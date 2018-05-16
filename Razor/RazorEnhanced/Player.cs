@@ -791,6 +791,17 @@ namespace RazorEnhanced
 					StealthSteps.Hide();
 			}		
 		}
+		// Map Message
+		public static void MapSay(int num)
+		{
+			MapSay(num.ToString());
+		}
+
+		public static void MapSay(string msg)
+		{
+			if (msg != null && msg != string.Empty)
+				ClientCommunication.PostTextSend(msg);
+		}
 
 		// Game Message
 		public static void ChatSay(int hue, int num)

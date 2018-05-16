@@ -354,6 +354,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.ChatSay(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Send a message in say with a specific color");
 			descriptionPlayer.Add("Player.ChatSay", tooltip);
 
+			tooltip = new ToolTipDescriptions("Player.MapSay(string or int)", new string[] { "string Message or int number" }, "void", "Send a message in map application");
+			descriptionPlayer.Add("Player.MapSay", tooltip);
+
 			tooltip = new ToolTipDescriptions("Player.ChatEmote(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Send a message in emote with a specific color");
 			descriptionPlayer.Add("Player.ChatEmote", tooltip);
 
