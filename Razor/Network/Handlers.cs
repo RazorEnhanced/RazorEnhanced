@@ -449,7 +449,10 @@ namespace Assistant
 		{
 			ushort index = p.ReadUInt16();
 
-			World.ShardName = World.Servers[index] as string ?? "[Unknown]";
+			if (World.Servers.TryGetValue(index, out string shardname))
+				World.ShardName = shardname;
+			else
+				World.ShardName = "[Unknown]";
 		}
 
 		private static void ResponseStringQuery(PacketReader p, PacketHandlerEventArgs args)
