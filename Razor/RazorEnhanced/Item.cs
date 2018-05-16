@@ -310,94 +310,93 @@ namespace RazorEnhanced
 			List<Item> result = new List<Item>();
 			List<Assistant.Item> assistantItems = new List<Assistant.Item>(World.Items.Values.ToList());
 
-			if (filter.Enabled)
+			try
 			{
-				if (filter.Serials.Count > 0)
+				if (filter.Enabled)
 				{
-					assistantItems = assistantItems.Where((i) => filter.Serials.Contains((int)i.Serial.Value)).ToList();
-				}
-				else
-				{
-					if (filter.Name != String.Empty)
+					if (filter.Serials.Count > 0)
 					{
-						Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-						List<Assistant.Item> list = new List<Assistant.Item>();
-						foreach (Assistant.Item i in assistantItems)
+						assistantItems = assistantItems.Where((i) => filter.Serials.Contains((int)i.Serial.Value)).ToList();
+					}
+					else
+					{
+						if (filter.Name != String.Empty)
 						{
-							if (rgx.IsMatch(i.Name))
+							Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
+							List<Assistant.Item> list = new List<Assistant.Item>();
+							foreach (Assistant.Item i in assistantItems)
 							{
-								list.Add(i);
+								if (rgx.IsMatch(i.Name))
+								{
+									list.Add(i);
+								}
 							}
-						}
-						assistantItems = list;
-					}
-
-					if (filter.Graphics.Count > 0)
-					{
-						assistantItems = assistantItems.Where((i) => filter.Graphics.Contains(i.ItemID.Value)).ToList();
-					}
-
-					if (filter.Hues.Count > 0)
-					{
-						assistantItems = assistantItems.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
-					}
-
-					if (filter.RangeMin != -1)
-					{
-						if (World.Player == null)
-							return result;
-
-						assistantItems = assistantItems.Where((i) =>
-							Utility.DistanceSqrt
-							(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) >= filter.RangeMin
-						).ToList();
-					}
-
-					if (filter.RangeMax != -1)
-					{
-						if (World.Player == null)
-							return result;
-
-						assistantItems = assistantItems.Where((i) =>
-							Utility.DistanceSqrt
-							(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) <= filter.RangeMax
-						).ToList();
-					}
-
-					assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
-
-					if (filter.Layers.Count > 0)
-					{
-						List<Assistant.Layer> list = new List<Assistant.Layer>();
-
-						foreach (string text in filter.Layers)
-						{
-							Enum.TryParse<Layer>(text, out Layer l);
-							if (l != Assistant.Layer.Invalid)
-							{
-								list.Add(l);
-							}
+							assistantItems = list;
 						}
 
-						assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
-					}
+						if (filter.Graphics.Count > 0)
+						{
+							assistantItems = assistantItems.Where((i) => filter.Graphics.Contains(i.ItemID.Value)).ToList();
+						}
 
-					if (filter.OnGround != -1)
-					{
-						assistantItems = assistantItems.Where((i) => i.OnGround == Convert.ToBoolean(filter.OnGround)).ToList();
-					}
+						if (filter.Hues.Count > 0)
+						{
+							assistantItems = assistantItems.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
+						}
 
-					if (filter.IsContainer != -1)
-					{
-						assistantItems = assistantItems.Where((i) => i.IsContainer == Convert.ToBoolean(filter.IsContainer)).ToList();
-					}
+						if (filter.RangeMin != -1)
+						{
+							assistantItems = assistantItems.Where((i) =>
+								Utility.DistanceSqrt
+								(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) >= filter.RangeMin
+							).ToList();
+						}
 
-					if (filter.IsCorpse != -1)
-					{
-						assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
+						if (filter.RangeMax != -1)
+						{
+							assistantItems = assistantItems.Where((i) =>
+								Utility.DistanceSqrt
+								(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) <= filter.RangeMax
+							).ToList();
+						}
+
+						assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
+
+						if (filter.Layers.Count > 0)
+						{
+							List<Assistant.Layer> list = new List<Assistant.Layer>();
+
+							foreach (string text in filter.Layers)
+							{
+								Enum.TryParse<Layer>(text, out Layer l);
+								if (l != Assistant.Layer.Invalid)
+								{
+									list.Add(l);
+								}
+							}
+
+							assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
+						}
+
+						if (filter.OnGround != -1)
+						{
+							assistantItems = assistantItems.Where((i) => i.OnGround == Convert.ToBoolean(filter.OnGround)).ToList();
+						}
+
+						if (filter.IsContainer != -1)
+						{
+							assistantItems = assistantItems.Where((i) => i.IsContainer == Convert.ToBoolean(filter.IsContainer)).ToList();
+						}
+
+						if (filter.IsCorpse != -1)
+						{
+							assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
+						}
 					}
 				}
+
 			}
+			catch { }
 
 			foreach (Assistant.Item assistantItem in assistantItems)
 			{
