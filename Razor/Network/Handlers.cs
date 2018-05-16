@@ -2650,6 +2650,9 @@ namespace Assistant
 
 		private static void ClientEncodedPacket(PacketReader p, PacketHandlerEventArgs args)
 		{
+			if (p == null)
+				return;
+
 			Serial serial = p.ReadUInt32();
 			ushort packetID = p.ReadUInt16();
 			switch (packetID)
