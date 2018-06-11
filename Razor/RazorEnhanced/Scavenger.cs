@@ -261,7 +261,7 @@ namespace RazorEnhanced
 
 			foreach (ScavengerItem scavengerItem in scavengerItemList)
 			{
-				if (World.Player.IsGhost)
+				if (World.Player != null && World.Player.IsGhost)
 				{
 					ResetIgnore();
 					Thread.Sleep(2000);
