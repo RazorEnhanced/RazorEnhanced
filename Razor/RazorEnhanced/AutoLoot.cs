@@ -303,7 +303,7 @@ namespace RazorEnhanced
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
-			if (World.Player.IsGhost)
+			if (World.Player != null && World.Player.IsGhost)
 			{
 				Thread.Sleep(2000);
 				ResetIgnore();
