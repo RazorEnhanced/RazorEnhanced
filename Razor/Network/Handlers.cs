@@ -883,6 +883,9 @@ namespace Assistant
 
 		private static void SetSkillLock(PacketReader p, PacketHandlerEventArgs args)
 		{
+			if (World.Player == null)
+				return;
+
 			int i = p.ReadUInt16();
 
 			if (i < 0 || i >= Skill.Count)
