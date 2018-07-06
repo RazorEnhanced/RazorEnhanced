@@ -413,7 +413,12 @@ namespace Assistant
 
 		private void RemoveItem(Item item)
 		{
-			m_Items.Remove(item);
+			try
+			{
+				m_Items.Remove(item);
+			}
+			catch
+			{ }
 		}
 
 		internal byte GetPacketFlags()
