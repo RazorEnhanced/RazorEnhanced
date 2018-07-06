@@ -10084,23 +10084,26 @@ namespace Assistant
 
 		private void razorButtonVisitUOD_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://www.uodreams.com");
-			System.Diagnostics.Debug.WriteLine(sender.ToString() + " - " + e.ToString());
+			ProcessStartInfo p = new ProcessStartInfo("http://www.uodreams.com");
+			Process.Start(p);
 		}
 
 		private void razorButtonCreateUODAccount_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://www.gamesnet.it/register.php");
+			ProcessStartInfo p = new ProcessStartInfo("http://www.gamesnet.it/register.php");
+			Process.Start(p);
 		}
 
 		private void razorButtonWiki_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://razorenhanced.org/");
+			ProcessStartInfo p = new ProcessStartInfo("http://razorenhanced.org/");
+			Process.Start(p);
 		}
 
 		private void discordrazorButton_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://discord.gg/P3Q7mKT");
+			ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
+			Process.Start(p);
 		}
 
 		private void openchangelogButton_Click(object sender, EventArgs e)
@@ -14194,7 +14197,8 @@ namespace Assistant
 
 		private void paypalButton_Click(object sender, EventArgs e)
 		{
-			Process.Start("https://www.paypal.me/Alexdan82");
+			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
+			Process.Start(p);
 		}
 		// ----------------- STOP DPS METER -------------------
 	}
