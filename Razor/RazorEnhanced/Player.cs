@@ -655,6 +655,9 @@ namespace RazorEnhanced
 
 		public static bool BuffsExist(string buffname)
 		{
+			if (World.Player == null || World.Player.Buffs == null)
+				return false;
+
 			return World.Player.Buffs.Any(icon => GetBuffDescription(icon) == buffname);
 		}
 
