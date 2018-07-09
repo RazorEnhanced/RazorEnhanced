@@ -112,11 +112,11 @@
     <Reference Include="Accord.Video.FFMPEG, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=x86">
       <HintPath>..\packages\Accord.Video.FFMPEG.3.8.0\lib\net45\Accord.Video.FFMPEG.dll</HintPath>
     </Reference>
-    <Reference Include="AutoUpdater.NET, Version=1.4.7.0, Culture=neutral, PublicKeyToken=942f95247e354701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autoupdater.NET.Official.1.4.7\lib\net40\AutoUpdater.NET.dll</HintPath>
+    <Reference Include="AutoUpdater.NET, Version=1.4.10.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.4.10\lib\net40\AutoUpdater.NET.dll</HintPath>
     </Reference>
-    <Reference Include="CrashReporter.NET, Version=1.5.3.0, Culture=neutral, PublicKeyToken=986591a91592b7e6, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrashReporter.NET.Official.1.5.3\lib\net40\CrashReporter.NET.dll</HintPath>
+    <Reference Include="CrashReporter.NET, Version=1.5.5.0, Culture=neutral, PublicKeyToken=7828e0fd88cab698, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrashReporter.NET.Official.1.5.5\lib\net40\CrashReporter.NET.dll</HintPath>
     </Reference>
     <Reference Include="IronPython, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.dll</HintPath>

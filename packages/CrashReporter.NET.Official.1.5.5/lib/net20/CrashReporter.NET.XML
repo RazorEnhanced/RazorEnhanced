@@ -1,0 +1,486 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CrashReporter.NET</name>
+    </assembly>
+    <members>
+        <member name="F:CrashReporterDotNET.CrashReport.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CrashReporterDotNET.CrashReport.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CrashReporterDotNET.CrashReport.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ProgressDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:CrashReporterDotNET.ProgressDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:CrashReporterDotNET.ProgressDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:CrashReporterDotNET.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.ajax_loader">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.email_go">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.EmailRequiredError">
+            <summary>
+              Looks up a localized string similar to A valid Email address is required in order to send the crash report. This ensures that you will be notified by the developer when bug is fixed.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.ErrorCapturingImageCaption">
+            <summary>
+              Looks up a localized string similar to No image captured.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.ErrorCapturingImageMessage">
+            <summary>
+              Looks up a localized string similar to There is an error while capturing image. You can submit report report without screenshot..
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.InvalidEmailAddressError">
+            <summary>
+              Looks up a localized string similar to Email address is not valid. Please provide valid email address..
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.MessageSentCaption">
+            <summary>
+              Looks up a localized string similar to Crash report sent.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.MessageSentMessage">
+            <summary>
+              Looks up a localized string similar to Crash report of {0} {1} is sent to the developer. Thanks for your support..
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.NoImageShownCaption">
+            <summary>
+              Looks up a localized string similar to Error opening image.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.NoImageShownMessage">
+            <summary>
+              Looks up a localized string similar to Error occured, no image will be shown..
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.ReportFileName">
+            <summary>
+              Looks up a localized string similar to {0} {1} Crash Report.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.save_as">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.stop">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.TitleText">
+            <summary>
+              Looks up a localized string similar to {0} {1} crashed..
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.ToolTipTitle">
+            <summary>
+              Looks up a localized string similar to Include application screenshot.
+            </summary>
+        </member>
+        <member name="P:CrashReporterDotNET.Properties.Resources.warning_64">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:CrashReporterDotNET.ReportCrash">
+            <summary>
+            Set SMTP server details and receiver email fields of this class instance to send crash reports directly in your inbox.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.Silent">
+            <summary>
+            Set it to true if you want
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.SmtpHost">
+            <summary>
+            Gets or Sets name or IP address of the Host used for SMTP transactions.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.EnableSSL">
+            <summary>
+            Specify whether the SMTP client uses the Secure Socket Layer (SSL) to encrypt the connection.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.Port">
+            <summary>
+            Gets or Sets the port used for SMTP transactions.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.UserName">
+            <summary>
+            Gets or Sets the username used for SMTP transactions.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.Password">
+            <summary>
+            Gets or Sets the password used for SMTP transactions. 
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.ToEmail">
+            <summary>
+            Gets or Sets email address where you want to receive crash reports.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.FromEmail">
+            <summary>
+            Gets or Sets email address used by crash reporter if user don't provide her email address.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.Exception">
+            <summary>
+            Gets or Sets exception that occur during application execution.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.CaptureScreen">
+            <summary>
+            Specify whether CrashReporter.NET should take screen shot of whole screen or not.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.DeveloperMessage">
+            <summary>
+            Gets or Sets custom message developer wants to send. It can be something like value of variables or other details you want to send.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.EmailRequired">
+            <summary>
+             Gets or Sets if email is required to send the crash report.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.IncludeScreenshot">
+            <summary>
+            Gets or Sets "Include screenshot" start value.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.AnalyzeWithDoctorDump">
+            <summary>
+            Specify whether CrashReporter.NET should send crash reports only for new problems (duplicates detected by Doctor Dump free cloud service).
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.ReportCrash.DoctorDumpSettings">
+            <summary>
+            Specify Doctor Dump processing settings. Used only when AnalyzeWithDoctorDump is true.
+            </summary>
+        </member>
+        <member name="M:CrashReporterDotNET.ReportCrash.#ctor(System.String)">
+            <summary>
+            Object use to send exception report to your Inbox.
+            </summary>
+            <param name="toEmail">Email where you want to receive crash reports.</param>
+        </member>
+        <member name="M:CrashReporterDotNET.ReportCrash.Send(System.Exception)">
+            <summary>
+            Sends exception report directly to receiver email address provided in ToEmail.
+            </summary>
+            <param name="exception">Exception object that contains details of the exception.</param>
+        </member>
+        <member name="T:CrashReporterDotNET.DoctorDumpSettings">
+            <summary>
+            Set Doctor Dump processing settings.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.DoctorDumpSettings.ApplicationID">
+            <summary>
+            Gets or Sets application ID.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.DoctorDumpSettings.SendAnonymousReportSilently">
+            <summary>
+            Specify whether CrashReporter.NET should send anonymous crash report to Doctor Dump that doesn't contain private information.
+            Only about 1/10 of users press "Send" button on crash reporting dialogs. And even less if there are required fields to fill.
+            Without sending anonymous reports most of the problems are hidden from the developer.
+            </summary>
+        </member>
+        <member name="F:CrashReporterDotNET.DoctorDumpSettings.OpenReportInBrowser">
+            <summary>
+            Specify whether CrashReporter.NET should open the web page in browser about crash report that contains report ID and may contain steps to fix the problem.
+            </summary>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.#ctor">
+            <remarks/>
+        </member>
+        <member name="E:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAnonymousReportCompleted">
+            <remarks/>
+        </member>
+        <member name="E:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAdditionalDataCompleted">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAnonymousReport(CrashReporterDotNET.com.drdump.ClientLib,CrashReporterDotNET.com.drdump.Application,CrashReporterDotNET.com.drdump.ExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAnonymousReportAsync(CrashReporterDotNET.com.drdump.ClientLib,CrashReporterDotNET.com.drdump.Application,CrashReporterDotNET.com.drdump.ExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAnonymousReportAsync(CrashReporterDotNET.com.drdump.ClientLib,CrashReporterDotNET.com.drdump.Application,CrashReporterDotNET.com.drdump.ExceptionDescription,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAdditionalData(System.Byte[],CrashReporterDotNET.com.drdump.DetailedExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAdditionalDataAsync(System.Byte[],CrashReporterDotNET.com.drdump.DetailedExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.SendAdditionalDataAsync(System.Byte[],CrashReporterDotNET.com.drdump.DetailedExceptionDescription,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpCrashReporterReportUploader.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.#ctor">
+            <remarks/>
+        </member>
+        <member name="E:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAnonymousReportCompleted">
+            <remarks/>
+        </member>
+        <member name="E:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAdditionalDataCompleted">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAnonymousReport(CrashReporterDotNET.com.drdump.ClientLib,CrashReporterDotNET.com.drdump.Application,CrashReporterDotNET.com.drdump.ExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAnonymousReportAsync(CrashReporterDotNET.com.drdump.ClientLib,CrashReporterDotNET.com.drdump.Application,CrashReporterDotNET.com.drdump.ExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAnonymousReportAsync(CrashReporterDotNET.com.drdump.ClientLib,CrashReporterDotNET.com.drdump.Application,CrashReporterDotNET.com.drdump.ExceptionDescription,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAdditionalData(System.Byte[],CrashReporterDotNET.com.drdump.DetailedExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAdditionalDataAsync(System.Byte[],CrashReporterDotNET.com.drdump.DetailedExceptionDescription)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.SendAdditionalDataAsync(System.Byte[],CrashReporterDotNET.com.drdump.DetailedExceptionDescription,System.Object)">
+            <remarks/>
+        </member>
+        <member name="M:CrashReporterDotNET.com.drdump.HttpsCrashReporterReportUploader.CancelAsync(System.Object)">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.ClientLib">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ClientLib.V1">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ClientLib.V2">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ClientLib.V3">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ClientLib.V4">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.DetailedExceptionDescription">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.DetailedExceptionDescription.DeveloperMessage">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.DetailedExceptionDescription.Exception">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.DetailedExceptionDescription.PngScreenShot">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.DetailedExceptionDescription.UserDescription">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.DetailedExceptionDescription.UserEmail">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.ExceptionDescription">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionDescription.ClrVersion">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionDescription.CrashDate">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionDescription.Exception">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionDescription.ExceptionString">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionDescription.OS">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionDescription.PCID">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.ExceptionInfo">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionInfo.HResult">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionInfo.InnerException">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionInfo.Message">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionInfo.Source">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionInfo.StackTrace">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ExceptionInfo.Type">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.Response">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.ClientID">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.Context">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.DumpGroupID">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.DumpGroupIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.DumpID">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.DumpIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.Garbage">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.ProblemID">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.ProblemIDSpecified">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Response.UrlToProblem">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.StopResponse">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.NeedReportResponse">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.ErrorResponse">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.ErrorResponse.Error">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.Application">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.AppName">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.ApplicationGUID">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.CompanyName">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.Email">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.MainModule">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.V1">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.V2">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.V3">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.Application.V4">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.SendAnonymousReportCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.SendAnonymousReportCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.SendAnonymousReportCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.SendAdditionalDataCompletedEventHandler">
+            <remarks/>
+        </member>
+        <member name="T:CrashReporterDotNET.com.drdump.SendAdditionalDataCompletedEventArgs">
+            <remarks/>
+        </member>
+        <member name="P:CrashReporterDotNET.com.drdump.SendAdditionalDataCompletedEventArgs.Result">
+            <remarks/>
+        </member>
+    </members>
+</doc>
