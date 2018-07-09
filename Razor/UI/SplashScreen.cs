@@ -87,13 +87,15 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
 			this.SuspendLayout();
-			//
+			// 
 			// SplashScreen
-			//
+			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-			this.BackColor = System.Drawing.Color.White;
-			this.BackgroundImage = global::Assistant.Properties.Resources.razor_enhanced_splash;
+			this.BackColor = System.Drawing.Color.Maroon;
+			this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.ClientSize = new System.Drawing.Size(600, 333);
 			this.ControlBox = false;
 			this.DoubleBuffered = true;
@@ -104,9 +106,10 @@ namespace Assistant
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Razor Splash Screen";
 			this.TopMost = true;
-			this.TransparencyKey = System.Drawing.Color.White;
+			this.TransparencyKey = System.Drawing.Color.Maroon;
 			this.Load += new System.EventHandler(this.SplashScreen_Load);
 			this.ResumeLayout(false);
+
 		}
 
 		#endregion Windows Form Designer generated code
