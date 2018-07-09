@@ -2026,7 +2026,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Copy().Rows)
 					{
 						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
 							items.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
