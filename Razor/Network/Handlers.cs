@@ -2124,6 +2124,17 @@ namespace Assistant
 						return;
 					}
 				}
+
+				// Filtro talk orc lizart rat
+				if (Engine.MainWindow.FilterNPC.Checked && ser.IsMobile)
+				{
+					Mobile m = World.FindMobile(ser);
+					if (m != null && RazorEnhanced.Filters.IsOrcLizardRat(m.Body))
+					{
+						args.Block = true;
+						return;
+					}
+				}
 			}
 		}
 

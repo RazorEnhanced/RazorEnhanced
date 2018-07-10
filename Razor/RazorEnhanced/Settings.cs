@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 54;
+		private static int SettingVersion = 55;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -4488,6 +4488,15 @@ namespace RazorEnhanced
 
 				realVersion = 54;
 				General.WriteInt("SettingVersion", 54);
+			}
+
+			if (realVersion == 54)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("FilterNPC", typeof(bool));
+				General.WriteBool("FilterNPC", false);
+
+				realVersion = 54;
+				General.WriteInt("SettingVersion", 55);
 			}
 
 			Save(true);

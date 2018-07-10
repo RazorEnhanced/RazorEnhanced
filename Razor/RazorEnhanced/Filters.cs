@@ -597,6 +597,23 @@ namespace RazorEnhanced
 		}
 		///////////////////// END -  FLAG COLOR ////////////////////////
 
+		///////////////////// START - NPC ORC-LIZARD-RAT Talk filter ////////////////////////
+		internal static bool IsOrcLizardRat(int body)
+		{
+			if (body >= 0x0021 && body <= 0x0024) // lizard
+				return true;
+
+			if (body == 0x0007 || body == 0x0029 || body == 0x0011 || (body >= 0x008a && body <= 0x008c)) // orc
+				return true;
+
+			if (body >= 0x02a && body <= 0x02f) // ratmen
+				return true;
+
+			return false;
+		}
+
+		///////////////////// END - NPC ORC-LIZARD-RAT Talk filter //////////////////////////
+
 
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()

@@ -620,7 +620,6 @@
     <None Include="RazorEnhanced\Resources\Skill_Icon_Stealth.png" />
     <None Include="RazorEnhanced\Resources\Skill_Icon_TasteID.png" />
     <None Include="RazorEnhanced\Resources\Skill_Icon_Tracking.png" />
-    <None Include="RazorEnhanced\Resources\splashnew.png" />
     <None Include="RazorEnhanced\Resources\splashnew.jpg" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
     <Content Include="UI\Lock.ico" />
