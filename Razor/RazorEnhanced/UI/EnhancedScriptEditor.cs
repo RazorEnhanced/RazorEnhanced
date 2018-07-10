@@ -1513,7 +1513,8 @@ namespace RazorEnhanced.UI
 			m_EnhancedScriptEditor.m_onclosing = true;
 			Stop();
 			End();
-			CloseAndSave();
+			if (!CloseAndSave())
+				e.Cancel = true;
 			m_EnhancedScriptEditor.m_onclosing = false;
 		}
 
@@ -1734,7 +1735,7 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		private void CloseAndSave()
+		private bool CloseAndSave()
 		{
 			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (res == System.Windows.Forms.DialogResult.Yes)
@@ -1753,6 +1754,7 @@ namespace RazorEnhanced.UI
 				m_Filename = String.Empty;
 				m_Filepath = String.Empty;
 				this.Text = m_Title;
+				return true;
 			}
 			else if (res == System.Windows.Forms.DialogResult.No)
 			{
@@ -1760,7 +1762,13 @@ namespace RazorEnhanced.UI
 				m_Filename = String.Empty;
 				m_Filepath = String.Empty;
 				this.Text = m_Title;
+				return true;
 			}
+			else if (res == System.Windows.Forms.DialogResult.Cancel)
+			{
+				return false;
+			}
+			return true;
 		}
 
 		private void AddBreakpoint()
