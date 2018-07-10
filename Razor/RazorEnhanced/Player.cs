@@ -10,7 +10,6 @@ namespace RazorEnhanced
 	{
 		// Stats
 		public static int Hits { get { return World.Player.Hits; } }
-
 		public static int HitsMax { get { return World.Player.HitsMax; } }
 		public static int Str { get { return World.Player.Str; } }
 		public static int Mana { get { return World.Player.Mana; } }

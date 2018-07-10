@@ -1740,16 +1740,26 @@ namespace RazorEnhanced.UI
 			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (res == System.Windows.Forms.DialogResult.Yes)
 			{
-				SaveFileDialog save = new SaveFileDialog
+				if (m_Filename != null && m_Filename != String.Empty)
 				{
-					Filter = "Script Files|*.py",
-					FileName = m_Filename
-				};
-
-				if (save.ShowDialog() == DialogResult.OK)
-				{
-					File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
 				}
+				else
+				{
+					SaveFileDialog save = new SaveFileDialog
+					{
+						Filter = "Script Files|*.py|Script Files|*.txt",
+						FileName = m_Filename
+					};
+
+					if (save.ShowDialog() == DialogResult.OK)
+					{
+						File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+					}
+					else
+						return false;
+				}
+
 				fastColoredTextBoxEditor.Text = String.Empty;
 				m_Filename = String.Empty;
 				m_Filepath = String.Empty;
