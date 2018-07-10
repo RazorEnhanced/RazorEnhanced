@@ -774,6 +774,7 @@ namespace Assistant
 		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } }
 		internal RazorCheckBox ChkStealth { get { return chkStealth; } }
 		internal RazorCheckBox FilterPoison { get { return filterPoison; } }
+		internal RazorCheckBox FilterNPC { get { return filterNPC; } }
 		internal RazorCheckBox ShowHealthOH { get { return showHealthOH; } }
 		internal RazorCheckBox AutoOpenDoors { get { return autoOpenDoors; } }
 		internal RazorCheckBox ShowCorpseNames { get { return incomingCorpse; } }
@@ -818,6 +819,7 @@ namespace Assistant
 		private RazorCheckBox autolootautostartCheckBox;
 		private RazorCheckBox scavengerautostartCheckBox;
 		private RazorButton paypalButton;
+		private RazorCheckBox filterNPC;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -918,6 +920,7 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.filterNPC = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox17 = new System.Windows.Forms.GroupBox();
 			this.setpathmapbutton = new System.Windows.Forms.Button();
 			this.label72 = new System.Windows.Forms.Label();
@@ -1934,6 +1937,7 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.filterNPC);
 			this.moreOptTab.Controls.Add(this.groupBox17);
 			this.moreOptTab.Controls.Add(this.filterPoison);
 			this.moreOptTab.Controls.Add(this.chknorunStealth);
@@ -1996,6 +2000,15 @@ namespace Assistant
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
 			// 
+			// filterNPC
+			// 
+			this.filterNPC.Location = new System.Drawing.Point(204, 180);
+			this.filterNPC.Name = "filterNPC";
+			this.filterNPC.Size = new System.Drawing.Size(216, 22);
+			this.filterNPC.TabIndex = 81;
+			this.filterNPC.Text = "Filter Orc / Lizard / Ratmen Messages";
+			this.filterNPC.CheckedChanged += new System.EventHandler(this.filterNPC_CheckedChanged);
+			// 
 			// groupBox17
 			// 
 			this.groupBox17.Controls.Add(this.setpathmapbutton);
@@ -2047,7 +2060,7 @@ namespace Assistant
 			// 
 			// chknorunStealth
 			// 
-			this.chknorunStealth.Location = new System.Drawing.Point(204, 264);
+			this.chknorunStealth.Location = new System.Drawing.Point(204, 285);
 			this.chknorunStealth.Name = "chknorunStealth";
 			this.chknorunStealth.Size = new System.Drawing.Size(190, 22);
 			this.chknorunStealth.TabIndex = 78;
@@ -2083,7 +2096,7 @@ namespace Assistant
 			// 
 			// hiddedAutoOpenDoors
 			// 
-			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 306);
+			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 327);
 			this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
 			this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.hiddedAutoOpenDoors.TabIndex = 74;
@@ -2323,7 +2336,7 @@ namespace Assistant
 			// 
 			// autoOpenDoors
 			// 
-			this.autoOpenDoors.Location = new System.Drawing.Point(204, 285);
+			this.autoOpenDoors.Location = new System.Drawing.Point(204, 306);
 			this.autoOpenDoors.Name = "autoOpenDoors";
 			this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.autoOpenDoors.TabIndex = 59;
@@ -2332,7 +2345,7 @@ namespace Assistant
 			// 
 			// chkStealth
 			// 
-			this.chkStealth.Location = new System.Drawing.Point(204, 243);
+			this.chkStealth.Location = new System.Drawing.Point(204, 264);
 			this.chkStealth.Name = "chkStealth";
 			this.chkStealth.Size = new System.Drawing.Size(190, 22);
 			this.chkStealth.TabIndex = 12;
@@ -2350,7 +2363,7 @@ namespace Assistant
 			// 
 			// negotiate
 			// 
-			this.negotiate.Location = new System.Drawing.Point(204, 201);
+			this.negotiate.Location = new System.Drawing.Point(204, 222);
 			this.negotiate.Name = "negotiate";
 			this.negotiate.Size = new System.Drawing.Size(224, 22);
 			this.negotiate.TabIndex = 56;
@@ -2399,7 +2412,7 @@ namespace Assistant
 			// 
 			// incomingCorpse
 			// 
-			this.incomingCorpse.Location = new System.Drawing.Point(204, 222);
+			this.incomingCorpse.Location = new System.Drawing.Point(204, 243);
 			this.incomingCorpse.Name = "incomingCorpse";
 			this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
 			this.incomingCorpse.TabIndex = 48;
@@ -2408,7 +2421,7 @@ namespace Assistant
 			// 
 			// incomingMob
 			// 
-			this.incomingMob.Location = new System.Drawing.Point(204, 180);
+			this.incomingMob.Location = new System.Drawing.Point(204, 201);
 			this.incomingMob.Name = "incomingMob";
 			this.incomingMob.Size = new System.Drawing.Size(244, 22);
 			this.incomingMob.TabIndex = 47;
@@ -7707,7 +7720,7 @@ namespace Assistant
 			// 
 			// openFileDialogscript
 			// 
-			this.openFileDialogscript.Filter = "Script Files|*.py";
+			this.openFileDialogscript.Filter = "Script Files|*.py;*.txt";
 			this.openFileDialogscript.RestoreDirectory = true;
 			// 
 			// timerupdatestatus
@@ -8250,6 +8263,7 @@ namespace Assistant
 			spamFilter.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSpam");
 			filterSnoop.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg");
 			filterPoison.Checked = RazorEnhanced.Settings.General.ReadBool("FilterPoison");
+			filterNPC.Checked = RazorEnhanced.Settings.General.ReadBool("FilterNPC");
 			incomingMob.Checked = RazorEnhanced.Settings.General.ReadBool("ShowMobNames");
 			negotiate.Checked = RazorEnhanced.Settings.General.ReadBool("Negotiate");
 			incomingCorpse.Checked = RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames");
@@ -9334,6 +9348,12 @@ namespace Assistant
 		{
 			if (filterPoison.Focused)
 				RazorEnhanced.Settings.General.WriteBool("FilterPoison", filterPoison.Checked);
+		}
+
+		private void filterNPC_CheckedChanged(object sender, EventArgs e)
+		{
+			if (filterNPC.Focused)
+				RazorEnhanced.Settings.General.WriteBool("FilterNPC", filterNPC.Checked);
 		}
 
 		private void filterSnoop_CheckedChanged(object sender, System.EventArgs e)

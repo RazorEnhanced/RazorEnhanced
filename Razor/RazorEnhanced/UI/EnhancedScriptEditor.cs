@@ -1158,8 +1158,8 @@ namespace RazorEnhanced.UI
 			if (filename != null && File.Exists(filename))
 			{
 				m_Filepath = filename;
-				m_Filename = Path.GetFileNameWithoutExtension(filename);
-				this.Text = m_Title + " - " + m_Filename + ".cs";
+				m_Filename = Path.GetFileName(filename);
+				this.Text = m_Title + " - " + m_Filename;
 				fastColoredTextBoxEditor.Text = File.ReadAllText(filename);
 			}
 		}
@@ -1637,16 +1637,16 @@ namespace RazorEnhanced.UI
 		{
 			OpenFileDialog open = new OpenFileDialog
 			{
-				Filter = "Script Files|*.py",
+				Filter = "Script Files|*.py;*.txt",
 				RestoreDirectory = true
 			};
 			if (open.ShowDialog() == DialogResult.OK)
 			{
 				if (open.FileName != null && File.Exists(open.FileName))
 				{
-					m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
+					m_Filename = Path.GetFileName(open.FileName);
 					m_Filepath = open.FileName;
-					this.Text = m_Title + " - " + m_Filename + ".py";
+					this.Text = m_Title + " - " + m_Filename;
 					fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
 				}
 			}
@@ -1656,14 +1656,14 @@ namespace RazorEnhanced.UI
 		{
 			if (m_Filename != String.Empty)
 			{
-				this.Text = m_Title + " - " + m_Filename + ".py";
+				this.Text = m_Title + " - " + m_Filename;
 				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
-				Scripts.EnhancedScript script = Scripts.Search(m_Filename + ".py");
+				Scripts.EnhancedScript script = Scripts.Search(m_Filename);
 				if (script != null)
 				{
-					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename + ".py");
+					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename);
 
-					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename + ".py"))
+					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename))
 					{
 						string text = File.ReadAllText(fullpath);
 						bool loop = script.Loop;
@@ -1675,9 +1675,9 @@ namespace RazorEnhanced.UI
 						if (isRunning)
 							script.Stop();
 
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename + ".py", text, wait, loop, run, autostart);
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename, text, wait, loop, run, autostart);
 						reloaded.Create(null);
-						Scripts.EnhancedScripts[m_Filename + ".py"] = reloaded;
+						Scripts.EnhancedScripts[m_Filename] = reloaded;
 
 						if (isRunning)
 							reloaded.Start();
@@ -1694,14 +1694,14 @@ namespace RazorEnhanced.UI
 		{
 			SaveFileDialog save = new SaveFileDialog
 			{
-				Filter = "Script Files|*.py",
+				Filter = "Script Files|*.py|Script Files|*.txt",
 				RestoreDirectory = true
 			};
 
 			if (save.ShowDialog() == DialogResult.OK)
 			{
-				m_Filename = Path.GetFileNameWithoutExtension(save.FileName);
-				this.Text = m_Title + " - " + m_Filename + ".py";
+				m_Filename = Path.GetFileName(save.FileName);
+				this.Text = m_Title + " - " + m_Filename;
 				m_Filepath = save.FileName;
 				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 
