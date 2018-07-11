@@ -1737,6 +1737,15 @@ namespace RazorEnhanced.UI
 
 		private bool CloseAndSave()
 		{
+			if (File.Exists(m_Filepath) && File.ReadAllText(m_Filepath) == fastColoredTextBoxEditor.Text)
+			{
+				fastColoredTextBoxEditor.Text = String.Empty;
+				m_Filename = String.Empty;
+				m_Filepath = String.Empty;
+				this.Text = m_Title;
+				return true;
+			}
+	
 			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (res == System.Windows.Forms.DialogResult.Yes)
 			{
