@@ -396,6 +396,33 @@ namespace Assistant
 			}
 		}
 
+		internal static string FormatDatagridColorGraphCell(DataGridViewCell cell)
+		{
+			int color = m_maxvalue;
+			if (cell.Value == null)
+				return "0x" + m_maxvalue.ToString("X4");
+
+			if (cell.Value.ToString() == "-1")
+			{
+				return "No Change";
+			}
+			else
+			{
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						color = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (color > m_maxvalue)
+						color = m_maxvalue;
+				}
+				return "0x" + color.ToString("X4");
+			}
+		}
+
 		internal static int ToInt32(string str, int def)
 		{
 			if (str == null)

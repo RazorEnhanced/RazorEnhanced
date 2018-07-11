@@ -1096,9 +1096,11 @@ namespace Assistant
 			m.Body = p.ReadUInt16();
 
 			// Chiamata funzione cambio grafica mob.
+			bool newcolor = false;
+			int color = 0;
 			if (Engine.MainWindow.MobFilterCheckBox.Checked)
 			{
-				p = RazorEnhanced.Filters.GraphChange(p, m.Body, out bool block);
+				p = RazorEnhanced.Filters.GraphChangeBody(p, m.Body, out bool block, out newcolor, out color);
 				if (block)
 				{
 					args.Block = true;
@@ -1119,6 +1121,12 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 
 			m.Hue = p.ReadUInt16();
+			if (newcolor) // Apply color change from filter
+			{
+				p.Seek(-2, SeekOrigin.Current);
+				p.Write((ushort)(color));
+			}
+
 			m.ProcessPacketFlags(p.ReadByte());
 
 			// Apply color flag on mob if enabled
@@ -1616,10 +1624,12 @@ namespace Assistant
 			Serial serial = p.ReadUInt32();
 			ushort body = p.ReadUInt16();
 
+			bool newcolor = false;
+			int color = 0;
 			// Chiamata funzione cambio grafica mob.
 			if (Engine.MainWindow.MobFilterCheckBox.Checked)
 			{
-				p = RazorEnhanced.Filters.GraphChange(p, body, out bool block);
+				p = RazorEnhanced.Filters.GraphChangeBody(p, body, out bool block, out newcolor, out color);
 				if (block)
 				{ 
 					args.Block = true;
@@ -1658,6 +1668,12 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 
 			m.Hue = p.ReadUInt16();
+			if (newcolor) // Apply color change from filter
+			{
+				p.Seek(-2, SeekOrigin.Current);
+				p.Write((ushort)(color));
+			}
+
 			m.ProcessPacketFlags(p.ReadByte());
 
 			// Apply color flag on mob if enabled

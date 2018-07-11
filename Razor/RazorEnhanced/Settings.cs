@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 55;
+		private static int SettingVersion = 56;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -3305,66 +3305,28 @@ namespace RazorEnhanced
 
 		internal class GraphFilter
 		{
+			internal static void ClearList()
+			{
+				for (int i = m_Dataset.Tables["FILTER_GRAPH"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["FILTER_GRAPH"].Rows[i];
+					row.Delete();
+				}
+			}
+
 			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
 			{
 				return (from DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows select (RazorEnhanced.Filters.GraphChangeData) row["Graph"]).ToList();
 			}
 
-			internal static void Insert(int graphreal, int graphnew)
+			internal static void Insert(bool enabled, int graphreal, int graphnew, int colornew)
 			{
-				RazorEnhanced.Filters.GraphChangeData graphdata = new RazorEnhanced.Filters.GraphChangeData(true, graphreal, graphnew);
+				RazorEnhanced.Filters.GraphChangeData graphdata = new RazorEnhanced.Filters.GraphChangeData(enabled, graphreal, graphnew, colornew);
 
 				DataRow row = m_Dataset.Tables["FILTER_GRAPH"].NewRow();
 				row["Graph"] = graphdata;
 				m_Dataset.Tables["FILTER_GRAPH"].Rows.Add(row);
-
-				Save();
-			}
-
-			internal static void Replace(int index, RazorEnhanced.Filters.GraphChangeData graphdata)
-			{
-				int count = -1;
-				foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
-				{
-					count++;
-					if (count == index)
-					{
-						row["Graph"] = graphdata;
-					}
-				}
-
-				Save();
-			}
-
-			internal static bool Exist(int graphreal)
-			{
-				for (int i = m_Dataset.Tables["FILTER_GRAPH"].Rows.Count - 1; i >= 0; i--)
-				{
-					DataRow row = m_Dataset.Tables["FILTER_GRAPH"].Rows[i];
-					RazorEnhanced.Filters.GraphChangeData graphdata = (RazorEnhanced.Filters.GraphChangeData)row["Graph"];
-					if (graphdata.GraphReal == graphreal)
-					{
-						return true;
-					}
-				}
-				return false;
-			}
-
-			internal static void Delete(int graphreal)
-			{
-				for (int i = m_Dataset.Tables["FILTER_GRAPH"].Rows.Count - 1; i >= 0; i--)
-				{
-					DataRow row = m_Dataset.Tables["FILTER_GRAPH"].Rows[i];
-					RazorEnhanced.Filters.GraphChangeData graphdata = (RazorEnhanced.Filters.GraphChangeData)row["Graph"];
-					if (graphdata.GraphReal == graphreal)
-					{
-						row.Delete();
-						break;
-					}
-				}
-
-				Save();
-			}
+			}		
 		}
 
 		// ------------- GRAPH FILTER END-----------------
@@ -4495,8 +4457,20 @@ namespace RazorEnhanced
 				m_Dataset.Tables["GENERAL"].Columns.Add("FilterNPC", typeof(bool));
 				General.WriteBool("FilterNPC", false);
 
-				realVersion = 54;
+				realVersion = 55;
 				General.WriteInt("SettingVersion", 55);
+			}
+
+			if (realVersion == 55)
+			{
+				m_Dataset.Tables.Remove("FILTER_GRAPH");
+
+				DataTable filter_graph = new DataTable("FILTER_GRAPH");
+				filter_graph.Columns.Add("Graph", typeof(RazorEnhanced.Filters.GraphChangeData));
+				m_Dataset.Tables.Add(filter_graph);
+
+				realVersion = 56;
+				General.WriteInt("SettingVersion", 56);
 			}
 
 			Save(true);

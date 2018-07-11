@@ -116,58 +116,68 @@ namespace RazorEnhanced
 			private int m_GraphNew;
 			public int GraphNew { get { return m_GraphNew; } }
 
-			public GraphChangeData(bool selected, int graphreal, int graphnew)
+			private int m_ColorNew;
+			public int ColorNew { get { return m_ColorNew; } }
+
+			public GraphChangeData(bool selected, int graphreal, int graphnew, int colornew)
 			{
 				m_Selected = selected;
 				m_GraphReal = graphreal;
 				m_GraphNew = graphnew;
+				m_ColorNew = colornew;
 			}
 		}
 
-		internal static void RefreshLists()
+		internal static void CopyGraphTable()
 		{
-			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
+			Settings.GraphFilter.ClearList(); // Rimuove vecchi dati dal save
 
-			Engine.MainWindow.MobFilterlistView.Items.Clear();
-
-			foreach (GraphChangeData graphdata in graphdatas)
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows)
 			{
-				ListViewItem listitem = new ListViewItem
-				{
-					Checked = graphdata.Selected
-				};
+				if (row.IsNewRow)
+					continue;
 
-				listitem.SubItems.Add("0x" + graphdata.GraphReal.ToString("X4"));
-				listitem.SubItems.Add("0x" + graphdata.GraphNew.ToString("X4"));
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
-				Engine.MainWindow.MobFilterlistView.Items.Add(listitem);
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "No Change")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+
+				Settings.GraphFilter.Insert(check, Convert.ToInt32((string)row.Cells[1].Value, 16), Convert.ToInt32((string)row.Cells[2].Value, 16), color);
 			}
+
+			Settings.Save(); // Salvo dati
 		}
 
-		internal static void UpdateSelectedItems(int i)
+		internal static void InitGraphGrid()
 		{
-			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
-
-			if (graphdatas.Count != Engine.MainWindow.MobFilterlistView.Items.Count)
+			ReloadGraphFilterData();
+			Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Clear();
+			foreach (GraphChangeData item in m_graphfilterdata)
 			{
-				return;
-			}
+				string color = "No Change";
+				if (item.ColorNew != -1)
+					color = "0x" + item.ColorNew.ToString("X4");
 
-			ListViewItem lvi = Engine.MainWindow.MobFilterlistView.Items[i];
-			GraphChangeData old = graphdatas[i];
-
-			if (lvi != null && old != null)
-			{
-				GraphChangeData graph = new GraphChangeData(lvi.Checked, old.GraphReal, old.GraphNew);
-				Settings.GraphFilter.Replace(i, graph);
-			}
+				Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Add(new object[] { item.Selected.ToString(), "0x" + item.GraphReal.ToString("X4"), "0x" + item.GraphNew.ToString("X4"), color });
+			}	
 		}
 
-		internal static Packet GraphChange(Packet p, ushort body, out bool block)
+		private static List<GraphChangeData> m_graphfilterdata = new List<GraphChangeData>();
+		internal static void ReloadGraphFilterData()
 		{
-			block = false;
-			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
-			foreach (GraphChangeData graphdata in graphdatas)
+			m_graphfilterdata = Settings.GraphFilter.ReadAll();
+		}
+
+		internal static Packet GraphChangeBody(Packet p, ushort body, out bool block, out bool newcolor, out int color)
+		{
+			block = newcolor = false;
+			color = 0;
+			foreach (GraphChangeData graphdata in m_graphfilterdata)
 			{
 				if (body != graphdata.GraphReal)
 					continue;
@@ -180,6 +190,12 @@ namespace RazorEnhanced
 
 				p.Seek(-2, SeekOrigin.Current);
 				p.Write((ushort)(graphdata.GraphNew));
+
+				if (graphdata.ColorNew != -1) // -1 no change
+				{
+					newcolor = true;
+					color = graphdata.ColorNew;
+				}
 				break;
 			}
 			return p;
@@ -642,7 +658,7 @@ namespace RazorEnhanced
 			AutoRemountEDelay = Settings.General.ReadInt("EMountDelay");
 			AutoRemountSerial = Settings.General.ReadInt("MountSerial");
 
-			RefreshLists();
+			InitGraphGrid();
 		}
 	}
 }

@@ -342,12 +342,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedProfileAdd.Designer.cs">
       <DependentUpon>EnhancedProfileAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.Designer.cs">
-      <DependentUpon>EnhancedGraphFilterAdd.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -485,9 +479,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileAdd.resx">
       <DependentUpon>EnhancedProfileAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.resx">
-      <DependentUpon>EnhancedGraphFilterAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.resx">
       <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>

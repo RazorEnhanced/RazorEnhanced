@@ -331,12 +331,6 @@ namespace Assistant
 		private Label label10;
 		private RazorCheckBox chkPartyOverhead;
 		private GroupBox groupBox23;
-		private RazorButton mobfilterRemoveButton;
-		private RazorButton mobfilterAddButton;
-		private ListView mobfilterlistView;
-		private ColumnHeader columnHeader52;
-		private ColumnHeader columnHeader53;
-		private ColumnHeader columnHeader54;
 		private RazorCheckBox mobfilterCheckBox;
 		private GroupBox groupBox10;
 		private Label autocarverbladeLabel;
@@ -755,7 +749,6 @@ namespace Assistant
 		internal RazorCheckBox MobFilterCheckBox { get { return mobfilterCheckBox; } }
 		internal Label AutoCarverBladeLabel { get { return autocarverbladeLabel; } }
 		internal Label BoneBladeLabel { get { return bonebladeLabel; } }
-		internal ListView MobFilterlistView { get { return mobfilterlistView; } }
 		internal RazorAgentNumOnlyTextBox RemountDelay { get { return remountdelay; } }
 		internal RazorAgentNumOnlyTextBox RemountEDelay { get { return remountedelay; } }
 		internal Label RemountSerialLabel { get { return remountseriallabel; } }
@@ -781,6 +774,8 @@ namespace Assistant
 		internal RazorCheckBox FilterSnoopMsg { get { return filterSnoop; } }
 		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
 		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
+
+		internal DataGridView GraphFilterDataGrid { get { return graphfilterdatagrid; } }
 
 		// Colori override
 		internal int SysColor = 0;
@@ -820,6 +815,12 @@ namespace Assistant
 		private RazorCheckBox scavengerautostartCheckBox;
 		private RazorButton paypalButton;
 		private RazorCheckBox filterNPC;
+		private DataGridView graphfilterdatagrid;
+		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1010,12 +1011,7 @@ namespace Assistant
 			this.flagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox23 = new System.Windows.Forms.GroupBox();
-			this.mobfilterRemoveButton = new RazorEnhanced.UI.RazorButton();
-			this.mobfilterAddButton = new RazorEnhanced.UI.RazorButton();
-			this.mobfilterlistView = new System.Windows.Forms.ListView();
-			this.columnHeader52 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader53 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader54 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
 			this.mobfilterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.autocarverbladeLabel = new System.Windows.Forms.Label();
@@ -1497,6 +1493,11 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+			this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1509,6 +1510,7 @@ namespace Assistant
 			this.groupBox32.SuspendLayout();
 			this.groupBox24.SuspendLayout();
 			this.groupBox23.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.graphfilterdatagrid)).BeginInit();
 			this.groupBox10.SuspendLayout();
 			this.groupBox9.SuspendLayout();
 			this.toolbarTab.SuspendLayout();
@@ -2862,9 +2864,7 @@ namespace Assistant
 			// 
 			// groupBox23
 			// 
-			this.groupBox23.Controls.Add(this.mobfilterRemoveButton);
-			this.groupBox23.Controls.Add(this.mobfilterAddButton);
-			this.groupBox23.Controls.Add(this.mobfilterlistView);
+			this.groupBox23.Controls.Add(this.graphfilterdatagrid);
 			this.groupBox23.Controls.Add(this.mobfilterCheckBox);
 			this.groupBox23.Location = new System.Drawing.Point(192, 14);
 			this.groupBox23.Name = "groupBox23";
@@ -2873,61 +2873,32 @@ namespace Assistant
 			this.groupBox23.TabStop = false;
 			this.groupBox23.Text = "Mobile Graphics Change Filter";
 			// 
-			// mobfilterRemoveButton
+			// graphfilterdatagrid
 			// 
-			this.mobfilterRemoveButton.Location = new System.Drawing.Point(202, 76);
-			this.mobfilterRemoveButton.Name = "mobfilterRemoveButton";
-			this.mobfilterRemoveButton.Size = new System.Drawing.Size(75, 23);
-			this.mobfilterRemoveButton.TabIndex = 68;
-			this.mobfilterRemoveButton.Text = "Remove";
-			this.mobfilterRemoveButton.UseVisualStyleBackColor = true;
-			this.mobfilterRemoveButton.Click += new System.EventHandler(this.mobfilterRemoveButton_Click);
-			// 
-			// mobfilterAddButton
-			// 
-			this.mobfilterAddButton.Location = new System.Drawing.Point(202, 47);
-			this.mobfilterAddButton.Name = "mobfilterAddButton";
-			this.mobfilterAddButton.Size = new System.Drawing.Size(75, 23);
-			this.mobfilterAddButton.TabIndex = 67;
-			this.mobfilterAddButton.Text = "Add";
-			this.mobfilterAddButton.UseVisualStyleBackColor = true;
-			this.mobfilterAddButton.Click += new System.EventHandler(this.mobfilterAddButton_Click);
-			// 
-			// mobfilterlistView
-			// 
-			this.mobfilterlistView.CheckBoxes = true;
-			this.mobfilterlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader52,
-            this.columnHeader53,
-            this.columnHeader54});
-			this.mobfilterlistView.FullRowSelect = true;
-			this.mobfilterlistView.GridLines = true;
-			this.mobfilterlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.mobfilterlistView.HideSelection = false;
-			this.mobfilterlistView.LabelWrap = false;
-			this.mobfilterlistView.Location = new System.Drawing.Point(6, 47);
-			this.mobfilterlistView.MultiSelect = false;
-			this.mobfilterlistView.Name = "mobfilterlistView";
-			this.mobfilterlistView.Size = new System.Drawing.Size(192, 208);
-			this.mobfilterlistView.TabIndex = 67;
-			this.mobfilterlistView.UseCompatibleStateImageBehavior = false;
-			this.mobfilterlistView.View = System.Windows.Forms.View.Details;
-			this.mobfilterlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.mobfilterlistView_ItemChecked);
-			// 
-			// columnHeader52
-			// 
-			this.columnHeader52.Text = "X";
-			this.columnHeader52.Width = 22;
-			// 
-			// columnHeader53
-			// 
-			this.columnHeader53.Text = "Old Graphics";
-			this.columnHeader53.Width = 80;
-			// 
-			// columnHeader54
-			// 
-			this.columnHeader54.Text = "New Graphics";
-			this.columnHeader54.Width = 80;
+			this.graphfilterdatagrid.AllowDrop = true;
+			this.graphfilterdatagrid.AllowUserToResizeRows = false;
+			this.graphfilterdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.graphfilterdatagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn4,
+            this.dataGridViewTextBoxColumn16,
+            this.dataGridViewTextBoxColumn17,
+            this.dataGridViewTextBoxColumn18,
+            this.dataGridViewTextBoxColumn19});
+			this.graphfilterdatagrid.Location = new System.Drawing.Point(6, 47);
+			this.graphfilterdatagrid.Name = "graphfilterdatagrid";
+			this.graphfilterdatagrid.RowHeadersVisible = false;
+			this.graphfilterdatagrid.Size = new System.Drawing.Size(271, 128);
+			this.graphfilterdatagrid.TabIndex = 69;
+			this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
+			this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
+			this.graphfilterdatagrid.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.graphfilterdatagrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.graphfilterdatagrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
+			this.graphfilterdatagrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.graphfilterdatagrid_DefaultValuesNeeded);
+			this.graphfilterdatagrid.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.graphfilterdatagrid.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.graphfilterdatagrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.graphfilterdatagrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// mobfilterCheckBox
 			// 
@@ -7859,6 +7830,47 @@ namespace Assistant
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
 			// 
+			// dataGridViewCheckBoxColumn4
+			// 
+			this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewCheckBoxColumn4.FalseValue = "False";
+			this.dataGridViewCheckBoxColumn4.HeaderText = "X";
+			this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
+			this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+			this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.dataGridViewCheckBoxColumn4.TrueValue = "True";
+			this.dataGridViewCheckBoxColumn4.Width = 22;
+			// 
+			// dataGridViewTextBoxColumn16
+			// 
+			this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
+			this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+			this.dataGridViewTextBoxColumn16.Width = 75;
+			// 
+			// dataGridViewTextBoxColumn17
+			// 
+			this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
+			this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+			this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn17.Width = 75;
+			// 
+			// dataGridViewTextBoxColumn18
+			// 
+			this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
+			this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+			this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn18.Width = 75;
+			// 
+			// dataGridViewTextBoxColumn19
+			// 
+			this.dataGridViewTextBoxColumn19.HeaderText = "Props";
+			this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+			this.dataGridViewTextBoxColumn19.Visible = false;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7894,6 +7906,7 @@ namespace Assistant
 			this.groupBox32.PerformLayout();
 			this.groupBox24.ResumeLayout(false);
 			this.groupBox23.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.graphfilterdatagrid)).EndInit();
 			this.groupBox10.ResumeLayout(false);
 			this.groupBox10.PerformLayout();
 			this.groupBox9.ResumeLayout(false);
@@ -12585,44 +12598,10 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("ShowAgentMessageCheckBox", showagentmessageCheckBox.Checked);
 		}
 
-		private void mobfilterRemoveButton_Click(object sender, EventArgs e)
-		{
-			if (mobfilterlistView.SelectedItems.Count == 1)
-			{
-				int index = mobfilterlistView.SelectedIndices[0];
-				int graph = 0;
-				try
-				{
-					graph = Convert.ToInt32(mobfilterlistView.Items[index].SubItems[1].Text.ToString(), 16);
-				}
-				catch
-				{ }
-
-				RazorEnhanced.Settings.GraphFilter.Delete(graph);
-				RazorEnhanced.Filters.RefreshLists();
-			}
-		}
-
-		private void mobfilterAddButton_Click(object sender, EventArgs e)
-		{
-			EnhancedGraphFilterAdd ManualAddGraphFilter = new EnhancedGraphFilterAdd
-			{
-				TopMost = true
-			};
-			ManualAddGraphFilter.Show();
-		}
-
-		private void mobfilterlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (mobfilterlistView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.Filters.UpdateSelectedItems(item.Index);
-			}
-		}
-
 		private void mobfilterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
+			graphfilterdatagrid.Enabled = !mobfilterCheckBox.Checked;
+			RazorEnhanced.Filters.ReloadGraphFilterData(); // Ricarico tabella in memoria
 			if (showagentmessageCheckBox.Checked)
 			{
 				if (mobfilterCheckBox.Checked)
@@ -12634,6 +12613,30 @@ namespace Assistant
 			if (mobfilterCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
 		}
+
+		private void graphfilterdatagrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = graphfilterdatagrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 3)
+			{
+				cell.Value = Utility.FormatDatagridColorGraphCell(cell);
+			}
+			else if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
+			{
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
+			}
+			RazorEnhanced.Filters.CopyGraphTable();
+		}
+
+		private void graphfilterdatagrid_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "0x0000";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = "No Change";
+		}
+
 		private void remountdelay_Leave(object sender, EventArgs e)
 		{
 			if (remountdelay.Text == String.Empty)
@@ -13752,6 +13755,13 @@ namespace Assistant
 						RazorEnhanced.Restock.CopyTable();
 					}
 					break;
+				case "graphfilterdatagrid":
+					if (!graphfilterdatagrid.Rows[agentrowindex].IsNewRow)
+					{
+						graphfilterdatagrid.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.Filters.CopyGraphTable();
+					}
+					break;
 			}
 
 		}
@@ -13845,6 +13855,10 @@ namespace Assistant
 					case "restockdataGridView":
 						Restock.CopyTable();
 						break;
+
+					case "graphfilterdatagrid":
+						RazorEnhanced.Filters.CopyGraphTable();
+						break;
 				}
 			}
 
@@ -13882,7 +13896,6 @@ namespace Assistant
 					agentrowindex = e.RowIndex;
 					agenttype = grid.Name;
 					grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
-					//datagridMenuStrip.Show(grid, e.Location);
 					datagridMenuStrip.Show(Cursor.Position);
 				}
 			}
@@ -13921,6 +13934,10 @@ namespace Assistant
 
 					case "restockdataGridView":
 						Restock.CopyTable();
+						break;
+
+					case "graphfilterdatagrid":
+						RazorEnhanced.Filters.CopyGraphTable();
 						break;
 				}
 			}
@@ -14220,6 +14237,8 @@ namespace Assistant
 			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
 			Process.Start(p);
 		}
+
+
 		// ----------------- STOP DPS METER -------------------
 	}
 }
