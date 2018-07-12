@@ -763,6 +763,13 @@ namespace RazorEnhanced
 			return World.Player.Skills[(int)skill].Value;
 		}
 
+		public static double GetRealSkillValue(string skillname)
+		{
+			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			return World.Player.Skills[(int)skill].Base;
+		}
+
+
 		public static double GetSkillCap(string skillname)
 		{
 			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
