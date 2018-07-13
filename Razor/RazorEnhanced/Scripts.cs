@@ -3,10 +3,14 @@ using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using System;
+using System.IO;
+using System.Text;
 using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Forms;
+using Microsoft.Scripting;
 
 namespace RazorEnhanced
 {
@@ -58,7 +62,40 @@ namespace RazorEnhanced
 				{
 					m_Source.Execute(m_Scope);
 				}
-				catch {	}
+				catch (Exception ex)
+				{
+					if (RazorEnhanced.Settings.General.ReadBool("ScriptErrorLog")) // enabled log of error
+					{
+						StringBuilder log = new StringBuilder();
+						log.Append(Environment.NewLine + "============================ START REPORT ============================ " + Environment.NewLine);
+
+						DateTime dt = DateTime.Now;
+						log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
+						log.Append(Environment.NewLine); 
+
+						if (ex is SyntaxErrorException)
+						{
+							SyntaxErrorException se = ex as SyntaxErrorException;
+							log.Append("----> Syntax Error:" + Environment.NewLine);
+							log.Append("-> LINE: " + se.Line + Environment.NewLine);
+							log.Append("-> COLUMN: " + se.Column + Environment.NewLine);
+							log.Append("-> SEVERITY: " + se.Severity + Environment.NewLine);
+							log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
+						}
+						else
+						{
+							log.Append("----> Generic Error:" + Environment.NewLine);
+							log.Append("-> MESSAGE: " + ex.Message + Environment.NewLine);
+						}
+
+						log.Append(Environment.NewLine);
+						log.Append("============================ END REPORT ============================ ");
+						log.Append(Environment.NewLine);
+
+						File.AppendAllText(Path.GetDirectoryName(Application.ExecutablePath) + "\\ " + m_Filename + ".ERROR", log.ToString());
+						log.Clear();
+					}
+				}
 			}
 
 			internal void Stop()

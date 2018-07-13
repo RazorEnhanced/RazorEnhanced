@@ -411,7 +411,6 @@ namespace Assistant
 		private RazorCheckBox remountcheckbox;
 		private Button buttonScriptPlay;
 		private Button buttonScriptStop;
-		private Label labelTimerDelay;
 		private TextBox textBoxDelay;
 		private RazorCheckBox showheadtargetCheckBox;
 		private RazorCheckBox notshowlauncher;
@@ -821,6 +820,7 @@ namespace Assistant
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+		private RazorCheckBox scripterrorlogCheckBox;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1012,6 +1012,11 @@ namespace Assistant
 			this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox23 = new System.Windows.Forms.GroupBox();
 			this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
+			this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.mobfilterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox10 = new System.Windows.Forms.GroupBox();
 			this.autocarverbladeLabel = new System.Windows.Forms.Label();
@@ -1158,12 +1163,12 @@ namespace Assistant
 			this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
 			this.scriptingTab = new System.Windows.Forms.TabPage();
 			this.groupBox31 = new System.Windows.Forms.GroupBox();
+			this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.buttonScriptRefresh = new System.Windows.Forms.Button();
 			this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.buttonAddScript = new RazorEnhanced.UI.RazorButton();
 			this.buttonRemoveScript = new RazorEnhanced.UI.RazorButton();
 			this.buttonScriptDown = new RazorEnhanced.UI.RazorButton();
-			this.labelTimerDelay = new System.Windows.Forms.Label();
 			this.textBoxDelay = new System.Windows.Forms.TextBox();
 			this.buttonScriptUp = new RazorEnhanced.UI.RazorButton();
 			this.buttonScriptEditor = new RazorEnhanced.UI.RazorButton();
@@ -1493,11 +1498,6 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-			this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -2899,6 +2899,47 @@ namespace Assistant
 			this.graphfilterdatagrid.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
 			this.graphfilterdatagrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
 			this.graphfilterdatagrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+			// 
+			// dataGridViewCheckBoxColumn4
+			// 
+			this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewCheckBoxColumn4.FalseValue = "False";
+			this.dataGridViewCheckBoxColumn4.HeaderText = "X";
+			this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
+			this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+			this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.dataGridViewCheckBoxColumn4.TrueValue = "True";
+			this.dataGridViewCheckBoxColumn4.Width = 22;
+			// 
+			// dataGridViewTextBoxColumn16
+			// 
+			this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
+			this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+			this.dataGridViewTextBoxColumn16.Width = 75;
+			// 
+			// dataGridViewTextBoxColumn17
+			// 
+			this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
+			this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+			this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn17.Width = 75;
+			// 
+			// dataGridViewTextBoxColumn18
+			// 
+			this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
+			this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+			this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn18.Width = 75;
+			// 
+			// dataGridViewTextBoxColumn19
+			// 
+			this.dataGridViewTextBoxColumn19.HeaderText = "Props";
+			this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+			this.dataGridViewTextBoxColumn19.Visible = false;
 			// 
 			// mobfilterCheckBox
 			// 
@@ -4339,12 +4380,12 @@ namespace Assistant
 			// 
 			// groupBox31
 			// 
+			this.groupBox31.Controls.Add(this.scripterrorlogCheckBox);
 			this.groupBox31.Controls.Add(this.buttonScriptRefresh);
 			this.groupBox31.Controls.Add(this.showscriptmessageCheckBox);
 			this.groupBox31.Controls.Add(this.buttonAddScript);
 			this.groupBox31.Controls.Add(this.buttonRemoveScript);
 			this.groupBox31.Controls.Add(this.buttonScriptDown);
-			this.groupBox31.Controls.Add(this.labelTimerDelay);
 			this.groupBox31.Controls.Add(this.textBoxDelay);
 			this.groupBox31.Controls.Add(this.buttonScriptUp);
 			this.groupBox31.Controls.Add(this.buttonScriptEditor);
@@ -4356,6 +4397,15 @@ namespace Assistant
 			this.groupBox31.TabIndex = 50;
 			this.groupBox31.TabStop = false;
 			this.groupBox31.Text = "Script Operation";
+			// 
+			// scripterrorlogCheckBox
+			// 
+			this.scripterrorlogCheckBox.Location = new System.Drawing.Point(7, 202);
+			this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
+			this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 22);
+			this.scripterrorlogCheckBox.TabIndex = 74;
+			this.scripterrorlogCheckBox.Text = "Log Script Error";
+			this.scripterrorlogCheckBox.CheckedChanged += new System.EventHandler(this.scripterrorlogCheckBox_CheckedChanged);
 			// 
 			// buttonScriptRefresh
 			// 
@@ -4407,19 +4457,9 @@ namespace Assistant
 			this.buttonScriptDown.UseVisualStyleBackColor = true;
 			this.buttonScriptDown.Click += new System.EventHandler(this.buttonScriptDown_Click);
 			// 
-			// labelTimerDelay
-			// 
-			this.labelTimerDelay.AutoSize = true;
-			this.labelTimerDelay.Location = new System.Drawing.Point(6, 202);
-			this.labelTimerDelay.Name = "labelTimerDelay";
-			this.labelTimerDelay.Size = new System.Drawing.Size(92, 13);
-			this.labelTimerDelay.TabIndex = 24;
-			this.labelTimerDelay.Text = "Engine Delay (ms)";
-			this.labelTimerDelay.Visible = false;
-			// 
 			// textBoxDelay
 			// 
-			this.textBoxDelay.Location = new System.Drawing.Point(104, 199);
+			this.textBoxDelay.Location = new System.Drawing.Point(7, 167);
 			this.textBoxDelay.Name = "textBoxDelay";
 			this.textBoxDelay.Size = new System.Drawing.Size(42, 20);
 			this.textBoxDelay.TabIndex = 23;
@@ -7830,47 +7870,6 @@ namespace Assistant
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
 			// 
-			// dataGridViewCheckBoxColumn4
-			// 
-			this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.dataGridViewCheckBoxColumn4.FalseValue = "False";
-			this.dataGridViewCheckBoxColumn4.HeaderText = "X";
-			this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
-			this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-			this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.dataGridViewCheckBoxColumn4.TrueValue = "True";
-			this.dataGridViewCheckBoxColumn4.Width = 22;
-			// 
-			// dataGridViewTextBoxColumn16
-			// 
-			this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
-			this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-			this.dataGridViewTextBoxColumn16.Width = 75;
-			// 
-			// dataGridViewTextBoxColumn17
-			// 
-			this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
-			this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-			this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.dataGridViewTextBoxColumn17.Width = 75;
-			// 
-			// dataGridViewTextBoxColumn18
-			// 
-			this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
-			this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-			this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.dataGridViewTextBoxColumn18.Width = 75;
-			// 
-			// dataGridViewTextBoxColumn19
-			// 
-			this.dataGridViewTextBoxColumn19.HeaderText = "Props";
-			this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-			this.dataGridViewTextBoxColumn19.Visible = false;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -8313,6 +8312,7 @@ namespace Assistant
 
 			// Script
 			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
+			scripterrorlogCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ScriptErrorLog");
 
 			// UoMod
 			if (Engine.ClientMajor >= 7)
@@ -9992,6 +9992,12 @@ namespace Assistant
 		{
 			if (showscriptmessageCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("ShowScriptMessageCheckBox", showscriptmessageCheckBox.Checked);
+		}
+
+		private void scripterrorlogCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (scripterrorlogCheckBox.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ScriptErrorLog", scripterrorlogCheckBox.Checked);
 		}
 
 		private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
@@ -14237,8 +14243,6 @@ namespace Assistant
 			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
 			Process.Start(p);
 		}
-
-
 		// ----------------- STOP DPS METER -------------------
 	}
 }

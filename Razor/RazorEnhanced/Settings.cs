@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 56;
+		private static int SettingVersion = 57;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1735,6 +1735,7 @@ namespace RazorEnhanced
 				general.Columns.Add("ChkNoRunStealth", typeof(bool));
 				general.Columns.Add("FilterPoison", typeof(bool));
 				general.Columns.Add("EnhancedMapPath", typeof(string));
+				general.Columns.Add("FilterNPC", typeof(bool));
 
 				// Parametri Tab (Options -> Hues)
 				general.Columns.Add("LTHilight", typeof(int));
@@ -1811,6 +1812,7 @@ namespace RazorEnhanced
 
 				// Parametri finestra script
 				general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
+				general.Columns.Add("ScriptErrorLog", typeof(bool));
 
 				// Parametri AgentAutostart
 				general.Columns.Add("ScavengerAutostartCheckBox", typeof(bool));
@@ -1849,7 +1851,7 @@ namespace RazorEnhanced
 					false, false, false,
 					false, false, false, 2,
 					false, false, false, false, false, false, false, false, false,
-					false, false, false, @"{power} [{spell}]", 0, false, false, false, false, string.Empty,
+					false, false, false, @"{power} [{spell}]", 0, false, false, false, false, string.Empty, false,
 
                     // Parametri primo avvio tab Options -> Hues
                     (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
@@ -1879,7 +1881,7 @@ namespace RazorEnhanced
                      Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false, false,
 
 					 // Parametri finestra script
-                     true,
+                     true, false,
 
 					 // Parametri AgentAutostart
                      false, false
@@ -4471,6 +4473,15 @@ namespace RazorEnhanced
 
 				realVersion = 56;
 				General.WriteInt("SettingVersion", 56);
+			}
+
+			if (realVersion == 56)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("ScriptErrorLog", typeof(bool));
+				General.WriteBool("ScriptErrorLog", false);
+
+				realVersion = 57;
+				General.WriteInt("SettingVersion", 57);
 			}
 
 			Save(true);
