@@ -14,6 +14,7 @@ namespace RazorEnhanced
 		private static int m_maxrange;
 		private static int m_scavengerbag;
 		private static string m_scavengerlist;
+		internal static volatile bool LockTable = false;
 
 		[Serializable]
 		public class ScavengerItem
@@ -200,6 +201,8 @@ namespace RazorEnhanced
 
 		internal static void CopyTable()
 		{
+			LockTable = true;
+
 			Settings.Scavenger.ClearList(Assistant.Engine.MainWindow.ScavengerListSelect.Text); // Rimuove vecchi dati dal save
 
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.ScavengerDataGridView.Rows)
@@ -222,6 +225,7 @@ namespace RazorEnhanced
 			}
 
 			Settings.Save(); // Salvo dati
+			LockTable = false;
 		}
 
 		internal static void AddList(string newList)

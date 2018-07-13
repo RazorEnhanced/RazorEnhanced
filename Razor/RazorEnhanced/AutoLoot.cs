@@ -16,6 +16,7 @@ namespace RazorEnhanced
 		private static bool m_noopencorpse;
 		private static string m_autolootlist;
 		private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
+		internal static volatile bool LockTable = false;
 
 		[Serializable]
 		public class AutoLootItem
@@ -235,6 +236,8 @@ namespace RazorEnhanced
 
 		internal static void CopyTable()
 		{
+			LockTable = true;
+
 			Settings.AutoLoot.ClearList(Assistant.Engine.MainWindow.AutoLootListSelect.Text); // Rimuove vecchi dati dal save
 
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.AutoLootDataGridView.Rows)
@@ -257,6 +260,8 @@ namespace RazorEnhanced
 			}
 
 			Settings.Save(); // Salvo dati
+			LockTable = false;
+
 		}
 
 		internal static void AddList(string newList)

@@ -2026,11 +2026,14 @@ namespace RazorEnhanced
 			{
 				List<RazorEnhanced.AutoLoot.AutoLootItem> items = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
 
+				if (RazorEnhanced.AutoLoot.LockTable)
+					return items;
+
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Copy().Rows)
+					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 					{
-						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
+						if ((string)row["List"] == list)
 							items.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
 					}
 				}
@@ -2187,11 +2190,14 @@ namespace RazorEnhanced
 			{
 				List<RazorEnhanced.Scavenger.ScavengerItem> items = new List<RazorEnhanced.Scavenger.ScavengerItem>();
 
+				if (RazorEnhanced.Scavenger.LockTable)
+					return items;
+
 				if (ListExists(list))
 				{
 					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
 					{
-						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
+						if ((string)row["List"] == list)
 							items.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
 					}
 				}
