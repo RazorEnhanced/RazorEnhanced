@@ -1342,7 +1342,9 @@ namespace RazorEnhanced.UI
 				else
 				{
 					SetErrorBox("Generic Error:");
-					SetErrorBox("--> MESSAGE: " + ex.Message);
+					ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
+					string error = eo.FormatException(ex);
+					SetErrorBox("--> MESSAGE: " + error);
 				}
 				SetStatusLabel("IDLE", Color.DarkTurquoise);
 			}

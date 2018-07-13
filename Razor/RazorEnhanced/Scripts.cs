@@ -83,9 +83,11 @@ namespace RazorEnhanced
 							log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
 						}
 						else
-						{
+						{ 
 							log.Append("----> Generic Error:" + Environment.NewLine);
-							log.Append("-> MESSAGE: " + ex.Message + Environment.NewLine);
+							ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
+							string error = eo.FormatException(ex);
+							log.Append(error);
 						}
 
 						log.Append(Environment.NewLine);
@@ -116,6 +118,8 @@ namespace RazorEnhanced
 				try
 				{
 					m_Engine = Python.CreateEngine();
+					
+					//m_Engine.GetService<ExceptionOperations>().FormatException(exception);
 					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
 					m_Scope = GetRazorScope(m_Engine);
 
