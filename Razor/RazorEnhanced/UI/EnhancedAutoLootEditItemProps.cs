@@ -143,9 +143,9 @@ namespace RazorEnhanced.UI
 				}
 
 			// Immagine
-			Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(itemid));
+			Bitmap m_itemimage = Ultima.Art.GetStatic(itemid);
 			{
-				if (color > 0)
+				if (m_itemimage != null && color > 0)
 				{
 					bool onlyHueGrayPixels = (color & 0x8000) != 0;
 					color = (color & 0x3FFF) - 1;

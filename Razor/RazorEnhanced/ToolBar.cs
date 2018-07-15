@@ -346,7 +346,11 @@ namespace RazorEnhanced
 
 				if (items[x].Graphics != 0)
 				{
-					Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(items[x].Graphics));
+					Bitmap m_itemimage = Ultima.Art.GetStatic(items[x].Graphics);
+
+					if (m_itemimage == null) // Graph not exist
+						continue;
+
 					if (items[x].Color > 0)
 					{
 						int hue = items[x].Color;

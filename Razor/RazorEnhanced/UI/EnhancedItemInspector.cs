@@ -176,9 +176,9 @@ namespace RazorEnhanced.UI
 			visibleflaglabel.ForeColor = (m_itemTarg.Visible) ? Color.Green : Color.Red;
 
 			// Immagine
-			Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(m_itemTarg.ItemID));
+			Bitmap m_itemimage = Ultima.Art.GetStatic(m_itemTarg.ItemID);
 			{
-				if (m_itemTarg.Hue > 0)
+				if (m_itemimage != null && m_itemTarg.Hue > 0)
 				{
 					int hue = m_itemTarg.Hue;
 					bool onlyHueGrayPixels = (hue & 0x8000) != 0;
