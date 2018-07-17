@@ -1029,7 +1029,7 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		internal static void PathFindTo(Assistant.Point3D Location)
+		public static void PathFindTo(Assistant.Point3D Location)
 		{
 			PathFindTo(Location.X, Location.Y, Location.Z);
 		}

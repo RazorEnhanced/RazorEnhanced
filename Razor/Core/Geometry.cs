@@ -2,13 +2,13 @@ using System;
 
 namespace Assistant
 {
-	internal interface IPoint2D
+	public interface IPoint2D
 	{
 		int X { get; }
 		int Y { get; }
 	}
 
-	internal interface IPoint3D : IPoint2D
+	public interface IPoint3D : IPoint2D
 	{
 		int Z { get; }
 	}
@@ -156,7 +156,7 @@ namespace Assistant
 		}
 	}
 
-	internal struct Point3D : IPoint3D
+	public struct Point3D : IPoint3D
 	{
 		internal int m_X;
 		internal int m_Y;
