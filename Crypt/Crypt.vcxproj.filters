@@ -48,12 +48,6 @@
     <ClCompile Include="UOArt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UoArtUOP.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Titlebar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crypt.h">
@@ -99,12 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Obfuscation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UoArtUOP.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Titlebar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

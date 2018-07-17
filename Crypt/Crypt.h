@@ -150,7 +150,6 @@ void MemoryPatch(unsigned long, unsigned long);
 void MemoryPatch(unsigned long, int, int);
 void MemoryPatch(unsigned long, const void *, int);
 void RedrawTitleBar(HWND, bool);
-void RedrawTitleBarUop(HWND, bool);
 void CheckTitlebarAttr(HWND);
 void FreeArt();
 void InitThemes();

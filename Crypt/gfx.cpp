@@ -4,7 +4,6 @@
 #include <uxtheme.h>
 #include <vssym32.h>
 #include <dwmapi.h>
-#include "Titlebar.h"
 
 int DrawUOItem(HDC, RECT, int, int);
 
@@ -89,7 +88,7 @@ void DoStat(HDC hDC, int v, int t, int l, int h, int w)
 	DeleteObject(hBr);
 }
 
-int DrawStatBar2(HDC hDC, RECT rect, int width, int status, int hp, int mn, int st)
+int DrawStatBar(HDC hDC, RECT rect, int width, int status, int hp, int mn, int st)
 {
 	HGDIOBJ hOld = NULL;
 	POINT pt[2];
@@ -252,7 +251,7 @@ void DrawColorTitleBar(HTHEME hTheme, HWND hWnd, HDC hOutDC, bool active, bool m
 				}
 
 				rect.left += 1;
-				rect.left += DrawStatBar2(hDC, rect, t, str[i + 3] - '0', GetHex2(&str[i + 4]), GetHex2(&str[i + 6]), GetHex2(&str[i + 8]));
+				rect.left += DrawStatBar(hDC, rect, t, str[i + 3] - '0', GetHex2(&str[i + 4]), GetHex2(&str[i + 6]), GetHex2(&str[i + 8]));
 				rect.left += 1;
 
 				start = i + 10;
@@ -326,43 +325,7 @@ void DrawColorTitleBar(HTHEME hTheme, HWND hWnd, HDC hOutDC, bool active, bool m
 		DeleteObject(hFont);
 }
 
-void RedrawTitleBarUop(HWND hWnd, bool active)
-{
-	if (!pShared)
-		return;
-
-	WaitForSingleObject(CommMutex, INFINITE);
-	if (pShared->TitleBar[0] == 0)
-	{
-		ReleaseMutex(CommMutex);
-		return;
-	}
-
-	//DWMNCRENDERINGPOLICY policy = DWMNCRP_ENABLED;
-	//DwmSetWindowAttribute(hWnd, DWMWA_NCRENDERING_POLICY, &policy, sizeof(policy));
-	HDC hdc = GetWindowDC(hWnd);
-	HDC hdcMem = CreateCompatibleDC(hdc);
-
-	RECT rect, rect2;
-	GetWindowRect(hWnd, &rect2);
-	RECT r = GetTitlebarRect(hWnd);
-	HBITMAP hBitmap = CreateCompatibleBitmap(hdc, rect2.right, rect2.bottom);
-	SelectObject(hdcMem, hBitmap);
-
-	rect.top = rect.left = 0;
-	rect.right = rect2.right - rect2.left;
-	rect.bottom = (r.bottom - r.top)-1;
-
-	FillRect(hdcMem, &rect, GetSysColorBrush(COLOR_ACTIVECAPTION));
-	DrawTitlebar(hdcMem, hWnd, rect, pShared->TitleBar);
-	BitBlt(hdc, r.left, r.top, (r.right - r.left), (r.bottom - r.top), hdcMem, 0, 0, SRCCOPY);
-	DeleteDC(hdcMem);
-	ReleaseDC(hWnd, hdc);
-	ReleaseMutex(CommMutex);
-}
-
-
-/*void RedrawTitleBar(HWND hWnd, bool active)
+void RedrawTitleBar(HWND hWnd, bool active)
 {
 	if (!pShared)
 		return;
@@ -406,7 +369,7 @@ void RedrawTitleBarUop(HWND hWnd, bool active)
 
 	ReleaseDC(hWnd, hDC);
 	ReleaseMutex(CommMutex);
-}*/
+}
 
 void GetRazorFont()
 {

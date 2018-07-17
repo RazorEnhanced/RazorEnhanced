@@ -151,13 +151,11 @@
     <ClCompile Include="OSIEncryption.cpp" />
     <ClCompile Include="PacketInfo.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Titlebar.cpp" />
     <ClCompile Include="twofish.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="UOArt.cpp" />
-    <ClCompile Include="UoArtUOP.cpp" />
     <ClCompile Include="uo_huffman.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -179,9 +177,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="table.h" />
-    <ClInclude Include="Titlebar.h" />
     <ClInclude Include="twofish.h" />
-    <ClInclude Include="UoArtUOP.h" />
     <ClInclude Include="uo_huffman.h" />
     <ClInclude Include="UOArt.h" />
   </ItemGroup>

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Crypt.h"
-#include "Titlebar.h"
 #include "uo_huffman.h"
 #include "PacketInfo.h"
 #include "OSIEncryption.h"
@@ -9,7 +8,6 @@
 #include "Checksum.h"
 #include "Obfuscation.h"
 #include <iostream>
-#include <dwmapi.h>
 
 #define NO_CHECKSUM_VERSION
 
@@ -2226,7 +2224,7 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 	case WM_SETTEXT:
 	case WM_CUSTOMTITLE:
 		CheckTitlebarAttr(hWnd);
-		RedrawTitleBarUop( hWnd, Active );
+		RedrawTitleBar( hWnd, Active );
 		break;
 	}
 }
