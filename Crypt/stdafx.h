@@ -22,6 +22,8 @@
 #include <winsock2.h>
 #include <time.h>
 #include <zmouse.h>
+#include <map>
+#include "UOArtUOP.h"
 
 //#include <vector>
 //#include <string>
