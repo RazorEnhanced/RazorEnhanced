@@ -44,7 +44,21 @@ namespace RazorEnhanced.UI
 		private static Command m_CurrentCommand = Command.None;
 		private static AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
 
-		private const string m_Title = "Enhanced Script Editor";
+		private string m_Title {
+			get
+			{
+				if (World.Player != null)
+				{
+					if (m_Filename != String.Empty)
+						return String.Format("Enhanced Script Editor - {(0)} - {1} ({2})", m_Filename, World.Player.Name, World.ShardName);
+					else
+						return String.Format("Enhanced Script Editor - {0} ({1})", World.Player.Name, World.ShardName);
+				}
+				else
+					return "Enhanced Script Editor";
+			}
+		}
+
 		private string m_Filename = String.Empty;
 		private string m_Filepath = String.Empty;
 
@@ -1158,11 +1172,13 @@ namespace RazorEnhanced.UI
 			this.m_Engine = engine;
 			this.m_Engine.SetTrace(null);
 
+
+
 			if (filename != null && File.Exists(filename))
 			{
 				m_Filepath = filename;
 				m_Filename = Path.GetFileName(filename);
-				this.Text = m_Title + " - " + m_Filename;
+				this.Text = m_Title;
 				fastColoredTextBoxEditor.Text = File.ReadAllText(filename);
 			}
 		}
@@ -1652,7 +1668,7 @@ namespace RazorEnhanced.UI
 				{
 					m_Filename = Path.GetFileName(open.FileName);
 					m_Filepath = open.FileName;
-					this.Text = m_Title + " - " + m_Filename;
+					this.Text = m_Title;
 					fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
 				}
 			}
@@ -1662,7 +1678,7 @@ namespace RazorEnhanced.UI
 		{
 			if (m_Filename != String.Empty)
 			{
-				this.Text = m_Title + " - " + m_Filename;
+				this.Text = m_Title;
 				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
 				Scripts.EnhancedScript script = Scripts.Search(m_Filename);
 				if (script != null)
@@ -1707,7 +1723,7 @@ namespace RazorEnhanced.UI
 			if (save.ShowDialog() == DialogResult.OK)
 			{
 				m_Filename = Path.GetFileName(save.FileName);
-				this.Text = m_Title + " - " + m_Filename;
+				this.Text = m_Title;
 				m_Filepath = save.FileName;
 				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 
