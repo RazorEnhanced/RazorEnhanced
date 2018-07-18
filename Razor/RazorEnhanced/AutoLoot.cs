@@ -426,6 +426,9 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.Running)
 				return;
 
+			if (World.Player == null)
+				return;
+
 			m_corpsefilter.RangeMax = m_maxrange;
 
 			// Check bag

@@ -355,6 +355,9 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.Running)
 				return;
 
+			if (World.Player == null)
+				return;
+
 			// Genero filtro item
 			m_itemfilter.RangeMax = m_maxrange;
 
