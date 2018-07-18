@@ -50,7 +50,7 @@ namespace RazorEnhanced.UI
 				if (World.Player != null)
 				{
 					if (m_Filename != String.Empty)
-						return String.Format("Enhanced Script Editor - {(0)} - {1} ({2})", m_Filename, World.Player.Name, World.ShardName);
+						return String.Format("Enhanced Script Editor - ({0}) - {1} ({2})", m_Filename, World.Player.Name, World.ShardName);
 					else
 						return String.Format("Enhanced Script Editor - {0} ({1})", World.Player.Name, World.ShardName);
 				}
