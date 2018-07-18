@@ -1036,10 +1036,8 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
-			int clientid = UoWarper.GetClientID();
-
 			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			while (!UoWarper.UODLLHandleClass.Open(clientid))
+			while (!UoWarper.UODLLHandleClass.Open(1))
 			{
 				Thread.Sleep(10);
 			}

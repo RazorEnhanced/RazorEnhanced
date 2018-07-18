@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
 using Assistant;
 
 namespace RazorEnhanced
@@ -11,25 +10,10 @@ namespace RazorEnhanced
 		internal static UO UODLLHandleClass = null;
 
 		private static IntPtr _UOHandle = DLLImport.Uo.Open();
-		internal static int GetClientID()
-		{
-			Process[] processlist = Process.GetProcesses();
-			int id = 1;
-			foreach (Process theprocess in processlist)
-			{
-				if (theprocess.MainWindowTitle.Contains("Ultima Online"))
-				{
-					if (theprocess.Id == ClientCommunication.ClientProcess.Id)
-						return id;
-					id++;
-				}
-			}
-			return id;
-		}
 
 		internal class UO
 		{
-			internal bool Open(int clinr)
+			internal bool Open(int clinr = 1)
 			{
 				_UOHandle = DLLImport.Uo.Open();
 				if (DLLImport.Uo.Version() != 3)
