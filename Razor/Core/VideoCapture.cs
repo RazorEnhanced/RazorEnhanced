@@ -44,16 +44,22 @@ namespace Assistant
 			if (!Assistant.Engine.CDepPresent)
 				return false;
 
-			DLLImport.Win.GetWindowRect(DLLImport.Razor.FindUOWindow(), out DLLImport.Win.RECT lpRect);
-			Rectangle screenArea = new Rectangle(lpRect.Left, lpRect.Top, (lpRect.Right - lpRect.Left), (lpRect.Bottom - lpRect.Top));
-			foreach (System.Windows.Forms.Screen screen in
-					  System.Windows.Forms.Screen.AllScreens)
-			{
-				screenArea = Rectangle.Union(screenArea, screen.Bounds);
-			}
+			IntPtr uowindow = DLLImport.Razor.FindUOWindow();
 
-			m_ResX = (lpRect.Right - lpRect.Left)-5;
-			m_ResY = (lpRect.Bottom - lpRect.Top)-5;
+			if (uowindow == IntPtr.Zero)
+				return false;
+
+			System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromHandle(uowindow);
+
+			Rectangle screenBound = screen.Bounds;
+			if (!DLLImport.Win.GetWindowRect(uowindow, out DLLImport.Win.RECT handleRect))
+				return false;
+
+			//Getting the intersection between the two rectangles
+			Rectangle handleBound = new Rectangle(handleRect.Left + 6, handleRect.Top, handleRect.Right - handleRect.Left - 6 , handleRect.Bottom - handleRect.Top);
+
+			m_ResX = (handleBound.Right - handleBound.Left)-5;
+			m_ResY = (handleBound.Bottom - handleBound.Top)-5;
 
 			if (m_ResX % 2 != 0)
 				m_ResX--;
@@ -94,7 +100,7 @@ namespace Assistant
 				m_filewriter.Open(filename, m_ResX, m_ResY, fps, (VideoCodec)codec, 30000000);
 
 				// create screen capture video source
-				m_videostream = new ScreenCaptureStream(screenArea, fps);
+				m_videostream = new ScreenCaptureStream(handleBound, fps);
 				// set NewFrame event handler
 				m_videostream.NewFrame += new NewFrameEventHandler(video_NewFrame);
 				// start the video source
