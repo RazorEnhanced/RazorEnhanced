@@ -58,6 +58,9 @@ namespace RazorEnhanced
 				if (m_Source == null)
 					return;
 
+				if (World.Player == null)
+					return;
+
 				try
 				{
 					m_Source.Execute(m_Scope);

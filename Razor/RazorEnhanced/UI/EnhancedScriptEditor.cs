@@ -1291,6 +1291,12 @@ namespace RazorEnhanced.UI
 
 		private void Start(bool debug)
 		{
+			if (World.Player == null)
+			{
+				SetErrorBox("Starting ERROR: Can't start script if not logged in game.");
+				return;
+			}
+
 			if (Scripts.ScriptEditorThread == null ||
 					(Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Running &&
 					Scripts.ScriptEditorThread.ThreadState != ThreadState.Unstarted &&
