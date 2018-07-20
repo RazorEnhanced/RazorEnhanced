@@ -1043,6 +1043,17 @@ namespace RazorEnhanced
 					}
 					break;
 
+				case "Pouch":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x09B0, -1))
+						{
+							if (!UseItemByIdHue(pack, 0x0E79, - 1))
+								World.Player.SendMessage(MsgLevel.Warning, "No Pouch found");
+						}
+					}
+					break;
+
 				default:
 					break;
 			}
