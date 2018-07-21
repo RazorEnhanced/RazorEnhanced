@@ -2037,7 +2037,7 @@ namespace RazorEnhanced
 				{
 					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 					{
-						if ((string)row["List"] == list)
+						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
 							items.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
 					}
 				}
@@ -2201,7 +2201,7 @@ namespace RazorEnhanced
 				{
 					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
 					{
-						if ((string)row["List"] == list)
+						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
 							items.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
 					}
 				}
