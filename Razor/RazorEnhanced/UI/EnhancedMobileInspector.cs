@@ -227,7 +227,7 @@ namespace RazorEnhanced.UI
 			lSex.Text = (m_mobile.Female) ? "Female" : "Male";
 
 			lHits.Text = m_mobile.Hits.ToString();
-			lMaxHits.Text = m_mobile.Hits.ToString();
+			lMaxHits.Text = m_mobile.HitsMax.ToString();
 			lNotoriety.Text = m_mobile.Notoriety.ToString();
 
 			switch (m_mobile.Direction & Assistant.Direction.Mask)
