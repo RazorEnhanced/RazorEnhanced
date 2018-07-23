@@ -8315,7 +8315,7 @@ namespace Assistant
 			scripterrorlogCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ScriptErrorLog");
 
 			// UoMod
-			if (Engine.ClientMajor >= 7)
+			if (Engine.ClientMajor >= 7 && Engine.ClientBuild < 49)
 			{
 				uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
 				uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");

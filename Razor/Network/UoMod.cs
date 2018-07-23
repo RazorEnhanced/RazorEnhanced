@@ -63,8 +63,8 @@ namespace Assistant
 			if (Engine.ClientMajor < 7)
 				return;
 
-	//		if (Engine.ClientBuild > 49)
-	//			return;
+			if (Engine.ClientBuild > 49)
+				return;
 
 			String path = AppDomain.CurrentDomain.BaseDirectory + "\\UOMod.dll";
 
@@ -208,8 +208,8 @@ namespace Assistant
 			if (Engine.ClientMajor < 7)
 				return;
 
-			//if (Engine.ClientBuild > 49)
-			//	return;
+			if (Engine.ClientBuild > 49)
+				return;
 
 			if (m_modhandle == IntPtr.Zero)
 				return;
