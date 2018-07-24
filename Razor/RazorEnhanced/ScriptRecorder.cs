@@ -156,19 +156,19 @@ namespace RazorEnhanced
 			{
 				Spell s = Spell.Get(id);
 				if (id >= 1 && id <= 64)
-					AddLog("Spells.CastMagery(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastMagery(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 101 && id <= 117)
-					AddLog("Spells.CastNecro(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastNecro(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 201 && id <= 210)
-					AddLog("Spells.CastChivalry(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastChivalry(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 401 && id <= 406)
-					AddLog("Spells.CastBushido(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastBushido(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 501 && id <= 508)
-					AddLog("Spells.CastNinjitsu(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastNinjitsu(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 601 && id <= 616)
-					AddLog("Spells.CastSpellweaving(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastSpellweaving(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 678 && id <= 693)
-					AddLog("Spells.CastMysticism(\"" + Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastMysticism(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				else if (id >= 701 && id <= 745)
 				{
 					if (id == 732)
@@ -176,7 +176,7 @@ namespace RazorEnhanced
 					else if (id == 715)
 						AddLog("Spells.CastMastery(\"Enchanted Summoning\")");
 					else
-						AddLog("Spells.CastMastery(\"" + Language.GetString(s.Name) + "\")");
+						AddLog("Spells.CastMastery(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
 				}
 				else
 					AddLog("ERROR Spell not listed " + id);

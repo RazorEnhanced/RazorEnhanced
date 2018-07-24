@@ -397,11 +397,7 @@ namespace RazorEnhanced
 					s = Spell.Get(205);
 					break;
 
-				case "Enemy Of One": // Keep compatibility whit old script.
-					s = Spell.Get(206);
-					break;
-
-				case "Enemy of One":
+				case "Enemy Of One": 
 					s = Spell.Get(206);
 					break;
 
