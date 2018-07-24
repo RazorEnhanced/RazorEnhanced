@@ -165,7 +165,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public int DistanceTo(Mobile m)
+		public static int DistanceTo(Mobile m)
 		{
 			int x = Math.Abs(Position.X - m.Position.X);
 			int y = Math.Abs(Position.Y - m.Position.Y);
@@ -173,7 +173,7 @@ namespace RazorEnhanced
 			return x > y ? x : y;
 		}
 
-		public int DistanceTo(Item i)
+		public static int DistanceTo(Item i)
 		{
 			int x = Math.Abs(Position.X - i.Position.X);
 			int y = Math.Abs(Position.Y - i.Position.Y);
@@ -736,7 +736,7 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public Item GetItemOnLayer(String layer)
+		public static Item GetItemOnLayer(String layer)
 		{
 			Enum.TryParse<Layer>(layer, out Layer l);
 
