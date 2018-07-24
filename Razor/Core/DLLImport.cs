@@ -31,7 +31,7 @@ namespace Assistant
 			}
 
 			[DllImport("User32.dll")]
-			internal static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, int lParam);
+			internal static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, uint lParam);
 
 			[DllImport("kernel32.dll", SetLastError = true)]
 			internal static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);

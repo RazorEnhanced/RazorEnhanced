@@ -270,7 +270,7 @@ namespace RazorEnhanced
 			Assistant.MainForm.StopVideoRecorder();
 
 			// Svuoto logbox e reset select index
-			Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
+		//	Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
 			AutoLoot.AddLog("Profile Changed!");
 
 			Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear();

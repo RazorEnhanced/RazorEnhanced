@@ -8315,7 +8315,7 @@ namespace Assistant
 			scripterrorlogCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ScriptErrorLog");
 
 			// UoMod
-			if (Engine.ClientMajor >= 7 && Engine.ClientBuild < 49)
+			if (Engine.ClientMajor >= 7 ) //&& Engine.ClientBuild < 49)
 			{
 				uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
 				uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
@@ -13675,7 +13675,11 @@ namespace Assistant
 			if (uomodFPSCheckBox.Focused)
 			{
 				if (uomodFPSCheckBox.Checked)
+				{
+					if (Engine.ClientBuild > 49)
+						MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_FPS);
+				}
 				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_FPS);
 
@@ -13688,7 +13692,11 @@ namespace Assistant
 			if (uomodpaperdoolCheckBox.Focused)
 			{
 				if (uomodpaperdoolCheckBox.Checked)
+				{
+					if (Engine.ClientBuild > 49)
+						MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+				}
 				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_PAPERDOLL_SLOTS);
 
@@ -13701,7 +13709,11 @@ namespace Assistant
 			if (uomodglobalsoundCheckBox.Focused)
 			{
 				if (uomodglobalsoundCheckBox.Checked)
+				{
+					if (Engine.ClientBuild > 49)
+						MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_GLOBAL_SOUND);
+				}
 				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_GLOBAL_SOUND);
 

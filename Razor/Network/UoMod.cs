@@ -63,8 +63,8 @@ namespace Assistant
 			if (Engine.ClientMajor < 7)
 				return;
 
-			if (Engine.ClientBuild > 49)
-				return;
+	//		if (Engine.ClientBuild > 49)
+	//			return;
 
 			String path = AppDomain.CurrentDomain.BaseDirectory + "\\UOMod.dll";
 
@@ -130,7 +130,14 @@ namespace Assistant
 				m_modhandle = DLLImport.Win.FindWindow("UOModWindow_" + DLLImport.Razor.FindUOWindow().ToString("x8").ToUpper(), null);
 
 				if (m_modhandle != IntPtr.Zero)
+				{
+					DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 0);
+					DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_INFO, 0, 0xFFFFFFFF);
+
+				//	SendMessage(dllWindow, PM_VIEW_RANGE_VALUE, (DWORD)Handle, 0);
+				//	SendMessage(dllWindow, PM_INFO, (DWORD)Handle, 0xFFFFFFFF);
 					EnableOnStartMod();
+				}
 
             }).Start();
 		}
@@ -208,8 +215,8 @@ namespace Assistant
 			if (Engine.ClientMajor < 7)
 				return;
 
-			if (Engine.ClientBuild > 49)
-				return;
+			//if (Engine.ClientBuild > 49)
+			//	return;
 
 			if (m_modhandle == IntPtr.Zero)
 				return;

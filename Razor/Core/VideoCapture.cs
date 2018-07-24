@@ -57,7 +57,7 @@ namespace Assistant
 
 			//Getting the intersection between the two rectangles
 			Rectangle handleBound = new Rectangle(handleRect.Left + 6, handleRect.Top, handleRect.Right - handleRect.Left - 6 , handleRect.Bottom - handleRect.Top);
-
+				
 			m_ResX = (handleBound.Right - handleBound.Left)-5;
 			m_ResY = (handleBound.Bottom - handleBound.Top)-5;
 
