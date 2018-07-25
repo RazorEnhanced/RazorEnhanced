@@ -152,6 +152,12 @@ namespace RazorEnhanced
 					else
 						return false;
 
+				case "Wet":
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Wet) != 0)
+						return true;
+					else
+						return false;
+
 				default:
 					Scripts.SendMessageScriptError("GetTileFlag: Invalid Flag to check");
 					return false;
