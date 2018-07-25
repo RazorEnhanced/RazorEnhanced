@@ -136,7 +136,8 @@ namespace RazorEnhanced
 
 		public static void Self()
 		{
-			TargetExecute(World.Player.Serial);
+			if (World.Player != null)
+				TargetExecute(World.Player.Serial);
 		}
 
 		public static void SelfQueued()
