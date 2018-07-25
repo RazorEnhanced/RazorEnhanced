@@ -97,7 +97,11 @@ namespace RazorEnhanced
 						log.Append("============================ END REPORT ============================ ");
 						log.Append(Environment.NewLine);
 
-						File.AppendAllText(Path.GetDirectoryName(Application.ExecutablePath) + "\\ " + m_Filename + ".ERROR", log.ToString());
+						try // For prevent crash in case of file are busy or inaccessible
+						{
+							File.AppendAllText(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + m_Filename + ".ERROR", log.ToString());
+						}
+						catch { }
 						log.Clear();
 					}
 				}
