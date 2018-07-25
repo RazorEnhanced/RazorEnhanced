@@ -404,10 +404,16 @@ namespace Assistant
 
 		private void AddItem(Item item)
 		{
-			if (m_Items.Any(i => i == item))
+			for (int i = 0; i < m_Items.Count; i++)
+			{
+				if (m_Items[i] == item)
+					return;
+			}
+
+			/*if (m_Items.Any(i => i == item))
 			{
 				return;
-			}
+			}*/
 			m_Items.Add(item);
 		}
 
