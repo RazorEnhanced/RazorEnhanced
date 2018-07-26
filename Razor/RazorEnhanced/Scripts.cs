@@ -425,9 +425,9 @@ namespace RazorEnhanced
 				{
 					if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
 					{
-						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
-						try
+							try
 						{
+							m_AutoLootThread = new Thread(AutoLoot.AutoRun);
 							m_AutoLootThread.Start();
 						}
 						catch { }
@@ -435,9 +435,9 @@ namespace RazorEnhanced
 
 					if (Scavenger.AutoMode && !IsRunningThread(m_ScavengerThread))
 					{
-						m_ScavengerThread = new Thread(Scavenger.AutoRun);
 						try
-						{ 
+						{
+							m_ScavengerThread = new Thread(Scavenger.AutoRun);
 							m_ScavengerThread.Start();
 						}
 						catch { }
@@ -445,9 +445,9 @@ namespace RazorEnhanced
 
 					if (BandageHeal.AutoMode && !IsRunningThread(m_BandageHealThread))
 					{
-						m_BandageHealThread = new Thread(BandageHeal.AutoRun);
 						try
-						{ 
+						{
+							m_BandageHealThread = new Thread(BandageHeal.AutoRun);
 							m_BandageHealThread.Start();
 						}
 						catch { }
@@ -455,9 +455,9 @@ namespace RazorEnhanced
 
 					if ((Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && !IsRunningThread(m_DragDropThread))
 					{
-						m_DragDropThread = new Thread(DragDropManager.AutoRun);
 						try
 						{
+							m_DragDropThread = new Thread(DragDropManager.AutoRun);
 							m_DragDropThread.Start();
 						}
 						catch { }
@@ -465,9 +465,9 @@ namespace RazorEnhanced
 
 					if (Filters.AutoCarver && !IsRunningThread(m_AutoCarverThread))
 					{
-						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
 						try
-						{ 
+						{
+							m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
 							m_AutoCarverThread.Start();
 						}
 						catch { }
@@ -475,9 +475,9 @@ namespace RazorEnhanced
 
 					if (Filters.BoneCutter && !IsRunningThread(m_BoneCutterThread))
 					{
-						m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
 						try
 						{
+							m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
 							m_BoneCutterThread.Start();
 						}
 						catch { }
@@ -485,9 +485,9 @@ namespace RazorEnhanced
 
 					if (Filters.AutoModeRemount && !IsRunningThread(m_AutoRemountThread))
 					{
-						m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
 						try
-						{ 
+						{
+							m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
 							m_AutoRemountThread.Start();
 						}
 						catch { }
