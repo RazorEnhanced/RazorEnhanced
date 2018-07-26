@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 58;
+		private static int SettingVersion = 59;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -811,6 +811,10 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Interrupt", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Clumsy", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -4506,6 +4510,20 @@ namespace RazorEnhanced
 				realVersion = 58;
 				General.WriteInt("SettingVersion", 58);
 			}
+
+			if (realVersion == 58)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMagery";
+				newRow["Name"] = "Clumsy";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 59;
+				General.WriteInt("SettingVersion", 59);
+			}
+
 
 			Save(true);
 		}
