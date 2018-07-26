@@ -39,11 +39,14 @@
 			this.bSerialCopy = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.lSex = new System.Windows.Forms.Label();
+			this.pStam = new System.Windows.Forms.ProgressBar();
+			this.pMana = new System.Windows.Forms.ProgressBar();
+			this.pHits = new System.Windows.Forms.ProgressBar();
+			this.lHits = new System.Windows.Forms.Label();
 			this.lDirection = new System.Windows.Forms.Label();
 			this.lNotoriety = new System.Windows.Forms.Label();
-			this.lMaxHits = new System.Windows.Forms.Label();
-			this.lHits = new System.Windows.Forms.Label();
+			this.lStam = new System.Windows.Forms.Label();
+			this.lMana = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.bOwnedCopy = new System.Windows.Forms.Button();
@@ -269,11 +272,14 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.lSex);
+			this.groupBox2.Controls.Add(this.pStam);
+			this.groupBox2.Controls.Add(this.pMana);
+			this.groupBox2.Controls.Add(this.pHits);
+			this.groupBox2.Controls.Add(this.lHits);
 			this.groupBox2.Controls.Add(this.lDirection);
 			this.groupBox2.Controls.Add(this.lNotoriety);
-			this.groupBox2.Controls.Add(this.lMaxHits);
-			this.groupBox2.Controls.Add(this.lHits);
+			this.groupBox2.Controls.Add(this.lStam);
+			this.groupBox2.Controls.Add(this.lMana);
 			this.groupBox2.Controls.Add(this.label6);
 			this.groupBox2.Controls.Add(this.label7);
 			this.groupBox2.Controls.Add(this.bOwnedCopy);
@@ -291,14 +297,35 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Mobile Details";
 			// 
-			// lSex
+			// pStam
 			// 
-			this.lSex.AutoSize = true;
-			this.lSex.Location = new System.Drawing.Point(147, 34);
-			this.lSex.Name = "lSex";
-			this.lSex.Size = new System.Drawing.Size(30, 13);
-			this.lSex.TabIndex = 18;
-			this.lSex.Text = "Male";
+			this.pStam.Location = new System.Drawing.Point(150, 92);
+			this.pStam.Name = "pStam";
+			this.pStam.Size = new System.Drawing.Size(100, 17);
+			this.pStam.TabIndex = 21;
+			// 
+			// pMana
+			// 
+			this.pMana.Location = new System.Drawing.Point(150, 64);
+			this.pMana.Name = "pMana";
+			this.pMana.Size = new System.Drawing.Size(100, 17);
+			this.pMana.TabIndex = 20;
+			// 
+			// pHits
+			// 
+			this.pHits.Location = new System.Drawing.Point(150, 32);
+			this.pHits.Name = "pHits";
+			this.pHits.Size = new System.Drawing.Size(100, 17);
+			this.pHits.TabIndex = 19;
+			// 
+			// lHits
+			// 
+			this.lHits.AutoSize = true;
+			this.lHits.Location = new System.Drawing.Point(258, 34);
+			this.lHits.Name = "lHits";
+			this.lHits.Size = new System.Drawing.Size(30, 13);
+			this.lHits.TabIndex = 18;
+			this.lHits.Text = "0 / 0";
 			// 
 			// lDirection
 			// 
@@ -318,23 +345,23 @@
 			this.lNotoriety.TabIndex = 11;
 			this.lNotoriety.Text = "0";
 			// 
-			// lMaxHits
+			// lStam
 			// 
-			this.lMaxHits.AutoSize = true;
-			this.lMaxHits.Location = new System.Drawing.Point(147, 94);
-			this.lMaxHits.Name = "lMaxHits";
-			this.lMaxHits.Size = new System.Drawing.Size(13, 13);
-			this.lMaxHits.TabIndex = 10;
-			this.lMaxHits.Text = "0";
+			this.lStam.AutoSize = true;
+			this.lStam.Location = new System.Drawing.Point(258, 94);
+			this.lStam.Name = "lStam";
+			this.lStam.Size = new System.Drawing.Size(30, 13);
+			this.lStam.TabIndex = 10;
+			this.lStam.Text = "0 / 0";
 			// 
-			// lHits
+			// lMana
 			// 
-			this.lHits.AutoSize = true;
-			this.lHits.Location = new System.Drawing.Point(147, 64);
-			this.lHits.Name = "lHits";
-			this.lHits.Size = new System.Drawing.Size(13, 13);
-			this.lHits.TabIndex = 9;
-			this.lHits.Text = "0";
+			this.lMana.AutoSize = true;
+			this.lMana.Location = new System.Drawing.Point(258, 64);
+			this.lMana.Name = "lMana";
+			this.lMana.Size = new System.Drawing.Size(30, 13);
+			this.lMana.TabIndex = 9;
+			this.lMana.Text = "0 / 0";
 			// 
 			// label6
 			// 
@@ -385,9 +412,9 @@
 			this.label8.AutoSize = true;
 			this.label8.Location = new System.Drawing.Point(39, 94);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(48, 13);
+			this.label8.Size = new System.Drawing.Size(86, 13);
 			this.label8.TabIndex = 3;
-			this.label8.Text = "MaxHits:";
+			this.label8.Text = "Stam / MaxStam";
 			// 
 			// bAmountCopy
 			// 
@@ -407,9 +434,9 @@
 			this.label9.AutoSize = true;
 			this.label9.Location = new System.Drawing.Point(39, 64);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(28, 13);
+			this.label9.Size = new System.Drawing.Size(92, 13);
 			this.label9.TabIndex = 1;
-			this.label9.Text = "Hits:";
+			this.label9.Text = "Mana / MaxMana";
 			// 
 			// bRContainerCopy
 			// 
@@ -429,9 +456,9 @@
 			this.label10.AutoSize = true;
 			this.label10.Location = new System.Drawing.Point(39, 34);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(28, 13);
+			this.label10.Size = new System.Drawing.Size(74, 13);
 			this.label10.TabIndex = 0;
-			this.label10.Text = "Sex:";
+			this.label10.Text = "Hits / MaxHits";
 			// 
 			// bContainerCopy
 			// 
@@ -681,11 +708,11 @@
 		private System.Windows.Forms.Label lMobileID;
 		private System.Windows.Forms.Label lColor;
 		private System.Windows.Forms.Label lPosition;
-		private System.Windows.Forms.Label lSex;
+		private System.Windows.Forms.Label lHits;
 		private System.Windows.Forms.Label lDirection;
 		private System.Windows.Forms.Label lNotoriety;
-		private System.Windows.Forms.Label lMaxHits;
-		private System.Windows.Forms.Label lHits;
+		private System.Windows.Forms.Label lStam;
+		private System.Windows.Forms.Label lMana;
 		private System.Windows.Forms.Label lFlagHidden;
 		private System.Windows.Forms.Label lFlagWar;
 		private System.Windows.Forms.Label lFlagPoisoned;
@@ -703,5 +730,8 @@
 		private System.Windows.Forms.Panel imagepanel;
 		private System.Windows.Forms.Label lFlagFlying;
 		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.ProgressBar pHits;
+		private System.Windows.Forms.ProgressBar pStam;
+		private System.Windows.Forms.ProgressBar pMana;
 	}
 }

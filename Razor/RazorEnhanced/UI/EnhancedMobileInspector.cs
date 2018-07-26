@@ -177,17 +177,17 @@ namespace RazorEnhanced.UI
 
 		private void bContainerCopy_Click(object sender, EventArgs e)
 		{
-			Utility.ClipBoardCopy(lSex.Text);
+			Utility.ClipBoardCopy(lHits.Text);
 		}
 
 		private void bRContainerCopy_Click(object sender, EventArgs e)
 		{
-			Utility.ClipBoardCopy(lHits.Text);
+			Utility.ClipBoardCopy(lMana.Text);
 		}
 
 		private void bAmountCopy_Click(object sender, EventArgs e)
 		{
-			Utility.ClipBoardCopy(lMaxHits.Text);
+			Utility.ClipBoardCopy(lStam.Text);
 		}
 
 		private void bLayerCopy_Click(object sender, EventArgs e)
@@ -224,10 +224,15 @@ namespace RazorEnhanced.UI
 			lPosition.Text = m_mobile.Position.ToString();
 
 			// Details
-			lSex.Text = (m_mobile.Female) ? "Female" : "Male";
+			lHits.Text = m_mobile.Hits + " / " + m_mobile.HitsMax;
+			pHits.Value = (int)(m_mobile.Hits * 100 / (m_mobile.HitsMax == 0 ? (ushort)1 : m_mobile.HitsMax));
 
-			lHits.Text = m_mobile.Hits.ToString();
-			lMaxHits.Text = m_mobile.HitsMax.ToString();
+			lMana.Text = m_mobile.Mana + " / " + m_mobile.ManaMax;
+			pMana.Value = (int)(m_mobile.Mana * 100 / (m_mobile.ManaMax == 0 ? (ushort)1 : m_mobile.ManaMax));
+
+			lStam.Text = m_mobile.Stam + " / " + m_mobile.StamMax;
+			pStam.Value = (int)(m_mobile.Stam * 100 / (m_mobile.StamMax == 0 ? (ushort)1 : m_mobile.StamMax));
+
 			lNotoriety.Text = m_mobile.Notoriety.ToString();
 
 			switch (m_mobile.Direction & Assistant.Direction.Mask)
@@ -341,5 +346,6 @@ namespace RazorEnhanced.UI
 				m_ProcessInfo.Start();
 			}
 		}
+
 	}
 }
