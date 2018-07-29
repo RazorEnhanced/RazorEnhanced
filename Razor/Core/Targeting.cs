@@ -199,9 +199,9 @@ namespace Assistant
 		}
 		
 
-		internal static void SetLastTarget(Mobile m, byte flagType, bool wait)
+		internal static void SetLastTarget(Serial s, byte flagType, bool wait)
 		{
-			if (m_LastTarget != null && m != null && m_LastTarget.Serial == m.Serial) // Non settare last se già il serial corrente
+			if (m_LastTarget != null && s == Serial.Zero && m_LastTarget.Serial == s) // Non settare last se già il serial corrente
 				return;
 
 			TargetInfo targ = new TargetInfo();
@@ -217,18 +217,32 @@ namespace Assistant
 			targ.Type = 0;
 			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
 
-			targ.Gfx = m.Body;
-			targ.Serial = m.Serial;
-			targ.X = m.Position.X;
-			targ.Y = m.Position.Y;
-			targ.Z = m.Position.Z;
+			
+			targ.Serial = s;
 
-			if (wait)
-				ClientCommunication.SendToClientWait(new ChangeCombatant(m));
-			else
-				ClientCommunication.SendToClient(new ChangeCombatant(m));
-
-			m_LastCombatant = m.Serial;
+			if (s.IsItem)
+			{
+				Item i = World.FindItem(s);
+				if (i != null)
+				{
+					targ.X = i.Position.X;
+					targ.Y = i.Position.Y;
+					targ.Z = i.Position.Z;
+				}
+			}
+			else if (s.IsMobile)
+			{
+				Mobile m = World.FindMobile(s);
+				if (m != null)
+				{
+					targ.Gfx = m.Body;
+					if (wait)
+						ClientCommunication.SendToClientWait(new ChangeCombatant(m));
+					else
+						ClientCommunication.SendToClient(new ChangeCombatant(m));
+					m_LastCombatant = s;
+				}
+			}
 
 			LastTargetChanged();
 		}

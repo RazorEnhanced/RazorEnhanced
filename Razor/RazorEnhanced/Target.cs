@@ -170,14 +170,12 @@ namespace RazorEnhanced
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);
 			if (mobile != null)
-				Assistant.Targeting.SetLastTarget(mobile, 0, true);
+				Assistant.Targeting.SetLastTarget(mob.Serial, 0, true);
 		}
 
 		public static void SetLast(int serial)
 		{
-			Assistant.Mobile mobile = World.FindMobile(serial);
-			if (mobile != null)
-				Assistant.Targeting.SetLastTarget(mobile, 0, true);
+			Assistant.Targeting.SetLastTarget(serial, 0, true);
 		}
 
 		public static void ClearQueue()
@@ -340,7 +338,7 @@ namespace RazorEnhanced
 
 			Assistant.Mobile mobile = World.FindMobile(mobtarget.Serial);
 			if (mobile != null)
-				Targeting.SetLastTarget(mobile, 0, false);
+				Targeting.SetLastTarget(mobile.Serial, 0, false);
 		}
 
 		public static void PerformTargetFromList(string targetid)
