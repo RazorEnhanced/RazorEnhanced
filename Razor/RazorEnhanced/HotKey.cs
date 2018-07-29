@@ -462,6 +462,11 @@ namespace RazorEnhanced
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);
 		}
+		private static void setlastTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			if (serial.IsValid)
+				Target.SetLast(serial);
+		}
 
 		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
@@ -1252,6 +1257,10 @@ namespace RazorEnhanced
 					Assistant.Targeting.ClearQueue();
 					break;
 
+				case "Set Last":
+					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(setlastTarget_Callback));
+					break;
+
 				default:
 					break;
 			}
@@ -1431,7 +1440,7 @@ namespace RazorEnhanced
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add("TList", "List");
 			keylist = RazorEnhanced.Settings.HotKey.ReadTarget();
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[8].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[9].Nodes.Add(GenerateNode(keydata));
 
 			// Script
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Script");
