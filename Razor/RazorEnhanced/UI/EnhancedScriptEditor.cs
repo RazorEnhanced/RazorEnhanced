@@ -160,7 +160,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsItems =
 			{
-				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
+				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
 				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.Select", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID", "Items.Hide",
 				"Items.ContextExist", "Items.UseItemOnTarget"
