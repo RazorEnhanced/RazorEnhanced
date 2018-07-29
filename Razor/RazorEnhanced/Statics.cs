@@ -164,6 +164,101 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static bool GetLandFlag(int itemid, string flagname)
+		{
+			switch (flagname)
+			{
+				case "None":
+					if (TileData.LandTable[itemid].Flags == TileFlag.None)
+						return true;
+					else
+						return false;
+
+				case "Translucent": // The tile is rendered with partial alpha-transparency.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Translucent) != 0)
+						return true;
+					else
+						return false;
+
+				case "Wall": // The tile is a wall.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Wall) != 0)
+						return true;
+					else
+						return false;
+
+				case "Damaging": // The tile can cause damage when moved over.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Damaging) != 0)
+						return true;
+					else
+						return false;
+
+				case "Impassable": // The tile may not be moved over or through.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Impassable) != 0)
+						return true;
+					else
+						return false;
+
+				case "Surface": // The tile is a surface. It may be moved over, but not through.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Surface) != 0)
+						return true;
+					else
+						return false;
+
+				case "Bridge": // The tile is a stair, ramp, or ladder.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Bridge) != 0)
+						return true;
+					else
+						return false;
+
+				case "Window": // The tile is a window.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Window) != 0)
+						return true;
+					else
+						return false;
+
+				case "NoShoot": // The tile blocks line of sight.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.NoShoot) != 0)
+						return true;
+					else
+						return false;
+
+				case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Foliage) != 0)
+						return true;
+					else
+						return false;
+
+				case "HoverOver": // Gargoyles can fly over
+					if ((TileData.LandTable[itemid].Flags & TileFlag.HoverOver) != 0)
+						return true;
+					else
+						return false;
+
+				case "Roof": // The tile is a slanted roof.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Roof) != 0)
+						return true;
+					else
+						return false;
+
+				case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Door) != 0)
+						return true;
+					else
+						return false;
+
+				case "Wet":
+					if ((TileData.LandTable[itemid].Flags & TileFlag.Wet) != 0)
+						return true;
+					else
+						return false;
+
+				default:
+					Scripts.SendMessageScriptError("GetLandFlag: Invalid Flag to check");
+					return false;
+			}
+		}
+
+
 		// Blocco info su statici
 		public class TileInfo
 		{
@@ -182,6 +277,43 @@ namespace RazorEnhanced
 				m_StaticHue = hue;
 				m_StaticZ = z;
 			}
+		}
+
+		public static TileInfo GetStaticsLandInfo(int x, int y, int map)
+		{
+			if (!m_loaded)
+				LoadMapData();
+
+			Ultima.Tile tile;
+			TileInfo tileinfo = null;
+
+			switch (map)
+			{
+				case 0:
+					tile = Ultima.Map.Felucca.Tiles.GetLandTile(x, y);
+					break;
+				case 1:
+					tile = Ultima.Map.Trammel.Tiles.GetLandTile(x, y);
+					break;
+				case 2:
+					tile = Ultima.Map.Ilshenar.Tiles.GetLandTile(x, y);
+					break;
+				case 3:
+					tile = Ultima.Map.Malas.Tiles.GetLandTile(x, y);
+					break;
+				case 4:
+					tile = Ultima.Map.Tokuno.Tiles.GetLandTile(x, y);
+					break;
+				case 5:
+					tile = Ultima.Map.TerMur.Tiles.GetLandTile(x, y);
+					break;
+				default:
+					Scripts.SendMessageScriptError("Script Error: GetLandZ Invalid Map!");
+					return tileinfo;
+			}
+			tileinfo = new TileInfo(tile.ID, 0, tile.Z);
+			
+			return tileinfo;
 		}
 
 		public static List<TileInfo> GetStaticsTileInfo(int x, int y, int map)

@@ -250,7 +250,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsStatics =
 			{
-				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag"
+				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo"
 			};
 
 			string[] methodsGeneric =
@@ -1043,11 +1043,17 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Statics.GetLandZ(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "int", "Get Z level of tile in X, Y coordinates");
 			descriptionStatics.Add("Statics.GetLandZ", tooltip);
 
-			tooltip = new ToolTipDescriptions("Statics.GetStaticsTileInfo(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "List<TileInfo>", "Get tiles info in a certain map at X, Y coordinates");
+			tooltip = new ToolTipDescriptions("Statics.GetStaticsTileInfo(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "List<TileInfo>", "Get static tiles info in a certain map at X, Y coordinates");
 			descriptionStatics.Add("Statics.GetStaticsTileInfo", tooltip);
 
-			tooltip = new ToolTipDescriptions("Statics.GetTileFlag(int, string)", new string[] { "int itemID", "string flagname" }, "bool", "Get true or false if flag is present for specific itemID\n\tSee wiki for flag name list.");
+			tooltip = new ToolTipDescriptions("Statics.GetStaticsLandInfo(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "List<TileInfo>", "Get land tile info in a certain map at X, Y coordinates");
+			descriptionStatics.Add("Statics.GetStaticsLandInfo", tooltip);
+
+			tooltip = new ToolTipDescriptions("Statics.GetTileFlag(int, string)", new string[] { "int itemID", "string flagname" }, "bool", "Get true or false if flag is present for specific static itemID\n\tSee wiki for flag name list.");
 			descriptionStatics.Add("Statics.GetTileFlag", tooltip);
+
+			tooltip = new ToolTipDescriptions("Statics.GetLandFlag(int, string)", new string[] { "int itemID", "string flagname" }, "bool", "Get true or false if flag is present for specific land itemID\n\tSee wiki for flag name list.");
+			descriptionStatics.Add("Statics.GetLandFlag", tooltip);
 
 			#endregion
 
