@@ -200,6 +200,36 @@ namespace RazorEnhanced
 				}
 			}
 		}
+		internal static void CloneList(string newList)
+		{
+			RazorEnhanced.Settings.Organizer.ListInsert(newList, RazorEnhanced.Organizer.OrganizerDelay, OrganizerSource, OrganizerDestination);
+
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.OrganizerDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				int amount = 0;
+				if ((string)row.Cells[4].Value == "All")
+					amount = -1;
+				else
+					amount = Convert.ToInt32((string)row.Cells[4].Value);
+
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+
+				Settings.Organizer.ItemInsert(newList, new OrganizerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, amount, check));
+			}
+
+			Settings.Save(); // Salvo dati
+			RazorEnhanced.Organizer.RefreshLists();
+			RazorEnhanced.Organizer.InitGrid();
+		}
 
 		internal static void AddList(string newList)
 		{

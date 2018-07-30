@@ -272,6 +272,35 @@ namespace RazorEnhanced
 			RazorEnhanced.AutoLoot.InitGrid();
 		}
 
+		internal static void CloneList(string newList)
+		{
+			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
+
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.AutoLootDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+
+				if (row.Cells[4].Value != null)
+					Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));
+				else
+					Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<AutoLootItem.Property>()));
+			}
+
+			Settings.Save(); // Salvo dati
+
+			RazorEnhanced.AutoLoot.RefreshLists();
+			RazorEnhanced.AutoLoot.InitGrid();
+		}
+
 		internal static void RemoveList(string list)
 		{
 			if (RazorEnhanced.Settings.AutoLoot.ListExists(list))

@@ -1042,8 +1042,43 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
+			Mutex m;
+			if (!Mutex.TryOpenExisting("mutexrazorenhanced", out m))
+			{
+				m = new Mutex(true, "mutexrazorenhanced");
+				//m.WaitOne();
+			}
+			else
+			{
+				try  // AbandonedMutexException
+				{
+					m.WaitOne();
+				}
+				catch
+				{
+					m = new Mutex(true, "mutexrazorenhanced");
+					//m.WaitOne();
+				}
+			}
+			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+			while (!UoWarper.UODLLHandleClass.Open())
+			{
+				Thread.Sleep(50);
+			}
+			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
+			UoWarper.UODLLHandleClass.Close();
 
-			if (!Mutex.TryOpenExisting("mutexrazorenhanced", out UoWarper.UoModMutex))
+			try  // AbandonedMutexException
+			{
+				m.ReleaseMutex();
+			}
+			catch {
+
+			}
+			Misc.Pause(70);
+			
+
+			/*if (!Mutex.TryOpenExisting("mutexrazorenhanced", out UoWarper.UoModMutex))
 			{
 				UoWarper.UoModMutex = new Mutex(true, "mutexrazorenhanced");
 				RazorEnhanced.AutoLoot.AddLog("Creo nuovo");
@@ -1066,7 +1101,7 @@ namespace RazorEnhanced
 				
 				
 			}
-
+			
 			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
 			while (!UoWarper.UODLLHandleClass.Open())
 			{
@@ -1076,7 +1111,7 @@ namespace RazorEnhanced
 			Thread.Sleep(100);
 
 			UoWarper.UoModMutex.ReleaseMutex();
-			
+			/*
 			/*
 			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
 			while (!UoWarper.UODLLHandleClass.Open())

@@ -937,7 +937,7 @@ namespace RazorEnhanced
 		{
 			Assistant.Item assistantItem = World.FindItem((uint)serial);
 
-			if (assistantItem != null && assistantItem.ObjPropList != null &&  assistantItem.ObjPropList.Content != null)
+			if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
 			{
 				List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantItem.ObjPropList.Content);
 

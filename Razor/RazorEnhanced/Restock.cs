@@ -191,9 +191,35 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static void CloneList(string newList)
+		{
+			Settings.Restock.ListInsert(newList, RestockDelay, RestockSource, RestockDestination);
+
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.RestockDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+
+				Settings.Restock.ItemInsert(newList, new RestockItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, Convert.ToInt32((string)row.Cells[4].Value), check));
+			}
+
+			Settings.Save(); // Salvo dati
+
+			Restock.RefreshLists();
+			Restock.InitGrid();
+		}
+
 		internal static void AddList(string newList)
 		{
-			Settings.Restock.ListInsert(newList, RazorEnhanced.Restock.RestockDelay, 0, 0);
+			Settings.Restock.ListInsert(newList, RestockDelay, 0, 0);
 
 			Restock.RefreshLists();
 			Restock.InitGrid();

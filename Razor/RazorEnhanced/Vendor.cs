@@ -156,7 +156,32 @@ namespace RazorEnhanced
 				}
 			}
 		}
-		
+		internal static void CloneList(string newList)
+		{
+			RazorEnhanced.Settings.SellAgent.ListInsert(newList, SellBag);
+
+			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[4].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+
+				Settings.SellAgent.ItemInsert(newList, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+			}
+
+			Settings.Save(); // Salvo dati
+
+			RazorEnhanced.SellAgent.RefreshLists();
+			RazorEnhanced.SellAgent.InitGrid();
+		}
+
 		internal static void AddList(string newList)
 		{
 			RazorEnhanced.Settings.SellAgent.ListInsert(newList, 0);
@@ -517,6 +542,32 @@ namespace RazorEnhanced
 					break;
 				}
 			}
+		}
+
+		internal static void CloneList(string newList)
+		{
+			RazorEnhanced.Settings.BuyAgent.ListInsert(newList);
+
+			foreach (DataGridViewRow row in Engine.MainWindow.VendorBuyDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[4].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+
+				Settings.BuyAgent.ItemInsert(newList, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+			}
+
+			Settings.Save(); // Salvo dati
+
+			RazorEnhanced.BuyAgent.RefreshLists();
+			RazorEnhanced.BuyAgent.InitGrid();
 		}
 
 		internal static void AddList(string newList)

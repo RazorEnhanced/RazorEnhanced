@@ -228,6 +228,35 @@ namespace RazorEnhanced
 			LockTable = false;
 		}
 
+		internal static void CloneList(string newList)
+		{
+			Settings.Scavenger.ListInsert(newList, ScavengerDelay, ScavengerBag, MaxRange);
+
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.ScavengerDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+
+				if (row.Cells[4].Value != null)
+					Settings.Scavenger.ItemInsert(newList, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<ScavengerItem.Property>)row.Cells[4].Value));
+				else
+					Settings.Scavenger.ItemInsert(newList, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<ScavengerItem.Property>()));
+			}
+
+			Settings.Save(); // Salvo dati
+
+			RefreshLists();
+			InitGrid();
+		}
+
 		internal static void AddList(string newList)
 		{
 			Settings.Scavenger.ListInsert(newList, ScavengerDelay, 0, MaxRange);

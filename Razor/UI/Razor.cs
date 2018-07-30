@@ -821,6 +821,12 @@ namespace Assistant
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
 		private RazorCheckBox scripterrorlogCheckBox;
+		private RazorButton autoLootButtonListClone;
+		private RazorButton scavengerButtonClone;
+		private RazorButton organizerCloneListB;
+		private RazorButton buyCloneButton;
+		private RazorButton sellCloneListButton;
+		private RazorButton restockCloneListB;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1191,6 +1197,7 @@ namespace Assistant
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
+			this.autoLootButtonListClone = new RazorEnhanced.UI.RazorButton();
 			this.autolootautostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label60 = new System.Windows.Forms.Label();
 			this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1219,6 +1226,7 @@ namespace Assistant
 			this.autolootLogBox = new System.Windows.Forms.ListBox();
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.escavenger = new System.Windows.Forms.TabPage();
+			this.scavengerButtonClone = new RazorEnhanced.UI.RazorButton();
 			this.scavengerautostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label61 = new System.Windows.Forms.Label();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
@@ -1246,6 +1254,7 @@ namespace Assistant
 			this.scavengerListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
 			this.organizer = new System.Windows.Forms.TabPage();
+			this.organizerCloneListB = new RazorEnhanced.UI.RazorButton();
 			this.organizerExecuteButton = new System.Windows.Forms.Button();
 			this.organizerStopButton = new System.Windows.Forms.Button();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
@@ -1273,6 +1282,7 @@ namespace Assistant
 			this.organizerListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
 			this.VendorBuy = new System.Windows.Forms.TabPage();
+			this.buyCloneButton = new RazorEnhanced.UI.RazorButton();
 			this.vendorbuydataGridView = new System.Windows.Forms.DataGridView();
 			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1290,6 +1300,7 @@ namespace Assistant
 			this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.buyExportListButton = new RazorEnhanced.UI.RazorButton();
 			this.VendorSell = new System.Windows.Forms.TabPage();
+			this.sellCloneListButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox19 = new System.Windows.Forms.GroupBox();
 			this.sellSetBagButton = new RazorEnhanced.UI.RazorButton();
 			this.label50 = new System.Windows.Forms.Label();
@@ -1498,6 +1509,7 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+			this.restockCloneListB = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -4662,6 +4674,7 @@ namespace Assistant
 			// 
 			// eautoloot
 			// 
+			this.eautoloot.Controls.Add(this.autoLootButtonListClone);
 			this.eautoloot.Controls.Add(this.autolootautostartCheckBox);
 			this.eautoloot.Controls.Add(this.label60);
 			this.eautoloot.Controls.Add(this.autoLootTextBoxMaxRange);
@@ -4687,6 +4700,15 @@ namespace Assistant
 			this.eautoloot.TabIndex = 0;
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
+			// 
+			// autoLootButtonListClone
+			// 
+			this.autoLootButtonListClone.Location = new System.Drawing.Point(578, 12);
+			this.autoLootButtonListClone.Name = "autoLootButtonListClone";
+			this.autoLootButtonListClone.Size = new System.Drawing.Size(70, 21);
+			this.autoLootButtonListClone.TabIndex = 67;
+			this.autoLootButtonListClone.Text = "Clone";
+			this.autoLootButtonListClone.Click += new System.EventHandler(this.autoLootButtonListClone_Click);
 			// 
 			// autolootautostartCheckBox
 			// 
@@ -4876,9 +4898,9 @@ namespace Assistant
 			// 
 			// autoLootButtonRemoveList
 			// 
-			this.autoLootButtonRemoveList.Location = new System.Drawing.Point(366, 12);
+			this.autoLootButtonRemoveList.Location = new System.Drawing.Point(347, 12);
 			this.autoLootButtonRemoveList.Name = "autoLootButtonRemoveList";
-			this.autoLootButtonRemoveList.Size = new System.Drawing.Size(90, 21);
+			this.autoLootButtonRemoveList.Size = new System.Drawing.Size(71, 21);
 			this.autoLootButtonRemoveList.TabIndex = 57;
 			this.autoLootButtonRemoveList.Text = "Remove";
 			this.autoLootButtonRemoveList.Click += new System.EventHandler(this.autoLootButtonRemoveList_Click);
@@ -4887,16 +4909,16 @@ namespace Assistant
 			// 
 			this.autolootButtonAddList.Location = new System.Drawing.Point(270, 12);
 			this.autolootButtonAddList.Name = "autolootButtonAddList";
-			this.autolootButtonAddList.Size = new System.Drawing.Size(90, 21);
+			this.autolootButtonAddList.Size = new System.Drawing.Size(71, 21);
 			this.autolootButtonAddList.TabIndex = 56;
 			this.autolootButtonAddList.Text = "Add";
 			this.autolootButtonAddList.Click += new System.EventHandler(this.autoLootButtonAddList_Click);
 			// 
 			// autoLootButtonListImport
 			// 
-			this.autoLootButtonListImport.Location = new System.Drawing.Point(462, 12);
+			this.autoLootButtonListImport.Location = new System.Drawing.Point(424, 12);
 			this.autoLootButtonListImport.Name = "autoLootButtonListImport";
-			this.autoLootButtonListImport.Size = new System.Drawing.Size(90, 21);
+			this.autoLootButtonListImport.Size = new System.Drawing.Size(71, 21);
 			this.autoLootButtonListImport.TabIndex = 49;
 			this.autoLootButtonListImport.Text = "Import";
 			this.autoLootButtonListImport.Click += new System.EventHandler(this.autoLootImport_Click);
@@ -4913,9 +4935,9 @@ namespace Assistant
 			// 
 			// autoLootButtonListExport
 			// 
-			this.autoLootButtonListExport.Location = new System.Drawing.Point(558, 12);
+			this.autoLootButtonListExport.Location = new System.Drawing.Point(501, 12);
 			this.autoLootButtonListExport.Name = "autoLootButtonListExport";
-			this.autoLootButtonListExport.Size = new System.Drawing.Size(90, 21);
+			this.autoLootButtonListExport.Size = new System.Drawing.Size(71, 21);
 			this.autoLootButtonListExport.TabIndex = 48;
 			this.autoLootButtonListExport.Text = "Export";
 			this.autoLootButtonListExport.Click += new System.EventHandler(this.autoLootButtonListExport_Click);
@@ -4958,6 +4980,7 @@ namespace Assistant
 			// 
 			// escavenger
 			// 
+			this.escavenger.Controls.Add(this.scavengerButtonClone);
 			this.escavenger.Controls.Add(this.scavengerautostartCheckBox);
 			this.escavenger.Controls.Add(this.label61);
 			this.escavenger.Controls.Add(this.groupBox41);
@@ -4982,6 +5005,15 @@ namespace Assistant
 			this.escavenger.TabIndex = 1;
 			this.escavenger.Text = "Scavenger";
 			this.escavenger.UseVisualStyleBackColor = true;
+			// 
+			// scavengerButtonClone
+			// 
+			this.scavengerButtonClone.Location = new System.Drawing.Point(571, 12);
+			this.scavengerButtonClone.Name = "scavengerButtonClone";
+			this.scavengerButtonClone.Size = new System.Drawing.Size(68, 21);
+			this.scavengerButtonClone.TabIndex = 77;
+			this.scavengerButtonClone.Text = "Clone";
+			this.scavengerButtonClone.Click += new System.EventHandler(this.scavengerButtonClone_Click);
 			// 
 			// scavengerautostartCheckBox
 			// 
@@ -5198,9 +5230,9 @@ namespace Assistant
 			// 
 			// scavengerButtonRemoveList
 			// 
-			this.scavengerButtonRemoveList.Location = new System.Drawing.Point(371, 12);
+			this.scavengerButtonRemoveList.Location = new System.Drawing.Point(349, 12);
 			this.scavengerButtonRemoveList.Name = "scavengerButtonRemoveList";
-			this.scavengerButtonRemoveList.Size = new System.Drawing.Size(90, 21);
+			this.scavengerButtonRemoveList.Size = new System.Drawing.Size(68, 21);
 			this.scavengerButtonRemoveList.TabIndex = 63;
 			this.scavengerButtonRemoveList.Text = "Remove";
 			this.scavengerButtonRemoveList.Click += new System.EventHandler(this.scavengerRemoveList_Click);
@@ -5209,16 +5241,16 @@ namespace Assistant
 			// 
 			this.scavengerButtonAddList.Location = new System.Drawing.Point(275, 12);
 			this.scavengerButtonAddList.Name = "scavengerButtonAddList";
-			this.scavengerButtonAddList.Size = new System.Drawing.Size(90, 21);
+			this.scavengerButtonAddList.Size = new System.Drawing.Size(68, 21);
 			this.scavengerButtonAddList.TabIndex = 62;
 			this.scavengerButtonAddList.Text = "Add";
 			this.scavengerButtonAddList.Click += new System.EventHandler(this.scavengerAddList_Click);
 			// 
 			// scavengerButtonImport
 			// 
-			this.scavengerButtonImport.Location = new System.Drawing.Point(467, 12);
+			this.scavengerButtonImport.Location = new System.Drawing.Point(423, 12);
 			this.scavengerButtonImport.Name = "scavengerButtonImport";
-			this.scavengerButtonImport.Size = new System.Drawing.Size(90, 21);
+			this.scavengerButtonImport.Size = new System.Drawing.Size(68, 21);
 			this.scavengerButtonImport.TabIndex = 59;
 			this.scavengerButtonImport.Text = "Import";
 			this.scavengerButtonImport.Click += new System.EventHandler(this.scavengerButtonImport_Click);
@@ -5235,15 +5267,16 @@ namespace Assistant
 			// 
 			// scavengerButtonExport
 			// 
-			this.scavengerButtonExport.Location = new System.Drawing.Point(563, 12);
+			this.scavengerButtonExport.Location = new System.Drawing.Point(497, 12);
 			this.scavengerButtonExport.Name = "scavengerButtonExport";
-			this.scavengerButtonExport.Size = new System.Drawing.Size(90, 21);
+			this.scavengerButtonExport.Size = new System.Drawing.Size(68, 21);
 			this.scavengerButtonExport.TabIndex = 58;
 			this.scavengerButtonExport.Text = "Export";
 			this.scavengerButtonExport.Click += new System.EventHandler(this.scavengerButtonExport_Click);
 			// 
 			// organizer
 			// 
+			this.organizer.Controls.Add(this.organizerCloneListB);
 			this.organizer.Controls.Add(this.organizerExecuteButton);
 			this.organizer.Controls.Add(this.organizerStopButton);
 			this.organizer.Controls.Add(this.groupBox11);
@@ -5265,6 +5298,15 @@ namespace Assistant
 			this.organizer.TabIndex = 2;
 			this.organizer.Text = "Organizer";
 			this.organizer.UseVisualStyleBackColor = true;
+			// 
+			// organizerCloneListB
+			// 
+			this.organizerCloneListB.Location = new System.Drawing.Point(577, 12);
+			this.organizerCloneListB.Name = "organizerCloneListB";
+			this.organizerCloneListB.Size = new System.Drawing.Size(70, 21);
+			this.organizerCloneListB.TabIndex = 92;
+			this.organizerCloneListB.Text = "Clone";
+			this.organizerCloneListB.Click += new System.EventHandler(this.organizerCloneListB_Click);
 			// 
 			// organizerExecuteButton
 			// 
@@ -5492,9 +5534,9 @@ namespace Assistant
 			// 
 			// organizerRemoveListB
 			// 
-			this.organizerRemoveListB.Location = new System.Drawing.Point(369, 12);
+			this.organizerRemoveListB.Location = new System.Drawing.Point(349, 12);
 			this.organizerRemoveListB.Name = "organizerRemoveListB";
-			this.organizerRemoveListB.Size = new System.Drawing.Size(90, 21);
+			this.organizerRemoveListB.Size = new System.Drawing.Size(70, 21);
 			this.organizerRemoveListB.TabIndex = 63;
 			this.organizerRemoveListB.Text = "Remove";
 			this.organizerRemoveListB.Click += new System.EventHandler(this.organizerRemoveList_Click);
@@ -5503,16 +5545,16 @@ namespace Assistant
 			// 
 			this.organizerAddListB.Location = new System.Drawing.Point(273, 12);
 			this.organizerAddListB.Name = "organizerAddListB";
-			this.organizerAddListB.Size = new System.Drawing.Size(90, 21);
+			this.organizerAddListB.Size = new System.Drawing.Size(70, 21);
 			this.organizerAddListB.TabIndex = 62;
 			this.organizerAddListB.Text = "Add";
 			this.organizerAddListB.Click += new System.EventHandler(this.organizerAddList_Click);
 			// 
 			// organizerImportListB
 			// 
-			this.organizerImportListB.Location = new System.Drawing.Point(465, 12);
+			this.organizerImportListB.Location = new System.Drawing.Point(425, 12);
 			this.organizerImportListB.Name = "organizerImportListB";
-			this.organizerImportListB.Size = new System.Drawing.Size(90, 21);
+			this.organizerImportListB.Size = new System.Drawing.Size(70, 21);
 			this.organizerImportListB.TabIndex = 59;
 			this.organizerImportListB.Text = "Import";
 			this.organizerImportListB.Click += new System.EventHandler(this.organizerImportListB_Click);
@@ -5529,15 +5571,16 @@ namespace Assistant
 			// 
 			// organizerExportListB
 			// 
-			this.organizerExportListB.Location = new System.Drawing.Point(561, 12);
+			this.organizerExportListB.Location = new System.Drawing.Point(501, 12);
 			this.organizerExportListB.Name = "organizerExportListB";
-			this.organizerExportListB.Size = new System.Drawing.Size(90, 21);
+			this.organizerExportListB.Size = new System.Drawing.Size(70, 21);
 			this.organizerExportListB.TabIndex = 58;
 			this.organizerExportListB.Text = "Export";
 			this.organizerExportListB.Click += new System.EventHandler(this.organizerExportListB_Click);
 			// 
 			// VendorBuy
 			// 
+			this.VendorBuy.Controls.Add(this.buyCloneButton);
 			this.VendorBuy.Controls.Add(this.vendorbuydataGridView);
 			this.VendorBuy.Controls.Add(this.groupBox18);
 			this.VendorBuy.Controls.Add(this.label25);
@@ -5555,6 +5598,15 @@ namespace Assistant
 			this.VendorBuy.TabIndex = 3;
 			this.VendorBuy.Text = "Vendor Buy";
 			this.VendorBuy.UseVisualStyleBackColor = true;
+			// 
+			// buyCloneButton
+			// 
+			this.buyCloneButton.Location = new System.Drawing.Point(565, 12);
+			this.buyCloneButton.Name = "buyCloneButton";
+			this.buyCloneButton.Size = new System.Drawing.Size(67, 21);
+			this.buyCloneButton.TabIndex = 89;
+			this.buyCloneButton.Text = "Clone";
+			this.buyCloneButton.Click += new System.EventHandler(this.buyCloneButton_Click);
 			// 
 			// vendorbuydataGridView
 			// 
@@ -5679,9 +5731,9 @@ namespace Assistant
 			// 
 			// buyRemoveListButton
 			// 
-			this.buyRemoveListButton.Location = new System.Drawing.Point(369, 12);
+			this.buyRemoveListButton.Location = new System.Drawing.Point(346, 12);
 			this.buyRemoveListButton.Name = "buyRemoveListButton";
-			this.buyRemoveListButton.Size = new System.Drawing.Size(90, 21);
+			this.buyRemoveListButton.Size = new System.Drawing.Size(67, 21);
 			this.buyRemoveListButton.TabIndex = 69;
 			this.buyRemoveListButton.Text = "Remove";
 			this.buyRemoveListButton.Click += new System.EventHandler(this.buyRemoveList_Click);
@@ -5690,16 +5742,16 @@ namespace Assistant
 			// 
 			this.buyAddListButton.Location = new System.Drawing.Point(273, 12);
 			this.buyAddListButton.Name = "buyAddListButton";
-			this.buyAddListButton.Size = new System.Drawing.Size(90, 21);
+			this.buyAddListButton.Size = new System.Drawing.Size(67, 21);
 			this.buyAddListButton.TabIndex = 68;
 			this.buyAddListButton.Text = "Add";
 			this.buyAddListButton.Click += new System.EventHandler(this.buyAddList_Click);
 			// 
 			// buyImportListButton
 			// 
-			this.buyImportListButton.Location = new System.Drawing.Point(465, 12);
+			this.buyImportListButton.Location = new System.Drawing.Point(419, 12);
 			this.buyImportListButton.Name = "buyImportListButton";
-			this.buyImportListButton.Size = new System.Drawing.Size(90, 21);
+			this.buyImportListButton.Size = new System.Drawing.Size(67, 21);
 			this.buyImportListButton.TabIndex = 65;
 			this.buyImportListButton.Text = "Import";
 			this.buyImportListButton.Click += new System.EventHandler(this.buyImportListButton_Click);
@@ -5716,15 +5768,16 @@ namespace Assistant
 			// 
 			// buyExportListButton
 			// 
-			this.buyExportListButton.Location = new System.Drawing.Point(561, 12);
+			this.buyExportListButton.Location = new System.Drawing.Point(492, 12);
 			this.buyExportListButton.Name = "buyExportListButton";
-			this.buyExportListButton.Size = new System.Drawing.Size(90, 21);
+			this.buyExportListButton.Size = new System.Drawing.Size(67, 21);
 			this.buyExportListButton.TabIndex = 64;
 			this.buyExportListButton.Text = "Export";
 			this.buyExportListButton.Click += new System.EventHandler(this.buyExportListButton_Click);
 			// 
 			// VendorSell
 			// 
+			this.VendorSell.Controls.Add(this.sellCloneListButton);
 			this.VendorSell.Controls.Add(this.groupBox19);
 			this.VendorSell.Controls.Add(this.vendorsellGridView);
 			this.VendorSell.Controls.Add(this.groupBox20);
@@ -5743,6 +5796,15 @@ namespace Assistant
 			this.VendorSell.TabIndex = 4;
 			this.VendorSell.Text = "Vendor Sell";
 			this.VendorSell.UseVisualStyleBackColor = true;
+			// 
+			// sellCloneListButton
+			// 
+			this.sellCloneListButton.Location = new System.Drawing.Point(565, 12);
+			this.sellCloneListButton.Name = "sellCloneListButton";
+			this.sellCloneListButton.Size = new System.Drawing.Size(67, 21);
+			this.sellCloneListButton.TabIndex = 90;
+			this.sellCloneListButton.Text = "Clone";
+			this.sellCloneListButton.Click += new System.EventHandler(this.sellCloneListButton_Click);
 			// 
 			// groupBox19
 			// 
@@ -5904,9 +5966,9 @@ namespace Assistant
 			// 
 			// sellRemoveListButton
 			// 
-			this.sellRemoveListButton.Location = new System.Drawing.Point(369, 12);
+			this.sellRemoveListButton.Location = new System.Drawing.Point(346, 12);
 			this.sellRemoveListButton.Name = "sellRemoveListButton";
-			this.sellRemoveListButton.Size = new System.Drawing.Size(90, 21);
+			this.sellRemoveListButton.Size = new System.Drawing.Size(67, 21);
 			this.sellRemoveListButton.TabIndex = 80;
 			this.sellRemoveListButton.Text = "Remove";
 			this.sellRemoveListButton.Click += new System.EventHandler(this.sellRemoveList_Click);
@@ -5915,16 +5977,16 @@ namespace Assistant
 			// 
 			this.sellAddListButton.Location = new System.Drawing.Point(273, 12);
 			this.sellAddListButton.Name = "sellAddListButton";
-			this.sellAddListButton.Size = new System.Drawing.Size(90, 21);
+			this.sellAddListButton.Size = new System.Drawing.Size(67, 21);
 			this.sellAddListButton.TabIndex = 79;
 			this.sellAddListButton.Text = "Add";
 			this.sellAddListButton.Click += new System.EventHandler(this.sellAddList_Click);
 			// 
 			// sellImportListButton
 			// 
-			this.sellImportListButton.Location = new System.Drawing.Point(465, 12);
+			this.sellImportListButton.Location = new System.Drawing.Point(419, 12);
 			this.sellImportListButton.Name = "sellImportListButton";
-			this.sellImportListButton.Size = new System.Drawing.Size(90, 21);
+			this.sellImportListButton.Size = new System.Drawing.Size(67, 21);
 			this.sellImportListButton.TabIndex = 76;
 			this.sellImportListButton.Text = "Import";
 			this.sellImportListButton.Click += new System.EventHandler(this.sellImportListButton_Click);
@@ -5941,9 +6003,9 @@ namespace Assistant
 			// 
 			// sellExportListButton
 			// 
-			this.sellExportListButton.Location = new System.Drawing.Point(561, 12);
+			this.sellExportListButton.Location = new System.Drawing.Point(492, 12);
 			this.sellExportListButton.Name = "sellExportListButton";
-			this.sellExportListButton.Size = new System.Drawing.Size(90, 21);
+			this.sellExportListButton.Size = new System.Drawing.Size(67, 21);
 			this.sellExportListButton.TabIndex = 75;
 			this.sellExportListButton.Text = "Export";
 			this.sellExportListButton.Click += new System.EventHandler(this.sellExportListButton_Click);
@@ -6523,6 +6585,7 @@ namespace Assistant
 			// 
 			// restock
 			// 
+			this.restock.Controls.Add(this.restockCloneListB);
 			this.restock.Controls.Add(this.restockExecuteButton);
 			this.restock.Controls.Add(this.restockStopButton);
 			this.restock.Controls.Add(this.groupBox3);
@@ -6771,9 +6834,9 @@ namespace Assistant
 			// 
 			// restockRemoveListB
 			// 
-			this.restockRemoveListB.Location = new System.Drawing.Point(366, 12);
+			this.restockRemoveListB.Location = new System.Drawing.Point(343, 12);
 			this.restockRemoveListB.Name = "restockRemoveListB";
-			this.restockRemoveListB.Size = new System.Drawing.Size(90, 21);
+			this.restockRemoveListB.Size = new System.Drawing.Size(67, 21);
 			this.restockRemoveListB.TabIndex = 69;
 			this.restockRemoveListB.Text = "Remove";
 			this.restockRemoveListB.Click += new System.EventHandler(this.restockRemoveListB_Click);
@@ -6782,16 +6845,16 @@ namespace Assistant
 			// 
 			this.restockAddListB.Location = new System.Drawing.Point(270, 12);
 			this.restockAddListB.Name = "restockAddListB";
-			this.restockAddListB.Size = new System.Drawing.Size(90, 21);
+			this.restockAddListB.Size = new System.Drawing.Size(67, 21);
 			this.restockAddListB.TabIndex = 68;
 			this.restockAddListB.Text = "Add";
 			this.restockAddListB.Click += new System.EventHandler(this.restockAddListB_Click);
 			// 
 			// restockImportListB
 			// 
-			this.restockImportListB.Location = new System.Drawing.Point(462, 12);
+			this.restockImportListB.Location = new System.Drawing.Point(416, 11);
 			this.restockImportListB.Name = "restockImportListB";
-			this.restockImportListB.Size = new System.Drawing.Size(90, 21);
+			this.restockImportListB.Size = new System.Drawing.Size(67, 21);
 			this.restockImportListB.TabIndex = 65;
 			this.restockImportListB.Text = "Import";
 			this.restockImportListB.Click += new System.EventHandler(this.restockImportB_Click);
@@ -6808,9 +6871,9 @@ namespace Assistant
 			// 
 			// restockExportListB
 			// 
-			this.restockExportListB.Location = new System.Drawing.Point(558, 12);
+			this.restockExportListB.Location = new System.Drawing.Point(489, 11);
 			this.restockExportListB.Name = "restockExportListB";
-			this.restockExportListB.Size = new System.Drawing.Size(90, 21);
+			this.restockExportListB.Size = new System.Drawing.Size(67, 21);
 			this.restockExportListB.TabIndex = 64;
 			this.restockExportListB.Text = "Export";
 			this.restockExportListB.Click += new System.EventHandler(this.restockExportListB_Click);
@@ -7869,6 +7932,15 @@ namespace Assistant
 			this.openmaplocation.Filter = "Executable Files|*.exe";
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
+			// 
+			// restockCloneListB
+			// 
+			this.restockCloneListB.Location = new System.Drawing.Point(562, 11);
+			this.restockCloneListB.Name = "restockCloneListB";
+			this.restockCloneListB.Size = new System.Drawing.Size(67, 21);
+			this.restockCloneListB.TabIndex = 94;
+			this.restockCloneListB.Text = "Clone";
+			this.restockCloneListB.Click += new System.EventHandler(this.restockCloneListB_Click);
 			// 
 			// MainForm
 			// 
@@ -10269,6 +10341,7 @@ namespace Assistant
 				autoLootButtonListExport.Enabled = false;
 				autoLootButtonListImport.Enabled = false;
 				autoLootButtonRemoveList.Enabled = false;
+				autoLootButtonListClone.Enabled = false;
 				autoLootTextBoxDelay.Enabled = false;
 				autoLootTextBoxMaxRange.Enabled = false;
 
@@ -10286,6 +10359,7 @@ namespace Assistant
 				autoLootButtonListExport.Enabled = true;
 				autoLootButtonListImport.Enabled = true;
 				autoLootButtonRemoveList.Enabled = true;
+				autoLootButtonListClone.Enabled = true;
 				autoLootTextBoxDelay.Enabled = true;
 				autoLootTextBoxMaxRange.Enabled = true;
 
@@ -10333,6 +10407,19 @@ namespace Assistant
 				}
 			}
 			new EnhancedAgentAddList(1).Show();
+		}
+		private void autoLootButtonListClone_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList af)
+				{
+					af.AgentID = 10;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(10).Show();
 		}
 
 		private void autoLootButtonRemoveList_Click(object sender, EventArgs e)
@@ -10518,6 +10605,20 @@ namespace Assistant
 			new EnhancedAgentAddList(2).Show();
 		}
 
+		private void scavengerButtonClone_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList af)
+				{
+					af.AgentID = 11;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(11).Show();
+		}
+
 		private void scavengerRemoveList_Click(object sender, EventArgs e)
 		{
 			if (scavengerListSelect.Text != String.Empty)
@@ -10574,6 +10675,7 @@ namespace Assistant
 				scavengerButtonRemoveList.Enabled = false;
 				scavengerButtonExport.Enabled = false;
 				scavengerButtonImport.Enabled = false;
+				scavengerButtonClone.Enabled = false;
 				scavengerDragDelay.Enabled = false;
 				scavengerRange.Enabled = false;
 
@@ -10591,6 +10693,7 @@ namespace Assistant
 				scavengerButtonRemoveList.Enabled = true;
 				scavengerButtonExport.Enabled = true;
 				scavengerButtonImport.Enabled = true;
+				scavengerButtonClone.Enabled = true;
 				scavengerDragDelay.Enabled = true;
 				scavengerRange.Enabled = true;
 
@@ -10676,6 +10779,20 @@ namespace Assistant
 				}
 			}
 			new EnhancedAgentAddList(3).Show();
+		}
+
+		private void organizerCloneListB_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList af)
+				{
+					af.AgentID = 12;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(12).Show();
 		}
 
 		private void organizerRemoveList_Click(object sender, EventArgs e)
@@ -10893,6 +11010,7 @@ namespace Assistant
 				organizerRemoveListB.Enabled = false;
 				organizerExportListB.Enabled = false;
 				organizerImportListB.Enabled = false;
+				organizerCloneListB.Enabled = false;
 				organizerDragDelay.Enabled = false;
 			}
 		}
@@ -10922,6 +11040,7 @@ namespace Assistant
 				organizerRemoveListB.Enabled = true;
 				organizerExportListB.Enabled = true;
 				organizerImportListB.Enabled = true;
+				organizerCloneListB.Enabled = true;
 				organizerDragDelay.Enabled = true;
 			}
 		}
@@ -10995,6 +11114,20 @@ namespace Assistant
 				}
 			}
 			new EnhancedAgentAddList(5).Show();
+		}
+
+		private void sellCloneListButton_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList af)
+				{
+					af.AgentID = 14;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(14).Show();
 		}
 
 		private void sellRemoveList_Click(object sender, EventArgs e)
@@ -11076,6 +11209,7 @@ namespace Assistant
 					sellRemoveListButton.Enabled = false;
 					sellImportListButton.Enabled = false;
 					sellExportListButton.Enabled = false;
+					sellCloneListButton.Enabled = false;
 					SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					if (showagentmessageCheckBox.Checked)
 						Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
@@ -11089,6 +11223,7 @@ namespace Assistant
 				sellRemoveListButton.Enabled = true;
 				sellImportListButton.Enabled = true;
 				sellExportListButton.Enabled = true;
+				sellCloneListButton.Enabled = true;
 				if (sellListSelect.Text != String.Empty)
 				{
 					RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
@@ -11210,6 +11345,20 @@ namespace Assistant
 			new EnhancedAgentAddList(4).Show();
 		}
 
+		private void buyCloneButton_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList af)
+				{
+					af.AgentID = 13;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(13).Show();
+		}
+
 		private void buyRemoveList_Click(object sender, EventArgs e)
 		{
 			if (buyListSelect.Text != String.Empty)
@@ -11274,6 +11423,7 @@ namespace Assistant
 				buyRemoveListButton.Enabled = false;
 				buyImportListButton.Enabled = false;
 				buyExportListButton.Enabled = false;
+				buyCloneButton.Enabled = false;
 				BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
@@ -11286,6 +11436,7 @@ namespace Assistant
 				buyRemoveListButton.Enabled = true;
 				buyImportListButton.Enabled = true;
 				buyExportListButton.Enabled = true;
+				buyCloneButton.Enabled = true;
 				BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
@@ -11888,6 +12039,20 @@ namespace Assistant
 				}
 			}
 			new EnhancedAgentAddList(8).Show();
+		}
+
+		private void restockCloneListB_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList af)
+				{
+					af.AgentID = 17;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(17).Show();
 		}
 
 		private void restockRemoveListB_Click(object sender, EventArgs e)
@@ -14255,6 +14420,7 @@ namespace Assistant
 			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
 			Process.Start(p);
 		}
+
 		// ----------------- STOP DPS METER -------------------
 	}
 }

@@ -14,8 +14,14 @@ namespace RazorEnhanced.UI
 		// 5- Sell 
 		// 6- Dress
 		// 7- Friend
-		// 8- Friend
+		// 8- Restock
 		// 9- Shard
+		// 10 - Clone autoloot
+		// 11 - Clone Scavenger
+		// 12 - Clone Organizer
+		// 13- Clone Buy 
+		// 14- Clone Sell 
+		// 17- Clone Restock
 
 		private int m_agentid = 0;
 
@@ -53,6 +59,24 @@ namespace RazorEnhanced.UI
 				case 9:
 					Text = "Launcher Add Shard";
 					break;
+				case 10:
+					Text = "Autoloot Clone List";
+					break;
+				case 11:
+					Text = "Scavenger Clone List";
+					break;
+				case 12:
+					Text = "Organizer Clone List";
+					break;
+				case 13:
+					Text = "Buy Clone List";
+					break;
+				case 14:
+					Text = "Sell Clone List";
+					break;
+				case 17:
+					Text = "Restock Clone List";
+					break;
 			}
 		}
 		public EnhancedAgentAddList(int agentid)
@@ -83,22 +107,27 @@ namespace RazorEnhanced.UI
 			switch (m_agentid)
 			{
 				case 1:
+				case 10:
 					if (Settings.AutoLoot.ListExists(newList))
 						fail = true;
 					break;
 				case 2:
+				case 11:
 					if (Settings.Scavenger.ListExists(newList))
 						fail = true;
 					break;
 				case 3:
+				case 12:
 					if (Settings.Organizer.ListExists(newList))
 						fail = true;
 					break;
 				case 4:
+				case 13:
 					if (Settings.BuyAgent.ListExists(newList))
 						fail = true;
 					break;
 				case 5:
+				case 14:
 					if (Settings.SellAgent.ListExists(newList))
 						fail = true;
 					break;
@@ -111,6 +140,7 @@ namespace RazorEnhanced.UI
 						fail = true;
 					break;
 				case 8:
+				case 17:
 					if (Settings.Restock.ListExists(newList))
 						fail = true;
 					break;
@@ -161,6 +191,24 @@ namespace RazorEnhanced.UI
 						break;
 					case 9:
 						RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
+						break;
+					case 10:
+						AutoLoot.CloneList(newList);
+						break;
+					case 11:
+						Scavenger.CloneList(newList);
+						break;
+					case 12:
+						Organizer.CloneList(newList);
+						break;
+					case 13:
+						BuyAgent.CloneList(newList);
+						break;
+					case 14:
+						SellAgent.CloneList(newList);
+						break;
+					case 17:
+						Restock.CloneList(newList);
 						break;
 				}
 
