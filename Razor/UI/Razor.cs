@@ -827,6 +827,8 @@ namespace Assistant
 		private RazorButton buyCloneButton;
 		private RazorButton sellCloneListButton;
 		private RazorButton restockCloneListB;
+		private GroupBox groupBox42;
+		private RazorTextBox scriptSearchTextBox;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1168,10 +1170,12 @@ namespace Assistant
 			this.razorButtonCreateUODAccount = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
 			this.scriptingTab = new System.Windows.Forms.TabPage();
-			this.groupBox31 = new System.Windows.Forms.GroupBox();
+			this.groupBox42 = new System.Windows.Forms.GroupBox();
+			this.scriptSearchTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.buttonScriptRefresh = new System.Windows.Forms.Button();
 			this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.groupBox31 = new System.Windows.Forms.GroupBox();
+			this.buttonScriptRefresh = new System.Windows.Forms.Button();
 			this.buttonAddScript = new RazorEnhanced.UI.RazorButton();
 			this.buttonRemoveScript = new RazorEnhanced.UI.RazorButton();
 			this.buttonScriptDown = new RazorEnhanced.UI.RazorButton();
@@ -1380,6 +1384,7 @@ namespace Assistant
 			this.friendListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.friendButtonExportList = new RazorEnhanced.UI.RazorButton();
 			this.restock = new System.Windows.Forms.TabPage();
+			this.restockCloneListB = new RazorEnhanced.UI.RazorButton();
 			this.restockExecuteButton = new System.Windows.Forms.Button();
 			this.restockStopButton = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -1509,7 +1514,6 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-			this.restockCloneListB = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1546,6 +1550,7 @@ namespace Assistant
 			((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
 			this.statusTab.SuspendLayout();
 			this.scriptingTab.SuspendLayout();
+			this.groupBox42.SuspendLayout();
 			this.groupBox31.SuspendLayout();
 			this.groupBox30.SuspendLayout();
 			this.EnhancedAgent.SuspendLayout();
@@ -4380,6 +4385,9 @@ namespace Assistant
 			// scriptingTab
 			// 
 			this.scriptingTab.BackColor = System.Drawing.SystemColors.Control;
+			this.scriptingTab.Controls.Add(this.groupBox42);
+			this.scriptingTab.Controls.Add(this.scripterrorlogCheckBox);
+			this.scriptingTab.Controls.Add(this.showscriptmessageCheckBox);
 			this.scriptingTab.Controls.Add(this.groupBox31);
 			this.scriptingTab.Controls.Add(this.groupBox30);
 			this.scriptingTab.Controls.Add(this.scriptlistView);
@@ -4390,11 +4398,46 @@ namespace Assistant
 			this.scriptingTab.TabIndex = 12;
 			this.scriptingTab.Text = "Enhanced Scripting";
 			// 
+			// groupBox42
+			// 
+			this.groupBox42.Controls.Add(this.scriptSearchTextBox);
+			this.groupBox42.Location = new System.Drawing.Point(488, 256);
+			this.groupBox42.Name = "groupBox42";
+			this.groupBox42.Size = new System.Drawing.Size(169, 54);
+			this.groupBox42.TabIndex = 75;
+			this.groupBox42.TabStop = false;
+			this.groupBox42.Text = "Search";
+			// 
+			// scriptSearchTextBox
+			// 
+			this.scriptSearchTextBox.Location = new System.Drawing.Point(6, 22);
+			this.scriptSearchTextBox.Name = "scriptSearchTextBox";
+			this.scriptSearchTextBox.Size = new System.Drawing.Size(157, 20);
+			this.scriptSearchTextBox.TabIndex = 0;
+			this.scriptSearchTextBox.Text = "Name to search..";
+			this.scriptSearchTextBox.TextChanged += new System.EventHandler(this.scriptSearchTextBox_TextChanged);
+			// 
+			// scripterrorlogCheckBox
+			// 
+			this.scripterrorlogCheckBox.Location = new System.Drawing.Point(488, 316);
+			this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
+			this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 22);
+			this.scripterrorlogCheckBox.TabIndex = 74;
+			this.scripterrorlogCheckBox.Text = "Log Script Error";
+			this.scripterrorlogCheckBox.CheckedChanged += new System.EventHandler(this.scripterrorlogCheckBox_CheckedChanged);
+			// 
+			// showscriptmessageCheckBox
+			// 
+			this.showscriptmessageCheckBox.Location = new System.Drawing.Point(488, 336);
+			this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
+			this.showscriptmessageCheckBox.Size = new System.Drawing.Size(160, 22);
+			this.showscriptmessageCheckBox.TabIndex = 72;
+			this.showscriptmessageCheckBox.Text = "Show Script Message";
+			this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
+			// 
 			// groupBox31
 			// 
-			this.groupBox31.Controls.Add(this.scripterrorlogCheckBox);
 			this.groupBox31.Controls.Add(this.buttonScriptRefresh);
-			this.groupBox31.Controls.Add(this.showscriptmessageCheckBox);
 			this.groupBox31.Controls.Add(this.buttonAddScript);
 			this.groupBox31.Controls.Add(this.buttonRemoveScript);
 			this.groupBox31.Controls.Add(this.buttonScriptDown);
@@ -4405,41 +4448,22 @@ namespace Assistant
 			this.groupBox31.Controls.Add(this.buttonScriptPlay);
 			this.groupBox31.Location = new System.Drawing.Point(482, 112);
 			this.groupBox31.Name = "groupBox31";
-			this.groupBox31.Size = new System.Drawing.Size(175, 246);
+			this.groupBox31.Size = new System.Drawing.Size(175, 137);
 			this.groupBox31.TabIndex = 50;
 			this.groupBox31.TabStop = false;
 			this.groupBox31.Text = "Script Operation";
-			// 
-			// scripterrorlogCheckBox
-			// 
-			this.scripterrorlogCheckBox.Location = new System.Drawing.Point(7, 202);
-			this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
-			this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 22);
-			this.scripterrorlogCheckBox.TabIndex = 74;
-			this.scripterrorlogCheckBox.Text = "Log Script Error";
-			this.scripterrorlogCheckBox.CheckedChanged += new System.EventHandler(this.scripterrorlogCheckBox_CheckedChanged);
 			// 
 			// buttonScriptRefresh
 			// 
 			this.buttonScriptRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonScriptRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptRefresh.Image")));
-			this.buttonScriptRefresh.Location = new System.Drawing.Point(53, 130);
+			this.buttonScriptRefresh.Location = new System.Drawing.Point(66, 98);
 			this.buttonScriptRefresh.Name = "buttonScriptRefresh";
-			this.buttonScriptRefresh.Size = new System.Drawing.Size(73, 27);
+			this.buttonScriptRefresh.Size = new System.Drawing.Size(44, 27);
 			this.buttonScriptRefresh.TabIndex = 73;
-			this.buttonScriptRefresh.Text = "Refresh";
 			this.buttonScriptRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonScriptRefresh.UseVisualStyleBackColor = true;
 			this.buttonScriptRefresh.Click += new System.EventHandler(this.buttonScriptRefresh_Click);
-			// 
-			// showscriptmessageCheckBox
-			// 
-			this.showscriptmessageCheckBox.Location = new System.Drawing.Point(7, 222);
-			this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
-			this.showscriptmessageCheckBox.Size = new System.Drawing.Size(160, 22);
-			this.showscriptmessageCheckBox.TabIndex = 72;
-			this.showscriptmessageCheckBox.Text = "Show Script Message";
-			this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
 			// 
 			// buttonAddScript
 			// 
@@ -4471,7 +4495,7 @@ namespace Assistant
 			// 
 			// textBoxDelay
 			// 
-			this.textBoxDelay.Location = new System.Drawing.Point(7, 167);
+			this.textBoxDelay.Location = new System.Drawing.Point(116, 204);
 			this.textBoxDelay.Name = "textBoxDelay";
 			this.textBoxDelay.Size = new System.Drawing.Size(42, 20);
 			this.textBoxDelay.TabIndex = 23;
@@ -4503,11 +4527,10 @@ namespace Assistant
 			// 
 			this.buttonScriptStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonScriptStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptStop.Image")));
-			this.buttonScriptStop.Location = new System.Drawing.Point(53, 163);
+			this.buttonScriptStop.Location = new System.Drawing.Point(10, 98);
 			this.buttonScriptStop.Name = "buttonScriptStop";
-			this.buttonScriptStop.Size = new System.Drawing.Size(73, 27);
+			this.buttonScriptStop.Size = new System.Drawing.Size(44, 27);
 			this.buttonScriptStop.TabIndex = 22;
-			this.buttonScriptStop.Text = "Stop";
 			this.buttonScriptStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonScriptStop.UseVisualStyleBackColor = true;
 			this.buttonScriptStop.Click += new System.EventHandler(this.buttonScriptStop_Click);
@@ -4516,11 +4539,10 @@ namespace Assistant
 			// 
 			this.buttonScriptPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.buttonScriptPlay.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptPlay.Image")));
-			this.buttonScriptPlay.Location = new System.Drawing.Point(53, 97);
+			this.buttonScriptPlay.Location = new System.Drawing.Point(122, 98);
 			this.buttonScriptPlay.Name = "buttonScriptPlay";
-			this.buttonScriptPlay.Size = new System.Drawing.Size(73, 27);
+			this.buttonScriptPlay.Size = new System.Drawing.Size(44, 27);
 			this.buttonScriptPlay.TabIndex = 21;
-			this.buttonScriptPlay.Text = "Play";
 			this.buttonScriptPlay.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonScriptPlay.UseVisualStyleBackColor = true;
 			this.buttonScriptPlay.Click += new System.EventHandler(this.buttonScriptPlay_Click);
@@ -6608,6 +6630,15 @@ namespace Assistant
 			this.restock.Text = "Restock";
 			this.restock.UseVisualStyleBackColor = true;
 			// 
+			// restockCloneListB
+			// 
+			this.restockCloneListB.Location = new System.Drawing.Point(562, 11);
+			this.restockCloneListB.Name = "restockCloneListB";
+			this.restockCloneListB.Size = new System.Drawing.Size(67, 21);
+			this.restockCloneListB.TabIndex = 94;
+			this.restockCloneListB.Text = "Clone";
+			this.restockCloneListB.Click += new System.EventHandler(this.restockCloneListB_Click);
+			// 
 			// restockExecuteButton
 			// 
 			this.restockExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
@@ -7933,15 +7964,6 @@ namespace Assistant
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
 			// 
-			// restockCloneListB
-			// 
-			this.restockCloneListB.Location = new System.Drawing.Point(562, 11);
-			this.restockCloneListB.Name = "restockCloneListB";
-			this.restockCloneListB.Size = new System.Drawing.Size(67, 21);
-			this.restockCloneListB.TabIndex = 94;
-			this.restockCloneListB.Text = "Clone";
-			this.restockCloneListB.Click += new System.EventHandler(this.restockCloneListB_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -8011,6 +8033,8 @@ namespace Assistant
 			((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
 			this.statusTab.ResumeLayout(false);
 			this.scriptingTab.ResumeLayout(false);
+			this.groupBox42.ResumeLayout(false);
+			this.groupBox42.PerformLayout();
 			this.groupBox31.ResumeLayout(false);
 			this.groupBox31.PerformLayout();
 			this.groupBox30.ResumeLayout(false);
@@ -10038,6 +10062,28 @@ namespace Assistant
 			}
 			EnhancedScriptEditor.Init(fullPath);
 		}
+
+		private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)
+		{
+			if (scriptSearchTextBox.Focused)
+			{
+
+				for (int i = 0; i < scriptlistView.Items.Count; i++)
+				{
+					scriptlistView.Items[i].ForeColor = SystemColors.WindowText; // Decolor old search
+
+					if (scriptSearchTextBox.Text != String.Empty)
+					{
+						if (scriptlistView.Items[i].SubItems[1].Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+						{
+							scriptlistView.EnsureVisible(i);
+							scriptlistView.Items[i].ForeColor = Color.Blue; // Set highlight color
+						}
+					}
+				}
+			}
+		}
+
 		private void buttonOpenEditor_Click(object sender, EventArgs e)
 		{
 			ScriptGridOpen();
