@@ -67,6 +67,9 @@ namespace RazorEnhanced
 				}
 				catch (Exception ex)
 				{
+					if (ex is System.Threading.ThreadAbortException)
+						return;
+					MessageBox.Show(ex.ToString());
 					if (RazorEnhanced.Settings.General.ReadBool("ScriptErrorLog")) // enabled log of error
 					{
 						StringBuilder log = new StringBuilder();
