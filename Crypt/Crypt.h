@@ -1,7 +1,7 @@
 #pragma once
 #pragma pack(1)
 
-#define DLL_VERSION "0.6.44"
+#define DLL_VERSION "0.6.45"
 #define DLL_VERSION_OLD "1.0.14"  // Not change IT!
 
 #define DLLFUNCTION __declspec(dllexport)
