@@ -1796,7 +1796,8 @@ namespace RazorEnhanced.UI
 
 					if (save.ShowDialog() == DialogResult.OK)
 					{
-						File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+						if (save.FileName != null && fastColoredTextBoxEditor.Text != null)
+							File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 					}
 					else
 						return false;
