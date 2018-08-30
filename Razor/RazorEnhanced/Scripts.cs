@@ -113,7 +113,11 @@ namespace RazorEnhanced
 			internal void Stop()
 			{
 				if (!IsStopped)
-					m_Thread.Abort();
+					try
+					{
+						m_Thread.Abort();
+					}
+					catch { }
 			}
 
 			internal void Reset()
@@ -558,7 +562,7 @@ namespace RazorEnhanced
 			scope.SetVariable("Friend", new RazorEnhanced.Friend());
 			scope.SetVariable("Restock", new RazorEnhanced.Restock());
 			scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
-			scope.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
+			//scope.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
 			scope.SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
 
 			return scope;
