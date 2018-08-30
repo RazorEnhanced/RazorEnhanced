@@ -1497,7 +1497,6 @@ namespace Assistant
 			player.Gold = p.ReadUInt32();
 			player.AR = p.ReadUInt16(); // ar / physical resist
 			player.Weight = p.ReadUInt16();
-
 			if (type >= 0x03)
 			{
 				if (type > 0x04)
@@ -1507,12 +1506,11 @@ namespace Assistant
 				}
 
 				player.StatCap = p.ReadUInt16();
+				player.Followers = p.ReadByte();
+				player.FollowersMax = p.ReadByte();
 
 				if (type > 0x03)
 				{
-					player.Followers = p.ReadByte();
-					player.FollowersMax = p.ReadByte();
-
 					player.FireResistance = p.ReadInt16();
 					player.ColdResistance = p.ReadInt16();
 					player.PoisonResistance = p.ReadInt16();
@@ -1528,8 +1526,6 @@ namespace Assistant
 
 				if (type > 0x05)        // KR Data
 				{
-
-
 					player.HitChanceIncrease = p.ReadInt16();
 					player.SwingSpeedIncrease = p.ReadInt16();
 					player.DamageChanceIncrease = p.ReadInt16();
