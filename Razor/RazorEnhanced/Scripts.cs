@@ -115,7 +115,10 @@ namespace RazorEnhanced
 				if (!IsStopped)
 					try
 					{
-						m_Thread.Abort();
+						if (m_Thread.ThreadState != ThreadState.AbortRequested)
+						{
+							m_Thread.Abort();
+						}
 					}
 					catch { }
 			}
@@ -148,6 +151,26 @@ namespace RazorEnhanced
 				}
 
 				return result;
+			}
+
+			internal string Status
+			{
+				get
+				{
+					switch (m_Thread.ThreadState)
+					{
+						case ThreadState.Aborted:
+						case ThreadState.AbortRequested:
+							return "Stopping";
+
+						case ThreadState.WaitSleepJoin:
+						case ThreadState.Running:
+							return "Running";
+
+						default:
+							return "Stopped";
+					}
+				}
 			}
 
 			private string m_Filename;
@@ -253,7 +276,7 @@ namespace RazorEnhanced
 				{
 					lock (m_Lock)
 					{
-						if ( (m_Thread.ThreadState & ThreadState.Running) != 0 || (m_Thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_Thread.ThreadState & ThreadState.AbortRequested) != 0 )
+						if ( (m_Thread.ThreadState & (ThreadState.Unstarted | ThreadState.Stopped)) == 0)
 						//if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
 							return true;
 						else
@@ -357,39 +380,44 @@ namespace RazorEnhanced
 
 			internal void Close()
 			{
-				if (IsRunningThread(m_AutoLootThread))
+				try
 				{
-					m_AutoLootThread.Abort();
+					if (IsRunningThread(m_AutoLootThread))
+					{
+						m_AutoLootThread.Abort();
+					}
+
+					if (IsRunningThread(m_ScavengerThread))
+					{
+						m_ScavengerThread.Abort();
+					}
+
+					if (IsRunningThread(m_BandageHealThread))
+					{
+						m_BandageHealThread.Abort();
+					}
+
+					if (IsRunningThread(m_DragDropThread))
+					{
+						m_DragDropThread.Abort();
+					}
+
+					if (IsRunningThread(m_AutoCarverThread))
+					{
+						m_AutoCarverThread.Abort();
+					}
+
+					if (IsRunningThread(m_AutoRemountThread))
+					{
+						m_AutoRemountThread.Abort();
+					}
+
+					UI.EnhancedScriptEditor.End();
+
+					this.Stop();
 				}
-
-				if (IsRunningThread(m_ScavengerThread))
-				{
-					m_ScavengerThread.Abort();
-				}
-
-				if (IsRunningThread(m_BandageHealThread))
-				{
-					m_BandageHealThread.Abort();
-				}
-
-				if (IsRunningThread(m_DragDropThread))
-				{
-					m_DragDropThread.Abort();
-				}
-
-				if (IsRunningThread(m_AutoCarverThread))
-				{
-					m_AutoCarverThread.Abort();
-				}
-
-				if (IsRunningThread(m_AutoRemountThread))
-				{
-					m_AutoRemountThread.Abort();
-				}
-
-				UI.EnhancedScriptEditor.End();
-
-				this.Stop();
+				catch
+				{ }
 			}
 
 			private void OnTick(object state)

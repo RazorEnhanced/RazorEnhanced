@@ -9895,14 +9895,7 @@ namespace Assistant
 						{
 							if (script != null)
 							{
-								if (script.Run)
-								{
-									litem.SubItems[2].Text = "Running";
-								}
-								else
-								{
-									litem.SubItems[2].Text = "Stopped";
-								}
+								litem.SubItems[2].Text = script.Status;
 							}
 						}
 					}
