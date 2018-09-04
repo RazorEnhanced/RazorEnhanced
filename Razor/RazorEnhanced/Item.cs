@@ -695,25 +695,39 @@ namespace RazorEnhanced
 			if (x != -1 && y != -1)
 				loc = new Assistant.Point3D(x, y, 0);
 
+			// recount amount
+			int newamount = amount;
 			if (amount == 0)
 			{
-				DragDropManager.HoldingItem = true;
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Thread.Sleep(80);
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-				DragDropManager.HoldingItem = false;
+				newamount = item.Amount;
 			}
 			else
 			{
 				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				DragDropManager.HoldingItem = true;
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Thread.Sleep(80);
+					newamount = item.Amount;
+			}
+
+			RazorEnhanced.DragDropManager.DragFail = false;
+
+			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, newamount));
+
+			int sleepcount = 0;
+			while (World.FindItem(item.Serial) != null && !RazorEnhanced.DragDropManager.DragFail)
+			{
+				Thread.Sleep(10);
+				sleepcount += 1;
+				if (sleepcount > 50)
+					break;
+
+			}
+
+			if (!RazorEnhanced.DragDropManager.DragFail)
+			{
 				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-				DragDropManager.HoldingItem = false;
+			}
+			else
+			{
+				RazorEnhanced.DragDropManager.DragFail = false;
 			}
 		}
 
@@ -740,11 +754,10 @@ namespace RazorEnhanced
 			if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-			DragDropManager.HoldingItem = true;
 			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
 			Thread.Sleep(80);
 			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
-			DragDropManager.HoldingItem = false;
+
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount)

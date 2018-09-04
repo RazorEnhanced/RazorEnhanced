@@ -385,9 +385,6 @@ namespace RazorEnhanced
 
 					foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
 					{
-						if (DragDropManager.HoldingItem)
-							continue;
-
 						if (autoLootItem.Color == -1)          // Colore ALL
 						{
 							if (oggettoContenuto.ItemID != autoLootItem.Graphics)

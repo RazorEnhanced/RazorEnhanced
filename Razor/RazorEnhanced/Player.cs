@@ -1042,84 +1042,13 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
-			Mutex m;
-			if (!Mutex.TryOpenExisting("mutexrazorenhanced", out m))
-			{
-				m = new Mutex(true, "mutexrazorenhanced");
-				//m.WaitOne();
-			}
-			else
-			{
-				try  // AbandonedMutexException
-				{
-					m.WaitOne();
-				}
-				catch
-				{
-					m = new Mutex(true, "mutexrazorenhanced");
-					//m.WaitOne();
-				}
-			}
 			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			while (!UoWarper.UODLLHandleClass.Open())
-			{
-				Thread.Sleep(50);
-			}
-			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
-			UoWarper.UODLLHandleClass.Close();
-
-			try  // AbandonedMutexException
-			{
-				m.ReleaseMutex();
-			}
-			catch {
-
-			}
-			Misc.Pause(70);
-			
-
-			/*if (!Mutex.TryOpenExisting("mutexrazorenhanced", out UoWarper.UoModMutex))
-			{
-				UoWarper.UoModMutex = new Mutex(true, "mutexrazorenhanced");
-				RazorEnhanced.AutoLoot.AddLog("Creo nuovo");
-			}
-			else
-			{
-				try  // AbandonedMutexException
-				{
-					RazorEnhanced.AutoLoot.AddLog("wait");
-					UoWarper.UoModMutex.WaitOne(2000);
-					RazorEnhanced.AutoLoot.AddLog("END wait");
-				}
-				catch
-				{
-					RazorEnhanced.AutoLoot.AddLog("wait NEW");
-					UoWarper.UoModMutex = new Mutex(true, "mutexrazorenhanced");
-					UoWarper.UoModMutex.WaitOne(2000);
-					RazorEnhanced.AutoLoot.AddLog("END NEW");
-				}
-				
-				
-			}
-			
-			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			while (!UoWarper.UODLLHandleClass.Open())
+			while (!UoWarper.UODLLHandleClass.Open(1))
 			{
 				Thread.Sleep(10);
 			}
 			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
-			Thread.Sleep(100);
 
-			UoWarper.UoModMutex.ReleaseMutex();
-			/*
-			/*
-			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			while (!UoWarper.UODLLHandleClass.Open())
-			{
-				Thread.Sleep(10);
-			}
-			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
-			*/
 		}
 
 		internal static void PathFindToPacket(Assistant.Point3D Location)

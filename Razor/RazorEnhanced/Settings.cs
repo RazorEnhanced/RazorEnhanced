@@ -2137,7 +2137,7 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[i];
 					if (row.RowState != DataRowState.Deleted)
-					{
+					{ 
 						if ((string)row["List"] == list)
 							row.Delete();
 					}

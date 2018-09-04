@@ -306,9 +306,6 @@ namespace RazorEnhanced
 
 				foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 				{
-					if (DragDropManager.HoldingItem)
-						continue;
-
 					if (scavengerItem.Color == -1)          // Colore ALL
 					{
 						if (itemGround.ItemID == scavengerItem.Graphics)
