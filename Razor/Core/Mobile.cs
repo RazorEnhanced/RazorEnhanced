@@ -319,7 +319,13 @@ namespace Assistant
 
 		internal Item GetItemOnLayer(Layer layer)
 		{
-			return m_Items.FirstOrDefault(item => item.Layer == layer);
+			for (int i = 0; i < m_Items.Count; i++)
+			{
+				Item item = (Item)m_Items[i];
+				if (item.Layer == layer)
+					return item;
+			}
+			return null;
 		}
 
 		internal Item Backpack
