@@ -66,10 +66,9 @@ namespace RazorEnhanced
 			get
 			{
 				List<Item> items = new List<Item>();
-				List<Assistant.Item> itempresent = new List<Assistant.Item>(m_AssistantItem.Contains);
-				foreach (Assistant.Item assistantItem in itempresent)
+				for (int i = 0; i < m_AssistantItem.Contains.Count; i++)
 				{
-					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(m_AssistantItem.Contains[i]);
 					items.Add(enhancedItem);
 				}
 				return items;
