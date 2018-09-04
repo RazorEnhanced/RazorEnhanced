@@ -406,40 +406,6 @@ namespace RazorEnhanced
 		{
 			return Engine.MainWindow.ChkNoRunStealth.Checked;
 		}
-		internal static bool RotateMove(Direction d)
-		{
-			if ((World.Player.Direction & Assistant.Direction.Mask) != d)
-			{
-				Player.Run(d.ToString());
-			}
-			return Player.Run(d.ToString());
-		}
-
-		public static IntPtr _handleToUo = IntPtr.Zero;
-		public static void testpath(int x, int y, int z) 
-		{
-			var pathFindEnded = false;
-			
-			new Thread(() =>
-			{
-				var timeout = 1000;
-				DateTime end = DateTime.Now.AddMilliseconds(timeout);
-				while (!pathFindEnded && DateTime.Now < end)
-					Thread.Sleep(10);
-
-				if (!pathFindEnded)
-				{
-					if (_handleToUo == IntPtr.Zero)
-						_handleToUo = DLLImport.Win.OpenProcess(2035711, false, ClientCommunication.ClientProcess.Id);
-
-					DLLImport.Win.WriteProcessMemory(_handleToUo, 0x400600 - 2, BitConverter.GetBytes((short)0), 2, out var dummy);
-				}
-			}).Start();
-
-			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
-			pathFindEnded = true;
-		
-		}
 
 
 	}
