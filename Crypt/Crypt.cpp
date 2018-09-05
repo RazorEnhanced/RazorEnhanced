@@ -767,7 +767,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	addr = mf.GetAddress("\x8B\x44\x24\x08\x8B\x4C\x24\x10\x0B\xC8\x8B\x4C\x24\x0C\x75\x09", 16); // E_OLDDIRAddress
 	if (addr)
 	{
-		E_OLDDIRAddress = addr + 16;
+		E_OLDDIRAddress = addr;
 	}
 
 	addr = mf.GetAddress("\x24\x14\x6A\x01\x33\xDB\x53\x53\x50", 9); // E_REDIRAddress
