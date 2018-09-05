@@ -498,10 +498,10 @@ namespace Assistant
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.DragDropManager.HoldingItem = false;
+		/*	RazorEnhanced.DragDropManager.HoldingItem = false;
 
 			if (RazorEnhanced.AutoLoot.AutoMode)
-				args.Block = true;
+				args.Block = true;*/
 
 			if (!DragDropManager.LiftReject())
 			{
@@ -1054,6 +1054,11 @@ namespace Assistant
 			ClientCommunication.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
 			ClientCommunication.BeginCalibratePosition();
+
+			// Get pathfind address
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)ClientCommunication.UONetMessage.PathFindAddress, IntPtr.Zero);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)ClientCommunication.UONetMessage.E_REDIRAddress, IntPtr.Zero);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)ClientCommunication.UONetMessage.E_OLDDIRAddress, IntPtr.Zero);
 
 			// Carico profili se linkati
 			string profilename = RazorEnhanced.Profiles.IsLinked(serial);

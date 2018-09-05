@@ -68,8 +68,10 @@ namespace Assistant
 			SmartCPU = 21,
 			Negotiate = 22,
 			SetMapHWnd = 23,
-			DwmFree = 25
-
+			DwmFree = 25,
+		    PathFindAddress = 30,
+			E_OLDDIRAddress = 31,
+			E_REDIRAddress = 32,
 			// ZIPPY REV 80			SetFwdHWnd = 24,
 		}
 
@@ -118,6 +120,10 @@ namespace Assistant
 
 			Last = POWERHOUR
 		}
+
+		internal static int PathFindAddress = 0;
+		internal static int E_REDIRAddress = 0;
+		internal static int E_OLDDIRAddress = 0;
 
 		private class WndCmd
 		{
@@ -1054,6 +1060,18 @@ namespace Assistant
 						MessageBox.Show(Engine.ActiveWindow, "An Error has occured : \n" + error, "Error Reported", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 						break;
 					}
+
+				case UONetMessage.PathFindAddress:
+					PathFindAddress = lParam;
+					break;
+
+				case UONetMessage.E_OLDDIRAddress:
+					E_OLDDIRAddress = lParam;
+					break;
+
+				case UONetMessage.E_REDIRAddress:
+					E_REDIRAddress = lParam;
+					break;
 
 				//case UONetMessage.FindData:
 				//	FindData.Message((wParam & 0xFFFF0000) >> 16, lParam);

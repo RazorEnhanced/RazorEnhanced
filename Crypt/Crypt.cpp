@@ -42,6 +42,7 @@ DWORD ResizeFuncaddr = 0;
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
 unsigned long RecvAddress, SendAddress, ConnectAddress, CloseSocketAddress, SelectAddress, CreateFileAAddress;
+unsigned long PathFindAddress = 0, E_OLDDIRAddress = 0, E_REDIRAddress = 0;
 
 bool Seeded = false;
 bool FirstRecv = true;
@@ -727,6 +728,11 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	mf.AddEntry("Electronic Arts Inc.", 20);
 	mf.AddEntry("intro.bik", 10);
 	mf.AddEntry("osilogo.bik", 12);
+	// pathfind data
+	mf.AddEntry("\x10\x85\xC0\x0F\x84\x73\x01\x00\x00", 9, 0x00500000); // pathfind function
+	mf.AddEntry("\x8B\x44\x24\x08\x8B\x4C\x24\x10\x0B\xC8\x8B\x4C\x24\x0C\x75\x09", 16, 0x00500000); // pathfind E_OLDDIR 
+	mf.AddEntry("\x24\x14\x6A\x01\x33\xDB\x53\x53\x50", 9, 0x00500000); // pathfind E_REDIR 
+	// end pathfind
 	mf.AddEntry("\x80\x02\x00\x00\xE0\x01\x00\x00", 8, 0x00500000); // current screen size
 	mf.AddEntry("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16, 0x00400000); // resize screen function
 	mf.AddEntry("\x57\x56\x6A\x00\x6A\x00\xE8", 7); // redraw screen/edge function
@@ -750,6 +756,26 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	memcpy(pShared->CheatKey, defaultCheatKey, 16);
 	bool newclient = true;
 	mf.Execute();
+
+	// Pathfind data
+	addr = mf.GetAddress("\x10\x85\xC0\x0F\x84\x73\x01\x00\x00", 9); // PathFindAddress
+	if (addr)
+	{
+		PathFindAddress = addr + 9;
+	}
+	
+	addr = mf.GetAddress("\x8B\x44\x24\x08\x8B\x4C\x24\x10\x0B\xC8\x8B\x4C\x24\x0C\x75\x09", 16); // E_OLDDIRAddress
+	if (addr)
+	{
+		E_OLDDIRAddress = addr + 16;
+	}
+
+	addr = mf.GetAddress("\x24\x14\x6A\x01\x33\xDB\x53\x53\x50", 9); // E_REDIRAddress
+	if (addr)
+	{
+		E_REDIRAddress = addr + 9;
+	}
+	// End Pathdind data
 
 	SizePtr = (SIZE*)mf.GetAddress("\x80\x02\x00\x00\xE0\x01\x00\x00", 8);
 	if (SizePtr)
@@ -2152,8 +2178,17 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 						PostMessage( hPostWnd, WM_UONETEVENT, SET_FWD_HWND, lParam );
 						break;
 			*/
+		case PATHFIND_ADDRESS:
+			PostMessage(hPostWnd, WM_UONETEVENT, PATHFIND_ADDRESS, PathFindAddress);
+			break;
+		case E_REDIR_ADDRESS:
+			PostMessage(hPostWnd, WM_UONETEVENT, E_REDIR_ADDRESS, E_REDIRAddress);
+			break;
+		case E_OLDDIR_ADDRESS:
+			PostMessage(hPostWnd, WM_UONETEVENT, E_OLDDIR_ADDRESS, E_OLDDIRAddress);
+			break;
 		}
-		break;
+
 
 		/*case WM_SIZE:
 		if ( wParam == 2 && pMsg && pMsg->hwnd == hWnd  )
