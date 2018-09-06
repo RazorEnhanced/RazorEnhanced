@@ -1040,6 +1040,7 @@ namespace RazorEnhanced
 			PathFindTo(Location.X, Location.Y, Location.Z);
 		}
 
+		private static MemoryComm memoryComm = new MemoryComm();
 		public static void PathFindTo(int x, int y, int z)
 		{
 			if (ClientCommunication.PathFindAddress == 0 || ClientCommunication.E_OLDDIRAddress == 0 || ClientCommunication.E_REDIRAddress == 0)
@@ -1047,8 +1048,6 @@ namespace RazorEnhanced
 				Misc.SendMessage("Can't detect pathfind function for your client version, Contact support on discord channel.");
 				return;
 			}
-
-			MemoryComm memoryComm = new MemoryComm();
 			memoryComm.PathFind(Convert.ToInt16(x), Convert.ToInt16(y), Convert.ToInt16(z));
 		}
 
