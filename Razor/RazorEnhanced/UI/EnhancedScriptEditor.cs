@@ -428,7 +428,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.Run(string)", new string[] { "string Direction" }, "int", "Move character (run speed) in a specific direction\n\tCheck the wiki for the possible strings\n\t Return true for success move, false if fail");
 			descriptionPlayer.Add("Player.Run", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", new string[] { "Point3D Coords or ( int X, int Y, int Z )" }, "void", "Client pathfinder to specific location with Point3D or XYZ coordinates");
+			tooltip = new ToolTipDescriptions("Player.PathFindTo(int, int, int)", new string[] { "int X, int Y, int Z" }, "void", "Client pathfinder to specific location with XYZ coordinates");
 			descriptionPlayer.Add("Player.PathFindTo", tooltip);
 
             tooltip = new ToolTipDescriptions("Player.GetPropValue(string)", new string[] { "string PropName" }, "int", "Get property value of player");
