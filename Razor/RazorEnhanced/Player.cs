@@ -1042,14 +1042,84 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
-			if (ClientCommunication.PathFindAddress == 0 || ClientCommunication.E_OLDDIRAddress == 0 || ClientCommunication.E_REDIRAddress == 0)
+			Mutex m;
+			if (!Mutex.TryOpenExisting("mutexrazorenhanced", out m))
 			{
-				Misc.SendMessage("Can't detect pathfind function for your client version, Contact support on discord channel.");
-				return;
+				m = new Mutex(true, "mutexrazorenhanced");
+				//m.WaitOne();
 			}
+			else
+			{
+				try  // AbandonedMutexException
+				{
+					m.WaitOne();
+				}
+				catch
+				{
+					m = new Mutex(true, "mutexrazorenhanced");
+					//m.WaitOne();
+				}
+			}
+			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+			while (!UoWarper.UODLLHandleClass.Open())
+			{
+				Thread.Sleep(50);
+			}
+			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
+			UoWarper.UODLLHandleClass.Close();
 
-			MemoryComm memoryComm = new MemoryComm();
-			memoryComm.PathFind(Convert.ToInt16(x), Convert.ToInt16(y), Convert.ToInt16(z));
+			try  // AbandonedMutexException
+			{
+				m.ReleaseMutex();
+			}
+			catch {
+
+			}
+			Misc.Pause(70);
+			
+
+			/*if (!Mutex.TryOpenExisting("mutexrazorenhanced", out UoWarper.UoModMutex))
+			{
+				UoWarper.UoModMutex = new Mutex(true, "mutexrazorenhanced");
+				RazorEnhanced.AutoLoot.AddLog("Creo nuovo");
+			}
+			else
+			{
+				try  // AbandonedMutexException
+				{
+					RazorEnhanced.AutoLoot.AddLog("wait");
+					UoWarper.UoModMutex.WaitOne(2000);
+					RazorEnhanced.AutoLoot.AddLog("END wait");
+				}
+				catch
+				{
+					RazorEnhanced.AutoLoot.AddLog("wait NEW");
+					UoWarper.UoModMutex = new Mutex(true, "mutexrazorenhanced");
+					UoWarper.UoModMutex.WaitOne(2000);
+					RazorEnhanced.AutoLoot.AddLog("END NEW");
+				}
+				
+				
+			}
+			
+			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+			while (!UoWarper.UODLLHandleClass.Open())
+			{
+				Thread.Sleep(10);
+			}
+			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
+			Thread.Sleep(100);
+
+			UoWarper.UoModMutex.ReleaseMutex();
+			/*
+			/*
+			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+			while (!UoWarper.UODLLHandleClass.Open())
+			{
+				Thread.Sleep(10);
+			}
+			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
+			*/
 		}
 
 		internal static void PathFindToPacket(Assistant.Point3D Location)
