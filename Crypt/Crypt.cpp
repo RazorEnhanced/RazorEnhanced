@@ -751,29 +751,6 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	bool newclient = true;
 	mf.Execute();
 
-<<<<<<< HEAD
-	// Pathfind data
-	addr = mf.GetAddress("\x10\x85\xC0\x0F\x84\x73\x01\x00\x00", 9); // PathFindAddress
-	if (addr)
-	{
-		PathFindAddress = addr + 9;
-	}
-	
-	addr = mf.GetAddress("\x8B\x44\x24\x08\x8B\x4C\x24\x10\x0B\xC8\x8B\x4C\x24\x0C\x75\x09", 16); // E_OLDDIRAddress
-	if (addr)
-	{
-		E_OLDDIRAddress = addr + 16;
-	}
-
-	addr = mf.GetAddress("\x24\x14\x6A\x01\x33\xDB\x53\x53\x50", 9); // E_REDIRAddress
-	if (addr)
-	{
-		E_REDIRAddress = addr + 9;
-	}
-	// End Pathdind data
-
-=======
->>>>>>> parent of 0507c0a... Part 1, new pathfind system
 	SizePtr = (SIZE*)mf.GetAddress("\x80\x02\x00\x00\xE0\x01\x00\x00", 8);
 	if (SizePtr)
 	{
