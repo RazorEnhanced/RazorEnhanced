@@ -818,7 +818,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Journal.SearchByType(string, string)", new string[] { "string TextToSearch", "string MessageType" }, "bool", "Search a text in all journal buffer by type, and text and type are case sensitive\n\tTrue: text found, False: text not found\n\tCheck the wiki for the possible strings");
 			descriptionJournal.Add("Journal.SearchByType", tooltip);
 
-			tooltip = new ToolTipDescriptions("Journal.GetLineText(string)", new string[] { "string TextToSearch" }, "string", "Search and get last line with searched text, and text is case sensitive\n\tTrue: text found, False: text not found");
+			tooltip = new ToolTipDescriptions("Journal.GetLineText(string)", new string[] { "string TextToSearch" }, "string", "Search and get last line containing searched text, and text is case sensitive\n\tReturns: matched entry or empty string (if not found)");
 			descriptionJournal.Add("Journal.GetLineText", tooltip);
 
 			tooltip = new ToolTipDescriptions("Journal.GetSpeechName()", new string[] { "none" }, "List<string>", "Get a list of all players name and object speech");
