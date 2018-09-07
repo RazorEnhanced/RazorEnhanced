@@ -407,15 +407,6 @@ namespace RazorEnhanced
 			return Engine.MainWindow.ChkNoRunStealth.Checked;
 		}
 
-		public static void test()
-		{
-			Misc.SendMessage("Debug Pathfind address: 0x" +ClientCommunication.PathFindAddress.ToString("X8"));
-			Thread.Sleep(100);
-			Misc.SendMessage("Debug E_OLDDIRAddress address: 0x" + ClientCommunication.E_OLDDIRAddress.ToString("X8"));
-			Thread.Sleep(100);
-			Misc.SendMessage("Debug E_REDIRAddress address: 0x" + ClientCommunication.E_REDIRAddress.ToString("X8"));
-		}
-
 
 	}
 }
