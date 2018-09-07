@@ -250,7 +250,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsStatics =
 			{
-				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo"
+				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
 			};
 
 			string[] methodsGeneric =
@@ -1054,6 +1054,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Statics.GetLandFlag(int, string)", new string[] { "int itemID", "string flagname" }, "bool", "Get true or false if flag is present for specific land itemID\n\tSee wiki for flag name list.");
 			descriptionStatics.Add("Statics.GetLandFlag", tooltip);
+
+			tooltip = new ToolTipDescriptions("Statics.CheckDeedHouse(int, int)", new string[] { "int X", "int Y" }, "bool", "Get true or false if deed house placed in specific coords.");
+			descriptionStatics.Add("Statics.CheckDeedHouse", tooltip);
 
 			#endregion
 

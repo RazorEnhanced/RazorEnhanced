@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Ultima;
 
 namespace RazorEnhanced
@@ -360,46 +361,18 @@ namespace RazorEnhanced
 			return tileinfo;
 		}
 
-		internal static List<int> GetStaticsTileInfoPathfind(int x, int y, int map)
+		public static bool CheckDeedHouse(int x, int y)
 		{
-			if (!m_loaded)
-				LoadMapData();
+			List<Multi.MultiData> multidata = Assistant.World.Multis.Values.ToList();
 
-			Ultima.HuedTile[] tiles;
-			List<int> tileinfo = new List<int>();
-
-			switch (map)
+			foreach (Multi.MultiData multi in multidata)
 			{
-				case 0:
-					tiles = Ultima.Map.Felucca.Tiles.GetStaticTiles(x, y);
-					break;
-				case 1:
-					tiles = Ultima.Map.Trammel.Tiles.GetStaticTiles(x, y);
-					break;
-				case 2:
-					tiles = Ultima.Map.Ilshenar.Tiles.GetStaticTiles(x, y);
-					break;
-				case 3:
-					tiles = Ultima.Map.Malas.Tiles.GetStaticTiles(x, y);
-					break;
-				case 4:
-					tiles = Ultima.Map.Tokuno.Tiles.GetStaticTiles(x, y);
-					break;
-				case 5:
-					tiles = Ultima.Map.TerMur.Tiles.GetStaticTiles(x, y);
-					break;
-				default:
-					return tileinfo;
-			}
-
-			if (tiles != null && tiles.Length > 0)
-			{
-				foreach (Ultima.HuedTile tile in tiles)
+				if (x >= multi.Corner1.X && x <= multi.Corner2.X + 1 && y >= multi.Corner1.Y && y <= multi.Corner2.Y + 1)
 				{
-					tileinfo.Add(tile.ID);
+					return true;
 				}
 			}
-			return tileinfo;
+			return false;
 		}
 	}
 }
