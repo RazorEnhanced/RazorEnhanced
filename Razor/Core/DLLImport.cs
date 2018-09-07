@@ -48,20 +48,6 @@ namespace Assistant
 			[DllImport("kernel32.dll", SetLastError = true)]
 			internal static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out UIntPtr lpNumberOfBytesWritten);
 
-			[DllImport("kernel32.dll", SetLastError = true)]
-			internal static extern bool WriteProcessMemory(IntPtr hProcess, int lpBaseAddress, byte[] lpBuffer, uint nSize, out UIntPtr lpNumberOfBytesWritten);
-
-			[DllImport("kernel32.dll", SetLastError = true)]
-			internal static extern bool ReadProcessMemory(
-				IntPtr hProcess,
-				IntPtr lpBaseAddress,
-				byte[] lpBuffer,
-				int dwSize,
-				out IntPtr lpNumberOfBytesRead);
-
-			[DllImport("kernel32.dll")]
-			internal static extern bool VirtualProtectEx(IntPtr hProcess, IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
-
 			[Flags]
 			internal enum FreeType
 			{
