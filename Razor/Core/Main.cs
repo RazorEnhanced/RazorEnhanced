@@ -15,8 +15,6 @@ namespace Assistant
 {
 	internal class Engine
 	{
-		private static DateTime m_ExpireDate = new DateTime(2018, 9, 30);
-
 		private static IPAddress m_ip;
 
 		internal static IPAddress IP
@@ -237,13 +235,6 @@ namespace Assistant
 
 			if (DLLImport.Razor.InitializeLibrary(Engine.Version) == 0)
 				throw new InvalidOperationException("This Razor installation is corrupted.");
-
-			DateTime local = DateTime.Now;
-			if (local > m_ExpireDate)
-			{
-				MessageBox.Show("This Razor installation has expired!, Download new version from: http://www.razorenhanced.org/", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
 
 			// Profili
 			RazorEnhanced.Profiles.Load();
