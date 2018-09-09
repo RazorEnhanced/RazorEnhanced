@@ -2874,10 +2874,9 @@ namespace Assistant
 				return;
 
 			List<string> stringlist = new List<string>();
-			World.Player.HasGump = true;
 			
-			World.Player.CurrentGumpS = p.ReadUInt32();
-			World.Player.CurrentGumpI = p.ReadUInt32();
+			uint currentgumps = p.ReadUInt32();
+			uint currentgumpi = p.ReadUInt32();
 			try
 			{
 				int x = p.ReadInt32(), y = p.ReadInt32();
@@ -2925,6 +2924,11 @@ namespace Assistant
 				World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
 				}
 			catch { }
+
+			// when all operation done update status.
+			World.Player.CurrentGumpS = currentgumps;
+			World.Player.CurrentGumpI = currentgumpi;
+			World.Player.HasGump = true;
 		}
 
 		private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
