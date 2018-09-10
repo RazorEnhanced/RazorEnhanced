@@ -271,28 +271,35 @@ namespace Ultima
 		{
 			index = GetLegalItemID(index, checkmaxid);
 			index += 0x4000;
+			patched = false;
 
-			if (m_patched.Contains(index))
-				patched = (bool)m_patched[index];
+			if (m_Cache.Length > index && m_Removed.Length > index)
+			{
+				/*	if (m_patched.Contains(index))
+							patched = (bool)m_patched[index];
+						else
+							patched = false;*/
+
+				if (m_Removed[index])
+					return null;
+				if (m_Cache[index] != null)
+					return m_Cache[index];
+
+				int length, extra;
+				Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+				if (stream == null)
+					return null;
+
+				/*	if (patched)
+						m_patched[index] = true;*/
+
+				if (Files.CacheData)
+					return m_Cache[index] = LoadStatic(stream, length);
+				else
+					return LoadStatic(stream, length);
+			}
 			else
-				patched = false;
-
-			if (m_Removed[index])
 				return null;
-			if (m_Cache[index] != null)
-				return m_Cache[index];
-
-			int length, extra;
-			Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
-			if (stream == null)
-				return null;
-			if (patched)
-				m_patched[index] = true;
-
-			if (Files.CacheData)
-				return m_Cache[index] = LoadStatic(stream, length);
-			else
-				return LoadStatic(stream, length);
 		}
 
 		public static byte[] GetRawStatic(int index)
