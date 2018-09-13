@@ -9759,7 +9759,7 @@ namespace Assistant
 						listitem.SubItems.Add("No");
 
 
-					listitem.SubItems.Add(key.ToString());
+					listitem.SubItems.Add(HotKey.KeyString(key));
 
 					if (passkey)
 						listitem.SubItems.Add("Yes");
@@ -9784,7 +9784,7 @@ namespace Assistant
 
 					listitem.SubItems.Add("No");
 
-					listitem.SubItems.Add(key.ToString());
+					listitem.SubItems.Add(HotKey.KeyString(key));
 
 					listitem.SubItems.Add("No");
 
