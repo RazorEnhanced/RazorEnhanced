@@ -1781,7 +1781,10 @@ namespace RazorEnhanced.UI
 				this.Text = m_Title;
 				return true;
 			}
-	
+
+			if (fastColoredTextBoxEditor.Text == String.Empty) // Not ask to save empty text
+				return true;
+
 			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (res == System.Windows.Forms.DialogResult.Yes)
 			{
