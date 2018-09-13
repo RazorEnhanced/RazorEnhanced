@@ -9867,11 +9867,11 @@ namespace Assistant
 			{
 				bool passkey = (bool)row["HotKeyPass"];
 				Keys key = (Keys)row["HotKey"];
-				scriptlistView.Items[i].SubItems[5].Text = key.ToString();
+				scriptlistView.Items[i].SubItems[6].Text = HotKey.KeyString(key);
 				if (passkey)
-					scriptlistView.Items[i].SubItems[6].Text = "Yes";
+					scriptlistView.Items[i].SubItems[7].Text = "Yes";
 				else
-					scriptlistView.Items[i].SubItems[6].Text = "No";
+					scriptlistView.Items[i].SubItems[7].Text = "No";
 				i++;
 			}
 			scriptlistView.EndUpdate();
