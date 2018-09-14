@@ -718,7 +718,6 @@ namespace RazorEnhanced
 
 	public class PathFinding
 	{
-		private static int m_retry = 0;
 		public class Route
 		{
 			public int X = 0;
@@ -735,8 +734,6 @@ namespace RazorEnhanced
 
 		public static void Go(Route r)
 		{
-			m_retry = 0; // reset retry count
-
 			List<Tile> road = PathMove.GetPath(r.X, r.Y);
 			if (road == null) // No way to destination
 			{
@@ -803,15 +800,15 @@ namespace RazorEnhanced
 
 					if (!r.StopIfStuck)
 					{
-						if (r.MaxRetry != 0) // no retry check if 0 
+						if (r.MaxRetry == 0) // no retry check if 0 
 							Go(r);
-						else // count retry attempt
+						else // count retry 
 						{
-							if (m_retry > r.MaxRetry)
+							if (r.MaxRetry == 0) // End retry 
 								return;
 
+							r.MaxRetry--;
 							Go(r);
-							m_retry++;
 						}
 					}
 					return;

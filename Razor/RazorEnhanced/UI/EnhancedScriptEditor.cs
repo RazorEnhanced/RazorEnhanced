@@ -124,7 +124,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
-				"Statics", "DPSMeter"
+				"Statics", "DPSMeter", "PathFinding"
 			};
 
 			#endregion
@@ -248,6 +248,11 @@ namespace RazorEnhanced.UI
 				"DPSMeter.Status", "DPSMeter.Start", "DPSMeter.Stop", "DPSMeter.Pause", "DPSMeter.GetDamage"
 			};
 
+			string[] methodsPathFinding =
+{
+				"PathFinding.Go", "PathFinding.Route"
+			};
+
 			string[] methodsStatics =
 			{
 				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
@@ -277,6 +282,7 @@ namespace RazorEnhanced.UI
 					.Union(methodsBandageHeal)
 					.Union(methodsStatics)
 					.Union(methodsDPSMeter)
+					.Union(methodsPathFinding)
 					.ToArray();
 
 			#endregion
@@ -1012,6 +1018,18 @@ namespace RazorEnhanced.UI
 
 			#endregion
 
+			#region Description PathFinding
+
+			Dictionary<string, ToolTipDescriptions> descriptionPathFinding = new Dictionary<string, ToolTipDescriptions>();
+
+			tooltip = new ToolTipDescriptions("PathFinding.Route()", new string[] { "none" }, "PathFinding", "Create a new instance for inizialize pathfinder");
+			descriptionPathFinding.Add("PathFinding.Route", tooltip);
+
+			tooltip = new ToolTipDescriptions("PathFinding.Go(Route)", new string[] { "Route PathfindingInstance" }, "void", "Start Pathfind movement");
+			descriptionPathFinding.Add("PathFinding.Go", tooltip);
+
+			#endregion
+
 			#region Description DPSMeter
 
 			Dictionary<string, ToolTipDescriptions> descriptionDPSMeter = new Dictionary<string, ToolTipDescriptions>();
@@ -1095,6 +1113,7 @@ namespace RazorEnhanced.UI
 				.Union(descriptionBandageHeal)
 				.Union(descriptionStatics)
 				.Union(descriptionDPSMeter)
+				.Union(descriptionPathFinding)
 				.ToDictionary(x => x.Key, x => x.Value);
 
 			#endregion
