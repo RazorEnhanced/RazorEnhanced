@@ -683,12 +683,11 @@ namespace RazorEnhanced
 				{
 					serialdestination = mbag.Serial;
 				}
-			}
-
-			if (serialdestination == 0)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
-				return;
+				else
+				{
+					Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
+					return;
+				}
 			}
 
 			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
