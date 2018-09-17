@@ -503,7 +503,11 @@ namespace RazorEnhanced
 					s = Spell.Get(506);
 					break;
 
-				case "Shadow jump":
+				case "Shadow jump": // Keep old compaibility whit old script
+					s = Spell.Get(507);
+					break;
+
+				case "Shadowjump":
 					s = Spell.Get(507);
 					break;
 
