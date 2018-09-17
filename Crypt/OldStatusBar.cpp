@@ -123,6 +123,45 @@ DWORD Sprintf1UV28(DWORD sprintfAddr, DWORD fmtAddr, DWORD CurAddr, int esiOffse
 	return count;
 }
 
+DWORD Sprintf1UV281(DWORD sprintfAddr, DWORD fmtAddr, DWORD CurAddr, int esiOffset)
+{
+	int count = 0;
+
+	memcpy((void*)(CurAddr + count), "\x33\xC9", 2); // xor     ecx, ecx
+	count += 2;
+
+	memcpy((void*)(CurAddr + count), "\x8D\x54\x24\x48", 4); // lea     edx, [esp+70h+var28]
+	count += 4;
+
+	memcpy((void*)(CurAddr + count), "\x90\x8B\x8E", 3); // mov     cx, [esi+__]
+	count += 3;
+	*((int*)(CurAddr + count)) = esiOffset;
+	count += 4;
+
+	memcpy((void*)(CurAddr + count), "\x51", 1); // push    ecx
+	count++;
+
+	// push offset fmtAddr
+	*((unsigned char*)(CurAddr + count)) = 0x68;
+	count++;
+	*((int*)(CurAddr + count)) = fmtAddr;
+	count += 4;
+
+	memcpy((void*)(CurAddr + count), "\x52", 1); // push    edx
+	count++;
+
+	// call    _sprintf
+	*((unsigned char*)(CurAddr + count)) = 0xE8;
+	count++;
+	*((int*)(CurAddr + count)) = sprintfAddr - (CurAddr + count + 4);
+	count += 4;
+
+	memcpy((void*)(CurAddr + count), "\x83\xC4\x0C", 3); // add    esp, 0Ch
+	count += 3;
+
+	return count;
+}
+
 DWORD Sprintf2UV28_Byte(DWORD sprintfAddr, DWORD fmtAddr, DWORD CurAddr, int offset1, int offset2)
 {
 	int count = 0;
@@ -493,7 +532,7 @@ bool PatchStatusBar(BOOL preAOS)
 	CurPos += GumpOutV28(GumpString1, esiOffset, twoFourOff, CurPos, 174, 84);
 
 	// gold
-	CurPos += Sprintf1UV28(sprintfAddr, uFmt, CurPos, statOffset + 0x14);
+	CurPos += Sprintf1UV281(sprintfAddr, uFmt, CurPos, statOffset + 0x14);
 	CurPos += GumpOutV28(GumpString1, esiOffset, twoFourOff, CurPos, 174, 108);
 
 	if (client5)
