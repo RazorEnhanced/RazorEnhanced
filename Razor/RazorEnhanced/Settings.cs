@@ -3930,7 +3930,7 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					row[name] = value;
-					Save();
+					//Save();
 				}
 			}
 
