@@ -88,6 +88,7 @@ namespace Assistant
 		{
 			PacketHandler.RegisterClientToServerViewer(0x6C, new PacketViewerCallback(TargetResponse));
 			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
+			PacketHandler.RegisterServerToClientViewer(0x99, new PacketViewerCallback(NewTarget));
 			PacketHandler.RegisterServerToClientViewer(0xAA, new PacketViewerCallback(CombatantChange));
 
 		}
@@ -555,7 +556,6 @@ namespace Assistant
 					info.Gfx = m.Body;
 				}
 			}
-
 			Target(info, wait);
 		}
 
