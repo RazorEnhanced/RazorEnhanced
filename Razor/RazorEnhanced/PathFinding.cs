@@ -111,10 +111,14 @@ namespace RazorEnhanced
 		// DIRS is directions        
 		public static readonly Tile[] Dirs =
 		{
-			new Tile(1, 0), // to right of tile
-            new Tile(0, -1), // below tile
-            new Tile(-1, 0), // to left of tile
-            new Tile(0, 1) // above tile            
+			new Tile(1, 0),
+			new Tile(-1, 0), 
+			new Tile(0, 1), 
+			new Tile(0, -1), 
+			new Tile(-1, -1),
+            new Tile(1, 1),           
+			new Tile(-1, 1),            
+			new Tile(1, -1)          
         };
 
 		public SquareGrid(int x, int y, int squareSize)
@@ -144,9 +148,39 @@ namespace RazorEnhanced
 		{
 			int xForward = b.X, yForward = b.Y;
 			var items = World.Items.Values.Where(x => x.OnGround);
-
+			var newZ = 0;
 			GetStartZ(loc, map, items.Where(x => x.Position.X == loc.X && x.Position.Y == loc.Y), out var startZ, out var startTop);
-			var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, out var newZ);
+			var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, out newZ);
+
+			if (b.X > loc.X && b.Y > loc.Y) //Down
+			{
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, out newZ);
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, out newZ);
+			}
+			else if (b.X < loc.X && b.Y < loc.Y) //UP
+			{
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y  == yForward + 1), xForward, yForward + 1, startTop, startZ, out newZ);
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward + 1 && x.Position.Y == yForward), xForward +1, yForward, startTop, startZ, out newZ);
+			}
+			else if (b.X > loc.X && b.Y < loc.Y) //Right
+			{
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, out newZ);
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward- 1, yForward, startTop, startZ, out newZ);
+			}
+			else if (b.X < loc.X && b.Y > loc.Y) //Left
+			{
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, out newZ);
+				if (moveIsOk)
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, out newZ);
+			}
+
 			if (moveIsOk)
 			{
 				bZ = newZ;
@@ -611,7 +645,6 @@ namespace RazorEnhanced
 					map = Ultima.Map.TerMur;
 					break;
 				default:
-					Scripts.SendMessageScriptError("Script Error: GetLandID Invalid Map!");
 					break;
 			}
 
@@ -839,14 +872,14 @@ namespace RazorEnhanced
 				Player.Run(d.ToString());
 
 				if (debug)
-					Misc.SendMessage("PathFind: Rotate in direction: " + d.ToString(), 55);
+					Misc.SendMessage("PathFind: Rotate in direction: " + (d & Direction.Mask).ToString(), 55);
 			}
 		}
 
 		private static bool Run(Direction d, bool debug, bool run)
 		{
 			if (debug)
-				Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
+				Misc.SendMessage("PathFind: Move to direction: " + (d & Direction.Mask).ToString(), 55);
 
 			if (run)
 				return Player.Run(d.ToString());
