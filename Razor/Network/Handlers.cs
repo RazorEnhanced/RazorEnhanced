@@ -868,9 +868,9 @@ namespace Assistant
 			p = RazorEnhanced.Filters.EquipmentUpdateColorize(p, i);
 
 			// Set last weapon in equip
-			if (i.Layer == Layer.RightHand || i.Layer == Layer.FirstValid)
+			if (World.Player != null && (i.Layer == Layer.RightHand || i.Layer == Layer.FirstValid))
 				World.Player.LastWeaponRight = i.Serial;
-			else if (i.Layer == Layer.LeftHand)
+			else if (World.Player != null && i.Layer == Layer.LeftHand)
 				World.Player.LastWeaponLeft = i.Serial;
 
 			if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
