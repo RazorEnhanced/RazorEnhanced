@@ -15,8 +15,8 @@ namespace Assistant
 		South = 0x4,
 		Left = 0x5,
 		West = 0x6,
-		Up = 0x7,
 		Mask = 0x7,
+		Up = 0x7,
 		Running = 0x80,
 		ValueMask = 0x87
 	}

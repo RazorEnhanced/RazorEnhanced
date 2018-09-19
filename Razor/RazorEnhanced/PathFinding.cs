@@ -872,14 +872,14 @@ namespace RazorEnhanced
 				Player.Run(d.ToString());
 
 				if (debug)
-					Misc.SendMessage("PathFind: Rotate in direction: " + (d & Direction.Mask).ToString(), 55);
+					Misc.SendMessage("PathFind: Rotate in direction: " + d.ToString(), 55);
 			}
 		}
 
 		private static bool Run(Direction d, bool debug, bool run)
 		{
 			if (debug)
-				Misc.SendMessage("PathFind: Move to direction: " + (d & Direction.Mask).ToString(), 55);
+				Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
 
 			if (run)
 				return Player.Run(d.ToString());

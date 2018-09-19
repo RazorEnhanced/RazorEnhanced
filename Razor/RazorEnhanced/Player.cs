@@ -973,7 +973,7 @@ namespace RazorEnhanced
 		}
 
 		// Moving
-		public static bool Walk(string direction, bool wait = true)  // Return true se walk ok false se rifiutato da server
+		public static bool Walk(string direction)  // Return true se walk ok false se rifiutato da server
 		{
 			Enum.TryParse<Direction>(direction, out Direction dir);
 			
@@ -983,10 +983,7 @@ namespace RazorEnhanced
 				int timeout = 0;
 				World.Player.WalkScriptRequest = 1;
 
-				if (wait)
-					ClientCommunication.SendToServerWait(new WalkRequest(dir, World.Player.WalkSequence));
-				else
-					ClientCommunication.SendToServer(new WalkRequest(dir, World.Player.WalkSequence));
+				ClientCommunication.SendToServerWait(new WalkRequest(dir, World.Player.WalkSequence));
 
 				while (World.Player.WalkScriptRequest < 2)
 				{
@@ -1004,7 +1001,7 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public static bool Run(string direction, bool wait = true)    // Return true se walk ok false se rifiutato da server
+		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
 		{
 			Enum.TryParse<Direction>(direction, out Direction dir);
 
@@ -1014,10 +1011,7 @@ namespace RazorEnhanced
 				int timeout = 0;
 				World.Player.WalkScriptRequest = 1;
 
-				if (wait)
-					ClientCommunication.SendToServerWait(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
-				else
-					ClientCommunication.SendToServer(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
+				ClientCommunication.SendToServerWait(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
 
 				while (World.Player.WalkScriptRequest < 2)
 				{
