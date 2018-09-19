@@ -407,6 +407,11 @@ namespace RazorEnhanced
 			return Engine.MainWindow.ChkNoRunStealth.Checked;
 		}
 
+		public static void FocusUOWindow()
+		{
+			DLLImport.Win.ShowWindow(DLLImport.Razor.FindUOWindow(),3);
+		}
+
 
 	}
 }
