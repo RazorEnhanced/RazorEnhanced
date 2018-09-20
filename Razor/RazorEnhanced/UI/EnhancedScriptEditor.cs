@@ -174,7 +174,7 @@ namespace RazorEnhanced.UI
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
-				"Misc.ScriptStatus", "Misc.PetRename"
+				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow"
 			};
 
 			string[] methodsTarget =
@@ -694,6 +694,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Misc.PetRename(Mobile or int, string)", new string[] { "Mobile MobileInstance or int MobileSerial", "string NewName" }, "void", "Rename a specific pet.\n\tMust be tamed");
 			descriptionMisc.Add("Misc.PetRename", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.FocusUOWindow()", new string[] { "none" }, "void", "Set UoClient window in focus or restore if minimized");
+			descriptionMisc.Add("Misc.FocusUOWindow", tooltip);
 
 			#endregion
 

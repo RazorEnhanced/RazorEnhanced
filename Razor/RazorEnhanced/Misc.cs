@@ -409,7 +409,10 @@ namespace RazorEnhanced
 
 		public static void FocusUOWindow()
 		{
-			DLLImport.Win.ShowWindow(DLLImport.Razor.FindUOWindow(),3);
+			if (DLLImport.Win.IsIconic(DLLImport.Razor.FindUOWindow()))  // Minimized
+				DLLImport.Win.ShowWindow(DLLImport.Razor.FindUOWindow(),3);
+			else // Only not focused
+				DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 		}
 
 
