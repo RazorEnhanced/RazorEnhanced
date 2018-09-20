@@ -203,7 +203,7 @@ namespace RazorEnhanced
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
 			CopyTable();
 		}
 
@@ -591,7 +591,7 @@ namespace RazorEnhanced
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
 			CopyTable();
 		}
 

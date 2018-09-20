@@ -252,7 +252,7 @@ namespace RazorEnhanced
 
 		internal static void AddItemToList(string name, int graphics, int color)
 		{
-			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), "All" });
+			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), "All" });
 			CopyTable();
 		}
 
