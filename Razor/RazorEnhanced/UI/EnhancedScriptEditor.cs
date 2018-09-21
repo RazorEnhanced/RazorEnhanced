@@ -179,7 +179,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsTarget =
 			{
-				"Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.TargetExecuteRelative" ,"Target.PromptTarget", "Target.Cancel", "Target.Last", "Target.LastQueued",
+				"Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.TargetExecuteRelative" ,"Target.PromptGroundTarget", "Target.PromptTarget", "Target.Cancel", "Target.Last", "Target.LastQueued",
 				"Target.Self", "Target.SelfQueued", "Target.SetLast", "Target.ClearLast", "Target.ClearQueue", "Target.ClearLastandQueue", "Target.SetLastTargetFromList", "Target.GetTargetFromList",
 				"Target.PerformTargetFromList", "Target.AttackTargetFromList"
 			};
@@ -724,6 +724,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Target.PromptTarget()", new string[] { "none or string message" }, "int", "Pick the serial from item or mobile\n\tCan specific string in parameters for prompt message");
 			descriptionTarget.Add("Target.PromptTarget", tooltip);
+			
+			tooltip = new ToolTipDescriptions("Target.PromptGroundTarget()", new string[] { "none or string message" }, "Point3D", "Pick coords of ground targetted\n\tCan specific string in parameters for prompt message");
+			descriptionTarget.Add("Target.PromptGroundTarget", tooltip);
 
 			tooltip = new ToolTipDescriptions("Target.Cancel()", new string[] { "none" }, "void", "Cancel target cursor");
 			descriptionTarget.Add("Target.Cancel", tooltip);

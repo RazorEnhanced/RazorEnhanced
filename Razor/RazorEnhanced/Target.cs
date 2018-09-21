@@ -7,6 +7,7 @@ namespace RazorEnhanced
 	public class Target
 	{
 		private int m_ptarget;
+		private RazorEnhanced.Point3D m_pgtarget;
 
 		//internal static bool TargetMessage = false;
 
@@ -201,7 +202,7 @@ namespace RazorEnhanced
 			Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
-				Thread.Sleep(2);
+				Thread.Sleep(30);
 
 			while (m_ptarget == -1 && Targeting.HasTarget)
 				Thread.Sleep(30);
@@ -209,7 +210,7 @@ namespace RazorEnhanced
 			Thread.Sleep(100);
 
 			if (m_ptarget == -1)
-				Misc.SendMessage("PromptTarget Cancelled", 945, true);
+				Misc.SendMessage("Prompt Target Cancelled", 945, true);
 
 			return m_ptarget;
 		}
@@ -217,6 +218,35 @@ namespace RazorEnhanced
 		private void PromptTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			m_ptarget = serial;
+		}
+
+		public Point3D PromptGroundTarget(string message = "Select Ground Position")
+		{
+			m_pgtarget = Point3D.MinusOne;
+
+			Misc.SendMessage(message, 945, true);
+			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(PromptGroundTargetExex_Callback));
+
+			while (!Targeting.HasTarget)
+				Thread.Sleep(30);
+
+			while (m_pgtarget.X == -1 && Targeting.HasTarget)
+				Thread.Sleep(30);
+
+			Thread.Sleep(100);
+
+			if (m_pgtarget.X == -1)
+				Misc.SendMessage("Prompt Gorund Target Cancelled", 945, true);
+
+			return m_pgtarget;
+		}
+
+		private void PromptGroundTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			if (!loc)
+				m_pgtarget = Point3D.MinusOne;
+			else
+				m_pgtarget = new Point3D(pt.X, pt.Y, pt.Z);
 		}
 
 		// Check Poison 
