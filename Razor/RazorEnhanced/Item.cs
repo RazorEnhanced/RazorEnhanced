@@ -40,9 +40,31 @@ namespace RazorEnhanced
 
 		public string Layer { get { return m_AssistantItem.Layer.ToString(); } }
 
-		public object Container { get { return m_AssistantItem.Container; } }
+		public int Container
+		{
+			get
+			{
+				if (m_AssistantItem.Container is Assistant.Item)
+					return (m_AssistantItem.Container as Assistant.Item).Serial;
+				else if (m_AssistantItem.Container is Assistant.Mobile)
+					return (m_AssistantItem.Container as Assistant.Mobile).Serial;
+				else
+					return 0;
+			}
+		}
 
-		public object RootContainer { get { return m_AssistantItem.RootContainer; } }
+		public int RootContainer
+		{
+			get
+			{
+				if (m_AssistantItem.RootContainer is Assistant.Item)
+					return (m_AssistantItem.RootContainer as Assistant.Item).Serial;
+				else if (m_AssistantItem.RootContainer is Assistant.Mobile)
+					return (m_AssistantItem.RootContainer as Assistant.Mobile).Serial;
+				else
+					return 0;
+			}
+		}
 
 		public bool PropsUpdated { get { return m_AssistantItem.PropsUpdated; } }
 
@@ -833,7 +855,7 @@ namespace RazorEnhanced
 
 			foreach (Item found in containeritem)
 			{
-				if (!found.IsInBank && found.RootContainer == World.Player)
+				if (!found.IsInBank && found.RootContainer == World.Player.Serial)
 				{
 					RazorEnhanced.Items.UseItem(found);
 					return true;

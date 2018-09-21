@@ -472,7 +472,7 @@ namespace RazorEnhanced
 		{
 			Item itemtodrop = RazorEnhanced.Items.FindBySerial(serial);
 
-			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player)
+			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player.Serial)
 			{
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(itemtodrop.Serial, itemtodrop.Amount));
 				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtodrop.Serial, World.Player.Position, Assistant.Serial.MinusOne));

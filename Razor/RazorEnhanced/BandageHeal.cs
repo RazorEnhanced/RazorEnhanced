@@ -409,7 +409,7 @@ namespace RazorEnhanced
 
 			foreach (Item found in containeritem)
 			{
-				if (!found.IsInBank && found.RootContainer == World.Player)
+				if (!found.IsInBank && found.RootContainer == World.Player.Serial)
 				{
 					return found.Serial;
 				}

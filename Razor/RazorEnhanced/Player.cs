@@ -712,7 +712,7 @@ namespace RazorEnhanced
 		public static void EquipItem(Item item)
 		{
 			Assistant.Mobile player = World.Player;
-			if (item.Container == null && Misc.DistanceSqrt(item.GetWorldPosition(), Position) > 3)
+			if (item.Container == 0 && Misc.DistanceSqrt(item.GetWorldPosition(), Position) > 3)
 			{
 				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
