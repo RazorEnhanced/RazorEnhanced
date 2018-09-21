@@ -1651,37 +1651,6 @@ namespace RazorEnhanced.UI
 			InspectGumps();
 		}
 
-		private void InspectItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
-			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
-			if (assistantItem != null && assistantItem.Serial.IsItem)
-			{
-				this.BeginInvoke((MethodInvoker)delegate
-				{
-					EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem)
-					{
-						TopMost = true
-					};
-					inspector.Show();
-				});
-			}
-			else
-			{
-				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
-				if (assistantMobile != null && assistantMobile.Serial.IsMobile)
-				{
-					this.BeginInvoke((MethodInvoker)delegate
-					{
-						EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile)
-						{
-							TopMost = true
-						};
-						inspector.Show();
-					});
-				}
-			}
-		}
-
 		private void toolStripRecord_Click(object sender, EventArgs e)
 		{
 			ScriptRecord();
@@ -1880,7 +1849,7 @@ namespace RazorEnhanced.UI
 
 		private void InspectEntities()
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(InspectItemTarget_Callback));
+			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
 		}
 
 		private void InspectGumps()

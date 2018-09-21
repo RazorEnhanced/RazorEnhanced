@@ -314,6 +314,12 @@
     <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.Designer.cs">
       <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedStaticInspector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedStaticInspector.Designer.cs">
+      <DependentUpon>EnhancedStaticInspector.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedProfileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -463,6 +469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.resx">
       <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedStaticInspector.resx">
+      <DependentUpon>EnhancedStaticInspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileImport.resx">
       <DependentUpon>EnhancedProfileImport.cs</DependentUpon>
