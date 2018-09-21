@@ -9,6 +9,10 @@ namespace Assistant
 		internal class Win
 		{
 			[DllImport("user32.dll")]
+			[return: MarshalAs(UnmanagedType.Bool)]
+			internal static extern bool IsIconic(IntPtr hWnd);
+
+			[DllImport("user32.dll")]
 			internal static extern IntPtr SetParent(IntPtr child, IntPtr newParent);
 
 			[DllImport("Gdi32.dll")]
