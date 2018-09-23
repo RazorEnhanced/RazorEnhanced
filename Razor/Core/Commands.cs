@@ -38,32 +38,44 @@ namespace Assistant
 		private static void GetInfo(string[] param)
 		{
 			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(GetInfoTarget_Callback));
+			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback( GetInfoTarget_Callback));
 		}
 
-		private static void GetInfoTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		internal static void GetInfoTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
-			if (assistantItem != null && assistantItem.Serial.IsItem)
+			if (loc) // Target on ground or static
 			{
 				Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
 				{
-					RazorEnhanced.UI.EnhancedItemInspector inspector = new RazorEnhanced.UI.EnhancedItemInspector(assistantItem);
+					RazorEnhanced.UI.EnhancedStaticInspector inspector = new RazorEnhanced.UI.EnhancedStaticInspector(pt);
 					inspector.TopMost = true;
 					inspector.Show();
 				});
 			}
-			else
+			else  // Target item or mobile
 			{
-				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
-				if (assistantMobile != null && assistantMobile.Serial.IsMobile)
+				Assistant.Item assistantItem = Assistant.World.FindItem(serial);
+				if (assistantItem != null && assistantItem.Serial.IsItem)
 				{
 					Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
 					{
-						RazorEnhanced.UI.EnhancedMobileInspector inspector = new RazorEnhanced.UI.EnhancedMobileInspector(assistantMobile);
+						RazorEnhanced.UI.EnhancedItemInspector inspector = new RazorEnhanced.UI.EnhancedItemInspector(assistantItem);
 						inspector.TopMost = true;
 						inspector.Show();
 					});
+				}
+				else
+				{
+					Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
+					if (assistantMobile != null && assistantMobile.Serial.IsMobile)
+					{
+						Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
+						{
+							RazorEnhanced.UI.EnhancedMobileInspector inspector = new RazorEnhanced.UI.EnhancedMobileInspector(assistantMobile);
+							inspector.TopMost = true;
+							inspector.Show();
+						});
+					}
 				}
 			}
 		}

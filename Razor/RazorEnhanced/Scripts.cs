@@ -329,8 +329,6 @@ namespace RazorEnhanced
 				m_AutoStart = autostart;
 				m_Thread = new Thread(AsyncStart);
 			}
-
-			internal static ConcurrentDictionary<string, object> SharedScriptData = new ConcurrentDictionary<string, object>();
 		}
 
 		internal class ScriptTimer

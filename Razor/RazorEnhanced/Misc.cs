@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Media;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace RazorEnhanced
 {
@@ -228,29 +229,75 @@ namespace RazorEnhanced
 		}
 
 		// Shared Script data
+		private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
+
 		public static object ReadSharedValue(string name)
 		{
 			object data = 0;
-			if (RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.ContainsKey(name))
-				RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryGetValue(name, out data);
+			if (m_sharedscriptdata.ContainsKey(name))
+				m_sharedscriptdata.TryGetValue(name, out data);
 			return data;
 		}
 
 		public static void SetSharedValue(string name, object value)
 		{
-			RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.AddOrUpdate(name, value, (key, oldValue) => value);
+			m_sharedscriptdata.AddOrUpdate(name, value, (key, oldValue) => value);
 		}
 		public static void RemoveSharedValue(string name)
 		{
-			RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryRemove(name, out object data);
+			m_sharedscriptdata.TryRemove(name, out object data);
 		}
 
 		public static bool CheckSharedValue(string name)
 		{
-			if (RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.ContainsKey(name))
+			if (m_sharedscriptdata.ContainsKey(name))
 				return true;
 			else
 				return false;
+		}
+
+		// Ignore list
+		private static List<int> m_serialignorelist = new List<int>();
+
+		public static void IgnoreObject(Item i)
+		{
+			IgnoreObject(i.Serial);
+		}
+		public static void IgnoreObject(Mobile m)
+		{
+			IgnoreObject(m.Serial);
+		}
+
+		public static void IgnoreObject(int s)
+		{
+			if (m_serialignorelist.Contains(s)) // if already exist ignore
+				return;
+
+			m_serialignorelist.Add(s);
+		}
+		public static bool CheckIgnoreObject(Item i)
+		{
+			return CheckIgnoreObject(i.Serial);
+		}
+
+		public static bool CheckIgnoreObject(Mobile m)
+		{
+			return CheckIgnoreObject(m.Serial);
+		}
+
+		public static bool CheckIgnoreObject(int s)
+		{
+			for (int i = 0; i < m_serialignorelist.Count; i++)
+			{
+				if (m_serialignorelist[i] == s)
+					return true;
+			}
+			return false;
+		}
+
+		public static void ClearIgnore(Item i)
+		{
+			m_serialignorelist.Clear();
 		}
 
 		// Comandi Script per Menu Old
