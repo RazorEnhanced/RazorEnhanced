@@ -3490,7 +3490,16 @@ namespace RazorEnhanced
 		{
 			internal static List<RazorEnhanced.SpellGrid.SpellGridItem> ReadItems()
 			{
-				return (from DataRow row in m_Dataset.Tables["SPELLGRID_ITEMS"].Rows select (RazorEnhanced.SpellGrid.SpellGridItem) row["Item"]).ToList();
+				List<RazorEnhanced.SpellGrid.SpellGridItem> griditem = new List<RazorEnhanced.SpellGrid.SpellGridItem>();
+
+				for (int i = 0; i < m_Dataset.Tables["SPELLGRID_ITEMS"].Rows.Count; i++)
+				{
+					DataRow row = m_Dataset.Tables["SPELLGRID_ITEMS"].Rows[i];
+					if (row.RowState != DataRowState.Deleted)
+						griditem.Add((RazorEnhanced.SpellGrid.SpellGridItem)row["Item"]);
+				}
+
+				return griditem;
 			}
 
 			internal static RazorEnhanced.SpellGrid.SpellGridItem ReadSelectedItem(int index)
