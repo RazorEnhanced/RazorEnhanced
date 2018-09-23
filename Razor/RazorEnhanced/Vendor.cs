@@ -631,10 +631,9 @@ namespace RazorEnhanced
 			int cost = 0;
 			List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // Lista definita altrove (non rimuovere se si fa pulizia in giro)
 
-			foreach (Assistant.Item t in pack.Contains)
+			for (int i = 0; i < pack.Contains.Count; i++)
 			{
-				Assistant.Item item = (Assistant.Item)t;
-				if (item == null)
+				if (pack.Contains[i] == null)
 					continue;
 
 				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(m_listname);
@@ -644,22 +643,22 @@ namespace RazorEnhanced
 					if (!buyItem.Selected)
 						continue;
 
-					if (buyItem.Graphics != item.ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, item.Hue))
+					if (buyItem.Graphics != pack.Contains[i].ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue))
 						continue;
 
-					if (item.Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
+					if (pack.Contains[i].Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
 					{
-						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + buyItem.Amount);
-						buyList.Add(new VendorBuyItem(item.Serial, buyItem.Amount, item.Price));
+						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].Amount + " - Buyed: " + buyItem.Amount);
+						buyList.Add(new VendorBuyItem(pack.Contains[i].Serial, buyItem.Amount, pack.Contains[i].Price));
 						total += buyItem.Amount;
-						cost += item.Price * buyItem.Amount;
+						cost += pack.Contains[i].Price * buyItem.Amount;
 					}
 					else // Caso che il vendor ne abbia di meno (Li compro tutti)
 					{
-						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + item.Amount);
-						buyList.Add(new VendorBuyItem(item.Serial, item.Amount, item.Price));
-						total += item.Amount;
-						cost += item.Price * item.Amount;
+						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].Amount + " - Buyed: " + pack.Contains[i].Amount);
+						buyList.Add(new VendorBuyItem(pack.Contains[i].Serial, pack.Contains[i].Amount, pack.Contains[i].Price));
+						total += pack.Contains[i].Amount;
+						cost += pack.Contains[i].Price * pack.Contains[i].Amount;
 					}
 				}
 			}
