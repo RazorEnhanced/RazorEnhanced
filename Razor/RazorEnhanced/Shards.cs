@@ -26,9 +26,10 @@ namespace RazorEnhanced
 
 			if (File.Exists(filename))
 			{
-				Stream stream = File.Open(filename, FileMode.Open);
+				Stream stream = null;
 				try
 				{
+					stream = File.Open(filename, FileMode.Open);
 					m_Dataset.RemotingFormat = SerializationFormat.Binary;
 					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
 					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
@@ -40,7 +41,8 @@ namespace RazorEnhanced
 				}
 				catch 
 				{
-					stream.Close();
+					if (stream != null)
+						stream.Close();
 					MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
 					Settings.RestoreBackup(m_Save);
 					Load();
