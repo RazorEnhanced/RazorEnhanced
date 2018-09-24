@@ -174,7 +174,8 @@ namespace RazorEnhanced.UI
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
-				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow"
+				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow",
+				"Misc.IgnoreObject", "Misc.CheckIgnoreObject", "Misc.ClearIgnore", "Misc.UnIgnoreObject"
 			};
 
 			string[] methodsTarget =
@@ -697,6 +698,18 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Misc.FocusUOWindow()", new string[] { "none" }, "void", "Set UoClient window in focus or restore if minimized");
 			descriptionMisc.Add("Misc.FocusUOWindow", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.IgnoreObject()", new string[] { "int serial or Item itemtoignore or Mobile mobtoignore" }, "void", "Add a object to ignore list.");
+			descriptionMisc.Add("Misc.IgnoreObject", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.CheckIgnoreObject()", new string[] { "int serial or Item itemtocheck or Mobile mobtocheck" }, "bool", "check if object is present in ignore list.");
+			descriptionMisc.Add("Misc.CheckIgnoreObject", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.ClearIgnore()", new string[] { "none" }, "void", "Clear ignore list.");
+			descriptionMisc.Add("Misc.ClearIgnore", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.UnIgnoreObject()", new string[] { "int serial or Item itemtounignore or Mobile mobtounignore" }, "void", "Remove a object from ignore list.");
+			descriptionMisc.Add("Misc.UnIgnoreObject", tooltip);
 
 			#endregion
 

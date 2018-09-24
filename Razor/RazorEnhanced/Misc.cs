@@ -275,6 +275,7 @@ namespace RazorEnhanced
 
 			m_serialignorelist.Add(s);
 		}
+
 		public static bool CheckIgnoreObject(Item i)
 		{
 			return CheckIgnoreObject(i.Serial);
@@ -298,6 +299,27 @@ namespace RazorEnhanced
 		public static void ClearIgnore(Item i)
 		{
 			m_serialignorelist.Clear();
+		}
+
+		public static void UnIgnoreObject(int s)
+		{
+			for (int i = 0; i < m_serialignorelist.Count; ++i)
+			{
+				if (m_serialignorelist[i] == s)
+				{
+					m_serialignorelist.RemoveAt(i);
+					break;
+				}
+			}
+		}
+
+		public static void UnIgnoreObject(Item i)
+		{
+			UnIgnoreObject(i.Serial);
+		}
+		public static void UnIgnoreObject(Mobile m)
+		{
+			UnIgnoreObject(m.Serial);
 		}
 
 		// Comandi Script per Menu Old
