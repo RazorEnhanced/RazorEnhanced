@@ -1496,6 +1496,7 @@ namespace Assistant
 			player.Gold = p.ReadUInt32();
 			player.AR = p.ReadUInt16(); // ar / physical resist
 			player.Weight = p.ReadUInt16();
+
 			if (type >= 0x03)
 			{
 				if (type > 0x04)
@@ -2286,6 +2287,7 @@ namespace Assistant
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpI = 0;
 			World.Player.CurrentGumpStrings.Clear();
+			World.Player.CurrentGumpTile.Clear();
 
 			int sc = p.ReadInt32();
 			if (sc < 0 || sc > 2000)
@@ -2338,6 +2340,7 @@ namespace Assistant
 							World.Player.HasGump = false;
 							World.Player.CurrentGumpI = 0;
 							World.Player.CurrentGumpStrings.Clear();
+							World.Player.CurrentGumpTile.Clear();
 							RazorEnhanced.GumpInspector.GumpCloseAddLog(p, args);
 						}
 						break;
@@ -2888,6 +2891,7 @@ namespace Assistant
 
 				// Split on one or more non-digit characters.
 				World.Player.CurrentGumpStrings.Clear();
+				World.Player.CurrentGumpTile.Clear();
 
 				string[] numbers = Regex.Split(layout, @"\D+");
 				foreach (string value in numbers)
@@ -2919,7 +2923,6 @@ namespace Assistant
 				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
 
 				World.Player.CurrentGumpStrings.AddRange(stringlist);
-
 				World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
 				}
 			catch { }
@@ -2932,13 +2935,12 @@ namespace Assistant
 
 		private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
 		{
-			List <string> testipresenti = new List<string>();
+			List<string> testipresenti = new List<string>();
 			for (int i = 0; i < gumpPieces.Length; i++)
 			{
 				string[] gumpParams = Regex.Split(gumpPieces[i], @"\s+");
 				switch (gumpParams[0].ToLower())
 				{
-
 					case "croppedtext":
 						testipresenti.Add(gumpLines[int.Parse(gumpParams[6])]);
 						// CroppedText [x] [y] [width] [height] [color] [text-id]
@@ -2961,9 +2963,13 @@ namespace Assistant
 						// Defines the position and color of a text (data) entry.
 						//gump.AddControl(new TextLabel(gump, gumpParams, gumpLines), currentGUMPPage);
 						break;
+					case "tilepic":
+						// TilePic [x] [y] [id]
+						// Adds a Tilepicture to the gump. [id] defines the tile graphic-id. For example use InsideUO to get them.
+						World.Player.CurrentGumpTile.Add(int.Parse(gumpParams[3]));
+						break;
 				}
 			}
-
 			return testipresenti;
 		}
 

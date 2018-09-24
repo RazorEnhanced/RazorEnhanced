@@ -16,6 +16,7 @@ namespace RazorEnhanced
 
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
+			World.Player.CurrentGumpTile.Clear();
 			World.Player.CurrentGumpI = 0;
 		}
 
@@ -23,6 +24,7 @@ namespace RazorEnhanced
 		{
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
+			World.Player.CurrentGumpTile.Clear();
 			World.Player.CurrentGumpI = 0;
 		}
 
@@ -77,6 +79,7 @@ namespace RazorEnhanced
 
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
+			World.Player.CurrentGumpTile.Clear();
 			World.Player.CurrentGumpI = 0;
 		}
 
@@ -97,6 +100,7 @@ namespace RazorEnhanced
 
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
+			World.Player.CurrentGumpTile.Clear();
 		}
 
 		public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> switchs, List<int> entryID, List<string> entryS)
@@ -199,6 +203,18 @@ namespace RazorEnhanced
 			catch
 			{
 				return string.Empty;
+			}
+		}
+
+		public static List<int> LastGumpTile()
+		{
+			try
+			{
+				return World.Player.CurrentGumpTile;
+			}
+			catch
+			{
+				return new List<int>();
 			}
 		}
 	}

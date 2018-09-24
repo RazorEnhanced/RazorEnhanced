@@ -897,6 +897,7 @@ namespace Assistant
 		internal uint PromptSenderSerial;
 		internal uint PromptID;
 		internal uint PromptType;
+		internal List<int> CurrentGumpTile = new List<int>();
 		internal List<string> CurrentGumpStrings = new List<string>();
 		internal string CurrentGumpRawData;
 		internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> Journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>();
