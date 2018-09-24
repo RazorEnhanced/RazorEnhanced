@@ -74,20 +74,22 @@ namespace RazorEnhanced
 			AddLog("----------- New Recevied END -----------");
 		}
 
-		internal static void NewGumpCompressedAddLog(uint GumpS, uint GumpI, List<string> stringlist)
+		internal static void NewGumpCompressedAddLog(uint GumpS, uint GumpI)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
 				return;
 
+			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginUpdate();
 			AddLog("----------- New Recevied START -----------");
 
 			AddLog("Gump Operation: " + GumpS.ToString());
 			AddLog("Gump ID: " + GumpI.ToString());
 
-			foreach (string text in stringlist)
+			foreach (string text in World.Player.CurrentGumpStrings)
 				AddLog("Gump Text Data: " + text);
 
 			AddLog("----------- New Recevied END -----------");
+			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.EndUpdate();
 		}
 
 		internal static void AddLog(string addlog)

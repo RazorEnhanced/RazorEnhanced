@@ -2875,8 +2875,6 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-			List<string> stringlist = new List<string>();
-			
 			uint currentgumps = p.ReadUInt32();
 			uint currentgumpi = p.ReadUInt32();
 			try
@@ -2900,7 +2898,7 @@ namespace Assistant
 					{
 						int i = int.Parse(value);
 						if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
-							stringlist.Add(Language.GetString(i));
+							World.Player.CurrentGumpStrings.Add(Language.GetString(i));
 					}
 				}
 
@@ -2918,13 +2916,13 @@ namespace Assistant
 
 				if (TryParseGump(layout, out string[] gumpPieces))
 				{
-					stringlist.AddRange(ParseGumpString(gumpPieces, stringlistparse));
+					ParseGumpString(gumpPieces, stringlistparse);
 				}
-				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
 
-				World.Player.CurrentGumpStrings.AddRange(stringlist);
 				World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
 				}
+
 			catch { }
 
 			// when all operation done update status.
@@ -2933,16 +2931,15 @@ namespace Assistant
 			World.Player.HasGump = true;
 		}
 
-		private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
+		private static void ParseGumpString(string[] gumpPieces, string[] gumpLines)
 		{
-			List<string> testipresenti = new List<string>();
 			for (int i = 0; i < gumpPieces.Length; i++)
 			{
 				string[] gumpParams = Regex.Split(gumpPieces[i], @"\s+");
 				switch (gumpParams[0].ToLower())
 				{
 					case "croppedtext":
-						testipresenti.Add(gumpLines[int.Parse(gumpParams[6])]);
+						World.Player.CurrentGumpStrings.Add(gumpLines[int.Parse(gumpParams[6])]);
 						// CroppedText [x] [y] [width] [height] [color] [text-id]
 						// Adds a text field to the gump. gump is similar to the text command, but the text is cropped to the defined area.
 						//gump.AddControl(new CroppedText(gump, gumpParams, gumpLines), currentGUMPPage);
@@ -2950,7 +2947,7 @@ namespace Assistant
 						break;
 
 					case "htmlgump":
-						testipresenti.Add(gumpLines[int.Parse(gumpParams[5])]);
+						World.Player.CurrentGumpStrings.Add(gumpLines[int.Parse(gumpParams[5])]);
 						// HtmlGump [x] [y] [width] [height] [text-id] [background] [scrollbar]
 						// Defines a text-area where Html-commands are allowed.
 						// [background] and [scrollbar] can be 0 or 1 and define whether the background is transparent and a scrollbar is displayed.
@@ -2958,7 +2955,7 @@ namespace Assistant
 						break;
 
 					case "text":
-						testipresenti.Add(gumpLines[int.Parse(gumpParams[4])]);
+						World.Player.CurrentGumpStrings.Add(gumpLines[int.Parse(gumpParams[4])]);
 						// Text [x] [y] [color] [text-id]
 						// Defines the position and color of a text (data) entry.
 						//gump.AddControl(new TextLabel(gump, gumpParams, gumpLines), currentGUMPPage);
@@ -2970,7 +2967,6 @@ namespace Assistant
 						break;
 				}
 			}
-			return testipresenti;
 		}
 
 		private static bool TryParseGump(string gumpData, out string[] pieces)
