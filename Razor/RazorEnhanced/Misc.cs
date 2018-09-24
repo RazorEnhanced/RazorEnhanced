@@ -296,7 +296,7 @@ namespace RazorEnhanced
 			return false;
 		}
 
-		public static void ClearIgnore(Item i)
+		public static void ClearIgnore()
 		{
 			m_serialignorelist.Clear();
 		}
