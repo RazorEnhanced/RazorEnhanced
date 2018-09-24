@@ -217,6 +217,16 @@ namespace RazorEnhanced
 			ItemData itemData;
 			TileFlag flags;
 
+			// Check For mobiles
+			var mobs = World.Mobiles.Values;
+			mobs.Where(xm => xm.Serial != World.Player.Serial && xm.Position.X == x && xm.Position.Y == y);
+			if (mobs.Count > 0) // mob present at this spot.
+			{
+				if (World.Player.Stam < World.Player.StamMax) // no max stam, avoid this location
+					return false;
+			}
+
+			// Check for deed player house
 			if (Statics.CheckDeedHouse(x, y))
 			{
 				return false;
