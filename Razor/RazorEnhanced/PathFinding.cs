@@ -219,8 +219,13 @@ namespace RazorEnhanced
 
 			// Check For mobiles
 			var mobs = World.Mobiles.Values;
-			mobs.Where(xm => xm.Serial != World.Player.Serial && xm.Position.X == x && xm.Position.Y == y);
-			if (mobs.Count > 0) // mob present at this spot.
+			List<Assistant.Mobile> result = new List<Assistant.Mobile>();
+			foreach (Assistant.Mobile m in mobs)
+			{
+				if (m.Position.X == x && m.Position.Y == y && m.Serial != Player.Serial)
+					result.Add(m);
+			}
+			if (result.Count > 0) // mob present at this spot.
 			{
 				if (World.Player.Stam < World.Player.StamMax) // no max stam, avoid this location
 					return false;
