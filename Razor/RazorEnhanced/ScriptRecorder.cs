@@ -235,9 +235,29 @@ namespace RazorEnhanced
 				AddLog("Misc.ResponsePrompt(\"" + text + "\")");
 		}
 
-		internal static void Record_UnicodeSpeech(string text, int hue)
+		internal static void Record_UnicodeSpeech(MessageType type, string text, int hue)
 		{
-			AddLog("Player.ChatSay(" + hue + ", \"" + text + "\")");
+			switch (type)
+			{
+				case MessageType.Guild:
+					AddLog("Player.ChatGuild(\"" + text + "\")");
+					break;
+				case MessageType.Alliance:
+					AddLog("Player.ChatAlliance(\"" + text + "\")");
+					break;
+				case MessageType.Emote:
+					AddLog("Player.ChatEmote(" + hue + ", \"" + text + "\")");
+					break;
+				case MessageType.Whisper:
+					AddLog("Player.ChatWhisper(" + hue + ", \"" + text + "\")");
+					break;
+				case MessageType.Yell:
+					AddLog("Player.ChatYell(" + hue + ", \"" + text + "\")");
+					break;
+				default:
+					AddLog("Player.ChatSay(" + hue + ", \"" + text + "\")");
+					break;
+			}
 		}
 
 		internal static void Record_GumpsResponse(uint id, int operation)

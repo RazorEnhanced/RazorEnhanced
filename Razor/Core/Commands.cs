@@ -301,7 +301,7 @@ namespace Assistant
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 			{
-				RazorEnhanced.ScriptRecorder.Record_UnicodeSpeech(text, hue);
+				RazorEnhanced.ScriptRecorder.Record_UnicodeSpeech(type, text, hue);
 			}
 
 			text = text.Trim();

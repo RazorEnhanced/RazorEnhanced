@@ -843,7 +843,10 @@ namespace RazorEnhanced
 
 		public static void ChatGuild(string msg)
 		{
-			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+			if (ClientCommunication.ServerEncrypted) // is OSI
+				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Guild, 1, 1, "ENU", new List<ushort>(), msg));
+			else
+				ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
 		public static void ChatAlliance(int num)
@@ -853,7 +856,10 @@ namespace RazorEnhanced
 
 		public static void ChatAlliance(string msg)
 		{
-			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
+			if (ClientCommunication.ServerEncrypted) // is OSI
+				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Alliance, 1, 1, "ENU", new List<ushort>(), msg));
+			else
+				ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
 		public static void ChatEmote(int hue, int num)
