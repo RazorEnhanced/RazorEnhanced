@@ -829,6 +829,7 @@ namespace Assistant
 		private RazorButton restockCloneListB;
 		private GroupBox groupBox42;
 		private RazorTextBox scriptSearchTextBox;
+		private RazorButton buttonScriptEditorNew;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1175,6 +1176,7 @@ namespace Assistant
 			this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox31 = new System.Windows.Forms.GroupBox();
+			this.buttonScriptEditorNew = new RazorEnhanced.UI.RazorButton();
 			this.buttonScriptRefresh = new System.Windows.Forms.Button();
 			this.buttonAddScript = new RazorEnhanced.UI.RazorButton();
 			this.buttonRemoveScript = new RazorEnhanced.UI.RazorButton();
@@ -4437,6 +4439,7 @@ namespace Assistant
 			// 
 			// groupBox31
 			// 
+			this.groupBox31.Controls.Add(this.buttonScriptEditorNew);
 			this.groupBox31.Controls.Add(this.buttonScriptRefresh);
 			this.groupBox31.Controls.Add(this.buttonAddScript);
 			this.groupBox31.Controls.Add(this.buttonRemoveScript);
@@ -4452,6 +4455,16 @@ namespace Assistant
 			this.groupBox31.TabIndex = 50;
 			this.groupBox31.TabStop = false;
 			this.groupBox31.Text = "Script Operation";
+			// 
+			// buttonScriptEditorNew
+			// 
+			this.buttonScriptEditorNew.Location = new System.Drawing.Point(7, 72);
+			this.buttonScriptEditorNew.Name = "buttonScriptEditorNew";
+			this.buttonScriptEditorNew.Size = new System.Drawing.Size(75, 21);
+			this.buttonScriptEditorNew.TabIndex = 74;
+			this.buttonScriptEditorNew.Text = "New";
+			this.buttonScriptEditorNew.UseVisualStyleBackColor = true;
+			this.buttonScriptEditorNew.Click += new System.EventHandler(this.buttonScriptEditorNew_Click);
 			// 
 			// buttonScriptRefresh
 			// 
@@ -4515,11 +4528,11 @@ namespace Assistant
 			// 
 			// buttonScriptEditor
 			// 
-			this.buttonScriptEditor.Location = new System.Drawing.Point(7, 71);
+			this.buttonScriptEditor.Location = new System.Drawing.Point(94, 71);
 			this.buttonScriptEditor.Name = "buttonScriptEditor";
-			this.buttonScriptEditor.Size = new System.Drawing.Size(162, 21);
+			this.buttonScriptEditor.Size = new System.Drawing.Size(75, 21);
 			this.buttonScriptEditor.TabIndex = 20;
-			this.buttonScriptEditor.Text = "Open Editor";
+			this.buttonScriptEditor.Text = "Edit";
 			this.buttonScriptEditor.UseVisualStyleBackColor = true;
 			this.buttonScriptEditor.Click += new System.EventHandler(this.buttonOpenEditor_Click);
 			// 
@@ -10044,6 +10057,11 @@ namespace Assistant
 			ScriptGridOpen();
 		}
 
+		private void buttonScriptEditorNew_Click(object sender, EventArgs e)
+		{
+			EnhancedScriptEditor.Init(null); // Open clear editor
+		}
+
 		private void ScriptGridOpen()
 		{
 			string fullPath = null;
@@ -10053,7 +10071,8 @@ namespace Assistant
 				string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
 				fullPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\") + filename;
 			}
-			EnhancedScriptEditor.Init(fullPath);
+			if (fullPath != null)
+				EnhancedScriptEditor.Init(fullPath);
 		}
 
 		private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)
@@ -14459,6 +14478,7 @@ namespace Assistant
 			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
 			Process.Start(p);
 		}
+
 
 		// ----------------- STOP DPS METER -------------------
 	}
