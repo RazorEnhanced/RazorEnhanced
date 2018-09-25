@@ -134,8 +134,8 @@
 			this.toolStripButtonClose.Image = global::Assistant.Properties.Resources.document_close_2;
 			this.toolStripButtonClose.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButtonClose.Name = "toolStripButtonClose";
-			this.toolStripButtonClose.Size = new System.Drawing.Size(56, 22);
-			this.toolStripButtonClose.Text = "Close";
+			this.toolStripButtonClose.Size = new System.Drawing.Size(51, 22);
+			this.toolStripButtonClose.Text = "New";
 			this.toolStripButtonClose.ToolTipText = "Close ( CTRL + E )";
 			this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
 			// 
@@ -333,6 +333,7 @@
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
 			this.fastColoredTextBoxEditor.LeftBracket = '(';

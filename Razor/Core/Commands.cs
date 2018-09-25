@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 using System.Net.NetworkInformation;
+using RazorEnhanced.UI;
 
 namespace Assistant
 {
@@ -20,6 +21,7 @@ namespace Assistant
 			Command.Register("echo", new CommandCallback(Echo));
 			Command.Register("getserial", new CommandCallback(GetSerial));
 			Command.Register("inspect", new CommandCallback(GetInfo));
+			Command.Register("inspectgumps", new CommandCallback(InspectGumps));
 			Command.Register("playscript", new CommandCallback(PlayScript));
 			Command.Register("hideitem", new CommandCallback(HideItem));
 		}
@@ -116,6 +118,10 @@ namespace Assistant
 			{
 				World.Player.SendMessage(MsgLevel.Force, LocString.PrioSet, String.Format("Error: {0}", e.Message));
 			}
+		}
+		private static void InspectGumps(string[] param)
+		{
+			EnhancedScriptEditor.InspectGumps();
 		}
 
 		private static void Where(string[] param)

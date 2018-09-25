@@ -1672,7 +1672,7 @@ namespace RazorEnhanced.UI
 			ScriptRecord();
 		}
 
-		private void gumpinspector_close(object sender, EventArgs e)
+		private static void gumpinspector_close(object sender, EventArgs e)
 		{
 			Assistant.Engine.MainWindow.GumpInspectorEnable = false;
 		}
@@ -1868,8 +1868,16 @@ namespace RazorEnhanced.UI
 			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
 		}
 
-		private void InspectGumps()
+		internal static void InspectGumps()
 		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedGumpInspector af)
+				{
+					af.Focus();
+					return;
+				}
+			}
 			EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
 			ginspector.FormClosed += new FormClosedEventHandler(gumpinspector_close);
 			ginspector.TopMost = true;
