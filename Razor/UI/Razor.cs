@@ -3472,7 +3472,7 @@ namespace Assistant
 			this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
 			this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountGraphTextBox.TabIndex = 2;
-			this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountNameTextBox_Leave);
+			this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountGraphTextBox_TextChanged);
 			// 
 			// label18
 			// 
@@ -10514,6 +10514,7 @@ namespace Assistant
 
 		private void autoLootTextBoxDelay_Leave(object sender, EventArgs e)
 		{
+			
 			if (autoLootTextBoxDelay.Text == String.Empty)
 				autoLootTextBoxDelay.Text = "100";
 
