@@ -865,6 +865,43 @@ namespace RazorEnhanced
 			return false;
 		}
 
+		// Find item by id
+		public static Item FindItemByID(int itemid, int color, int container)
+		{
+			Item cont = FindBySerial(container);
+
+			if (cont != null)
+				return FindItemByID(itemid, color, cont);
+			else
+				Scripts.SendMessageScriptError("Script Error: FindItemByID: Invalid Container serial");
+
+			return null;
+		}
+
+		public static Item FindItemByID(int itemid, int color, Item container)
+		{
+			foreach (Item i in container.Contains)
+			{
+				if (i.ItemID == itemid) // check item id
+				{
+					if (color != -1) // color -1 ALL
+					{
+						if (i.Hue == color)
+							return i;
+					}
+					else
+					{
+						return i;
+					}
+				}
+				else if (i.IsContainer)
+				{
+					FindItemByID(itemid, color, i); // recall for sub container
+				}
+			}
+			return null; // Return null if no item found
+		}
+
 		// Single Click
 		public static void SingleClick(Item item)
 		{
