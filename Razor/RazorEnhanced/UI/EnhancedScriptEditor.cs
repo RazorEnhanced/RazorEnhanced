@@ -163,7 +163,7 @@ namespace RazorEnhanced.UI
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
 				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.Select", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID", "Items.Hide",
-				"Items.ContextExist", "Items.UseItemOnMobile"
+				"Items.ContextExist", "Items.UseItemOnMobile", "Items.FindItemByID"
 			};
 
 			string[] methodsMisc =
@@ -614,6 +614,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Items.ContextExist(serial or item, string)", new string[] { "int serial or item, string nametosearch" }, "int", "Check if item have this context. Return Context ID or -1 if not valid item or not present");
 			descriptionItems.Add("Items.ContextExist", tooltip);
+
+			tooltip = new ToolTipDescriptions("Items.FindItemByID(int, int, int)", new string[] { "Int itemid, int color, int serialcontainer" }, "int", "Find item serial by specific item ID, color and Container.\n\tCan use -1 on color for no chose color\n\tcan use -1 on container for serach in all item in memory.");
+			descriptionItems.Add("Items.FindItemByID", tooltip);
 
 			#endregion
 
