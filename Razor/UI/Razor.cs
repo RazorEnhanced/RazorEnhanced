@@ -8552,7 +8552,6 @@ namespace Assistant
 			for (int i = 0; i < Skill.Count; i++)
 				Total += World.Player.Skills[i].Base;
 			baseTotal.Text = String.Format("{0:F1}", Total);
-
 			for (int i = 0; i < skillList.Items.Count; i++)
 			{
 				ListViewItem cur = skillList.Items[i];
@@ -8628,6 +8627,7 @@ namespace Assistant
 				ListView.SelectedListViewItemCollection items = skillList.SelectedItems;
 				if (items.Count <= 0)
 					return;
+
 				Skill s = items[0].Tag as Skill;
 				if (s == null)
 					return;
@@ -8669,21 +8669,26 @@ namespace Assistant
 			ListView.SelectedListViewItemCollection items = skillList.SelectedItems;
 			if (items.Count <= 0)
 				return;
-			Skill s = items[0].Tag as Skill;
-			if (s == null)
-				return;
 
-			try
+			Skill s = null;
+			for (int i = 0; i < items.Count; i++)
 			{
-				ClientCommunication.SendToServer(new SetSkillLock(s.Index, lockType));
+				s = items[i].Tag as Skill;
+				if (s == null)
+					continue;
 
-				s.Lock = lockType;
-				UpdateSkill(s);
+				try
+				{
+					ClientCommunication.SendToServer(new SetSkillLock(s.Index, lockType));
 
-				ClientCommunication.SendToClient(new SkillUpdate(s));
-			}
-			catch
-			{
+					s.Lock = lockType;
+					UpdateSkill(s);
+
+					ClientCommunication.SendToClient(new SkillUpdate(s));
+				}
+				catch
+				{
+				}
 			}
 		}
 
