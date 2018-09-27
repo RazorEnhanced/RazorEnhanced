@@ -868,38 +868,53 @@ namespace RazorEnhanced
 		// Find item by id
 		public static Item FindItemByID(int itemid, int color, int container)
 		{
-			Item cont = FindBySerial(container);
-
-			if (cont != null)
-				return FindItemByID(itemid, color, cont);
-			else
-				Scripts.SendMessageScriptError("Script Error: FindItemByID: Invalid Container serial");
-
-			return null;
-		}
-
-		public static Item FindItemByID(int itemid, int color, Item container)
-		{
-			foreach (Item i in container.Contains)
+			if (container != -1)  // search in specific container
 			{
-				if (i.ItemID == itemid) // check item id
+				Item cont = FindBySerial(container);
+				if (cont == null) // not valid serial or container not found
 				{
-					if (color != -1) // color -1 ALL
+					Scripts.SendMessageScriptError("Script Error: FindItemByID: Container serial not found");
+					return null;
+				}
+				foreach (Item i in cont.Contains)
+				{
+					if (i.ItemID == itemid) // check item id
 					{
-						if (i.Hue == color)
+						if (color != -1) // color -1 ALL
+						{
+							if (i.Hue == color)
+								return i;
+						}
+						else
+						{
 							return i;
+						}
 					}
-					else
+					else if (i.IsContainer)
 					{
-						return i;
+						FindItemByID(itemid, color, i.Serial); // recall for sub container
 					}
 				}
-				else if (i.IsContainer)
-				{
-					FindItemByID(itemid, color, i); // recall for sub container
-				}
+				return null; // Return null if no item found
 			}
-			return null; // Return null if no item found
+			else  // Search in world
+			{
+				Items.Filter itemFilter = new Items.Filter
+				{
+					Enabled = true
+				};
+				itemFilter.Graphics.Add(itemid);
+
+				if (color != -1)
+					itemFilter.Hues.Add(color);
+
+				List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+				 
+				foreach (Item found in containeritem)  // Return frist one found
+					return found;
+
+				return null;
+			}
 		}
 
 		// Single Click
