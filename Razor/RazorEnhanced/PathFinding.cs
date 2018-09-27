@@ -780,13 +780,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void Go(Route r)
+		public static bool Go(Route r)
 		{
 			List<Tile> road = PathMove.GetPath(r.X, r.Y);
 			if (road == null) // No way to destination
 			{
 				Misc.SendMessage("PathFind: Destination not valid", 33);
-				return;
+				return false;
 			}
 
 			foreach (Tile step in road)
@@ -794,7 +794,7 @@ namespace RazorEnhanced
 				if (Player.Position.X == r.X && Player.Position.Y == r.Y)
 				{
 					Misc.SendMessage("PathFind: Destination reached", 66);
-					return;
+					return true;
 				}
 				bool walkok = false;
 				if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
@@ -853,13 +853,13 @@ namespace RazorEnhanced
 						else // count retry 
 						{
 							if (r.MaxRetry == 0) // End retry 
-								return;
+								return false;
 
 							r.MaxRetry--;
 							Go(r);
 						}
 					}
-					return;
+					return false;
 				}
 				else
 				{
@@ -871,12 +871,12 @@ namespace RazorEnhanced
 			if (Player.Position.X == r.X && Player.Position.Y == r.Y)
 			{
 				Misc.SendMessage("PathFind: Destination reached", 66);
-				return;
+				return true;
 			}
 			else
 			{
 				Go(r);
-				return;
+				return false;
 			}
 		}
 
