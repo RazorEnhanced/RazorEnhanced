@@ -2011,6 +2011,21 @@ namespace RazorEnhanced.UI
 			toolStripStatusLabelScript.Width = this.Width - 20;
 			SetStatusLabel("IDLE", Color.DarkTurquoise);
         }
+
+		private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			fastColoredTextBoxEditor.Copy();
+		}
+
+		private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			fastColoredTextBoxEditor.Paste();
+		}
+
+		private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			fastColoredTextBoxEditor.Cut();
+		}
 	}
 
 	public class ToolTipDescriptions
