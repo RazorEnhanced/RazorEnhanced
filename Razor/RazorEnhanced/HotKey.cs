@@ -100,6 +100,10 @@ namespace RazorEnhanced
 			}
 			else    // Esecuzine reale
 			{
+				if (World.Player != null && World.Player.WalkScriptRequest >= 1 && (k == Keys.Up || k == Keys.Down || k == Keys.Left || k == Keys.Right
+					|| k == Keys.PageUp || k == Keys.PageDown || k == Keys.Home || k == Keys.End))
+					return true; // Check for prevent new pathfind system trigger hotkey if assignet to move key
+
 				if (World.Player != null && RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
 				{
 					string group = string.Empty;
