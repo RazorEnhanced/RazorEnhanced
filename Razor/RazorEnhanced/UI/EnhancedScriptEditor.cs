@@ -70,6 +70,7 @@ namespace RazorEnhanced.UI
 		private FunctionCode m_CurrentCode;
 		private string m_CurrentResult;
 		private object m_CurrentPayload;
+		private int m_ThreadID;
 
 		private List<int> m_Breakpoints = new List<int>();
 
@@ -1355,6 +1356,7 @@ namespace RazorEnhanced.UI
 			{
 				Scripts.ScriptEditorThread = new Thread(() => AsyncStart(debug));
                 Scripts.ScriptEditorThread.Start();
+				m_ThreadID = Scripts.ScriptEditorThread.ManagedThreadId;
 			}
 			else
 				SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
@@ -1443,7 +1445,7 @@ namespace RazorEnhanced.UI
 			SetStatusLabel("IDLE", Color.DarkTurquoise);
 			SetTraceback(String.Empty);
 
-			if (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Stopped)
+			if (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Stopped && m_ThreadID == Scripts.ScriptEditorThread.ManagedThreadId)
 			{
 				try
 				{
