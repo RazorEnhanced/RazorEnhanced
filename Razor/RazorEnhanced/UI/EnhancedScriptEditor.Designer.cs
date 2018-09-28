@@ -55,14 +55,17 @@
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
-			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-			this.textBoxDebug = new System.Windows.Forms.TextBox();
-			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
 			this.textareaMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.commentSelectLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.unCommentLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.textBoxDebug = new System.Windows.Forms.TextBox();
+			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -70,10 +73,10 @@
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).BeginInit();
+			this.textareaMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
-			this.textareaMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// toolStrip1
@@ -354,6 +357,63 @@
 			this.fastColoredTextBoxEditor.TabIndex = 0;
 			this.fastColoredTextBoxEditor.Zoom = 100;
 			// 
+			// textareaMenuStrip
+			// 
+			this.textareaMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.cutToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.commentSelectLineToolStripMenuItem,
+            this.unCommentLineToolStripMenuItem});
+			this.textareaMenuStrip.Name = "textareaMenuStrip";
+			this.textareaMenuStrip.Size = new System.Drawing.Size(214, 120);
+			// 
+			// copyToolStripMenuItem
+			// 
+			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+			this.copyToolStripMenuItem.Text = "Copy";
+			this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+			// 
+			// pasteToolStripMenuItem
+			// 
+			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+			this.pasteToolStripMenuItem.Text = "Paste";
+			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+			// 
+			// cutToolStripMenuItem
+			// 
+			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+			this.cutToolStripMenuItem.Text = "Cut";
+			this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(210, 6);
+			// 
+			// commentSelectLineToolStripMenuItem
+			// 
+			this.commentSelectLineToolStripMenuItem.Name = "commentSelectLineToolStripMenuItem";
+			this.commentSelectLineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+			this.commentSelectLineToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+			this.commentSelectLineToolStripMenuItem.Text = "Comment Line";
+			this.commentSelectLineToolStripMenuItem.Click += new System.EventHandler(this.commentSelectLineToolStripMenuItem_Click);
+			// 
+			// unCommentLineToolStripMenuItem
+			// 
+			this.unCommentLineToolStripMenuItem.Name = "unCommentLineToolStripMenuItem";
+			this.unCommentLineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+			this.unCommentLineToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+			this.unCommentLineToolStripMenuItem.Text = "UnComment Line";
+			this.unCommentLineToolStripMenuItem.Click += new System.EventHandler(this.unCommentLineToolStripMenuItem_Click);
+			// 
 			// listBox1
 			// 
 			this.listBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -402,39 +462,6 @@
 			this.imageList2.Images.SetKeyName(4, "Field_blue_16x.png");
 			this.imageList2.Images.SetKeyName(5, "Field_black_16x.png");
 			// 
-			// textareaMenuStrip
-			// 
-			this.textareaMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem,
-            this.cutToolStripMenuItem});
-			this.textareaMenuStrip.Name = "textareaMenuStrip";
-			this.textareaMenuStrip.Size = new System.Drawing.Size(181, 92);
-			// 
-			// copyToolStripMenuItem
-			// 
-			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-			this.copyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.copyToolStripMenuItem.Text = "Copy";
-			this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-			// 
-			// pasteToolStripMenuItem
-			// 
-			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.pasteToolStripMenuItem.Text = "Paste";
-			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-			// 
-			// cutToolStripMenuItem
-			// 
-			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-			this.cutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.cutToolStripMenuItem.Text = "Cut";
-			this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,11 +485,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).EndInit();
+			this.textareaMenuStrip.ResumeLayout(false);
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
-			this.textareaMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -503,5 +530,8 @@
 		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem commentSelectLineToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem unCommentLineToolStripMenuItem;
 	}
 }

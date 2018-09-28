@@ -2026,6 +2026,38 @@ namespace RazorEnhanced.UI
 		{
 			fastColoredTextBoxEditor.Cut();
 		}
+
+		private void commentSelectLineToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(fastColoredTextBoxEditor.SelectedText)) // No selection
+				return;
+
+			string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None );
+
+			fastColoredTextBoxEditor.SelectedText = "";
+			for (int i = 0; i < lines.Count(); i++)
+			{
+				fastColoredTextBoxEditor.SelectedText += "#" + lines[i];
+				if (i < lines.Count() -1)
+					fastColoredTextBoxEditor.SelectedText += "\r\n";
+			}
+		}
+
+		private void unCommentLineToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(fastColoredTextBoxEditor.SelectedText)) // No selection
+				return;
+
+			string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+			fastColoredTextBoxEditor.SelectedText = "";
+			for (int i = 0; i < lines.Count(); i++)
+			{
+				fastColoredTextBoxEditor.SelectedText += lines[i].TrimStart('#');
+				if (i < lines.Count() - 1)
+					fastColoredTextBoxEditor.SelectedText += "\r\n";
+			}
+		}
 	}
 
 	public class ToolTipDescriptions
