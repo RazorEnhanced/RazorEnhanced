@@ -866,14 +866,14 @@ namespace RazorEnhanced
 		}
 
 		// Find item by id
-		public static Item FindItemByID(int itemid, int color, int container)
+		public static Item FindByID(int itemid, int color, int container)
 		{
 			if (container != -1)  // search in specific container
 			{
 				Item cont = FindBySerial(container);
 				if (cont == null) // not valid serial or container not found
 				{
-					Scripts.SendMessageScriptError("Script Error: FindItemByID: Container serial not found");
+					Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
 					return null;
 				}
 				foreach (Item i in cont.Contains)
@@ -892,7 +892,7 @@ namespace RazorEnhanced
 					}
 					else if (i.IsContainer)
 					{
-						FindItemByID(itemid, color, i.Serial); // recall for sub container
+						FindByID(itemid, color, i.Serial); // recall for sub container
 					}
 				}
 				return null; // Return null if no item found
