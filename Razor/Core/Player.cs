@@ -656,8 +656,7 @@ namespace Assistant
 			Direction = dir;
 		}
 
-		private int m_WalkScriptRequest = 0;
-		internal int WalkScriptRequest { get { return m_WalkScriptRequest; } set { m_WalkScriptRequest = value; } }
+		internal int WalkScriptRequest = 0;
 
 		internal bool HasWalkEntry(byte seq)
 		{
@@ -723,9 +722,6 @@ namespace Assistant
 			set
 			{
 				base.Position = value;
-
-				if (m_WalkScriptRequest == 1)
-					m_WalkScriptRequest = 2;
 			}
 		}
 

@@ -107,12 +107,7 @@ namespace Assistant
 		internal Direction Direction
 		{
 			get { return m_Direction; }
-			set
-			{
-				m_Direction = value;
-				if (this == World.Player && World.Player.WalkScriptRequest == 1)
-					World.Player.WalkScriptRequest = 2;
-			}
+			set	{ m_Direction = value; }
 		}
 
 		internal bool Visible

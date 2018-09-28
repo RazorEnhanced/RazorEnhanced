@@ -590,8 +590,6 @@ namespace Assistant
 			if (World.Player.WalkScriptRequest == 1)
 				World.Player.WalkScriptRequest = 3;
 
-		//	RazorEnhanced.Misc.SendMessage("call");
-
 			World.Player.MoveRej(seq, dir, new Point3D(x, y, z));
 		}
 
@@ -606,6 +604,14 @@ namespace Assistant
 			World.Player.Notoriety = p.ReadByte();
 
 			args.Block |= !World.Player.MoveAck(seq);
+
+			if (World.Player.WalkScriptRequest == 1)
+			{
+				if (args.Block)
+					World.Player.WalkScriptRequest = 3;
+				else
+					World.Player.WalkScriptRequest = 2;
+			}
 		}
 
 		private static void MovementRequest(Packet p, PacketHandlerEventArgs args)

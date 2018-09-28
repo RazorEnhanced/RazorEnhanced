@@ -770,7 +770,6 @@ namespace RazorEnhanced
 		{
 			public int X = 0;
 			public int Y = 0;
-			public bool Run = true;
 			public bool DebugMessage = false;
 			public bool StopIfStuck = false;
 			public int MaxRetry = 0;
@@ -800,42 +799,42 @@ namespace RazorEnhanced
 				if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
 				{
 					Rotate(Direction.East, r.DebugMessage);
-					walkok = Run(Direction.East, r.DebugMessage, r.Run);
+					walkok = Run(Direction.East, r.DebugMessage);
 				}
 				else if (step.X < Player.Position.X && step.Y == Player.Position.Y) // West
 				{
 					Rotate(Direction.West, r.DebugMessage);
-					walkok = Run(Direction.West, r.DebugMessage, r.Run);
+					walkok = Run(Direction.West, r.DebugMessage);
 				}
 				else if (step.X == Player.Position.X && step.Y < Player.Position.Y) //North
 				{
 					Rotate(Direction.North, r.DebugMessage);
-					walkok = Run(Direction.North, r.DebugMessage, r.Run);
+					walkok = Run(Direction.North, r.DebugMessage);
 				}
 				else if (step.X == Player.Position.X && step.Y > Player.Position.Y) //South
 				{
 					Rotate(Direction.South, r.DebugMessage);
-					walkok = Run(Direction.South, r.DebugMessage, r.Run);
+					walkok = Run(Direction.South, r.DebugMessage);
 				}
 				else if (step.X > Player.Position.X && step.Y > Player.Position.Y) //Down
 				{
 					Rotate(Direction.Down, r.DebugMessage);
-					walkok = Run(Direction.Down, r.DebugMessage, r.Run);
+					walkok = Run(Direction.Down, r.DebugMessage);
 				}
 				else if (step.X < Player.Position.X && step.Y < Player.Position.Y) //UP
 				{
 					Rotate(Direction.Up, r.DebugMessage);
-					walkok = Run(Direction.Up, r.DebugMessage, r.Run);
+					walkok = Run(Direction.Up, r.DebugMessage);
 				}
 				else if (step.X > Player.Position.X && step.Y < Player.Position.Y) //Right
 				{
 					Rotate(Direction.Right, r.DebugMessage);
-					walkok = Run(Direction.Right, r.DebugMessage, r.Run);
+					walkok = Run(Direction.Right, r.DebugMessage);
 				}
 				else if (step.X < Player.Position.X && step.Y > Player.Position.Y) //Left
 				{
 					Rotate(Direction.Left, r.DebugMessage);
-					walkok = Run(Direction.Left, r.DebugMessage, r.Run);
+					walkok = Run(Direction.Left, r.DebugMessage);
 				}
 				else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
 					walkok = true;
@@ -891,15 +890,12 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static bool Run(Direction d, bool debug, bool run)
+		private static bool Run(Direction d, bool debug)
 		{
 			if (debug)
 				Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
 
-			if (run)
-				return Player.Run(d.ToString());
-			else
-				return Player.Walk(d.ToString());
+			return Player.Run(d.ToString());
 		}
 	}
 }

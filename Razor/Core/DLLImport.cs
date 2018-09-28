@@ -8,6 +8,10 @@ namespace Assistant
 	{
 		internal class Win
 		{
+			[return: MarshalAs(UnmanagedType.Bool)]
+			[DllImport("user32.dll", SetLastError = true)]
+			internal static extern bool PostMessage(IntPtr hWnd, int Msg, System.Windows.Forms.Keys wParam, int lParam);
+
 			[DllImport("user32.dll")]
 			[return: MarshalAs(UnmanagedType.Bool)]
 			internal static extern bool IsIconic(IntPtr hWnd);

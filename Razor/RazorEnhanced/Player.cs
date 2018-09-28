@@ -981,58 +981,64 @@ namespace RazorEnhanced
 		// Moving
 		public static bool Walk(string direction)  // Return true se walk ok false se rifiutato da server
 		{
-			Enum.TryParse<Direction>(direction, out Direction dir);
-			
-			int state = 0;
-			if (dir != Assistant.Direction.ValueMask)
-			{
-				int timeout = 0;
-				World.Player.WalkScriptRequest = 1;
-
-				ClientCommunication.SendToServerWait(new WalkRequest(dir, World.Player.WalkSequence));
-
-				while (World.Player.WalkScriptRequest < 2)
-				{
-					Thread.Sleep(10);
-					timeout += 10;
-					if (timeout > 2000)
-						break;
-				}
-				state = World.Player.WalkScriptRequest;
-				World.Player.WalkScriptRequest = 0;
-			}
-			if (state == 2)
-				return true;
-			else
-				return false;
+			return Run(direction);
 		}
 
 		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
 		{
 			Enum.TryParse<Direction>(direction, out Direction dir);
 
-			int state = 0;
-			if (dir != Assistant.Direction.ValueMask)
+			int timeout = 0;
+			World.Player.WalkScriptRequest = 1;
+			switch (dir)
 			{
-				int timeout = 0;
-				World.Player.WalkScriptRequest = 1;
-
-				ClientCommunication.SendToServerWait(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
-
-				while (World.Player.WalkScriptRequest < 2)
-				{
-					Thread.Sleep(10);
-					timeout += 10;
-					if (timeout > 2000)
-						break;
-				}
-				state = World.Player.WalkScriptRequest;
-				World.Player.WalkScriptRequest = 0;
+				case Assistant.Direction.Up:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Up, 0);
+					break;
+				case Assistant.Direction.Down:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Down, 0);
+					break;
+				case Assistant.Direction.Left:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Left, 0);
+					break;
+				case Assistant.Direction.Right:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Right, 0);
+					break;
+				case Assistant.Direction.North:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.PageUp, 0);
+					break;
+				case Assistant.Direction.East:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.PageDown, 0);
+					break;
+				case Assistant.Direction.West:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Home, 0);
+					break;
+				case Assistant.Direction.South:
+					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.End, 0);
+					break;
+				default:
+					Misc.SendMessage(dir.ToString());
+					break;
 			}
-			if (state == 2)
+
+			while (World.Player.WalkScriptRequest < 2)
+			{
+				Thread.Sleep(10);
+				timeout += 10;
+				if (timeout > 500)
+					break;
+			}				
+
+			if (World.Player.WalkScriptRequest == 2)
+			{
+				World.Player.WalkScriptRequest = 0;
 				return true;
+			}
 			else
+			{
+				World.Player.WalkScriptRequest = 0;
 				return false;
+			}
 		}
 
 		public static void PathFindTo(Assistant.Point3D Location)
