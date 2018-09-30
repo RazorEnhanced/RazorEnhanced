@@ -313,8 +313,15 @@ namespace RazorEnhanced.UI
 				"Human", "WarMode", "Female", "Hits", "HitsMax", "Stam", "StamMax", "Mana", "ManaMax", "Backpack", "Mount",
 				"Quiver", "Notoriety", "Map", "InParty", "Properties", "Amount", "IsBagOfSending", "IsContainer", "IsCorpse",
 				"IsDoor", "IsInBank", "Movable", "OnGround", "ItemID", "RootContainer", "Container", "Durability", "MaxDurability",
-				"Contains", "Weight", "Position", "StaticID", "StaticHue", "StaticZ", "Flying"
-			};
+				"Contains", "Weight", "Position", "StaticID", "StaticHue", "StaticZ", "Flying",
+
+				// Item filter part
+				"Enabled", "Graphics", "Hues", "RangeMin", "RangeMax", "Layers",
+				// Mobiles
+				"Bodies", "Notorieties",
+				// PathFind
+				"DebugMessage", "StopIfStuck", "MaxRetry"
+		};
 
 			string[] props = propsGeneric;
 
