@@ -318,10 +318,10 @@ namespace RazorEnhanced.UI
 				// Item filter part
 				"Enabled", "Graphics", "Hues", "RangeMin", "RangeMax", "Layers",
 				// Mobiles
-				"Bodies", "Notorieties",
+				"Bodies", "Notorieties", "CheckIgnoreObject",
 				// PathFind
 				"DebugMessage", "StopIfStuck", "MaxRetry"
-		};
+			};
 
 			string[] props = propsGeneric;
 

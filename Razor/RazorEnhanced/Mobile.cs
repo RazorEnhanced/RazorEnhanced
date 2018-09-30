@@ -312,6 +312,7 @@ namespace RazorEnhanced
 			public int Warmode = -1;
 			public int Friend = -1;
 			public int Paralized = -1;
+			public bool CheckIgnoreObject = false;
 			public List<byte> Notorieties = new List<byte>();
 
 			public Filter()
@@ -408,6 +409,11 @@ namespace RazorEnhanced
 					if (filter.Notorieties.Count > 0)
 					{
 						assistantMobiles = assistantMobiles.Where((m) => filter.Notorieties.Contains(m.Notoriety)).ToList();
+					}
+
+					if (filter.CheckIgnoreObject)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => Misc.CheckIgnoreObject(m.Serial) != true).ToList();
 					}
 
 					// Esclude Self dalla ricerca

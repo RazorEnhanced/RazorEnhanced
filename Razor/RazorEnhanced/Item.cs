@@ -316,6 +316,7 @@ namespace RazorEnhanced
 			public double RangeMin = -1;
 			public double RangeMax = -1;
 			public bool Movable = true;
+			public bool CheckIgnoreObject = false;
 			public List<string> Layers = new List<string>();
 			public int OnGround = -1;
 			public int IsCorpse = -1;
@@ -412,6 +413,11 @@ namespace RazorEnhanced
 						if (filter.IsCorpse != -1)
 						{
 							assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
+						}
+
+						if (filter.CheckIgnoreObject)
+						{
+							assistantItems = assistantItems.Where((i) => Misc.CheckIgnoreObject(i.Serial) != true).ToList();
 						}
 					}
 				}
