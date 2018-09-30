@@ -294,7 +294,7 @@ namespace RazorEnhanced.UI
 			string[] propsPlayer =
 			{
 				"Player.StatCap", "Player.AR", "Player.FireResistance", "Player.ColdResistance", "Player.EnergyResistance",
-				"Player.PoisonResistance",
+				"Player.PoisonResistance", "Player.StaticMount",
 				"Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bank",
 				"Player.Gold", "Player.Luck", "Player.Body", "Player.HasSpecial",
 				"Player.Followers", "Player.FollowersMax", "Player.MaxWeight", "Player.Str", "Player.Dex", "Player.Int"

@@ -2906,7 +2906,7 @@ namespace Assistant
 			this.graphfilterdatagrid.Location = new System.Drawing.Point(6, 47);
 			this.graphfilterdatagrid.Name = "graphfilterdatagrid";
 			this.graphfilterdatagrid.RowHeadersVisible = false;
-			this.graphfilterdatagrid.Size = new System.Drawing.Size(271, 128);
+			this.graphfilterdatagrid.Size = new System.Drawing.Size(271, 208);
 			this.graphfilterdatagrid.TabIndex = 69;
 			this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
