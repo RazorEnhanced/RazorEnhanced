@@ -89,7 +89,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static string GetLineText(string text)
+		public static string GetLineText(string text, bool addname = false)
 		{
 			string result = string.Empty;
 			try
@@ -97,7 +97,12 @@ namespace RazorEnhanced
 				foreach (JournalEntry entrys in World.Player.Journal)
 				{
 					if (entrys.Text.Contains(text))
-						result = entrys.Text;
+					{
+						if (addname)
+							result = entrys.Name + ": " + entrys.Text;
+						else
+							result = entrys.Text;
+					}
 				}
 				return result;
 			}
@@ -127,7 +132,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<string> GetTextByColor(int color)
+		public static List<string> GetTextByColor(int color, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
@@ -136,7 +141,10 @@ namespace RazorEnhanced
 				{
 					if (entrys.Color == color)
 					{
-						result.Add(entrys.Text);
+						if (addname)
+							result.Add(entrys.Name + ": " + entrys.Text);
+						else
+							result.Add(entrys.Text);
 					}
 				}
 				return result;
@@ -167,7 +175,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<string> GetTextByType(string type)
+		public static List<string> GetTextByType(string type, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
@@ -176,7 +184,10 @@ namespace RazorEnhanced
 				{
 					if (entrys.Type == type)
 					{
-						result.Add(entrys.Text);
+						if (addname)
+							result.Add(entrys.Name + ": " + entrys.Text);
+						else
+							result.Add(entrys.Text);
 					}
 				}
 				return result;
