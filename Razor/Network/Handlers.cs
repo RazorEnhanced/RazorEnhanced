@@ -2227,10 +2227,7 @@ namespace Assistant
 				string text = Language.ClilocFormat(num, ext_str);
 				HandleSpeech(p, args, serial, body, type, hue, font, Language.CliLocName.ToUpper(), name, text);
 			}
-			catch (Exception e)
-			{
-				Engine.LogCrash(new Exception(String.Format("Exception in Ultima.dll cliloc: {0}, {1}", num, ext_str), e));
-			}
+			catch { } // avoid possible error if ultima.dll fail to get cliloc entry.
 		}
 
 		private static void OnLocalizedMessageAffix(Packet p, PacketHandlerEventArgs phea)
