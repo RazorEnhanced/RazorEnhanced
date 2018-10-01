@@ -847,6 +847,8 @@ namespace RazorEnhanced
 
 					if (!r.StopIfStuck)
 					{
+						Misc.Resync();
+						Misc.Pause(200);
 						if (r.MaxRetry == 0) // no retry check if 0 
 							Go(r);
 						else // count retry 
