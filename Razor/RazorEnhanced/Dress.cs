@@ -355,8 +355,12 @@ namespace RazorEnhanced
 						m_UndressThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 			{
-				m_UndressThread = new Thread(Dress.UndressEngine);
-				m_UndressThread.Start();
+				try
+				{
+					m_UndressThread = new Thread(Dress.UndressEngine);
+					m_UndressThread.Start();
+				}
+				catch { }
 			}
 		}
 
@@ -517,8 +521,12 @@ namespace RazorEnhanced
 						m_DressThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 			{
-				m_DressThread = new Thread(Dress.DressEngine);
-				m_DressThread.Start();
+				try
+				{
+					m_DressThread = new Thread(Dress.DressEngine);
+					m_DressThread.Start();
+				}
+				catch { }
 			}
 		}
 
@@ -526,11 +534,13 @@ namespace RazorEnhanced
 		{
 			if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
 			{
-				m_DressThread.Abort();
+				try { m_DressThread.Abort(); }
+				catch { }
 			}
 			if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
 			{
-				m_UndressThread.Abort();
+				try { m_UndressThread.Abort(); }
+				catch { }
 			}
 		}
 
