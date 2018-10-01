@@ -1493,18 +1493,21 @@ namespace RazorEnhanced.UI
 		{
 			if (this.m_onclosing || this.Disposing)
 				return;
-
-			if (this.InvokeRequired)
+			try
 			{
-				SetStatusLabelDelegate d = new SetStatusLabelDelegate(SetStatusLabel);
-				this.Invoke(d, new object[] { text, color });
-			}
-			else
-			{
-				this.toolStripStatusLabelScript.Text = "--> " + text;
-				this.statusStrip1.BackColor = color;
+				if (this.InvokeRequired)
+				{
+					SetStatusLabelDelegate d = new SetStatusLabelDelegate(SetStatusLabel);
+					this.Invoke(d, new object[] { text, color });
+				}
+				else
+				{
+					this.toolStripStatusLabelScript.Text = "--> " + text;
+					this.statusStrip1.BackColor = color;
 
+				}
 			}
+			catch { }
 		}
 
 		private void SetRecordButton(string text)
