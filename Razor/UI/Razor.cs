@@ -9807,6 +9807,9 @@ namespace Assistant
 
 		private void screensList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
+			if (!screensList.Focused)
+				return;
+
 			if (screenPrev.Image != null)
 			{
 				screenPrev.Image.Dispose();

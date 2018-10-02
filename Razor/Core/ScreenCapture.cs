@@ -101,9 +101,9 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				Assistant.Engine.MainWindow.ScreenPath.Text = path;
 			}
-			//list.BeginUpdate();
-			list.Items.Clear();
 
+			list.BeginUpdate();
+			list.Items.Clear();
 			AddFiles(list, path, "jpeg");
 			AddFiles(list, path, "jpg");
 			AddFiles(list, path, "png");
@@ -114,7 +114,7 @@ namespace Assistant
 			AddFiles(list, path, "wmf");
 			AddFiles(list, path, "exif");
 			AddFiles(list, path, "emf");
-			//list.EndUpdate();
+			list.EndUpdate();
 		}
 
 		internal static void AddFiles(ListBox list, string path, string ext)
