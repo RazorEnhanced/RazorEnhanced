@@ -3360,9 +3360,23 @@ namespace RazorEnhanced
 		// ------------- TARGET SETTINGS START -----------------
 		internal class Target
 		{
-			internal static List<TargetGUI.TargetGUIObjectList> ReadAll()
+			internal static List<string> ReadAllShortCut()
 			{
-				return (from DataRow row in m_Dataset.Tables["TARGETS"].Rows let name = (string) row["Name"] let target = (TargetGUI.TargetGUIObject) row["TargetGUIObject"] select new TargetGUI.TargetGUIObjectList(name, target)).ToList();
+				List<string> all = new List<string>();
+				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+					all.Add((string)row["Name"]);
+
+				return all;
+			}
+
+			internal static void TargetReplace(string targetid, TargetGUI.TargetGUIObject target)
+			{
+				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+				{
+					if ((string)row["Name"] == targetid)
+						row["TargetGUIObject"] = target;
+				}
+				Save();
 			}
 
 			internal static bool TargetExist(string targetid)
@@ -3370,26 +3384,10 @@ namespace RazorEnhanced
 				return m_Dataset.Tables["TARGETS"].Rows.Cast<DataRow>().Any(row => (string) row["Name"] == targetid);
 			}
 
-			internal static void TargetReplace(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
-			{
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-				{
-					if ((string)row["Name"] == targetid)
-					{
-						row["TargetGUIObject"] = target;
-						row["HotKey"] = k;
-						row["HotKeyPass"] = pass;
-					}
-				}
-				Save();
-			}
-
-			internal static void TargetSave(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
+			internal static void TargetAdd(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
 			{
 				if (TargetExist(targetid))
-				{
 					TargetDelete(targetid);
-				}
 
 				DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
 				row["Name"] = targetid;

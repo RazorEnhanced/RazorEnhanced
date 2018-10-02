@@ -284,28 +284,6 @@ namespace Assistant
 		private RazorCheckBox bandagehealenableCheckBox;
 		private GroupBox groupBox5;
 		private ListBox bandagehealLogBox;
-		private ListView targetlistView;
-		private ColumnHeader columnHeader36;
-		private ColumnHeader columnHeader37;
-		private ColumnHeader columnHeader38;
-		private ColumnHeader columnHeader39;
-		private ColumnHeader columnHeader40;
-		private ColumnHeader columnHeader41;
-		private ColumnHeader columnHeader42;
-		private ColumnHeader columnHeader43;
-		private ColumnHeader columnHeader44;
-		private ColumnHeader columnHeader45;
-		private ColumnHeader columnHeader46;
-		private ColumnHeader columnHeader47;
-		private ColumnHeader columnHeader48;
-		private ColumnHeader columnHeader49;
-		private ColumnHeader columnHeader50;
-		private GroupBox groupBox7;
-		private RazorButton editTargetButton;
-		private RazorButton removeTargetButton;
-		private RazorButton addTargetButton;
-		private RazorButton performTargetButton;
-		private ColumnHeader columnHeader51;
 		private RazorCheckBox rememberPwds;
 		private RazorCheckBox gameSize;
 		private RazorTextBox forceSizeX;
@@ -397,7 +375,6 @@ namespace Assistant
 		private RazorButton profilesUnlinkButton;
 		private RazorButton profilesLinkButton;
 		private Label profilelinklabel;
-		private ColumnHeader columnHeader55;
 
 		private bool m_CanClose = true;
 		private GroupBox groupBox32;
@@ -734,9 +711,6 @@ namespace Assistant
 		internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
 		internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
 
-		// Target
-		internal ListView TargetListView { get { return targetlistView; } }
-
 		// Enhanced Filters
 		internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
 		internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
@@ -830,6 +804,69 @@ namespace Assistant
 		private GroupBox groupBox42;
 		private RazorTextBox scriptSearchTextBox;
 		private RazorButton buttonScriptEditorNew;
+		private GroupBox groupBox43;
+		private RazorButton targetaddButton;
+		private RazorTextBox targetaddTextBox;
+		private ListBox targetlistBox;
+		private GroupBox groupBox45;
+		private DataGridView targethueGridView;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
+		private RazorCheckBox targetcoloCheckBox;
+		private GroupBox groupBox44;
+		private DataGridView targetbodydataGridView;
+		private RazorCheckBox targetbodyCheckBox;
+		private GroupBox groupBox46;
+		private GroupBox groupBox47;
+		private RazorRadioButton paralizedBoth;
+		private RazorRadioButton paralizedOff;
+		private RazorRadioButton paralizedOn;
+		private GroupBox groupBox49;
+		private RazorRadioButton friendOn;
+		private RazorRadioButton friendBoth;
+		private RazorRadioButton friendOff;
+		private GroupBox groupBox50;
+		private RazorRadioButton warmodeOn;
+		private RazorRadioButton warmodeBoth;
+		private RazorRadioButton warmodeOff;
+		private GroupBox groupBox51;
+		private RazorRadioButton ghostOn;
+		private RazorRadioButton ghostBoth;
+		private RazorRadioButton ghostOff;
+		private GroupBox groupBox52;
+		private RazorRadioButton humanOn;
+		private RazorRadioButton humanOff;
+		private RazorRadioButton humanBoth;
+		private GroupBox groupBox53;
+		private RazorRadioButton blessedOn;
+		private RazorRadioButton blessedOff;
+		private RazorRadioButton blessedBoth;
+		private GroupBox groupBox54;
+		private RazorRadioButton poisonedOn;
+		private RazorRadioButton poisonedOff;
+		private RazorRadioButton poisonedBoth;
+		private GroupBox groupBox48;
+		private Label label73;
+		private Label label74;
+		private RazorTextBox targetRangeMaxTextBox;
+		private Label label75;
+		private RazorTextBox targetRangeMinTextBox;
+		private GroupBox groupBox55;
+		private RazorTextBox targetNameTextBox;
+		private GroupBox groupBox57;
+		private GroupBox groupBox56;
+		private RazorComboBox targetSelectorComboBox;
+		private RazorCheckBox targetBlueCheckBox;
+		private RazorCheckBox targetYellowCheckBox;
+		private RazorCheckBox targetRedCheckBox;
+		private RazorCheckBox targetOrangeCheckBox;
+		private RazorCheckBox targetCriminalCheckBox;
+		private RazorCheckBox targetGreyCheckBox;
+		private RazorCheckBox targetGreenCheckBox;
+		private RazorButton targetsaveButton;
+		private RazorButton targetTestButton;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+		private RazorButton targetremoveButton;
+		private Label label76;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1108,29 +1145,68 @@ namespace Assistant
 			this.gridclose_button = new RazorEnhanced.UI.RazorButton();
 			this.gridopen_button = new RazorEnhanced.UI.RazorButton();
 			this.emptyTab = new System.Windows.Forms.TabPage();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.performTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.editTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.removeTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.addTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.targetlistView = new System.Windows.Forms.ListView();
-			this.columnHeader51 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader44 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader45 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader48 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader55 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.targetTestButton = new RazorEnhanced.UI.RazorButton();
+			this.targetsaveButton = new RazorEnhanced.UI.RazorButton();
+			this.groupBox57 = new System.Windows.Forms.GroupBox();
+			this.targetYellowCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.targetRedCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.targetOrangeCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.targetCriminalCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.targetGreyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.targetGreenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.targetBlueCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.groupBox56 = new System.Windows.Forms.GroupBox();
+			this.targetSelectorComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.groupBox55 = new System.Windows.Forms.GroupBox();
+			this.targetNameTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.groupBox48 = new System.Windows.Forms.GroupBox();
+			this.label73 = new System.Windows.Forms.Label();
+			this.label74 = new System.Windows.Forms.Label();
+			this.targetRangeMaxTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.label75 = new System.Windows.Forms.Label();
+			this.targetRangeMinTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.groupBox46 = new System.Windows.Forms.GroupBox();
+			this.groupBox47 = new System.Windows.Forms.GroupBox();
+			this.paralizedBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.paralizedOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.paralizedOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox49 = new System.Windows.Forms.GroupBox();
+			this.friendOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.friendBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.friendOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox50 = new System.Windows.Forms.GroupBox();
+			this.warmodeOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.warmodeBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.warmodeOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox51 = new System.Windows.Forms.GroupBox();
+			this.ghostOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.ghostBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.ghostOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox52 = new System.Windows.Forms.GroupBox();
+			this.humanOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.humanOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.humanBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox53 = new System.Windows.Forms.GroupBox();
+			this.blessedOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.blessedOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.blessedBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox54 = new System.Windows.Forms.GroupBox();
+			this.poisonedOn = new RazorEnhanced.UI.RazorRadioButton();
+			this.poisonedOff = new RazorEnhanced.UI.RazorRadioButton();
+			this.poisonedBoth = new RazorEnhanced.UI.RazorRadioButton();
+			this.groupBox45 = new System.Windows.Forms.GroupBox();
+			this.targethueGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.targetcoloCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.groupBox44 = new System.Windows.Forms.GroupBox();
+			this.targetbodydataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.targetbodyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.groupBox43 = new System.Windows.Forms.GroupBox();
+			this.targetremoveButton = new RazorEnhanced.UI.RazorButton();
+			this.targetaddButton = new RazorEnhanced.UI.RazorButton();
+			this.targetaddTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.targetlistBox = new System.Windows.Forms.ListBox();
 			this.skillsTab = new System.Windows.Forms.TabPage();
 			this.dispDelta = new RazorEnhanced.UI.RazorCheckBox();
 			this.skillCopyAll = new RazorEnhanced.UI.RazorButton();
@@ -1516,6 +1592,7 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+			this.label76 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1546,7 +1623,23 @@ namespace Assistant
 			this.groupBox36.SuspendLayout();
 			this.groupBox35.SuspendLayout();
 			this.emptyTab.SuspendLayout();
-			this.groupBox7.SuspendLayout();
+			this.groupBox57.SuspendLayout();
+			this.groupBox56.SuspendLayout();
+			this.groupBox55.SuspendLayout();
+			this.groupBox48.SuspendLayout();
+			this.groupBox46.SuspendLayout();
+			this.groupBox47.SuspendLayout();
+			this.groupBox49.SuspendLayout();
+			this.groupBox50.SuspendLayout();
+			this.groupBox51.SuspendLayout();
+			this.groupBox52.SuspendLayout();
+			this.groupBox53.SuspendLayout();
+			this.groupBox54.SuspendLayout();
+			this.groupBox45.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.targethueGridView)).BeginInit();
+			this.groupBox44.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.targetbodydataGridView)).BeginInit();
+			this.groupBox43.SuspendLayout();
 			this.skillsTab.SuspendLayout();
 			this.screenshotTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
@@ -3805,195 +3898,678 @@ namespace Assistant
 			// 
 			// emptyTab
 			// 
-			this.emptyTab.Controls.Add(this.groupBox7);
-			this.emptyTab.Controls.Add(this.targetlistView);
+			this.emptyTab.Controls.Add(this.targetTestButton);
+			this.emptyTab.Controls.Add(this.targetsaveButton);
+			this.emptyTab.Controls.Add(this.groupBox57);
+			this.emptyTab.Controls.Add(this.groupBox56);
+			this.emptyTab.Controls.Add(this.groupBox55);
+			this.emptyTab.Controls.Add(this.groupBox48);
+			this.emptyTab.Controls.Add(this.groupBox46);
+			this.emptyTab.Controls.Add(this.groupBox45);
+			this.emptyTab.Controls.Add(this.groupBox44);
+			this.emptyTab.Controls.Add(this.groupBox43);
 			this.emptyTab.Location = new System.Drawing.Point(4, 40);
 			this.emptyTab.Name = "emptyTab";
 			this.emptyTab.Size = new System.Drawing.Size(666, 366);
 			this.emptyTab.TabIndex = 3;
 			this.emptyTab.Text = "Enhanced Targetting";
 			// 
-			// groupBox7
+			// targetTestButton
 			// 
-			this.groupBox7.Controls.Add(this.performTargetButton);
-			this.groupBox7.Controls.Add(this.editTargetButton);
-			this.groupBox7.Controls.Add(this.removeTargetButton);
-			this.groupBox7.Controls.Add(this.addTargetButton);
-			this.groupBox7.Location = new System.Drawing.Point(8, 297);
-			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(650, 61);
-			this.groupBox7.TabIndex = 49;
-			this.groupBox7.TabStop = false;
-			this.groupBox7.Text = "Manage Targets";
+			this.targetTestButton.Location = new System.Drawing.Point(375, 274);
+			this.targetTestButton.Name = "targetTestButton";
+			this.targetTestButton.Size = new System.Drawing.Size(100, 23);
+			this.targetTestButton.TabIndex = 57;
+			this.targetTestButton.Text = "Test Target";
+			this.targetTestButton.UseVisualStyleBackColor = true;
+			this.targetTestButton.Click += new System.EventHandler(this.targetTestButton_Click);
 			// 
-			// performTargetButton
+			// targetsaveButton
 			// 
-			this.performTargetButton.Location = new System.Drawing.Point(495, 23);
-			this.performTargetButton.Name = "performTargetButton";
-			this.performTargetButton.Size = new System.Drawing.Size(136, 23);
-			this.performTargetButton.TabIndex = 3;
-			this.performTargetButton.Text = "Perform Target Filter";
-			this.performTargetButton.UseVisualStyleBackColor = true;
-			this.performTargetButton.Click += new System.EventHandler(this.performTargetButton_Click);
+			this.targetsaveButton.Location = new System.Drawing.Point(573, 333);
+			this.targetsaveButton.Name = "targetsaveButton";
+			this.targetsaveButton.Size = new System.Drawing.Size(88, 23);
+			this.targetsaveButton.TabIndex = 5;
+			this.targetsaveButton.Text = "Save Change";
+			this.targetsaveButton.UseVisualStyleBackColor = true;
+			this.targetsaveButton.Click += new System.EventHandler(this.targetsaveButton_Click);
 			// 
-			// editTargetButton
+			// groupBox57
 			// 
-			this.editTargetButton.Location = new System.Drawing.Point(338, 23);
-			this.editTargetButton.Name = "editTargetButton";
-			this.editTargetButton.Size = new System.Drawing.Size(136, 23);
-			this.editTargetButton.TabIndex = 2;
-			this.editTargetButton.Text = "Edit Target Filter";
-			this.editTargetButton.UseVisualStyleBackColor = true;
-			this.editTargetButton.Click += new System.EventHandler(this.editTargetButton_Click);
+			this.groupBox57.Controls.Add(this.targetYellowCheckBox);
+			this.groupBox57.Controls.Add(this.targetRedCheckBox);
+			this.groupBox57.Controls.Add(this.targetOrangeCheckBox);
+			this.groupBox57.Controls.Add(this.targetCriminalCheckBox);
+			this.groupBox57.Controls.Add(this.targetGreyCheckBox);
+			this.groupBox57.Controls.Add(this.targetGreenCheckBox);
+			this.groupBox57.Controls.Add(this.targetBlueCheckBox);
+			this.groupBox57.Location = new System.Drawing.Point(375, 110);
+			this.groupBox57.Name = "groupBox57";
+			this.groupBox57.Size = new System.Drawing.Size(100, 157);
+			this.groupBox57.TabIndex = 56;
+			this.groupBox57.TabStop = false;
+			this.groupBox57.Text = "Notoriety Color";
 			// 
-			// removeTargetButton
+			// targetYellowCheckBox
 			// 
-			this.removeTargetButton.Location = new System.Drawing.Point(177, 23);
-			this.removeTargetButton.Name = "removeTargetButton";
-			this.removeTargetButton.Size = new System.Drawing.Size(136, 23);
-			this.removeTargetButton.TabIndex = 1;
-			this.removeTargetButton.Text = "Remove Target Filter";
-			this.removeTargetButton.UseVisualStyleBackColor = true;
-			this.removeTargetButton.Click += new System.EventHandler(this.removeTargetButton_Click);
+			this.targetYellowCheckBox.AutoSize = true;
+			this.targetYellowCheckBox.ForeColor = System.Drawing.Color.DarkSalmon;
+			this.targetYellowCheckBox.Location = new System.Drawing.Point(6, 134);
+			this.targetYellowCheckBox.Name = "targetYellowCheckBox";
+			this.targetYellowCheckBox.Size = new System.Drawing.Size(57, 17);
+			this.targetYellowCheckBox.TabIndex = 77;
+			this.targetYellowCheckBox.Text = "Yellow";
+			this.targetYellowCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// addTargetButton
+			// targetRedCheckBox
 			// 
-			this.addTargetButton.Location = new System.Drawing.Point(16, 23);
-			this.addTargetButton.Name = "addTargetButton";
-			this.addTargetButton.Size = new System.Drawing.Size(136, 23);
-			this.addTargetButton.TabIndex = 0;
-			this.addTargetButton.Text = "Add Target Filter";
-			this.addTargetButton.UseVisualStyleBackColor = true;
-			this.addTargetButton.Click += new System.EventHandler(this.addTargetButton_Click);
+			this.targetRedCheckBox.AutoSize = true;
+			this.targetRedCheckBox.ForeColor = System.Drawing.Color.Red;
+			this.targetRedCheckBox.Location = new System.Drawing.Point(6, 114);
+			this.targetRedCheckBox.Name = "targetRedCheckBox";
+			this.targetRedCheckBox.Size = new System.Drawing.Size(46, 17);
+			this.targetRedCheckBox.TabIndex = 76;
+			this.targetRedCheckBox.Text = "Red";
+			this.targetRedCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// targetlistView
+			// targetOrangeCheckBox
 			// 
-			this.targetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader51,
-            this.columnHeader36,
-            this.columnHeader37,
-            this.columnHeader38,
-            this.columnHeader39,
-            this.columnHeader40,
-            this.columnHeader41,
-            this.columnHeader42,
-            this.columnHeader43,
-            this.columnHeader44,
-            this.columnHeader45,
-            this.columnHeader46,
-            this.columnHeader47,
-            this.columnHeader48,
-            this.columnHeader55,
-            this.columnHeader49,
-            this.columnHeader50});
-			this.targetlistView.FullRowSelect = true;
-			this.targetlistView.GridLines = true;
-			this.targetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.targetlistView.HideSelection = false;
-			this.targetlistView.LabelWrap = false;
-			this.targetlistView.Location = new System.Drawing.Point(8, 12);
-			this.targetlistView.MultiSelect = false;
-			this.targetlistView.Name = "targetlistView";
-			this.targetlistView.Size = new System.Drawing.Size(650, 279);
-			this.targetlistView.TabIndex = 48;
-			this.targetlistView.UseCompatibleStateImageBehavior = false;
-			this.targetlistView.View = System.Windows.Forms.View.Details;
+			this.targetOrangeCheckBox.AutoSize = true;
+			this.targetOrangeCheckBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.targetOrangeCheckBox.Location = new System.Drawing.Point(6, 95);
+			this.targetOrangeCheckBox.Name = "targetOrangeCheckBox";
+			this.targetOrangeCheckBox.Size = new System.Drawing.Size(61, 17);
+			this.targetOrangeCheckBox.TabIndex = 75;
+			this.targetOrangeCheckBox.Text = "Orange";
+			this.targetOrangeCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// columnHeader51
+			// targetCriminalCheckBox
 			// 
-			this.columnHeader51.Text = "";
-			this.columnHeader51.Width = 1;
+			this.targetCriminalCheckBox.AutoSize = true;
+			this.targetCriminalCheckBox.ForeColor = System.Drawing.Color.DimGray;
+			this.targetCriminalCheckBox.Location = new System.Drawing.Point(6, 76);
+			this.targetCriminalCheckBox.Name = "targetCriminalCheckBox";
+			this.targetCriminalCheckBox.Size = new System.Drawing.Size(85, 17);
+			this.targetCriminalCheckBox.TabIndex = 74;
+			this.targetCriminalCheckBox.Text = "Grey (Aggro)";
+			this.targetCriminalCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// columnHeader36
+			// targetGreyCheckBox
 			// 
-			this.columnHeader36.Text = "Target ID";
+			this.targetGreyCheckBox.AutoSize = true;
+			this.targetGreyCheckBox.ForeColor = System.Drawing.Color.DimGray;
+			this.targetGreyCheckBox.Location = new System.Drawing.Point(6, 57);
+			this.targetGreyCheckBox.Name = "targetGreyCheckBox";
+			this.targetGreyCheckBox.Size = new System.Drawing.Size(48, 17);
+			this.targetGreyCheckBox.TabIndex = 73;
+			this.targetGreyCheckBox.Text = "Grey";
+			this.targetGreyCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// columnHeader37
+			// targetGreenCheckBox
 			// 
-			this.columnHeader37.Text = "Body List";
-			this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader37.Width = 80;
+			this.targetGreenCheckBox.AutoSize = true;
+			this.targetGreenCheckBox.ForeColor = System.Drawing.Color.Green;
+			this.targetGreenCheckBox.Location = new System.Drawing.Point(6, 38);
+			this.targetGreenCheckBox.Name = "targetGreenCheckBox";
+			this.targetGreenCheckBox.Size = new System.Drawing.Size(55, 17);
+			this.targetGreenCheckBox.TabIndex = 72;
+			this.targetGreenCheckBox.Text = "Green";
+			this.targetGreenCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// columnHeader38
+			// targetBlueCheckBox
 			// 
-			this.columnHeader38.Text = "Name";
-			this.columnHeader38.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.targetBlueCheckBox.AutoSize = true;
+			this.targetBlueCheckBox.ForeColor = System.Drawing.Color.Blue;
+			this.targetBlueCheckBox.Location = new System.Drawing.Point(6, 19);
+			this.targetBlueCheckBox.Name = "targetBlueCheckBox";
+			this.targetBlueCheckBox.Size = new System.Drawing.Size(47, 17);
+			this.targetBlueCheckBox.TabIndex = 71;
+			this.targetBlueCheckBox.Text = "Blue";
+			this.targetBlueCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// columnHeader39
+			// groupBox56
 			// 
-			this.columnHeader39.Text = "Hue List";
-			this.columnHeader39.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader39.Width = 80;
+			this.groupBox56.Controls.Add(this.targetSelectorComboBox);
+			this.groupBox56.Location = new System.Drawing.Point(140, 321);
+			this.groupBox56.Name = "groupBox56";
+			this.groupBox56.Size = new System.Drawing.Size(200, 40);
+			this.groupBox56.TabIndex = 55;
+			this.groupBox56.TabStop = false;
+			this.groupBox56.Text = "Selector";
 			// 
-			// columnHeader40
+			// targetSelectorComboBox
 			// 
-			this.columnHeader40.Text = "Min";
-			this.columnHeader40.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader40.Width = 32;
+			this.targetSelectorComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.targetSelectorComboBox.FormattingEnabled = true;
+			this.targetSelectorComboBox.Location = new System.Drawing.Point(8, 14);
+			this.targetSelectorComboBox.Name = "targetSelectorComboBox";
+			this.targetSelectorComboBox.Size = new System.Drawing.Size(182, 21);
+			this.targetSelectorComboBox.TabIndex = 11;
 			// 
-			// columnHeader41
+			// groupBox55
 			// 
-			this.columnHeader41.Text = "Max";
-			this.columnHeader41.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader41.Width = 32;
+			this.groupBox55.Controls.Add(this.targetNameTextBox);
+			this.groupBox55.Location = new System.Drawing.Point(346, 321);
+			this.groupBox55.Name = "groupBox55";
+			this.groupBox55.Size = new System.Drawing.Size(180, 40);
+			this.groupBox55.TabIndex = 54;
+			this.groupBox55.TabStop = false;
+			this.groupBox55.Text = "Target (Char/Mob) Name";
 			// 
-			// columnHeader42
+			// targetNameTextBox
 			// 
-			this.columnHeader42.Text = "P";
-			this.columnHeader42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader42.Width = 25;
+			this.targetNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.targetNameTextBox.BackColor = System.Drawing.Color.White;
+			this.targetNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.targetNameTextBox.Location = new System.Drawing.Point(10, 15);
+			this.targetNameTextBox.Margin = new System.Windows.Forms.Padding(2);
+			this.targetNameTextBox.Name = "targetNameTextBox";
+			this.targetNameTextBox.Size = new System.Drawing.Size(162, 20);
+			this.targetNameTextBox.TabIndex = 13;
 			// 
-			// columnHeader43
+			// groupBox48
 			// 
-			this.columnHeader43.Text = "B";
-			this.columnHeader43.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader43.Width = 25;
+			this.groupBox48.Controls.Add(this.label73);
+			this.groupBox48.Controls.Add(this.label74);
+			this.groupBox48.Controls.Add(this.targetRangeMaxTextBox);
+			this.groupBox48.Controls.Add(this.label75);
+			this.groupBox48.Controls.Add(this.targetRangeMinTextBox);
+			this.groupBox48.Location = new System.Drawing.Point(374, 6);
+			this.groupBox48.Name = "groupBox48";
+			this.groupBox48.Size = new System.Drawing.Size(101, 94);
+			this.groupBox48.TabIndex = 53;
+			this.groupBox48.TabStop = false;
+			this.groupBox48.Text = "Range";
 			// 
-			// columnHeader44
+			// label73
 			// 
-			this.columnHeader44.Text = "H";
-			this.columnHeader44.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader44.Width = 25;
+			this.label73.AutoSize = true;
+			this.label73.Location = new System.Drawing.Point(9, 77);
+			this.label73.Name = "label73";
+			this.label73.Size = new System.Drawing.Size(85, 13);
+			this.label73.TabIndex = 4;
+			this.label73.Text = "Set -1 for no limit";
 			// 
-			// columnHeader45
+			// label74
 			// 
-			this.columnHeader45.Text = "G";
-			this.columnHeader45.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader45.Width = 25;
+			this.label74.AutoSize = true;
+			this.label74.Location = new System.Drawing.Point(9, 48);
+			this.label74.Name = "label74";
+			this.label74.Size = new System.Drawing.Size(30, 13);
+			this.label74.TabIndex = 3;
+			this.label74.Text = "Max:";
 			// 
-			// columnHeader46
+			// targetRangeMaxTextBox
 			// 
-			this.columnHeader46.Text = "S";
-			this.columnHeader46.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader46.Width = 25;
+			this.targetRangeMaxTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.targetRangeMaxTextBox.BackColor = System.Drawing.Color.White;
+			this.targetRangeMaxTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.targetRangeMaxTextBox.Location = new System.Drawing.Point(43, 45);
+			this.targetRangeMaxTextBox.Name = "targetRangeMaxTextBox";
+			this.targetRangeMaxTextBox.Size = new System.Drawing.Size(47, 20);
+			this.targetRangeMaxTextBox.TabIndex = 2;
+			this.targetRangeMaxTextBox.Text = "-1";
 			// 
-			// columnHeader47
+			// label75
 			// 
-			this.columnHeader47.Text = "W";
-			this.columnHeader47.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader47.Width = 25;
+			this.label75.AutoSize = true;
+			this.label75.Location = new System.Drawing.Point(9, 22);
+			this.label75.Name = "label75";
+			this.label75.Size = new System.Drawing.Size(27, 13);
+			this.label75.TabIndex = 1;
+			this.label75.Text = "Min:";
 			// 
-			// columnHeader48
+			// targetRangeMinTextBox
 			// 
-			this.columnHeader48.Text = "F";
-			this.columnHeader48.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader48.Width = 25;
+			this.targetRangeMinTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.targetRangeMinTextBox.BackColor = System.Drawing.Color.White;
+			this.targetRangeMinTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.targetRangeMinTextBox.Location = new System.Drawing.Point(43, 19);
+			this.targetRangeMinTextBox.Name = "targetRangeMinTextBox";
+			this.targetRangeMinTextBox.Size = new System.Drawing.Size(47, 20);
+			this.targetRangeMinTextBox.TabIndex = 0;
+			this.targetRangeMinTextBox.Text = "-1";
 			// 
-			// columnHeader55
+			// groupBox46
 			// 
-			this.columnHeader55.Text = "Pa";
-			this.columnHeader55.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader55.Width = 25;
+			this.groupBox46.Controls.Add(this.groupBox47);
+			this.groupBox46.Controls.Add(this.groupBox49);
+			this.groupBox46.Controls.Add(this.groupBox50);
+			this.groupBox46.Controls.Add(this.groupBox51);
+			this.groupBox46.Controls.Add(this.groupBox52);
+			this.groupBox46.Controls.Add(this.groupBox53);
+			this.groupBox46.Controls.Add(this.groupBox54);
+			this.groupBox46.Location = new System.Drawing.Point(481, 6);
+			this.groupBox46.Name = "groupBox46";
+			this.groupBox46.Size = new System.Drawing.Size(180, 311);
+			this.groupBox46.TabIndex = 52;
+			this.groupBox46.TabStop = false;
+			this.groupBox46.Text = "Flags";
 			// 
-			// columnHeader49
+			// groupBox47
 			// 
-			this.columnHeader49.Text = "Notorietie";
-			this.columnHeader49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.groupBox47.Controls.Add(this.paralizedBoth);
+			this.groupBox47.Controls.Add(this.paralizedOff);
+			this.groupBox47.Controls.Add(this.paralizedOn);
+			this.groupBox47.Location = new System.Drawing.Point(6, 263);
+			this.groupBox47.Name = "groupBox47";
+			this.groupBox47.Size = new System.Drawing.Size(163, 37);
+			this.groupBox47.TabIndex = 97;
+			this.groupBox47.TabStop = false;
+			this.groupBox47.Text = "Paralized";
 			// 
-			// columnHeader50
+			// paralizedBoth
 			// 
-			this.columnHeader50.Text = "Selector";
-			this.columnHeader50.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.paralizedBoth.Checked = true;
+			this.paralizedBoth.Location = new System.Drawing.Point(107, 15);
+			this.paralizedBoth.Name = "paralizedBoth";
+			this.paralizedBoth.Size = new System.Drawing.Size(50, 20);
+			this.paralizedBoth.TabIndex = 59;
+			this.paralizedBoth.TabStop = true;
+			this.paralizedBoth.Text = "Both";
+			// 
+			// paralizedOff
+			// 
+			this.paralizedOff.Location = new System.Drawing.Point(60, 15);
+			this.paralizedOff.Name = "paralizedOff";
+			this.paralizedOff.Size = new System.Drawing.Size(41, 20);
+			this.paralizedOff.TabIndex = 58;
+			this.paralizedOff.Text = "No";
+			// 
+			// paralizedOn
+			// 
+			this.paralizedOn.Location = new System.Drawing.Point(6, 15);
+			this.paralizedOn.Name = "paralizedOn";
+			this.paralizedOn.Size = new System.Drawing.Size(48, 20);
+			this.paralizedOn.TabIndex = 57;
+			this.paralizedOn.Text = "Yes";
+			// 
+			// groupBox49
+			// 
+			this.groupBox49.Controls.Add(this.friendOn);
+			this.groupBox49.Controls.Add(this.friendBoth);
+			this.groupBox49.Controls.Add(this.friendOff);
+			this.groupBox49.Location = new System.Drawing.Point(6, 222);
+			this.groupBox49.Name = "groupBox49";
+			this.groupBox49.Size = new System.Drawing.Size(163, 37);
+			this.groupBox49.TabIndex = 95;
+			this.groupBox49.TabStop = false;
+			this.groupBox49.Text = "Friend";
+			// 
+			// friendOn
+			// 
+			this.friendOn.Location = new System.Drawing.Point(6, 15);
+			this.friendOn.Name = "friendOn";
+			this.friendOn.Size = new System.Drawing.Size(48, 20);
+			this.friendOn.TabIndex = 65;
+			this.friendOn.Text = "Yes";
+			// 
+			// friendBoth
+			// 
+			this.friendBoth.Checked = true;
+			this.friendBoth.Location = new System.Drawing.Point(107, 15);
+			this.friendBoth.Name = "friendBoth";
+			this.friendBoth.Size = new System.Drawing.Size(50, 20);
+			this.friendBoth.TabIndex = 67;
+			this.friendBoth.TabStop = true;
+			this.friendBoth.Text = "Both";
+			// 
+			// friendOff
+			// 
+			this.friendOff.Location = new System.Drawing.Point(60, 14);
+			this.friendOff.Name = "friendOff";
+			this.friendOff.Size = new System.Drawing.Size(41, 20);
+			this.friendOff.TabIndex = 66;
+			this.friendOff.Text = "No";
+			// 
+			// groupBox50
+			// 
+			this.groupBox50.Controls.Add(this.warmodeOn);
+			this.groupBox50.Controls.Add(this.warmodeBoth);
+			this.groupBox50.Controls.Add(this.warmodeOff);
+			this.groupBox50.Location = new System.Drawing.Point(6, 179);
+			this.groupBox50.Name = "groupBox50";
+			this.groupBox50.Size = new System.Drawing.Size(163, 37);
+			this.groupBox50.TabIndex = 94;
+			this.groupBox50.TabStop = false;
+			this.groupBox50.Text = "Warmode";
+			// 
+			// warmodeOn
+			// 
+			this.warmodeOn.Location = new System.Drawing.Point(6, 15);
+			this.warmodeOn.Name = "warmodeOn";
+			this.warmodeOn.Size = new System.Drawing.Size(48, 20);
+			this.warmodeOn.TabIndex = 69;
+			this.warmodeOn.Text = "Yes";
+			// 
+			// warmodeBoth
+			// 
+			this.warmodeBoth.Checked = true;
+			this.warmodeBoth.Location = new System.Drawing.Point(107, 15);
+			this.warmodeBoth.Name = "warmodeBoth";
+			this.warmodeBoth.Size = new System.Drawing.Size(50, 20);
+			this.warmodeBoth.TabIndex = 71;
+			this.warmodeBoth.TabStop = true;
+			this.warmodeBoth.Text = "Both";
+			// 
+			// warmodeOff
+			// 
+			this.warmodeOff.Location = new System.Drawing.Point(60, 15);
+			this.warmodeOff.Name = "warmodeOff";
+			this.warmodeOff.Size = new System.Drawing.Size(41, 20);
+			this.warmodeOff.TabIndex = 70;
+			this.warmodeOff.Text = "No";
+			// 
+			// groupBox51
+			// 
+			this.groupBox51.Controls.Add(this.ghostOn);
+			this.groupBox51.Controls.Add(this.ghostBoth);
+			this.groupBox51.Controls.Add(this.ghostOff);
+			this.groupBox51.Location = new System.Drawing.Point(6, 139);
+			this.groupBox51.Name = "groupBox51";
+			this.groupBox51.Size = new System.Drawing.Size(163, 37);
+			this.groupBox51.TabIndex = 92;
+			this.groupBox51.TabStop = false;
+			this.groupBox51.Text = "Ghost";
+			// 
+			// ghostOn
+			// 
+			this.ghostOn.Location = new System.Drawing.Point(6, 14);
+			this.ghostOn.Name = "ghostOn";
+			this.ghostOn.Size = new System.Drawing.Size(48, 20);
+			this.ghostOn.TabIndex = 73;
+			this.ghostOn.Text = "Yes";
+			// 
+			// ghostBoth
+			// 
+			this.ghostBoth.Checked = true;
+			this.ghostBoth.Location = new System.Drawing.Point(107, 14);
+			this.ghostBoth.Name = "ghostBoth";
+			this.ghostBoth.Size = new System.Drawing.Size(50, 20);
+			this.ghostBoth.TabIndex = 75;
+			this.ghostBoth.TabStop = true;
+			this.ghostBoth.Text = "Both";
+			// 
+			// ghostOff
+			// 
+			this.ghostOff.Location = new System.Drawing.Point(60, 14);
+			this.ghostOff.Name = "ghostOff";
+			this.ghostOff.Size = new System.Drawing.Size(41, 20);
+			this.ghostOff.TabIndex = 74;
+			this.ghostOff.Text = "No";
+			// 
+			// groupBox52
+			// 
+			this.groupBox52.Controls.Add(this.humanOn);
+			this.groupBox52.Controls.Add(this.humanOff);
+			this.groupBox52.Controls.Add(this.humanBoth);
+			this.groupBox52.Location = new System.Drawing.Point(6, 98);
+			this.groupBox52.Name = "groupBox52";
+			this.groupBox52.Size = new System.Drawing.Size(163, 37);
+			this.groupBox52.TabIndex = 91;
+			this.groupBox52.TabStop = false;
+			this.groupBox52.Text = "Human";
+			// 
+			// humanOn
+			// 
+			this.humanOn.Location = new System.Drawing.Point(6, 15);
+			this.humanOn.Name = "humanOn";
+			this.humanOn.Size = new System.Drawing.Size(48, 20);
+			this.humanOn.TabIndex = 77;
+			this.humanOn.Text = "Yes";
+			// 
+			// humanOff
+			// 
+			this.humanOff.Location = new System.Drawing.Point(60, 15);
+			this.humanOff.Name = "humanOff";
+			this.humanOff.Size = new System.Drawing.Size(41, 20);
+			this.humanOff.TabIndex = 78;
+			this.humanOff.Text = "No";
+			// 
+			// humanBoth
+			// 
+			this.humanBoth.Checked = true;
+			this.humanBoth.Location = new System.Drawing.Point(107, 15);
+			this.humanBoth.Name = "humanBoth";
+			this.humanBoth.Size = new System.Drawing.Size(50, 20);
+			this.humanBoth.TabIndex = 79;
+			this.humanBoth.TabStop = true;
+			this.humanBoth.Text = "Both";
+			// 
+			// groupBox53
+			// 
+			this.groupBox53.Controls.Add(this.blessedOn);
+			this.groupBox53.Controls.Add(this.blessedOff);
+			this.groupBox53.Controls.Add(this.blessedBoth);
+			this.groupBox53.Location = new System.Drawing.Point(6, 58);
+			this.groupBox53.Name = "groupBox53";
+			this.groupBox53.Size = new System.Drawing.Size(163, 37);
+			this.groupBox53.TabIndex = 90;
+			this.groupBox53.TabStop = false;
+			this.groupBox53.Text = "Yellow Hits";
+			// 
+			// blessedOn
+			// 
+			this.blessedOn.Location = new System.Drawing.Point(6, 14);
+			this.blessedOn.Name = "blessedOn";
+			this.blessedOn.Size = new System.Drawing.Size(48, 20);
+			this.blessedOn.TabIndex = 81;
+			this.blessedOn.Text = "Yes";
+			// 
+			// blessedOff
+			// 
+			this.blessedOff.Location = new System.Drawing.Point(60, 14);
+			this.blessedOff.Name = "blessedOff";
+			this.blessedOff.Size = new System.Drawing.Size(41, 20);
+			this.blessedOff.TabIndex = 82;
+			this.blessedOff.Text = "No";
+			// 
+			// blessedBoth
+			// 
+			this.blessedBoth.Checked = true;
+			this.blessedBoth.Location = new System.Drawing.Point(107, 14);
+			this.blessedBoth.Name = "blessedBoth";
+			this.blessedBoth.Size = new System.Drawing.Size(50, 20);
+			this.blessedBoth.TabIndex = 83;
+			this.blessedBoth.TabStop = true;
+			this.blessedBoth.Text = "Both";
+			// 
+			// groupBox54
+			// 
+			this.groupBox54.Controls.Add(this.poisonedOn);
+			this.groupBox54.Controls.Add(this.poisonedOff);
+			this.groupBox54.Controls.Add(this.poisonedBoth);
+			this.groupBox54.Location = new System.Drawing.Point(6, 19);
+			this.groupBox54.Name = "groupBox54";
+			this.groupBox54.Size = new System.Drawing.Size(163, 37);
+			this.groupBox54.TabIndex = 89;
+			this.groupBox54.TabStop = false;
+			this.groupBox54.Text = "Poisoned";
+			// 
+			// poisonedOn
+			// 
+			this.poisonedOn.Location = new System.Drawing.Point(6, 13);
+			this.poisonedOn.Name = "poisonedOn";
+			this.poisonedOn.Size = new System.Drawing.Size(48, 20);
+			this.poisonedOn.TabIndex = 85;
+			this.poisonedOn.Text = "Yes";
+			// 
+			// poisonedOff
+			// 
+			this.poisonedOff.Location = new System.Drawing.Point(60, 13);
+			this.poisonedOff.Name = "poisonedOff";
+			this.poisonedOff.Size = new System.Drawing.Size(41, 20);
+			this.poisonedOff.TabIndex = 86;
+			this.poisonedOff.Text = "No";
+			// 
+			// poisonedBoth
+			// 
+			this.poisonedBoth.Checked = true;
+			this.poisonedBoth.Location = new System.Drawing.Point(107, 13);
+			this.poisonedBoth.Name = "poisonedBoth";
+			this.poisonedBoth.Size = new System.Drawing.Size(50, 20);
+			this.poisonedBoth.TabIndex = 87;
+			this.poisonedBoth.TabStop = true;
+			this.poisonedBoth.Text = "Both";
+			// 
+			// groupBox45
+			// 
+			this.groupBox45.Controls.Add(this.targethueGridView);
+			this.groupBox45.Controls.Add(this.targetcoloCheckBox);
+			this.groupBox45.Location = new System.Drawing.Point(257, 6);
+			this.groupBox45.Name = "groupBox45";
+			this.groupBox45.Size = new System.Drawing.Size(111, 313);
+			this.groupBox45.TabIndex = 51;
+			this.groupBox45.TabStop = false;
+			this.groupBox45.Text = "Color Filter";
+			// 
+			// targethueGridView
+			// 
+			this.targethueGridView.AllowDrop = true;
+			this.targethueGridView.AllowUserToResizeRows = false;
+			this.targethueGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.targethueGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn21});
+			this.targethueGridView.Location = new System.Drawing.Point(7, 43);
+			this.targethueGridView.Name = "targethueGridView";
+			this.targethueGridView.RowHeadersVisible = false;
+			this.targethueGridView.Size = new System.Drawing.Size(95, 261);
+			this.targethueGridView.TabIndex = 70;
+			this.targethueGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targethueGridView_CellEndEdit);
+			this.targethueGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_MouseDown);
+			this.targethueGridView.CellMouseMove += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_MouseMove);
+			this.targethueGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.targethueGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.targethueGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
+			this.targethueGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.targetfilter_DefaultValuesNeeded);
+			this.targethueGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.targethueGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			// 
+			// dataGridViewTextBoxColumn21
+			// 
+			this.dataGridViewTextBoxColumn21.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn21.HeaderText = "Hue";
+			this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
+			this.dataGridViewTextBoxColumn21.Width = 75;
+			// 
+			// targetcoloCheckBox
+			// 
+			this.targetcoloCheckBox.AutoSize = true;
+			this.targetcoloCheckBox.Location = new System.Drawing.Point(7, 20);
+			this.targetcoloCheckBox.Name = "targetcoloCheckBox";
+			this.targetcoloCheckBox.Size = new System.Drawing.Size(59, 17);
+			this.targetcoloCheckBox.TabIndex = 0;
+			this.targetcoloCheckBox.Text = "Enable";
+			this.targetcoloCheckBox.UseVisualStyleBackColor = true;
+			this.targetcoloCheckBox.CheckedChanged += new System.EventHandler(this.targetcoloCheckBox_CheckedChanged);
+			// 
+			// groupBox44
+			// 
+			this.groupBox44.Controls.Add(this.targetbodydataGridView);
+			this.groupBox44.Controls.Add(this.targetbodyCheckBox);
+			this.groupBox44.Location = new System.Drawing.Point(140, 6);
+			this.groupBox44.Name = "groupBox44";
+			this.groupBox44.Size = new System.Drawing.Size(111, 313);
+			this.groupBox44.TabIndex = 50;
+			this.groupBox44.TabStop = false;
+			this.groupBox44.Text = "Body Filter";
+			// 
+			// targetbodydataGridView
+			// 
+			this.targetbodydataGridView.AllowDrop = true;
+			this.targetbodydataGridView.AllowUserToResizeRows = false;
+			this.targetbodydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.targetbodydataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn20});
+			this.targetbodydataGridView.Location = new System.Drawing.Point(7, 43);
+			this.targetbodydataGridView.Name = "targetbodydataGridView";
+			this.targetbodydataGridView.RowHeadersVisible = false;
+			this.targetbodydataGridView.Size = new System.Drawing.Size(95, 264);
+			this.targetbodydataGridView.TabIndex = 70;
+			this.targetbodydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targetbodydataGridView_CellEndEdit);
+			this.targetbodydataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.targetbodydataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.targetbodydataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
+			this.targetbodydataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.targetfilter_DefaultValuesNeeded);
+			this.targetbodydataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.targetbodydataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.targetbodydataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.targetbodydataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+			// 
+			// dataGridViewTextBoxColumn20
+			// 
+			this.dataGridViewTextBoxColumn20.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn20.HeaderText = "Body ID";
+			this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+			this.dataGridViewTextBoxColumn20.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn20.Width = 75;
+			// 
+			// targetbodyCheckBox
+			// 
+			this.targetbodyCheckBox.AutoSize = true;
+			this.targetbodyCheckBox.Location = new System.Drawing.Point(7, 20);
+			this.targetbodyCheckBox.Name = "targetbodyCheckBox";
+			this.targetbodyCheckBox.Size = new System.Drawing.Size(59, 17);
+			this.targetbodyCheckBox.TabIndex = 0;
+			this.targetbodyCheckBox.Text = "Enable";
+			this.targetbodyCheckBox.UseVisualStyleBackColor = true;
+			this.targetbodyCheckBox.CheckedChanged += new System.EventHandler(this.targetbodyCheckBox_CheckedChanged);
+			// 
+			// groupBox43
+			// 
+			this.groupBox43.Controls.Add(this.label76);
+			this.groupBox43.Controls.Add(this.targetremoveButton);
+			this.groupBox43.Controls.Add(this.targetaddButton);
+			this.groupBox43.Controls.Add(this.targetaddTextBox);
+			this.groupBox43.Controls.Add(this.targetlistBox);
+			this.groupBox43.Location = new System.Drawing.Point(8, 6);
+			this.groupBox43.Name = "groupBox43";
+			this.groupBox43.Size = new System.Drawing.Size(126, 355);
+			this.groupBox43.TabIndex = 49;
+			this.groupBox43.TabStop = false;
+			this.groupBox43.Text = "Shortcut";
+			// 
+			// targetremoveButton
+			// 
+			this.targetremoveButton.Location = new System.Drawing.Point(7, 45);
+			this.targetremoveButton.Name = "targetremoveButton";
+			this.targetremoveButton.Size = new System.Drawing.Size(55, 23);
+			this.targetremoveButton.TabIndex = 5;
+			this.targetremoveButton.Text = "Remove";
+			this.targetremoveButton.UseVisualStyleBackColor = true;
+			this.targetremoveButton.Click += new System.EventHandler(this.targetremoveButton_Click);
+			// 
+			// targetaddButton
+			// 
+			this.targetaddButton.Location = new System.Drawing.Point(65, 45);
+			this.targetaddButton.Name = "targetaddButton";
+			this.targetaddButton.Size = new System.Drawing.Size(55, 23);
+			this.targetaddButton.TabIndex = 4;
+			this.targetaddButton.Text = "Add";
+			this.targetaddButton.UseVisualStyleBackColor = true;
+			this.targetaddButton.Click += new System.EventHandler(this.targetaddButton_Click);
+			// 
+			// targetaddTextBox
+			// 
+			this.targetaddTextBox.Location = new System.Drawing.Point(44, 19);
+			this.targetaddTextBox.Name = "targetaddTextBox";
+			this.targetaddTextBox.Size = new System.Drawing.Size(76, 20);
+			this.targetaddTextBox.TabIndex = 1;
+			// 
+			// targetlistBox
+			// 
+			this.targetlistBox.FormattingEnabled = true;
+			this.targetlistBox.Location = new System.Drawing.Point(7, 72);
+			this.targetlistBox.Name = "targetlistBox";
+			this.targetlistBox.Size = new System.Drawing.Size(113, 277);
+			this.targetlistBox.TabIndex = 0;
+			this.targetlistBox.SelectedIndexChanged += new System.EventHandler(this.targetlistBox_SelectedIndexChanged);
 			// 
 			// skillsTab
 			// 
@@ -7977,6 +8553,15 @@ namespace Assistant
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
 			// 
+			// label76
+			// 
+			this.label76.AutoSize = true;
+			this.label76.Location = new System.Drawing.Point(6, 22);
+			this.label76.Name = "label76";
+			this.label76.Size = new System.Drawing.Size(38, 13);
+			this.label76.TabIndex = 5;
+			this.label76.Text = "Name:";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -8038,7 +8623,29 @@ namespace Assistant
 			this.groupBox35.ResumeLayout(false);
 			this.groupBox35.PerformLayout();
 			this.emptyTab.ResumeLayout(false);
-			this.groupBox7.ResumeLayout(false);
+			this.groupBox57.ResumeLayout(false);
+			this.groupBox57.PerformLayout();
+			this.groupBox56.ResumeLayout(false);
+			this.groupBox55.ResumeLayout(false);
+			this.groupBox55.PerformLayout();
+			this.groupBox48.ResumeLayout(false);
+			this.groupBox48.PerformLayout();
+			this.groupBox46.ResumeLayout(false);
+			this.groupBox47.ResumeLayout(false);
+			this.groupBox49.ResumeLayout(false);
+			this.groupBox50.ResumeLayout(false);
+			this.groupBox51.ResumeLayout(false);
+			this.groupBox52.ResumeLayout(false);
+			this.groupBox53.ResumeLayout(false);
+			this.groupBox54.ResumeLayout(false);
+			this.groupBox45.ResumeLayout(false);
+			this.groupBox45.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.targethueGridView)).EndInit();
+			this.groupBox44.ResumeLayout(false);
+			this.groupBox44.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.targetbodydataGridView)).EndInit();
+			this.groupBox43.ResumeLayout(false);
+			this.groupBox43.PerformLayout();
 			this.skillsTab.ResumeLayout(false);
 			this.skillsTab.PerformLayout();
 			this.screenshotTab.ResumeLayout(false);
@@ -8303,7 +8910,14 @@ namespace Assistant
 			spellgrid_trackBar.Value = RazorEnhanced.Settings.General.ReadInt("GridOpacity");
 
 			// ------------------ TARGETS --------------------
-			TargetGUI.RefreshTarget();
+			targetSelectorComboBox.DataSource = TargetGUI.Selectors;
+			targetcoloCheckBox.Checked = targethueGridView.Enabled = false;
+			targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = false;
+			TargetGUI.RefreshTargetShortCut(targetlistBox);
+			if (targetlistBox.Items.Count > 0)
+				EnableTargetGUI();
+			else
+				DisableTargetGUI();
 
 			// ------------------ HOTKEY --------------------
 			HotKey.Init();
@@ -12601,49 +13215,6 @@ namespace Assistant
 		}
 		// ---------------- HEAL BANDAGE END ----------------
 
-		// ---------------- TARGETTING START ----------------
-
-		private void addTargetButton_Click(object sender, EventArgs e)
-		{
-			EnhancedTargetAdd addtarget = new EnhancedTargetAdd
-			{
-				TopMost = true
-			};
-			addtarget.Show();
-		}
-
-		private void removeTargetButton_Click(object sender, EventArgs e)
-		{
-			if (targetlistView.SelectedItems.Count == 1)
-			{
-				RazorEnhanced.Settings.Target.TargetDelete(targetlistView.SelectedItems[0].SubItems[1].Text);
-				TargetGUI.RefreshTarget();
-				RazorEnhanced.HotKey.Init();
-			}
-		}
-
-		private void performTargetButton_Click(object sender, EventArgs e)
-		{
-			if (targetlistView.SelectedItems.Count == 1)
-			{
-				RazorEnhanced.Target.SetLastTargetFromListHotKey(targetlistView.SelectedItems[0].SubItems[1].Text);
-			}
-		}
-
-		private void editTargetButton_Click(object sender, EventArgs e)
-		{
-			if (targetlistView.SelectedItems.Count == 1)
-			{
-				EnhancedTargetEdit edittarget = new EnhancedTargetEdit(targetlistView.SelectedItems[0].SubItems[1].Text)
-				{
-					TopMost = true
-				};
-				edittarget.Show();
-			}
-		}
-
-		// ---------------- TARGETTING END ----------------
-
 		// ---------------- FILTERS START ----------------
 		private void autocarverrazorButton_Click(object sender, EventArgs e)
 		{
@@ -14009,6 +14580,14 @@ namespace Assistant
 						RazorEnhanced.Filters.CopyGraphTable();
 					}
 					break;
+				case "targetbodydataGridView":
+					if (!targetbodydataGridView.Rows[agentrowindex].IsNewRow)
+						targetbodydataGridView.Rows.RemoveAt(agentrowindex);
+					break;
+				case "targethueGridView":
+					if (!targethueGridView.Rows[agentrowindex].IsNewRow)
+						targethueGridView.Rows.RemoveAt(agentrowindex);
+					break;
 			}
 
 		}
@@ -14142,7 +14721,10 @@ namespace Assistant
 					grid.Rows[e.RowIndex].Selected = true;
 					agentrowindex = e.RowIndex;
 					agenttype = grid.Name;
-					grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
+					if (grid.Rows[e.RowIndex].Cells.Count > 1)
+						grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
+					else
+						grid.CurrentCell = grid.Rows[e.RowIndex].Cells[0];
 					datagridMenuStrip.Show(Cursor.Position);
 				}
 			}
@@ -14485,7 +15067,388 @@ namespace Assistant
 			Process.Start(p);
 		}
 
+		string lasttargetselected = string.Empty;
+
+		private void EnableTargetGUI()
+		{
+			groupBox44.Enabled = groupBox45.Enabled = groupBox48.Enabled = groupBox57.Enabled = groupBox46.Enabled =
+			groupBox56.Enabled = groupBox55.Enabled = targetTestButton.Enabled = targetsaveButton.Enabled = true;
+		}
+
+		private void DisableTargetGUI()
+		{
+			groupBox44.Enabled = groupBox45.Enabled = groupBox48.Enabled = groupBox57.Enabled = groupBox46.Enabled =
+			groupBox56.Enabled = groupBox55.Enabled = targetTestButton.Enabled = targetsaveButton.Enabled = false;
+		}
+
+		private void targetlistBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (targetlistBox.SelectedItem == null || targetlistBox.SelectedItem.ToString() == lasttargetselected)
+				return;
+
+			EnableTargetGUI();
+
+			lasttargetselected = targetlistBox.SelectedItem.ToString();
+			TargetGUI.TargetGUIObject m_targ =  Settings.Target.TargetRead(targetlistBox.SelectedItem.ToString());
+
+			targethueGridView.Rows.Clear();
+			targetbodydataGridView.Rows.Clear();
+
+			// Selector
+			targetSelectorComboBox.Text = m_targ.Selector;
+
+			//Name
+			targetNameTextBox.Text = m_targ.Filter.Name;
+
+			// Flags
+			if (m_targ.Filter.Poisoned == -1)
+				poisonedBoth.Checked = true;
+			else if (m_targ.Filter.Poisoned == 1)
+				poisonedOn.Checked = true;
+			else
+				poisonedOff.Checked = true;
+
+			if (m_targ.Filter.Blessed == -1)
+				blessedBoth.Checked = true;
+			else if (m_targ.Filter.Blessed == 1)
+				blessedOn.Checked = true;
+			else
+				blessedOff.Checked = true;
+
+			if (m_targ.Filter.IsHuman == -1)
+				humanBoth.Checked = true;
+			else if (m_targ.Filter.IsHuman == 1)
+				humanOn.Checked = true;
+			else
+				humanOff.Checked = true;
+
+			if (m_targ.Filter.IsGhost == -1)
+				ghostBoth.Checked = true;
+			else if (m_targ.Filter.IsGhost == 1)
+				ghostOn.Checked = true;
+			else
+				ghostOff.Checked = true;
+
+			if (m_targ.Filter.Warmode == -1)
+				warmodeBoth.Checked = true;
+			else if (m_targ.Filter.Warmode == 1)
+				warmodeOn.Checked = true;
+			else
+				warmodeOff.Checked = true;
+
+			if (m_targ.Filter.Friend == -1)
+				friendBoth.Checked = true;
+			else if (m_targ.Filter.Friend == 1)
+				friendOn.Checked = true;
+			else
+				friendOff.Checked = true;
+
+			if (m_targ.Filter.Paralized == -1)
+				paralizedBoth.Checked = true;
+			else if (m_targ.Filter.Paralized == 1)
+				paralizedOn.Checked = true;
+			else
+				paralizedOff.Checked = true;
+
+			// min max range
+			targetRangeMaxTextBox.Text = m_targ.Filter.RangeMax.ToString();
+			targetRangeMinTextBox.Text = m_targ.Filter.RangeMin.ToString();
+
+			// Body ID
+			if (m_targ.Filter.Bodies.Count > 0)
+			{
+				targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = true;
+				foreach (int bodyid in m_targ.Filter.Bodies)
+					targetbodydataGridView.Rows.Add(new object[] { "0x" + bodyid.ToString("X4") });
+			}
+			else
+				targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = false;
+
+			// Hue
+			if (m_targ.Filter.Hues.Count > 0)
+			{
+				targetcoloCheckBox.Checked = targethueGridView.Enabled = true;
+				foreach (int hue in m_targ.Filter.Hues)
+					targethueGridView.Rows.Add(new object[] { "0x" + hue.ToString("X4") });
+			}
+			else
+				targetcoloCheckBox.Checked = targethueGridView.Enabled = false;
+
+			// noto
+			targetBlueCheckBox.Checked = targetGreenCheckBox.Checked = targetGreyCheckBox.Checked = targetCriminalCheckBox.Checked =
+			targetOrangeCheckBox.Checked = targetRedCheckBox.Checked = targetYellowCheckBox.Checked = false;
+
+			foreach (int noto in m_targ.Filter.Notorieties)
+			{
+				switch (noto)
+				{
+					case 0x01:
+						targetBlueCheckBox.Checked = true;
+						break;
+					case 0x02:
+						targetGreenCheckBox.Checked = true;
+						break;
+					case 0x03:
+						targetGreyCheckBox.Checked = true;
+						break;
+					case 0x04:
+						targetCriminalCheckBox.Checked = true;
+						break;
+					case 0x05:
+						targetOrangeCheckBox.Checked = true;
+						break;
+					case 0x06:
+						targetRedCheckBox.Checked = true;
+						break;
+					case 0x07:
+						targetYellowCheckBox.Checked = true;
+						break;
+				}
+			}
+		}
+
+		private void targetbodyCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			targetbodydataGridView.Enabled = targetbodyCheckBox.Checked;
+		}
+
+		private void targetcoloCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			targethueGridView.Enabled = targetcoloCheckBox.Checked;
+		}
+
+		private void targetbodydataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = targetbodydataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 0)
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
+		}
+
+		private void targetfilter_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = "0x0000";
+		}
+
+		private void targethueGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = targethueGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 0)
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
+		}
+
+		private void SaveTarget()
+		{
+			List<int> bodylist = new List<int>();
+			List<int> huelist = new List<int>();
+			List<byte> notolist = new List<byte>();
+			int maxrange = -1;
+			int minrange = -1;
+
+			// body list
+			foreach (DataGridViewRow row in targetbodydataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+				bodylist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
+			}
+
+			// hue list
+			foreach (DataGridViewRow row in targethueGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+				huelist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
+			}
+
+			// max range
+			if (Int32.TryParse(targetRangeMaxTextBox.Text, out maxrange))
+			{
+				if (maxrange < -1)
+					maxrange = -1;
+			}
+			else
+			{
+				maxrange = -1;
+				targetRangeMaxTextBox.Text = "-1";
+			}
+
+			// min range
+			if (Int32.TryParse(targetRangeMinTextBox.Text, out minrange))
+			{
+				if (minrange < -1)
+					minrange = -1;
+			}
+			else
+			{
+				minrange = -1;
+				targetRangeMinTextBox.Text = "-1";
+			}
+
+			// notocolor
+
+			if (targetBlueCheckBox.Checked)
+				notolist.Add(0x01);
+
+			if (targetGreenCheckBox.Checked)
+				notolist.Add(0x02);
+
+			if (targetGreyCheckBox.Checked)
+				notolist.Add(0x03);
+
+			if (targetCriminalCheckBox.Checked)
+				notolist.Add(0x04);
+
+			if (targetOrangeCheckBox.Checked)
+				notolist.Add(0x05);
+
+			if (targetRedCheckBox.Checked)
+				notolist.Add(0x06);
+
+			if (targetYellowCheckBox.Checked)
+				notolist.Add(0x07);
+
+			// Genero filtro da salvare
+			Mobiles.Filter filtertosave = new Mobiles.Filter
+			{
+				Enabled = true,
+				Bodies = bodylist,
+				Name = targetNameTextBox.Text,
+				Hues = huelist,
+				RangeMax = maxrange,
+				RangeMin = minrange
+			};
+
+			if (poisonedBoth.Checked)
+				filtertosave.Poisoned = -1;
+			else if (poisonedOn.Checked)
+				filtertosave.Poisoned = 1;
+			else
+				filtertosave.Poisoned = 0;
+
+			if (blessedBoth.Checked)
+				filtertosave.Blessed = -1;
+			else if (blessedOn.Checked)
+				filtertosave.Blessed = 1;
+			else
+				filtertosave.Blessed = 0;
+
+			if (humanBoth.Checked)
+				filtertosave.IsHuman = -1;
+			else if (humanOn.Checked)
+				filtertosave.IsHuman = 1;
+			else
+				filtertosave.IsHuman = 0;
+
+			if (ghostBoth.Checked)
+				filtertosave.IsGhost = -1;
+			else if (ghostOn.Checked)
+				filtertosave.IsGhost = 1;
+			else
+				filtertosave.IsGhost = 0;
+
+			filtertosave.Female = -1;
+
+			if (warmodeBoth.Checked)
+				filtertosave.Warmode = -1;
+			else if (warmodeOn.Checked)
+				filtertosave.Warmode = 1;
+			else
+				filtertosave.Warmode = 0;
+
+			if (friendBoth.Checked)
+				filtertosave.Friend = -1;
+			else if (friendOn.Checked)
+				filtertosave.Friend = 1;
+			else
+				filtertosave.Friend = 0;
+
+			if (paralizedBoth.Checked)
+				filtertosave.Paralized = -1;
+			else if (paralizedOn.Checked)
+				filtertosave.Paralized = 1;
+			else
+				filtertosave.Paralized = 0;
+
+			filtertosave.Notorieties = notolist;
+
+			// Genero struttura da salvare
+			TargetGUI.TargetGUIObject targettosave = new TargetGUI.TargetGUIObject(targetSelectorComboBox.Text, filtertosave);
+			RazorEnhanced.Settings.Target.TargetReplace(targetlistBox.SelectedItem.ToString(), targettosave);
+
+		}
+		private void targetsaveButton_Click(object sender, EventArgs e)
+		{
+			SaveTarget();
+		}
+
+		private void targetaddButton_Click(object sender, EventArgs e)
+		{
+			bool fail = false;
+			string newtargetid = String.Empty;
+
+			if (targetaddTextBox.Text == String.Empty)
+				fail = true;
+
+			if (!System.Text.RegularExpressions.Regex.IsMatch(targetaddTextBox.Text, "^[a-zA-Z0-9_]+$"))
+				fail = true;
+
+			newtargetid = targetaddTextBox.Text.ToLower();
+			if (RazorEnhanced.Settings.Target.TargetExist(newtargetid))
+				fail = true;
+
+			if (fail)
+			{
+				MessageBox.Show("Invalid Target ID!",
+				"Invalid Target ID!",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation,
+				MessageBoxDefaultButton.Button1);
+				return;
+			}
+			Mobiles.Filter filtertoadd = new Mobiles.Filter
+			{
+				Enabled = true
+			};
+
+			TargetGUI.TargetGUIObject targettoadd = new TargetGUI.TargetGUIObject("Nearest", filtertoadd);
+
+			// Salvo struttura
+			RazorEnhanced.Settings.Target.TargetAdd(newtargetid, targettoadd, Keys.None, true);
+			TargetGUI.RefreshTargetShortCut(targetlistBox);
+			targetlistBox.SelectedIndex = targetlistBox.Items.Count - 1;
+			RazorEnhanced.HotKey.Init();
+		}
+
+		private void targetremoveButton_Click(object sender, EventArgs e)
+		{
+			if (targetlistBox.SelectedItem == null || string.IsNullOrEmpty(targetlistBox.SelectedItem.ToString()))
+				return;
+
+			RazorEnhanced.Settings.Target.TargetDelete(targetlistBox.SelectedItem.ToString());
+			TargetGUI.RefreshTargetShortCut(targetlistBox);
+			if (targetlistBox.Items.Count > 0)
+				targetlistBox.SelectedIndex = 0;
+			else
+			{
+				lasttargetselected = string.Empty;
+				DisableTargetGUI();
+				targetlistBox.SelectedIndex = -1;
+			}
+			RazorEnhanced.HotKey.Init();
+		}
+
+		private void targetTestButton_Click(object sender, EventArgs e)
+		{
+			if (targetlistBox.SelectedItem == null || string.IsNullOrEmpty(targetlistBox.SelectedItem.ToString()))
+				return;
+
+			SaveTarget();
+			RazorEnhanced.Target.SetLastTargetFromListHotKey(targetlistBox.SelectedItem.ToString());
+		}
 
 		// ----------------- STOP DPS METER -------------------
 	}
 }
+

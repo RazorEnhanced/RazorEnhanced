@@ -350,18 +350,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.Designer.cs">
       <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedTargetEdit.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedTargetEdit.Designer.cs">
-      <DependentUpon>EnhancedTargetEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedTargetAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedTargetAdd.Designer.cs">
-      <DependentUpon>EnhancedTargetAdd.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -487,12 +475,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.resx">
       <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedTargetEdit.resx">
-      <DependentUpon>EnhancedTargetEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedTargetAdd.resx">
-      <DependentUpon>EnhancedTargetAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.resx">
       <DependentUpon>EnhancedFriendAddPlayerManual.cs</DependentUpon>
