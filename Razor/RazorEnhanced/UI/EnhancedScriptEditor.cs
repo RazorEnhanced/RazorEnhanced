@@ -134,7 +134,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsPlayer =
 			{
-				"Player.BuffsExist", "Player.GetBuffDescription",
+				"Player.BuffsExist", "Player.GetBuffDescription", "Player.SpellIsEnabled",
 				"Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
 				"Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer", "Player.EquipUO3D",
 				"Player.GetSkillValue", "Player.GetSkillCap", "Player.GetSkillStatus", "Player.GetRealSkillValue", "Player.UseSkill", "Player.ChatSay",
@@ -334,6 +334,9 @@ namespace RazorEnhanced.UI
 			#region Description Player
 
 			Dictionary<string, ToolTipDescriptions> descriptionPlayer = new Dictionary<string, ToolTipDescriptions>();
+
+			tooltip = new ToolTipDescriptions("Player.SpellIsEnabled(string)", new string[] { "string SpellName" }, "bool", "Get a bool value if specific spell is enabled (red Icon) or not\n\tCheck the wiki for the possible strings");
+			descriptionPlayer.Add("Player.SpellIsEnabled", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.BuffsExist(string)", new string[] { "string BuffName" }, "bool", "Get a bool value if specific buff exist or not\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.BuffsExist", tooltip);

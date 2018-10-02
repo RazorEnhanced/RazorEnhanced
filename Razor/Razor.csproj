@@ -165,6 +165,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\SkillIcon.cs" />
     <Compile Include="Core\DLLImport.cs" />
     <Compile Include="Core\TitleBar.cs" />
     <Compile Include="Core\VideoCapture.cs" />

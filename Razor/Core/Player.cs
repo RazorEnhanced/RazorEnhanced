@@ -225,8 +225,12 @@ namespace Assistant
 
 		internal static int FastWalkKey = 0;
 
-		internal List<BuffIcon> m_Buffs = new List<BuffIcon>();
+		private List<BuffIcon> m_Buffs = new List<BuffIcon>();
 		internal List<BuffIcon> Buffs { get { return m_Buffs; } }
+
+		private List<SkillIcon> m_SkillEnabled = new List<SkillIcon>();
+		internal List<SkillIcon> SkillEnabled { get { return m_SkillEnabled; } }
+
 
 		internal PlayerData(Serial serial)
 			: base(serial)

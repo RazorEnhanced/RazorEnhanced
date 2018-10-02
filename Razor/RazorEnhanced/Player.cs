@@ -668,6 +668,25 @@ namespace RazorEnhanced
 			return false;
 		}
 
+		// Special skill Icon
+		public static bool SpellIsEnabled(string spell)
+		{
+			if (World.Player == null || World.Player.SkillEnabled == null)
+				return false;
+
+			string spellname = Utility.RemoveWhiteSpace(spell);
+
+			if (!Enum.TryParse<SkillIcon>(spellname, out SkillIcon l))
+			{
+				Scripts.SendMessageScriptError("Script Error: SpellEnable: Invalid spell name: " + spellname);
+				return false;
+			}
+
+			if (World.Player.SkillEnabled.Contains(l))
+					return true;
+
+			return false;
+		}
 		public static void UnEquipItemByLayer(String layer, bool wait = true)
 		{
 			Enum.TryParse<Layer>(layer, out Layer l);

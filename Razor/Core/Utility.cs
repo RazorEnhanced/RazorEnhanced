@@ -68,6 +68,13 @@ namespace Assistant
 			}
 		}
 
+		internal static string RemoveWhiteSpace(string input)
+		{
+			return new string(input.ToCharArray()
+				.Where(c => !Char.IsWhiteSpace(c))
+				.ToArray());
+		}
+
 		internal static string CapitalizeAllWords(string str)
 		{
 			if (str == null || str == string.Empty)

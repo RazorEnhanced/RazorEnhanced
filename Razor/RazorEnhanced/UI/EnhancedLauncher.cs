@@ -46,20 +46,13 @@ namespace RazorEnhanced.UI
 				okay.Enabled = false;
 		}
 
-		private static string RemoveSpace(string input)
-		{
-			return new string(input.ToCharArray()
-				.Where(c => !Char.IsWhiteSpace(c))
-				.ToArray());
-		}
-
 		internal void UpdateGUI()
 		{
-			portLabel.Text = RemoveSpace(portLabel.Text);
+			portLabel.Text = Assistant.Utility.RemoveWhiteSpace(portLabel.Text);
 			int port = 2593;
 			Int32.TryParse(portLabel.Text, out port);
 
-			hostLabel.Text = RemoveSpace(hostLabel.Text);
+			hostLabel.Text = Assistant.Utility.RemoveWhiteSpace(hostLabel.Text);
 
 			RazorEnhanced.Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
