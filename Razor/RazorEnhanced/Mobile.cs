@@ -39,7 +39,7 @@ namespace RazorEnhanced
 
 		public bool IsGhost { get { return m_AssistantMobile.IsGhost; } }
 
-		public bool Warmode { get { return m_AssistantMobile.Warmode; } }
+		public bool WarMode { get { return m_AssistantMobile.Warmode; } }
 
 		public bool Female { get { return m_AssistantMobile.Female; } }
 
