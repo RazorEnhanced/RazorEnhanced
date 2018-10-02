@@ -62,7 +62,10 @@
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.commentSelectLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.unCommentLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.messagelistBox = new System.Windows.Forms.ListBox();
+			this.logboxMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.textBoxDebug = new System.Windows.Forms.TextBox();
 			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
@@ -74,6 +77,7 @@
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).BeginInit();
 			this.textareaMenuStrip.SuspendLayout();
+			this.logboxMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
@@ -311,7 +315,7 @@
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.fastColoredTextBoxEditor);
-			this.splitContainer1.Panel1.Controls.Add(this.listBox1);
+			this.splitContainer1.Panel1.Controls.Add(this.messagelistBox);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -414,14 +418,41 @@
 			this.unCommentLineToolStripMenuItem.Text = "UnComment Line";
 			this.unCommentLineToolStripMenuItem.Click += new System.EventHandler(this.unCommentLineToolStripMenuItem_Click);
 			// 
-			// listBox1
+			// messagelistBox
 			// 
-			this.listBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Location = new System.Drawing.Point(0, 464);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(962, 121);
-			this.listBox1.TabIndex = 1;
+			this.messagelistBox.ContextMenuStrip = this.logboxMenuStrip;
+			this.messagelistBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.messagelistBox.FormattingEnabled = true;
+			this.messagelistBox.HorizontalScrollbar = true;
+			this.messagelistBox.Location = new System.Drawing.Point(0, 464);
+			this.messagelistBox.Name = "messagelistBox";
+			this.messagelistBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.messagelistBox.Size = new System.Drawing.Size(962, 121);
+			this.messagelistBox.TabIndex = 1;
+			this.messagelistBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.messagelistBox_KeyUp);
+			// 
+			// logboxMenuStrip
+			// 
+			this.logboxMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearToolStripMenuItem,
+            this.copyToolStripMenuItem1});
+			this.logboxMenuStrip.Name = "logboxMenuStrip";
+			this.logboxMenuStrip.Size = new System.Drawing.Size(145, 48);
+			// 
+			// clearToolStripMenuItem
+			// 
+			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+			this.clearToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+			this.clearToolStripMenuItem.Text = "Clear";
+			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+			// 
+			// copyToolStripMenuItem1
+			// 
+			this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+			this.copyToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+			this.copyToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+			this.copyToolStripMenuItem1.Text = "Copy";
+			this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
 			// 
 			// splitContainer2
 			// 
@@ -486,6 +517,7 @@
 			this.splitContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).EndInit();
 			this.textareaMenuStrip.ResumeLayout(false);
+			this.logboxMenuStrip.ResumeLayout(false);
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -521,7 +553,7 @@
 		private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBoxEditor;
 		private System.Windows.Forms.ToolStripButton toolStripButtonSave;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.ListBox listBox1;
+		private System.Windows.Forms.ListBox messagelistBox;
         private System.Windows.Forms.ImageList imageList2;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -533,5 +565,8 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem commentSelectLineToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem unCommentLineToolStripMenuItem;
+		private System.Windows.Forms.ContextMenuStrip logboxMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
 	}
 }

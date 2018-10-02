@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
+using System.Text;
 using FastColoredTextBoxNS;
 
 namespace RazorEnhanced.UI
@@ -1582,15 +1582,15 @@ namespace RazorEnhanced.UI
 
 			try
 			{
-				if (this.listBox1.InvokeRequired)
+				if (this.messagelistBox.InvokeRequired)
 				{
 					SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
 					this.Invoke(d, new object[] { text });
 				}
 				else
 				{
-					this.listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] - " + text);
-					this.listBox1.SelectedIndex = this.listBox1.Items.Count - 1;
+					this.messagelistBox.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] - " + text);
+					this.messagelistBox.TopIndex = this.messagelistBox.Items.Count - 1;
 				}
 			}
 			catch
@@ -2069,6 +2069,30 @@ namespace RazorEnhanced.UI
 				if (i < lines.Count() - 1)
 					fastColoredTextBoxEditor.SelectedText += "\r\n";
 			}
+		}
+
+		private void messagelistBox_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (messagelistBox.SelectedItems == null) // Nothing selected
+				return;
+
+			if (e.Control && e.KeyCode == Keys.C)
+			{
+				Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
+			}
+		}
+
+		private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			messagelistBox.Items.Clear();
+		}
+
+		private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (messagelistBox.SelectedItems == null) // Nothing selected
+				return;
+
+			Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
 		}
 	}
 
