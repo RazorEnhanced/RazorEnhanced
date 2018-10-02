@@ -69,6 +69,7 @@
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.textBoxDebug = new System.Windows.Forms.TextBox();
 			this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+			this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -90,6 +91,7 @@
             this.toolStripButtonSave,
             this.toolStripButtonSaveAs,
             this.toolStripButtonClose,
+            this.toolStripButtonSearch,
             this.toolStripSeparator1,
             this.toolStripButtonPlay,
             this.toolStripButtonStop,
@@ -346,6 +348,7 @@
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
 			this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -493,6 +496,16 @@
 			this.imageList2.Images.SetKeyName(4, "Field_blue_16x.png");
 			this.imageList2.Images.SetKeyName(5, "Field_black_16x.png");
 			// 
+			// toolStripButtonSearch
+			// 
+			this.toolStripButtonSearch.Image = global::Assistant.Properties.Resources.search2;
+			this.toolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonSearch.Name = "toolStripButtonSearch";
+			this.toolStripButtonSearch.Size = new System.Drawing.Size(62, 22);
+			this.toolStripButtonSearch.Text = "Search";
+			this.toolStripButtonSearch.ToolTipText = "Search ( CTRL + F )";
+			this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
+			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -568,5 +581,6 @@
 		private System.Windows.Forms.ContextMenuStrip logboxMenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
 	}
 }

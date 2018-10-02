@@ -1692,6 +1692,12 @@ namespace RazorEnhanced.UI
 			Assistant.Engine.MainWindow.GumpInspectorEnable = false;
 		}
 
+		private void toolStripButtonSearch_Click(object sender, EventArgs e)
+		{
+			fastColoredTextBoxEditor.Focus();
+			SendKeys.SendWait("^f");
+		}
+
 		private void Open()
 		{
 			OpenFileDialog open = new OpenFileDialog
@@ -2094,6 +2100,7 @@ namespace RazorEnhanced.UI
 
 			Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
 		}
+
 	}
 
 	public class ToolTipDescriptions
