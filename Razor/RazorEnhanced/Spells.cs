@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
@@ -11,274 +12,16 @@ namespace RazorEnhanced
 				return;
 
 			Spell s = null;
+			int id = 0;
+			m_MagerySpellName.TryGetValue(SpellName, out id);
 
-			switch (SpellName)
-			{
-				// Primo circolo magery
-				case "Clumsy":
-					s = Spell.Get(1);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
 
-				case "Create Food":
-					s = Spell.Get(2);
-					break;
-
-				case "Feeblemind":
-					s = Spell.Get(3);
-					break;
-
-				case "Heal":
-					s = Spell.Get(4);
-					break;
-
-				case "Magic Arrow":
-					s = Spell.Get(5);
-					break;
-
-				case "Night Sight":
-					s = Spell.Get(6);
-					break;
-
-				case "Reactive Armor":
-					s = Spell.Get(7);
-					break;
-
-				case "Weaken":
-					s = Spell.Get(8);
-					break;
-				// Secondo circolo magery
-				case "Agility":
-					s = Spell.Get(9);
-					break;
-
-				case "Cunning":
-					s = Spell.Get(10);
-					break;
-
-				case "Cure":
-					s = Spell.Get(11);
-					break;
-
-				case "Harm":
-					s = Spell.Get(12);
-					break;
-
-				case "Magic Trap":
-					s = Spell.Get(13);
-					break;
-
-				case "Magic Untrap":
-					s = Spell.Get(14);
-					break;
-
-				case "Protection":
-					s = Spell.Get(15);
-					break;
-
-				case "Strength":
-					s = Spell.Get(16);
-					break;
-				// Terzo circolo magery
-				case "Bless":
-					s = Spell.Get(17);
-					break;
-
-				case "Fireball":
-					s = Spell.Get(18);
-					break;
-
-				case "Magic Lock":
-					s = Spell.Get(19);
-					break;
-
-				case "Poison":
-					s = Spell.Get(20);
-					break;
-
-				case "Telekinesis":
-					s = Spell.Get(21);
-					break;
-
-				case "Teleport":
-					s = Spell.Get(22);
-					break;
-
-				case "Unlock":
-					s = Spell.Get(23);
-					break;
-
-				case "Wall of Stone":
-					s = Spell.Get(24);
-					break;
-				// Quarto circolo magery
-				case "Arch Cure":
-					s = Spell.Get(25);
-					break;
-
-				case "Arch Protection":
-					s = Spell.Get(26);
-					break;
-
-				case "Curse":
-					s = Spell.Get(27);
-					break;
-
-				case "Fire Field":
-					s = Spell.Get(28);
-					break;
-
-				case "Greater Heal":
-					s = Spell.Get(29);
-					break;
-
-				case "Lightning":
-					s = Spell.Get(30);
-					break;
-
-				case "Mana Drain":
-					s = Spell.Get(31);
-					break;
-
-				case "Recall":
-					s = Spell.Get(32);
-					break;
-				// Quinto circolo magery
-				case "Blade Spirits":
-					s = Spell.Get(33);
-					break;
-
-				case "Dispel Field":
-					s = Spell.Get(34);
-					break;
-
-				case "Incognito":
-					s = Spell.Get(35);
-					break;
-
-				case "Magic Reflection":
-					s = Spell.Get(36);
-					break;
-
-				case "Mind Blast":
-					s = Spell.Get(37);
-					break;
-
-				case "Paralyze":
-					s = Spell.Get(38);
-					break;
-
-				case "Poison Field":
-					s = Spell.Get(39);
-					break;
-
-				case "Summon Creature":
-					s = Spell.Get(40);
-					break;
-				// Sesto circolo magery
-				case "Dispel":
-					s = Spell.Get(41);
-					break;
-
-				case "Energy Bolt":
-					s = Spell.Get(42);
-					break;
-
-				case "Explosion":
-					s = Spell.Get(43);
-					break;
-
-				case "Invisibility":
-					s = Spell.Get(44);
-					break;
-
-				case "Mark":
-					s = Spell.Get(45);
-					break;
-
-				case "Mass Curse":
-					s = Spell.Get(46);
-					break;
-
-				case "Paralyze Field":
-					s = Spell.Get(47);
-					break;
-
-				case "Reveal":
-					s = Spell.Get(48);
-					break;
-				// Settimo circolo magery
-				case "Chain Lightning":
-					s = Spell.Get(49);
-					break;
-
-				case "Energy Field":
-					s = Spell.Get(50);
-					break;
-
-				case "Flamestrike":
-					s = Spell.Get(51);
-					break;
-
-				case "Gate Travel":
-					s = Spell.Get(52);
-					break;
-
-				case "Mana Vampire":
-					s = Spell.Get(53);
-					break;
-
-				case "Mass Dispel":
-					s = Spell.Get(54);
-					break;
-
-				case "Meteor Swarm":
-					s = Spell.Get(55);
-					break;
-
-				case "Polymorph":
-					s = Spell.Get(56);
-					break;
-				// Ottavo circolo magery
-				case "Earthquake":
-					s = Spell.Get(57);
-					break;
-
-				case "Energy Vortex":
-					s = Spell.Get(58);
-					break;
-
-				case "Resurrection":
-					s = Spell.Get(59);
-					break;
-
-				case "Summon Air Elemental":
-					s = Spell.Get(60);
-					break;
-
-				case "Summon Daemon":
-					s = Spell.Get(61);
-					break;
-
-				case "Summon Earth Elemental":
-					s = Spell.Get(62);
-					break;
-
-				case "Summon Fire Elemental":
-					s = Spell.Get(63);
-					break;
-
-				case "Summon Water Elemental":
-					s = Spell.Get(64);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
 
 		public static void CastNecro(string SpellName, bool wait = true)
@@ -288,85 +31,18 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Animate Dead":
-					s = Spell.Get(101);
-					break;
+			int id = 0;
+			m_NecroSpellName.TryGetValue(SpellName, out id);
 
-				case "Blood Oath":
-					s = Spell.Get(102);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
 
-				case "Corpse Skin":
-					s = Spell.Get(103);
-					break;
-
-				case "Curse Weapon":
-					s = Spell.Get(104);
-					break;
-
-				case "Evil Omen":
-					s = Spell.Get(105);
-					break;
-
-				case "Horrific Beast":
-					s = Spell.Get(106);
-					break;
-
-				case "Lich Form":
-					s = Spell.Get(107);
-					break;
-
-				case "Mind Rot":
-					s = Spell.Get(108);
-					break;
-
-				case "Pain Spike":
-					s = Spell.Get(109);
-					break;
-
-				case "Poison Strike":
-					s = Spell.Get(110);
-					break;
-
-				case "Strangle":
-					s = Spell.Get(111);
-					break;
-
-				case "Summon Familiar":
-					s = Spell.Get(112);
-					break;
-
-				case "Vampiric Embrace":
-					s = Spell.Get(113);
-					break;
-
-				case "Vengeful Spirit":
-					s = Spell.Get(114);
-					break;
-
-				case "Wither":
-					s = Spell.Get(115);
-					break;
-
-				case "Wraith Form":
-					s = Spell.Get(116);
-					break;
-
-				case "Exorcism":
-					s = Spell.Get(117);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
+		
 
 		public static void CastChivalry(string SpellName, bool wait = true)
 		{
@@ -375,56 +51,16 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Cleanse By Fire":
-					s = Spell.Get(201);
-					break;
+			int id = 0;
+			m_ChivalrySpellName.TryGetValue(SpellName, out id);
 
-				case "Close Wounds":
-					s = Spell.Get(202);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
 
-				case "Consecrate Weapon":
-					s = Spell.Get(203);
-					break;
-
-				case "Dispel Evil":
-					s = Spell.Get(204);
-					break;
-
-				case "Divine Fury":
-					s = Spell.Get(205);
-					break;
-
-				case "Enemy Of One": 
-					s = Spell.Get(206);
-					break;
-
-				case "Holy Light":
-					s = Spell.Get(207);
-					break;
-
-				case "Noble Sacrifice":
-					s = Spell.Get(208);
-					break;
-
-				case "Remove Curse":
-					s = Spell.Get(209);
-					break;
-
-				case "Sacred Journey":
-					s = Spell.Get(210);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
 
 		public static void CastBushido(string SpellName, bool wait = true)
@@ -434,40 +70,16 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Honorable Execution":
-					s = Spell.Get(401);
-					break;
+			int id = 0;
+			m_BushidoSpellName.TryGetValue(SpellName, out id);
 
-				case "Confidence":
-					s = Spell.Get(402);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
 
-				case "Evasion":
-					s = Spell.Get(403);
-					break;
-
-				case "Counter Attack":
-					s = Spell.Get(404);
-					break;
-
-				case "Lightning Strike":
-					s = Spell.Get(405);
-					break;
-
-				case "Momentum Strike":
-					s = Spell.Get(406);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
 
 		public static void CastNinjitsu(string SpellName, bool wait = true)
@@ -477,52 +89,16 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Focus Attack":
-					s = Spell.Get(501);
-					break;
+			int id = 0;
+			m_NinjitsuSpellName.TryGetValue(SpellName, out id);
 
-				case "Death Strike":
-					s = Spell.Get(502);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
 
-				case "Animal Form":
-					s = Spell.Get(503);
-					break;
-
-				case "Ki Attack":
-					s = Spell.Get(504);
-					break;
-
-				case "Surprise Attack":
-					s = Spell.Get(505);
-					break;
-
-				case "Backstab":
-					s = Spell.Get(506);
-					break;
-
-				case "Shadow jump": // Keep old compaibility whit old script
-					s = Spell.Get(507);
-					break;
-
-				case "Shadowjump":
-					s = Spell.Get(507);
-					break;
-
-				case "Mirror Image":
-					s = Spell.Get(508);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
 
 		public static void CastSpellweaving(string SpellName, bool wait = true)
@@ -532,80 +108,16 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Arcane Circle":
-					s = Spell.Get(601);
-					break;
+			int id = 0;
+			m_SpellweavingSpellName.TryGetValue(SpellName, out id);
 
-				case "Gift Of Renewal":
-					s = Spell.Get(602);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
 
-				case "Immolating Weapon":
-					s = Spell.Get(603);
-					break;
-
-				case "Attune Weapon":
-					s = Spell.Get(604);
-					break;
-
-				case "Thunderstorm":
-					s = Spell.Get(605);
-					break;
-
-				case "Natures Fury":
-					s = Spell.Get(606);
-					break;
-
-				case "Summon Fey":
-					s = Spell.Get(607);
-					break;
-
-				case "Summon Fiend":
-					s = Spell.Get(608);
-					break;
-
-				case "Reaper Form":
-					s = Spell.Get(609);
-					break;
-
-				case "Wildfire":
-					s = Spell.Get(610);
-					break;
-
-				case "Essence Of Wind":
-					s = Spell.Get(611);
-					break;
-
-				case "Dryad Allure":
-					s = Spell.Get(612);
-					break;
-
-				case "Ethereal Voyage":
-					s = Spell.Get(613);
-					break;
-
-				case "Word Of Death":
-					s = Spell.Get(614);
-					break;
-
-				case "Gift Of Life":
-					s = Spell.Get(615);
-					break;
-
-				case "Arcane Empowerment":
-					s = Spell.Get(616);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
 
 		public static void CastMysticism(string SpellName, bool wait = true)
@@ -615,80 +127,16 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Nether Bolt":
-					s = Spell.Get(678);
-					break;
+			int id = 0;
+			m_MysticismSpellName.TryGetValue(SpellName, out id);
 
-				case "Healing Stone":
-					s = Spell.Get(679);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
 
-				case "Purge Magic":
-					s = Spell.Get(680);
-					break;
-
-				case "Enchant":
-					s = Spell.Get(681);
-					break;
-
-				case "Sleep":
-					s = Spell.Get(682);
-					break;
-
-				case "Eagle Strike":
-					s = Spell.Get(683);
-					break;
-
-				case "Animated Weapon":
-					s = Spell.Get(684);
-					break;
-
-				case "Stone Form":
-					s = Spell.Get(685);
-					break;
-
-				case "Spell Trigger":
-					s = Spell.Get(686);
-					break;
-
-				case "Mass Sleep":
-					s = Spell.Get(687);
-					break;
-
-				case "Cleansing Winds":
-					s = Spell.Get(688);
-					break;
-
-				case "Bombard":
-					s = Spell.Get(689);
-					break;
-
-				case "Spell Plague":
-					s = Spell.Get(690);
-					break;
-
-				case "Hail Storm":
-					s = Spell.Get(691);
-					break;
-
-				case "Nether Cyclone":
-					s = Spell.Get(692);
-					break;
-
-				case "Rising Colossus":
-					s = Spell.Get(693);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastSpellMysticism: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
 
 		public static void CastMastery(string SpellName, bool wait = true)
@@ -698,197 +146,18 @@ namespace RazorEnhanced
 
 			Spell s = null;
 
-			switch (SpellName)
-			{
-				case "Inspire":
-					s = Spell.Get(701);
-					break;
+			int id = 0;
+			m_MasterySpellName.TryGetValue(SpellName, out id);
 
-				case "Invigorate":
-					s = Spell.Get(702);
-					break;
+			if (id > 0)
+				s = Spell.Get(id);
+			else
+				Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
 
-				case "Resilience":
-					s = Spell.Get(703);
-					break;
-
-				case "Perseverance":
-					s = Spell.Get(704);
-					break;
-
-				case "Tribulation":
-					s = Spell.Get(705);
-					break;
-
-				case "Despair":
-					s = Spell.Get(706);
-					break;
-
-				case "Death Ray":
-					s = Spell.Get(707);
-					break;
-
-				case "Ethereal Blast":
-					s = Spell.Get(708);
-					break;
-
-				case "Nether Blast":
-					s = Spell.Get(709);
-					break;
-
-				case "Mystic Weapon":
-					s = Spell.Get(710);
-					break;
-
-				case "Command Undead":
-					s = Spell.Get(711);
-					break;
-
-				case "Conduit":
-					s = Spell.Get(712);
-					break;
-
-				case "Mana Shield":
-					s = Spell.Get(713);
-					break;
-
-				case "Summon Reaper":
-					s = Spell.Get(714);
-					break;
-
-				case "Enchanted Summoning":
-					s = Spell.Get(715);
-					break;
-
-				case "Anticipate Hit":
-					s = Spell.Get(716);
-					break;
-
-				case "Warcry":
-					s = Spell.Get(717);
-					break;
-
-				case "Intuition":
-					s = Spell.Get(718);
-					break;
-
-				case "Rejuvenate":
-					s = Spell.Get(719);
-					break;
-
-				case "Holy Fist":
-					s = Spell.Get(720);
-					break;
-
-				case "Shadow":
-					s = Spell.Get(721);
-					break;
-
-				case "White Tiger Form":
-					s = Spell.Get(722);
-					break;
-
-				case "Flaming Shot":
-					s = Spell.Get(723);
-					break;
-
-				case "Playing The Odds":
-					s = Spell.Get(724);
-					break;
-
-				case "Thrust":
-					s = Spell.Get(725);
-					break;
-
-				case "Pierce":
-					s = Spell.Get(726);
-					break;
-
-				case "Stagger":
-					s = Spell.Get(727);
-					break;
-
-				case "Toughness":
-					s = Spell.Get(728);
-					break;
-
-				case "Onslaught":
-					s = Spell.Get(729);
-					break;
-
-				case "Focused Eye":
-					s = Spell.Get(730);
-					break;
-
-				case "Elemental Fury":
-					s = Spell.Get(731);
-					break;
-
-				case "Called Shot":
-					s = Spell.Get(732);
-					break;
-
-				case "Saving Throw":
-					s = Spell.Get(733);
-					break;
-
-				case "Shield Bash":
-					s = Spell.Get(734);
-					break;
-
-				case "Bodyguard":
-					s = Spell.Get(735);
-					break;
-
-				case "Heighten Senses":
-					s = Spell.Get(736);
-					break;
-
-				case "Tolerance":
-					s = Spell.Get(737);
-					break;
-
-				case "Injected Strike":
-					s = Spell.Get(738);
-					break;
-
-				case "Potency":
-					s = Spell.Get(739);
-					break;
-
-				case "Rampage":
-					s = Spell.Get(740);
-					break;
-
-				case "Fists Of Fury":
-					s = Spell.Get(741);
-					break;
-
-				case "Knockout":
-					s = Spell.Get(742);
-					break;
-
-				case "Whispering":
-					s = Spell.Get(743);
-					break;
-
-				case "Combat Training":
-					s = Spell.Get(744);
-					break;
-
-				case "Boarding":
-					s = Spell.Get(745);
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
-					break;
-			}
 			if (s != null)
-			{
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
 		}
+
 		public static void Interrupt()
 		{
 			Assistant.Item item = FindUsedLayer();
@@ -980,5 +249,239 @@ namespace RazorEnhanced
 
 			return null;
 		}
+
+		//////////////////////////////////////////////////////////////
+		// Dizionari
+		//////////////////////////////////////////////////////////////
+
+		private static Dictionary<string, int> m_MagerySpellName = new Dictionary<string, int>
+		{
+			// Primo circolo magery
+			{ "Clumsy", 1 },
+			{ "Create Food", 2 },
+			{ "Feeblemind", 3 },
+			{ "Heal", 4 },
+			{ "Magic Arrow", 5 },
+			{ "Night Sight", 6 },
+			{ "Reactive Armor", 7 },
+			{ "Weaken", 8 },
+
+			// Secondo circolo magery
+			{ "Agility", 9 },
+			{ "Cunning", 10 },
+			{ "Cure", 11 },
+			{ "Harm", 12 },
+			{ "Magic Trap", 13 },
+			{ "Magic Untrap", 14 },
+			{ "Protection", 15 },
+			{ "Strength", 16 },
+
+			// Terzo circolo magery
+			{ "Bless", 17 },
+			{ "Fireball", 18 },
+			{ "Magic Lock", 19 },
+			{ "Poison", 20 },
+			{ "Telekinesis", 21 },
+			{ "Teleport", 22 },
+			{ "Unlock", 23 },
+			{ "Wall of Stone", 24 },
+
+			// Quarto circolo magery
+			{ "Arch Cure", 25 },
+			{ "Arch Protection", 26 },
+			{ "Curse", 27 },
+			{ "Fire Field", 28 },
+			{ "Greater Heal", 29 },
+			{ "Lightning", 30 },
+			{ "Mana Drain", 31 },
+			{ "Recall", 32 },
+
+			// Quinto circolo magery
+			{ "Blade Spirits", 33 },
+			{ "Dispel Field", 34 },
+			{ "Incognito", 35 },
+			{ "Magic Reflection", 36 },
+			{ "Mind Blast", 37 },
+			{ "Paralyze", 38 },
+			{ "Poison Field", 39 },
+			{ "Summon Creature", 40 },
+
+			// Sesto circolo magery
+			{ "Dispel", 41 },
+			{ "Energy Bolt", 42 },
+			{ "Explosion", 43 },
+			{ "Invisibility", 44 },
+			{ "Mark", 45 },
+			{ "Mass Curse", 46 },
+			{ "Paralyze Field", 47 },
+			{ "Reveal", 48 },
+
+			// Settimo circolo magery
+			{ "Chain Lightning", 49 },
+			{ "Energy Field", 50 },
+			{ "Flamestrike", 51 },
+			{ "Gate Travel", 52 },
+			{ "Mana Vampire", 53 },
+			{ "Mass Dispel", 54 },
+			{ "Meteor Swarm", 55 },
+			{ "Polymorph", 56 },
+
+			// Ottavo circolo magery
+			{ "Earthquake", 57 },
+			{ "Energy Vortex", 58 },
+			{ "Resurrection", 59 },
+			{ "Summon Air Elemental", 60 },
+			{ "Summon Daemon", 61 },
+			{ "Summon Earth Elemental", 62 },
+			{ "Summon Fire Elemental", 63 },
+			{ "Summon Water Elemental", 64 }
+		};
+
+		private static Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
+		{
+			{ "Animate Dead", 101 },
+			{ "Blood Oath", 102 },
+			{ "Corpse Skin", 103 },
+			{ "Curse Weapon", 104 },
+			{ "Evil Omen", 105 },
+			{ "Horrific Beast", 106 },
+			{ "Lich Form", 107 },
+			{ "Mind Rot", 108 },
+			{ "Pain Spike", 109 },
+			{ "Poison Strike", 110 },
+			{ "Strangle", 111 },
+			{ "Summon Familiar", 112 },
+			{ "Vampiric Embrace", 113 },
+			{ "Vengeful Spirit", 114 },
+			{ "Wither", 115 },
+			{ "Wraith Form", 116 },
+			{ "Exorcism", 117 }
+		};
+
+		private static Dictionary<string, int> m_ChivalrySpellName = new Dictionary<string, int>
+		{
+			{ "Cleanse By Fire", 201 },
+			{ "Close Wounds", 202 },
+			{ "Consecrate Weapon", 203 },
+			{ "Dispel Evil", 204 },
+			{ "Divine Fury", 205 },
+			{ "Enemy Of One", 206 },
+			{ "Holy Light", 207 },
+			{ "Noble Sacrifice", 208 },
+			{ "Remove Curse", 209 },
+			{ "Sacred Journey", 210 }
+		};
+
+		private static Dictionary<string, int> m_BushidoSpellName = new Dictionary<string, int>
+		{
+			{ "Honorable Execution", 401 },
+			{ "Confidence", 402 },
+			{ "Evasion", 403 },
+			{ "Counter Attack", 404 },
+			{ "Lightning Strike", 405 },
+			{ "Momentum Strike", 406 }
+		};
+
+		private static Dictionary<string, int> m_NinjitsuSpellName = new Dictionary<string, int>
+		{
+			{ "Focus Attack", 501 },
+			{ "Death Strike", 502 },
+			{ "Animal Form", 503 },
+			{ "Ki Attack", 504 },
+			{ "Surprise Attack", 505 },
+			{ "Backstab", 506 },
+			{ "Shadow jump", 507 },  // Keep old compaibility whit old script
+			{ "Shadowjump", 507 },
+			{ "Mirror Image", 508 },
+		};
+
+		private static Dictionary<string, int> m_SpellweavingSpellName = new Dictionary<string, int>
+		{
+			{ "Arcane Circle", 601 },
+			{ "Gift Of Renewal", 602 },
+			{ "Immolating Weapon", 603 },
+			{ "Attune Weapon", 604 },
+			{ "Thunderstorm", 605 },
+			{ "Natures Fury", 606 },
+			{ "Summon Fey", 607 },
+			{ "Summon Fiend", 608 },
+			{ "Reaper Form", 609 },
+			{ "Wildfire", 610 },
+			{ "Essence Of Wind", 611 },
+			{ "Dryad Allure", 612 },
+			{ "Ethereal Voyage", 613 },
+			{ "Word Of Death", 614 },
+			{ "Gift Of Life", 615 },
+			{ "Arcane Empowerment", 616 }
+		};
+
+		private static Dictionary<string, int> m_MysticismSpellName = new Dictionary<string, int>
+		{
+			{ "Nether Bolt", 678 },
+			{ "Healing Stone", 679 },
+			{ "Purge Magic", 680 },
+			{ "Enchant", 681 },
+			{ "Sleep", 682 },
+			{ "Eagle Strike", 683 },
+			{ "Animated Weapon", 684 },
+			{ "Stone Form", 685 },
+			{ "Spell Trigger", 686 },
+			{ "Mass Sleep", 687 },
+			{ "Cleansing Winds", 688 },
+			{ "Bombard", 689 },
+			{ "Spell Plague", 690 },
+			{ "Hail Storm", 691 },
+			{ "Nether Cyclone", 692 },
+			{ "Rising Colossus", 693 },
+		};
+
+		private static Dictionary<string, int> m_MasterySpellName = new Dictionary<string, int>
+		{
+			{ "Inspire", 701 },
+			{ "Invigorate", 702 },
+			{ "Resilience", 703 },
+			{ "Perseverance", 704 },
+			{ "Tribulation", 705 },
+			{ "Despair", 706 },
+			{ "Death Ray", 707 },
+			{ "Ethereal Blast", 708 },
+			{ "Nether Blast", 709 },
+			{ "Mystic Weapon", 710 },
+			{ "Command Undead", 711 },
+			{ "Conduit", 712 },
+			{ "Mana Shield", 713 },
+			{ "Summon Reaper", 714 },
+			{ "Enchanted Summoning", 715 },
+			{ "Anticipate Hit", 716 },
+			{ "Warcry", 717 },
+			{ "Intuition", 718 },
+			{ "Rejuvenate", 719 },
+			{ "Holy Fist", 720 },
+			{ "Shadow", 721 },
+			{ "White Tiger Form", 722 },
+			{ "Flaming Shot", 723 },
+			{ "Playing The Odds", 724 },
+			{ "Thrust", 725 },
+			{ "Pierce", 726 },
+			{ "Stagger", 727 },
+			{ "Toughness", 728 },
+			{ "Onslaught", 729 },
+			{ "Focused Eye", 730 },
+			{ "Elemental Fury", 731 },
+			{ "Called Shot", 732 },
+			{ "Saving Throw", 733 },
+			{ "Shield Bash", 734 },
+			{ "Bodyguard", 735 },
+			{ "Heighten Senses", 736 },
+			{ "Tolerance", 737 },
+			{ "Injected Strike", 738 },
+			{ "Potency", 739 },
+			{ "Rampage", 740 },
+			{ "Fists Of Fury", 741 },
+			{ "Knockout", 742 },
+			{ "Whispering", 743 },
+			{ "Combat Training", 744 },
+			{ "Boarding", 745 },
+		};
 	}
 }
