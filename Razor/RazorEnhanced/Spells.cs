@@ -400,7 +400,8 @@ namespace RazorEnhanced
 			{ "Arcane Circle", 601 },
 			{ "Gift Of Renewal", 602 },
 			{ "Immolating Weapon", 603 },
-			{ "Attune Weapon", 604 },
+			{ "Attunement", 604 },
+			{ "Attune Weapon", 604 }, // Keep old compaibility whit old script
 			{ "Thunderstorm", 605 },
 			{ "Natures Fury", 606 },
 			{ "Summon Fey", 607 },
