@@ -1257,7 +1257,7 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Attune Weapon", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Attunement", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();

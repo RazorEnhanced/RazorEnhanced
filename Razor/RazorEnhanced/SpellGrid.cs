@@ -804,7 +804,7 @@ namespace RazorEnhanced
 			{ "Arcane Circle", 0x59D8},
 			{ "Gift Of Renewal", 0x59D9},
 			{ "Immolating Weapon", 0x59DA},
-			{ "Attune Weapon", 0x59DB},
+			{ "Attunement", 0x59DB},
 			{ "Thunderstorm", 0x59DC},
 			{ "Natures Fury", 0x59DD},
 			{ "Summon Fey", 0x59DE},
