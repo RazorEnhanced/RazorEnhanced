@@ -689,7 +689,11 @@ namespace RazorEnhanced
 		}
 		public static void UnEquipItemByLayer(String layer, bool wait = true)
 		{
-			Enum.TryParse<Layer>(layer, out Layer l);
+			if (!Enum.TryParse<Layer>(layer, out Layer l))
+			{
+				Scripts.SendMessageScriptError("Script Error: UnEquipItemByLayer: " + layer + " not valid");
+				return;
+			}
 
 			Assistant.Item item = World.Player.GetItemOnLayer(l);
 
@@ -753,7 +757,11 @@ namespace RazorEnhanced
 		}
 		public static bool CheckLayer(String layer)
 		{
-			Enum.TryParse<Layer>(layer, out Layer l);
+			if (!Enum.TryParse<Layer>(layer, out Layer l))
+			{
+				Scripts.SendMessageScriptError("Script Error: CheckLayer: "+ layer +" not valid");
+				return false;
+			}
 			
 			Assistant.Item item = World.Player.GetItemOnLayer(l);
 
@@ -765,7 +773,11 @@ namespace RazorEnhanced
 
 		public static Item GetItemOnLayer(String layer)
 		{
-			Enum.TryParse<Layer>(layer, out Layer l);
+			if (!Enum.TryParse<Layer>(layer, out Layer l))
+			{
+				Scripts.SendMessageScriptError("Script Error: GetItemOnLayer: " + layer + " not valid");
+				return null;
+			}
 
 			Assistant.Item assistantItem = null;
 			if (l != Assistant.Layer.Invalid)
@@ -786,32 +798,56 @@ namespace RazorEnhanced
 		// Skill
 		public static double GetSkillValue(string skillname)
 		{
-			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			{
+				Scripts.SendMessageScriptError("Script Error: GetSkillValue: " + skillname + " not valid");
+				return -1;
+			}
+
 			return World.Player.Skills[(int)skill].Value;
 		}
 
 		public static double GetRealSkillValue(string skillname)
 		{
-			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			{
+				Scripts.SendMessageScriptError("Script Error: GetRealSkillValue: " + skillname + " not valid");
+				return -1;
+			}
+
 			return World.Player.Skills[(int)skill].Base;
 		}
 
 
 		public static double GetSkillCap(string skillname)
 		{
-			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			{
+				Scripts.SendMessageScriptError("Script Error: GetSkillCap: " + skillname + " not valid");
+				return -1;
+			}
+
 			return World.Player.Skills[(int)skill].Cap;
 		}
 
 		public static int GetSkillStatus(string skillname)
 		{
-			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			{
+				Scripts.SendMessageScriptError("Script Error: GetSkillStatus: " + skillname + " not valid");
+				return -1;
+			}
+
 			return (int)World.Player.Skills[(int)skill].Lock;
 		}
 
 		public static void UseSkill(string skillname, bool wait = true)
 		{
-			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			{
+				Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
+				return;
+			}
 
 			if (wait)
 				ClientCommunication.SendToServerWait(new UseSkill((int)skill));
@@ -963,7 +999,12 @@ namespace RazorEnhanced
 		// Virtue
 		public static void InvokeVirtue(string virtue)
 		{
-			Enum.TryParse<Virtues>(virtue, out Virtues v);
+			if (!Enum.TryParse<Virtues>(virtue, out Virtues v))
+			{
+				Scripts.SendMessageScriptError("Script Error: InvokeVirtue: " + virtue + " not valid");
+				return;
+			}
+
 			ClientCommunication.SendToServerWait(new InvokeVirtue((byte)v));
 		}
 
@@ -1007,7 +1048,11 @@ namespace RazorEnhanced
 
 		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
 		{
-			Enum.TryParse<Direction>(direction, out Direction dir);
+			if (!Enum.TryParse<Direction>(direction, out Direction dir))
+			{
+				Scripts.SendMessageScriptError("Script Error: Run: " + direction + " not valid");
+				return false;
+			}
 
 			int timeout = 0;
 			World.Player.WalkScriptRequest = 1;
