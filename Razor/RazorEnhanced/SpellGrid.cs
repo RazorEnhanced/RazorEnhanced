@@ -32,8 +32,8 @@ namespace RazorEnhanced
 			set { m_spell = value; }
 		}
 
-		private string m_group = "Empty";
-		public string Group
+		private SpellGrid.GroupType m_group = SpellGrid.GroupType.Empty;
+		public SpellGrid.GroupType Group
 		{
 			get { return m_group; }
 			set { m_group = value; }
@@ -110,6 +110,22 @@ namespace RazorEnhanced
 				m_Color = color;
 				m_Border = border;
 			}
+		}
+
+		internal enum GroupType : int
+		{
+			Empty,
+			Magery,
+			Abilities,
+			Bushido,
+			Chivalry,
+			Necromancy,
+			Ninjitsu,
+			Mysticism,
+			Spellweaving,
+			Mastery,
+			Script,
+			Skills
 		}
 
 		private static Form m_form;
@@ -240,12 +256,31 @@ namespace RazorEnhanced
 			}
 			return mImage;
 		}
+		internal static void UpdateSkillHighLight(SkillIcon ID, bool enable)
+		{
+			foreach (PanelGrid p in m_panellist)
+			{
+				if (p.Group == GroupType.Mastery || p.Group == GroupType.Bushido || p.Group == GroupType.Ninjitsu)
+				{
+					if (Enum.TryParse<SkillIcon>(Utility.RemoveWhiteSpace(p.Spell), out SkillIcon l))
+					{
+						if (ID == l)
+						{
+							if (enable)
+								p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
+							else
+								p.BackgroundImage = Ultima.Gumps.GetGump(GetImageID(p.Group, p.Spell));
+						}
+					}
+				}
+			}
+		}
 
 		internal static void UpdateSAHighLight(int ID)
 		{
 			foreach (PanelGrid p in m_panellist)
 			{
-				if (p.Group == "Abilities")
+				if (p.Group == GroupType.Abilities)
 				{
 					if (ID == 0)
 					{
@@ -301,7 +336,7 @@ namespace RazorEnhanced
 
 			foreach (PanelGrid p in m_panellist)
 			{
-				if (p.Group == "Abilities")
+				if (p.Group == GroupType.Abilities)
 				{
 					if (p.Spell == "Primary")
 					{
@@ -364,40 +399,40 @@ namespace RazorEnhanced
 			PanelGrid pl = (PanelGrid)sender;
 			switch (pl.Group)
 			{
-				case "Magery":
+				case GroupType.Magery:
 					Spells.CastMagery(pl.Spell, false);
 					break;
-				case "Abilities":
+				case GroupType.Abilities:
 					if (pl.Spell == "Primary")
 						SpecialMoves.SetPrimaryAbility(false);
 					else
 						SpecialMoves.SetSecondaryAbility(false);
 					break;
-				case "Bushido":
+				case GroupType.Bushido:
 					Spells.CastBushido(pl.Spell, false);
 					break;
-				case "Chivalry":
+				case GroupType.Chivalry:
 					Spells.CastChivalry(pl.Spell, false);
 					break;
-				case "Necromancy":
+				case GroupType.Necromancy:
 					Spells.CastNecro(pl.Spell, false);
 					break;
-				case "Ninjitsu":
+				case GroupType.Ninjitsu:
 					Spells.CastNinjitsu(pl.Spell, false);
 					break;
-				case "Mysticism":
+				case GroupType.Mysticism:
 					Spells.CastMysticism(pl.Spell, false);
 					break;
-				case "Spellweaving":
+				case GroupType.Spellweaving:
 					Spells.CastSpellweaving(pl.Spell, false);
 					break;
-				case "Mastery":
+				case GroupType.Mastery:
 					Spells.CastMastery(pl.Spell, false);
 					break;
-				case "Script":
+				case GroupType.Script:
 					Misc.ScriptRun(pl.Spell);
 					break;
-				case "Skills":
+				case GroupType.Skills:
 					Player.UseSkill(pl.Spell, false);
 					break;
 				default:
@@ -466,6 +501,53 @@ namespace RazorEnhanced
 			InitEvent();
 		}
 
+		private static int GetImageID(GroupType t, string s)
+		{
+			int imageid = 0;
+
+			switch (t)
+			{
+				case GroupType.Magery:
+					SpellIconMagery.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Abilities:
+					SpellIconAbilities.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Mastery:
+					SpellIconMastery.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Bushido:
+					SpellIconBushido.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Chivalry:
+					SpellIconChivalry.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Necromancy:
+					SpellIconNecromancy.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Ninjitsu:
+					SpellIconNinjitsu.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Mysticism:
+					SpellIconMysticism.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Spellweaving:
+					SpellIconSpellweaving.TryGetValue(s, out imageid);
+					break;
+				case GroupType.Script:
+					imageid = -1;
+					break;
+				case GroupType.Skills:
+					imageid = -2;
+					break;
+				default:
+					imageid = 0;
+					break;
+			}
+
+			return imageid;
+		}
+
 		internal static void UpdatePanelImage()
 		{
 			if (m_form == null)
@@ -480,48 +562,13 @@ namespace RazorEnhanced
 
 				int imageid = 0;
 
+				GroupType g = GroupType.Empty;
+
+				if (Enum.TryParse<GroupType>(items[x].Group, out g))
+					imageid = GetImageID(g, items[x].Spell);
+
 				m_panellist[x].BorderColor = items[x].Color;
-
-				switch (items[x].Group)
-				{
-					case "Magery":
-						SpellIconMagery.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Abilities":
-						SpellIconAbilities.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Mastery":
-						SpellIconMastery.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Bushido":
-						SpellIconBushido.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Chivalry":
-						SpellIconChivalry.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Necromancy":
-						SpellIconNecromancy.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Ninjitsu":
-						SpellIconNinjitsu.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Mysticism":
-						SpellIconMysticism.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Spellweaving":
-						SpellIconSpellweaving.TryGetValue(items[x].Spell, out imageid);
-						break;
-					case "Script":
-						imageid = -1;
-						break;
-					case "Skills":
-						imageid = -2;
-						break;
-					default:
-						imageid = 0;
-						break;
-				}
-
+				
 				switch (imageid)
 				{
 					case 0:
@@ -548,7 +595,8 @@ namespace RazorEnhanced
 				}
 	
 				m_panellist[x].Spell = items[x].Spell;
-				m_panellist[x].Group = items[x].Group;
+
+				m_panellist[x].Group = g;
 			}
 		}
 

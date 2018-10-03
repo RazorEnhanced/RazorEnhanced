@@ -387,7 +387,7 @@ namespace Assistant
 				{
 					ClientCommunication.SendToServerWait(new UseAbility(a));
 					ClientCommunication.SendToClientWait(ClearAbility.Instance);
-				}
+				} 
 				else
 				{
 					ClientCommunication.SendToServer(new UseAbility(a));

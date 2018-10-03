@@ -2520,6 +2520,35 @@ namespace Assistant
 						World.Player.HasSpecial = SpecialMoves.HasPrimary = SpecialMoves.HasSecondary = false;
 						break;
 					}
+				case 0x25: // Toggle Special Moves (skills icon red or white)
+					{
+						ushort skillid = p.ReadUInt16();
+						byte action = p.ReadByte();
+						
+						if (Enum.IsDefined(typeof(SkillIcon), skillid))
+						{
+							SkillIcon skill = (SkillIcon)skillid;
+							switch (action)
+							{
+								case 0x01: // set red icon
+									if (World.Player != null && !World.Player.SkillEnabled.Contains(skill))
+									{
+										World.Player.SkillEnabled.Add(skill);
+										RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, true);
+									}
+									break;
+
+								case 0x0: // set white icon
+									if (World.Player != null && World.Player.SkillEnabled.Contains(skill))
+									{
+										World.Player.SkillEnabled.Remove(skill);
+										RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, false);
+									}
+									break;
+							}
+						}
+						break;
+					}
 			}
 		}
 
