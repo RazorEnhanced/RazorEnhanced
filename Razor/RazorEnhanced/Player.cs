@@ -798,7 +798,7 @@ namespace RazorEnhanced
 		// Skill
 		public static double GetSkillValue(string skillname)
 		{
-			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
 			{
 				Scripts.SendMessageScriptError("Script Error: GetSkillValue: " + skillname + " not valid");
 				return -1;
@@ -809,7 +809,7 @@ namespace RazorEnhanced
 
 		public static double GetRealSkillValue(string skillname)
 		{
-			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
 			{
 				Scripts.SendMessageScriptError("Script Error: GetRealSkillValue: " + skillname + " not valid");
 				return -1;
@@ -821,7 +821,7 @@ namespace RazorEnhanced
 
 		public static double GetSkillCap(string skillname)
 		{
-			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
 			{
 				Scripts.SendMessageScriptError("Script Error: GetSkillCap: " + skillname + " not valid");
 				return -1;
@@ -832,7 +832,7 @@ namespace RazorEnhanced
 
 		public static int GetSkillStatus(string skillname)
 		{
-			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
 			{
 				Scripts.SendMessageScriptError("Script Error: GetSkillStatus: " + skillname + " not valid");
 				return -1;
@@ -843,7 +843,7 @@ namespace RazorEnhanced
 
 		public static void UseSkill(string skillname, bool wait = true)
 		{
-			if (Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
 			{
 				Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
 				return;
