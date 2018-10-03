@@ -15250,20 +15250,22 @@ namespace Assistant
 			int minrange = -1;
 
 			// body list
-			foreach (DataGridViewRow row in targetbodydataGridView.Rows)
-			{
-				if (row.IsNewRow)
-					continue;
-				bodylist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
-			}
+			if (targetbodyCheckBox.Checked)
+				foreach (DataGridViewRow row in targetbodydataGridView.Rows)
+				{
+					if (row.IsNewRow)
+						continue;
+					bodylist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
+				}
 
 			// hue list
-			foreach (DataGridViewRow row in targethueGridView.Rows)
-			{
-				if (row.IsNewRow)
-					continue;
-				huelist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
-			}
+			if (targetcoloCheckBox.Checked)
+				foreach (DataGridViewRow row in targethueGridView.Rows)
+				{
+					if (row.IsNewRow)
+						continue;
+					huelist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
+				}
 
 			// max range
 			if (Int32.TryParse(targetRangeMaxTextBox.Text, out maxrange))
