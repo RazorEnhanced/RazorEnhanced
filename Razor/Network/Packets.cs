@@ -847,13 +847,17 @@ namespace Assistant
 			Write((ushort)0x19);
 			if (a == AOSAbility.Clear)
 			{
-				Write(true);
+				Write((byte)0x00);
+				Write((byte)0x00);
+				Write((byte)0x00);
+				Write((byte)0x00);
 			}
 			else
 			{
 				Write(false);
 				Write((int)a);
 			}
+			Write((byte)0x0A);
 		}
 	}
 
