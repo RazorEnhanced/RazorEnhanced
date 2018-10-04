@@ -86,11 +86,18 @@ namespace RazorEnhanced
 		// Funzioni di accesso al salvataggio
 		internal static List<string> ReadAll()
 		{
+			DataTable profiles = m_Dataset.Tables["PROFILES"];
+
+			IEnumerable<DataRow> query =
+				from profile in profiles.AsEnumerable()
+				orderby profile.Field<string>("Name")
+				select profile;
+
 			List<string> profilelist = new List<string>();
 
-			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+			foreach (DataRow contact in query)
 			{
-				profilelist.Add((string)row["Name"]);
+				profilelist.Add(contact.Field<string>("Name"));
 			}
 
 			return profilelist;
