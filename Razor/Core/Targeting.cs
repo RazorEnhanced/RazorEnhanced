@@ -144,7 +144,7 @@ namespace Assistant
 
 		internal static void CancelOneTimeTarget(bool wait)
 		{
-			m_ClientTarget = m_HasTarget = false;
+			m_NoShowTarget = m_ClientTarget = m_HasTarget = false;
 
 			if (wait)
 				ClientCommunication.SendToClientWait(new CancelTarget(LocalTargID));
@@ -682,6 +682,8 @@ namespace Assistant
 
 		private static void TargetResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
+			m_NoShowTarget = false;
+
 			TargetInfo info = new TargetInfo
 			{
 				Type = p.ReadByte(),

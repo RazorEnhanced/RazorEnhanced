@@ -740,7 +740,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Target.GetLastAttack()", new string[] { "none" }, "int", "Get serial number of last attack target");
 			descriptionTarget.Add("Target.GetLastAttack", tooltip);
 
-			tooltip = new ToolTipDescriptions("Target.WaitForTarget(int, bool)", new string[] { "int TimeoutTarget, bool NoShowTarget" }, "none", "Pause script to wait server to send target request\n\tTimeout is in Milliseconds, and can select if show or not target cursor in game");
+			tooltip = new ToolTipDescriptions("Target.WaitForTarget(int, optional bool)", new string[] { "int TimeoutTarget, optional bool NoShowTarget" }, "none", "Pause script to wait server to send target request\n\tTimeout is in Milliseconds, and can select if show or not target cursor in game (false show)");
 			descriptionTarget.Add("Target.WaitForTarget", tooltip);
 
 			tooltip = new ToolTipDescriptions("Target.TargetExecute(int or Item or Mobile or (int, int, int, (optional)int))", new string[] { "int Serial or Item ItemInstance or Mobile MobileInstance or ( int X, int Y, int Z, int TileID )" }, "void", "Send target execute to specific serial, item, mobile\n\tIn case of X Y Z coordinates, can be defined a tileid");

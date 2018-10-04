@@ -9,16 +9,15 @@ namespace RazorEnhanced
 		private int m_ptarget;
 		private RazorEnhanced.Point3D m_pgtarget;
 
-		//internal static bool TargetMessage = false;
-
 		public static bool HasTarget()
 		{
 			return Assistant.Targeting.HasTarget;
 		}
 
-		public static void WaitForTarget(int delay) // Delay in MS
+		public static void WaitForTarget(int delay, bool noshow = false)
 		{
 			int subdelay = delay;
+			Assistant.Targeting.NoShowTarget = noshow;
 			while (Assistant.Targeting.HasTarget == false)
 			{
 				Thread.Sleep(2);
@@ -26,25 +25,7 @@ namespace RazorEnhanced
 				if (subdelay <= 0)
 					break;
 			}
-		}
-
-		public static void WaitForTarget(int delay, bool noshow)
-		{
-			if (!noshow)
-				WaitForTarget(delay);
-			else
-			{
-				int subdelay = delay;
-				Assistant.Targeting.NoShowTarget = true;
-				while (Assistant.Targeting.HasTarget == false)
-				{
-					Thread.Sleep(2);
-					subdelay -= 2;
-					if (subdelay <= 0)
-						break;
-				}
-				Assistant.Targeting.NoShowTarget = false;
-			}
+			Assistant.Targeting.NoShowTarget = false;
 		}
 
 		public static void TargetExecute(int serial)
