@@ -3340,7 +3340,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
+			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll() 
 			{
 				return (from DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows select (RazorEnhanced.Filters.GraphChangeData) row["Graph"]).ToList();
 			}
@@ -3352,6 +3352,7 @@ namespace RazorEnhanced
 				DataRow row = m_Dataset.Tables["FILTER_GRAPH"].NewRow();
 				row["Graph"] = graphdata;
 				m_Dataset.Tables["FILTER_GRAPH"].Rows.Add(row);
+				m_Dataset.AcceptChanges();
 			}		
 		}
 

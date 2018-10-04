@@ -867,6 +867,8 @@ namespace Assistant
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
 		private RazorButton targetremoveButton;
 		private Label label76;
+		private RazorButton graphFilterImportButton;
+		private RazorButton graphFilterExportButton;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1057,6 +1059,8 @@ namespace Assistant
 			this.flagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox23 = new System.Windows.Forms.GroupBox();
+			this.graphFilterImportButton = new RazorEnhanced.UI.RazorButton();
+			this.graphFilterExportButton = new RazorEnhanced.UI.RazorButton();
 			this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
 			this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1203,6 +1207,7 @@ namespace Assistant
 			this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.targetbodyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox43 = new System.Windows.Forms.GroupBox();
+			this.label76 = new System.Windows.Forms.Label();
 			this.targetremoveButton = new RazorEnhanced.UI.RazorButton();
 			this.targetaddButton = new RazorEnhanced.UI.RazorButton();
 			this.targetaddTextBox = new RazorEnhanced.UI.RazorTextBox();
@@ -1592,7 +1597,6 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-			this.label76 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -2976,6 +2980,8 @@ namespace Assistant
 			// 
 			// groupBox23
 			// 
+			this.groupBox23.Controls.Add(this.graphFilterImportButton);
+			this.groupBox23.Controls.Add(this.graphFilterExportButton);
 			this.groupBox23.Controls.Add(this.graphfilterdatagrid);
 			this.groupBox23.Controls.Add(this.mobfilterCheckBox);
 			this.groupBox23.Location = new System.Drawing.Point(192, 14);
@@ -2984,6 +2990,24 @@ namespace Assistant
 			this.groupBox23.TabIndex = 66;
 			this.groupBox23.TabStop = false;
 			this.groupBox23.Text = "Mobile Graphics Change Filter";
+			// 
+			// graphFilterImportButton
+			// 
+			this.graphFilterImportButton.Location = new System.Drawing.Point(129, 19);
+			this.graphFilterImportButton.Name = "graphFilterImportButton";
+			this.graphFilterImportButton.Size = new System.Drawing.Size(71, 21);
+			this.graphFilterImportButton.TabIndex = 71;
+			this.graphFilterImportButton.Text = "Import";
+			this.graphFilterImportButton.Click += new System.EventHandler(this.graphFilterImportButton_Click);
+			// 
+			// graphFilterExportButton
+			// 
+			this.graphFilterExportButton.Location = new System.Drawing.Point(206, 19);
+			this.graphFilterExportButton.Name = "graphFilterExportButton";
+			this.graphFilterExportButton.Size = new System.Drawing.Size(71, 21);
+			this.graphFilterExportButton.TabIndex = 70;
+			this.graphFilterExportButton.Text = "Export";
+			this.graphFilterExportButton.Click += new System.EventHandler(this.graphFilterExportButton_Click);
 			// 
 			// graphfilterdatagrid
 			// 
@@ -4439,7 +4463,7 @@ namespace Assistant
 			this.targethueGridView.Location = new System.Drawing.Point(7, 43);
 			this.targethueGridView.Name = "targethueGridView";
 			this.targethueGridView.RowHeadersVisible = false;
-			this.targethueGridView.Size = new System.Drawing.Size(95, 261);
+			this.targethueGridView.Size = new System.Drawing.Size(95, 264);
 			this.targethueGridView.TabIndex = 70;
 			this.targethueGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targethueGridView_CellEndEdit);
 			this.targethueGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_MouseDown);
@@ -4534,6 +4558,15 @@ namespace Assistant
 			this.groupBox43.TabIndex = 49;
 			this.groupBox43.TabStop = false;
 			this.groupBox43.Text = "Shortcut";
+			// 
+			// label76
+			// 
+			this.label76.AutoSize = true;
+			this.label76.Location = new System.Drawing.Point(6, 22);
+			this.label76.Name = "label76";
+			this.label76.Size = new System.Drawing.Size(38, 13);
+			this.label76.TabIndex = 5;
+			this.label76.Text = "Name:";
 			// 
 			// targetremoveButton
 			// 
@@ -8552,15 +8585,6 @@ namespace Assistant
 			this.openmaplocation.Filter = "Executable Files|*.exe";
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
-			// 
-			// label76
-			// 
-			this.label76.AutoSize = true;
-			this.label76.Location = new System.Drawing.Point(6, 22);
-			this.label76.Name = "label76";
-			this.label76.Size = new System.Drawing.Size(38, 13);
-			this.label76.TabIndex = 5;
-			this.label76.Text = "Name:";
 			// 
 			// MainForm
 			// 
@@ -13496,6 +13520,15 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("MountSerial", serial);
 			}
 		}
+		private void graphFilterImportButton_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportGraphFilter();
+		}
+
+		private void graphFilterExportButton_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ExportGraphFilter();
+		}
 
 		// ---------------- FILTERS END ----------------
 
@@ -15064,11 +15097,15 @@ namespace Assistant
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
 
+		// ----------------- STOP DPS METER -------------------
+
 		private void paypalButton_Click(object sender, EventArgs e)
 		{
 			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
 			Process.Start(p);
 		}
+
+		// ----------------- START TARGET -------------------
 
 		string lasttargetselected = string.Empty;
 
@@ -15452,8 +15489,7 @@ namespace Assistant
 			SaveTarget();
 			RazorEnhanced.Target.SetLastTargetFromListHotKey(targetlistBox.SelectedItem.ToString());
 		}
-
-		// ----------------- STOP DPS METER -------------------
+		// ----------------- STOP TARGET -------------------
 	}
 }
 

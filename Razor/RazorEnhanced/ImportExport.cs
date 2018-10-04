@@ -1097,5 +1097,111 @@ namespace RazorEnhanced
 		}
 
 		////////////// PROFILES END //////////////
+
+		////////////// GRAPHFILTER START //////////////
+		internal static void ImportGraphFilter()
+		{
+			DataSet m_Dataset = new DataSet();
+			DataTable m_DatasetTable = new DataTable();
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Graph Filter",
+				RestoreDirectory = true
+			};
+
+			if (od.ShowDialog() == DialogResult.OK)
+			{
+				if (File.Exists(od.FileName))
+				{
+					try
+					{
+						m_Dataset.RemotingFormat = SerializationFormat.Binary;
+						m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+						Stream stream = File.Open(od.FileName, FileMode.Open);
+						GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+						BinaryFormatter bin = new BinaryFormatter();
+						m_Dataset = bin.Deserialize(decompress) as DataSet;
+						decompress.Close();
+						stream.Close();
+					}
+					catch
+					{
+						MessageBox.Show("File is corrupted!");
+					}
+				}
+				else
+				{
+					MessageBox.Show("Unable to access file!");
+				}
+				if (m_Dataset.Tables.Contains("FILTER_GRAPH"))
+				{
+					m_DatasetTable = m_Dataset.Tables["FILTER_GRAPH"];
+					if (m_DatasetTable.Rows.Count > 0)
+					{
+						Settings.GraphFilter.ClearList(); // Clear old data
+
+						foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
+						{
+							Filters.GraphChangeData d = (Filters.GraphChangeData)row["Graph"];
+							Settings.GraphFilter.Insert(d.Selected, d.GraphReal, d.GraphNew, d.ColorNew);
+						}
+
+						Filters.InitGraphGrid();
+					}
+				}
+				else
+				{
+					MessageBox.Show("This file not contain Graph Filter data!");
+				}
+			}
+		}
+
+		internal static void ExportGraphFilter()
+		{
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Graph Filter List",
+				FileName = "GraphFilter.raz",
+				RestoreDirectory = true
+			};
+
+			if (sd.ShowDialog() == DialogResult.OK)
+			{
+				DataSet m_Dataset = new DataSet();
+				DataTable filter_graph = new DataTable("FILTER_GRAPH");
+				filter_graph.Columns.Add("Graph", typeof(Filters.GraphChangeData));
+				m_Dataset.Tables.Add(filter_graph);
+				m_Dataset.AcceptChanges();
+
+				List<Filters.GraphChangeData> filters = Settings.GraphFilter.ReadAll();
+
+				foreach (Filters.GraphChangeData filter in filters)
+				{
+					DataRow row = m_Dataset.Tables["FILTER_GRAPH"].NewRow();
+					row["Graph"] = filter;
+					m_Dataset.Tables["FILTER_GRAPH"].Rows.Add(row);
+				}
+
+				try
+				{
+					m_Dataset.RemotingFormat = SerializationFormat.Binary;
+					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+					Stream stream = File.Create(sd.FileName);
+					GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
+					BinaryFormatter bin = new BinaryFormatter();
+					bin.Serialize(compress, m_Dataset);
+					compress.Close();
+					stream.Close();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.ToString(), "Export Graph Filter fail");
+				}
+			}
+		}
+
+		////////////// AUTOLOOT END //////////////
 	}
 }
