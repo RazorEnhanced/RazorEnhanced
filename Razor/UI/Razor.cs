@@ -10196,7 +10196,17 @@ namespace Assistant
 		private void screenPrev_Click(object sender, System.EventArgs e)
 		{
 			if (screensList.SelectedItem is String file)
-				System.Diagnostics.Process.Start(Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file));
+			{
+				string tostart = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file);
+				if (File.Exists(tostart))
+					return;
+
+				try
+				{
+					Process.Start(tostart);
+				}
+				catch { }
+			}
 		}
 
 		private Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
