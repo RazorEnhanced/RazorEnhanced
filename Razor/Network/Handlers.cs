@@ -228,8 +228,14 @@ namespace Assistant
 			if (!RazorEnhanced.Settings.General.ReadBool("AutoCap"))
 				return;
 
-			if (m != null && ((m.Body >= 0x0190 && m.Body <= 0x0193) || (m.Body >= 0x025D && m.Body <= 0x0260)) && Utility.Distance(World.Player.Position, m.Position) <= 12)
+			if (m != null && (
+					(m.Body >= 0x0190 && m.Body <= 0x0193) ||   // Humans
+					(m.Body >= 0x025D && m.Body <= 0x0260) ||   // Elves
+					(m.Body >= 0x029A && m.Body <= 0x029B)) &&  // Gargoyles
+					Utility.Distance(World.Player.Position, m.Position) <= 12)
+			{
 				ScreenCapManager.DeathCapture();
+			}
 		}
 
 		private static void ExtendedClientCommand(Packet p, PacketHandlerEventArgs args)
