@@ -232,7 +232,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsDress =
 			{
-				"Dress.DessStatus", "Dress.UnDressStatus", "Dress.DressFStart", "Dress.UnDressFStart", "Dress.DressFStop", "Dress.UnDressFStop", "Dress.ChangeList"
+				"Dress.DressStatus", "Dress.UnDressStatus", "Dress.DressFStart", "Dress.UnDressFStart", "Dress.DressFStop", "Dress.UnDressFStop", "Dress.ChangeList"
 			};
 
 			string[] methodsFriend =
@@ -998,8 +998,8 @@ namespace RazorEnhanced.UI
 
 			Dictionary<string, ToolTipDescriptions> descriptionDress = new Dictionary<string, ToolTipDescriptions>();
 
-			tooltip = new ToolTipDescriptions("Dress.DessStatus()", new string[] { "none" }, "bool", "Get status of dress engine\n\tTrue: is running, False: is not running");
-			descriptionDress.Add("Dress.DessStatus", tooltip);
+			tooltip = new ToolTipDescriptions("Dress.DressStatus()", new string[] { "none" }, "bool", "Get status of dress engine\n\tTrue: is running, False: is not running");
+			descriptionDress.Add("Dress.DressStatus", tooltip);
 
 			tooltip = new ToolTipDescriptions("Dress.UnDressStatus()", new string[] { "none" }, "bool", "Get status of undress engine\n\tTrue: is running, False: is not running");
 			descriptionDress.Add("Dress.UnDressStatus", tooltip);
