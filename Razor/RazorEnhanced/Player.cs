@@ -169,18 +169,12 @@ namespace RazorEnhanced
 
 		public static int DistanceTo(Mobile m)
 		{
-			int x = Math.Abs(Position.X - m.Position.X);
-			int y = Math.Abs(Position.Y - m.Position.Y);
-
-			return x > y ? x : y;
+			return Utility.Distance(Position.X, Position.Y, m.Position.X, m.Position.Y);
 		}
 
 		public static int DistanceTo(Item i)
 		{
-			int x = Math.Abs(Position.X - i.Position.X);
-			int y = Math.Abs(Position.Y - i.Position.Y);
-
-			return x > y ? x : y;
+			return Utility.Distance(Position.X, Position.Y, i.Position.X, i.Position.Y);
 		}
 
 		internal static string GetBuffDescription(BuffIcon icon)
@@ -1173,7 +1167,10 @@ namespace RazorEnhanced
 		// Range
 		public static bool InRangeMobile(Mobile mob, int range)
 		{
-			return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
+			if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
+				return true;
+			else
+				return false;
 		}
 
 		public static bool InRangeMobile(int mobserial, int range)
@@ -1181,15 +1178,21 @@ namespace RazorEnhanced
 			Assistant.Mobile mob = World.FindMobile(mobserial);
 			if (mob != null)
 			{
-				return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
+				if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
+					return true;
+				else
+					return false;
 			}
 			else
 				return false;
 		}
 
-		public static bool InRangeItem(Item mob, int range)
+		public static bool InRangeItem(Item i, int range)
 		{
-			return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
+			if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= range)
+				return true;
+			else
+				return false;
 		}
 
 		public static bool InRangeItem(int itemserial, int range)
@@ -1197,7 +1200,10 @@ namespace RazorEnhanced
 			Assistant.Item item = World.FindItem(itemserial);
 			if (item != null)
 			{
-				return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), range);
+				if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
+					return true;
+				else
+					return false;
 			}
 			else
 				return false;

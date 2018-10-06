@@ -97,10 +97,7 @@ namespace RazorEnhanced
 
 		public int DistanceTo(Mobile m)
 		{
-			int x = Math.Abs(this.Position.X - m.Position.X);
-			int y = Math.Abs(this.Position.Y - m.Position.Y);
-
-			return x > y ? x : y;
+			return Utility.Distance(Position.X, Position.Y, m.Position.X, m.Position.Y);
 		}
 
 		private static Assistant.Layer GetAssistantLayer(string layer)
@@ -353,16 +350,14 @@ namespace RazorEnhanced
 					if (filter.RangeMin != -1)
 					{
 						assistantMobiles = assistantMobiles.Where((m) =>
-							Utility.DistanceSqrt
-							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(m.Position.X, m.Position.Y)) >= filter.RangeMin
+							Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) >= filter.RangeMin
 						).ToList();
 					}
 
 					if (filter.RangeMax != -1)
 					{
 						assistantMobiles = assistantMobiles.Where((m) =>
-							Utility.DistanceSqrt
-							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(m.Position.X, m.Position.Y)) <= filter.RangeMax
+							Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) <= filter.RangeMax
 						).ToList();
 					}
 
