@@ -180,7 +180,7 @@ namespace RazorEnhanced
 				case (Keys)262648:
 					return "X Button 2, Alt";
 
-            default:
+				default:
 					return k.ToString();
 			}
 		}
@@ -211,8 +211,56 @@ namespace RazorEnhanced
 						ProcessPet(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
-					case "Agents":
-						ProcessAgents(RazorEnhanced.Settings.HotKey.FindString(k));
+					case "AgentAutoloot":
+						ProcessAgentsAutoloot(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentScavenger":
+						ProcessAgentsScavenger(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentOrganizer":
+						ProcessAgentsOrganizer(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentSell":
+						ProcessAgentsSell(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentBuy":
+						ProcessAgentBuy(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentDress":
+						ProcessAgentDress(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentRestock":
+						ProcessAgentRestock(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentBandage":
+						ProcessAgentBandage(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentBoneCutter":
+						ProcessAgentBoneCutter(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentAutoCarver":
+						ProcessAgentAutoCarver(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentAutoRemount":
+						ProcessAgentAutoRemount(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentGraphFilter":
+						ProcessAgentGraphFilter(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
+					case "AgentFriend":
+						ProcessAgentFriend(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "Abilities":
@@ -347,9 +395,279 @@ namespace RazorEnhanced
 				}
 			}
 		}
+		private static void ProcessAgentGraphFilter(string function)
+		{
+			switch (function)
+			{
+				case "Graphic Filter Trigger ON/OFF":
+					if (Engine.MainWindow.MobFilterCheckBox.Checked)
+						Engine.MainWindow.MobFilterCheckBox.Checked = false;
+					else
+						Engine.MainWindow.MobFilterCheckBox.Checked = true;
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentFriend(string function)
+		{
+			switch (function)
+			{
+				case "Add Friend":
+					Friend.AddFriendTarget();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentAutoRemount(string function)
+		{
+			switch (function)
+			{
+				case "Auto Remount Trigger ON/OFF":
+					if (Engine.MainWindow.RemountCheckbox.Checked)
+						Engine.MainWindow.RemountCheckbox.Checked = false;
+					else
+						Engine.MainWindow.RemountCheckbox.Checked = true;
+					break;
+
+				case "Auto Remount Set Mount":
+					Engine.MainWindow.AutoRemountSetMount();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentAutoCarver(string function)
+		{
+			switch (function)
+			{
+				case "Auto Carver Trigger ON/OFF":
+					if (Engine.MainWindow.AutoCarverCheckBox.Checked)
+						Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+					else
+						Engine.MainWindow.AutoCarverCheckBox.Checked = true;
+					break;
+
+				case "Auto Carver Set Blade":
+					Engine.MainWindow.AutoCarverSetBlade();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentBoneCutter(string function)
+		{
+			switch (function)
+			{
+				case "Bone Cutter Trigger ON/OFF":
+					if (Engine.MainWindow.BoneCutterCheckBox.Checked)
+						Engine.MainWindow.BoneCutterCheckBox.Checked = false;
+					else
+						Engine.MainWindow.BoneCutterCheckBox.Checked = true;
+					break;
+
+				case "Bone Cutter Set Blade":
+					Engine.MainWindow.BoneCutterSetBlade();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentRestock(string function)
+		{
+			switch (function)
+			{
+				case "Restock Start":
+					Restock.FStart();
+					break;
+
+				case "Restock Stop":
+					Restock.FStop();
+					break;
+
+				case "Restock Set Soruce Bag":
+					Engine.MainWindow.RestockSetSource();
+					break;
+
+				case "Restock Set Destination Bag":
+					Engine.MainWindow.RestockSetDestination();
+					break;
+
+				case "Restock Add Item":
+					Engine.MainWindow.RestockAddItem();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentDress(string function)
+		{
+			switch (function)
+			{
+				case "Dress Start":
+					Dress.DressFStart();
+					break;
+
+				case "Undress Start":
+					Dress.UnDressFStart();
+					break;
+
+				case "Dress / Undress Stop":
+					if (Dress.DressStatus())
+						Dress.DressFStop();
+					else
+						Dress.UnDressFStop();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentBandage(string function)
+		{
+			switch (function)
+			{
+				case "Bandage Heal Trigger ON/OFF":
+					if (BandageHeal.Status())
+						BandageHeal.Stop();
+					else
+						BandageHeal.Start();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentBuy(string function)
+		{
+			switch (function)
+			{
+				case "Buy Trigger ON/OFF":
+					if (BuyAgent.Status())
+						BuyAgent.Disable();
+					else
+						BuyAgent.Enable();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentsSell(string function)
+		{
+			switch (function)
+			{
+				case "Sell Trigger ON/OFF":
+					if (SellAgent.Status())
+						SellAgent.Disable();
+					else
+						SellAgent.Enable();
+					break;
+
+				case "Sell Set Soruce Bag":
+					Engine.MainWindow.SellAgentSetBag();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentsAutoloot(string function)
+		{
+			switch (function)
+			{
+				case "Autoloot Trigger ON/OFF":
+					if (AutoLoot.Status())
+						AutoLoot.Stop();
+					else
+						AutoLoot.Start();
+					break;
+
+				case "Autoloot Set Bag":
+					Engine.MainWindow.AutolootSetBag();
+					break;
+
+				case "Autoloot Add Item":
+					Engine.MainWindow.AutolootAddItem();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentsScavenger(string function)
+		{
+			switch (function)
+			{
+				case "Scavenger Trigger ON/OFF":
+					if (Scavenger.Status())
+						Scavenger.Stop();
+					else
+						Scavenger.Start();
+					break;
+
+				case "Scavenger Set Bag":
+					Engine.MainWindow.ScavengerSetBag();
+					break;
+
+				case "Scavenger Add Item":
+					Engine.MainWindow.ScavengerAddItem();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		private static void ProcessAgentsOrganizer(string function)
+		{
+			switch (function)
+			{
+				case "Organizer Start":
+					Organizer.FStart();
+					break;
+
+				case "Organizer Stop":
+					Organizer.FStop();
+					break;
+
+				case "Organizer Set Soruce Bag":
+					Engine.MainWindow.OrganizerSetSource();
+					break;
+
+				case "Organizer Set Destination Bag":
+					Engine.MainWindow.OrganizerSetDestination();
+					break;
+
+				case "Organizer Add Item":
+					Engine.MainWindow.OrganizerAddItem();
+					break;
+
+				default:
+					break;
+			}
+		}
 
 		private static void ProcessGeneral(string function)
-		{
+			{
 			switch (function)
 			{
 				case "Resync":
@@ -585,110 +903,6 @@ namespace RazorEnhanced
 			else
 			{
 				RazorEnhanced.Player.ChatSay(Engine.MainWindow.SpeechHue, function);
-			}
-		}
-
-		private static void ProcessAgents(string function)
-		{
-			switch (function)
-			{
-				case "Autoloot ON/OFF":
-					if (RazorEnhanced.AutoLoot.Status())
-						RazorEnhanced.AutoLoot.Stop();
-					else
-						RazorEnhanced.AutoLoot.Start();
-					break;
-
-				case "Scavenger ON/OFF":
-					if (RazorEnhanced.Scavenger.Status())
-						RazorEnhanced.Scavenger.Stop();
-					else
-						RazorEnhanced.Scavenger.Start();
-					break;
-
-				case "Organizer Start":
-					RazorEnhanced.Organizer.FStart();
-					break;
-
-				case "Organizer Stop":
-					RazorEnhanced.Organizer.FStop();
-					break;
-
-				case "Sell Agent ON/OFF":
-					if (RazorEnhanced.SellAgent.Status())
-						RazorEnhanced.SellAgent.Disable();
-					else
-						RazorEnhanced.SellAgent.Enable();
-					break;
-
-				case "Buy Agent ON/OFF":
-					if (RazorEnhanced.BuyAgent.Status())
-						RazorEnhanced.BuyAgent.Disable();
-					else
-						RazorEnhanced.BuyAgent.Enable();
-					break;
-
-				case "Dress Start":
-					RazorEnhanced.Dress.DressFStart();
-					break;
-
-				case "Dress Stop":
-					RazorEnhanced.Dress.DressFStop();
-					break;
-
-				case "Undress":
-					RazorEnhanced.Dress.UnDressFStart();
-					break;
-
-				case "Restock Start":
-					RazorEnhanced.Restock.FStart();
-					break;
-
-				case "Restock Stop":
-					RazorEnhanced.Restock.FStop();
-					break;
-
-				case "Bandage Heal ON/OFF":
-					if (RazorEnhanced.BandageHeal.Status())
-						RazorEnhanced.BandageHeal.Stop();
-					else
-						RazorEnhanced.BandageHeal.Start();
-					break;
-
-				case "Bone Cutter ON/OFF":
-					if (Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked)
-						Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = false;
-					else
-						Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = true;
-					break;
-
-				case "Auto Carver ON/OFF":
-					if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked)
-						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
-					else
-						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = true;
-					break;
-
-				case "Auto Remount ON/OFF":
-					if (Assistant.Engine.MainWindow.RemountCheckbox.Checked)
-						Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
-					else
-						Assistant.Engine.MainWindow.RemountCheckbox.Checked = true;
-					break;
-
-				case "Graphics Filter ON/OFF":
-					if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-						Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
-					else
-						Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = true;
-					break;
-
-				case "Add Friend":
-					Friend.AddFriendTarget();
-					break;
-
-				default:
-					break;
 			}
 		}
 
@@ -1316,15 +1530,91 @@ namespace RazorEnhanced
 
 			// Agents
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Agents");
-			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Agents");
+
+			// Agent Autoloot
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Autoloot");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentAutoloot");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[0].Nodes.Add(GenerateNode(keydata));
+
+			// Agent Scavenger
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Scavenger");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentScavenger");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[1].Nodes.Add(GenerateNode(keydata));
+
+			// Organizer Agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Organizer");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentOrganizer");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[2].Nodes.Add(GenerateNode(keydata));
+
+			// Sell Agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Sell");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentSell");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[3].Nodes.Add(GenerateNode(keydata));
+
+			// Buy Agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Buy");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentBuy");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[4].Nodes.Add(GenerateNode(keydata));
+
+			// Dress Agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Dress");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentDress");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes.Add(GenerateNode(keydata));
 
 			// Agents -> Dress List
-			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("DList", "Dress List");
-			keylist = RazorEnhanced.Settings.HotKey.ReadDress();
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes.Add("DList", "List");
+				keylist = RazorEnhanced.Settings.HotKey.ReadDress();
+				foreach (HotKeyData keydata in keylist)
+					Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes[3].Nodes.Add(GenerateNode(keydata));
+
+			// Restock Agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Restock");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentRestock");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[17].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[6].Nodes.Add(GenerateNode(keydata));
+
+			// Bandage Heal agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Bandage Heal");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentBandage");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[7].Nodes.Add(GenerateNode(keydata));
+
+			// BoneCutter agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Bone Cutter");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentBoneCutter");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[8].Nodes.Add(GenerateNode(keydata));
+
+			// AutoCarver agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Auto Carver");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentAutoCarver");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[9].Nodes.Add(GenerateNode(keydata));
+
+			// AutoRemount agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Auto Remount");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentAutoRemount");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[10].Nodes.Add(GenerateNode(keydata));
+
+			// AutoRemount agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Graphics Filter");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentGraphFilter");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[11].Nodes.Add(GenerateNode(keydata));
+
+			// Friend  agent
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Friend");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("AgentFriend");
+			foreach (HotKeyData keydata in keylist)
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[12].Nodes.Add(GenerateNode(keydata));
+
 
 			// Combats
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Combat");

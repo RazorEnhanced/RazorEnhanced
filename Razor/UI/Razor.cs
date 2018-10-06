@@ -10949,6 +10949,14 @@ namespace Assistant
 
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
+			AutolootSetBag();
+		}
+
+		internal void AutolootSetBag()
+		{
+			if (showagentmessageCheckBox.Checked)
+				RazorEnhanced.Misc.SendMessage("Autoloot Select Loot Bag", false);
+
 			if (autolootListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
 			else
@@ -10984,6 +10992,14 @@ namespace Assistant
 
 		private void autoLootAddItemTarget_Click(object sender, EventArgs e)
 		{
+			AutolootAddItem();
+		}
+
+		internal void AutolootAddItem()
+		{
+			if (showagentmessageCheckBox.Checked)
+				RazorEnhanced.Misc.SendMessage("Select item to add in Autoloot list", false);
+
 			if (autolootListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
 			else
@@ -11240,37 +11256,53 @@ namespace Assistant
 				editProp.Show();
 			}
 			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+				Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerAddItemTarget_Click(object sender, EventArgs e)
 		{
+			ScavengerAddItem();
+		}
+
+		internal void ScavengerAddItem()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select item to add in Scavenger list", false);
+
 			if (scavengerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemTarget_Callback));
 			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+				Scavenger.AddLog("Item list not selected!");
 		}
 
-		private void ScavengerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		private void ScavengerItemTarget_Callback(bool loc, Serial serial, Point3D pt, ushort itemid)
 		{
-			Assistant.Item scavengerItem = Assistant.World.FindItem(serial);
+			Item scavengerItem = World.FindItem(serial);
 			if (scavengerItem != null && scavengerItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
-				RazorEnhanced.Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
+					Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
+				Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
+				this.BeginInvoke((MethodInvoker)delegate { Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid target", false);
-				RazorEnhanced.Scavenger.AddLog("Invalid target");
+					Misc.SendMessage("Invalid target", false);
+				Scavenger.AddLog("Invalid target");
 			}
 		}
 
 		private void scavengerSetContainer_Click(object sender, EventArgs e)
 		{
+			ScavengerSetBag();
+		}
+
+		internal void ScavengerSetBag()
+		{
+			if (showagentmessageCheckBox.Checked)
+				RazorEnhanced.Misc.SendMessage("Select Scavenger Bag", false);
+
 			if (scavengerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
 			else
@@ -11528,6 +11560,14 @@ namespace Assistant
 
 		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
+			OrganizerSetSource();
+		}
+
+		internal void OrganizerSetSource()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select Source container", false);
+
 			if (organizerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
 			else
@@ -11569,12 +11609,20 @@ namespace Assistant
 
 		private void organizerSetDestination_Click(object sender, EventArgs e)
 		{
+			OrganizerSetDestination();
+		}
+
+		internal void OrganizerSetDestination()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select destination container", false);
+
 			if (organizerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
-
+	
 		private void OrganizerDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item organizerBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
@@ -11624,6 +11672,14 @@ namespace Assistant
 
 		private void organizerAddTarget_Click(object sender, EventArgs e)
 		{
+			OrganizerAddItem();
+		}
+
+		internal void OrganizerAddItem()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select item to add in Organizer list", false);
+
 			if (organizerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
 			else
@@ -11951,6 +12007,14 @@ namespace Assistant
 
 		private void sellSetBag_Click(object sender, EventArgs e)
 		{
+			SellAgentSetBag();
+		}
+
+		internal void SellAgentSetBag()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select Sell bag.", false);
+
 			if (sellListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
 			else
@@ -12801,6 +12865,14 @@ namespace Assistant
 
 		private void restockSetSourceButton_Click(object sender, EventArgs e)
 		{
+			RestockSetSource();
+		}
+
+		internal void RestockSetSource()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select Restock source bag", false);
+
 			if (restockListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockSourceContainerTarget_Callback));
 			else
@@ -12843,6 +12915,14 @@ namespace Assistant
 
 		private void restockSetDestinationButton_Click(object sender, EventArgs e)
 		{
+			RestockSetDestination();
+		}
+
+		internal void RestockSetDestination()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select Restock destination bag", false);
+
 			if (restockListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockDestinationContainerTarget_Callback));
 			else
@@ -12995,6 +13075,14 @@ namespace Assistant
 
 		private void restockAddTargetButton_Click(object sender, EventArgs e)
 		{
+			RestockAddItem();
+		}
+
+		internal void RestockAddItem()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select item to add in Restock list", false);
+
 			if (restockListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockItemTarget_Callback));
 			else
@@ -13255,6 +13343,14 @@ namespace Assistant
 		// ---------------- FILTERS START ----------------
 		private void autocarverrazorButton_Click(object sender, EventArgs e)
 		{
+			AutoCarverSetBlade();
+		}
+
+		internal void AutoCarverSetBlade()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select Auto Carver Blade", false);
+
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autocarverbladeTarget_Callback));
 		}
 
@@ -13283,6 +13379,13 @@ namespace Assistant
 
 		private void boneCutterrazorButton_Click(object sender, EventArgs e)
 		{
+			BoneCutterSetBlade();
+		}
+		internal void BoneCutterSetBlade()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select Bone Cutter Blade", false);
+
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(bonecutterbladeTarget_Callback));
 		}
 
@@ -13340,7 +13443,7 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.BoneCutter = false;
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("BoneCutter Engine Start...", false);
+					Misc.SendMessage("BoneCutter Engine Stop...", false);
 			}
 
 			if (bonecutterCheckBox.Focused)
@@ -13519,6 +13622,14 @@ namespace Assistant
 
 		private void remountsetbutton_Click(object sender, EventArgs e)
 		{
+			AutoRemountSetMount();
+		}
+
+		internal void AutoRemountSetMount()
+		{
+			if (showagentmessageCheckBox.Checked)
+				Misc.SendMessage("Select mount or item.", false);
+
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(remountSetMountTarget_Callback));
 		}
 

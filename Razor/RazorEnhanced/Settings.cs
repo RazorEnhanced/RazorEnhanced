@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 60;
+		private static int SettingVersion = 61;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -400,73 +400,143 @@ namespace RazorEnhanced
 				hotkeyrow.ItemArray = new object[] { "Pet Commands", "Mount / Dismount", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
+				// Autoloot agent
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentAutoloot", "Autoloot Trigger ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentAutoloot", "Autoloot Set Bag", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Start", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentAutoloot", "Autoloot Add Item", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Scavenger agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentScavenger", "Scavenger Trigger ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Stop", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentScavenger", "Scavenger Set Bag", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentScavenger", "Scavenger Add Item", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Organizer Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Start", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Stop", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Dress Start", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Set Soruce Bag", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Dress Stop", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Set Destination Bag", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Undress", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Add Item", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Sell Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentSell", "Sell Trigger ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Restock Start", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentSell", "Sell Set Soruce Bag", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Buy Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentBuy", "Buy Trigger ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Dress agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentDress", "Dress Start", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Restock Stop", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentDress", "Undress Start", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentDress", "Dress / Undress Stop", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+				
+				// Restock agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Start", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Bone Cutter ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Stop", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Auto Carver ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Set Soruce Bag", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Auto Remount ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Set Destination Bag", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Graphics Filter ON/OFF", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Add Item", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Bandage Heal agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentBandage", "Bandage Heal Trigger ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+				
+				// BoneCutter Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentBoneCutter", "Bone Cutter Trigger ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Agents", "Add Friend", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "AgentBoneCutter", "Bone Cutter Set Blade", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
+
+				// AutoCarver Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentAutoCarver", "Auto Carver Trigger ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentAutoCarver", "Auto Carver Set Blade", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// AutoRemount Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentAutoRemount", "Auto Remount Trigger ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentAutoRemount", "Auto Remount Set Mount", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Graphics Filter
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentGraphFilter", "Graphic Filter Trigger ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				// Friend Agent
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "AgentFriend", "Add Friend", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Abilities", "Primary", Keys.None, true };
@@ -4554,6 +4624,437 @@ namespace RazorEnhanced
 				realVersion = 60;
 				General.WriteInt("SettingVersion", 60);
 			}
+
+			if (realVersion == 60)
+			{
+				Keys autolootOnOff = Keys.None;
+				Keys scavengerOnOff = Keys.None;
+				Keys organizerStart = Keys.None;
+				Keys organizerStop = Keys.None;
+				Keys sellagentOnOff = Keys.None;
+				Keys buyagentOnOff = Keys.None;
+				Keys dressStart = Keys.None;
+				Keys dressStop = Keys.None;
+				Keys undress = Keys.None;
+				Keys restockStart = Keys.None;
+				Keys restockStop = Keys.None;
+				Keys bandagehealOnOff = Keys.None;
+				Keys bonecutterOnOff = Keys.None;
+				Keys autocarverOnOff = Keys.None;
+				Keys autoremountOnOff = Keys.None;
+				Keys graphOnOff = Keys.None;
+				Keys addfriend = Keys.None;
+
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Autoloot ON/OFF")
+					{
+						autolootOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Scavenger ON/OFF")
+					{
+						scavengerOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Organizer Start")
+					{
+						organizerStart = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Organizer Stop")
+					{
+						organizerStop = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Sell Agent ON/OFF")
+					{
+						sellagentOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Buy Agent ON/OFF")
+					{
+						buyagentOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Dress Start")
+					{
+						dressStart = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Dress Stop")
+					{
+						dressStop = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Undress")
+					{
+						undress = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Restock Start")
+					{
+						restockStart = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Restock Stop")
+					{
+						restockStop = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Bandage Heal ON/OFF")
+					{
+						bandagehealOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Bone Cutter ON/OFF")
+					{
+						bonecutterOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Auto Carver ON/OFF")
+					{
+						autocarverOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Auto Remount ON/OFF")
+					{
+						autoremountOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Graphics Filter ON/OFF")
+					{
+						graphOnOff = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows) // Delete row and save old key config
+				{
+					if ((string)row["Name"] == "Add Friend")
+					{
+						addfriend = (Keys)row["Key"];
+						row.Delete();
+						m_Dataset.AcceptChanges();
+						break;
+					}
+				}
+
+				// Start adding new hotkey
+
+				// Autoloot
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoloot";
+				newRow["Name"] = "Autoloot Trigger ON/OFF";
+				newRow["Key"] = autolootOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoloot";
+				newRow["Name"] = "Autoloot Set Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoloot";
+				newRow["Name"] = "Autoloot Add Item";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				//Scavenger
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentScavenger";
+				newRow["Name"] = "Scavenger Trigger ON/OFF";
+				newRow["Key"] = scavengerOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentScavenger";
+				newRow["Name"] = "Scavenger Set Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentScavenger";
+				newRow["Name"] = "Scavenger Add Item";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// Organizer Agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentOrganizer";
+				newRow["Name"] = "Organizer Start";
+				newRow["Key"] = organizerStart;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentOrganizer";
+				newRow["Name"] = "Organizer Stop";
+				newRow["Key"] = organizerStop;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentOrganizer";
+				newRow["Name"] = "Organizer Set Soruce Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentOrganizer";
+				newRow["Name"] = "Organizer Set Destination Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentOrganizer";
+				newRow["Name"] = "Organizer Add Item";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				//Sell Agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentSell";
+				newRow["Name"] = "Sell Trigger ON/OFF";
+				newRow["Key"] = sellagentOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentSell";
+				newRow["Name"] = "Sell Set Soruce Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				//Buy Agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentBuy";
+				newRow["Name"] = "Buy Trigger ON/OFF";
+				newRow["Key"] = buyagentOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				//Dress Agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentDress";
+				newRow["Name"] = "Dress Start";
+				newRow["Key"] = dressStart;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentDress";
+				newRow["Name"] = "Undress Start";
+				newRow["Key"] = undress;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentDress";
+				newRow["Name"] = "Dress / Undress Stop";
+				newRow["Key"] = dressStop;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// Restock Agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentRestock";
+				newRow["Name"] = "Restock Start";
+				newRow["Key"] = restockStart;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentRestock";
+				newRow["Name"] = "Restock Stop";
+				newRow["Key"] = restockStop;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentRestock";
+				newRow["Name"] = "Restock Set Soruce Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentRestock";
+				newRow["Name"] = "Restock Set Destination Bag";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentRestock";
+				newRow["Name"] = "Restock Add Item";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// Bandage Heal agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentBandage";
+				newRow["Name"] = "Bandage Heal Trigger ON/OFF";
+				newRow["Key"] = bandagehealOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// BoneCutter agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentBoneCutter";
+				newRow["Name"] = "Bone Cutter Trigger ON/OFF";
+				newRow["Key"] = bonecutterOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentBoneCutter";
+				newRow["Name"] = "Bone Cutter Set Blade";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// AutoCarver agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoCarver";
+				newRow["Name"] = "Auto Carver Trigger ON/OFF";
+				newRow["Key"] = autocarverOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoCarver";
+				newRow["Name"] = "Auto Carver Set Blade";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// AutoRemount agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoRemount";
+				newRow["Name"] = "Auto Remount Trigger ON/OFF";
+				newRow["Key"] = autoremountOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentAutoRemount";
+				newRow["Name"] = "Auto Remount Set Mount";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// Graph Filter agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentGraphFilter";
+				newRow["Name"] = "Graphic Filter Trigger ON/OFF";
+				newRow["Key"] = graphOnOff;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				// Friend agent
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "AgentFriend";
+				newRow["Name"] = "Add Friend";
+				newRow["Key"] = addfriend;
+				newRow["Pass"] = false;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+
+				realVersion = 61;
+				General.WriteInt("SettingVersion", 61);
+
+			}
+
 
 			Save(true);
 		}
