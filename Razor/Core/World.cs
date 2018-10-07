@@ -88,10 +88,10 @@ namespace Assistant
 
 		internal static void RemoveItem(Item item)
 		{
-			Item removed;
 			if (item.IsMulti)
 				RemoveMulti(item);
-			m_Items.TryRemove(item.Serial, out removed);
+			while (m_Items.ContainsKey(item.Serial))
+				m_Items.TryRemove(item.Serial, out Item removed);
 		}
 
 		internal static void RemoveMulti(Item item)

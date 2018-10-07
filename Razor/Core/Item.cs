@@ -64,7 +64,6 @@ namespace Assistant
 		private int m_Price;
 		private string m_BuyDesc;
 		private List<Item> m_Items;
-		private List<Serial> m_Serials;
 
 		private bool m_IsNew;
 		private bool m_AutoStack;
@@ -90,15 +89,14 @@ namespace Assistant
 
 		internal override void AfterLoad()
 		{
-			m_Items = new List<Item>();
-
-			foreach (Serial serial in m_Serials)
+			for (int i = 0; i < m_Items.Count; i++)
 			{
-				Item item = World.FindItem(serial);
+				m_Items[i] = World.FindItem(m_Items[i].Serial);
 
-				if (item != null)
+				if (m_Items[i] == null)
 				{
-					m_Items.Add(item);
+					m_Items.RemoveAt(i);
+					i--;
 				}
 			}
 
@@ -410,10 +408,6 @@ namespace Assistant
 					return;
 			}
 
-			/*if (m_Items.Any(i => i == item))
-			{
-				return;
-			}*/
 			m_Items.Add(item);
 		}
 
@@ -423,8 +417,7 @@ namespace Assistant
 			{
 				m_Items.Remove(item);
 			}
-			catch
-			{ }
+			catch { }
 		}
 
 		internal byte GetPacketFlags()

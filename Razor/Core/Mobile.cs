@@ -45,21 +45,18 @@ namespace Assistant
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
 
 		private List<Item> m_Items;
-		private List<Serial> m_Serials;
-
 		private byte m_Map;
 
 		internal override void AfterLoad()
 		{
-			m_Items = new List<Item>();
-
-			foreach (Serial serial in m_Serials)
+			for (int i = 0; i < m_Items.Count; i++)
 			{
-				Item item = World.FindItem(serial);
+				m_Items[i] = World.FindItem(m_Items[i].Serial);
 
-				if (item != null)
+				if (m_Items[i] == null)
 				{
-					m_Items.Add(item);
+					m_Items.RemoveAt(i);
+					i--;
 				}
 			}
 		}

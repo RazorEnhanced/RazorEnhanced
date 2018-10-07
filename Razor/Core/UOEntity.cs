@@ -74,38 +74,9 @@ namespace Assistant
 			return m_Serial.GetHashCode();
 		}
 
-		internal int OPLHash
-		{
-			get
-			{
-				if (m_ObjPropList != null)
-					return m_ObjPropList.Hash;
-				else
-					return 0;
-			}
-			set
-			{
-				if (m_ObjPropList != null)
-					m_ObjPropList.Hash = value;
-			}
-		}
-
-		internal bool ModifiedOPL { get { return m_ObjPropList.Customized; } }
-
 		internal void ReadPropertyList(PacketReader p)
 		{
 			m_ObjPropList.Read(p);
-		}
-
-		/*public Packet BuildOPLPacket()
-		{
-			return m_ObjPropList.BuildPacket();
-		}*/
-
-		internal void OPLChanged()
-		{
-			//ClientCommunication.SendToClient( m_ObjPropList.BuildPacket() );
-			ClientCommunication.SendToClient(new OPLInfo(Serial, OPLHash));
 		}
 	}
 }
