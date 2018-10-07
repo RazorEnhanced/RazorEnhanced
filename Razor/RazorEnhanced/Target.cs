@@ -152,12 +152,13 @@ namespace RazorEnhanced
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);
 			if (mobile != null)
-				Assistant.Targeting.SetLastTarget(mob.Serial, 0, true);
+				SetLast(mob.Serial);
 		}
 
-		public static void SetLast(int serial)
+		public static void SetLast(int serial, bool wait = true)
 		{
-			Assistant.Targeting.SetLastTarget(serial, 0, true);
+			TargetMessage(serial, wait); // Process message for highlight
+			Assistant.Targeting.SetLastTarget(serial, 0, wait);
 		}
 
 		public static void ClearQueue()
@@ -301,8 +302,6 @@ namespace RazorEnhanced
 				if (mobtarget == null)
 					return;
 
-				TargetMessage(mobtarget.Serial, true); // Process message for highlight
-
 				RazorEnhanced.Target.SetLast(mobtarget);
 			}
 		}
@@ -369,8 +368,6 @@ namespace RazorEnhanced
 
 			if (mobtarget == null)
 				return;
-
-			TargetMessage(mobtarget.Serial, true); // Process message for highlight
 
 			TargetExecute(mobtarget.Serial);
 			SetLast(mobtarget);

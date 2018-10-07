@@ -787,7 +787,7 @@ namespace RazorEnhanced
 		private static void setlastTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			if (serial.IsValid)
-				Target.SetLast(serial);
+				Target.SetLast(serial, false);
 		}
 
 		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
