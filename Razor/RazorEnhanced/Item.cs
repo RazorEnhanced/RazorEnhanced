@@ -769,7 +769,7 @@ namespace RazorEnhanced
 			DragDropManager.HoldingItem = false;
 		}
 
-		public static void DropItemGroundSelf(Item item, int amount)
+		public static void DropItemGroundSelf(Item item, int amount = 0)
 		{
 			if (item == null)
 			{
@@ -784,7 +784,7 @@ namespace RazorEnhanced
 			MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
 		}
 
-		public static void DropItemGroundSelf(int serialitem, int amount)
+		public static void DropItemGroundSelf(int serialitem, int amount = 0)
 		{
 			Item i = FindBySerial(serialitem);
 			DropItemGroundSelf(i, amount);
@@ -840,7 +840,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static bool UseItemByID(int itemid, int color)
+		public static bool UseItemByID(int itemid, int color = -1)
 		{
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter
@@ -1070,7 +1070,7 @@ namespace RazorEnhanced
 		}
 
 		// Count
-		public static int ContainerCount(int serial, int itemid, int color)
+		public static int ContainerCount(int serial, int itemid, int color = -1)
 		{
 			Item container = FindBySerial(serial);
 			if (container != null)
@@ -1082,7 +1082,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static int ContainerCount(Item container, int itemid, int color)
+		public static int ContainerCount(Item container, int itemid, int color = -1)
 		{
 			int count = 0;
 			if (container != null && container.IsContainer)
@@ -1123,7 +1123,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static int BackpackCount(int itemid, int color)
+        public static int BackpackCount(int itemid, int color = -1)
 		{
 			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
 			if (color == -1)
