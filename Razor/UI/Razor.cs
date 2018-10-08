@@ -871,6 +871,8 @@ namespace Assistant
 		private Label label76;
 		private RazorButton graphFilterImportButton;
 		private RazorButton graphFilterExportButton;
+		private RazorButton targetImportButton;
+		private RazorButton targetExportButton;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1599,6 +1601,8 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+			this.targetImportButton = new RazorEnhanced.UI.RazorButton();
+			this.targetExportButton = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -4549,6 +4553,8 @@ namespace Assistant
 			// 
 			// groupBox43
 			// 
+			this.groupBox43.Controls.Add(this.targetImportButton);
+			this.groupBox43.Controls.Add(this.targetExportButton);
 			this.groupBox43.Controls.Add(this.label76);
 			this.groupBox43.Controls.Add(this.targetremoveButton);
 			this.groupBox43.Controls.Add(this.targetaddButton);
@@ -4602,7 +4608,7 @@ namespace Assistant
 			this.targetlistBox.FormattingEnabled = true;
 			this.targetlistBox.Location = new System.Drawing.Point(7, 72);
 			this.targetlistBox.Name = "targetlistBox";
-			this.targetlistBox.Size = new System.Drawing.Size(113, 277);
+			this.targetlistBox.Size = new System.Drawing.Size(113, 251);
 			this.targetlistBox.TabIndex = 0;
 			this.targetlistBox.SelectedIndexChanged += new System.EventHandler(this.targetlistBox_SelectedIndexChanged);
 			// 
@@ -8587,6 +8593,24 @@ namespace Assistant
 			this.openmaplocation.Filter = "Executable Files|*.exe";
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
+			// 
+			// targetImportButton
+			// 
+			this.targetImportButton.Location = new System.Drawing.Point(7, 330);
+			this.targetImportButton.Name = "targetImportButton";
+			this.targetImportButton.Size = new System.Drawing.Size(49, 21);
+			this.targetImportButton.TabIndex = 51;
+			this.targetImportButton.Text = "Import";
+			this.targetImportButton.Click += new System.EventHandler(this.targetImportButton_Click);
+			// 
+			// targetExportButton
+			// 
+			this.targetExportButton.Location = new System.Drawing.Point(71, 329);
+			this.targetExportButton.Name = "targetExportButton";
+			this.targetExportButton.Size = new System.Drawing.Size(49, 21);
+			this.targetExportButton.TabIndex = 50;
+			this.targetExportButton.Text = "Export";
+			this.targetExportButton.Click += new System.EventHandler(this.targetExportButton_Click);
 			// 
 			// MainForm
 			// 
@@ -15611,6 +15635,19 @@ namespace Assistant
 
 			SaveTarget();
 			RazorEnhanced.Target.SetLastTargetFromListHotKey(targetlistBox.SelectedItem.ToString());
+		}
+
+		private void targetImportButton_Click(object sender, EventArgs e)
+		{
+			ImportExport.ImportTargetFilter(targetlistBox);
+		}
+
+		private void targetExportButton_Click(object sender, EventArgs e)
+		{
+			if (targetlistBox.SelectedItem == null || string.IsNullOrEmpty(targetlistBox.SelectedItem.ToString()))
+				return;
+
+			ImportExport.ExportTargetFilter(targetlistBox.SelectedItem.ToString());
 		}
 		// ----------------- STOP TARGET -------------------
 	}

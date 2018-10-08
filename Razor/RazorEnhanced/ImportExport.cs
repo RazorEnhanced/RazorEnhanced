@@ -40,11 +40,13 @@ namespace RazorEnhanced
 					catch
 					{
 						AutoLoot.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					AutoLoot.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("AUTOLOOT_ITEMS"))
 				{
@@ -69,16 +71,19 @@ namespace RazorEnhanced
 					else
 					{
 						AutoLoot.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					AutoLoot.AddLog("This file not contain Autoloot data!");
+					return;
 				}
 			}
 			else
 			{
 				AutoLoot.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -132,6 +137,7 @@ namespace RazorEnhanced
 			else
 			{
 				AutoLoot.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -168,11 +174,13 @@ namespace RazorEnhanced
 					catch
 					{
 						Scavenger.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					Scavenger.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("SCAVENGER_ITEMS"))
 				{
@@ -197,16 +205,19 @@ namespace RazorEnhanced
 					else
 					{
 						Scavenger.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					Scavenger.AddLog("This file not contain Scavenger data!");
+					return;
 				}
 			}
 			else
 			{
 				Scavenger.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -260,6 +271,7 @@ namespace RazorEnhanced
 			else
 			{
 				Scavenger.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -296,11 +308,13 @@ namespace RazorEnhanced
 					catch
 					{
 						Organizer.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					Organizer.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("ORGANIZER_ITEMS"))
 				{
@@ -325,16 +339,19 @@ namespace RazorEnhanced
 					else
 					{
 						Organizer.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					Organizer.AddLog("This file not contain Organizer data!");
+					return;
 				}
 			}
 			else
 			{
 				Organizer.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -383,11 +400,13 @@ namespace RazorEnhanced
 				{
 					Organizer.AddLog("Export list fail");
 					Organizer.AddLog(ex.ToString());
+					return;
 				}
 			}
 			else
 			{
 				Organizer.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -424,11 +443,13 @@ namespace RazorEnhanced
 					catch
 					{
 						SellAgent.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					SellAgent.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("SELL_ITEMS"))
 				{
@@ -453,16 +474,19 @@ namespace RazorEnhanced
 					else
 					{
 						SellAgent.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					SellAgent.AddLog("This file not contain SellAgent data!");
+					return;
 				}
 			}
 			else
 			{
 				SellAgent.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -511,11 +535,13 @@ namespace RazorEnhanced
 				{
 					SellAgent.AddLog("Export list fail");
 					SellAgent.AddLog(ex.ToString());
+					return;
 				}
 			}
 			else
 			{
 				SellAgent.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -551,11 +577,13 @@ namespace RazorEnhanced
 					catch
 					{
 						BuyAgent.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					BuyAgent.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("BUY_ITEMS"))
 				{
@@ -580,16 +608,19 @@ namespace RazorEnhanced
 					else
 					{
 						BuyAgent.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					BuyAgent.AddLog("This file not contain BuyAgent data!");
+					return;
 				}
 			}
 			else
 			{
 				BuyAgent.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -638,11 +669,13 @@ namespace RazorEnhanced
 				{
 					BuyAgent.AddLog("Export list fail");
 					BuyAgent.AddLog(ex.ToString());
+					return;
 				}
 			}
 			else
 			{
 				BuyAgent.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -678,11 +711,13 @@ namespace RazorEnhanced
 					catch
 					{
 						Dress.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					Dress.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("DESS_ITEMS"))
 				{
@@ -707,16 +742,19 @@ namespace RazorEnhanced
 					else
 					{
 						Dress.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					Dress.AddLog("This file not contain Dress data!");
+					return;
 				}
 			}
 			else
 			{
 				Dress.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -765,11 +803,13 @@ namespace RazorEnhanced
 				{
 					Dress.AddLog("Export list fail");
 					Dress.AddLog(ex.ToString());
+					return;
 				}
 			}
 			else
 			{
 				Dress.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -805,11 +845,13 @@ namespace RazorEnhanced
 					catch
 					{
 						Friend.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					Friend.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("FRIEND_PLAYERS"))
 				{
@@ -834,16 +876,19 @@ namespace RazorEnhanced
 					else
 					{
 						Friend.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					Friend.AddLog("This file not contain Restock data!");
+					return;
 				}
 			}
 			else
 			{
 				Friend.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -892,11 +937,13 @@ namespace RazorEnhanced
 				{
 					Friend.AddLog("Export list fail");
 					Friend.AddLog(ex.ToString());
+					return;
 				}
 			}
 			else
 			{
 				Friend.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -932,11 +979,13 @@ namespace RazorEnhanced
 					catch
 					{
 						Restock.AddLog("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					Restock.AddLog("Unable to access file!");
+					return;
 				}
 				if (m_Dataset.Tables.Contains("RESTOCK_ITEMS"))
 				{
@@ -961,16 +1010,19 @@ namespace RazorEnhanced
 					else
 					{
 						Restock.AddLog("This list is empty!");
+						return;
 					}
 				}
 				else
 				{
 					Restock.AddLog("This file not contain Friends data!");
+					return;
 				}
 			}
 			else
 			{
 				Restock.AddLog("Import list cancelled.");
+				return;
 			}
 		}
 
@@ -1019,11 +1071,13 @@ namespace RazorEnhanced
 				{
 					Restock.AddLog("Export list fail");
 					Restock.AddLog(ex.ToString());
+					return;
 				}
 			}
 			else
 			{
 				Restock.AddLog("Export list cancelled.");
+				return;
 			}
 		}
 
@@ -1082,11 +1136,13 @@ namespace RazorEnhanced
 			catch
 			{
 				MessageBox.Show("File is corrupted!");
+				return;
 			}
 
 			if (!m_Dataset.Tables.Contains("GENERAL"))
 			{
 				MessageBox.Show("This file not contain Profile data!");
+				return;
 			}
 			else
 			{
@@ -1128,12 +1184,15 @@ namespace RazorEnhanced
 					catch
 					{
 						MessageBox.Show("File is corrupted!");
+						return;
 					}
 				}
 				else
 				{
 					MessageBox.Show("Unable to access file!");
+					return;
 				}
+
 				if (m_Dataset.Tables.Contains("FILTER_GRAPH"))
 				{
 					m_DatasetTable = m_Dataset.Tables["FILTER_GRAPH"];
@@ -1153,6 +1212,7 @@ namespace RazorEnhanced
 				else
 				{
 					MessageBox.Show("This file not contain Graph Filter data!");
+					return;
 				}
 			}
 		}
@@ -1198,10 +1258,127 @@ namespace RazorEnhanced
 				catch (Exception ex)
 				{
 					MessageBox.Show(ex.ToString(), "Export Graph Filter fail");
+					return;
 				}
 			}
 		}
 
-		////////////// AUTOLOOT END //////////////
+		////////////// GRAPHFILTER END //////////////
+
+
+		////////////// TARGET START //////////////
+		internal static void ImportTargetFilter(ListBox targetlistBox)
+		{
+			DataSet m_Dataset = new DataSet();
+			DataTable m_DatasetTable = new DataTable();
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Target Filter",
+				RestoreDirectory = true
+			};
+
+			if (od.ShowDialog() == DialogResult.OK)
+			{
+				if (File.Exists(od.FileName))
+				{
+					try
+					{
+						m_Dataset.RemotingFormat = SerializationFormat.Binary;
+						m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+						Stream stream = File.Open(od.FileName, FileMode.Open);
+						GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+						BinaryFormatter bin = new BinaryFormatter();
+						m_Dataset = bin.Deserialize(decompress) as DataSet;
+						decompress.Close();
+						stream.Close();
+					}
+					catch
+					{
+						MessageBox.Show("File is corrupted!");
+						return;
+					}
+				}
+				else
+				{
+					MessageBox.Show("Unable to access file!");
+					return;
+				}
+				if (m_Dataset.Tables.Contains("TARGETS"))
+				{
+					m_DatasetTable = m_Dataset.Tables["TARGETS"];
+					if (m_DatasetTable.Rows.Count > 0)
+					{
+						foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+						{
+							if (Settings.Target.TargetExist((string)row["Name"]))
+							{
+								MessageBox.Show("Target Filter: " + (string)row["Name"] + " already exist");
+								return;
+							}
+							else
+								Settings.Target.TargetAdd((string)row["Name"], (TargetGUI.TargetGUIObject)row["TargetGUIObject"], (Keys)row["HotKey"], (bool)row["HotKeyPass"]);
+						}
+						TargetGUI.RefreshTargetShortCut(targetlistBox);
+						HotKey.Init();
+					}
+				}
+				else
+				{
+					MessageBox.Show("This file not contain Target Filter data!");
+					return;
+				}
+			}
+		}
+
+		internal static void ExportTargetFilter(string name)
+		{
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Target Filter List",
+				FileName = "TARG." + name + ".raz",
+				RestoreDirectory = true
+			};
+
+			if (sd.ShowDialog() == DialogResult.OK)
+			{
+				DataSet m_Dataset = new DataSet();
+				DataTable targets = new DataTable("TARGETS");
+				targets.Columns.Add("Name", typeof(string));
+				targets.Columns.Add("TargetGUIObject", typeof(TargetGUI.TargetGUIObject));
+				targets.Columns.Add("HotKey", typeof(Keys));
+				targets.Columns.Add("HotKeyPass", typeof(bool));
+				m_Dataset.Tables.Add(targets);
+				m_Dataset.AcceptChanges();
+
+				DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
+				row["Name"] = name;
+				row["TargetGUIObject"] = Settings.Target.TargetRead(name);
+				row["HotKey"] = Keys.None;
+				row["HotKeyPass"] = true;
+
+				m_Dataset.Tables["TARGETS"].Rows.Add(row);
+
+				try
+				{
+					m_Dataset.RemotingFormat = SerializationFormat.Binary;
+					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+					Stream stream = File.Create(sd.FileName);
+					GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
+					BinaryFormatter bin = new BinaryFormatter();
+					bin.Serialize(compress, m_Dataset);
+					compress.Close();
+					stream.Close();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.ToString(), "Export Target Filter fail");
+					return;
+				}
+			}
+		}
+
+		////////////// TARGET END //////////////
 	}
 }
