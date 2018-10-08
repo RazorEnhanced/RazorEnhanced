@@ -17,6 +17,7 @@ namespace RazorEnhanced
 		private static string m_autolootlist;
 		private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
 		internal static volatile bool LockTable = false;
+		internal static volatile bool NeedItemRefresh = true;
 
 		[Serializable]
 		public class AutoLootItem
@@ -261,7 +262,7 @@ namespace RazorEnhanced
 
 			Settings.Save(); // Salvo dati
 			LockTable = false;
-
+			NeedItemRefresh = true;
 		}
 
 		internal static void AddList(string newList)

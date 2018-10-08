@@ -15,6 +15,7 @@ namespace RazorEnhanced
 		private static int m_scavengerbag;
 		private static string m_scavengerlist;
 		internal static volatile bool LockTable = false;
+		internal static volatile bool NeedItemRefresh = true;
 
 		[Serializable]
 		public class ScavengerItem
@@ -226,6 +227,7 @@ namespace RazorEnhanced
 
 			Settings.Save(); // Salvo dati
 			LockTable = false;
+			NeedItemRefresh = true;
 		}
 
 		internal static void CloneList(string newList)
