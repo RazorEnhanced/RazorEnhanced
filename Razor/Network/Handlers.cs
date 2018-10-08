@@ -184,7 +184,7 @@ namespace Assistant
 				RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);*/
 
 			// if you modify this, don't forget to modify the allnames hotkey
-			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+			if (Engine.MainWindow.LastTargTextFlags.Checked)
 			{
 				Mobile m = World.FindMobile(ser);
 				if (m != null)
@@ -679,10 +679,10 @@ namespace Assistant
 				World.AddItem(i = new Item(serial));
 				i.IsNew = i.AutoStack = true;
 			}
-			else
+		/*	else
 			{
 				i.CancelRemove();
-			}
+			}*/
 
 			if (serial != DragDropManager.Pending)
 			{
@@ -743,10 +743,10 @@ namespace Assistant
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
-				else
+			/*	else
 				{
 					item.CancelRemove();
-				}
+				}*/
 
 				//if ( !DragDropManager.EndHolding( serial ) )
 				//	continue;
@@ -804,10 +804,10 @@ namespace Assistant
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
-				else
+			/*	else
 				{
 					item.CancelRemove();
-				}
+				}*/
 
 				if (!DragDropManager.EndHolding(serial))
 					continue;
@@ -852,10 +852,10 @@ namespace Assistant
 				isNew = true;
 				Item.UpdateContainers();
 			}
-			else
+			/*else
 			{
 				i.CancelRemove();
-			}
+			}*/
 
 			if (!DragDropManager.EndHolding(serial))
 				return;
@@ -1661,9 +1661,9 @@ namespace Assistant
 
 			bool wasHidden = !m.Visible;
 
-			if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowMobNames"))
+			if (m != World.Player && Engine.MainWindow.ShowMobNames.Checked)
 				ClientCommunication.SendToServer(new SingleClick(m));
-			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+			if (Engine.MainWindow.LastTargTextFlags.Checked)
 				Targeting.CheckTextFlags(m);
 
 			int ltHue = Engine.MainWindow.LTHilight;
@@ -1776,7 +1776,7 @@ namespace Assistant
 					}
 					else
 					{
-						i.RemoveRequest();
+						i.Remove();
 					}
 				}
 			}
@@ -1798,10 +1798,10 @@ namespace Assistant
 				World.AddItem(item = new Item(serial & 0x7FFFFFFF));
 				isNew = true;
 			}
-			else
+			/*else
 			{
 				item.CancelRemove();
-			}
+			}*/
 
 			if (!DragDropManager.EndHolding(serial))
 				return;
@@ -1924,10 +1924,10 @@ namespace Assistant
 				World.AddItem(item = new Item(serial));
 				isNew = true;
 			}
-			else
+			/*else
 			{
 				item.CancelRemove();
-			}
+			}*/
 
 			if (!DragDropManager.EndHolding(serial))
 				return;

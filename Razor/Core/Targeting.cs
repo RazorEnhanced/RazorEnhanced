@@ -334,7 +334,7 @@ namespace Assistant
 		internal static bool DoLastTarget()
 		{
 			TargetInfo targ;
-			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+			if (Engine.MainWindow.SmartLastTarget.Checked)
 			{
 				if (m_AllowGround && m_LastGroundTarg != null)
 					targ = m_LastGroundTarg;
@@ -603,7 +603,7 @@ namespace Assistant
 
 		internal static void CheckTextFlags(Mobile m)
 		{
-			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+			if (Engine.MainWindow.SmartLastTarget.Checked)
 			{
 				bool harm = m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial;
 				bool bene = m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial;
@@ -622,7 +622,7 @@ namespace Assistant
 			if (m == null)
 				return false;
 
-			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+			if (Engine.MainWindow.SmartLastTarget.Checked)
 			{
 				if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 					return true;

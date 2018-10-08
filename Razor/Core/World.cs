@@ -90,8 +90,14 @@ namespace Assistant
 		{
 			if (item.IsMulti)
 				RemoveMulti(item);
-			while (m_Items.ContainsKey(item.Serial))
-				m_Items.TryRemove(item.Serial, out Item removed);
+
+			m_Items.TryRemove(item.Serial, out Item removed);
+
+		/*	while (m_Items.ContainsKey(item.Serial))
+			{
+				if (!m_Items.TryRemove(item.Serial, out Item removed))
+					RazorEnhanced.AutoLoot.AddLog("Fail item remove" + item.Name);
+			}*/
 		}
 
 		internal static void RemoveMulti(Item item)

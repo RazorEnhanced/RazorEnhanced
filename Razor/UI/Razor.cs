@@ -747,9 +747,11 @@ namespace Assistant
 		internal RazorCheckBox FilterSnoopMsg { get { return filterSnoop; } }
 		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
 		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
-
 		internal DataGridView GraphFilterDataGrid { get { return graphfilterdatagrid; } }
-
+		internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
+		internal RazorCheckBox LastTargTextFlags { get { return showtargtext; } }
+		internal RazorCheckBox SmartLastTarget { get { return smartLT; } }
+		
 		// Colori override
 		internal int SysColor = 0;
 		internal int WarningColor = 0;

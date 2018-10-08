@@ -451,9 +451,9 @@ namespace Assistant
 			m_Movable = ((flags & 0x20) != 0);
 		}
 
-		private Timer m_RemoveTimer = null;
+		//private Timer m_RemoveTimer = null;
 
-		internal void RemoveRequest()
+	/*	internal void RemoveRequest()
 		{
 			if (m_RemoveTimer == null)
 				m_RemoveTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(0.25), new TimerCallback(Remove));
@@ -461,9 +461,9 @@ namespace Assistant
 				m_RemoveTimer.Stop();
 
 			m_RemoveTimer.Start();
-		}
+		}*/
 
-		internal bool CancelRemove()
+		/*internal bool CancelRemove()
 		{
 			if (m_RemoveTimer != null && m_RemoveTimer.Running)
 			{
@@ -474,7 +474,7 @@ namespace Assistant
 			{
 				return false;
 			}
-		}
+		}*/
 
 		internal override void Remove()
 		{

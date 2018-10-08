@@ -774,6 +774,16 @@ namespace Assistant
 				if (i.RootContainer != World.Player)
 					i.Remove();
 			}
+
+		/*	World.Items.Clear();
+			for (int i = 0; i < Contains.Count; i++)
+			{
+				Item item = (Item)Contains[i];
+				World.AddItem(item);
+				item.Contains.Clear();
+			}*/
+
+
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
 

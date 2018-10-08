@@ -840,7 +840,7 @@ namespace RazorEnhanced
 						if (m != World.Player)
 							ClientCommunication.SendToServer(new SingleClick(m));
 
-						if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+						if (Assistant.Engine.MainWindow.LastTargTextFlags.Checked)
 							Targeting.CheckTextFlags(m);
 					}
 					foreach (Assistant.Item i in World.Items.Values)
@@ -864,7 +864,7 @@ namespace RazorEnhanced
 						if (m != World.Player)
 							ClientCommunication.SendToServer(new SingleClick(m));
 
-						if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+						if (Assistant.Engine.MainWindow.LastTargTextFlags.Checked)
 							Targeting.CheckTextFlags(m);
 					}
 					break;
