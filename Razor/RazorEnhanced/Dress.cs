@@ -236,6 +236,12 @@ namespace RazorEnhanced
 
 		internal static void ReadPlayerDress()
 		{
+			if (World.Player == null) // non loggato
+			{
+				AddLog("You are not logged in game!");
+				return;
+			}
+
 			RazorEnhanced.Settings.Dress.ItemClear(Assistant.Engine.MainWindow.DressListSelect.Text);
 
 			foreach (Layer l in LayerList)
