@@ -92,7 +92,9 @@ namespace Assistant
 				return ImageFormat.Jpeg;
 		}
 
-		internal static void DisplayTo(ListBox list)
+
+		private static readonly Object m_lock = new Object();
+		internal static void DisplayTo(ListBox lb)
 		{
 			string path = RazorEnhanced.Settings.General.ReadString("CapPath");
 			if (!Directory.Exists(path))
@@ -102,26 +104,51 @@ namespace Assistant
 				Assistant.Engine.MainWindow.ScreenPath.Text = path;
 			}
 
-			list.BeginUpdate();
-			list.Items.Clear();
-			AddFiles(list, path, "jpeg");
-			AddFiles(list, path, "jpg");
-			AddFiles(list, path, "png");
-			AddFiles(list, path, "bmp");
-			AddFiles(list, path, "gif");
-			AddFiles(list, path, "tiff");
-			AddFiles(list, path, "tif");
-			AddFiles(list, path, "wmf");
-			AddFiles(list, path, "exif");
-			AddFiles(list, path, "emf");
-			list.EndUpdate();
+			if (lb.InvokeRequired)
+			{
+				lb.Invoke(new MethodInvoker(delegate
+				{
+					lock (m_lock)
+					{
+						lb.BeginUpdate();
+						lb.Items.Clear();
+						AddFiles(lb, path, "jpeg");
+						AddFiles(lb, path, "jpg");
+						AddFiles(lb, path, "png");
+						AddFiles(lb, path, "bmp");
+						AddFiles(lb, path, "gif");
+						AddFiles(lb, path, "tiff");
+						AddFiles(lb, path, "tif");
+						AddFiles(lb, path, "wmf");
+						AddFiles(lb, path, "exif");
+						AddFiles(lb, path, "emf");
+						lb.EndUpdate();
+					}
+				}));
+			}
+			else
+			{
+				lock (m_lock)
+				{
+					lb.BeginUpdate();
+					lb.Items.Clear();
+					AddFiles(lb, path, "jpeg");
+					AddFiles(lb, path, "jpg");
+					AddFiles(lb, path, "png");
+					AddFiles(lb, path, "bmp");
+					AddFiles(lb, path, "gif");
+					AddFiles(lb, path, "tiff");
+					AddFiles(lb, path, "tif");
+					AddFiles(lb, path, "wmf");
+					AddFiles(lb, path, "exif");
+					AddFiles(lb, path, "emf");
+					lb.EndUpdate();
+				}
+			}
 		}
 
 		internal static void AddFiles(ListBox list, string path, string ext)
 		{
-			if (list.Items.Count >= 500)
-				return;
-
 			string[] files = Directory.GetFiles(path, String.Format("*.{0}", ext));
 			for (int i = 0; i < files.Length && list.Items.Count < 500; i++)
 				list.Items.Add(Path.GetFileName(files[i]));

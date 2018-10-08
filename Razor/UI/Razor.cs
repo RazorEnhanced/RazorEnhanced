@@ -9829,6 +9829,9 @@ namespace Assistant
 
 		internal void ReloadScreenShotsList()
 		{
+			if (tabs.SelectedTab != screenshotTab) // No force screen update in not showing tab
+				return;
+
 			ScreenCapManager.DisplayTo(screensList);
 			if (screenPrev.Image != null)
 			{
