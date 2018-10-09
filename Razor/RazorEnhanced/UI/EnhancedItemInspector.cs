@@ -139,10 +139,17 @@ namespace RazorEnhanced.UI
 				lAmount.Text = "1";
 			else
 			{
-				if ((Ultima.TileData.ItemTable[m_itemTarg.ItemID].Flags & Ultima.TileFlag.Generic) != 0)
-					lAmount.Text = m_itemTarg.Amount.ToString();
-				else
+				try // avoid crash if some bad happen in Ultima.dll
+				{
+					if ((Ultima.TileData.ItemTable[m_itemTarg.ItemID].Flags & Ultima.TileFlag.Generic) != 0)
+						lAmount.Text = m_itemTarg.Amount.ToString();
+					else
+						lAmount.Text = "1";
+				}
+				catch
+				{
 					lAmount.Text = "1";
+				}
 			}
 			
 			lLayer.Text = m_itemTarg.Layer.ToString();
