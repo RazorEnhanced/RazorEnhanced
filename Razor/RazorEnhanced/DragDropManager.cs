@@ -83,7 +83,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= AutoLoot.MaxRange && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
+						if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, corpse.Position.X, corpse.Position.Y) <= AutoLoot.MaxRange && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{
