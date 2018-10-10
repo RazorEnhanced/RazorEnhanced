@@ -262,7 +262,7 @@ namespace RazorEnhanced
 			{
 				if (p.Group == GroupType.Mastery || p.Group == GroupType.Bushido || p.Group == GroupType.Ninjitsu)
 				{
-					if (Enum.TryParse<SkillIcon>(Utility.RemoveWhiteSpace(p.Spell), out SkillIcon l))
+					if (Enum.TryParse<SkillIcon>(p.Spell.Replace(" ", ""), out SkillIcon l))
 					{
 						if (ID == l)
 						{

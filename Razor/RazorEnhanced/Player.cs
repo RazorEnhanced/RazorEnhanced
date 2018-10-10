@@ -668,11 +668,9 @@ namespace RazorEnhanced
 			if (World.Player == null || World.Player.SkillEnabled == null)
 				return false;
 
-			string spellname = Utility.RemoveWhiteSpace(spell);
-
-			if (!Enum.TryParse<SkillIcon>(spellname, out SkillIcon l))
+			if (!Enum.TryParse<SkillIcon>(spell.Replace(" ", ""), out SkillIcon l))
 			{
-				Scripts.SendMessageScriptError("Script Error: SpellEnable: Invalid spell name: " + spellname);
+				Scripts.SendMessageScriptError("Script Error: SpellEnable: Invalid spell name: " + spell);
 				return false;
 			}
 

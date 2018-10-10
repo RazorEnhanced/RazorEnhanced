@@ -48,15 +48,15 @@ namespace RazorEnhanced.UI
 
 		internal void UpdateGUI()
 		{
-			portLabel.Text = Assistant.Utility.RemoveWhiteSpace(portLabel.Text);
+			portLabel.Text = portLabel.Text.Replace(" ", "");
 			int port = 2593;
 			Int32.TryParse(portLabel.Text, out port);
 
-			hostLabel.Text = Assistant.Utility.RemoveWhiteSpace(hostLabel.Text);
+			hostLabel.Text = hostLabel.Text.Replace(" ", "");
 
-			RazorEnhanced.Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
+			Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
-			RazorEnhanced.Shard.Read(out List<Shard> shards);
+			Shard.Read(out List<Shard> shards);
 
 			shardlistCombobox.Items.Clear();
 			foreach (Shard shard in shards)
