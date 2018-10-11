@@ -2083,7 +2083,7 @@ namespace RazorEnhanced
 					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe, range);
 					lists.Add(list);
 				}
-				RazorEnhanced.AutoLoot.NeedItemRefresh = true;
+
 				return lists;
 			}
 
@@ -2107,25 +2107,23 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			private static List<RazorEnhanced.AutoLoot.AutoLootItem> m_cacheautolootlist = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
 			internal static List<RazorEnhanced.AutoLoot.AutoLootItem> ItemsRead(string list)
 			{
-				if (!RazorEnhanced.AutoLoot.NeedItemRefresh || RazorEnhanced.AutoLoot.LockTable)
-					return m_cacheautolootlist;
+				List<RazorEnhanced.AutoLoot.AutoLootItem> items = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
 
-				m_cacheautolootlist.Clear();
+				if (RazorEnhanced.AutoLoot.LockTable)
+					return items;
 
 				if (ListExists(list))
 				{
 					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 					{
 						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
-							m_cacheautolootlist.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
+							items.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
 					}
 				}
 
-				RazorEnhanced.AutoLoot.NeedItemRefresh = false;
-				return m_cacheautolootlist;
+				return items;
             }
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse, out int range)
@@ -2253,8 +2251,6 @@ namespace RazorEnhanced
 					lists.Add(list);
 				}
 
-				RazorEnhanced.Scavenger.NeedItemRefresh = true;
-
 				return lists;
 			}
 
@@ -2278,25 +2274,23 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			private static List<RazorEnhanced.Scavenger.ScavengerItem> m_cachescavengerlist = new List<RazorEnhanced.Scavenger.ScavengerItem>();
 			internal static List<RazorEnhanced.Scavenger.ScavengerItem> ItemsRead(string list)
 			{
-				if (!RazorEnhanced.Scavenger.NeedItemRefresh || RazorEnhanced.Scavenger.LockTable)
-					return m_cachescavengerlist;
+				List<RazorEnhanced.Scavenger.ScavengerItem> items = new List<RazorEnhanced.Scavenger.ScavengerItem>();
 
-				m_cachescavengerlist.Clear();
+				if (RazorEnhanced.Scavenger.LockTable)
+					return items;
 
 				if (ListExists(list))
 				{
 					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
 					{
 						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
-							m_cachescavengerlist.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
+							items.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
 					}
 				}
 
-				RazorEnhanced.Scavenger.NeedItemRefresh = false;
-				return m_cachescavengerlist;
+				return items;
             }
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out int range)
