@@ -148,7 +148,7 @@ namespace Assistant
 		{
 			get
 			{
-				if (m_Hits == 0)
+				if (StatsUpdated && m_Hits == 0)
 					return true;
 
 				return m_Body == 402
