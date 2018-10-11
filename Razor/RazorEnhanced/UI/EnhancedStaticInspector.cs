@@ -35,49 +35,52 @@ namespace RazorEnhanced.UI
 			lLandID.Text = "0x" + land.StaticID.ToString("X4");
 			ipLandImg.BackgroundImage = Ultima.Textures.GetTexture(land.StaticID);
 
-			// Land Flag
-			lLandFlagNone.Text = (TileData.LandTable[land.StaticID].Flags == TileFlag.None) ? "Yes" : "No";
-			lLandFlagNone.ForeColor = (TileData.LandTable[land.StaticID].Flags == TileFlag.None) ? Color.Green : Color.Red;
+			try // Necessary if some fail in Ultima.dll
+			{
+				// Land Flag
+				lLandFlagNone.Text = (TileData.LandTable[land.StaticID].Flags == TileFlag.None) ? "Yes" : "No";
+				lLandFlagNone.ForeColor = (TileData.LandTable[land.StaticID].Flags == TileFlag.None) ? Color.Green : Color.Red;
 
-			lLandFlagTranslucent.Text = ((TileData.ItemTable[land.StaticID].Flags & TileFlag.Translucent) != 0)? "Yes" : "No";
-			lLandFlagTranslucent.ForeColor = ((TileData.ItemTable[land.StaticID].Flags & TileFlag.Translucent) != 0) ? Color.Green : Color.Red;
+				lLandFlagTranslucent.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Translucent) != 0) ? "Yes" : "No";
+				lLandFlagTranslucent.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Translucent) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagWall.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wall) != 0) ? "Yes" : "No";
-			lLandFlagWall.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wall) != 0) ? Color.Green : Color.Red;
+				lLandFlagWall.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wall) != 0) ? "Yes" : "No";
+				lLandFlagWall.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wall) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagDamaging.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Damaging) != 0) ? "Yes" : "No";
-			lLandFlagDamaging.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Damaging) != 0) ? Color.Green : Color.Red;
+				lLandFlagDamaging.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Damaging) != 0) ? "Yes" : "No";
+				lLandFlagDamaging.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Damaging) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagImpassable.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Impassable) != 0) ? "Yes" : "No";
-			lLandFlagImpassable.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Impassable) != 0) ? Color.Green : Color.Red;
+				lLandFlagImpassable.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Impassable) != 0) ? "Yes" : "No";
+				lLandFlagImpassable.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Impassable) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagSurface.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Surface) != 0) ? "Yes" : "No";
-			lLandFlagSurface.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Surface) != 0) ? Color.Green : Color.Red;
+				lLandFlagSurface.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Surface) != 0) ? "Yes" : "No";
+				lLandFlagSurface.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Surface) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagBridge.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Bridge) != 0) ? "Yes" : "No";
-			lLandFlagBridge.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Bridge) != 0) ? Color.Green : Color.Red;
+				lLandFlagBridge.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Bridge) != 0) ? "Yes" : "No";
+				lLandFlagBridge.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Bridge) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagWindow.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Window) != 0) ? "Yes" : "No";
-			lLandFlagWindow.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Window) != 0) ? Color.Green : Color.Red;
+				lLandFlagWindow.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Window) != 0) ? "Yes" : "No";
+				lLandFlagWindow.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Window) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagNoShoot.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.NoShoot) != 0) ? "Yes" : "No";
-			lLandFlagNoShoot.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.NoShoot) != 0) ? Color.Green : Color.Red;
+				lLandFlagNoShoot.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.NoShoot) != 0) ? "Yes" : "No";
+				lLandFlagNoShoot.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.NoShoot) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagFoliage.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Foliage) != 0) ? "Yes" : "No";
-			lLandFlagFoliage.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Foliage) != 0) ? Color.Green : Color.Red;
+				lLandFlagFoliage.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Foliage) != 0) ? "Yes" : "No";
+				lLandFlagFoliage.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Foliage) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagHoverOver.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.HoverOver) != 0) ? "Yes" : "No";
-			lLandFlagHoverOver.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.HoverOver) != 0) ? Color.Green : Color.Red;
+				lLandFlagHoverOver.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.HoverOver) != 0) ? "Yes" : "No";
+				lLandFlagHoverOver.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.HoverOver) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagRoof.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Roof) != 0) ? "Yes" : "No";
-			lLandFlagRoof.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Roof) != 0) ? Color.Green : Color.Red;
+				lLandFlagRoof.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Roof) != 0) ? "Yes" : "No";
+				lLandFlagRoof.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Roof) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagDoor.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Door) != 0) ? "Yes" : "No";
-			lLandFlagDoor.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Door) != 0) ? Color.Green : Color.Red;
+				lLandFlagDoor.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Door) != 0) ? "Yes" : "No";
+				lLandFlagDoor.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Door) != 0) ? Color.Green : Color.Red;
 
-			lLandFlagWet.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wet) != 0) ? "Yes" : "No";
-			lLandFlagWet.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wet) != 0) ? Color.Green : Color.Red;
-
+				lLandFlagWet.Text = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wet) != 0) ? "Yes" : "No";
+				lLandFlagWet.ForeColor = ((TileData.LandTable[land.StaticID].Flags & TileFlag.Wet) != 0) ? Color.Green : Color.Red;
+			}
+			catch { }
 			// Static Data
 			m_static = Statics.GetStaticsTileInfo(m_loc.X, m_loc.Y, Player.Map);
 			if (m_static.Count == 0)
