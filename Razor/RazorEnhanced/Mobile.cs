@@ -644,6 +644,35 @@ namespace RazorEnhanced
 			}
 		}
 
+		// wait for stats
+		public static void WaitForStats(Mobile m, int delay) // Delay in MS
+		{
+			WaitForStats(m.Serial, delay);
+		}
+
+		public static void WaitForStats(int mobileserial, int delay) // Delay in MS
+		{
+			Assistant.Mobile m = World.FindMobile(mobileserial);
+
+			if (m == null)
+				return;
+
+			if (m.StatsUpdated)
+				return;
+
+			ClientCommunication.SendToServerWait(new StatusQuery(m.Serial));
+
+			int subdelay = delay;
+
+			while (!m.StatsUpdated)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+				if (subdelay <= 0)
+					break;
+			}
+		}
+
 		public static List<string> GetPropStringList(int serial)
 		{
 			List<string> propstringlist = new List<string>();
