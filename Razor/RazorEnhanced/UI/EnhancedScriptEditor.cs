@@ -149,7 +149,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsSpells =
 			{
-				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.Mastery", "Spells.Interrupt"
+				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.Mastery", "Spells.Interrupt", "Spells.CastLastSpell"
 			};
 
 			string[] methodsMobiles =
@@ -514,6 +514,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Spells.Interrupt()", new string[] { "none" }, "void", "Block current casting action.");
 			descriptionSpells.Add("Spells.Interrupt", tooltip);
+
+			tooltip = new ToolTipDescriptions("Spells.CastLastSpell()", new string[] { "none" }, "void", "Cast Last spell.");
+			descriptionSpells.Add("Spells.CastLastSpell", tooltip);
 
 			#endregion
 

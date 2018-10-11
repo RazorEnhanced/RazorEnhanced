@@ -169,6 +169,17 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static void CastLastSpell(bool wait = true)
+		{
+			if (World.Player.LastSpell != 0)
+			{
+				Spell s = Spell.Get(World.Player.LastSpell);
+
+				if (s != null)
+					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
+			}
+		}
+
 		internal static Assistant.Item FindUsedLayer()
 		{
 			Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shoes);

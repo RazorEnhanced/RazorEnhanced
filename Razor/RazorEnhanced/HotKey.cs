@@ -1427,6 +1427,10 @@ namespace RazorEnhanced
 					}
 					break;
 
+				case "Last Spell":
+					Spells.CastLastSpell(false);
+					break;
+
 				default:
 					break;
 			}
@@ -1680,49 +1684,49 @@ namespace RazorEnhanced
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Magery");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMagery");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Necro
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Necro");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNecro");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Bushido
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Bushido");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsBushido");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Ninjitsu
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Ninjitsu");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNinjitsu");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Spellweaving
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Spellweaving");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsSpellweaving");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Spellweaving
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Mysticism");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMysticism");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[10].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Chivalry
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Chivalry");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsChivalry");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[10].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[11].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Mastery
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Mastery");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMastery");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[11].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[12].Nodes.Add(GenerateNode(keydata));
 
 			// Target
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Target");
