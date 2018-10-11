@@ -89,7 +89,7 @@ namespace Assistant
 
 		internal override void AfterLoad()
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+		/*	for (int i = 0; i < m_Items.Count; i++)
 			{
 				m_Items[i] = World.FindItem(m_Items[i].Serial);
 
@@ -98,7 +98,7 @@ namespace Assistant
 					m_Items.RemoveAt(i);
 					i--;
 				}
-			}
+			}*/
 
 			UpdateContainer();
 		}

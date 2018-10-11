@@ -39,7 +39,9 @@ namespace Assistant
 		private bool m_Paralized;
 		private bool m_Flying;
 
-		private bool m_PropsUpdated;
+		// Stats & Props
+		private bool m_PropsUpdated = false;
+		private bool m_StatsUpdated = false;
 
 		private ushort m_HitsMax, m_Hits;
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
@@ -49,7 +51,7 @@ namespace Assistant
 
 		internal override void AfterLoad()
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			/*for (int i = 0; i < m_Items.Count; i++)
 			{
 				m_Items[i] = World.FindItem(m_Items[i].Serial);
 
@@ -58,7 +60,7 @@ namespace Assistant
 					m_Items.RemoveAt(i);
 					i--;
 				}
-			}
+			}*/
 		}
 
 		internal Mobile(Serial serial)
@@ -99,6 +101,12 @@ namespace Assistant
 		{
 			get { return m_PropsUpdated; }
 			set { m_PropsUpdated = value; }
+		}
+
+		internal bool StatsUpdated
+		{
+			get { return m_StatsUpdated; }
+			set { m_StatsUpdated = value; }
 		}
 
 		internal Direction Direction

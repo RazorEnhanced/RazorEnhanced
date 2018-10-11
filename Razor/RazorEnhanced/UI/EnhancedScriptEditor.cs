@@ -156,7 +156,7 @@ namespace RazorEnhanced.UI
 			{
 				"Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
 				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Select", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
-				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist"
+				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist", "Mobiles.WaitForStats"
 			};
 
 			string[] methodsItems =
@@ -542,8 +542,11 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Mobiles.Message(Mobile or int, int, string)", new string[] { "Mobile MobileIstance or int MobileSerial", "int ColorMessage", "string Message" }, "void", "Display a message with a certain color over a specified mobile");
 			descriptionMobiles.Add("Mobiles.Message", tooltip);
 
-			tooltip = new ToolTipDescriptions("Mobiles.WaitForProps(Mobile or int, int)", new string[] { "Mobile MobileIstance or int MobileSerial", "int TimeoutProps" }, "void", "Wait to retrieves properties of a specific mobile within a certain time");
+			tooltip = new ToolTipDescriptions("Mobiles.WaitForProps(Mobile or int, int)", new string[] { "Mobile MobileIstance or int MobileSerial", "int TimeoutProps" }, "void", "Wait to retrieves properties of a specific mobile within a certain timeout");
 			descriptionMobiles.Add("Mobiles.WaitForProps", tooltip);
+
+			tooltip = new ToolTipDescriptions("Mobiles.WaitForStats(Mobile or int, int)", new string[] { "Mobile MobileIstance or int MobileSerial", "int TimeoutProps" }, "void", "Wait to retrieves stats (Whitout open bar) of a specific mobile within a certain timeout");
+			descriptionMobiles.Add("Mobiles.WaitForStats", tooltip);
 
 			tooltip = new ToolTipDescriptions("Mobiles.GetPropValue(Mobile or int, string)", new string[] { "Mobile MobileIstance or int MobileSerial", "string PropName" }, "int", "Get value of a specific property from a certain mobile");
 			descriptionMobiles.Add("Mobiles.GetPropValue", tooltip);
