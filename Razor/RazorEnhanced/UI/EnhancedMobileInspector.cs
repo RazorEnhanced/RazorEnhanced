@@ -346,7 +346,7 @@ namespace RazorEnhanced.UI
 
 							listBoxAttributes.Items.Add("Max Weight: " + Assistant.World.Player.MaxWeight);
 
-							if (Assistant.World.Player.Expansion >= 6)
+							if (World.Player.Expansion >= 3)
 							{
 								m_ProcessInfo = new Thread(ProcessInfoThread);
 								m_ProcessInfo.Start();
