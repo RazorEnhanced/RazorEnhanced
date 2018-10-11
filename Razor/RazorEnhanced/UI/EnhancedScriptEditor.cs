@@ -149,7 +149,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsSpells =
 			{
-				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.Mastery", "Spells.Interrupt", "Spells.CastLastSpell"
+				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.CastMastery", "Spells.Interrupt", "Spells.CastLastSpell"
 			};
 
 			string[] methodsMobiles =
