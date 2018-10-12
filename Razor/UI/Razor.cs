@@ -8970,7 +8970,7 @@ namespace Assistant
 				DisableTargetGUI();
 
 			// ------------------ HOTKEY --------------------
-			HotKey.Init();
+			//HotKey.Init();
 
 			// ------------------ DPS METER --------------------
 			DPSMeterStopButton.Enabled = DPSMeterPauseButton.Enabled = false;
