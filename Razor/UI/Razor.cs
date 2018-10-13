@@ -1211,6 +1211,8 @@ namespace Assistant
 			this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.targetbodyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox43 = new System.Windows.Forms.GroupBox();
+			this.targetImportButton = new RazorEnhanced.UI.RazorButton();
+			this.targetExportButton = new RazorEnhanced.UI.RazorButton();
 			this.label76 = new System.Windows.Forms.Label();
 			this.targetremoveButton = new RazorEnhanced.UI.RazorButton();
 			this.targetaddButton = new RazorEnhanced.UI.RazorButton();
@@ -1601,8 +1603,6 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-			this.targetImportButton = new RazorEnhanced.UI.RazorButton();
-			this.targetExportButton = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -2224,7 +2224,7 @@ namespace Assistant
 			this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
 			this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.hiddedAutoOpenDoors.TabIndex = 74;
-			this.hiddedAutoOpenDoors.Text = "Disable if hidded";
+			this.hiddedAutoOpenDoors.Text = "Disable if hidden";
 			this.hiddedAutoOpenDoors.CheckedChanged += new System.EventHandler(this.hiddedAutoOpenDoors_CheckedChanged);
 			// 
 			// chkPartyOverhead
@@ -4566,6 +4566,24 @@ namespace Assistant
 			this.groupBox43.TabIndex = 49;
 			this.groupBox43.TabStop = false;
 			this.groupBox43.Text = "Shortcut";
+			// 
+			// targetImportButton
+			// 
+			this.targetImportButton.Location = new System.Drawing.Point(7, 330);
+			this.targetImportButton.Name = "targetImportButton";
+			this.targetImportButton.Size = new System.Drawing.Size(49, 21);
+			this.targetImportButton.TabIndex = 51;
+			this.targetImportButton.Text = "Import";
+			this.targetImportButton.Click += new System.EventHandler(this.targetImportButton_Click);
+			// 
+			// targetExportButton
+			// 
+			this.targetExportButton.Location = new System.Drawing.Point(71, 329);
+			this.targetExportButton.Name = "targetExportButton";
+			this.targetExportButton.Size = new System.Drawing.Size(49, 21);
+			this.targetExportButton.TabIndex = 50;
+			this.targetExportButton.Text = "Export";
+			this.targetExportButton.Click += new System.EventHandler(this.targetExportButton_Click);
 			// 
 			// label76
 			// 
@@ -8593,24 +8611,6 @@ namespace Assistant
 			this.openmaplocation.Filter = "Executable Files|*.exe";
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
-			// 
-			// targetImportButton
-			// 
-			this.targetImportButton.Location = new System.Drawing.Point(7, 330);
-			this.targetImportButton.Name = "targetImportButton";
-			this.targetImportButton.Size = new System.Drawing.Size(49, 21);
-			this.targetImportButton.TabIndex = 51;
-			this.targetImportButton.Text = "Import";
-			this.targetImportButton.Click += new System.EventHandler(this.targetImportButton_Click);
-			// 
-			// targetExportButton
-			// 
-			this.targetExportButton.Location = new System.Drawing.Point(71, 329);
-			this.targetExportButton.Name = "targetExportButton";
-			this.targetExportButton.Size = new System.Drawing.Size(49, 21);
-			this.targetExportButton.TabIndex = 50;
-			this.targetExportButton.Text = "Export";
-			this.targetExportButton.Click += new System.EventHandler(this.targetExportButton_Click);
 			// 
 			// MainForm
 			// 
