@@ -9,7 +9,7 @@
 #include "Obfuscation.h"
 #include <iostream>
 
-#define NO_CHECKSUM_VERSION
+//#define NO_CHECKSUM_VERSION
 
 //*************************************************************************************
 //**************************************Varaibles**************************************
