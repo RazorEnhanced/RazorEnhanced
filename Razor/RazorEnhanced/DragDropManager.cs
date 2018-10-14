@@ -10,7 +10,7 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
 
-		internal static volatile bool HoldingItem = false;
+		internal static volatile int HoldingItem = 0;
 
 		internal static void AutoRun()
 		{

@@ -488,7 +488,7 @@ namespace Assistant
 			if (item != null)
 				iid = item.ItemID.Value;
 
-			RazorEnhanced.DragDropManager.HoldingItem = true;
+			RazorEnhanced.DragDropManager.HoldingItem = serial;
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 			{
 				if (item == null)
@@ -504,10 +504,10 @@ namespace Assistant
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.DragDropManager.HoldingItem = false;
+			RazorEnhanced.DragDropManager.HoldingItem = 0;
 
-			if (RazorEnhanced.AutoLoot.AutoMode)
-				args.Block = true;
+		/*	if (RazorEnhanced.AutoLoot.AutoMode)
+				args.Block = true;*/
 
 			if (!DragDropManager.LiftReject())
 			{
@@ -517,12 +517,12 @@ namespace Assistant
 
 		private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.DragDropManager.HoldingItem = false;
+		//	RazorEnhanced.DragDropManager.HoldingItem = true;
 		}
 
 		private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.DragDropManager.HoldingItem = false;
+			RazorEnhanced.DragDropManager.HoldingItem = 0;
 		}
 
 		private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -533,24 +533,23 @@ namespace Assistant
 
 			Item item = World.FindItem(iser);
 
-			if (item == null)
+		/*	if (item == null)
+			{
+				RazorEnhanced.AutoLoot.AddLog("null item");
 				return;
+			}*/
 
 			Mobile m = World.FindMobile(mser);
 			if (m == null)
 				return;
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-				RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
+				RazorEnhanced.ScriptRecorder.Record_EquipRequest(iser, layer, m);
 
-			RazorEnhanced.DragDropManager.HoldingItem = false;
+			RazorEnhanced.DragDropManager.HoldingItem = mser;
 
-			// Aggiornamento icone spellgrid
-			if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
-				RazorEnhanced.SpellGrid.UpdateSAIcon();
-
-			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-				args.Block = DragDropManager.Drop(item, m, layer);
+		if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+				args.Block = DragDropManager.Drop(iser, m, layer);
 		}
 
 		private static void DropRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -567,8 +566,6 @@ namespace Assistant
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_DropRequest(iser, dser);
-
-			RazorEnhanced.DragDropManager.HoldingItem = false;
 
 			Item i = World.FindItem(iser);
 			if (i == null)

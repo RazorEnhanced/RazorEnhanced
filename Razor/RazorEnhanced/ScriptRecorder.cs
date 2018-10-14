@@ -213,12 +213,20 @@ namespace RazorEnhanced
 			}
         }
 
-		internal static void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
+/*		internal static void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
 		{
 			if (m == World.Player)
 				AddLog("Player.EquipItem(0x"+ item.Serial.Value.ToString("X8") + ")");
 			else
 				AddLog("Player.UnEquipItemByLayer("+ l.ToString() + ")");
+		}*/
+
+		internal static void Record_EquipRequest(int ser, Assistant.Layer l, Assistant.Mobile m)
+		{
+			if (m == World.Player)
+				AddLog("Player.EquipItem(0x" + ser.ToString("X8") + ")");
+			else
+				AddLog("Player.UnEquipItemByLayer(" + l.ToString() + ")");
 		}
 
 		internal static void Record_RenameMobile(int serial, string name)
