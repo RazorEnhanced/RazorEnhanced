@@ -273,41 +273,45 @@ namespace RazorEnhanced
 
 		internal static int UndressEngine(int mseconds, int undressbagserial)
 		{
-			List<int> itemtoundress = new List<int>();
-			List<ushort> layertoundress = new List<ushort>();
-
-			foreach (Layer l in LayerList)
+			try
 			{
-				Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
-				if (itemtomove != null && itemtomove.Movable)
-				{
-					layertoundress.Add((ushort)l);
-					itemtoundress.Add(itemtomove.Serial);
-				}
-			}
+				List<int> itemtoundress = new List<int>();
+				List<ushort> layertoundress = new List<ushort>();
 
-			if (itemtoundress.Count > 0 )
-			{
-				if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
+				foreach (Layer l in LayerList)
 				{
-					RazorEnhanced.Dress.AddLog("UnDressing...");
-					ClientCommunication.SendToServerWait(new UnEquipItemMacro(layertoundress));
-				}
-				else
-				{
-					foreach (int serial in itemtoundress)
+					Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
+					if (itemtomove != null && itemtomove.Movable)
 					{
-						Dress.AddLog("Item 0x" + serial.ToString("X8") + " undressed!");
-						Items.Move(serial, undressbagserial, 0);
-						Thread.Sleep(mseconds);
+						layertoundress.Add((ushort)l);
+						itemtoundress.Add(itemtomove.Serial);
 					}
 				}
 
+				if (itemtoundress.Count > 0)
+				{
+					if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
+					{
+						RazorEnhanced.Dress.AddLog("UnDressing...");
+						ClientCommunication.SendToServerWait(new UnEquipItemMacro(layertoundress));
+					}
+					else
+					{
+						foreach (int serial in itemtoundress)
+						{
+							Dress.AddLog("Item 0x" + serial.ToString("X8") + " undressed!");
+							Items.Move(serial, undressbagserial, 0);
+							Thread.Sleep(mseconds);
+						}
+					}
+
+				}
+				if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+					Misc.SendMessage("Enhanced UnDress: Finish!", false);
+				Engine.MainWindow.UndressFinishWork();
+				Dress.AddLog("Finish!");
 			}
-			Dress.AddLog("Finish!");
-			if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-				Misc.SendMessage("Enhanced UnDress: Finish!", false);
-			Engine.MainWindow.UndressFinishWork();
+			catch { }
 			return 0;
 		}
 
@@ -348,18 +352,37 @@ namespace RazorEnhanced
 				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			int exit = UndressEngine(m_dressdelay, m_dressbag);
+			UndressEngine(m_dressdelay, m_dressbag);
 		}
 
 		private static Thread m_UndressThread;
 
 		internal static void UndressStart()
 		{
-			if (m_UndressThread == null ||
-						(m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Running &&
-						m_UndressThread.ThreadState != ThreadState.Unstarted &&
-						m_UndressThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+			// We have an existing thread that we need to examine and determine disposition
+			// Cannot do delays or WaitSleepJoin because it will lock up UI
+			if (m_UndressThread != null)
+			{
+				// We can only allow 1 thread to run at a time otherwise it will cause conflicts.
+				switch (m_UndressThread.ThreadState)
+				{
+					case ThreadState.Aborted:
+					case ThreadState.Unstarted:
+					case ThreadState.Stopped:
+
+					// Calculated risk here; usually unsafe and can leak memory, but we will accept risk here
+					case ThreadState.AbortRequested:
+					case ThreadState.StopRequested:
+						m_UndressThread = null;
+						break;
+
+					default:
+						// If thread is running or in WaitSleepJoin, make user wait and try again
+						return;
+				}
+			}
+
+			if (m_UndressThread == null)
 			{
 				try
 				{
@@ -372,181 +395,211 @@ namespace RazorEnhanced
 
 		// Dress
 
-		internal static int DressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial, bool conflict)
+		internal static void DressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial, bool conflict)
 		{
-			if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
+			try
 			{
-				List<uint> itemserial = new List<uint>();
-
-				foreach (DressItemNew oggettolista in items)
-					itemserial.Add((uint)oggettolista.Serial);
-
-				if (itemserial.Count > 0)
+				if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
 				{
-					RazorEnhanced.Dress.AddLog("Dressing...");
-					ClientCommunication.SendToServerWait(new EquipItemMacro(itemserial));
-				}
-			}
-			else
-			{
-				foreach (DressItemNew oggettolista in items)
-				{
-					if (!oggettolista.Selected)
-						continue;
+					List<uint> itemserial = new List<uint>();
 
-					if (oggettolista.Name == "UNDRESS")          // Caso undress slot
+					foreach (DressItemNew oggettolista in items)
+						itemserial.Add((uint)oggettolista.Serial);
+
+					if (itemserial.Count > 0)
 					{
-						Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(oggettolista.Layer);
-
-						if (itemtomove == null)
-							continue;
-
-						if (!itemtomove.Movable)
-							continue;
-
-						RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + oggettolista.Layer.ToString() + " undressed!");
-						RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
-						Thread.Sleep(mseconds);
+						RazorEnhanced.Dress.AddLog("Dressing...");
+						ClientCommunication.SendToServerWait(new EquipItemMacro(itemserial));
 					}
-					else
+				}
+				else
+				{
+					foreach (DressItemNew oggettolista in items)
 					{
-						if (World.FindItem(oggettolista.Serial) == null)
+						if (!oggettolista.Selected)
 							continue;
 
-						if (conflict)       // Caso abilitato controllo conflitto
+						if (oggettolista.Name == "UNDRESS")          // Caso undress slot
 						{
-							Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(oggettolista.Serial).Layer);
-							if (itemonlayer != null)
-								if (itemonlayer.Serial == oggettolista.Serial)
-									continue;
-
-							if (World.FindItem(oggettolista.Serial).Layer == Layer.RightHand || World.FindItem(oggettolista.Serial).Layer == Layer.LeftHand)        // Check armi per controlli twohand
-							{
-								Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
-								Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
-
-								if (Assistant.World.FindItem(oggettolista.Serial).IsTwoHanded)
-								{
-									if (lefth != null && lefth.Movable)
-									{
-										RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
-										RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
-										Thread.Sleep(mseconds);
-									}
-									if (righth != null && righth.Movable)
-									{
-										RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
-										RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
-										Thread.Sleep(mseconds);
-									}
-								}
-								else if ((lefth != null && lefth.IsTwoHanded) || (righth != null && righth.IsTwoHanded))
-								{
-									if (lefth != null && lefth.Movable)
-									{
-										RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
-										RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
-										Thread.Sleep(mseconds);
-									}
-									if (righth != null && righth.Movable)
-									{
-										RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
-										RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
-										Thread.Sleep(mseconds);
-									}
-								}
-							}
-
 							Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(oggettolista.Layer);
-							if (itemtomove != null)
-							{
-								if (itemtomove.Serial == oggettolista.Serial)
-									continue;
 
-								if (!itemtomove.Movable)
-									continue;
+							if (itemtomove == null)
+								continue;
 
-								RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + oggettolista.Layer.ToString() + " undressed!");
-								RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
-								Thread.Sleep(mseconds);
-								RazorEnhanced.Player.EquipItem(oggettolista.Serial);
-								RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " Equipped on layer: " + oggettolista.Layer.ToString());
-								Thread.Sleep(mseconds);
-							}
-							else
-							{
-								RazorEnhanced.Player.EquipItem(oggettolista.Serial);
-								RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " Equipped on layer: " + oggettolista.Layer.ToString());
-								Thread.Sleep(mseconds);
-							}
+							if (!itemtomove.Movable)
+								continue;
+
+							RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + oggettolista.Layer.ToString() + " undressed!");
+							RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
+							Thread.Sleep(mseconds);
 						}
 						else
 						{
-							Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(oggettolista.Layer);
-							if (itemtomove != null)
+							if (World.FindItem(oggettolista.Serial) == null)
 								continue;
 
-							RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " Equipped on layer: " + oggettolista.Layer.ToString());
-							RazorEnhanced.Player.EquipItem(oggettolista.Serial);
-							Thread.Sleep(mseconds);
+							if (conflict)       // Caso abilitato controllo conflitto
+							{
+								Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(oggettolista.Serial).Layer);
+								if (itemonlayer != null)
+									if (itemonlayer.Serial == oggettolista.Serial)
+										continue;
+
+								if (World.FindItem(oggettolista.Serial).Layer == Layer.RightHand || World.FindItem(oggettolista.Serial).Layer == Layer.LeftHand)        // Check armi per controlli twohand
+								{
+									Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+									Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+
+									if (Assistant.World.FindItem(oggettolista.Serial).IsTwoHanded)
+									{
+										if (lefth != null && lefth.Movable)
+										{
+											RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
+											RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
+											Thread.Sleep(mseconds);
+										}
+										if (righth != null && righth.Movable)
+										{
+											RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
+											RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
+											Thread.Sleep(mseconds);
+										}
+									}
+									else if ((lefth != null && lefth.IsTwoHanded) || (righth != null && righth.IsTwoHanded))
+									{
+										if (lefth != null && lefth.Movable)
+										{
+											RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
+											RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
+											Thread.Sleep(mseconds);
+										}
+										if (righth != null && righth.Movable)
+										{
+											RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
+											RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
+											Thread.Sleep(mseconds);
+										}
+									}
+								}
+
+								Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(oggettolista.Layer);
+								if (itemtomove != null)
+								{
+									if (itemtomove.Serial == oggettolista.Serial)
+										continue;
+
+									if (!itemtomove.Movable)
+										continue;
+
+									RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + oggettolista.Layer.ToString() + " undressed!");
+									RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
+									Thread.Sleep(mseconds);
+									RazorEnhanced.Player.EquipItem(oggettolista.Serial);
+									RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " Equipped on layer: " + oggettolista.Layer.ToString());
+									Thread.Sleep(mseconds);
+								}
+								else
+								{
+									RazorEnhanced.Player.EquipItem(oggettolista.Serial);
+									RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " Equipped on layer: " + oggettolista.Layer.ToString());
+									Thread.Sleep(mseconds);
+								}
+							}
+							else
+							{
+								Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(oggettolista.Layer);
+								if (itemtomove != null)
+									continue;
+
+								RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " Equipped on layer: " + oggettolista.Layer.ToString());
+								RazorEnhanced.Player.EquipItem(oggettolista.Serial);
+								Thread.Sleep(mseconds);
+							}
 						}
 					}
 				}
+				RazorEnhanced.Dress.AddLog("Finish!");
+				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+					RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+				Assistant.Engine.MainWindow.UndressFinishWork();
 			}
-			RazorEnhanced.Dress.AddLog("Finish!");
-			if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
-			Assistant.Engine.MainWindow.UndressFinishWork();
-			return 0;
+
+			catch { }
 		}
 
 		internal static void DressEngine()
 		{
-			List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
-
-			// Check bag
-			Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
-			if (bag == null)
+			try
 			{
-				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
-				AddLog("Invalid Bag, Switch to backpack");
-				DressBag = (int)World.Player.Backpack.Serial.Value;
-			}
+				List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
 
-			int exit = DressEngine(items, m_dressdelay, m_dressbag, m_dressconflict);
+				// Check bag
+				Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
+				if (bag == null)
+				{
+					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+						Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+					AddLog("Invalid Bag, Switch to backpack");
+					DressBag = (int)World.Player.Backpack.Serial.Value;
+				}
+
+				DressEngine(items, m_dressdelay, m_dressbag, m_dressconflict);
+			}
+			catch { }
 		}
 
 		private static Thread m_DressThread;
 
 		internal static void DressStart()
 		{
-			if (m_DressThread == null ||
-						(m_DressThread != null && m_DressThread.ThreadState != ThreadState.Running &&
-						m_DressThread.ThreadState != ThreadState.Unstarted &&
-						m_DressThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+			// We have an existing thread that we need to examine and determine disposition
+			// Cannot do delays or WaitSleepJoin because it will lock up UI
+			if (m_DressThread != null)
 			{
-				try
+				// We can only allow 1 thread to run at a time otherwise it will cause conflicts.
+				switch (m_DressThread.ThreadState)
 				{
-					m_DressThread = new Thread(Dress.DressEngine);
-					m_DressThread.Start();
+					case ThreadState.Aborted:
+					case ThreadState.Unstarted:
+					case ThreadState.Stopped:
+
+					// Calculated risk here; usually unsafe and can leak memory, but we will accept risk here
+					case ThreadState.AbortRequested:
+					case ThreadState.StopRequested:
+						m_DressThread = null;
+						break;
+
+					default:
+						// If thread is running or in WaitSleepJoin, make user wait and try again
+						return;
 				}
-				catch { }
+			}
+			if (m_DressThread == null)
+			{
+				m_DressThread = new Thread(Dress.DressEngine);
+				m_DressThread.Start();
 			}
 		}
 
 		internal static void ForceStop()
 		{
-			if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
+			if (m_DressThread != null)
 			{
-				try { m_DressThread.Abort(); }
-				catch { }
+				try
+				{
+					m_DressThread.Abort();
+				}
+				catch
+				{ }
 			}
-			if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
+			if (m_UndressThread != null)
 			{
-				try { m_UndressThread.Abort(); }
-				catch { }
+				try
+				{
+					m_UndressThread.Abort();
+				}
+				catch
+				{ }
 			}
 		}
 
