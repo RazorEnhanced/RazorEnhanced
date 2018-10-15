@@ -226,47 +226,7 @@ namespace Assistant
 			ActionQueue.SignalLift(!fromClient);
 			return lr.Id;
 		}
-		internal static bool Drop(Serial i, Mobile to, Layer layer)
-		{
-			if (m_Pending == i)
-			{
-				Log("Equipping {0} to {1} (@{2})", i, to.Serial, layer);
-				ClientCommunication.SendToServer(new EquipRequest(i, to, layer));
-				m_Pending = Serial.Zero;
-				m_Lifted = DateTime.MinValue;
-				return true;
-			}
-			else
-			{
-				bool add = false;
 
-				for (byte j = m_Front; j != m_Back && !add; j++)
-				{
-					if (m_LiftReqs[j] != null && m_LiftReqs[j].Serial == i)
-					{
-						add = true;
-						break;
-					}
-				}
-
-				if (add)
-				{
-					Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
-
-					if (!m_DropReqs.ContainsKey(i))
-						m_DropReqs.Add(i, new Queue<DropReq>());
-
-					Queue<DropReq> q = m_DropReqs[i];
-					q.Enqueue(new DropReq(to == null ? Serial.Zero : to.Serial, layer));
-					return true;
-				}
-				else
-				{
-					Log("Drop/Equip for {0} (to {1} (@{2})) not found, skipped", i, to == null ? Serial.Zero : to.Serial, layer);
-					return false;
-				}
-			}
-		}
 		internal static bool Drop(Item i, Mobile to, Layer layer)
 		{
 			if (m_Pending == i.Serial)

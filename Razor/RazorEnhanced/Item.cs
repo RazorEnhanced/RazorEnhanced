@@ -685,18 +685,6 @@ namespace RazorEnhanced
 
 		public static void Move(int source, int destination, int amount, int x, int y)
 		{
-			int holdtimeout = 1000;
-			while (DragDropManager.HoldingItem != 0) // wait if holding a item to prevent double drag and crash client.
-			{
-				holdtimeout -= 10;
-				Thread.Sleep(10);
-				if (holdtimeout < 0)
-				{
-					Assistant.ClientCommunication.SendToServerWait(new DropRequest(DragDropManager.HoldingItem, Assistant.Point3D.MinusOne, Player.Backpack.Serial));
-					DragDropManager.HoldingItem = 0;
-				}
-			}
-
 			Assistant.Item bag = Assistant.World.FindItem(destination);
 			Assistant.Item item = Assistant.World.FindItem(source);
 			int serialdestination = 0;
@@ -731,9 +719,11 @@ namespace RazorEnhanced
 
 			if (amount == 0)
 			{
-				DragDropManager.HoldingItem = item.Serial;
+				DragDropManager.HoldingItem = true;
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				Thread.Sleep(80);
 				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+				DragDropManager.HoldingItem = false;
 			}
 			else
 			{
@@ -741,9 +731,11 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
-				DragDropManager.HoldingItem = item.Serial;
+				DragDropManager.HoldingItem = true;
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
+				Thread.Sleep(80);
 				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+				DragDropManager.HoldingItem = false;
 			}
 		}
 
@@ -754,18 +746,6 @@ namespace RazorEnhanced
 
         public static void MoveOnGround(int source, int amount, int x, int y, int z)
 		{
-			int holdtimeout = 1000;
-			while (DragDropManager.HoldingItem != 0) // wait if holding a item to prevent double drag and crash client.
-			{
-				holdtimeout -= 10;
-				Thread.Sleep(10);
-				if (holdtimeout < 0)
-				{
-					Assistant.ClientCommunication.SendToServerWait(new DropRequest(DragDropManager.HoldingItem, Assistant.Point3D.MinusOne, Player.Backpack.Serial));
-					DragDropManager.HoldingItem = 0;
-				}
-			}
-
 			Assistant.Item item = Assistant.World.FindItem(source);
 
 			if (item == null)
@@ -782,9 +762,11 @@ namespace RazorEnhanced
 			if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-			DragDropManager.HoldingItem = item.Serial;
+			DragDropManager.HoldingItem = true;
 			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
+			Thread.Sleep(80);
 			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
+			DragDropManager.HoldingItem = false;
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount = 0)

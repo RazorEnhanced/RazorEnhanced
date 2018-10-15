@@ -11106,6 +11106,7 @@ namespace Assistant
 
 				AutoLoot.ResetIgnore();
 				AutoLoot.AutoMode = true;
+				RazorEnhanced.DragDropManager.HoldingItem = false;
 				AutoLoot.AddLog("Autoloot Engine Start...");
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("AUTOLOOT: Engine Start...", false);
@@ -11123,6 +11124,7 @@ namespace Assistant
 
 				// Stop autoloot
 				AutoLoot.AutoMode = false;
+				RazorEnhanced.DragDropManager.HoldingItem = false;
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("AUTOLOOT: Engine Stop...", false);
 				AutoLoot.AddLog("Autoloot Engine Stop...");
@@ -11456,6 +11458,7 @@ namespace Assistant
 				Scavenger.ResetIgnore();
 				Scavenger.AutoMode = true;
 				Scavenger.AddLog("Scavenger Engine Start...");
+				RazorEnhanced.DragDropManager.HoldingItem = false;
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("SCAVENGER: Engine Start...", false);
 			}
@@ -11472,6 +11475,7 @@ namespace Assistant
 
 				Scavenger.AutoMode = false;
 				Scavenger.AddLog("Scavenger Engine Stop...");
+				RazorEnhanced.DragDropManager.HoldingItem = false;
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("SCAVENGER: Engine Stop...", false);
 			}
