@@ -343,7 +343,6 @@ namespace RazorEnhanced
 						m_RestockThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 			{
-				RazorEnhanced.DragDropManager.HoldingItem = false;
 				m_RestockThread = new Thread(Restock.Engine);
 				m_RestockThread.Start();
 			}
@@ -353,7 +352,6 @@ namespace RazorEnhanced
 		{
 			if (Status())
 			{
-				RazorEnhanced.DragDropManager.HoldingItem = false;
 				m_RestockThread.Abort();
 			}
 		}

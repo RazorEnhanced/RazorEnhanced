@@ -19,25 +19,18 @@ namespace RazorEnhanced
 
 		internal static void Record_ClientDoubleClick(Assistant.Serial ser)
 		{
-			int serint = ser;
 			if (ser.IsItem)
-				AddLog("Items.UseItem(0x" + serint.ToString("X8") + ")");
+				AddLog("Items.UseItem(0x" + ser.Value.ToString("X8") + ")");
 			else
-				AddLog("Mobiles.UseMobile(0x" + serint.ToString("X8") + ")");
+				AddLog("Mobiles.UseMobile(0x" + ser.Value.ToString("X8") + ")");
 		}
 
-		internal static void Record_DropRequest(Assistant.Serial i, Assistant.Serial dest)
+		internal static void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
 		{
-			int iint = i;
-			int destint = dest;
-			Assistant.Item item = Assistant.World.FindItem(i);
-			if (item != null)
-			{
-				if (dest != 0xFFFFFFFF)
-					AddLog("Items.Move(0x" + iint.ToString("X8") + ", 0x" + destint.ToString("X8") + ", " + item.Amount + ")");
-				else
-					AddLog("Items.DropItemGroundSelf(0x" + iint.ToString("X8") + ", " + item.Amount + ")");
-			}
+			if (dest != 0xFFFFFFFF)
+				AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
+			else
+				AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");	
 		}
 
 		/*internal static void Record_ClientSingleClick(Assistant.Serial ser)

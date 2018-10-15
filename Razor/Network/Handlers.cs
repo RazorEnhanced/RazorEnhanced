@@ -56,8 +56,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(BeginContainerContent));
 			PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
-			PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
-			PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
+			//PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
+			//PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
 			PacketHandler.RegisterServerToClientViewer(0x2D, new PacketViewerCallback(MobileStatInfo));
 			PacketHandler.RegisterServerToClientFilter(0x2E, new PacketFilterCallback(EquipmentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
@@ -488,7 +488,6 @@ namespace Assistant
 			if (item != null)
 				iid = item.ItemID.Value;
 
-			RazorEnhanced.DragDropManager.HoldingItem = true;
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 			{
 				if (item == null)
@@ -504,26 +503,21 @@ namespace Assistant
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.DragDropManager.HoldingItem = false;
-
-			if (RazorEnhanced.AutoLoot.AutoMode)
-				args.Block = true;
-
 			if (!DragDropManager.LiftReject())
 			{
 				args.Block = true;
 			}
 		}
 
-		private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
+	/*	private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.DragDropManager.HoldingItem = false;
-		}
+			RazorEnhanced.DragDropManager.HoldingItem = true;
+		}*/
 
-		private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
+	/*	private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
 		{
 			RazorEnhanced.DragDropManager.HoldingItem = false;
-		}
+		}*/
 
 		private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -534,7 +528,10 @@ namespace Assistant
 			Item item = World.FindItem(iser);
 
 			if (item == null)
-				return;
+			{
+				World.AddItem(item = new Item(iser));
+				item.Layer = layer;
+			}
 
 			Mobile m = World.FindMobile(mser);
 			if (m == null)
@@ -542,8 +539,6 @@ namespace Assistant
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
-
-			RazorEnhanced.DragDropManager.HoldingItem = false;
 
 			// Aggiornamento icone spellgrid
 			if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
@@ -565,14 +560,14 @@ namespace Assistant
 			Point3D newPos = new Point3D(x, y, z);
 			Serial dser = p.ReadUInt32();
 
-			if (RazorEnhanced.ScriptRecorder.OnRecord)
-				RazorEnhanced.ScriptRecorder.Record_DropRequest(iser, dser);
-
-			RazorEnhanced.DragDropManager.HoldingItem = false;
-
 			Item i = World.FindItem(iser);
 			if (i == null)
-				return;
+			{
+				World.AddItem(i = new Item(dser));
+			}
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
 
 			Item dest = World.FindItem(dser);
 			if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))

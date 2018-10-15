@@ -719,11 +719,8 @@ namespace RazorEnhanced
 
 			if (amount == 0)
 			{
-				DragDropManager.HoldingItem = true;
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Thread.Sleep(80);
 				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-				DragDropManager.HoldingItem = false;
 			}
 			else
 			{
@@ -731,11 +728,8 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
-				DragDropManager.HoldingItem = true;
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Thread.Sleep(80);
 				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-				DragDropManager.HoldingItem = false;
 			}
 		}
 
@@ -762,11 +756,8 @@ namespace RazorEnhanced
 			if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-			DragDropManager.HoldingItem = true;
 			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
-			Thread.Sleep(80);
 			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
-			DragDropManager.HoldingItem = false;
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount = 0)

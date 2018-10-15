@@ -358,7 +358,6 @@ namespace RazorEnhanced
 						m_OrganizerThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 			{
-				RazorEnhanced.DragDropManager.HoldingItem = false;
 				m_OrganizerThread = new Thread(Organizer.Engine);
 				m_OrganizerThread.Start();
 			}
@@ -368,7 +367,6 @@ namespace RazorEnhanced
 		{
 			if (Status())
 			{
-				RazorEnhanced.DragDropManager.HoldingItem = false;
 				m_OrganizerThread.Abort();
 			}
 		}
