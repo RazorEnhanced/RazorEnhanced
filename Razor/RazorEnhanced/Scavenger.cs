@@ -329,6 +329,14 @@ namespace RazorEnhanced
 			if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
 				return;
 
+			if (ClientCommunication.ServerEncrypted) // Check For Osi Locked item
+			{
+				if (Items.GetPropValue(itemGround, "Locked Down") > 0)
+					return;
+				if (Items.GetPropValue(itemGround, "Locked Down & Secure") > 0)
+					return;
+			}
+
 			if (scavengerItem.Properties.Count > 0) // Item con props
 			{
 				Items.WaitForProps(itemGround, 1000);
