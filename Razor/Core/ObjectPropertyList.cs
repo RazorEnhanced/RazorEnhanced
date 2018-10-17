@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Assistant
 {
@@ -44,20 +42,7 @@ namespace Assistant
 		private List<OPLEntry> m_Content = new List<OPLEntry>();
 		internal List<OPLEntry> Content { get { return m_Content; } }
 
-		private int m_CustomHash = 0;
-		private List<OPLEntry> m_CustomContent = new List<OPLEntry>();
-
 		private UOEntity m_Owner = null;
-
-		internal int Hash
-		{
-			get { return m_Hash ^ m_CustomHash; }
-			set { m_Hash = value; }
-		}
-
-		internal int ServerHash { get { return m_Hash; } }
-
-		internal bool Customized { get { return m_CustomHash != 0; } }
 
 		internal ObjectPropertyList(UOEntity owner)
 		{
@@ -98,44 +83,7 @@ namespace Assistant
 				else
 					m_Content.Add(new OPLEntry(num, args));
 			}
-
-			foreach (OPLEntry ent in m_CustomContent)
-			{
-				if (m_StringNums.Contains(ent.Number))
-				{
-					m_StringNums.Remove(ent.Number);
-				}
-				else
-				{
-					foreach (int t in m_DefaultStringNums)
-					{
-						if (ent.Number == t)
-						{
-							ent.Number = GetStringNumber();
-							break;
-						}
-					}
-				}
-			}
 		}
-
-		private static byte[] m_Buffer = new byte[0];
-
-		internal void AddHash(int val)
-		{
-			m_CustomHash ^= (val & 0x3FFFFFF);
-			m_CustomHash ^= (val >> 26) & 0x3F;
-		}
-
-		internal void Add(int number, string arguments)
-		{
-			if (number == 0)
-				return;
-
-			AddHash(number);
-			m_CustomContent.Add(new OPLEntry(number, arguments));
-		}
-
 
 		private static int[] m_DefaultStringNums = new int[]
 		{
@@ -149,85 +97,5 @@ namespace Assistant
 			//1062613, // "~1_NAME~" (orange)
 			//1049644, // [~1_stuff~]
 		};
-
-		private int GetStringNumber()
-		{
-			if (m_StringNums.Count > 0)
-			{
-				int num = (int)m_StringNums[0];
-				m_StringNums.RemoveAt(0);
-				return num;
-			}
-			else
-			{
-				return 1049644;
-			}
-		}
-
-		private const string RazorHTMLFormat = " <CENTER><BASEFONT COLOR=#FF0000>{0}</BASEFONT></CENTER> ";
-
-		internal void Add(string text)
-		{
-			Add(GetStringNumber(), String.Format(RazorHTMLFormat, text));
-		}
-
-
-		internal bool Remove(string str)
-		{
-			string htmlStr = String.Format(RazorHTMLFormat, str);
-
-			/*for ( int i = 0; i < m_Content.Count; i++ )
-			{
-				OPLEntry ent = (OPLEntry)m_Content[i];
-				if ( ent == null )
-					continue;
-
-				for (int s=0;s<m_DefaultStringNums.Length;s++)
-				{
-					if ( ent.Number == m_DefaultStringNums[s] && ( ent.Args == htmlStr || ent.Args == str ) )
-					{
-						m_StringNums.Insert( 0, ent.Number );
-
-						m_Content.RemoveAt( i );
-
-						AddHash( ent.Number );
-						if ( ent.Args != null && ent.Args != "" )
-							AddHash( ent.Args.GetHashCode() );
-						return true;
-					}
-				}
-			}*/
-
-			for (int i = 0; i < m_CustomContent.Count; i++)
-			{
-				OPLEntry ent = m_CustomContent[i];
-				if (ent == null)
-					continue;
-
-				if (m_DefaultStringNums.Any(num => ent.Number == num && (ent.Args == htmlStr || ent.Args == str)))
-				{
-					m_StringNums.Insert(0, ent.Number);
-
-					m_CustomContent.RemoveAt(i);
-
-					AddHash(ent.Number);
-					if (!string.IsNullOrEmpty(ent.Args))
-						AddHash(ent.Args.GetHashCode());
-					return true;
-				}
-			}
-
-			return false;
-		}
-	}
-
-	internal class OPLInfo : Packet
-	{
-		internal OPLInfo(Serial ser, int hash)
-			: base(0xDC, 9)
-		{
-			Write((uint)ser);
-			Write((int)hash);
-		}
 	}
 }
