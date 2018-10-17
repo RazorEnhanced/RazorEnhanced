@@ -14,10 +14,6 @@ namespace Assistant
 
 		internal ObjectPropertyList ObjPropList { get { return m_ObjPropList; } }
 
-		internal virtual void AfterLoad()
-		{
-		}
-
 		internal UOEntity(Serial ser)
 		{
 			m_ObjPropList = new ObjectPropertyList(this);

@@ -563,7 +563,7 @@ namespace Assistant
 			Item i = World.FindItem(iser);
 			if (i == null)
 			{
-				World.AddItem(i = new Item(dser));
+				World.AddItem(i = new Item(iser));
 			}
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)

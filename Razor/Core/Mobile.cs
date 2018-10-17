@@ -49,20 +49,6 @@ namespace Assistant
 		private List<Item> m_Items;
 		private byte m_Map;
 
-		internal override void AfterLoad()
-		{
-			/*for (int i = 0; i < m_Items.Count; i++)
-			{
-				m_Items[i] = World.FindItem(m_Items[i].Serial);
-
-				if (m_Items[i] == null)
-				{
-					m_Items.RemoveAt(i);
-					i--;
-				}
-			}*/
-		}
-
 		internal Mobile(Serial serial)
 			: base(serial)
 		{

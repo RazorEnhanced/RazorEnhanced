@@ -87,22 +87,6 @@ namespace Assistant
 			}
 		}
 
-		internal override void AfterLoad()
-		{
-		/*	for (int i = 0; i < m_Items.Count; i++)
-			{
-				m_Items[i] = World.FindItem(m_Items[i].Serial);
-
-				if (m_Items[i] == null)
-				{
-					m_Items.RemoveAt(i);
-					i--;
-				}
-			}*/
-
-			UpdateContainer();
-		}
-
 		internal Item(Serial serial)
 			: base(serial)
 		{
