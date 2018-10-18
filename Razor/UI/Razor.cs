@@ -7650,7 +7650,7 @@ namespace Assistant
 			this.bandagehealmortalCheckBox.Name = "bandagehealmortalCheckBox";
 			this.bandagehealmortalCheckBox.Size = new System.Drawing.Size(155, 22);
 			this.bandagehealmortalCheckBox.TabIndex = 87;
-			this.bandagehealmortalCheckBox.Text = "Block heal if Mortal struck";
+			this.bandagehealmortalCheckBox.Text = "Block heal if Mortalled";
 			this.bandagehealmortalCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealmortalCheckBox_CheckedChanged);
 			// 
 			// bandagehealpoisonCheckBox
