@@ -145,6 +145,9 @@ namespace RazorEnhanced
 
 		public static int Weight { get { return World.Player.Weight; } }
 
+		// Party
+		public bool InParty { get { return Assistant.PacketHandlers.Party.Contains(World.Player.Serial); } }
+
 		// Position
 		public static Point3D Position { get { return new Point3D(World.Player.Position); } }
 		public static int Map { get { return World.Player.Map; } }
