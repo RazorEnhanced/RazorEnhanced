@@ -443,11 +443,14 @@ namespace Assistant
 
 		internal static void ClipBoardCopy(string txt)
 		{
+			if (string.IsNullOrEmpty(txt))
+				return;
+
 			try
 			{
 				Clipboard.SetText(txt);
 			}
-			catch (System.Runtime.InteropServices.ExternalException) { }
+			catch { }
 		}
 	}
 }
