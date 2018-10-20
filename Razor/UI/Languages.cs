@@ -682,12 +682,12 @@ namespace Assistant
 				if (subprops)
 				{
 					if (i > 7)
-						if (char.IsDigit(str) || str == '-')
+						if (char.IsDigit(str) || str == '-' || str == '.')
 							number += str.ToString();
 				}
 				else
 				{
-					if (char.IsDigit(str) || str == '-')
+					if (char.IsDigit(str) || str == '-' || str == '.')
 					{
 						number += str.ToString();
 					}

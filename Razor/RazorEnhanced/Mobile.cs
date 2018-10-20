@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Globalization;
 
 namespace RazorEnhanced
 {
@@ -713,7 +714,7 @@ namespace RazorEnhanced
 			return GetPropStringByIndex(mob.Serial, index);
 		}
 
-		public static int GetPropValue(int serial, string name)
+		public static float GetPropValue(int serial, string name)
 		{
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
@@ -731,7 +732,7 @@ namespace RazorEnhanced
 
 					try
 					{
-						return (Convert.ToInt32(Language.ParsePropsCliloc(prop.Args)));
+						return Convert.ToSingle(Language.ParsePropsCliloc(prop.Args), CultureInfo.InvariantCulture);
 					}
 					catch
 					{
@@ -742,7 +743,7 @@ namespace RazorEnhanced
 			return 0;  // Non esiste
 		}
 
-		public static int GetPropValue(Mobile mob, string name)
+		public static float GetPropValue(Mobile mob, string name)
 		{
 			return GetPropValue(mob.Serial, name);
 		}

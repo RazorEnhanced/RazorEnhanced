@@ -56,6 +56,10 @@ namespace RazorEnhanced
 			SendMessage(msg.ToString(), true);
 		}
 
+		public static void SendMessage(float num)
+		{
+			SendMessage(num.ToString(), true);
+		}
 
 		public static void SendMessage(int num, int color)
 		{

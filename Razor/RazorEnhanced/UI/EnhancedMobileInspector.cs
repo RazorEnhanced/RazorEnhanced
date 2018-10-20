@@ -25,7 +25,7 @@ namespace RazorEnhanced.UI
 
 			foreach (string prop in m_props)
 			{
-				int attrib = 0;
+				float attrib = 0;
 
 				attrib = GetAttribute(prop);
 				if (attrib > 0)
@@ -109,6 +109,7 @@ namespace RazorEnhanced.UI
 			"Self Repair",
 			"Luck",
 			"Hit Lower Defense",
+			"Weapon Speed",
 			// Sa props
 			"Casting Focus",
 			"Fire Eater",
@@ -146,9 +147,9 @@ namespace RazorEnhanced.UI
 			Layer.InnerLegs
 		};
 
-		private int GetAttribute(string attributename)
+		private float GetAttribute(string attributename)
 		{
-			int attributevalue = 0;
+			float attributevalue = 0;
 
 			foreach (Layer l in m_layer_props)
 			{
