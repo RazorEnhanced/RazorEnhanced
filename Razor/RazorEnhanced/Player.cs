@@ -629,8 +629,13 @@ namespace RazorEnhanced
 				case BuffIcon.Weaken:
 					description = "Weaken";
 					break;
+
 				case BuffIcon.VampiricEmbrace:
 					description = "Vampiric Embrace";
+					break;
+
+				case BuffIcon.WraithForm:
+					description = "Wraith Form";
 					break;
 			}
 
