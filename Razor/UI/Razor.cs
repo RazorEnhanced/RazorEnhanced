@@ -873,6 +873,8 @@ namespace Assistant
 		private RazorButton graphFilterExportButton;
 		private RazorButton targetImportButton;
 		private RazorButton targetExportButton;
+		private RazorButton targetChoseHue;
+		private RazorButton targetChoseBody;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1603,6 +1605,8 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+			this.targetChoseBody = new RazorEnhanced.UI.RazorButton();
+			this.targetChoseHue = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -4450,6 +4454,7 @@ namespace Assistant
 			// 
 			// groupBox45
 			// 
+			this.groupBox45.Controls.Add(this.targetChoseHue);
 			this.groupBox45.Controls.Add(this.targethueGridView);
 			this.groupBox45.Controls.Add(this.targetcoloCheckBox);
 			this.groupBox45.Location = new System.Drawing.Point(257, 6);
@@ -4469,7 +4474,7 @@ namespace Assistant
 			this.targethueGridView.Location = new System.Drawing.Point(7, 43);
 			this.targethueGridView.Name = "targethueGridView";
 			this.targethueGridView.RowHeadersVisible = false;
-			this.targethueGridView.Size = new System.Drawing.Size(95, 264);
+			this.targethueGridView.Size = new System.Drawing.Size(95, 233);
 			this.targethueGridView.TabIndex = 70;
 			this.targethueGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targethueGridView_CellEndEdit);
 			this.targethueGridView.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_MouseDown);
@@ -4501,6 +4506,7 @@ namespace Assistant
 			// 
 			// groupBox44
 			// 
+			this.groupBox44.Controls.Add(this.targetChoseBody);
 			this.groupBox44.Controls.Add(this.targetbodydataGridView);
 			this.groupBox44.Controls.Add(this.targetbodyCheckBox);
 			this.groupBox44.Location = new System.Drawing.Point(140, 6);
@@ -4520,7 +4526,7 @@ namespace Assistant
 			this.targetbodydataGridView.Location = new System.Drawing.Point(7, 43);
 			this.targetbodydataGridView.Name = "targetbodydataGridView";
 			this.targetbodydataGridView.RowHeadersVisible = false;
-			this.targetbodydataGridView.Size = new System.Drawing.Size(95, 264);
+			this.targetbodydataGridView.Size = new System.Drawing.Size(95, 233);
 			this.targetbodydataGridView.TabIndex = 70;
 			this.targetbodydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targetbodydataGridView_CellEndEdit);
 			this.targetbodydataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
@@ -8611,6 +8617,26 @@ namespace Assistant
 			this.openmaplocation.Filter = "Executable Files|*.exe";
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
+			// 
+			// targetChoseBody
+			// 
+			this.targetChoseBody.Location = new System.Drawing.Point(7, 284);
+			this.targetChoseBody.Name = "targetChoseBody";
+			this.targetChoseBody.Size = new System.Drawing.Size(95, 23);
+			this.targetChoseBody.TabIndex = 58;
+			this.targetChoseBody.Text = "Target Body ID";
+			this.targetChoseBody.UseVisualStyleBackColor = true;
+			this.targetChoseBody.Click += new System.EventHandler(this.targetChoseBody_Click);
+			// 
+			// targetChoseHue
+			// 
+			this.targetChoseHue.Location = new System.Drawing.Point(7, 284);
+			this.targetChoseHue.Name = "targetChoseHue";
+			this.targetChoseHue.Size = new System.Drawing.Size(95, 23);
+			this.targetChoseHue.TabIndex = 71;
+			this.targetChoseHue.Text = "Target Hue ID";
+			this.targetChoseHue.UseVisualStyleBackColor = true;
+			this.targetChoseHue.Click += new System.EventHandler(this.targetChoseHue_Click);
 			// 
 			// MainForm
 			// 
@@ -15647,6 +15673,33 @@ namespace Assistant
 				return;
 
 			ImportExport.ExportTargetFilter(targetlistBox.SelectedItem.ToString());
+		}
+
+		private void targetChoseBody_Click(object sender, EventArgs e)
+		{
+			if (targetbodydataGridView.Enabled)
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(targetbuttonChoseBody));
+		}
+
+		private void targetbuttonChoseBody(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Mobile mob = Assistant.World.FindMobile(serial);
+			if (mob != null)
+				targetbodydataGridView.BeginInvoke((MethodInvoker)delegate { targetbodydataGridView.Rows.Add(new object[] { "0x" + mob.Body.ToString("X4") }); });
+		}
+
+		private void targetChoseHue_Click(object sender, EventArgs e)
+		{
+			if (targethueGridView.Enabled)
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(targetbuttonChoseBodyHue));
+		}
+
+		private void targetbuttonChoseBodyHue(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Mobile mob = Assistant.World.FindMobile(serial);
+			if (mob != null)
+				targethueGridView.BeginInvoke((MethodInvoker)delegate { targethueGridView.Rows.Add(new object[] { "0x" + mob.Hue.ToString("X4") }); });
+
 		}
 		// ----------------- STOP TARGET -------------------
 	}
