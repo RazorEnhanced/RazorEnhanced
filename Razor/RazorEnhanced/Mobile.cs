@@ -295,7 +295,7 @@ namespace RazorEnhanced
 		[Serializable]
 		public class Filter
 		{
-			public bool Enabled = false;
+			public bool Enabled = true;
 			public List<int> Serials = new List<int>();
 			public List<int> Bodies = new List<int>();
 			public string Name = String.Empty;
