@@ -88,7 +88,7 @@ namespace Assistant
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(HideItem_Callback));
 		}
 
-		private static void HideItem_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		internal static void HideItem_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			RazorEnhanced.Items.Hide(serial);
 		}

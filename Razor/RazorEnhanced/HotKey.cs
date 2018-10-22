@@ -767,6 +767,11 @@ namespace RazorEnhanced
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(dropitemTarget_Callback));
 					break;
 
+				case "Hide Item":
+					RazorEnhanced.Misc.SendMessage("Target item to Hide.", false);
+					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(Commands.HideItem_Callback));
+					break;
+
 				default:
 					break;
 			}
@@ -1518,19 +1523,19 @@ namespace RazorEnhanced
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add("Use");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Use");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[3].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(GenerateNode(keydata));
 
 			// Actions -> Show Names
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add("Show Names");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Show Names");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(GenerateNode(keydata));
 
 			// Actions -> Per Commands
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add("Pet Commands");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Pet Commands");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[6].Nodes.Add(GenerateNode(keydata));
 
 			// Agents
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Agents");
