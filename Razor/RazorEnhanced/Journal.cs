@@ -221,5 +221,22 @@ namespace RazorEnhanced
 				subdelay -= 10;
 			}
 		}
+
+		public static void WaitJournal(List<string> msgs, int delay)
+		{
+			bool l = true;
+			int subdelay = delay;
+			while (l && subdelay > 0)
+			{
+				foreach(string s in msgs)
+				{
+					if (Search(s)) // found 
+						l = false; // exit from loop
+				}
+
+				Thread.Sleep(10);
+				subdelay -= 10;
+			}
+		}
 	}
 }
