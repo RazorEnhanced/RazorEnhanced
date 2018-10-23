@@ -224,14 +224,13 @@ namespace RazorEnhanced
 
 		public static void WaitJournal(List<string> msgs, int delay)
 		{
-			bool l = true;
 			int subdelay = delay;
-			while (l && subdelay > 0)
+			while (subdelay > 0)
 			{
 				foreach(string s in msgs)
 				{
-					if (Search(s)) // found 
-						l = false; // exit from loop
+					if (Search(s)) 
+						return; // found one of msgs list
 				}
 
 				Thread.Sleep(10);
