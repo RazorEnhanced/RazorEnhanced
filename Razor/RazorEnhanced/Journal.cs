@@ -222,7 +222,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void WaitJournal(List<string> msgs, int delay)
+		public static string WaitJournal(List<string> msgs, int delay)
 		{
 			int subdelay = delay;
 			while (subdelay > 0)
@@ -230,12 +230,14 @@ namespace RazorEnhanced
 				foreach(string s in msgs)
 				{
 					if (Search(s)) 
-						return; // found one of msgs list
+						return s; // found one of msgs list
 				}
 
 				Thread.Sleep(10);
 				subdelay -= 10;
 			}
+			return string.Empty; // found one of msgs list
+
 		}
 	}
 }
