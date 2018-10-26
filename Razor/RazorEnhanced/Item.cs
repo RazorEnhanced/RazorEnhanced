@@ -684,7 +684,7 @@ namespace RazorEnhanced
 			Move(source.Serial, destination.Serial, amount, x, y);
 		}
 
-		public static void Move(int source, int destination, int amount, int x, int y)
+		/*public static void Move(int source, int destination, int amount, int x, int y)
 		{
 			Assistant.Item bag = Assistant.World.FindItem(destination);
 			Assistant.Item item = Assistant.World.FindItem(source);
@@ -732,6 +732,71 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
 				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
 			}
+		}*/
+
+		public static void Move(int source, int destination, int amount, int x, int y)
+		{
+			Assistant.Item bag = Assistant.World.FindItem(destination);
+			Assistant.Item item = Assistant.World.FindItem(source);
+			Assistant.Mobile mbag = null;
+
+			int serialdestination = 0;
+			bool isMobile = false;
+			bool onLocation = false;
+			int newamount = 0;
+
+			if (item == null)
+			{
+				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
+				return;
+			}
+
+			if (bag != null)
+			{
+				serialdestination = bag.Serial;
+			}
+			else
+			{
+				mbag = Assistant.World.FindMobile(destination);
+				if (mbag != null)
+				{
+					isMobile = true;
+					serialdestination = mbag.Serial;
+				}
+			}
+
+			if (serialdestination == 0)
+			{
+				Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
+				return;
+			}
+
+			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+			if (x != -1 && y != -1)
+			{
+				onLocation = true;
+				loc = new Assistant.Point3D(x, y, 0);
+			}
+
+			// calcolo amount
+			if (amount == 0)
+			{
+				newamount = item.Amount;
+			}
+			else
+			{
+				if (item.Amount < amount)
+					newamount = item.Amount;
+				else
+					newamount = amount;
+			}
+
+			if (isMobile)
+				Assistant.DragDropManager.DragDrop(item, mbag, Layer.Backpack, newamount);
+			else if (onLocation)
+				Assistant.DragDropManager.DragDrop(item, newamount, bag, loc);
+			else
+				Assistant.DragDropManager.DragDrop(item, newamount, bag);
 		}
 
 		public static void MoveOnGround(Item source, int amount, int x, int y, int z)
@@ -749,16 +814,15 @@ namespace RazorEnhanced
 				return;
 			}
 
-			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-			if (x != -1 && y != -1)
-				loc = new Assistant.Point3D(x, y, z);
+			Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
 
 			int amounttodrop = amount;
 			if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
-			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
+			Assistant.DragDropManager.DragDrop(item, loc, amounttodrop);
+			//Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
+			//Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount = 0)

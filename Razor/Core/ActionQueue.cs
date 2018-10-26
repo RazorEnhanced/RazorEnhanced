@@ -4,8 +4,6 @@ using System.IO;
 
 namespace Assistant
 {
-	//internal delegate void DropDoneCallback(Serial iser, Serial dser, Point3D newPos);
-
 	internal class DragDropManager
 	{
 		internal enum ProcStatus
@@ -18,7 +16,7 @@ namespace Assistant
 
 		internal static bool Debug = false;
 
-		private static void Log(string str, params object[] args)
+	/*	private static void Log(string str, params object[] args)
 		{
 			if (!Debug)
 				return;
@@ -36,7 +34,7 @@ namespace Assistant
 			catch
 			{
 			}
-		}
+		}*/
 
 		private class LiftReq
 		{
@@ -82,29 +80,9 @@ namespace Assistant
 
 		public static void Initialize()
 		{
-			try { File.Delete("DragDrop.log"); }
-			catch { }
-			//HotKey.Add(HKCategory.Misc, LocString.DropCur, new HotKeyCallback(DropCurrent));
+
 		}
 
-		private static void DropCurrent()
-		{
-			Log("Drop current requested on {0}", m_Holding);
-
-			if (m_Holding.IsItem)
-			{
-				if (World.Player.Backpack != null)
-					ClientCommunication.SendToServer(new DropRequest(m_Holding, Point3D.MinusOne, World.Player.Backpack.Serial));
-				else
-					ClientCommunication.SendToServer(new DropRequest(m_Holding, World.Player.Position, Serial.Zero));
-			}
-			else
-			{
-				World.Player.SendMessage(MsgLevel.Force, LocString.NoHold);
-			}
-
-			Clear();
-		}
 
 		private static int m_LastID;
 
@@ -125,7 +103,7 @@ namespace Assistant
 
 		internal static void Clear()
 		{
-			Log("Clearing....");
+			//Log("Clearing....");
 
 			m_DropReqs.Clear();
 			for (int i = 0; i < 256; i++)
@@ -154,10 +132,27 @@ namespace Assistant
 			Drop(i, Serial.MinusOne, dest);
 		}
 
+		internal static void DragDrop(Item i, Point3D dest, int amount)
+		{
+			Drag(i, amount);
+			Drop(i, Serial.MinusOne, dest);
+		}
+
 		internal static void DragDrop(Item i, int amount, Item to)
 		{
 			Drag(i, amount);
 			Drop(i, to.Serial, Point3D.MinusOne);
+		}
+		internal static void DragDrop(Item i, int amount, Item to, Point3D dest)
+		{
+			Drag(i, amount);
+			Drop(i, to.Serial, dest);
+		}
+
+		internal static void DragDrop(Item i, Mobile to, Layer layer, int amount)
+		{
+			Drag(i, amount, false);
+			Drop(i, to, layer);
 		}
 
 		internal static void DragDrop(Item i, Mobile to, Layer layer, bool doLast)
@@ -182,7 +177,6 @@ namespace Assistant
 			return Drag(i, amount, false, false);
 		}
 
-		internal static bool Empty { get { return m_Back == m_Front; } }
 		internal static bool Full { get { return ((byte)(m_Back + 1)) == m_Front; } }
 
 		internal static int Drag(Item i, int amount, bool fromClient, bool doLast)
@@ -198,7 +192,7 @@ namespace Assistant
 				return 0;
 			}
 
-			Log("Queuing Drag request {0}", lr);
+			//Log("Queuing Drag request {0}", lr);
 
 			if (m_Back >= m_LiftReqs.Length)
 				m_Back = 0;
@@ -211,7 +205,7 @@ namespace Assistant
 			// if the current last req must stay last, then insert this one in its place
 			if (prev != null && prev.DoLast)
 			{
-				Log("Back-Queuing {0}", prev);
+				//Log("Back-Queuing {0}", prev);
 				if (m_Back <= 0)
 					m_LiftReqs[m_LiftReqs.Length - 1] = lr;
 				else if (m_Back <= m_LiftReqs.Length)
@@ -231,7 +225,7 @@ namespace Assistant
 		{
 			if (m_Pending == i.Serial)
 			{
-				Log("Equipping {0} to {1} (@{2})", i, to.Serial, layer);
+				//Log("Equipping {0} to {1} (@{2})", i, to.Serial, layer);
 				ClientCommunication.SendToServer(new EquipRequest(i.Serial, to, layer));
 				m_Pending = Serial.Zero;
 				m_Lifted = DateTime.MinValue;
@@ -252,7 +246,7 @@ namespace Assistant
 
 				if (add)
 				{
-					Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
+					//Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
 
 					if (!m_DropReqs.ContainsKey(i.Serial))
 						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
@@ -263,7 +257,7 @@ namespace Assistant
 				}
 				else
 				{
-					Log("Drop/Equip for {0} (to {1} (@{2})) not found, skipped", i, to == null ? Serial.Zero : to.Serial, layer);
+					//Log("Drop/Equip for {0} (to {1} (@{2})) not found, skipped", i, to == null ? Serial.Zero : to.Serial, layer);
 					return false;
 				}
 			}
@@ -273,7 +267,7 @@ namespace Assistant
 		{
 			if (m_Pending == i.Serial)
 			{
-				Log("Dropping {0} to {1} (@{2})", i, dest, pt);
+				//Log("Dropping {0} to {1} (@{2})", i, dest, pt);
 
 				ClientCommunication.SendToServer(new DropRequest(i.Serial, pt, dest));
 				m_Pending = Serial.Zero;
@@ -295,7 +289,7 @@ namespace Assistant
 
 				if (add)
 				{
-					Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
+					//Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
 
 					if (!m_DropReqs.ContainsKey(i.Serial))
 						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
@@ -306,7 +300,7 @@ namespace Assistant
 				}
 				else
 				{
-					Log("Drop for {0} (to {1} (@{2})) not found, skipped", i, dest, pt);
+					//Log("Drop for {0} (to {1} (@{2})) not found, skipped", i, dest, pt);
 					return false;
 				}
 			}
@@ -324,7 +318,7 @@ namespace Assistant
 
 		internal static bool LiftReject()
 		{
-			Log("Server rejected lift for item {0}", m_Holding);
+			//Log("Server rejected lift for item {0}", m_Holding);
 			if (m_Holding == Serial.Zero)
 				return true;
 
@@ -344,44 +338,6 @@ namespace Assistant
 			}
 
 			return false;
-		}
-
-		internal static bool CancelDragFor(Serial s)
-		{
-			if (Empty)
-				return false;
-
-			int skip = 0;
-			for (byte j = m_Front; j != m_Back; j++)
-			{
-				if (skip == 0 && m_LiftReqs[j] != null && m_LiftReqs[j].Serial == s)
-				{
-					m_LiftReqs[j] = null;
-					skip++;
-					if (j == m_Front)
-					{
-						m_Front++;
-						break;
-					}
-					else
-					{
-						m_Back--;
-					}
-				}
-
-				if (skip > 0)
-					m_LiftReqs[j] = m_LiftReqs[(byte)(j + skip)];
-			}
-
-			if (skip > 0)
-			{
-				m_LiftReqs[m_Back] = null;
-				return true;
-			}
-			else
-			{
-				return false;
-			}
 		}
 
 		internal static bool EndHolding(Serial s)
@@ -409,19 +365,6 @@ namespace Assistant
 			return dr;
 		}
 
-		internal static void GracefulStop()
-		{
-			m_Front = m_Back = 0;
-
-			if (!m_Pending.IsValid)
-				return;
-
-			Queue<DropReq> o = m_DropReqs[m_Pending];
-			m_DropReqs.Clear();
-
-			m_DropReqs.Add(m_Pending, o);
-		}
-
 		internal static ProcStatus ProcessNext(int numPending)
 		{
 			if (m_Pending != Serial.Zero)
@@ -430,7 +373,7 @@ namespace Assistant
 				{
 					Item i = World.FindItem(m_Pending);
 
-					Log("Lift timeout, forced drop to pack for {0}", m_Pending);
+					//Log("Lift timeout, forced drop to pack for {0}", m_Pending);
 
 					if (World.Player != null)
 					{
@@ -467,14 +410,14 @@ namespace Assistant
 			m_Front++;
 			if (lr != null)
 			{
-				Log("Lifting {0}", lr);
+				//Log("Lifting {0}", lr);
 
 				Item item = World.FindItem(lr.Serial);
 				if (item != null && item.Container == null)
 				{ // if the item is on the ground and out of range then dont grab it
 					if (Utility.Distance(item.GetWorldPosition(), World.Player.Position) > 3)
 					{
-						Log("Item is too far away... uncaching.");
+						//Log("Item is too far away... uncaching.");
 						return ProcStatus.Nothing;
 					}
 				}
@@ -492,7 +435,7 @@ namespace Assistant
 					m_Pending = Serial.Zero;
 					m_Lifted = DateTime.MinValue;
 
-					Log("Dropping {0} to {1}", lr, dr.Serial);
+					//Log("Dropping {0} to {1}", lr, dr.Serial);
 
 					if (dr.Serial.IsMobile && dr.Layer > Layer.Invalid && dr.Layer <= Layer.LastUserValid)
 						ClientCommunication.SendToServer(new EquipRequest(lr.Serial, dr.Serial, dr.Layer));
@@ -509,7 +452,7 @@ namespace Assistant
 			}
 			else
 			{
-				Log("No lift to be done?!");
+				//Log("No lift to be done?!");
 				return ProcStatus.Nothing;
 			}
 		}
@@ -560,8 +503,6 @@ namespace Assistant
 			m_Queue.Clear();
 			DragDropManager.Clear();
 		}
-
-		internal static bool Empty { get { return m_Queue.Count <= 0 && !m_Timer.Running; } }
 
 		internal static string TimeLeft
 		{
@@ -654,8 +595,8 @@ namespace Assistant
 				{
 					Stop();
 
-					if (m_Total > 1 && World.Player != null)
-						World.Player.SendMessage(LocString.QueueFinished, m_Total, ((DateTime.Now - m_StartTime) - this.Interval).TotalSeconds);
+				//	if (m_Total > 1 && World.Player != null)
+				//		World.Player.SendMessage(LocString.QueueFinished, m_Total, ((DateTime.Now - m_StartTime) - this.Interval).TotalSeconds);
 
 					m_Last = Serial.Zero;
 					m_Total = 0;
