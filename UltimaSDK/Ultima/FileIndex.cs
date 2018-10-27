@@ -278,8 +278,8 @@ namespace Ultima
 
 										byte[] extra = br.ReadBytes(8);
 
-										short extra1 = (short)((extra[3] << 24) | (extra[2] << 16) | (extra[1] << 8) | extra[0]);
-										short extra2 = (short)((extra[7] << 24) | (extra[6] << 16) | (extra[5] << 8) | extra[4]);
+										ushort extra1 = (ushort)((extra[3] << 24) | (extra[2] << 16) | (extra[1] << 8) | extra[0]);
+										ushort extra2 = (ushort)((extra[7] << 24) | (extra[6] << 16) | (extra[5] << 8) | extra[4]);
 
 										Index[idx].lookup += 8;
 										Index[idx].extra = extra1 << 16 | extra2;

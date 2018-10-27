@@ -43,16 +43,16 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Scale
         /// </summary>
-        [Description("Scale")]
-        [DefaultValue(0.3f)]
-        public float Scale
+        public float GetScale()
+        { return scale; }
+
+        /// <summary>
+        /// Scale
+        /// </summary>
+        public void SetScale(float value)
         {
-            get { return scale; }
-            set
-            {
-                scale = value;
-                NeedRepaint();
-            }
+            scale = value;
+            NeedRepaint();
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace FastColoredTextBoxNS
             if (target == null)
                 return;
 
-            var zoom = this.Scale * 100 / target.Zoom;
+            var zoom = this.GetScale() * 100 / target.Zoom;
 
             if (zoom <= float.Epsilon)
                 return;
@@ -218,7 +218,7 @@ namespace FastColoredTextBoxNS
             if (target == null)
                 return;
 
-            var zoom = this.Scale*100/target.Zoom;
+            var zoom = this.GetScale() * 100/target.Zoom;
 
             if (zoom <= float.Epsilon)
                 return;
