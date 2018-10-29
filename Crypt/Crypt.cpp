@@ -5,11 +5,9 @@
 #include "OSIEncryption.h"
 #include "LoginEncryption.h"
 #include "MemFinder.h"
-#include "Checksum.h"
 #include "Obfuscation.h"
 #include <iostream>
 
-//#define NO_CHECKSUM_VERSION
 
 //*************************************************************************************
 //**************************************Varaibles**************************************
@@ -48,14 +46,12 @@ bool FirstRecv = true;
 bool FirstSend = true;
 bool LoginServer = false;
 bool Active = true;
-bool Disabled = true;
 bool SmartCPU = false;
 bool ServerNegotiated = false;
 bool InGame = false;
 bool CopyFailed = true;
 bool Forwarding = false;
 bool Forwarded = false;
-bool UltimaDLLHaxed = false;
 bool ClientEncrypted = false;
 bool ServerEncrypted = false;
 bool DwmAttrState = true;
@@ -156,8 +152,6 @@ DLLFUNCTION DWORD InitializeLibrary(const char *exeVer)
 
 	char *obStr = GetObStr(OB_KERNEL32);
 
-	Disabled = (int)tolower(*obStr) != (int)'k';
-
 	if (!strcmp(exeVer, DLL_VERSION))
 	{
 		GetModuleFileName(NULL, fileName, 256);
@@ -176,8 +170,6 @@ DLLFUNCTION DWORD InitializeLibrary(const char *exeVer)
 
 			for (int i = 0; i < 16; i++)
 				data[i] ^= data[0x1717 + i];
-
-			Disabled |= memcmp(data, RAZOR_CHECKSUM, 16) != 0;
 
 			delete[] data;
 		}
@@ -219,20 +211,14 @@ DLLFUNCTION DWORD InitializeLibrary(const char *exeVer)
 			for (int i = 0; i < 16; i++)
 				data[i] ^= data[0x1717 + i];
 
-			UltimaDLLHaxed = memcmp(data, ULTIMA_CHECKSUM, 16) != 0;
-
 			delete[] data;
 		}
 	}
-	else
-	{
-		Disabled |= true;
-	}
+
 	DLLFUNCTION bool AllowBit(unsigned int bit);
 	OSIEncryption::MD5(((const BYTE*)AllowBit) + 9, 0x31 - 9, CryptChecksum);
 
 	HMODULE hKern = LoadLibrary(obStr);
-	Disabled |= !hKern;
 
 	GetObStr(OB_GETPROCADDR);
 	void *(__stdcall *getprocaddr)(HANDLE, const char *);
@@ -244,14 +230,7 @@ DLLFUNCTION DWORD InitializeLibrary(const char *exeVer)
 
 	getmodfn(NULL, obStr, 256);
 
-	Disabled |= memcmp(obStr, origFilename, strlen(obStr)) != 0;
-	Disabled |= memcmp(origFilename, obStr, strlen(origFilename)) != 0;
-
-#ifdef NO_CHECKSUM_VERSION
-	Disabled = false;
-#endif
-
-	return !Disabled;
+	return true;
 }
 
 DLLFUNCTION void *GetSharedAddress()
@@ -309,9 +288,6 @@ DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pid, int flags)
 
 	Log("Initialize library...");
 
-	if (Disabled)
-		return LIB_DISABLED;
-
 	HWND hWnd = NULL;
 	if (pid != 0)
 	{
@@ -359,7 +335,7 @@ DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pid, int flags)
 		return NO_SHAREMEM;
 	//memset( pShared, 0, sizeof(SharedMemory) );
 
-	pShared->IsHaxed = UltimaDLLHaxed;
+	pShared->IsHaxed = false;
 
 	hWndProcRetHook = SetWindowsHookEx(WH_CALLWNDPROCRET, WndProcRetHookFunc, hInstance, UOTId);
 	if (!hWndProcRetHook)
@@ -1566,12 +1542,7 @@ void FlushSendData()
 					}
 
 					InGame = true;
-#ifdef NO_CHECKSUM_VERSION
-					memcpy(buff + 1 + 4 + 30 + 28, "\xDE\xAD", 2);
-#else
-					if (pShared->IsHaxed)
-						memcpy(buff + 1 + 4 + 30 + 28, "\xDE\xAD", 2);
-#endif
+
 					break;
 				}
 				else if (*buff == 0x00 && (*((DWORD*)&buff[1])) == 0xEDEDEDED && len >= 1 + 4 + 4 + 1 + 30 + 30 && len <= left)
@@ -1584,12 +1555,7 @@ void FlushSendData()
 					}
 
 					InGame = true;
-#ifdef NO_CHECKSUM_VERSION
-					memcpy(buff + 1 + 4 + 30 + 28, "\xDE\xAD", 2);
-#else
-					if (pShared->IsHaxed)
-						memcpy(buff + 1 + 4 + 30 + 28, "\xDE\xAD", 2);
-#endif
+
 					break;
 				}
 
