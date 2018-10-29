@@ -218,7 +218,6 @@ namespace RazorEnhanced
 			var stepTop = startTop + StepHeight;
 			var checkTop = startZ + PersonHeight;
 
-			var ignoreDoors = Player.IsGhost;
 			const bool ignoreSpellFields = true;
 
 			int itemZ, itemTop, ourZ, ourTop, testTop;
@@ -304,7 +303,7 @@ namespace RazorEnhanced
 					continue;
 				}
 
-				if (!IsOk(ignoreDoors, ignoreSpellFields, ourZ, testTop, tiles, items))
+				if (!IsOk(ignoreSpellFields, ourZ, testTop, tiles, items))
 				{
 					continue;
 				}
@@ -378,7 +377,7 @@ namespace RazorEnhanced
 					continue;
 				}
 
-				if (!IsOk(ignoreDoors, ignoreSpellFields, ourZ, testTop, tiles, items))
+				if (!IsOk(ignoreSpellFields, ourZ, testTop, tiles, items))
 				{
 					continue;
 				}
@@ -415,7 +414,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			if (!shouldCheck || !IsOk(ignoreDoors, ignoreSpellFields, ourZ, testTop, tiles, items))
+			if (!shouldCheck || !IsOk(ignoreSpellFields, ourZ, testTop, tiles, items))
 			{
 				return moveIsOk;
 			}
@@ -431,12 +430,12 @@ namespace RazorEnhanced
 			return tile.Z + itemData.CalcHeight <= ourZ || ourTop <= tile.Z || (itemData.Flags & ImpassableSurface) == 0;
 		}
 
-		private static bool IsOk(bool ignoreDoors, bool ignoreSpellFields, int ourZ, int ourTop, HuedTile[] tiles, IEnumerable<Assistant.Item> items)
+		private static bool IsOk(bool ignoreSpellFields, int ourZ, int ourTop, HuedTile[] tiles, IEnumerable<Assistant.Item> items)
 		{
-			return tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
+			return tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreSpellFields));
 		}
 
-		private static bool IsOk(Assistant.Item item, int ourZ, int ourTop, bool ignoreDoors, bool ignoreSpellFields)
+		private static bool IsOk(Assistant.Item item, int ourZ, int ourTop, bool ignoreSpellFields)
 		{
 			var itemID = item.ItemID & (TileData.ItemTable.Length - 1);
 			var itemData = TileData.ItemTable[itemID];
@@ -446,11 +445,11 @@ namespace RazorEnhanced
 				return true;
 			}
 
-			if (((itemData.Flags & TileFlag.Door) != 0 || itemID == 0x692 || itemID == 0x846 || itemID == 0x873 ||
+		/*	if (((itemData.Flags & TileFlag.Door) != 0 || itemID == 0x692 || itemID == 0x846 || itemID == 0x873 ||
 				 (itemID >= 0x6F5 && itemID <= 0x6F6)) && ignoreDoors)
 			{
 				return true;
-			}
+			}*/
 
 			if ((itemID == 0x82 || itemID == 0x3946 || itemID == 0x3956) && ignoreSpellFields)
 			{
