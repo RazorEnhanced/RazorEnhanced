@@ -387,6 +387,9 @@ namespace RazorEnhanced
 			if (World.Player.IsGhost)
 				return;
 
+			if (!World.Player.IsHuman) // Not mount if not human form
+				return;
+
 			if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
 				return;
 
