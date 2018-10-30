@@ -783,8 +783,7 @@ namespace RazorEnhanced
 
 			if (itemtograb != null && itemtograb.Serial.IsItem && itemtograb.Movable)
 			{
-				Assistant.ClientCommunication.SendToServer(new LiftRequest(itemtograb.Serial, itemtograb.Amount));
-				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtograb.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+				Assistant.DragDropManager.DragDrop(itemtograb, itemtograb.Amount, World.Player.Backpack);
 			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);
@@ -797,12 +796,11 @@ namespace RazorEnhanced
 
 		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Item itemtodrop = RazorEnhanced.Items.FindBySerial(serial);
+			Assistant.Item itemtodrop = World.FindItem(serial);
 
-			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player.Serial)
+			if (itemtodrop != null && itemtodrop.Movable)
 			{
-				Assistant.ClientCommunication.SendToServer(new LiftRequest(itemtodrop.Serial, itemtodrop.Amount));
-				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtodrop.Serial, World.Player.Position, Assistant.Serial.MinusOne));
+				Assistant.DragDropManager.DragDrop(itemtodrop, World.Player.Position, itemtodrop.Amount);
 			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);
