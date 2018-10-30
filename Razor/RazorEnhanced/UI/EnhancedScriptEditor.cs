@@ -1731,7 +1731,13 @@ namespace RazorEnhanced.UI
 			if (m_Filename != String.Empty)
 			{
 				this.Text = m_Title;
-				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+
+				try // Avoid crash if for some reasons file are unaccessible.
+				{
+					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+				}
+				catch { }
+
 				Scripts.EnhancedScript script = Scripts.Search(m_Filename);
 				if (script != null)
 				{
