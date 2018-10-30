@@ -1068,28 +1068,26 @@ namespace RazorEnhanced
 
 			if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
 			{
-				List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantItem.ObjPropList.Content);
-
-				foreach (ObjectPropertyList.OPLEntry prop in props)
+				for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
 				{
-					if (!prop.ToString().ToLower().Contains(name.ToLower()))
+					if (!assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
 						continue;
 
-
-					if (prop.Args == null)  // Props esiste ma non ha valore
+					if (assistantItem.ObjPropList.Content[i].Args == null)  // Props exist but not have value
 						return 1;
 
 					try
 					{
-						return Convert.ToSingle(Language.ParsePropsCliloc(prop.Args), CultureInfo.InvariantCulture);
+						return Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
 					}
 					catch
 					{
-						return 1;  // errore di conversione ma esiste
+						return 1;  // Conversion error
 					}
+
 				}
 			}
-			return 0;  // Non esiste o null item
+			return 0;  // Item not exist or props not exist
 		}
 
 		public static float GetPropValue(Item item, string name)
