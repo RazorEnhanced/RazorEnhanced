@@ -1091,7 +1091,7 @@ namespace RazorEnhanced
 			{
 				Thread.Sleep(10);
 				timeout += 10;
-				if (timeout > 500)
+				if (timeout > 1500)
 					break;
 			}				
 
