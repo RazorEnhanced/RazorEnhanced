@@ -48,7 +48,7 @@ namespace Ultima
 		}
 
 		// Razor
-		private static Regex m_RegEx = new Regex(@"~(\d+)[_\w]+~", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
+		private static Regex m_RegEx = new Regex(@"~(\d+)[_\w]*~", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
 		private string m_FmtTxt;
 		private static object[] m_Args = new object[] { "", "", "", "", "", "", "", "", "", "", "" };
@@ -69,11 +69,25 @@ namespace Ultima
 			if (m_FmtTxt == null)
 				m_FmtTxt = m_RegEx.Replace(m_Text, @"{$1}");
 			List<string> list = new List<string>();
-			list.Add("");
-			foreach (string s in argstr.Split('\t'))
-				list.Add(s); // adds an extra on to the args array
+			list.Add("");		    
+		    if (Number == 1041522) // ~1~~2~~3~ is being over-used on free shards
+		    {
+		        Regex get_ability = new Regex(@".*(Abilities: )([^,]+, )(.*)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
+                Match match = get_ability.Match(argstr);
+		        if (match.Success) 
+		        {
+		            list.Add(match.Groups[1].Value);
+		            list.Add(match.Groups[2].Value);
+		            list.Add(match.Groups[3].Value);
+                }
+		    }
+		    else
+		    {
+		        foreach (string s in argstr.Split('\t'))
+		            list.Add(s); // adds an extra on to the args array
+		    }
 
-			return String.Format(m_FmtTxt, list.ToArray());
+		    return String.Format(m_FmtTxt, list.ToArray());
 		}
 	}
 }
