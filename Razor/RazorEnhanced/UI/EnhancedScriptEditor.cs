@@ -125,7 +125,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
-				"Statics", "DPSMeter", "PathFinding"
+				"Statics", "DPSMeter", "PathFinding", "Timer"
 			};
 
 			#endregion
@@ -255,6 +255,11 @@ namespace RazorEnhanced.UI
 				"PathFinding.Go", "PathFinding.Route"
 			};
 
+			string[] methodsTimer =
+{
+				"Timer.Check", "Timer.Create"
+			};
+
 			string[] methodsStatics =
 			{
 				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
@@ -285,6 +290,7 @@ namespace RazorEnhanced.UI
 					.Union(methodsStatics)
 					.Union(methodsDPSMeter)
 					.Union(methodsPathFinding)
+					.Union(methodsTimer)
 					.ToArray();
 
 			#endregion
@@ -1069,6 +1075,18 @@ namespace RazorEnhanced.UI
 
 			#endregion
 
+			#region Description Timer
+
+			Dictionary<string, ToolTipDescriptions> descriptionTimer = new Dictionary<string, ToolTipDescriptions>();
+
+			tooltip = new ToolTipDescriptions("Timer.Create()", new string[] { "string TimerName, int mstime" }, "void", "Create a timer object whit specific name and duration in ms");
+			descriptionPathFinding.Add("Timer.Create", tooltip);
+
+			tooltip = new ToolTipDescriptions("Timer.Check()", new string[] { "string TimerName" }, "bool", "Check if a timer object is expired or not, \n\t True if not expired, false if expired");
+			descriptionPathFinding.Add("Timer.Check", tooltip);
+
+			#endregion
+
 			#region Description DPSMeter
 
 			Dictionary<string, ToolTipDescriptions> descriptionDPSMeter = new Dictionary<string, ToolTipDescriptions>();
@@ -1153,6 +1171,7 @@ namespace RazorEnhanced.UI
 				.Union(descriptionStatics)
 				.Union(descriptionDPSMeter)
 				.Union(descriptionPathFinding)
+				.Union(descriptionTimer)
 				.ToDictionary(x => x.Key, x => x.Value);
 
 			#endregion

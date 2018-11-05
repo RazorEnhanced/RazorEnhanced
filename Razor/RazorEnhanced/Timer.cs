@@ -5,48 +5,56 @@ using System.Timers;
 
 namespace RazorEnhanced
 {
+	public class ScriptTimer : System.Timers.Timer
+	{
+		internal string Name;
+	}
+
 	public class Timer
 	{
-		private static ConcurrentDictionary<string, System.Timers.Timer> m_timers = new ConcurrentDictionary<string, System.Timers.Timer>();
+		private static ConcurrentDictionary<string, ScriptTimer> m_timers = new ConcurrentDictionary<string, ScriptTimer>();
 
-		public static void CreateTimer(string name, int delay)
+		public static void Create(string name, int delay)
 		{
 			if (m_timers.ContainsKey(name)) // Timer Exist
 			{
-				if (m_timers.TryGetValue(name, out System.Timers.Timer t)) // Get timer data
+				if (m_timers.TryGetValue(name, out ScriptTimer t)) // Get timer data
 				{
 					t.Close(); // stop timer
 					t = null;
-					m_timers.TryRemove(name, out System.Timers.Timer tt); // Remove timer
+					m_timers.TryRemove(name, out ScriptTimer tt); // Remove timer
 				}
 			}
-
-			System.Timers.Timer newtimer = new System.Timers.Timer();
+			ScriptTimer newtimer = new ScriptTimer();
 			newtimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 			newtimer.Interval = delay;
 			newtimer.Enabled = true;
+			newtimer.Name = name;
+			m_timers[name] = newtimer;
 		}
 
-		public static bool CheckTimer(string name)
+		public static bool Check(string name)
 		{
 			if (m_timers.ContainsKey(name)) // Timer Exist
-				return false;
-
-			if (m_timers.TryGetValue(name, out System.Timers.Timer t)) // Get timer data
 			{
-				if (t != null)
-					return true;
+				if (m_timers.TryGetValue(name, out ScriptTimer t)) // Get timer data
+				{
+					if (t != null)
+						return true;
+					else
+						return false;
+				}
 				else
 					return false;
 			}
-			else
-				return false;
+			return false;
 		}
 
 		private static void OnTimedEvent(object source, ElapsedEventArgs e)
 		{
-			System.Timers.Timer t = (System.Timers.Timer)source;
+			ScriptTimer t = (ScriptTimer)source;
 			t.Close();
+			m_timers.TryRemove(t.Name, out ScriptTimer tt); // Remove timer
 			t = null;
 		}
 	}		
