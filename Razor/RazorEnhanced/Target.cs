@@ -112,7 +112,7 @@ namespace RazorEnhanced
 
 		public static void Cancel()
 		{
-			Assistant.Targeting.CancelClientTarget(true);
+			//Assistant.Targeting.CancelClientTarget(true);
 			Assistant.Targeting.CancelOneTimeTarget(true);
 		}
 

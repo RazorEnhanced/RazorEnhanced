@@ -1462,7 +1462,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Target Cancel":
-					Assistant.Targeting.CancelClientTarget(false);
+					//Assistant.Targeting.CancelClientTarget(false);
 					Assistant.Targeting.CancelOneTimeTarget(false);
 					break;
 
