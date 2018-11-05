@@ -488,6 +488,10 @@ namespace RazorEnhanced
 				DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 		}
 
+		public static string ShardName()
+		{
+			return World.ShardName;
+		}
 
 	}
 }
