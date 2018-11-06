@@ -792,7 +792,7 @@ namespace RazorEnhanced
 			}
 
 			if (isMobile)
-				Assistant.DragDropManager.DragDrop(item, mbag, Layer.Backpack, newamount);
+				Assistant.DragDropManager.DragDrop(item, newamount, mbag.Serial);
 			else if (onLocation)
 				Assistant.DragDropManager.DragDrop(item, newamount, bag, loc);
 			else

@@ -120,6 +120,12 @@ namespace Assistant
 			Drop(i, to, Point3D.MinusOne);
 		}
 
+		internal static void DragDrop(Item i, int amount, Serial to)
+		{
+			Drag(i, amount);
+			Drop(i, to, Point3D.MinusOne);
+		}
+
 		internal static void DragDrop(Item i, Item to)
 		{
 			Drag(i, i.Amount);
