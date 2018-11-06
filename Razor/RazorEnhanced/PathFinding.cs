@@ -218,7 +218,11 @@ namespace RazorEnhanced
 			var stepTop = startTop + StepHeight;
 			var checkTop = startZ + PersonHeight;
 
-			var ignoreDoors = Player.IsGhost;
+			var ignoreDoors = false;
+
+			if (Player.IsGhost || Engine.MainWindow.AutoOpenDoors.Checked)
+				ignoreDoors = true;
+			
 			const bool ignoreSpellFields = true;
 
 			int itemZ, itemTop, ourZ, ourTop, testTop;
