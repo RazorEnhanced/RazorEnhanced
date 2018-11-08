@@ -162,34 +162,35 @@ namespace RazorEnhanced
 
 		internal static void LoadSettings()
 		{
-			ShowCountdown = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
-			TargetSerial = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
-			Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
-			CustomID = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
-			CustomColor = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
-			Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
-			CustomDelay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
-			HpLimit = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
-			MaxRange = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
-			PoisonBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
-			MortalBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
-			HiddenBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
+			ShowCountdown = Settings.General.ReadBool("BandageHealcountdownCheckBox");
+			TargetSerial = Settings.General.ReadInt("BandageHealtargetLabel");
+			Engine.MainWindow.BandageHealcustomCheckBox.Checked = Settings.General.ReadBool("BandageHealcustomCheckBox");
+			CustomID = Settings.General.ReadInt("BandageHealcustomIDTextBox");
+			CustomColor = Settings.General.ReadInt("BandageHealcustomcolorTextBox");
+			Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+			CustomDelay = Settings.General.ReadInt("BandageHealdelayTextBox");
+			HpLimit = Settings.General.ReadInt("BandageHealhpTextBox");
+			MaxRange = Settings.General.ReadInt("BandageHealMaxRangeTextBox");
+			PoisonBlock = Settings.General.ReadBool("BandageHealpoisonCheckBox");
+			MortalBlock = Settings.General.ReadBool("BandageHealmortalCheckBox");
+			HiddenBlock = Settings.General.ReadBool("BandageHealhiddedCheckBox");
+			Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
-			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
-			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
-			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
-			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend");
-			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Text = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
+			Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
+			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
+			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
+			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend");
+			Engine.MainWindow.BandageHealtargetComboBox.Text = Settings.General.ReadString("BandageHealtargetComboBox");
 
-			if (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox") == "Target")
+			if (Settings.General.ReadString("BandageHealtargetComboBox") == "Target")
 			{
-				Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
-				Assistant.Engine.MainWindow.BandageHealtargetLabel.Enabled = true;
+				Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
+				Engine.MainWindow.BandageHealtargetLabel.Enabled = true;
 			}
 			else
 			{
-				Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
-				Assistant.Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
+				Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
+				Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
 			}
 		}
 
@@ -415,6 +416,16 @@ namespace RazorEnhanced
 				}
 			}
 			return 0;
+		}
+
+		private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
+
+		internal static void LoginAutostart()
+		{
+			if (!Status())
+			{
+				m_autostart.Start();
+			}
 		}
 	}
 }

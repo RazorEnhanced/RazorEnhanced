@@ -491,13 +491,9 @@ namespace RazorEnhanced
 		public static void RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-			{
-					Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
-			}
+				Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
 			else
-			{
 				Engine(autoLootList, mseconds, filter);
-			}
 		}
 
 		public static void Start()
@@ -508,10 +504,8 @@ namespace RazorEnhanced
 				return;
 			}
 
-				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-			{
-					Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
-			}
+			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+				Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
 			else
 				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
 		}
@@ -519,9 +513,7 @@ namespace RazorEnhanced
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
-			{
 				Scripts.SendMessageScriptError("Script Error: Autoloot.Stop: Autoloot already sleeping");
-			}
 			else
 				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
 		}

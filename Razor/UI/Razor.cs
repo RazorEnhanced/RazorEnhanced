@@ -710,7 +710,7 @@ namespace Assistant
 		internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
 		internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
 		internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
-
+		internal RazorCheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
 		// Enhanced Filters
 		internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
 		internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
@@ -875,6 +875,7 @@ namespace Assistant
 		private RazorButton targetExportButton;
 		private RazorButton targetChoseHue;
 		private RazorButton targetChoseBody;
+		private RazorCheckBox bandagehealAutostartCheckBox;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1205,10 +1206,12 @@ namespace Assistant
 			this.poisonedOff = new RazorEnhanced.UI.RazorRadioButton();
 			this.poisonedBoth = new RazorEnhanced.UI.RazorRadioButton();
 			this.groupBox45 = new System.Windows.Forms.GroupBox();
+			this.targetChoseHue = new RazorEnhanced.UI.RazorButton();
 			this.targethueGridView = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.targetcoloCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox44 = new System.Windows.Forms.GroupBox();
+			this.targetChoseBody = new RazorEnhanced.UI.RazorButton();
 			this.targetbodydataGridView = new System.Windows.Forms.DataGridView();
 			this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.targetbodyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1503,6 +1506,7 @@ namespace Assistant
 			this.restockListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.restockExportListB = new RazorEnhanced.UI.RazorButton();
 			this.bandageheal = new System.Windows.Forms.TabPage();
+			this.bandagehealAutostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.label46 = new System.Windows.Forms.Label();
@@ -1605,8 +1609,6 @@ namespace Assistant
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-			this.targetChoseBody = new RazorEnhanced.UI.RazorButton();
-			this.targetChoseHue = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -4464,6 +4466,16 @@ namespace Assistant
 			this.groupBox45.TabStop = false;
 			this.groupBox45.Text = "Color Filter";
 			// 
+			// targetChoseHue
+			// 
+			this.targetChoseHue.Location = new System.Drawing.Point(7, 284);
+			this.targetChoseHue.Name = "targetChoseHue";
+			this.targetChoseHue.Size = new System.Drawing.Size(95, 23);
+			this.targetChoseHue.TabIndex = 71;
+			this.targetChoseHue.Text = "Target Hue ID";
+			this.targetChoseHue.UseVisualStyleBackColor = true;
+			this.targetChoseHue.Click += new System.EventHandler(this.targetChoseHue_Click);
+			// 
 			// targethueGridView
 			// 
 			this.targethueGridView.AllowDrop = true;
@@ -4515,6 +4527,16 @@ namespace Assistant
 			this.groupBox44.TabIndex = 50;
 			this.groupBox44.TabStop = false;
 			this.groupBox44.Text = "Body Filter";
+			// 
+			// targetChoseBody
+			// 
+			this.targetChoseBody.Location = new System.Drawing.Point(7, 284);
+			this.targetChoseBody.Name = "targetChoseBody";
+			this.targetChoseBody.Size = new System.Drawing.Size(95, 23);
+			this.targetChoseBody.TabIndex = 58;
+			this.targetChoseBody.Text = "Target Body ID";
+			this.targetChoseBody.UseVisualStyleBackColor = true;
+			this.targetChoseBody.Click += new System.EventHandler(this.targetChoseBody_Click);
 			// 
 			// targetbodydataGridView
 			// 
@@ -7565,6 +7587,7 @@ namespace Assistant
 			// 
 			// bandageheal
 			// 
+			this.bandageheal.Controls.Add(this.bandagehealAutostartCheckBox);
 			this.bandageheal.Controls.Add(this.groupBox6);
 			this.bandageheal.Controls.Add(this.groupBox5);
 			this.bandageheal.Controls.Add(this.bandagehealenableCheckBox);
@@ -7575,6 +7598,15 @@ namespace Assistant
 			this.bandageheal.TabIndex = 8;
 			this.bandageheal.Text = "Bandage Heal";
 			this.bandageheal.UseVisualStyleBackColor = true;
+			// 
+			// bandagehealAutostartCheckBox
+			// 
+			this.bandagehealAutostartCheckBox.Location = new System.Drawing.Point(533, 15);
+			this.bandagehealAutostartCheckBox.Name = "bandagehealAutostartCheckBox";
+			this.bandagehealAutostartCheckBox.Size = new System.Drawing.Size(118, 22);
+			this.bandagehealAutostartCheckBox.TabIndex = 75;
+			this.bandagehealAutostartCheckBox.Text = "Autostart OnLogin";
+			this.bandagehealAutostartCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealAutostartCheckBox_CheckedChanged);
 			// 
 			// groupBox6
 			// 
@@ -7858,7 +7890,7 @@ namespace Assistant
 			this.bandagehealenableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealenableCheckBox.Location = new System.Drawing.Point(304, 15);
 			this.bandagehealenableCheckBox.Name = "bandagehealenableCheckBox";
-			this.bandagehealenableCheckBox.Size = new System.Drawing.Size(185, 22);
+			this.bandagehealenableCheckBox.Size = new System.Drawing.Size(147, 22);
 			this.bandagehealenableCheckBox.TabIndex = 73;
 			this.bandagehealenableCheckBox.Text = "Enable Bandage Heal";
 			this.bandagehealenableCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealenableCheckBox_CheckedChanged);
@@ -8617,26 +8649,6 @@ namespace Assistant
 			this.openmaplocation.Filter = "Executable Files|*.exe";
 			this.openmaplocation.RestoreDirectory = true;
 			this.openmaplocation.Title = "Select Enhanced Map";
-			// 
-			// targetChoseBody
-			// 
-			this.targetChoseBody.Location = new System.Drawing.Point(7, 284);
-			this.targetChoseBody.Name = "targetChoseBody";
-			this.targetChoseBody.Size = new System.Drawing.Size(95, 23);
-			this.targetChoseBody.TabIndex = 58;
-			this.targetChoseBody.Text = "Target Body ID";
-			this.targetChoseBody.UseVisualStyleBackColor = true;
-			this.targetChoseBody.Click += new System.EventHandler(this.targetChoseBody_Click);
-			// 
-			// targetChoseHue
-			// 
-			this.targetChoseHue.Location = new System.Drawing.Point(7, 284);
-			this.targetChoseHue.Name = "targetChoseHue";
-			this.targetChoseHue.Size = new System.Drawing.Size(95, 23);
-			this.targetChoseHue.TabIndex = 71;
-			this.targetChoseHue.Text = "Target Hue ID";
-			this.targetChoseHue.UseVisualStyleBackColor = true;
-			this.targetChoseHue.Click += new System.EventHandler(this.targetChoseHue_Click);
 			// 
 			// MainForm
 			// 
@@ -13220,10 +13232,12 @@ namespace Assistant
 				groupBox6.Enabled = false;
 			else
 				groupBox6.Enabled = true;
-
-			// Avvio healer engine e check vari
 		}
-
+		private void bandagehealAutostartCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (bandagehealAutostartCheckBox.Focused)
+				Settings.General.WriteBool("BandageHealAutostartCheckBox", bandagehealAutostartCheckBox.Checked);
+		}
 		private void bandagehealtargetComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (BandageHealtargetComboBox.Text == "Target")
@@ -15701,6 +15715,8 @@ namespace Assistant
 				targethueGridView.BeginInvoke((MethodInvoker)delegate { targethueGridView.Rows.Add(new object[] { "0x" + mob.Hue.ToString("X4") }); });
 
 		}
+
+
 		// ----------------- STOP TARGET -------------------
 	}
 }

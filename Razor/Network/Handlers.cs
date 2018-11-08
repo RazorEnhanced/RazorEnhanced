@@ -1085,6 +1085,9 @@ namespace Assistant
 				RazorEnhanced.AutoLoot.LoginAutostart();
 			if (Engine.MainWindow.ScavengerAutostartCheckBox.Checked)
 				RazorEnhanced.Scavenger.LoginAutostart();
+			if (Engine.MainWindow.BandageHealAutostartCheckBox.Checked)
+				RazorEnhanced.BandageHeal.LoginAutostart();
+			
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
