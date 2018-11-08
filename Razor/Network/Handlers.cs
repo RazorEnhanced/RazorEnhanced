@@ -1768,15 +1768,15 @@ namespace Assistant
 				Item i = World.FindItem(serial);
 				if (i != null)
 				{
-					i.Remove();
-					/*	if (DragDropManager.Holding == i)
-						{
-							i.Container = null;
-						}
-						else
-						{
-							i.Remove();
-						}*/
+					if (DragDropManager.Holding == i)
+					{
+						i.Container = null;
+						i.Remove();
+					}
+					else
+					{
+						i.Remove();
+					}
 				}
 			}
 		}
