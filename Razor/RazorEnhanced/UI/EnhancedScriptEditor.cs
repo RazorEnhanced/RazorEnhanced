@@ -1745,6 +1745,35 @@ namespace RazorEnhanced.UI
 			}
 		}
 
+		private void ReloadAfterSave()
+		{
+			Scripts.EnhancedScript script = Scripts.Search(m_Filename);
+			if (script != null)
+			{
+				string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename);
+
+				if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename))
+				{
+					string text = File.ReadAllText(fullpath);
+					bool loop = script.Loop;
+					bool wait = script.Wait;
+					bool run = script.Run;
+					bool autostart = script.AutoStart;
+					bool isRunning = script.IsRunning;
+
+					if (isRunning)
+						script.Stop();
+
+					Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename, text, wait, loop, run, autostart);
+					reloaded.Create(null);
+					Scripts.EnhancedScripts[m_Filename] = reloaded;
+
+					if (isRunning)
+						reloaded.Start();
+				}
+			}
+		}
+
 		private void Save()
 		{
 			if (m_Filename != String.Empty)
@@ -1757,31 +1786,7 @@ namespace RazorEnhanced.UI
 				}
 				catch { }
 
-				Scripts.EnhancedScript script = Scripts.Search(m_Filename);
-				if (script != null)
-				{
-					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename);
-
-					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename))
-					{
-						string text = File.ReadAllText(fullpath);
-						bool loop = script.Loop;
-						bool wait = script.Wait;
-						bool run = script.Run;
-						bool autostart = script.AutoStart;
-						bool isRunning = script.IsRunning;
-
-						if (isRunning)
-							script.Stop();
-
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename, text, wait, loop, run, autostart);
-						reloaded.Create(null);
-						Scripts.EnhancedScripts[m_Filename] = reloaded;
-
-						if (isRunning)
-							reloaded.Start();
-					}
-				}
+				ReloadAfterSave();
 			}
 			else
 			{
@@ -1802,34 +1807,9 @@ namespace RazorEnhanced.UI
 				m_Filename = Path.GetFileName(save.FileName);
 				this.Text = m_Title;
 				m_Filepath = save.FileName;
+				m_Filename = Path.GetFileName(save.FileName);
 				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
-
-				string filename = Path.GetFileName(save.FileName);
-				Scripts.EnhancedScript script = Scripts.Search(filename);
-				if (script != null)
-				{
-					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", filename);
-
-					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(filename))
-					{
-						string text = File.ReadAllText(fullpath);
-						bool loop = script.Loop;
-						bool wait = script.Wait;
-						bool run = script.Run;
-						bool isRunning = script.IsRunning;
-						bool autostart = script.AutoStart;
-
-						if (isRunning)
-							script.Stop();
-
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
-						reloaded.Create(null);
-						Scripts.EnhancedScripts[filename] = reloaded;
-
-						if (isRunning)
-							reloaded.Start();
-					}
-				}
+				ReloadAfterSave();
 			}
 		}
 
@@ -1853,6 +1833,7 @@ namespace RazorEnhanced.UI
 				if (m_Filename != null && m_Filename != String.Empty)
 				{
 					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+					ReloadAfterSave();
 				}
 				else
 				{
@@ -1865,7 +1846,11 @@ namespace RazorEnhanced.UI
 					if (save.ShowDialog() == DialogResult.OK)
 					{
 						if (save.FileName != null && save.FileName != string.Empty && fastColoredTextBoxEditor.Text != null)
+						{
 							File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+							m_Filename = save.FileName;
+							ReloadAfterSave();
+						}
 					}
 					else
 						return false;
