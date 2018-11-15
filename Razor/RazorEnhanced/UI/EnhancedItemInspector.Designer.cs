@@ -1,4 +1,6 @@
-﻿namespace RazorEnhanced.UI
+﻿using IronPython.Modules;
+
+namespace RazorEnhanced.UI
 {
 	partial class EnhancedItemInspector
 	{
@@ -27,7 +29,7 @@
             this.lName = new System.Windows.Forms.Label();
             this.lSerial = new System.Windows.Forms.TextBox();
             this.lItemID = new System.Windows.Forms.TextBox();
-            this.lColor = new System.Windows.Forms.Label();
+            this.lColor = new System.Windows.Forms.TextBox();
             this.lPosition = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -39,11 +41,11 @@
             this.bSerialCopy = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lContainer = new System.Windows.Forms.Label();
+            this.lContainer = new System.Windows.Forms.TextBox();
             this.lOwned = new System.Windows.Forms.Label();
             this.lLayer = new System.Windows.Forms.Label();
             this.lAmount = new System.Windows.Forms.Label();
-            this.lRootContainer = new System.Windows.Forms.Label();
+            this.lRootContainer = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.bOwnedCopy = new System.Windows.Forms.Button();
@@ -159,9 +161,10 @@
             // 
             // lColor
             // 
-            this.lColor.AutoSize = true;
+            this.lColor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lColor.Location = new System.Drawing.Point(97, 124);
             this.lColor.Name = "lColor";
+            this.lColor.ReadOnly = true;
             this.lColor.Size = new System.Drawing.Size(42, 13);
             this.lColor.TabIndex = 14;
             this.lColor.Text = "0x0000";
@@ -299,9 +302,10 @@
             // 
             // lContainer
             // 
-            this.lContainer.AutoSize = true;
+            this.lContainer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lContainer.Location = new System.Drawing.Point(147, 34);
             this.lContainer.Name = "lContainer";
+            this.lContainer.ReadOnly = true;
             this.lContainer.Size = new System.Drawing.Size(66, 13);
             this.lContainer.TabIndex = 18;
             this.lContainer.Text = "0x00000000";
@@ -335,9 +339,10 @@
             // 
             // lRootContainer
             // 
-            this.lRootContainer.AutoSize = true;
+            this.lRootContainer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lRootContainer.Location = new System.Drawing.Point(147, 64);
             this.lRootContainer.Name = "lRootContainer";
+            this.lRootContainer.ReadOnly = true;
             this.lRootContainer.Size = new System.Drawing.Size(66, 13);
             this.lRootContainer.TabIndex = 9;
             this.lRootContainer.Text = "0x00000000";
@@ -727,13 +732,13 @@
 		private System.Windows.Forms.Label lName;
 		private System.Windows.Forms.TextBox lSerial;
 		private System.Windows.Forms.TextBox lItemID;
-		private System.Windows.Forms.Label lColor;
+		private System.Windows.Forms.TextBox lColor;
 		private System.Windows.Forms.Label lPosition;
-		private System.Windows.Forms.Label lContainer;
+		private System.Windows.Forms.TextBox lContainer;
 		private System.Windows.Forms.Label lOwned;
 		private System.Windows.Forms.Label lLayer;
 		private System.Windows.Forms.Label lAmount;
-		private System.Windows.Forms.Label lRootContainer;
+		private System.Windows.Forms.TextBox lRootContainer;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Label movableflaglabel;
 		private System.Windows.Forms.Label label17;
