@@ -744,6 +744,11 @@ namespace RazorEnhanced
 					}
 					break;
 
+				case "Inspect Item/Ground":
+					ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
+					Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
+					break;
+
 				default:
 					break;
 			}
