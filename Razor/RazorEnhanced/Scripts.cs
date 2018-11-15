@@ -17,6 +17,8 @@ namespace RazorEnhanced
 	internal class Scripts
 	{
 		internal static Thread ScriptEditorThread;
+		internal static bool ScriptErrorLog = false;
+		internal static bool ScriptStartStopMessage = false;
 
 		internal enum RunMode
 		{
@@ -70,7 +72,7 @@ namespace RazorEnhanced
 					if (ex is System.Threading.ThreadAbortException)
 						return;
 
-					if (Settings.General.ReadBool("ScriptErrorLog")) // enabled log of error
+					if (ScriptErrorLog) // enabled log of error
 					{
 						StringBuilder log = new StringBuilder();
 						log.Append(Environment.NewLine + "============================ START REPORT ============================ " + Environment.NewLine);
@@ -315,6 +317,20 @@ namespace RazorEnhanced
 				}
 			}
 
+			private bool m_StopMessage = false;
+			internal bool StopMessage
+			{
+				get { return m_StopMessage; }
+				set { m_StopMessage = value; }
+			}
+
+			private bool m_StartMessage = true;
+			internal bool StartMessage
+			{
+				get { return m_StartMessage; }
+				set { m_StartMessage = value; }
+			}
+
 			private ScriptEngine m_Engine;
 			private ScriptScope m_Scope;
 			private ScriptSource m_Source;
@@ -424,6 +440,13 @@ namespace RazorEnhanced
 				{
 					if (script.Run)
 					{
+						if (ScriptStartStopMessage && script.StartMessage)
+						{
+							Misc.SendMessage("Script <" + script.Filename + "> started.", 70, false);
+							script.StartMessage = false;
+							script.StopMessage = true;
+						}
+
 						if (script.Loop)
 						{
 							if (script.IsStopped)
@@ -442,15 +465,18 @@ namespace RazorEnhanced
 					}
 					else
 					{
-						if (script.IsRunning)
+						if (ScriptStartStopMessage && script.StopMessage)
 						{
-							script.Stop();
+							Misc.SendMessage("Script <" + script.Filename + "> stopped.", 70, false);
+							script.StartMessage = true;
+							script.StopMessage = false;
 						}
 
+						if (script.IsRunning)
+							script.Stop();
+
 						if (script.IsStopped)
-						{
 							script.Reset();
-						}
 					}
 				}
 
@@ -458,7 +484,7 @@ namespace RazorEnhanced
 				{
 					if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
 					{
-							try
+						try
 						{
 							m_AutoLootThread = new Thread(AutoLoot.AutoRun);
 							m_AutoLootThread.Start();
