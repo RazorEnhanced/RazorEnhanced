@@ -36,7 +36,7 @@ namespace RazorEnhanced
 			int i = 0;
 			foreach (string stext in texts)
 			{
-				AddLog("Text ID: " + i + " String: +" + stext);
+				AddLog("Text ID: " + i + " String: " + stext);
 				i++;
 			}
 		}
