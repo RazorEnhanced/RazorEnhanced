@@ -688,23 +688,26 @@ namespace Assistant
 		internal GumpResponse(uint serial, uint tid, int bid, int[] switches, GumpTextEntry[] entries)
 			: base(0xB1)
 		{
-			EnsureCapacity(3 + 4 + 4 + 4 + 4 + switches.Length * 4 + 4 + entries.Length * 4);
+			int txtlenght = 0;
+			foreach (GumpTextEntry t in entries) // Calculate dynamic lenght of all text
+				txtlenght += t.Text.Length;
+
+			EnsureCapacity(3 + 4 + 4 + 4 + 4 + switches.Length * 4 + 4 + entries.Length * 4 + txtlenght * 2);
 
 			Write((uint)serial);
 			Write((uint)tid);
-
 			Write((int)bid);
 
 			Write((int)switches.Length);
 			foreach (int t in switches)
 				Write((int)t);
+
 			Write((int)entries.Length);
 			foreach (GumpTextEntry t in entries)
 			{
-				GumpTextEntry gte = (GumpTextEntry)t;
-				Write((ushort)gte.EntryID);
-				Write((ushort)(gte.Text.Length * 2));
-				WriteBigUniFixed(gte.Text, gte.Text.Length);
+				Write((short) t.EntryID);
+				Write((short) t.Text.Length);
+				WriteBigUniFixed(t.Text, t.Text.Length);
 			}
 		}
 	}

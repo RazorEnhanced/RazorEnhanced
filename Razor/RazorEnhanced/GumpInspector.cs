@@ -29,16 +29,9 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void GumpResponseAddLogTextID(List<string> texts)
+		internal static void GumpResponseAddLogTextID(int id, string text)
 		{
-			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-				return;
-			int i = 0;
-			foreach (string stext in texts)
-			{
-				AddLog("Text ID: " + i + " String: " + stext);
-				i++;
-			}
+			AddLog("Text ID: " + id + " String: " + text);
 		}
 
 		internal static void GumpResponseAddLogEnd()
