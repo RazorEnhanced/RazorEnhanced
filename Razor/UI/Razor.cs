@@ -876,6 +876,7 @@ namespace Assistant
 		private RazorButton targetChoseHue;
 		private RazorButton targetChoseBody;
 		private RazorCheckBox bandagehealAutostartCheckBox;
+		private RazorCheckBox scriptshowStartStopCheckBox;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1263,6 +1264,7 @@ namespace Assistant
 			this.razorButtonCreateUODAccount = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
 			this.scriptingTab = new System.Windows.Forms.TabPage();
+			this.scriptshowStartStopCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox42 = new System.Windows.Forms.GroupBox();
 			this.scriptSearchTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -5050,6 +5052,7 @@ namespace Assistant
 			// scriptingTab
 			// 
 			this.scriptingTab.BackColor = System.Drawing.SystemColors.Control;
+			this.scriptingTab.Controls.Add(this.scriptshowStartStopCheckBox);
 			this.scriptingTab.Controls.Add(this.groupBox42);
 			this.scriptingTab.Controls.Add(this.scripterrorlogCheckBox);
 			this.scriptingTab.Controls.Add(this.showscriptmessageCheckBox);
@@ -5063,12 +5066,21 @@ namespace Assistant
 			this.scriptingTab.TabIndex = 12;
 			this.scriptingTab.Text = "Enhanced Scripting";
 			// 
+			// scriptshowStartStopCheckBox
+			// 
+			this.scriptshowStartStopCheckBox.Location = new System.Drawing.Point(488, 342);
+			this.scriptshowStartStopCheckBox.Name = "scriptshowStartStopCheckBox";
+			this.scriptshowStartStopCheckBox.Size = new System.Drawing.Size(175, 22);
+			this.scriptshowStartStopCheckBox.TabIndex = 76;
+			this.scriptshowStartStopCheckBox.Text = "Show Start/Stop Message";
+			this.scriptshowStartStopCheckBox.CheckedChanged += new System.EventHandler(this.scriptshowStartStopCheckBox_CheckedChanged);
+			// 
 			// groupBox42
 			// 
 			this.groupBox42.Controls.Add(this.scriptSearchTextBox);
-			this.groupBox42.Location = new System.Drawing.Point(488, 256);
+			this.groupBox42.Location = new System.Drawing.Point(482, 249);
 			this.groupBox42.Name = "groupBox42";
-			this.groupBox42.Size = new System.Drawing.Size(169, 54);
+			this.groupBox42.Size = new System.Drawing.Size(175, 54);
 			this.groupBox42.TabIndex = 75;
 			this.groupBox42.TabStop = false;
 			this.groupBox42.Text = "Search";
@@ -5084,7 +5096,7 @@ namespace Assistant
 			// 
 			// scripterrorlogCheckBox
 			// 
-			this.scripterrorlogCheckBox.Location = new System.Drawing.Point(488, 316);
+			this.scripterrorlogCheckBox.Location = new System.Drawing.Point(488, 302);
 			this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
 			this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 22);
 			this.scripterrorlogCheckBox.TabIndex = 74;
@@ -5093,11 +5105,11 @@ namespace Assistant
 			// 
 			// showscriptmessageCheckBox
 			// 
-			this.showscriptmessageCheckBox.Location = new System.Drawing.Point(488, 336);
+			this.showscriptmessageCheckBox.Location = new System.Drawing.Point(488, 322);
 			this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
-			this.showscriptmessageCheckBox.Size = new System.Drawing.Size(160, 22);
+			this.showscriptmessageCheckBox.Size = new System.Drawing.Size(175, 22);
 			this.showscriptmessageCheckBox.TabIndex = 72;
-			this.showscriptmessageCheckBox.Text = "Show Script Message";
+			this.showscriptmessageCheckBox.Text = "Show Script Error Message";
 			this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
 			// 
 			// groupBox31
@@ -9122,8 +9134,9 @@ namespace Assistant
 			txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
 
 			// Script
-			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
-			scripterrorlogCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ScriptErrorLog");
+			showscriptmessageCheckBox.Checked = Settings.General.ReadBool("ShowScriptMessageCheckBox");
+			scripterrorlogCheckBox.Checked = Scripts.ScriptErrorLog = Settings.General.ReadBool("ScriptErrorLog");
+			scriptshowStartStopCheckBox.Checked = Scripts.ScriptStartStopMessage = Settings.General.ReadBool("ScriptStartStopMessage");
 
 			// UoMod
 			if (Engine.ClientMajor >= 7 ) //&& Engine.ClientBuild < 49)
@@ -10850,7 +10863,18 @@ namespace Assistant
 		private void scripterrorlogCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (scripterrorlogCheckBox.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("ScriptErrorLog", scripterrorlogCheckBox.Checked);
+				Scripts.ScriptErrorLog = scripterrorlogCheckBox.Checked;
+			}
+		}
+		private void scriptshowStartStopCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (scriptshowStartStopCheckBox.Focused)
+			{
+				RazorEnhanced.Settings.General.WriteBool("ScriptStartStopMessage", scriptshowStartStopCheckBox.Checked);
+				Scripts.ScriptStartStopMessage = scriptshowStartStopCheckBox.Checked;
+			}
 		}
 
 		private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
@@ -15715,8 +15739,6 @@ namespace Assistant
 				targethueGridView.BeginInvoke((MethodInvoker)delegate { targethueGridView.Rows.Add(new object[] { "0x" + mob.Hue.ToString("X4") }); });
 
 		}
-
-
 		// ----------------- STOP TARGET -------------------
 	}
 }

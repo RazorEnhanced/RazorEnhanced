@@ -2286,7 +2286,6 @@ namespace Assistant
 			uint tid = p.ReadUInt32();
 			int bid = p.ReadInt32();
 			List<int> switchesid = new List<int>();
-			List<string> texts = new List<string>();
 
 			RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, tid, bid);
 
@@ -2308,18 +2307,19 @@ namespace Assistant
 			int ec = p.ReadInt32();
 			if (ec < 0 || ec > 2000)
 				return;
-			GumpTextEntry[] entries = new GumpTextEntry[ec];
+
 			for (int i = 0; i < ec; i++)
 			{
 				ushort id = p.ReadUInt16();
 				ushort len = p.ReadUInt16();
+
 				if (len >= 240)
 					return;
 				string text = p.ReadUnicodeStringSafe(len);
-				entries[i] = new GumpTextEntry(id, text);
-				texts.Add(entries[i].Text);
+
+				RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(id, text);
 			}
-			RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(texts);
+
 			RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)

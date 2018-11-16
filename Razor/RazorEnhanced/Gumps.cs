@@ -102,6 +102,11 @@ namespace RazorEnhanced
 			World.Player.CurrentGumpStrings.Clear();
 			World.Player.CurrentGumpTile.Clear();
 		}
+		public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> entryID, List<string> entryS)
+		{
+			List<int> switchs = new List<int>();
+			SendAdvancedAction(gumpid, buttonid, switchs, entryID, entryS);
+		}
 
 		public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> switchs, List<int> entryID, List<string> entryS)
 		{
@@ -109,9 +114,10 @@ namespace RazorEnhanced
 			{
 				int i = 0;
 				GumpTextEntry[] entries = new GumpTextEntry[entryID.Count];
-				GumpTextEntry entrie = null;
+
 				foreach (int entry in entryID)
 				{
+					GumpTextEntry entrie = new GumpTextEntry(0, string.Empty);
 					entrie.EntryID = (ushort)entry;
 					entrie.Text = entryS[i];
 					entries[i] = entrie;
