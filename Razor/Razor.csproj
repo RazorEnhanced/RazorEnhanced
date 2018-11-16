@@ -424,16 +424,25 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\AutoLoot.cs">
+    <Compile Include="UI\Agent\AutoLoot.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\BandageHeal.cs">
+    <Compile Include="UI\Agent\BandageHeal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dress.cs">
+    <Compile Include="UI\Agent\Dress.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Friends.cs">
+    <Compile Include="UI\Filter\EN-Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Agent\Friends.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Filter\Filters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Other\Hotkey.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\HueEntry.cs">
@@ -442,16 +451,25 @@
     <Compile Include="UI\Languages.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\Organizer.cs">
+    <Compile Include="UI\Agent\Organizer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Razor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Restock.cs">
+    <Compile Include="UI\Agent\Restock.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Scavenger.cs">
+    <Compile Include="UI\Agent\Scavenger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Grids-Bars\SpellGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Other\Script.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Video-Screen\ScreenShot.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SplashScreen.cs">
@@ -469,10 +487,16 @@
     <Compile Include="Core\ZLib.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\VendorBuy.cs">
+    <Compile Include="UI\Grids-Bars\Toolbar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\VendorSell.cs">
+    <Compile Include="UI\Agent\VendorBuy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Agent\VendorSell.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Video-Screen\VideoRecorder.cs">
       <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -667,6 +691,7 @@
       <Name>Ultima</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
