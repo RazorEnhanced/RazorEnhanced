@@ -24,11 +24,11 @@
             this.bNameCopy = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.imagepanel = new System.Windows.Forms.Panel();
-            this.lName = new System.Windows.Forms.Label();
+            this.lName = new System.Windows.Forms.TextBox();
             this.lSerial = new System.Windows.Forms.TextBox();
             this.lMobileID = new System.Windows.Forms.TextBox();
             this.lColor = new System.Windows.Forms.TextBox();
-            this.lPosition = new System.Windows.Forms.Label();
+            this.lPosition = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.bPositionCopy = new System.Windows.Forms.Button();
@@ -42,11 +42,11 @@
             this.pStam = new System.Windows.Forms.ProgressBar();
             this.pMana = new System.Windows.Forms.ProgressBar();
             this.pHits = new System.Windows.Forms.ProgressBar();
-            this.lHits = new System.Windows.Forms.Label();
-            this.lDirection = new System.Windows.Forms.Label();
-            this.lNotoriety = new System.Windows.Forms.Label();
-            this.lStam = new System.Windows.Forms.Label();
-            this.lMana = new System.Windows.Forms.Label();
+            this.lHits = new System.Windows.Forms.TextBox();
+            this.lDirection = new System.Windows.Forms.TextBox();
+            this.lNotoriety = new System.Windows.Forms.TextBox();
+            this.lStam = new System.Windows.Forms.TextBox();
+            this.lMana = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.bOwnedCopy = new System.Windows.Forms.Button();
@@ -123,17 +123,19 @@
             // imagepanel
             // 
             this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.imagepanel.Location = new System.Drawing.Point(186, 62);
+            this.imagepanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imagepanel.Location = new System.Drawing.Point(199, 53);
             this.imagepanel.Name = "imagepanel";
-            this.imagepanel.Size = new System.Drawing.Size(124, 113);
+            this.imagepanel.Size = new System.Drawing.Size(100, 95);
             this.imagepanel.TabIndex = 18;
             // 
             // lName
             // 
-            this.lName.AutoSize = true;
+            this.lName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lName.Location = new System.Drawing.Point(105, 36);
             this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(23, 13);
+            this.lName.ReadOnly = true;
+            this.lName.Size = new System.Drawing.Size(211, 13);
             this.lName.TabIndex = 17;
             this.lName.Text = "null";
             // 
@@ -142,7 +144,7 @@
             this.lSerial.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lSerial.Location = new System.Drawing.Point(105, 64);
             this.lSerial.Name = "lSerial";
-		    this.lSerial.ReadOnly = true;
+            this.lSerial.ReadOnly = true;
             this.lSerial.Size = new System.Drawing.Size(66, 13);
             this.lSerial.TabIndex = 16;
             this.lSerial.Text = "0x00000000";
@@ -152,7 +154,7 @@
             this.lMobileID.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lMobileID.Location = new System.Drawing.Point(105, 96);
             this.lMobileID.Name = "lMobileID";
-		    this.lMobileID.ReadOnly = true;
+            this.lMobileID.ReadOnly = true;
             this.lMobileID.Size = new System.Drawing.Size(42, 13);
             this.lMobileID.TabIndex = 15;
             this.lMobileID.Text = "0x0000";
@@ -162,17 +164,18 @@
             this.lColor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lColor.Location = new System.Drawing.Point(105, 124);
             this.lColor.Name = "lColor";
-		    this.lColor.ReadOnly = true;
+            this.lColor.ReadOnly = true;
             this.lColor.Size = new System.Drawing.Size(42, 13);
             this.lColor.TabIndex = 14;
             this.lColor.Text = "0x0000";
             // 
             // lPosition
             // 
-            this.lPosition.AutoSize = true;
+            this.lPosition.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lPosition.Location = new System.Drawing.Point(105, 154);
             this.lPosition.Name = "lPosition";
-            this.lPosition.Size = new System.Drawing.Size(37, 13);
+            this.lPosition.ReadOnly = true;
+            this.lPosition.Size = new System.Drawing.Size(104, 13);
             this.lPosition.TabIndex = 13;
             this.lPosition.Text = "0, 0, 0";
             // 
@@ -323,46 +326,51 @@
             // 
             // lHits
             // 
-            this.lHits.AutoSize = true;
+            this.lHits.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lHits.Location = new System.Drawing.Point(258, 34);
             this.lHits.Name = "lHits";
-            this.lHits.Size = new System.Drawing.Size(30, 13);
+            this.lHits.ReadOnly = true;
+            this.lHits.Size = new System.Drawing.Size(52, 13);
             this.lHits.TabIndex = 18;
             this.lHits.Text = "0 / 0";
             // 
             // lDirection
             // 
-            this.lDirection.AutoSize = true;
+            this.lDirection.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lDirection.Location = new System.Drawing.Point(147, 154);
             this.lDirection.Name = "lDirection";
-            this.lDirection.Size = new System.Drawing.Size(13, 13);
+            this.lDirection.ReadOnly = true;
+            this.lDirection.Size = new System.Drawing.Size(103, 13);
             this.lDirection.TabIndex = 12;
             this.lDirection.Text = "0";
             // 
             // lNotoriety
             // 
-            this.lNotoriety.AutoSize = true;
+            this.lNotoriety.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lNotoriety.Location = new System.Drawing.Point(147, 126);
             this.lNotoriety.Name = "lNotoriety";
-            this.lNotoriety.Size = new System.Drawing.Size(13, 13);
+            this.lNotoriety.ReadOnly = true;
+            this.lNotoriety.Size = new System.Drawing.Size(103, 13);
             this.lNotoriety.TabIndex = 11;
             this.lNotoriety.Text = "0";
             // 
             // lStam
             // 
-            this.lStam.AutoSize = true;
+            this.lStam.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lStam.Location = new System.Drawing.Point(258, 94);
             this.lStam.Name = "lStam";
-            this.lStam.Size = new System.Drawing.Size(30, 13);
+            this.lStam.ReadOnly = true;
+            this.lStam.Size = new System.Drawing.Size(52, 13);
             this.lStam.TabIndex = 10;
             this.lStam.Text = "0 / 0";
             // 
             // lMana
             // 
-            this.lMana.AutoSize = true;
+            this.lMana.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lMana.Location = new System.Drawing.Point(258, 64);
             this.lMana.Name = "lMana";
-            this.lMana.Size = new System.Drawing.Size(30, 13);
+            this.lMana.ReadOnly = true;
+            this.lMana.Size = new System.Drawing.Size(52, 13);
             this.lMana.TabIndex = 9;
             this.lMana.Text = "0 / 0";
             // 
@@ -706,16 +714,16 @@
 		private System.Windows.Forms.GroupBox groupBox3;
 		private RazorButton razorButton1;
 		private System.Windows.Forms.Button bSerialCopy;
-		private System.Windows.Forms.Label lName;
+		private System.Windows.Forms.TextBox lName;
 		private System.Windows.Forms.TextBox lSerial;
 		private System.Windows.Forms.TextBox lMobileID;
 		private System.Windows.Forms.TextBox lColor;
-		private System.Windows.Forms.Label lPosition;
-		private System.Windows.Forms.Label lHits;
-		private System.Windows.Forms.Label lDirection;
-		private System.Windows.Forms.Label lNotoriety;
-		private System.Windows.Forms.Label lStam;
-		private System.Windows.Forms.Label lMana;
+		private System.Windows.Forms.TextBox lPosition;
+		private System.Windows.Forms.TextBox lHits;
+		private System.Windows.Forms.TextBox lDirection;
+		private System.Windows.Forms.TextBox lNotoriety;
+		private System.Windows.Forms.TextBox lStam;
+		private System.Windows.Forms.TextBox lMana;
 		private System.Windows.Forms.Label lFlagHidden;
 		private System.Windows.Forms.Label lFlagWar;
 		private System.Windows.Forms.Label lFlagPoisoned;
