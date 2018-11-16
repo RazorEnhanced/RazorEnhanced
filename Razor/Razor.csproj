@@ -433,6 +433,12 @@
     <Compile Include="UI\Agent\Dress.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\Agent\Common.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Agent\DPSMeter.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\Filter\EN-Filters.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -454,6 +460,9 @@
     <Compile Include="UI\Agent\Organizer.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\Other\Profile.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\Razor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -467,6 +476,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Other\Script.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Other\Skills.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Other\Target.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Video-Screen\ScreenShot.cs">

@@ -1,26 +1,16 @@
-﻿using Assistant.Filters;
-using RazorEnhanced;
-using RazorEnhanced.UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
+﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Linq;
-using Accord.Video.DirectShow;
-using AutoUpdaterDotNET;
-
 
 namespace Assistant
 {
 	internal partial class MainForm : System.Windows.Forms.Form
 	{
+		internal TextBox ScreenPath { get { return screenPath; } }
+
 		private void screenAutoCap_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (screenAutoCap.Focused)
@@ -185,6 +175,33 @@ namespace Assistant
 			if (dispTime.Focused)
 				RazorEnhanced.Settings.General.WriteBool("CapTimeStamp", dispTime.Checked);
 		}
+		private void screenPath_TextChanged(object sender, System.EventArgs e)
+		{
+			RazorEnhanced.Settings.General.WriteString("CapPath", screenPath.Text);
+		}
 
+		private void imgFmt_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			if (imgFmt.SelectedIndex != -1)
+				RazorEnhanced.Settings.General.WriteString("ImageFormat", imgFmt.SelectedItem.ToString());
+			else
+				RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
+		}
+
+		private void screenPrev_Click(object sender, System.EventArgs e)
+		{
+			if (screensList.SelectedItem is String file)
+			{
+				string tostart = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file);
+				if (File.Exists(tostart))
+					return;
+
+				try
+				{
+					Process.Start(tostart);
+				}
+				catch { }
+			}
+		}
 	}
 }

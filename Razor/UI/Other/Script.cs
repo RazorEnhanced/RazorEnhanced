@@ -1,26 +1,19 @@
-﻿using Assistant.Filters;
-using RazorEnhanced;
+﻿using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
-using Accord.Video.DirectShow;
-using AutoUpdaterDotNET;
-
 
 namespace Assistant
 {
 	internal partial class MainForm : System.Windows.Forms.Form
 	{
+		private DataTable scriptTable;
+
 		private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart)
 		{
 			string status = "Loaded";

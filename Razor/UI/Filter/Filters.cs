@@ -2,20 +2,8 @@
 using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Linq;
-using Accord.Video.DirectShow;
-using AutoUpdaterDotNET;
-
 
 namespace Assistant
 {
@@ -531,5 +519,71 @@ namespace Assistant
 			{
 			}
 		}
+
+		private void incomingMob_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (incomingMob.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ShowMobNames", incomingMob.Checked);
+		}
+
+		private void incomingCorpse_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (incomingCorpse.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ShowCorpseNames", incomingCorpse.Checked);
+		}
+
+		private void alwaysTop_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (alwaysTop.Focused)
+				RazorEnhanced.Settings.General.WriteBool("AlwaysOnTop", this.TopMost = alwaysTop.Checked);
+		}
+
+		private void opacity_Scroll(object sender, System.EventArgs e)
+		{
+			int o = opacity.Value;
+
+			if (opacity.Focused)
+				RazorEnhanced.Settings.General.WriteInt("Opacity", o);
+
+			opacityLabel.Text = String.Format("Opacity: {0}%", o);
+			this.Opacity = ((double)o) / 100.0;
+		}
+
+
+
+
+		private void taskbar_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (taskbar.Focused)
+			{
+				if (taskbar.Checked)
+				{
+					systray.Checked = false;
+					RazorEnhanced.Settings.General.WriteBool("Systray", false);
+					if (!this.ShowInTaskbar)
+						MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+			}
+		}
+
+		private void systray_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (systray.Focused)
+			{
+				if (systray.Checked)
+				{
+					taskbar.Checked = false;
+					RazorEnhanced.Settings.General.WriteBool("Systray", true);
+					if (this.ShowInTaskbar)
+						MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+			}
+		}
+
+		private void OnFilterCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
+		{
+			((Filter)filters.Items[e.Index]).OnCheckChanged(e.NewValue);
+		}
+
 	}
 }
