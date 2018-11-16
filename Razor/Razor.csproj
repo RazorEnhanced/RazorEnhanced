@@ -209,7 +209,9 @@
     <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Timer.cs" />
+    <Compile Include="RazorEnhanced\Timer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RazorEnhanced\Statics.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />
     <Compile Include="RazorEnhanced\Profiles.cs" />
@@ -422,13 +424,34 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\AutoLoot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BandageHeal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Friends.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\HueEntry.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Languages.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\Organizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\Razor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Restock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Scavenger.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\SplashScreen.cs">
@@ -445,6 +468,12 @@
     </Compile>
     <Compile Include="Core\ZLib.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\VendorBuy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\VendorSell.cs">
+      <SubType>Form</SubType>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
