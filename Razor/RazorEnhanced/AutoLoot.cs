@@ -253,13 +253,19 @@ namespace RazorEnhanced
 
 				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
-				if (row.Cells[4].Value != null)
-					Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));
-				else
-					Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<AutoLootItem.Property>()));
-			}
+                int itemID = 0;
+                if ((string)row.Cells[2].Value == "All")
+                    itemID = -1;
+                else
+                    itemID = Convert.ToInt32((string)row.Cells[2].Value, 16);
 
-			Settings.Save(); // Salvo dati
+                if (row.Cells[4].Value != null)
+                    Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));
+                else
+                    Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, new List<AutoLootItem.Property>()));
+            }
+
+            Settings.Save(); // Salvo dati
 			LockTable = false;
 
 		}
@@ -385,20 +391,21 @@ namespace RazorEnhanced
 
 					foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
 					{
-						if (autoLootItem.Color == -1)          // Colore ALL
-						{
-							if (oggettoContenuto.ItemID != autoLootItem.Graphics)
-								continue;
-							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
-						}
-						else
-						{
-							if (oggettoContenuto.ItemID != autoLootItem.Graphics || oggettoContenuto.Hue != autoLootItem.Color)
-								continue;
-							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
-						}
-					}
-				}
+                        if ((autoLootItem.Graphics == oggettoContenuto.ItemID) // match itemID
+                            ||
+                            (autoLootItem.Graphics == -1)  // match ALL id
+                            )
+                        {
+                            if ((autoLootItem.Color == oggettoContenuto.Hue)
+                                ||
+                                (autoLootItem.Color == -1)
+                               )
+                            {
+                                GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
+                            }
+                        }
+                    }
+                }
 			}
 		}
 
