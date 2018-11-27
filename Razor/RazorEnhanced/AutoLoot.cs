@@ -391,15 +391,9 @@ namespace RazorEnhanced
 
 					foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
 					{
-                        if ((autoLootItem.Graphics == oggettoContenuto.ItemID) // match itemID
-                            ||
-                            (autoLootItem.Graphics == -1)  // match ALL id
-                            )
+                        if (autoLootItem.Graphics == oggettoContenuto.ItemID || autoLootItem.Graphics == -1)  // match ALL id
                         {
-                            if ((autoLootItem.Color == oggettoContenuto.Hue)
-                                ||
-                                (autoLootItem.Color == -1)
-                               )
+                            if (autoLootItem.Color == oggettoContenuto.Hue || autoLootItem.Color == -1)
                             {
                                 GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
                             }

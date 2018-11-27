@@ -291,7 +291,7 @@ namespace Assistant
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				cell.Value = Utility.FormatDatagridItemIDCell(cell);
+				cell.Value = Utility.FormatDatagridItemIDCellAutoLoot(cell);
 			}
 			RazorEnhanced.AutoLoot.CopyTable();
 		}

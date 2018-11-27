@@ -352,7 +352,25 @@ namespace Assistant
 				return amount.ToString();
 			}
 		}
+
 		internal static string FormatDatagridItemIDCell(DataGridViewCell cell)
+		{
+			int itemid = m_maxvalue;
+			if (cell.Value != null && !cell.Value.ToString().Contains("-"))
+			{
+				try
+				{
+					itemid = Convert.ToInt32((string)cell.Value, 16);
+				}
+				catch { }
+
+				if (itemid > m_maxvalue)
+					itemid = m_maxvalue;
+			}
+			return "0x" + itemid.ToString("X4");
+		}
+
+		internal static string FormatDatagridItemIDCellAutoLoot(DataGridViewCell cell)
 		{
             int itemid = m_maxvalue;
 
