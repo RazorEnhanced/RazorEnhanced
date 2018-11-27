@@ -115,6 +115,28 @@ namespace Assistant
 			}
 		}
 
+		internal void UpdateSkill(Skill skill)
+		{
+			double Total = 0;
+			for (int i = 0; i < Skill.Count; i++)
+				Total += World.Player.Skills[i].Base;
+			baseTotal.Text = String.Format("{0:F1}", Total);
+			for (int i = 0; i < skillList.Items.Count; i++)
+			{
+				ListViewItem cur = skillList.Items[i];
+				if (cur.Tag == skill)
+				{
+					cur.SubItems[1].Text = String.Format("{0:F1}", skill.Value);
+					cur.SubItems[2].Text = String.Format("{0:F1}", skill.Base);
+					cur.SubItems[3].Text = String.Format("{0}{1:F1}", (skill.Delta > 0 ? "+" : String.Empty), skill.Delta);
+					cur.SubItems[4].Text = String.Format("{0:F1}", skill.Cap);
+					cur.SubItems[5].Text = skill.Lock.ToString()[0].ToString();
+					SortSkills();
+					return;
+				}
+			}
+		}
+
 		private void OnSkillColClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
 		{
 			if (e.Column == RazorEnhanced.Settings.General.ReadInt("SkillListCol"))
