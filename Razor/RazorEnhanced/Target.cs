@@ -223,12 +223,21 @@ namespace RazorEnhanced
 			return m_pgtarget;
 		}
 
-		private void PromptGroundTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
-			if (!loc)
-				m_pgtarget = Point3D.MinusOne;
-			else
-				m_pgtarget = new Point3D(pt.X, pt.Y, pt.Z);
+        private void PromptGroundTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            if (!loc)
+            {
+                Mobile target = Mobiles.FindBySerial(serial);
+                if (target == null)
+                {
+                    m_pgtarget = Point3D.MinusOne;
+}
+                else {
+                    m_pgtarget = target.Position;
+                }
+            }
+            else
+                m_pgtarget = new Point3D(pt.X, pt.Y, pt.Z);
 		}
 
 		// Check Poison 

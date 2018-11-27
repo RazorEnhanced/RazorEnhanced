@@ -354,49 +354,68 @@ namespace Assistant
 		}
 		internal static string FormatDatagridItemIDCell(DataGridViewCell cell)
 		{
-			int itemid = m_maxvalue;
-			if (cell.Value != null && !cell.Value.ToString().Contains("-"))
-			{
-				try
-				{
-					itemid = Convert.ToInt32((string)cell.Value, 16);
-				}
-				catch { }
+            int itemid = m_maxvalue;
 
-				if (itemid > m_maxvalue)
-					itemid = m_maxvalue;
-			}
-			return "0x" + itemid.ToString("X4");
-		}
+            if (cell.Value == null)
+                return "0x" + m_maxvalue.ToString("X4");
 
-		internal static string FormatDatagridColorCell(DataGridViewCell cell)
+            if ((cell.Value.ToString() == "All")
+                ||
+                (cell.Value.ToString().Contains("-"))
+                )
+            {
+                return "All";
+            }
+
+            try
+            {
+                itemid = Convert.ToInt32((string)cell.Value, 16);
+            }
+            catch { }
+
+            if (itemid > m_maxvalue)
+                itemid = m_maxvalue;
+
+            if (itemid == -1)
+            {
+                return "All";
+            }
+
+            return "0x" + itemid.ToString("X4");
+        }
+
+        internal static string FormatDatagridColorCell(DataGridViewCell cell)
 		{
-			int color = m_maxvalue;
-			if (cell.Value == null)
-				return "0x" + m_maxvalue.ToString("X4");
+            int color = m_maxvalue;
+            if (cell.Value == null)
+                return "0x" + m_maxvalue.ToString("X4");
 
-			if (cell.Value.ToString() == "-1")
-			{
-				return "All";
-			}
-			else
-			{
-				if (!cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						color = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
+            if ((cell.Value.ToString() == "All")
+                ||
+                (cell.Value.ToString().Contains("-"))
+                )
+            {
+                return "All";
+            }
 
-					if (color > m_maxvalue)
-						color = m_maxvalue;
-				}
-				return "0x" + color.ToString("X4");
-			}
-		}
+            try
+            {
+                color = Convert.ToInt32((string)cell.Value, 16);
+            }
+            catch { }
 
-		internal static string FormatDatagridColorGraphCell(DataGridViewCell cell)
+            if (color > m_maxvalue)
+                color = m_maxvalue;
+
+            if (color == -1)
+            {
+                return "All";
+            }
+
+            return "0x" + color.ToString("X4");
+        }
+
+        internal static string FormatDatagridColorGraphCell(DataGridViewCell cell)
 		{
 			int color = m_maxvalue;
 			if (cell.Value == null)

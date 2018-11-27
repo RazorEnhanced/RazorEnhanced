@@ -26,11 +26,11 @@ namespace RazorEnhanced.UI
             this.bNameCopy = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.imagepanel = new System.Windows.Forms.Panel();
-            this.lName = new System.Windows.Forms.Label();
+            this.lName = new System.Windows.Forms.TextBox();
             this.lSerial = new System.Windows.Forms.TextBox();
             this.lItemID = new System.Windows.Forms.TextBox();
             this.lColor = new System.Windows.Forms.TextBox();
-            this.lPosition = new System.Windows.Forms.Label();
+            this.lPosition = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.bPositionCopy = new System.Windows.Forms.Button();
@@ -42,9 +42,9 @@ namespace RazorEnhanced.UI
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lContainer = new System.Windows.Forms.TextBox();
-            this.lOwned = new System.Windows.Forms.Label();
-            this.lLayer = new System.Windows.Forms.Label();
-            this.lAmount = new System.Windows.Forms.Label();
+            this.lOwned = new System.Windows.Forms.TextBox();
+            this.lLayer = new System.Windows.Forms.TextBox();
+            this.lAmount = new System.Windows.Forms.TextBox();
             this.lRootContainer = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -125,17 +125,19 @@ namespace RazorEnhanced.UI
             // imagepanel
             // 
             this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.imagepanel.Location = new System.Drawing.Point(178, 64);
+            this.imagepanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imagepanel.Location = new System.Drawing.Point(178, 55);
             this.imagepanel.Name = "imagepanel";
-            this.imagepanel.Size = new System.Drawing.Size(132, 103);
+            this.imagepanel.Size = new System.Drawing.Size(132, 100);
             this.imagepanel.TabIndex = 18;
             // 
             // lName
             // 
-            this.lName.AutoSize = true;
+            this.lName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lName.Location = new System.Drawing.Point(97, 36);
             this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(23, 13);
+            this.lName.ReadOnly = true;
+            this.lName.Size = new System.Drawing.Size(213, 13);
             this.lName.TabIndex = 17;
             this.lName.Text = "null";
             // 
@@ -171,10 +173,11 @@ namespace RazorEnhanced.UI
             // 
             // lPosition
             // 
-            this.lPosition.AutoSize = true;
+            this.lPosition.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lPosition.Location = new System.Drawing.Point(97, 154);
             this.lPosition.Name = "lPosition";
-            this.lPosition.Size = new System.Drawing.Size(37, 13);
+            this.lPosition.ReadOnly = true;
+            this.lPosition.Size = new System.Drawing.Size(102, 13);
             this.lPosition.TabIndex = 13;
             this.lPosition.Text = "0, 0, 0";
             // 
@@ -312,27 +315,30 @@ namespace RazorEnhanced.UI
             // 
             // lOwned
             // 
-            this.lOwned.AutoSize = true;
+            this.lOwned.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lOwned.Location = new System.Drawing.Point(147, 154);
             this.lOwned.Name = "lOwned";
+            this.lOwned.ReadOnly = true;
             this.lOwned.Size = new System.Drawing.Size(21, 13);
             this.lOwned.TabIndex = 12;
             this.lOwned.Text = "No";
             // 
             // lLayer
             // 
-            this.lLayer.AutoSize = true;
+            this.lLayer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lLayer.Location = new System.Drawing.Point(147, 126);
             this.lLayer.Name = "lLayer";
-            this.lLayer.Size = new System.Drawing.Size(13, 13);
+            this.lLayer.ReadOnly = true;
+            this.lLayer.Size = new System.Drawing.Size(79, 13);
             this.lLayer.TabIndex = 11;
             this.lLayer.Text = "0";
             // 
             // lAmount
             // 
-            this.lAmount.AutoSize = true;
+            this.lAmount.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lAmount.Location = new System.Drawing.Point(147, 94);
             this.lAmount.Name = "lAmount";
+            this.lAmount.ReadOnly = true;
             this.lAmount.Size = new System.Drawing.Size(13, 13);
             this.lAmount.TabIndex = 10;
             this.lAmount.Text = "0";
@@ -729,15 +735,15 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.ListBox listBoxAttributes;
 		private RazorButton razorButton1;
 		private System.Windows.Forms.Button bSerialCopy;
-		private System.Windows.Forms.Label lName;
+		private System.Windows.Forms.TextBox lName;
 		private System.Windows.Forms.TextBox lSerial;
 		private System.Windows.Forms.TextBox lItemID;
 		private System.Windows.Forms.TextBox lColor;
-		private System.Windows.Forms.Label lPosition;
+		private System.Windows.Forms.TextBox lPosition;
 		private System.Windows.Forms.TextBox lContainer;
-		private System.Windows.Forms.Label lOwned;
-		private System.Windows.Forms.Label lLayer;
-		private System.Windows.Forms.Label lAmount;
+		private System.Windows.Forms.TextBox lOwned;
+		private System.Windows.Forms.TextBox lLayer;
+		private System.Windows.Forms.TextBox lAmount;
 		private System.Windows.Forms.TextBox lRootContainer;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Label movableflaglabel;
