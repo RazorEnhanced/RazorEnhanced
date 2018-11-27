@@ -841,6 +841,30 @@ namespace RazorEnhanced
 			return (int)World.Player.Skills[(int)skill].Lock;
 		}
 
+		public static void SetSkillStatus(string skillname, int status)
+		{
+			if (status < 0 || status > 2)
+			{
+				Scripts.SendMessageScriptError("Script Error: SetSkillStatus: status: " + status + " not valid");
+				return;
+			}
+
+			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+			{
+				Scripts.SendMessageScriptError("Script Error: SetSkillStatus: " + skillname + " not valid");
+				return;
+			}
+
+			LockType t = (LockType)status;
+
+			ClientCommunication.SendToServer(new SetSkillLock(World.Player.Skills[(int)skill].Index, t));
+
+			World.Player.Skills[(int)skill].Lock = t;
+			Engine.MainWindow.Invoke(new Action(() => Engine.MainWindow.UpdateSkill(World.Player.Skills[(int)skill])));
+
+			ClientCommunication.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
+		}
+
 		public static void UseSkill(string skillname, bool wait = true)
 		{
 			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))

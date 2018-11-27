@@ -799,7 +799,7 @@ namespace RazorEnhanced
 				Target.SetLast(serial, false);
 		}
 
-		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		internal static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item itemtodrop = World.FindItem(serial);
 

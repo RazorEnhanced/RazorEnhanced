@@ -137,7 +137,7 @@ namespace RazorEnhanced.UI
 				"Player.BuffsExist", "Player.GetBuffDescription", "Player.SpellIsEnabled",
 				"Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
 				"Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer", "Player.EquipUO3D",
-				"Player.GetSkillValue", "Player.GetSkillCap", "Player.GetSkillStatus", "Player.GetRealSkillValue", "Player.UseSkill", "Player.ChatSay",
+				"Player.GetSkillValue", "Player.GetSkillCap", "Player.SetSkillStatus", "Player.GetSkillStatus", "Player.GetRealSkillValue", "Player.UseSkill", "Player.ChatSay",
 				"Player.ChatEmote", "Player.ChatWhisper","Player.ChatChannel",
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
@@ -385,6 +385,10 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Player.GetSkillStatus(string)", new string[] { "string SkillName" }, "int", "Get lock status for a certain skill\n\tUP: 0, DOWN: 1, LOCKED: 2\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.GetSkillStatus", tooltip);
+
+			tooltip = new ToolTipDescriptions("Player.SetSkillStatus(string, int)", new string[] { "string SkillName, int Status" }, "void", "Set status for a certain skill\n\tUP: 0, DOWN: 1, LOCKED: 2\n\tCheck the wiki for the possible strings");
+			descriptionPlayer.Add("Player.SetSkillStatus", tooltip);
+
 
 			tooltip = new ToolTipDescriptions("Player.GetRealSkillValue(string)", new string[] { "string SkillName" }, "int", "Get real value of a specific skill\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.GetRealSkillValue", tooltip);

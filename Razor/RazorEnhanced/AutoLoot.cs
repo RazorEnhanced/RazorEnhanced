@@ -226,7 +226,11 @@ namespace RazorEnhanced
 						if (item.Color != -1)
 							color = "0x" + item.Color.ToString("X4");
 
-						Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
+						string itemid = "All";
+						if (item.Graphics != -1)
+							itemid = "0x" + item.Graphics.ToString("X4");
+
+						Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, item.Properties });
 					}
 
 					break;
@@ -391,15 +395,9 @@ namespace RazorEnhanced
 
 					foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
 					{
-                        if ((autoLootItem.Graphics == oggettoContenuto.ItemID) // match itemID
-                            ||
-                            (autoLootItem.Graphics == -1)  // match ALL id
-                            )
+                        if (autoLootItem.Graphics == oggettoContenuto.ItemID || autoLootItem.Graphics == -1)  // match ALL id
                         {
-                            if ((autoLootItem.Color == oggettoContenuto.Hue)
-                                ||
-                                (autoLootItem.Color == -1)
-                               )
+                            if (autoLootItem.Color == oggettoContenuto.Hue || autoLootItem.Color == -1)
                             {
                                 GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
                             }

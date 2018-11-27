@@ -1,21 +1,7 @@
-﻿using Assistant.Filters;
-using RazorEnhanced;
+﻿using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Linq;
-using Accord.Video.DirectShow;
-using AutoUpdaterDotNET;
-
 
 namespace Assistant
 {
@@ -305,7 +291,7 @@ namespace Assistant
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				cell.Value = Utility.FormatDatagridItemIDCell(cell);
+				cell.Value = Utility.FormatDatagridItemIDCellAutoLoot(cell);
 			}
 			RazorEnhanced.AutoLoot.CopyTable();
 		}
