@@ -24,6 +24,7 @@ namespace Assistant
 			Command.Register("inspectgumps", new CommandCallback(InspectGumps));
 			Command.Register("playscript", new CommandCallback(PlayScript));
 			Command.Register("hideitem", new CommandCallback(HideItem));
+			Command.Register("drop", new CommandCallback(DropItem));
 		}
 
 		private static void GetSerial(string[] param)
@@ -80,6 +81,12 @@ namespace Assistant
 					}
 				}
 			}
+		}
+
+		private static void DropItem(string[] param)
+		{
+			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target item to Drop at feet."));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RazorEnhanced.HotKey.dropitemTarget_Callback));
 		}
 
 		private static void HideItem(string[] param)
