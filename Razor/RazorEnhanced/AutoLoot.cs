@@ -226,7 +226,11 @@ namespace RazorEnhanced
 						if (item.Color != -1)
 							color = "0x" + item.Color.ToString("X4");
 
-						Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
+						string itemid = "All";
+						if (item.Graphics != -1)
+							itemid = "0x" + item.Graphics.ToString("X4");
+
+						Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, item.Properties });
 					}
 
 					break;

@@ -132,7 +132,10 @@ namespace RazorEnhanced.UI
             lColor.Text = m_color;
 
 			int color = 0;
-            int itemid = Convert.ToInt32(m_graphics, 16);
+			int itemid = 0;
+			if (m_graphics != "All")
+				itemid = Convert.ToInt32(m_graphics, 16);
+		
             if (m_color != "All")
 				color = Convert.ToInt32(m_color, 16);
 
