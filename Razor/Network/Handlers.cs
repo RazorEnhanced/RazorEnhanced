@@ -2215,15 +2215,8 @@ namespace Assistant
 			string name = p.ReadStringSafe(30);
 			string ext_str = p.ReadUnicodeStringLE();
 
-			if ((num >= 3002011 && num < 3002011 + 64) || // reg spells
-				(num >= 1060509 && num < 1060509 + 16) || // necro
-				(num >= 1060585 && num < 1060585 + 10) || // chiv
-				(num >= 1060493 && num < 1060493 + 10) || // chiv
-				(num >= 1060595 && num < 1060595 + 6) || // bush
-				(num >= 1060610 && num < 1060610 + 8)) // ninj
-			{
+			if (IsSpellMessage(num))
 				type = MessageType.Spell;
-			}
 
 			try
 			{
@@ -2247,16 +2240,8 @@ namespace Assistant
 			string affix = p.ReadStringSafe();
 			string args = p.ReadUnicodeStringSafe();
 
-			if ((num >= 3002011 && num < 3002011 + 64) || // reg spells
-				(num >= 1060509 && num < 1060509 + 16) || // necro
-				(num >= 1060585 && num < 1060585 + 10) || // chiv
-				(num >= 1060493 && num < 1060493 + 10) || // chiv
-				(num >= 1060595 && num < 1060595 + 6) || // bush
-				(num >= 1060610 && num < 1060610 + 8)     // ninj
-				)
-			{
+			if (IsSpellMessage(num))
 				type = MessageType.Spell;
-			}
 
 			string text;
 			if ((affixType & 1) != 0) // prepend
@@ -2264,6 +2249,21 @@ namespace Assistant
 			else // 0 == append, 2 = system
 				text = String.Format("{0}{1}", Language.ClilocFormat(num, args), affix);
 			HandleSpeech(p, phea, serial, body, type, hue, font, Language.CliLocName.ToUpper(), name, text);
+		}
+
+		private static bool IsSpellMessage(int num)
+		{
+			if ((num >= 3002011 && num < 3002011 + 64) || // reg spells
+				(num >= 1060509 && num < 1060509 + 16) || // necro
+				(num >= 1060585 && num < 1060585 + 10) || // chiv
+				(num >= 1060493 && num < 1060493 + 10) || // chiv
+				(num >= 1060718 && num < 1060718 + 10) || // chiv
+				(num >= 1060595 && num < 1060595 + 6) || // bush
+				(num >= 1060610 && num < 1060610 + 8)) // ninj
+			{
+				return true;
+			}
+			return false;
 		}
 
 		private static void SendGump(PacketReader p, PacketHandlerEventArgs args)
