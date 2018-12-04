@@ -1778,17 +1778,22 @@ namespace RazorEnhanced.UI
 			}
 		}
 
+		private void SavaData(string path, string text)
+		{
+			try // Avoid crash if for some reasons file are unaccessible.
+			{
+				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+			}
+			catch { }
+		}
+
 		private void Save()
 		{
 			if (m_Filename != String.Empty)
 			{
 				this.Text = m_Title;
 
-				try // Avoid crash if for some reasons file are unaccessible.
-				{
-					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
-				}
-				catch { }
+				SavaData(m_Filepath, fastColoredTextBoxEditor.Text);
 
 				ReloadAfterSave();
 			}
@@ -1812,7 +1817,7 @@ namespace RazorEnhanced.UI
 				this.Text = m_Title;
 				m_Filepath = save.FileName;
 				m_Filename = Path.GetFileName(save.FileName);
-				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+				SavaData(save.FileName, fastColoredTextBoxEditor.Text);
 				ReloadAfterSave();
 			}
 		}
@@ -1836,7 +1841,7 @@ namespace RazorEnhanced.UI
 			{
 				if (m_Filename != null && m_Filename != String.Empty)
 				{
-					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+					SavaData(m_Filepath, fastColoredTextBoxEditor.Text);
 					ReloadAfterSave();
 				}
 				else
@@ -1851,7 +1856,7 @@ namespace RazorEnhanced.UI
 					{
 						if (save.FileName != null && save.FileName != string.Empty && fastColoredTextBoxEditor.Text != null)
 						{
-							File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+							SavaData(save.FileName, fastColoredTextBoxEditor.Text);
 							m_Filename = save.FileName;
 							ReloadAfterSave();
 						}
