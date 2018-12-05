@@ -171,7 +171,7 @@ namespace RazorEnhanced.UI
 			{
 				"Misc.SendMessage", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
 				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
-				"Misc.SetSharedValue",
+				"Misc.SetSharedValue", "Misc.ScriptStopAll", "Misc.ShardName",
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
@@ -720,6 +720,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.ScriptStop(string)", new string[] { "string ScriptFilename" }, "void", "Stop a script by filename\n\tScritp must be present in script grid");
 			descriptionMisc.Add("Misc.ScriptStop", tooltip);
 
+			tooltip = new ToolTipDescriptions("Misc.ScriptStopAll(string)", new string[] { "none" }, "void", "Stop all script running.");
+			descriptionMisc.Add("Misc.ScriptStopAll", tooltip);
+
 			tooltip = new ToolTipDescriptions("Misc.ScriptStatus(string)", new string[] { "string ScriptFilename" }, "bool", "Get status of a script if is running or not\n\tScript must be present in script grid");
 			descriptionMisc.Add("Misc.ScriptStatus", tooltip);
 
@@ -740,6 +743,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Misc.UnIgnoreObject()", new string[] { "int serial or Item itemtounignore or Mobile mobtounignore" }, "void", "Remove a object from ignore list.");
 			descriptionMisc.Add("Misc.UnIgnoreObject", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.ShardName()", new string[] { "none" }, "string", "Get currect shard name you play.");
+			descriptionMisc.Add("Misc.ShardName", tooltip);
 
 			#endregion
 
