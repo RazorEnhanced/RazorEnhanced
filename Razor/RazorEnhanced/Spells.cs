@@ -42,7 +42,7 @@ namespace RazorEnhanced
 			if (s != null)
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 		}
-		
+
 
 		public static void CastChivalry(string SpellName, bool wait = true)
 		{
@@ -342,11 +342,15 @@ namespace RazorEnhanced
 			{ "Energy Vortex", 58 },
 			{ "Resurrection", 59 },
 			{ "Summon Air Elemental", 60 },
-			{ "Summon Daemon", 61 },
+            { "Air Elemental", 60 },
+            { "Summon Daemon", 61 },
 			{ "Summon Earth Elemental", 62 },
-			{ "Summon Fire Elemental", 63 },
-			{ "Summon Water Elemental", 64 }
-		};
+            { "Earth Elemental", 62 },
+            { "Summon Fire Elemental", 63 },
+            { "Fire Elemental", 63 },
+            { "Water Elemental", 64 },
+            { "Summon Water Elemental", 64 }
+        };
 
 		private static Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
 		{
