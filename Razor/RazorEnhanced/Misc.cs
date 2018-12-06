@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Media;
 using System.Threading;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace RazorEnhanced
 {
@@ -442,6 +443,14 @@ namespace RazorEnhanced
 			}
 			else
 				Scripts.SendMessageScriptError("ScriptStatus: Script not exist");
+		}
+
+		public static void ScriptStopAll()
+		{
+			foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
+			{
+				scriptdata.Run = false;
+			}
 		}
 
 		public static bool ScriptStatus(string scriptfile)

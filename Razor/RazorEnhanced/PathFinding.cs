@@ -784,7 +784,7 @@ namespace RazorEnhanced
 			public int Y = 0;
 			public bool DebugMessage = false;
 			public bool StopIfStuck = false;
-			public int MaxRetry = 0;
+			public int MaxRetry = -1;
 		
 			public Route()
 			{
@@ -792,6 +792,39 @@ namespace RazorEnhanced
 		}
 
 		public static bool Go(Route r)
+		{
+			if (r.StopIfStuck) // make one attempt if this enable
+				return Engine(r);
+			else
+			{
+				if (r.MaxRetry == -1) // Try to reach destination whit no limit
+				{
+					bool l = true;
+
+					while (l) // call pathfind engine until is true
+						l = !Engine(r);
+
+					return true; // Destination reach
+				}
+				else  // Try to reach destination whit count retry
+				{
+					bool l = true;
+					while (l)
+					{
+						if (r.MaxRetry == 0)
+							return false; // Destination not reach
+
+						l = !Engine(r);
+						r.MaxRetry -= 1;
+					}
+
+					return true; // Destination reach
+				}
+			}
+
+
+		}
+		private static bool Engine(Route r)
 		{
 			List<Tile> road = PathMove.GetPath(r.X, r.Y);
 			if (road == null) // No way to destination
@@ -851,27 +884,13 @@ namespace RazorEnhanced
 				else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
 					walkok = true;
 
-
 				if (!walkok)
 				{
 					if (r.DebugMessage)
 						Misc.SendMessage("PathFind: Move action FAIL", 33);
 
-					if (!r.StopIfStuck)
-					{
-						Misc.Resync();
-						Misc.Pause(200);
-						if (r.MaxRetry == 0) // no retry check if 0 
-							Go(r);
-						else // count retry 
-						{
-							if (r.MaxRetry == 0) // End retry 
-								return false;
-
-							r.MaxRetry--;
-							Go(r);
-						}
-					}
+					Misc.Resync();
+					Misc.Pause(200);
 					return false;
 				}
 				else
