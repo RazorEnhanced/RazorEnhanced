@@ -282,8 +282,9 @@ namespace Assistant
 						PacketHandlers.IgnoreGumps.Add(this);
 						PlayerData.DoubleClick(this);
 
-						foreach (Item icheck in Contains)
+						for (int c = 0; c < Contains.Count; c++)
 						{
+							Item icheck = (Item)Contains[c];
 							if (icheck.IsContainer && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
 							{
 								PacketHandlers.IgnoreGumps.Add(icheck);

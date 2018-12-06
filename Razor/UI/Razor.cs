@@ -9168,25 +9168,41 @@ namespace Assistant
 		private void razorButtonVisitUOD_Click(object sender, EventArgs e)
 		{
 			ProcessStartInfo p = new ProcessStartInfo("http://www.uodreams.com");
-			Process.Start(p);
+			try
+			{
+				Process.Start(p);
+			}
+			catch { }
 		}
 
 		private void razorButtonCreateUODAccount_Click(object sender, EventArgs e)
 		{
 			ProcessStartInfo p = new ProcessStartInfo("http://www.gamesnet.it/register.php");
-			Process.Start(p);
+			try
+			{
+				Process.Start(p);
+			}
+			catch { }
 		}
 
 		private void razorButtonWiki_Click(object sender, EventArgs e)
 		{
 			ProcessStartInfo p = new ProcessStartInfo("http://razorenhanced.org/");
-			Process.Start(p);
+			try
+			{
+				Process.Start(p);
+			}
+			catch { }
 		}
 
 		private void discordrazorButton_Click(object sender, EventArgs e)
 		{
 			ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
-			Process.Start(p);
+			try
+			{
+				Process.Start(p);
+			}
+			catch { }
 		}
 
 		private void openchangelogButton_Click(object sender, EventArgs e)

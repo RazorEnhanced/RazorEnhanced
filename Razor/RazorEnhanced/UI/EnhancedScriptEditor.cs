@@ -171,7 +171,7 @@ namespace RazorEnhanced.UI
 			{
 				"Misc.SendMessage", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
 				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
-				"Misc.SetSharedValue",
+				"Misc.SetSharedValue", "Misc.ScriptStopAll", "Misc.ShardName",
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
@@ -720,6 +720,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.ScriptStop(string)", new string[] { "string ScriptFilename" }, "void", "Stop a script by filename\n\tScritp must be present in script grid");
 			descriptionMisc.Add("Misc.ScriptStop", tooltip);
 
+			tooltip = new ToolTipDescriptions("Misc.ScriptStopAll(string)", new string[] { "none" }, "void", "Stop all script running.");
+			descriptionMisc.Add("Misc.ScriptStopAll", tooltip);
+
 			tooltip = new ToolTipDescriptions("Misc.ScriptStatus(string)", new string[] { "string ScriptFilename" }, "bool", "Get status of a script if is running or not\n\tScript must be present in script grid");
 			descriptionMisc.Add("Misc.ScriptStatus", tooltip);
 
@@ -740,6 +743,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Misc.UnIgnoreObject()", new string[] { "int serial or Item itemtounignore or Mobile mobtounignore" }, "void", "Remove a object from ignore list.");
 			descriptionMisc.Add("Misc.UnIgnoreObject", tooltip);
+
+			tooltip = new ToolTipDescriptions("Misc.ShardName()", new string[] { "none" }, "string", "Get currect shard name you play.");
+			descriptionMisc.Add("Misc.ShardName", tooltip);
 
 			#endregion
 
@@ -1778,17 +1784,22 @@ namespace RazorEnhanced.UI
 			}
 		}
 
+		private void SavaData(string path, string text)
+		{
+			try // Avoid crash if for some reasons file are unaccessible.
+			{
+				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+			}
+			catch { }
+		}
+
 		private void Save()
 		{
 			if (m_Filename != String.Empty)
 			{
 				this.Text = m_Title;
 
-				try // Avoid crash if for some reasons file are unaccessible.
-				{
-					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
-				}
-				catch { }
+				SavaData(m_Filepath, fastColoredTextBoxEditor.Text);
 
 				ReloadAfterSave();
 			}
@@ -1812,7 +1823,7 @@ namespace RazorEnhanced.UI
 				this.Text = m_Title;
 				m_Filepath = save.FileName;
 				m_Filename = Path.GetFileName(save.FileName);
-				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+				SavaData(save.FileName, fastColoredTextBoxEditor.Text);
 				ReloadAfterSave();
 			}
 		}
@@ -1836,7 +1847,7 @@ namespace RazorEnhanced.UI
 			{
 				if (m_Filename != null && m_Filename != String.Empty)
 				{
-					File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+					SavaData(m_Filepath, fastColoredTextBoxEditor.Text);
 					ReloadAfterSave();
 				}
 				else
@@ -1851,7 +1862,7 @@ namespace RazorEnhanced.UI
 					{
 						if (save.FileName != null && save.FileName != string.Empty && fastColoredTextBoxEditor.Text != null)
 						{
-							File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+							SavaData(save.FileName, fastColoredTextBoxEditor.Text);
 							m_Filename = save.FileName;
 							ReloadAfterSave();
 						}
