@@ -199,11 +199,11 @@ namespace RazorEnhanced
 					break;
 
 				case BuffIcon.ArcaneEmpowerment:
-					description = "Arcane Enpowerment";
+					description = "Arcane Empowerment";
 					break;
 
 				case BuffIcon.ArcaneEmpowermentNew:
-					description = "Arcane Enpowerment (new)";
+					description = "Arcane Empowerment (new)";
 					break;
 
 				case BuffIcon.ArchProtection:

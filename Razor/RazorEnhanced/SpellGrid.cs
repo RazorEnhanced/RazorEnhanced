@@ -244,7 +244,7 @@ namespace RazorEnhanced
 						new float[] { 0, 0, 1, 0, 0 },
 						new float[] { 0, 0, 0, 1, 0 },
 						new float[] { 1, 0, 0, 0, 1 }};
-			
+
 
 			ColorMatrix cm = new ColorMatrix(coeff);
 			var ia = new ImageAttributes();
@@ -568,7 +568,7 @@ namespace RazorEnhanced
 					imageid = GetImageID(g, items[x].Spell);
 
 				m_panellist[x].BorderColor = items[x].Color;
-				
+
 				switch (imageid)
 				{
 					case 0:
@@ -593,7 +593,7 @@ namespace RazorEnhanced
 						m_panellist[x].Enabled = true;
 						break;
 				}
-	
+
 				m_panellist[x].Spell = items[x].Spell;
 
 				m_panellist[x].Group = g;
@@ -605,7 +605,7 @@ namespace RazorEnhanced
 			Bitmap bmp = new Bitmap(44, 44);
 
 			RectangleF rectf = new RectangleF(0, 0, 44, 44);
-			
+
 			Graphics g = Graphics.FromImage(bmp);
 			g.Clear(Color.Black);
 			g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -937,11 +937,11 @@ namespace RazorEnhanced
 			{ "Earthquake", 0x8F8},
 			{ "Energy Vortex", 0x8F9},
 			{ "Resurrection", 0x8FA},
-			{ "Summon Air Elemental", 0x8FB},
-			{ "Summon Daemon", 0x8FC},
-			{ "Summon Earth Elemental", 0x8FD},
-			{ "Summon Fire Elemental", 0x8FE},
-			{ "Summon Water Elemental", 0x8FF}
+            { "Air Elemental", 0x8FB},
+            { "Summon Daemon", 0x8FC},
+            { "Earth Elemental", 0x8FD},
+            { "Fire Elemental", 0x8FE},
+            { "Water Elemental", 0x8FF}
 		};
 
 		internal static Dictionary<string, Bitmap> SkillsIcon = new Dictionary<string, Bitmap>
