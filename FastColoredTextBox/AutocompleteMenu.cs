@@ -25,7 +25,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Minimum fragment length for popup
         /// </summary>
-        public int MinFragmentLength { get; set; }
+        public int MinFragmentLength {get; set; }
         /// <summary>
         /// User selects item
         /// </summary>
@@ -77,7 +77,7 @@ namespace FastColoredTextBoxNS
 
         public AutocompleteMenu(FastColoredTextBox tb)
         {
-            // create a new popup and add the list view to it 
+            // create a new popup and add the list view to it
             AutoClose = false;
             AutoSize = false;
             Margin = Padding.Empty;
@@ -296,7 +296,7 @@ namespace FastColoredTextBoxNS
             tb.LostFocus += (o, e) =>
             {
                 if (Menu != null && !Menu.IsDisposed)
-                if (!Menu.Focused) 
+                if (!Menu.Focused)
                     SafetyClose();
             };
 
@@ -397,7 +397,7 @@ namespace FastColoredTextBoxNS
             Point point = tb.PlaceToPoint(fragment.End);
             point.Offset(2, tb.CharHeight);
             //
-            if (forced || (text.Length >= Menu.MinFragmentLength 
+            if (forced || (text.Length >= Menu.MinFragmentLength
                 && tb.Selection.IsEmpty /*pops up only if selected range is empty*/
                 && (tb.Selection.Start > fragment.Start || text.Length == 0/*pops up only if caret is after first letter*/)))
             {
@@ -446,7 +446,7 @@ namespace FastColoredTextBoxNS
         {
             /*
             FastColoredTextBox tb = sender as FastColoredTextBox;
-            
+
             if (Math.Abs(prevSelection.iChar - tb.Selection.Start.iChar) > 1 ||
                         prevSelection.iLine != tb.Selection.Start.iLine)
                 Menu.Close();
@@ -474,7 +474,7 @@ namespace FastColoredTextBoxNS
                 if (needClose)
                     Menu.Close();
             }
-            
+
         }
 
         void tb_KeyDown(object sender, KeyEventArgs e)
@@ -627,7 +627,21 @@ namespace FastColoredTextBoxNS
 
         private void DoAutocomplete(AutocompleteItem item, Range fragment)
         {
-            string newText = item.GetTextForReplace();
+            string newText = fragment.Text;
+            int last = newText.LastIndexOf('.');
+            if (last > 0)
+            {
+                newText = newText.Substring(0, last + 1);
+            }
+            else
+            {
+                newText = "";
+            }
+            newText = newText + item;
+            if (item.ToolTipText != null)
+            {
+                newText = newText + "()";
+            }
 
             //replace text of fragment
             var tb = fragment.tb;
@@ -662,7 +676,7 @@ namespace FastColoredTextBoxNS
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             ProcessKey(keyData, Keys.None);
-            
+
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
