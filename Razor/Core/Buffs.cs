@@ -125,6 +125,56 @@
 		SplinteringEffect = 1122,
 		SwingSpeed = 1123,
 		WraithForm = 1124,
-		CityTradeDeal = 1126
+		CityTradeDeal = 1126,
+		HumilityDebuff = 0x467,
+		Spirituality,
+		Humility,
+		// Skill Masteries
+		Rampage,
+		Stagger, // Debuff
+		Toughness,
+		Thrust,
+		Pierce,   // Debuff
+		PlayingTheOdds,
+		FocusedEye,
+		Onslaught, // Debuff
+		ElementalFury,
+		ElementalFuryDebuff, // Debuff
+		CalledShot,
+		Knockout,
+		SavingThrow,
+		Conduit,
+		EtherealBurst,
+		MysticWeapon,
+		ManaShield,
+		AnticipateHit,
+		Warcry,
+		Shadow,
+		WhiteTigerForm,
+		Bodyguard,
+		HeightenedSenses,
+		Tolerance,
+		DeathRay,
+		DeathRayDebuff,
+		Intuition,
+		EnchantedSummoning,
+		ShieldBash,
+		Whispering,
+		CombatTraining,
+		InjectedStrikeDebuff,
+		InjectedStrike,
+		UnknownTomato,
+		PlayingTheOddsDebuff,
+		DragonTurtleDebuff,
+		Boarding,
+		Potency,
+		ThrustDebuff,
+		FistsOfFury, // 1169
+		BarrabHemolymphConcentrate,
+		JukariBurnPoiltice,
+		KurakAmbushersEssence,
+		BarakoDraftOfMight,
+		UraliTranceTonic,
+		SakkhraProphylaxis
 	}
 }

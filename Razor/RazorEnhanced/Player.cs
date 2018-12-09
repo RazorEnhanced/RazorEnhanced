@@ -199,11 +199,11 @@ namespace RazorEnhanced
 					break;
 
 				case BuffIcon.ArcaneEmpowerment:
-					description = "Arcane Empowerment";
+					description = "Arcane Enpowerment";
 					break;
 
 				case BuffIcon.ArcaneEmpowermentNew:
-					description = "Arcane Empowerment (new)";
+					description = "Arcane Enpowerment (new)";
 					break;
 
 				case BuffIcon.ArchProtection:
@@ -636,6 +636,190 @@ namespace RazorEnhanced
 
 				case BuffIcon.WraithForm:
 					description = "Wraith Form";
+					break;
+
+				case BuffIcon.Rampage:
+					description = "Rampage";
+					break;
+
+				case BuffIcon.Stagger:
+					description = "Stagger";
+					break;
+
+				case BuffIcon.Toughness:
+					description = "Toughness";
+					break;
+
+				case BuffIcon.Thrust:
+					description = "Thrust";
+					break;
+
+				case BuffIcon.Pierce:
+					description = "Pierce";
+					break;
+
+				case BuffIcon.PlayingTheOdds:
+					description = "Playing The Odds";
+					break;
+
+				case BuffIcon.FocusedEye:
+					description = "Focused Eye";
+					break;
+
+				case BuffIcon.Onslaught:
+					description = "Onslaught";
+					break;
+
+				case BuffIcon.ElementalFury:
+					description = "Elemental Fury";
+					break;
+
+				case BuffIcon.ElementalFuryDebuff:
+					description = "Elemental Fury Debuff";
+					break;
+
+				case BuffIcon.CalledShot:
+					description = "Called Shot";
+					break;
+
+				case BuffIcon.Knockout:
+					description = "Knockout";
+					break;
+
+				case BuffIcon.SavingThrow:
+					description = "Saving Throw";
+					break;
+
+				case BuffIcon.Conduit:
+					description = "Conduit";
+					break;
+
+				case BuffIcon.EtherealBurst:
+					description = "Ethereal Burst";
+					break;
+
+				case BuffIcon.MysticWeapon:
+					description = "Mystic Weapon";
+					break;
+
+				case BuffIcon.ManaShield:
+					description = "Mana Shield";
+					break;
+
+				case BuffIcon.AnticipateHit:
+					description = "Anticipate Hit";
+					break;
+
+				case BuffIcon.Warcry:
+					description = "Warcry";
+					break;
+
+				case BuffIcon.Shadow:
+					description = "Shadow";
+					break;
+
+				case BuffIcon.WhiteTigerForm:
+					description = "White Tiger Form";
+					break;
+
+				case BuffIcon.Bodyguard:
+					description = "Bodyguard";
+					break;
+
+				case BuffIcon.HeightenedSenses:
+					description = "Heightened Senses";
+					break;
+
+				case BuffIcon.Tolerance:
+					description = "Tolerance";
+					break;
+
+				case BuffIcon.DeathRay:
+					description = "Death Ray";
+					break;
+
+				case BuffIcon.DeathRayDebuff:
+					description = "Death Ray Debuff";
+					break;
+
+				case BuffIcon.Intuition:
+					description = "Intuition";
+					break;
+
+				case BuffIcon.EnchantedSummoning:
+					description = "Enchanted Summoning";
+					break;
+
+				case BuffIcon.ShieldBash:
+					description = "Shield Bash";
+					break;
+
+				case BuffIcon.Whispering:
+					description = "Whispering";
+					break;
+
+				case BuffIcon.CombatTraining:
+					description = "Combat Training";
+					break;
+
+				case BuffIcon.InjectedStrikeDebuff:
+					description = "Injected Strike Debuff";
+					break;
+
+				case BuffIcon.InjectedStrike:
+					description = "Injected Strike";
+					break;
+
+				case BuffIcon.UnknownTomato:
+					description = "Unknown Tomato";
+					break;
+
+				case BuffIcon.PlayingTheOddsDebuff:
+					description = "Playing The Odds Debuff";
+					break;
+
+				case BuffIcon.DragonTurtleDebuff:
+					description = "Dragon Turtle Debuff";
+					break;
+
+				case BuffIcon.Boarding:
+					description = "Boarding";
+					break;
+
+				case BuffIcon.Potency:
+					description = "Potency";
+					break;
+
+				case BuffIcon.ThrustDebuff:
+					description = "Thrust Debuff";
+					break;
+
+				case BuffIcon.FistsOfFury:
+					description = "Fists Of Fury";
+					break;
+
+				case BuffIcon.BarrabHemolymphConcentrate:
+					description = "Barrab Hemolymph Concentrate";
+					break;
+
+				case BuffIcon.JukariBurnPoiltice:
+					description = "Jukari Burn Poiltice";
+					break;
+
+				case BuffIcon.KurakAmbushersEssence:
+					description = "Kurak Ambushers Essence";
+					break;
+
+				case BuffIcon.BarakoDraftOfMight:
+					description = "Barako Draft Of Might";
+					break;
+
+				case BuffIcon.UraliTranceTonic:
+					description = "Urali Trance Tonic,";
+					break;
+
+				case BuffIcon.SakkhraProphylaxis:
+					description = "Sakkhra Prophylaxis";
 					break;
 			}
 
