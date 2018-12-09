@@ -5097,7 +5097,6 @@ namespace Assistant
             this.heypass});
 			this.scriptlistView.FullRowSelect = true;
 			this.scriptlistView.GridLines = true;
-			this.scriptlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.scriptlistView.HideSelection = false;
 			this.scriptlistView.LabelWrap = false;
 			this.scriptlistView.Location = new System.Drawing.Point(8, 6);
@@ -5107,6 +5106,7 @@ namespace Assistant
 			this.scriptlistView.TabIndex = 48;
 			this.scriptlistView.UseCompatibleStateImageBehavior = false;
 			this.scriptlistView.View = System.Windows.Forms.View.Details;
+			this.scriptlistView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
 			this.scriptlistView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
 			this.scriptlistView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
 			// 
@@ -9434,6 +9434,8 @@ namespace Assistant
 			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
 			Process.Start(p);
 		}
+
+		
 	}
 }
 

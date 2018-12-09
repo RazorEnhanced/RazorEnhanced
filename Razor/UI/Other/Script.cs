@@ -148,6 +148,9 @@ namespace Assistant
 		}
 		private void ScriptGridMoveDown()
 		{
+			if (sorted) // No move script index if user have place some different ordering 
+				return;
+
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
 				int rowCount = scriptlistView.Items.Count;
@@ -171,6 +174,9 @@ namespace Assistant
 
 		private void ScriptGridMoveUp()
 		{
+			if (sorted) // No move script index if user have place some different ordering 
+				return;
+
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
 				int rowCount = scriptlistView.Items.Count;
@@ -187,7 +193,9 @@ namespace Assistant
 				// We remove the old and insert the new
 				scriptTable.Rows.RemoveAt(index - 1);
 				scriptTable.Rows.InsertAt(newRow, index);
+
 				ReloadScriptTable();
+
 				scriptlistView.Items[index - 1].Selected = true;
 			}
 		}
@@ -498,20 +506,23 @@ namespace Assistant
 				return;
 
 			if (stripmenu)
-			{
-				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = !scriptautostartcheckbox.Checked;
 				scriptautostartcheckbox.Checked = !scriptautostartcheckbox.Checked;
-				ReloadScriptTable();
-			}
-			else
+
+			if (!scriptautostartcheckbox.Focused)
+				return;
+
+			foreach (DataRow row in scriptTable.Rows)
 			{
-				if (!scriptautostartcheckbox.Focused)
-					return;
-
-				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = scriptautostartcheckbox.Checked;
+				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+					row["AutoStart"] = scriptautostartcheckbox.Checked;
 			}
 
-			ReloadScriptTable();
+			if (scriptautostartcheckbox.Checked)
+				scriptlistView.SelectedItems[0].SubItems[4].Text = "Yes";
+			else
+				scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
+
+			Settings.Save();
 		}
 
 		private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
@@ -530,20 +541,23 @@ namespace Assistant
 				return;
 
 			if (stripmenu)
-			{
-				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Loop"] = !scriptloopmodecheckbox.Checked;
 				scriptloopmodecheckbox.Checked = !scriptloopmodecheckbox.Checked;
-				ReloadScriptTable();
-			}
-			else
+
+			if (!scriptloopmodecheckbox.Focused)
+				return;
+
+			foreach (DataRow row in scriptTable.Rows)
 			{
-				if (!scriptloopmodecheckbox.Focused)
-					return;
-
-				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Loop"] = scriptloopmodecheckbox.Checked;
+				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+					row["Loop"] = scriptloopmodecheckbox.Checked;
 			}
 
-			ReloadScriptTable();
+			if (scriptloopmodecheckbox.Checked)
+				scriptlistView.SelectedItems[0].SubItems[3].Text = "Yes";
+			else
+				scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
+
+			Settings.Save();
 		}
 
 		private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)
@@ -562,20 +576,23 @@ namespace Assistant
 				return;
 
 			if (stripmenu)
-			{
-				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Wait"] = !scriptwaitmodecheckbox.Checked;
 				scriptwaitmodecheckbox.Checked = !scriptwaitmodecheckbox.Checked;
-				ReloadScriptTable();
-			}
-			else
+
+			if (!scriptwaitmodecheckbox.Focused)
+				return;
+
+			foreach (DataRow row in scriptTable.Rows)
 			{
-				if (!scriptwaitmodecheckbox.Focused)
-					return;
-
-				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Wait"] = scriptwaitmodecheckbox.Checked;
+				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+					row["Wait"] = scriptwaitmodecheckbox.Checked;
 			}
 
-			ReloadScriptTable();
+			if (scriptwaitmodecheckbox.Checked)
+				scriptlistView.SelectedItems[0].SubItems[5].Text = "Yes";
+			else
+				scriptlistView.SelectedItems[0].SubItems[5].Text = "No";
+
+			Settings.Save();
 		}
 
 		private void scriptwaitmodecheckbox_CheckedChanged(object sender, EventArgs e)
@@ -586,6 +603,143 @@ namespace Assistant
 		private void waitBeforeInterruptToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ScriptGridWaitBeforeInterrupt(true);
+		}
+
+		private ColumnHeader SortingColumn = null;
+		private bool sorted = false;
+		private void scriptlistView_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			sorted = true;
+			// Get the new sorting column.
+			ColumnHeader new_sorting_column = scriptlistView.Columns[e.Column];
+
+			// Figure out the new sorting order.
+			System.Windows.Forms.SortOrder sort_order;
+			if (SortingColumn == null)
+			{
+				// New column. Sort ascending.
+				sort_order = SortOrder.Ascending;
+			}
+			else
+			{
+				// See if this is the same column.
+				if (new_sorting_column == SortingColumn)
+				{
+					// Same column. Switch the sort order.
+					if (SortingColumn.Text.StartsWith("> "))
+					{
+						sort_order = SortOrder.Descending;
+					}
+					else
+					{
+						sort_order = SortOrder.Ascending;
+					}
+				}
+				else
+				{
+					// New column. Sort ascending.
+					sort_order = SortOrder.Ascending;
+				}
+
+				// Remove the old sort indicator.
+				SortingColumn.Text = SortingColumn.Text.Substring(2);
+			}
+
+			// Display the new sort order.
+			SortingColumn = new_sorting_column;
+			if (sort_order == SortOrder.Ascending)
+			{
+				SortingColumn.Text = "> " + SortingColumn.Text;
+			}
+			else
+			{
+				SortingColumn.Text = "< " + SortingColumn.Text;
+			}
+
+			// Create a comparer.
+			scriptlistView.ListViewItemSorter =
+				new ListViewComparer(e.Column, sort_order);
+
+			// Sort.
+			scriptlistView.Sort();
+		}
+	}
+
+	public class ListViewComparer : System.Collections.IComparer
+	{
+		private int ColumnNumber;
+		private SortOrder SortOrder;
+
+		public ListViewComparer(int column_number,
+			SortOrder sort_order)
+		{
+			ColumnNumber = column_number;
+			SortOrder = sort_order;
+		}
+
+		// Compare two ListViewItems.
+		public int Compare(object object_x, object object_y)
+		{
+			// Get the objects as ListViewItems.
+			ListViewItem item_x = object_x as ListViewItem;
+			ListViewItem item_y = object_y as ListViewItem;
+
+			// Get the corresponding sub-item values.
+			string string_x;
+			if (item_x.SubItems.Count <= ColumnNumber)
+			{
+				string_x = "";
+			}
+			else
+			{
+				string_x = item_x.SubItems[ColumnNumber].Text;
+			}
+
+			string string_y;
+			if (item_y.SubItems.Count <= ColumnNumber)
+			{
+				string_y = "";
+			}
+			else
+			{
+				string_y = item_y.SubItems[ColumnNumber].Text;
+			}
+
+			// Compare them.
+			int result;
+			double double_x, double_y;
+			if (double.TryParse(string_x, out double_x) &&
+				double.TryParse(string_y, out double_y))
+			{
+				// Treat as a number.
+				result = double_x.CompareTo(double_y);
+			}
+			else
+			{
+				DateTime date_x, date_y;
+				if (DateTime.TryParse(string_x, out date_x) &&
+					DateTime.TryParse(string_y, out date_y))
+				{
+					// Treat as a date.
+					result = date_x.CompareTo(date_y);
+				}
+				else
+				{
+					// Treat as a string.
+					result = string_x.CompareTo(string_y);
+				}
+			}
+
+			// Return the correct result depending on whether
+			// we're sorting ascending or descending.
+			if (SortOrder == SortOrder.Ascending)
+			{
+				return result;
+			}
+			else
+			{
+				return -result;
+			}
 		}
 	}
 }
