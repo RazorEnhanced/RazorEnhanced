@@ -356,10 +356,21 @@ namespace Assistant
 		{
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
-				DataRow row = scriptTable.Rows[scriptlistView.SelectedItems[0].Index];
 				RunCurrentScript(false);
-				scriptTable.Rows.Remove(row);
-				ReloadScriptTable();
+
+				foreach (DataRow row in scriptTable.Rows)
+				{
+					if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+					{
+						row.Delete();
+						break;
+					}
+				}
+
+				scriptlistView.SelectedItems[0].Remove();
+
+				Settings.Save();
+				HotKey.Init();
 			}
 		}
 		private void buttonScriptRemove_Click(object sender, EventArgs e)
