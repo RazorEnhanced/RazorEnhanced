@@ -697,6 +697,7 @@ namespace Assistant
 		private RazorButton targetChoseHue;
 		private RazorButton targetChoseBody;
 		private RazorCheckBox bandagehealAutostartCheckBox;
+		private RazorCheckBox bandagehealusetarget;
 		private RazorCheckBox scriptshowStartStopCheckBox;
 
 		internal MainForm()
@@ -1310,6 +1311,7 @@ namespace Assistant
 			this.bandageheal = new System.Windows.Forms.TabPage();
 			this.bandagehealAutostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.bandagehealusetarget = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.label46 = new System.Windows.Forms.Label();
 			this.bandagehealcountdownCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -7422,6 +7424,7 @@ namespace Assistant
 			// 
 			// groupBox6
 			// 
+			this.groupBox6.Controls.Add(this.bandagehealusetarget);
 			this.groupBox6.Controls.Add(this.bandagehealmaxrangeTextBox);
 			this.groupBox6.Controls.Add(this.label46);
 			this.groupBox6.Controls.Add(this.bandagehealcountdownCheckBox);
@@ -7450,6 +7453,16 @@ namespace Assistant
 			this.groupBox6.TabIndex = 74;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Settings";
+			// 
+			// bandagehealusetarget
+			// 
+			this.bandagehealusetarget.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.bandagehealusetarget.Location = new System.Drawing.Point(184, 162);
+			this.bandagehealusetarget.Name = "bandagehealusetarget";
+			this.bandagehealusetarget.Size = new System.Drawing.Size(155, 22);
+			this.bandagehealusetarget.TabIndex = 92;
+			this.bandagehealusetarget.Text = "Use Normal Target";
+			this.bandagehealusetarget.CheckedChanged += new System.EventHandler(this.bandagehealusetarget_CheckedChanged);
 			// 
 			// bandagehealmaxrangeTextBox
 			// 
@@ -9435,7 +9448,6 @@ namespace Assistant
 			Process.Start(p);
 		}
 
-		
 	}
 }
 

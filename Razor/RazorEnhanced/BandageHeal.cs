@@ -22,10 +22,10 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.Running)
 				return;
 
-			Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.SelectedIndex = Assistant.Engine.MainWindow.BandageHealLogBox.Items.Count - 1));
-			if (Assistant.Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear()));
+			Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.Items.Add(addlog)));
+			Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.SelectedIndex = Assistant.Engine.MainWindow.BandageHealLogBox.Items.Count - 1));
+			if (Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
+				Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.Items.Clear()));
 		}
 
 		internal static int TargetSerial
@@ -35,7 +35,7 @@ namespace RazorEnhanced
 				int serial = 0;
 				try
 				{
-					serial = Convert.ToInt32(Assistant.Engine.MainWindow.BandageHealtargetLabel.Text, 16);
+					serial = Convert.ToInt32(Engine.MainWindow.BandageHealtargetLabel.Text, 16);
 				}
 				catch
 				{ }
@@ -44,7 +44,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealtargetLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Engine.MainWindow.BandageHealtargetLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_customid = value;
-				Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4")));
+				Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4")));
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_customcolor = value;
-				Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4")));
+				Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4")));
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_customdelay = value;
-				Assistant.Engine.MainWindow.BandageHealdelayTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text = value.ToString()));
+				Engine.MainWindow.BandageHealdelayTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealdelayTextBox.Text = value.ToString()));
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_maxrange = value;
-				Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text = value.ToString()));
+				Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealMaxRangeTextBox.Text = value.ToString()));
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_hplimit = value;
-				Assistant.Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealhpTextBox.Text = value.ToString()));
+				Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealhpTextBox.Text = value.ToString()));
 			}
 		}
 
@@ -112,12 +112,12 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Checked;
+				return Engine.MainWindow.BandageHealpoisonCheckBox.Checked;
 			}
 
 			set
 			{
-				Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Checked = value));
+				Engine.MainWindow.BandageHealpoisonCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealpoisonCheckBox.Checked = value));
 			}
 		}
 
@@ -125,12 +125,12 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Checked;
+				return Engine.MainWindow.BandageHealmortalCheckBox.Checked;
 			}
 
 			set
 			{
-				Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Checked = value));
+				Engine.MainWindow.BandageHealmortalCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealmortalCheckBox.Checked = value));
 			}
 		}
 
@@ -138,12 +138,12 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.BandageHealhiddedCheckBox.Checked;
+				return Engine.MainWindow.BandageHealhiddedCheckBox.Checked;
 			}
 
 			set
 			{
-				Assistant.Engine.MainWindow.BandageHealhiddedCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealhiddedCheckBox.Checked = value));
+				Engine.MainWindow.BandageHealhiddedCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealhiddedCheckBox.Checked = value));
 			}
 		}
 
@@ -151,12 +151,25 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.BandageHealcountdownCheckBox.Checked;
+				return Engine.MainWindow.BandageHealcountdownCheckBox.Checked;
 			}
 
 			set
 			{
-				Assistant.Engine.MainWindow.BandageHealcountdownCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcountdownCheckBox.Checked = value));
+				Engine.MainWindow.BandageHealcountdownCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealcountdownCheckBox.Checked = value));
+			}
+		}
+
+		internal static bool UseTarget
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.BandageHealUseTarget.Checked;
+			}
+
+			set
+			{
+				Engine.MainWindow.BandageHealUseTarget.Invoke(new Action(() => Engine.MainWindow.BandageHealUseTarget.Checked = value));
 			}
 		}
 
@@ -174,6 +187,7 @@ namespace RazorEnhanced
 			PoisonBlock = Settings.General.ReadBool("BandageHealpoisonCheckBox");
 			MortalBlock = Settings.General.ReadBool("BandageHealmortalCheckBox");
 			HiddenBlock = Settings.General.ReadBool("BandageHealhiddedCheckBox");
+			UseTarget = Settings.General.ReadBool("BandageHealUseTarget");
 			Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
 			Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
@@ -247,9 +261,9 @@ namespace RazorEnhanced
 				{
 					AddLog("Using bandage (0x"+ bandageserial.ToString("X8") +") on Target (" + target.Serial.ToString()+")");
 
-					if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
+					if (!UseTarget) // Uso nuovo packet
 						Items.UseItemOnMobile(bandageserial, target.Serial);
-					else // Vecchi client
+					else 
 					{
 						Items.UseItem(bandageserial);
 						Target.WaitForTarget(1000, true);
@@ -262,7 +276,7 @@ namespace RazorEnhanced
 						if (delay < 1) // Limite per evitare che si vada in negativo
 							delay = 100;
 
-						if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
+						if (ShowCountdown)          // Se deve mostrare il cooldown
 						{
 							int second = 0;
 
@@ -287,7 +301,7 @@ namespace RazorEnhanced
 					else                // Se ho un delay custom
 					{
 						double delay = m_customdelay;
-						if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
+						if (ShowCountdown)          // Se deve mostrare il cooldown
 						{
 							double subdelay = delay / 1000;
 

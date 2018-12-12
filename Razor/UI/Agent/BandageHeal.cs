@@ -22,6 +22,7 @@ namespace Assistant
 		internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
 		internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
 		internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
+		internal RazorCheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
 		internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
 		internal RazorCheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
 
@@ -216,6 +217,13 @@ namespace Assistant
 
 			BandageHeal.HpLimit = Convert.ToInt32(bandagehealhpTextBox.Text);
 			Settings.General.WriteInt("BandageHealhpTextBox", BandageHeal.HpLimit);
+		}
+
+
+		private void bandagehealusetarget_CheckedChanged(object sender, EventArgs e)
+		{
+			if (bandagehealusetarget.Focused)
+				Settings.General.WriteBool("BandageHealUseTarget", bandagehealusetarget.Checked);
 		}
 
 		private void bandagehealmaxrangeTextBox_Leave(object sender, EventArgs e)
