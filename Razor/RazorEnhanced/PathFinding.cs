@@ -48,7 +48,7 @@ namespace RazorEnhanced
 		/// <param name="y">Y coordinate of same map</param>
 		/// <param name="scanMaxRange">Max range to scan a path (x, y) should be included in this max range</param>
 		/// <returns></returns>
-		public static List<Tile> GetPath(int x, int y, int scanMaxRange)
+		public static List<Tile> GetPath(int x, int y, int scanMaxRange, bool ignoremob)
 		{
 			var playerPosition = Player.Position;
 			var squareGrid = new SquareGrid(playerPosition.X, playerPosition.Y, scanMaxRange);
@@ -59,7 +59,7 @@ namespace RazorEnhanced
 				return null;
 			}
 
-			var aStarSearch = new AStarSearch(squareGrid, new Tile(playerPosition.X, playerPosition.Y), new Tile(x, y), playerPosition.Z);
+			var aStarSearch = new AStarSearch(squareGrid, new Tile(playerPosition.X, playerPosition.Y), new Tile(x, y), playerPosition.Z, ignoremob);
 			var result = aStarSearch.FindPath();
 
 			if (result == null)
@@ -88,7 +88,7 @@ namespace RazorEnhanced
 		/// <param name="x">X coordinate of same map</param>
 		/// <param name="y">Y coordinate of same map</param>
 		/// <returns></returns>
-		public static List<Tile> GetPath(int x, int y)
+		public static List<Tile> GetPath(int x, int y, bool ignoremob)
 		{
 			var position = Player.Position;
 
@@ -96,7 +96,7 @@ namespace RazorEnhanced
 			var distanceY = Math.Abs(position.Y - y);
 			var scanMaxRange = Math.Max(distanceX, distanceY) + 2;
 
-			return GetPath(x, y, scanMaxRange);
+			return GetPath(x, y, scanMaxRange, ignoremob);
 		}
 	}
 
@@ -152,41 +152,41 @@ namespace RazorEnhanced
 			return Tiles.Any(x => x.Equals(id));
 		}
 
-		public int Cost(Point3D loc, Map map, Tile b, out int bZ)
+		public int Cost(Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
 		{
 			int xForward = b.X, yForward = b.Y;
 			var items = World.Items.Values.Where(x => x.OnGround);
 			var newZ = 0;
 			GetStartZ(loc, map, items.Where(x => x.Position.X == loc.X && x.Position.Y == loc.Y), out var startZ, out var startTop);
-			var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, out newZ);
+			var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, ignoremob, out newZ);
 
 			if (b.X > loc.X && b.Y > loc.Y) //Down
 			{
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, ignoremob, out newZ);
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, ignoremob, out newZ);
 			}
 			else if (b.X < loc.X && b.Y < loc.Y) //UP
 			{
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y  == yForward + 1), xForward, yForward + 1, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y  == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward + 1 && x.Position.Y == yForward), xForward +1, yForward, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward + 1 && x.Position.Y == yForward), xForward +1, yForward, startTop, startZ, ignoremob, out newZ);
 			}
 			else if (b.X > loc.X && b.Y < loc.Y) //Right
 			{
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward- 1, yForward, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward- 1, yForward, startTop, startZ, ignoremob, out newZ);
 			}
 			else if (b.X < loc.X && b.Y > loc.Y) //Left
 			{
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, ignoremob, out newZ);
 				if (moveIsOk)
-					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, out newZ);
+					moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
 			}
 
 			if (moveIsOk)
@@ -199,7 +199,7 @@ namespace RazorEnhanced
 			return BigCost;
 		}
 
-		private static bool Check(Map map, IEnumerable<Assistant.Item> items, int x, int y, int startTop, int startZ, out int newZ)
+		private static bool Check(Map map, IEnumerable<Assistant.Item> items, int x, int y, int startTop, int startZ, bool ignoremob, out int newZ)
 		{
 			newZ = 0;
 
@@ -230,19 +230,21 @@ namespace RazorEnhanced
 			TileFlag flags;
 
 			// Check For mobiles
-			var mobs = World.Mobiles.Values;
-			List<Assistant.Mobile> result = new List<Assistant.Mobile>();
-			foreach (Assistant.Mobile m in mobs)
+			if (!ignoremob)
 			{
-				if (m.Position.X == x && m.Position.Y == y && m.Serial != Player.Serial)
-					result.Add(m);
+				var mobs = World.Mobiles.Values;
+				List<Assistant.Mobile> result = new List<Assistant.Mobile>();
+				foreach (Assistant.Mobile m in mobs)
+				{
+					if (m.Position.X == x && m.Position.Y == y && m.Serial != Player.Serial)
+						result.Add(m);
+				}
+				if (result.Count > 0) // mob present at this spot.
+				{
+					if (World.Player.Stam < World.Player.StamMax) // no max stam, avoid this location
+						return false;
+				}
 			}
-			if (result.Count > 0) // mob present at this spot.
-			{
-				if (World.Player.Stam < World.Player.StamMax) // no max stam, avoid this location
-					return false;
-			}
-
 			// Check for deed player house
 			if (Statics.CheckDeedHouse(x, y))
 			{
@@ -636,7 +638,7 @@ namespace RazorEnhanced
 		}
 
 		// Conduct the A* search
-		public AStarSearch(SquareGrid graph, Tile start, Tile goal, int startZ)
+		public AStarSearch(SquareGrid graph, Tile start, Tile goal, int startZ, bool ignoremob)
 		{
 			// start is current sprite Location
 			_start = start;
@@ -693,7 +695,7 @@ namespace RazorEnhanced
 					// that are next to, diagonal to, above or below current
 					foreach (var neighbor in graph.Neighbors(current))
 					{
-						var newCost = CostSoFar[new Tile(current.X, current.Y).ToString()] + graph.Cost(current, map, neighbor, out var neighborZ);
+						var newCost = CostSoFar[new Tile(current.X, current.Y).ToString()] + graph.Cost(current, map, neighbor, ignoremob, out var neighborZ);
 						if (newCost < SquareGrid.BigCost)
 						{
 							if (!CostSoFar.ContainsKey(neighbor.ToString()) || newCost < CostSoFar[neighbor.ToString()])
@@ -784,6 +786,8 @@ namespace RazorEnhanced
 			public int Y = 0;
 			public bool DebugMessage = false;
 			public bool StopIfStuck = false;
+			public bool IgnoreMobile = false;
+			public bool UseResync = true;
 			public int MaxRetry = -1;
 		
 			public Route()
@@ -826,7 +830,7 @@ namespace RazorEnhanced
 		}
 		private static bool Engine(Route r)
 		{
-			List<Tile> road = PathMove.GetPath(r.X, r.Y);
+			List<Tile> road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
 			if (road == null) // No way to destination
 			{
 				Misc.SendMessage("PathFind: Destination not valid", 33);
@@ -889,8 +893,12 @@ namespace RazorEnhanced
 					if (r.DebugMessage)
 						Misc.SendMessage("PathFind: Move action FAIL", 33);
 
-					Misc.Resync();
-					Misc.Pause(200);
+					if (r.UseResync)
+					{
+						Misc.Resync();
+						Misc.Pause(200);
+					}
+
 					return false;
 				}
 				else
