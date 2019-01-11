@@ -39,7 +39,7 @@ namespace RazorEnhanced
 					stream.Close();
 					Settings.MakeBackup(m_Save);
 				}
-				catch 
+				catch
 				{
 					if (stream != null)
 						stream.Close();
@@ -63,7 +63,7 @@ namespace RazorEnhanced
 				shards.Columns.Add("Selected", typeof(bool));
 
 				DataRow uod = shards.NewRow();
-				uod.ItemArray = new object[] { "UODreams", String.Empty, String.Empty, "login.uodreams.com", 2593, true, false, true };
+				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
 				shards.Rows.Add(uod);
 				m_Dataset.Tables.Add(shards);
 
