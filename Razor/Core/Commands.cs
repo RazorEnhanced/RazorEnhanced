@@ -22,6 +22,7 @@ namespace Assistant
 			Command.Register("getserial", new CommandCallback(GetSerial));
 			Command.Register("inspect", new CommandCallback(GetInfo));
 			Command.Register("inspectgumps", new CommandCallback(InspectGumps));
+			Command.Register("inspectalias", new CommandCallback(InspectAlias));
 			Command.Register("playscript", new CommandCallback(PlayScript));
 			Command.Register("hideitem", new CommandCallback(HideItem));
 			Command.Register("drop", new CommandCallback(DropItem));
@@ -38,6 +39,18 @@ namespace Assistant
 			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Serial: 0x" + serial.Value.ToString("X8")));
 		}
 
+		private static void InspectAlias(string[] param)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedObjectInspector af)
+				{
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedObjectInspector().Show();
+		}
 		private static void GetInfo(string[] param)
 		{
 			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
