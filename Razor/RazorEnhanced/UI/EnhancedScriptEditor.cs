@@ -2135,6 +2135,18 @@ namespace RazorEnhanced.UI
 			Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
 		}
 
+		private void toolStripInspectAlias_Click(object sender, EventArgs e)
+		{
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedObjectInspector af)
+				{
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedObjectInspector().Show();
+		}
 	}
 
 	public class ToolTipDescriptions

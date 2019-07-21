@@ -209,9 +209,7 @@
     <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Timer.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="RazorEnhanced\Timer.cs" />
     <Compile Include="RazorEnhanced\Statics.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />
     <Compile Include="RazorEnhanced\Profiles.cs" />
@@ -317,6 +315,12 @@
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.Designer.cs">
       <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedObjectInspector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedObjectInspector.Designer.cs">
+      <DependentUpon>EnhancedObjectInspector.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedStaticInspector.cs">
       <SubType>Form</SubType>
@@ -527,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.resx">
       <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedObjectInspector.resx">
+      <DependentUpon>EnhancedObjectInspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedStaticInspector.resx">
       <DependentUpon>EnhancedStaticInspector.cs</DependentUpon>
