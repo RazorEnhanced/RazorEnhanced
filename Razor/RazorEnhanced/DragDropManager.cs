@@ -1,6 +1,7 @@
 ﻿using Assistant;
 using System.Collections.Concurrent;
 using System.Threading;
+using System;
 
 namespace RazorEnhanced
 {
@@ -55,60 +56,8 @@ namespace RazorEnhanced
 				catch { }
 			}
 
-			if (AutoLoot.SerialToGrabList.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && Player.Visible)
-			{
-				try
-				{
-					if (AutoLoot.SerialToGrabList.TryPeek(out AutoLoot.SerialToGrab data))
-					{
-						Assistant.Item item = Assistant.World.FindItem(data.ItemSerial);
+            ProcessLootList();
 
-						if (item == null)
-						{
-							AutoLoot.SerialToGrabList.TryDequeue(out data);
-							return;
-						}
-
-						if (item.RootContainer == World.Player)
-						{
-							AutoLoot.SerialToGrabList.TryDequeue(out data);
-							return;
-						}
-
-						Assistant.Item corpse = Assistant.World.FindItem(data.CorpseSerial);
-
-						if (corpse == null)
-						{
-							AutoLoot.SerialToGrabList.TryDequeue(out data);
-							return;
-						}
-
-						if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, corpse.Position.X, corpse.Position.Y) <= AutoLoot.MaxRange && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
-						{
-							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
-							{
-								RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
-								RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space", true);
-								Thread.Sleep(2000);
-							}
-							else
-							{
-								RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
-								RazorEnhanced.Items.Move(item.Serial, AutoLoot.AutoLootBag, 0);
-								Thread.Sleep(AutoLoot.AutoLootDelay);
-								AutoLoot.SerialToGrabList.TryDequeue(out data);
-							}
-						}
-						else
-						{
-							AutoLoot.SerialToGrabList.TryDequeue(out data);
-							AutoLoot.SerialToGrabList.Enqueue(data);
-						}
-					}
-				}
-				catch { }
-			}
-			
 			if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
 			{
 				try
@@ -190,7 +139,72 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static bool CheckZLevel(int x, int y)
+        private static System.Object autolootLock = new System.Object();
+        internal static void ProcessLootList()
+        {
+            if (Monitor.TryEnter(autolootLock)) try
+                {
+                    if (Player.Visible && AutoLoot.SerialToGrabList.Count > 0)
+                    {
+                        try
+                        {
+                            if (AutoLoot.SerialToGrabList.TryPeek(out AutoLoot.SerialToGrab data))
+                            {
+                                Assistant.Item item = Assistant.World.FindItem(data.ItemSerial);
+
+                                if (item == null)
+                                {
+                                    AutoLoot.SerialToGrabList.TryDequeue(out data);
+                                    return;
+                                }
+
+                                if (item.RootContainer == World.Player)
+                                {
+                                    AutoLoot.SerialToGrabList.TryDequeue(out data);
+                                    return;
+                                }
+
+                                Assistant.Item corpse = Assistant.World.FindItem(data.CorpseSerial);
+
+                                if (corpse == null)
+                                {
+                                    AutoLoot.SerialToGrabList.TryDequeue(out data);
+                                    return;
+                                }
+
+                                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, corpse.Position.X, corpse.Position.Y) <= AutoLoot.MaxRange && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
+                                {
+                                    if ((World.Player.MaxWeight - World.Player.Weight) < 5)
+                                    {
+                                        RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
+                                        RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space", true);
+                                        Thread.Sleep(2000);
+                                    }
+                                    else
+                                    {
+                                        RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
+                                        RazorEnhanced.Items.Move(item.Serial, AutoLoot.AutoLootBag, 0);
+                                        Thread.Sleep(AutoLoot.AutoLootDelay);
+                                        AutoLoot.SerialToGrabList.TryDequeue(out data);
+                                    }
+                                }
+                                else
+                                {
+                                    AutoLoot.SerialToGrabList.TryDequeue(out data);
+                                    AutoLoot.SerialToGrabList.Enqueue(data);
+                                }
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                finally
+                {
+                    Monitor.Exit(autolootLock);
+                }
+        }
+
+        private static bool CheckZLevel(int x, int y)
 		{
 			int diff = x - y;
 

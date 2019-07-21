@@ -773,7 +773,7 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Target.PromptTarget()", new string[] { "none or string message" }, "int", "Pick the serial from item or mobile\n\tCan specific string in parameters for prompt message");
 			descriptionTarget.Add("Target.PromptTarget", tooltip);
-			
+
 			tooltip = new ToolTipDescriptions("Target.PromptGroundTarget()", new string[] { "none or string message" }, "Point3D", "Pick coords of ground targetted\n\tCan specific string in parameters for prompt message");
 			descriptionTarget.Add("Target.PromptGroundTarget", tooltip);
 
@@ -857,7 +857,7 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Gumps.LastGumpRawData()", new string[] { "none" }, "string", "Get last gump RawData structure.");
 			descriptionGumps.Add("Gumps.LastGumpRawData", tooltip);
-			
+
 			#endregion
 
 			#region Description Journal
@@ -918,7 +918,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("AutoLoot.ChangeList(string)", new string[] { "string ListName" }, "void", "Change list of autoloot item. List must exist in autoloot GUI configuration");
 			descriptionAutoLoot.Add("AutoLoot.ChangeList", tooltip);
 
-			tooltip = new ToolTipDescriptions("AutoLoot.RunOnce(AutoLootItem, double, Filter)", new string[] { "AutoLootItem ItemList", "double DelayGrabInMs", "Filter FilterToSearch" }, "void", "Start autoloot with certain parameters. AutoLootitem is a list type for item\n\tdelay in seconds to grab and filter for search on ground");
+			tooltip = new ToolTipDescriptions("AutoLoot.RunOnce(string, double, Filter)", new string[] { "string AutoLootItemListName", "double DelayGrabInMs", "Filter FilterToSearch" }, "void", "Start autoloot with certain parameters. AutoLootitem is a list type for item\n\tdelay in seconds to grab and filter for search on ground");
 			descriptionAutoLoot.Add("AutoLoot.RunOnce", tooltip);
 
 			#endregion

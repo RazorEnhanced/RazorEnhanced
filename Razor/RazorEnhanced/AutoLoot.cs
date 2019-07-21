@@ -493,12 +493,21 @@ namespace RazorEnhanced
 			Scavenger.ResetIgnore();
 		}
 
-		public static void RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
+		public static void RunOnce(string lootListName, int mseconds, Items.Filter filter)
 		{
-			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-				Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
-			else
-				Engine(autoLootList, mseconds, filter);
+            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+            {
+                Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
+                return;
+            }
+        List<AutoLootItem> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
+        if (autoLootList.Count > 0)
+            {
+                Engine(autoLootList, mseconds, filter);
+                DragDropManager.ProcessLootList();
+            } else {
+                Scripts.SendMessageScriptError("Script Error: Autoloot.RunOnce: list specified is empty or doesn't exist");
+            }
 		}
 
 		public static void Start()
@@ -565,7 +574,7 @@ namespace RazorEnhanced
 			return false;
 		}
 
-		// Autostart al login 
+		// Autostart al login
 		private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
 
 		internal static void LoginAutostart()
