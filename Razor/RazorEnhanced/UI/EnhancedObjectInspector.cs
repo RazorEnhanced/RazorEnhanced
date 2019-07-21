@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedObjectInspector : Form
@@ -64,7 +65,7 @@ namespace RazorEnhanced.UI
 
 			foreach (var t in Timer.Timers)
 			{
-				timerGridView.Rows.Add(new object[] { t.Key, "0x " + ((Timer.ScriptTimer)t.Value).Interval.ToString() });
+				timerGridView.Rows.Add(new object[] { t.Key, "0x " + ((ScriptTimer)t.Value).Interval.ToString() });
 			}
 		}
 	}

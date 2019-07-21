@@ -36,7 +36,7 @@ namespace RazorEnhanced
 		{
 			SendMessage(num.ToString(), true);
 		}
-		
+
 		public static void SendMessage(object obj)
 		{
 			SendMessage(obj.ToString(), true);
@@ -235,8 +235,9 @@ namespace RazorEnhanced
 
 		// Shared Script data
 		private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
+        public static ConcurrentDictionary<string, object> SharedScriptData { get => m_sharedscriptdata; set => m_sharedscriptdata = value; }
 
-		public static object ReadSharedValue(string name)
+        public static object ReadSharedValue(string name)
 		{
 			object data = 0;
 			if (m_sharedscriptdata.ContainsKey(name))
@@ -329,7 +330,7 @@ namespace RazorEnhanced
 
 		// Comandi Script per Menu Old
 
-		public static bool HasMenu() 
+		public static bool HasMenu()
 		{
 			return World.Player.HasMenu;
 		}

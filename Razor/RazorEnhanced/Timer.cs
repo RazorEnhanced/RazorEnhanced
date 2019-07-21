@@ -13,8 +13,9 @@ namespace RazorEnhanced
 	public class Timer
 	{
 		private static ConcurrentDictionary<string, ScriptTimer> m_timers = new ConcurrentDictionary<string, ScriptTimer>();
+        public static ConcurrentDictionary<string, ScriptTimer> Timers { get => m_timers; set => m_timers = value; }
 
-		public static void Create(string name, int delay)
+        public static void Create(string name, int delay)
 		{
 			if (m_timers.ContainsKey(name)) // Timer Exist
 			{
@@ -57,5 +58,5 @@ namespace RazorEnhanced
 			m_timers.TryRemove(t.Name, out ScriptTimer tt); // Remove timer
 			t = null;
 		}
-	}		
+	}
 }
