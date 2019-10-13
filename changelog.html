@@ -1,0 +1,737 @@
+﻿<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
+<p>
+    <strong>Version 0.6.62 [10/13/2019]</strong>
+    <br />- Corrected compile errors.
+    <br />- Fixed Autoloot.Runonce to work
+<p>
+    <strong>Version 0.6.62 [04/12/2018]</strong>
+    <br />- Added start and stop script message, can enable it from script tab gui.
+    <br />- Added inspect item hotkey.
+    <br />- More Fields Copyable in inspectors.
+    <br />- Remove little error in text show in gump inspector.
+    <br />- Fix error in GumpResponse whit text.
+    <br />- Enable copy/paste on remaining fields in mobileinspector and iteminspector to match the button copy.
+    <br />- Allow 'All' for the loot item ID (-1).
+    <br />- Allow PromptGroundTarget to return position of Mobile if target mobil instead of ground.
+    <br />- Added script command Player.SetSkillStatus for set lock up or down from script.
+    <br />- Added script editor highlight for SetSkillStatus function.
+    <br />- Added command -drop for open a target and select item to drop on feet.
+    <br />- Fix possible stack overflow in pathfind code.
+    <br />- Fix spell message for chiva spells.
+    <br />- Added Misc.ScriptStopAll() command for stop all script.
+
+
+<p>
+    <strong>Version 0.6.61 [12/11/2018]</strong>
+    <br />- Fix not correct script refresh when close editor and save it.
+    <br />- Fix drag a part of stack item in container on ground, not correct sertial refresh.
+    <br />- Added BandageHeal agent autostart option at login-
+    <br />- Fix pathfind and door, now ignore door only if enabled autoopendoor or you are a ghost.
+    <br />- Fix script function Items.Move for move item over a NPC.
+    <br />- Added script function Misc.ShardName() return string of selected shard.
+
+<p>
+    <strong>Version 0.6.60 [05/11/2018]</strong>
+    <br />- Fix clilor read for ID 1041522.  Thx Credzba
+    <br />- Fix Possible crash in grab item HotKey
+    <br />- Fix BugTrack ID: 423161 UnauthorizedAccessException if save file in script editor.
+    <br />- Fix BugTrack ID: 376816 ArgumentException in GetPropValue
+    <br />- Fix possible wrong walk script command response in shard whit huge lag
+
+    <br />- Fix Possible loop in scavenger on stacked item
+    <br />- Fix possible cancel target error
+    <br />- Added script function Timer.Check and Timer.Create
+
+    <br />- Implement UOP file reading for icon on titlebar counter. Thx Credzba
+
+
+<p>
+    <strong>Version 0.6.59 [29/10/2018]</strong>
+    <br />- Added button to add direct hue and body if by target a npc in target filter gui.
+    <br />- Filters now have by default value True on Enabled. For prevent confusion when script.
+    <br />- Added Hide Item HotKey.
+    <br />- Added to script command WaitJournal possibility to pass a List<string>
+        for multiple message.
+        <br />- Fix possible crash when move item of sight.
+        <br />- Made serial and type copyable to clipboard.
+        Cleaned up warning messages.
+        <br />- Removed razor checksum, and cleaned up more warnings.
+        <br />- Fix door on new pathfind.
+        <br />- Fix auotremount, Now not try to remount if player is Polymorfed.
+
+<p>
+    <strong>Version 0.6.58 [20/10/2018]</strong>
+    <br />- Fix decimal point in props read command script GetPropValue for item and mobile.
+    <br />- Added missing WraithForm for BuffsExist command.
+    <br />- Added InParty flag for player object.
+    <br />- Text fix in bandage heal agent
+    .
+    <br />- Fix BugTrack ID: 420104  ArgumentNullException in Clipboard.SetText.
+    <br />- Added check to OSI lock item on Scavenger.
+    <br />- Fix possible crash if double drag item.
+    <br />- Fix in dress thread thx Jewele
+    .
+    <br />- Text fix in gui options tab.
+    <br />- Removed double init hotkey at load at start.
+    <br />- Fix Mobile inspector for client 5.x.x
+
+    <br />- Fix CastMastery tooltip in script editor.
+    <br />- Added Hokey for cast last spell.
+    <br />- Added Script Command Spells.CastLastSpell.
+    <br />- Fix BugTrack ID: 418000, avoid error in StaticInspector if ultima.dll fail to get data.
+    <br />- Fix wrong dead flag read on OSI.
+    <br />- Added script command Mobiles.WaitForStats for OSI shard for retrive stat value (not real) from mobs whitout open bar.
+    <br />- Fix missing hits load on -Inspect.
+    <br />- Item & mobile, Code optimization.
+
+<p>
+    <strong>Version 0.6.57 [10/10/2018]</strong>
+    <br />- Fix item distance calc for autoloot.
+
+<p>
+    <strong>Version 0.6.56 [09/10/2018]</strong>
+    <br />- Now profile list in selector are ordered by alpha order.
+    <br />- Fix bug in WaitForTarget no correct read bool value for show or not target cursor.
+    <br />- Correct WaitForTarget  command description in tooltip.
+    <br />- Added possibility to import and export graph filter.
+    <br />- Fix BugTrack ID:417278, System.ComponentModel.Win32Exception
+    <br />- Fix autocapture screen (on dead) for Gargoyle race.
+    <br />- Added lots of hotkey for better control agent and filter.
+    <br />- Fix Dress.DressStatus tooltips in script editor.
+    <br />- Fix a bug in distance calculation on diagonal.
+    <br />- Added optional value for some item script function
+    .
+    <br />- Added missing target highlight (if enable) on script command setlast or setfromlist.
+    <br />- Fix possible missing object remove in core (if resource if busy whit another thread).
+    <br />- Optimized possible lag spike in area whit high density of mobile/item.
+    <br />- Optimized autoloot & scavenger code.
+    <br />- Added function to import / export target filter.
+    <br />- Fix BugTrack ID: 377322, Crash if use ReadPlayerDress button and not logged in game.
+    <br />- Fix BugTrack 390003. Possible crash in screen autocapture.
+    <br />- Fix BugTrack ID 999195 in item inspector if Ultima.dll fail to read itemtable.
+
+<p>
+    <strong>Version 0.6.55 [04/10/2018]</strong>
+    <br />- Fix wrong spell name from recorder and spell command for spell Attunement.
+    <br />- Fix Attunement spellname in spellgrid & hotkey.
+    <br />- Fix Error in player script error message
+    .
+    <br />- Fix in target filter save flag for color and body filter.
+
+<p>
+    <strong>Version 0.6.54 [03/10/2018]</strong>
+    <br />- Added resync in new pathfind if go out from sync.
+    <br />- Added optional bool value on journal script function  GetLineText  GetTextByColor GetTextByType for get in test name of ppl talk also.
+    <br />- Fix bugtrack 363336, System.NullReferenceException in Dress.DressEngine().
+    <br />- Fix spamming crash error if Ultima.StringEntry.SplitFormat fail to get cliloc. BugTrack ID: 382557.
+    <br />- Fix ObjectDisposedException in script editor window. BugTrack ID: 372759.
+    <br />- New target filter gui.
+    <br />- Fix possible NullReferenceException in ScreenCapManager.DisplayTo.
+    <br />- Remove flicker effect on screen shot list when loaded.
+    <br />- Added strip menu and key shotcut for copy message in script editor log box, also added clear menu for remove all old error message.
+    <br />- Align WarMode flag name whit player and mobiles in script.. Now all in mob.WarMode and Player.WarMode
+    <br />- Added search/replace menu for script editor.
+    <br />- Added Script command Player.SpellIsEnabled(skill name) For detect if skill have red or wait icon is active.
+    <br />- Added function to highlight skill icon on toolbar if spells is enabled (For spell have this function).
+    <br />- Fix Clear Ability packed for OSI.
+    <br />-
+    Added missing error message for some player function if input wrong parameter.
+    <br />- Optimize spell script function.
+
+<p>
+    <strong>Version 0.6.53 [30/09/2018]</strong>
+    <br />- Optimized movement function for pathfind.. remove Run Flag. Now speed direct checked from client if always run option is enable or not.
+    <br />- Added stripmenu in script editor text area whit copy, cut and paste.
+    <br />- Added to stripmenu in script editor command for comment or uncomment line.
+    <br />- Fix error thread abort when use multiple script editor window.
+
+    <br />- Fix possible conflict whit movement key send and hotkey bind to move direction button.
+    <br />- Correct function name  Items.FindItemByID(int, int, int) -->  Items.FindByID(int, int, int).
+    <br />- Fix missing editor Highlight for item and mobile filters. Also added for pathfind object.
+    <br />- Added on items and mobiles filter object flag CheckIgnoreObject .. true or false for automatic check if object is ignored.
+    <br />- Added script command Player.StaticMount for get serial of mount setted in filter mount GUI.
+
+
+<p>
+    <strong>Version 0.6.52 [27/09/2018]</strong>
+    <br />- Added mobile check on new pathfind system.
+    <br />- Optimized code in gump string process.
+    <br />- Fix OSI new packet for alliance and guild chat.
+    <br />- Fix missing .Container highlight in script editor.
+    <br />- Added to script recorder different chat message.
+    <br />- Removed possibility to open multiple gump inspector window and make confusion.
+    <br />- Add ingame command -inspectgumps.
+    <br />- Separate button on script tab for edit selected script or open new editor.
+    <br />- Fix Items.UseItemOnMobile script editor tooltip
+    .
+    <br />- Fix wrong event call on toolbar edit gui when change data in itemid.
+    <br />- Added script FindItemByID function. (for lazy coder not want use for or filter :p ).
+    <br />- Added return value true or false on Pathfind.Go function, if destination is unrechable return false.
+    <br />- Optimize logout operation.
+    <br />- Updated uo.dll for old pathfind system whit new osi client.
+
+<p>
+    <strong>Version 0.6.51 [24/09/2018]</strong>
+    <br />- Added possibility to use command -inspect on ground for get static and land information.
+    <br />- Added Target.PromptGroundTarget script function, For get in script a prompt for target coords.
+    <br />- Added new function for ignore object in in script and share same ignore from script. easy way whitout using custom array in script (see wiki for all details).
+    <br />- Fix possible InvalidOperationException in BuyAgent. BugTrack ID: 414590
+    <br />- Fix BugTrack ID: 346983
+    <br />- Fix possible NullReferenceException in spellgrid BugTrack: 414366
+    <br />- Fix consumables macro for smoke bombs.
+
+<p>
+    <strong>Version 0.6.50 [20/09/2018]</strong>
+    <br />- Little optimization in new pathfind system.
+    <br />- Added script function Misc.FocusUOWindow(), This allow script focus or de-minimize uowindow.
+    <br />- Item added in agent is checked by default.
+    <br />- Optimized compiler option for better performance.
+
+<p>
+    <strong>Version 0.6.49 [19/09/2018]</strong>
+    <br />- Fix error in script move if destination not valid.
+    <br />- Fix target execute for multi object (house, boat, ecc).
+    <br />- Fix old status bar gold value for old client (thx evening for code).
+    <br />- Fixed nosave function in settings.
+    <br />- Fix Shadowjump different name from script record to function.
+    <br />- Optimized new pathfind whit diagonal move.
+    <br />- Fix possible NullReferenceException in PacketHandlers.EquipmentUpdate  BugTrack ID: 385192.
+    <br />- Fix function for restore settings if corrupted.
+
+
+<p>
+    <strong>Version 0.6.48 [14/09/2018]</strong>
+    <br />- Added script function Statics.CheckDeedHouse(X,Y) for detect il in this tile is placed a deed house.
+    <br />- Removed crash report for System.BadImageFormatException: Could not load file or assembly 'Accord.Video.FFMPEG.dll'. Missing dll or c++ redist
+    <br />- Remove expire date, no longer have sense on opensource project.
+    <br />- Fix possible missing text read after a waitforgump script operation.
+    <br />- Fix Ultima.Art.GetStatic possible IndexOutOfRangeException in ultima.dll BugTrack ID: 358395.
+    <br />- Fix quiver not correct detect like container.
+    <br />- Fix visual error show in script tab hotkey name if is mouse.
+    <br />- Fix possible crash fi close UO client whit save script dialog is open.
+    <br />- Fix wrong ask to save file in script editor window if is empty editor.
+    <br />- Fix visual error in script grid when update hotkey.
+    <br />- Added New pathfind system. (Check wiki or discord channel for information)
+
+
+<p>
+    <strong>Version 0.6.47 [07/09/2018]</strong>
+    <br />- Rollback New pathfind system too unstable.
+
+<p>
+    <strong>Version 0.6.46 [07/09/2018]</strong>
+    <br />- Fix Followers and MaxFollowers read value
+    <br />- Fix possible exception on script stop.
+    <br />- Fix script stop status thx Jewele for it :)
+    <br />- Updated autoupdate lib.
+    <br />- Fix bugtrack id: 387143 InvalidOperationException in Mobile.GetItemOnLayer.
+    <br />- Fix Bugtrack ID: 360211 ArgumentException & Item.get_Contains().
+    <br />- New pathfind system now work on multiple istance of client. Thx Soltrac for help.
+
+<p>
+    <strong>Version 0.6.45 [11/08/2018]</strong>
+    <br />- Removed script stop from script error log for prevend overload in writing log file.
+    <br />- Fix fake error message when press stop script in editor.
+    <br />- Fix Bug Track ID: 403395
+
+    <br />- Fix bug track ID: 403932
+    <br />- Removed debug message when login.
+
+<p>
+    <strong>Version 0.6.44 [30/07/2018]</strong>
+    <br />- Added "Wet" type for script command GetTileFlag.
+    <br />- Fix IOException in script error log file generation. BugTrack ID:400999
+    <br />- Fix possible exception additem core function. BugTrack 377686
+    <br />- Fix possible null exception in target self in player not loaded. BugTrack ID: 401279
+    <br />- Added missing Clumsy spell hotkey.
+    <br />- Fix possible error in agent thread loop. BugTrack ID: 348569
+    <br />- Added bar for stats in mobile inspector.
+    <br />- Fix bugtrack Id: 348151 Items.GetPropValue.
+    <br />- Script command setlast now can set also item for last target.
+    <br />- Possible fix for enumeration operation may not execute in Player.BuffsExist.
+    <br />- Fix text autocomplete DropItemGroundSelf in script editor.
+    <br />- Added function GetStaticsLandInfo and GetLandFlag for access to static infomation for land.
+
+    <br />- Added SetLast Hotkey.
+    <br />- Added clone button for agent list.
+    <br />- Added search option in script tab.
+
+<p>
+    <strong>Version 0.6.43 [24/07/2018]</strong>
+    <br />- Fix GetItemOnLayer and DistanceTo static.
+    <br />- Improved uomod stability, also added warning message when enable option if client is > 7.49
+    .
+    <br />- Fix missing capital letter on spell recorder for spell Word of Death.
+
+<p>
+    <strong>Version 0.6.42 [23/07/2018]</strong>
+    <br />- Fix BugTrack ID: 378940.
+    <br />- Fix MaxHits value in mobileinspector.
+    <br />- Added hotkey for use Pouch.
+    <br />- Fix BugTrack ID: 360211.
+    <br />-
+    Fix BugTrack ID: 398118.
+    <br />-
+    Fix BugTrack ID: 400068.
+    <br />- Fix video recorder bug in multiscreen.
+    <br />- Fix bugtrack ID: 363414.
+    <br />- Added shard name and char name in script editor title for make easy find editor window.
+
+<p>
+    <strong>Version 0.6.41 [18/07/2018]</strong>
+    <br />- Added filter to block lizart rat and orc talk.
+    <br />- Added txt extension for script.
+    <br />- Fix script editor warning message for save script (if press cancel now not close editor).
+    <br />- Fix script editor save message (on form closing) now if script if not new not ask again to select file save direct on old file.
+    <br />- Optimized code in mobile graph filter, also added possibility to change color. removed add and remove button. now can edit direct table.
+    <br />- Fix script save dialog not ask to save if script not modifyed.
+    <br />- Added Player.GetRealSkillValue function.
+    <br />- Added option in script tab to record script error (when script in background crash make a error log file called <ScriptName>
+        .ERROR
+        <br />- Added script line error for generic error in script editor.
+        <br />- Fix possible crash when edit a item when autoloot running. BugTrack ID: 377099
+        <br />- Fix possible crash in display item image.
+        <br />- Updated uo.dll for new client pathfind.
+        <br />- Fix Player.PathFindTo function not accept Point3D parameter.
+        <br />- Fixed Pathfind on multiclient.
+
+<p>
+    <strong>Version 0.6.40 [09/07/2018]</strong>
+    <br />- Updated: Crashreport and AutoUpdate library
+    <br />- Fix possible autoloot issue if editing item and autoloot try to grab item in edit.
+
+    BugTrack ID: 377099
+    <br />- Added new splash screen image
+    <br />- Fix BugTrack: 378590
+    <br />- Fix Player.BuffsExist possible NullReferenceException. BugTrack ID: 373581
+    <br />- Fix Items.GetPropValue fix possible ArgumentException. BugTrack ID: 376816
+    <br />- Fix BugTrack ID: 353303
+
+    <br />- Fix possible error when click on browser link on gui.
+    BugTrack ID: 396339 & 397129
+    <br />- Fix BugTrack ID: 1091403  SetSkillLock packet NullReferenceException
+    <br />- Fix Enemy of One string for on record and cast command (keep also old Enemy Of One for old script compatibility)
+    <br />- Fix BugTrack ID :387637
+    <br />- Fix bugtrack ID: 1072915
+
+<p>
+    <strong>Version 0.6.39 [23/05/2018]</strong>
+    <br />- Fix Bandage hotkey if use colored bandage.
+    <br />- Added warning message on closing whit X button script editor to prevent lose data
+    <br />- Fix smokebomb item color in hotkey
+    <br />- Fix null exception in playscript command. BugTrack ID: 385777
+    <br />- Added script command Player.MapSay(msg) for send message direct to map application
+    <br />- Fix bugtrack id 377753 .. Possibile null exception on item not have correct data
+    <br />- ClientEncodedPacket possible null exception. BugTrack ID: 377788
+    <br />- Fix null exception in spellgrid if not image found in ultima file. BugTrack ID: 386281
+    <br />- Fix possible error in read shard name. BugTrack id: 385880
+
+<p>
+    <strong>Version 0.6.38 [10/04/2018]</strong>
+    <br />- Fix error in gumpresponse (closing not correct gump id).
+    <br />- Optimized some player script function.
+    <br />- Added missing skill to script commang getskillcap and getskill for this skills: Mysticism - Imbuing - Throwing.
+
+<p>
+    <strong>Version 0.6.37 [10/04/2018]</strong>
+    <br />- Update pathfind for Client 7.0.63.2 and lower.
+    <br />- Fix hotkey problem.
+    <br />-
+    Added script function Friend.GetList(name).
+    <br />- Fix organizer and restock false positive in Status command
+    <br />- Added support for party private message for chatparty script command
+    <br />- Added possibility to use ContextReply whit MenuText not only ID
+    <br />- Fix Misc.MenuContain tootips
+    <br />- Fix item selector Strongest
+
+<p>
+    <strong>Version 0.6.36 [09/04/2018]</strong>
+    <br />- Possible fix access violation for memory.
+    <br />- Fix hotkey problem on key assign refresh.
+    <br />- Added journal function:
+    - GetTextByType
+    - GetTextByName
+    - GetTextByColor - GetTextBySerial.
+    <br />- Fix error in singleclick script command
+    .
+    <br />- Removed on target selector self and not retarget if selected mobile is already on last target.
+    <br />- Fix BugTrack 377099 possible error if edit scavenger item if running
+    .
+    <br />- Fix BugTrack 368219
+    .
+    <br />- Fix BugTrack 378940.
+    <br />- Fix BugTrack 377753 possible crash if targetted item disappare when autocarver or bonecutter are running.
+    <br />- Fix script recorder for Chivalry spells.
+    <br />- Added Statics.GetTileFlag(int, string) function. For read flag of static item (tiledata info)
+    .
+    <br />- Fix BugTrack ID: 351837.
+    <br />- Added paypal donation button.
+    <br />- Added selector Next for target filter.
+
+    <br />- Enabled UoMod for client > 7.0.50.x
+    .
+    <br />- Fixed missing color save for target highlight.
+    <br />- Added Add Friend HotKey.
+    <br />- Remove "." in spellgrid script name.
+
+<p>
+    <strong>Version 0.6.35 [04/04/2018]</strong>
+    <br />- Fix toggle weapon hotkey for two handed weapon.
+    <br />- Fix Bugtrack ID: 1052099.
+    <br />- Fix Bugtrack ID: 378100 Items.GetPropValue possible error to get value.
+    <br />- Added autostart al login option for autoloot & scavenger.
+    <br />- Fix Special SA for paladin sword.
+    <br />- Fix hotkey textbox can't read same key if last used.
+    <br />- Removed .py extension on draw text in spellgrid icon.
+    <br />- Fix missing restock refresh list.
+    <br />- Added skill to spellgrid option.
+    <br />- Fix pathfing for Client 7.0.62.2 and lower.
+
+<p>
+    <strong>Version 0.6.34 [31/03/2018]</strong>
+    <br />- Fix mob bar refresh.
+    <br />- Fix BugTrack ID: 350256 crash if try to start razor whitout any shard in bookmarks.
+    <br />- Fix Show health above people/creatures health format.
+    <br />- Added hotkey: Equip Right -  Equip Left - Toggle Right - Toggle Left.
+
+<p>
+    <strong>Version 0.6.33 [29/03/2018]</strong>
+    <br />- Reduce lag in area whit more item.
+    <br />- Increase titlebar refresh rate.
+    <br />- Added option to lock walk mode if are stealted.
+    <br />- Fix possible thread exception on abort in script editor. BugTrack ID: 351458
+    <br />- Possible fix for agent thread exception if not corrected stopped for BugTrack ID: 348852
+    <br />- Fix exception if use copy button in inspector and clipboard is locked by other process. BugTrack: 372449
+    <br />- Fix possible crash in lastused profile if a profile delete outside razor. BugTrack: 362900
+    <br />- Fix missing activation of Stealth Step counter in some case.
+
+    <br />- Added report crash for packet handler exception.
+    <br />- Added filter for poison message on mobs.
+    <br />- Fix possible System.ArgumentException when scan props of item. BugTrack: 376816
+    <br />- Added hotkey for start Enhanced Map.
+    <br />- Fix tooltip wrong text for UseItemOnTarget.
+
+<p>
+    <strong>Version 0.6.32 [25/03/2018]</strong><br />- Added GetTargetFromList function for script.
+    <br />- Fixed spam message on left bottom of screen for Message function if mob not in range or not xist
+    <br />- Reorded target function.
+    <br />- Reordered all sendmessage function.
+    <br />- Fix dress agent message not follow rule (Show Agent message filter).
+    <br />- Added tooltip in script editor for new function Target.GetTargetFromList.
+    <br />- Fix possible graphics error when resurrect if have self color filter enable.
+    <br />- Fixed some target problem if mobs spawn near you.
+    <br />- Added to Player.Attack Function parameters mobile not only serial.
+    <br />- Removed single click action in script recorder, for prevent confusion whit normal client send single click.
+    <br />- Fixed problem for script have flag loop not correct stop after second keypress from hotkey.Now all script execpt wait before interrupt follow this rule. Frist key press start second key press stop.
+    <br />- Fix possible null exception is Item.ItemID get value. BugTrack ID: 376439.
+
+<p><strong>Version 0.6.31 [20/03/2018]</strong><br />- Fix for crash on script. BugTrack ID: 375103 & 375116
+
+<p>
+    <strong>Version 0.6.30 [19/03/2018]</strong><br />- Fix self colorize and optimiziation.
+    <br />- Added missing Wrath Grapes id for hotkey.
+    <br />- Optimized code for Show Target on Head filted. Now detect also action manual done in game and show message of target. Also added message for attack by game and by script.
+    <br />- Fix hotkey confusion if have both potion Supernova and Strengh and try to use Strengh.
+    <br />- Fix possible error in autoloot if datarow not end edit and autoloot running. BugTrack: 374251.
+    <br />- Code optimized in mob inspector.
+    <br />- Reorder and clear dress engine code
+    .
+    <br />- Update dll for pathfind Client 7.0.61.13 and lower.
+    <br />- Added missing target message if use Player.Attack Script command.
+    <br />- Fix possible script thread exception. BugTrack ID: 348852
+    .
+    <br />- Added tooltip menu in script table grid for more easy change script data.
+    <br />- Changed grph for static filed for wall of stone.
+    <br />- Added TargetExecuteRelative script command TargetExecuteRelative(mobile, +-offsetdistance)
+
+<p>
+    <strong>Version 0.6.29 [13/03/2018]</strong><br />- Fix BugTrack ID: 370101, Out of range in toolbar item settings.
+    <br />- Fix BugTrack ID: 373384 - possible crash in selection slot change for toolbar.
+    <br />- FIX setting file. Missing parameter when create new profile.
+
+<p>
+    <strong>Version 0.6.28 [13/03/2018]</strong><br />- Fix on script command WaitForProps, possible NullReferenceException. BugTrack ID: 371929.
+    <br />- Fix possible NullReferenceException in item entity. BugTrack ID: 372010.
+    <br />- Added Self Flag Color Filter. This option colorize only your PG based to flag status (Paralized, Poison, Mortal)
+    .
+    <br />- Fix static filed for wall of stone for OSI (added missing ID).
+    <br />- Function Player.ChatSay - Player.ChatEmote - Player.ChatWhisper - Player.ChatChannel - Player.ChatYell - Player.ChatGuild - Player.ChatAlliance. Now accept also integer parameters not only string.
+    <br />- Added BoodOath color highlight on self.
+    <br />- Optimized code in static field filter.
+    <br />- Optimized mob graph filter.
+    <br />- Fix missing update LastAttack if use hotkey.
+    <br />- Fix possible conflict whit auto oper corpse and autoloot.
+    <br />- Possible fix for BugTrack ID: 356719 & 372793.
+    <br />- Added check for disable recorder if not have all necessary library installed on system BugTrack ID:372990.
+    <br />- Fix BugTrack ID: 372809: RazorEnhanced.Settings.General.ReadBool System.ArgumentException.
+    <br />- Fix possible crash in script editor if close window and script thread is running. BugTack ID: 372759
+    .
+    <br />- Removed warning message from findbyserial script command.
+    <br />- Changed PromptTarget Function in script, now can specific a message show in game for prompt target. PromptTarget("String message").
+    <br />- Fix on hotkey not accept  CTRL + e - r. and other special combination.
+
+<p>
+    <strong>Version 0.6.27 [06/03/2018]</strong><br />- Fix Bugtrack 369498 (toolbar editing item name).
+    <br />- Reordered DLLImport call in a single class.
+    <br />- Fix missing restock save bag.
+    <br />- Fix script error in profile change.
+    <br />- Update pathfind for OSI Client 7.0.61.1 and lower.
+
+<p>
+    <strong>Version 0.6.26 [01/03/2018]</strong><br />- Optimezed item edit in toolbar gui.
+    <br />- Fix PathFind bug.
+
+<p>
+    <strong>Version 0.6.25 [28/02/2018]</strong><br />- Fix script function Gumps.LastGumpGetLineList  not read all correct string.
+    <br>- Added highlight and tootips in script editor for DPSMeter command.
+    <br>- Added script function Gumps.LastGumpRawData. This function return last gump raw data structure. can be used for advanced search in gump layout for item button ecc.
+    <br>- Optimezed force screen function, now no longer need select 800*600 or other resulution in game for enable. If enable from razor automatic enabled in client.
+    <br>- Fix crash if editing item in toolbar outofrange. BugTrackID: 1028443
+    <br>- Fix possible crash if enter null value in amount in restock agent. BugTrack ID: 1028360
+    <br>- Fix pathfind script command for new client. Now supported Client 7.0.60.47 and lower
+
+
+<p>
+    <strong>Version 0.6.24 [26/02/2018]</strong><br />- Fix open file dialog on script editor if select bad file, BugTrack ID: 369236.
+    <br>- Script editor, record button now change name if is on record or not.
+    <br>- Fix Bug TrackID: 369498, Crash if redouce number of item in toolbar and selector still on last.
+    <br>- Added toolbar layout for TitleBar.
+    <br>- Fix compatibility whit some shard.
+    <br>- Optimized dess undress code.
+    <br>- Added Dps Meter.
+    <br>- Added missing tooptip for Player.Run description in script editor.
+    <br>- Optimizer player.walk and run function. now have check if walk is succesful or not (return true for walk succesful return false if walk rejected), also have a delay check no longer need use delay in script for walk sequence.
+    <br>- Fix gui refresh for script command use agent.
+    <br>- Update IronPython Lib.
+    <br>- Added autoupdater for future version.
+    <br>- Fix agent grid dragdrop item if outside range.
+    <br>- Added hotkey for toggle war mode.
+    <br>- Fix bugtack ID: 361669 (toolbar and spellgrid).
+
+<p>
+    <strong>Version 0.6.22 [19/02/2018]</strong><br />- Fix error in buyagent when switch list.
+    <br>- Fix toolbar issue if item deleted in game during counting (BugTrack ID: 359770).
+    <br>- Fix organizer grid if enter null value in itemid (BugTrack ID: 361538).
+    <br>- Fix all agent grid if enter null value in itemid (BugTrack ID: 350220).
+    <br>- Added missing bodyid for IsHuman flag.
+    <br>- Fix special SA icon if equip spellbook.
+    <br>- Fix composite bow SA.
+    <br>- Fix possible toolbar crash out of range (BugTrack ID: 361669).
+    <br>- Optimized code when edit a agent grid.
+    <br>- Removed multi window open if click more time on add list on agent.
+    <br>- Fix crash if delete script file outside razor and try to edit it (BugTrack ID: 359386).
+    <br>- Fix AbbandonedMutexException (BugTrack ID: 353303).
+    <br>- Fixed error message for missing dll on start. Now if necessary lib not installed some function has been disable.
+    <br>- Added hotkey for toggle Special Ability ON/OFF in one key.
+    <br>- Fix missing label update in slot number in toolbar if increase it.
+    <br>- Fix toolbar slot count if switch from big to small size.
+    <br>- Added possibility to add shortcut for script in SpellGrid.
+    <br>- Optimized ToolBar and SpellGrid save position function.
+    <br>- Fix WaitForContent script function now accept also serial not only item object.
+    <br>- Fix GetPropValue script command if have negative result.
+    <br>- Fix missing label update in slot number in toolbar if increase it.
+    <br>- Optimezed Autoloot Scavenger organizer restock agent core.
+    <br>- Optimezed Data load and save in agent itemgrid.
+    <br>- Fixed Accord.Video.FFMPEG dll error.
+    <br>- Fixed possible crash if editing agent datagrid item whitout saved it.
+    <br>- Fixed crash if press edit item if list is empty.
+    <br>- Fix scavenger problem on OSI.
+    <br>- Fix Missing show on gui scavenger and autoloot maxrange value when switch list.
+    <br>- Removed double message on try to start agent and not logged or not select a list
+    <br>- Fix BugTrack ID: 361538.
+    <br>- Fix BugTrack ID: 346403.
+    <br>- Fix BugTrack ID: 364481.
+    <br>- Fix viewrange flag on profile change.
+    <br>- Optimized Auto Carver Core.
+    <br>- Optimized Auto Remount Core.
+    <br>- Optimized Auto Bone Cutter Core
+    <br>- Fix crash if inspect a item and disappared from game (BugTrack ID: 999195).
+    <br>- Added missing id and color for orange petal use hotkey.
+
+<p>
+    <strong>Version 0.6.21 [03/02/2018]</strong><br />- Fix possible crash in script loop (BugTrack ID: 348852).
+    <br>- Fix talisman slot name.
+    <br>- Added refresh of Special SA in spellgrid.
+    <br>- Added highlight on Special SA in spellgrid.
+    <br>- Some grapichs change in toolbars (Icon size, alignement, ecc)
+    <br>- Fixed issue in FeaturedBit.
+<p>
+    <strong>Version 0.6.20 [16/01/2018]</strong><br />- Fix CaseSensitive bug in -playscript <Script.py>
+        command
+        <br>- Fix missing Talisman slot in GetItemByLayer script command.
+        <br>- Fix bandage issue in old client <= 6.
+        <br>- Added vendor agent message to journal buffer.
+        <br>- Fix possible crash in getprops script command.
+        <br>- Fix possible crash during stop video record if file deleted or locked.
+        <br>- Added hotkey for interrupt spell cast.
+        <br>- Added script command for interrupt spell cast Spells.Interrupt().
+        <bt>- Fix crash in gumpinspector if click copy data do clipboard and no item selected.
+<p>
+    <strong>Version 0.6.19 [26/11/2017]</strong><br />- Fix possible crash in load settings if file are locked by other process.
+    <br>- Added Autostart Flag on script GUI, for select what script start when login.
+    <br>- Removed WMP COM object for better compatibility.
+    <br>- Fix possible crash in vidor record (Stop Record).
+    <br>- Fix crash in autoloot and scavenger item props editor if enter null value in grid.
+    <br>- Fix Negotiate protocol for light filter.
+<p>
+    <strong>Version 0.6.17 [26/11/2017]</strong><br />- Fix possible crash in bandage heal if use dex formula on nonofficial shard.
+    <br>- Updated CrashReport library.
+    <br>- Added Video recorder.
+    <br>- Fix crash if delete screenshot folder during assistant running.
+    <br>- Fix crash in autoloot if content of container updated outside autoloot thread.
+    <br>- Added Mount Dismount hotkey in single key.
+    <br>- Fix context reader for client < 6.0.0.0
+    <br>- Fix special container (gift box) not readed correctly.
+    <br>- Fix Script editor statusbar.
+    <br>- Fix a tooltip text in script editor.
+    <br>- Fix missing save/load of bandageheal assistant parameters.
+<p>
+    <strong>Version 0.6.16 [12/11/2017]</strong><br />- Fix possible crash in bandage heal assistant.
+    <br>- Fix string parsing for gumps command.
+    <br>- Fix missing hide is some situation of toolbar and spellgrid.
+    <br>- Fix losing assistant bag when change facet if assistant running.
+    <br>- Updated use bandege hotkey whit packet BF.2C
+    <br>- Updated BandageHeal agent whit packet BF.2C
+    <br>- Added script function Items.UseItemOnMobile see wiki for details.
+    <br>- Fix missing buff check for Vampiric Embrace
+    <br>- Added script function Items and Mobile ContextExist see wiki for details.
+    <br>- Fix OSI resistance bug
+    <br>- Fix Consecrate Weapon icon in spellgrid.
+    <br>- Fix possible error if keep a space in hostname or port in launcher menu.
+<p>
+    <strong>Version 0.6.15 [02/10/2017]</strong><br />- Fix missing imbuing skill.
+    <br>- Update crash report.
+<p>
+    <strong>Version 0.6.14 [10/06/2017]</strong><br />- Fix problem if disable launch window and can't resolve shard host.
+    <br>- Fix bonecutter crash if blade destroyed.
+    <br>- Fix core crash.
+    <br>- Fix missing hotkey refresh if add dress list.
+    <br>- Fix text error in Bload Oath Buff string.
+<p>
+    <strong>Version 0.6.13 [28/05/2017]</strong><br />- Fix losing tabs is script editor if edit a line whit tabs
+    <br>- Added automatic TABS insert in script editor if detect a IF ELSE WHILE ecc.
+    <br>- Added UO3D equip command for script.
+    <br>- Fixed BoneCutter for OSI shard.
+    <br>- Now bonecutter and autocarver use object delay for cut action.
+    <br>- Fix a crash if try to change color border in spellgrid if not opened.
+    <br>- Added script support for send message in chat channel.
+    <br>- Fixed -ping timeout.
+<p>
+    <strong>Version 0.6.12 [22/05/2017]</strong><br />- Fix possible crash during write backup file if can't write in folder.
+    <br>- Fix possible crash in bandage heal on exit.
+    <br>- Fix data save in Vendor Buy agent.
+<p>
+    <strong>Version 0.6.11 [18/05/2017]</strong><br />- Fix autoloot item props save.
+    <br>- Fix filter queue message thread exception.
+    <br>- Fix IsGhost flag for bonded pet.
+    <br>- Fix Visible flag on item if use Hide command.
+    <br>- Added function for Autosearch for container.
+    <br>- Fix lag when more fields on screen and show field message is enabled.
+    <br>- Added support for use UO3D packet equip function.
+    <br>- Fix toolbar refresh when change map.
+    <br>- Added support for use mouse and CTRL, ALT, SHIFT combo in Hotkey.
+    <br>- Fix possible crash if reading props item during updating it.
+<p>
+    <strong>Version 0.6.10 [06/05/2017]</strong><br />- Fix Gargoyle SA weapon id.
+    <br>- Fix password memory.
+    <br>- Fix a crash in drag item.
+    <br>- Fix Wrong compatibilty version message from UoMorpg shard.
+<p>
+    <strong>Version 0.6.9 [01/05/2017]</strong><br />- Fix Gargoyle SA if fly or not.
+    <br>- Fix ContextMenu Response in script recorder.
+    <br>- Added Fly hotkey.
+    <br>- Added Fly check for script (Player.Flying).
+    <br>- Added Fly command for script (Player.Fly(true/false)).
+    <br>- Fix screen resolution change for new client.
+    <br>- Fix Bombard spell.
+    <br>- Minor text fix in inspector.
+    <br>- Reduce player jump when hit a nonpassable item.
+    <br>- Changed command -ping now direct ping host.
+    <br>- Added SA props on mobile inspect.
+    <br>- Fix Luck value in mobule inspect.
+    <br>- Added NPC staff filter.
+    <br>- Fix item amount on inspect for OSI shard.
+    <br>- Added option if want block auto open door if hidded.
+<p>
+    <strong>Version 0.6.8 [15/04/2017]</strong><br />- Fix item inspect (amount), for osi shard.
+    <br>- Fix Hit bar update.
+    <br>- Fix Hit bar name bug.
+    <br>- More stability for drag item in autoloot and scavenger.
+    <br>- Added custom range setting for Scavenger.
+    <br>- Added custom range setting for Autoloot.
+<p>
+    <strong>Version 0.6.7 [11/04/2017]</strong><br />- Added crash reported.
+    <br>- Fix crash on right click on agent datagrid.
+    <br>- Fix text error in props Hit Lower Defense.
+    <br>- Now list order in autoloot and scavenger have priority in grab.
+    <br>- Added option do drag item in agent datagrid (autoloot scavenger) for change order.
+    <br>- Fix Scavenger for OSI shard.
+    <br>- Fix message level combobox.
+    <br>- Added script command to hide item.
+    <br>- Added command -hide to hide item in game.
+    <br>- Added script command for check if Special Ability is active or not.
+    <br>- Fix script listview flickering.
+    <br>- Remove old debug message from organizer.
+<p>
+    <strong>Version 0.6.6 [02/04/2017]</strong><br />- Changed GUI, now more clear and simple.
+    <br>- Added missing buff in check function (Consecrate Weapon).
+    <br>- Fix in autoloot props edit.
+<p>
+    <strong>Version 0.6.5 [30/03/2017]</strong><br />- Fix crash in autoloot props editing.
+    <br>- Fixed static filed on Enegy filed
+    <br>- Add e new datagrid for restock agent.
+    <br>- Fixing rangeview compatibility for OSI shard.
+    <br>- Fixed image on button for copy data in mobili and item inspector
+<p>
+    <strong>Version 0.6.4 [29/03/2017]</strong><br />- Fix issue in autoloot corpse distance.
+    <br>- Add e new datagrid for organizer agent.
+    <br>- Add e new datagrid for sell agent.
+    <br>- Add e new datagrid for buy agent.
+    <br>- Add e new datagrid for scavenger agent.
+    <br>- Add e new datagrid for autoloot agent.
+    <br>- Add color item on toolbar image
+    <br>- Add image on item inspector window and flag color.
+    <br>- Add image on mobile inspector window and flag color.
+    <br>- Minor fix on core.
+</p>
+<p>
+    <strong>Version 0.6.3 [21/03/2017]</strong><br />- Added Custom name porp on item editor in Autoloot.
+    <br>- Added Custom name porp on item editor in Scavenger.
+    <br>- Fix ghost item.
+    <br>- Optimized code for Batchquery stats and props.
+    <br>- Added Mastery skill on spellgrid.
+    <br>- Added Mastery skill script support Spells.CastMastery, see wiki for details.
+    <br>- Added Mastery skill hotkey.
+    <br>- Added discord channel button on tabs help.
+    <br>- Minor text fix.
+    <br>- Added new OSI potion on hotkey
+    <br>- Fix missing skill "Discordance" in HotKey.
+    <br>- Added a dialog for confirm list and profile delete action.
+    <br>- Fix missing update label opacity when start.
+    <br>- Optimize autoloot code.
+</p>
+<p>
+    <strong>Version 0.6.2 [17/03/2017]</strong><br />- Fix Autoloot for OSI shards.
+    <br>- Add option in waitfortarget (in script) for prevent show target cursor in game (do in in background).
+    <br>- Fix some compatibility for client 7.0.50+ series.
+    <br>- Fix flag during save profiles for UoMod.
+    <br>- Added config to BandageHeal for set distance.
+    <br>- Added selector in BandageHeal for heal target from friendlist.
+    <br>- Added this cangelog window.
+    <br>- Fix crash if closing script editor in debug mode.
+    <br>- Fix item list refresh when change props on item (autoloot and scavenger).
+    <br>- Target cursor for agent no longer show in game, do it in background.
+</p>
+<p><strong>Version 0.6.1 [15/03/2017]</strong><br />- Fix client instability when enable or disable UoMod patch</p>
+<p><strong>Version 0.6.0 [10/03/2017]</strong><br />- Increase autoloot Z reange level<br />- Fix toolbar blink when add or modify item<br />- Fix spellgrid blink when add or modify spell<br />- Fix savepassword bug on profile change<br />- Add UoMod Librady for remove blackcorner<br />- Add FPS patch from UoMod<br />- Add GlobalSound from UoMod<br />- Add Paperdool jewels slot from UoMod</p>
+<p><strong>Version 0.5.0 [01/03/2017]</strong><br />- Fix reopen toolbar and spellgrid when change profile<br />- Optimized core code<br />- Added spellgrid</p>
+<p><strong>Version 0.4.8 [29/12/2016]</strong><br />- Fix dropitemon groud form script and HotKey<br />- Add Bardic spell support<br />- Fix spellcast Mysticism<br />- Fix save last position for toolbar<br />- Added Autoloot option to no open corpse</p>
+<p><strong>Version 0.4.6 [06/12/2016]</strong><br />- Some fix to toolbar</p>
+<p><strong>Version 0.4.5 [10/11/2016]</strong><br />- Aggiunto comando script UseItemByID<br />- Fix Z Level<br />- Fix Journal and target for multithread script<br />- Fix script grid if script file not longer exist<br />- Fix HotHey Dress</p>
+<p><strong>Version 0.4.4 [24/10/2016]</strong><br />- Added SA Special Ability<br />- Added on hotkey call for DressList<br />- Added script command for get distance from player and mobile<br />- Added auto backup for profiles</p>
+<p><strong>Version 0.4.3 [31/08/2016]</strong><br />- Fix text gump reading<br />- Fix in negoziate features</p>
+<p><strong>Version 0.4.2 [3/06/2016]</strong><br />- Fix hotkey grid<br />- Fix Autodisarm if use potion from hotkey</p>
+<p><strong>Version 0.4.1 [19/04/2016]</strong><br />- Added Run function for moving pg<br />- Fixed some freez issue<br />- Fix Walk to direction UP<br />- Added autoloot pause if have target<br />- Added autoloot pause if hidded<br />- Changed Big cure to Cure on Big Heal</p>
+<p><strong>Version 0.4.0 [24/03/2016]</strong><br />- Added Script recorder<br />- Added Autocomplete on script editor<br />- Added Tips on Editor<br />- Added Editor ShortCut<br />- FIx crash issue in editor if close window in script debug mode<br />- Fix script function DropItemGroundSelf<br />- Fix pathfind Function<br />- Moved per rename function on Misc class<br />- Fix refresh agent if switch from emptry profile<br />- Added to fiendlist possibility to friend guild by tag or faction<br />- Other little core fix</p>
+<p><strong>Version 0.3.5 [13/03/2016]</strong><br />- Fixed crash or freez issue in script sendpacket thread<br />- Removed PopUp script error message, added a textarea for errors.<br />- Added highlight syntax in editor for razor function<br />- Fixed error during chagne profile in dress list<br />- Added support for old craft menu<br />- Added support for old query menu<br />- Fixed targetexecute function for item and mobile<br />- Added move function can also move item on mobile</p>
+<p><strong>Version 0.3.4 [01/03/2016]</strong><br />- Fixed crash or freez issue in script sendpacket thread<br />- Fixed Wall of Stone spell Hotkey<br />- Fixed missing refresh on agent gui if activated by script<br />- Added Save As button to script editor<br />- Added Last attack function for script and HotKey</p>
