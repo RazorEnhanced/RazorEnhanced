@@ -217,7 +217,7 @@ namespace RazorEnhanced.UI
 		{
 			// AutoUpdater
 			AutoUpdater.ReportErrors = true;
-			AutoUpdater.Start("http://razorenhanced.org/download/RazorAutoUpdater.xml");
+			AutoUpdater.Start("https://bitbucket.org/credzba_login/razor-enhanced-original/raw/magneto/RazorAutoUpdater.xml");
 		}
 	}
 }
