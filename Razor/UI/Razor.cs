@@ -9109,7 +9109,7 @@ namespace Assistant
 
 		private void razorButtonWiki_Click(object sender, EventArgs e)
 		{
-			ProcessStartInfo p = new ProcessStartInfo("http://razorenhanced.org/");
+			ProcessStartInfo p = new ProcessStartInfo("http://www.razorenhanced.net/dokuwiki");
 			try
 			{
 				Process.Start(p);
@@ -9353,7 +9353,7 @@ namespace Assistant
 
 		private void paypalButton_Click(object sender, EventArgs e)
 		{
-			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/Alexdan82");
+			ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/credzba");
 			Process.Start(p);
 		}
 

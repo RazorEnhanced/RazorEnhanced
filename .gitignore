@@ -1,0 +1,14 @@
+/Output
+/Crypt/Debug/
+/Crypt/Release/
+/Debug/
+/FastColoredTextBox/bin/
+/FastColoredTextBox/obj/
+/Loader/Debug/
+/Loader/Release/
+/Razor/obj/
+/Release/
+/UltimaSDK/bin/
+/UltimaSDK/obj/
+/.vs/
+*~
