@@ -95,7 +95,7 @@ namespace RazorEnhanced.UI
 			// general
 			lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
 			lItemID.Text = "0x" + m_itemTarg.ItemID.Value.ToString("X4");
-			lColor.Text = "0x" + m_itemTarg.Hue.ToString("X4");
+			lColor.Text =  m_itemTarg.Hue.ToString("D4");
 			lPosition.Text = m_itemTarg.Position.ToString();
 			// Details
 			Assistant.PlayerData tempdata;
@@ -151,7 +151,7 @@ namespace RazorEnhanced.UI
 					lAmount.Text = "1";
 				}
 			}
-			
+
 			lLayer.Text = m_itemTarg.Layer.ToString();
 
 			// Flag
