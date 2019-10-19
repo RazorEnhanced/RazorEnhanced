@@ -213,11 +213,11 @@ namespace RazorEnhanced.UI
 			UpdateGUI();
 		}
 
-		private void checkupdatebutton_Click(object sender, EventArgs e)
-		{
-			// AutoUpdater
-			AutoUpdater.ReportErrors = true;
-			AutoUpdater.Start("https://bitbucket.org/credzba_login/razor-enhanced-original/raw/magneto/RazorAutoUpdater.xml");
-		}
+//		private void checkupdatebutton_Click(object sender, EventArgs e)
+//		{
+//			// AutoUpdater
+//			AutoUpdater.ReportErrors = true;
+//			AutoUpdater.Start("http://www.RazorEnhanced.net/RazorAutoUpdater.xml");
+//		}
 	}
 }
