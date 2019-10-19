@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
-using AutoUpdaterDotNET;
+//using AutoUpdaterDotNET;
 
 
 namespace Assistant
@@ -8669,47 +8669,7 @@ namespace Assistant
 			//AutoUpdater.Start("https://bitbucket.org/credzba_login/razor-enhanced-original/raw/magneto/Distribution/Razor-Enhanced-Latest.zip");
 		}
 
-		private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
-		{
-			if (args != null)
-			{
-				if (args.IsUpdateAvailable)
-				{
-					DialogResult dialogResult;
-
-					dialogResult =
-						MessageBox.Show(
-							$@"There is new version {args.CurrentVersion} available. You are using version {
-									args.InstalledVersion
-								}. Do you want to update the application now?", @"Update Available",
-							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Information);
-
-					if (dialogResult.Equals(DialogResult.Yes))
-					{
-						try
-						{
-							if (AutoUpdater.DownloadUpdate())
-							{
-								Application.Exit();
-								Thread.Sleep(2000); // attesa uscita
-							}
-						}
-						catch (Exception exception)
-						{
-							MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-								MessageBoxIcon.Error);
-						}
-					}
-				}
-			}
-			else
-			{
-				MessageBox.Show(
-						@"There is a problem reaching update server please check your internet connection and try again later.",
-						@"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+        // autoupdate code used to be here
 
 		internal void LoadSettings()
 		{
