@@ -1,0 +1,118 @@
+======Scripting - Autoloot control function======
+Here can find some information about Enhanced Scripting function to control autoloot engine by script!
+
+=====Check Status=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check AutoLoot Status**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | AutoLoot.Status( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a bool value of autoloot engine status, if running or not
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|AutoLoot
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Start=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Start AutoLoot**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | AutoLoot.Start( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Start autoloot engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|AutoLoot
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Stop =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Stop AutoLoot**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | AutoLoot.Stop( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Stop autoloot engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|AutoLoot
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Change List=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Change AutoLoot item list**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | AutoLoot.ChangeList(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Change list of autoloot item, List must be exist in autoloot GUI configuration
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|AutoLoot
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|ListName
+
+|}
+
+=====Custom List=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Start Autoloot whit custom parameters**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | AutoLoot.RunOnce(AutoLootItem, int, Filter)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Start autoloot with specific parameters: AutoLootItem is a list type for item, delay in second for grab and filter for search on ground
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|AutoLoot
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|AutoLootItem ItemList, double DelayGrabInMilliSecond, Filter FilterForSearch
+
+|}
+

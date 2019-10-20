@@ -1,0 +1,12 @@
+====== Download Razor Enhanced ======
+
+Download last Alex Dan version of Razor Enhanced form this official link: [[http://www.razorenhanced.net/download/Razor-Enhanced-AlexDan.zip|Download]]
+
+Download latest build: [[http://www.razorenhanced.net/download/Razor-Enhanced-0.6.64.zip|Download]]
+
+====== Download .NET Framework 4.5 ======
+
+Razor Enhanced require Microsoft .NET Framework 4.5. If not sure of your version or not have it download from official Microsoft site: [[https://www.microsoft.com/en-us/download/details.aspx?id=30653|Download .Net Framework 4.5]]
+
+======Download Visual C++ Redistributable======
+Razor Enhanced require Visual C++ Redistributable. If not sure of your version or not have it download from official Microsoft site: [[https://www.microsoft.com/en-us/download/details.aspx?id=48145|Download Visual C++ Redistributable]]

@@ -1,0 +1,179 @@
+====== Scripting - Pathfinding ======
+
+Here can find some information about Enhanced Scripting function about Pathfinding !
+
+
+===== Pathfinding =====
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Go**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Pathfinding.Go()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Returns if a destination is reachable.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Boolean
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+|Route Filter Object
+
+|}
+
+
+===== Route Filter Object=====
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **X**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | Sets the destination position X.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Integer, default = 0
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Y**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | Sets the destination position Y.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Integer, default = 0
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **DebugMessage **
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | Outputs a debug message.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Boolean, default = False
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **StopIfStuck **
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | Halts the pathfinding loop.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Boolean, default = False
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **IgnoreMobile **
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | Ignores any mobiles with the path calculation.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Boolean, default = False
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **UseResync **
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | ReSyncs the path calculation.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Boolean, default = True
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **MaxRetry **
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | 
+|-
+|colspan="2" |**Description:** 
+|- 
+|colspan="2" | Number of attempts untill the path calculation is halted.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|
+|-
+|**In Object:**
+|Pathfinding
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+| Integer, default = -1
+
+|}
+
+

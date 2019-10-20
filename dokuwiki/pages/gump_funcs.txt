@@ -1,0 +1,282 @@
+====== Scripting - Gumps data and function ======
+Here can find some information about Enhanced Scripting function and data for gump operation!
+
+===== Gump Status =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Current Gumps**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.CurrentGump( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a integer whit ID of last gump opened and still open.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|uint
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Gump Open**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.HasGump( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get status if have a gump open or not
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Close Gump**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.CloseGump(uint)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Close a specific Gump.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|GumpID
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Reset Gump**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.ResetGump()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clean current status of gumps.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait gump**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | For Gump
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Description:
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|script for wait server send gump after operation for call gump, function must have a timeout in ms.
+|-
+|**In Object:**
+|In Object:	Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Delay
+
+|}
+
+===== Gump Response =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Send Response**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.SendAction(uint, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a gump response by gump id and button id
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|ButtonID
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Send Advanced Response Switch Only**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.SendAdvancedAction(uint, int, list(int))
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a gump response by gump id and button id and advanced switch in gumps. You can add a switch list whit all parameters need setted in gump windows.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Switchs
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Send Advanced Response Switch and Text**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.SendAdvancedAction(uint, int, list(int), list(int), list(string))
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a gump response by gump id and button id and advanced switch and text in gumps. You can add a switch list whit all parameters need be setted in gump windows, also can send text need to be filled in gump
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|text
+
+|}
+
+===== Gump Data =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Text Line**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.LastGumpGetLine(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get the text string in gump by line number, Gump must be still open for get data
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|LineNumber
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get All Text**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.LastGumpGetLineList( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get all text string in gump, Gump must be still open for get data
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list] string
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|None
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Text in Gump**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.LastGumpTextExist(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search text string inside a gump text, return bool if found or not, Gump must be still open for get data
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|TextToSearch
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Text in Gump by Line**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.LastGumpTextExistByLine(int, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search text string inside a gump text by line, return bool if found or not, Gump must be still open for get data
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|TextToSearch
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Last gump raw data**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Gumps.LastGumpRawData( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get the raw data of last gump opened.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Gumps
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+

@@ -1,0 +1,487 @@
+====== Scripting - Item type structure ======
+Here can find some information about Enhanced Scripting about Item type structure
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Amount**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Amount
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Read amount from item type object.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Hue
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Read color number from item type object.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Bag of Sending**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.IsBagOfSending
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is a Bag of Sending. True: Is a Bag of Sending, False: Isn't a Bag of Sending
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Container**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.IsContainer
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is a container. True: Is a container, False: Isn't a container
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Corpse**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.IsCorpse
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is a corpse. True: Is a corpse, False: Isn't a corpse
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Door**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.IsDoor
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is a door. True: Is a door, False: Isn't a door
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item is In Bank**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.IsInBank
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is inside a bank. True: Is in bankbox, False: Isn't in bankbox
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item is Movable**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Movable
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is movable. True: Can move, False: Can't move
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item is o Ground**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.OnGround
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a bool if item object is on ground. True: Item is on ground, False: Item isn't on ground
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Name
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get name of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|String
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Serial
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get serial number of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Graphycs**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.ItemID
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get graphycs of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Root Container**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.RootContainer
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get serial of root container of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Container**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Container
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get serial of container of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Position**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Position
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get Point3D coords of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Point3D
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Position X coord**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Position.X
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get X coord of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Position Y coord**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Position.Y
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get Y coord of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Position Z level**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Position.Z
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get Z level of item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Weight**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Weight
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get Weight value.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Durability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Durability
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get Durability value.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Maximum Durability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.MaxDurability
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get maximum durability value.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item In container**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.Contains
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a list of item inside a container.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Distance**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | item.DistanceTo(mobile)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a int of tile distance from item to mobile.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Item
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|mobile
+
+|}

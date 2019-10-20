@@ -1,0 +1,2848 @@
+====== Scripting - Player data and function ======
+
+Here can find some information about Enhanced Scripting function about player self data and related function!
+
+===== Stats =====
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Hits**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Hits
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character hits.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player HitsMax**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.HitsMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character max hits.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Strenght**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Str
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character strenght.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Mana**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Mana
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character mana.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player MaxMana**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ManaMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character max mana.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Intelligence**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Int
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character intelligence.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Stamina**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Stam
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character stamina.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Max Stamina**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.StamMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character max stamina.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Dexterity**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Dex
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character dexterity.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player StatCap**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.StatCap
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character StatCap.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Resistances =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Armor**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.AR
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character armor.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Fire Resistance**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.FireResistance
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character fire resistance.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Cold Resistance**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ColdResistance
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character cold resistance.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Enery Resistance**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.EnergyResistance
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character energy resistance.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Poison Resistance**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.PoisonResistance
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an integer value from self character poison resistance.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Buff =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Buffs**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player Buffs
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a string list with name of current buffs active on player.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string[]
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+|-
+|Result list:
+|
+  * Meditation
+  * Agility
+  * Animal Form
+  * Arcane Enpowerment
+  * Arcane Enpowerment (new)
+  * Arch Protection
+  * Armor Pierce
+  * Attunement
+  * Aura of Nausea
+  * Bleed
+  * Bless
+  * Block
+  * Bload Oath (caster)
+  * Bload Oath (curse)
+  * BloodWorm Anemia
+  * City Trade Deal
+  * Clumsy
+  * Confidence
+  * Corpse Skin
+  * Counter Attack
+  * Criminal
+  * Cunning
+  * Curse
+  * Curse Weapon
+  * Death Strike
+  * Defense Mastery
+  * Despair
+  * Despair (target)
+  * Disarm (new)
+  * Disguised
+  * Dismount Prevention
+  * Divine Fury
+  * Dragon Slasher Fear
+  * Enchant
+  * Enemy Of One
+  * Enemy Of One (new)
+  * Essence Of Wind
+  * Ethereal Voyage
+  * Evasion
+  * Evil Omen
+  * Faction Loss
+  * Fan Dancer Fan Fire
+  * Feeble Mind
+  * Feint
+  * Force Arrow
+  * Berserk
+  * Fly
+  * Gaze Despair
+  * Gift Of Life
+  * Gift Of Renewal
+  * Healing
+  * Heat Of Battle
+  * Hiding
+  * Hiryu Physical Malus
+  * Hit Dual Wield
+  * Hit Lower Attack
+  * Hit Lower Defense
+  * Honorable Execution
+  * Honored
+  * Horrific Beast
+  * Hawl Of Cacophony
+  * Immolating Weapon
+  * Incognito
+  * Inspire
+  * Invigorate
+  * Invisibility
+  * Lich Form
+  * Lighting Strike
+  * Magic Fish
+  * Magic Reflection
+  * Mana Phase
+  * Mass Curse
+  * Medusa Stone
+  * Mind Rot
+  * Momentum Strike
+  * Mortal Strike
+  * Night Sight
+  * NoRearm
+  * Orange Petals
+  * Pain Spike
+  * Paralyze
+  * Perfection
+  * Perseverance
+  * Poison
+  * Poison Resistance
+  * Polymorph
+  * Protection
+  * Psychic Attack
+  * Consecrate Weapon
+  * Rage
+  * Rage Focusing
+  * Rage Focusing (target)
+  * Reactive Armor
+  * Reaper Form
+  * Resilience
+  * Rose Of Trinsic
+  * Rotworm Blood Disease
+  * Rune Beetle Corruption
+  * Skill Use Delay
+  * Sleep
+  * Spell Focusing
+  * Spell Focusing (target)
+  * Spell Plague
+  * Splintering Effect
+  * Stone Form
+  * Strangle
+  * Strength
+  * Surge
+  * Swing Speed
+  * Talon Strike
+  * Vampiric Embrace
+  * Weaken
+  * Wraith Form
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Buffs Exist**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.BuffsExist(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Return a bool value if specific buff exist or not.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+|-
+|**Parameter list:**
+|
+  * Meditation
+  * Agility
+  * Animal Form
+  * Arcane Enpowerment
+  * Arcane Enpowerment (new)
+  * Arch Protection
+  * Armor Pierce
+  * Attunement
+  * Aura of Nausea
+  * Bleed
+  * Bless
+  * Block
+  * Bloath Oath (caster)
+  * Bload Oath (curse)
+  * BloodWorm Anemia
+  * City Trade Deal
+  * Clumsy
+  * Confidence
+  * Corpse Skin
+  * Counter Attack
+  * Criminal
+  * Cunning
+  * Curse
+  * Curse Weapon
+  * Death Strike
+  * Defense Mastery
+  * Despair
+  * Despair (target)
+  * Disarm (new)
+  * Disguised
+  * Dismount Prevention
+  * Divine Fury
+  * Dragon Slasher Fear
+  * Enchant
+  * Enemy Of One
+  * Enemy Of One (new)
+  * Essence Of Wind
+  * Ethereal Voyage
+  * Evasion
+  * Evil Omen
+  * Faction Loss
+  * Fan Dancer Fan Fire
+  * Feeble Mind
+  * Feint
+  * Force Arrow
+  * Berserk
+  * Fly
+  * Gaze Despair
+  * Gift Of Life
+  * Gift Of Renewal
+  * Healing
+  * Heat Of Battle
+  * Hiding
+  * Hiryu Physical Malus
+  * Hit Dual Wield
+  * Hit Lower Attack
+  * Hit Lower Defense
+  * Honorable Execution
+  * Honored
+  * Horrific Beast
+  * Hawl Of Cacophony
+  * Immolating Weapon
+  * Incognito
+  * Inspire
+  * Invigorate
+  * Invisibility
+  * Lich Form
+  * Lighting Strike
+  * Magic Fish
+  * Magic Reflection
+  * Mana Phase
+  * Mass Curse
+  * Medusa Stone
+  * Mind Rot
+  * Momentum Strike
+  * Mortal Strike
+  * Night Sight
+  * NoRearm
+  * Orange Petals
+  * Pain Spike
+  * Paralyze
+  * Perfection
+  * Perseverance
+  * Poison
+  * Poison Resistance
+  * Polymorph
+  * Protection
+  * Psychic Attack
+  * Consecrate Weapon
+  * Rage
+  * Rage Focusing
+  * Rage Focusing (target)
+  * Reactive Armor
+  * Reaper Form
+  * Resilience
+  * Rose Of Trinsic
+  * Rotworm Blood Disease
+  * Rune Beetle Corruption
+  * Skill Use Delay
+  * Sleep
+  * Spell Focusing
+  * Spell Focusing (target)
+  * Spell Plague
+  * Splintering Effect
+  * Stone Form
+  * Strangle
+  * Strength
+  * Surge
+  * Swing Speed
+  * Talon Strike
+  * Vampiric Embrace
+  * Weaken
+  * Wraith Form
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Ghost**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.IsGhost
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character ghost status. True character is dead, False character is alive
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Poisoned**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Poisoned
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character poison status. True character is poisoned, False character is not poisoned
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player YellowHits**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.YellowHits
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character YellowHits status.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Hidded**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Visible
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character hidded status. True character is visible, False character is hidded
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player War Mode**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.WarMode
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character war status. True character is in warmode, False character is in peace
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Paralized**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Paralized
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character paral status. True character is in paralized, False character is not paralized
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== General =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Sex**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Female
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an bool value from self character sex. True character is womand, False character is male
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Name
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a string whit self character name.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Backpack**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Backpack
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an item with self character backpack.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|item
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Backpack Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Backpack.Serial
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character backpack serial.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Backpack Color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Backpack.Hue
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character backpack color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Bank**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Bank
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a item whit self character bankbox.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|item
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Quiver**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Quiver
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a item whit self character quiver.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|item
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Quiver Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Quiver.Serial
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character quiver serial.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Quiver Color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Quiver.Hue
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character quiver color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Mount**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Mount
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a item whit self character mount. You must be mounted for retrive this information
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|item
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Gui Static Mount**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.StaticMount
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves serial of mount set in Filter/Mount GUI.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Mount Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Mount.Serial
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character mount serial.You must be mounted for retrive this information
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Mount Color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Mount.Hue
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character mount color. You must be mounted for retrive this information
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Mount Name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Mount.Name
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a string whit self character mount name. You must be mounted for retrive this information
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Gold in Backpack**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Gold
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character gold amount in backpack.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Luck**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Luck
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character luck value.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Body Graphycs**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Body
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character body graphycs value.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Serial
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a int whit self character serial.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Head Message**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.HeadMessage(int, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Display a message over self character whit color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Notoriety**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Notoriety
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Read byte of Notoriety color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|byte
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Followers =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Current Followers**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Followers( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character current followers.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Max Followers**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.FollowersMax( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character max followers allowed.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Weight =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Current Weight**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Weight
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character current weight.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Max Weight**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.MaxWeight
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character max weight can carry.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Positioning =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Position**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Position
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an Point3D value from self character current position.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|point3d
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Position X Coord**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Position.X
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character position X coord.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Position Y Coord**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Position.Y
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character position Y coord.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Position Z Level**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Position.Z
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves an int value from self character position Z level.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Mobile Range**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.InRangeMobile(Mobile or Int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a bool value if specific mobile is in specific range.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Item Range**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.InRangeItem(Item or Int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a bool value if specific item is in specific range.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Player Direction**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Direction
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Contain player direction in string: North, South, West, East, Right, Left, Up, Down.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Map**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Map
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves current player map number.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Layers =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Get Item on Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetItemOnLayer(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrieves a item value of item equipped on specific layer.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|item
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Layername
+|-
+|**Parameters list:**
+|
+  * RightHand
+  * LeftHand
+  * Shoes
+  * Pants
+  * Shirt
+  * Head
+  * Gloves
+  * Ring
+  * Neck
+  * Waist
+  * InnerTorso
+  * Bracelet
+  * MiddleTorso
+  * Earrings
+  * Arms
+  * Cloak
+  * OuterTorso
+  * OuterLegs
+  * InnerLegs
+  * Talisman
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player UnEquip Item on Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.UnEquipItemByLayer(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Unequip item equipped on specific layer.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Layername
+|-
+|**Parameters list:**
+|
+  * RightHand
+  * LeftHand
+  * Shoes
+  * Pants
+  * Shirt
+  * Head
+  * Gloves
+  * Ring
+  * Neck
+  * Hair
+  * Waist
+  * InnerTorso
+  * Bracelet
+  * FacialHair
+  * MiddleTorso
+  * Earrings
+  * Arms
+  * Cloak
+  * OuterTorso
+  * OuterLegs
+  * InnerLegs
+  * Talisman
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Equip Item on Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.EquipItem(Int or Item)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Equip item on specific layer. Can use item or serial for parameters.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int item serial, Item reference
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Check Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.CheckLayer(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a bool value if layer is busy whit item or not. True: Layer busy, False: Layer free
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Layername
+|-
+|**Parameters list:**
+|
+  * RightHand
+  * LeftHand
+  * Shoes
+  * Pants
+  * Shirt
+  * Head
+  * Gloves
+  * Ring
+  * Neck
+  * Hair
+  * Waist
+  * InnerTorso
+  * Bracelet
+  * FacialHair
+  * MiddleTorso
+  * Earrings
+  * Arms
+  * Cloak
+  * OuterTorso
+  * OuterLegs
+  * InnerLegs
+  * Talisman
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Get Assistant Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetAssistantLayer(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get the Layer's name in Hex.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|layer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string Layer's name
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Equip UO3D**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.EquipUO3D(List(Int))
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Equip a list of item by using UO3D packet.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|layer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|List(Int) Serialtoequip
+
+|}
+
+===== Skills =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Get Skill Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetSkillValue(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get value of specific skill.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|double
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Skillname
+|-
+|**Parameters list:**
+|
+  * Alchemy
+  * Anatomy
+  * Animal Lore
+  * Item ID
+  * Arms Lore
+  * Parry
+  * Begging
+  * Blacksmith
+  * Fletching
+  * Peacemaking
+  * Camping
+  * Carpentry
+  * Cartography
+  * Cooking
+  * Detect Hidden
+  * Discordance
+  * EvalInt
+  * Healing
+  * Fishing
+  * Forensics
+  * Herding
+  * Hiding
+  * Provocation
+  * Inscribe
+  * Lockpicking
+  * Magery
+  * Magic Resist
+  * Tactics
+  * Snooping
+  * Musicianship
+  * Poisoning
+  * Archery
+  * Spirit Speak
+  * Stealing
+  * Tailoring
+  * Animal Taming
+  * Taste ID
+  * Tinkering
+  * Tracking
+  * Veterinary
+  * Swords
+  * Macing
+  * Fencing
+  * Wrestling
+  * Lumberjacking
+  * Mining
+  * Meditation
+  * Stealth
+  * Remove Trap
+  * Necromancy
+  * Focus
+  * Chivalry
+  * Bushido
+  * Ninjitsu
+  * Spell Weaving
+  * Imbuing
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Get Real Skill Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetRealSkillValue(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get real value of specific skill.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|double
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Skillname
+|-
+|**Parameters list:**
+|
+%SEVEN
+  * Alchemy
+  * Anatomy
+  * Animal Lore
+  * Item ID
+  * Arms Lore
+  * Parry
+  * Begging
+  * Blacksmith
+  * Fletching
+  * Peacemaking
+  * Camping
+  * Carpentry
+  * Cartography
+  * Cooking
+  * Detect Hidden
+  * Discordance
+  * EvalInt
+  * Healing
+  * Fishing
+  * Forensics
+  * Herding
+  * Hiding
+  * Provocation
+  * Inscribe
+  * Lockpicking
+  * Magery
+  * Magic Resist
+  * Tactics
+  * Snooping
+  * Musicianship
+  * Poisoning
+  * Archery
+  * Spirit Speak
+  * Stealing
+  * Tailoring
+  * Animal Taming
+  * Taste ID
+  * Tinkering
+  * Tracking
+  * Veterinary
+  * Swords
+  * Macing
+  * Fencing
+  * Wrestling
+  * Lumberjacking
+  * Mining
+  * Meditation
+  * Stealth
+  * Remove Trap
+  * Necromancy
+  * Focus
+  * Chivalry
+  * Bushido
+  * Ninjitsu
+  * Spell Weaving
+  * Imbuing
+  *
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Get SkillCap Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetSkillCap(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get value of specific skillcap.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|double
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Skillname
+|-
+|**Parameters list:**
+|
+  * Alchemy
+  * Anatomy
+  * Animal Lore
+  * Item ID
+  * Arms Lore
+  * Parry
+  * Begging
+  * Blacksmith
+  * Fletching
+  * Peacemaking
+  * Camping
+  * Carpentry
+  * Cartography
+  * Cooking
+  * Detect Hidden
+  * Discordance
+  * EvalInt
+  * Healing
+  * Fishing
+  * Forensics
+  * Herding
+  * Hiding
+  * Provocation
+  * Inscribe
+  * Lockpicking
+  * Magery
+  * Magic Resist
+  * Tactics
+  * Snooping
+  * Musicianship
+  * Poisoning
+  * Archery
+  * Spirit Speak
+  * Stealing
+  * Tailoring
+  * Animal Taming
+  * Taste ID
+  * Tinkering
+  * Tracking
+  * Veterinary
+  * Swords
+  * Macing
+  * Fencing
+  * Wrestling
+  * Lumberjacking
+  * Mining
+  * Meditation
+  * Stealth
+  * Remove Trap
+  * Necromancy
+  * Focus
+  * Chivalry
+  * Bushido
+  * Ninjitsu
+  * Spell Weaving
+  * Imbuing
+  *
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Get Skill Status (Up/Down/Lock)**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetSkillStatus(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get status lock for a specific skill. UP: 0, DOWN: 1, LOCKED: 2
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Skillname
+|-
+|**Parameters list:**
+|
+  * Alchemy
+  * Anatomy
+  * Animal Lore
+  * Item ID
+  * Arms Lore
+  * Parry
+  * Begging
+  * Blacksmith
+  * Fletching
+  * Peacemaking
+  * Camping
+  * Carpentry
+  * Cartography
+  * Cooking
+  * Detect Hidden
+  * Discordance
+  * EvalInt
+  * Healing
+  * Fishing
+  * Forensics
+  * Herding
+  * Hiding
+  * Provocation
+  * Inscribe
+  * Lockpicking
+  * Magery
+  * Magic Resist
+  * Tactics
+  * Snooping
+  * Musicianship
+  * Poisoning
+  * Archery
+  * Spirit Speak
+  * Stealing
+  * Tailoring
+  * Animal Taming
+  * Taste ID
+  * Tinkering
+  * Tracking
+  * Veterinary
+  * Swords
+  * Macing
+  * Fencing
+  * Wrestling
+  * Lumberjacking
+  * Mining
+  * Meditation
+  * Stealth
+  * Remove Trap
+  * Necromancy
+  * Focus
+  * Chivalry
+  * Bushido
+  * Ninjitsu
+  * Spell Weaving
+  * Imbuing
+  *
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Set Skill Status (Up/Down/Lock)**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.SetSkillStatus(String, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set status for a specific skill. UP: 0, DOWN: 1, LOCKED: 2
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Skillname, int status
+|-
+|**Parameters list:**
+|
+  * Alchemy
+  * Anatomy
+  * Animal Lore
+  * Item ID
+  * Arms Lore
+  * Parry
+  * Begging
+  * Blacksmith
+  * Fletching
+  * Peacemaking
+  * Camping
+  * Carpentry
+  * Cartography
+  * Cooking
+  * Detect Hidden
+  * Discordance
+  * EvalInt
+  * Healing
+  * Fishing
+  * Forensics
+  * Herding
+  * Hiding
+  * Provocation
+  * Inscribe
+  * Lockpicking
+  * Magery
+  * Magic Resist
+  * Tactics
+  * Snooping
+  * Musicianship
+  * Poisoning
+  * Archery
+  * Spirit Speak
+  * Stealing
+  * Tailoring
+  * Animal Taming
+  * Taste ID
+  * Tinkering
+  * Tracking
+  * Veterinary
+  * Swords
+  * Macing
+  * Fencing
+  * Wrestling
+  * Lumberjacking
+  * Mining
+  * Meditation
+  * Stealth
+  * Remove Trap
+  * Necromancy
+  * Focus
+  * Chivalry
+  * Bushido
+  * Ninjitsu
+  * Spell Weaving
+  * Imbuing
+  *
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Use Skill**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.UseSkill(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Use a specific skill.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Skillname
+|-
+|**Parameters list:**
+|
+  * Animal Lore
+  * Item ID
+  * Arms Lore
+  * Begging
+  * Peacemaking
+  * Cartography
+  * Detect Hidden
+  * Discordance
+  * Eval Int
+  * Forensics
+  * Hiding
+  * Provocation
+  * Poisoning
+  * Spirit Speak
+  * Stealing
+  * Animal Taming
+  * Taste ID
+  * Tracking
+  * Meditation
+  * Stealth
+  * Remove Trap
+  * Inscribe
+  * Anatomy
+  * Imbuing
+
+|}
+
+
+===== Chat =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Say**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatSay(int, string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message in say whit specific color and message.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int Color, String Message or int number
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Emote**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatEmote(int, string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a emote message whit specific color and message.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int Color, String Message or int number
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Whisper**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatWhisper(int, string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message in whisper whit specific color and message.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int Color, String Message or int number
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Yell**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatYell(int, string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message in yell whit specific color and message.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int Color, String Message or int number
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Guild**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatGuild(string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message in guild chat.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Message or int number
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Alliance**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatAlliance(string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message in alliance chat.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Message or int number
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Chat Channel**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatChannel(string or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message in chat channel.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Message or int number
+
+|}
+
+===== Attack =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Set Warmode**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.SetWarMode(bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set character warmode status. True: Set warmode ON, False: Set warmode OFF
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|bool warstatus
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Attack**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Attack(int or mobile)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Force character to attack specific serial or mobile
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int targetserial or mobile targetmobile
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Attack Last**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.AttackLast()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Force character to attack last attack
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Party =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Party Check**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.InParty()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check if character is in party. True: Is in party, False: Is not party
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|void
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Party Send Message**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.ChatParty(string, optional int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a message to party chat, if specific a serial send private message.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string Message, optional int SerialtoPrivate
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Party Set Loot**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.PartyCanLoot(bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set player party canloot flags. True: Member can loot me, False: Member can't me
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|bool
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Party Invite**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.PartyInvite( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Open a target prompt for invite new member
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Party Leave**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.PartyLeave( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Leave from party.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Party Kick Member**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.KickMember(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Kick a member from party by serial. Only for party leader
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int SerialPersontokick
+
+|}
+
+===== Virtue =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Invoke Virtue**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.InvokeVirtue(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Invoke a character virtue by specific name.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Virtuename
+|-
+|**Parameters list:**
+|
+  * Honor
+  * Sacrifice
+  * Valor
+  * Compassion
+  * Honesty
+  * Humility
+  * Justice
+
+|}
+
+===== Move =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Walk**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Walk(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Move char in specific direction. Return true for success move, false if fail.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Direction
+|-
+|**Parameters list:**
+|
+  * North
+  * South
+  * East
+  * West
+  * Up
+  * Down
+  * Left
+  * Right
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Run**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Run(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Move (run speed) char in specific direction. Return true for success move, false if fail.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String Direction
+|-
+|**Parameters list:**
+|
+  * North
+  * South
+  * East
+  * West
+  * Up
+  * Down
+  * Left
+  * Right
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Pathfind**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.PathFindTo(Point3D or int x, int y, int z)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Force a client pathfind to specific location XYZ coords.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int X Y Z
+
+|}
+
+===== Properties =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Proprerties**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetPropValue(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get value self (player) propriety
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|integer
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String PropName
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Proprerties String**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GetPropStringByIndex(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string name of prop by index, if no prop in selected index return empty.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int PropIndex
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Proprerties String List**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.GetPropStringList()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string list of all props name, if no props list is empty.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list (String)
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Paperdoll Button =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Open quest Menu**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.QuestButton( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Open a quest menu linked to paperdool quest button.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Open guild Menu**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.GuildButton( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Open a guild menu linked to paperdool quest button.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Weapon Special Ability =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Weapon Primary Ability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.WeaponPrimarySA( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set on Weapon Primary Ability.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Weapon Secondary Ability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.WeaponSecondarySA( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set on Weapon Secondary Ability.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Weapon Clear Ability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.WeaponClearSA( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clear ability if active.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **On Weapon Stun Ability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.WeaponStunSA( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set on No Weapon Stun.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **On Weapon Disarm Ability**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.WeaponDisarmSA( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set on No Weapon Disarm.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check if have Ability ON**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.HasSpecial
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check if player have a special abiliti ON.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Gargoyle Flying =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Gargoyle Flying**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.Fly( bool )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Enable or disable Gargoyle Flying.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|bool EnableFly
+
+|}
+
+===== Active Spells =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Active spells**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Player.SpellIsEnabled( string )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check Active spell whit spell name (for spell have this function).
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Player
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string SpellName
+
+|}
+

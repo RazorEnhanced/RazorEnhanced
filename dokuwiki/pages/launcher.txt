@@ -1,0 +1,17 @@
+**Note from credzba this seems broken **
+====== Launcher ======
+
+Here can find some information about Enhanced Razor launcher window!
+
+
+  - With this selectbox can switch Shard from bookmarks.
+  - Use this button for add new Shard to bookmarks.
+  - Use this button for remove Shard from bookmarks.
+  - Use this button to configure Client location for selected shard.
+  - Use this button to configure Ultima on Line folder location for selected shard.
+  - This textbox is used for set host or IP for current shard.
+  - This textbox is used for set port for current shard.
+  - Enable or disable this checkbox for Patch client Encryption for current shard.
+  - Enable or disable this checkbox for use OSI Encryption for current shard.
+  - Use this button to launch Razor and Ultima on Line client.
+  - Use this button to exit from Enhanced Razor.

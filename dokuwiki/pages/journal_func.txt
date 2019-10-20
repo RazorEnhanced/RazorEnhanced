@@ -1,0 +1,296 @@
+====== Scripting - Journal data and function ======
+Here can find some information about Enhanced Scripting function and data for journal operation!
+
+===== Clear =====
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Clear Journal**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.Clear( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clear data in journal buffer.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Search =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Journal**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.Search(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search a string in all journal buffer, if present get true. String is case sensitive.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|TextToSearch
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Journal by name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.SearchByName(string, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search a string in all journal buffer by sender name, if present get true. String and name is case sensitive.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|SenderName
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Journal by color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.SearchByColor(string, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search a string in all journal buffer by font color, if present get true. String is case sensitive.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|ColorToSearch
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Journal by message type**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.SearchByType(string, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Search a string in all journal buffer by message type, if present get true. String and Type is case sensitive.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string TextToSearch, string MessageType
+|-
+|**Parameters type list:**
+|
+  * Regular
+  * System
+  * Emote
+  * Label
+  * Focus
+  * Whisper
+  * Yell
+  * Spell
+  * Guild
+  * Alliance
+  * Party
+  * Encoded
+  * Special
+
+|}
+
+
+===== Get Data =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search and Get text line**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.GetLineText(string, optional bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search and get last line whit searched string, if present return a string whit all text in line. String is case sensitive. Use optional bool true for add name of mobile or item send text.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|bool
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Speech Name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.GetSpeechName()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a list of all name of player and object speech.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list (string)
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Text by Type**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.GetTextByType(string, optional bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a list of all speech by specific type. Use optional bool true for add name of mobile or item send text.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list (string)
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string textType, optional bool addMobileId
+|-
+|TextTypes:
+|
+  * System
+  * Emote
+  * Label
+  * Focus
+  * Whisper
+  * Yell
+  * Spell
+  * Guild
+  * Alliance
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Text by Name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.GetTextByName(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a list of all speech by specific player name.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list (string)
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|name
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Text by Color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.GetTextByColor(int, optional bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a list of all speech by specific color. Use optional bool true for add name of mobile or item send text.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list (string)
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|bool
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Text by Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.GetTextBySerial(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a list of all speech by specific serial.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list (string)
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|serial
+
+|}
+
+===== Wait Journal =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait in journal**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Journal.WaitJournal(string, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pause script and wait when a text is present in journal. Text is case sensitive and max wait delay is in ms.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Journal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|MaxWaitTime
+
+|}

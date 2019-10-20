@@ -1,0 +1,94 @@
+======Scripting - Restock control function======
+Here can find some information about Enhanced Scripting function to control restock engine by script!
+
+=====Check Status=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Restock Status**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Restock.Status( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a bool value of scavenger engine status, if running or not
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Restock
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Start=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Start Restock**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Restock.FStart( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Start Restock engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Restock
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Stop=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Stop Restock engine**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Restock.FStop( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Stop Restock engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Restock
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Change List=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Change Restock item list**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Restock.ChangeList(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Change list of Restock item, List must be exist in organizer GUI configuration
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Restock
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|ListName
+
+|}

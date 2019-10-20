@@ -1,0 +1,773 @@
+====== Scripting - Items data and function ======
+Here can find some information about Enhanced Scripting function and data about Mobiles!
+
+===== Find =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Find item by Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.FindBySerial(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Find item and get item object by specific serial
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialnumber
+|-
+|**Exception:**
+|If item not found function return null!
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Find item by ItemID**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.FindByID(int, int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Find item serial by specific item ID, color and Container. Can use -1 on color for no chose color, can use -1 on container for serach in all item in memory.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int itemid, int color, int serialcontainer
+|-
+|**Exception:**
+|If item not found function return null!
+
+|}
+
+===== Move =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Move item**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Move(item, item, int or item, mobile, int or item, item, int, int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Move specific item whit amount to specific destination allow also move item on mobile, if set amount 0 move all item stack, if ask to move amount major stack move all stack. Also can specify coords for move item in x y on container grid. All parameters can be int (for serial), or object item and mobile.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item source, Item destination, Int amount or Item source, Mobile destination, Int amount or Item source, Item destination, Int amount, Int XGridPosition, Int YGridPosition
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Move item on Ground**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.MoveOnGround(item, int, int, int, int)
+
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Move specific item whit amount to specific destination on ground by coords (X, Y, Z).
+
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item source, Int amount, Int XPosition, Int YPosition, Int ZPosition
+
+|}
+
+===== Drop =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Drop Item on ground**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.DropItemGroundSelf(item, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Drop on character feet specific item whit amount, if set amount 0 move all item stack, if ask to drop amount major stack drop all stack
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item source, Int amount
+
+|}
+
+===== Use =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Use item**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.UseItem(item or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Use (double click) specific item, can insert item object ot serial
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item itemtouse or Int serialitemtouse
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Single Click**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.SingleClick(item or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Perform a single click specific item, can insert item object ot serial
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item itemtoclick or Int serialitemtoclick
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Use item By ItemID**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.UseItemByID(int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Use (double click) specific item owned by player by ItemID and Color (-1 all color).
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int itemid, int color
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Use item on Mobile**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.UseItemOnMobile(int or item, int or mobile)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Use and autotarget whit 0xBF.2C packet a item on specific mobile (whit out iterruption or target lost).
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int itemserial or item itemtouse, int mobielserial or mobile mobiletarget
+
+|}
+
+===== Properties =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item WaitforProps**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.WaitForProps(item or int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrive Propriety of specific item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item itemtocheck, int serialitemtocheck, Int delay of props wait (ms)
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Item Proprerties**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.GetPropValue(int or item, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Returns:	Int
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|String
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialtoinspect or Item itemtoinspect, Int PropIndex
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Item Proprerties String**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.GetPropStringByIndex(int or item, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string name of prop by index, if no prop in selected index return empty
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialtoinspect or Item itemtoinspect, Int PropIndex
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Item Proprerties String List**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.GetPropStringList(int or item)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string list of all props name on specific item, if item no props list is empty.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|List(string)
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialtoinspect or Item itemtoinspect
+
+|}
+
+===== WaitForContent =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item container WaitforContents**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.WaitForContents(item or int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Force a item to open and automatic wait response for item inside
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Item itemtouse, int serialitemtouse, Int delay of content wait (ms)
+
+|}
+
+===== Message =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Item Message**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Message(item or int, int, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Display a message over specific item whit color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int ItemSerial or Item SelectedItem, Int MessageColor, String Message
+
+|}
+
+===== Filter Type =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Enable Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Enabled
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Enable or not filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Serials Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Serials
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a list of serial to filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list(int)
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Graphics Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Graphics
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a list of Graphics to filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list(int)
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Color Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Hues
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a list of color to filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list(int)
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Name Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Name
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a name to filter in ApplyFilter function, blank no filter by name
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Range Min Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.RangeMin
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a value of minimum range in ApplyFilter function
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Range Max Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.RangeMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a value of maximum range in ApplyFilter function
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Movable Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Movable
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search parameter movable for ApplyFilter function
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Layers Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.Layers
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search list by layer for ApplyFilter function
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Ground Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.OnGround
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search parameter if item is on ground for ApplyFilter function. (1=Only OnGround, 0=Skipp OnGround, -1= Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Corpse Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.IsCorpse
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search parameter if item is a corpse for ApplyFilter function. (1=Only Corpse, 0=Skipp Corpse, -1= Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Container Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.IsContainer
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search parameter if item is a container for ApplyFilter function. (1=Only container, 0=Skipp Container, -1= Both).
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Ignore list Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Filter.CheckIgnoreObject
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search parameter True or false for remove IgnoreObject from result.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+===== Apply Filter =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Seach an item with a filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.ApplyFilter(filter)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search an item by filter
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list(item)
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|filter
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Apply a selector on item list**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Select((List)Item, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Apply a selector on mobile list.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|(List)Item, string
+|-
+|**Possible selector:**
+|
+  * Random
+  * Nearest
+  * Farthest
+  * Less
+  * Most
+  * Weakest
+  * Strongest
+
+|}
+
+===== Count =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Count Type in Backpack**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.BackpackCount(int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return amount of specific item (By ItemID) and color in backpack and subcontainer, Color -1 is WildCard for all color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int itemID, int color
+
+|}
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Count Type in Container**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.ContainerCount(int or item, int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return amount of specific item (By ItemID) and color in specific container, Color -1 is WildCard for all color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int containerserial or Item container, Int itemid, Int color
+
+|}
+
+===== Hide =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Hide item**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.Hide(int or item)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Hide an item.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+| none
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| itemId or Item
+
+|}
+
+===== Context =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Context Exist**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Items.ContextExist(int or item, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check on specific item if context menu by string exist. Return context id if exist, -1 if not present.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Items
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int itemserial or item itemtocheck, string contextstring
+
+|}

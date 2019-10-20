@@ -1,0 +1,3 @@
+====== Scripting - Timer control function ======
+
+Here you can find some information about Timer control function!

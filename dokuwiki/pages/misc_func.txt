@@ -1,0 +1,806 @@
+====== Scripting - Misc data and function ======
+Here can find some infomation about Enhanced Scripting function and data misc!
+
+===== Message =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Sysmessage**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.SendMessage(string or int or bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a sysmessage.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string Message, int Value, bool Status
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Player Sysmessage colored**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.SendMessage(string or int or bool, color)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send a sysmessage whit specific color
+|- style="background-color:#f0f0f0;"
+|**Returns**
+| none
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|string Message or int Value or bool Status, int color
+
+|}
+
+===== System =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Resync Game Data**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.Resync( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Resync game data.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Pause on Script**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.Pause(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pause script for X millisecond.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|MSpause
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Focus on UoClient window**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.FocusUOWindow()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set UoClient window in focus or restore if minimized.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Misc =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Beep**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.Beep( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Play beep system sound.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Shard Name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ShardName( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string with shard name you play.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Disconnect =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Disconnect**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.Disconnect( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Force client to disconnect.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Context Menu =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait Context Menu**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.WaitForContext(int or mobile or item, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Wait server response a context menu request.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|timeout
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Context Menu Reply**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ContextReply(int or mobile or item, int or string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Response a context me on mobile or item. Menu ID is base zero, or can use string of menu text
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Menuname
+
+|}
+
+===== Share Data for Script =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Read Shared Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ReadSharedValue(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Read a shared value, if value not exist return null.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|obj
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|nameofvalue
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Remove Shared Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.RemoveSharedValue(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Remove a shared value,
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|nameofvalue
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Shared Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.CheckSharedValue(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a true o flase if value exist.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|nameofvalue
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Set Shared Value**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.SetSharedValue(string, obj)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a value by specific name, if value exist he repalce value.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|value
+
+|}
+
+===== Old Menu =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Has Menu**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.HasMenu()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return bool if have or not a menu opened.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Close Menu**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.CloseMenu()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Close opened menu.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Menu Contain**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.MenuContain(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Search in opened menu if contains a specific string, return true or false.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|texttosearch
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Menu Title**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.GetMenuTitile()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Return a string of title for opene menu.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait For Menu**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.WaitForMenu(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pause script until server send menu, delay is in ms.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|delayinms
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Menu Response**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.MenuResponse(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Perform a menu response by subitem name. If item not exist close menu
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|subitemname
+
+|}
+
+===== Query String =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Has Has QueryString**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.HasQueryString( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check if a have a query string menu opened, return true or false.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait For Query String**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.WaitForQueryString(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pause script until server send query string request, delay is in ms.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|delayinms
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Query String Response**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.QueryStringResponse(bool, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Perform a query string response by ok or cancel button and specific response string.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|stringtoresponse
+
+|}
+
+===== Script Function =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Run a Script**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ScriptRun(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Run a script by file name, Script must be present in script grid.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|scriptfilename
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Stop a Script**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ScriptStop(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Stop a script by file name, Script must be present in script grid.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|scriptfilename
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Stop all Script**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ScriptStopAll( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Stop all script running.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Script Status**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ScriptStatus(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get status of script if running or not, Script must be present in script grid.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|scriptfilename
+
+|}
+
+===== Pets =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Rename Pet**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.PetRename(int or mobile, string )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Rename a specific pet.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|newname
+
+|}
+
+===== String Prompt Response =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Reset Prompt response**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ResetPrompt()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Reset a prompt response.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Reset Prompt response**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.HasPrompt()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check if have a prompt request.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait Prompt**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.WaitForPrompt(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Wait a prompt response.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|delaytowait
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Cancel Prompt**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.CancelPrompt()
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Cancel a prompt request.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Prompt Response**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ResponsePrompt( string )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Response a prompt request.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|reponsetosend
+
+|}
+
+===== Ignore List =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Add onbject to Ignore List**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.IgnoreObject( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Add a object to ignore list. Can add serial, items or mobiles
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|mobtoignore
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Remove onbject from Ignore List**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.UnIgnoreObject( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Remove object from ignore list. Can remove serial, items or mobiles
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|mobtounignore
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check onbject if present in Ignore List**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.CheckIgnoreObject( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check object from ignore list, return true if present. Can check serial, items or mobiles
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|mobtocheck
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Clear ignore list**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Misc.ClearIgnore( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clear ignore list from all object
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Misc
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+

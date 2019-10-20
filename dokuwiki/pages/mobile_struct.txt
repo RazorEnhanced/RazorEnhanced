@@ -1,0 +1,734 @@
+====== Scripting - Mobile type structure ======
+
+Here can find some information about Enhanced Scripting function about Mobile type structure data and related function!
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile name**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Name
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Read mobile name..
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|String
+|-
+|**In Object:**
+|Mobile
+
+|- style="background-color:#f0f0f0;" 
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile body**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Body
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile body.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile color**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile color
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Direction**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Direction
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile Direction.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|String
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Visible**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Visible
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile visible flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Poisoned**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Poisoned
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile poisoned flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Flying**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Flying
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile Flying flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile YellowHits**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.YellowHits
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile YellowHits flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile YellowHits**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Paralized
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile Paralized flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Human**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.IsHuman
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile human flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile WarMode**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.WarMode
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile warmode flag.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Female**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Female
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile gender.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Bool
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Hits**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Hits
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile hits.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile HitsMax**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.HitsMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile maxhits.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Stamina**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Stam
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile stamina.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile MaxStamina**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.StamMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile max stamina.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Mana**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Mana
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile Mana.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile ManaMax**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.ManaMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read mobile ManaMax.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Integer
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Backpack**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Backpack
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get item object for mobile backpack.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Mount**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Mount
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get item object for mobile Mount.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Mobile
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Position**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Position
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get Point3D about mobile position.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Point3D
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Quiver**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Quiver
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get item object for mobile quiver.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | GetItemOnLayer(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Retrieves a item object of item equipped on specific layer.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| String Layername
+RightHand
+LeftHand
+Shoes
+Pants
+Shirt
+Head
+Gloves
+Ring
+Neck
+Waist
+InnerTorso
+Bracelet
+MiddleTorso
+Earrings
+Arms
+Cloak
+OuterTorso
+OuterLegs
+InnerLegs
+|-
+|**Exception**
+|style="width: 90%" | If wrong layer name or layer empty function return null!
+|-
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Assistant Layer**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.GetAssistantLayer(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get the Layer in Hex.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Item
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| String Layername
+
+|}
+
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Notoriety**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Notoriety
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read byte of Notoriety color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Byte
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Map**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Map
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Read the facet of mobile.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Byte
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Party**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.InParty
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get if mobile is in party.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Byte
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Contains**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Contains
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get a list of all items into the backpack.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|List of Item
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}
+
+
+
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Properties**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobile.Properties
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" | Get a list of all properties of a mobile.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|List of Property
+|-
+|**In Object:**
+| Mobile
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+| None
+
+|}

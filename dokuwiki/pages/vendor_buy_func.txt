@@ -1,0 +1,95 @@
+======Scripting - Vendor Buy filter control function======
+Here can find some information about Enhanced Scripting function to control Vendor Buy filter by script!
+
+=====Check Status=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Vendor Buy Filter Status**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BuyAgent.Status( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a bool value of vendor Buy filter status, if enabled or not
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|BuyAgent
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Enable=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Enable Vendor Buy Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BuyAgent.Enable( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Enable vendor Buy filter.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|BuyAgent
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Disable=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Disable Vendor Buy Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BuyAgent.Disable( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Stop scavenger engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|BuyAgent
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Change List=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Change Vendor Buy filter item list**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BuyAgent.ChangeList(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Change list of vendor Buy filter, List must be exist in vendor Buy GUI configuration
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|BuyAgent
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|ListName
+
+|}
+

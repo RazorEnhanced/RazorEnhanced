@@ -1,0 +1,71 @@
+======Scripting - Bandage Heal control function======
+Here can find some information about Enhanced Scripting function to control Bandage Heal engine by script!
+
+=====Check Status=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Bandage Heal Status**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BandageHeal.Status( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get a bool value of Bandage Heal engine status, if running or not
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|BandageHeal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Start=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Start Bandage HEal**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BandageHeal.Start( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Start Bandage Heal engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|BandageHeal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+=====Stop=====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Stop Bandage Heal**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | BandageHeal.Stop( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Stop Bandage Heal engine.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|BandageHeal
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}

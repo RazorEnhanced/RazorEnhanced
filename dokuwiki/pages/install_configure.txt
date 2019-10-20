@@ -1,0 +1,7 @@
+====== Install ======
+
+Now see few steps to install Razor Enhanced:
+
+  - [[download|Download]] and save compressed pack
+  - Unpack archive in your own folder
+  - Run Razor.exe or make a shortcut

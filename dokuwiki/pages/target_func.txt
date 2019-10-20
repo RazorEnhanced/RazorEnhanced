@@ -1,0 +1,452 @@
+====== Scripting - Targets data and function ======
+Here can find some information about Enhanced Scripting function and data for Target operation!
+
+===== Target Status =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Check Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.HasTarget( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get status if have target cursor in game or not
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Last Target Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.GetLast( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get serial number of last target
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Last Attack Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.GetLastAttack( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get serial number of last attack target
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Wait Target =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Wait For Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.WaitForTarget(int, optional bool)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pause script for wait server send target request. Must set a pause limit in ms. and optional flag True or False. True Not show cursor, false show it
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int Pause, bool BlockCursor
+
+|}
+
+===== Target Action =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Target Relative**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.TargetExecuteRelative(int or mobile, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send target execute to specific land point whit offset distance from mobile. Distance is calculated by target mobile direction.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int Serial or Mobile Mobiletarget, int offset
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Target Execute**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.TargetExecute(int or item or mobile or int, int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Send target execute to specific serial, item, mobile, X Y Z point.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|int Serial or Item ItemtoTarget or Mobile Mobile to target or Point3D StaticCoords or int XCoord, int YCoord, int ZLevel
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Prompt Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.PromptTarget(none or string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pick the serial from item or mobile. Can also specific a text message for prompt
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none or string stringmessage
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Prompt Target Ground Position**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.PromptTargetGround(none or string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Pick the coords from ground target. Can also specific a text message for prompt
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|point3d
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none or string stringmessage
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Cancel Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.Cancel( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Cancel target cursor.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Last Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.Last( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Target last object or mobile targetted.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Last Target Queued**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.LastQueued( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Queue next target to Last.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Last Self**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.Self( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Target Self.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Last Self Queued**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.SelfQueued( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Queue Next target to Self.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Set Last Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.SetLast(mobile or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Force set last target to specific mobile, by mobile type or serial.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|mobile MobileTarget or int SerialTarget
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Clear Last Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.ClearLast( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clear Last Target.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Clear Queue Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.ClearQueue( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clear Queue Target.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Clear Last and Queue Target**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.ClearLastandQueue( )
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Clear Last and Queue Target.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|none
+
+|}
+
+===== Target Filter =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Set last Target Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.SetLastTargetFromList(String)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set Last Target from gui filter selector.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String TargetFilterName
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Perform Target Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.PerformTargetFromList(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Execute Target from gui filter selector.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String TargetFilterName
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Attack Target Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.AttackTargetFromList(sting)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Attack Target from gui filter selector.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String TargetFilterName
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Target from Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Target.GetTargetFromList(string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get Mobile object from GUI Filter selector. If no mobile found return null
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|mobile
+|-
+|**In Object:**
+|Target
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|String TargetFilterName
+
+|}

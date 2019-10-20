@@ -1,0 +1,597 @@
+====== Scripting - Mobiles data and function ======
+Here can find some information about Enhanced Scripting function and data about Mobiles!
+
+===== Find =====
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Find Mobile by Serial**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.FindBySerial(int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Find Mobile and get mobile object by specific serial
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|mobile
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialnumber
+
+|}
+
+===== Use =====
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Use Mobile**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.UseMobile(mobile or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Use (double click) specific mobile, can insert mobile object or serial
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Mobile mobiletouse or Int serialmobiletouse
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Single Click**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.SingleClick(mobile or int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Perform a single click on specific mobile, can insert mobile object or serial
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Mobile mobiletoclick or Int serialmobiletoclick
+
+|}
+
+===== Filter Type =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Enable Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Enabled
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Enable or not filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Serial Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Serials
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a list of serial to filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Bodyes Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Bodies
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a list of body to filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Name Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Name
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a name to filter in ApplyFilter function, blank no filter by name
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Range Min Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.RangeMin
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a value of minimum range in ApplyFilter function
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Range Max Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.RangeMax
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a value of maximum range in ApplyFilter function
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Color Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Hues
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a list of color to filter in ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Poisoned Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Poisoned
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by poisoned flag for ApplyFilter function. 1 On, 0 Off, -1 Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Human Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.IsHuman
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by Human flag for ApplyFilter function. 1 On, 0 Off, -1 Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Ghost Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.IsGhost
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by Ghost flag for ApplyFilter function. 1 On, 0 Off, -1 Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Sex Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Female
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by sex for ApplyFilter function. 1 Female, 0 Male, -1 Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Warmode Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Warmode
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by warmode flag for ApplyFilter function. 1 On, 0 Off, -1 Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Friend Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Friend
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by friend list for ApplyFilter function. 1 On, 0 Off, -1 Both
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Notorieties color Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.Notorieties
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set a filter by byte list for notorieties color for ApplyFilter function.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Ignore list Filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Filter.CheckIgnoreObject
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Set search parameter True or false for remove IgnoreObject from result.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|bool
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|
+
+|}
+
+===== Message =====
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile Message**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Message(mobile or int, int, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Display a message over specific mobile whit color.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|void
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int MobileSerial or Mobile SelectedMobile, Int MessageColor, String Message
+
+|}
+
+===== ApplyFilter =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Search Mobile with a filter**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.ApplyFilter(filter)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Seatch a mobile by filter
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|list(mobile)
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|filter
+
+|}
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Apply a selector on mobile list**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.Select((List)Mobile, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Apply a selector on mobile list.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|Mobile
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|(List)Mobile, string
+|-
+|Possible selector:
+|
+  * Random
+  * Nearest
+  * Farthest
+  * Weakest
+  * Strongest
+  * Next
+
+|}
+
+
+
+===== Properties =====
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile WaitforProps**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.WaitForProps(mobile or int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrive Propriety of specific mobile.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Mobile mobiletocheck, int serialmobiletocheck, Int delay of props wait (ms)
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Item Proprerties**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.GetPropValue(int or mobile, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get value of item propriety
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|int
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialtoinspect or mobile mobiletoinspect, String PropName
+
+|}
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Mobile Proprerties String**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.GetPropStringByIndex(int or mobile, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string name of prop by index, if no prop in selected index return empty.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialtoinspect or mobile mobiletoinspect, Int PropIndex
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Get Mobile Proprerties String List**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.GetPropStringList(int or mobile)
+
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Get string list of all props name on specific mobile, if item no props list is empty.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|List (String)
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int serialtoinspect or mobile mobiletoinspect
+
+|}
+
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Mobile WaitForStats**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.WaitForStats (mobile or int, int)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Retrive stat value of specific mobile. This is for OSI or server not send stats if no open bars.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|none
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Mobile mobiletocheck, int serialmobiletocheck, Int delay of props wait (ms)
+
+|}
+
+===== Context =====
+
+{|style="font-size:85%; border:solid 2px; width: 50%;"
+|style="font-size:150%;  padding: 2px" colspan="2" | **Context Exist**
+|- style="background-color:#f0f0f0;"
+|**Syntax**
+|style="width: 90%" | Mobiles.ContextExist(int or mobile, string)
+|-
+|colspan="2" |**Description:**
+|-
+|colspan="2" |Check on specific mobile if context menu by string exist. Return context id if exist, -1 if not present.
+|- style="background-color:#f0f0f0;"
+|**Returns**
+|string
+|-
+|**In Object:**
+|Mobiles
+|- style="background-color:#f0f0f0;"
+|**Parameters:**
+|Int mobserial or item mobiletocheck, string contextstring
+
+|}
