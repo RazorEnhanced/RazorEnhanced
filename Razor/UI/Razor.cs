@@ -605,7 +605,6 @@ namespace Assistant
 		private OpenFileDialog openmaplocation;
 		private RazorCheckBox autolootautostartCheckBox;
 		private RazorCheckBox scavengerautostartCheckBox;
-		private RazorButton paypalButton;
 		private RazorCheckBox filterNPC;
 		private DataGridView graphfilterdatagrid;
 		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
@@ -694,7 +693,8 @@ namespace Assistant
 		private RazorButton targetChoseBody;
 		private RazorCheckBox bandagehealAutostartCheckBox;
 		private RazorCheckBox bandagehealusetarget;
-		private RazorCheckBox scriptshowStartStopCheckBox;
+        private RazorButton paypalButton;
+        private RazorCheckBox scriptshowStartStopCheckBox;
 
 		internal MainForm()
 		{
@@ -744,7 +744,6 @@ namespace Assistant
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
-            this.paypalButton = new RazorEnhanced.UI.RazorButton();
             this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
             this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox29 = new System.Windows.Forms.GroupBox();
@@ -1405,6 +1404,7 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+            this.paypalButton = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1561,20 +1561,6 @@ namespace Assistant
             this.generalTab.Size = new System.Drawing.Size(666, 366);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
-            //
-            // paypalButton
-            //
-            this.paypalButton.BackColor = System.Drawing.SystemColors.Control;
-            this.paypalButton.BackgroundImage = global::Assistant.Properties.Resources.PayPal;
-            this.paypalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.paypalButton.FlatAppearance.BorderSize = 0;
-            this.paypalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.paypalButton.Location = new System.Drawing.Point(542, 53);
-            this.paypalButton.Name = "paypalButton";
-            this.paypalButton.Size = new System.Drawing.Size(95, 33);
-            this.paypalButton.TabIndex = 69;
-            this.paypalButton.UseVisualStyleBackColor = false;
-            this.paypalButton.Click += new System.EventHandler(this.paypalButton_Click);
             //
             // openchangelogButton
             //
@@ -8423,6 +8409,21 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            //
+            // paypalButton
+            //
+            this.paypalButton.BackColor = System.Drawing.SystemColors.Control;
+            this.paypalButton.BackgroundImage = global::Assistant.Properties.Resources.PayPal;
+            this.paypalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.paypalButton.Enabled = false;
+            this.paypalButton.FlatAppearance.BorderSize = 0;
+            this.paypalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.paypalButton.Location = new System.Drawing.Point(542, 53);
+            this.paypalButton.Name = "paypalButton";
+            this.paypalButton.Size = new System.Drawing.Size(95, 33);
+            this.paypalButton.TabIndex = 69;
+            this.paypalButton.UseVisualStyleBackColor = false;
+            this.paypalButton.Click += new System.EventHandler(this.paypalButton_Click);
             //
             // MainForm
             //

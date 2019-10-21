@@ -14,7 +14,7 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedChangeLog_Load(object sender, EventArgs e)
 		{
-		
+
 		}
 	}
 }
