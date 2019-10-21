@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-//using AutoUpdaterDotNET;
+using AutoUpdaterDotNET;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -213,11 +213,11 @@ namespace RazorEnhanced.UI
 			UpdateGUI();
 		}
 
-//		private void checkupdatebutton_Click(object sender, EventArgs e)
-//		{
-//			// AutoUpdater
-//			AutoUpdater.ReportErrors = true;
-//			AutoUpdater.Start("http://www.RazorEnhanced.net/RazorAutoUpdater.xml");
-//		}
+        private void checkupdatebutton_Click(object sender, EventArgs e)
+        {
+            // AutoUpdater
+            AutoUpdater.ReportErrors = true;
+            AutoUpdater.Start("http://www.RazorEnhanced.net/download/RazorAutoUpdater.xml");
+        }
 	}
 }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <item>
-  <version>0.6.63.0</version>
+  <version>0.6.66.0</version>
   <url>
-    https://bitbucket.org/credzba_login/razor-enhanced-original/raw/magneto/Distribution/Razor-Enhanced-Latest.zip
+    http://www.razorenhanced.net/download/Razor-Enhanced-0.6.66.zip
   </url>
-  <changelog>http://bitbucket.org/credzba_login/razor-enhanced-original/raw/magneto/changelog.html</changelog>
+  <changelog>http://www.razorenhanced.net/download/changelog.html</changelog>
   <mandatory>false</mandatory>
 </item>

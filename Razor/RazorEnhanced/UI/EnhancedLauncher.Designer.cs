@@ -50,6 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.quit = new RazorEnhanced.UI.RazorButton();
             this.okay = new RazorEnhanced.UI.RazorButton();
+            this.checkupdatebutton = new RazorEnhanced.UI.RazorButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -278,11 +279,21 @@
             this.okay.Text = "Launch";
             this.okay.Click += new System.EventHandler(this.okay_Click);
             //
+            // checkupdatebutton
+            //
+            this.checkupdatebutton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.checkupdatebutton.Location = new System.Drawing.Point(157, 199);
+            this.checkupdatebutton.Name = "checkupdatebutton";
+            this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
+            this.checkupdatebutton.TabIndex = 10;
+            this.checkupdatebutton.Text = "Check Update";
+            //
             // EnhancedLauncher
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 231);
+            this.Controls.Add(this.checkupdatebutton);
             this.Controls.Add(this.quit);
             this.Controls.Add(this.okay);
             this.Controls.Add(this.groupBox2);
@@ -323,5 +334,6 @@
 		private System.Windows.Forms.GroupBox groupBox2;
 		public RazorComboBox shardlistCombobox;
 		private System.Windows.Forms.OpenFileDialog openclientlocation;
-	}
+        private RazorButton checkupdatebutton;
+    }
 }
