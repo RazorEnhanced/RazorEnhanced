@@ -1,9 +1,10 @@
 ====== Download Razor Enhanced ======
 
+[[http://razorenhanced.net/download/changelog.html|Razor Enhanced Change Log]]\\
+Razor Enhanced Build 0.6.66: [[http://www.razorenhanced.net/download/Razor-Enhanced-0.6.66.zip|Download - enabled auto update]] \\
+Razor Enhanced Build 0.6.65: [[http://www.razorenhanced.net/download/Razor-Enhanced-0.6.65.zip|Download - fixed changelog]] 
+\\
 Download last Alex Dan version of Razor Enhanced form this official link: [[http://www.razorenhanced.net/download/Razor-Enhanced-AlexDan.zip|Download]]
-
-Download latest build: [[http://www.razorenhanced.net/download/Razor-Enhanced-0.6.64.zip|Download]]
-
 ====== Download .NET Framework 4.5 ======
 
 Razor Enhanced require Microsoft .NET Framework 4.5. If not sure of your version or not have it download from official Microsoft site: [[https://www.microsoft.com/en-us/download/details.aspx?id=30653|Download .Net Framework 4.5]]
