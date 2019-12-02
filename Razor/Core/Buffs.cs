@@ -1,4 +1,6 @@
-﻿namespace Assistant
+﻿
+
+namespace Assistant
 {
 	internal enum BuffIcon : ushort
 	{

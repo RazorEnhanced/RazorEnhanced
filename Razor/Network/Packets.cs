@@ -885,7 +885,7 @@ namespace Assistant
 			Write(seq);
 		}
 	}
-	
+
 	internal sealed class MobileIncoming : Packet
 	{
 		internal MobileIncoming(Mobile m)
@@ -1224,7 +1224,7 @@ namespace Assistant
 
 			foreach (int t in patches)
 				Write((int)t);
-			
+
 		}
 	}
 
@@ -1418,288 +1418,13 @@ namespace Assistant
 	{
 		internal const int MaxItemsPerStairBuffer = 750;
 
-		private static byte[][] m_PlaneBuffers;
-		private static bool[] m_PlaneUsed;
-
-		private static byte[][] m_StairBuffers;
-
 		private static byte[] m_InflatedBuffer = new byte[0x2000];
 		private static byte[] m_DeflatedBuffer = new byte[0x2000];
-
-		/*private static byte[] m_PrimBuffer = new byte[4];
-
-		internal override void Write( int value )
-		{
-			m_PrimBuffer[0] = (byte)(value >> 24);
-			m_PrimBuffer[1] = (byte)(value >> 16);
-			m_PrimBuffer[2] = (byte)(value >>  8);
-			m_PrimBuffer[3] = (byte) value;
-
-			UnderlyingStream.Write( m_PrimBuffer, 0, 4 );
-		}
-
-		internal override void Write( short value )
-		{
-			m_PrimBuffer[0] = (byte)(value >> 8);
-			m_PrimBuffer[1] = (byte) value;
-
-			UnderlyingStream.Write( m_PrimBuffer, 0, 2 );
-		}
-
-		internal override void Write( byte value )
-		{
-			UnderlyingStream.WriteByte( value );
-		}
-
-		internal void Write( byte[] buffer, int offset, int size )
-		{
-			UnderlyingStream.Write( buffer, offset, size );
-		}*/
 
 		internal static void Clear(byte[] buffer, int size)
 		{
 			for (int i = 0; i < size; ++i)
 				buffer[i] = 0;
-		}
-
-		internal DesignStateDetailed(Serial serial, int revision, int xMin, int yMin, int xMax, int yMax, MultiTileEntry[] tiles)
-			: base(0xD8)
-		{
-			EnsureCapacity(17 + (tiles.Length * 5));
-
-			Write((byte)0x03); // Compression Type
-			Write((byte)0x00); // Unknown
-			Write((uint)serial);
-			Write((int)revision);
-			Write((short)tiles.Length);
-			Write((short)0); // Buffer length : reserved
-			Write((byte)0); // Plane count : reserved
-
-			int totalLength = 1; // includes plane count
-
-			int width = (xMax - xMin) + 1;
-			int height = (yMax - yMin) + 1;
-
-			if (m_PlaneBuffers == null)
-			{
-				m_PlaneBuffers = new byte[9][];
-				m_PlaneUsed = new bool[9];
-
-				for (int i = 0; i < m_PlaneBuffers.Length; ++i)
-					m_PlaneBuffers[i] = new byte[0x400];
-
-				m_StairBuffers = new byte[6][];
-
-				for (int i = 0; i < m_StairBuffers.Length; ++i)
-					m_StairBuffers[i] = new byte[MaxItemsPerStairBuffer * 5];
-			}
-			else
-			{
-				for (int i = 0; i < m_PlaneUsed.Length; ++i)
-					m_PlaneUsed[i] = false;
-
-				Clear(m_PlaneBuffers[0], width * height * 2);
-
-				for (int i = 0; i < 4; ++i)
-				{
-					Clear(m_PlaneBuffers[1 + i], (width - 1) * (height - 2) * 2);
-					Clear(m_PlaneBuffers[5 + i], width * (height - 1) * 2);
-				}
-			}
-
-			int totalStairsUsed = 0;
-
-			foreach (MultiTileEntry mte in tiles)
-			{
-				int x = mte.m_OffsetX - xMin;
-				int y = mte.m_OffsetY - yMin;
-				int z = mte.m_OffsetZ;
-				int plane, size;
-				bool floor = false;
-				try
-				{
-					floor = (Ultima.TileData.ItemTable[mte.m_ItemID & 0x3FFF].Height <= 0);
-				}
-				catch
-				{
-				}
-
-				switch (z)
-				{
-					case 0: plane = 0; break;
-					case 7: plane = 1; break;
-					case 27: plane = 2; break;
-					case 47: plane = 3; break;
-					case 67: plane = 4; break;
-					default:
-					{
-						int stairBufferIndex = (totalStairsUsed / MaxItemsPerStairBuffer);
-						byte[] stairBuffer = m_StairBuffers[stairBufferIndex];
-
-						int byteIndex = (totalStairsUsed % MaxItemsPerStairBuffer) * 5;
-
-						stairBuffer[byteIndex++] = (byte)((mte.m_ItemID >> 8) & 0x3F);
-						stairBuffer[byteIndex++] = (byte)mte.m_ItemID;
-
-						stairBuffer[byteIndex++] = (byte)mte.m_OffsetX;
-						stairBuffer[byteIndex++] = (byte)mte.m_OffsetY;
-						stairBuffer[byteIndex++] = (byte)mte.m_OffsetZ;
-
-						++totalStairsUsed;
-
-						continue;
-					}
-				}
-
-				if (plane == 0)
-				{
-					size = height;
-				}
-				else if (floor)
-				{
-					size = height - 2;
-					x -= 1;
-					y -= 1;
-				}
-				else
-				{
-					size = height - 1;
-					plane += 4;
-				}
-
-				int index = ((x * size) + y) * 2;
-
-				m_PlaneUsed[plane] = true;
-				m_PlaneBuffers[plane][index] = (byte)((mte.m_ItemID >> 8) & 0x3F);
-				m_PlaneBuffers[plane][index + 1] = (byte)mte.m_ItemID;
-			}
-
-			int planeCount = 0;
-
-			for (int i = 0; i < m_PlaneBuffers.Length; ++i)
-			{
-				if (!m_PlaneUsed[i])
-					continue;
-
-				++planeCount;
-
-				int size = 0;
-
-				if (i == 0)
-					size = width * height * 2;
-				else if (i < 5)
-					size = (width - 1) * (height - 2) * 2;
-				else
-					size = width * (height - 1) * 2;
-
-				byte[] inflatedBuffer = m_PlaneBuffers[i];
-
-				int deflatedLength = m_DeflatedBuffer.Length;
-				ZLibError ce = DLLImport.ZLib.compress2(m_DeflatedBuffer, ref deflatedLength, inflatedBuffer, size, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION);
-
-				if (ce != ZLibError.Z_OK)
-				{
-					Console.WriteLine("ZLib error: {0} (#{1})", ce, (int)ce);
-					deflatedLength = 0;
-					size = 0;
-				}
-
-				Write((byte)(0x20 | i));
-				Write((byte)size);
-				Write((byte)deflatedLength);
-				Write((byte)(((size >> 4) & 0xF0) | ((deflatedLength >> 8) & 0xF)));
-				Write(m_DeflatedBuffer, 0, deflatedLength);
-
-				totalLength += 4 + deflatedLength;
-			}
-
-			int totalStairBuffersUsed = (totalStairsUsed + (MaxItemsPerStairBuffer - 1)) / MaxItemsPerStairBuffer;
-
-			for (int i = 0; i < totalStairBuffersUsed; ++i)
-			{
-				++planeCount;
-
-				int count = (totalStairsUsed - (i * MaxItemsPerStairBuffer));
-
-				if (count > MaxItemsPerStairBuffer)
-					count = MaxItemsPerStairBuffer;
-
-				int size = count * 5;
-
-				byte[] inflatedBuffer = m_StairBuffers[i];
-
-				int deflatedLength = m_DeflatedBuffer.Length;
-				ZLibError ce = DLLImport.ZLib.compress2(m_DeflatedBuffer, ref deflatedLength, inflatedBuffer, size, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION);
-
-				if (ce != ZLibError.Z_OK)
-				{
-					Console.WriteLine("ZLib error: {0} (#{1})", ce, (int)ce);
-					deflatedLength = 0;
-					size = 0;
-				}
-
-				Write((byte)(9 + i));
-				Write((byte)size);
-				Write((byte)deflatedLength);
-				Write((byte)(((size >> 4) & 0xF0) | ((deflatedLength >> 8) & 0xF)));
-				Write(m_DeflatedBuffer, 0, deflatedLength);
-
-				totalLength += 4 + deflatedLength;
-			}
-
-			Seek(15, System.IO.SeekOrigin.Begin);
-
-			Write((short)totalLength); // Buffer length
-			Write((byte)planeCount); // Plane count
-
-			/*int planes = (tiles.Length + (MaxItemsPerPlane - 1)) / MaxItemsPerPlane;
-
-			if ( planes > 255 )
-				planes = 255;
-
-			int totalLength = 0;
-
-			Write( (byte) planes );
-			++totalLength;
-
-			int itemIndex = 0;
-
-			for ( int i = 0; i < planes; ++i )
-			{
-				int byteIndex = 0;
-
-				for ( int j = 0; j < MaxItemsPerPlane && itemIndex < tiles.Length; ++j, ++itemIndex )
-				{
-					MultiTileEntry e = tiles[itemIndex];
-
-					m_InflatedBuffer[byteIndex++] = (byte)((e.m_ItemID >> 8) & 0x3F);
-					m_InflatedBuffer[byteIndex++] = (byte)e.m_ItemID;
-					m_InflatedBuffer[byteIndex++] = (byte)e.m_OffsetX;
-					m_InflatedBuffer[byteIndex++] = (byte)e.m_OffsetY;
-					m_InflatedBuffer[byteIndex++] = (byte)e.m_OffsetZ;
-				}
-
-				int deflatedLength = m_DeflatedBuffer.Length;
-				ZLibError ce = ZLib.compress2( m_DeflatedBuffer, ref deflatedLength, m_InflatedBuffer, byteIndex, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION );
-
-				if ( ce != ZLibError.Z_OK )
-				{
-					Console.WriteLine( "ZLib error: {0} (#{1})", ce, (int)ce );
-					deflatedLength = 0;
-					byteIndex = 0;
-				}
-
-				Write( (byte) 0x00 );
-				Write( (byte) byteIndex );
-				Write( (byte) deflatedLength );
-				Write( (byte) (((byteIndex >> 4) & 0xF0) | ((deflatedLength >> 8) & 0xF)) );
-				Write( m_DeflatedBuffer, 0, deflatedLength );
-
-				totalLength += 4 + deflatedLength;
-			}
-
-			Seek( 15, System.IO.SeekOrigin.Begin );
-			Write( (short) totalLength ); // Buffer length*/
 		}
 	}
 
@@ -1805,7 +1530,7 @@ namespace Assistant
 		{
 			EnsureCapacity(2 + 2 + 2 + 4);
 			Write((ushort)0x32);   // Command
-			Write((ushort)0x01);       
+			Write((ushort)0x01);
 			Write((int)0x00);
 		}
 	}

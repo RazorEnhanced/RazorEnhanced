@@ -5,10 +5,6 @@ namespace Assistant
 {
 	internal class MultiTileEntry
 	{
-		internal ushort m_ItemID;
-		internal short m_OffsetX;
-		internal short m_OffsetY;
-		internal short m_OffsetZ;
 	}
 
 	internal class Facet
