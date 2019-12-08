@@ -1,0 +1,867 @@
+INTEREST	365	15	3	Dark Guardian Room
+EXIT	5904	16	7	Hythloth
+TELEPORT	5217	18	7	to town
+INN	5165	30	7	Seeker's Inn
+INN	5310	34	7	bunkhouse
+INTEREST	496	47	3	Exit portal
+BAKER	5351	56	7	Mage's Appetite
+INTEREST	5251	58	7	park
+MAGIC	5148	60	7	Wind Alchemy
+INTEREST	323	66	3	Lever Puzzle
+TELEPORT	5199	71	7	to park
+BANK	5346	74	7	Wind Bank
+SCENIC	2452	79	7	The North Mines
+DUNGEON	1996	80	7	Ice
+TAILOR	5203	86	7	Windy Clothes
+MAGIC	5301	88	7	The Alchemist of Wind
+PROVISIONS	5154	97	7	Mage's Things
+INTEREST	468	96	3	Lamp Room
+TOWN	5252	104	7	Wind
+EXIT	427	112	2	Sorcerers dungeon
+LANDMARK	392	114	3	Dungeon Doom
+REAGENTS	5215	117	7	Magical Supplies
+HEALER	5263	129	7	Wind Healer
+EXIT	5396	129	7	Shame
+STAIRS	380	134	3	Doom Entrance
+LIBRARY	5238	144	7	The Learned Mage
+EXIT	5875	147	7	Ice (LL)
+EXIT	5191	152	7	to surface
+SCENIC	1738	174	2	the Abyss
+INN	5218	175	7	Windy Inn
+LIBRARY	5243	179	7	Seat of Knowledge
+INTEREST	425	192	3	Victoria the Sorceress
+INTEREST	1095	197	3	tunnel
+LANDMARK	758	208	2	cyclopse camp
+SHRINE	529	212	2	Valor
+MOONGATE	528	216	2	Valor
+MOONGATE	1721	218	2	Chaos
+LANDMARK	2404	218	7	passage to Lost Lands
+DUNGEON	2042	226	7	Wrong
+SHRINE	1749	234	2	Chaos
+EXIT	5882	243	7	Ice (B)
+LANDMARK	5165	246	7	entrance
+INTEREST	417	247	3	Bell of the Dead
+SCENIC	747	247	2	cyclopse garden
+INTEREST	1071	247	3	tunnel
+DOCKS	410	254	3	Cyhloth the Ferryman (to Gauntet)
+TERRAIN	1028	272	2	Pass of Karnaugh
+BODYOFWATER	430	288	3	Lake Mortis
+SHRINE	3355	289	7	Sacrifice
+SCENIC	1701	291	2	statue room
+LANDMARK	1668	292	2	Montor
+HEALER	682	297	2	
+INTEREST	1658	304	3	tunnel
+SCENIC	1414	317	2	Wyrm Mountain
+EXIT	2188	319	2	Rock dungeon
+DOCKS	425	324	3	Entrance to Gauntlet
+INTEREST	433	326	3	Exit portal
+RUINS	2192	327	3	Grimswind Ruins
+POINT	383	329	2	Champ "Valor"
+INTEREST	1811	359	3	tunnel
+LANDMARK	5228	368	7	Green Acres
+BODYOFWATER	495	370	2	Pormir Felwis
+OTHER	433	371	3	Secret Entrance to Nix
+PROVISIONS	491	371	3	Nix the Variety Dealer
+STABLES	2526	375	7	Stables
+HEALER	375	379	3	The Healer Shop
+TERRAIN	1580	384	3	Northern Crags
+TAVERN	2475	397	7	The Barnacle
+SHRINE	1106	404	2	Shrine of the Virtues
+BUTCHER	2438	410	7	The Slaughtered Cow
+LANDMARK	580	420	2	Terort Skitas "Temple of Knowledge"
+BODYOFWATER	1620	420	2	Termir Flam "The Lake of Fire"
+TOWN	1380	425	2	gypsy caravan
+PROVISIONS	2453	425	7	The Old Miners' Supplies
+DUNGEON	556	427	2	Sorcerers dungeon
+LANDMARK	946	427	2	Gargoyle Mining Camp
+STABLES	1388	428	2	animal pen
+HEALER	1407	428	2	healer's hut
+WARRIORSGUILD	2482	428	7	The New World Order
+DUNGEON	4111	429	7	Deceit
+GATE	488	430	3	Room 1 Darknight Creepers
+GATE	330	431	3	Room 5 Abyssmal Horrors
+INTEREST	1628	432	3	tunnel
+MINERSGUILD	2505	432	7	The Golden Pick Axe
+LANDMARK	423	433	3	Gauntlet Central Area
+BUTCHER	1400	434	2	a butcher
+GUILD	2434	438	7	Counselor's Guild
+MAGIC	1394	441	2	a mage
+TERRAIN	1460	448	2	Alexandrella's Bowl
+DUNGEON	911	451	2	Exit to Ilshenar
+DUNGEON	548	454	2	Sorcerers dungeon
+INTEREST	2157	456	3	tunnel
+TINKER	2461	457	7	Gears and Gadgets
+RUINS	856	463	2	undead camp
+MOONGATE	1215	467	2	Compassion
+BODYOFWATER	706	469	2	Pormir Harm
+SCENIC	728	475	2	stepping stones
+INTEREST	1790	475	3	tunnel
+SHRINE	1210	477	2	Compassion
+CARPENTER	2513	477	7	The Oak Throne
+TOWN	985	481	3	Luna
+MINERSGUILD	2455	487	7	The Matewan
+SCENIC	748	489	2	bandstand
+INTEREST	948	492	2	Volcano
+SCENIC	2587	492	7	The East Mines
+SCENIC	753	493	2	memorial to Gwenno
+DUNGEON	940	502	2	Ancient (Volcanic) Lair
+GATE	335	505	3	Room 4 Shadow Knights
+SHRINE	976	510	3	Shrine of Wisdom
+BLACKSMITH	981	510	3	Shining Blades
+PROVISIONS	994	510	3	Open Market
+INTEREST	1195	511	3	tunnel
+GATE	477	516	3	Room 2 Flash Renderers
+CARPENTER	1002	518	3	Hardwoods and More
+BANK	996	519	3	Luna Bank
+LANDMARK	1044	519	2	Savage Camp
+INN	1005	522	3	Paladin's Stopover
+INTEREST	2465	522	7	statues
+TOWN	2502	522	7	Minoc
+MAGIC	1001	523	3	Sage's Refuge
+RUINS	875	524	2	Ruined Villa
+TANNER	2524	524	7	The Stretched Hide
+TAILOR	981	527	3	Clothier's Colors
+MOONGATE	1015	527	3	Luna
+INTEREST	2429	528	7	Minoc Town Hall
+GATE	408	531	3	Room 3 Impalers
+LANDMARK	2590	532	7	Mining Camp
+HEALER	284	536	2	healer's hut
+HEALER	575	537	2	
+PROVISIONS	1598	539	2	a provisioner
+JEWELER	1605	541	2	a jeweler
+RUINS	1516	542	2	Ancient Citadel
+HEALER	1235	543	2	healer's hut
+RUINS	512	546	2	bandit town
+HEALER	1628	548	2	healer's hut
+PROVISIONS	2532	548	7	The Survival Shop
+TOWN	1608	550	2	Desert Outpost
+TAILOR	1600	552	2	a tailor
+BANK	2503	552	7	Bank of Minoc
+BANK	1226	554	2	a bank
+INN	1620	554	2	an inn
+BARD	2424	555	7	The Mystical Lute
+BANK	1610	556	2	a bank
+STABLES	1225	563	2	animal pen
+SHRINE	4212	563	7	Honesty
+BLACKSMITH	2471	564	7	The Forgery
+TOWN	1240	565	2	gypsy caravan
+DUNGEON	1788	569	2	Rock dungeon
+MAGIC	840	571	2	TerOrtLem
+INTEREST	2082	574	3	tunnel
+ARMS	2533	576	7	Warrior's Battle Gear
+BLACKSMITH	1261	582	2	a forge
+DUNGEON	1236	583	2	Entrance to Central Area
+ARMS	808	586	2	AngraCharInLem
+HEALER	872	586	2	InManiLem
+TINKER	1253	588	2	a tinker
+DUNGEON	1140	593	2	Exit to Ilshenar
+HEALER	2577	599	7	The Healing Hand
+PROVISIONS	824	602	2	BenInLem
+BANK	855	603	2	AtriAur
+TAILOR	896	610	2	SkisInLem
+MAGIC	1505	611	2	a mage
+BAKER	1514	611	2	
+ARMS	1497	614	2	an armourer
+TERRAIN	1388	616	3	Crystal Fens
+GUILD	792	617	2	LapInLem
+STABLES	1499	619	2	the stables
+HEALER	1518	619	2	healer's hut
+BODYOFWATER	993	620	2	Oasis
+TAILOR	2961	621	7	The Spinning Wheel
+TOWN	1506	622	2	Desert Outpost
+LIBRARY	869	625	2	Librum
+EXIT	5588	632	7	Despise
+EXIT	5825	632	7	Wrong
+SHRINE	1300	633	7	Justice
+LANDMARK	939	637	3	Grand Arena
+TERRAIN	966	637	2	Desert
+PROVISIONS	2992	638	7	The Adventurer's Supplies
+EXIT	5188	638	7	Deceit
+TINKER	766	641	2	AtriBenInAilem
+INTEREST	792	641	2	Fountain
+LANDMARK	836	641	2	Ver Lor Reg
+RUINS	1084	651	2	Ruined Castle
+SCENIC	2533	654	7	Gypsy Camp
+MAGIC	2892	654	7	The Bubbling Brew
+LIBRARY	868	657	2	Librum
+TERRAIN	1352	664	2	glacier
+INN	665	665	2	The Deuce's Vinculum Inn
+BLACKSMITH	792	665	2	ZhelInLem
+DUNGEON	710	667	2	Entrance to Central Area
+TELEPORT	5265	669	0	to Champ "Fire"
+MAGIC	2918	672	7	The Magical Light
+GUILD	894	673	2	TerAnEksPor
+PROVISIONS	826	679	2	BenInLem
+BANK	854	680	2	AtriAur
+TELEPORT	5265	683	0	to Champ "Despice"
+BANK	2881	684	7	The Mint of Vesper
+GUILD	872	686	2	LapInLem
+INTEREST	39	688	2	Dragon's Egg
+MOONGATE	2702	692	7	Minoc Moongate
+ARMS	808	697	2	AngloInLem
+JEWELER	859	698	2	KlarLapInLem
+SCENIC	1038	701	2	Tribal Berry Orchard
+LANDMARK	1091	703	2	Controller Tower
+GATE	1200	704	2	Entrance
+BEEKEEPER	2957	705	7	The Busy Bees
+INN	840	707	2	TerZu
+OTHER	5331	707	0	from Ancient Wyrm's Lair Teleporter
+POINT	5178	708	0	Champ Deceit Neira (Unholy Terror)
+PAINTER	2906	710	7	The Colored Canvass
+JEWELER	2882	723	7	The Shimmering Jewel
+MOONGATE	744	724	2	Honor
+SCENIC	1269	727	2	Hay Fields
+SHRINE	748	731	2	Honor
+LANDMARK	1238	733	2	Savage Clan Settlement
+SCENIC	1280	734	2	Reagent Garden
+MINERSGUILD	2855	734	7	The Ore of Vesper
+TERRAIN	1124	739	2	Swamp
+OTHER	2891	744	7	The Musician's Hall
+EXIT	84	750	2	Ilshenar Central Area
+MOONGATE	771	754	7	Yew Moongate
+BAKER	2998	760	7	The Twisted Oven
+SCENIC	1201	762	2	Hay Fields
+SCENIC	1211	763	2	Vegetable Patch
+LANDMARK	295	764	7	Britannia Prison
+MARKET	3019	766	7	Farmer's Market
+OTHER	1288	769	2	Burning Corpse
+BUTCHER	2992	776	7	The Butcher's Knife
+LANDMARK	826	777	2	Power Core
+DUNGEON	834	779	2	Exodus dungeon
+INTEREST	1280	779	2	Ridgeback Pen
+MARKET	3018	785	7	Fisherman's Warf
+LANDMARK	318	789	7	to lighthouse
+TINKER	2899	790	7	The Gadget's Corner
+CARPENTER	2917	798	7	The Hammer and Nail
+OTHER	5606	802	0	from Fireand DeceitTeleporter
+ARMS	2835	805	7	Warrior's Companion
+INN	610	810	7	Abbey Innkeeper
+FLETCHER	2861	812	7	The Ranger's Tool
+FISHERMANSGUILD	2963	813	7	The Fisherman's Guild
+TELEPORT	5506	814	0	to Ancient Wyrm's Lair (Destard lvl 3)
+BODYOFWATER	1128	816	2	Pormir Priin "River of Unity"
+LANDMARK	645	817	2	ratman lair
+TELEPORT	5506	817	0	to Champ "Terathan Keep"
+SHIPS	2997	819	7	The Majestic Boat
+BANK	652	820	7	Abbey Banker
+INTEREST	553	826	7	Yew Mill
+POINT	5557	826	0	Champ of Despice Barracoon (Vermin Horde)
+DOCKS	3034	827	7	Vesper Docks
+EXIT	2114	830	2	Blood dungeon
+POINT	5259	837	0	Champ Destard Rikktor (Cold Blood)
+TOWN	2884	839	7	Vesper
+BODYOFWATER	1688	840	2	Lenmir Antinmolas
+SHRINE	1458	844	7	Chaos
+REAGENTS	2992	844	7	The Magician's Friend
+TELEPORT	4540	845	7	portal to Papua (recdu)
+LANDMARK	635	851	7	Empath Abbey
+ARMS	2865	852	7	The Ironworks
+HEALER	2920	856	7	Healer of Vesper
+MAGESGUILD	4545	860	7	Encyclopedia Magicka
+RUINS	337	864	2	ruins
+LANDMARK	1256	865	7	Training Tower
+PROVISIONS	535	867	7	The Adventurer's Friend
+GRAVEYARD	2753	867	7	Vesper Cemetery
+DUNGEON	811	874	2	Serpentine Passage
+SHRINE	1858	874	7	Compassion
+DUNGEON	1490	879	2	spider dungeon
+TELEPORT	1516	879	2	to Reg Volom (the island)
+TERRAIN	480	882	2	lava vent
+TAILOR	2840	885	7	The Spinning Wheel
+INN	2962	885	7	Vesper Youth Hostel
+INTEREST	618	886	7	Ye Olde Winery
+GRAVEYARD	327	889	2	graveyard
+DUNGEON	1361	890	7	Wind
+TERRAIN	1372	892	3	Divide of the Abyss
+LANDMARK	2775	893	7	passage to Lost Cemetery
+LANDMARK	370	899	7	Court of Truth
+WARRIORSGUILD	2841	907	7	The Champion's of Light
+TAVERN	2901	908	7	The Marsh Hall
+DUNGEON	1420	910	2	spider dungeon
+DUNGEON	2499	916	7	Covetous
+POINT	462	926	2	Champ "Humility"
+DUNGEON	664	929	2	central (Ankh) dungeon
+RUINS	653	933	2	ruined tower
+CUSTOMS	2944	934	7	Vesper Customs
+TOWN	504	942	7	Yew
+ISLAND	1672	944	3	Isle of the Divide
+GUILD	2843	944	7	Counselor's Guild
+SCENIC	596	946	2	a flowstone surrounded by runes
+LANDMARK	18	950	2	The Oracle
+HEALER	1093	955	2	a healing temple
+RUINS	1249	955	2	BetLem Reg
+HEALER	532	958	7	Healer of Yew
+TERRAIN	1447	964	2	spider wood
+SCENIC	1675	965	2	harpy nest
+BOWYER	564	968	7	The Sturdy Bow
+INN	2782	969	7	The Ironwood Inn
+TELEPORT	5140	973	0	to Deceit (lvl 4)
+TELEPORT	5145	973	0	to Champ "Terathan Keep"
+GUILD	616	980	7	Counselor's Guild
+TELEPORT	2618	980	7	gate to Buccaneer's Den
+INTEREST	2743	980	7	Vesper Guard Tower
+INTEREST	2923	981	7	Vesper Museum
+TANNER	517	986	7	The Tanned Hide
+LANDMARK	917	993	2	watchpost
+EXIT	1787	993	2	spider dungeon
+BAKER	559	995	7	The Jolly Baker
+TANNER	2860	999	7	Tanner's Shop
+LANDMARK	894	1000	2	dam
+LANDMARK	4312	1000	7	The Lyceaeum
+RUINS	1586	1004	2	abandoned building
+SHRINE	985	1005	2	Justice
+EXIT	5244	1007	7	Destard
+BUTCHER	529	1008	7	Yew's Finest Cuts
+OTHER	5164	1009	0	from DespiceTeleporter
+MOONGATE	987	1011	2	Justice
+SHRINE	287	1013	2	Humility
+CARPENTER	570	1015	7	Bloody Thumb Woodworks
+MOONGATE	281	1016	2	Humility
+DUNGEON	1363	1032	2	Spectre (Reg Volom) Dungeon
+SCENIC	1197	1034	2	giant yew tree
+SHIPS	634	1038	7	Great Oak Vessels
+DOCKS	4406	1038	7	Moonglow Docks
+INN	1566	1049	2	Twin Oaks Tavern
+HEALER	1364	1051	2	etherial warrior castle healer
+LANDMARK	821	1060	2	Mistas
+TAILOR	4458	1060	7	Scholar's Cut
+PAINTER	4525	1060	7	Academy of Arts
+PROVISIONS	4417	1064	7	The Scholar's Goods
+INN	4484	1064	7	Moonglow Student Hostel
+BAKER	4392	1068	7	Mage's Bread
+LANDMARK	1362	1073	2	Reg Volom
+LANDMARK	1675	1074	2	tower
+DUNGEON	1296	1082	7	Despise
+CARPENTER	4416	1085	7	The Mage's Seat
+MARKET	4481	1085	7	Farmer's Market
+HEALER	647	1087	7	Deep Forest Healing
+HEALER	4392	1089	7	Moonglow Healer
+MAGIC	4448	1090	7	Moonglow's Finest Alchemy
+GRAVEYARD	2437	1104	7	cemetery
+TELEPORT	1363	1105	2	to spider dungeon
+EXIT	1982	1106	2	Etherial Tombs
+POINT	1645	1108	2	Champ "Lord Oaks and the Forest Queen" 
+REAGENTS	4416	1112	7	Moonglow Reagent Shop
+LANDMARK	5816	1112	7	Green Acres
+INTEREST	2212	1115	7	watchtower
+SCENIC	4708	1116	7	Telescope
+GRAVEYARD	722	1117	7	Yew Cemetery
+ARMS	4392	1117	7	The Mighty Axe
+TOWN	4457	1117	7	Moonglow
+BODYOFWATER	1316	1120	2	Termir Ilshen "Ilshen's Lake"
+LANDMARK	1442	1122	2	small lumber camp
+TELEPORT	4442	1122	7	teleporter park
+GUILD	4478	1126	7	Counselor's Guild
+RUINS	1200	1127	2	Lakeshire/Mireg
+REAGENTS	4416	1133	7	Herbal Splendor
+BUTCHER	4395	1137	7	The Fatted Calf
+RUINS	360	1140	2	undead fort
+LANDMARK	575	1140	2	abandoned tower
+GRAVEYARD	3529	1141	7	Nujel'm Cemetery
+INN	774	1144	2	Mistas Regsit
+TERRAIN	2172	1144	3	Corrupted Foresets
+BOWYER	624	1147	7	Great Oak Bowyer
+RUINS	1069	1151	2	ratman village
+DUNGEON	1030	1154	2	Ratman Cave
+DUNGEON	576	1156	2	central (Ankh) dungeon
+BANK	4471	1156	7	First Bank of Moonglow and Tinker's Guild
+ARMS	4440	1162	7	Second Defense Armory
+INN	4401	1165	7	The Scholar's Inn
+LANDMARK	5291	1169	7	jail
+ARMS	2217	1170	7	The Warrior's Supplies
+BUTCHER	3555	1171	7	Nujel'm Butcher
+JEWELER	3778	1172	7	Jewel of the Isle
+TANNER	3545	1178	7	Nujel'm Tannery
+TERRAIN	736	1180	3	Crumbling Mountains
+DOCKS	2256	1181	7	Cove Dock
+BLACKSMITH	3546	1185	7	Nujel'm Blacksmith
+SCENIC	1183	1188	2	orchard
+SCENIC	1589	1190	2	flowstone
+GUILD	3769	1190	7	Counselor's Guild
+SCENIC	1548	1192	2	pool
+PROVISIONS	2216	1192	7	The Farmer's Market
+FLETCHER	3546	1194	7	Nujel'm Bowry
+TERRAIN	420	1196	2	Nox Tereg
+INTEREST	869	1196	1	Yew Crossroads
+EXIT	20	1197	2	Elemental Arena
+BARDICGUILD	3740	1197	7	Bardic Guild
+BLACKSMITH	3554	1202	7	Public Smithing
+GATE	3657	1202	7	City Gates
+ILLUSIONISTSGUILD	4626	1207	7	Masters of Illusion
+GATE	2281	1210	7	town gate
+SHIPS	3700	1214	7	Seaborne Ships
+TAVERN	3769	1218	7	Mystical Spirits
+LANDMARK	1340	1226	3	Orc Fort
+CUSTOMS	3717	1228	0	Seaborne Ships
+HEALER	2245	1231	7	The Healing Hand
+TOWN	3600	1231	7	Nujel'm
+THEATRE	3739	1231	7	Nujel'm Theater
+DUNGEON	1747	1235	2	Blood dungeon
+LANDMARK	1123	1236	2	brigand tower
+TOWN	2263	1237	7	Cove
+GATE	401	1251	2	lizzardman gate
+TAVERN	3736	1255	7	The Silver Bow
+GATE	367	1261	2	lizzardman gate
+SCENIC	1606	1265	2	forge
+TAILOR	3774	1265	7	Tailor of the Isle
+EXIT	3	1267	2	central (Ankh) dungeon
+DUNGEON	2357	1268	3	Doom
+LANDMARK	907	1283	2	cyclopse's pyramid
+SCENIC	768	1284	2	campfire
+INTEREST	3690	1284	7	Nujel'm Palace
+MOONGATE	4468	1284	7	Moonglow Moongate
+MOONGATE	1174	1286	2	Sacrifice
+SHRINE	1171	1288	2	Sacrifice
+CARPENTER	2066	1288	3	Warped Woodworks
+TOWN	2020	1292	3	Umbra
+DUNGEON	652	1301	2	wisp dungeon
+LANDMARK	881	1303	2	passage
+INN	3732	1306	7	Restful Slumber
+INTEREST	1979	1307	3	training dummy
+LANDMARK	857	1312	2	passage
+INN	2039	1317	3	Wailing Banshee Inn
+BANK	3764	1317	7	Bank of Nujel'm
+STABLES	1995	1318	3	Critter Pens
+GRAVEYARD	4541	1319	7	Moonglow Cemetery
+PROVISIONS	1318	1328	2	sheep farm
+PROVISIONS	2016	1328	3	Gravedigger's Aparatus
+DUNGEON	314	1329	2	Lizard passage
+TAILOR	2074	1334	3	Darkweave
+DUNGEON	226	1336	2	Lizard passage
+INTEREST	1962	1339	3	training dumm
+SHRINE	1526	1340	2	Spirituality
+MOONGATE	1532	1340	2	Spirituality
+EXIT	6026	1344	7	to City of the Dead
+BANK	2048	1345	3	Umbra Bank
+TAVERN	2030	1350	3	Skeleton Swill
+SHRINE	719	1351	2	Honesty
+POINT	5814	1351	0	Champ of Fire Semidar (Abyss)
+BAKER	2017	1354	3	Ghast Refectory
+RUINS	292	1356	2	lizard man camp
+INTEREST	3727	1361	7	The Chessboard
+DUNGEON	904	1362	2	wisp dungeon (level 3)
+LANDMARK	221	1363	2	ancient wyrm's lair
+RUINS	412	1363	2	abandoned tower
+MOONGATE	722	1366	2	Honesty
+BLACKSMITH	1984	1367	3	Armoury of Souls
+HEALER	2084	1372	3	Bloodletter's Guild
+RUINS	2176	1372	7	Orc Fort
+LANDMARK	4511	1376	7	Britannia Royal Zoo
+OTHER	5876	1378	0	from TeraKeepTeleporter
+EXIT	6004	1379	7	to Delucia
+MAGIC	2024	1383	3	Necromancer Ampitheater
+INTEREST	3715	1383	7	Debtor's Prison
+MOONGATE	1997	1386	3	Umbra
+INTEREST	3723	1396	7	Nujel'm Court
+JEWELER	2051	1398	3	Lich's Hoard
+EXIT	5899	1410	7	to Trinsic forest
+SORCERERSGUILD	4684	1412	7	The Sorcerer's Guild
+EXIT	5792	1415	7	Fire (LL)
+EXIT	5687	1424	7	Fire (B)
+DUNGEON	349	1428	2	Elemental Arena
+LANDMARK	1530	1428	7	Lord Blackthorn's Castle
+EXIT	6141	1430	7	to Hoppers Bog
+HEALER	369	1432	2	resurrection tree
+TERRAIN	429	1433	2	dead forest
+DUNGEON	1014	1434	7	Orc Cave
+TELEPORT	5682	1437	0	to Ancient Wyrm's Lair (Destard lvl 3)
+TELEPORT	5682	1440	0	to Champ "Despice"
+TERRAIN	312	1442	2	Elemental Canyon
+EXIT	155	1474	2	central (Ankh) dungeon
+TERRAIN	1148	1476	3	Broken Mountains
+GRAVEYARD	1371	1482	7	Britain Cemetery
+RUINS	632	1484	7	Orc Fort
+EXIT	1478	1495	2	mushroom caves
+EXIT	6031	1500	7	to Britain
+EXIT	1014	1507	2	cyclopse dungeon
+EXIT	1348	1510	2	Ratman Cave
+GUILD	1498	1518	7	Counselor's Guild
+INN	1458	1525	7	The North Side Inn
+LANDMARK	447	1526	2	fountain
+BRIDGE	1550	1529	7	The Northern Bridge
+LANDMARK	478	1531	2	abandoned mage tower
+EXIT	533	1532	2	central (Ankh) dungeon
+TELEPORT	5356	1540	0	to Deceit (lvl 4)
+TELEPORT	5360	1540	0	to Champ "Fire"
+STABLES	1510	1543	7	The Bucking Horse Stables
+BLACKSMITH	1418	1547	7	The Hammer and Anvil
+MAGIC	1485	1550	7	The Sorcerer's Delight
+BARD	1455	1557	7	Lord British's Conservatory of Music
+LANDMARK	437	1558	2	bandstand
+CAVALRYGUILD	1578	1558	7	Cavalry Guild
+DUNGEON	512	1559	7	Shame
+INTEREST	1635	1561	7	Gazebo
+OTHER	5201	1564	0	from Despice and AncientWyrmTeleporter
+INTEREST	1507	1567	7	Britannia Animal Care
+STAIRS	5170	1569	0	
+ARMS	1365	1575	7	The Lord's Arms
+MINERSGUILD	1417	1578	7	The Miner's Guild
+FLETCHER	1470	1578	7	Quality Fletching
+BRIDGE	1520	1578	7	Mage's Bridge
+LANDMARK	466	1584	2	statue
+ARMS	1481	1584	7	Strength and Steel
+TAVERN	1620	1586	7	The Salty Dog
+OTHER	5171	1586	0	from StarroomTeleporter
+TELEPORT	5173	1589	0	Starroom
+LIBRARY	1409	1590	7	Britain Public Library
+THEATRE	1449	1590	7	The King's Men Theater
+INN	1585	1591	7	The Wayfarer's Inn
+TAILOR	1385	1593	7	Lord British's Tailor
+CARPENTER	1430	1597	7	The Saw Horse
+MERCHANTSGUILD	1474	1597	7	The Merchant's Guild
+INTEREST	1538	1597	7	The Chamber of Virtue
+EXIT	5340	1599	7	Terathan Keep
+POINT	5189	1605	0	Champ of the TeraKeep Mephistis (Arachnid)
+BANK	1655	1606	7	East Britain Bank
+HEALER	1472	1607	7	Healer of Britain
+TANNER	1431	1612	7	The Best Hides of Britain
+BAKER	1450	1617	7	Good Eats
+INN	1493	1619	7	Sweet Dreams
+INTEREST	1608	1622	7	East Side Park
+LANDMARK	1323	1624	7	Lord British's Castle
+BRIDGE	1520	1628	7	Virtue's Pass
+GATE	1421	1633	7	Poor Gate
+TOWN	1546	1634	7	Britain
+GATE	1477	1638	7	The Main Gate
+DUNGEON	1492	1641	7	sewer entrance
+JEWELER	1655	1642	7	A Girl's Best Friend
+ARMS	1437	1647	7	Heavy Metal Armorer
+TINKERSGUILD	1422	1654	7	Tinker's Guild
+MAGIC	1590	1654	7	Incantations & Enchantments
+BODYOFWATER	1596	1656	3	Gravewater Lake
+STABLES	1385	1658	7	The Stables
+REAGENTS	1498	1659	7	Ethereal Goods
+TAILOR	1547	1659	7	The Right Fit
+ROGUESGUILD	1442	1662	7	Artists' Guild
+GUILD	1628	1664	7	Counselor's Guild
+PROVISIONS	1469	1668	7	Britain's Premier Provisioners and Fish Shoppe
+TERRAIN	2128	1668	3	Dry Highlands
+BRIDGE	1521	1673	7	Cypress Bridge
+JEWELER	1451	1679	7	Premier Gems
+STAIRS	121	1682	3	up to Umbra
+INTEREST	1541	1685	7	Senator Robin's House and Office
+TAILOR	1467	1686	7	The Lord's Clothiers
+BANK	1425	1690	7	The First Bank of Britain
+TAVERN	1498	1691	7	The Blue Boar
+ARMS	1637	1693	7	Artistic Armour
+BRIDGE	1512	1705	7	River's Gate Bridge
+PROVISIONS	1602	1712	7	Profuse Provisions
+LIBRARY	1494	1715	7	The First Library of Britain
+TAVERN	1427	1716	7	The Cat's Lair
+BUTCHER	1449	1723	7	The Cleaver
+WARRIORSGUILD	1341	1733	7	The Warriors' Guild
+CUSTOMS	1476	1745	7	Customs
+BRIDGE	1383	1746	7	Gung Farmer's Bridge
+SHIPS	1416	1754	7	The Oaken Oar
+STABLES	1296	1759	7	Sosarian Steeds
+OTHER	1619	1760	7	The Watch Tower
+MOONGATE	5153	1760	0	StandardMoongate
+DOCKS	1470	1765	7	Britain Docks
+TAVERN	1547	1768	7	The Unicorn's Horn
+TELEPORT	5140	1773	0	to Champ "Terathan Keep"
+OTHER	5143	1774	0	from Tera KeepTeleporter
+BLACKSMITHSGUILD	1348	1778	7	Britain's Blacksmith Guild
+RUINS	1825	1799	3	Forgotten Pyramid
+EXIT	5456	1863	7	Covetous
+MOONGATE	1336	1997	7	Britain Moongate
+MOONGATE	645	2068	7	Skara Brae Moongate
+LANDMARK	1958	2068	7	to Lost Lands
+BLACKSMITH	2637	2075	7	Cutlass Smithing
+INTEREST	2667	2087	7	Buccaneer's Bath
+INN	2715	2098	7	The Peg Leg Inn
+CARPENTER	2627	2100	7	Violente Woodworks
+TOWN	2720	2110	7	Buccaneer's Den
+STABLES	571	2119	7	Beasts of Burden
+TINKER	3720	2126	7	The TicToc Shop
+GUILD	610	2128	7	Counselor's Guild
+HEALER	2709	2130	7	Healer of Buccaneer's Den
+TELEPORT	2728	2133	7	gate to mainland
+MOONGATE	3564	2140	7	Magincia Moongate
+MINERSGUILD	3665	2140	7	Magincia Miner's Guild
+MAGIC	659	2141	7	Mystic Treasures
+ARCHERSGUILD	554	2145	7	Rangers' Guild
+BANK	587	2146	7	Bank of Skara Brae
+LANDMARK	5792	2148	7	Green Acres
+BANK	3734	2149	7	Bank of Magincia
+DOCKS	2752	2155	7	Buccaneer's Den Docks
+MARKET	611	2157	7	Farmer's Market
+CARPENTER	628	2160	7	Builder's Delight
+ARMS	652	2160	7	Gore Galore
+INN	3695	2160	7	The Stag and Lion
+ARMS	586	2170	7	More Than Just Mail
+BAKER	3683	2171	7	The Bread Basket
+GUILD	3721	2177	7	Counselor's Guild
+INN	554	2178	7	The Shattered Skull
+TANNER	2707	2178	7	Buccaneer's Den Leatherworks
+MAGIC	602	2180	7	Mages' Menagerie
+TAILOR	650	2180	7	Shear Pleasure
+JEWELER	3661	2183	7	The Family Jewels
+BUTCHER	582	2186	7	Bountiful Meats
+BANK	2731	2192	7	A Place Fer Yer Stuff
+BLACKSMITH	630	2194	7	On Guard Armoury
+THIEVESGUILD	2659	2194	7	Pirate's Den
+TOWN	3735	2200	7	Magincia
+BOWYER	590	2205	7	Bloody Bowman
+INTEREST	565	2213	7	Skara Brae Town Hall
+SCENIC	1146	2215	7	Hedge Maze
+HEALER	620	2218	7	Healer of Skara Brae
+TAVERN	3730	2218	7	Great Horns Tavern
+MAGIC	3704	2222	7	Magincia's Magicka
+PROVISIONS	578	2227	7	Sundry Supplies
+HEALER	3687	2227	7	Healer of Magincia
+BAKER	3755	2227	7	Baker's Dozen
+MOONGATE	2711	2234	0	Buccaneer's Den Moongate
+DOCKS	656	2235	7	Skara Brae Docks
+TAILOR	3666	2235	7	Stitchin' Time
+TAVERN	2680	2238	7	The Pirate's Plunder
+INN	595	2248	7	The Falconer's Inn
+MERCHANTSGUILD	3703	2249	7	The Merchant's Guild
+SHIPS	3667	2252	7	The Furled Sail
+PROVISIONS	2735	2254	7	Pirate's Provisioners
+FISHERMANSGUILD	3685	2256	7	Fisherman's Guild and Supplies
+INTEREST	3796	2259	7	Magincia Parliment
+TOWN	595	2263	7	Skara Brae
+SHIPS	592	2277	7	Superior Ships
+DOCKS	3674	2293	7	Magincia Docks
+TELEPORT	5443	2325	0	T1 to the Southeast of Papua
+DUNGEON	5203	2328	7	Ice
+TELEPORT	6080	2340	0	T4 to the South of this Point
+TERRAIN	5382	2343	7	Kos Heb
+OTHER	5958	2345	0	from Teleporter T2 "Ice East"
+OTHER	5490	2348	0	from Teleporter T5 South of Papua
+POINT	5511	2360	0	Champ 1 "Ice West"
+TERRAIN	5954	2363	7	Kos Heb
+TELEPORT	5996	2367	0	T3 to the East of Delucia
+LANDMARK	5671	2391	7	lighthouse passage
+POINT	6038	2400	0	Champ 2 "Ice East"
+OTHER	6089	2400	0	from Teleporter T4 Northeast of "Ice East"
+TELEPORT	6053	2407	0	T2 to the Northwest of Champ 2 "Ice East"
+OTHER	5972	2418	0	from Teleporter T6 East of Delucia
+BODYOFWATER	5789	2430	7	Sok' Gah
+LIBRARY	3612	2466	0	Ocllo Public Library
+THEATRE	3685	2477	0	First Academy of Music
+SHRINE	1595	2490	7	Spirituality
+MARPATIO	3599	2491	1	Companion Hall
+PAINTER	3638	2499	0	Paint and More
+GUILD	3667	2502	0	Counselor's Guild Hall
+BANK	3695	2511	0	Bank of Ocllo
+BARDICGUILD	3665	2531	0	The Bardic Guild
+MAGIC	3628	2541	0	The Sorceror's Guild
+TOWN	3664	2558	0	Ocllo
+OTHER	3739	2563	1	Farm
+PROVISIONS	3636	2565	0	Last Chance Provisioners
+INTEREST	3746	2576	1	Archer Targets
+BAKER	3610	2577	0	Now You're Cookin'
+INTEREST	3732	2583	1	Training Dummies
+TAILOR	3667	2586	0	A Stitch In Time
+OTHER	3708	2588	1	Farm
+MOONGATE	3661	2590	1	Haven Moongate
+ARMS	3632	2595	0	Hammer and Steel Smithy
+INTEREST	3633	2597	1	Garden with Waterfall
+HEALER	3629	2608	0	Healer of Ocllo
+INN	3673	2614	0	The Bountiful Harvest
+TANNER	3602	2615	0	Better Leather Tannery
+TERRAIN	5543	2618	7	oasis
+RUINS	5765	2618	7	Ophidian Lair
+DUNGEON	1176	2635	7	Destard
+OTHER	3731	2635	1	Farm
+SHIPS	3632	2640	0	Anchors Aweigh
+POINT	5549	2640	0	Champ 3 "Oasis"
+BUTCHER	3708	2649	0	Sweet Meat
+ARMS	1895	2653	7	Shining Path Armory
+INN	3672	2654	0	The Albatross
+BODYOFWATER	5937	2660	7	Sea of Harmony
+OTHER	1947	2677	7	Mess Hall
+MOONGATE	3449	2678	1	New Haven moongate
+TINKERSGUILD	1848	2680	7	Tinker's Guild
+DOCKS	3647	2681	0	Ocllo Docks
+BANK	1897	2684	7	Trinsic Royal Bank
+INTEREST	1938	2688	7	Barracks
+INTEREST	1962	2691	7	Barracks
+WARRIORSGUILD	3740	2692	1	Rangers Cabin
+LANDMARK	5974	2694	7	Serpent Pillar (sueacron)
+INTEREST	1972	2698	7	Training Ground
+MAGIC	1843	2711	7	Encyclopedia Magicka
+INTEREST	1937	2711	7	Barracks
+INTEREST	1895	2719	7	Trinsic Meeting Hall
+LIBRARY	2003	2726	7	Paladin's Library
+INN	1844	2735	7	The Traveler's Inn
+STABLES	1822	2739	7	Trinsic Stablery
+WARRIORSGUILD	1939	2739	7	The Brotherhood of Trinsic
+TERRAIN	5604	2742	7	Y'Nah Teb
+WARRIORSGUILD	2019	2748	7	Trinsic Training Hall
+ISLAND	2122	2755	7	Barrier Isle
+LANDMARK	5266	2757	7	Serpent Pillar (sueacron)
+INTEREST	1893	2763	7	park
+TOWN	1879	2766	7	Trinsic
+INTEREST	1855	2769	7	Jail
+BLACKSMITH	1937	2771	7	Honorable Arms
+MOONGATE	3763	2771	1	Haven Moongate
+GATE	1831	2779	7	West Trinsic Gate
+OTHER	3544	2789	1	Invalid Tram Tlocation
+PROVISIONS	1850	2796	7	Britannia Provisions
+TAVERN	1935	2796	7	The Keg and Anchor
+BRIDGE	2083	2796	7	East Trinsic Bridge
+INN	2033	2801	7	The Rusty Anchor
+BAKER	1880	2802	7	Baked Delights
+HEALER	1911	2805	7	Trinsic Healer
+STABLES	2010	2807	7	First Trinsic Stablery
+JEWELER	1895	2809	7	The Pearl of Trinsic
+OTHER	3557	2821	1	Invalid Tram Tlocation
+BANK	1813	2825	7	Bank of Britannia Trinsic Branch
+OTHER	3590	2825	1	Invalid Tram Tlocation
+OTHER	3700	2828	1	Invalid Tram TLocation
+PROVISIONS	1852	2831	7	Red's Curious Goods
+GUILD	1893	2838	7	Counselor's Guild
+TAILOR	1981	2838	7	Adventurer's Clothing
+SHIPS	2026	2845	7	Sons Of The Sea
+BRIDGE	1778	2848	7	bridge
+DOCKS	2072	2856	7	Trinsic Docks
+TANNER	1991	2867	7	Trinsic Fine Skins
+BODYOFWATER	5274	2883	7	J'Fer Sok
+BUTCHER	1991	2887	7	The Trinsic Cut
+LANDMARK	2986	2887	7	Serpent Pillar (doracron)
+SCENIC	1651	2890	7	Volcano Tunnel
+TERRAIN	5139	2903	7	Cyclops Valley
+DUNGEON	5757	2909	7	Fire
+POINT	5636	2916	0	Champ 4 "Desert"
+GATE	2003	2921	7	South Gate
+BRIDGE	1789	2923	7	bridge
+TERRAIN	5724	2923	7	Sak Teb
+TERRAIN	6028	2933	7	Terra Sanctum
+POINT	6035	2944	0	Champ 5 "Terra Sanctum"
+MOONGATE	1829	2949	7	Trinsic Moongate
+TERRAIN	5542	2999	7	Beggars Gorge
+SCENIC	1712	3005	7	waterfall
+BODYOFWATER	5902	3106	7	Shallow Sea
+DUNGEON	5426	3120	7	Terathan Keep
+BANK	5669	3131	7	Ye Olde Loan and Savings
+LANDMARK	5126	3144	7	to Marble Building
+JEWELER	5662	3150	7	Strange Rocks
+INN	5775	3161	7	The Just Inn
+POINT	5267	3171	0	Champ 6 "Marble"
+MAGIC	5731	3183	7	Tricks of the Trade
+TELEPORT	5733	3190	7	portal to Moonglow (recsu)
+BAKER	5746	3200	7	Nature's Best Baked Goods
+REAGENTS	5714	3202	7	The Reagent Shop
+CARPENTER	5691	3209	7	The Carpentry House
+HEALER	5737	3222	7	The Healing Hand
+TOWN	5751	3231	7	Papua
+TINKER	5726	3243	7	Tinker's Paradise
+DOCKS	5839	3256	7	Papua dock
+PROVISIONS	5737	3262	7	Adventure Outfitters
+TERRAIN	5265	3270	7	Damwin Thicket
+SHIPS	5805	3270	7	Pier 39 
+TAILOR	5754	3273	7	Papua Tailor
+LANDMARK	425	3279	7	Serpent Pillar (doracron)
+BUTCHER	5700	3279	7	The Southside Butchery
+STABLES	5671	3287	7	Southside Stables
+ARMS	5805	3300	7	The Revenge Shoppe
+DUNGEON	1628	3318	7	passage to Delucia
+DUNGEON	6075	3330	7	passage to Britain
+GUILD	2948	3349	7	Counselor's Guild
+MAGIC	3002	3350	7	Serpent's Spells
+WARRIORSGUILD	3031	3350	7	Serpent Warriors
+REAGENTS	3013	3353	7	Britainian Herbs
+BAKER	2975	3358	7	Plenty O' Dough
+POINT	5281	3368	0	Champ 7 "Damwin"
+BOWYER	3054	3369	7	Silver Serpent Bows
+MINAX	5778	3376	0	Minax's Fortress
+PROVISIONS	3008	3389	7	Supplies
+BODYOFWATER	5360	3396	7	The Ru
+WARRIORSGUILD	3058	3400	7	The Warriors' Guild
+DUNGEON	2922	3402	7	Fire
+INN	2967	3408	7	The Broken Arrow Inn
+BLACKSMITH	3007	3408	7	Blacksmith
+DOCKS	2940	3410	7	North Docks
+TELEPORT	5731	3420	0	T5 to "Ice West"
+TAVERN	2972	3425	7	The Dog and Lion Pub
+HEALER	2997	3428	7	Serpent's Hold Healer
+ARMS	3018	3433	7	Serpent's Arms
+TERRAIN	5978	3447	7	Hoppers Bog
+TAVERN	3012	3457	7	Fisherman's Brew
+STABLES	3036	3464	7	Serpent's Hold Stablery
+DOCKS	3001	3466	7	South Dock
+BODYOFWATER	5804	3468	7	The Gentle River
+BANK	2880	3472	7	Serpent's Hold Bank
+POINT	5954	3475	0	Champ 8 "Hopper's Boog"
+BUTCHER	2912	3485	7	Serpent Hold Meats
+TOWN	3025	3498	7	Serpent's Hold
+TINKER	2940	3500	7	Tinker of the Isle
+TAILOR	2881	3503	7	Silver Serpent Tailors
+TERRAIN	5470	3515	7	Serpents Cousins
+STABLES	2905	3517	7	Serpents Hold Stablery
+SHRINE	1723	3527	7	Honor
+OTHER	5814	3548	0	from Teleporter T1 "Ice West"
+TELEPORT	2494	3576	7	island temple portal
+RUINS	5211	3611	7	Orc Fort
+POINT	5207	3637	0	Champ 9 "City of Death"
+RUINS	5219	3645	7	City of the Dead
+GRAVEYARD	5696	3660	7	cemetery passage
+DUNGEON	5138	3665	7	passage to Trinsic
+TOWN	1359	3671	7	Jhelom
+LANDMARK	6084	3674	7	passage to North Mines
+DOCKS	1125	3687	7	Jhelom Docks
+GATE	1475	3690	7	City Gate
+DOCKS	1504	3693	7	Jhelom Docks
+SHRINE	4274	3697	7	Humility
+WEAPONSGUILD	1362	3700	7	Brothers In Arms
+GUILD	1418	3703	7	Counselor's Guild
+BLACKSMITH	1395	3705	7	First Defense
+ARMS	1441	3719	7	Second Skin
+GRAVEYARD	1283	3731	7	Jhelom Cemetery
+BAKER	1364	3732	7	Baker's Dozen
+BODYOFWATER	5260	3737	7	Cibilo Creek
+INTEREST	1397	3744	7	The Dueling Pit
+SHIPS	1452	3747	7	Sailor's Keeper
+FISHERMANSGUILD	1437	3750	7	Ocean's Treasure
+POINT	5559	3757	0	Champ 10 "Wild" (Lord Oaks)
+ARMS	1359	3763	7	Deadly Intentions
+BODYOFWATER	5838	3766	7	The Gentle River
+TAVERN	1452	3770	7	The Horse's Head
+LIBRARY	1387	3771	7	Jhelom Library
+MOONGATE	1500	3772	7	Jhelom Moongate
+BANK	1317	3773	7	Jhelom Bank and Jeweler
+DUNGEON	6009	3775	0	Khaldun
+HEALER	1416	3779	7	Jhelom Healer
+TAILOR	1359	3781	7	Adventurer's Needle
+PROVISIONS	1444	3794	7	Needful Things
+TINKER	1404	3805	7	Gadgets and Things
+DUNGEON	4722	3814	7	Hythloth
+INN	1360	3815	7	The Morning Star Inn
+DUNGEON	5882	3819	0	Khaldun
+CARPENTER	1435	3820	7	From Tree to Yew
+MARKET	1392	3824	7	Farmer's Market
+TELEPORT	1414	3829	7	teleporters
+BODYOFWATER	5457	3831	7	The Ru
+ARMS	1456	3850	7	Jhelom Armory
+BLACKSMITH	1419	3859	7	Warrior's Bounty
+ARMS	1475	3865	7	Call to Arms
+GATE	1370	3868	7	City Gate
+POINT	5982	3882	0	Champ 11 "Khaldun"
+ARMOURERSGUILD	1437	3884	7	Hand of Death
+DOCKS	1372	3908	7	Jhelom Docks
+OTHER	5522	3921	0	from Teleporter T3 "Ice East"
+SHRINE	2491	3933	7	Valor
+INTEREST	5265	3939	7	Watch Tower and Keep
+GATE	5313	3970	7	Watch Gates
+TELEPORT	5503	3971	0	T6 to "Ice East"
+MAGIC	1424	3975	7	Jhelom Mage
+BANK	5275	3977	7	Ye Olde Eleventh Bank
+TOWN	5227	3978	7	Delucia
+MAGIC	5296	3978	7	Hut of Magics
+JEWELER	1447	3981	7	The Pearl of Jhelom
+DOCKS	1512	3989	7	Jhelom Docks
+HEALER	5191	3989	7	a Healer
+POINT	5724	3991	0	Champ 12 "Tortoise"
+BLACKSMITH	5225	4000	7	Zoot's Hammer
+TAILOR	1455	4006	7	Jhelom's Fine Tailoring
+STABLES	5297	4007	7	Delucia Stable
+PROVISIONS	5219	4012	7	The Supply Depot
+THEATRE	1424	4016	7	Performing Arts Centre
+TAILOR	5234	4025	7	Delucia Tailor
+BUTCHER	1457	4028	7	Finest Cuts
+BODYOFWATER	5771	4050	7	Tortoise Lagoon
+INN	5197	4060	7	The Barely Inn
+DUNGEON	5150	4063	7	passage to Trinsic
+TELEPORT	5905	4069	7	portal to island temple
