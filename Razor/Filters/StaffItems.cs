@@ -107,7 +107,7 @@ namespace Assistant.Filters
 			foreach (Item i in World.Items.Values)
 			{
 				if (IsStaffItem(i))
-					ClientCommunication.SendToClient(new RemoveObject(i));
+			 		Assistant.Client.Instance.SendToClient(new RemoveObject(i));
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace Assistant.Filters
 			foreach (Item i in World.Items.Values)
 			{
 				if (IsStaffItem(i))
-					ClientCommunication.SendToClient(new WorldItem(i));
+			 		Assistant.Client.Instance.SendToClient(new WorldItem(i));
 			}
 		}
 	}

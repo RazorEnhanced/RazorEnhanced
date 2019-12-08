@@ -1,4 +1,11 @@
 ﻿<p>
+    <strong>Version 0.6.67 [10/20/2019]</strong>
+    <br />- changed color back to hex in inspector (sorry)
+    <br />- Picked up latest Crypt and Loader from Razor project
+    <br />- Changed to use instance for Client interface so that ER
+    can use the ClassicUO client one of these days
+</p>
+<p>
     <strong>Version 0.6.66 [10/20/2019]</strong>
     <br />- enable auto update again
 </p>
@@ -185,7 +192,7 @@
     <br />- Added script FindItemByID function. (for lazy coder not want use for or filter :p ).
     <br />- Added return value true or false on Pathfind.Go function, if destination is unrechable return false.
     <br />- Optimize logout operation.
-    <br />- Updated uo.dll for old pathfind system whit new osi client.
+    <br />- Updated uo.dll for old pathfind system whit new os i Assistant.Client.Instance.
 
 <p>
     <strong>Version 0.6.51 [24/09/2018]</strong>
@@ -243,7 +250,7 @@
     <br />- Updated autoupdate lib.
     <br />- Fix bugtrack id: 387143 InvalidOperationException in Mobile.GetItemOnLayer.
     <br />- Fix Bugtrack ID: 360211 ArgumentException & Item.get_Contains().
-    <br />- New pathfind system now work on multiple istance of client. Thx Soltrac for help.
+    <br />- New pathfind system now work on multiple istance o f Assistant.Client.Instance. Thx Soltrac for help.
 
 <p>
     <strong>Version 0.6.45 [11/08/2018]</strong>
@@ -502,10 +509,10 @@
     <strong>Version 0.6.25 [28/02/2018]</strong><br />- Fix script function Gumps.LastGumpGetLineList  not read all correct string.
     <br>- Added highlight and tootips in script editor for DPSMeter command.
     <br>- Added script function Gumps.LastGumpRawData. This function return last gump raw data structure. can be used for advanced search in gump layout for item button ecc.
-    <br>- Optimezed force screen function, now no longer need select 800*600 or other resulution in game for enable. If enable from razor automatic enabled in client.
+    <br>- Optimezed force screen function, now no longer need select 800*600 or other resulution in game for enable. If enable from razor automatic enabled i n Assistant.Client.Instance.
     <br>- Fix crash if editing item in toolbar outofrange. BugTrackID: 1028443
     <br>- Fix possible crash if enter null value in amount in restock agent. BugTrack ID: 1028360
-    <br>- Fix pathfind script command for new client. Now supported Client 7.0.60.47 and lower
+    <br>- Fix pathfind script command for ne w Assistant.Client.Instance. Now supported Client 7.0.60.47 and lower
 
 
 <p>
@@ -659,7 +666,7 @@
     <br>- Added Fly hotkey.
     <br>- Added Fly check for script (Player.Flying).
     <br>- Added Fly command for script (Player.Fly(true/false)).
-    <br>- Fix screen resolution change for new client.
+    <br>- Fix screen resolution change for ne w Assistant.Client.Instance.
     <br>- Fix Bombard spell.
     <br>- Minor text fix in inspector.
     <br>- Reduce player jump when hit a nonpassable item.

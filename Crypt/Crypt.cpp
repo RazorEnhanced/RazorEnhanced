@@ -326,6 +326,11 @@ DLLFUNCTION unsigned int TotalIn()
 		return 0;
 }
 
+DLLFUNCTION bool IsCalibrated()
+{
+	return pShared && pShared->Position[0] == 0xFFFFFFFF && pShared->Position[1] == 0xDEADBEEF && pShared->Position[2] != 0 && pShared->Position[2] != 0xFFFFFFFF;
+}
+
 DLLFUNCTION void CalibratePosition( uint16_t x, uint16_t y, uint16_t z )
 {
 	Position pos;

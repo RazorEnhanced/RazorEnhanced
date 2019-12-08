@@ -13,6 +13,7 @@ EXPORTS
 	TotalOut
 	WaitForWindow
 	SetDataPath
+	IsCalibrated
 	CalibratePosition
 	OnAttach
 	SetServer

@@ -2,7 +2,7 @@ using System;
 
 namespace Assistant
 {
-	internal struct ItemID
+	public struct ItemID
 	{
 		private ushort m_ID;
 

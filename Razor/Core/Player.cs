@@ -582,7 +582,7 @@ namespace Assistant
 		private static void OpenDoor()
 		{
 			if (World.Player != null)
-				ClientCommunication.SendToServer(new OpenDoorMacro());
+		 		Assistant.Client.Instance.SendToServer(new OpenDoorMacro());
 		}
 
 		private Serial m_LastDoor = Serial.Zero;
@@ -708,26 +708,6 @@ namespace Assistant
 			}
 		}
 
-		internal override Point3D Position
-		{
-			get
-			{
-				if (m_ExternZ && DLLImport.Razor.IsCalibrated())
-				{
-					Point3D p = new Point3D(base.Position);
-					p.Z = ClientCommunication.GetZ(p.X, p.Y, p.Z);
-					return p;
-				}
-				else
-				{
-					return base.Position;
-				}
-			}
-			set
-			{
-				base.Position = value;
-			}
-		}
 
 		internal override void OnPositionChanging(Point3D newPos)
 		{
@@ -787,7 +767,7 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
 
-			ClientCommunication.PostMapChange(cur);
+	 		Assistant.Client.Instance.PostMapChange(cur);
 			m_HandCheck.Start();
 		}
 
@@ -891,7 +871,7 @@ namespace Assistant
 					hue = Engine.MainWindow.SysColor;
 					break;
 			}
-			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
+	 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
 
 			PacketHandlers.SysMessages.Add(text.ToLower());
 

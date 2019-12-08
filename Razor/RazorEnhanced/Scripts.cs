@@ -33,7 +33,7 @@ namespace RazorEnhanced
 				return;
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
+		 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
 		}
 
 		internal class EnhancedScript

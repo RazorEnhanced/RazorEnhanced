@@ -21,7 +21,7 @@ namespace Assistant.Filters
 			if (World.Player == null)
 				return;
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.LightFilter))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.LightFilter))
 				return;
 
 			World.Player.LocalLightLevel = 0;
@@ -35,7 +35,7 @@ namespace Assistant.Filters
 			if (World.Player == null)
 				return;
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.LightFilter))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.LightFilter))
 			{
 				World.Player.SendMessage("Light filter NOT Allowed");
 				return;
@@ -44,8 +44,8 @@ namespace Assistant.Filters
 			World.Player.LocalLightLevel = 0;
 			World.Player.GlobalLightLevel = 0;
 
-			ClientCommunication.SendToClient(new GlobalLightLevel(0));
-			ClientCommunication.SendToClient(new PersonalLightLevel(World.Player));
+	 		Assistant.Client.Instance.SendToClient(new GlobalLightLevel(0));
+	 		Assistant.Client.Instance.SendToClient(new PersonalLightLevel(World.Player));
 		}
 	}
 }

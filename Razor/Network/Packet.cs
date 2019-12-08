@@ -14,7 +14,7 @@ namespace Assistant
 		PacketVideo,
 	}
 
-	internal class Packet
+	public class Packet
 	{
 		private static bool m_Logging = false;
 
@@ -799,7 +799,7 @@ namespace Assistant
 		}
 	}
 
-	internal unsafe sealed class PacketReader
+	public unsafe sealed class PacketReader
 	{
 		private unsafe byte* m_Data;
 		private int m_Pos;

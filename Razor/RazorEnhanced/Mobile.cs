@@ -543,7 +543,7 @@ namespace RazorEnhanced
 
 		public static void UseMobile(Mobile mobile)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new DoubleClick(mobile.Serial));
+			Assistant.Client.Instance.SendToServerWait(new DoubleClick(mobile.Serial));
 		}
 
 		public static void UseMobile(int mobileserial)
@@ -557,7 +557,7 @@ namespace RazorEnhanced
 
 			if (mobile.Serial.IsMobile)
 			{
-				Assistant.ClientCommunication.SendToServerWait(new DoubleClick(mobile.Serial));
+				Assistant.Client.Instance.SendToServerWait(new DoubleClick(mobile.Serial));
 			}
 			else
 			{
@@ -568,7 +568,7 @@ namespace RazorEnhanced
 		// Single Click
 		public static void SingleClick(Mobile mobile)
 		{
-			ClientCommunication.SendToServerWait(new SingleClick(mobile));
+		 	Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
 		}
 
 		public static void SingleClick(int mobileserial)
@@ -579,7 +579,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
 				return;
 			}
-			ClientCommunication.SendToServerWait(new SingleClick(mobile));
+		 	Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
 		}
 
 		// Message
@@ -591,9 +591,9 @@ namespace RazorEnhanced
 				return;
 
 			if (wait)
-				Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 			else
-				Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+				Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
 		public static void Message(int serial, int hue, string message, bool wait = true)
@@ -608,9 +608,9 @@ namespace RazorEnhanced
 				return;
 
 			if (wait)
-				Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 			else
-				Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+				Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
 		// Props
@@ -633,7 +633,7 @@ namespace RazorEnhanced
 			if (m.PropsUpdated)
 				return;
 
-			ClientCommunication.SendToServerWait(new QueryProperties(m.Serial));
+		 	Assistant.Client.Instance.SendToServerWait(new QueryProperties(m.Serial));
 			int subdelay = delay;
 
 			while (!m.PropsUpdated)
@@ -661,7 +661,7 @@ namespace RazorEnhanced
 			if (m.StatsUpdated)
 				return;
 
-			ClientCommunication.SendToServerWait(new StatusQuery(m.Serial));
+		 	Assistant.Client.Instance.SendToServerWait(new StatusQuery(m.Serial));
 
 			int subdelay = delay;
 

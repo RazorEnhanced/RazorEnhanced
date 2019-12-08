@@ -32,7 +32,7 @@ namespace Assistant
 
 		internal enum PATCH_MESSAGES
 		{
-			PM_INSTALL = ClientCommunication.WM_USER + 666,
+			PM_INSTALL = Assistant.Client.WM_USER + 666,
 			PM_INFO,
 			PM_ENABLE,
 			PM_DISABLE,
@@ -187,7 +187,7 @@ namespace Assistant
             {
 				DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 				DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
-				ClientCommunication.SendToClient(new SetUpdateRange(31));
+			 	Assistant.Client.Instance.SendToClient(new SetUpdateRange(31));
 				m_viewrangepatch = true;
 			}
 
@@ -230,7 +230,7 @@ namespace Assistant
 					{
 						DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 						DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
-						ClientCommunication.SendToClient(new SetUpdateRange(31));
+					 	Assistant.Client.Instance.SendToClient(new SetUpdateRange(31));
 						m_viewrangepatch = true;
 					}
 				}

@@ -930,7 +930,7 @@ namespace Assistant
 								skill.FixedCap = p.ReadUInt16();
 								if (!World.Player.SkillsSent)
 									skill.Delta = 0;
-								ClientCommunication.PostSkillUpdate(i - 1, skill.FixedBase);
+						 		Assistant.Client.Instance.PostSkillUpdate(i - 1, skill.FixedBase);
 							}
 							else
 							{
@@ -962,7 +962,7 @@ namespace Assistant
 								if (!World.Player.SkillsSent)
 									skill.Delta = 0;
 
-								ClientCommunication.PostSkillUpdate(i - 1, skill.FixedBase);
+						 		Assistant.Client.Instance.PostSkillUpdate(i - 1, skill.FixedBase);
 							}
 							else
 							{
@@ -995,7 +995,7 @@ namespace Assistant
 
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
-							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
+					 		Assistant.Client.Instance.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
 					}
@@ -1019,7 +1019,7 @@ namespace Assistant
 							Engine.MainWindow.UpdateSkill(skill);
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
-							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
+					 		Assistant.Client.Instance.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
 					}
@@ -1055,11 +1055,11 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 			m.Resync();
 
-			ClientCommunication.SendToServer(new StatusQuery(m.Serial));
+	 		Assistant.Client.Instance.SendToServer(new StatusQuery(m.Serial));
 
-			ClientCommunication.PostLogin((int)serial.Value);
+	 		Assistant.Client.Instance.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
-			ClientCommunication.BeginCalibratePosition();
+	 		Assistant.Client.Instance.BeginCalibratePosition();
 
 			// Carico profili se linkati
 			string profilename = RazorEnhanced.Profiles.IsLinked(serial);
@@ -1098,8 +1098,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (!ClientCommunication.ServerEncrypted)
-					ClientCommunication.SendToServer(new StatusQuery(serial));
+				if (!Assistant.Client.Instance.ServerEncrypted)
+			 		Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
 			}
 
 			m.Body = p.ReadUInt16();
@@ -1145,7 +1145,7 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				ClientCommunication.BeginCalibratePosition();
+		 		Assistant.Client.Instance.BeginCalibratePosition();
 			}
 		}
 
@@ -1215,7 +1215,7 @@ namespace Assistant
 				// Update hits toolbar
 				RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
-				ClientCommunication.PostHitsUpdate();
+		 		Assistant.Client.Instance.PostHitsUpdate();
 			}
 
 			if (!Engine.MainWindow.ShowHealthOH.Checked)
@@ -1256,7 +1256,7 @@ namespace Assistant
 				// Update Stam Toolbar
 				RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
-				ClientCommunication.PostStamUpdate();
+		 		Assistant.Client.Instance.PostStamUpdate();
 			}
 
 			if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
@@ -1297,7 +1297,7 @@ namespace Assistant
 				// Update Mana toolbar
 				RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
-				ClientCommunication.PostManaUpdate();
+		 		Assistant.Client.Instance.PostManaUpdate();
 			}
 
 			if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
@@ -1339,9 +1339,9 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				ClientCommunication.PostHitsUpdate();
-				ClientCommunication.PostStamUpdate();
-				ClientCommunication.PostManaUpdate();
+		 		Assistant.Client.Instance.PostHitsUpdate();
+		 		Assistant.Client.Instance.PostStamUpdate();
+		 		Assistant.Client.Instance.PostManaUpdate();
 			}
 		}
 
@@ -1565,9 +1565,9 @@ namespace Assistant
 			// Update All toolbar
 			RazorEnhanced.ToolBar.UpdateAll();
 
-			ClientCommunication.PostHitsUpdate();
-			ClientCommunication.PostStamUpdate();
-			ClientCommunication.PostManaUpdate();
+	 		Assistant.Client.Instance.PostHitsUpdate();
+	 		Assistant.Client.Instance.PostStamUpdate();
+	 		Assistant.Client.Instance.PostManaUpdate();
 
 			Engine.MainWindow.UpdateTitle(); // update player name
 		}
@@ -1583,8 +1583,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (!ClientCommunication.ServerEncrypted)
-					ClientCommunication.SendToServer(new StatusQuery(serial));
+				if (!Assistant.Client.Instance.ServerEncrypted)
+			 		Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
@@ -1599,7 +1599,7 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				ClientCommunication.BeginCalibratePosition();
+		 		Assistant.Client.Instance.BeginCalibratePosition();
 
 				World.Player.Resync();
 
@@ -1653,14 +1653,14 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (!ClientCommunication.ServerEncrypted)
-					ClientCommunication.SendToServer(new StatusQuery(serial));
+				if (!Assistant.Client.Instance.ServerEncrypted)
+			 		Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
 
 			if (m != World.Player && Engine.MainWindow.ShowMobNames.Checked)
-				ClientCommunication.SendToServer(new SingleClick(m));
+		 		Assistant.Client.Instance.SendToServer(new SingleClick(m));
 			if (Engine.MainWindow.LastTargTextFlags.Checked)
 				Targeting.CheckTextFlags(m);
 
@@ -1689,7 +1689,7 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				ClientCommunication.BeginCalibratePosition();
+		 		Assistant.Client.Instance.BeginCalibratePosition();
 
 				if (!wasHidden && !m.Visible)
 				{
@@ -1846,14 +1846,14 @@ namespace Assistant
 				if (item.ItemID == 0x2006) // corpse itemid = 0x2006
 				{
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
-						ClientCommunication.SendToServer(new SingleClick(item));
+				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
 					if (World.Player != null && !RazorEnhanced.AutoLoot.AutoMode && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player.Visible)
-						ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+				 		Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
 				}
 				else if (item.IsMulti)
 				{
 					World.AddMulti(item);
-					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
+			 		Assistant.Client.Instance.PostAddMulti(item.ItemID, item.Position);
 				}
 			}
 			Item.UpdateContainers();
@@ -1965,14 +1965,14 @@ namespace Assistant
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
-						ClientCommunication.SendToServer(new SingleClick(item));
+				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
 					if (World.Player != null && !RazorEnhanced.AutoLoot.AutoMode && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player.Visible)
-						ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+				 		Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
 				}
 				else if (item.IsMulti)
 				{
 					World.AddMulti(item);
-					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
+			 		Assistant.Client.Instance.PostAddMulti(item.ItemID, item.Position);
 				}
 			}
 
@@ -2058,7 +2058,7 @@ namespace Assistant
 
 					if (!string.IsNullOrEmpty(newText) && newText != text)
 					{
-						ClientCommunication.SendToClient(new AsciiMessage(ser, body, MessageType.Spell, s.GetHue(hue), font, name, newText));
+				 		Assistant.Client.Instance.SendToClient(new AsciiMessage(ser, body, MessageType.Spell, s.GetHue(hue), font, name, newText));
 						replaced = true;
 						args.Block = true;
 					}
@@ -2601,7 +2601,7 @@ namespace Assistant
 
 						if (DLLImport.Razor.HandleNegotiate(features))
 						{
-							ClientCommunication.SendToServer(new RazorNegotiateResponse());
+					 		Assistant.Client.Instance.SendToServer(new RazorNegotiateResponse());
 							Engine.MainWindow.UpdateControlLocks();
 
 						}
@@ -2674,7 +2674,7 @@ namespace Assistant
 						PartyLeader = p.ReadUInt32();
 						if (Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked)                           // AutoDecline Party
 						{
-							ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
+					 		Assistant.Client.Instance.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
 						}
 
 						if (RazorEnhanced.Friend.AutoacceptParty && RazorEnhanced.Friend.IsFriend(PartyLeader))     // Autoaccept party from friend
@@ -2694,7 +2694,7 @@ namespace Assistant
 									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 										RazorEnhanced.Misc.SendMessage("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")", false);
 								}
-								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
+						 		Assistant.Client.Instance.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
 							}
 						}
@@ -2750,7 +2750,7 @@ namespace Assistant
 
 			if (string.IsNullOrEmpty(pass))
 			{
-				pass = RazorEnhanced.Settings.Password.GetPassword(World.AccountName, ClientCommunication.LastConnection.ToString());
+				pass = RazorEnhanced.Settings.Password.GetPassword(World.AccountName , Assistant.Client.Instance.LastConnection.ToString());
 				if (!string.IsNullOrEmpty(pass))
 				{
 					p.Seek(31, SeekOrigin.Begin);
@@ -2760,7 +2760,7 @@ namespace Assistant
 			}
 			else
 			{
-				RazorEnhanced.Settings.Password.AddUpdateUser(World.AccountName, pass, ClientCommunication.LastConnection.ToString());
+				RazorEnhanced.Settings.Password.AddUpdateUser(World.AccountName, pass , Assistant.Client.Instance.LastConnection.ToString());
 			}
 		}
 

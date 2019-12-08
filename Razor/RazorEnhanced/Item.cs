@@ -597,7 +597,7 @@ namespace RazorEnhanced
 			}
 			if (amount == 0)
 			{
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
 			}
 			else
 			{
@@ -605,7 +605,7 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
 			}
 		}
 
@@ -626,7 +626,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Move: Destination Item is not a container");
 				return;
 			}
-			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+			Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 		}
 
 		public static void Move(Item source, Mobile destination, int amount)
@@ -720,8 +720,8 @@ namespace RazorEnhanced
 
 			if (amount == 0)
 			{
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
 			}
 			else
 			{
@@ -729,8 +729,8 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
+				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
 			}
 		}*/
 
@@ -821,8 +821,8 @@ namespace RazorEnhanced
                 amounttodrop = item.Amount;
 
 			Assistant.DragDropManager.DragDrop(item, loc, amounttodrop);
-			//Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
-			//Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
+			//Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
+			//Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount = 0)
@@ -849,25 +849,25 @@ namespace RazorEnhanced
 		// Use item
 		public static void UseItemOnMobile(Item i, Mobile m)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(i.Serial, m.Serial));
+			Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(i.Serial, m.Serial));
 		}
 
 		public static void UseItemOnMobile(int itemserial, Mobile m)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(itemserial, m.Serial));
+			Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(itemserial, m.Serial));
 		}
 
 		public static void UseItemOnMobile(Item i, int targetserial)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(i.Serial, targetserial));
+			Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(i.Serial, targetserial));
 		}
 
 		public static void UseItemOnMobile(int itemserial, int targetserial, bool wait = true)
 		{
 			if (wait)
-				ClientCommunication.SendToServerWait(new UseItemOnTarget(itemserial, targetserial));
+		 		Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(itemserial, targetserial));
 			else
-				ClientCommunication.SendToServer(new UseItemOnTarget(itemserial, targetserial));
+		 		Assistant.Client.Instance.SendToServer(new UseItemOnTarget(itemserial, targetserial));
 		}
 
 
@@ -888,7 +888,7 @@ namespace RazorEnhanced
 
 			if (item.Serial.IsItem)
 			{
-				Assistant.ClientCommunication.SendToServerWait(new DoubleClick(item.Serial));
+				Assistant.Client.Instance.SendToServerWait(new DoubleClick(item.Serial));
 			}
 			else
 			{
@@ -977,7 +977,7 @@ namespace RazorEnhanced
 		// Single Click
 		public static void SingleClick(Item item)
 		{
-			ClientCommunication.SendToServerWait(new SingleClick(item));
+	 		Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
 		}
 
 		public static void SingleClick(int itemserial)
@@ -988,7 +988,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
 				return;
 			}
-			ClientCommunication.SendToServerWait(new SingleClick(item));
+	 		Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
 		}
 
 		// Props
@@ -1010,7 +1010,7 @@ namespace RazorEnhanced
 			if (i.PropsUpdated)
 				return;
 
-			ClientCommunication.SendToServerWait(new QueryProperties(i.Serial));
+	 		Assistant.Client.Instance.SendToServerWait(new QueryProperties(i.Serial));
 			int subdelay = delay;
 
 			while (!i.PropsUpdated)
@@ -1106,7 +1106,7 @@ namespace RazorEnhanced
 			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
 				return;
 
-			ClientCommunication.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 
 		public static void Message(int serial, int hue, string message)
@@ -1120,7 +1120,7 @@ namespace RazorEnhanced
 			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
 				return;
 
-			ClientCommunication.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 
 		// Count
@@ -1173,7 +1173,7 @@ namespace RazorEnhanced
 			if (item != null)
 			{
 				item.Visible = false;
-				ClientCommunication.SendToClientWait(new RemoveObject(serial));
+		 		Assistant.Client.Instance.SendToClientWait(new RemoveObject(serial));
 			}
 		}
 

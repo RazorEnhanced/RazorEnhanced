@@ -403,10 +403,10 @@ namespace RazorEnhanced
 			AttackMessage(mobtarget.Serial, true); // Process message for highlight
 			if (Targeting.LastAttack != mobtarget.Serial)
 			{
-				ClientCommunication.SendToClientWait(new ChangeCombatant(mobtarget.Serial));
+		 		Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(mobtarget.Serial));
 				Targeting.LastAttack = (uint)mobtarget.Serial;
 			}
-			ClientCommunication.SendToServerWait(new AttackReq(mobtarget.Serial)); // Real attack
+	 		Assistant.Client.Instance.SendToServerWait(new AttackReq(mobtarget.Serial)); // Real attack
 		}
 
 		internal static void TargetMessage(int serial, bool wait)

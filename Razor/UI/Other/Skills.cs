@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal void RedrawSkills()
 		{
@@ -102,12 +102,12 @@ namespace Assistant
 
 				try
 				{
-					ClientCommunication.SendToServer(new SetSkillLock(s.Index, lockType));
+			 		Assistant.Client.Instance.SendToServer(new SetSkillLock(s.Index, lockType));
 
 					s.Lock = lockType;
 					UpdateSkill(s);
 
-					ClientCommunication.SendToClient(new SkillUpdate(s));
+			 		Assistant.Client.Instance.SendToClient(new SkillUpdate(s));
 				}
 				catch
 				{
@@ -234,9 +234,9 @@ namespace Assistant
 			for (short i = 0; i < Skill.Count; i++)
 			{
 				World.Player.Skills[i].Lock = type;
-				ClientCommunication.SendToServer(new SetSkillLock(i, type));
+		 		Assistant.Client.Instance.SendToServer(new SetSkillLock(i, type));
 			}
-			ClientCommunication.SendToClient(new SkillsList());
+	 		Assistant.Client.Instance.SendToClient(new SkillsList());
 			RedrawSkills();
 		}
 

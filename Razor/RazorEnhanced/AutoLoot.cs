@@ -512,7 +512,7 @@ namespace RazorEnhanced
 
 		public static void Start()
 		{
-			if (!DLLImport.Razor.AllowBit(FeatureBit.AutolootAgent))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutolootAgent))
 			{
 				Scripts.SendMessageScriptError("Autoloot Not Allowed!");
 				return;

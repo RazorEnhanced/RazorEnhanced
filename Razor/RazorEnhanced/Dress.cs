@@ -293,7 +293,7 @@ namespace RazorEnhanced
 					if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
 					{
 						RazorEnhanced.Dress.AddLog("UnDressing...");
-						ClientCommunication.SendToServerWait(new UnEquipItemMacro(layertoundress));
+				 		Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
 					}
 					else
 					{
@@ -409,7 +409,7 @@ namespace RazorEnhanced
 					if (itemserial.Count > 0)
 					{
 						RazorEnhanced.Dress.AddLog("Dressing...");
-						ClientCommunication.SendToServerWait(new EquipItemMacro(itemserial));
+				 		Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(itemserial));
 					}
 				}
 				else

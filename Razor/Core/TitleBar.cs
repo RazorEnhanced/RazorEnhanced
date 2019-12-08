@@ -23,7 +23,7 @@ namespace Assistant
 		private static StringBuilder m_TBBuilder = new StringBuilder();
 		internal static void UpdateTitleBar()
 		{
-			if (!ClientCommunication.Ready || World.Player == null)
+			if (!Assistant.Client.Instance.Ready || World.Player == null)
 				return;
 
 			m_TBBuilder.Remove(0, m_TBBuilder.Length);
@@ -97,7 +97,7 @@ namespace Assistant
 				sb.Append(String.Format("{0} ",sbitem.ToString()));
 			}
 
-			ClientCommunication.SetTitleStr(sb.ToString());
+			Assistant.Client.Instance.SetTitleStr(sb.ToString());
 		}
 	}
 }

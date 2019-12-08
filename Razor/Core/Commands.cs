@@ -30,13 +30,13 @@ namespace Assistant
 
 		private static void GetSerial(string[] param)
 		{
-			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to get their serial number."));
+		 	Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to get their serial number."));
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(GetSerialTarget_Callback));
 		}
 
 		private static void GetSerialTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Serial: 0x" + serial.Value.ToString("X8")));
+		 	Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Serial: 0x" + serial.Value.ToString("X8")));
 		}
 
 		private static void InspectAlias(string[] param)
@@ -53,7 +53,7 @@ namespace Assistant
 		}
 		private static void GetInfo(string[] param)
 		{
-			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
+		 	Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
 			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback( GetInfoTarget_Callback));
 		}
 
@@ -98,13 +98,13 @@ namespace Assistant
 
 		private static void DropItem(string[] param)
 		{
-			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target item to Drop at feet."));
+		 	Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target item to Drop at feet."));
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RazorEnhanced.HotKey.dropitemTarget_Callback));
 		}
 
 		private static void HideItem(string[] param)
 		{
-			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a item to hide."));
+		 	Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a item to hide."));
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(HideItem_Callback));
 		}
 
@@ -118,7 +118,7 @@ namespace Assistant
 			StringBuilder sb = new StringBuilder("Note To Self: ");
 			foreach (string t in param)
 				sb.Append(t);
-			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
+		 	Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
 		}
 
 		private static void ReNice(string[] param)
@@ -131,7 +131,7 @@ namespace Assistant
 				else
 					prio = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), param[0], true);
 
-				ClientCommunication.ClientProcess.PriorityClass = prio;
+			 	Assistant.Client.Instance.ClientProcess.PriorityClass = prio;
 				World.Player.SendMessage(MsgLevel.Force, LocString.PrioSet, prio);
 			}
 			catch (Exception e)
@@ -200,10 +200,10 @@ namespace Assistant
 				string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 				byte[] buffer = Encoding.ASCII.GetBytes(data);
 				int timeout = 1000;
-				RazorEnhanced.Misc.SendMessage("Address: " + ClientCommunication.LastConnection.ToString(), 33, false);
+				RazorEnhanced.Misc.SendMessage("Address: " + Assistant.Client.Instance.LastConnection.ToString(), 33, false);
 				for (int i = 0; i < 5; i++)
 				{
-					PingReply reply = pingSender.Send(ClientCommunication.LastConnection, timeout, buffer, options);
+					PingReply reply = pingSender.Send(Assistant.Client.Instance.LastConnection, timeout, buffer, options);
 					if (reply.Status == IPStatus.Success)
 					{
 						total += (int)reply.RoundtripTime;
@@ -357,7 +357,7 @@ namespace Assistant
 				else if (text[0] == '-' && text[1] == '-')
 				{
 					args.Block = true;
-					ClientCommunication.PostTextSend(text.Substring(2));
+				 	Assistant.Client.Instance.PostTextSend(text.Substring(2));
 				}
 			}
 		}

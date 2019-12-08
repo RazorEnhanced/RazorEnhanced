@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
 		internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }

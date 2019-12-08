@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal TextBox ScreenPath { get { return screenPath; } }
 

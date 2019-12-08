@@ -108,7 +108,7 @@ namespace Assistant.Filters
 					continue;
 
 				if (!m.Visible)
-					ClientCommunication.SendToClient(new RemoveObject(m));
+			 		Assistant.Client.Instance.SendToClient(new RemoveObject(m));
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace Assistant.Filters
 					continue;
 
 				if (!m.Visible)
-					ClientCommunication.SendToClient(new MobileUpdate(m));
+			 		Assistant.Client.Instance.SendToClient(new MobileUpdate(m));
 			}
 		}
 	}

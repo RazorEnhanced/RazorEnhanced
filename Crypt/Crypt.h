@@ -91,6 +91,7 @@ struct SharedMemory
 	unsigned int TotalRecv;
 	unsigned short PacketTable[256];
 	char DataPath[256];
+	int Position[3]; // added back temporarily
 	bool AllowNegotiate;
 	unsigned char AuthBits[16];
 	bool Reserved0;
@@ -143,6 +144,7 @@ DLLFUNCTION int GetUOProcId();
 DLLFUNCTION HANDLE GetCommMutex();
 DLLFUNCTION unsigned int TotalIn();
 DLLFUNCTION unsigned int TotalOut();
+DLLFUNCTION bool IsCalibrated();
 DLLFUNCTION void CalibratePosition(uint16_t x, uint16_t y, uint16_t z);
 DLLFUNCTION void OnAttach(void *params, int paramsLen);
 DLLFUNCTION void SetServer(unsigned int addr, unsigned short port);

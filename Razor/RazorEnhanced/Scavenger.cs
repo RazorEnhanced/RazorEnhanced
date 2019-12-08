@@ -286,7 +286,7 @@ namespace RazorEnhanced
 		{
 			List<Item> itemsOnGround = RazorEnhanced.Items.ApplyFilter(filter);
 
-			if (ClientCommunication.ServerEncrypted) // OSI shard use movable flag for different, item on ground lootable can have both flag
+			if (Assistant.Client.Instance.ServerEncrypted) // OSI shard use movable flag for different, item on ground lootable can have both flag
 			{
 				m_itemfilterOsi.RangeMax = m_maxrange;
 				itemsOnGround.AddRange(RazorEnhanced.Items.ApplyFilter(m_itemfilterOsi));
@@ -329,7 +329,7 @@ namespace RazorEnhanced
 			if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
 				return;
 
-			if (ClientCommunication.ServerEncrypted) // Check For Osi Locked item
+			if (Assistant.Client.Instance.ServerEncrypted) // Check For Osi Locked item
 			{
 				if (Items.GetPropValue(itemGround, "Locked Down") > 0)
 					return;

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
 		internal RazorCheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
@@ -164,7 +164,7 @@ namespace Assistant
 			if (toolboxstyleComboBox.Text != "TitleBar")
 			{
 				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = true;
-				ClientCommunication.SetTitleStr(""); // Restore titlebar standard
+		 		Assistant.Client.Instance.SetTitleStr(""); // Restore titlebar standard
 			}
 			else
 				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = false;
@@ -320,7 +320,7 @@ namespace Assistant
 			if (Initializing || !Assistant.Engine.Running)
 				return;
 
-			if (!ClientCommunication.Ready || World.Player == null)
+			if (!Assistant.Client.Instance.Ready || World.Player == null)
 				return;
 
 			if (toolboxstyleComboBox.Text == "TitleBar")

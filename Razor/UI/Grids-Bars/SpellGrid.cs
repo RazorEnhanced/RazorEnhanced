@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal Label GridLocationLabel { get { return gridlocation_label; } }
 		internal RazorCheckBox GridLockCheckBox { get { return gridlock_CheckBox; } }

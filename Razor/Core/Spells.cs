@@ -103,16 +103,16 @@ namespace Assistant
 		internal void OnCast(PacketReader p)
 		{
 			Cast();
-			ClientCommunication.SendToServer(p);
+	 		Assistant.Client.Instance.SendToServer(p);
 		}
 
 		internal void OnCast(Packet p, bool wait)
 		{
 			Cast();
 			if (wait)
-				ClientCommunication.SendToServerWait(p);
+		 		Assistant.Client.Instance.SendToServerWait(p);
 			else
-				ClientCommunication.SendToServer(p);
+		 		Assistant.Client.Instance.SendToServer(p);
 		}
 
 		private void Cast()
@@ -147,7 +147,7 @@ namespace Assistant
 				}
 			}
 
-			ClientCommunication.PostSpellCast(this.Number);
+	 		Assistant.Client.Instance.PostSpellCast(this.Number);
 
 			if (World.Player != null)
 			{
@@ -237,7 +237,7 @@ namespace Assistant
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 							Targeting.TargetSelf(true);
-						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+				 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
 				}
@@ -248,7 +248,7 @@ namespace Assistant
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
-					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+			 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}
@@ -268,7 +268,7 @@ namespace Assistant
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 							Targeting.TargetSelf(true);
-						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+				 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
 				}
@@ -279,7 +279,7 @@ namespace Assistant
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
-					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+			 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}
@@ -300,7 +300,7 @@ namespace Assistant
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 							Targeting.TargetSelf(true);
-						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+				 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
 				}
@@ -311,7 +311,7 @@ namespace Assistant
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
-					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+			 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}

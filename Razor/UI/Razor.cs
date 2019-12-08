@@ -12,7 +12,7 @@ using AutoUpdaterDotNET;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		#region Class Variables
 		private System.Windows.Forms.TabControl tabs;
@@ -8603,12 +8603,12 @@ namespace Assistant
 		{
 			if (msg.Msg == 1025)
 			{
-				msg.Result = (IntPtr)(ClientCommunication.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
+				msg.Result = (IntPtr)(Assistant.Client.Instance.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
 				return;
 			}
 			if (msg.Msg >= 1224 && msg.Msg <= 1338)
 			{
-				msg.Result = (IntPtr)ClientCommunication.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
+				msg.Result = (IntPtr)Assistant.Client.Instance.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
 				return;
 			}
 			base.WndProc(ref msg);
@@ -8640,7 +8640,7 @@ namespace Assistant
 
 			UpdateTitle();
 
-			if (!ClientCommunication.InstallHooks(this.Handle)) // WaitForInputIdle done here
+			if (!Assistant.Client.Instance.InstallHooks(this.Handle)) // WaitForInputIdle done here
 			{
 				m_CanClose = true;
 				SplashScreen.End();
@@ -8789,7 +8789,7 @@ namespace Assistant
 			Filter.Draw(filters);
 			smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
 			if (smartCPU.Checked)
-				ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;
+		 		Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;
 
 			this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
 			rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
@@ -8978,7 +8978,7 @@ namespace Assistant
 
 		private void UpdateRazorStatus()
 		{
-			if (!ClientCommunication.ClientRunning)
+			if (!Assistant.Client.Instance.ClientRunning)
 				Close();
 
 			if (tabs.SelectedTab != statusTab)
@@ -8990,8 +8990,8 @@ namespace Assistant
 			m_InPrev = DLLImport.Razor.TotalIn();
 
 			int time = 0;
-			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
-				time = (int)((DateTime.Now - ClientCommunication.ConnectionStart).TotalSeconds);
+			if (Assistant.Client.Instance.ConnectionStart != DateTime.MinValue)
+				time = (int)((DateTime.Now  - Assistant.Client.Instance.ConnectionStart).TotalSeconds);
 
 			string status = Language.Format(LocString.RazorStatus1,
 				m_Ver,
@@ -9025,7 +9025,7 @@ namespace Assistant
 
 		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if (!m_CanClose && ClientCommunication.ClientRunning)
+			if (!m_CanClose && Assistant.Client.Instance.ClientRunning)
 			{
 				DisableCloseButton();
 				e.Cancel = true;
@@ -9186,7 +9186,7 @@ namespace Assistant
 			//if (File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "bypassnegotiate")))
 			//	return;
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.AutolootAgent))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutolootAgent))
 			{
 				autoLootCheckBox.Enabled = false;
 				autoLootCheckBox.Checked = false;
@@ -9199,7 +9199,7 @@ namespace Assistant
 					autoLootCheckBox.Enabled = true;
 			}
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.RangeCheckLT))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.RangeCheckLT))
 			{
 				rangeCheckLT.Checked = false;
 				rangeCheckLT.Enabled = false;
@@ -9212,11 +9212,11 @@ namespace Assistant
 			}
 
 
-			/*	if (ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
+			/*	if (Client.AllowBit(FeatureBit.AutoOpenDoors))
 				{
-					RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.LightFilter).ToString());
+					RazorEnhanced.AutoLoot.AddLog(Client.AllowBit(FeatureBit.LightFilter).ToString());
 
-					//RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors).ToString());
+					//RazorEnhanced.AutoLoot.AddLog(Client.AllowBit(FeatureBit.AutoOpenDoors).ToString());
 					autoOpenDoors.Checked = false;
 					autoOpenDoors.Enabled = false;
 					Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
@@ -9228,7 +9228,7 @@ namespace Assistant
 				}*/
 
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.UnequipBeforeCast))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.UnequipBeforeCast))
 			{
 				spellUnequip.Checked = false;
 				spellUnequip.Enabled = false;
@@ -9240,7 +9240,7 @@ namespace Assistant
 					spellUnequip.Enabled = true;
 			}
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoPotionEquip))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutoPotionEquip))
 			{
 				potionEquip.Checked = false;
 				potionEquip.Enabled = false;
@@ -9252,7 +9252,7 @@ namespace Assistant
 					potionEquip.Enabled = true;
 			}
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.BlockHealPoisoned))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.BlockHealPoisoned))
 			{
 				blockhealpoisonCheckBox.Checked = false;
 				blockhealpoisonCheckBox.Enabled = false;
@@ -9264,7 +9264,7 @@ namespace Assistant
 					blockhealpoisonCheckBox.Enabled = true;
 			}
 
-			/*	if (!ClientCommunication.AllowBit(FeatureBit.SellAgent))
+			/*	if (!Client.AllowBit(FeatureBit.SellAgent))
 				{
 					sellEnableCheckBox.Enabled = false;
 					sellEnableCheckBox.Checked = false;
@@ -9276,7 +9276,7 @@ namespace Assistant
 				}*/
 
 
-			/*if (!ClientCommunication.AllowBit(FeatureBit.BuyAgent))
+			/*if (!Client.AllowBit(FeatureBit.BuyAgent))
 			{
 				buyEnableCheckBox.Enabled = false;
 				buyEnableCheckBox.Checked = false;
@@ -9287,7 +9287,7 @@ namespace Assistant
 					buyEnableCheckBox.Enabled = true;
 			}*/
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.OverheadHealth))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.OverheadHealth))
 			{
 				chkPartyOverhead.Checked = false;
 				chkPartyOverhead.Enabled = false;
@@ -9299,7 +9299,7 @@ namespace Assistant
 					chkPartyOverhead.Enabled = true;
 			}
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.BoneCutterAgent))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.BoneCutterAgent))
 			{
 				bonecutterCheckBox.Checked = false;
 				bonecutterCheckBox.Enabled = false;
@@ -9311,7 +9311,7 @@ namespace Assistant
 					bonecutterCheckBox.Enabled = true;
 			}
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoRemount))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutoRemount))
 			{
 				remountcheckbox.Checked = false;
 				remountcheckbox.Enabled = false;
@@ -9324,7 +9324,7 @@ namespace Assistant
 			}
 
 
-			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoBandage))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutoBandage))
 			{
 				bandagehealenableCheckBox.Enabled = false;
 				bandagehealenableCheckBox.Checked = false;

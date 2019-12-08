@@ -281,7 +281,7 @@ namespace Assistant
 
 		internal static void ToggleWarPeace()
 		{
-			ClientCommunication.SendToServer(new SetWarMode(!World.Player.Warmode));
+	 		Assistant.Client.Instance.SendToServer(new SetWarMode(!World.Player.Warmode));
 		}
 
 		internal static void OnStun(bool wait)
@@ -290,9 +290,9 @@ namespace Assistant
 			{
 				m_LastToggle = DateTime.Now;
 				if (wait)
-					ClientCommunication.SendToServerWait(new StunRequest());
+			 		Assistant.Client.Instance.SendToServerWait(new StunRequest());
 				else
-					ClientCommunication.SendToServer(new StunRequest());
+			 		Assistant.Client.Instance.SendToServer(new StunRequest());
 			}
 		}
 
@@ -302,9 +302,9 @@ namespace Assistant
 			{
 				m_LastToggle = DateTime.Now;
 				if (wait)
-					ClientCommunication.SendToServerWait(new DisarmRequest());
+			 		Assistant.Client.Instance.SendToServerWait(new DisarmRequest());
 				else
-					ClientCommunication.SendToServer(new DisarmRequest());
+			 		Assistant.Client.Instance.SendToServer(new DisarmRequest());
 			}
 		}
 
@@ -341,13 +341,13 @@ namespace Assistant
 				HasSecondary = false;
 				if (wait)
 				{
-					ClientCommunication.SendToServerWait(new UseAbility(a));
-					ClientCommunication.SendToClientWait(ClearAbility.Instance);
+			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
+			 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
 				}
 				else
 				{
-					ClientCommunication.SendToServer(new UseAbility(a));
-					ClientCommunication.SendToClient(ClearAbility.Instance);
+			 		Assistant.Client.Instance.SendToServer(new UseAbility(a));
+			 		Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
 				}
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
@@ -385,13 +385,13 @@ namespace Assistant
 				HasPrimary = false;
 				if (wait)
 				{
-					ClientCommunication.SendToServerWait(new UseAbility(a));
-					ClientCommunication.SendToClientWait(ClearAbility.Instance);
+			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
+			 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
 				} 
 				else
 				{
-					ClientCommunication.SendToServer(new UseAbility(a));
-					ClientCommunication.SendToClient(ClearAbility.Instance);
+			 		Assistant.Client.Instance.SendToServer(new UseAbility(a));
+			 		Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
 				}
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
@@ -432,13 +432,13 @@ namespace Assistant
 			World.Player.HasSpecial = HasPrimary = HasSecondary = false;
 			if (wait)
 			{
-				ClientCommunication.SendToServerWait(new UseAbility(AOSAbility.Clear));
-				ClientCommunication.SendToClientWait(ClearAbility.Instance);
+		 		Assistant.Client.Instance.SendToServerWait(new UseAbility(AOSAbility.Clear));
+		 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
 			}
 			else
 			{
-				ClientCommunication.SendToServer(new UseAbility(AOSAbility.Clear));
-				ClientCommunication.SendToClient(ClearAbility.Instance);
+		 		Assistant.Client.Instance.SendToServer(new UseAbility(AOSAbility.Clear));
+		 		Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
 			}
 			World.Player.SendMessage(LocString.AOSAbCleared);
 		}

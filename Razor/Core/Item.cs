@@ -47,7 +47,7 @@ namespace Assistant
 		LastValid = 0x1D
 	}
 
-	internal class Item : UOEntity
+	public class Item : UOEntity
 	{
 		private ItemID m_ItemID;
 		private ushort m_Amount;
@@ -464,7 +464,7 @@ namespace Assistant
 		internal override void Remove()
 		{
 			if (IsMulti)
-				ClientCommunication.PostRemoveMulti(this);
+			 	Assistant.Client.Instance.PostRemoveMulti(this);
 
 			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
@@ -485,8 +485,8 @@ namespace Assistant
 		{
 			if (IsMulti && this.Position != Point3D.Zero && newPos != Point3D.Zero && this.Position != newPos)
 			{
-				ClientCommunication.PostRemoveMulti(this);
-				ClientCommunication.PostAddMulti(m_ItemID, newPos);
+			 	Assistant.Client.Instance.PostRemoveMulti(this);
+			 	Assistant.Client.Instance.PostAddMulti(m_ItemID, newPos);
 			}
 			base.OnPositionChanging(newPos);
 		}

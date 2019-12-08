@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Assistant
 {
-	internal class UOEntity
+	public class UOEntity
 	{
 		private Serial m_Serial;
 		private Point3D m_Pos;

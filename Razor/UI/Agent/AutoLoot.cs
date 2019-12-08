@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
 		internal RazorAgentNumOnlyTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }

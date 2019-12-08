@@ -885,13 +885,13 @@ namespace RazorEnhanced
 			{
 				if (wait)
 				{
-					ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-					ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+			 		Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+			 		Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 				}
 				else
 				{
-					ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-					ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+			 		Assistant.Client.Instance.SendToServer(new LiftRequest(item.Serial, item.Amount));
+			 		Assistant.Client.Instance.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 				}
 			}
 			else
@@ -914,8 +914,8 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
-			ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
-			ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.Layer)); // Equippa
+	 		Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
+	 		Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.Layer)); // Equippa
 		}
 
 		public static void EquipItem(Item item)
@@ -926,8 +926,8 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
-			ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
-			ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.AssistantLayer)); // Equippa
+	 		Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
+	 		Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.AssistantLayer)); // Equippa
 		}
 
 		public static void EquipUO3D(List<int> serials)
@@ -936,7 +936,7 @@ namespace RazorEnhanced
 			foreach (int serial in serials)
 				serialstoequip.Add((uint)serial);
 
-			ClientCommunication.SendToServerWait(new EquipItemMacro(serialstoequip));
+	 		Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(serialstoequip));
 
 		}
 		public static bool CheckLayer(String layer)
@@ -1041,12 +1041,12 @@ namespace RazorEnhanced
 
 			LockType t = (LockType)status;
 
-			ClientCommunication.SendToServer(new SetSkillLock(World.Player.Skills[(int)skill].Index, t));
+	 		Assistant.Client.Instance.SendToServer(new SetSkillLock(World.Player.Skills[(int)skill].Index, t));
 
 			World.Player.Skills[(int)skill].Lock = t;
 			Engine.MainWindow.Invoke(new Action(() => Engine.MainWindow.UpdateSkill(World.Player.Skills[(int)skill])));
 
-			ClientCommunication.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
+	 		Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
 		}
 
 		public static void UseSkill(string skillname, bool wait = true)
@@ -1058,9 +1058,9 @@ namespace RazorEnhanced
 			}
 
 			if (wait)
-				ClientCommunication.SendToServerWait(new UseSkill((int)skill));
+		 		Assistant.Client.Instance.SendToServerWait(new UseSkill((int)skill));
 			else
-				ClientCommunication.SendToServer(new UseSkill((int)skill));
+		 		Assistant.Client.Instance.SendToServer(new UseSkill((int)skill));
 
 			if (skill == SkillName.Hiding)
 				StealthSteps.Hide();
@@ -1080,7 +1080,7 @@ namespace RazorEnhanced
 		public static void MapSay(string msg)
 		{
 			if (msg != null && msg != string.Empty)
-				ClientCommunication.PostTextSend(msg);
+		 		Assistant.Client.Instance.PostTextSend(msg);
 		}
 
 		// Game Message
@@ -1094,11 +1094,11 @@ namespace RazorEnhanced
 			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
 			if (kw.Count == 1 && kw[0] == 0)
 			{
-				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
+		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
 			}
 			else
 			{
-				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
+		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
 			}
 		}
 		public static void ChatGuild(int num)
@@ -1108,10 +1108,10 @@ namespace RazorEnhanced
 
 		public static void ChatGuild(string msg)
 		{
-			if (ClientCommunication.ServerEncrypted) // is OSI
-				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Guild, 1, 1, "ENU", new List<ushort>(), msg));
+			if (Assistant.Client.Instance.ServerEncrypted) // is OSI
+		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Guild, 1, 1, "ENU", new List<ushort>(), msg));
 			else
-				ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+		 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
 		public static void ChatAlliance(int num)
@@ -1121,10 +1121,10 @@ namespace RazorEnhanced
 
 		public static void ChatAlliance(string msg)
 		{
-			if (ClientCommunication.ServerEncrypted) // is OSI
-				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Alliance, 1, 1, "ENU", new List<ushort>(), msg));
+			if (Assistant.Client.Instance.ServerEncrypted) // is OSI
+		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Alliance, 1, 1, "ENU", new List<ushort>(), msg));
 			else
-				ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
+		 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
 		public static void ChatEmote(int hue, int num)
@@ -1134,7 +1134,7 @@ namespace RazorEnhanced
 
 		public static void ChatEmote(int hue, string msg)
 		{
-			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
+	 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
 		}
 
 		public static void ChatWhisper(int hue, int num)
@@ -1144,7 +1144,7 @@ namespace RazorEnhanced
 
 		public static void ChatWhisper(int hue, string msg)
 		{
-			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
+	 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
 		public static void ChatYell(int hue, int num)
@@ -1154,7 +1154,7 @@ namespace RazorEnhanced
 
 		public static void ChatYell(int hue, string msg)
 		{
-			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
+	 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
 		public static void ChatChannel(int num)
@@ -1164,13 +1164,13 @@ namespace RazorEnhanced
 
 		public static void ChatChannel(string msg)
 		{
-			ClientCommunication.SendToServerWait(new ChatAction(0x61, Language.CliLocName, msg));
+	 		Assistant.Client.Instance.SendToServerWait(new ChatAction(0x61, Language.CliLocName, msg));
 		}
 		
 		// attack
 		public static void SetWarMode(bool warflag)
 		{
-			ClientCommunication.SendToServerWait(new SetWarMode(warflag));
+	 		Assistant.Client.Instance.SendToServerWait(new SetWarMode(warflag));
 		}
 		public static void Attack(Mobile m)
 		{
@@ -1185,10 +1185,10 @@ namespace RazorEnhanced
 			Target.AttackMessage(serial, true);
 			if (Targeting.LastAttack != serial)
 			{
-				ClientCommunication.SendToClientWait(new ChangeCombatant(serial));
+		 		Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
 				Targeting.LastAttack = (uint)serial;
 			}
-			ClientCommunication.SendToServerWait(new AttackReq(serial));
+	 		Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
         }
 
 		public static void AttackLast()
@@ -1201,7 +1201,7 @@ namespace RazorEnhanced
 
 			Target.AttackMessage((int)Targeting.LastAttack, true);
 
-			ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
+	 		Assistant.Client.Instance.SendToServerWait(new AttackReq(Targeting.LastAttack));
 		}
 
 		// Virtue
@@ -1213,39 +1213,39 @@ namespace RazorEnhanced
 				return;
 			}
 
-			ClientCommunication.SendToServerWait(new InvokeVirtue((byte)v));
+	 		Assistant.Client.Instance.SendToServerWait(new InvokeVirtue((byte)v));
 		}
 
 		public static void ChatParty(string msg, int serial = 0)
 		{
 			if (serial != 0)
-				ClientCommunication.SendToServerWait(new SendPartyMessagePrivate(serial, msg));
+		 		Assistant.Client.Instance.SendToServerWait(new SendPartyMessagePrivate(serial, msg));
 			else
-				ClientCommunication.SendToServerWait(new SendPartyMessage(msg));
+		 		Assistant.Client.Instance.SendToServerWait(new SendPartyMessage(msg));
 		}
 
 		public static void PartyInvite()
 		{
-			ClientCommunication.SendToServerWait(new PartyInvite());
+	 		Assistant.Client.Instance.SendToServerWait(new PartyInvite());
 		}
 
 		public static void LeaveParty()
 		{
-			ClientCommunication.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
+	 		Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
 		}
 
 		public static void KickMember(int serial)
 		{
 			uint userial = Convert.ToUInt16(serial);
-			ClientCommunication.SendToServerWait(new PartyRemoveMember(userial));
+	 		Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(userial));
 		}
 
 		public static void PartyCanLoot(bool CanLoot)
 		{
 			if (CanLoot)
-					ClientCommunication.SendToServerWait(new PartyCanLoot(0x1));
+			 		Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x1));
 				else
-					ClientCommunication.SendToServerWait(new PartyCanLoot(0x0));
+			 		Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x0));
 		}
 
 		// Moving
@@ -1332,7 +1332,7 @@ namespace RazorEnhanced
 
 		internal static void PathFindToPacket(Assistant.Point3D Location)
 		{
-			ClientCommunication.SendToClientWait(new PathFindTo(Location));
+	 		Assistant.Client.Instance.SendToClientWait(new PathFindTo(Location));
 		}
 
 		internal static void PathFindToPacket(int x, int y, int z)
@@ -1347,12 +1347,12 @@ namespace RazorEnhanced
 			if (on)
 			{
 				if (!World.Player.Flying)
-					ClientCommunication.SendToServerWait(new ToggleFly());
+			 		Assistant.Client.Instance.SendToServerWait(new ToggleFly());
 			}
 			else
 			{
 				if (World.Player.Flying)
-					ClientCommunication.SendToServerWait(new ToggleFly());
+			 		Assistant.Client.Instance.SendToServerWait(new ToggleFly());
 			}
 		}
 
@@ -1364,18 +1364,18 @@ namespace RazorEnhanced
 
 		public static void HeadMessage(int hue, string message)
 		{
-			ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
+	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
 
 		// Paperdool button click
 		public static void QuestButton()
 		{
-			ClientCommunication.SendToServerWait(new QuestButton(World.Player.Serial));
+	 		Assistant.Client.Instance.SendToServerWait(new QuestButton(World.Player.Serial));
 		}
 
 		public static void GuildButton()
 		{
-			ClientCommunication.SendToServerWait(new GuildButton(World.Player.Serial));
+	 		Assistant.Client.Instance.SendToServerWait(new GuildButton(World.Player.Serial));
 		}
 
 		// Range

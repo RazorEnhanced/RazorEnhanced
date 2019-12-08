@@ -219,10 +219,7 @@ namespace Assistant
 			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
 
-			if (DLLImport.Razor.InitializeLibrary(Engine.Version) == 0)
-				throw new InvalidOperationException("This Razor installation is corrupted.");
-
-			// Profili
+			// Profile
 			RazorEnhanced.Profiles.Load();
 
 			// Shard Bookmarks
@@ -240,6 +237,7 @@ namespace Assistant
 			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
 			RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
 
+			Assistant.Client.Init(true);
 			if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
 			{
 				Start(selected);
@@ -266,8 +264,8 @@ namespace Assistant
 		}
 		internal static void Start(RazorEnhanced.Shard selected)
 		{
-			ClientCommunication.ClientEncrypted = selected.PatchEnc;
-			ClientCommunication.ServerEncrypted = selected.OSIEnc;
+		 	Assistant.Client.Instance.ClientEncrypted = selected.PatchEnc;
+		 	Assistant.Client.Instance.ServerEncrypted = selected.OSIEnc;
 			string clientPath = selected.ClientPath;
 			string dataDir = selected.ClientFolder;
 			string addr = selected.Host;
@@ -297,13 +295,13 @@ namespace Assistant
 			Language.LoadCliLoc();
 			Initialize(typeof(Assistant.Engine).Assembly);
 
-			ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
-			ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
+		 	Assistant.Client.Instance.SetConnectionInfo(IPAddress.None, -1);
+		 	Assistant.Client.Loader_Error result = 	Assistant.Client.Loader_Error.UNKNOWN_ERROR;
 
 			if (clientPath != null && File.Exists(clientPath))
-				result = ClientCommunication.LaunchClient(clientPath);
+				result = 	Assistant.Client.Instance.LaunchClient(clientPath);
 
-			if (result != ClientCommunication.Loader_Error.SUCCESS)
+			if (result != 	Assistant.Client.Loader_Error.SUCCESS)
 			{
 				if (clientPath == null && File.Exists(clientPath))
 					MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -330,7 +328,7 @@ namespace Assistant
 			SplashScreen.Start();
 			m_ActiveWnd = SplashScreen.Instance;
 
-			ClientCommunication.SetConnectionInfo(m_ip, port);
+		 	Assistant.Client.Instance.SetConnectionInfo(m_ip, port);
 
 			Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
@@ -369,7 +367,7 @@ namespace Assistant
 
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
-			ClientCommunication.Close();
+		 	Assistant.Client.Instance.Close();
 		}
 
 		private static void Initialize(Assembly a)

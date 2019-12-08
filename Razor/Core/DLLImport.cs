@@ -155,8 +155,8 @@ namespace Assistant
 			[DllImport("Crypt.dll")]
 			internal static unsafe extern int GetUOProcId();
 
-			[DllImport("Crypt.dll")]
-			internal static unsafe extern int InitializeLibrary(string version);
+			//[DllImport("Crypt.dll")]
+			//internal static unsafe extern int InitializeLibrary(string version);
 
 			[DllImport("Crypt.dll")]
 			internal static unsafe extern IntPtr GetCommMutex();
@@ -194,8 +194,8 @@ namespace Assistant
 			[DllImport("Crypt.dll")]
 			internal static unsafe extern void DoFeatures(int features, bool oldversion);
 
-			[DllImport("Crypt.dll")]
-			internal static unsafe extern bool AllowBit(uint bit);
+			//[DllImport("Crypt.dll")]
+			//internal static unsafe extern bool AllowBit(uint bit);
 
 			[DllImport("Crypt.dll")]
 			internal static unsafe extern void SetAllowDisconn(bool allowed);

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } }
 		internal RazorCheckBox ChkStealth { get { return chkStealth; } }
@@ -52,7 +52,7 @@ namespace Assistant
 			{
 				Settings.General.WriteInt("LTHilight", 0);
 				LTHilight = 0;
-				ClientCommunication.SetCustomNotoHue(0);
+		 		Assistant.Client.Instance.SetCustomNotoHue(0);
 				lthilight.BackColor = SystemColors.Control;
 				lthilight.ForeColor = SystemColors.ControlText;
 			}
@@ -189,7 +189,7 @@ namespace Assistant
 		private void setLTHilight_Click(object sender, System.EventArgs e)
 		{
 			if (SetHue(lthilight, "LTHilight"))
-				ClientCommunication.SetCustomNotoHue(LTHilight);
+		 		Assistant.Client.Instance.SetCustomNotoHue(LTHilight);
 		}
 
 		private void setBeneHue_Click(object sender, System.EventArgs e)
@@ -304,7 +304,7 @@ namespace Assistant
 			if (preAOSstatbar.Focused)
 				RazorEnhanced.Settings.General.WriteBool("OldStatBar", preAOSstatbar.Checked);
 
-			ClientCommunication.RequestStatbarPatch(preAOSstatbar.Checked);
+	 		Assistant.Client.Instance.RequestStatbarPatch(preAOSstatbar.Checked);
 			if (World.Player != null && !m_Initializing)
 				MessageBox.Show(this, "Close and re-open your status bar for the change to take effect.", "Status Window Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
@@ -325,7 +325,7 @@ namespace Assistant
 		{
 			if (smartCPU.Focused)
 				RazorEnhanced.Settings.General.WriteBool("SmartCPU", smartCPU.Checked);
-			ClientCommunication.SetSmartCPU(smartCPU.Checked);
+	 		Assistant.Client.Instance.SetSmartCPU(smartCPU.Checked);
 		}
 
 		private void blockDis_CheckedChanged(object sender, System.EventArgs e)
@@ -367,7 +367,7 @@ namespace Assistant
 				y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
 
 				if (x > 100 && x < 2000 && y > 100 && y < 2000)
-					ClientCommunication.SetGameSize(x, y);
+			 		Assistant.Client.Instance.SetGameSize(x, y);
 				else
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 			}
@@ -388,11 +388,11 @@ namespace Assistant
 				if (x < 100 || y < 100 || x > 2000 || y > 2000)
 					MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 				else
-					ClientCommunication.SetGameSize(x, y);
+			 		Assistant.Client.Instance.SetGameSize(x, y);
 			}
 			else
 			{
-				ClientCommunication.SetGameSize(0, 0);
+		 		Assistant.Client.Instance.SetGameSize(0, 0);
 			}
 
 			if (World.Player != null)
@@ -463,7 +463,7 @@ namespace Assistant
 			{
 				if (negotiate.Focused)
 					RazorEnhanced.Settings.General.WriteBool("Negotiate", negotiate.Checked);
-				ClientCommunication.SetNegotiate(negotiate.Checked);
+		 		Assistant.Client.Instance.SetNegotiate(negotiate.Checked);
 			}
 		}
 
@@ -513,7 +513,7 @@ namespace Assistant
 
 			try
 			{
-				ClientCommunication.ClientProcess.PriorityClass = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), str, true);
+		 		Assistant.Client.Instance.ClientProcess.PriorityClass = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), str, true);
 			}
 			catch
 			{

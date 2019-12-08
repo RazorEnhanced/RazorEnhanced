@@ -338,7 +338,7 @@ namespace RazorEnhanced
 			if (list.Count <= 0)
 				return;
 
-			ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
+	 		Assistant.Client.Instance.SendToServer(new VendorSellResponse(vendor, list));
 			AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 			string message = "Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins";
 			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
@@ -349,7 +349,7 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Enable()
 		{
-			if (!DLLImport.Razor.AllowBit(FeatureBit.SellAgent))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.SellAgent))
 			{
 				Scripts.SendMessageScriptError("SellAgent Not Allowed!");
 				return;
@@ -667,7 +667,7 @@ namespace RazorEnhanced
 				return;
 
 			args.Block = true;
-			ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
+	 		Assistant.Client.Instance.SendToServer(new VendorBuyResponse(serial, buyList));
 
 			string message = "Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins";
 			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
@@ -678,7 +678,7 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Enable()
 		{
-			if (!DLLImport.Razor.AllowBit(FeatureBit.BuyAgent))
+			if (!Assistant.Client.Instance.AllowBit(FeatureBit.BuyAgent))
 			{
 				Scripts.SendMessageScriptError("BuyAgent Not Allowed!");
 				return;

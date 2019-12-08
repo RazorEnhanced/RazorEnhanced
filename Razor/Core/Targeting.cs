@@ -138,7 +138,7 @@ namespace Assistant
 			m_OnCancel = onCancel;
 
 			m_ClientTarget = m_HasTarget = true;
-			ClientCommunication.SendToClient(new Target(LocalTargID, ground));
+	 		Assistant.Client.Instance.SendToClient(new Target(LocalTargID, ground));
 			ClearQueue();
 		}
 
@@ -147,9 +147,9 @@ namespace Assistant
 			m_NoShowTarget = m_ClientTarget = m_HasTarget = false;
 
 			if (wait)
-				ClientCommunication.SendToClientWait(new CancelTarget(LocalTargID));
+		 		Assistant.Client.Instance.SendToClientWait(new CancelTarget(LocalTargID));
 			else
-				ClientCommunication.SendToClient(new CancelTarget(LocalTargID));
+		 		Assistant.Client.Instance.SendToClient(new CancelTarget(LocalTargID));
 			EndIntercept();
 		}
 
@@ -172,7 +172,7 @@ namespace Assistant
 				if (m != null)
 				{
 					if (lth)
-						ClientCommunication.SendToClient(new MobileIncoming(m));
+				 		Assistant.Client.Instance.SendToClient(new MobileIncoming(m));
 
 					RemoveTextFlags(m);
 				}
@@ -188,7 +188,7 @@ namespace Assistant
 				if (m != null)
 				{
 					if (IsLastTarget(m) && lth)
-						ClientCommunication.SendToClient(new MobileIncoming(m));
+				 		Assistant.Client.Instance.SendToClient(new MobileIncoming(m));
 
 					CheckLastTargetRange(m);
 
@@ -238,9 +238,9 @@ namespace Assistant
 				{
 					targ.Gfx = m.Body;
 					if (wait)
-						ClientCommunication.SendToClientWait(new ChangeCombatant(m));
+				 		Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(m));
 					else
-						ClientCommunication.SendToClient(new ChangeCombatant(m));
+				 		Assistant.Client.Instance.SendToClient(new ChangeCombatant(m));
 					m_LastCombatant = s;
 				}
 			}
@@ -305,7 +305,7 @@ namespace Assistant
 			}
 			else
 			{
-				ClientCommunication.SendToServer(new TargetResponse(m_CurrentID, World.Player));
+		 		Assistant.Client.Instance.SendToServer(new TargetResponse(m_CurrentID, World.Player));
 			}
 
 			return true;
@@ -425,7 +425,7 @@ namespace Assistant
 			if (m_Intercept)
 				OneTimeResponse(targ);
 			else
-				ClientCommunication.SendToServer(new TargetResponse(targ));
+		 		Assistant.Client.Instance.SendToServer(new TargetResponse(targ));
 			return true;
 		}
 
@@ -469,9 +469,9 @@ namespace Assistant
 
 			m_FilterCancel.Add((uint)m_CurrentID);
 			if (wait)
-				ClientCommunication.SendToClientWait(new CancelTarget(m_CurrentID));
+		 		Assistant.Client.Instance.SendToClientWait(new CancelTarget(m_CurrentID));
 			else
-				ClientCommunication.SendToClient(new CancelTarget(m_CurrentID));
+		 		Assistant.Client.Instance.SendToClient(new CancelTarget(m_CurrentID));
 			m_ClientTarget = false;
 		}
 
@@ -486,9 +486,9 @@ namespace Assistant
 				info.TargID = m_CurrentID;
 				m_LastGroundTarg = m_LastTarget = info;
 				if (wait)
-					ClientCommunication.SendToServerWait(new TargetResponse(info));
+			 		Assistant.Client.Instance.SendToServerWait(new TargetResponse(info));
 				else
-					ClientCommunication.SendToServer(new TargetResponse(info));
+			 		Assistant.Client.Instance.SendToServer(new TargetResponse(info));
 			}
 
 			CancelClientTarget(wait);
@@ -874,7 +874,7 @@ namespace Assistant
 			{
 				CancelClientTarget(false);
 				m_ClientTarget = m_HasTarget = true;
-				ClientCommunication.SendToClient(new Target(m_CurrentID, m_AllowGround, m_CurFlags));
+		 		Assistant.Client.Instance.SendToClient(new Target(m_CurrentID, m_AllowGround, m_CurFlags));
 			}
 		}
 	}

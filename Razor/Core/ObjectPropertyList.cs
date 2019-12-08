@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Assistant
 {
-	internal class ObjectPropertyList
+	public class ObjectPropertyList
 	{
 		internal class OPLEntry
 		{

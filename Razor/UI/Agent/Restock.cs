@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal RazorAgentNumOnlyTextBox RestockDragDelay { get { return restockDragDelay; } }
 		internal Label RestockSourceLabel { get { return restockSourceLabel; } }

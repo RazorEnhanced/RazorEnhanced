@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		private DataTable scriptTable;
 

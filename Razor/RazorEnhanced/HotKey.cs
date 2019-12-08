@@ -693,7 +693,7 @@ namespace RazorEnhanced
 				case "Accept Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
-						ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
+				 		Assistant.Client.Instance.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
 					break;
@@ -701,7 +701,7 @@ namespace RazorEnhanced
 				case "Decline Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
-						ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
+				 		Assistant.Client.Instance.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
 					break;
@@ -745,7 +745,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Inspect Item/Ground":
-					ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
+			 		Assistant.Client.Instance.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
 					Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
 					break;
 
@@ -759,7 +759,7 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				case "Fly ON/OFF":
-					ClientCommunication.SendToServer(new ToggleFly());
+			 		Assistant.Client.Instance.SendToServer(new ToggleFly());
 					break;
 
 				case "Grab Item":
@@ -818,19 +818,19 @@ namespace RazorEnhanced
 			{
 				case "Last Item":
 					if (World.Player.LastObject != Assistant.Serial.Zero)
-						Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.LastObject));
+						Assistant.Client.Instance.SendToServer(new DoubleClick(World.Player.LastObject));
 					break;
 
 				case "Left Hand":
 					item = World.Player.GetItemOnLayer(Layer.LeftHand);
 					if (item != null)
-						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+						Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
 					break;
 
 				case "Right Hand":
 					item = World.Player.GetItemOnLayer(Layer.RightHand);
 					if (item != null)
-						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+						Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
 					break;
 
 				default:
@@ -846,7 +846,7 @@ namespace RazorEnhanced
 					foreach (Assistant.Mobile m in World.MobilesInRange())
 					{
 						if (m != World.Player)
-							ClientCommunication.SendToServer(new SingleClick(m));
+					 		Assistant.Client.Instance.SendToServer(new SingleClick(m));
 
 						if (Assistant.Engine.MainWindow.LastTargTextFlags.Checked)
 							Targeting.CheckTextFlags(m);
@@ -854,7 +854,7 @@ namespace RazorEnhanced
 					foreach (Assistant.Item i in World.Items.Values)
 					{
 						if (i.IsCorpse)
-							ClientCommunication.SendToServer(new SingleClick(i));
+					 		Assistant.Client.Instance.SendToServer(new SingleClick(i));
 					}
 					break;
 
@@ -862,7 +862,7 @@ namespace RazorEnhanced
 					foreach (Assistant.Item i in World.Items.Values)
 					{
 						if (i.IsCorpse)
-							ClientCommunication.SendToServer(new SingleClick(i));
+					 		Assistant.Client.Instance.SendToServer(new SingleClick(i));
 					}
 					break;
 
@@ -870,7 +870,7 @@ namespace RazorEnhanced
 					foreach (Assistant.Mobile m in World.MobilesInRange())
 					{
 						if (m != World.Player)
-							ClientCommunication.SendToServer(new SingleClick(m));
+					 		Assistant.Client.Instance.SendToServer(new SingleClick(m));
 
 						if (Assistant.Engine.MainWindow.LastTargTextFlags.Checked)
 							Targeting.CheckTextFlags(m);
@@ -880,7 +880,7 @@ namespace RazorEnhanced
 				case "Items":
 					foreach (Assistant.Item i in World.Items.Values)
 					{
-						ClientCommunication.SendToServer(new SingleClick(i));
+				 		Assistant.Client.Instance.SendToServer(new SingleClick(i));
 					}
 					break;
 
@@ -895,18 +895,18 @@ namespace RazorEnhanced
 			if (function == "Mount")
 			{
 				if (Filters.AutoRemountSerial != 0)
-					Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
+					Assistant.Client.Instance.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
 			}
 			else if (function == "Dismount")
 			{
-				Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
+				Assistant.Client.Instance.SendToServer(new DoubleClick(World.Player.Serial));
 			}
 			else if (function == "Mount / Dismount")
 			{
 				if (Player.Mount == null)
-					Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
+					Assistant.Client.Instance.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
 				else
-					Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
+					Assistant.Client.Instance.SendToServer(new DoubleClick(World.Player.Serial));
 			}
 			else
 			{
@@ -962,12 +962,12 @@ namespace RazorEnhanced
 					if (World.FindMobile(Targeting.GetLastTarger) != null)
 					{
 						Targeting.LastAttack = Targeting.GetLastTarger;
-						Assistant.ClientCommunication.SendToServer(new AttackReq(Targeting.GetLastTarger));
+						Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.GetLastTarger));
 					}
 					break;
 				case "Attack Last":
 					if (Targeting.LastAttack != 0)
-						Assistant.ClientCommunication.SendToServer(new AttackReq(Targeting.LastAttack));
+						Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.LastAttack));
 					break;
 				case "WarMode ON/OFF":
 					SpecialMoves.ToggleWarPeace();
@@ -1322,8 +1322,8 @@ namespace RazorEnhanced
 					i = World.FindItem(World.Player.LastWeaponRight);
 					if (i != null)
 					{
-						ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount)); 
-						ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+				 		Assistant.Client.Instance.SendToServer(new LiftRequest(i.Serial, i.Amount)); 
+				 		Assistant.Client.Instance.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
 					}
 					break;
 
@@ -1334,8 +1334,8 @@ namespace RazorEnhanced
 					i = World.FindItem(World.Player.LastWeaponLeft);
 					if (i != null)
 					{
-						ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount));
-						ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+				 		Assistant.Client.Instance.SendToServer(new LiftRequest(i.Serial, i.Amount));
+				 		Assistant.Client.Instance.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
 					}
 					break;
 
@@ -1354,8 +1354,8 @@ namespace RazorEnhanced
 						i = World.FindItem(World.Player.LastWeaponRight);
 						if (i != null)
 						{
-							ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount));
-							ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+					 		Assistant.Client.Instance.SendToServer(new LiftRequest(i.Serial, i.Amount));
+					 		Assistant.Client.Instance.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
 						}
 					}
 					break;
@@ -1371,8 +1371,8 @@ namespace RazorEnhanced
 						i = World.FindItem(World.Player.LastWeaponLeft);
 						if (i != null)
 						{
-							ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount));
-							ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+					 		Assistant.Client.Instance.SendToServer(new LiftRequest(i.Serial, i.Amount));
+					 		Assistant.Client.Instance.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
 						}
 					}
 					break;
@@ -1398,7 +1398,7 @@ namespace RazorEnhanced
 			{
 				if (World.Player.LastSkill != -1)
 				{
-					ClientCommunication.SendToServer(new UseSkill(World.Player.LastSkill));
+			 		Assistant.Client.Instance.SendToServer(new UseSkill(World.Player.LastSkill));
 					if ((World.Player.LastSkill == (int)SkillName.Stealth && !World.Player.Visible) || World.Player.LastSkill == (int)SkillName.Hiding) // Trigger stealth step counter
 						StealthSteps.Hide();
 				}
@@ -1430,8 +1430,8 @@ namespace RazorEnhanced
 					if (item != null)
 					{
 						Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-						Assistant.ClientCommunication.SendToServer(new LiftRequest(item, 1));
-						Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
+						Assistant.Client.Instance.SendToServer(new LiftRequest(item, 1));
+						Assistant.Client.Instance.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
 					}
 					break;
 
@@ -1457,12 +1457,12 @@ namespace RazorEnhanced
 					break;
 
 				case "Target Self Queued":
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"self\" queued."));
+					Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"self\" queued."));
 					Assistant.Targeting.TargetSelf(true);
 					break;
 
 				case "Target Last Queued":
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" queued."));
+					Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" queued."));
 					Assistant.Targeting.LastTarget(true);
 					break;
 
@@ -1472,17 +1472,17 @@ namespace RazorEnhanced
 					break;
 
 				case "Clear Target Queue":
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"queue\" cleared."));
+					Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"queue\" cleared."));
 					Assistant.Targeting.ClearQueue();
 					break;
 
 				case "Clear Last Target":
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" cleared."));
+					Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" cleared."));
 					Assistant.Targeting.ClearLast();
                     break;
 
 				case "Clear Last and Queue":
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last and queue\" cleared."));
+					Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last and queue\" cleared."));
 					Assistant.Targeting.ClearLast();
 					Assistant.Targeting.ClearQueue();
 					break;

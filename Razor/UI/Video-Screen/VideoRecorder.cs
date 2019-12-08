@@ -8,7 +8,7 @@ using Accord.Video.DirectShow;
 
 namespace Assistant
 {
-	internal partial class MainForm : System.Windows.Forms.Form
+	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal TextBox VideoPathTextBox { get { return videoPathTextBox; } }
 

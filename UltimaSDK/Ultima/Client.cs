@@ -4,7 +4,7 @@ using System.IO;
 namespace Ultima
 {
 	/// <summary>
-	/// Provides methods to interact with the Ultima Online client.
+	/// Provides methods to interact with the Ultima Onlin e Assistant.Client.Instance.
 	/// </summary>
 	public sealed class Client
 	{
@@ -395,7 +395,7 @@ namespace Ultima
 		}
 
 		/// <summary>
-		/// Sends a <see cref="String" /> of characters (<paramref name="text" />) to the Client. The string is followed by a carriage return and line feed.
+		/// Sends a <see cref="String" /> of characters (<paramref name="text" />) to th e Assistant.Client.Instance. The string is followed by a carriage return and line feed.
 		/// </summary>
 		/// <returns>True if the Client is running, false if not.</returns>
 		public static bool SendText(string text)
@@ -419,7 +419,7 @@ namespace Ultima
 		}
 
 		/// <summary>
-		/// Sends a formatted <see cref="String" /> of characters to the Client. The string is followed by a carriage return and line feed. The format functionality is the same as <see cref="String.Format">String.Format</see>.
+		/// Sends a formatted <see cref="String" /> of characters to th e Assistant.Client.Instance. The string is followed by a carriage return and line feed. The format functionality is the same as <see cref="String.Format">String.Format</see>.
 		/// </summary>
 		/// <returns>True if the Client is running, false if not.</returns>
 		public static bool SendText(string format, params object[] args)

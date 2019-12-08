@@ -22,7 +22,7 @@ namespace RazorEnhanced
 
 		public static void Resync()
 		{
-			Assistant.ClientCommunication.SendToServer(new ResyncReq());
+			Assistant.Client.Instance.SendToServer(new ResyncReq());
 		}
 
 		public static double DistanceSqrt(Point3D a, Point3D b)
@@ -97,9 +97,9 @@ namespace RazorEnhanced
 			if (Assistant.World.Player != null)
 			{
 				if (wait)
-					ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
 				else
-					ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
 			}
 		}
 
@@ -111,7 +111,7 @@ namespace RazorEnhanced
 		// Login and logout
 		public static void Disconnect()
 		{
-			Assistant.ClientCommunication.SendToClient(new Disconnect());
+			Assistant.Client.Instance.SendToClient(new Disconnect());
 		}
 
 		// Context Menu
@@ -127,7 +127,7 @@ namespace RazorEnhanced
 
 		public static void WaitForContext(int ser, int delay) // Delay in MS
 		{
-			ClientCommunication.SendToServerWait(new ContextMenuRequest(ser));
+	 		Assistant.Client.Instance.SendToServerWait(new ContextMenuRequest(ser));
 			int subdelay = delay;
 			while (World.Player.HasContext != true && World.Player.ContextID != ser && subdelay > 0)
 			{
@@ -139,7 +139,7 @@ namespace RazorEnhanced
 
 		public static void ContextReply(int serial, int idx)
 		{
-			ClientCommunication.SendToServerWait(new ContextMenuResponse(serial, (ushort)idx));
+	 		Assistant.Client.Instance.SendToServerWait(new ContextMenuResponse(serial, (ushort)idx));
 			World.Player.HasContext = false;
 			World.Player.ContextID = 0;
 		}
@@ -183,7 +183,7 @@ namespace RazorEnhanced
 				}
 				if (idx >= 0)
 				{
-					ClientCommunication.SendToServerWait(new ContextMenuResponse(serial, (ushort)idx));
+			 		Assistant.Client.Instance.SendToServerWait(new ContextMenuResponse(serial, (ushort)idx));
 					World.Player.HasContext = false;
 					World.Player.ContextID = 0;
 				}
@@ -218,13 +218,13 @@ namespace RazorEnhanced
 
 		public static void CancelPrompt()
 		{
-			ClientCommunication.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, String.Empty));
+	 		Assistant.Client.Instance.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, String.Empty));
 			World.Player.HasPrompt = false;
 		}
 
 		public static void ResponsePrompt(string text)
 		{
-			ClientCommunication.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
+	 		Assistant.Client.Instance.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
 			World.Player.HasPrompt = false;
 		}
 
@@ -339,7 +339,7 @@ namespace RazorEnhanced
 		{
 			if(World.Player.HasMenu)
 			{
-				ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, 0, 0, 0));
+		 		Assistant.Client.Instance.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, 0, 0, 0));
 				World.Player.MenuEntry.Clear();
 				World.Player.HasMenu = false;
 			}
@@ -385,14 +385,14 @@ namespace RazorEnhanced
 			{
 				if (menuentry.ModelText.Contains(submenu))
 				{
-					ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)i, menuentry.ModelID, menuentry.ModelColor));
+			 		Assistant.Client.Instance.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)i, menuentry.ModelID, menuentry.ModelColor));
 					World.Player.MenuEntry.Clear();
                     World.Player.HasMenu = false;
 					return;
 				}
 				i++;
 			}
-			ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, 0, 0, 0));
+	 		Assistant.Client.Instance.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, 0, 0, 0));
 			World.Player.MenuEntry.Clear();
 			World.Player.HasMenu = false;
 			Scripts.SendMessageScriptError("MenuResponse Error: No menu name found");
@@ -419,7 +419,7 @@ namespace RazorEnhanced
 
 		public static void QueryStringResponse(bool okcancel, string response) // Delay in MS
 		{
-			ClientCommunication.SendToServerWait(new StringQueryResponse(World.Player.QueryStringID, World.Player.QueryStringType, World.Player.QueryStringIndex, okcancel, response));
+	 		Assistant.Client.Instance.SendToServerWait(new StringQueryResponse(World.Player.QueryStringID, World.Player.QueryStringType, World.Player.QueryStringIndex, okcancel, response));
 			World.Player.HasQueryString = false;
 		}
 
@@ -471,12 +471,12 @@ namespace RazorEnhanced
 		// Pet Rename
 		public static void PetRename(int serial, string name)
 		{
-			ClientCommunication.SendToServerWait(new RenameRequest((uint)serial, name));
+	 		Assistant.Client.Instance.SendToServerWait(new RenameRequest((uint)serial, name));
 		}
 
 		public static void PetRename(RazorEnhanced.Mobile mob, string name)
 		{
-			ClientCommunication.SendToServerWait(new RenameRequest((uint)mob.Serial, name));
+	 		Assistant.Client.Instance.SendToServerWait(new RenameRequest((uint)mob.Serial, name));
 		}
 
 		// Lock stealth run

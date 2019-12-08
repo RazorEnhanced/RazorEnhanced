@@ -12,38 +12,8 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Assistant
 {
-	internal class FeatureBit
-	{
-		internal static readonly uint WeatherFilter = 1 << 0; // Weather Filter
-		internal static readonly uint LightFilter = 1 << 1;// Light Filter
-		internal static readonly uint SmartLT = 1 << 2; // Smart Last Target
-		internal static readonly uint RangeCheckLT = 1 << 3;// Range Check Last Target
-		internal static readonly uint AutoOpenDoors = 1 << 4; // Automatically Open Doors
-		internal static readonly uint UnequipBeforeCast = 1 << 5; // Unequip Weapon on spell cast
-		internal static readonly uint AutoPotionEquip = 1 << 6; // Un/re-equip weapon on potion use
-		internal static readonly uint BlockHealPoisoned = 1 << 7; // Block heal If poisoned/Macro If Poisoned condition/Heal or Cure self
-		internal static readonly uint LoopingMacros = 1 << 8; // Disallow looping or recursive macros
-		internal static readonly uint UseOnceAgent = 1 << 9;// The use once agent
-		internal static readonly uint RestockAgent = 1 << 10;// The restock agent
-		internal static readonly uint SellAgent = 1 << 11;// The sell agent
-		internal static readonly uint BuyAgent = 1 << 12;// The buy agent
-		internal static readonly uint PotionHotkeys = 1 << 13;// All potion hotkeys
-		internal static readonly uint RandomTargets = 1 << 14;// All random target hotkeys (not target next, last target, target self)
-		internal static readonly uint ClosestTargets = 1 << 15; // All closest target hotkeys
-		internal static readonly uint OverheadHealth = 1 << 16;// Health and Mana/Stam messages shown over player's heads
-		internal static readonly uint AutolootAgent = 1 << 17; // The autoloot agent
-		internal static readonly uint BoneCutterAgent = 1 << 18; // The bone cutter agent
-		internal static readonly uint AdvancedMacros = 1 << 19; // Advanced macro engine
-		internal static readonly uint AutoRemount = 1 << 20; // Auto remount after dismount
-		internal static readonly uint AutoBandage = 1 << 21; // Auto bandage friends, self, last and mount option
-		internal static readonly uint EnemyTargetShare = 1 << 22; // Enemy target share on guild, party or alliance chat
-		internal static readonly uint FilterSeason = 1 << 23; // Season Filter
-		internal static readonly uint SpellTargetShare = 1 << 24; // Spell target share on guild, party or alliance chat
 
-		internal static readonly uint MaxBit = 24;
-	}
-
-	internal unsafe sealed class ClientCommunication
+	internal unsafe sealed class OSIClient : Client
 	{
 		internal enum UONetMessage
 		{
@@ -73,7 +43,6 @@ namespace Assistant
 			// ZIPPY REV 80			SetFwdHWnd = 24,
 		}
 
-		internal const int WM_USER = 0x400;
 
 		internal enum UOAMessage
 		{
@@ -165,7 +134,7 @@ namespace Assistant
 
 		private static uint m_NextCmdID = WM_USER + 401;
 
-		internal static int OnUOAMessage(MainForm razor, int Msg, int wParam, int lParam)
+		public override int OnUOAMessage(MainForm razor, int Msg, int wParam, int lParam)
 		{
 			switch ((UOAMessage)Msg)
 			{
@@ -256,7 +225,7 @@ namespace Assistant
 							return 0;
 
 						if ((wParam & 0x00010000) != 0)
-							ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", sb.ToString()));
+						 	Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", sb.ToString()));
 						else
 							World.Player.OverheadMessage(hue, sb.ToString());
 						DLLImport.Win.GlobalDeleteAtom((ushort)lParam);
@@ -310,7 +279,7 @@ namespace Assistant
 					{
 						if (World.Player == null || wParam < 0 || wParam > World.Player.Skills.Length || lParam < 0 || lParam >= 3)
 							return 0;
-						SendToServer(new SetSkillLock(wParam, (LockType)lParam));
+						Assistant.Client.Instance.SendToServer(new SetSkillLock(wParam, (LockType)lParam));
 						return 1;
 					}
 				case UOAMessage.GET_ACCT_ID:
@@ -330,12 +299,12 @@ namespace Assistant
 			PostToWndReg((uint)UOAMessage.RES_COUNT_DONE, (IntPtr)counter, (IntPtr)count);
 		}
 
-		internal static void PostSpellCast(int spell)
+		public override void PostSpellCast(int spell)
 		{
 			PostToWndReg((uint)UOAMessage.CAST_SPELL, (IntPtr)spell, IntPtr.Zero);
 		}
 
-		internal static void PostLogin(int serial)
+		public override void PostLogin(int serial)
 		{
 			PostToWndReg((uint)UOAMessage.LOGIN, (IntPtr)serial, IntPtr.Zero);
 		}
@@ -345,19 +314,19 @@ namespace Assistant
 			PostToWndReg((uint)UOAMessage.MACRO_DONE, IntPtr.Zero, IntPtr.Zero);
 		}
 
-		internal static void PostMapChange(int map)
+		public override void PostMapChange(int map)
 		{
 			PostToWndReg((uint)UOAMessage.MAP_INFO, (IntPtr)map, IntPtr.Zero);
 		}
 
-		internal static void PostSkillUpdate(int skill, int val)
+		public override void PostSkillUpdate(int skill, int val)
 		{
 			PostToWndReg((uint)UOAMessage.SKILL_LEVEL, (IntPtr)skill, (IntPtr)val);
 			if (skill == (int)SkillName.Magery)
 				PostToWndReg((uint)UOAMessage.MAGERY_LEVEL, (IntPtr)((int)(val / 10)), (IntPtr)(val % 10));
 		}
 
-		internal static void PostRemoveMulti(Item item)
+		public override void PostRemoveMulti(Item item)
 		{
 			if (item == null)
 				return;
@@ -374,7 +343,7 @@ namespace Assistant
 			}
 		}
 
-		internal static void PostAddMulti(ItemID iid, Point3D Position)
+		public override void PostAddMulti(ItemID iid, Point3D Position)
 		{
 			IntPtr pos = (IntPtr)((int)((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
 
@@ -388,25 +357,25 @@ namespace Assistant
 			}
 		}
 
-		internal static void PostHitsUpdate()
+		public override void PostHitsUpdate()
 		{
 			if (World.Player != null)
 				PostToWndReg((uint)UOAMessage.STR_STATUS, (IntPtr)World.Player.HitsMax, (IntPtr)World.Player.Hits);
 		}
 
-		internal static void PostManaUpdate()
+		public override void PostManaUpdate()
 		{
 			if (World.Player != null)
 				PostToWndReg((uint)UOAMessage.INT_STATUS, (IntPtr)World.Player.ManaMax, (IntPtr)World.Player.Mana);
 		}
 
-		internal static void PostStamUpdate()
+		public override void PostStamUpdate()
 		{
 			if (World.Player != null)
 				PostToWndReg((uint)UOAMessage.DEX_STATUS, (IntPtr)World.Player.StamMax, (IntPtr)World.Player.Stam);
 		}
 
-		internal static void PostTextSend(string text)
+		public override void PostTextSend(string text)
 		{
 			if (World.Player != null)
 			{
@@ -470,22 +439,7 @@ namespace Assistant
 			internal byte Buff0;
 		}
 
-		internal enum Loader_Error
-		{
-			SUCCESS = 0,
-			NO_OPEN_EXE,
-			NO_MAP_EXE,
-			NO_READ_EXE_DATA,
-
-			NO_RUN_EXE,
-			NO_ALLOC_MEM,
-
-			NO_WRITE,
-			NO_VPROTECT,
-			NO_READ,
-
-			UNKNOWN_ERROR = 99
-		};
+		
 		
 		internal static string GetWindowsUserName()
 		{
@@ -519,7 +473,7 @@ namespace Assistant
 		// ZIPPY REV 80		public static IntPtr FwdWnd { get { return m_FwdWnd; } }
 
 		private static bool m_Ready = false;
-		internal static bool Ready { get { return m_Ready; } }
+		public override bool Ready { get { return m_Ready; } }
 		private static DateTime m_ConnStart;
 		private static IPAddress m_LastConnection;
 
@@ -527,11 +481,11 @@ namespace Assistant
 
 		internal static int NotificationCount { get { return m_WndReg.Count; } }
 
-		internal static DateTime ConnectionStart { get { return m_ConnStart; } }
-		internal static IPAddress LastConnection { get { return m_LastConnection; } }
-		internal static Process ClientProcess { get { return ClientProc; } }
+		public override DateTime ConnectionStart { get { return m_ConnStart; } }
+		public override IPAddress LastConnection { get { return m_LastConnection; } }
+		public override Process ClientProcess { get { return ClientProc; } }
 
-		internal static bool ClientRunning
+		public override bool ClientRunning
 		{
 			get
 			{
@@ -546,7 +500,7 @@ namespace Assistant
 			}
 		}
 
-		static ClientCommunication()
+		static OSIClient()
 		{
 			m_SendQueue = new ConcurrentQueue<Packet>();
 			m_RecvQueue = new ConcurrentQueue<Packet>();
@@ -555,7 +509,7 @@ namespace Assistant
 			m_ClientEnc = false;
 			m_ServerEnc = false;
 			m_CalTimer = null;
-			m_CalibrateNow = new TimerCallback(ClientCommunication.CalibrateNow);
+			m_CalibrateNow = new TimerCallback(CalibrateNow);
 			m_CalPos = Point2D.Zero;
 			m_DwmTimer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0));
 		}
@@ -576,31 +530,31 @@ namespace Assistant
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
 		}
 
-		internal static void RequestStatbarPatch(bool preAOS)
+		public override void RequestStatbarPatch(bool preAOS)
 		{
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
 		}
 
-		internal static void SetCustomNotoHue(int hue)
+		public override void SetCustomNotoHue(int hue)
 		{
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
 		}
 
-		internal static void SetSmartCPU(bool enabled)
+		public override void SetSmartCPU(bool enabled)
 		{
 			if (enabled)
-				try { ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
+				try { 	Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
 				catch { }
 
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
-		internal static void SetGameSize(int x, int y)
+		public override void SetGameSize(int x, int y)
 		{
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
 		}
 
-		internal static Loader_Error LaunchClient(string client)
+		public override Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
 			uint pid = 0;
@@ -623,12 +577,12 @@ namespace Assistant
 		}
 
 		private static bool m_ClientEnc = false;
-		internal static bool ClientEncrypted { get { return m_ClientEnc; } set { m_ClientEnc = value; } }
+		public override bool ClientEncrypted { get { return m_ClientEnc; } set { m_ClientEnc = value; } }
 
 		private static bool m_ServerEnc = false;
-		internal static bool ServerEncrypted { get { return m_ServerEnc; } set { m_ServerEnc = value; } }
+		public override bool ServerEncrypted { get { return m_ServerEnc; } set { m_ServerEnc = value; } }
 
-		internal static bool InstallHooks(IntPtr mainWindow)
+		public override bool InstallHooks(IntPtr mainWindow)
 		{
 			InitError error;
 			int flags = 0;
@@ -639,7 +593,7 @@ namespace Assistant
 			if (ClientEncrypted)
 				flags |= 0x08;
 
-			if (ServerEncrypted)
+			if (Assistant.Client.Instance.ServerEncrypted)
 				flags |= 0x10;
 
 			//ClientProc.WaitForInputIdle();
@@ -667,7 +621,7 @@ namespace Assistant
 			m_OutRecv = (Buffer*)(baseAddr + sizeof(Buffer));
 			m_InSend = (Buffer*)(baseAddr + sizeof(Buffer) * 2);
 			m_OutSend = (Buffer*)(baseAddr + sizeof(Buffer) * 3);
-			m_TitleStr = baseAddr + sizeof(ClientCommunication.Buffer) * 4;
+			m_TitleStr = baseAddr + sizeof(Buffer) * 4;
 
 			DLLImport.Razor.SetServer(m_ServerIP, m_ServerPort);
 
@@ -690,7 +644,7 @@ namespace Assistant
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
-				ClientCommunication.RequestStatbarPatch(true);
+			 	Assistant.Client.Instance.RequestStatbarPatch(true);
 
 			return true;
 		}
@@ -698,7 +652,7 @@ namespace Assistant
 		private static uint m_ServerIP;
 		private static ushort m_ServerPort;
 
-		internal static void SetConnectionInfo(IPAddress addr, int port)
+		public override void SetConnectionInfo(IPAddress addr, int port)
 		{
 			byte[] ipBytes = addr.GetAddressBytes();
 			uint ip = (uint)ipBytes[3] << 24;
@@ -710,19 +664,19 @@ namespace Assistant
 			m_ServerPort = (ushort)port;
 		}
 
-		internal static void SetNegotiate(bool negotiate)
+		public override void SetNegotiate(bool negotiate)
 		{
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
 		}
 
-		internal static bool Attach(int pid)
+		public override bool Attach(int pid)
 		{
 			ClientProc = null;
 			ClientProc = Process.GetProcessById(pid);
 			return ClientProc != null;
 		}
 
-		internal static void Close()
+		public override void Close()
 		{
 			DLLImport.Razor.Shutdown(true);
 			if (ClientProc != null && !ClientProc.HasExited)
@@ -730,16 +684,7 @@ namespace Assistant
 			ClientProc = null;
 		}
 
-		internal static int GetZ(int x, int y, int z)
-		{
-			if (DLLImport.Razor.IsCalibrated())
-			{
-				if (DLLImport.Razor.GetPosition(null, null, &z))
-					return z;
-			}
 
-			return Facet.ZTop(World.Player.Map, x, y, z);
-		}
 
 		private static void CalibrateNow()
 		{
@@ -767,7 +712,7 @@ namespace Assistant
 		private static TimerCallback m_CalibrateNow = new TimerCallback(CalibrateNow);
 		private static Point2D m_CalPos = Point2D.Zero;
 
-		internal static void BeginCalibratePosition()
+		public override void BeginCalibratePosition()
 		{
 			if (World.Player == null || DLLImport.Razor.IsCalibrated())
 				return;
@@ -807,7 +752,7 @@ namespace Assistant
 				m_ConnStart = DateTime.MinValue;
 			}
 
-			ClientCommunication.SetTitleStr(""); // Restore titlebar standard
+		 	Assistant.Client.Instance.SetTitleStr(""); // Restore titlebar standard
 
 			if (World.Player != null)
 			{
@@ -867,7 +812,7 @@ namespace Assistant
 
 		}
 
-		internal static bool OnMessage(MainForm razor, uint wParam, int lParam)
+		public override bool OnMessage(MainForm razor, uint wParam, int lParam)
 		{
 			bool retVal = true;
 			bool m_hidetoolbar = false;
@@ -1071,14 +1016,14 @@ namespace Assistant
 
 				// Unknown
 				default:
-					MessageBox.Show(Engine.ActiveWindow, "Unknown message from uo client\n" + ((int)wParam).ToString(), "Error?");
+					//MessageBox.Show(Engine.ActiveWindow, "Unknown message from uo client\n" + ((int)wParam).ToString(), "Error?");
 					break;
 			}
 
 			return retVal;
 		}
 
-		internal static void SendToServer(Packet p)
+		public override unsafe void SendToServer(Packet p)
 		{
 			if (!m_Ready)
 				return;
@@ -1096,7 +1041,7 @@ namespace Assistant
 			}
         }
 
-		internal static void SendToServerWait(Packet p)
+		public override unsafe void SendToServerWait(Packet p)
 		{
 			if (!m_Ready)
 				return;
@@ -1122,7 +1067,7 @@ namespace Assistant
 			m_ScriptWaitSend = false;
 		}
 
-		internal static void SendToServer(PacketReader pr)
+		public override unsafe void SendToServer(PacketReader pr)
 		{
 			if (!m_Ready)
 				return;
@@ -1130,7 +1075,7 @@ namespace Assistant
 			SendToServer(MakePacketFrom(pr));
 		}
 
-		internal static void SendToClientWait(Packet p)
+		public override unsafe void SendToClientWait(Packet p)
 		{
 			if (!m_Ready || p.Length <= 0)
 				return;
@@ -1157,7 +1102,7 @@ namespace Assistant
 		}
 
 
-		internal static void SendToClient(Packet p)
+		public override void SendToClient(Packet p)
 		{
 			if (!m_Ready || p.Length <= 0)
 				return;
@@ -1174,7 +1119,7 @@ namespace Assistant
 			}
 		}
 
-		internal static void SendToClient(PacketReader pr)
+		public override void SendToClient(PacketReader pr)
 		{
 			if (!m_Ready)
 				return;
@@ -1182,7 +1127,8 @@ namespace Assistant
 			SendToClient(MakePacketFrom(pr));
 		}
 
-		internal static void ForceSendToClient(Packet p)
+
+		public override void ForceSendToClient(Packet p)
 		{
 			byte[] data = p.Compile();
 
@@ -1200,7 +1146,7 @@ namespace Assistant
 			CommMutex.ReleaseMutex();
 		}
 
-		internal static void ForceSendToServer(Packet p)
+		public override void ForceSendToServer(Packet p)
 		{
 			if (p == null || p.Length <= 0)
 				return;
@@ -1221,13 +1167,13 @@ namespace Assistant
 			CommMutex.ReleaseMutex();
 		}
 
-		private static void InitSendFlush()
+		public override void InitSendFlush()
 		{
 			if (m_OutSend->Length == 0)
 				DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
 		}
 
-		private static void CopyToBuffer(Buffer* buffer, byte* data, int len)
+		private void CopyToBuffer(Buffer* buffer, byte* data, int len)
 		{
 			//if ( buffer->Length + buffer->Start + len >= SHARED_BUFF_SIZE )
 			//	throw new NullReferenceException( String.Format( "Buffer OVERFLOW in CopyToBuffer [{0} + {1}] <- {2}", buffer->Start, buffer->Length, len ) );
@@ -1241,13 +1187,13 @@ namespace Assistant
 			buffer->Length += len;
 		}
 
-		internal static Packet MakePacketFrom(PacketReader pr)
+		public override Packet MakePacketFrom(PacketReader pr)
 		{
 			byte[] data = pr.CopyBytes(0, pr.Length);
 			return new Packet(data, pr.Length, pr.DynamicLength);
 		}
 
-		private static unsafe void HandleComm(Buffer* inBuff, Buffer* outBuff, ConcurrentQueue<Packet> queue, PacketPath path)
+		private unsafe void HandleComm(Buffer* inBuff, Buffer* outBuff, ConcurrentQueue<Packet> queue, PacketPath path)
 		{
 			CommMutex.WaitOne();
 			while (inBuff->Length > 0)
@@ -1353,7 +1299,7 @@ namespace Assistant
 			CommMutex.ReleaseMutex();
 		}
 
-		private static void OnRecv()
+		private void OnRecv()
 		{
 			m_ScriptWaitRecv = true;
 			m_QueueRecv = true;
@@ -1362,7 +1308,7 @@ namespace Assistant
 			m_ScriptWaitRecv = false;
         }
 
-		private static void OnSend()
+		private void OnSend()
 		{
 			m_ScriptWaitSend = true;
 			m_QueueSend = true;
@@ -1374,7 +1320,7 @@ namespace Assistant
 		// Titlebar
 		private static string m_LastStr = string.Empty;
 
-		internal static void SetTitleStr(string str)
+		public override void SetTitleStr(string str)
 		{
 			if (m_LastStr == str)
 				return;

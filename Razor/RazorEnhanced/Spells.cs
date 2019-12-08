@@ -164,8 +164,8 @@ namespace RazorEnhanced
 			if (item != null)
 			{
 				Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item, 1));
-				Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item, 1));
+				Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
 			}
 		}
 
