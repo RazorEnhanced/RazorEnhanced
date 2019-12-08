@@ -41,21 +41,6 @@ namespace Assistant
 
 		private static Version m_ClientVersion = null;
 
-		private static string GetManagedString(IntPtr toManage)
-		{
-			// Receive the pointer to ANSI character array
-			// from API.
-			IntPtr pStr = toManage;
-			// Construct a string from the pointer.
-			string str = Marshal.PtrToStringAnsi(pStr);
-			// Free the memory pointed to by the pointer.
-			// Marshal.FreeHGlobal(pStr);
-			// pStr = IntPtr.Zero;
-			// Display the string.
-			return str;
-			// Console.WriteLine("Returned string : " + str);
-		}
-
 		internal static Version ClientVersion
 		{
 			get
@@ -63,7 +48,8 @@ namespace Assistant
 				if (m_ClientVersion == null || m_ClientVersion.Major < 2)
 				{
 					IntPtr version = DLLImport.Razor.GetUOVersion();
-					string[] split = GetManagedString(version).Split('.');
+					string str = Marshal.PtrToStringAnsi(version);
+					string[] split = str.Split('.');
 
 					if (split.Length < 3)
 						return new Version(4, 0, 0, 0);

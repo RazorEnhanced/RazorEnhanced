@@ -1,21 +1,21 @@
 /***************************************************************************
-	PLATFORM.H  -- Platform-specific defines for TWOFISH code
+    PLATFORM.H  -- Platform-specific defines for TWOFISH code
 
-	Submitters:
-		Bruce Schneier, Counterpane Systems
-		Doug Whiting,   Hi/fn
-		John Kelsey,    Counterpane Systems
-		Chris Hall,     Counterpane Systems
-		David Wagner,   UC Berkeley
-
-	Code Author:        Doug Whiting,   Hi/fn
-
-	Version  1.00       April 1998
-
-	Copyright 1998, Hi/fn and Counterpane Systems.  All rights reserved.
-
-	Notes:
-		*   Tab size is set to 4 characters in this file
+    Submitters:
+        Bruce Schneier, Counterpane Systems
+        Doug Whiting,   Hi/fn
+        John Kelsey,    Counterpane Systems
+        Chris Hall,     Counterpane Systems
+        David Wagner,   UC Berkeley
+            
+    Code Author:        Doug Whiting,   Hi/fn
+        
+    Version  1.00       April 1998
+        
+    Copyright 1998, Hi/fn and Counterpane Systems.  All rights reserved.
+        
+    Notes:
+        *   Tab size is set to 4 characters in this file
 
 ***************************************************************************/
 
@@ -41,7 +41,7 @@
 #undef  ROL
 #undef  ROR
 #pragma intrinsic(_lrotl,_lrotr)        /* use intrinsic compiler rotations */
-#define ROL(x,n)    _lrotl(x,n)
+#define ROL(x,n)    _lrotl(x,n)         
 #define ROR(x,n)    _lrotr(x,n)
 #endif
 
@@ -74,3 +74,4 @@
 #define     b1(x)           _b(x,1)
 #define     b2(x)           _b(x,2)
 #define     b3(x)           _b(x,3)     /* extract MSB of DWORD */
+

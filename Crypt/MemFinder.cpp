@@ -3,10 +3,21 @@
 
 DWORD MemFinder::Find(const void *data, int length, DWORD addressHint, DWORD addressMax)
 {
-	for (DWORD addr = addressHint; addr < addressMax && !IsBadReadPtr((void*)addr, length); addr++)
+	for (DWORD addr = addressHint; addr < addressMax; addr++)
 	{
-		if (memcmp((const void*)addr, data, length) == 0)
-			return addr;
+		if (IsBadReadPtr((void*)addr, length)) {
+			continue;
+		}
+
+		__try
+		{
+			if (memcmp((const void*)addr, data, length) == 0)
+				return addr;
+		}
+		__except (EXCEPTION_ACCESS_VIOLATION)
+		{
+			continue;
+		}
 	}
 
 	return 0;
@@ -27,11 +38,12 @@ void MemFinder::Clear()
 	_Executed = false;
 	_StartPos = 0xFFFFFFFF;
 
-	for (unsigned int i = 0; i < _Entries.size(); i++)
+	for (unsigned int i = 0; i<_Entries.size(); i++)
 		delete[] _Entries[i].Data;
 
 	_Entries.clear();
 }
+
 
 void MemFinder::AddEntry(const void *data, int length, unsigned int maxResults, DWORD hint)
 {
@@ -77,26 +89,40 @@ void MemFinder::Execute()
 	bool allDone = false;
 	for (DWORD pos = _StartPos; pos < 0x02000000 && !allDone; pos++)
 	{
-		allDone = true;
-		for (unsigned int i = 0; i < _Entries.size(); i++)
+		__try
 		{
-			Entry &e = _Entries[i];
+			allDone = true;
+			for (unsigned int i = 0; i < _Entries.size(); i++)
+			{
+				Entry &e = _Entries[i];
 
-			if (e.Results.size() >= e.MaxResults)
-				continue;
+				if (e.Results.size() >= e.MaxResults) {
+					/* Already found this entry */
+					continue;
+				}
 
-			if (IsBadReadPtr((void*)pos, e.Length))
-				continue;
+				if (IsBadReadPtr((void*)pos, e.Length)) {
+					continue;
+				}
 
-			allDone = false;
+				allDone = false;
 
-			if (e.PositionHint > pos)
-				continue;
+				if (e.PositionHint > pos) {
+					/* This entry always appears in memory after this position */
+					continue;
+				}
 
-			if (!memcmp((void*)pos, e.Data, e.Length))
-				e.Results.push_back(pos);
+				if (!memcmp((void*)pos, e.Data, e.Length)) {
+					e.Results.push_back(pos);
+				}
+			}
+		}
+		__except (EXCEPTION_ACCESS_VIOLATION)
+		{
+			break;
 		}
 	}
 
 	_Executed = true;
 }
+

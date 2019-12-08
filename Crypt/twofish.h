@@ -3,15 +3,15 @@
 /* ---------- See examples at end of this file for typical usage -------- */
 
 /* AES Cipher header file for ANSI C Submissions
-	Lawrence E. Bassham III
-	Computer Security Division
-	National Institute of Standards and Technology
+    Lawrence E. Bassham III
+    Computer Security Division
+    National Institute of Standards and Technology
 
-	This sample is to assist implementers developing to the
+    This sample is to assist implementers developing to the
 Cryptographic API Profile for AES Candidate Algorithm Submissions.
 Please consult this document as a cross-reference.
-
-	ANY CHANGES, WHERE APPROPRIATE, TO INFORMATION PROVIDED IN THIS FILE
+    
+    ANY CHANGES, WHERE APPROPRIATE, TO INFORMATION PROVIDED IN THIS FILE
 MUST BE DOCUMENTED. CHANGES ARE ONLY APPROPRIATE WHERE SPECIFIED WITH
 THE STRING "CHANGE POSSIBLE". FUNCTION CALLS AND THEIR PARAMETERS
 CANNOT BE CHANGED. STRUCTURES CAN BE ALTERED TO ALLOW IMPLEMENTERS TO
@@ -19,7 +19,7 @@ INCLUDE IMPLEMENTATION SPECIFIC INFORMATION.
 */
 
 /* Includes:
-	Standard include files
+    Standard include files
 */
 
 #pragma once
@@ -29,7 +29,7 @@ INCLUDE IMPLEMENTATION SPECIFIC INFORMATION.
 #include    "platform.h"            /* platform-specific defines */
 
 /*  Defines:
-		Add any additional defines you need
+        Add any additional defines you need
 */
 
 #define     DIR_ENCRYPT     0       /* Are we encrpyting? */
@@ -75,8 +75,8 @@ INCLUDE IMPLEMENTATION SPECIFIC INFORMATION.
 #define     TOTAL_SUBKEYS       (ROUND_SUBKEYS + 2*MAX_ROUNDS)
 
 /* Typedefs:
-	Typedef'ed data storage elements. Add any algorithm specific
-	parameters at the bottom of the structs as appropriate.
+    Typedef'ed data storage elements. Add any algorithm specific
+    parameters at the bottom of the structs as appropriate.
 */
 
 typedef unsigned char BYTE;
@@ -84,67 +84,67 @@ typedef unsigned long DWORD;        /* 32-bit unsigned quantity */
 typedef DWORD fullSbox[4][256];
 
 /* The structure for key information */
-typedef struct
-{
-	BYTE direction;                 /* Key used for encrypting or decrypting? */
+typedef struct 
+    {
+    BYTE direction;                 /* Key used for encrypting or decrypting? */
 #if ALIGN32
-	BYTE dummyAlign[3];             /* keep 32-bit alignment */
+    BYTE dummyAlign[3];             /* keep 32-bit alignment */
 #endif
-	int  keyLen;                    /* Length of the key */
-	char keyMaterial[MAX_KEY_SIZE + 4];/* Raw key data in ASCII */
+    int  keyLen;                    /* Length of the key */
+    char keyMaterial[MAX_KEY_SIZE+4];/* Raw key data in ASCII */
 
-	/* Twofish-specific parameters: */
-	DWORD keySig;                   /* set to VALID_SIG by makeKey() */
-	int   numRounds;                /* number of rounds in cipher */
-	DWORD key32[MAX_KEY_BITS / 32];   /* actual key bits, in dwords */
-	DWORD sboxKeys[MAX_KEY_BITS / 64];/* key bits used for S-boxes */
-	DWORD subKeys[TOTAL_SUBKEYS];   /* round subkeys, input/output whitening bits */
+    /* Twofish-specific parameters: */
+    DWORD keySig;                   /* set to VALID_SIG by makeKey() */
+    int   numRounds;                /* number of rounds in cipher */
+    DWORD key32[MAX_KEY_BITS/32];   /* actual key bits, in dwords */
+    DWORD sboxKeys[MAX_KEY_BITS/64];/* key bits used for S-boxes */
+    DWORD subKeys[TOTAL_SUBKEYS];   /* round subkeys, input/output whitening bits */
 #if REENTRANT
-	fullSbox sBox8x32;              /* fully expanded S-box */
-#if defined(COMPILE_KEY) && defined(USE_ASM)
+    fullSbox sBox8x32;              /* fully expanded S-box */
+  #if defined(COMPILE_KEY) && defined(USE_ASM)
 #undef  VALID_SIG
 #define VALID_SIG    0x504D4F43     /* 'COMP':  C is compiled with -DCOMPILE_KEY */
-	DWORD cSig1;                    /* set after first "compile" (zero at "init") */
-	void *encryptFuncPtr;           /* ptr to asm encrypt function */
-	void *decryptFuncPtr;           /* ptr to asm decrypt function */
-	DWORD codeSize;                 /* size of compiledCode */
-	DWORD cSig2;                    /* set after first "compile" */
-	BYTE  compiledCode[5000];       /* make room for the code itself */
+    DWORD cSig1;                    /* set after first "compile" (zero at "init") */
+    void *encryptFuncPtr;           /* ptr to asm encrypt function */
+    void *decryptFuncPtr;           /* ptr to asm decrypt function */
+    DWORD codeSize;                 /* size of compiledCode */
+    DWORD cSig2;                    /* set after first "compile" */
+    BYTE  compiledCode[5000];       /* make room for the code itself */
+  #endif
 #endif
-#endif
-} keyInstance;
+    } keyInstance;
 
 /* The structure for cipher information */
-typedef struct
-{
-	BYTE  mode;                     /* MODE_ECB, MODE_CBC, or MODE_CFB1 */
+typedef struct 
+    {
+    BYTE  mode;                     /* MODE_ECB, MODE_CBC, or MODE_CFB1 */
 #if ALIGN32
-	BYTE dummyAlign[3];             /* keep 32-bit alignment */
+    BYTE dummyAlign[3];             /* keep 32-bit alignment */
 #endif
-	BYTE  IV[MAX_IV_SIZE];          /* CFB1 iv bytes  (CBC uses iv32) */
+    BYTE  IV[MAX_IV_SIZE];          /* CFB1 iv bytes  (CBC uses iv32) */
 
-	/* Twofish-specific parameters: */
-	DWORD cipherSig;                /* set to VALID_SIG by cipherInit() */
-	DWORD iv32[BLOCK_SIZE / 32];      /* CBC IV bytes arranged as dwords */
-} cipherInstance;
+    /* Twofish-specific parameters: */
+    DWORD cipherSig;                /* set to VALID_SIG by cipherInit() */
+    DWORD iv32[BLOCK_SIZE/32];      /* CBC IV bytes arranged as dwords */
+    } cipherInstance;
 
 /* Function protoypes */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"{
 #endif
 
-	int makeKey(keyInstance *key, BYTE direction, int keyLen, char *keyMaterial);
+int makeKey(keyInstance *key, BYTE direction, int keyLen, char *keyMaterial);
 
-	int cipherInit(cipherInstance *cipher, BYTE mode, char *IV);
+int cipherInit(cipherInstance *cipher, BYTE mode, char *IV);
 
-	int blockEncrypt(cipherInstance *cipher, keyInstance *key, BYTE *input,
-		int inputLen, BYTE *outBuffer);
+int blockEncrypt(cipherInstance *cipher, keyInstance *key, BYTE *input,
+                int inputLen, BYTE *outBuffer);
 
-	int blockDecrypt(cipherInstance *cipher, keyInstance *key, BYTE *input,
-		int inputLen, BYTE *outBuffer);
+int blockDecrypt(cipherInstance *cipher, keyInstance *key, BYTE *input,
+                int inputLen, BYTE *outBuffer);
 
-	int reKey(keyInstance *key);    /* do key schedule using modified key.keyDwords */
+int reKey(keyInstance *key);    /* do key schedule using modified key.keyDwords */
 #ifdef __cplusplus
 }
 #endif
