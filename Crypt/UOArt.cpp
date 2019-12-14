@@ -1,698 +1,701 @@
 #include "stdafx.h"
+#include "UOArt.h"
 #include "Crypt.h"
-#include "Resource.h"
-#include <uxtheme.h>
-#include <vssym32.h>
-#include <dwmapi.h>
 
-#define Color16to32(c16) (((c16) & 0x7C00) >> 7) | (((c16) & 0x3E0) << 6) | (((c16) & 0x1F) << 19)
+#include <iostream>
+#include <fstream>
+#include <strstream>
+#include <exception>
 
-struct UOItem
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <sys/stat.h>
+
+#include <map>
+#include <memory>
+
+
+namespace {
+
+    UOItem *ArtCache = NULL;
+    unsigned short **Hues = NULL;
+    int NumHues = 0;
+    static bool _loaded;
+    static std::map<int32_t, struct Entry3D> _index;
+}
+
+int64_t HashFileName(char* s);
+
+inline bool fileExists(const std::string fullPath)
 {
-    int RealWidth;
-    int RealHeight;
+    struct stat buf;
+    return (stat(fullPath.c_str(), &buf) == 0);
+}
 
-    int Left;
-    int Top;
-    int Bottom;
-    int Right;
-
-    int GetWidth() const { return Right - Left; }
-    int GetHeight() const { return Bottom - Top; }
-
-    unsigned short **Data; // [ReadlWidth][RealHeight] 32bit color data
-
-    int ItemID;
-    UOItem *pNext;
-};
-
-struct ArtIdx
+inline long fileSize(const std::string& filename)
 {
-    long FilePos;
-    long Length;
-    long Unused;
-};
-
-struct ArtHeader
-{
-    long Unknown;
-    short Width;
-    short Height;
-    //followed by short LookupTable
-};
-
-UOItem *ArtCache = NULL;
-unsigned short **Hues = NULL;
-int NumHues = 0;
+    struct stat stat_buf;
+    int rc = stat(filename.c_str(), &stat_buf);
+    return rc == 0 ? stat_buf.st_size : -1;
+}
 
 inline int Round(float n)
 {
-	int i = (int)n;
-	return i + (n - i >= 0.5 ? 1 : 0);
+    int i = (int)n;
+    return i + (n - i >= 0.5 ? 1 : 0);
 }
 
 unsigned short *GetHue(int index)
 {
-	if (Hues == NULL)
-	{
-		if (!pShared)
-			return NULL;
+    if (Hues == NULL)
+    {
+        if (!pShared)
+            return NULL;
 
-		char str[512];
-		int length, blockCount, index;
-		FILE *huesMul = NULL;
+        WaitForSingleObject(CommMutex, INFINITE);
+        std::string path(pShared->DataPath);
+        ReleaseMutex(CommMutex);
+        path += "/hues.mul";
 
-		WaitForSingleObject(CommMutex, INFINITE);
-		sprintf(str, "%s/hues.mul", pShared->DataPath);
-		ReleaseMutex(CommMutex);
+        int length = fileSize(path);
 
-		huesMul = fopen(str, "rb");
-		if (!huesMul)
-		{
-			Hues = new unsigned short *[1];
-			Hues[0] = new unsigned short[34];
-			memset(Hues[0], 0, 34 * 2);
-			NumHues = 1;
-			return NULL;
-		}
+        int  blockCount, index;
+        std::ifstream huesMul;
+        huesMul.open(path.c_str(), std::ios::in | std::ios::binary);
+        if (!huesMul.is_open())
+        {
+            Log("Failed to load hues file");
+            Hues = new unsigned short *[1];
+            Hues[0] = new unsigned short[34];
+            memset(Hues[0], 0, 34 * 2);
+            NumHues = 1;
+            return NULL;
+        }
+        blockCount = length / 708;
+        if (blockCount > 375)
+            blockCount = 375;
+        NumHues = blockCount * 8;
 
-		fseek(huesMul, 0, SEEK_END);
-		length = (int)ftell(huesMul);
-		fseek(huesMul, 0, SEEK_SET);
-		blockCount = length / 708;
-		if (blockCount > 375)
-			blockCount = 375;
-		NumHues = blockCount * 8;
+        Hues = new unsigned short *[NumHues];
 
-		Hues = new unsigned short *[NumHues];
+        index = 0;
+        for (int b = 0; b < blockCount; b++)
+        {
+            huesMul.seekg(4, std::ios_base::cur);
 
-		index = 0;
-		for (int b = 0; b < blockCount; b++)
-		{
-			fseek(huesMul, 4, SEEK_CUR);
+            for (int i = 0; i < 8; i++, index++)
+            {
+                Hues[index] = new unsigned short[34];
+                for (int c = 0; c < 34; c++)
+                {
+                    unsigned short color;
+                    huesMul.read((char*)&color, 2);
+                    Hues[index][c] = color | 0x8000;
+                }
 
-			for (int i = 0; i < 8; i++, index++)
-			{
-				Hues[index] = new unsigned short[34];
-				for (int c = 0; c < 34; c++)
-				{
-					unsigned short color;
-					fread(&color, 2, 1, huesMul);
-					Hues[index][c] = color | 0x8000;
-				}
+                huesMul.seekg(20, std::ios_base::cur);// ignore name
+            }
+        }
+        huesMul.close();
+    }
 
-				fseek(huesMul, 20, SEEK_CUR); // ignore name
-			}
-		}
-		fclose(huesMul);
-	}
-
-	if (index > 0 && index <= NumHues)
-		return Hues[index - 1];
-	else
-		return NULL;
+    if (index > 0 && index <= NumHues)
+        return Hues[index - 1];
+    else
+        return NULL;
 }
 
 unsigned short ApplyHueToPixel(unsigned short *hue, unsigned short pix)
 {
-	if (hue)
-		return hue[(pix >> 10) & 31];
-	else
-		return pix;
+    if (hue)
+        return hue[(pix >> 10) & 31];
+    else
+        return pix;
 }
 
-UOItem *ReadUOItem(int item, int bh)
+void load_uop_pointers(const std::string& from_file)
 {
-	if (item == 0 || item >= 0xFFFF || !pShared)
-		return NULL;
+    // even if fail don't try again
+    _loaded = true;
 
-	char str[512];
-	short *Lookup;
-	unsigned short *Run;
+    // Build hash to itemId map
+    std::map<int64_t, INT32> hashes;
 
-	FILE *idxMul, *artMul;
-	ArtIdx idx;
-	ArtHeader header;
-	memset(&header, 0, sizeof(ArtHeader));
+    char* tmp = new CHAR[256];
+    for (int itemId = 0; itemId < 0x13FDC; itemId++)
+    {
+        sprintf_s(tmp, 256, "build/artlegacymul/%08d.tga", itemId);
+        UINT64 hash = HashFileName(tmp);
+        if (!hashes.count(hash)) {
+            hashes[hash] = itemId;
+        }
+    }
+    Log("built hash file");
 
-	WaitForSingleObject(CommMutex, INFINITE);
-	sprintf(str, "%s/artidx.mul", pShared->DataPath);
-	ReleaseMutex(CommMutex);
+    std::ifstream art_uop;
+    art_uop.open(from_file.c_str(), std::ios::in | std::ios::binary);
+    if (!art_uop.is_open())
+    {
 
-	idxMul = fopen(str, "rb");
-	if (!idxMul)
-		return NULL;
-	fseek(idxMul, item * sizeof(ArtIdx), SEEK_SET);
-	fread(&idx, sizeof(ArtIdx), 1, idxMul);
-	fclose(idxMul);
-	if (idx.FilePos == -1 || idx.Length == -1)
-		return NULL;
+        std::strstream temp;
+        temp << "Open Failed in load pointers for "
+            << from_file.c_str()
+            << std::ends;
+        Log(temp.str());
+        return;
+    }
 
-	WaitForSingleObject(CommMutex, INFINITE);
-	sprintf(str, "%s/art.mul", pShared->DataPath);
-	ReleaseMutex(CommMutex);
+    long  bytes_read = 0;
+    FormatHeader header;
+    if (!art_uop.read((char*)&header, sizeof(header)))
+    {
+        Log("Unable to Read art uop header");
+        return;
+    }
 
-	artMul = fopen(str, "rb");
-	if (!artMul)
-	{
-		fclose(idxMul);
-		return NULL;
-	}
-	fseek(artMul, idx.FilePos, SEEK_SET);
-	fread(&header, sizeof(ArtHeader), 1, artMul);
-	if (header.Height <= 0 || header.Width <= 0 || header.Height >= 1024 || header.Width >= 1024 || header.Unknown > 0xFFFF || header.Unknown == 0)
-	{
-		fclose(artMul);
-		return NULL;
-	}
+    int64_t next_address = header.first_address;
 
-	Run = new unsigned short[header.Width]; // it should never be wider than the whole image!
-	Lookup = new short[header.Height];
-	fread(Lookup, header.Height * 2, 1, artMul);
-	long dataStart = ftell(artMul);
+    for (unsigned int block_count = 0; block_count < header.block_count; block_count++)
+    {
+        if (next_address == 0)
+        {
+            break;
+        }
 
-	UOItem *pNew = new UOItem;
-	pNew->ItemID = item;
-	pNew->pNext = ArtCache;
-	ArtCache = pNew;
+        if (!art_uop.seekg(next_address))
+        {
+            std::strstream temp;
+            temp << "setpos Failed in load pointers for "
+                << from_file.c_str()
+                << " errno: " << errno
+                << " errstr: " << strerror(errno)
+                << std::ends;
+            Log(temp.str());
+            return;
+        }
 
-	unsigned short **Image = new unsigned short *[header.Width];
-	for (int i = 0; i < header.Width; i++)
-	{
-		Image[i] = new unsigned short[header.Height];
-		memset(Image[i], 0, header.Height * 2);
-	}
+        BlockHeader block_header;
+        if (!art_uop.read((char*)&block_header, sizeof(block_header)))
+        {
+            Log("block search failed");
+            return;
+        }
 
-	pNew->Left = pNew->Top = 0x7FFFFFFF;
-	pNew->Right = pNew->Bottom = 0;
-	for (int y = 0; y < header.Height; y++)
-	{
-		int x = 0;
+        for (int32_t i = 0; i < block_header.num_files; i++)
+        {
+            FileHeader fileHeader;
+            if (!art_uop.read((char*)&fileHeader, sizeof(FileHeader)))
+            {
+                std::strstream temp;
+                temp << "read file header failed for "
+                    << from_file.c_str()
+                    << " file_num: " << i
+                    << " max_file: " << block_header.num_files
+                    << " next_pos: 0X" << std::hex << next_address
+                    << " block_count: " << block_count
+                    << " max block count: " << header.block_count
+                    << std::ends;
+                Log(temp.str());
+                return;
+            }
+            if (fileHeader.data_header_address != 0)
+            {
+                if (hashes.count(fileHeader.hash))
+                {
+                    int itemId = hashes[fileHeader.hash];
+                    _index[itemId].FilePos = (int)(fileHeader.data_header_address + fileHeader.length);
+                    _index[itemId].Length = fileHeader.zlib_quality ? fileHeader.compressed_size : fileHeader.uncompressed_size;
+                }
+            }
+        }
+        next_address = block_header.next_address;
+    }
 
-		fseek(artMul, dataStart + Lookup[y] * 2, SEEK_SET);
-		do
-		{
-			short RunOffset = 0, RunLength = 0;
-
-			fread(&RunOffset, 2, 1, artMul);
-			fread(&RunLength, 2, 1, artMul);
-
-			if (RunLength <= 0 || RunOffset < 0 || RunOffset + RunLength >= 2048 || RunLength > header.Width)
-				break;
-
-			if (y > pNew->Bottom)
-				pNew->Bottom = y;
-			if (y < pNew->Top)
-				pNew->Top = y;
-
-			x += RunOffset;
-			if (x < pNew->Left)
-				pNew->Left = x;
-
-			fread(Run, RunLength * 2, 1, artMul);
-			for (int o = 0; o < RunLength; o++, x++)
-				Image[x][y] = Run[o];
-
-			if (x > pNew->Right)
-				pNew->Right = x;
-		} while (true);
-	}
-	fclose(artMul);
-
-	delete[] Run;
-	delete[] Lookup;
-
-	float scale = float(bh) / float(pNew->GetHeight());
-	if (scale > 1 || scale <= 0)
-		scale = 1;
-
-	pNew->RealHeight = (int)(header.Height * scale + 1);
-	pNew->RealWidth = (int)(header.Width * scale + 1);
-	pNew->Data = new unsigned short *[pNew->RealWidth];
-	for (int x = 0; x < pNew->RealWidth; x++)
-	{
-		pNew->Data[x] = new unsigned short[pNew->RealHeight];
-		memset(pNew->Data[x], 0, 2 * pNew->RealHeight);
-	}
-
-	for (int x = 0; x < header.Width; x++)
-	{
-		for (int y = 0; y < header.Height; y++)
-			pNew->Data[(int)(x * scale)][(int)(y * scale)] |= Image[x][y];
-	}
-
-	pNew->Top = (int)(pNew->Top * scale);
-	pNew->Left = (int)(pNew->Left * scale);
-	pNew->Bottom = (int)(pNew->Bottom * scale);
-	pNew->Right = (int)(pNew->Right * scale);
-
-	for (int x = 0; x < header.Width; x++)
-		delete[] Image[x];
-	delete[] Image;
-
-	return pNew;
+    art_uop.close();
+    {
+        std::strstream temp;
+        temp << "Success loading indexes from "
+            << from_file.c_str()
+            << std::ends;
+        Log(temp.str());
+    }
+    return;
 }
+
+
+// Returns a partially constructed UIItem with the image and sizes populated
+UOItem *ReadImage(std::ifstream& file, int bh)
+{
+    ArtHeader header;
+    if (!file.read((char*)&header, sizeof(header)))
+    {
+        Log("Failed to read image header");
+        return NULL;
+    }
+
+    if (header.Height <= 0 || header.Width <= 0 || header.Height >= 1024 || header.Width >= 1024 || header.Unknown > 0xFFFF || header.Unknown == 0)
+    {
+        return NULL;
+    }
+
+    std::shared_ptr<unsigned short> Run(new unsigned short[header.Width]); // it should never be wider than the whole image!
+    std::shared_ptr<unsigned short> Lookup(new unsigned short[header.Height]);
+    if (!file.read((char*)Lookup.get(), header.Height * sizeof(short)))
+    {
+        Log("Unable to read art lookup table");
+        return NULL;
+    }
+    std::streamoff dataStart = file.tellg();
+
+    UOItem *pNew = new UOItem;
+    pNew->pNext = NULL;
+
+    unsigned short **Image = new unsigned short*[header.Width];
+    for (int i = 0; i < header.Width; i++)
+    {
+        Image[i] = new unsigned short[header.Height];
+        memset(Image[i], 0, header.Height * 2);
+    }
+
+    pNew->Left = pNew->Top = 0x7FFFFFFF;
+    pNew->Right = pNew->Bottom = 0;
+    for (int y = 0; y < header.Height; y++)
+    {
+        int x = 0;
+
+        if (!file.seekg(dataStart + Lookup.get()[y] * 2))
+        {
+            std::strstream temp;
+            temp << "setpos Failed in read image for lookup "
+                << y
+                << std::ends;
+            Log(temp.str());
+            return NULL;
+        }
+
+        do {
+            short RunOffset = 0, RunLength = 0;
+
+            if (!file.read((char*)&RunOffset, 2))
+            {
+                Log("failed to read image run offset");
+                break;
+            }
+            if (!file.read((char*)&RunLength, 2))
+            {
+                Log("failed to read image run length");
+                break;
+            }
+
+            if (RunLength <= 0 || RunOffset < 0 || RunOffset + RunLength >= 2048 || RunLength > header.Width)
+                break;
+
+            if (y > pNew->Bottom)
+                pNew->Bottom = y;
+            if (y < pNew->Top)
+                pNew->Top = y;
+
+            x += RunOffset;
+            if (x < pNew->Left)
+                pNew->Left = x;
+
+            file.read((char*)Run.get(), RunLength * 2);
+            for (int o = 0; o < RunLength; o++, x++)
+                Image[x][y] = Run.get()[o];
+
+            if (x > pNew->Right)
+                pNew->Right = x;
+        } while (true);
+    }
+
+    float scale = float(bh) / float(pNew->GetHeight());
+    if (scale > 1 || scale <= 0)
+        scale = 1;
+
+    pNew->RealHeight = (int)(header.Height * scale + 1);
+    pNew->RealWidth = (int)(header.Width * scale + 1);
+    pNew->Data = new unsigned short *[pNew->RealWidth];
+    for (int x = 0; x < pNew->RealWidth; x++)
+    {
+        pNew->Data[x] = new unsigned short[pNew->RealHeight];
+        memset(pNew->Data[x], 0, 2 * pNew->RealHeight);
+    }
+
+    for (int x = 0; x < header.Width; x++)
+    {
+        for (int y = 0; y < header.Height; y++)
+            pNew->Data[(int)(x * scale)][(int)(y * scale)] |= Image[x][y];
+    }
+
+    pNew->Top = (int)(pNew->Top * scale);
+    pNew->Left = (int)(pNew->Left * scale);
+    pNew->Bottom = (int)(pNew->Bottom * scale);
+    pNew->Right = (int)(pNew->Right * scale);
+
+    for (int x = 0; x < header.Width; x++)
+        delete[] Image[x];
+    delete[] Image;
+
+    {
+        std::strstream temp;
+        temp << "Finished "
+            << " real W: " << pNew->RealWidth
+            << " real H: " << pNew->RealHeight
+            << std::ends;
+        Log(temp.str());
+    }
+
+    {
+        std::strstream temp;
+        temp << "Left: " << pNew->Left
+            << " Right: " << pNew->Right
+            << " Top" << pNew->Top
+            << " Bottom: " << pNew->Bottom
+            << std::ends;
+        Log(temp.str());
+    }
+
+    return pNew;
+}
+
+
+UOItem* ReadUOPItem(int itemId, const std::string& path, int bh)
+{
+    if (itemId == 0 || itemId >= 0xFFFF || !pShared)
+        return NULL;
+
+    const std::string fileName = path + "/artLegacyMUL.uop";
+
+    if (!_loaded)
+        load_uop_pointers(fileName);
+
+    std::ifstream file;
+    file.open(fileName.c_str(), std::ios::in | std::ios::binary);
+    if (!file.is_open())
+    {
+        std::strstream temp;
+        temp << "unable to open " << fileName.c_str()
+            << " for Image 0x" << std::hex << itemId
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+
+    if (_index.count(itemId) == 0)
+    {
+        std::strstream temp;
+        temp << "Image 0x" << std::hex << itemId
+            << " not found in index"
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+
+    int file_pos = _index[itemId].FilePos;
+    int length = _index[itemId].Length;
+
+    {
+        std::strstream temp;
+        temp << "Image 0x" << std::hex << itemId << " data at 0x" << std::hex << file_pos
+            << std::ends;
+        Log(temp.str());
+    }
+    if (!file.seekg(file_pos))
+    {
+        Log("File setpos failed");
+        return NULL;
+    }
+
+    UOItem* pNew = ReadImage(file, bh);
+
+    pNew->ItemID = itemId;
+    pNew->pNext = 0;
+
+    return pNew;
+}
+
+
+UOItem* ReadUOItem(int itemId, const std::string& path, int bh)
+{
+    if (itemId == 0 || itemId >= 0xFFFF || !pShared)
+        return NULL;
+
+    ArtIdx idx;
+    ArtHeader header;
+    memset(&header, 0, sizeof(ArtHeader));
+
+    const std::string idxFileName = path + "/artidx.mul";
+
+    std::ifstream idxMul;
+    idxMul.open(idxFileName.c_str(), std::ios::in | std::ios::binary);
+    if (!idxMul.is_open())
+    {
+        std::strstream temp;
+        temp << "Unable to open "
+            << idxFileName.c_str()
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+
+    {
+        std::strstream temp;
+        temp << "Image 0x" << std::hex << itemId << " data at 0x" << std::hex << itemId * sizeof(ArtIdx)
+            << std::ends;
+        Log(temp.str());
+    }
+    if (!idxMul.seekg(itemId * sizeof(ArtIdx)))
+    {
+        std::strstream temp;
+        temp << "Unable to seek to index for item 0X"
+            << std::hex << itemId
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+    if (!idxMul.read((char*)&idx, sizeof(ArtIdx)))
+    {
+        std::strstream temp;
+        temp << "Unable to read index for item 0X"
+            << std::hex << itemId
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+
+    idxMul.close();
+
+    if (idx.FilePos == -1 || idx.Length == -1)
+    {
+        return NULL;
+    }
+
+    const std::string artFileName = path + "/art.mul";
+    std::ifstream artMul;
+    artMul.open(artFileName.c_str(), std::ios::in | std::ios::binary);
+    if (!artMul.is_open())
+    {
+        std::strstream temp;
+        temp << "Unable to open "
+            << artFileName.c_str()
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+
+    if (!artMul.seekg(idx.FilePos))
+    {
+        std::strstream temp;
+        temp << "Unable to position for data in "
+            << artFileName.c_str()
+            << " for item " << std::hex << itemId
+            << std::ends;
+        Log(temp.str());
+        return NULL;
+    }
+    UOItem* pNew = ReadImage(artMul, bh);
+    pNew->ItemID = itemId;
+
+    return pNew;
+}
+
 
 UOItem *FindItem(int item)
 {
-	UOItem *node = ArtCache;
-	while (node != NULL)
-	{
-		if (node->ItemID == item)
-			return node;
-		else
-			node = node->pNext;
-	}
+    UOItem *node = ArtCache;
+    while (node != NULL)
+    {
+        if (node->ItemID == item)
+            return node;
+        else
+            node = node->pNext;
+    }
 
-	return NULL;
+    return NULL;
 }
 
 inline COLORREF Brightness(int shift, COLORREF c)
 {
-	return RGB(min(255, GetRValue(c) + shift), min(255, GetGValue(c) + shift), min(255, GetBValue(c) + shift));
+    return RGB(min(255, GetRValue(c) + shift), min(255, GetGValue(c) + shift), min(255, GetBValue(c) + shift));
 }
+
+
+
+enum SystemType
+{
+    unknown,
+    uopSystem,
+    mulSystem
+}  systemType = unknown;
 
 int DrawUOItem(HDC hDC, RECT rect, int item, int hueIdx)
 {
-	item |= 0x4000;
+    item |= 0x4000;
 
-	rect.top++;
-	rect.bottom--;
-	int maxHeight = rect.bottom - rect.top;
+    rect.top++;
+    rect.bottom--;
+    int maxHeight = rect.bottom - rect.top;
 
-	UOItem *i = FindItem(item);
-	if (i == NULL)
-		i = ReadUOItem(item, maxHeight);
+    static std::string path;
+    if (systemType == unknown)
+    {
+        WaitForSingleObject(CommMutex, INFINITE);
+        path = pShared->DataPath;
+        ReleaseMutex(CommMutex);
+        if (fileExists(path + "/art.mul"))
+        {
+            systemType = mulSystem;
+        }
+        else if (fileExists(path + "/artLegacyMUL.uop"))
+        {
+            systemType = uopSystem;
+        }
+        else
+        {
+            Log("UNKNOWN SYSTEM");
+            throw std::exception("Unable to determine system type. no art.mul or artLegacy.uop");
+        }
+    }
 
-	if (i == NULL)
-		return 0;
+    UOItem *i = FindItem(item);
+    if (i == NULL)
+    {
+        switch (systemType)
+        {
+        case unknown:
+            i = NULL;
+            break;
+        case uopSystem:
+            i = ReadUOPItem(item, path, maxHeight);
+            break;
+        case mulSystem:
+            i = ReadUOItem(item, path, maxHeight);
+            break;
+        }
+        if (i == NULL)
+        {
+            return 0;
+        }
+        else
+        {
+            i->pNext = ArtCache;
+            ArtCache = i;
+        }
+    }
 
-	if (i->GetHeight() < maxHeight)
-		rect.top += (maxHeight - i->GetHeight()) / 2;
+    if (i->GetHeight() < maxHeight)
+        rect.top += (maxHeight - i->GetHeight()) / 2;
 
-	unsigned short *hue = GetHue(hueIdx);
-	for (int x = i->Left; x <= i->Right; x++)
-	{
-		for (int y = i->Top; y <= i->Bottom; y++)
-		{
-			if (i->Data[x][y] != 0)
-				SetPixel(hDC, rect.left + x - i->Left, rect.top + y - i->Top, Brightness(0x30, Color16to32(ApplyHueToPixel(hue, i->Data[x][y]))));
-		}
-	}
+    unsigned short *hue = GetHue(hueIdx);
+    for (int x = i->Left; x <= i->Right; x++)
+    {
+        for (int y = i->Top; y <= i->Bottom; y++)
+        {
+            if (i->Data[x][y] != 0)
+                SetPixel(hDC, rect.left + x - i->Left, rect.top + y - i->Top, Brightness(0x30, Color16to32(ApplyHueToPixel(hue, i->Data[x][y]))));
+        }
+    }
 
-	return i->GetWidth() + 3;
+    return i->GetWidth() + 3;
 }
 
 void FreeItem(UOItem *node)
 {
-	if (node != NULL)
-	{
-		FreeItem(node->pNext);
-		for (int i = 0; i < node->RealWidth; i++)
-			delete[] node->Data[i];
-		delete[] node->Data;
-		delete node;
-	}
+    if (node != NULL)
+    {
+        FreeItem(node->pNext);
+        for (int i = 0; i < node->RealWidth; i++)
+            delete[] node->Data[i];
+        delete[] node->Data;
+        delete node;
+    }
 }
 
 void FreeArt()
 {
-	FreeItem(ArtCache);
-	if (Hues && NumHues > 0)
-	{
-		for (int i = 0; i < NumHues; i++)
-			delete[] Hues[i];
-		delete[] Hues;
-	}
+    FreeItem(ArtCache);
+    if (Hues && NumHues > 0)
+    {
+        for (int i = 0; i < NumHues; i++)
+            delete[] Hues[i];
+        delete[] Hues;
+    }
 }
 
-int DrawUOItem(HDC, RECT, int, int);
 
-typedef HTHEME(__stdcall *OPENTHEMEDATA)(HWND, LPCWSTR);
-OPENTHEMEDATA zOpenThemeData = NULL;
-typedef HRESULT(__stdcall *DRAWTHEMEBACKGROUND)(HTHEME, HDC, int, int, const RECT *, OPTIONAL const RECT *);
-DRAWTHEMEBACKGROUND zDrawThemeBackground = NULL;
-typedef HRESULT(__stdcall *CLOSETHEMEDATA)(HTHEME);
-CLOSETHEMEDATA zCloseThemeData = NULL;
-typedef HRESULT(__stdcall *GETTHEMESYSFONT)(HTHEME, int, OUT LOGFONTW *);
-GETTHEMESYSFONT zGetThemeSysFont = NULL;
-typedef COLORREF(__stdcall *GETTHEMESYSCOLOR)(HTHEME, int);
-GETTHEMESYSCOLOR zGetThemeSysColor = NULL;
-typedef HRESULT(__stdcall *GETTHEMEMETRIC)(HTHEME, HDC, int, int, int, int *);
-GETTHEMEMETRIC zGetThemeMetric = NULL;
-typedef HRESULT(__stdcall *DWMSETWINDOWATTRIBUTE)(HWND, DWORD, LPCVOID, DWORD);
-DWMSETWINDOWATTRIBUTE zDwmSetWindowAttribute = NULL;
-HMODULE hThemes = NULL;
-HMODULE hDwmApi = NULL;
-
-void InitThemes()
+int64_t HashFileName(char* s)
 {
-	hThemes = LoadLibrary("UXTHEME.DLL");
-	if (hThemes)
-	{
-		zOpenThemeData = (OPENTHEMEDATA)GetProcAddress(hThemes, "OpenThemeData");
-		zDrawThemeBackground = (DRAWTHEMEBACKGROUND)GetProcAddress(hThemes, "DrawThemeBackground");
-		zCloseThemeData = (CLOSETHEMEDATA)GetProcAddress(hThemes, "CloseThemeData");
-		zGetThemeSysColor = (GETTHEMESYSCOLOR)GetProcAddress(hThemes, "GetThemeSysColor");
-		zGetThemeSysFont = (GETTHEMESYSFONT)GetProcAddress(hThemes, "GetThemeSysFont");
-		zGetThemeMetric = (GETTHEMEMETRIC)GetProcAddress(hThemes, "GetThemeMetric");
-	}
+    UINT eax, ecx, edx, ebx, esi, edi;
+    DWORD length = strlen(s);
 
-	hDwmApi = LoadLibrary("DWMAPI.DLL");
-	if (hDwmApi)
-	{
-		zDwmSetWindowAttribute = (DWMSETWINDOWATTRIBUTE)GetProcAddress(hDwmApi, "DwmSetWindowAttribute");
-	}
-}
+    eax = ecx = edx = ebx = esi = edi = 0;
+    ebx = edi = esi = (UINT)length + 0xDEADBEEF;
 
-inline int GetHex2(LPCSTR hex)
-{
-	int num = 0;
-	if (!isxdigit(hex[0]) || !isxdigit(hex[1]))
-		return -1;
+    UINT i = 0;
 
-	num = isdigit(hex[1]) ? (hex[1] - '0') : (tolower(hex[1]) - 'a' + 10);
-	num += (isdigit(hex[0]) ? (hex[0] - '0') : (tolower(hex[0]) - 'a' + 10)) * 16;
+    for (i = 0; i + 12 < length; i += 12)
+    {
+        edi = (UINT)((s[i + 7] << 24) | (s[i + 6] << 16) | (s[i + 5] << 8) | s[i + 4]) + edi;
+        esi = (UINT)((s[i + 11] << 24) | (s[i + 10] << 16) | (s[i + 9] << 8) | s[i + 8]) + esi;
+        edx = (UINT)((s[i + 3] << 24) | (s[i + 2] << 16) | (s[i + 1] << 8) | s[i]) - esi;
 
-	return num;
-}
+        edx = (edx + ebx) ^ (esi >> 28) ^ (esi << 4);
+        esi += edi;
+        edi = (edi - edx) ^ (edx >> 26) ^ (edx << 6);
+        edx += esi;
+        esi = (esi - edi) ^ (edi >> 24) ^ (edi << 8);
+        edi += edx;
+        ebx = (edx - esi) ^ (esi >> 16) ^ (esi << 16);
+        esi += edi;
+        edi = (edi - ebx) ^ (ebx >> 13) ^ (ebx << 19);
+        ebx += esi;
+        esi = (esi - edi) ^ (edi >> 28) ^ (edi << 4);
+        edi += ebx;
+    }
 
-inline int GetHex4(LPCSTR hex)
-{
-	return (GetHex2(hex) << 8) | GetHex2(&hex[2]);
-}
+    if (length - i > 0)
+    {
+        switch (length - i)
+        {
+        case 12:
+            esi += (UINT)s[i + 11] << 24;
+        case 11:
+            esi += (UINT)s[i + 10] << 16;
+        case 10:
+            esi += (UINT)s[i + 9] << 8;
+        case 9:
+            esi += (UINT)s[i + 8];
+        case 8:
+            edi += (UINT)s[i + 7] << 24;
+        case 7:
+            edi += (UINT)s[i + 6] << 16;
+        case 6:
+            edi += (UINT)s[i + 5] << 8;
+        case 5:
+            edi += (UINT)s[i + 4];
+        case 4:
+            ebx += (UINT)s[i + 3] << 24;
+        case 3:
+            ebx += (UINT)s[i + 2] << 16;
+        case 2:
+            ebx += (UINT)s[i + 1] << 8;
+        case 1:
+            ebx += (UINT)s[i];
+            break;
+        }
 
-void DoStat(HDC hDC, int v, int t, int l, int h, int w)
-{
-	if (w <= 0)
-		return;
-	RECT fill;
-	fill.top = t;
-	fill.left = l;
-	fill.bottom = t + h;
-	fill.right = l + w;
-	HBRUSH hBr = NULL;
+        esi = (esi ^ edi) - ((edi >> 18) ^ (edi << 14));
+        ecx = (esi ^ ebx) - ((esi >> 21) ^ (esi << 11));
+        edi = (edi ^ ecx) - ((ecx >> 7) ^ (ecx << 25));
+        esi = (esi ^ edi) - ((edi >> 16) ^ (edi << 16));
+        edx = (esi ^ ecx) - ((esi >> 28) ^ (esi << 4));
+        edi = (edi ^ edx) - ((edx >> 18) ^ (edx << 14));
+        eax = (esi ^ edi) - ((edi >> 8) ^ (edi << 24));
 
-	if (v == 0xFF)                                //poisoned
-		hBr = CreateSolidBrush(RGB(255, 128, 0)); // orange
-	else if (v <= 25)
-		hBr = CreateSolidBrush(RGB(255, 0, 0)); // red
-	else if (v <= 75)
-		hBr = CreateSolidBrush(RGB(255, 255, 0)); // yellow
-	else
-		hBr = CreateSolidBrush(RGB(0, 255, 0)); // green
+        return ((int64_t)edi << 32) | eax;
+    }
 
-	FillRect(hDC, &fill, hBr);
-	DeleteObject(hBr);
-}
-
-int DrawStatBar(HDC hDC, RECT rect, int width, int status, int hp, int mn, int st)
-{
-	HGDIOBJ hOld = NULL;
-	POINT pt[2];
-	rect.right = rect.left + width + 2;
-
-	int o = (rect.bottom - rect.top - 20) / 2;
-	if (o > 0)
-		rect.top += o;
-	rect.bottom = rect.top + 6 + 6 + 6 + 1;
-
-	hOld = SelectObject(hDC, GetStockObject(BLACK_PEN));
-	FrameRect(hDC, &rect, (HBRUSH)GetStockObject(BLACK_BRUSH));
-
-	pt[0].x = rect.left;
-	pt[1].x = rect.right;
-
-	pt[0].y = rect.top + 6;
-	pt[1].y = rect.top + 6;
-	Polyline(hDC, pt, 2);
-
-	pt[0].y = rect.top + 6 + 6;
-	pt[1].y = rect.top + 6 + 6;
-	Polyline(hDC, pt, 2);
-
-	if (status == 1) // poisoned
-		DoStat(hDC, 0xFF, rect.top + 1, rect.left + 1, 5, (int)((double(hp + 1) / 100.0) * width));
-	else
-		DoStat(hDC, hp, rect.top + 1, rect.left + 1, 5, (int)((double(hp + 1) / 100.0) * width));
-
-	DoStat(hDC, mn, rect.top + 1 + 6, rect.left + 1, 5, (int)((double(mn + 1) / 100) * width));
-	DoStat(hDC, st, rect.top + 2 + 6 + 5, rect.left + 1, 5, (int)((double(st + 1) / 100) * width));
-
-	SelectObject(hDC, hOld);
-	return width + 2;
-}
-
-void CheckTitlebarAttr(HWND hWnd)
-{
-	static bool curNCRP = true;
-	bool newNCRP = !pShared || pShared->TitleBar[0] == '\0';
-
-	if (curNCRP != newNCRP && zDwmSetWindowAttribute)
-	{
-		DWMNCRENDERINGPOLICY policy = newNCRP ? DWMNCRP_ENABLED : DWMNCRP_DISABLED;
-		zDwmSetWindowAttribute(hWnd, DWMWA_NCRENDERING_POLICY, &policy, sizeof(policy));
-		curNCRP = newNCRP;
-	}
-}
-
-void DrawColorTitleBar(HTHEME hTheme, HWND hWnd, HDC hOutDC, bool active, bool maximized, LPCSTR str, int len, RECT orig)
-{
-	const COLORREF def = GetSysColor(active ? COLOR_CAPTIONTEXT : COLOR_INACTIVECAPTIONTEXT);
-	COLORREF color = def;
-
-	RECT rect;
-	RECT window;
-	GetWindowRect(hWnd, &window);
-	rect.left = rect.top = 0;
-	rect.right = window.right - window.left;
-	rect.bottom = (orig.bottom - orig.top);
-
-	HDC hDC = CreateCompatibleDC(hOutDC);
-	HBITMAP hBmp = CreateCompatibleBitmap(hOutDC, rect.right, rect.bottom);
-	SelectObject(hDC, hBmp);
-
-	bool needRegFill = true;
-	HFONT hFont = NULL;
-
-	if (hThemes)
-	{
-		LOGFONTW lf;
-
-		if (maximized)
-		{
-			needRegFill = zDrawThemeBackground(hTheme, hDC, WP_MAXCAPTION, active ? MXCS_ACTIVE : MXCS_INACTIVE, &rect, NULL) != S_OK;
-		}
-		else
-		{
-			int modTop = GetSystemMetrics(SM_CYFRAME);
-			rect.top -= modTop;
-			needRegFill = zDrawThemeBackground(hTheme, hDC, WP_CAPTION, active ? CS_ACTIVE : CS_INACTIVE, &rect, NULL) != S_OK;
-			rect.top += modTop;
-		}
-
-		if (zGetThemeSysFont(hTheme, TMT_CAPTIONFONT, &lf) == S_OK)
-		{
-			hFont = CreateFontIndirectW(&lf);
-			SelectObject(hDC, hFont);
-		}
-	}
-
-	if (needRegFill)
-		FillRect(hDC, &rect, GetSysColorBrush(active ? COLOR_ACTIVECAPTION : COLOR_INACTIVECAPTION));
-
-	if (hFont == NULL)
-		SelectObject(hDC, GetStockObject(ANSI_VAR_FONT));
-
-	rect.left = orig.left;
-
-	int start = 0;
-	int dlen = 0;
-	int t;
-	SetBkMode(hDC, TRANSPARENT);
-	for (int i = 0; i < len; i++)
-	{
-		if (rect.left >= rect.right)
-			break;
-
-		if (str[i] == '~')
-		{
-			switch (str[i + 1])
-			{
-			case '#':
-				if (dlen > 0)
-				{
-					SetTextColor(hDC, color);
-					DrawText(hDC, &str[start], dlen, &rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
-					SIZE ext;
-					GetTextExtentPoint32(hDC, &str[start], dlen, &ext);
-					rect.left += ext.cx;
-				}
-				dlen = 0;
-
-				if (str[i + 2] == '~')
-				{
-					color = def;
-					SetBkMode(hDC, TRANSPARENT);
-					start = i + 3;
-					i += 2;
-				}
-				else
-				{
-					color = RGB(GetHex2(&str[i + 2]), GetHex2(&str[i + 4]), GetHex2(&str[i + 6]));
-					start = i + 8;
-					i += 7;
-				}
-
-				break;
-			case 'S':
-			case 's':
-				// ~SSFRRGGBB
-				if (dlen > 0)
-				{
-					SetTextColor(hDC, color);
-					DrawText(hDC, &str[start], dlen, &rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
-					SIZE ext;
-					GetTextExtentPoint32(hDC, &str[start], dlen, &ext);
-					rect.left += ext.cx;
-				}
-				dlen = 0;
-
-				t = 30;
-				switch (toupper(str[i + 2]))
-				{
-				case 'S':
-					t = 15;
-					break;
-					//case 'R': w = 30; break;
-				case 'M':
-					t = 45;
-					break;
-				case 'L':
-					t = 60;
-					break;
-				case 'X':
-					t = 75;
-					break;
-				}
-
-				rect.left += 1;
-				rect.left += DrawStatBar(hDC, rect, t, str[i + 3] - '0', GetHex2(&str[i + 4]), GetHex2(&str[i + 6]), GetHex2(&str[i + 8]));
-				rect.left += 1;
-
-				start = i + 10;
-				i += 9;
-
-				break;
-			case 'I':
-			case 'i':
-				if (dlen > 0)
-				{
-					SetTextColor(hDC, color);
-					DrawText(hDC, &str[start], dlen, &rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
-					SIZE ext;
-					GetTextExtentPoint32(hDC, &str[start], dlen, &ext);
-					rect.left += ext.cx;
-				}
-				dlen = 0;
-				if (str[i + 6] == '~')
-				{
-					rect.left += DrawUOItem(hDC, rect, GetHex4(&str[i + 2]), 0);
-					start = i + 7;
-					i += 6;
-				}
-				else
-				{
-					rect.left += DrawUOItem(hDC, rect, GetHex4(&str[i + 2]), GetHex4(&str[i + 6]));
-					start = i + 10;
-					i += 9;
-				}
-				break;
-			case '^':
-				if (dlen > 0)
-				{
-					SetTextColor(hDC, color);
-					DrawText(hDC, &str[start], dlen, &rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
-					SIZE ext;
-					GetTextExtentPoint32(hDC, &str[start], dlen, &ext);
-					rect.left += ext.cx;
-				}
-				dlen = 0;
-
-				color = RGB(0, 0, 0);
-				SetBkMode(hDC, OPAQUE);
-				SetBkColor(hDC, RGB(GetHex2(&str[i + 2]), GetHex2(&str[i + 4]), GetHex2(&str[i + 6])));
-
-				start = i + 8;
-				i += 7;
-				break;
-			case 'B':
-			case 'b': // skip bold identifier
-				i++;
-				break;
-			}
-		}
-		else
-		{
-			dlen++;
-		}
-	}
-
-	if (dlen > 0)
-	{
-		SetTextColor(hDC, color);
-		DrawText(hDC, &str[start], dlen, &rect, DT_LEFT | DT_VCENTER | DT_SINGLELINE);
-	}
-
-	BitBlt(hOutDC, orig.left, orig.top, (orig.right - orig.left), (orig.bottom - orig.top) - 1, hDC, orig.left, 0, SRCCOPY);
-	DeleteDC(hDC);
-	DeleteObject(hBmp);
-	if (hFont)
-		DeleteObject(hFont);
-}
-
-void RedrawTitleBar(HWND hWnd, bool active)
-{
-	if (!pShared)
-		return;
-
-	WaitForSingleObject(CommMutex, INFINITE);
-	if (pShared->TitleBar[0] == 0)
-	{
-		ReleaseMutex(CommMutex);
-		return;
-	}
-
-	int len = (int)strlen(pShared->TitleBar);
-	if (len >= 1024)
-		len = 1023;
-
-	WINDOWPLACEMENT place;
-	RECT rect;
-	HDC hDC = GetWindowDC(hWnd); //WINDOW dc allows us to draw on the non client area
-
-	GetWindowPlacement(hWnd, &place);
-	GetWindowRect(hWnd, &rect);
-
-	// Change the coords (believe me, okay?)
-	rect.top = GetSystemMetrics(SM_CYFRAME);
-	rect.bottom = rect.top + GetSystemMetrics(SM_CYCAPTION);
-
-	rect.right = (rect.right - rect.left) - (4 * GetSystemMetrics(SM_CXSIZE) + GetSystemMetrics(SM_CXFRAME));
-	rect.left = GetSystemMetrics(SM_CXSIZEFRAME) + GetSystemMetrics(SM_CXSMICON) + 5;
-
-	if (hThemes)
-	{
-		HTHEME hTheme = zOpenThemeData(hWnd, L"WINDOW");
-		DrawColorTitleBar(hTheme, hWnd, hDC, active, place.showCmd == SW_MAXIMIZE, pShared->TitleBar, len, rect);
-		zCloseThemeData(hTheme);
-	}
-	else
-	{
-		rect.left += GetSystemMetrics(SM_CXFRAME);
-		DrawColorTitleBar(NULL, hWnd, hDC, active, place.showCmd == SW_MAXIMIZE, pShared->TitleBar, len, rect);
-	}
-
-	ReleaseDC(hWnd, hDC);
-	ReleaseMutex(CommMutex);
+    return ((int64_t)esi << 32) | eax;
 }

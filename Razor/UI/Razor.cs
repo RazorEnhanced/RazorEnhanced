@@ -8608,7 +8608,7 @@ namespace Assistant
 			}
 			if (msg.Msg >= 1224 && msg.Msg <= 1338)
 			{
-				msg.Result = (IntPtr)Assistant.Client.Instance.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
+				msg.Result = (IntPtr)Assistant.UOAssist.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
 				return;
 			}
 			base.WndProc(ref msg);

@@ -48,7 +48,6 @@ namespace Assistant
 		public static Client Instance;
 		public static bool IsOSI;
 
-		internal const int WM_USER = 0x400;
 		public enum Loader_Error
 		{
 			SUCCESS = 0,
@@ -109,7 +108,6 @@ namespace Assistant
 
 		public abstract void InitSendFlush();
 		public abstract Packet MakePacketFrom(PacketReader pr);
-		public abstract void PostTextSend(string text);
 
 		public abstract void SetCustomNotoHue(int hue);
 		public abstract void RequestStatbarPatch(bool preAOS);
@@ -120,24 +118,14 @@ namespace Assistant
 		public abstract void SetTitleStr(string str);
 		public abstract bool OnMessage(MainForm razor, uint wParam, int lParam);
 
-		public abstract void PostRemoveMulti(Item item);
-		public abstract void PostAddMulti(ItemID iid, Point3D Position);
-		public abstract void PostMapChange(int map);
-		public abstract void PostSkillUpdate(int skill, int val);
-
-		public abstract void PostStamUpdate();
-		public abstract void PostManaUpdate();
-		public abstract void PostHitsUpdate();
-		public abstract void PostLogin(int serial);
-
 		public abstract void SetConnectionInfo(IPAddress addr, int port);
 		public abstract Loader_Error LaunchClient(string client);
 		public abstract bool Attach(int pid);
 		public abstract void Close();
 
 		public abstract void BeginCalibratePosition();
-		public abstract void PostSpellCast(int spell);
 
-		public abstract int OnUOAMessage(MainForm razor, int Msg, int wParam, int lParam);
+		public abstract IntPtr GetWindowHandle();
+
 	}
 }

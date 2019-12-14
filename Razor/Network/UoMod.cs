@@ -32,7 +32,7 @@ namespace Assistant
 
 		internal enum PATCH_MESSAGES
 		{
-			PM_INSTALL = Assistant.Client.WM_USER + 666,
+			PM_INSTALL = Assistant.UOAssist.WM_USER + 666,
 			PM_INFO,
 			PM_ENABLE,
 			PM_DISABLE,

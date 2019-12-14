@@ -147,7 +147,7 @@ namespace Assistant
 				}
 			}
 
-	 		Assistant.Client.Instance.PostSpellCast(this.Number);
+	 		Assistant.UOAssist.PostSpellCast(this.Number);
 
 			if (World.Player != null)
 			{

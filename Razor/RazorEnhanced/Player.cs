@@ -1080,7 +1080,7 @@ namespace RazorEnhanced
 		public static void MapSay(string msg)
 		{
 			if (msg != null && msg != string.Empty)
-		 		Assistant.Client.Instance.PostTextSend(msg);
+		 		Assistant.UOAssist.PostTextSend(msg);
 		}
 
 		// Game Message

@@ -767,7 +767,7 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
 
-	 		Assistant.Client.Instance.PostMapChange(cur);
+	 		Assistant.UOAssist.PostMapChange(cur);
 			m_HandCheck.Start();
 		}
 

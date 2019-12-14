@@ -930,7 +930,7 @@ namespace Assistant
 								skill.FixedCap = p.ReadUInt16();
 								if (!World.Player.SkillsSent)
 									skill.Delta = 0;
-						 		Assistant.Client.Instance.PostSkillUpdate(i - 1, skill.FixedBase);
+						 		Assistant.UOAssist.PostSkillUpdate(i - 1, skill.FixedBase);
 							}
 							else
 							{
@@ -962,7 +962,7 @@ namespace Assistant
 								if (!World.Player.SkillsSent)
 									skill.Delta = 0;
 
-						 		Assistant.Client.Instance.PostSkillUpdate(i - 1, skill.FixedBase);
+						 		Assistant.UOAssist.PostSkillUpdate(i - 1, skill.FixedBase);
 							}
 							else
 							{
@@ -995,7 +995,7 @@ namespace Assistant
 
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
-					 		Assistant.Client.Instance.PostSkillUpdate(i, skill.FixedBase);
+					 		Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
 					}
@@ -1019,7 +1019,7 @@ namespace Assistant
 							Engine.MainWindow.UpdateSkill(skill);
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
-					 		Assistant.Client.Instance.PostSkillUpdate(i, skill.FixedBase);
+					 		Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
 					}
@@ -1057,7 +1057,7 @@ namespace Assistant
 
 	 		Assistant.Client.Instance.SendToServer(new StatusQuery(m.Serial));
 
-	 		Assistant.Client.Instance.PostLogin((int)serial.Value);
+	 		Assistant.UOAssist.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
 	 		Assistant.Client.Instance.BeginCalibratePosition();
 
@@ -1215,7 +1215,7 @@ namespace Assistant
 				// Update hits toolbar
 				RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
-		 		Assistant.Client.Instance.PostHitsUpdate();
+		 		Assistant.UOAssist.PostHitsUpdate();
 			}
 
 			if (!Engine.MainWindow.ShowHealthOH.Checked)
@@ -1256,7 +1256,7 @@ namespace Assistant
 				// Update Stam Toolbar
 				RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
-		 		Assistant.Client.Instance.PostStamUpdate();
+		 		Assistant.UOAssist.PostStamUpdate();
 			}
 
 			if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
@@ -1297,7 +1297,7 @@ namespace Assistant
 				// Update Mana toolbar
 				RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
-		 		Assistant.Client.Instance.PostManaUpdate();
+		 		Assistant.UOAssist.PostManaUpdate();
 			}
 
 			if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
@@ -1339,9 +1339,9 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-		 		Assistant.Client.Instance.PostHitsUpdate();
-		 		Assistant.Client.Instance.PostStamUpdate();
-		 		Assistant.Client.Instance.PostManaUpdate();
+		 		Assistant.UOAssist.PostHitsUpdate();
+		 		Assistant.UOAssist.PostStamUpdate();
+		 		Assistant.UOAssist.PostManaUpdate();
 			}
 		}
 
@@ -1565,9 +1565,9 @@ namespace Assistant
 			// Update All toolbar
 			RazorEnhanced.ToolBar.UpdateAll();
 
-	 		Assistant.Client.Instance.PostHitsUpdate();
-	 		Assistant.Client.Instance.PostStamUpdate();
-	 		Assistant.Client.Instance.PostManaUpdate();
+	 		Assistant.UOAssist.PostHitsUpdate();
+	 		Assistant.UOAssist.PostStamUpdate();
+	 		Assistant.UOAssist.PostManaUpdate();
 
 			Engine.MainWindow.UpdateTitle(); // update player name
 		}
@@ -1853,7 +1853,7 @@ namespace Assistant
 				else if (item.IsMulti)
 				{
 					World.AddMulti(item);
-			 		Assistant.Client.Instance.PostAddMulti(item.ItemID, item.Position);
+			 		Assistant.UOAssist.PostAddMulti(item.ItemID, item.Position);
 				}
 			}
 			Item.UpdateContainers();
@@ -1972,7 +1972,7 @@ namespace Assistant
 				else if (item.IsMulti)
 				{
 					World.AddMulti(item);
-			 		Assistant.Client.Instance.PostAddMulti(item.ItemID, item.Position);
+			 		Assistant.UOAssist.PostAddMulti(item.ItemID, item.Position);
 				}
 			}
 
@@ -2598,13 +2598,13 @@ namespace Assistant
 				case 0xFE: // Begin Handshake/Features Negotiation
 					{
 						ulong features = p.ReadRawUInt64();
-
-						if (DLLImport.Razor.HandleNegotiate(features))
-						{
+						//Felix Fix
+						//if (DLLImport.Razor.HandleNegotiate(features))
+						//{
 					 		Assistant.Client.Instance.SendToServer(new RazorNegotiateResponse());
-							Engine.MainWindow.UpdateControlLocks();
+							//Engine.MainWindow.UpdateControlLocks();
 
-						}
+						//}
 						break;
 					}
 			}

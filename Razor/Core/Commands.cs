@@ -357,7 +357,7 @@ namespace Assistant
 				else if (text[0] == '-' && text[1] == '-')
 				{
 					args.Block = true;
-				 	Assistant.Client.Instance.PostTextSend(text.Substring(2));
+				 	Assistant.UOAssist.PostTextSend(text.Substring(2));
 				}
 			}
 		}

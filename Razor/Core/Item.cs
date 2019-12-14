@@ -464,7 +464,7 @@ namespace Assistant
 		internal override void Remove()
 		{
 			if (IsMulti)
-			 	Assistant.Client.Instance.PostRemoveMulti(this);
+			 	Assistant.UOAssist.PostRemoveMulti(this);
 
 			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
@@ -485,8 +485,8 @@ namespace Assistant
 		{
 			if (IsMulti && this.Position != Point3D.Zero && newPos != Point3D.Zero && this.Position != newPos)
 			{
-			 	Assistant.Client.Instance.PostRemoveMulti(this);
-			 	Assistant.Client.Instance.PostAddMulti(m_ItemID, newPos);
+			 	Assistant.UOAssist.PostRemoveMulti(this);
+			 	Assistant.UOAssist.PostAddMulti(m_ItemID, newPos);
 			}
 			base.OnPositionChanging(newPos);
 		}
