@@ -396,7 +396,7 @@ namespace Assistant
 			}
 
 			if (World.Player != null)
-				MessageBox.Show(this, Language.GetString(LocString.RelogRequired), "Relog Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(this, Language.GetString(LocString.ApplyOptionsRequired), "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void forceSizeX_TextChanged(object sender, System.EventArgs e)

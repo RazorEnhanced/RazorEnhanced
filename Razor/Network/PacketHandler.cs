@@ -7,7 +7,7 @@ namespace Assistant
 
 	internal delegate void PacketFilterCallback(Packet p, PacketHandlerEventArgs args);
 
-	internal class PacketHandlerEventArgs
+	public class PacketHandlerEventArgs
 	{
 		private bool m_Block;
 

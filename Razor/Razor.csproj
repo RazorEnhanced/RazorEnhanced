@@ -189,6 +189,7 @@
     <Compile Include="Filters\MessageFilter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Filters\MobileFilter.cs" />
     <Compile Include="Filters\SoundFilters.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -196,9 +197,11 @@
     <Compile Include="Filters\StaffItems.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Filters\TargetFilterManager.cs" />
     <Compile Include="Filters\VetRewardGump.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Filters\WallStaticFilter.cs" />
     <Compile Include="Filters\Weather.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -103,7 +103,7 @@ namespace Assistant
 		Justice = 0x7
 	}
 
-	internal enum SkillName
+	public enum SkillName
 	{
 		Alchemy = 0,
 		Anatomy = 1,

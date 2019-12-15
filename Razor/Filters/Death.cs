@@ -1,23 +1,32 @@
+using System;
+using Assistant;
+
 namespace Assistant.Filters
 {
-	internal class DeathFilter : Filter
-	{
-		public static void Initialize()
-		{
-			Filter.Register(new DeathFilter());
-		}
+    public class DeathFilter : Filter
+    {
+        public static void Initialize()
+        {
+            Filter.Register(new DeathFilter());
+        }
 
-		private DeathFilter()
-		{
-		}
+        private DeathFilter()
+        {
+        }
 
-		internal override byte[] PacketIDs { get { return new byte[] { 0x2C }; } }
+        public override byte[] PacketIDs
+        {
+            get { return new byte[] {0x2C}; }
+        }
 
-		internal override LocString Name { get { return LocString.DeathStatus; } }
+        public override LocString Name
+        {
+            get { return LocString.DeathStatus; }
+        }
 
-		internal override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
-		{
-			args.Block = true;
-		}
-	}
+        public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
+        {
+            args.Block = true;
+        }
+    }
 }

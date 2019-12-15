@@ -11,11 +11,11 @@ namespace Assistant.Filters
 		{
 		}
 
-		internal override byte[] PacketIDs { get { return new byte[] { 0x20, 0x78, 0x77 }; } }
+		public override byte[] PacketIDs { get { return new byte[] { 0x20, 0x78, 0x77 }; } }
 
-		internal override LocString Name { get { return LocString.StaffOnlyNpcs; } }
+		public override LocString Name { get { return LocString.StaffOnlyNpcs; } }
 
-		internal override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
+		public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (p.PacketID == 0x20) // Mobile update
 			{
@@ -96,7 +96,7 @@ namespace Assistant.Filters
 			}
 		}
 
-		internal override void OnEnable()
+		public override void OnEnable()
 		{
 			base.OnEnable();
 			if (World.Player == null)
@@ -112,7 +112,7 @@ namespace Assistant.Filters
 			}
 		}
 
-		internal override void OnDisable()
+		public override void OnDisable()
 		{
 			base.OnDisable();
 

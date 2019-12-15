@@ -12,37 +12,38 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Assistant
 {
-	internal class FeatureBit
+	public class FeatureBit
 	{
-		internal static readonly uint WeatherFilter = 1 << 0; // Weather Filter
-		internal static readonly uint LightFilter = 1 << 1;// Light Filter
-		internal static readonly uint SmartLT = 1 << 2; // Smart Last Target
-		internal static readonly uint RangeCheckLT = 1 << 3;// Range Check Last Target
-		internal static readonly uint AutoOpenDoors = 1 << 4; // Automatically Open Doors
-		internal static readonly uint UnequipBeforeCast = 1 << 5; // Unequip Weapon on spell cast
-		internal static readonly uint AutoPotionEquip = 1 << 6; // Un/re-equip weapon on potion use
-		internal static readonly uint BlockHealPoisoned = 1 << 7; // Block heal If poisoned/Macro If Poisoned condition/Heal or Cure self
-		internal static readonly uint LoopingMacros = 1 << 8; // Disallow looping or recursive macros
-		internal static readonly uint UseOnceAgent = 1 << 9;// The use once agent
-		internal static readonly uint RestockAgent = 1 << 10;// The restock agent
-		internal static readonly uint SellAgent = 1 << 11;// The sell agent
-		internal static readonly uint BuyAgent = 1 << 12;// The buy agent
-		internal static readonly uint PotionHotkeys = 1 << 13;// All potion hotkeys
-		internal static readonly uint RandomTargets = 1 << 14;// All random target hotkeys (not target next, last target, target self)
-		internal static readonly uint ClosestTargets = 1 << 15; // All closest target hotkeys
-		internal static readonly uint OverheadHealth = 1 << 16;// Health and Mana/Stam messages shown over player's heads
-		internal static readonly uint AutolootAgent = 1 << 17; // The autoloot agent
-		internal static readonly uint BoneCutterAgent = 1 << 18; // The bone cutter agent
-		internal static readonly uint AdvancedMacros = 1 << 19; // Advanced macro engine
-		internal static readonly uint AutoRemount = 1 << 20; // Auto remount after dismount
-		internal static readonly uint AutoBandage = 1 << 21; // Auto bandage friends, self, last and mount option
-		internal static readonly uint EnemyTargetShare = 1 << 22; // Enemy target share on guild, party or alliance chat
-		internal static readonly uint FilterSeason = 1 << 23; // Season Filter
-		internal static readonly uint SpellTargetShare = 1 << 24; // Spell target share on guild, party or alliance chat
+		public static readonly int WeatherFilter = 0;
+		public static readonly int LightFilter = 1;
+		public static readonly int SmartLT = 2;
+		public static readonly int RangeCheckLT = 3;
+		public static readonly int AutoOpenDoors = 4;
+		public static readonly int UnequipBeforeCast = 5;
+		public static readonly int AutoPotionEquip = 6;
+		public static readonly int BlockHealPoisoned = 7;
+		public static readonly int LoopingMacros = 8; // includes fors and macros running macros
+		public static readonly int UseOnceAgent = 9;
+		public static readonly int RestockAgent = 10;
+		public static readonly int SellAgent = 11;
+		public static readonly int BuyAgent = 12;
+		public static readonly int PotionHotkeys = 13;
+		public static readonly int RandomTargets = 14;
+		public static readonly int ClosestTargets = 15;
+		public static readonly int OverheadHealth = 16;
+		public static readonly int AutolootAgent = 17;
+		public static readonly int BoneCutterAgent = 18;
+		public static readonly int AdvancedMacros = 19;
+		public static readonly int AutoRemount = 20;
+		public static readonly int AutoBandage = 21;
+		public static readonly int EnemyTargetShare = 22;
+		public static readonly int FilterSeason = 23;
+		public static readonly int SpellTargetShare = 24;
+		public static readonly int HumanoidHealthChecks = 25;
+		public static readonly int SpeechJournalChecks = 26;
 
-		internal static readonly uint MaxBit = 24;
+		public static readonly int MaxBit = 26;
 	}
-
 	public abstract class Client
 	{
 		public static Client Instance;
@@ -75,9 +76,9 @@ namespace Assistant
 
 		private ulong m_Features = 0;
 
-		public bool AllowBit(uint bit)
+		public bool AllowBit(int bit)
 		{
-			return (m_Features & (1U << (int)bit)) == 0;
+			return (m_Features & (1U << bit)) == 0;
 		}
 
 		public void SetFeatures(ulong features)
