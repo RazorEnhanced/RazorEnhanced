@@ -2,7 +2,7 @@ using System;
 
 namespace Assistant
 {
-	internal struct Serial : IComparable
+	public struct Serial : IComparable
 	{
 		private uint m_Serial;
 

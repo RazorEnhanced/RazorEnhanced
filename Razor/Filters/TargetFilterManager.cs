@@ -4,8 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
-using Assistant.Core;
-using Assistant.UI;
 
 namespace Assistant.Filters
 {

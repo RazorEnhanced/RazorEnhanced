@@ -21,7 +21,7 @@ namespace Assistant
 		ValueMask = 0x87
 	}
 
-	internal class Mobile : UOEntity
+	public class Mobile : UOEntity
 	{
 		private static List<ushort> m_HumanBodies = new List<ushort>() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695};
 
