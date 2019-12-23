@@ -18,14 +18,12 @@ namespace Assistant
 {
     public unsafe sealed class UOAssist
     {
-        public const int WM_USER = 0x400;
-
         public enum UOAMessage
         {
             First = REGISTER,
 
             //incoming:
-            REGISTER = WM_USER + 200,
+            REGISTER = Client.WM_USER + 200,
             COUNT_RESOURCES,
             GET_COORDS,
             GET_SKILL,
@@ -44,7 +42,7 @@ namespace Assistant
             GET_ACCT_ID,
 
             //outgoing:
-            RES_COUNT_DONE = WM_USER + 301,
+            RES_COUNT_DONE = Client.WM_USER + 301,
             CAST_SPELL,
             LOGIN,
             MAGERY_LEVEL,
@@ -114,7 +112,7 @@ namespace Assistant
             }
         }
 
-        private static uint m_NextCmdID = WM_USER + 401;
+        private static uint m_NextCmdID = Client.WM_USER + 401;
         private static ArrayList m_WndReg;
 
         public static int NotificationCount

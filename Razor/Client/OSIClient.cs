@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
@@ -16,8 +17,7 @@ namespace Assistant
 
 	internal unsafe sealed class OSIClient : Client
 	{
-		internal const int WM_UONETEVENT = UOAssist.WM_USER + 1;
-		private const int WM_CUSTOMTITLE = UOAssist.WM_USER + 2;
+		private const int WM_CUSTOMTITLE = WM_USER + 2;
 
 		internal enum UONetMessage
 		{
@@ -154,7 +154,7 @@ namespace Assistant
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
 		}
      
-		internal static void SetMapWndHandle(Form mapWnd)
+		public override void SetMapWndHandle(Form mapWnd)
 		{
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
 		}
@@ -645,6 +645,53 @@ namespace Assistant
 			return retVal;
 		}
 
+
+		[StructLayout(LayoutKind.Sequential, Pack = 1)]
+		private struct CopyData
+		{
+			public int dwData;
+			public int cbDAta;
+			public IntPtr lpData;
+		};
+
+		[StructLayout(LayoutKind.Sequential, Pack = 1)]
+		private struct Position
+		{
+			public ushort x;
+			public ushort y;
+			public ushort z;
+		};
+
+		public enum UONetMessageCopyData
+		{
+			Position = 1,
+		}
+
+		public override bool OnCopyData(IntPtr wparam, IntPtr lparam)
+		{
+			CopyData copydata = (CopyData)Marshal.PtrToStructure(lparam, typeof(CopyData));
+
+			switch ((UONetMessageCopyData)copydata.dwData)
+			{
+				case UONetMessageCopyData.Position:
+					if (World.Player != null)
+					{
+						Position pos = (Position)Marshal.PtrToStructure(copydata.lpData, typeof(Position));
+						Point3D pt = new Point3D();
+
+						pt.X = pos.x;
+						pt.Y = pos.y;
+						pt.Z = pos.z;
+
+						World.Player.Position = pt;
+					}
+
+					return true;
+			}
+
+			return false;
+		}
+
 		public override unsafe void SendToServer(Packet p)
 		{
 			if (!m_Ready)
@@ -741,14 +788,6 @@ namespace Assistant
 			}
 		}
 
-		public override void SendToClient(PacketReader pr)
-		{
-			if (!m_Ready)
-				return;
-
-			SendToClient(MakePacketFrom(pr));
-		}
-
 
 		public override void ForceSendToClient(Packet p)
 		{
@@ -809,11 +848,6 @@ namespace Assistant
 			buffer->Length += len;
 		}
 
-		public override Packet MakePacketFrom(PacketReader pr)
-		{
-			byte[] data = pr.CopyBytes(0, pr.Length);
-			return new Packet(data, pr.Length, pr.DynamicLength);
-		}
 
 		private unsafe void HandleComm(Buffer* inBuff, Buffer* outBuff, ConcurrentQueue<Packet> queue, PacketPath path)
 		{
@@ -888,12 +922,22 @@ namespace Assistant
 						}
 				}
 
+
 				if (filter)
 				{
 					byte[] data = p.Compile();
+					if (data[0] == 0xc8 || data[0] == 0x73 || data[0] == 0xbf || data[0] == 0xdc)
+					{
+					}
+					else
+					{
+						int something = len;
+						Debug.WriteLine("Packet id 0x{0:X}", data[0]);
+					}
+
 					fixed (byte* ptr = data)
 					{
-						//Packet.Log(path, ptr, data.Length, blocked);
+						Packet.Log(path, ptr, data.Length, blocked);
 						if (!blocked)
 							CopyToBuffer(outBuff, ptr, data.Length);
 					}
@@ -939,8 +983,106 @@ namespace Assistant
 			m_ScriptWaitSend = false;
         }
 
-		// Titlebar
-		private static string m_LastStr = string.Empty;
+		[DllImport("Crypt.dll")]
+		internal static unsafe extern void CalibratePosition(uint x, uint y, uint z);
+
+		public override void SetPosition(uint x, uint y, uint z, byte dir)
+		{
+			CalibratePosition(x, y, z);
+		}
+
+		[DllImport("user32.dll")]
+		internal static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+		public void KeyPress(int keyCode)
+		{
+			const uint WM_KEYDOWN = 0x100, WM_KEYUP = 0x101;
+			SendMessage(FindUOWindow(), WM_KEYDOWN, (IntPtr)keyCode, (IntPtr)1);
+		}
+
+		[DllImport("Crypt.dll")]
+		internal static unsafe extern string GetUOVersion();
+		public override string GetClientVersion()
+		{
+			return GetUOVersion();
+		}
+		public override string GetUoFilePath()
+		{
+			return ConfigurationManager.AppSettings["UODataDir"];
+		}
+
+		[DllImport("Crypt.dll")]
+		internal static unsafe extern IntPtr FindUOWindow();
+		public override IntPtr GetWindowHandle()
+		{
+			return FindUOWindow();
+		}
+
+		[DllImport("Crypt.dll")]
+		internal static unsafe extern uint TotalIn();
+		public override uint TotalDataIn()
+		{
+			return TotalIn();
+		}
+
+		[DllImport("Crypt.dll")]
+		internal static unsafe extern uint TotalOut();
+		public override uint TotalDataOut()
+		{
+			return TotalOut();
+		}
+		private enum KeyboardDir
+		{
+			North = 0x21, //page up
+			Right = 0x27, // right
+			East = 0x22, // page down
+			Down = 0x28, // down
+			South = 0x23, // end
+			Left = 0x25, // left
+			West = 0x24, // home
+			Up = 0x26, // up
+		}
+
+		internal override void RequestMove(Direction m_Dir)
+		{
+			int direction;
+
+			switch (m_Dir)
+			{
+				case Direction.Down:
+					direction = (int)KeyboardDir.Down;
+					break;
+				case Direction.East:
+					direction = (int)KeyboardDir.East;
+					break;
+				case Direction.Left:
+					direction = (int)KeyboardDir.Left;
+					break;
+				case Direction.North:
+					direction = (int)KeyboardDir.North;
+					break;
+				case Direction.Right:
+					direction = (int)KeyboardDir.Right;
+					break;
+				case Direction.South:
+					direction = (int)KeyboardDir.South;
+					break;
+				case Direction.Up:
+					direction = (int)KeyboardDir.Up;
+					break;
+				case Direction.West:
+					direction = (int)KeyboardDir.West;
+					break;
+				default:
+					direction = (int)KeyboardDir.Up;
+					break;
+			}
+
+			KeyPress(direction);
+		}
+
+
+// Titlebar
+private static string m_LastStr = string.Empty;
 
 		public override void SetTitleStr(string str)
 		{
@@ -963,13 +1105,6 @@ namespace Assistant
 			CommMutex.ReleaseMutex();
 
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
-		}
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern IntPtr FindUOWindow();
-		public override IntPtr GetWindowHandle()
-		{
-			return FindUOWindow();
 		}
 
 	}

@@ -49,6 +49,48 @@ namespace Assistant
 		public static Client Instance;
 		public static bool IsOSI;
 
+        internal static void Init(bool isOSI)
+        {
+            IsOSI = isOSI;
+
+            if (isOSI)
+                Instance = new OSIClient();
+            //else
+            //    Instance = new ClassicUOClient();
+            RazorEnhanced.Settings.Load();
+
+        }
+        public const int WM_USER = 0x400;
+
+		public const int WM_COPYDATA = 0x4A;
+		public const int WM_UONETEVENT = WM_USER + 1;
+
+		private ulong m_Features = 0;
+
+		public bool AllowBit(int bit)
+		{
+			return (m_Features & (1U << bit)) == 0;
+		}
+
+		public void SetFeatures(ulong features)
+		{
+			m_Features = features;
+		}
+		public abstract DateTime ConnectionStart { get; }
+		public abstract IPAddress LastConnection { get; }
+		public abstract Process ClientProcess { get; }
+		public abstract  bool ClientRunning { get; }
+
+		public abstract void SetMapWndHandle(Form mapWnd);
+
+		public abstract void RequestStatbarPatch(bool preAOS);
+
+		public abstract void SetCustomNotoHue(int hue);
+
+		public abstract void SetSmartCPU(bool enabled);
+
+		public abstract void SetGameSize(int x, int y);
+
 		public enum Loader_Error
 		{
 			SUCCESS = 0,
@@ -65,68 +107,194 @@ namespace Assistant
 
 			UNKNOWN_ERROR = 99
 		};
+		public abstract Loader_Error LaunchClient(string client);
+
+		public abstract bool ClientEncrypted { get; set; }
+		public abstract bool ServerEncrypted { get; set; }
 
 		public abstract bool InstallHooks(IntPtr mainWindow);
 
-		internal static void Init(bool isOSI)
-		{
-			IsOSI = isOSI;
-			Instance = new OSIClient();		
-		}
+		public abstract void SetConnectionInfo(IPAddress addr, int port);
+		public abstract void SetNegotiate(bool negotiate);
+		public abstract bool Attach(int pid);
 
-		private ulong m_Features = 0;
+		public abstract void Close();
 
-		public bool AllowBit(int bit)
-		{
-			return (m_Features & (1U << bit)) == 0;
-		}
+		public abstract void SetTitleStr(string str);
 
-		public void SetFeatures(ulong features)
-		{
-			m_Features = features;
-		}
-
-		public abstract bool ServerEncrypted { get; set; }
-		public abstract bool ClientEncrypted { get; set; }
-
-		public abstract bool Ready { get;  }
-		public abstract Process ClientProcess { get; }
-
-		public abstract DateTime ConnectionStart { get; }
-		public abstract IPAddress LastConnection { get; }
-		public abstract  bool ClientRunning { get; }
-
-
-
+		public abstract bool OnMessage(MainForm razor, uint wParam, int lParam);
+		public abstract bool OnCopyData(IntPtr wparam, IntPtr lparam);
 		public abstract void SendToServer(Packet p);
-		public abstract void SendToServerWait(Packet p);
 		public abstract void SendToServer(PacketReader pr);
-		public abstract void SendToClientWait(Packet p);
+
 		public abstract void SendToClient(Packet p);
-		public abstract void SendToClient(PacketReader pr);
 		public abstract void ForceSendToClient(Packet p);
 		public abstract void ForceSendToServer(Packet p);
 
-		public abstract void InitSendFlush();
-		public abstract Packet MakePacketFrom(PacketReader pr);
-
-		public abstract void SetCustomNotoHue(int hue);
-		public abstract void RequestStatbarPatch(bool preAOS);
-		public abstract void SetSmartCPU(bool enabled);
-		public abstract void SetGameSize(int x, int y);
-		public abstract void SetNegotiate(bool negotiate);
-
-		public abstract void SetTitleStr(string str);
-		public abstract bool OnMessage(MainForm razor, uint wParam, int lParam);
-
-		public abstract void SetConnectionInfo(IPAddress addr, int port);
-		public abstract Loader_Error LaunchClient(string client);
-		public abstract bool Attach(int pid);
-		public abstract void Close();
-
-		public abstract void BeginCalibratePosition();
-
+		// ONLY in Razor Client abstraction
+		public abstract void SetPosition(uint x, uint y, uint z, byte dir);
+		public abstract string GetClientVersion();
+		public abstract string GetUoFilePath();
 		public abstract IntPtr GetWindowHandle();
+		public abstract uint TotalDataIn();
 
-	}
+		public abstract uint TotalDataOut();
+
+        internal abstract void RequestMove(Direction m_Dir);
+
+        public void RequestTitlebarUpdate()
+        {
+            // throttle updates, since things like counters might request 1000000 million updates/sec
+            if (m_TBTimer == null)
+                m_TBTimer = new TitleBarThrottle();
+
+            if (!m_TBTimer.Running)
+                m_TBTimer.Start();
+        }
+
+        private class TitleBarThrottle : Timer
+        {
+            public TitleBarThrottle() : base(TimeSpan.FromSeconds(0.25))
+            {
+            }
+
+            protected override void OnTick()
+            {
+                Instance.UpdateTitleBar();
+            }
+        }
+
+        private Timer m_TBTimer;
+        public StringBuilder TitleBarBuilder = new StringBuilder();
+        private string m_LastPlayerName = "";
+
+        public void ResetTitleBarBuilder()
+        {
+            // reuse the same sb each time for less damn allocations
+            //TitleBarBuilder.Remove(0, TitleBarBuilder.Length);
+            //TitleBarBuilder.Insert(0, $"{Config.GetString("TitleBarText")}");
+        }
+
+        public virtual void UpdateTitleBar()
+        {
+            if (!ClientRunning)
+                return;
+
+            StringBuilder sb = TitleBarBuilder;
+
+            PlayerData p = World.Player;
+
+            if (p.Name != m_LastPlayerName)
+            {
+                m_LastPlayerName = p.Name;
+
+                Engine.MainWindow.UpdateTitle();
+            }
+
+            sb.Replace(@"{shard}", World.ShardName);
+
+            sb.Replace(@"{str}", p.Str.ToString());
+            sb.Replace(@"{hpmax}", p.HitsMax.ToString());
+
+            sb.Replace(@"{dex}", World.Player.Dex.ToString());
+            sb.Replace(@"{stammax}", World.Player.StamMax.ToString());
+
+            sb.Replace(@"{int}", World.Player.Int.ToString());
+            sb.Replace(@"{manamax}", World.Player.ManaMax.ToString());
+
+            sb.Replace(@"{ar}", p.AR.ToString());
+            sb.Replace(@"{tithe}", p.Tithe.ToString());
+
+            sb.Replace(@"{physresist}", p.AR.ToString());
+            sb.Replace(@"{fireresist}", p.FireResistance.ToString());
+            sb.Replace(@"{coldresist}", p.ColdResistance.ToString());
+            sb.Replace(@"{poisonresist}", p.PoisonResistance.ToString());
+            sb.Replace(@"{energyresist}", p.EnergyResistance.ToString());
+
+            sb.Replace(@"{luck}", p.Luck.ToString());
+
+            sb.Replace(@"{damage}", String.Format("{0}-{1}", p.DamageMin, p.DamageMax));
+
+            sb.Replace(@"{maxweight}", World.Player.MaxWeight.ToString());
+
+            sb.Replace(@"{followers}", World.Player.Followers.ToString());
+            sb.Replace(@"{followersmax}", World.Player.FollowersMax.ToString());
+
+            sb.Replace(@"{gold}", World.Player.Gold.ToString());
+
+            //sb.Replace(@"{gps}", GoldPerHourTimer.Running ? $"{GoldPerHourTimer.GoldPerSecond:N2}" : "-");
+            //sb.Replace(@"{gpm}", GoldPerHourTimer.Running ? $"{GoldPerHourTimer.GoldPerMinute:N2}" : "-");
+            //sb.Replace(@"{gph}", GoldPerHourTimer.Running ? $"{GoldPerHourTimer.GoldPerHour:N2}" : "-");
+            //sb.Replace(@"{goldtotal}", GoldPerHourTimer.Running ? $"{GoldPerHourTimer.GoldSinceStart}" : "-");
+            //sb.Replace(@"{goldtotalmin}", GoldPerHourTimer.Running ? $"{GoldPerHourTimer.TotalMinutes:N2} min" : "-");
+
+            //sb.Replace(@"{skill}", SkillTimer.Running ? $"{SkillTimer.Count}" : "-");
+            //sb.Replace(@"{gate}", GateTimer.Running ? $"{GateTimer.Count}" : "-");
+
+            sb.Replace(@"{stealthsteps}", StealthSteps.Counting ? StealthSteps.Count.ToString() : "-");
+            //Client.ConnectionStart != DateTime.MinValue )
+            //time = (int)((DateTime.UtcNow - Client.ConnectionStart).TotalSeconds);
+            sb.Replace(@"{uptime}",
+                ConnectionStart != DateTime.MinValue
+                    ? Utility.FormatTime((int)((DateTime.UtcNow - ConnectionStart).TotalSeconds))
+                    : "-");
+
+           // sb.Replace(@"{dps}", DamageTracker.Running ? $"{DamageTracker.DamagePerSecond:N2}" : "-");
+            //sb.Replace(@"{maxdps}", DamageTracker.Running ? $"{DamageTracker.MaxDamagePerSecond:N2}" : "-");
+            //sb.Replace(@"{maxdamagedealt}", DamageTracker.Running ? $"{DamageTracker.MaxSingleDamageDealt}" : "-");
+            //sb.Replace(@"{maxdamagetaken}", DamageTracker.Running ? $"{DamageTracker.MaxSingleDamageTaken}" : "-");
+            //sb.Replace(@"{totaldamagedealt}", DamageTracker.Running ? $"{DamageTracker.TotalDamageDealt}" : "-");
+            //sb.Replace(@"{totaldamagetaken}", DamageTracker.Running ? $"{DamageTracker.TotalDamageTaken}" : "-");
+
+
+            string buffList = string.Empty;
+
+#if notimplemented
+            if (BuffsTimer.Running)
+            {
+                StringBuilder buffs = new StringBuilder();
+                foreach (BuffsDebuffs buff in World.Player.BuffsDebuffs)
+                {
+                    int timeLeft = 0;
+
+                    if (buff.Duration > 0)
+                    {
+                        TimeSpan diff = DateTime.UtcNow - buff.Timestamp;
+                        timeLeft = buff.Duration - (int)diff.TotalSeconds;
+                    }
+
+                    buffs.Append(timeLeft <= 0
+                        ? $"{buff.ClilocMessage1}, "
+                        : $"{buff.ClilocMessage1} ({timeLeft}), ");
+                }
+
+                buffs.Length = buffs.Length - 2;
+                buffList = buffs.ToString();
+                sb.Replace(@"{buffsdebuffs}", buffList);
+            }
+            else
+            {
+                sb.Replace(@"{buffsdebuffs}", "-");
+            }
+#endif
+            SetTitleStr(sb.ToString());
+        }
+
+        public Packet MakePacketFrom(PacketReader pr)
+        {
+            byte[] data = pr.CopyBytes(0, pr.Length);
+            return new Packet(data, pr.Length, pr.DynamicLength);
+        }
+
+
+    // NOT IN Razor Client abstract definition
+    public abstract bool Ready { get; }
+
+		public abstract void InitSendFlush();
+		public abstract void BeginCalibratePosition();
+        public abstract void SendToClientWait(Packet p);
+        public abstract void SendToServerWait(Packet p);
+
+
+    }
 }
