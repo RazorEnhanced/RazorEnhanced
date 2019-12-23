@@ -326,9 +326,22 @@ namespace Assistant
 
         private bool OnHotKeyHandler(int key, int mod, bool ispressed)
         {
+            if (ispressed && !Enum.IsDefined(typeof(SDL_Keycode_Ignore), key))
+            {
+                RazorEnhanced.ModKeys cur = RazorEnhanced.ModKeys.None;
+                SDL_Keymod keymod = (SDL_Keymod)mod;
+                if (keymod.HasFlag(SDL_Keymod.KMOD_LCTRL) || keymod.HasFlag(SDL_Keymod.KMOD_RCTRL))
+                    cur |= RazorEnhanced.ModKeys.Control;
+                if (keymod.HasFlag(SDL_Keymod.KMOD_LALT) || keymod.HasFlag(SDL_Keymod.KMOD_RALT))
+                    cur |= RazorEnhanced.ModKeys.Alt;
+                if (keymod.HasFlag(SDL_Keymod.KMOD_LSHIFT) || keymod.HasFlag(SDL_Keymod.KMOD_RSHIFT))
+                    cur |= RazorEnhanced.ModKeys.Shift;
+                return RazorEnhanced.HotKey.OnKeyDown(Win32Platform.MapKey(key), cur);
+            }
+
             return true;
         }
-        private void OnDisconnected()
+            private void OnDisconnected()
         {
         }
 

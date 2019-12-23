@@ -11,4 +11,11 @@
 /UltimaSDK/bin/
 /UltimaSDK/obj/
 /.vs/
+/bin/Win32/Debug/*.dll
+/bin/Win32/Debug/*.xml
+/bin/Win32/Debug/*.pdb
+/bin/Win32/Debug/*.ilk
+/bin/Win32/Debug/*.lib
+/bin/Win32/Debug/*.exp
+/bin/Win32/Debug/*.exe
 *~

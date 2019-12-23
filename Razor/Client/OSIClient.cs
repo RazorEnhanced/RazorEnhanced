@@ -1006,7 +1006,6 @@ namespace Assistant
 			IntPtr version = DLLImport.Razor.GetUOVersion();
 			string str = Marshal.PtrToStringAnsi(version);
 			return str;
-			//string[] split = str.Split('.');
 		}
 		public override string GetUoFilePath()
 		{

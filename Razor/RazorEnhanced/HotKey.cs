@@ -4,9 +4,18 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Assistant.UI;
 
 namespace RazorEnhanced
 {
+	public enum ModKeys : int
+	{
+		None = 0,
+		Alt = 0x0001,
+		Control = 0x0002,
+		Shift = 0x0004
+	}
+
 	internal class HotKey
 	{
 		public class HotKeyData
@@ -58,14 +67,43 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static bool OnKeyDown(int key, ModKeys mod)
+		{
+			Debug.WriteLine("key: 0x{0:X} mod: 0x{0:X} ", key, mod);
+			Keys k = (Keys)key;
+			if (mod.HasFlag(ModKeys.Control))
+			{
+				k |= Keys.Control;
+			}
+			if (mod.HasFlag(ModKeys.Alt))
+			{
+				k |= Keys.Alt;
+			}
+			if (mod.HasFlag(ModKeys.Shift))
+			{
+				k |= Keys.Shift;
+			}
+			return KeyDown(k);
+		}
 		internal static bool GameKeyDown(Keys k)
 		{
-            return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
+			Debug.WriteLine("GKD keys: 0x{0:X}", k);
+			return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
 		}
+		//System.Windows.Forms.Control _threadControl = new System.Windows.Forms.Control();
+		//_threadControl.Invoke((MethodInvoker)delegate
+		//	{
+		//		KeyDown(k);
+	    // });
 
 		internal static bool KeyDown(Keys k)
 		{
-			if (!Engine.MainWindow.HotKeyTextBox.Focused && !Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)
+			Debug.WriteLine("KD Keys: 0x{0:X}", k);
+			bool hotTextFocused = false;
+			bool hotTextMasterFocused = false;
+			Engine.MainWindow.SafeAction(s => hotTextFocused = s.HotKeyTextBox.Focused);
+			Engine.MainWindow.SafeAction(s => hotTextMasterFocused = s.HotKeyKeyMasterTextBox.Focused);
+			if (!hotTextFocused && !hotTextMasterFocused)
 			{
 				if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita
 				{
@@ -86,16 +124,18 @@ namespace RazorEnhanced
 				}
 			}
 
-			if (Engine.MainWindow.HotKeyTextBox.Focused)                // In caso di assegnazione hotKey normale
+			if (hotTextFocused)                // In caso di assegnazione hotKey normale
 			{
 				m_key = k;
-				Engine.MainWindow.HotKeyTextBox.Text = KeyString(k);
+				//Engine.MainWindow.HotKeyTextBox.Text = KeyString(k);
+				Engine.MainWindow.SafeAction(s => s.HotKeyTextBox.Text = KeyString(k));
 				return false;
 			}
-			else if (Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)                // In caso di assegnazione hotKey primaria
+			else if (hotTextMasterFocused)                // In caso di assegnazione hotKey primaria
 			{
 				m_masterkey = k;
-				Engine.MainWindow.HotKeyKeyMasterTextBox.Text = KeyString(k);
+				//Engine.MainWindow.HotKeyKeyMasterTextBox.Text = KeyString(k);
+				Engine.MainWindow.SafeAction(s => s.HotKeyKeyMasterTextBox.Text = KeyString(k));
 				return false;
 			}
 			else    // Esecuzine reale

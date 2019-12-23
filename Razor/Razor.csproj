@@ -213,6 +213,7 @@
     <Compile Include="Network\PacketTable.cs" />
     <Compile Include="Network\UoMod.cs" />
     <Compile Include="Network\UoWarper.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
