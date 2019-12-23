@@ -456,6 +456,7 @@
     <Compile Include="UI\Agent\DPSMeter.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\Ext.cs" />
     <Compile Include="UI\Filter\EN-Filters.cs">
       <SubType>Form</SubType>
     </Compile>

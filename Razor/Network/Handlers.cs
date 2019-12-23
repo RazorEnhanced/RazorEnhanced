@@ -2,6 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.IO;
+using Assistant.UI;
 
 namespace Assistant
 {
@@ -1058,8 +1059,9 @@ namespace Assistant
 	 		Assistant.Client.Instance.SendToServer(new StatusQuery(m.Serial));
 
 	 		Assistant.UOAssist.PostLogin((int)serial.Value);
-			Engine.MainWindow.UpdateTitle(); // update player name & shard name
-	 		Assistant.Client.Instance.BeginCalibratePosition();
+			//Engine.MainWindow.UpdateTitle(); // update player name & shard name
+			Engine.MainWindow.SafeAction(s => s.UpdateTitle());
+			Assistant.Client.Instance.BeginCalibratePosition();
 
 			// Carico profili se linkati
 			string profilename = RazorEnhanced.Profiles.IsLinked(serial);
