@@ -1003,7 +1003,10 @@ namespace Assistant
 		internal static unsafe extern string GetUOVersion();
 		public override string GetClientVersion()
 		{
-			return GetUOVersion();
+			IntPtr version = DLLImport.Razor.GetUOVersion();
+			string str = Marshal.PtrToStringAnsi(version);
+			return str;
+			//string[] split = str.Split('.');
 		}
 		public override string GetUoFilePath()
 		{

@@ -52,10 +52,8 @@ namespace Assistant
 			{
 				if (m_ClientVersion == null || m_ClientVersion.Major < 2)
 				{
-					IntPtr version = DLLImport.Razor.GetUOVersion();
-					string str = Marshal.PtrToStringAnsi(version);
+					string str = Client.Instance.GetClientVersion();
 					string[] split = str.Split('.');
-
 					if (split.Length < 3)
 						return new Version(4, 0, 0, 0);
 
