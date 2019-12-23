@@ -337,8 +337,7 @@ namespace Assistant
 
 			Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
-			MainWnd = new MainForm();
-			Application.Run(MainWnd);
+			RunUI();
 
 			m_Running = false;
 
@@ -373,6 +372,11 @@ namespace Assistant
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
 		 	Assistant.Client.Instance.Close();
+		}
+		internal static void RunUI()
+		{
+			MainWnd = new MainForm();
+			Application.Run(MainWnd);
 		}
 
 		private static void Initialize(Assembly a)

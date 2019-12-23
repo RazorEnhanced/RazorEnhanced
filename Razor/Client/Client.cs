@@ -55,8 +55,8 @@ namespace Assistant
 
             if (isOSI)
                 Instance = new OSIClient();
-            //else
-            //    Instance = new ClassicUOClient();
+            else
+                Instance = new ClassicUOClient();
             RazorEnhanced.Settings.Load();
 
         }

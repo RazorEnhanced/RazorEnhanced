@@ -78,15 +78,10 @@ namespace Assistant
             /* Load Profile */
             SplashScreen.End();
 
-            Thread t = new Thread(() => { RunUI(); });
+            Thread t = new Thread(() => { Engine.RunUI(); });
             t.SetApartmentState(ApartmentState.STA);
             t.IsBackground = true;
             t.Start();
-        }
-        internal static void RunUI()
-        {
-            MainForm m_MainWnd = new MainForm();
-            Application.Run(m_MainWnd);
         }
 
     }
