@@ -13,8 +13,13 @@ using CrashReporterDotNET;
 
 namespace Assistant
 {
-	internal class Engine
+	public partial class Engine
 	{
+		private static string _rootPath = null;
+
+		public static string RootPath =>
+			_rootPath ?? (_rootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Engine)).Location));
+
 		private static IPAddress m_ip;
 
 		internal static IPAddress IP

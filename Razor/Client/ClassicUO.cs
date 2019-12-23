@@ -83,7 +83,14 @@ namespace Assistant
             t.IsBackground = true;
             t.Start();
         }
+        internal static void RunUI()
+        {
+            MainForm m_MainWnd = new MainForm();
+            Application.Run(m_MainWnd);
+        }
+
     }
+
 
     public class ClassicUOClient : Client
     {
@@ -292,7 +299,7 @@ namespace Assistant
             else if (button > 1)
                 button = 1;
 
-            Assistant.HotKey.OnMouse(button, wheel);
+            RazorEnhanced.HotKey.OnMouse(button, wheel);
         }
 
         private enum SDL_Keymod
@@ -324,19 +331,6 @@ namespace Assistant
 
         private bool OnHotKeyHandler(int key, int mod, bool ispressed)
         {
-            if (ispressed && !Enum.IsDefined(typeof(SDL_Keycode_Ignore), key))
-            {
-                Assistant.ModKeys cur = Assistant.ModKeys.None;
-                SDL_Keymod keymod = (SDL_Keymod)mod;
-                if (keymod.HasFlag(SDL_Keymod.KMOD_LCTRL) || keymod.HasFlag(SDL_Keymod.KMOD_RCTRL))
-                    cur |= ModKeys.Control;
-                if (keymod.HasFlag(SDL_Keymod.KMOD_LALT) || keymod.HasFlag(SDL_Keymod.KMOD_RALT))
-                    cur |= ModKeys.Alt;
-                if (keymod.HasFlag(SDL_Keymod.KMOD_LSHIFT) || keymod.HasFlag(SDL_Keymod.KMOD_RSHIFT))
-                    cur |= ModKeys.Shift;
-                return Assistant.HotKey.OnKeyDown(Assistant.Win32Platform.MapKey(key), cur);
-            }
-
             return true;
         }
         private void OnDisconnected()
@@ -350,7 +344,7 @@ namespace Assistant
 
         private void OnClientClosing()
         {
-            Engine.Close();
+            Close();
         }
 
         private void OnInitialize()
