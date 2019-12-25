@@ -12,734 +12,734 @@ using AutoUpdaterDotNET;
 
 namespace Assistant
 {
-	public partial class MainForm : System.Windows.Forms.Form
-	{
-		#region Class Variables
-		private System.Windows.Forms.TabControl tabs;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.CheckedListBox filters;
-		private System.Windows.Forms.ColumnHeader skillHDRName;
-		private System.Windows.Forms.ColumnHeader skillHDRvalue;
-		private System.Windows.Forms.ColumnHeader skillHDRbase;
-		private System.Windows.Forms.ColumnHeader skillHDRdelta;
-		private RazorButton resetDelta;
-		private RazorButton setlocks;
-		private RazorComboBox locks;
-		private System.Windows.Forms.ListView skillList;
-		private System.Windows.Forms.ColumnHeader skillHDRcap;
-		private RazorCheckBox alwaysTop;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox baseTotal;
-		private System.Windows.Forms.TabPage emptyTab;
-		private RazorButton skillCopySel;
-		private RazorButton skillCopyAll;
-		private System.Windows.Forms.TabPage generalTab;
-		private System.Windows.Forms.TabPage toolbarTab;
-		private System.Windows.Forms.TabPage skillsTab;
-		private System.Windows.Forms.TabPage moreOptTab;
-		private RazorCheckBox chkForceSpeechHue;
-		private System.Windows.Forms.Label label3;
-		private RazorTextBox txtSpellFormat;
-		private RazorCheckBox chkForceSpellHue;
-		private System.Windows.Forms.Label opacityLabel;
-		private System.Windows.Forms.TrackBar opacity;
-		private RazorCheckBox dispDelta;
-		private RazorCheckBox openCorpses;
-		private RazorTextBox corpseRange;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TabPage screenshotTab;
-		private System.Windows.Forms.TabPage statusTab;
-		private RazorCheckBox spamFilter;
-		private System.Windows.Forms.PictureBox screenPrev;
-		private System.Windows.Forms.ListBox screensList;
-		private RazorButton setScnPath;
-		private RazorRadioButton radioFull;
-		private RazorRadioButton radioUO;
-		private RazorCheckBox screenAutoCap;
-		private RazorTextBox screenPath;
-		private RazorButton capNow;
-		private RazorCheckBox dispTime;
-		private System.Windows.Forms.ColumnHeader skillHDRlock;
-		private System.ComponentModel.IContainer components;
-		private RazorCheckBox queueTargets;
-		private RazorRadioButton systray;
-		private RazorRadioButton taskbar;
-		private System.Windows.Forms.Label label11;
-		private RazorCheckBox autoStackRes;
-		private RazorButton setMsgHue;
-		private RazorButton setWarnHue;
-		private RazorButton setSpeechHue;
-		private RazorButton setBeneHue;
-		private RazorButton setHarmHue;
-		private RazorButton setNeuHue;
-		private System.Windows.Forms.Label lblWarnHue;
-		private System.Windows.Forms.Label lblMsgHue;
-		private System.Windows.Forms.Label lblBeneHue;
-		private System.Windows.Forms.Label lblHarmHue;
-		private System.Windows.Forms.Label lblNeuHue;
-		private RazorCheckBox incomingCorpse;
-		private RazorCheckBox incomingMob;
-		private System.Windows.Forms.TabPage enhancedFilterTab;
-		private RazorCheckBox filterSnoop;
-		private RazorCheckBox smartCPU;
-		private RazorButton setLTHilight;
-		private RazorCheckBox lthilight;
-		private RazorCheckBox blockDis;
-		private System.Windows.Forms.Label label12;
-		private RazorComboBox imgFmt;
-		private ToolTip m_Tip;
+    public partial class MainForm : System.Windows.Forms.Form
+    {
+        #region Class Variables
+        private System.Windows.Forms.TabControl tabs;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckedListBox filters;
+        private System.Windows.Forms.ColumnHeader skillHDRName;
+        private System.Windows.Forms.ColumnHeader skillHDRvalue;
+        private System.Windows.Forms.ColumnHeader skillHDRbase;
+        private System.Windows.Forms.ColumnHeader skillHDRdelta;
+        private RazorButton resetDelta;
+        private RazorButton setlocks;
+        private RazorComboBox locks;
+        private System.Windows.Forms.ListView skillList;
+        private System.Windows.Forms.ColumnHeader skillHDRcap;
+        private RazorCheckBox alwaysTop;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox baseTotal;
+        private System.Windows.Forms.TabPage emptyTab;
+        private RazorButton skillCopySel;
+        private RazorButton skillCopyAll;
+        private System.Windows.Forms.TabPage generalTab;
+        private System.Windows.Forms.TabPage toolbarTab;
+        private System.Windows.Forms.TabPage skillsTab;
+        private System.Windows.Forms.TabPage moreOptTab;
+        private RazorCheckBox chkForceSpeechHue;
+        private System.Windows.Forms.Label label3;
+        private RazorTextBox txtSpellFormat;
+        private RazorCheckBox chkForceSpellHue;
+        private System.Windows.Forms.Label opacityLabel;
+        private System.Windows.Forms.TrackBar opacity;
+        private RazorCheckBox dispDelta;
+        private RazorCheckBox openCorpses;
+        private RazorTextBox corpseRange;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage screenshotTab;
+        private System.Windows.Forms.TabPage statusTab;
+        private RazorCheckBox spamFilter;
+        private System.Windows.Forms.PictureBox screenPrev;
+        private System.Windows.Forms.ListBox screensList;
+        private RazorButton setScnPath;
+        private RazorRadioButton radioFull;
+        private RazorRadioButton radioUO;
+        private RazorCheckBox screenAutoCap;
+        private RazorTextBox screenPath;
+        private RazorButton capNow;
+        private RazorCheckBox dispTime;
+        private System.Windows.Forms.ColumnHeader skillHDRlock;
+        private System.ComponentModel.IContainer components;
+        private RazorCheckBox queueTargets;
+        private RazorRadioButton systray;
+        private RazorRadioButton taskbar;
+        private System.Windows.Forms.Label label11;
+        private RazorCheckBox autoStackRes;
+        private RazorButton setMsgHue;
+        private RazorButton setWarnHue;
+        private RazorButton setSpeechHue;
+        private RazorButton setBeneHue;
+        private RazorButton setHarmHue;
+        private RazorButton setNeuHue;
+        private System.Windows.Forms.Label lblWarnHue;
+        private System.Windows.Forms.Label lblMsgHue;
+        private System.Windows.Forms.Label lblBeneHue;
+        private System.Windows.Forms.Label lblHarmHue;
+        private System.Windows.Forms.Label lblNeuHue;
+        private RazorCheckBox incomingCorpse;
+        private RazorCheckBox incomingMob;
+        private System.Windows.Forms.TabPage enhancedFilterTab;
+        private RazorCheckBox filterSnoop;
+        private RazorCheckBox smartCPU;
+        private RazorButton setLTHilight;
+        private RazorCheckBox lthilight;
+        private RazorCheckBox blockDis;
+        private System.Windows.Forms.Label label12;
+        private RazorComboBox imgFmt;
+        private ToolTip m_Tip;
 
-		#endregion Class Variables
+        #endregion Class Variables
 
-		private RazorCheckBox negotiate;
-		private RazorCheckBox preAOSstatbar;
-		private RazorComboBox clientPrio;
-		private System.Windows.Forms.Label label9;
-		private TabPage scriptingTab;
-		private RazorButton buttonAddScript;
-		private RazorButton buttonRemoveScript;
-		private RazorButton buttonScriptUp;
-		private RazorButton buttonScriptDown;
-		private RazorButton buttonScriptEditor;
-		private Label labelStatus;
-		private RazorButton razorButtonWiki;
-		private Panel panelLogo;
-		private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
-		private List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
-		private List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
-		private List<RazorEnhanced.Dress.DressItemNew> dressItemList = new List<RazorEnhanced.Dress.DressItemNew>();
-		private TabPage EnhancedAgent;
-		private TabControl tabControl1;
-		private TabPage eautoloot;
-		private GroupBox groupBox13;
-		private ListBox autolootLogBox;
-		private Label autolootContainerLabel;
-		private RazorButton autoLootButtonListImport;
-		private RazorButton autoLootButtonListExport;
-		private RazorButton autolootItemPropsB;
-		private RazorButton autolootAddItemBTarget;
-		private RazorButton autolootContainerButton;
-		private RazorCheckBox autoLootCheckBox;
-		private TabPage escavenger;
-		private Label label21;
-		private RazorAgentNumOnlyTextBox autoLootTextBoxDelay;
-		private RazorButton autoLootButtonRemoveList;
-		private RazorButton autolootButtonAddList;
-		private RazorComboBox autolootListSelect;
-		private Label label20;
-		private RazorButton scavengerButtonRemoveList;
-		private RazorButton scavengerButtonAddList;
-		private RazorButton scavengerButtonImport;
-		private RazorButton scavengerButtonExport;
-		private RazorComboBox scavengerListSelect;
-		private Label label22;
-		private GroupBox groupBox12;
-		private ListBox scavengerLogBox;
-		private Label label23;
-		private RazorAgentNumOnlyTextBox scavengerDragDelay;
-		private Label scavengerContainerLabel;
-		private RazorButton scavengerButtonSetContainer;
-		private RazorCheckBox scavengerCheckBox;
-		private RazorButton scavengerButtonEditProps;
-		private RazorButton scavengerButtonAddTarget;
-		private TabPage organizer;
-		private GroupBox groupBox16;
-		private ListBox organizerLogBox;
-		private Label label27;
-		private RazorAgentNumOnlyTextBox organizerDragDelay;
-		private Label organizerDestinationLabel;
-		private RazorButton organizerSetDestinationB;
-		private Label organizerSourceLabel;
-		private RazorButton organizerAddTargetB;
-		private RazorButton organizerSetSourceB;
-		private RazorButton organizerRemoveListB;
-		private RazorButton organizerAddListB;
-		private RazorButton organizerImportListB;
-		private RazorComboBox organizerListSelect;
-		private RazorButton organizerExportListB;
-		private Label label24;
-		private TabPage VendorBuy;
-		private TabPage VendorSell;
-		private RazorButton buyAddTargetB;
-		private GroupBox groupBox18;
-		private ListBox buyLogBox;
-		private RazorCheckBox buyEnableCheckBox;
-		private RazorButton buyRemoveListButton;
-		private RazorButton buyAddListButton;
-		private RazorButton buyImportListButton;
-		private RazorComboBox buyListSelect;
-		private RazorButton buyExportListButton;
-		private Label label25;
-		private RazorButton sellAddTargerButton;
-		private GroupBox groupBox20;
-		private ListBox sellLogBox;
-		private RazorCheckBox sellEnableCheckBox;
-		private RazorButton sellRemoveListButton;
-		private RazorButton sellAddListButton;
-		private RazorButton sellImportListButton;
-		private RazorComboBox sellListSelect;
-		private RazorButton sellExportListButton;
-		private Label label26;
-		private Label sellBagLabel;
-		private RazorButton sellSetBagButton;
-		private TabPage Dress;
-		private RazorCheckBox dressConflictCheckB;
-		private Label dressBagLabel;
-		private RazorButton dressSetBagB;
-		private RazorButton undressExecuteButton;
-		private RazorButton dressExecuteButton;
-		private GroupBox groupBox22;
-		private RazorButton dressAddTargetB;
-		private RazorButton dressAddManualB;
-		private RazorButton dressRemoveB;
-		private RazorButton dressReadB;
-		private Label label29;
-		private RazorAgentNumOnlyTextBox dressDragDelay;
-		private GroupBox groupBox21;
-		private ListBox dressLogBox;
-		private ListView dressListView;
-		private ColumnHeader columnHeader24;
-		private ColumnHeader columnHeader25;
-		private ColumnHeader columnHeader26;
-		private ColumnHeader columnHeader27;
-		private RazorButton dressRemoveListB;
-		private RazorButton dressAddListB;
-		private RazorButton dressImportListB;
-		private RazorComboBox dressListSelect;
-		private RazorButton dressExportListB;
-		private Label label28;
-		private NotifyIcon m_NotifyIcon;
-		private OpenFileDialog openFileDialogscript;
-		private System.Timers.Timer m_SystemTimer;
-		private RazorButton dressStopButton;
-		private System.Windows.Forms.Timer timerupdatestatus;
-		private TabPage friends;
-		private GroupBox friendloggroupBox;
-		private ListBox friendLogBox;
-		private RazorCheckBox friendIncludePartyCheckBox;
-		private RazorCheckBox friendAttackCheckBox;
-		private RazorCheckBox friendPartyCheckBox;
-		private ListView friendlistView;
-		private ColumnHeader columnHeader28;
-		private ColumnHeader columnHeader29;
-		private ColumnHeader columnHeader30;
-		private RazorButton friendButtonRemoveList;
-		private RazorButton friendButtonAddList;
-		private RazorButton friendButtonImportList;
-		private RazorComboBox friendListSelect;
-		private RazorButton friendButtonExportList;
-		private Label labelfriend;
-		private GroupBox friendGroupBox;
-		private RazorButton friendAddTargetButton;
-		private RazorButton friendRemoveButton;
-		private RazorButton friendAddButton;
-		private TabPage restock;
-		private GroupBox groupBox2;
-		private ListBox restockLogBox;
-		private Label label13;
-		private RazorAgentNumOnlyTextBox restockDragDelay;
-		private Label restockDestinationLabel;
-		private RazorButton restockSetDestinationButton;
-		private Label restockSourceLabel;
-		private RazorButton restockAddTargetButton;
-		private RazorButton restockSetSourceButton;
-		private RazorButton restockRemoveListB;
-		private RazorButton restockAddListB;
-		private RazorButton restockImportListB;
-		private RazorComboBox restockListSelect;
-		private RazorButton restockExportListB;
-		private Label label7;
-		private TabPage bandageheal;
-		private GroupBox groupBox6;
-		private RazorCheckBox bandagehealcountdownCheckBox;
-		private RazorCheckBox bandagehealhiddedCheckBox;
-		private RazorCheckBox bandagehealmortalCheckBox;
-		private RazorCheckBox bandagehealpoisonCheckBox;
-		private Label label33;
-		private RazorAgentNumOnlyTextBox bandagehealhpTextBox;
-		private Label label32;
-		private RazorCheckBox bandagehealdexformulaCheckBox;
-		private RazorAgentNumHexTextBox bandagehealcustomcolorTextBox;
-		private Label label30;
-		private RazorAgentNumHexTextBox bandagehealcustomIDTextBox;
-		private Label label19;
-		private RazorCheckBox bandagehealcustomCheckBox;
-		private Label bandagehealtargetLabel;
-		private Label label15;
-		private RazorButton bandagehealsettargetButton;
-		private RazorComboBox bandagehealtargetComboBox;
-		private Label label14;
-		private RazorCheckBox bandagehealenableCheckBox;
-		private GroupBox groupBox5;
-		private ListBox bandagehealLogBox;
-		private RazorCheckBox rememberPwds;
-		private RazorCheckBox gameSize;
-		private RazorTextBox forceSizeX;
-		private RazorTextBox forceSizeY;
-		private RazorCheckBox chkStealth;
-		private RazorCheckBox autoOpenDoors;
-		private RazorCheckBox spellUnequip;
-		private RazorCheckBox potionEquip;
-		private Label label17;
-		private RazorComboBox msglvl;
-		private RazorCheckBox actionStatusMsg;
-		private RazorCheckBox QueueActions;
-		private RazorTextBox txtObjDelay;
-		private Label label5;
-		private Label label6;
-		private RazorCheckBox smartLT;
-		private RazorCheckBox rangeCheckLT;
-		private RazorTextBox ltRange;
-		private Label label8;
-		private RazorCheckBox showtargtext;
-		private RazorCheckBox showHealthOH;
-		private RazorTextBox healthFmt;
-		private Label label10;
-		private RazorCheckBox chkPartyOverhead;
-		private GroupBox groupBox23;
-		private RazorCheckBox mobfilterCheckBox;
-		private GroupBox groupBox10;
-		private Label autocarverbladeLabel;
-		private Label label34;
-		private RazorButton autocarverrazorButton;
-		private RazorCheckBox autocarverCheckBox;
-		private GroupBox groupBox9;
-		private Label bonebladeLabel;
-		private Label label16;
-		private RazorButton boneCutterrazorButton;
-		private RazorCheckBox bonecutterCheckBox;
-		private RazorCheckBox showstaticfieldCheckBox;
-		private RazorCheckBox flagsHighlightCheckBox;
-		private RazorCheckBox highlighttargetCheckBox;
-		private GroupBox groupBox24;
-		private RazorCheckBox blockpartyinviteCheckBox;
-		private RazorCheckBox blocktraderequestCheckBox;
-		private RazorButton openToolBarButton;
-		private GroupBox groupBox25;
-		private RazorCheckBox lockToolBarCheckBox;
-		private RazorCheckBox autoopenToolBarCheckBox;
-		private Label locationToolBarLabel;
-		private RazorButton closeToolBarButton;
-		private GroupBox groupBox26;
-		private Label label38;
-		private RazorTextBox toolboxcountNameTextBox;
-		private Label label37;
-		private RazorButton toolboxcountClearButton;
-		private RazorButton toolboxcountTargetButton;
-		private RazorAgentNumOnlyTextBox toolboxcountWarningTextBox;
-		private Label label36;
-		private RazorCheckBox toolboxcountHueWarningCheckBox;
-		private RazorTextBox toolboxcountHueTextBox;
-		private Label label35;
-		private RazorAgentNumHexTextBox toolboxcountGraphTextBox;
-		private Label label18;
-		private RazorComboBox toolboxcountComboBox;
-		private TabPage enhancedHotKeytabPage;
-		private TreeView hotkeytreeView;
-		private RazorHotKeyTextBox hotkeytextbox;
-		private GroupBox groupBox27;
-		private RazorButton hotkeyClearButton;
-		private RazorButton hotkeySetButton;
-		private Label label39;
-		private GroupBox groupBox28;
-		private RazorButton hotkeyMasterClearButton;
-		private RazorButton hotkeyMasterSetButton;
-		private Label label42;
-		private Label hotkeyKeyMasterLabel;
-		private RazorHotKeyTextBox hotkeyKeyMasterTextBox;
-		private Label hotkeyStatusLabel;
-		private RazorCheckBox hotkeypassCheckBox;
-		private GroupBox groupBox8;
-		private RazorButton hotkeyMDisableButton;
-		private RazorButton hotkeyMEnableButton;
-		private GroupBox groupBox29;
-		private RazorButton profilesDeleteButton;
-		private RazorButton profilesAddButton;
-		private RazorComboBox profilesComboBox;
-		private RazorButton profilesExportButton;
-		private RazorButton profilesCloneButton;
-		private RazorButton profilesRenameButton;
-		private RazorButton profilesImportButton;
-		private RazorButton profilesUnlinkButton;
-		private RazorButton profilesLinkButton;
-		private Label profilelinklabel;
+        private RazorCheckBox negotiate;
+        private RazorCheckBox preAOSstatbar;
+        private RazorComboBox clientPrio;
+        private System.Windows.Forms.Label label9;
+        private TabPage scriptingTab;
+        private RazorButton buttonAddScript;
+        private RazorButton buttonRemoveScript;
+        private RazorButton buttonScriptUp;
+        private RazorButton buttonScriptDown;
+        private RazorButton buttonScriptEditor;
+        private Label labelStatus;
+        private RazorButton razorButtonWiki;
+        private Panel panelLogo;
+        private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
+        private List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
+        private List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
+        private List<RazorEnhanced.Dress.DressItemNew> dressItemList = new List<RazorEnhanced.Dress.DressItemNew>();
+        private TabPage EnhancedAgent;
+        private TabControl tabControl1;
+        private TabPage eautoloot;
+        private GroupBox groupBox13;
+        private ListBox autolootLogBox;
+        private Label autolootContainerLabel;
+        private RazorButton autoLootButtonListImport;
+        private RazorButton autoLootButtonListExport;
+        private RazorButton autolootItemPropsB;
+        private RazorButton autolootAddItemBTarget;
+        private RazorButton autolootContainerButton;
+        private RazorCheckBox autoLootCheckBox;
+        private TabPage escavenger;
+        private Label label21;
+        private RazorAgentNumOnlyTextBox autoLootTextBoxDelay;
+        private RazorButton autoLootButtonRemoveList;
+        private RazorButton autolootButtonAddList;
+        private RazorComboBox autolootListSelect;
+        private Label label20;
+        private RazorButton scavengerButtonRemoveList;
+        private RazorButton scavengerButtonAddList;
+        private RazorButton scavengerButtonImport;
+        private RazorButton scavengerButtonExport;
+        private RazorComboBox scavengerListSelect;
+        private Label label22;
+        private GroupBox groupBox12;
+        private ListBox scavengerLogBox;
+        private Label label23;
+        private RazorAgentNumOnlyTextBox scavengerDragDelay;
+        private Label scavengerContainerLabel;
+        private RazorButton scavengerButtonSetContainer;
+        private RazorCheckBox scavengerCheckBox;
+        private RazorButton scavengerButtonEditProps;
+        private RazorButton scavengerButtonAddTarget;
+        private TabPage organizer;
+        private GroupBox groupBox16;
+        private ListBox organizerLogBox;
+        private Label label27;
+        private RazorAgentNumOnlyTextBox organizerDragDelay;
+        private Label organizerDestinationLabel;
+        private RazorButton organizerSetDestinationB;
+        private Label organizerSourceLabel;
+        private RazorButton organizerAddTargetB;
+        private RazorButton organizerSetSourceB;
+        private RazorButton organizerRemoveListB;
+        private RazorButton organizerAddListB;
+        private RazorButton organizerImportListB;
+        private RazorComboBox organizerListSelect;
+        private RazorButton organizerExportListB;
+        private Label label24;
+        private TabPage VendorBuy;
+        private TabPage VendorSell;
+        private RazorButton buyAddTargetB;
+        private GroupBox groupBox18;
+        private ListBox buyLogBox;
+        private RazorCheckBox buyEnableCheckBox;
+        private RazorButton buyRemoveListButton;
+        private RazorButton buyAddListButton;
+        private RazorButton buyImportListButton;
+        private RazorComboBox buyListSelect;
+        private RazorButton buyExportListButton;
+        private Label label25;
+        private RazorButton sellAddTargerButton;
+        private GroupBox groupBox20;
+        private ListBox sellLogBox;
+        private RazorCheckBox sellEnableCheckBox;
+        private RazorButton sellRemoveListButton;
+        private RazorButton sellAddListButton;
+        private RazorButton sellImportListButton;
+        private RazorComboBox sellListSelect;
+        private RazorButton sellExportListButton;
+        private Label label26;
+        private Label sellBagLabel;
+        private RazorButton sellSetBagButton;
+        private TabPage Dress;
+        private RazorCheckBox dressConflictCheckB;
+        private Label dressBagLabel;
+        private RazorButton dressSetBagB;
+        private RazorButton undressExecuteButton;
+        private RazorButton dressExecuteButton;
+        private GroupBox groupBox22;
+        private RazorButton dressAddTargetB;
+        private RazorButton dressAddManualB;
+        private RazorButton dressRemoveB;
+        private RazorButton dressReadB;
+        private Label label29;
+        private RazorAgentNumOnlyTextBox dressDragDelay;
+        private GroupBox groupBox21;
+        private ListBox dressLogBox;
+        private ListView dressListView;
+        private ColumnHeader columnHeader24;
+        private ColumnHeader columnHeader25;
+        private ColumnHeader columnHeader26;
+        private ColumnHeader columnHeader27;
+        private RazorButton dressRemoveListB;
+        private RazorButton dressAddListB;
+        private RazorButton dressImportListB;
+        private RazorComboBox dressListSelect;
+        private RazorButton dressExportListB;
+        private Label label28;
+        private NotifyIcon m_NotifyIcon;
+        private OpenFileDialog openFileDialogscript;
+        private System.Timers.Timer m_SystemTimer;
+        private RazorButton dressStopButton;
+        private System.Windows.Forms.Timer timerupdatestatus;
+        private TabPage friends;
+        private GroupBox friendloggroupBox;
+        private ListBox friendLogBox;
+        private RazorCheckBox friendIncludePartyCheckBox;
+        private RazorCheckBox friendAttackCheckBox;
+        private RazorCheckBox friendPartyCheckBox;
+        private ListView friendlistView;
+        private ColumnHeader columnHeader28;
+        private ColumnHeader columnHeader29;
+        private ColumnHeader columnHeader30;
+        private RazorButton friendButtonRemoveList;
+        private RazorButton friendButtonAddList;
+        private RazorButton friendButtonImportList;
+        private RazorComboBox friendListSelect;
+        private RazorButton friendButtonExportList;
+        private Label labelfriend;
+        private GroupBox friendGroupBox;
+        private RazorButton friendAddTargetButton;
+        private RazorButton friendRemoveButton;
+        private RazorButton friendAddButton;
+        private TabPage restock;
+        private GroupBox groupBox2;
+        private ListBox restockLogBox;
+        private Label label13;
+        private RazorAgentNumOnlyTextBox restockDragDelay;
+        private Label restockDestinationLabel;
+        private RazorButton restockSetDestinationButton;
+        private Label restockSourceLabel;
+        private RazorButton restockAddTargetButton;
+        private RazorButton restockSetSourceButton;
+        private RazorButton restockRemoveListB;
+        private RazorButton restockAddListB;
+        private RazorButton restockImportListB;
+        private RazorComboBox restockListSelect;
+        private RazorButton restockExportListB;
+        private Label label7;
+        private TabPage bandageheal;
+        private GroupBox groupBox6;
+        private RazorCheckBox bandagehealcountdownCheckBox;
+        private RazorCheckBox bandagehealhiddedCheckBox;
+        private RazorCheckBox bandagehealmortalCheckBox;
+        private RazorCheckBox bandagehealpoisonCheckBox;
+        private Label label33;
+        private RazorAgentNumOnlyTextBox bandagehealhpTextBox;
+        private Label label32;
+        private RazorCheckBox bandagehealdexformulaCheckBox;
+        private RazorAgentNumHexTextBox bandagehealcustomcolorTextBox;
+        private Label label30;
+        private RazorAgentNumHexTextBox bandagehealcustomIDTextBox;
+        private Label label19;
+        private RazorCheckBox bandagehealcustomCheckBox;
+        private Label bandagehealtargetLabel;
+        private Label label15;
+        private RazorButton bandagehealsettargetButton;
+        private RazorComboBox bandagehealtargetComboBox;
+        private Label label14;
+        private RazorCheckBox bandagehealenableCheckBox;
+        private GroupBox groupBox5;
+        private ListBox bandagehealLogBox;
+        private RazorCheckBox rememberPwds;
+        private RazorCheckBox gameSize;
+        private RazorTextBox forceSizeX;
+        private RazorTextBox forceSizeY;
+        private RazorCheckBox chkStealth;
+        private RazorCheckBox autoOpenDoors;
+        private RazorCheckBox spellUnequip;
+        private RazorCheckBox potionEquip;
+        private Label label17;
+        private RazorComboBox msglvl;
+        private RazorCheckBox actionStatusMsg;
+        private RazorCheckBox QueueActions;
+        private RazorTextBox txtObjDelay;
+        private Label label5;
+        private Label label6;
+        private RazorCheckBox smartLT;
+        private RazorCheckBox rangeCheckLT;
+        private RazorTextBox ltRange;
+        private Label label8;
+        private RazorCheckBox showtargtext;
+        private RazorCheckBox showHealthOH;
+        private RazorTextBox healthFmt;
+        private Label label10;
+        private RazorCheckBox chkPartyOverhead;
+        private GroupBox groupBox23;
+        private RazorCheckBox mobfilterCheckBox;
+        private GroupBox groupBox10;
+        private Label autocarverbladeLabel;
+        private Label label34;
+        private RazorButton autocarverrazorButton;
+        private RazorCheckBox autocarverCheckBox;
+        private GroupBox groupBox9;
+        private Label bonebladeLabel;
+        private Label label16;
+        private RazorButton boneCutterrazorButton;
+        private RazorCheckBox bonecutterCheckBox;
+        private RazorCheckBox showstaticfieldCheckBox;
+        private RazorCheckBox flagsHighlightCheckBox;
+        private RazorCheckBox highlighttargetCheckBox;
+        private GroupBox groupBox24;
+        private RazorCheckBox blockpartyinviteCheckBox;
+        private RazorCheckBox blocktraderequestCheckBox;
+        private RazorButton openToolBarButton;
+        private GroupBox groupBox25;
+        private RazorCheckBox lockToolBarCheckBox;
+        private RazorCheckBox autoopenToolBarCheckBox;
+        private Label locationToolBarLabel;
+        private RazorButton closeToolBarButton;
+        private GroupBox groupBox26;
+        private Label label38;
+        private RazorTextBox toolboxcountNameTextBox;
+        private Label label37;
+        private RazorButton toolboxcountClearButton;
+        private RazorButton toolboxcountTargetButton;
+        private RazorAgentNumOnlyTextBox toolboxcountWarningTextBox;
+        private Label label36;
+        private RazorCheckBox toolboxcountHueWarningCheckBox;
+        private RazorTextBox toolboxcountHueTextBox;
+        private Label label35;
+        private RazorAgentNumHexTextBox toolboxcountGraphTextBox;
+        private Label label18;
+        private RazorComboBox toolboxcountComboBox;
+        private TabPage enhancedHotKeytabPage;
+        private TreeView hotkeytreeView;
+        private RazorHotKeyTextBox hotkeytextbox;
+        private GroupBox groupBox27;
+        private RazorButton hotkeyClearButton;
+        private RazorButton hotkeySetButton;
+        private Label label39;
+        private GroupBox groupBox28;
+        private RazorButton hotkeyMasterClearButton;
+        private RazorButton hotkeyMasterSetButton;
+        private Label label42;
+        private Label hotkeyKeyMasterLabel;
+        private RazorHotKeyTextBox hotkeyKeyMasterTextBox;
+        private Label hotkeyStatusLabel;
+        private RazorCheckBox hotkeypassCheckBox;
+        private GroupBox groupBox8;
+        private RazorButton hotkeyMDisableButton;
+        private RazorButton hotkeyMEnableButton;
+        private GroupBox groupBox29;
+        private RazorButton profilesDeleteButton;
+        private RazorButton profilesAddButton;
+        private RazorComboBox profilesComboBox;
+        private RazorButton profilesExportButton;
+        private RazorButton profilesCloneButton;
+        private RazorButton profilesRenameButton;
+        private RazorButton profilesImportButton;
+        private RazorButton profilesUnlinkButton;
+        private RazorButton profilesLinkButton;
+        private Label profilelinklabel;
 
-		private bool m_CanClose = true;
-		private GroupBox groupBox32;
-		private RazorAgentNumOnlyTextBox remountedelay;
-		private RazorAgentNumOnlyTextBox remountdelay;
-		private Label label48;
-		private Label label40;
-		private Label remountseriallabel;
-		private Label label47;
-		private RazorButton remountsetbutton;
-		private RazorCheckBox remountcheckbox;
-		private Button buttonScriptPlay;
-		private Button buttonScriptStop;
-		private TextBox textBoxDelay;
-		private RazorCheckBox showheadtargetCheckBox;
-		private RazorCheckBox notshowlauncher;
-		private RazorCheckBox blockhealpoisonCheckBox;
-		private GroupBox groupBox4;
-		private Label label43;
-		private RazorComboBox toolboxsizeComboBox;
-		private Label label41;
-		private RazorCheckBox showfollowerToolBarCheckBox;
-		private RazorCheckBox showweightToolBarCheckBox;
-		private RazorCheckBox showmanaToolBarCheckBox;
-		private RazorCheckBox showstaminaToolBarCheckBox;
-		private RazorCheckBox showhitsToolBarCheckBox;
-		private RazorComboBox toolboxstyleComboBox;
-		private Label label2;
-		private Label toolbarslot_label;
-		private RazorCheckBox colorflagsHighlightCheckBox;
-		private RazorCheckBox blockchivalryhealCheckBox;
-		private RazorCheckBox blockbighealCheckBox;
-		private RazorCheckBox blockminihealCheckBox;
-		private ScriptListView scriptlistView;
-		private ColumnHeader filename;
-		private ColumnHeader status;
-		private ColumnHeader loop;
-		private ColumnHeader wait;
-		private ColumnHeader hotkey;
-		private ColumnHeader heypass;
-		private ColumnHeader columnHeader62;
-		private GroupBox groupBox30;
-		private RazorCheckBox scriptwaitmodecheckbox;
-		private RazorCheckBox scriptloopmodecheckbox;
-		private Label scriptfilelabel;
-		private GroupBox groupBox31;
-		private RazorCheckBox showagentmessageCheckBox;
-		private RazorCheckBox showmessagefieldCheckBox;
-		private RazorCheckBox showscriptmessageCheckBox;
-		private Button buttonScriptRefresh;
-		private RazorButton FriendGuildRemoveButton;
-		private RazorButton FriendGuildAddButton;
-		private ListView friendguildListView;
-		private ColumnHeader columnHeader63;
-		private ColumnHeader columnHeader64;
-		private RazorCheckBox MINfriendCheckBox;
-		private RazorCheckBox COMfriendCheckBox;
-		private RazorCheckBox TBfriendCheckBox;
-		private RazorCheckBox SLfriendCheckBox;
-		private GroupBox groupBox34;
-		private GroupBox groupBox33;
-		private RazorButton toolbarremoveslotButton;
-		private RazorButton toolbaraddslotButton;
-		private RazorCheckBox autoLootnoopenCheckBox;
-		private TabPage tabPage2;
-		private TabPage tabPage3;
-		private GroupBox groupBox37;
-		private RazorButton gridhslotremove_button;
-		private RazorButton gridhslotadd_button;
-		private Label gridhslot_textbox;
-		private Label label53;
-		private RazorButton gridvslotremove_button;
-		private RazorButton gridvslotadd_button;
-		private Label gridvslot_textbox;
-		private Label label49;
-		private GroupBox groupBox36;
-		private RazorComboBox gridborder_ComboBox;
-		private Label label44;
-		private RazorComboBox gridspell_ComboBox;
-		private Label label52;
-		private RazorComboBox gridgroup_ComboBox;
-		private Label label51;
-		private Label label45;
-		private RazorComboBox gridslot_ComboBox;
-		private GroupBox groupBox35;
-		private RazorCheckBox gridlock_CheckBox;
-		private RazorCheckBox gridopenlogin_CheckBox;
-		private Label gridlocation_label;
-		private RazorButton gridclose_button;
-		private RazorButton gridopen_button;
-		private GroupBox groupBox39;
-		private TrackBar toolbar_trackBar;
-		private Label toolbar_opacity_label;
-		private GroupBox groupBox38;
-		private TrackBar spellgrid_trackBar;
-		private Label spellgrid_opacity_label;
-		private TabControl toolbarstab;
-		private GroupBox uomodgroupbox;
-		private RazorCheckBox uomodFPSCheckBox;
-		private RazorCheckBox uomodpaperdoolCheckBox;
-		private RazorCheckBox uomodglobalsoundCheckBox;
-		private Label labelHotride;
-		private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
-		private Label label46;
-		private RazorAgentNumOnlyTextBox bandagehealdelayTextBox;
-		private Label label31;
-		private RazorButton openchangelogButton;
-		private RazorButton discordrazorButton;
-		private DataGridView vendorsellGridView;
-		private ContextMenuStrip datagridMenuStrip;
-		private ToolStripMenuItem deleteRowToolStripMenuItem;
-		private Label label50;
-		private GroupBox groupBox19;
-		private DataGridView scavengerdataGridView;
-		private DataGridViewCheckBoxColumn VendorSellX;
-		private DataGridViewTextBoxColumn VendorSellItemName;
-		private DataGridViewTextBoxColumn VendorSellGraphics;
-		private DataGridViewTextBoxColumn VendorSellAmount;
-		private DataGridViewTextBoxColumn VendorSellColor;
-		private GroupBox groupBox41;
-		private Label label54;
-		private DataGridViewCheckBoxColumn ScavengerX;
-		private DataGridViewTextBoxColumn ScavengerItemName;
-		private DataGridViewTextBoxColumn ScavenerGraphics;
-		private DataGridViewTextBoxColumn ScavengerColor;
-		private DataGridViewTextBoxColumn ScavengerProp;
-		private DataGridView autolootdataGridView;
-		private GroupBox groupBox14;
-		private Label label55;
-		private DataGridViewCheckBoxColumn AutolootColumnX;
-		private DataGridViewTextBoxColumn AutolootColumnItemName;
-		private DataGridViewTextBoxColumn AutolootColumnItemID;
-		private DataGridViewTextBoxColumn AutolootColumnColor;
-		private DataGridViewTextBoxColumn AutolootColumnProps;
-		private DataGridView vendorbuydataGridView;
-		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-		private DataGridView organizerdataGridView;
-		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-		private Button organizerStopButton;
-		private GroupBox groupBox11;
-		private Label label57;
-		private Label label56;
-		private Button organizerExecuteButton;
-		private DataGridView restockdataGridView;
-		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn3;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-		private GroupBox groupBox3;
-		private Label label59;
-		private Label label58;
-		private Button restockExecuteButton;
-		private Button restockStopButton;
-		private Label label60;
-		private RazorAgentNumOnlyTextBox autoLootTextBoxMaxRange;
-		private Label label61;
-		private RazorAgentNumOnlyTextBox scavengerRange;
-		private RazorCheckBox hiddedAutoOpenDoors;
-		private RazorCheckBox uo3dEquipUnEquip;
-		private RazorCheckBox nosearchpouches;
-		private RazorCheckBox autosearchcontainers;
-		private TabPage videoTab;
-		private RazorTextBox videoPathTextBox;
-		private RazorButton videoPathButton;
-		private ListBox videolistBox;
-		private GroupBox groupBox40;
-		private GroupBox videosettinggroupBox;
-		private Button videorecbutton;
-		private Button videostopbutton;
-		private Label label62;
-		private RazorTextBox videoFPSTextBox;
-		private GroupBox groupBox15;
-		private Label videoRecStatuslabel;
-		private Label label64;
-		private RazorComboBox videoCodecComboBox;
-		private Label label63;
-		private RazorCheckBox scriptautostartcheckbox;
-		private ColumnHeader autostart;
-		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
-		private RazorComboBox gridscript_ComboBox;
-		private Label label65;
-		private TabPage DPStabPage;
-		private RazorButton DPSMeterStopButton;
-		private RazorButton DPSMeterStartButton;
-		private RazorButton DPSMeterClearButton;
-		private Label DPSMeterStatusLabel;
-		private Label label67;
-		private RazorButton DPSMeterPauseButton;
-		private DataGridView DpsMeterGridView;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
-		private GroupBox filtergroup;
-		private RazorButton DPSMeterApplyFilterButton;
-		private RazorTextBox DPSmetername;
-		private Label label70;
-		private RazorAgentNumHexTextBox DPSmeterserial;
-		private Label label69;
-		private Label label68;
-		private RazorAgentNumOnlyTextBox DPSmetermaxdamage;
-		private Label label66;
-		private RazorAgentNumOnlyTextBox DPSmetermindamage;
-		private RazorButton DPSMeterClearFilterButton;
-		private System.Drawing.Point windowspt;
+        private bool m_CanClose = true;
+        private GroupBox groupBox32;
+        private RazorAgentNumOnlyTextBox remountedelay;
+        private RazorAgentNumOnlyTextBox remountdelay;
+        private Label label48;
+        private Label label40;
+        private Label remountseriallabel;
+        private Label label47;
+        private RazorButton remountsetbutton;
+        private RazorCheckBox remountcheckbox;
+        private Button buttonScriptPlay;
+        private Button buttonScriptStop;
+        private TextBox textBoxDelay;
+        private RazorCheckBox showheadtargetCheckBox;
+        private RazorCheckBox notshowlauncher;
+        private RazorCheckBox blockhealpoisonCheckBox;
+        private GroupBox groupBox4;
+        private Label label43;
+        private RazorComboBox toolboxsizeComboBox;
+        private Label label41;
+        private RazorCheckBox showfollowerToolBarCheckBox;
+        private RazorCheckBox showweightToolBarCheckBox;
+        private RazorCheckBox showmanaToolBarCheckBox;
+        private RazorCheckBox showstaminaToolBarCheckBox;
+        private RazorCheckBox showhitsToolBarCheckBox;
+        private RazorComboBox toolboxstyleComboBox;
+        private Label label2;
+        private Label toolbarslot_label;
+        private RazorCheckBox colorflagsHighlightCheckBox;
+        private RazorCheckBox blockchivalryhealCheckBox;
+        private RazorCheckBox blockbighealCheckBox;
+        private RazorCheckBox blockminihealCheckBox;
+        private ScriptListView scriptlistView;
+        private ColumnHeader filename;
+        private ColumnHeader status;
+        private ColumnHeader loop;
+        private ColumnHeader wait;
+        private ColumnHeader hotkey;
+        private ColumnHeader heypass;
+        private ColumnHeader columnHeader62;
+        private GroupBox groupBox30;
+        private RazorCheckBox scriptwaitmodecheckbox;
+        private RazorCheckBox scriptloopmodecheckbox;
+        private Label scriptfilelabel;
+        private GroupBox groupBox31;
+        private RazorCheckBox showagentmessageCheckBox;
+        private RazorCheckBox showmessagefieldCheckBox;
+        private RazorCheckBox showscriptmessageCheckBox;
+        private Button buttonScriptRefresh;
+        private RazorButton FriendGuildRemoveButton;
+        private RazorButton FriendGuildAddButton;
+        private ListView friendguildListView;
+        private ColumnHeader columnHeader63;
+        private ColumnHeader columnHeader64;
+        private RazorCheckBox MINfriendCheckBox;
+        private RazorCheckBox COMfriendCheckBox;
+        private RazorCheckBox TBfriendCheckBox;
+        private RazorCheckBox SLfriendCheckBox;
+        private GroupBox groupBox34;
+        private GroupBox groupBox33;
+        private RazorButton toolbarremoveslotButton;
+        private RazorButton toolbaraddslotButton;
+        private RazorCheckBox autoLootnoopenCheckBox;
+        private TabPage tabPage2;
+        private TabPage tabPage3;
+        private GroupBox groupBox37;
+        private RazorButton gridhslotremove_button;
+        private RazorButton gridhslotadd_button;
+        private Label gridhslot_textbox;
+        private Label label53;
+        private RazorButton gridvslotremove_button;
+        private RazorButton gridvslotadd_button;
+        private Label gridvslot_textbox;
+        private Label label49;
+        private GroupBox groupBox36;
+        private RazorComboBox gridborder_ComboBox;
+        private Label label44;
+        private RazorComboBox gridspell_ComboBox;
+        private Label label52;
+        private RazorComboBox gridgroup_ComboBox;
+        private Label label51;
+        private Label label45;
+        private RazorComboBox gridslot_ComboBox;
+        private GroupBox groupBox35;
+        private RazorCheckBox gridlock_CheckBox;
+        private RazorCheckBox gridopenlogin_CheckBox;
+        private Label gridlocation_label;
+        private RazorButton gridclose_button;
+        private RazorButton gridopen_button;
+        private GroupBox groupBox39;
+        private TrackBar toolbar_trackBar;
+        private Label toolbar_opacity_label;
+        private GroupBox groupBox38;
+        private TrackBar spellgrid_trackBar;
+        private Label spellgrid_opacity_label;
+        private TabControl toolbarstab;
+        private GroupBox uomodgroupbox;
+        private RazorCheckBox uomodFPSCheckBox;
+        private RazorCheckBox uomodpaperdoolCheckBox;
+        private RazorCheckBox uomodglobalsoundCheckBox;
+        private Label labelHotride;
+        private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
+        private Label label46;
+        private RazorAgentNumOnlyTextBox bandagehealdelayTextBox;
+        private Label label31;
+        private RazorButton openchangelogButton;
+        private RazorButton discordrazorButton;
+        private DataGridView vendorsellGridView;
+        private ContextMenuStrip datagridMenuStrip;
+        private ToolStripMenuItem deleteRowToolStripMenuItem;
+        private Label label50;
+        private GroupBox groupBox19;
+        private DataGridView scavengerdataGridView;
+        private DataGridViewCheckBoxColumn VendorSellX;
+        private DataGridViewTextBoxColumn VendorSellItemName;
+        private DataGridViewTextBoxColumn VendorSellGraphics;
+        private DataGridViewTextBoxColumn VendorSellAmount;
+        private DataGridViewTextBoxColumn VendorSellColor;
+        private GroupBox groupBox41;
+        private Label label54;
+        private DataGridViewCheckBoxColumn ScavengerX;
+        private DataGridViewTextBoxColumn ScavengerItemName;
+        private DataGridViewTextBoxColumn ScavenerGraphics;
+        private DataGridViewTextBoxColumn ScavengerColor;
+        private DataGridViewTextBoxColumn ScavengerProp;
+        private DataGridView autolootdataGridView;
+        private GroupBox groupBox14;
+        private Label label55;
+        private DataGridViewCheckBoxColumn AutolootColumnX;
+        private DataGridViewTextBoxColumn AutolootColumnItemName;
+        private DataGridViewTextBoxColumn AutolootColumnItemID;
+        private DataGridViewTextBoxColumn AutolootColumnColor;
+        private DataGridViewTextBoxColumn AutolootColumnProps;
+        private DataGridView vendorbuydataGridView;
+        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridView organizerdataGridView;
+        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private Button organizerStopButton;
+        private GroupBox groupBox11;
+        private Label label57;
+        private Label label56;
+        private Button organizerExecuteButton;
+        private DataGridView restockdataGridView;
+        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private GroupBox groupBox3;
+        private Label label59;
+        private Label label58;
+        private Button restockExecuteButton;
+        private Button restockStopButton;
+        private Label label60;
+        private RazorAgentNumOnlyTextBox autoLootTextBoxMaxRange;
+        private Label label61;
+        private RazorAgentNumOnlyTextBox scavengerRange;
+        private RazorCheckBox hiddedAutoOpenDoors;
+        private RazorCheckBox uo3dEquipUnEquip;
+        private RazorCheckBox nosearchpouches;
+        private RazorCheckBox autosearchcontainers;
+        private TabPage videoTab;
+        private RazorTextBox videoPathTextBox;
+        private RazorButton videoPathButton;
+        private ListBox videolistBox;
+        private GroupBox groupBox40;
+        private GroupBox videosettinggroupBox;
+        private Button videorecbutton;
+        private Button videostopbutton;
+        private Label label62;
+        private RazorTextBox videoFPSTextBox;
+        private GroupBox groupBox15;
+        private Label videoRecStatuslabel;
+        private Label label64;
+        private RazorComboBox videoCodecComboBox;
+        private Label label63;
+        private RazorCheckBox scriptautostartcheckbox;
+        private ColumnHeader autostart;
+        private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
+        private RazorComboBox gridscript_ComboBox;
+        private Label label65;
+        private TabPage DPStabPage;
+        private RazorButton DPSMeterStopButton;
+        private RazorButton DPSMeterStartButton;
+        private RazorButton DPSMeterClearButton;
+        private Label DPSMeterStatusLabel;
+        private Label label67;
+        private RazorButton DPSMeterPauseButton;
+        private DataGridView DpsMeterGridView;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private GroupBox filtergroup;
+        private RazorButton DPSMeterApplyFilterButton;
+        private RazorTextBox DPSmetername;
+        private Label label70;
+        private RazorAgentNumHexTextBox DPSmeterserial;
+        private Label label69;
+        private Label label68;
+        private RazorAgentNumOnlyTextBox DPSmetermaxdamage;
+        private Label label66;
+        private RazorAgentNumOnlyTextBox DPSmetermindamage;
+        private RazorButton DPSMeterClearFilterButton;
+        private System.Drawing.Point windowspt;
 
-		// GumpInspector Flag
-		internal bool GumpInspectorEnable = false;
+        // GumpInspector Flag
+        internal bool GumpInspectorEnable = false;
 
-		private RazorCheckBox colorflagsselfHighlightCheckBox;
-		private ContextMenuStrip scriptgridMenuStrip;
-		private ToolStripMenuItem modifyToolStripMenuItem;
-		private ToolStripMenuItem addToolStripMenuItem;
-		private ToolStripMenuItem removeToolStripMenuItem;
-		private ToolStripMenuItem openToolStripMenuItem;
-		private ToolStripMenuItem moveUpToolStripMenuItem;
-		private ToolStripMenuItem moveDownToolStripMenuItem;
-		private ToolStripMenuItem flagsToolStripMenuItem;
-		private ToolStripMenuItem loopModeToolStripMenuItem;
-		private ToolStripMenuItem waitBeforeInterruptToolStripMenuItem;
-		private ToolStripMenuItem autoStartAtLoginToolStripMenuItem;
-		private ToolStripMenuItem playToolStripMenuItem;
-		private ToolStripMenuItem stopToolStripMenuItem;
-		private System.Windows.Forms.Timer timertitlestatusbar;
-		private RazorCheckBox chknorunStealth;
-		private RazorCheckBox filterPoison;
-		private Label label71;
-		private GroupBox groupBox17;
-		private Label label72;
-		private RazorTextBox enhancedmappathTextBox;
-		private Button setpathmapbutton;
-		private OpenFileDialog openmaplocation;
-		private RazorCheckBox autolootautostartCheckBox;
-		private RazorCheckBox scavengerautostartCheckBox;
-		private RazorCheckBox filterNPC;
-		private DataGridView graphfilterdatagrid;
-		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
-		private RazorCheckBox scripterrorlogCheckBox;
-		private RazorButton autoLootButtonListClone;
-		private RazorButton scavengerButtonClone;
-		private RazorButton organizerCloneListB;
-		private RazorButton buyCloneButton;
-		private RazorButton sellCloneListButton;
-		private RazorButton restockCloneListB;
-		private GroupBox groupBox42;
-		private RazorTextBox scriptSearchTextBox;
-		private RazorButton buttonScriptEditorNew;
-		private GroupBox groupBox43;
-		private RazorButton targetaddButton;
-		private RazorTextBox targetaddTextBox;
-		private ListBox targetlistBox;
-		private GroupBox groupBox45;
-		private DataGridView targethueGridView;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
-		private RazorCheckBox targetcoloCheckBox;
-		private GroupBox groupBox44;
-		private DataGridView targetbodydataGridView;
-		private RazorCheckBox targetbodyCheckBox;
-		private GroupBox groupBox46;
-		private GroupBox groupBox47;
-		private RazorRadioButton paralizedBoth;
-		private RazorRadioButton paralizedOff;
-		private RazorRadioButton paralizedOn;
-		private GroupBox groupBox49;
-		private RazorRadioButton friendOn;
-		private RazorRadioButton friendBoth;
-		private RazorRadioButton friendOff;
-		private GroupBox groupBox50;
-		private RazorRadioButton warmodeOn;
-		private RazorRadioButton warmodeBoth;
-		private RazorRadioButton warmodeOff;
-		private GroupBox groupBox51;
-		private RazorRadioButton ghostOn;
-		private RazorRadioButton ghostBoth;
-		private RazorRadioButton ghostOff;
-		private GroupBox groupBox52;
-		private RazorRadioButton humanOn;
-		private RazorRadioButton humanOff;
-		private RazorRadioButton humanBoth;
-		private GroupBox groupBox53;
-		private RazorRadioButton blessedOn;
-		private RazorRadioButton blessedOff;
-		private RazorRadioButton blessedBoth;
-		private GroupBox groupBox54;
-		private RazorRadioButton poisonedOn;
-		private RazorRadioButton poisonedOff;
-		private RazorRadioButton poisonedBoth;
-		private GroupBox groupBox48;
-		private Label label73;
-		private Label label74;
-		private RazorTextBox targetRangeMaxTextBox;
-		private Label label75;
-		private RazorTextBox targetRangeMinTextBox;
-		private GroupBox groupBox55;
-		private RazorTextBox targetNameTextBox;
-		private GroupBox groupBox57;
-		private GroupBox groupBox56;
-		private RazorComboBox targetSelectorComboBox;
-		private RazorCheckBox targetBlueCheckBox;
-		private RazorCheckBox targetYellowCheckBox;
-		private RazorCheckBox targetRedCheckBox;
-		private RazorCheckBox targetOrangeCheckBox;
-		private RazorCheckBox targetCriminalCheckBox;
-		private RazorCheckBox targetGreyCheckBox;
-		private RazorCheckBox targetGreenCheckBox;
-		private RazorButton targetsaveButton;
-		private RazorButton targetTestButton;
-		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
-		private RazorButton targetremoveButton;
-		private Label label76;
-		private RazorButton graphFilterImportButton;
-		private RazorButton graphFilterExportButton;
-		private RazorButton targetImportButton;
-		private RazorButton targetExportButton;
-		private RazorButton targetChoseHue;
-		private RazorButton targetChoseBody;
-		private RazorCheckBox bandagehealAutostartCheckBox;
-		private RazorCheckBox bandagehealusetarget;
+        private RazorCheckBox colorflagsselfHighlightCheckBox;
+        private ContextMenuStrip scriptgridMenuStrip;
+        private ToolStripMenuItem modifyToolStripMenuItem;
+        private ToolStripMenuItem addToolStripMenuItem;
+        private ToolStripMenuItem removeToolStripMenuItem;
+        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem moveUpToolStripMenuItem;
+        private ToolStripMenuItem moveDownToolStripMenuItem;
+        private ToolStripMenuItem flagsToolStripMenuItem;
+        private ToolStripMenuItem loopModeToolStripMenuItem;
+        private ToolStripMenuItem waitBeforeInterruptToolStripMenuItem;
+        private ToolStripMenuItem autoStartAtLoginToolStripMenuItem;
+        private ToolStripMenuItem playToolStripMenuItem;
+        private ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.Timer timertitlestatusbar;
+        private RazorCheckBox chknorunStealth;
+        private RazorCheckBox filterPoison;
+        private Label label71;
+        private GroupBox groupBox17;
+        private Label label72;
+        private RazorTextBox enhancedmappathTextBox;
+        private Button setpathmapbutton;
+        private OpenFileDialog openmaplocation;
+        private RazorCheckBox autolootautostartCheckBox;
+        private RazorCheckBox scavengerautostartCheckBox;
+        private RazorCheckBox filterNPC;
+        private DataGridView graphfilterdatagrid;
+        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private RazorCheckBox scripterrorlogCheckBox;
+        private RazorButton autoLootButtonListClone;
+        private RazorButton scavengerButtonClone;
+        private RazorButton organizerCloneListB;
+        private RazorButton buyCloneButton;
+        private RazorButton sellCloneListButton;
+        private RazorButton restockCloneListB;
+        private GroupBox groupBox42;
+        private RazorTextBox scriptSearchTextBox;
+        private RazorButton buttonScriptEditorNew;
+        private GroupBox groupBox43;
+        private RazorButton targetaddButton;
+        private RazorTextBox targetaddTextBox;
+        private ListBox targetlistBox;
+        private GroupBox groupBox45;
+        private DataGridView targethueGridView;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
+        private RazorCheckBox targetcoloCheckBox;
+        private GroupBox groupBox44;
+        private DataGridView targetbodydataGridView;
+        private RazorCheckBox targetbodyCheckBox;
+        private GroupBox groupBox46;
+        private GroupBox groupBox47;
+        private RazorRadioButton paralizedBoth;
+        private RazorRadioButton paralizedOff;
+        private RazorRadioButton paralizedOn;
+        private GroupBox groupBox49;
+        private RazorRadioButton friendOn;
+        private RazorRadioButton friendBoth;
+        private RazorRadioButton friendOff;
+        private GroupBox groupBox50;
+        private RazorRadioButton warmodeOn;
+        private RazorRadioButton warmodeBoth;
+        private RazorRadioButton warmodeOff;
+        private GroupBox groupBox51;
+        private RazorRadioButton ghostOn;
+        private RazorRadioButton ghostBoth;
+        private RazorRadioButton ghostOff;
+        private GroupBox groupBox52;
+        private RazorRadioButton humanOn;
+        private RazorRadioButton humanOff;
+        private RazorRadioButton humanBoth;
+        private GroupBox groupBox53;
+        private RazorRadioButton blessedOn;
+        private RazorRadioButton blessedOff;
+        private RazorRadioButton blessedBoth;
+        private GroupBox groupBox54;
+        private RazorRadioButton poisonedOn;
+        private RazorRadioButton poisonedOff;
+        private RazorRadioButton poisonedBoth;
+        private GroupBox groupBox48;
+        private Label label73;
+        private Label label74;
+        private RazorTextBox targetRangeMaxTextBox;
+        private Label label75;
+        private RazorTextBox targetRangeMinTextBox;
+        private GroupBox groupBox55;
+        private RazorTextBox targetNameTextBox;
+        private GroupBox groupBox57;
+        private GroupBox groupBox56;
+        private RazorComboBox targetSelectorComboBox;
+        private RazorCheckBox targetBlueCheckBox;
+        private RazorCheckBox targetYellowCheckBox;
+        private RazorCheckBox targetRedCheckBox;
+        private RazorCheckBox targetOrangeCheckBox;
+        private RazorCheckBox targetCriminalCheckBox;
+        private RazorCheckBox targetGreyCheckBox;
+        private RazorCheckBox targetGreenCheckBox;
+        private RazorButton targetsaveButton;
+        private RazorButton targetTestButton;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private RazorButton targetremoveButton;
+        private Label label76;
+        private RazorButton graphFilterImportButton;
+        private RazorButton graphFilterExportButton;
+        private RazorButton targetImportButton;
+        private RazorButton targetExportButton;
+        private RazorButton targetChoseHue;
+        private RazorButton targetChoseBody;
+        private RazorCheckBox bandagehealAutostartCheckBox;
+        private RazorCheckBox bandagehealusetarget;
         private RazorButton paypalButton;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
-		internal MainForm()
-		{
-			m_Tip = new ToolTip();
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+        internal MainForm()
+        {
+            m_Tip = new ToolTip();
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-			m_NotifyIcon.ContextMenu =
-				new ContextMenu(new MenuItem[]
-				{
-					new MenuItem( "Show Razor", new EventHandler( DoShowMe ) ),
-					new MenuItem( "Hide Razor", new EventHandler( HideMe ) ),
-					new MenuItem( "-" ),
-					new MenuItem( "Toggle Razor Visibility", new EventHandler( ToggleVisible ) ),
-					new MenuItem( "-" ),
-					new MenuItem( "Close Razor && UO", new EventHandler( OnClose ) ),
-				});
-			m_NotifyIcon.ContextMenu.MenuItems[0].DefaultItem = true;
-		}
+            m_NotifyIcon.ContextMenu =
+                new ContextMenu(new MenuItem[]
+                {
+                    new MenuItem( "Show Razor", new EventHandler( DoShowMe ) ),
+                    new MenuItem( "Hide Razor", new EventHandler( HideMe ) ),
+                    new MenuItem( "-" ),
+                    new MenuItem( "Toggle Razor Visibility", new EventHandler( ToggleVisible ) ),
+                    new MenuItem( "-" ),
+                    new MenuItem( "Close Razor && UO", new EventHandler( OnClose ) ),
+                });
+            m_NotifyIcon.ContextMenu.MenuItems[0].DefaultItem = true;
+        }
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				if (components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabs = new System.Windows.Forms.TabControl();
@@ -8595,122 +8595,126 @@ namespace Assistant
             this.scriptgridMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion Windows Form Designer generated code
+        #endregion Windows Form Designer generated code
 
-		protected override void WndProc(ref Message msg)
-		{
-			if (msg.Msg == 1025)
-			{
-				msg.Result = (IntPtr)(Assistant.Client.Instance.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
-				return;
-			}
-			if (msg.Msg >= 1224 && msg.Msg <= 1338)
-			{
-				msg.Result = (IntPtr)Assistant.UOAssist.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
-				return;
-			}
-			base.WndProc(ref msg);
-		}
+        protected override void WndProc(ref Message msg)
+        {
+            if (msg.Msg == 1025)
+            {
+                msg.Result = (IntPtr)(Assistant.Client.Instance.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
+                return;
+            }
+            if (msg.Msg >= 1224 && msg.Msg <= 1338)
+            {
+                msg.Result = (IntPtr)Assistant.UOAssist.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
+                return;
+            }
+            base.WndProc(ref msg);
+        }
 
-		private void DisableCloseButton()
-		{
-			IntPtr menu = DLLImport.Win.GetSystemMenu(this.Handle, false);
-			DLLImport.Win.EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
-			m_CanClose = false;
-		}
+        private void DisableCloseButton()
+        {
+            IntPtr menu = DLLImport.Win.GetSystemMenu(this.Handle, false);
+            DLLImport.Win.EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
+            m_CanClose = false;
+        }
 
-		private void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
-		{
-			Assistant.Timer.Slice();
-		}
+        private void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
+        {
+            Assistant.Timer.Slice();
+        }
 
-		private void MainForm_Load(object sender, System.EventArgs e)
-		{
-			m_SystemTimer = new System.Timers.Timer(5);
-			m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
-			Timer.SystemTimer = m_SystemTimer;
+        private void MainForm_Load(object sender, System.EventArgs e)
+        {
+            m_SystemTimer = new System.Timers.Timer(5);
+            m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
+            Timer.SystemTimer = m_SystemTimer;
 
-			this.Hide();
+            this.Hide();
 
-			bool st = RazorEnhanced.Settings.General.ReadBool("Systray");
-			taskbar.Checked = this.ShowInTaskbar = !st;
-			systray.Checked = m_NotifyIcon.Visible = st;
+            bool st = RazorEnhanced.Settings.General.ReadBool("Systray");
+            taskbar.Checked = this.ShowInTaskbar = !st;
+            systray.Checked = m_NotifyIcon.Visible = st;
 
-			UpdateTitle();
+            UpdateTitle();
 
-			if (!Assistant.Client.Instance.InstallHooks(this.Handle)) // WaitForInputIdle done here
-			{
-				m_CanClose = true;
-				SplashScreen.End();
-				this.Close();
-				System.Diagnostics.Process.GetCurrentProcess().Kill();
-				return;
-			}
+            if (!Assistant.Client.Instance.InstallHooks(this.Handle)) // WaitForInputIdle done here
+            {
+                m_CanClose = true;
+                SplashScreen.End();
+                this.Close();
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                return;
+            }
 
-			InitConfig();
+            InitConfig();
 
-			this.Show();
-			this.BringToFront();
+            this.Show();
+            this.BringToFront();
 
-			Engine.ActiveWindow = this;
+            Engine.ActiveWindow = this;
 
-			DisableCloseButton();
+            DisableCloseButton();
 
-			tabs_IndexChanged(this, null); // load first tab
+            tabs_IndexChanged(this, null); // load first tab
 
-			m_Tip.Active = true;
-			SplashScreen.End();
+            m_Tip.Active = true;
+            SplashScreen.End();
 
-			// AutoUpdater
-			AutoUpdater.ShowSkipButton = false;
-			AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-			AutoUpdater.ReportErrors = true;
-			AutoUpdater.Start("http://www.razorenhanced.net/download/RazorAutoUpdater.xml");
-		}
+            // AutoUpdater
+            AutoUpdater.ShowSkipButton = false;
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.ReportErrors = true;
+            AutoUpdater.Start("http://www.razorenhanced.net/download/RazorAutoUpdater.xml");
+        }
 
         private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {
-            if (args != null)
+            if (Client.IsOSI)
             {
-                if (args.IsUpdateAvailable)
+                if (args != null)
                 {
-                    DialogResult dialogResult;
-
-                    dialogResult =
-                        MessageBox.Show(
-                            $@"There is new version {args.CurrentVersion} available. You are using version {
-                                    args.InstalledVersion
-                                }. Do you want to update the application now?", @"Update Available",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Information);
-
-                    if (dialogResult.Equals(DialogResult.Yes))
+                    if (args.IsUpdateAvailable)
                     {
-                        try
+                        DialogResult dialogResult;
+
+                        dialogResult =
+                            MessageBox.Show(
+                                $@"There is new version {args.CurrentVersion} available. You are using version {
+                                        args.InstalledVersion
+                                    }. Do you want to update the application now?", @"Update Available",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Information);
+
+                        if (dialogResult.Equals(DialogResult.Yes))
                         {
-                            if (AutoUpdater.DownloadUpdate())
+                            try
                             {
-                                Application.Exit();
-                                Thread.Sleep(2000); // attesa uscita
+                                if (AutoUpdater.DownloadUpdate())
+                                {
+                                    Application.Exit();
+                                    Thread.Sleep(2000); // attesa uscita
+                                }
                             }
-                        }
-                        catch (Exception exception)
-                        {
-                            MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                            catch (Exception exception)
+                            {
+                                MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
+                else
+                {
+                    MessageBox.Show(
+                            @"There is a problem reaching update server please check your internet connection and try again later.",
+                            @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
-            {
-                MessageBox.Show(
-                        @"There is a problem reaching update server please check your internet connection and try again later.",
-                        @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        } 
+    
 
 
         internal void LoadSettings()

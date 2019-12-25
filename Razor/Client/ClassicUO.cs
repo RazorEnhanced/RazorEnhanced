@@ -357,6 +357,7 @@ namespace Assistant
 
         private void OnInitialize()
         {
+
         }
 
         public override void SetConnectionInfo(IPAddress addr, int port)

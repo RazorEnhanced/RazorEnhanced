@@ -44,7 +44,7 @@ namespace Assistant
 			if (!Assistant.Engine.CDepPresent)
 				return false;
 
-			IntPtr uowindow = DLLImport.Razor.FindUOWindow();
+			IntPtr uowindow = Client.Instance.GetWindowHandle(); 
 
 			if (uowindow == IntPtr.Zero)
 				return false;

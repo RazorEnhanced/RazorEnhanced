@@ -74,7 +74,8 @@ namespace RazorEnhanced
 			m_BushidoSpellName.TryGetValue(SpellName, out id);
 
 			if (id > 0)
-				s = Spell.Get(id);
+				s = Spell
+					.Get(id);
 			else
 				Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
 

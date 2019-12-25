@@ -358,7 +358,8 @@ namespace Assistant
 			sb.AppendFormat("{0}\n", error);
 			sb.Append(Language.GetString((int)(LocString.InitError + (int)error)));
 
-			MessageBox.Show(Engine.ActiveWindow, sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+			//MessageBox.Show(Engine.ActiveWindow, sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+			MessageBox.Show(sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
 		internal static void OnLogout()

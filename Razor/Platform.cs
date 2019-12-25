@@ -132,7 +132,7 @@ namespace Assistant
 
             if (!m_KeyMap.TryGetValue(key, out keycode))
             {
-                keycode = 0;
+                keycode = key;
             }
 
             return keycode;

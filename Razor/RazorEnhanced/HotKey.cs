@@ -110,13 +110,13 @@ namespace RazorEnhanced
 					if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
 					{
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
-						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
+						Engine.MainWindow.SafeAction(s => s.HotKeyStatusLabel.Text = "Status: Disable");
 						if (World.Player != null)
 							RazorEnhanced.Misc.SendMessage("HotKey: DISABLED", 37, false);
 					}
 					else
 					{
-						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
+						Engine.MainWindow.SafeAction(s => s.HotKeyStatusLabel.Text = "Status: Enable");
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 						if (World.Player != null)
 							RazorEnhanced.Misc.SendMessage("HotKey: ENABLED", 168, false);

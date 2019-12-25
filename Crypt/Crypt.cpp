@@ -447,7 +447,7 @@ static void CheckPosition()
 	}
 }
 
-VOID CALLBACK OnTick(HWND hwnd, UINT Message, UINT TimerId, DWORD dwTime) {
+void OnTick(HWND hwnd, UINT Message, UINT_PTR TimerId, DWORD dwTime) {
 	/* Scan client memory for position updates */
 	CheckPosition();
 
@@ -1654,7 +1654,7 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 
 		/* Start a timer that will call a callback each tick. We use this to implement
 		 * timers as well as scan client memory for position updates. */
-		SetTimer(hUOWindow, (UINT_PTR)0xAA, 25, OnTick);
+		SetTimer(hUOWindow, 0xAA, 25, OnTick);
 
 		break;
 

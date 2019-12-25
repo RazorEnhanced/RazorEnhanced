@@ -2181,7 +2181,8 @@ namespace Assistant
 				p.Seek(3, SeekOrigin.Begin);
 				p.WriteAsciiFixed("", (int)p.Length - 3);
 
-				DLLImport.Razor.DoFeatures(World.Player.Features, true);
+				//DLLImport.Razor.DoFeatures(World.Player.Features, true);
+				Client.Instance.SendToServer(new ACKTalk());
 
 			}
 			else
@@ -2599,14 +2600,12 @@ namespace Assistant
 					}
 				case 0xFE: // Begin Handshake/Features Negotiation
 					{
-						ulong features = p.ReadRawUInt64();
-						//Felix Fix
-						//if (DLLImport.Razor.HandleNegotiate(features))
-						//{
-					 		Assistant.Client.Instance.SendToServer(new RazorNegotiateResponse());
-							//Engine.MainWindow.UpdateControlLocks();
 
-						//}
+						ulong features = ((ulong)p.ReadUInt32() << 32) | (ulong)p.ReadUInt32();
+
+						Client.Instance.SetFeatures(features);
+						Client.Instance.SendToServer(new RazorNegotiateResponse());
+						Engine.MainWindow.SafeAction(s => s.UpdateControlLocks());
 						break;
 					}
 			}
