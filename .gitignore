@@ -19,4 +19,7 @@
 /bin/Win32/Debug/*.lib
 /bin/Win32/Debug/*.exp
 /bin/Win32/Debug/*.exe
+/bin/Win32/Debug/Accord.dll.config
+/bin/Win32/Debug/CrashReporter.NET.dll.config
+/bin/Win32/Debug/Razor.exe.config
 *~
