@@ -18,7 +18,7 @@ namespace Assistant
 		{
 			string status = "Loaded";
 			string classname = Path.GetFileNameWithoutExtension(filename);
-			string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", filename);
+			string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", filename);
 			string text = null;
 
 			if (File.Exists(fullpath))
@@ -280,6 +280,13 @@ namespace Assistant
 			}
 		}
 
+		internal static string NormalizePath(string path)
+		{
+			return Path.GetFullPath(new Uri(path).LocalPath)
+						.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+						.ToUpperInvariant();
+		}
+
 		private void AddScriptInGrid()
 		{
 			DialogResult result = openFileDialogscript.ShowDialog();
@@ -287,10 +294,10 @@ namespace Assistant
 			if (result == DialogResult.OK) // Test result.
 			{
 				string filename = Path.GetFileName(openFileDialogscript.FileName);
-				string scriptPath = openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1).ToLower();
-				string razorPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\").ToLower();
+				string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
+				string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 
-				if (scriptPath == razorPath)
+				if (scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase ))
 				{
 					Scripts.EnhancedScript script = Scripts.Search(filename);
 					if (script == null)
@@ -325,7 +332,7 @@ namespace Assistant
 				Scripts.EnhancedScript script = Scripts.Search(scriptname);
 				if (script != null)
 				{
-					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts",
+					string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts",
 						scriptname);
 
 					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))

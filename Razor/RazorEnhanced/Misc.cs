@@ -432,7 +432,7 @@ namespace RazorEnhanced
 				script.Run = true;
 			}
 			else
-				Scripts.SendMessageScriptError("ScriptStatus: Script not exist");
+				Scripts.SendMessageScriptError("ScriptRun: Script not exist");
 		}
 
 		public static void ScriptStop(string scriptfile)
@@ -443,7 +443,7 @@ namespace RazorEnhanced
 				script.Run = false;
 			}
 			else
-				Scripts.SendMessageScriptError("ScriptStatus: Script not exist");
+				Scripts.SendMessageScriptError("ScriptStop: Script not exist");
 		}
 
 		public static void ScriptStopAll()

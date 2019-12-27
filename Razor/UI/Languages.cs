@@ -652,7 +652,7 @@ namespace Assistant
                 return true;
 
             m_CliLocName = "enu";
-            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),
+            string filename = Path.Combine(Assistant.Engine.RootPath,
                 "Language", String.Format("Razor_lang.{0}", lang));
 
             if (!File.Exists(filename))

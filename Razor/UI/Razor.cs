@@ -9188,7 +9188,7 @@ namespace Assistant
 		{
 			// ENABLE IT ONLY FOR DEBUG
 			//if (File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "bypassnegotiate")))
-			//	return;
+				return;
 
 			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutolootAgent))
 			{

@@ -1068,7 +1068,7 @@ namespace Assistant
 			if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
 			{
 				RazorEnhanced.Profiles.ProfileChange(profilename);
-				Engine.MainWindow.ProfilesComboBox.SelectedIndex = Engine.MainWindow.ProfilesComboBox.FindString(profilename);
+				Engine.MainWindow.SafeAction(s => s.ProfilesComboBox.SelectedIndex = s.ProfilesComboBox.FindString(profilename));
 			}
 
 			// Apertura automatica toolbar se abilitata

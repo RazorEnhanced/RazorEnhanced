@@ -1760,7 +1760,7 @@ namespace RazorEnhanced.UI
 			Scripts.EnhancedScript script = Scripts.Search(m_Filename);
 			if (script != null)
 			{
-				string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename);
+				string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
 
 				if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename))
 				{

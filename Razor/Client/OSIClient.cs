@@ -185,7 +185,7 @@ namespace Assistant
 
 		public override Loader_Error LaunchClient(string client)
 		{
-			string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
+			string dll = Path.Combine(Assistant.Engine.RootPath, "Crypt.dll");
 			uint pid = 0;
 			Loader_Error err = (Loader_Error)DLLImport.Razor.Load(client, dll, "OnAttach", null, 0, out pid);
 

@@ -35,7 +35,7 @@ namespace RazorEnhanced
 				m_Dataset.Clear();
 
 			m_Dataset = new DataSet();
-			string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
+			string filename = Path.Combine(Assistant.Engine.RootPath, m_Save);
 
 			if (File.Exists(filename))
 			{
@@ -1933,7 +1933,7 @@ namespace RazorEnhanced
                     false, false, 10, 10, 2, 2, 100,
 
                     // Parametri primo avvio per tab screenshot
-                    Path.GetDirectoryName(Application.ExecutablePath), "jpg", false, false, false,
+                    Assistant.Engine.RootPath, "jpg", false, false, false,
 
                     // Parametri primo avvio per vecchi filtri
                     false, false, false, false, false, false, false, false, false, false, false, false, false, false,
@@ -1978,7 +1978,7 @@ namespace RazorEnhanced
                      false, false, false,
 
 					 // Parametri Video Recorder
-                     Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false, false,
+                     Assistant.Engine.RootPath, 25, "Full Size", 1, 100, false, false, false,
 
 					 // Parametri finestra script
                      true, false, false,
@@ -4135,7 +4135,7 @@ namespace RazorEnhanced
 			{
 				m_Dataset.AcceptChanges();
 
-				string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
+				string filename = Path.Combine(Assistant.Engine.RootPath, m_Save);
 
 				m_Dataset.RemotingFormat = SerializationFormat.Binary;
 				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
@@ -4203,7 +4203,7 @@ namespace RazorEnhanced
 			if (realVersion == 38)
 			{
 				m_Dataset.Tables["GENERAL"].Columns.Add("VideoPath", typeof(string));
-				General.WriteString("VideoPath", Path.GetDirectoryName(Application.ExecutablePath));
+				General.WriteString("VideoPath", Assistant.Engine.RootPath);
 
 				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFPS", typeof(int));
 				General.WriteInt("VideoFPS", 25);
@@ -5149,14 +5149,14 @@ namespace RazorEnhanced
 
 		internal static void MakeBackup(string filename)
 		{
-			if (!Directory.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup"))
+			if (!Directory.Exists(Assistant.Engine.RootPath + "\\Backup"))
 			{
-				Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup");
+				Directory.CreateDirectory(Assistant.Engine.RootPath + "\\Backup");
             }
 
 			try
 			{
-				File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), true);
+				File.Copy(Path.Combine(Assistant.Engine.RootPath, filename), Path.Combine(Assistant.Engine.RootPath + "\\Backup", filename), true);
 			}
 			catch { }
 
@@ -5164,13 +5164,13 @@ namespace RazorEnhanced
 
 		internal static void RestoreBackup(string filename)
 		{
-			if (!Directory.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup"))
+			if (!Directory.Exists(Assistant.Engine.RootPath + "\\Backup"))
 			{
 				MessageBox.Show("BackUp folder not exist! Can't restore: " + filename );
 				Environment.Exit(0);
 			}
 
-			if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename)))
+			if (!File.Exists(Path.Combine(Assistant.Engine.RootPath + "\\Backup", filename)))
 			{
 				MessageBox.Show("BackUp of: " + filename + " not exist! Can't restore!");
 				Environment.Exit(0);
@@ -5178,7 +5178,7 @@ namespace RazorEnhanced
 
 			try
 			{
-				File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), true);
+				File.Copy(Path.Combine(Assistant.Engine.RootPath + "\\Backup", filename), Path.Combine(Assistant.Engine.RootPath, filename), true);
 
 			}
 			catch

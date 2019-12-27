@@ -19,7 +19,7 @@ namespace Assistant
 			string path = RazorEnhanced.Settings.General.ReadString("VideoPath");
 			if (!Directory.Exists(path))
 			{
-				path = Path.GetDirectoryName(Application.ExecutablePath);
+				path = Assistant.Engine.RootPath;
 				RazorEnhanced.Settings.General.WriteString("VideoPath", path);
 				Assistant.Engine.MainWindow.VideoPathTextBox.Text = path;
 			}
@@ -73,7 +73,7 @@ namespace Assistant
 
 			if (!Directory.Exists(path))
 			{
-				path = Path.GetDirectoryName(Application.ExecutablePath);
+				path = Assistant.Engine.RootPath;
 				RazorEnhanced.Settings.General.WriteString("VideoPath", path);
 				Assistant.Engine.MainWindow.VideoPathTextBox.Text = path;
 			}

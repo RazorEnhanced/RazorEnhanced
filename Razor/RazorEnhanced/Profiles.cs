@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -37,7 +38,7 @@ namespace RazorEnhanced
 				return;
 
 			m_Dataset = new DataSet();
-			string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
+			string filename = Path.Combine(Assistant.Engine.RootPath, m_Save);
 
 			if (File.Exists(filename))
 			{
@@ -342,7 +343,8 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = -1;
 
 			// Reinizzializzo razor
-			Assistant.Engine.MainWindow.LoadSettings();
+			Engine.MainWindow.SafeAction(s => s.LoadSettings());
+			//Assistant.Engine.MainWindow.LoadSettings();
 
 			// Riapro toollbar se le condizioni lo permettono
 			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox"))
@@ -367,7 +369,7 @@ namespace RazorEnhanced
 			{
 				m_Dataset.AcceptChanges();
 
-				string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
+				string filename = Path.Combine(Assistant.Engine.RootPath, m_Save);
 
 				m_Dataset.RemotingFormat = SerializationFormat.Binary;
 				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;

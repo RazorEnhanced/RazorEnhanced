@@ -41,7 +41,8 @@ namespace Assistant
 
 			if (!Directory.Exists(path))
 			{
-				path = Path.GetDirectoryName(Application.ExecutablePath);
+
+				path = Assistant.Engine.RootPath; //  Path.GetDirectoryName(Application.ExecutablePath);
 				RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				Assistant.Engine.MainWindow.ScreenPath.Text = path;
 			}
@@ -99,7 +100,7 @@ namespace Assistant
 			string path = RazorEnhanced.Settings.General.ReadString("CapPath");
 			if (!Directory.Exists(path))
 			{
-				path = Path.GetDirectoryName(Application.ExecutablePath);
+				path = Assistant.Engine.RootPath; //Path.GetDirectoryName(Application.ExecutablePath);
 				RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				Assistant.Engine.MainWindow.ScreenPath.Text = path;
 			}

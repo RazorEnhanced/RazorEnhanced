@@ -104,7 +104,7 @@ namespace RazorEnhanced
 
 						try // For prevent crash in case of file are busy or inaccessible
 						{
-							File.AppendAllText(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + m_Filename + ".ERROR", log.ToString());
+							File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Filename + ".ERROR", log.ToString());
 						}
 						catch { }
 						log.Clear();

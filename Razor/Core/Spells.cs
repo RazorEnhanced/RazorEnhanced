@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Assistant.UI;
 
 namespace Assistant
 {
@@ -164,13 +165,15 @@ namespace Assistant
 
 		static Spell()
 		{
-			string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Definitions/spells.def");
+			//string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Definitions/spells.def");
+			string filename = Path.Combine( Assistant.Engine.RootPath, "Definitions/spells.def");
 			m_SpellsByPower = new Dictionary<string, Spell>(64 + 10 + 16);
 			m_SpellsByID = new Dictionary<int, Spell>(64 + 10 + 16);
 
 			if (!File.Exists(filename))
 			{
-				MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoSpells), "Spells.def", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				//Engine.MainWindow.SafeAction({ MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoSpells), "Spells.def", MessageBoxButtons.OK, MessageBoxIcon.Warning); });
+				MessageBox.Show(Language.GetString(LocString.NoSpells), "Spells.def", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
 

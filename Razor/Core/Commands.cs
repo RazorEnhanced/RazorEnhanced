@@ -239,7 +239,7 @@ namespace Assistant
 				script.Run = true;
 			}
 			else
-				RazorEnhanced.Misc.SendMessage("Script not exist",33, false);
+				RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist",33, false);
 		}
 	}
 

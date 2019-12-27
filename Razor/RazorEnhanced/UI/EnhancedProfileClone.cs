@@ -48,10 +48,10 @@ namespace RazorEnhanced.UI
 			{
 				string oldprofilepath;
 				if (RazorEnhanced.Profiles.LastUsed() == "default")
-					oldprofilepath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced.settings");
+					oldprofilepath = Path.Combine(Assistant.Engine.RootPath, "RazorEnhanced.settings");
 				else
-					oldprofilepath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings");
-				string newprofilepath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + newprofile + ".settings");
+					oldprofilepath = Path.Combine(Assistant.Engine.RootPath, "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings");
+				string newprofilepath = Path.Combine(Assistant.Engine.RootPath, "RazorEnhanced." + newprofile + ".settings");
 
 				if (File.Exists(oldprofilepath))
 				{
