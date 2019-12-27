@@ -1810,13 +1810,13 @@ namespace RazorEnhanced.UI
 		}
 
 		private void SaveAs()
-		{
+		{									
 			SaveFileDialog save = new SaveFileDialog
-			{
+			{				
 				Filter = "Script Files|*.py|Script Files|*.txt",
 				RestoreDirectory = true
 			};
-
+			save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
 			if (save.ShowDialog() == DialogResult.OK)
 			{
 				m_Filename = Path.GetFileName(save.FileName);

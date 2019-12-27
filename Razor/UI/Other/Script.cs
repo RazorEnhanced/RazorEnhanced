@@ -423,7 +423,8 @@ namespace Assistant
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
 				string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
-				fullPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\") + filename;
+				//fullPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\") + filename;
+				fullPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", filename);
 			}
 			if (fullPath != null)
 				EnhancedScriptEditor.Init(fullPath);

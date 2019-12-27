@@ -168,7 +168,7 @@ namespace Assistant
 			}
 		}
 
-		internal static string ExePath { get { return Process.GetCurrentProcess().MainModule.FileName; } }
+		//internal static string ExePath { get { return Process.GetCurrentProcess().MainModule.FileName; } }
 		internal static MainForm MainWindow { get { return MainWnd; } }
 		internal static bool Running { get { return m_Running; } }
 		internal static Form ActiveWindow { get { return m_ActiveWnd; } set { m_ActiveWnd = value; } }

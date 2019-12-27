@@ -8990,8 +8990,8 @@ namespace Assistant
 
 			uint ps = m_OutPrev;
 			uint pr = m_InPrev;
-			m_OutPrev = DLLImport.Razor.TotalOut();
-			m_InPrev = DLLImport.Razor.TotalIn();
+            m_OutPrev = Client.Instance.TotalDataOut(); // DLLImport.Razor.TotalOut();
+            m_InPrev = Client.Instance.TotalDataIn(); //  DLLImport.Razor.TotalIn();
 
 			int time = 0;
 			if (Assistant.Client.Instance.ConnectionStart != DateTime.MinValue)
