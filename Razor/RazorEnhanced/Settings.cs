@@ -29,7 +29,7 @@ namespace RazorEnhanced
 			get { return m_Dataset; }
 		}
 
-		internal static void Load()
+		internal static void Load(bool try_recover=true)
 		{
 			if (m_Dataset != null)
 				m_Dataset.Clear();
@@ -56,9 +56,15 @@ namespace RazorEnhanced
 				{
 					if (stream != null)
 						stream.Close();
-					MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
-					Settings.RestoreBackup(m_Save);
-					Load();
+					if (try_recover == true)
+					{
+						MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+						Settings.RestoreBackup(m_Save);
+						Load(false);
+					} else
+					{
+						throw;
+					}
 					return;
 				}
 

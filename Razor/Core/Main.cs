@@ -278,7 +278,7 @@ namespace Assistant
 
 			if (!Language.Load("ENU"))
 			{
-				SplashScreen.End();
+				//SplashScreen.End();
 				MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
@@ -307,10 +307,10 @@ namespace Assistant
 			if (result != 	Assistant.Client.Loader_Error.SUCCESS)
 			{
 				if (clientPath == null && File.Exists(clientPath))
-					MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				else
-					MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				SplashScreen.End();
+					MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				//SplashScreen.End();
 				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
 			}
@@ -320,7 +320,7 @@ namespace Assistant
 			if (m_ip == IPAddress.None || port == 0)
 			{
 				MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				SplashScreen.End();
+				//SplashScreen.End();
 				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
 			}
@@ -328,8 +328,8 @@ namespace Assistant
 			ClientBuild = FileVersionInfo.GetVersionInfo(clientPath).FileBuildPart;
 			ClientMajor = FileVersionInfo.GetVersionInfo(clientPath).FileMajorPart;
 
-			SplashScreen.Start();
-			m_ActiveWnd = SplashScreen.Instance;
+			//SplashScreen.Start();
+			//m_ActiveWnd = SplashScreen.Instance;
 
 		 	Assistant.Client.Instance.SetConnectionInfo(m_ip, port);
 

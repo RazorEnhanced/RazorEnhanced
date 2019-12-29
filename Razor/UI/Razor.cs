@@ -8643,7 +8643,7 @@ namespace Assistant
             if (!Assistant.Client.Instance.InstallHooks(this.Handle)) // WaitForInputIdle done here
             {
                 m_CanClose = true;
-                SplashScreen.End();
+                //SplashScreen.End();
                 this.Close();
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
                 return;
@@ -8661,7 +8661,7 @@ namespace Assistant
             tabs_IndexChanged(this, null); // load first tab
 
             m_Tip.Active = true;
-            SplashScreen.End();
+            //SplashScreen.End();
 
             // AutoUpdater
             AutoUpdater.ShowSkipButton = false;

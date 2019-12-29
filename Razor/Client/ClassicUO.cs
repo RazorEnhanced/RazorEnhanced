@@ -36,7 +36,7 @@ namespace Assistant
                 return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
             };
 
-            SplashScreen.Start();
+            //SplashScreen.Start();
             m_ActiveWnd = SplashScreen.Instance;
 
             Client.Init(false);
@@ -51,7 +51,7 @@ namespace Assistant
             /* Load localization files */
             if (!Language.Load("ENU"))
             {
-                SplashScreen.End();
+                //SplashScreen.End();
                 MessageBox.Show(
                     String.Format(
                         "WARNING: Razor was unable to load the file Language/Razor_lang.ENU\n."),
@@ -76,7 +76,7 @@ namespace Assistant
             Initialize(typeof(Engine).Assembly);
 
             /* Load Profile */
-            SplashScreen.End();
+            //SplashScreen.End();
 
             Thread t = new Thread(() => { Engine.RunUI(); });
             t.SetApartmentState(ApartmentState.STA);
