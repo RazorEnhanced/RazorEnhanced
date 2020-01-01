@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
-
+using System.Linq;
 
 namespace Assistant
 {
@@ -77,8 +77,7 @@ namespace Assistant
 			internal byte Buff0;
 		}
 
-		
-		
+
 		internal static string GetWindowsUserName()
 		{
 			int len = 1024;
@@ -106,13 +105,7 @@ namespace Assistant
 
 		private static bool m_Ready = false;
 		public override bool Ready { get { return m_Ready; } }
-		private static DateTime m_ConnStart;
-		private static IPAddress m_LastConnection;
 
-		//private static List<WndRegEnt> m_WndReg;
-
-		public override DateTime ConnectionStart { get { return m_ConnStart; } }
-		public override IPAddress LastConnection { get { return m_LastConnection; } }
 		public override Process ClientProcess { get { return ClientProc; } }
 
 		public override bool ClientRunning
@@ -125,13 +118,14 @@ namespace Assistant
 				}
 				catch
 				{
-					return ClientProc != null && DLLImport.Razor.FindUOWindow() != IntPtr.Zero;
+					return ClientProc != null && Assistant.Client.Instance.GetWindowHandle() != IntPtr.Zero;
 				}
 			}
 		}
 
 		static OSIClient()
 		{
+			Client.IsOSI = true;
 			m_SendQueue = new ConcurrentQueue<Packet>();
 			m_RecvQueue = new ConcurrentQueue<Packet>();
 			//m_NextCmdID = 1425u;
@@ -151,23 +145,33 @@ namespace Assistant
 			{
 				return;
 			}
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
 		}
      
 		public override void SetMapWndHandle(Form mapWnd)
 		{
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
 		}
 
 		public override void RequestStatbarPatch(bool preAOS)
 		{
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
 		}
 
 		public override void SetCustomNotoHue(int hue)
 		{
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
 		}
+		public override void RunUI()
+		{
+			Engine.MainWnd = new MainForm();
+			Application.Run(Engine.MainWnd);
+		}
+		public override RazorEnhanced.Shard SelectShard(List<RazorEnhanced.Shard> shards)
+		{
+			return shards.FirstOrDefault(s => s.Selected);
+		}
+
 
 		public override void SetSmartCPU(bool enabled)
 		{
@@ -175,12 +179,12 @@ namespace Assistant
 				try { 	Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
 				catch { }
 
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
 		public override void SetGameSize(int x, int y)
 		{
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
 		}
 
 		public override Loader_Error LaunchClient(string client)
@@ -292,7 +296,7 @@ namespace Assistant
 
 		public override void SetNegotiate(bool negotiate)
 		{
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
 		}
 
 		public override bool Attach(int pid)
@@ -304,6 +308,7 @@ namespace Assistant
 
 		public override void Close()
 		{
+			base.Close();
 			DLLImport.Razor.Shutdown(true);
 			if (ClientProc != null && !ClientProc.HasExited)
 				ClientProc.CloseMainWindow();
@@ -362,12 +367,12 @@ namespace Assistant
 			MessageBox.Show(sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
-		internal static void OnLogout()
+		internal void OnLogout()
 		{
 			OnLogout(true);
 		}
 
-		private static void OnLogout(bool fake)
+		private void OnLogout(bool fake)
 		{
 			if (!fake)
 			{
@@ -377,7 +382,7 @@ namespace Assistant
 				// Felix Fix
 				//foreach (WndRegEnt t in m_WndReg)  
 				//	DLLImport.Win.PostMessage((IntPtr)((WndRegEnt)t).Handle, (uint)Assistant.UOAssist.UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
-				m_ConnStart = DateTime.MinValue;
+				m_ConnectionStart = DateTime.MinValue;
 			}
 
 		 	Assistant.Client.Instance.SetTitleStr(""); // Restore titlebar standard
@@ -455,7 +460,7 @@ namespace Assistant
 							StringBuilder sb = new StringBuilder(256);
 							if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
 								return false;
-							DLLImport.Razor.BringToFront(DLLImport.Razor.FindUOWindow());
+							DLLImport.Razor.BringToFront(Assistant.Client.Instance.GetWindowHandle());
 							//PacketPlayer.Open(sb.ToString());
 							Engine.MainWindow.ShowMe();
 						}
@@ -504,7 +509,7 @@ namespace Assistant
 					break;
 
 				case UONetMessage.Connect:
-					m_ConnStart = DateTime.Now;
+					m_ConnectionStart = DateTime.Now;
 					try
 					{
 						m_LastConnection = new IPAddress((uint)lParam);
@@ -575,7 +580,7 @@ namespace Assistant
 							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
 								DLLImport.Win.ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
 
-							DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
+							DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
 						}
 					}
 
@@ -608,7 +613,7 @@ namespace Assistant
 						if (lParam != 0 && !razor.TopMost)
 						{
 							razor.TopMost = true;
-							DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
+							DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
 						}
 						else if (lParam == 0 && razor.TopMost)
 						{
@@ -832,7 +837,7 @@ namespace Assistant
 		public override void InitSendFlush()
 		{
 			if (m_OutSend->Length == 0)
-				DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
+				DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
 		}
 
 		private void CopyToBuffer(Buffer* buffer, byte* data, int len)
@@ -1107,7 +1112,7 @@ private static string m_LastStr = string.Empty;
 			*(m_TitleStr + clen) = 0;
 			CommMutex.ReleaseMutex();
 
-			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
 		}
 
 	}

@@ -480,7 +480,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				if (World.Player != null && Assistant.Engine.Running) // Parte agent 
+				if (World.Player != null && Client.Running) // Parte agent 
 				{
 					if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
 					{

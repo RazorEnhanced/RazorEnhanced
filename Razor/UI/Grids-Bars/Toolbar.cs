@@ -317,7 +317,7 @@ namespace Assistant
 
 		private void timertitlestatusbar_Tick(object sender, EventArgs e)
 		{
-			if (Initializing || !Assistant.Engine.Running)
+			if (Initializing || !Client.Running)
 				return;
 
 			if (!Assistant.Client.Instance.Ready || World.Player == null)

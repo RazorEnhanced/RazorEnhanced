@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-	internal class Shard
+	public class Shard
 	{
 		private static string m_Save = "RazorEnhanced.shards";
 

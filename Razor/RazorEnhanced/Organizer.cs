@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assistant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -109,7 +110,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (!Assistant.Engine.Running)
+			if (!Client.Running)
 				return;
 
 			Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Add(addlog)));

@@ -89,7 +89,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (!Engine.Running)
+			if (!Client.Running)
 				return;
 
 			Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));

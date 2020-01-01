@@ -77,7 +77,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (Engine.Running)
+			if (Client.Running)
 			{
 				Engine.MainWindow.SellLogBox.Invoke(new Action(() => Engine.MainWindow.SellLogBox.Items.Add(addlog)));
 				Engine.MainWindow.SellLogBox.Invoke(new Action(() => Engine.MainWindow.SellLogBox.SelectedIndex = Engine.MainWindow.SellLogBox.Items.Count - 1));
@@ -465,7 +465,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (Engine.Running)
+			if (Client.Running)
 			{
 				Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
 				Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Engine.MainWindow.BuyLogBox.SelectedIndex = Engine.MainWindow.BuyLogBox.Items.Count - 1));

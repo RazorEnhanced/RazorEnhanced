@@ -127,7 +127,7 @@ namespace Assistant
 			{
 				Thread.CurrentThread.IsBackground = true;
 				Thread.Sleep(1500);
-				m_modhandle = DLLImport.Win.FindWindow("UOModWindow_" + DLLImport.Razor.FindUOWindow().ToString("x8").ToUpper(), null);
+				m_modhandle = DLLImport.Win.FindWindow("UOModWindow_" + Assistant.Client.Instance.GetWindowHandle().ToString("x8").ToUpper(), null);
 
 				if (m_modhandle != IntPtr.Zero)
 				{

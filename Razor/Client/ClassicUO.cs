@@ -8,12 +8,45 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using Assistant;
+using System.Linq;
+
+// For CUO Settings 
+//using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
+
 
 namespace Assistant
 {
     public partial class Engine
     {
+
+
         public static unsafe void Install(PluginHeader* plugin)
+        {
+            string file = ClassicUO.Configuration.Settings.GetSettingsFilepath();
+            if (!File.Exists(file))
+            {
+                //Log.Warn(file + " not found.");
+
+                return;
+            }
+
+            string text = File.ReadAllText(file);
+            text = System.Text.RegularExpressions.Regex.Replace(text,
+                                         @"(?<!\\)  # lookbehind: Check that previous character isn't a \
+                                                \\         # match a \
+                                                (?!\\)     # lookahead: Check that the following character isn't a \",
+                                    @"\\", System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace);
+            JsonSerializerSettings jsonsettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead
+            };
+            ClassicUO.Configuration.Settings settings = JsonConvert.DeserializeObject<ClassicUO.Configuration.Settings>(text, jsonsettings);
+            Install2(plugin, settings.IP);          
+        }
+
+        public static unsafe void Install2(PluginHeader* plugin, string shard_host)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -39,63 +72,37 @@ namespace Assistant
             //SplashScreen.Start();
             m_ActiveWnd = SplashScreen.Instance;
 
-            Client.Init(false);
+            ClassicUOClient.ShardHost = shard_host;
 
-            if (!(Client.Instance as ClassicUOClient).Install(plugin))
-            {
-                Process.GetCurrentProcess().Kill();
-                return;
-            }
-            RazorEnhanced.Profiles.Load();
+            ClassicUOClient cuo = new ClassicUOClient();
+            Client.Instance = cuo;
+            cuo.InitPlugin(plugin);
+            cuo.Init(false);
+            cuo.RunUI();
 
-            /* Load localization files */
-            if (!Language.Load("ENU"))
-            {
-                //SplashScreen.End();
-                MessageBox.Show(
-                    String.Format(
-                        "WARNING: Razor was unable to load the file Language/Razor_lang.ENU\n."),
-                    "Language Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //if (!(Client.Instance as ClassicUOClient).Install(plugin, HostExecutionContext, character))
+            //{
+            //    Process.GetCurrentProcess().Kill();
+            //    return;
+            //}
 
-            m_Running = true;
-
-            string clientPath =
-                ((OnGetUOFilePath) Marshal.GetDelegateForFunctionPointer(plugin->GetUOFilePath, typeof(OnGetUOFilePath))
-                )();
-
-            Ultima.Files.SetMulPath(clientPath);
-            //Ultima.Multis.PostHSFormat = UsePostHSChanges;
-            Client.Instance.ClientEncrypted = false;
-            Client.Instance.ServerEncrypted = false;
-
-            Language.LoadCliLoc();
-
-            /* Initialize engine */
-            Initialize(typeof(Engine).Assembly);
-
-            /* Load Profile */
-            //SplashScreen.End();
-
-            Thread t = new Thread(() => { Engine.RunUI(); });
-            t.SetApartmentState(ApartmentState.STA);
-            t.IsBackground = true;
-            t.Start();
         }
 
     }
-
-
     public class ClassicUOClient : Client
     {
-        public override DateTime ConnectionStart => m_ConnectionStart;
-        public override IPAddress LastConnection { get; }
+
+        private static string m_shardHost;
+        public static string ShardHost
+        {
+            get { return m_shardHost; }
+            set { m_shardHost = value; }
+        }
+        
         public override Process ClientProcess => m_ClientProcess;
         public override bool ClientRunning => m_ClientRunning;
         private uint m_In, m_Out;
 
-        private DateTime m_ConnectionStart;
         private Process m_ClientProcess = null;
         private bool m_ClientRunning = false;
         private string m_ClientVersion;
@@ -122,6 +129,12 @@ namespace Assistant
         private static OnFocusLost _onFocusLost;
         private IntPtr m_ClientWindow;
         private static bool m_Ready = false;
+
+        static ClassicUOClient()
+        {
+            Client.IsOSI = false;
+
+        }
 
         public override void SetMapWndHandle(Form mapWnd)
         {
@@ -152,7 +165,7 @@ namespace Assistant
 
         public override bool ServerEncrypted { get; set; }
 
-        public unsafe bool Install(PluginHeader* header)
+        public unsafe bool InitPlugin(PluginHeader* header)
         {
             _sendToClient =
                 (OnPacketSendRecv) Marshal.GetDelegateForFunctionPointer(header->Recv, typeof(OnPacketSendRecv));
@@ -219,6 +232,31 @@ namespace Assistant
         private void OnPlayerPositionChanged(int x, int y, int z)
         {
             World.Player.Position = new Point3D(x, y, z);
+        }
+
+        internal static void RunTheUI()
+        {
+            Engine.MainWnd = new MainForm();
+            Application.Run(Engine.MainWnd);
+        }
+        public override void RunUI()
+        {
+            Thread t = new Thread(() => { RunTheUI(); });
+            t.SetApartmentState(ApartmentState.STA);
+            t.IsBackground = true;
+            t.Start();
+        }
+        public override RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards)
+        {
+            RazorEnhanced.Shard selected = null;
+            foreach (var shard_iter in shards)
+            {
+                if (shard_iter.Host == ShardHost)
+                {
+                    selected = shard_iter;
+                }
+            }
+            return selected;
         }
 
         private unsafe bool OnRecv(ref byte[] data, ref int length)
@@ -348,6 +386,7 @@ namespace Assistant
         private void OnConnected()
         {
             m_ConnectionStart = DateTime.UtcNow;
+            m_LastConnection = Engine.IP;
         }
 
         private void OnClientClosing()
@@ -375,6 +414,7 @@ namespace Assistant
 
         public override void Close()
         {
+            base.Close();
         }
 
         public override void UpdateTitleBar()
@@ -490,3 +530,56 @@ namespace Assistant
 
     }
 }
+
+    namespace ClassicUO.Configuration
+    {
+        internal sealed class Settings
+        {
+            public static Settings GlobalSettings = new Settings();
+
+            [JsonConstructor]
+            public Settings()
+            {
+            }
+
+
+            [JsonProperty(PropertyName = "username")]
+            public string Username { get; set; } = string.Empty;
+
+            [JsonProperty(PropertyName = "password")]
+            public string Password { get; set; } = string.Empty;
+
+            [JsonProperty(PropertyName = "ip")] public string IP { get; set; } = "127.0.0.1";
+
+            [JsonProperty(PropertyName = "port")] public ushort Port { get; set; } = 2593;
+
+            [JsonProperty(PropertyName = "ultimaonlinedirectory")]
+            public string UltimaOnlineDirectory { get; set; } = "path/to/uo/";
+
+            [JsonProperty(PropertyName = "clientversion")]
+            public string ClientVersion { get; set; } = string.Empty;
+
+            [JsonProperty(PropertyName = "lastcharactername")]
+            public string LastCharacterName { get; set; } = string.Empty;
+
+            [JsonProperty(PropertyName = "cliloc")]
+            public string ClilocFile { get; set; } = "Cliloc.enu";
+
+            [JsonProperty(PropertyName = "lastservernum")]
+            public ushort LastServerNum { get; set; } = 1;
+
+            [JsonProperty(PropertyName = "shard_type")]
+            public int ShardType { get; set; } // 0 = normal (no customization), 1 = old, 2 = outlands??
+
+            [JsonProperty(PropertyName = "plugins")]
+            public string[] Plugins { get; set; } = { @"./Assistant/Razor.dll" };
+
+            public const string SETTINGS_FILENAME = "settings.json";
+
+            public static string GetSettingsFilepath()
+            {
+                string cuo_directory = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
+                return Path.Combine(cuo_directory, SETTINGS_FILENAME);
+            }
+        }
+    }

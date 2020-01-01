@@ -181,8 +181,8 @@ namespace Assistant
 		{
 			Serial ser = p.ReadUInt32();
 
-		/*	if (RazorEnhanced.ScriptRecorder.OnRecord)
-				RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);*/
+			/*	if (RazorEnhanced.ScriptRecorder.OnRecord)
+					RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);*/
 
 			// if you modify this, don't forget to modify the allnames hotkey
 			if (Engine.MainWindow.LastTargTextFlags.Checked)
@@ -940,7 +940,7 @@ namespace Assistant
 						}
 
 						World.Player.SkillsSent = true;
-						Engine.MainWindow.RedrawSkills();
+						Engine.MainWindow.SafeAction(s => s.RedrawSkills());
 						break;
 					}
 
@@ -972,7 +972,7 @@ namespace Assistant
 						}
 
 						World.Player.SkillsSent = true;
-						Engine.MainWindow.RedrawSkills();
+						Engine.MainWindow.SafeAction(s => s.RedrawSkills());
 						break;
 					}
 
@@ -992,7 +992,7 @@ namespace Assistant
 							skill.FixedBase = p.ReadUInt16();
 							skill.Lock = (LockType)p.ReadByte();
 							skill.FixedCap = p.ReadUInt16();
-							Engine.MainWindow.UpdateSkill(skill);
+							Engine.MainWindow.SafeAction(s => s.UpdateSkill(skill));
 
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
@@ -1957,7 +1957,7 @@ namespace Assistant
 
 			item.ProcessPacketFlags(flags);
 
-			if (Engine.UsePostHSChanges)
+			if (Client.Instance.UsePostHSChanges)
 			{
 				p.ReadUInt16();
 			}

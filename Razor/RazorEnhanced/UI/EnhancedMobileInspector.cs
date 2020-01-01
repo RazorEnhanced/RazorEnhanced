@@ -37,7 +37,7 @@ namespace RazorEnhanced.UI
 		{
 			try
 			{
-				if (Assistant.Engine.Running)
+				if (Client.Running)
 				{
 					Mobiles.WaitForStats(m_mobile.Serial, 1000);
 
@@ -60,7 +60,7 @@ namespace RazorEnhanced.UI
 		{
 			try
 			{
-				if (Assistant.Engine.Running)
+				if (Client.Running)
 				{
 					listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(value)));
 				}

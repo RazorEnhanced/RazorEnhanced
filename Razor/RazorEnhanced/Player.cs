@@ -1267,28 +1267,28 @@ namespace RazorEnhanced
 			switch (dir)
 			{
 				case Assistant.Direction.Up:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Up, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.Up, 0);
 					break;
 				case Assistant.Direction.Down:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Down, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.Down, 0);
 					break;
 				case Assistant.Direction.Left:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Left, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.Left, 0);
 					break;
 				case Assistant.Direction.Right:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Right, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.Right, 0);
 					break;
 				case Assistant.Direction.North:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.PageUp, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.PageUp, 0);
 					break;
 				case Assistant.Direction.East:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.PageDown, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.PageDown, 0);
 					break;
 				case Assistant.Direction.West:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.Home, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.Home, 0);
 					break;
 				case Assistant.Direction.South:
-					DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), 0x100, System.Windows.Forms.Keys.End, 0);
+					DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), 0x100, System.Windows.Forms.Keys.End, 0);
 					break;
 				default:
 					Misc.SendMessage(dir.ToString());

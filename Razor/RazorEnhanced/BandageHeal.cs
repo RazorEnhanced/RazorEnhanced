@@ -19,7 +19,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (!Assistant.Engine.Running)
+			if (!Client.Running)
 				return;
 
 			Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.Items.Add(addlog)));
@@ -335,7 +335,7 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
-			if (!Assistant.Engine.Running)
+			if (!Client.Running)
 				return;
 
 			if (World.Player == null)

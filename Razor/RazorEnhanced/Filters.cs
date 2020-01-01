@@ -227,7 +227,7 @@ namespace RazorEnhanced
 
 		internal static void AutoCarverEngine(Items.Filter filter)
 		{
-			if (!Engine.Running)
+			if (!Client.Running)
 				return;
 
 			if (World.Player == null)       // Esce se non loggato
@@ -287,7 +287,7 @@ namespace RazorEnhanced
 
 		internal static void BoneCutterEngine(Items.Filter filter)
 		{
-			if (!Engine.Running)
+			if (!Client.Running)
 				return;
 
 			if (World.Player == null)       // Esce se non loggato

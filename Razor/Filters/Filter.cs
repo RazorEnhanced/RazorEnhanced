@@ -106,9 +106,15 @@ namespace Assistant.Filters
         public void OnCheckChanged(CheckState newValue)
         {
             if (Enabled && newValue == CheckState.Unchecked)
+            {
                 OnDisable();
+                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), false);
+            }
             else if (!Enabled && newValue == CheckState.Checked)
+            {
                 OnEnable();
+                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), true);
+            }
         }
     }
 }

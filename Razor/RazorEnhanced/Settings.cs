@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -51,6 +52,15 @@ namespace RazorEnhanced
 					decompress.Close();
 					stream.Close();
 					MakeBackup(m_Save);
+					//JsonSerializer serializer = new JsonSerializer();
+					//serializer.NullValueHandling = NullValueHandling.Ignore;
+
+					//using (StreamWriter sw = new StreamWriter(@"c:\json.txt"))
+					//using (JsonWriter writer = new JsonTextWriter(sw))
+					//{
+						//serializer.Serialize(writer, m_Dataset);
+						// {"ExpiryDate":new Date(1230375600000),"Price":0}
+					//}
 				}
 				catch
 				{

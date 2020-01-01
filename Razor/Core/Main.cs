@@ -25,6 +25,7 @@ namespace Assistant
 		internal static IPAddress IP
 		{
 			get { return m_ip; }
+			set { m_ip = value;  }
 		}
 
 		internal static void LogCrash(object exception)
@@ -99,29 +100,6 @@ namespace Assistant
 			}
 		}
 
-		internal static bool UsePostHSChanges
-		{
-			get
-			{
-				if (ClientVersion.Major > 7)
-				{
-					return true;
-				}
-				else if (ClientVersion.Major == 7)
-				{
-					if (ClientVersion.Minor > 0)
-					{
-						return true;
-					}
-					else if (ClientVersion.Build >= 9)
-					{
-						return true;
-					}
-				}
-
-				return false;
-			}
-		}
 
 		internal static bool UsePostSAChanges
 		{
@@ -170,7 +148,6 @@ namespace Assistant
 
 		//internal static string ExePath { get { return Process.GetCurrentProcess().MainModule.FileName; } }
 		internal static MainForm MainWindow { get { return MainWnd; } }
-		internal static bool Running { get { return m_Running; } }
 		internal static Form ActiveWindow { get { return m_ActiveWnd; } set { m_ActiveWnd = value; } }
 
 		// Blocco parametri salvataggio uscita
@@ -199,9 +176,8 @@ namespace Assistant
 
 		internal static string ShardList { get; private set; }
 
-		private static MainForm MainWnd;
+		public static MainForm MainWnd;
 		private static Form m_ActiveWnd;
-		private static bool m_Running;
 		private static bool m_cdeppresent = false;
 		private static int m_ToolBarX;
 		private static int m_ToolBarY;
@@ -219,176 +195,17 @@ namespace Assistant
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
-			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
-
-			// Profile
-			RazorEnhanced.Profiles.Load();
-
-			// Shard Bookmarks
-			RazorEnhanced.Shard.Load();
-
-			// Parametri di razor
-			if (RazorEnhanced.Profiles.LastUsed() == "default")
-				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
-			else
-				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
-
-			RazorEnhanced.Settings.Load();
-
-
-			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
-			RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
-
-			Assistant.Client.Init(true);
-			if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
+			Client.Instance = new OSIClient();
+			bool shardSelected = Client.Instance.Init(true);
+			if (shardSelected)
 			{
-				Start(selected);
-			}
-			else
-			{
-				RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-				DialogResult laucherdialog = launcher.ShowDialog();
-
-				if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
-				{
-					if (selected == null)
-					{
-						MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-					else
-					{
-						RazorEnhanced.Shard.Read(out shards);
-						selected = shards.FirstOrDefault(s => s.Selected);
-						Start(selected);
-					}
-				}
+				Client.Instance.RunUI();
+				Client.Instance.Close();
 			}
 		}
-		internal static void Start(RazorEnhanced.Shard selected)
-		{
-		 	Assistant.Client.Instance.ClientEncrypted = selected.PatchEnc;
-		 	Assistant.Client.Instance.ServerEncrypted = selected.OSIEnc;
-			string clientPath = selected.ClientPath;
-			string dataDir = selected.ClientFolder;
-			string addr = selected.Host;
-			int port = selected.Port;
 
-			Ultima.Files.Directory = selected.ClientFolder;
 
-			if (!Language.Load("ENU"))
-			{
-				//SplashScreen.End();
-				MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
-
-			if (dataDir != null && Directory.Exists(dataDir))
-			{
-				Ultima.Files.SetMulPath(dataDir);
-			}
-			else
-			{
-				MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
-
-			Language.LoadCliLoc();
-			Initialize(typeof(Assistant.Engine).Assembly);
-
-		 	Assistant.Client.Instance.SetConnectionInfo(IPAddress.None, -1);
-		 	Assistant.Client.Loader_Error result = 	Assistant.Client.Loader_Error.UNKNOWN_ERROR;
-
-			if (clientPath != null && File.Exists(clientPath))
-				result = 	Assistant.Client.Instance.LaunchClient(clientPath);
-
-			if (result != 	Assistant.Client.Loader_Error.SUCCESS)
-			{
-				if (clientPath == null && File.Exists(clientPath))
-					MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				else
-					MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				//SplashScreen.End();
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
-
-			// if these are null then the registry entry does not exist (old razor version)
-			m_ip = Resolve(addr);
-			if (m_ip == IPAddress.None || port == 0)
-			{
-				MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				//SplashScreen.End();
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
-
-			ClientBuild = FileVersionInfo.GetVersionInfo(clientPath).FileBuildPart;
-			ClientMajor = FileVersionInfo.GetVersionInfo(clientPath).FileMajorPart;
-
-			//SplashScreen.Start();
-			//m_ActiveWnd = SplashScreen.Instance;
-
-		 	Assistant.Client.Instance.SetConnectionInfo(m_ip, port);
-
-			Ultima.Multis.PostHSFormat = UsePostHSChanges;
-
-			RunUI();
-
-			m_Running = false;
-
-			RazorEnhanced.Settings.General.SaveExitData();
-
-			// Chiuto toolbar
-			if (RazorEnhanced.ToolBar.ToolBarForm!= null)
-				RazorEnhanced.ToolBar.ToolBarForm.Close();
-
-			// Chiuto Spellgrid
-			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-				RazorEnhanced.SpellGrid.SpellGridForm.Close();
-
-			// Stoppo tick timer agent
-			if (RazorEnhanced.Scripts.Timer != null)
-				RazorEnhanced.Scripts.Timer.Close();
-
-			// Stop forzato di tutti i thread agent
-			RazorEnhanced.AutoLoot.AutoMode = false;
-			RazorEnhanced.Scavenger.AutoMode = false;
-			RazorEnhanced.BandageHeal.AutoMode = false;
-
-			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
-
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
-
-			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-				Assistant.Engine.MainWindow.RestockStop.PerformClick();
-
-			RazorEnhanced.UI.EnhancedScriptEditor.End();
-
-		 	Assistant.Client.Instance.Close();
-		}
-		internal static void RunUI()
-		{
-			MainWnd = new MainForm();
-			Application.Run(MainWnd);
-		}
-
-		private static void Initialize(Assembly a)
-		{
-			Type[] types = a.GetTypes();
-
-			foreach (Type t in types)
-			{
-				MethodInfo init = t.GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
-
-				if (init != null)
-					init.Invoke(null, null);
-			}
-		}
 
 		internal static IPAddress Resolve(string addr)
 		{

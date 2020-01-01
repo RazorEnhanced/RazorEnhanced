@@ -86,7 +86,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (!Engine.Running)
+			if (!Client.Running)
 				return;
 
 			Engine.MainWindow.DressLogBox.Invoke(new Action(() => Engine.MainWindow.DressLogBox.Items.Add(addlog)));

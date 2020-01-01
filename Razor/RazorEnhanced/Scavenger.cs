@@ -140,7 +140,7 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (!Assistant.Engine.Running)
+			if (!Client.Running)
 				return;
 
 			Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Add(addlog)));
@@ -386,7 +386,7 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
-			if (!Assistant.Engine.Running)
+			if (!Client.Running)
 				return;
 
 			if (World.Player == null)

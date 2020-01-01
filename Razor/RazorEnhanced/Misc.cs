@@ -492,10 +492,10 @@ namespace RazorEnhanced
 
 		public static void FocusUOWindow()
 		{
-			if (DLLImport.Win.IsIconic(DLLImport.Razor.FindUOWindow()))  // Minimized
-				DLLImport.Win.ShowWindow(DLLImport.Razor.FindUOWindow(),3);
+			if (DLLImport.Win.IsIconic(Assistant.Client.Instance.GetWindowHandle()))  // Minimized
+				DLLImport.Win.ShowWindow(Assistant.Client.Instance.GetWindowHandle(),3);
 			else // Only not focused
-				DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
+				DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
 		}
 
 		public static string ShardName()

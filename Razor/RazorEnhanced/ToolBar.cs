@@ -593,7 +593,7 @@ namespace RazorEnhanced
 
 		internal static void ToolbarForm_MouseClick(object sender, MouseEventArgs e)
 		{
-			DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
+			DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
 		}
 
 		internal static void InitEvent()
