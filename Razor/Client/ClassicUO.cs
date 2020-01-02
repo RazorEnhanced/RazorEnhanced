@@ -23,26 +23,7 @@ namespace Assistant
 
         public static unsafe void Install(PluginHeader* plugin)
         {
-            string file = ClassicUO.Configuration.Settings.GetSettingsFilepath();
-            if (!File.Exists(file))
-            {
-                //Log.Warn(file + " not found.");
-
-                return;
-            }
-
-            string text = File.ReadAllText(file);
-            text = System.Text.RegularExpressions.Regex.Replace(text,
-                                         @"(?<!\\)  # lookbehind: Check that previous character isn't a \
-                                                \\         # match a \
-                                                (?!\\)     # lookahead: Check that the following character isn't a \",
-                                    @"\\", System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace);
-            JsonSerializerSettings jsonsettings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All,
-                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead
-            };
-            ClassicUO.Configuration.Settings settings = JsonConvert.DeserializeObject<ClassicUO.Configuration.Settings>(text, jsonsettings);
+            ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
             Install2(plugin, settings.IP);          
         }
 
@@ -248,15 +229,21 @@ namespace Assistant
         }
         public override RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards)
         {
-            RazorEnhanced.Shard selected = null;
             foreach (var shard_iter in shards)
             {
                 if (shard_iter.Host == ShardHost)
                 {
-                    selected = shard_iter;
+                    return shard_iter;
                 }
             }
-            return selected;
+            ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
+            RazorEnhanced.Shard.Insert("Classic UO Default", Path.Combine(settings.UltimaOnlineDirectory, "client.exe"),
+                settings.UltimaOnlineDirectory, settings.IP, settings.Port, true, false);
+            RazorEnhanced.Shard cuo_shard = 
+                new RazorEnhanced.Shard("Classic UO Default", Path.Combine(settings.UltimaOnlineDirectory, "client.exe"),
+                settings.UltimaOnlineDirectory, settings.IP, settings.Port, true, false, true);
+            shards.Add(cuo_shard);
+            return cuo_shard;
         }
 
         private unsafe bool OnRecv(ref byte[] data, ref int length)
@@ -533,8 +520,30 @@ namespace Assistant
 
     namespace ClassicUO.Configuration
     {
-        internal sealed class Settings
+    internal sealed class Settings
+    {
+        public static Settings Get()
         {
+            string file = ClassicUO.Configuration.Settings.GetSettingsFilepath();
+            if (!File.Exists(file))
+            {
+                return null;
+            }
+
+            string text = File.ReadAllText(file);
+            text = System.Text.RegularExpressions.Regex.Replace(text,
+                                         @"(?<!\\)  # lookbehind: Check that previous character isn't a \
+                                                \\         # match a \
+                                                (?!\\)     # lookahead: Check that the following character isn't a \",
+                                    @"\\", System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace);
+            JsonSerializerSettings jsonsettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead
+            };
+            ClassicUO.Configuration.Settings settings = JsonConvert.DeserializeObject<ClassicUO.Configuration.Settings>(text, jsonsettings);
+            return settings;
+        } 
             public static Settings GlobalSettings = new Settings();
 
             [JsonConstructor]

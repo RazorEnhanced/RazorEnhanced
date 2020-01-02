@@ -190,7 +190,7 @@ namespace RazorEnhanced.UI
 						Restock.AddList(newList);
 						break;
 					case 9:
-						RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
+						RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", 0, false, false);
 						break;
 					case 10:
 						AutoLoot.CloneList(newList);

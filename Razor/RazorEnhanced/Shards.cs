@@ -22,7 +22,7 @@ namespace RazorEnhanced
 			//	return;
 
 			m_Dataset = new DataSet();
-			string filename = Path.Combine(Assistant.Engine.RootPath, m_Save);
+			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
 
 			if (File.Exists(filename))
 			{
@@ -112,7 +112,7 @@ namespace RazorEnhanced
 			return m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 		}
 
-		internal static void Insert(string description, string clientpath, string clientfolder, string host, string port, bool parchenc, bool osienc)
+		internal static void Insert(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc)
 		{
 			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
 			{
@@ -234,7 +234,7 @@ namespace RazorEnhanced
 			{
 				m_Dataset.AcceptChanges();
 
-				string filename = Path.Combine(Assistant.Engine.RootPath, m_Save);
+				string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
 
 				m_Dataset.RemotingFormat = SerializationFormat.Binary;
 				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;

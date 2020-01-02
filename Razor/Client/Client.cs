@@ -59,6 +59,8 @@ namespace Assistant
 		// returns false on cancel 
 		{
 			m_Running = true;
+
+			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles")); 
 			// Profile
 			RazorEnhanced.Profiles.Load();
 
@@ -144,21 +146,25 @@ namespace Assistant
 			Initialize(typeof(Assistant.Engine).Assembly);
 
 			Assistant.Client.Instance.SetConnectionInfo(IPAddress.None, -1);
-			Assistant.Client.Loader_Error result = Assistant.Client.Loader_Error.UNKNOWN_ERROR;
-
-			if (clientPath != null && File.Exists(clientPath))
-				result = Assistant.Client.Instance.LaunchClient(clientPath);
-
-			if (result != Assistant.Client.Loader_Error.SUCCESS)
+			if (IsOSI)
 			{
-				if (clientPath == null && File.Exists(clientPath))
-					MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				else
-					MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				//SplashScreen.End();
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
+				Assistant.Client.Loader_Error result = Assistant.Client.Loader_Error.UNKNOWN_ERROR;
+
+				if (clientPath != null && File.Exists(clientPath))
+					result = Assistant.Client.Instance.LaunchClient(clientPath);
+
+				if (result != Assistant.Client.Loader_Error.SUCCESS)
+				{
+					if (clientPath == null && File.Exists(clientPath))
+						MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					else
+						MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					//SplashScreen.End();
+					RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+					return;
+				}
 			}
+			
 
 			// if these are null then the registry entry does not exist (old razor version)
 			Engine.IP = Resolve(addr);
