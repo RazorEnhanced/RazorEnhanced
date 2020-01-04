@@ -382,8 +382,10 @@ namespace Assistant
 		public abstract uint TotalDataOut();
 
         internal abstract void RequestMove(Direction m_Dir);
+		public abstract void PathFindTo(Assistant.Point3D location);
 
-        public void RequestTitlebarUpdate()
+
+		public void RequestTitlebarUpdate()
         {
             // throttle updates, since things like counters might request 1000000 million updates/sec
             if (m_TBTimer == null)

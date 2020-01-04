@@ -213,6 +213,7 @@ namespace Assistant
         private void OnPlayerPositionChanged(int x, int y, int z)
         {
             World.Player.Position = new Point3D(x, y, z);
+            World.Player.WalkScriptRequest = 2;
         }
 
         internal static void RunTheUI()
@@ -492,6 +493,11 @@ namespace Assistant
         internal override void RequestMove(Direction m_Dir)
         {
             _requestMove((int) m_Dir, true);
+        }
+
+        public override void PathFindTo(Assistant.Point3D Location)
+        {
+            Assistant.Client.Instance.SendToClientWait(new PathFindTo(Location));
         }
 
         public void OnFocusGained()

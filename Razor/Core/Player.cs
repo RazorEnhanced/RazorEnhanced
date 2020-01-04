@@ -582,7 +582,7 @@ namespace Assistant
 		private static void OpenDoor()
 		{
 			if (World.Player != null)
-		 		Assistant.Client.Instance.SendToServer(new OpenDoorMacro());
+				Assistant.Client.Instance.SendToServer(new OpenDoorMacro());
 		}
 
 		private Serial m_LastDoor = Serial.Zero;
@@ -609,10 +609,10 @@ namespace Assistant
 
 			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
 			{
-					int x = Position.X, y = Position.Y;
-					Utility.Offset(e.Dir, ref x, ref y);
+				int x = Position.X, y = Position.Y;
+				Utility.Offset(e.Dir, ref x, ref y);
 
-					int z = CalcZ;
+				int z = CalcZ;
 
 				foreach (Item i in World.Items.Values)
 				{
@@ -660,7 +660,16 @@ namespace Assistant
 			Direction = dir;
 		}
 
-		internal int WalkScriptRequest = 0;
+		private int walkScriptRequest = 0;
+		internal int WalkScriptRequest {
+			get { return walkScriptRequest; }
+			set
+			{
+				//if ( (walkScriptRequest < 2) && (value >= 2))
+				//	System.Threading.Thread.Sleep(500);
+				walkScriptRequest = value;
+			}
+		}
 
 		internal bool HasWalkEntry(byte seq)
 		{
@@ -946,6 +955,7 @@ namespace Assistant
 
 		private int m_LastSpell = -1;
 		internal int LastSpell { get { return m_LastSpell; } set { m_LastSpell = value; } }
+
 
 		//private UOEntity m_LastCtxM = null;
 		//public UOEntity LastContextMenu { get { return m_LastCtxM; } set { m_LastCtxM = value; } }

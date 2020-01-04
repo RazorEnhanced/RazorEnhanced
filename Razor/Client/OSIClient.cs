@@ -200,6 +200,8 @@ namespace Assistant
 					ClientProc = Process.GetProcessById((int)pid);
 					if (ClientProc != null && !RazorEnhanced.Settings.General.ReadBool("SmartCPU"))
 						ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
+					RazorEnhanced.UoWarper.UODLLHandleClass.Open();
+
 				}
 				catch
 				{
@@ -1086,11 +1088,26 @@ namespace Assistant
 			}
 
 			KeyPress(direction);
+
+		}
+		public override void PathFindTo(Assistant.Point3D location)
+		{
+			// Uses EasyUO to do the move
+			RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+
+			if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+			{
+				while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+				{
+					Thread.Sleep(50);
+				}
+			}
+				
+			RazorEnhanced.UoWarper.UODLLHandleClass.Pathfind (location.X, location.Y, location.Z);
 		}
 
-
-// Titlebar
-private static string m_LastStr = string.Empty;
+		// Titlebar
+		private static string m_LastStr = string.Empty;
 
 		public override void SetTitleStr(string str)
 		{
