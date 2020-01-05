@@ -90,8 +90,6 @@ namespace Assistant
         private ToolTip m_Tip;
 
         #endregion Class Variables
-
-        private RazorCheckBox negotiate;
         private RazorCheckBox preAOSstatbar;
         private RazorComboBox clientPrio;
         private System.Windows.Forms.Label label9;
@@ -813,7 +811,6 @@ namespace Assistant
             this.autoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
             this.chkStealth = new RazorEnhanced.UI.RazorCheckBox();
             this.preAOSstatbar = new RazorEnhanced.UI.RazorCheckBox();
-            this.negotiate = new RazorEnhanced.UI.RazorCheckBox();
             this.setLTHilight = new RazorEnhanced.UI.RazorButton();
             this.lthilight = new RazorEnhanced.UI.RazorCheckBox();
             this.filterSnoop = new RazorEnhanced.UI.RazorCheckBox();
@@ -1387,6 +1384,7 @@ namespace Assistant
             this.DPSMeterClearButton = new RazorEnhanced.UI.RazorButton();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogscript.InitialDirectory = Path.Combine(Engine.RootPath, "Scripts");
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
             this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1900,7 +1898,6 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.autoOpenDoors);
             this.moreOptTab.Controls.Add(this.chkStealth);
             this.moreOptTab.Controls.Add(this.preAOSstatbar);
-            this.moreOptTab.Controls.Add(this.negotiate);
             this.moreOptTab.Controls.Add(this.setLTHilight);
             this.moreOptTab.Controls.Add(this.lthilight);
             this.moreOptTab.Controls.Add(this.filterSnoop);
@@ -1987,7 +1984,7 @@ namespace Assistant
             // 
             // chknorunStealth
             // 
-            this.chknorunStealth.Location = new System.Drawing.Point(204, 285);
+            this.chknorunStealth.Location = new System.Drawing.Point(204, 264);
             this.chknorunStealth.Name = "chknorunStealth";
             this.chknorunStealth.Size = new System.Drawing.Size(190, 22);
             this.chknorunStealth.TabIndex = 78;
@@ -2023,7 +2020,7 @@ namespace Assistant
             // 
             // hiddedAutoOpenDoors
             // 
-            this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 327);
+            this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 306);
             this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
             this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
             this.hiddedAutoOpenDoors.TabIndex = 74;
@@ -2263,7 +2260,7 @@ namespace Assistant
             // 
             // autoOpenDoors
             // 
-            this.autoOpenDoors.Location = new System.Drawing.Point(204, 306);
+            this.autoOpenDoors.Location = new System.Drawing.Point(204, 285);
             this.autoOpenDoors.Name = "autoOpenDoors";
             this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
             this.autoOpenDoors.TabIndex = 59;
@@ -2272,7 +2269,7 @@ namespace Assistant
             // 
             // chkStealth
             // 
-            this.chkStealth.Location = new System.Drawing.Point(204, 264);
+            this.chkStealth.Location = new System.Drawing.Point(204, 243);
             this.chkStealth.Name = "chkStealth";
             this.chkStealth.Size = new System.Drawing.Size(190, 22);
             this.chkStealth.TabIndex = 12;
@@ -2287,18 +2284,6 @@ namespace Assistant
             this.preAOSstatbar.TabIndex = 57;
             this.preAOSstatbar.Text = "Use Pre-AOS status window";
             this.preAOSstatbar.CheckedChanged += new System.EventHandler(this.preAOSstatbar_CheckedChanged);
-            // 
-            // negotiate
-            // 
-            this.negotiate.Checked = true;
-            this.negotiate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.negotiate.Enabled = false;
-            this.negotiate.Location = new System.Drawing.Point(204, 222);
-            this.negotiate.Name = "negotiate";
-            this.negotiate.Size = new System.Drawing.Size(224, 22);
-            this.negotiate.TabIndex = 56;
-            this.negotiate.Text = "Negotiate features with server";
-            this.negotiate.CheckedChanged += new System.EventHandler(this.negotiate_CheckedChanged);
             // 
             // setLTHilight
             // 
@@ -2342,7 +2327,7 @@ namespace Assistant
             // 
             // incomingCorpse
             // 
-            this.incomingCorpse.Location = new System.Drawing.Point(204, 243);
+            this.incomingCorpse.Location = new System.Drawing.Point(204, 222);
             this.incomingCorpse.Name = "incomingCorpse";
             this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
             this.incomingCorpse.TabIndex = 48;
@@ -8858,7 +8843,6 @@ namespace Assistant
 			filterPoison.Checked = RazorEnhanced.Settings.General.ReadBool("FilterPoison");
 			filterNPC.Checked = RazorEnhanced.Settings.General.ReadBool("FilterNPC");
 			incomingMob.Checked = RazorEnhanced.Settings.General.ReadBool("ShowMobNames");
-			negotiate.Checked = RazorEnhanced.Settings.General.ReadBool("Negotiate");
 			incomingCorpse.Checked = RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames");
 			chkStealth.Checked = RazorEnhanced.Settings.General.ReadBool("CountStealthSteps");
 			autoOpenDoors.Checked = hiddedAutoOpenDoors.Enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors");

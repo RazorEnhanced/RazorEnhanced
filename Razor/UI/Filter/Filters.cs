@@ -457,16 +457,6 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("NoSearchPouches", nosearchpouches.Checked);
 		}
 
-		private void negotiate_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if (!m_Initializing)
-			{
-				if (negotiate.Focused)
-					RazorEnhanced.Settings.General.WriteBool("Negotiate", negotiate.Checked);
-		 		Assistant.Client.Instance.SetNegotiate(negotiate.Checked);
-			}
-		}
-
 		private void showHealthOH_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (showHealthOH.Focused)
