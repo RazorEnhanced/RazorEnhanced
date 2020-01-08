@@ -27,20 +27,9 @@ namespace RazorEnhanced
 
 
 		internal delegate DataTable initFN();
-		internal static bool LoadExistingData(string profileName, bool try_recover = true)
-		{
-			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName, "RazorEnhanced.settings");
-			if (!File.Exists(filename + ".GENERAL"))
-			{
-				return false;
-			}
+		internal delegate DataTable loadFN(string filename, string tableName);
 
-			try
-			{
-
-				DirectoryInfo d = new DirectoryInfo(Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName));
-				FileInfo[] Files = d.GetFiles("RazorEnhanced.settings.*");
-				Dictionary<string, initFN> fnDict = new Dictionary<string, initFN>()
+		internal static Dictionary<string, initFN> initDict = new Dictionary<string, initFN>()
 				{
 					{ "AUTOLOOT_ITEMS", InitAutoLoot },
 					{ "AUTOLOOT_LISTS", InitAutoLootLists},
@@ -68,32 +57,44 @@ namespace RazorEnhanced
 					{ "TARGETS", InitTargeting },
 					{ "TOOLBAR_ITEMS", InitToolbarItems }
 				};
+		internal static Dictionary<string, loadFN> loadDict = new Dictionary<string, loadFN>()
+				{
+					//{ "AUTOLOOT_ITEMS", LoadAutoLoot },
+					{ "TARGETS", LoadTargeting },
+		};
+
+		internal static bool LoadExistingData(string profileName, bool try_recover = true)
+		{
+			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName, "RazorEnhanced.settings");
+			if (!File.Exists(filename + ".GENERAL"))
+			{
+				return false;
+			}
+
+			try
+			{
+
+				DirectoryInfo d = new DirectoryInfo(Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName));
+				FileInfo[] Files = d.GetFiles("RazorEnhanced.settings.*");
+
 				foreach (FileInfo file in Files)
 				{
 					string tableName = file.Extension.Substring(1);   // get rid of the dot
 					if (File.Exists(filename + "." + tableName))
 					{
 						DataTable temp = null;
-						if (tableName == "TARGETS")
+						if (loadDict.ContainsKey(tableName))
 						{
-							List<Load_TargetGUI> targets = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Load_TargetGUI>>(File.ReadAllText(filename + "." + tableName));
-							temp = fnDict[tableName]();
-							//DataRow row = temp.NewRow();
-							foreach (Load_TargetGUI load_target in targets)
-							{
-								TargetGUI target = load_target.TargetGUI;
-								temp.Rows.Add(target);
-							}
-
+							temp = loadDict[tableName](filename, tableName);
 						}
 						else
 						{
 							temp = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(filename + "." + tableName));
 						}
 						if (temp.Columns.Count == 0)
-							if (fnDict.ContainsKey(tableName))
+							if (initDict.ContainsKey(tableName))
 							{
-								temp = fnDict[tableName]();
+								temp = initDict[tableName]();
 							}
 							else
 							{
@@ -141,6 +142,28 @@ namespace RazorEnhanced
 			UpdateVersion(currentVersion);
 			return true;
 
+		}
+		//private static DataTable LoadAutoLoot(string filename, string tableName)
+		//{
+			//List<JsonData.AutoLootItem> autolootItems = JsonData.AutoLootItem.FromJson(File.ReadAllText(filename + "." + tableName));
+			//DataTable temp = initDict[tableName]();
+			//foreach (JsonData.AutoLootItem item in autolootItems)
+			//{
+			//	temp.Rows.Add(item);
+			//}
+			//return temp;
+		//}
+		private static DataTable LoadTargeting(string filename, string tableName)
+		{
+			List<Load_TargetGUI> targets = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Load_TargetGUI>>(File.ReadAllText(filename + "." + tableName));
+			DataTable temp = initDict[tableName]();
+			//DataRow row = temp.NewRow();
+			foreach (Load_TargetGUI load_target in targets)
+			{
+				TargetGUI target = load_target.TargetGUI;
+				temp.Rows.Add(target);
+			}
+			return temp;
 		}
 
 		internal static DataTable InitScripting()

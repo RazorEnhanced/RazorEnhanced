@@ -161,6 +161,7 @@ namespace RazorEnhanced.UI
 			if (openclientlocation.ShowDialog(this) == DialogResult.OK)
 			{
 				clientPathLabel.Text = openclientlocation.FileName;
+				clientFolderLabel.Text = Path.GetDirectoryName(openclientlocation.FileName);
 				UpdateGUI();
 			}
 		}
