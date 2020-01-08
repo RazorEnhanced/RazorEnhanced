@@ -1,0 +1,30 @@
+LANDMARK	6343	80	7	Sanctuary Caves
+LANDMARK	6219	89	7	Sanctuary
+LANDMARK	6538	138	7	Prism of Light
+TELEPORT	6986	340	7	Quit to Yew
+LANDMARK	7030	382	7	Heartwood
+INTEREST	7063	408	7	Elven forge
+LANDMARK	6382	426	7	Palace of Paroxymus
+DUNGEON	1350	764	4	The Citadel
+LANDMARK	6498	906	7	Blighted Grove
+TELEPORT	1775	971	3	Teleporter
+DUNGEON	1734	974	3	Labyrinth
+TELEPORT	536	991	7	Entrance to Heartwood
+DUNGEON	1225	1098	7	Prism of Light
+TELEPORT	1717	1157	3	to Isle of the Divide
+LANDMARK	2187	1219	2	Twisted Weald
+POINT	2209	1259	2	Twisted Glade spawn (Twaulo)
+DUNGEON	1457	1329	2	Twisted Weald
+DUNGEON	2068	1371	3	Bedlam
+TELEPORT	1450	1472	2	to Twisted Weald
+STAIRS	155	1612	3	up
+POINT	175	1629	3	Pestilence spawn (Ilhenir)
+DUNGEON	590	1637	7	Blighted Grove
+DUNGEON	769	1647	7	Sanctuary
+LANDMARK	105	1657	3	Bedlam
+STAIRS	84	1673	3	to Crypt
+LANDMARK	380	1923	3	Labyrinth
+POINT	383	1931	3	Minotaur spawn (Meraktus)
+INTEREST	329	1973	3	Exit to Isle of the Divide
+DUNGEON	1714	2997	1	Painted Caves
+DUNGEON	5576	3020	7	Palace of Paroxymus

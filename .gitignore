@@ -1,4 +1,3 @@
-/Output
 /packages/
 /Crypt/Debug/
 /Crypt/Release/
@@ -22,4 +21,14 @@
 /bin/Win32/Debug/Accord.dll.config
 /bin/Win32/Debug/CrashReporter.NET.dll.config
 /bin/Win32/Debug/Razor.exe.config
+/bin/Win32/Release/*.dll
+/bin/Win32/Release/*.xml
+/bin/Win32/Release/*.pdb
+/bin/Win32/Release/*.ilk
+/bin/Win32/Release/*.lib
+/bin/Win32/Release/*.exp
+/bin/Win32/Release/*.exe
+/bin/Win32/Release/Accord.dll.config
+/bin/Win32/Release/CrashReporter.NET.dll.config
+/bin/Win32/Release/Razor.exe.config
 *~

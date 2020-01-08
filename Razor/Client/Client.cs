@@ -60,7 +60,9 @@ namespace Assistant
 		{
 			m_Running = true;
 
-			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles")); 
+			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
+			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
+			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 			// Profile
 			RazorEnhanced.Profiles.Load();
 
