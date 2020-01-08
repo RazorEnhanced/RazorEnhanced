@@ -67,13 +67,7 @@ namespace Assistant
 			// Shard Bookmarks
 			RazorEnhanced.Shard.Load();
 
-			// Parametri di razor
-			if (RazorEnhanced.Profiles.LastUsed() == "default")
-				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
-			else
-				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
-
-			RazorEnhanced.Settings.Load();
+			RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
 
 			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
 

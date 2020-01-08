@@ -16,36 +16,34 @@ namespace RazorEnhanced
 		private static DataSet m_Dataset;
 		internal static DataSet Dataset { get { return m_Dataset; } }
 
-		internal static void Load()
+		internal static void Load(bool tryBackup=true)
 		{
 			//if (m_Dataset != null)
 			//	return;
 
 			m_Dataset = new DataSet();
 			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
+			string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
 
 			if (File.Exists(filename))
 			{
-				Stream stream = null;
 				try
 				{
-					stream = File.Open(filename, FileMode.Open);
-					m_Dataset.RemotingFormat = SerializationFormat.Binary;
-					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
-					BinaryFormatter bin = new BinaryFormatter();
-					m_Dataset = bin.Deserialize(decompress) as DataSet;
-					decompress.Close();
-					stream.Close();
-					Settings.MakeBackup(m_Save);
+					m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(filename));
+					File.Copy(filename, backup, true);
 				}
-				catch
+				catch (Exception e)
 				{
-					if (stream != null)
-						stream.Close();
-					MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
-					Settings.RestoreBackup(m_Save);
-					Load();
+					if (tryBackup)
+					{
+						MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+						File.Copy(backup, filename, true);
+						Load(false);
+					}
+					else
+					{
+						throw;
+					}
 					return;
 				}
 			}
@@ -57,7 +55,7 @@ namespace RazorEnhanced
 				shards.Columns.Add("ClientPath", typeof(string));
 				shards.Columns.Add("ClientFolder", typeof(string));
 				shards.Columns.Add("Host", typeof(string));
-				shards.Columns.Add("Port", typeof(int));
+				shards.Columns.Add("Port", typeof(long));
 				shards.Columns.Add("PatchEnc", typeof(bool));
 				shards.Columns.Add("OSIEnc", typeof(bool));
 				shards.Columns.Add("Selected", typeof(bool));
@@ -216,7 +214,8 @@ namespace RazorEnhanced
 				string clientpath = (string)row["ClientPath"];
 				string clientfolder = (string)row["ClientFolder"];
 				string host = (string)row["Host"];
-				int port = (int)row["Port"];
+				long testPort = (long)row["Port"];
+				int port = (int)testPort;
 				bool patchenc = (bool)row["PatchEnc"];
 				bool osienc = (bool)row["OSIEnc"];
 				bool selected = (bool)row["Selected"];
@@ -235,15 +234,7 @@ namespace RazorEnhanced
 				m_Dataset.AcceptChanges();
 
 				string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
-
-				m_Dataset.RemotingFormat = SerializationFormat.Binary;
-				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-				Stream stream = File.Create(filename);
-				GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
-				BinaryFormatter bin = new BinaryFormatter();
-				bin.Serialize(compress, m_Dataset);
-				compress.Close();
-				stream.Close();
+				File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));
 			}
 			catch (Exception ex)
 			{

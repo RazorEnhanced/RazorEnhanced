@@ -8756,7 +8756,7 @@ namespace Assistant
 			targetSelectorComboBox.DataSource = TargetGUI.Selectors;
 			targetcoloCheckBox.Checked = targethueGridView.Enabled = false;
 			targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = false;
-			TargetGUI.RefreshTargetShortCut(targetlistBox);
+			RazorEnhanced.Filter.RefreshTargetShortCut(targetlistBox);
 			if (targetlistBox.Items.Count > 0)
 				EnableTargetGUI();
 			else
@@ -8778,8 +8778,8 @@ namespace Assistant
 			imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
 			dispTime.Checked = RazorEnhanced.Settings.General.ReadBool("CapTimeStamp");
 			screenAutoCap.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCap");
-			Filter.Load();
-			Filter.Draw(filters);
+			Filters.Filter.Load();
+			Filters.Filter.Draw(filters);
 			smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
 			if (smartCPU.Checked)
 		 		Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;

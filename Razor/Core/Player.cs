@@ -603,7 +603,7 @@ namespace Assistant
 			e.IsStep = (dir & Direction.Mask) == (Direction & Direction.Mask);
 			e.Dir = dir;
 
-			ProcessMove(dir); // shouldnt this be in MoveAck?!?
+			ProcessMove(dir); 
 
 			e.Position = Position;
 
@@ -616,13 +616,16 @@ namespace Assistant
 
 				foreach (Item i in World.Items.Values)
 				{
-					if (i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now))
-					{
-						m_LastDoor = i.Serial;
-						m_LastDoorTime = DateTime.Now;
-						m_OpenDoorReq.Start();
-						break;
-					}
+					if (i.Position.X == x && i.Position.Y == y)
+						if (i.IsDoor)
+							if (i.Position.Z - 15 <= z && i.Position.Z + 15 >= z)
+								if (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now)
+								{
+									m_LastDoor = i.Serial;
+									m_LastDoorTime = DateTime.Now;
+									m_OpenDoorReq.Start();
+									break;
+								}
 				}
 			}
 

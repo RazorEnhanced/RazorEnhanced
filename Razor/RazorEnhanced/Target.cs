@@ -298,11 +298,11 @@ namespace RazorEnhanced
 		}
 		public static void SetLastTargetFromList(string targetid)
 		{
-			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 			if (targetdata != null)
 			{
-				Mobiles.Filter filter = targetdata.Filter;
-				string selector = targetdata.Selector;
+				Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();			
+				string selector = targetdata.TargetGuiObject.Selector;
 
 				List<Mobile> filterresult;
 				filterresult = Mobiles.ApplyFilter(filter);
@@ -317,13 +317,13 @@ namespace RazorEnhanced
 
 		public static Mobile GetTargetFromList(string targetid)
 		{
-			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 			if (targetdata == null)
 				return null;
 
 			
-			Mobiles.Filter filter = targetdata.Filter;
-			string selector = targetdata.Selector;
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
 			filterresult = Mobiles.ApplyFilter(filter);
@@ -337,13 +337,13 @@ namespace RazorEnhanced
 
 		internal static void SetLastTargetFromListHotKey(string targetid)
 		{
-			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 
 			if (targetdata == null)
 				return;
 
-			Mobiles.Filter filter = targetdata.Filter;
-			string selector = targetdata.Selector;
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
 			filterresult = Mobiles.ApplyFilter(filter);
@@ -362,13 +362,13 @@ namespace RazorEnhanced
 
 		public static void PerformTargetFromList(string targetid)
 		{
-			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 
 			if (targetdata == null)
 				return;
 
-			Mobiles.Filter filter = targetdata.Filter;
-			string selector = targetdata.Selector;
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
 			filterresult = Mobiles.ApplyFilter(filter);
@@ -384,13 +384,13 @@ namespace RazorEnhanced
 
 		public static void AttackTargetFromList(string targetid)
 		{
-			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 
 			if (targetdata == null)
 				return;
 
-			Mobiles.Filter filter = targetdata.Filter;
-			string selector = targetdata.Selector;
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
 			filterresult = Mobiles.ApplyFilter(filter);

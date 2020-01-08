@@ -32,36 +32,34 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void Load()
+		internal static void Load(bool try_backup=true)
 		{
 			if (m_Dataset != null)
 				return;
 
 			m_Dataset = new DataSet();
 			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles" ,m_Save);
+			string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
 
 			if (File.Exists(filename))
 			{
-				Stream stream = null;
 				try
 				{
-					stream = File.Open(filename, FileMode.Open);
-					m_Dataset.RemotingFormat = SerializationFormat.Binary;
-					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
-					BinaryFormatter bin = new BinaryFormatter();
-					m_Dataset = bin.Deserialize(decompress) as DataSet;
-					decompress.Close();
-					stream.Close();
-					Settings.MakeBackup(m_Save);
+					m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(filename));
+					File.Copy(filename, backup, true);
 				}
 				catch
 				{
-					if (stream != null)
-						stream.Close();
-					MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
-					Settings.RestoreBackup(m_Save);
-					Load();
+					if (try_backup)
+					{
+						MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+						File.Copy(backup, filename, true);
+						Load(false);
+					}
+					else 
+					{
+						throw;
+					}
 					return;
 				}
 			}
@@ -166,7 +164,7 @@ namespace RazorEnhanced
 
 		internal static string IsLinked(int serial)
 		{
-			return (from DataRow row in m_Dataset.Tables["PROFILES"].Rows where (int) row["PlayerSerial"] == serial select (string) row["Name"]).FirstOrDefault();
+			return (from DataRow row in m_Dataset.Tables["PROFILES"].Rows where Convert.ToInt32(row["PlayerSerial"]) == serial select (string)row["Name"]).FirstOrDefault();
 		}
 
 		internal static string GetLinkName(string profilename)
@@ -178,7 +176,7 @@ namespace RazorEnhanced
 		{
 			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  // Slinka se gia linkato
 			{
-				if ((int)row["PlayerSerial"] == serial)
+				if (Convert.ToInt32(row["PlayerSerial"]) == serial)
 				{
 					row["PlayerSerial"] = 0;
 					row["PlayerName"] = String.Empty;
@@ -310,10 +308,10 @@ namespace RazorEnhanced
 			BandageHeal.AddLog("Profile Changed!");
 
 			// Cambio file
-			if (name == "default")
-				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
-			else
-				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + name + ".settings";
+			//if (name == "default")
+			//	RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
+			//else
+			//	RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + name + ".settings";
 
 			// Rimuovo cache password e disabilito vecchi filtri
 			Assistant.Filters.Filter.DisableAll();
@@ -327,7 +325,7 @@ namespace RazorEnhanced
 				RazorEnhanced.SpellGrid.SpellGridForm.Close();
 
 			// Carico save profilo
-			RazorEnhanced.Settings.Load();
+			RazorEnhanced.Settings.Load(name);
 
 			// Abilito patch UOMod
 			UoMod.ProfileChange();
@@ -370,15 +368,7 @@ namespace RazorEnhanced
 				m_Dataset.AcceptChanges();
 
 				string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
-
-				m_Dataset.RemotingFormat = SerializationFormat.Binary;
-				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-				Stream stream = File.Create(filename);
-				GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
-				BinaryFormatter bin = new BinaryFormatter();
-				bin.Serialize(compress, m_Dataset);
-				compress.Close();
-				stream.Close();
+				File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));
 			}
 			catch (Exception ex)
 			{

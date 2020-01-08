@@ -633,8 +633,6 @@ namespace Assistant
 			}
 
 			byte seq = p.ReadByte();
-			World.Player.Direction = (dir & Direction.Mask);
-
 			World.Player.MoveReq(dir, seq);
 			//Client.Instance.RequestMove(dir);
 

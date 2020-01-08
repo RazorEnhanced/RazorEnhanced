@@ -29,86 +29,86 @@ namespace Assistant
 			EnableTargetGUI();
 
 			lasttargetselected = targetlistBox.SelectedItem.ToString();
-			TargetGUI.TargetGUIObject m_targ = Settings.Target.TargetRead(targetlistBox.SelectedItem.ToString());
+			TargetGUI m_targ = Settings.Target.TargetRead(targetlistBox.SelectedItem.ToString());
 
 			targethueGridView.Rows.Clear();
 			targetbodydataGridView.Rows.Clear();
 
 			// Selector
-			targetSelectorComboBox.Text = m_targ.Selector;
+			targetSelectorComboBox.Text = m_targ.TargetGuiObject.Selector;
 
 			//Name
-			targetNameTextBox.Text = m_targ.Filter.Name;
+			targetNameTextBox.Text = m_targ.TargetGuiObject.Filter.Name;
 
 			// Flags
-			if (m_targ.Filter.Poisoned == -1)
+			if (m_targ.TargetGuiObject.Filter.Poisoned == -1)
 				poisonedBoth.Checked = true;
-			else if (m_targ.Filter.Poisoned == 1)
+			else if (m_targ.TargetGuiObject.Filter.Poisoned == 1)
 				poisonedOn.Checked = true;
 			else
 				poisonedOff.Checked = true;
 
-			if (m_targ.Filter.Blessed == -1)
+			if (m_targ.TargetGuiObject.Filter.Blessed == -1)
 				blessedBoth.Checked = true;
-			else if (m_targ.Filter.Blessed == 1)
+			else if (m_targ.TargetGuiObject.Filter.Blessed == 1)
 				blessedOn.Checked = true;
 			else
 				blessedOff.Checked = true;
 
-			if (m_targ.Filter.IsHuman == -1)
+			if (m_targ.TargetGuiObject.Filter.IsHuman == -1)
 				humanBoth.Checked = true;
-			else if (m_targ.Filter.IsHuman == 1)
+			else if (m_targ.TargetGuiObject.Filter.IsHuman == 1)
 				humanOn.Checked = true;
 			else
 				humanOff.Checked = true;
 
-			if (m_targ.Filter.IsGhost == -1)
+			if (m_targ.TargetGuiObject.Filter.IsGhost == -1)
 				ghostBoth.Checked = true;
-			else if (m_targ.Filter.IsGhost == 1)
+			else if (m_targ.TargetGuiObject.Filter.IsGhost == 1)
 				ghostOn.Checked = true;
 			else
 				ghostOff.Checked = true;
 
-			if (m_targ.Filter.Warmode == -1)
+			if (m_targ.TargetGuiObject.Filter.Warmode == -1)
 				warmodeBoth.Checked = true;
-			else if (m_targ.Filter.Warmode == 1)
+			else if (m_targ.TargetGuiObject.Filter.Warmode == 1)
 				warmodeOn.Checked = true;
 			else
 				warmodeOff.Checked = true;
 
-			if (m_targ.Filter.Friend == -1)
+			if (m_targ.TargetGuiObject.Filter.Friend == -1)
 				friendBoth.Checked = true;
-			else if (m_targ.Filter.Friend == 1)
+			else if (m_targ.TargetGuiObject.Filter.Friend == 1)
 				friendOn.Checked = true;
 			else
 				friendOff.Checked = true;
 
-			if (m_targ.Filter.Paralized == -1)
+			if (m_targ.TargetGuiObject.Filter.Paralized == -1)
 				paralizedBoth.Checked = true;
-			else if (m_targ.Filter.Paralized == 1)
+			else if (m_targ.TargetGuiObject.Filter.Paralized == 1)
 				paralizedOn.Checked = true;
 			else
 				paralizedOff.Checked = true;
 
 			// min max range
-			targetRangeMaxTextBox.Text = m_targ.Filter.RangeMax.ToString();
-			targetRangeMinTextBox.Text = m_targ.Filter.RangeMin.ToString();
+			targetRangeMaxTextBox.Text = m_targ.TargetGuiObject.Filter.RangeMax.ToString();
+			targetRangeMinTextBox.Text = m_targ.TargetGuiObject.Filter.RangeMin.ToString();
 
 			// Body ID
-			if (m_targ.Filter.Bodies.Count > 0)
+			if (m_targ.TargetGuiObject.Filter.Bodies.Count > 0)
 			{
 				targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = true;
-				foreach (int bodyid in m_targ.Filter.Bodies)
+				foreach (int bodyid in m_targ.TargetGuiObject.Filter.Bodies)
 					targetbodydataGridView.Rows.Add(new object[] { "0x" + bodyid.ToString("X4") });
 			}
 			else
 				targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = false;
 
 			// Hue
-			if (m_targ.Filter.Hues.Count > 0)
+			if (m_targ.TargetGuiObject.Filter.Hues.Count > 0)
 			{
 				targetcoloCheckBox.Checked = targethueGridView.Enabled = true;
-				foreach (int hue in m_targ.Filter.Hues)
+				foreach (int hue in m_targ.TargetGuiObject.Filter.Hues)
 					targethueGridView.Rows.Add(new object[] { "0x" + hue.ToString("X4") });
 			}
 			else
@@ -118,7 +118,7 @@ namespace Assistant
 			targetBlueCheckBox.Checked = targetGreenCheckBox.Checked = targetGreyCheckBox.Checked = targetCriminalCheckBox.Checked =
 			targetOrangeCheckBox.Checked = targetRedCheckBox.Checked = targetYellowCheckBox.Checked = false;
 
-			foreach (int noto in m_targ.Filter.Notorieties)
+			foreach (int noto in m_targ.TargetGuiObject.Filter.Notorieties)
 			{
 				switch (noto)
 				{
@@ -316,7 +316,10 @@ namespace Assistant
 			filtertosave.Notorieties = notolist;
 
 			// Genero struttura da salvare
-			TargetGUI.TargetGUIObject targettosave = new TargetGUI.TargetGUIObject(targetSelectorComboBox.Text, filtertosave);
+			TargetGUI targettosave = new TargetGUI();
+			targettosave.TargetGuiObject.Selector = targetSelectorComboBox.Text;
+			targettosave.TargetGuiObject.Filter = Filter.FromMobileFilter(filtertosave);
+			targettosave.Name = targetlistBox.SelectedItem.ToString();
 			RazorEnhanced.Settings.Target.TargetReplace(targetlistBox.SelectedItem.ToString(), targettosave);
 
 		}
@@ -354,11 +357,14 @@ namespace Assistant
 				Enabled = true
 			};
 
-			TargetGUI.TargetGUIObject targettoadd = new TargetGUI.TargetGUIObject("Nearest", filtertoadd);
+			TargetGUI targettoadd = new TargetGUI();
+			targettoadd.TargetGuiObject.Selector = "Nearest";
+			targettoadd.TargetGuiObject.Filter = Filter.FromMobileFilter(filtertoadd);
+			targettoadd.Name = newtargetid;
 
 			// Salvo struttura
 			RazorEnhanced.Settings.Target.TargetAdd(newtargetid, targettoadd, Keys.None, true);
-			TargetGUI.RefreshTargetShortCut(targetlistBox);
+			Filter.RefreshTargetShortCut(targetlistBox);
 			targetlistBox.SelectedIndex = targetlistBox.Items.Count - 1;
 			RazorEnhanced.HotKey.Init();
 		}
@@ -369,7 +375,7 @@ namespace Assistant
 				return;
 
 			RazorEnhanced.Settings.Target.TargetDelete(targetlistBox.SelectedItem.ToString());
-			TargetGUI.RefreshTargetShortCut(targetlistBox);
+			Filter.RefreshTargetShortCut(targetlistBox);
 			if (targetlistBox.Items.Count > 0)
 				targetlistBox.SelectedIndex = 0;
 			else

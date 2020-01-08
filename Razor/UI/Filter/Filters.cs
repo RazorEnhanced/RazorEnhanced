@@ -572,7 +572,7 @@ namespace Assistant
 
 		private void OnFilterCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
 		{
-			((Filter)filters.Items[e.Index]).OnCheckChanged(e.NewValue);
+			((Filters.Filter)filters.Items[e.Index]).OnCheckChanged(e.NewValue);
 		}
 
 	}

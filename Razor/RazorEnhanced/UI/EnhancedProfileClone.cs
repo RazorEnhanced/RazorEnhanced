@@ -24,7 +24,7 @@ namespace RazorEnhanced.UI
 		private void profileadd_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newprofile = String.Empty;
+			string newprofileName = String.Empty;
 
 			if (profilename.Text == String.Empty)
 				fail = true;
@@ -32,8 +32,8 @@ namespace RazorEnhanced.UI
 			if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
 				fail = true;
 
-			newprofile = profilename.Text.ToLower();
-			if (RazorEnhanced.Profiles.Exist(newprofile))
+			newprofileName = profilename.Text.ToLower();
+			if (RazorEnhanced.Profiles.Exist(newprofileName))
 				fail = true;
 
 			if (fail)
@@ -46,27 +46,33 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-				string oldprofilepath;
-				if (RazorEnhanced.Profiles.LastUsed() == "default")
-					oldprofilepath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced.settings");
-				else
-					oldprofilepath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings");
-				string newprofilepath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced." + newprofile + ".settings");
+				string oldprofileName = RazorEnhanced.Profiles.LastUsed();
+				////////////////////
+				string dest = Path.Combine(Assistant.Engine.RootPath, "Profiles", newprofileName);
+				System.IO.Directory.CreateDirectory(dest);
 
-				if (File.Exists(oldprofilepath))
+				string src = Path.Combine(Assistant.Engine.RootPath, "Profiles", oldprofileName);
+
+				try
 				{
-					File.Copy(oldprofilepath, newprofilepath, true);
-					RazorEnhanced.Profiles.Add(newprofile);
+					DirectoryInfo d = new DirectoryInfo(src);
+					FileInfo[] Files = d.GetFiles("*");
+					foreach (FileInfo file in Files)
+					{
+						File.Copy(file.FullName, Path.Combine(dest, file.Name), true);
+					}
+					RazorEnhanced.Profiles.Add(newprofileName);
 					RazorEnhanced.Profiles.Refresh();
 				}
-				else
+				catch
 				{
-					MessageBox.Show("Error during clonig profile!",
+					MessageBox.Show("Error during cloning profile!",
 					"Enhanced Profiles",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation,
 					MessageBoxDefaultButton.Button1);
 				}
+
 				this.Close();
 			}
 		}

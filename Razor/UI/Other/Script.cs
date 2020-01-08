@@ -67,7 +67,7 @@ namespace Assistant
 				bool loop = (bool)row["Loop"];
 				string status = (string)row["Status"];
 				bool passkey = (bool)row["HotKeyPass"];
-				Keys key = (Keys)row["HotKey"];
+				Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
 				bool autostart = (bool)row["AutoStart"];
 
 				bool run = false;
@@ -215,7 +215,7 @@ namespace Assistant
 			foreach (DataRow row in scriptTable.Rows)
 			{
 				bool passkey = (bool)row["HotKeyPass"];
-				Keys key = (Keys)row["HotKey"];
+				Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
 				scriptlistView.Items[i].SubItems[6].Text = HotKey.KeyString(key);
 				if (passkey)
 					scriptlistView.Items[i].SubItems[7].Text = "Yes";

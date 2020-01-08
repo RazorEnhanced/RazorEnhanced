@@ -1269,114 +1269,12 @@ namespace RazorEnhanced
 		////////////// TARGET START //////////////
 		internal static void ImportTargetFilter(ListBox targetlistBox)
 		{
-			DataSet m_Dataset = new DataSet();
-			DataTable m_DatasetTable = new DataTable();
-			OpenFileDialog od = new OpenFileDialog
-			{
-				Filter = "Enhanced Razor Export|*.raz",
-				Title = "Import Target Filter",
-				RestoreDirectory = true
-			};
-
-			if (od.ShowDialog() == DialogResult.OK)
-			{
-				if (File.Exists(od.FileName))
-				{
-					try
-					{
-						m_Dataset.RemotingFormat = SerializationFormat.Binary;
-						m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-						Stream stream = File.Open(od.FileName, FileMode.Open);
-						GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
-						BinaryFormatter bin = new BinaryFormatter();
-						m_Dataset = bin.Deserialize(decompress) as DataSet;
-						decompress.Close();
-						stream.Close();
-					}
-					catch
-					{
-						MessageBox.Show("File is corrupted!");
-						return;
-					}
-				}
-				else
-				{
-					MessageBox.Show("Unable to access file!");
-					return;
-				}
-				if (m_Dataset.Tables.Contains("TARGETS"))
-				{
-					m_DatasetTable = m_Dataset.Tables["TARGETS"];
-					if (m_DatasetTable.Rows.Count > 0)
-					{
-						foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-						{
-							if (Settings.Target.TargetExist((string)row["Name"]))
-							{
-								MessageBox.Show("Target Filter: " + (string)row["Name"] + " already exist");
-								return;
-							}
-							else
-								Settings.Target.TargetAdd((string)row["Name"], (TargetGUI.TargetGUIObject)row["TargetGUIObject"], (Keys)row["HotKey"], (bool)row["HotKeyPass"]);
-						}
-						TargetGUI.RefreshTargetShortCut(targetlistBox);
-						HotKey.Init();
-					}
-				}
-				else
-				{
-					MessageBox.Show("This file not contain Target Filter data!");
-					return;
-				}
-			}
+			// import and export no longer needed
 		}
 
 		internal static void ExportTargetFilter(string name)
 		{
-			SaveFileDialog sd = new SaveFileDialog
-			{
-				Filter = "Enhanced Razor Export|*.raz",
-				Title = "Export Target Filter List",
-				FileName = "TARG." + name + ".raz",
-				RestoreDirectory = true
-			};
-
-			if (sd.ShowDialog() == DialogResult.OK)
-			{
-				DataSet m_Dataset = new DataSet();
-				DataTable targets = new DataTable("TARGETS");
-				targets.Columns.Add("Name", typeof(string));
-				targets.Columns.Add("TargetGUIObject", typeof(TargetGUI.TargetGUIObject));
-				targets.Columns.Add("HotKey", typeof(Keys));
-				targets.Columns.Add("HotKeyPass", typeof(bool));
-				m_Dataset.Tables.Add(targets);
-				m_Dataset.AcceptChanges();
-
-				DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
-				row["Name"] = name;
-				row["TargetGUIObject"] = Settings.Target.TargetRead(name);
-				row["HotKey"] = Keys.None;
-				row["HotKeyPass"] = true;
-
-				m_Dataset.Tables["TARGETS"].Rows.Add(row);
-
-				try
-				{
-					m_Dataset.RemotingFormat = SerializationFormat.Binary;
-					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-					Stream stream = File.Create(sd.FileName);
-					GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
-					BinaryFormatter bin = new BinaryFormatter();
-					bin.Serialize(compress, m_Dataset);
-					compress.Close();
-					stream.Close();
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.ToString(), "Export Target Filter fail");
-					return;
-				}
-			}
+		// import and export no longer needed
 		}
 
 		////////////// TARGET END //////////////
