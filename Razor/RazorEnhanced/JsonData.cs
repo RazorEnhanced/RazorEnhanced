@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace RazorEnhanced
+namespace JsonData
 {
 
     public partial class Load_TargetGUI
@@ -77,7 +77,7 @@ namespace RazorEnhanced
     public partial class Filter
     {
 
-        public static Filter FromMobileFilter(Mobiles.Filter mobileFilter)
+        public static Filter FromMobileFilter(RazorEnhanced.Mobiles.Filter mobileFilter)
         {
             Filter filter = new Filter();
             filter.Enabled = mobileFilter.Enabled;
@@ -188,7 +188,7 @@ namespace RazorEnhanced
 
         public RazorEnhanced.Mobiles.Filter ToMobileFilter()
         {
-            Mobiles.Filter filter = new Mobiles.Filter();
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
             filter.Enabled = Enabled;
             filter.Serials = Serials;
             filter.Bodies = Bodies;
@@ -211,7 +211,7 @@ namespace RazorEnhanced
         internal static void RefreshTargetShortCut(ListBox t)
         {
             t.Items.Clear();
-            List<string> shortcutlist = Settings.Target.ReadAllShortCut();
+            List<string> shortcutlist = RazorEnhanced.Settings.Target.ReadAllShortCut();
             foreach (string shortcut in shortcutlist)
             {
                 t.Items.Add(shortcut);

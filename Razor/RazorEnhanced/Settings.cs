@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using JsonData;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -157,11 +158,13 @@ namespace RazorEnhanced
 		{
 			List<Load_TargetGUI> targets = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Load_TargetGUI>>(File.ReadAllText(filename + "." + tableName));
 			DataTable temp = initDict[tableName]();
-			//DataRow row = temp.NewRow();
 			foreach (Load_TargetGUI load_target in targets)
 			{
 				TargetGUI target = load_target.TargetGUI;
-				temp.Rows.Add(target);
+				DataRow row = temp.NewRow();
+				row["TargetGUI"] = target;
+				temp.Rows.Add(row);
+				//temp.Rows.Add(target);
 			}
 			return temp;
 		}
@@ -345,7 +348,7 @@ namespace RazorEnhanced
 		{
 			// ----------- TARGET ----------
 			DataTable targets = new DataTable("TARGETS");
-			targets.Columns.Add("TargetGUI", typeof(RazorEnhanced.TargetGUI));
+			targets.Columns.Add("TargetGUI", typeof(TargetGUI));
 			return targets;
 		}
 
@@ -3683,7 +3686,7 @@ namespace RazorEnhanced
 				List<string> all = new List<string>();
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					string name = theTarget.Name;
 					all.Add(name);
 				}
@@ -3691,17 +3694,20 @@ namespace RazorEnhanced
 				return all;
 			}
 
-			internal static void TargetReplace(string targetid, RazorEnhanced.TargetGUI target)
+			internal static void TargetReplace(string targetid, TargetGUI target)
 			{
 				for (int i=0; i < m_Dataset.Tables["TARGETS"].Rows.Count; i++)
 				{ 
 					DataRow row = m_Dataset.Tables["TARGETS"].Rows[i];
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					string name = theTarget.Name;
 					if (name == targetid)
 					{
 						row.Delete();
-						m_Dataset.Tables["TARGETS"].Rows.Add(target);
+						//m_Dataset.Tables["TARGETS"].Rows.Add(target);
+						row = m_Dataset.Tables["TARGETS"].NewRow();
+						row["TargetGUI"] = target;
+						m_Dataset.Tables["TARGETS"].Rows.Add(row);
 						break;
 					}
 				}
@@ -3712,7 +3718,7 @@ namespace RazorEnhanced
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.Name == targetid)
 					{
 						return true;
@@ -3722,15 +3728,16 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			internal static void TargetAdd(string targetid, RazorEnhanced.TargetGUI target, Keys k, bool pass)
+			internal static void TargetAdd(string targetid, TargetGUI target, Keys k, bool pass)
 			{
 				target.Name = targetid;
 				target.HotKey = k;
 				target.HotKeyPass = pass;
 				if (TargetExist(targetid))
 					TargetDelete(targetid);
-				m_Dataset.Tables["TARGETS"].Rows.Add(target);
-
+				DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
+				row["TargetGUI"] = target;
+				m_Dataset.Tables["TARGETS"].Rows.Add(row);
 				Save();
 			}
 
@@ -3740,7 +3747,7 @@ namespace RazorEnhanced
 				{
 					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
-						TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+						TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 						if (theTarget.Name == targetid)
 						{
 							row.Delete();
@@ -3755,7 +3762,7 @@ namespace RazorEnhanced
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.Name == targetid)
 					{
 						return theTarget;
@@ -3997,7 +4004,7 @@ namespace RazorEnhanced
 				List<RazorEnhanced.HotKey.HotKeyData> retList = new List<RazorEnhanced.HotKey.HotKeyData>();
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					string name = theTarget.Name;
 					Keys key = (Keys)theTarget.HotKey;
 					RazorEnhanced.HotKey.HotKeyData aKey = new RazorEnhanced.HotKey.HotKeyData(name, key);
@@ -4037,7 +4044,7 @@ namespace RazorEnhanced
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.Name == name)
 					{
 						theTarget.HotKey = key;
@@ -4098,7 +4105,7 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.HotKey == key)
 					{
 						theTarget.HotKey = Keys.None;
@@ -4137,7 +4144,7 @@ namespace RazorEnhanced
 			
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.HotKey == key)
 						return true;
 				}
@@ -4179,7 +4186,7 @@ namespace RazorEnhanced
 				if (!found)
 					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
-						TargetGUI target = (TargetGUI)row.ItemArray[0];
+						TargetGUI target = (TargetGUI)row["TargetGUI"];
 						if (target.Name == name)
 						{
 							key = target.HotKey;
@@ -4227,7 +4234,7 @@ namespace RazorEnhanced
 				
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.HotKey == key)
 						return theTarget.Name;
 				}
@@ -4241,7 +4248,7 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 					if (theTarget.Name == name)
 					{
 						k = theTarget.HotKey;
@@ -4280,7 +4287,7 @@ namespace RazorEnhanced
 				if (!found)
 					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
-						TargetGUI theTarget = (TargetGUI)row.ItemArray[0];
+						TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
 						if (theTarget.HotKey == key)
 						{
 							group = "TList";

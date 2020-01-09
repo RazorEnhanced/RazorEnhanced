@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using AutoUpdaterDotNET;
 using System.IO;
+using JsonData;
 
 namespace Assistant
 {
@@ -8756,7 +8757,7 @@ namespace Assistant
 			targetSelectorComboBox.DataSource = TargetGUI.Selectors;
 			targetcoloCheckBox.Checked = targethueGridView.Enabled = false;
 			targetbodyCheckBox.Checked = targetbodydataGridView.Enabled = false;
-			RazorEnhanced.Filter.RefreshTargetShortCut(targetlistBox);
+			JsonData.Filter.RefreshTargetShortCut(targetlistBox);
 			if (targetlistBox.Items.Count > 0)
 				EnableTargetGUI();
 			else
