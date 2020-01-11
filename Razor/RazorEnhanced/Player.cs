@@ -455,7 +455,7 @@ namespace RazorEnhanced
 					break;
 
 				case BuffIcon.LightningStrike:
-					description = "Lighting Strike";
+					description = "Lightning Strike";
 					break;
 
 				case BuffIcon.MagicFish:
