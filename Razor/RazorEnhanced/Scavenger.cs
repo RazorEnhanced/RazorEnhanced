@@ -1,4 +1,6 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,10 +18,8 @@ namespace RazorEnhanced
 		private static string m_scavengerlist;
 		internal static volatile bool LockTable = false;
 
-		[Serializable]
-		public class ScavengerItem
+		public class ScavengerItem	 : ListAbleItem
 		{
-			[Serializable]
 			public class Property
 			{
 				private string m_Name;
@@ -38,7 +38,6 @@ namespace RazorEnhanced
 					m_Maximum = maximum;
 				}
 			}
-
 			private string m_Name;
 			public string Name { get { return m_Name; } }
 
@@ -48,8 +47,8 @@ namespace RazorEnhanced
 			private int m_Color;
 			public int Color { get { return m_Color; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set; }
 
 			private List<Property> m_Properties;
 			public List<Property> Properties { get { return m_Properties; } }
@@ -59,7 +58,7 @@ namespace RazorEnhanced
 				m_Name = name;
 				m_Graphics = graphics;
 				m_Color = color;
-				m_Selected = selected;
+				Selected = selected;
 				m_Properties = properties;
 			}
 		}

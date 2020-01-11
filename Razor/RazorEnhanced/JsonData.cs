@@ -7,12 +7,7 @@ using Newtonsoft.Json.Converters;
 namespace JsonData
 {
 
-    public partial class Load_TargetGUI
-    {
-        [JsonProperty("TargetGUI")]
-        public TargetGUI TargetGUI { get; set; }
-    }
-    public class TargetGUI
+    public class TargetGUI  : RazorEnhanced.ListAbleItem
     {
         // Selector List
         internal static List<string> Selectors = new List<string>

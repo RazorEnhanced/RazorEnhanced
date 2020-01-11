@@ -27,43 +27,65 @@ namespace RazorEnhanced
 		}
 
 
-		internal delegate DataTable initFN();
+		internal delegate DataTable initFN(string tableName);
 		internal delegate DataTable loadFN(string filename, string tableName);
+		internal delegate void saveFN(string filename, string tableName, DataTable targets);
+
 
 		internal static Dictionary<string, initFN> initDict = new Dictionary<string, initFN>()
 				{
-					{ "AUTOLOOT_ITEMS", InitAutoLoot },
-					{ "AUTOLOOT_LISTS", InitAutoLootLists},
-					{ "BUY_ITEMS", InitBuyAgent },
+					{ "AUTOLOOT_ITEMS", InitItems<RazorEnhanced.AutoLoot.AutoLootItem>},					
+					{ "BUY_ITEMS", InitItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
 					{ "BUY_LISTS", InitBuyAgentLists },
-					{ "DRESS_ITEMS", InitDressingAgent },
+					{ "DRESS_ITEMS", InitItems<RazorEnhanced.Dress.DressItemNew> },
 					{ "DRESS_LISTS", InitDressingAgentLists },
 					{ "FILTER_GRAPH", InitGraphChanges },
-					{ "FRIEND_GUILDS", InitGuildFriends },
+					{ "FRIEND_GUILDS", InitItems<RazorEnhanced.Friend.FriendGuild> },
 					{ "FRIEND_LISTS", InitFriendsList },
-					{ "FRIEND_PLAYERS", InitPlayerFriends },
+					{ "FRIEND_PLAYERS", InitItems<RazorEnhanced.Friend.FriendPlayer> },
 					{ "GENERAL", InitGeneralSettings },
 					{ "HOTKEYS", InitHotKeys },
-					{ "ORGANIZER_ITEMS", InitOrganizer },
+					{ "ORGANIZER_ITEMS", InitItems<RazorEnhanced.Organizer.OrganizerItem> },
 					{ "ORGANIZER_LISTS", InitOrganizerLists },
 					{ "PASSWORD", InitPasswords },
-					{ "RESTOCK_ITEMS", InitRestock },
+					{ "RESTOCK_ITEMS", InitItems<RazorEnhanced.Restock.RestockItem> },
 					{ "RESTOCK_LISTS", InitRestockLists },
-					{ "SCAVENGER_ITEMS", InitScavenger },
+					{ "SCAVENGER_ITEMS", InitItems<RazorEnhanced.Scavenger.ScavengerItem> },
 					{ "SCAVENGER_LISTS", InitScavengerLists },
 					{ "SCRIPTING", InitScripting },
-					{ "SELL_ITEMS", InitSellAgent },
+					{ "SELL_ITEMS", InitItems<RazorEnhanced.SellAgent.SellAgentItem> },
 					{ "SELL_LISTS", InitSellAgentLists },
 					{ "SPELLGRID_ITEMS", InitSpellGrid },
-					{ "TARGETS", InitTargeting },
+					{ "TARGETS", InitItems<TargetGUI> },
 					{ "TOOLBAR_ITEMS", InitToolbarItems }
 				};
 		internal static Dictionary<string, loadFN> loadDict = new Dictionary<string, loadFN>()
 				{
-					//{ "AUTOLOOT_ITEMS", LoadAutoLoot },
-					{ "TARGETS", LoadTargeting },
+					{ "AUTOLOOT_ITEMS", LoadItems<RazorEnhanced.AutoLoot.AutoLootItem> },
+					{ "BUY_ITEMS", LoadItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
+					{ "DRESS_ITEMS", LoadItems<RazorEnhanced.Dress.DressItemNew> },
+					{ "FRIEND_GUILDS", LoadItems<RazorEnhanced.Friend.FriendGuild> },
+					{ "FRIEND_PLAYERS", LoadItems<RazorEnhanced.Friend.FriendPlayer> },
+					{ "ORGANIZER_ITEMS", LoadItems<RazorEnhanced.Organizer.OrganizerItem> },
+					{ "RESTOCK_ITEMS", LoadItems<RazorEnhanced.Restock.RestockItem> },
+					{ "SCAVENGER_ITEMS", LoadItems<RazorEnhanced.Scavenger.ScavengerItem> },
+					{ "SELL_ITEMS", LoadItems<RazorEnhanced.SellAgent.SellAgentItem> },
+					{ "TARGETS", LoadItems<TargetGUI> },
 		};
-
+		internal static Dictionary<string, saveFN> saveDict = new Dictionary<string, saveFN>()
+				{
+					{ "AUTOLOOT_ITEMS", SaveItems<RazorEnhanced.AutoLoot.AutoLootItem> },
+					{ "BUY_ITEMS", SaveItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
+					{ "DRESS_ITEMS", SaveItems<RazorEnhanced.Dress.DressItemNew> },
+					{ "FRIEND_GUILDS", SaveItems<RazorEnhanced.Friend.FriendGuild> },
+					{ "FRIEND_PLAYERS", SaveItems<RazorEnhanced.Friend.FriendPlayer> },
+					{ "ORGANIZER_ITEMS", SaveItems<RazorEnhanced.Organizer.OrganizerItem> },
+					{ "RESTOCK_ITEMS", SaveItems<RazorEnhanced.Restock.RestockItem> },
+					{ "SCAVENGER_ITEMS", SaveItems<RazorEnhanced.Scavenger.ScavengerItem> },
+					{ "SELL_ITEMS", SaveItems<RazorEnhanced.SellAgent.SellAgentItem> },
+					{ "TARGETS", SaveItems<TargetGUI> },
+		};
+																	
 		internal static bool LoadExistingData(string profileName, bool try_recover = true)
 		{
 			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName, "RazorEnhanced.settings");
@@ -95,7 +117,7 @@ namespace RazorEnhanced
 						if (temp.Columns.Count == 0)
 							if (initDict.ContainsKey(tableName))
 							{
-								temp = initDict[tableName]();
+								temp = initDict[tableName](tableName);
 							}
 							else
 							{
@@ -146,33 +168,62 @@ namespace RazorEnhanced
 		}
 		//private static DataTable LoadAutoLoot(string filename, string tableName)
 		//{
-			//List<JsonData.AutoLootItem> autolootItems = JsonData.AutoLootItem.FromJson(File.ReadAllText(filename + "." + tableName));
-			//DataTable temp = initDict[tableName]();
-			//foreach (JsonData.AutoLootItem item in autolootItems)
-			//{
-			//	temp.Rows.Add(item);
-			//}
-			//return temp;
+		//List<JsonData.AutoLootItem> autolootItems = JsonData.AutoLootItem.FromJson(File.ReadAllText(filename + "." + tableName));
+		//DataTable temp = initDict[tableName]();
+		//foreach (JsonData.AutoLootItem item in autolootItems)
+		//{
+		//	temp.Rows.Add(item);
 		//}
-		private static DataTable LoadTargeting(string filename, string tableName)
+		//return temp;
+		//}
+		internal static DataTable InitItems<T>(string tableName) where T : ListAbleItem
 		{
-			List<Load_TargetGUI> targets = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Load_TargetGUI>>(File.ReadAllText(filename + "." + tableName));
-			DataTable temp = initDict[tableName]();
-			foreach (Load_TargetGUI load_target in targets)
+			DataTable items = new DataTable(tableName);
+			items.Columns.Add("List", typeof(string));
+			items.Columns.Add("Item", typeof(T));
+			return (items);
+		}
+		private static DataTable LoadItems<T>(string filename, string tableName) where T : ListAbleItem
+		{
+			List<T> items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(filename + "." + tableName));
+			DataTable temp = initDict[tableName](tableName);
+			foreach (T item in items)
 			{
-				TargetGUI target = load_target.TargetGUI;
 				DataRow row = temp.NewRow();
-				row["TargetGUI"] = target;
+				row["List"] = item.List;
+				row["Item"] = item;
 				temp.Rows.Add(row);
-				//temp.Rows.Add(target);
 			}
 			return temp;
 		}
 
-		internal static DataTable InitScripting()
+		//
+		private static void SaveItems<T>(string filename, string tableName, DataTable targets) where T : ListAbleItem
+		{
+			List<T> items = new List<T>();
+			foreach (DataRow row in targets.Rows)
+			{
+				T item = (T)row["Item"];
+				if (row["List"] is System.DBNull)
+				{
+					item.List = "None";
+				}
+				else {
+					item.List = (string)row["List"];
+				}
+				items.Add(item);
+			}
+
+			string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
+			//	File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(targets, Newtonsoft.Json.Formatting.Indented));
+			File.WriteAllText(filename + "." + tableName, xml);
+
+		}
+
+		internal static DataTable InitScripting(string tableName)
 		{
 			// Scripting
-			DataTable scripting = new DataTable("SCRIPTING");
+			DataTable scripting = new DataTable(tableName);
 			scripting.Columns.Add("Filename", typeof(string));
 			scripting.Columns.Add("Flag", typeof(Bitmap));
 			scripting.Columns.Add("Status", typeof(string));
@@ -185,10 +236,10 @@ namespace RazorEnhanced
 
 		}
 
-		internal static DataTable InitAutoLootLists()
+		internal static DataTable InitAutoLootLists(string tableName)
 		{
 			// -------- AUTOLOOT ------------
-			DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
+			DataTable autoloot_lists = new DataTable(tableName);
 			autoloot_lists.Columns.Add("Description", typeof(string));
 			autoloot_lists.Columns.Add("Delay", typeof(int));
 			autoloot_lists.Columns.Add("Range", typeof(int));
@@ -198,18 +249,11 @@ namespace RazorEnhanced
 			return (autoloot_lists); 
 		}
 
-		internal static DataTable InitAutoLoot()
-		{
-			DataTable autoloot_items = new DataTable("AUTOLOOT_ITEMS");
-			autoloot_items.Columns.Add("List", typeof(string));
-			autoloot_items.Columns.Add("Item", typeof(RazorEnhanced.AutoLoot.AutoLootItem));
-			return (autoloot_items);		
-		}
 
-		internal static DataTable InitScavengerLists()
+		internal static DataTable InitScavengerLists(string tableName)
 		{
 			// ----------- SCAVENGER ----------
-			DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
+			DataTable scavenger_lists = new DataTable(tableName);
 			scavenger_lists.Columns.Add("Description", typeof(string));
 			scavenger_lists.Columns.Add("Delay", typeof(int));
 			scavenger_lists.Columns.Add("Range", typeof(int));
@@ -217,18 +261,10 @@ namespace RazorEnhanced
 			scavenger_lists.Columns.Add("Selected", typeof(bool));
 			return scavenger_lists;
 		}
-		internal static DataTable InitScavenger()
-		{ 
-			DataTable scavenger_items = new DataTable("SCAVENGER_ITEMS");
-			scavenger_items.Columns.Add("List", typeof(string));
-			scavenger_items.Columns.Add("Item", typeof(RazorEnhanced.Scavenger.ScavengerItem));
-			return scavenger_items;
-
-		}
-		internal static DataTable InitOrganizerLists()
+		internal static DataTable InitOrganizerLists(string tableName)
 		{
 			// ----------- ORGANIZER ----------
-			DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
+			DataTable organizer_lists = new DataTable(tableName);
 			organizer_lists.Columns.Add("Description", typeof(string));
 			organizer_lists.Columns.Add("Delay", typeof(int));
 			organizer_lists.Columns.Add("Source", typeof(int));
@@ -236,48 +272,26 @@ namespace RazorEnhanced
 			organizer_lists.Columns.Add("Selected", typeof(bool));
 			return organizer_lists;
 		}
-		internal static DataTable InitOrganizer()
-		{ 
-			DataTable organizer_items = new DataTable("ORGANIZER_ITEMS");
-			organizer_items.Columns.Add("List", typeof(string));
-			organizer_items.Columns.Add("Item", typeof(RazorEnhanced.Organizer.OrganizerItem));
-			return organizer_items;
 
-		}
-
-		internal static DataTable InitSellAgentLists()
+		internal static DataTable InitSellAgentLists(string tableName)
 		{               // ----------- SELL AGENT ----------
-			DataTable sell_lists = new DataTable("SELL_LISTS");
+			DataTable sell_lists = new DataTable(tableName);
 			sell_lists.Columns.Add("Description", typeof(string));
 			sell_lists.Columns.Add("Bag", typeof(int));
 			sell_lists.Columns.Add("Selected", typeof(bool));
 			return sell_lists;
 		}
-		internal static DataTable InitSellAgent()
-		{ 
-			DataTable sell_items = new DataTable("SELL_ITEMS");
-			sell_items.Columns.Add("List", typeof(string));
-			sell_items.Columns.Add("Item", typeof(RazorEnhanced.SellAgent.SellAgentItem));
-			return sell_items;
-		}
-		internal static DataTable InitBuyAgentLists()
+		internal static DataTable InitBuyAgentLists(string tableName)
 		{               // ----------- BUY AGENT ----------
-			DataTable buy_lists = new DataTable("BUY_LISTS");
+			DataTable buy_lists = new DataTable(tableName);
 			buy_lists.Columns.Add("Description", typeof(string));
 			buy_lists.Columns.Add("Selected", typeof(bool));
 			return buy_lists;
 		}
-		internal static DataTable InitBuyAgent()
-		{ 
-			DataTable buy_items = new DataTable("BUY_ITEMS");
-			buy_items.Columns.Add("List", typeof(string));
-			buy_items.Columns.Add("Item", typeof(RazorEnhanced.BuyAgent.BuyAgentItem));
-			return buy_items;
-		}
-		internal static DataTable InitDressingAgentLists()
+		internal static DataTable InitDressingAgentLists(string tableName)
 		{
 			// ----------- DRESS ----------
-			DataTable dress_lists = new DataTable("DRESS_LISTS");
+			DataTable dress_lists = new DataTable(tableName);
 			dress_lists.Columns.Add("Description", typeof(string));
 			dress_lists.Columns.Add("Bag", typeof(int));
 			dress_lists.Columns.Add("Delay", typeof(int));
@@ -287,18 +301,18 @@ namespace RazorEnhanced
 			dress_lists.Columns.Add("HotKeyPass", typeof(bool));
 			return dress_lists;
 		}
-		internal static DataTable InitDressingAgent() 
+		internal static DataTable InitDressingAgent(string tableName) 
 		{ 
-			DataTable dress_items = new DataTable("DRESS_ITEMS");
+			DataTable dress_items = new DataTable(tableName);
 			dress_items.Columns.Add("List", typeof(string));
 			dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItemNew));
 			return dress_items;
 
 		}
-		internal static DataTable InitFriendsList()
+		internal static DataTable InitFriendsList(string tableName)
 		{
 			// ----------- FRIEND ----------
-			DataTable friend_lists = new DataTable("FRIEND_LISTS");
+			DataTable friend_lists = new DataTable(tableName);
 			friend_lists.Columns.Add("Description", typeof(string));
 			friend_lists.Columns.Add("IncludeParty", typeof(bool));
 			friend_lists.Columns.Add("PreventAttack", typeof(bool));
@@ -310,25 +324,25 @@ namespace RazorEnhanced
 			friend_lists.Columns.Add("Selected", typeof(bool));
 			return friend_lists;
 		}
-		internal static DataTable InitPlayerFriends()
+		internal static DataTable InitPlayerFriends(string tableName)
 		{
-			DataTable friend_player = new DataTable("FRIEND_PLAYERS");
+			DataTable friend_player = new DataTable(tableName);
 			friend_player.Columns.Add("List", typeof(string));
-			friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
+			friend_player.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendPlayer));
 			return friend_player;
 		}
-		internal static DataTable InitGuildFriends()
+		internal static DataTable InitGuildFriends(string tableName)
 		{ 
-			DataTable friend_guild = new DataTable("FRIEND_GUILDS");
+			DataTable friend_guild = new DataTable(tableName);
 			friend_guild.Columns.Add("List", typeof(string));
-			friend_guild.Columns.Add("Guild", typeof(RazorEnhanced.Friend.FriendGuild));
+			friend_guild.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendGuild));
 			return friend_guild;
 
 		}
-		internal static DataTable InitRestockLists()
+		internal static DataTable InitRestockLists(string tableName)
 		{
 			// ----------- RESTOCK ----------
-			DataTable restock_lists = new DataTable("RESTOCK_LISTS");
+			DataTable restock_lists = new DataTable(tableName);
 			restock_lists.Columns.Add("Description", typeof(string));
 			restock_lists.Columns.Add("Delay", typeof(int));
 			restock_lists.Columns.Add("Source", typeof(int));
@@ -336,26 +350,18 @@ namespace RazorEnhanced
 			restock_lists.Columns.Add("Selected", typeof(bool));
 			return restock_lists;
 		}
-		internal static DataTable InitRestock()
+		internal static DataTable InitRestock(string tableName)
 		{ 
-			DataTable restock_items = new DataTable("RESTOCK_ITEMS");
+			DataTable restock_items = new DataTable(tableName);
 			restock_items.Columns.Add("List", typeof(string));
 			restock_items.Columns.Add("Item", typeof(RazorEnhanced.Restock.RestockItem));
 			return restock_items;
 
 		}
-		internal static DataTable InitTargeting()
-		{
-			// ----------- TARGET ----------
-			DataTable targets = new DataTable("TARGETS");
-			targets.Columns.Add("TargetGUI", typeof(TargetGUI));
-			return targets;
-		}
-
-		internal static DataTable InitGraphChanges()
+		internal static DataTable InitGraphChanges(string tableName)
 		{
 			// ----------- FILTER GRAPH CHANGE ----------
-			DataTable filter_graph = new DataTable("FILTER_GRAPH");
+			DataTable filter_graph = new DataTable(tableName);
 			filter_graph.Columns.Add("Selected", typeof(bool));
 			filter_graph.Columns.Add("GraphReal", typeof(int));
 			filter_graph.Columns.Add("GraphNew", typeof(int));
@@ -363,10 +369,10 @@ namespace RazorEnhanced
 			return filter_graph;
 
 		}
-		internal static DataTable InitToolbarItems()
+		internal static DataTable InitToolbarItems(string tableName)
 		{
 			// ----------- TOOLBAR ITEM ----------
-			DataTable toolbar_items = new DataTable("TOOLBAR_ITEMS");
+			DataTable toolbar_items = new DataTable(tableName);
 			toolbar_items.Columns.Add("Name", typeof(string));
 			toolbar_items.Columns.Add("Graphics", typeof(int));
 			toolbar_items.Columns.Add("Color", typeof(int));
@@ -384,10 +390,10 @@ namespace RazorEnhanced
 			return toolbar_items;
 
 		}
-		internal static DataTable InitSpellGrid()
+		internal static DataTable InitSpellGrid(string tableName)
 		{
 			// ----------- SPELLGRID ITEM ----------
-			DataTable spellgrid_items = new DataTable("SPELLGRID_ITEMS");
+			DataTable spellgrid_items = new DataTable(tableName);
 			spellgrid_items.Columns.Add("Group", typeof(string));
 			spellgrid_items.Columns.Add("Spell", typeof(string));
 			spellgrid_items.Columns.Add("Color", typeof(string));
@@ -403,19 +409,19 @@ namespace RazorEnhanced
 			return spellgrid_items;
 		}
 
-		internal static DataTable InitPasswords()
+		internal static DataTable InitPasswords(string tableName)
 		{
 			// ----------- SAVE PASSWORD ----------
-			DataTable password = new DataTable("PASSWORD");
+			DataTable password = new DataTable(tableName);
 			password.Columns.Add("IP", typeof(string));
 			password.Columns.Add("User", typeof(string));
 			password.Columns.Add("Password", typeof(string));
 			return password;
 		}
-		internal static DataTable InitHotKeys()
+		internal static DataTable InitHotKeys(string tableName)
 		{
 			// ----------- HOTKEYS ----------
-			DataTable hotkey = new DataTable("HOTKEYS");
+			DataTable hotkey = new DataTable(tableName);
 			hotkey.Columns.Add("Group", typeof(string));
 			hotkey.Columns.Add("Name", typeof(string));
 			hotkey.Columns.Add("Key", typeof(Keys));
@@ -1848,10 +1854,10 @@ namespace RazorEnhanced
 
 
 		}
-		internal static DataTable InitGeneralSettings()
+		internal static DataTable InitGeneralSettings(string tableName)
 		{
 			// ----------- GENERAL SETTINGS ----------
-			DataTable general = new DataTable("GENERAL");
+			DataTable general = new DataTable(tableName);
 
 			// Parametri Tab (Agent --> Heal)
 			general.Columns.Add("BandageHealcountdownCheckBox", typeof(bool));
@@ -2177,40 +2183,40 @@ namespace RazorEnhanced
 
 			if (! LoadExistingData(profileName, try_recover))
 			{
-				m_Dataset.Tables.Add(InitScripting());
+				m_Dataset.Tables.Add(initDict["SCRIPTING"]("SCRIPTING"));
 
-				m_Dataset.Tables.Add(InitAutoLoot());
-				m_Dataset.Tables.Add(InitAutoLootLists());
+				m_Dataset.Tables.Add(initDict["AUTOLOOT_ITEMS"]("AUTOLOOT_ITEMS"));
+				m_Dataset.Tables.Add(initDict["AUTOLOOT_LISTS"]("AUTOLOOT_LISTS"));
 
-				m_Dataset.Tables.Add(InitScavengerLists());
-				m_Dataset.Tables.Add(InitScavenger());
+				m_Dataset.Tables.Add(initDict["SCAVENGER_LISTS"]("SCAVENGER_LISTS"));
+				m_Dataset.Tables.Add(initDict["SCAVENGER_ITEMS"]("SCAVENGER_ITEMS"));
 
-				m_Dataset.Tables.Add(InitOrganizer());
-				m_Dataset.Tables.Add(InitOrganizerLists());
+				m_Dataset.Tables.Add(initDict["ORGANIZER_ITEMS"]("ORGANIZER_ITEMS"));
+				m_Dataset.Tables.Add(initDict["ORGANIZER_LISTS"]("ORGANIZER_LISTS"));
 
-				m_Dataset.Tables.Add(InitSellAgent());
-				m_Dataset.Tables.Add(InitSellAgentLists());
+				m_Dataset.Tables.Add(initDict["SELL_ITEMS"]("SELL_ITEMS"));
+				m_Dataset.Tables.Add(initDict["SELL_LISTS"]("SELL_LISTS"));
 
-				m_Dataset.Tables.Add(InitBuyAgent());
-				m_Dataset.Tables.Add(InitBuyAgentLists());
+				m_Dataset.Tables.Add(initDict["BUY_ITEMS"]("BUY_ITEMS"));
+				m_Dataset.Tables.Add(initDict["BUY_LISTS"]("BUY_LISTS"));
 
-				m_Dataset.Tables.Add(InitDressingAgent());
-				m_Dataset.Tables.Add(InitDressingAgentLists());
+				m_Dataset.Tables.Add(initDict["DRESS_ITEMS"]("DRESS_ITEMS"));
+				m_Dataset.Tables.Add(initDict["DRESS_LISTS"]("DRESS_LISTS"));
 
-				m_Dataset.Tables.Add(InitPlayerFriends());
-				m_Dataset.Tables.Add(InitGuildFriends());
-				m_Dataset.Tables.Add(InitFriendsList());
+				m_Dataset.Tables.Add(initDict["FRIEND_PLAYERS"]("FRIEND_PLAYERS"));
+				m_Dataset.Tables.Add(initDict["FRIEND_GUILDS"]("FRIEND_GUILDS"));
+				m_Dataset.Tables.Add(initDict["FRIEND_LISTS"]("FRIEND_LISTS"));
 
-				m_Dataset.Tables.Add(InitRestock());
-				m_Dataset.Tables.Add(InitRestockLists());
+				m_Dataset.Tables.Add(initDict["RESTOCK_ITEMS"]("RESTOCK_ITEMS"));
+				m_Dataset.Tables.Add(initDict["RESTOCK_LISTS"]("RESTOCK_LISTS"));
 
-				m_Dataset.Tables.Add(InitTargeting());
-				m_Dataset.Tables.Add(InitGraphChanges());
-				m_Dataset.Tables.Add(InitToolbarItems());
-				m_Dataset.Tables.Add(InitSpellGrid());
-				m_Dataset.Tables.Add(InitPasswords());
-				m_Dataset.Tables.Add(InitHotKeys());
-				m_Dataset.Tables.Add(InitGeneralSettings());
+				m_Dataset.Tables.Add(initDict["TARGETS"]("TARGETS"));
+				m_Dataset.Tables.Add(initDict["FILTER_GRAPH"]("FILTER_GRAPH"));
+				m_Dataset.Tables.Add(initDict["TOOLBAR_ITEMS"]("TOOLBAR_ITEMS"));
+				m_Dataset.Tables.Add(initDict["SPELLGRID_ITEMS"]("SPELLGRID_ITEMS"));
+				m_Dataset.Tables.Add(initDict["PASSWORD"]("PASSWORD"));
+				m_Dataset.Tables.Add(initDict["HOTKEYS"]("HOTKEYS"));
+				m_Dataset.Tables.Add(initDict["GENERAL"]("GENERAL"));
 
 				m_Dataset.AcceptChanges();
 			}
@@ -2310,11 +2316,11 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int delay = (int)row["Delay"];
-					int bag = (int)row["Bag"];
+					int delay = Convert.ToInt32(row["Delay"]);
+					int bag = Convert.ToInt32(row["Bag"]);
 					bool selected = (bool)row["Selected"];
 					bool noopencorspe = (bool)row["NoOpenCorpse"];
-					int range = (int)row["Range"];
+					int range = Convert.ToInt32(row["Range"]);
 
 					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe, range);
 					lists.Add(list);
@@ -2373,10 +2379,10 @@ namespace RazorEnhanced
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bag = (int)row["Bag"];
-						delay = (int)row["Delay"];
+						bag = Convert.ToInt32(row["Bag"]);
+						delay = Convert.ToInt32(row["Delay"]);
 						noopencorpse = (bool)row["NoOpenCorpse"];
-						range = (int)row["Range"];
+						range = Convert.ToInt32(row["Range"]);
 					}
 				}
 			}
@@ -2478,10 +2484,10 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int delay = (int)row["Delay"];
-					int bag = (int)row["Bag"];
+					int delay = Convert.ToInt32(row["Delay"]);
+					int bag = Convert.ToInt32(row["Bag"]);
 					bool selected = (bool)row["Selected"];
-					int range = (int)row["Range"];
+					int range = Convert.ToInt32(row["Range"]);
 
 					RazorEnhanced.Scavenger.ScavengerList list = new RazorEnhanced.Scavenger.ScavengerList(description, delay, bag, selected, range);
 					lists.Add(list);
@@ -2538,9 +2544,9 @@ namespace RazorEnhanced
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bag = (int)row["Bag"];
-						delay = (int)row["Delay"];
-						range = (int)row["Range"];
+						bag = Convert.ToInt32(row["Bag"]);
+						delay = Convert.ToInt32(row["Delay"]);
+						range = Convert.ToInt32(row["Range"]);
 					}
 				}
 			}
@@ -2640,9 +2646,9 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int delay = (int)row["Delay"];
-					int source = (int)row["Source"];
-					int destination = (int)row["Destination"];
+					int delay = Convert.ToInt32(row["Delay"]);
+					int source = Convert.ToInt32(row["Source"]);
+					int destination = Convert.ToInt32(row["Destination"]);
 					bool selected = (bool)row["Selected"];
 
 					RazorEnhanced.Organizer.OrganizerList list = new RazorEnhanced.Organizer.OrganizerList(description, delay, source, destination, selected);
@@ -2693,9 +2699,9 @@ namespace RazorEnhanced
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bags = (int)row["Source"];
-						bagd = (int)row["Destination"];
-						delay = (int)row["Delay"];
+						bags = Convert.ToInt32(row["Source"]);
+						bagd = Convert.ToInt32(row["Destination"]);
+						delay = Convert.ToInt32(row["Delay"]);
 					}
 				}
 			}
@@ -2781,7 +2787,7 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int bag = (int)row["Bag"];
+					int bag = Convert.ToInt32(row["Bag"]);
 					bool selected = (bool)row["Selected"];
 
 					RazorEnhanced.SellAgent.SellAgentList list = new RazorEnhanced.SellAgent.SellAgentList(description, bag, selected);
@@ -2793,7 +2799,7 @@ namespace RazorEnhanced
 
 			internal static int BagRead(string listname)
 			{
-				return (from DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows where (string) row["Description"] == listname select (int) row["Bag"]).FirstOrDefault();
+				return (from DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows where (string) row["Description"] == listname select Convert.ToInt32(row["Bag"])).FirstOrDefault();
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.SellAgent.SellAgentItem item)
@@ -3056,8 +3062,8 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int delay = (int)row["Delay"];
-					int bag = (int)row["Bag"];
+					int delay = Convert.ToInt32(row["Delay"]);
+					int bag = Convert.ToInt32(row["Bag"]);
 					bool conflict = (bool)row["Conflict"];
 					bool selected = (bool)row["Selected"];
 
@@ -3089,8 +3095,8 @@ namespace RazorEnhanced
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bag = (int)row["Bag"];
-						delay = (int)row["Delay"];
+						bag = Convert.ToInt32(row["Bag"]);
+						delay = Convert.ToInt32(row["Delay"]);
 						conflict = (bool)row["Conflict"];
 					}
 				}
@@ -3308,19 +3314,39 @@ namespace RazorEnhanced
 
 			internal static bool PlayerExists(string list, RazorEnhanced.Friend.FriendPlayer player)
 			{
-				return (from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows let dacercare = (RazorEnhanced.Friend.FriendPlayer) row["Player"] where (string) row["List"] == list && dacercare.Serial == player.Serial select row).Any();
+				foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+				{
+					RazorEnhanced.Friend.FriendPlayer listPlayer = (RazorEnhanced.Friend.FriendPlayer)row["Item"];
+					if ((listPlayer.List == list) && (listPlayer.Serial == player.Serial))
+					{
+						return true;
+					}
+				}
+				return false;
+
+				//return (from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows let dacercare = (RazorEnhanced.Friend.FriendPlayer) row["Item"] where (string) row["List"] == list && dacercare.Serial == player.Serial select row).Any();
 			}
 
 			internal static bool GuildExists(string list, string guild)
 			{
-				return (from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows let dacercare = (RazorEnhanced.Friend.FriendGuild) row["Guild"] where (string) row["List"] == list && dacercare.Name == guild select row).Any();
+				foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
+				{
+					RazorEnhanced.Friend.FriendGuild f_guild = (RazorEnhanced.Friend.FriendGuild)row["Item"];
+					if ((f_guild.List == list) && (f_guild.Name == guild))
+					{
+						return true;
+					}
+				}
+				return false;
+				// (from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows let dacercare = (RazorEnhanced.Friend.FriendGuild) row["Item"] where (string) row["List"] == list && dacercare.Name == guild select row).Any();
 			}
 
 			internal static void PlayerInsert(string list, RazorEnhanced.Friend.FriendPlayer player)
 			{
 				DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].NewRow();
 				row["List"] = list;
-				row["Player"] = player;
+				player.List = list;
+				row["Item"] = player;
 				m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
 
 				Save();
@@ -3330,7 +3356,8 @@ namespace RazorEnhanced
 			{
 				DataRow row = m_Dataset.Tables["FRIEND_GUILDS"].NewRow();
 				row["List"] = list;
-				row["Guild"] = guild;
+				guild.List = list;
+				row["Item"] = guild;
 				m_Dataset.Tables["FRIEND_GUILDS"].Rows.Add(row);
 
 				Save();
@@ -3342,7 +3369,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].NewRow();
 					row["List"] = list;
-					row["Player"] = player;
+					player.List = list;
+					row["Item"] = player;
 					m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
 				}
 				Save();
@@ -3354,7 +3382,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["FRIEND_GUILDS"].NewRow();
 					row["List"] = list;
-					row["Guild"] = guild;
+					guild.List = list;
+					row["Item"] = guild;
 					m_Dataset.Tables["FRIEND_GUILDS"].Rows.Add(row);
 				}
 				Save();
@@ -3370,7 +3399,7 @@ namespace RazorEnhanced
 						count++;
 						if (count == index)
 						{
-							row["Player"] = player;
+							row["Item"] = player;
 						}
 					}
 				}
@@ -3388,7 +3417,7 @@ namespace RazorEnhanced
 						count++;
 						if (count == index)
 						{
-							row["Guild"] = guild;
+							row["Item"] = guild;
 						}
 					}
 				}
@@ -3401,7 +3430,7 @@ namespace RazorEnhanced
 				for (int i = m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].Rows[i];
-					if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Player"] == player)
+					if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Item"] == player)
 					{
 						row.Delete();
 						break;
@@ -3416,7 +3445,7 @@ namespace RazorEnhanced
 				for (int i = m_Dataset.Tables["FRIEND_GUILDS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["FRIEND_GUILDS"].Rows[i];
-					if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendGuild)row["Guild"] == guild)
+					if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendGuild)row["Item"] == guild)
 					{
 						row.Delete();
 						break;
@@ -3432,18 +3461,33 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					players.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendPlayer) row["Player"]);
+					foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+					{
+						RazorEnhanced.Friend.FriendPlayer player = (RazorEnhanced.Friend.FriendPlayer)row["Item"];
+						if (player.List == list)
+						{ 
+							players.Add(player);
+						}
+					}
+// players.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendPlayer) row["Item"]);
 				}
 			}
 
 			internal static void GuildRead(string list, out List<RazorEnhanced.Friend.FriendGuild> guilds)
 			{
 				guilds = new List<RazorEnhanced.Friend.FriendGuild>();
-
-				if (ListExists(list))
+				foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
 				{
-					guilds.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Guild"]);
+					RazorEnhanced.Friend.FriendGuild guild = (RazorEnhanced.Friend.FriendGuild)row["Item"];
+					if (guild.List == list)
+					{
+						guilds.Add(guild);
+					}
 				}
+				//if (ListExists(list))
+				//{
+				//	guilds.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Item"]);
+				//}
 			}
 
 			internal static void ListDetailsRead(string listname, out bool includeparty, out bool preventattack, out bool autoacceptparty, out bool slfriend, out bool tbfriend, out bool comfriend, out bool minfriend)
@@ -3566,9 +3610,9 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int delay = (int)row["Delay"];
-					int source = (int)row["Source"];
-					int destination = (int)row["Destination"];
+					int delay = Convert.ToInt32(row["Delay"]);
+					int source = Convert.ToInt32(row["Source"]);
+					int destination = Convert.ToInt32(row["Destination"]);
 					bool selected = (bool)row["Selected"];
 
 					lists.Add(new RazorEnhanced.Restock.RestockList(description, delay, source, destination, selected));
@@ -3623,9 +3667,9 @@ namespace RazorEnhanced
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bags = (int)row["Source"];
-						bagd = (int)row["Destination"];
-						delay = (int)row["Delay"];
+						bags = Convert.ToInt32(row["Source"]);
+						bagd = Convert.ToInt32(row["Destination"]);
+						delay = Convert.ToInt32(row["Delay"]);
 					}
 				}
 			}
@@ -3686,7 +3730,7 @@ namespace RazorEnhanced
 				List<string> all = new List<string>();
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					string name = theTarget.Name;
 					all.Add(name);
 				}
@@ -3699,14 +3743,14 @@ namespace RazorEnhanced
 				for (int i=0; i < m_Dataset.Tables["TARGETS"].Rows.Count; i++)
 				{ 
 					DataRow row = m_Dataset.Tables["TARGETS"].Rows[i];
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					string name = theTarget.Name;
 					if (name == targetid)
 					{
 						row.Delete();
 						//m_Dataset.Tables["TARGETS"].Rows.Add(target);
 						row = m_Dataset.Tables["TARGETS"].NewRow();
-						row["TargetGUI"] = target;
+						row["Item"] = target;
 						m_Dataset.Tables["TARGETS"].Rows.Add(row);
 						break;
 					}
@@ -3718,7 +3762,7 @@ namespace RazorEnhanced
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.Name == targetid)
 					{
 						return true;
@@ -3736,7 +3780,7 @@ namespace RazorEnhanced
 				if (TargetExist(targetid))
 					TargetDelete(targetid);
 				DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
-				row["TargetGUI"] = target;
+				row["Item"] = target;
 				m_Dataset.Tables["TARGETS"].Rows.Add(row);
 				Save();
 			}
@@ -3747,7 +3791,7 @@ namespace RazorEnhanced
 				{
 					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
-						TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+						TargetGUI theTarget = (TargetGUI)row["Item"];
 						if (theTarget.Name == targetid)
 						{
 							row.Delete();
@@ -3762,7 +3806,7 @@ namespace RazorEnhanced
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.Name == targetid)
 					{
 						return theTarget;
@@ -4004,9 +4048,9 @@ namespace RazorEnhanced
 				List<RazorEnhanced.HotKey.HotKeyData> retList = new List<RazorEnhanced.HotKey.HotKeyData>();
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					string name = theTarget.Name;
-					Keys key = (Keys)theTarget.HotKey;
+					Keys key = theTarget.HotKey;
 					RazorEnhanced.HotKey.HotKeyData aKey = new RazorEnhanced.HotKey.HotKeyData(name, key);
 					retList.Add(aKey);
 				}
@@ -4044,7 +4088,7 @@ namespace RazorEnhanced
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.Name == name)
 					{
 						theTarget.HotKey = key;
@@ -4105,7 +4149,7 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.HotKey == key)
 					{
 						theTarget.HotKey = Keys.None;
@@ -4144,7 +4188,7 @@ namespace RazorEnhanced
 			
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.HotKey == key)
 						return true;
 				}
@@ -4186,7 +4230,7 @@ namespace RazorEnhanced
 				if (!found)
 					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
-						TargetGUI target = (TargetGUI)row["TargetGUI"];
+						TargetGUI target = (TargetGUI)row["Item"];
 						if (target.Name == name)
 						{
 							key = target.HotKey;
@@ -4234,7 +4278,7 @@ namespace RazorEnhanced
 				
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.HotKey == key)
 						return theTarget.Name;
 				}
@@ -4248,7 +4292,7 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
-					TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.Name == name)
 					{
 						k = theTarget.HotKey;
@@ -4259,12 +4303,12 @@ namespace RazorEnhanced
 
 			internal static string FindScript(Keys key)
 			{
-				return (from DataRow row in m_Dataset.Tables["SCRIPTING"].Rows where (Keys) row["HotKey"] == key select (String) row["Filename"]).FirstOrDefault();
+				return (from DataRow row in m_Dataset.Tables["SCRIPTING"].Rows where (Keys)Convert.ToInt32(row["HotKey"]) == key select (String) row["Filename"]).FirstOrDefault();
 			}
 
 			internal static string FindDress(Keys key)
 			{
-				return (from DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows where (Keys) row["HotKey"] == key select (String) row["Description"]).FirstOrDefault();
+				return (from DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows where (Keys)Convert.ToInt32(row["HotKey"]) == key select (String) row["Description"]).FirstOrDefault();
 			}
 
 			internal static void FindGroup(Keys key, out string outgroup, out bool outpass)
@@ -4287,7 +4331,7 @@ namespace RazorEnhanced
 				if (!found)
 					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
-						TargetGUI theTarget = (TargetGUI)row["TargetGUI"];
+						TargetGUI theTarget = (TargetGUI)row["Item"];
 						if (theTarget.HotKey == key)
 						{
 							group = "TList";
@@ -4467,20 +4511,14 @@ namespace RazorEnhanced
 				foreach (DataTable table in m_Dataset.Tables)
 				{
 					
-					//if (table.TableName == "TARGETS")
-					//{
-					//	List<TargetGUI> targets = new List<TargetGUI>();
-					//	foreach (DataRow row in table.Rows)
-					//	{
-					//		TargetGUI target = (TargetGUI)row.ItemArray[0];
-					//		targets.Add(target);
-					//	}
-					//	File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(targets, Newtonsoft.Json.Formatting.Indented));
-					//}
-					//else
-					//{
+					if (saveDict.ContainsKey(table.TableName))
+					{
+						saveDict[table.TableName](filename, table.TableName, table);
+					}
+					else
+					{
 						File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(table, Newtonsoft.Json.Formatting.Indented));
-					//}
+					}
 				}
 				
 				//File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));

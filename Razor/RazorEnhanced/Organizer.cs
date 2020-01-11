@@ -1,4 +1,6 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace RazorEnhanced
 		private static string m_organizerlist;
 
 		[Serializable]
-		public class OrganizerItem
+		public class OrganizerItem : ListAbleItem
 		{
 			private string m_Name;
 			public string Name { get { return m_Name; } }
@@ -29,8 +31,8 @@ namespace RazorEnhanced
 			private int m_amount;
 			public int Amount { get { return m_amount; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set; }
 
 			public OrganizerItem(string name, int graphics, int color, int amount, bool selected)
 			{
@@ -38,7 +40,7 @@ namespace RazorEnhanced
 				m_Graphics = graphics;
 				m_Color = color;
 				m_amount = amount;
-				m_Selected = selected;
+				Selected = selected;
 			}
 		}
 

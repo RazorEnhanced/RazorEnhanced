@@ -1,4 +1,6 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace RazorEnhanced
 		private static int m_sellbag;
 
 		[Serializable]
-		public class SellAgentItem
+		public class SellAgentItem : ListAbleItem
 		{
 			private string m_Name;
 			public string Name { get { return m_Name; } }
@@ -26,8 +28,9 @@ namespace RazorEnhanced
 			private int m_color;
 			public int Color { get { return m_color; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set; }
 
 			public SellAgentItem(string name, int graphics, int amount, int color, bool selected)
 			{
@@ -35,7 +38,7 @@ namespace RazorEnhanced
 				m_Graphics = graphics;
 				m_amount = amount;
 				m_color = color;
-				m_Selected = selected;
+				Selected = selected;
 			}
 		}
 
@@ -47,14 +50,14 @@ namespace RazorEnhanced
 			private int m_Bag;
 			internal int Bag { get { return m_Bag; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set;}
 
 			public SellAgentList(string description, int bag, bool selected)
 			{
 				m_Description = description;
 				m_Bag = bag;
-				m_Selected = selected;
+				Selected = selected;
 			}
 		}
 
@@ -415,7 +418,7 @@ namespace RazorEnhanced
 		private static string m_listname;
 
 		[Serializable]
-		public class BuyAgentItem
+		public class BuyAgentItem  : ListAbleItem
 		{
 			private string m_Name;
 			public string Name { get { return m_Name; } }
@@ -429,8 +432,8 @@ namespace RazorEnhanced
 			private int m_Color;
 			public int Color { get { return m_Color; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set; }
 
 			public BuyAgentItem(string name, int graphics, int amount, int color, bool selected)
 			{
@@ -438,7 +441,7 @@ namespace RazorEnhanced
 				m_Graphics = graphics;
 				m_Amount = amount;
 				m_Color = color;
-				m_Selected = selected;
+				Selected = selected;
 			}
 		}
 
@@ -447,13 +450,13 @@ namespace RazorEnhanced
 			private string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set;}
 
 			public BuyAgentList(string description, bool selected)
 			{
 				m_Description = description;
-				m_Selected = selected;
+				Selected = selected;
 			}
 		}
 

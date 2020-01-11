@@ -1,4 +1,6 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,7 @@ namespace RazorEnhanced
 {
 	public class Dress
 	{
-		[Serializable]
-		internal class DressItem // Vecchia struttura da rimuovere fra qualche versione. rimasta per permetere conversione settings
+		internal class XXDressItem // Vecchia struttura da rimuovere fra qualche versione. rimasta per permetere conversione settings
 		{
 			private int m_Layer;
 			internal int Layer { get { return m_Layer; } }
@@ -24,7 +25,7 @@ namespace RazorEnhanced
 			private bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
-			public DressItem(string name, int layer, int serial, bool selected)
+			public XXDressItem(string name, int layer, int serial, bool selected)
 			{
 				m_Name = name;
 				m_Layer = layer;
@@ -33,27 +34,26 @@ namespace RazorEnhanced
 			}
 		}
 
-		[Serializable]
-		internal class DressItemNew
+		internal class DressItemNew	 : ListAbleItem
 		{
-			private Layer m_Layer;
-			internal Layer Layer { get { return m_Layer; } }
+			[JsonProperty("Layer")]
+			internal Layer Layer { get; set;}
 
-			private string m_Name;
-			internal string Name { get { return m_Name; } }
+			[JsonProperty("Name")]
+			internal string Name { get; set;}
 
-			private int m_serial;
-			internal int Serial { get { return m_serial; } }
+			[JsonProperty("Serial")]
+			internal int Serial { get; set; }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set;}
 
 			public DressItemNew(string name, Layer layer, int serial, bool selected)
 			{
-				m_Name = name;
-				m_Layer = layer;
-				m_serial = serial;
-				m_Selected = selected;
+				Name = name;
+				Layer = layer;
+				Serial = serial;
+				Selected = selected;
 			}
 		}
 

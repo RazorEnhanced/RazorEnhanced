@@ -1,4 +1,6 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,7 @@ namespace RazorEnhanced
 		private static int m_destinationbag;
 		private static string m_restocklist;
 
-		[Serializable]
-		public class RestockItem
+		public class RestockItem : ListAbleItem
 		{
 			private string m_Name;
 			public string Name { get { return m_Name; } }
@@ -29,8 +30,8 @@ namespace RazorEnhanced
 			private int m_amountlimit;
 			public int AmountLimit { get { return m_amountlimit; } }
 
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
+			[JsonProperty("Selected")]
+			internal bool Selected { get; set;}
 
 			public RestockItem(string name, int graphics, int color, int amountlimit, bool selected)
 			{
@@ -38,7 +39,7 @@ namespace RazorEnhanced
 				m_Graphics = graphics;
 				m_Color = color;
 				m_amountlimit = amountlimit;
-				m_Selected = selected;
+				Selected = selected;
 			}
 		}
 

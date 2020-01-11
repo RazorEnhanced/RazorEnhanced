@@ -1,4 +1,6 @@
 ﻿using Assistant;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace RazorEnhanced
 	public class Friend
 	{
 		[Serializable]
-		public class FriendPlayer
+		public class FriendPlayer : ListAbleItem
 		{
 			private string m_Name;
 			public string Name { get { return m_Name; } }
@@ -29,7 +31,7 @@ namespace RazorEnhanced
 		}
 
 		[Serializable]
-		public class FriendGuild
+		public class FriendGuild : ListAbleItem
 		{
 			private string m_Name;
 			public string Name { get { return m_Name; } }
