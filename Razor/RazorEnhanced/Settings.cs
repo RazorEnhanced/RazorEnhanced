@@ -34,7 +34,8 @@ namespace RazorEnhanced
 
 		internal static Dictionary<string, initFN> initDict = new Dictionary<string, initFN>()
 				{
-					{ "AUTOLOOT_ITEMS", InitItems<RazorEnhanced.AutoLoot.AutoLootItem>},					
+					{ "AUTOLOOT_ITEMS", InitItems<RazorEnhanced.AutoLoot.AutoLootItem>},
+					{ "AUTOLOOT_LISTS", InitAutoLootLists},
 					{ "BUY_ITEMS", InitItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
 					{ "BUY_LISTS", InitBuyAgentLists },
 					{ "DRESS_ITEMS", InitItems<RazorEnhanced.Dress.DressItemNew> },
