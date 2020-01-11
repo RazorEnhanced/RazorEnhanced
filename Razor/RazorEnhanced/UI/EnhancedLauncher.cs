@@ -218,7 +218,7 @@ namespace RazorEnhanced.UI
         {
             // AutoUpdater
             AutoUpdater.ReportErrors = true;
-            AutoUpdater.Start("http://www.RazorEnhanced.net/download/RazorAutoUpdater.xml");
+            AutoUpdater.Start("http://www.RazorEnhanced.net/download/RazorEnhancedAutoUpdater.xml");
         }
 	}
 }
