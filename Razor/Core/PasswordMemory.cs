@@ -13,22 +13,20 @@ namespace Assistant
 		[Serializable]
 		internal class PasswordData
 		{
-			private string m_IP;
-			public string IP { get { return m_IP; } }
+			public string IP { get; set;}
 
-			private string m_User;
-			public string User { get { return m_User; } }
+			public string User { get; set; }
 
-			private string m_Password;
-			public string Password { get { return m_Password; } }
+			public string Password { get; set; }
 
 			public PasswordData(string ip, string user, string password)
 			{
-				m_IP = ip;
-				m_User = user;
-				m_Password = password;
+				IP = ip;
+				User = user;
+				Password = password;
 			}
-		}
+
+        }
 
 		internal static void ProfileChangeInit()
 		{

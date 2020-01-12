@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Web.Security;
 
 namespace RazorEnhanced
 {
@@ -68,6 +69,7 @@ namespace RazorEnhanced
 					{ "FRIEND_GUILDS", LoadItems<RazorEnhanced.Friend.FriendGuild> },
 					{ "FRIEND_PLAYERS", LoadItems<RazorEnhanced.Friend.FriendPlayer> },
 					{ "ORGANIZER_ITEMS", LoadItems<RazorEnhanced.Organizer.OrganizerItem> },
+					{ "PASSWORD", LoadPasswords },
 					{ "RESTOCK_ITEMS", LoadItems<RazorEnhanced.Restock.RestockItem> },
 					{ "SCAVENGER_ITEMS", LoadItems<RazorEnhanced.Scavenger.ScavengerItem> },
 					{ "SELL_ITEMS", LoadItems<RazorEnhanced.SellAgent.SellAgentItem> },
@@ -81,6 +83,7 @@ namespace RazorEnhanced
 					{ "FRIEND_GUILDS", SaveItems<RazorEnhanced.Friend.FriendGuild> },
 					{ "FRIEND_PLAYERS", SaveItems<RazorEnhanced.Friend.FriendPlayer> },
 					{ "ORGANIZER_ITEMS", SaveItems<RazorEnhanced.Organizer.OrganizerItem> },
+					{ "PASSWORD", SavePasswords },
 					{ "RESTOCK_ITEMS", SaveItems<RazorEnhanced.Restock.RestockItem> },
 					{ "SCAVENGER_ITEMS", SaveItems<RazorEnhanced.Scavenger.ScavengerItem> },
 					{ "SELL_ITEMS", SaveItems<RazorEnhanced.SellAgent.SellAgentItem> },
@@ -220,7 +223,91 @@ namespace RazorEnhanced
 			File.WriteAllText(filename + "." + tableName, xml);
 
 		}
+		// Passwords
+		public static string Protect(string text, string purpose)
+		{
+			if (string.IsNullOrEmpty(text))
+				return "";
+			try
+			{
+				byte[] stream = System.Text.Encoding.UTF8.GetBytes(text);
+				var encodedValue = MachineKey.Protect(stream, purpose);
 
+				return Convert.ToBase64String(encodedValue);
+			}
+			catch (Exception e)
+			{
+				return "";
+			}
+		}
+
+		public static string Unprotect(string text, string purpose)
+		{
+			if (string.IsNullOrEmpty(text))
+				return "";
+			try
+			{
+				byte[] stream = Convert.FromBase64String(text);
+				byte[] decodedValue = MachineKey.Unprotect(stream, purpose);
+				return System.Text.Encoding.UTF8.GetString(decodedValue);
+			}
+			catch (Exception e)
+			{ 
+				return "";
+			}
+		}
+		internal static DataTable InitPasswords(string tableName)
+		{
+			DataTable password = new DataTable(tableName);
+			password.Columns.Add("IP", typeof(string));
+			password.Columns.Add("User", typeof(string));
+			password.Columns.Add("Password", typeof(string));
+			
+			return password;
+		}
+		private class PasswordStorage {
+			public string IP;
+			public string User;
+			public string Password;
+		}
+		
+		internal static DataTable LoadPasswords(string filename, string tableName)
+		{
+			List<PasswordStorage> items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PasswordStorage>>(File.ReadAllText(filename + "." + tableName));
+			DataTable temp = initDict[tableName](tableName);
+			foreach (PasswordStorage item in items)
+			{
+				DataRow row = temp.NewRow();
+				row["IP"] = item.IP;
+				row["User"] = item.User;
+				row["Password"] = Unprotect(item.Password, "cypher");
+				temp.Rows.Add(row);
+			}
+			return temp;
+		}
+		internal static void SavePasswords(string filename, string tableName, DataTable table)
+		{
+			List<PasswordStorage> items = new List<PasswordStorage>();
+			foreach (DataRow row in table.Rows)
+			{
+				PasswordStorage item = new PasswordStorage();
+				item.IP = (string)row["IP"];
+				item.User = (string)row["User"];
+				item.Password = Protect((string)row["Password"], "cypher");
+				items.Add(item);
+			}
+			File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented));
+
+
+			// ----------- SAVE PASSWORD ----------
+			//DataTable password = new DataTable(tableName);
+			//password.Columns.Add("IP", typeof(string));
+			//password.Columns.Add("User", typeof(string));
+			//password.Columns.Add("Password", typeof(string));
+			//return password;
+		}
+
+		// Scripting
 		internal static DataTable InitScripting(string tableName)
 		{
 			// Scripting
@@ -410,15 +497,7 @@ namespace RazorEnhanced
 			return spellgrid_items;
 		}
 
-		internal static DataTable InitPasswords(string tableName)
-		{
-			// ----------- SAVE PASSWORD ----------
-			DataTable password = new DataTable(tableName);
-			password.Columns.Add("IP", typeof(string));
-			password.Columns.Add("User", typeof(string));
-			password.Columns.Add("Password", typeof(string));
-			return password;
-		}
+
 		internal static DataTable InitHotKeys(string tableName)
 		{
 			// ----------- HOTKEYS ----------
