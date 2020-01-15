@@ -46,8 +46,8 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				Assistant.Engine.MainWindow.ScreenPath.Text = path;
 			}
-			
-		
+
+
 			int count = 0;
 			do
 			{

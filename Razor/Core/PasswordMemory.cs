@@ -37,6 +37,6 @@ namespace Assistant
 		{
 			RazorEnhanced.Settings.Password.InsertAll(list);
 		}
-		
+
 	}
 }

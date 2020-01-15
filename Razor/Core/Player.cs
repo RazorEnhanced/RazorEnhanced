@@ -603,7 +603,7 @@ namespace Assistant
 			e.IsStep = (dir & Direction.Mask) == (Direction & Direction.Mask);
 			e.Dir = dir;
 
-			ProcessMove(dir); 
+			ProcessMove(dir);
 
 			e.Position = Position;
 

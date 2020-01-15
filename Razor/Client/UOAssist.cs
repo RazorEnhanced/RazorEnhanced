@@ -59,7 +59,7 @@ namespace Assistant
 
             Last = POWERHOUR
         }
-       
+
         private class WndCmd
         {
             public WndCmd(uint msg, IntPtr handle, string cmd)

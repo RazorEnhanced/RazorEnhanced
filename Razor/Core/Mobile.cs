@@ -385,7 +385,7 @@ namespace Assistant
 			if (Blessed != ((flags & 0x08) != 0))
 				needrefresh = true;
 			m_Blessed = (flags & 0x08) != 0;
-			
+
 			m_Female = (flags & 0x02) != 0;
 			m_Warmode = (flags & 0x40) != 0;
 			m_Visible = (flags & 0x80) == 0;
@@ -408,7 +408,7 @@ namespace Assistant
 				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(this);
 			}
-		} 
+		}
 
 		internal List<Item> Contains { get { return m_Items; } }
 

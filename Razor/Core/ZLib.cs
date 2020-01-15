@@ -25,7 +25,7 @@ namespace Assistant
 		Z_DEFAULT_COMPRESSION = (-1)
 	}
 
-	
+
 
 	// Be careful when writing raw data, as it may confuse the GZBlockIn if not accounted for when reading.
 	// Seeking in the compressed stream is HIGHLY unrecommended

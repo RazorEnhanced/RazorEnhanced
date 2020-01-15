@@ -44,7 +44,7 @@ namespace Assistant
 			if (!Assistant.Engine.CDepPresent)
 				return false;
 
-			IntPtr uowindow = Client.Instance.GetWindowHandle(); 
+			IntPtr uowindow = Client.Instance.GetWindowHandle();
 
 			if (uowindow == IntPtr.Zero)
 				return false;
@@ -57,7 +57,7 @@ namespace Assistant
 
 			//Getting the intersection between the two rectangles
 			Rectangle handleBound = new Rectangle(handleRect.Left + 6, handleRect.Top, handleRect.Right - handleRect.Left - 6 , handleRect.Bottom - handleRect.Top);
-				
+
 			m_ResX = (handleBound.Right - handleBound.Left)-5;
 			m_ResY = (handleBound.Bottom - handleBound.Top)-5;
 
@@ -89,7 +89,7 @@ namespace Assistant
 			do
 			{
 				filename = Path.Combine(path, String.Format("{0}{1}.avi", name, count != 0 ? count.ToString() : ""));
-				count--; // cause a - to be put in front of the number 
+				count--; // cause a - to be put in front of the number
 			}
 			while (File.Exists(filename));
 

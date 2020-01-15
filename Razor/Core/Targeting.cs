@@ -198,7 +198,7 @@ namespace Assistant
 
 			m_OldLT = m_LastTarget.Serial;
 		}
-		
+
 
 		internal static void SetLastTarget(Serial s, byte flagType, bool wait)
 		{
@@ -218,7 +218,7 @@ namespace Assistant
 			targ.Type = 0;
 			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
 
-			
+
 			targ.Serial = s;
 
 			if (s.IsItem)
@@ -836,7 +836,7 @@ namespace Assistant
 			{
 				if (m_NoShowTarget)
 					args.Block = true;
-			}	
+			}
 
 			if (args.Block)
 			{

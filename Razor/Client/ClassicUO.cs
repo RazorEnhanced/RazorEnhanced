@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Assistant;
 using System.Linq;
 
-// For CUO Settings 
+// For CUO Settings
 //using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 
@@ -24,7 +24,7 @@ namespace Assistant
         public static unsafe void Install(PluginHeader* plugin)
         {
             ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
-            Install2(plugin, settings.IP);          
+            Install2(plugin, settings.IP);
         }
 
         public static unsafe void Install2(PluginHeader* plugin, string shard_host)
@@ -79,7 +79,7 @@ namespace Assistant
             get { return m_shardHost; }
             set { m_shardHost = value; }
         }
-        
+
         public override Process ClientProcess => m_ClientProcess;
         public override bool ClientRunning => m_ClientRunning;
         private uint m_In, m_Out;
@@ -240,7 +240,7 @@ namespace Assistant
             ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
             RazorEnhanced.Shard.Insert("Classic UO Default", Path.Combine(settings.UltimaOnlineDirectory, "client.exe"),
                 settings.UltimaOnlineDirectory, settings.IP, settings.Port, true, false);
-            RazorEnhanced.Shard cuo_shard = 
+            RazorEnhanced.Shard cuo_shard =
                 new RazorEnhanced.Shard("Classic UO Default", Path.Combine(settings.UltimaOnlineDirectory, "client.exe"),
                 settings.UltimaOnlineDirectory, settings.IP, settings.Port, true, false, true);
             shards.Add(cuo_shard);
@@ -549,7 +549,7 @@ namespace Assistant
             };
             ClassicUO.Configuration.Settings settings = JsonConvert.DeserializeObject<ClassicUO.Configuration.Settings>(text, jsonsettings);
             return settings;
-        } 
+        }
             public static Settings GlobalSettings = new Settings();
 
             [JsonConstructor]

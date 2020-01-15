@@ -147,7 +147,7 @@ namespace Assistant
 			}
 			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
 		}
-     
+
 		public override void SetMapWndHandle(Form mapWnd)
 		{
 			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
@@ -251,7 +251,7 @@ namespace Assistant
 			m_InSend = (Buffer*)(baseAddr+sizeof(Buffer)*3);
 			m_OutSend = (Buffer*)(baseAddr+sizeof(Buffer)*4);
 			m_TitleStr = (byte*)(baseAddr+sizeof(Buffer)*5);*/
-			
+
 			m_InRecv = (Buffer*)baseAddr;
 			m_OutRecv = (Buffer*)(baseAddr + sizeof(Buffer));
 			m_InSend = (Buffer*)(baseAddr + sizeof(Buffer) * 2);
@@ -382,7 +382,7 @@ namespace Assistant
 
 				Engine.MainWindow.UpdateTitle();
 				// Felix Fix
-				//foreach (WndRegEnt t in m_WndReg)  
+				//foreach (WndRegEnt t in m_WndReg)
 				//	DLLImport.Win.PostMessage((IntPtr)((WndRegEnt)t).Handle, (uint)Assistant.UOAssist.UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnectionStart = DateTime.MinValue;
 			}
@@ -443,7 +443,7 @@ namespace Assistant
 
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
-			
+
 
 		}
 
@@ -540,7 +540,7 @@ namespace Assistant
 				case UONetMessage.KeyDown:
 					//retVal = HotKey.OnKeyDown(lParam);
 					retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
-					break; 
+					break;
 
 				// Activation Tracking
 				case UONetMessage.Activate:
@@ -705,7 +705,7 @@ namespace Assistant
 			if (!m_Ready)
 				return;
 
-			
+
             if (m_QueueSend || m_ScriptWaitSend)
 			{
 				m_SendQueue.Enqueue(p);
@@ -811,7 +811,7 @@ namespace Assistant
 				}
 			}
 			catch { }
-			
+
 			CommMutex.ReleaseMutex();
 		}
 
@@ -1102,7 +1102,7 @@ namespace Assistant
 					Thread.Sleep(50);
 				}
 			}
-				
+
 			RazorEnhanced.UoWarper.UODLLHandleClass.Pathfind (location.X, location.Y, location.Z);
 		}
 

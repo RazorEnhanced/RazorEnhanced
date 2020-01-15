@@ -89,34 +89,31 @@ namespace RazorEnhanced
 					{ "SELL_ITEMS", SaveItems<RazorEnhanced.SellAgent.SellAgentItem> },
 					{ "TARGETS", SaveItems<TargetGUI> },
 		};
-																	
+
 		internal static bool LoadExistingData(string profileName, bool try_recover = true)
 		{
-			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName, "RazorEnhanced.settings");
-			if (!File.Exists(filename + ".GENERAL"))
+			string profileFilename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName, "RazorEnhanced.settings");
+			string serverFilename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced");
+			if (!File.Exists(profileFilename + ".GENERAL"))
 			{
 				return false;
 			}
 
 			try
 			{
-
-				DirectoryInfo d = new DirectoryInfo(Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName));
-				FileInfo[] Files = d.GetFiles("RazorEnhanced.settings.*");
-
-				foreach (FileInfo file in Files)
+				foreach (string tableName in initDict.Keys)
 				{
-					string tableName = file.Extension.Substring(1);   // get rid of the dot
-					if (File.Exists(filename + "." + tableName))
+					// PASSWORD moved to server area, so have to check both
+					if (File.Exists(profileFilename + "." + tableName) || File.Exists(serverFilename + "." + tableName))
 					{
 						DataTable temp = null;
 						if (loadDict.ContainsKey(tableName))
 						{
-							temp = loadDict[tableName](filename, tableName);
+							temp = loadDict[tableName](profileFilename, tableName);
 						}
 						else
 						{
-							temp = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(filename + "." + tableName));
+							temp = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(profileFilename + "." + tableName));
 						}
 						if (temp.Columns.Count == 0)
 							if (initDict.ContainsKey(tableName))
@@ -130,6 +127,21 @@ namespace RazorEnhanced
 							}
 						temp.TableName = tableName;
 						m_Dataset.Tables.Add(temp);
+					}
+					else
+					{
+						if (initDict.ContainsKey(tableName))
+						{
+							DataTable temp = initDict[tableName](tableName);
+							temp.TableName = tableName;
+							m_Dataset.Tables.Add(temp);
+						}
+						else
+						{
+							// Something BAD
+							throw new Exception("Table name to init function mismatched");
+						}
+
 					}
 				}
 
@@ -252,7 +264,7 @@ namespace RazorEnhanced
 				return System.Text.Encoding.UTF8.GetString(decodedValue);
 			}
 			catch (Exception e)
-			{ 
+			{
 				return "";
 			}
 		}
@@ -262,7 +274,7 @@ namespace RazorEnhanced
 			password.Columns.Add("IP", typeof(string));
 			password.Columns.Add("User", typeof(string));
 			password.Columns.Add("Password", typeof(string));
-			
+
 			return password;
 		}
 		private class PasswordStorage {
@@ -270,10 +282,33 @@ namespace RazorEnhanced
 			public string User;
 			public string Password;
 		}
-		
-		internal static DataTable LoadPasswords(string filename, string tableName)
+
+		internal static DataTable LoadPasswords(string in_profile, string tableName)
 		{
-			List<PasswordStorage> items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PasswordStorage>>(File.ReadAllText(filename + "." + tableName));
+		 	string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced." + tableName.ToLower());
+
+			// ensure we load passwords from top level of profile
+			// all this cleanup code can go away by June of 2020
+			if (!File.Exists(filename))
+			{
+				// This maybe be a pre 0.7.2 directory so I can maybe move the file from profile
+				string tempName = in_profile + "." + tableName;
+				if (File.Exists(tempName))
+				{
+					File.Move(tempName, filename);
+				}
+
+			}
+			foreach (string subDir in Directory.GetDirectories(Path.Combine(Assistant.Engine.RootPath, "Profiles")))
+			{
+				string passwordFilename = Path.Combine(subDir, "RazorEnhanced.settings.PASSWORD");
+				if (File.Exists(passwordFilename))
+				{
+					File.Delete(passwordFilename);
+				}
+			}
+
+			List <PasswordStorage> items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PasswordStorage>>(File.ReadAllText(filename));
 			DataTable temp = initDict[tableName](tableName);
 			foreach (PasswordStorage item in items)
 			{
@@ -285,8 +320,11 @@ namespace RazorEnhanced
 			}
 			return temp;
 		}
-		internal static void SavePasswords(string filename, string tableName, DataTable table)
+		internal static void SavePasswords(string not_used, string tableName, DataTable table)
 		{
+			// ensure we save passwords to top level of profile
+			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced");
+
 			List<PasswordStorage> items = new List<PasswordStorage>();
 			foreach (DataRow row in table.Rows)
 			{
@@ -296,7 +334,7 @@ namespace RazorEnhanced
 				item.Password = Protect((string)row["Password"], "cypher");
 				items.Add(item);
 			}
-			File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented));
+			File.WriteAllText(filename + '.' + table.TableName.ToLower(), Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented));
 
 
 			// ----------- SAVE PASSWORD ----------
@@ -334,7 +372,7 @@ namespace RazorEnhanced
 			autoloot_lists.Columns.Add("Bag", typeof(int));
 			autoloot_lists.Columns.Add("Selected", typeof(bool));
 			autoloot_lists.Columns.Add("NoOpenCorpse", typeof(bool));
-			return (autoloot_lists); 
+			return (autoloot_lists);
 		}
 
 
@@ -389,8 +427,8 @@ namespace RazorEnhanced
 			dress_lists.Columns.Add("HotKeyPass", typeof(bool));
 			return dress_lists;
 		}
-		internal static DataTable InitDressingAgent(string tableName) 
-		{ 
+		internal static DataTable InitDressingAgent(string tableName)
+		{
 			DataTable dress_items = new DataTable(tableName);
 			dress_items.Columns.Add("List", typeof(string));
 			dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItemNew));
@@ -420,7 +458,7 @@ namespace RazorEnhanced
 			return friend_player;
 		}
 		internal static DataTable InitGuildFriends(string tableName)
-		{ 
+		{
 			DataTable friend_guild = new DataTable(tableName);
 			friend_guild.Columns.Add("List", typeof(string));
 			friend_guild.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendGuild));
@@ -439,7 +477,7 @@ namespace RazorEnhanced
 			return restock_lists;
 		}
 		internal static DataTable InitRestock(string tableName)
-		{ 
+		{
 			DataTable restock_items = new DataTable(tableName);
 			restock_items.Columns.Add("List", typeof(string));
 			restock_items.Columns.Add("Item", typeof(RazorEnhanced.Restock.RestockItem));
@@ -2259,7 +2297,7 @@ namespace RazorEnhanced
 				m_Dataset.Clear();
 
 			m_profileName = profileName;
-			m_Dataset = new DataSet();			
+			m_Dataset = new DataSet();
 
 			if (! LoadExistingData(profileName, try_recover))
 			{
@@ -3545,7 +3583,7 @@ namespace RazorEnhanced
 					{
 						RazorEnhanced.Friend.FriendPlayer player = (RazorEnhanced.Friend.FriendPlayer)row["Item"];
 						if (player.List == list)
-						{ 
+						{
 							players.Add(player);
 						}
 					}
@@ -3770,7 +3808,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll() 
+			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
 			{
 				List<RazorEnhanced.Filters.GraphChangeData> retList = new List<RazorEnhanced.Filters.GraphChangeData>();
 				foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
@@ -3797,7 +3835,7 @@ namespace RazorEnhanced
 				m_Dataset.AcceptChanges();
 
 
-			}		
+			}
 		}
 
 		// ------------- GRAPH FILTER END-----------------
@@ -3821,7 +3859,7 @@ namespace RazorEnhanced
 			internal static void TargetReplace(string targetid, TargetGUI target)
 			{
 				for (int i=0; i < m_Dataset.Tables["TARGETS"].Rows.Count; i++)
-				{ 
+				{
 					DataRow row = m_Dataset.Tables["TARGETS"].Rows[i];
 					TargetGUI theTarget = (TargetGUI)row["Item"];
 					string name = theTarget.Name;
@@ -3919,7 +3957,7 @@ namespace RazorEnhanced
 			}
 
 			internal static RazorEnhanced.ToolBar.ToolBarItem ReadSelectedItem(int index)
-			{				
+			{
 				DataRow row = m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index];
 				string name = (string)row["Name"];
 				int graphic = Convert.ToInt32(row["Graphics"]);
@@ -4014,7 +4052,7 @@ namespace RazorEnhanced
 				return temp;
 				//return (RazorEnhanced.SpellGrid.SpellGridItem)m_Dataset.Tables["SPELLGRID_ITEMS"].Rows[index];
 			}
-			
+
 			internal static void UpdateItem(int index, string group, string spell, Color border)
 			{
 				//RazorEnhanced.SpellGrid.SpellGridItem item = new RazorEnhanced.SpellGrid.SpellGridItem(group, spell, border, Color.Transparent);
@@ -4058,7 +4096,7 @@ namespace RazorEnhanced
 
 			internal static string GetPassword(string user, string IP)
 			{
-				foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)  // Cerco 
+				foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)  // Cerco
 				{
 					if ((string)row["User"] == user && (string)row["IP"] == IP)
 					{
@@ -4083,7 +4121,7 @@ namespace RazorEnhanced
 				}
 				Save();
 			}
-			
+
 
 			internal static List<Assistant.PasswordMemory.PasswordData> RealAll()
 			{
@@ -4265,14 +4303,14 @@ namespace RazorEnhanced
 					return true;
 				}
 
-			
+
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
 					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.HotKey == key)
 						return true;
 				}
-				
+
 
 				if (m_Dataset.Tables["SCRIPTING"].Rows.Cast<DataRow>().Any(row => (Keys)Convert.ToInt32(row["HotKey"]) == key))
 				{
@@ -4355,7 +4393,7 @@ namespace RazorEnhanced
 
 			internal static string FindTargetString(Keys key)
 			{
-				
+
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
 					TargetGUI theTarget = (TargetGUI)row["Item"];
@@ -4590,7 +4628,7 @@ namespace RazorEnhanced
 				m_Dataset.AcceptChanges();
 				foreach (DataTable table in m_Dataset.Tables)
 				{
-					
+
 					if (saveDict.ContainsKey(table.TableName))
 					{
 						saveDict[table.TableName](filename, table.TableName, table);
@@ -4600,7 +4638,7 @@ namespace RazorEnhanced
 						File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(table, Newtonsoft.Json.Formatting.Indented));
 					}
 				}
-				
+
 				//File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));
 			}
 			catch (Exception ex)

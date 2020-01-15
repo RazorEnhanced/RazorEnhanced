@@ -32,7 +32,7 @@ namespace Assistant
 			sb.Append(String.Format("~#{0:X6}{1}~#~ ", World.Player.GetNotorietyColor() & 0x00FFFFFF, World.Player.Name)); // Nome Player
 
 			// Blocco barre
-			string statStr = String.Format("{0}{1:X2}{2:X2}{3:X2}", 
+			string statStr = String.Format("{0}{1:X2}{2:X2}{3:X2}",
 			(int)(World.Player.GetStatusCode()),
 			(int)(World.Player.HitsMax == 0 ? 0 : (double)World.Player.Hits / World.Player.HitsMax * 99),
 			(int)(World.Player.ManaMax == 0 ? 0 : (double)World.Player.Mana / World.Player.ManaMax * 99),

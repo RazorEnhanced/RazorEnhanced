@@ -56,7 +56,7 @@ namespace Assistant
 
 
 		public bool Init(bool isOSI)
-		// returns false on cancel 
+		// returns false on cancel
 		{
 			m_Running = true;
 
@@ -160,7 +160,7 @@ namespace Assistant
 					return;
 				}
 			}
-			
+
 
 			// if these are null then the registry entry does not exist (old razor version)
 			Engine.IP = Resolve(addr);
@@ -273,13 +273,13 @@ namespace Assistant
 		public  DateTime ConnectionStart => m_ConnectionStart;
 
 		protected static IPAddress m_LastConnection;
-		public  IPAddress LastConnection { 
-			get { 
-				if (m_LastConnection == null) 
+		public  IPAddress LastConnection {
+			get {
+				if (m_LastConnection == null)
 					return Engine.IP;	  // CUO was not calling OnConnect soon enough
-				else 
-					return m_LastConnection; 
-			} 
+				else
+					return m_LastConnection;
+			}
 		}
 
 		public abstract Process ClientProcess { get; }

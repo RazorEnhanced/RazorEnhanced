@@ -17,8 +17,8 @@
 		// Ninja Spells (Ninjisu)
 		FocusAttack = 0x1F5,
 		DeathStrike,
-		AnimalForm, 
-		KiAttack, 
+		AnimalForm,
+		KiAttack,
 		SurpriseAttack,
 		Backstab,
 		Shadowjump,
