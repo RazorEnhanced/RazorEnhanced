@@ -95,7 +95,8 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.DressLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.DressLogBox.Items.Clear()));
 		}
 
-		private static int m_dressdelay;
+		private static int 
+			m_dressdelay;
 		internal static int DressDelay
 		{
 			get { return m_dressdelay; }
@@ -271,45 +272,46 @@ namespace RazorEnhanced
 
 		// Undress
 
-		internal static int UndressEngine(int mseconds, int undressbagserial)
+		internal static int UndressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial)
 		{
 			try
 			{
-				List<int> itemtoundress = new List<int>();
-				List<ushort> layertoundress = new List<ushort>();
-
-				foreach (Layer l in LayerList)
+				if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
 				{
-					Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
-					if (itemtomove != null && itemtomove.Movable)
+					List<ushort> layertoundress = new List<ushort>();
+					foreach (Layer l in LayerList)
 					{
-						layertoundress.Add((ushort)l);
-						itemtoundress.Add(itemtomove.Serial);
-					}
-				}
-
-				if (itemtoundress.Count > 0)
-				{
-					if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
-					{
-						RazorEnhanced.Dress.AddLog("UnDressing...");
-				 		Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
-					}
-					else
-					{
-						foreach (int serial in itemtoundress)
+						Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
+						if (itemtomove != null && itemtomove.Movable)
 						{
-							Dress.AddLog("Item 0x" + serial.ToString("X8") + " undressed!");
-							Items.Move(serial, undressbagserial, 0);
-							Thread.Sleep(mseconds);
+							layertoundress.Add((ushort)l);
 						}
 					}
-
+					RazorEnhanced.Dress.AddLog("UnDressing...");
+					Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
 				}
-				if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-					Misc.SendMessage("Enhanced UnDress: Finish!", false);
-				Engine.MainWindow.UndressFinishWork();
-				Dress.AddLog("Finish!");
+				else
+				{
+					foreach (DressItemNew oggettolista in items)
+					{
+						if (!oggettolista.Selected)
+							continue;
+
+						if (World.FindItem(oggettolista.Serial) == null)
+							continue;
+						
+						Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(oggettolista.Serial).Layer);
+						if (itemonlayer != null && itemonlayer.Serial == oggettolista.Serial)
+							RazorEnhanced.Items.Move(oggettolista.Serial, undressbagserial, 0);
+							RazorEnhanced.Dress.AddLog("Item 0x" + oggettolista.Serial.ToString("X8") + " on layer: " + oggettolista.Layer.ToString() + " undressed!");
+							Thread.Sleep(mseconds);
+					}
+					RazorEnhanced.Dress.AddLog("Finish!");
+					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+						RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+					Assistant.Engine.MainWindow.UndressFinishWork();
+				}
+				
 			}
 			catch { }
 			return 0;
@@ -342,17 +344,23 @@ namespace RazorEnhanced
 
 		internal static void UndressEngine()
 		{
-			// Check bag
-			Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
-			if (bag == null)
+			try
 			{
-				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", true);
-				AddLog("Invalid Bag, Switch to backpack");
-				DressBag = (int)World.Player.Backpack.Serial.Value;
-			}
+				List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
 
-			UndressEngine(m_dressdelay, m_dressbag);
+				// Check bag
+				Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
+				if (bag == null)
+				{
+					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+						Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+					AddLog("Invalid Bag, Switch to backpack");
+					DressBag = (int)World.Player.Backpack.Serial.Value;
+				}
+
+				UndressEngine(items, m_dressdelay, m_dressbag);
+			}
+			catch { }
 		}
 
 		private static Thread m_UndressThread;
