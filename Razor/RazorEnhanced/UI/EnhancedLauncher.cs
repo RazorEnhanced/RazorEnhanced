@@ -214,7 +214,7 @@ namespace RazorEnhanced.UI
 			UpdateGUI();
 		}
 
-        private void checkupdatebutton_Click(object sender, EventArgs e)
+		private void checkupdatebutton_Click(object sender, EventArgs e)
         {
             // AutoUpdater
             AutoUpdater.ReportErrors = true;

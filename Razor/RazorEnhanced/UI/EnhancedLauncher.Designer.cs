@@ -287,6 +287,8 @@
             this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
             this.checkupdatebutton.TabIndex = 10;
             this.checkupdatebutton.Text = "Check Update";
+            this.checkupdatebutton.Click += new System.EventHandler(this.checkupdatebutton_Click);
+
             //
             // EnhancedLauncher
             //

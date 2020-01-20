@@ -9175,10 +9175,6 @@ namespace Assistant
 
 		public void UpdateControlLocks()
 		{
-			// ENABLE IT ONLY FOR DEBUG
-			if (File.Exists(Path.Combine(Assistant.Engine.RootPath, "bypassnegotiate")))
-				return;
-
 			if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutolootAgent))
 			{
 				autoLootCheckBox.Enabled = false;
