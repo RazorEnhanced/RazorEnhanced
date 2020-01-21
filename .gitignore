@@ -32,3 +32,4 @@
 /bin/Win32/Release/CrashReporter.NET.dll.config
 /bin/Win32/Release/Razor.exe.config
 *~
+/bin/Win32/Debug
