@@ -137,6 +137,7 @@ namespace RazorEnhanced
 				}
 				catch { }
 			}
+			Thread.Sleep(250);
 		}
 
         private static System.Object autolootLock = new System.Object();

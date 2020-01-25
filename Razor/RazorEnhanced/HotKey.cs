@@ -931,7 +931,7 @@ namespace RazorEnhanced
 
 		private static void ProcessPet(string function)
 		{
-			
+
 			if (function == "Mount")
 			{
 				if (Filters.AutoRemountSerial != 0)
@@ -1120,7 +1120,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Potion Strenght":
+				case "Potion Strength":
 					if (pack != null)
 					{
 						if (!UseItemByIdHue(pack, 0x0F09, 0))
@@ -1362,7 +1362,7 @@ namespace RazorEnhanced
 					i = World.FindItem(World.Player.LastWeaponRight);
 					if (i != null)
 					{
-				 		Assistant.Client.Instance.SendToServer(new LiftRequest(i.Serial, i.Amount)); 
+				 		Assistant.Client.Instance.SendToServer(new LiftRequest(i.Serial, i.Amount));
 				 		Assistant.Client.Instance.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
 					}
 					break;

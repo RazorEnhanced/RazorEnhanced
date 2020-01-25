@@ -91,7 +91,7 @@ namespace RazorEnhanced.UI
 			"Night Sight",
 			"Mage Armor",
 			"Swing Speed Increase",
-			"Strenght Bonus",
+			"Strength Bonus",
 			"Water Elemental Slayer",
 			"Troll Slayer",
 			"Undead Slayer",

@@ -897,7 +897,7 @@ namespace RazorEnhanced
 			hotkey.Rows.Add(hotkeyrow);
 
 			hotkeyrow = hotkey.NewRow();
-			hotkeyrow.ItemArray = new object[] { "Potions", "Potion Strenght", Keys.None, true };
+			hotkeyrow.ItemArray = new object[] { "Potions", "Potion Strength", Keys.None, true };
 			hotkey.Rows.Add(hotkeyrow);
 
 			hotkeyrow = hotkey.NewRow();

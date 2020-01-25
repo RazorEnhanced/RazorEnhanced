@@ -91,7 +91,7 @@ namespace RazorEnhanced.UI
 			"Night Sight",
 			"Mage Armor",
 			"Swing Speed Increase",
-			"Strenght Bonus",
+			"Strength Bonus",
 			"Water Elemental Slayer",
 			"Troll Slayer",
 			"Undead Slayer",
@@ -135,7 +135,7 @@ namespace RazorEnhanced.UI
 			int itemid = 0;
 			if (m_graphics != "All")
 				itemid = Convert.ToInt32(m_graphics, 16);
-		
+
             if (m_color != "All")
 				color = Convert.ToInt32(m_color, 16);
 
