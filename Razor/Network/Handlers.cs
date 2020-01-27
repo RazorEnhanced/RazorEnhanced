@@ -16,7 +16,7 @@ namespace Assistant
 			//Client -> Server handlers
 			PacketHandler.RegisterClientToServerViewer(0x00, new PacketViewerCallback(CreateCharacter));
 			PacketHandler.RegisterClientToServerFilter(0x02, new PacketFilterCallback(MovementRequest));
-			PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));	
+			PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));
 			PacketHandler.RegisterClientToServerViewer(0x06, new PacketViewerCallback(ClientDoubleClick));
 			PacketHandler.RegisterClientToServerViewer(0x07, new PacketViewerCallback(LiftRequest));
 			PacketHandler.RegisterClientToServerViewer(0x08, new PacketViewerCallback(DropRequest));
@@ -59,6 +59,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
 			//PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
 			//PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
+			PacketHandler.RegisterServerToClientViewer(0x2C, new PacketViewerCallback(MyDeath));
 			PacketHandler.RegisterServerToClientViewer(0x2D, new PacketViewerCallback(MobileStatInfo));
 			PacketHandler.RegisterServerToClientFilter(0x2E, new PacketFilterCallback(EquipmentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
@@ -220,7 +221,20 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = !PlayerData.DoubleClick(ser, false);
 		}
+		private static void MyDeath(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (!RazorEnhanced.Settings.General.ReadBool("AutoCap"))
+				return;
+			byte deathType = p.ReadByte();
+			// 0x00 - Notify client of his death.
+			// 0x01 - Client has chosen to resurrect with penalties.
+			// 0x02 - Client has chosen to play as ghost.
+			if (deathType == 0x00)
+			{
+				ScreenCapManager.DeathCapture(3.0);
+			}
 
+		}
 		private static void DeathAnimation(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial killed = p.ReadUInt32();
@@ -235,7 +249,7 @@ namespace Assistant
 					(m.Body >= 0x029A && m.Body <= 0x029B)) &&  // Gargoyles
 					Utility.Distance(World.Player.Position, m.Position) <= 12)
 			{
-				ScreenCapManager.DeathCapture();
+				ScreenCapManager.DeathCapture(1.0);
 			}
 		}
 
@@ -477,7 +491,7 @@ namespace Assistant
 			string text = p.ReadStringSafe(textlenght);
 			RazorEnhanced.ScriptRecorder.Record_ResponseStringQuery(yesno, text);
 		}
-		
+
 		private static void LiftRequest(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial serial = p.ReadUInt32();
@@ -1030,7 +1044,7 @@ namespace Assistant
 		private static void LoginConfirm(PacketReader p, PacketHandlerEventArgs args)
 		{
 			World.Items.Clear();
-			World.Mobiles.Clear(); 
+			World.Mobiles.Clear();
 
 			if (Engine.ClientMajor >= 7)
 				UseNewStatus = true;
@@ -1089,7 +1103,7 @@ namespace Assistant
 				RazorEnhanced.Scavenger.LoginAutostart();
 			if (Engine.MainWindow.BandageHealAutostartCheckBox.Checked)
 				RazorEnhanced.BandageHeal.LoginAutostart();
-			
+
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
@@ -1639,7 +1653,7 @@ namespace Assistant
 			{
 				p = RazorEnhanced.Filters.GraphChangeBody(p, body, out bool block, out newcolor, out color);
 				if (block)
-				{ 
+				{
 					args.Block = true;
 					return;
 				}
@@ -1667,7 +1681,7 @@ namespace Assistant
 				Targeting.CheckTextFlags(m);
 
 			int ltHue = Engine.MainWindow.LTHilight;
-			
+
 
 			m.Body = body;
 
@@ -1734,14 +1748,14 @@ namespace Assistant
 					if (Engine.UseNewMobileIncoming || (num & 32768) != 0)
 					{
 						item.Hue = p.ReadUInt16();
-						
-						// Colorize item 
+
+						// Colorize item
 						p = RazorEnhanced.Filters.MobileIncomingItemColorize(p, m, true);
 					}
 					else
 					{
 						item.Hue = 0;
-						// Colorize item 
+						// Colorize item
 						RazorEnhanced.Filters.MobileIncomingItemColorize(p, m, false, item);
 					}
 					if ((item.Layer == Layer.Backpack & isNew) && m == World.Player && m != null)
@@ -1978,7 +1992,7 @@ namespace Assistant
 				}
 			}
 
-			Item.UpdateContainers(); 
+			Item.UpdateContainers();
 
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
@@ -2107,7 +2121,7 @@ namespace Assistant
 					}
 				}
 
-				// Filtro messsaggi poison 
+				// Filtro messsaggi poison
 				if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
 				{
 					if (Engine.MainWindow.FilterPoison.Checked)
@@ -2119,7 +2133,7 @@ namespace Assistant
 						}
 					}
 				}
-				// Filtro messsaggi poison "seems to have no effect" 
+				// Filtro messsaggi poison "seems to have no effect"
 				if (type == MessageType.Emote && hue == 946 && ser != World.Player.Serial)
 				{
 					if (Engine.MainWindow.FilterPoison.Checked)
@@ -2530,7 +2544,7 @@ namespace Assistant
 					{
 						ushort skillid = p.ReadUInt16();
 						byte action = p.ReadByte();
-						
+
 						if (Enum.IsDefined(typeof(SkillIcon), skillid))
 						{
 							SkillIcon skill = (SkillIcon)skillid;

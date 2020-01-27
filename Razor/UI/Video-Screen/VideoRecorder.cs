@@ -15,6 +15,7 @@ namespace Assistant
 		public void DisableRecorder()
 		{
 			videoTab.Enabled = Assistant.Engine.CDepPresent = false;
+			removeVideoTab();
 		}
 
 		private void videoFPSTextBox_TextChanged(object sender, EventArgs e)

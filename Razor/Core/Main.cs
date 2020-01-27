@@ -178,7 +178,7 @@ namespace Assistant
 
 		public static MainForm MainWnd;
 		private static Form m_ActiveWnd;
-		private static bool m_cdeppresent = false;
+		private static bool m_cdeppresent = true;
 		private static int m_ToolBarX;
 		private static int m_ToolBarY;
 		private static int m_GridX;

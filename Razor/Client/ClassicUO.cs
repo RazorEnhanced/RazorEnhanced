@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using Assistant;
+using Assistant.UI;
 using System.Linq;
 
 // For CUO Settings
@@ -114,7 +115,6 @@ namespace Assistant
         static ClassicUOClient()
         {
             Client.IsOSI = false;
-
         }
 
         public override void SetMapWndHandle(Form mapWnd)
@@ -219,6 +219,9 @@ namespace Assistant
         internal static void RunTheUI()
         {
             Engine.MainWnd = new MainForm();
+            if (! IsOSI) {
+                Engine.MainWindow.SafeAction(s => { s.DisableRecorder(); });
+            }
             Application.Run(Engine.MainWnd);
         }
         public override void RunUI()

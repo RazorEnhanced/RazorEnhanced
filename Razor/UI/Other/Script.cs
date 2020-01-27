@@ -148,7 +148,7 @@ namespace Assistant
 		}
 		private void ScriptGridMoveDown()
 		{
-			if (sorted) // No move script index if user have place some different ordering 
+			if (sorted) // No move script index if user have place some different ordering
 				return;
 
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
@@ -174,7 +174,7 @@ namespace Assistant
 
 		private void ScriptGridMoveUp()
 		{
-			if (sorted) // No move script index if user have place some different ordering 
+			if (sorted) // No move script index if user have place some different ordering
 				return;
 
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
@@ -541,6 +541,7 @@ namespace Assistant
 			else
 				scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
 
+			//ReloadScriptTable();
 			Settings.Save();
 		}
 
@@ -576,7 +577,8 @@ namespace Assistant
 			else
 				scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
 
-			Settings.Save();
+			ReloadScriptTable();
+			//Settings.Save();
 		}
 
 		private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)
@@ -611,7 +613,8 @@ namespace Assistant
 			else
 				scriptlistView.SelectedItems[0].SubItems[5].Text = "No";
 
-			Settings.Save();
+			ReloadScriptTable();
+			//Settings.Save();
 		}
 
 		private void scriptwaitmodecheckbox_CheckedChanged(object sender, EventArgs e)

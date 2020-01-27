@@ -1566,7 +1566,7 @@ namespace Assistant
             this.paypalButton.BackColor = System.Drawing.SystemColors.Control;
             this.paypalButton.BackgroundImage = global::Assistant.Properties.Resources.PayPal;
             this.paypalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.paypalButton.Enabled = false;
+            this.paypalButton.Enabled = true;
             this.paypalButton.FlatAppearance.BorderSize = 0;
             this.paypalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.paypalButton.Location = new System.Drawing.Point(542, 53);
@@ -8925,7 +8925,12 @@ namespace Assistant
 			m_Initializing = false;
 		}
 
-		private void tabs_IndexChanged(object sender, System.EventArgs e)
+        public void removeVideoTab()
+        {
+            this.tabs.Controls.Remove(this.videoTab);
+        }
+
+        private void tabs_IndexChanged(object sender, System.EventArgs e)
 		{
 			if (tabs == null)
 				return;
@@ -8949,14 +8954,14 @@ namespace Assistant
 			{
 				if (!tabs.SelectedTab.Enabled)
 				{
-					DialogResult dialogResult = MessageBox.Show("Microsoft Visual C++ 2015 Redistributable is not installed, is necessary for prevent crash or missing function, Want open offical download site?", "Missing Dependency", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-					if (dialogResult == DialogResult.Yes)
-					{
-						if (Environment.Is64BitOperatingSystem)
-							System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe");
-						else
-							System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x86.exe");
-					}
+					//DialogResult dialogResult = MessageBox.Show("Microsoft Visual C++ 2015 Redistributable is not installed, is necessary for prevent crash or missing function, Want open offical download site?", "Missing Dependency", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					//if (dialogResult == DialogResult.Yes)
+					//{
+					//	if (Environment.Is64BitOperatingSystem)
+					//		System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe");
+					//	else
+					//		System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x86.exe");
+					//}
 
 				}
 				else

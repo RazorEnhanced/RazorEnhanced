@@ -237,7 +237,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsFriend =
 			{
-				"Friend.IsFriend", "Friend.ChangeList", "Friend.GetList"
+				"Friend.IsFriend", "Friend.ChangeList", "Friend.GetList", "Friend.AddPlayer"
 			};
 
 			string[] methodsBandageHeal =
@@ -816,7 +816,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Target.GetTargetFromList(string)", new string[] { "string TargetFilterName" }, "Mobile", "Get Mobile object from GUI Filter selector\n\tIf no mobile found return null");
 			descriptionTarget.Add("Target.GetTargetFromList", tooltip);
 
-			#endregion
+			#endregion																											   IsFriend
 
 			#region Description Gumps
 
@@ -1055,6 +1055,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Friend.GetList(string)", new string[] { "string ListName" }, "<list> int", "Retrive list of serial in list, List must be exist in friend list GUI configuration");
 			descriptionFriend.Add("Friend.GetList", tooltip);
+
+			tooltip = new ToolTipDescriptions("Friend.AddPlayer(string, string, int)", new string[] { "string ListName, string PlayerName, int PlayerSerial" }, "void", "Add a player to the friends list as if added manually");
+			descriptionFriend.Add("Friend.AddPlayer", tooltip);
 
 			#endregion
 
@@ -1810,9 +1813,9 @@ namespace RazorEnhanced.UI
 		}
 
 		private void SaveAs()
-		{									
+		{
 			SaveFileDialog save = new SaveFileDialog
-			{				
+			{
 				Filter = "Script Files|*.py|Script Files|*.txt",
 				RestoreDirectory = true
 			};
