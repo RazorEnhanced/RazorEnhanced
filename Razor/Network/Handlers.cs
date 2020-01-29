@@ -2577,7 +2577,9 @@ namespace Assistant
 
 		private static void RunUOProtocolExtention(PacketReader p, PacketHandlerEventArgs args)
 		{
-			args.Block = true;
+			// Only block this packet if they are using the OSI client
+			// since ClassicUO actually has support for it now
+			args.Block = Client.IsOSI;
 
 			switch (p.ReadByte())
 			{
@@ -2607,8 +2609,14 @@ namespace Assistant
 							if (!m_Party.Contains(serial))
 								m_Party.Add(serial);
 
-							mobile.Position = map == World.Player.Map ? new Point3D(x, y, mobile.Position.Z) : Point3D.Zero;
+							if (map == World.Player.Map)
+								mobile.Position = new Point3D(x, y, mobile.Position.Z);
+							else
+								mobile.Position = Point3D.Zero;
+
 						}
+						//if (Engine.MainWindow.MapWindow != null)
+						//	Engine.MainWindow.SafeAction(s => s.MapWindow.UpdateMap());
 
 						break;
 					}
