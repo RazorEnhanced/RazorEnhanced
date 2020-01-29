@@ -353,8 +353,29 @@ namespace Assistant
             SDLK_RALT = 1073742054,
         }
 
-        private bool OnHotKeyHandler(int key, int mod, bool ispressed)
+        // Weird situation where CUO was passing in a wrong value
+        // for oem keys.
+        // so, I special case those, check if down, and return appropriate
+        // code
+        internal int checkForOmeKeys(int key)
         {
+            Keys[] oemKeys = {Keys.Oem1, Keys.Oem102, Keys.Oem2,
+            Keys.Oem3, Keys.Oem4, Keys.Oem5, Keys.Oem6, Keys.Oem7, Keys.Oem8,
+            Keys.OemBackslash, Keys.OemClear, Keys.OemCloseBrackets,
+            Keys.Oemcomma, Keys.OemMinus, Keys.OemOpenBrackets,
+            Keys.OemPeriod, Keys.OemPipe, Keys.Oemplus, Keys.OemQuestion,
+            Keys.OemQuotes, Keys.OemSemicolon, Keys.Oemtilde };
+            foreach (var oemKey in oemKeys)
+            {
+                if ((Platform.GetAsyncKeyState((int)oemKey) & 0xFF00) != 0)
+                    return (int)oemKey;
+            }
+            return key;
+        }
+
+        private bool OnHotKeyHandler(int inkey, int mod, bool ispressed)
+        {
+            int key = checkForOmeKeys(inkey);
             if (ispressed && !Enum.IsDefined(typeof(SDL_Keycode_Ignore), key))
             {
                 RazorEnhanced.ModKeys cur = RazorEnhanced.ModKeys.None;
