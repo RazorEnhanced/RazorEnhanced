@@ -9093,9 +9093,7 @@ namespace Assistant
 
 		internal void ShowMe()
 		{
-			// Fuck windows, seriously.
-
-			DLLImport.Razor.BringToFront(this.Handle);
+		        Client.BringToFront(this.Handle);
 			if (RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop"))
 				this.TopMost = true;
 			if (WindowState != FormWindowState.Normal)

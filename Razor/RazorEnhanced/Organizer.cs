@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -71,7 +72,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static string OrganizerListName 
+		internal static string OrganizerListName
 		{
 			get { return m_organizerlist; }
 			set { m_organizerlist = value; }
@@ -84,7 +85,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_dragdelay = value;
-				Assistant.Engine.MainWindow.OrganizerDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerDragDelay.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerDragDelay.Text = value.ToString());
 			}
 		}
 
@@ -95,7 +96,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_sorucebag = value;
-				Assistant.Engine.MainWindow.OrganizerSourceLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerSourceLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerSourceLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -106,7 +107,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_destinationbag = value;
-				Assistant.Engine.MainWindow.OrganizerDestinationLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerDestinationLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerDestinationLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -115,16 +116,16 @@ namespace RazorEnhanced
 			if (!Client.Running)
 				return;
 
-			Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.SelectedIndex = Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count - 1));
+			Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.Items.Add(addlog));
+			Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.SelectedIndex = s.OrganizerLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Clear()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.Items.Clear());
 		}
 
 		internal static void RefreshLists()
 		{
 			List<OrganizerList> lists = Settings.Organizer.ListsRead();
-	
+
 			OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
 				return;
@@ -403,36 +404,36 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public static void ChangeList(string nomelista)
+		public static void ChangeList(string listName)
 		{
-			if (!UpdateListParam(nomelista))
+			if (!UpdateListParam(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Organizer.ChangeList: Organizer list: " + listName + " not exist");
 			}
 			else
 			{
-				if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
+				if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop change list e restart
 				{
-					Assistant.Engine.MainWindow.OrganizerStop.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerStop.PerformClick()));
-					Assistant.Engine.MainWindow.OrganizerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.OrganizerExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerExecute.PerformClick()));
+					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerStop.PerformClick());
+					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerExecute.PerformClick());
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.OrganizerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerListSelect.SelectedIndex = s.OrganizerListSelect.Items.IndexOf(listName));  // change list
 				}
 			}
 		}
 
-		internal static bool UpdateListParam(string nomelista)
+		internal static bool UpdateListParam(string listName)
 		{
-			if (Settings.Organizer.ListExists(nomelista))
+			if (Settings.Organizer.ListExists(listName))
 			{
-				Settings.Organizer.ListDetailsRead(nomelista, out int bagsource, out int bagdestination, out int delay);
+				Settings.Organizer.ListDetailsRead(listName, out int bagsource, out int bagdestination, out int delay);
 				OrganizerDelay = delay;
 				OrganizerSource = bagsource;
 				OrganizerDestination = bagdestination;
-				OrganizerListName = nomelista;
+				OrganizerListName = listName;
 				return true;
 			}
 			return false;

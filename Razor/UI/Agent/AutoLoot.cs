@@ -90,7 +90,7 @@ namespace Assistant
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString(), false);
 				RazorEnhanced.AutoLoot.AddLog("Autoloot item added: " + autoLootItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
+				this.Invoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 			}
 			else
 			{
@@ -120,7 +120,7 @@ namespace Assistant
 
 		private void autoLootEnable_CheckedChanged(object sender, EventArgs e)
 		{
-			if (World.Player == null)  // offline 
+			if (World.Player == null)  // offline
 			{
 				if (autoLootCheckBox.Checked)
 				{

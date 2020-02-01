@@ -8,7 +8,7 @@
 //
 //  Email: pavel_torgashov@ukr.net
 //
-//  Copyright (C) Pavel Torgashov, 2011-2016. 
+//  Copyright (C) Pavel Torgashov, 2011-2016.
 
 // #define debug
 
@@ -125,7 +125,7 @@ namespace FastColoredTextBoxNS
         private int reservedCountOfLineNumberChars = 1;
         private int zoom = 100;
         private Size localAutoScrollMinSize;
- 
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -236,7 +236,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Colors of some service visual markers
         /// </summary>
-        [Browsable(true)] 
+        [Browsable(true)]
         [Description("Colors of some service visual markers.")]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public ServiceColors ServiceColors { get; set; }
@@ -255,7 +255,7 @@ namespace FastColoredTextBoxNS
         [DefaultValue(typeof(BracketsHighlightStrategy), "Strategy1")]
         [Description("Strategy of search of brackets to highlighting.")]
         public BracketsHighlightStrategy BracketsHighlightStrategy { get; set; }
-        
+
         /// <summary>
         /// Automatically shifts secondary wordwrap lines on the shift amount of the first line
         /// </summary>
@@ -585,7 +585,7 @@ namespace FastColoredTextBoxNS
         [Browsable(false)]
         public Rectangle TextAreaRect
         {
-            get 
+            get
             {
                 int rightPaddingStartX = LeftIndent + maxLineLength * CharWidth + Paddings.Left + 1;
                 rightPaddingStartX = Math.Max(ClientSize.Width - Paddings.Right, rightPaddingStartX);
@@ -805,7 +805,7 @@ namespace FastColoredTextBoxNS
         [Description("Here you can change hotkeys for FastColoredTextBox.")]
         [Editor(typeof(HotkeysEditor), typeof(UITypeEditor))]
         [DefaultValue("Tab=IndentIncrease, Escape=ClearHints, PgUp=GoPageUp, PgDn=GoPageDown, End=GoEnd, Home=GoHome, Left=GoLeft, Up=GoUp, Right=GoRight, Down=GoDown, Ins=ReplaceMode, Del=DeleteCharRight, F3=FindNext, Shift+Tab=IndentDecrease, Shift+PgUp=GoPageUpWithSelection, Shift+PgDn=GoPageDownWithSelection, Shift+End=GoEndWithSelection, Shift+Home=GoHomeWithSelection, Shift+Left=GoLeftWithSelection, Shift+Up=GoUpWithSelection, Shift+Right=GoRightWithSelection, Shift+Down=GoDownWithSelection, Shift+Ins=Paste, Shift+Del=Cut, Ctrl+Back=ClearWordLeft, Ctrl+Space=AutocompleteMenu, Ctrl+End=GoLastLine, Ctrl+Home=GoFirstLine, Ctrl+Left=GoWordLeft, Ctrl+Up=ScrollUp, Ctrl+Right=GoWordRight, Ctrl+Down=ScrollDown, Ctrl+Ins=Copy, Ctrl+Del=ClearWordRight, Ctrl+0=ZoomNormal, Ctrl+A=SelectAll, Ctrl+B=BookmarkLine, Ctrl+C=Copy, Ctrl+E=MacroExecute, Ctrl+F=FindDialog, Ctrl+G=GoToDialog, Ctrl+H=ReplaceDialog, Ctrl+I=AutoIndentChars, Ctrl+M=MacroRecord, Ctrl+N=GoNextBookmark, Ctrl+R=Redo, Ctrl+U=UpperCase, Ctrl+V=Paste, Ctrl+X=Cut, Ctrl+Z=Undo, Ctrl+Add=ZoomIn, Ctrl+Subtract=ZoomOut, Ctrl+OemMinus=NavigateBackward, Ctrl+Shift+End=GoLastLineWithSelection, Ctrl+Shift+Home=GoFirstLineWithSelection, Ctrl+Shift+Left=GoWordLeftWithSelection, Ctrl+Shift+Right=GoWordRightWithSelection, Ctrl+Shift+B=UnbookmarkLine, Ctrl+Shift+C=CommentSelected, Ctrl+Shift+N=GoPrevBookmark, Ctrl+Shift+U=LowerCase, Ctrl+Shift+OemMinus=NavigateForward, Alt+Back=Undo, Alt+Up=MoveSelectedLinesUp, Alt+Down=MoveSelectedLinesDown, Alt+F=FindChar, Alt+Shift+Left=GoLeft_ColumnSelectionMode, Alt+Shift+Up=GoUp_ColumnSelectionMode, Alt+Shift+Right=GoRight_ColumnSelectionMode, Alt+Shift+Down=GoDown_ColumnSelectionMode")]
-        public string Hotkeys { 
+        public string Hotkeys {
             get { return HotkeysMapping.ToString(); }
             set { HotkeysMapping = HotkeysMapping.Parse(value); }
         }
@@ -910,7 +910,7 @@ namespace FastColoredTextBoxNS
         {
             get
             {
-                return isReplaceMode && 
+                return isReplaceMode &&
                        Selection.IsEmpty &&
                        (!Selection.ColumnSelectionMode) &&
                        Selection.Start.iChar < lines[Selection.Start.iLine].Count;
@@ -932,8 +932,8 @@ namespace FastColoredTextBoxNS
         [Browsable(true)]
         [DefaultValue(true)]
         [Description("Allows to record macros.")]
-        public bool AllowMacroRecording 
-        { 
+        public bool AllowMacroRecording
+        {
             get { return macrosManager.AllowMacroRecordingByUser; }
             set { macrosManager.AllowMacroRecordingByUser = value; }
         }
@@ -1804,7 +1804,7 @@ namespace FastColoredTextBoxNS
         public new void Invalidate()
         {
             if (InvokeRequired)
-                BeginInvoke(new MethodInvoker(Invalidate));
+                Invoke(new MethodInvoker(Invalidate));
             else
                 base.Invalidate();
         }
@@ -1869,8 +1869,8 @@ namespace FastColoredTextBoxNS
         public event EventHandler VisibleRangeChanged;
 
         /// <summary>
-        /// TextChangedDelayed event. 
-        /// It occurs after insert, delete, clear, undo and redo operations. 
+        /// TextChangedDelayed event.
+        /// It occurs after insert, delete, clear, undo and redo operations.
         /// This event occurs with a delay relative to TextChanged, and fires only once.
         /// </summary>
         [Browsable(true)]
@@ -2164,7 +2164,7 @@ namespace FastColoredTextBoxNS
             }
             LineInfos.InsertRange(e.Index, temp);
 
-            /* 
+            /*
             for (int i = 0; i < e.Count; i++)
             {
                 LineInfos.Add(new LineInfo(-1) { VisibleState = newState });//<---- needed Insert
@@ -2317,7 +2317,7 @@ namespace FastColoredTextBoxNS
         {
             if(InvokeRequired)
             {
-                BeginInvoke(new MethodInvoker(()=>ResetTimer(timer)));
+                Invoke(new MethodInvoker(()=>ResetTimer(timer)));
                 return;
             }
             timer.Stop();
@@ -2355,9 +2355,9 @@ namespace FastColoredTextBoxNS
         }
 
         /// <summary>
-        /// Checks if the styles buffer has enough space to add one 
-        /// more element. If not, an exception is thrown. Otherwise, 
-        /// the index of a free slot is returned. 
+        /// Checks if the styles buffer has enough space to add one
+        /// more element. If not, an exception is thrown. Otherwise,
+        /// the index of a free slot is returned.
         /// </summary>
         /// <returns>Index of free styles buffer slot</returns>
         /// <exception cref="Exception">If maximum count of styles is exceeded</exception>
@@ -2903,7 +2903,7 @@ namespace FastColoredTextBoxNS
             if (m.Msg == WM_HSCROLL || m.Msg == WM_VSCROLL)
                 if (m.WParam.ToInt32() != SB_ENDSCROLL)
                     Invalidate();
-            
+
             base.WndProc(ref m);
 
             if (ImeAllowed)
@@ -3085,7 +3085,7 @@ namespace FastColoredTextBoxNS
             //adjust AutoScrollMinSize
             int minWidth;
             CalcMinAutosizeWidth(out minWidth, ref maxLineLength);
-            
+
             AutoScrollMinSize = new Size(minWidth, TextHeight + Paddings.Top + Paddings.Bottom);
             UpdateScrollbars();
 #if debug
@@ -3251,7 +3251,7 @@ namespace FastColoredTextBoxNS
                         cutOff = i;
                     }
                     else
-                    if (!char.IsLetterOrDigit(c) && c != '_' && c != '\'' && c != '\xa0' 
+                    if (!char.IsLetterOrDigit(c) && c != '_' && c != '\'' && c != '\xa0'
                         && ((c != '.' && c!= ',') || !char.IsDigit(line[i + 1].c)))//dot before digit
                         cutOff = Math.Min(i + 1, line.Count - 1);
                 }
@@ -3374,11 +3374,11 @@ namespace FastColoredTextBoxNS
                 PerformLayout();
 
             if(IsHandleCreated)
-                BeginInvoke((MethodInvoker)OnScrollbarsUpdated);
+                Invoke((MethodInvoker)OnScrollbarsUpdated);
         }
 
         protected virtual void OnScrollbarsUpdated()
-        {           
+        {
             if (ScrollbarsUpdated != null)
                 ScrollbarsUpdated(this, EventArgs.Empty);
         }
@@ -3490,7 +3490,7 @@ namespace FastColoredTextBoxNS
 
             base.OnKeyDown(e);
 
-            if (Focused)//??? 
+            if (Focused)//???
                 lastModifiers = e.Modifiers;
 
             handledChar = false;
@@ -4332,7 +4332,7 @@ namespace FastColoredTextBoxNS
                 OnKeyPressed('\b');
                 return true;
             }
- 
+
             /* !!!!
             if (c == '\b' && (modifiers & Keys.Alt) != 0)
                 return true;*/
@@ -4406,7 +4406,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Regex patterns for AutoIndentChars (one regex per line)
         /// </summary>
-        [Description("Regex patterns for AutoIndentChars (one regex per line)")] 
+        [Description("Regex patterns for AutoIndentChars (one regex per line)")]
         [Editor( "System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" , typeof(UITypeEditor))]
         [DefaultValue(@"^\s*[\w\.]+\s*(?<range>=)\s*(?<range>[^;]+);")]
         public string AutoIndentCharsPatterns { get; set; }
@@ -4533,7 +4533,7 @@ namespace FastColoredTextBoxNS
                         texts[i] = texts[i].Insert(cap.Index, new string(' ', addSpaces));
                     else
                         texts[i] = texts[i].Remove(cap.Index + addSpaces, -addSpaces);
-                    
+
                     changed[i] = true;
                     was = true;
                 }
@@ -4922,7 +4922,7 @@ namespace FastColoredTextBoxNS
                 for (int iWordWrapLine = 0; iWordWrapLine < lineInfo.WordWrapStringsCount; iWordWrapLine++)
                 {
                     y = lineInfo.startY + iWordWrapLine * CharHeight - startY;
-                    //indent 
+                    //indent
                     var indent = iWordWrapLine == 0 ? 0 : lineInfo.wordWrapIndent * CharWidth;
                     //draw chars
                     DrawLineChars(gr, firstChar, lastChar, iLine, iWordWrapLine, -startX + indent, y);
@@ -5658,7 +5658,7 @@ namespace FastColoredTextBoxNS
         /// Zooming (in percentages)
         /// </summary>
         [Browsable(false)]
-        public int Zoom 
+        public int Zoom
         {
             get { return zoom; }
             set {
@@ -7239,9 +7239,9 @@ namespace FastColoredTextBoxNS
         private void InitializeComponent()
         {
             SuspendLayout();
-            // 
+            //
             // FastColoredTextBox
-            // 
+            //
             Name = "FastColoredTextBox";
             ResumeLayout(false);
         }
@@ -7998,7 +7998,7 @@ window.status = ""#print"";
                 middleClickScrollingTimer.Interval = 50;
                 middleClickScrollingTimer.Enabled = true;
                 Capture = true;
-                // Refresh the control 
+                // Refresh the control
                 Refresh();
                 // Disable drawing
                 SendMessage(Handle, WM_SETREDRAW, 0, 0);
@@ -8127,7 +8127,7 @@ window.status = ""#print"";
 
             // Enable drawing
             SendMessage(Handle, WM_SETREDRAW, 1, 0);
-            // Refresh the control 
+            // Refresh the control
             Refresh();
             // Disable drawing
             SendMessage(Handle, WM_SETREDRAW, 0, 0);

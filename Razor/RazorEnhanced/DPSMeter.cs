@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Windows.Forms;
@@ -92,17 +93,17 @@ namespace RazorEnhanced
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterStartB.Enabled)
-				Assistant.Engine.MainWindow.DPSMeterStartB.Invoke(new Action(() => Assistant.Engine.MainWindow.DPSMeterStartB.PerformClick()));
+				Engine.MainWindow.SafeAction(s => s.DPSMeterStartB.PerformClick());
 		}
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterStopB.Enabled)
-				Assistant.Engine.MainWindow.DPSMeterStopB.Invoke(new Action(() => Assistant.Engine.MainWindow.DPSMeterStopB.PerformClick()));
+				Engine.MainWindow.SafeAction(s => s.DPSMeterStopB.PerformClick());
 		}
 		public static void Pause()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterPauseB.Enabled)
-				Assistant.Engine.MainWindow.DPSMeterPauseB.Invoke(new Action(() => Assistant.Engine.MainWindow.DPSMeterPauseB.PerformClick()));
+				Engine.MainWindow.SafeAction(s => s.DPSMeterPauseB.PerformClick());
 		}
 
 		public static int GetDamage(int serial)

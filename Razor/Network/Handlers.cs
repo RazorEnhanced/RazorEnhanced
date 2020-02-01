@@ -1081,7 +1081,8 @@ namespace Assistant
 			string profilename = RazorEnhanced.Profiles.IsLinked(serial);
 			if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
 			{
-				RazorEnhanced.Profiles.ProfileChange(profilename);
+				//RazorEnhanced.Profiles.ProfileChange(profilename);
+				Engine.MainWindow.SafeAction(s => RazorEnhanced.Profiles.ProfileChange(profilename));
 				Engine.MainWindow.SafeAction(s => s.ProfilesComboBox.SelectedIndex = s.ProfilesComboBox.FindString(profilename));
 			}
 

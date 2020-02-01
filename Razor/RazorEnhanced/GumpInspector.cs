@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System;
 using System.Collections.Generic;
 
@@ -89,8 +90,8 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Invoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Add(addlog)));
-			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Invoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.SelectedIndex = RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Count - 1));
+			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginInvoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Add(addlog)));
+			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginInvoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.SelectedIndex = RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Count - 1));
 		}
 	}
 }

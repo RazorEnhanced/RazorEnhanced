@@ -87,7 +87,7 @@ namespace Assistant
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("Buy Agent item added: " + buyItem.ToString(), false);
 				BuyAgent.AddLog("Buy Agent item added: " + buyItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
+				this.Invoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
 			}
 			else
 			{
@@ -99,7 +99,7 @@ namespace Assistant
 
 		private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
 		{
-			if (World.Player == null)  // offline 
+			if (World.Player == null)  // offline
 			{
 				buyEnableCheckBox.Checked = false;
 				BuyAgent.AddLog("You are not logged in game!");

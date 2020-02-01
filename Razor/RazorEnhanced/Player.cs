@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -932,7 +933,7 @@ namespace RazorEnhanced
 
 		public static void EquipUO3D(List<int> serials)
 		{
-			List<uint> serialstoequip = new List<uint>(); 
+			List<uint> serialstoequip = new List<uint>();
 			foreach (int serial in serials)
 				serialstoequip.Add((uint)serial);
 
@@ -946,7 +947,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: CheckLayer: "+ layer +" not valid");
 				return false;
 			}
-			
+
 			Assistant.Item item = World.Player.GetItemOnLayer(l);
 
 			if (item != null)
@@ -1044,7 +1045,7 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToServer(new SetSkillLock(World.Player.Skills[(int)skill].Index, t));
 
 			World.Player.Skills[(int)skill].Lock = t;
-			Engine.MainWindow.Invoke(new Action(() => Engine.MainWindow.UpdateSkill(World.Player.Skills[(int)skill])));
+			Engine.MainWindow.SafeAction(s => s.UpdateSkill(World.Player.Skills[(int)skill]));
 
 	 		Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
 		}
@@ -1069,7 +1070,7 @@ namespace RazorEnhanced
 			{
 				if (!World.Player.Visible) // Trigger stealth step counter
 					StealthSteps.Hide();
-			}		
+			}
 		}
 		// Map Message
 		public static void MapSay(int num)
@@ -1166,7 +1167,7 @@ namespace RazorEnhanced
 		{
 	 		Assistant.Client.Instance.SendToServerWait(new ChatAction(0x61, Language.CliLocName, msg));
 		}
-		
+
 		// attack
 		public static void SetWarMode(bool warflag)
 		{
@@ -1195,7 +1196,7 @@ namespace RazorEnhanced
 		{
 			if (Targeting.LastAttack == 0) // Nessun last attack presente
 				return;
-			
+
 			if (World.FindMobile(Targeting.LastAttack) == null) // Mob non piu esistente
 				return;
 
@@ -1441,7 +1442,7 @@ namespace RazorEnhanced
 			SpecialMoves.OnStun(true);
 		}
 
-		// Props 
+		// Props
 
 		public static List<string> GetPropStringList()
 		{

@@ -90,11 +90,6 @@ namespace RazorEnhanced
 			Debug.WriteLine("GKD keys: 0x{0:X}", k);
 			return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
 		}
-		//System.Windows.Forms.Control _threadControl = new System.Windows.Forms.Control();
-		//_threadControl.Invoke((MethodInvoker)delegate
-		//	{
-		//		KeyDown(k);
-	    // });
 
 		internal static bool KeyDown(Keys k)
 		{

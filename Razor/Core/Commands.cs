@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Net.NetworkInformation;
 using RazorEnhanced.UI;
+using Assistant.UI;
 
 namespace Assistant
 {
@@ -61,7 +62,7 @@ namespace Assistant
 		{
 			if (loc) // Target on ground or static
 			{
-				Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
+				Engine.MainWindow.SafeAction(s =>
 				{
 					RazorEnhanced.UI.EnhancedStaticInspector inspector = new RazorEnhanced.UI.EnhancedStaticInspector(pt);
 					inspector.TopMost = true;
@@ -73,7 +74,7 @@ namespace Assistant
 				Assistant.Item assistantItem = Assistant.World.FindItem(serial);
 				if (assistantItem != null && assistantItem.Serial.IsItem)
 				{
-					Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
+					Engine.MainWindow.SafeAction(s =>
 					{
 						RazorEnhanced.UI.EnhancedItemInspector inspector = new RazorEnhanced.UI.EnhancedItemInspector(assistantItem);
 						inspector.TopMost = true;
@@ -85,8 +86,7 @@ namespace Assistant
 					Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
 					if (assistantMobile != null && assistantMobile.Serial.IsMobile)
 					{
-						Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
-						{
+						Assistant.Engine.MainWindow.SafeAction(s => {
 							RazorEnhanced.UI.EnhancedMobileInspector inspector = new RazorEnhanced.UI.EnhancedMobileInspector(assistantMobile);
 							inspector.TopMost = true;
 							inspector.Show();

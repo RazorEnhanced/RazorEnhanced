@@ -122,7 +122,7 @@ namespace Assistant
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate {
+			this.Invoke((MethodInvoker)delegate {
 				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
 				RazorEnhanced.Dress.RefreshLists();
 			});
@@ -173,7 +173,7 @@ namespace Assistant
 		{
 			Assistant.Item dressItem = Assistant.World.FindItem(serial);
 			if (dressItem != null && dressItem.Serial.IsItem)
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Dress.AddItemByTarger(dressItem); });
+				this.Invoke((MethodInvoker)delegate { RazorEnhanced.Dress.AddItemByTarger(dressItem); });
 			else
 			{
 				if (showagentmessageCheckBox.Checked)

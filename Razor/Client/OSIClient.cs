@@ -447,6 +447,9 @@ namespace Assistant
 
 		}
 
+		[DllImport("user32.dll")]
+		static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
 		public override bool OnMessage(MainForm razor, uint wParam, int lParam)
 		{
 			bool retVal = true;
@@ -462,8 +465,8 @@ namespace Assistant
 							StringBuilder sb = new StringBuilder(256);
 							if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
 								return false;
-							DLLImport.Razor.BringToFront(Assistant.Client.Instance.GetWindowHandle());
-							//PacketPlayer.Open(sb.ToString());
+
+							BringToFront(Assistant.Client.Instance.GetWindowHandle());
 							Engine.MainWindow.ShowMe();
 						}
 						break;

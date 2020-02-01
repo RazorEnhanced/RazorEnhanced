@@ -83,7 +83,7 @@ namespace Assistant
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString(), false);
 				RazorEnhanced.SellAgent.AddLog("Sell Agent item added: " + sellItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
+				this.Invoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
 			}
 			else
 			{
@@ -95,7 +95,7 @@ namespace Assistant
 
 		private void sellEnableCheck_CheckedChanged(object sender, EventArgs e)
 		{
-			if (World.Player == null)  // offline 
+			if (World.Player == null)  // offline
 			{
 				if (sellEnableCheckBox.Checked)
 				{
@@ -196,7 +196,7 @@ namespace Assistant
 				SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate {
+			this.Invoke((MethodInvoker)delegate {
 				RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true);
 				RazorEnhanced.SellAgent.RefreshLists();
 			});

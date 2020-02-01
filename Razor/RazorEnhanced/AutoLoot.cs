@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -17,7 +18,7 @@ namespace RazorEnhanced
 
 	};
 
-	public class AutoLoot 
+	public class AutoLoot
 	{
 		private static int m_lootdelay;
 		private static int m_maxrange;
@@ -145,7 +146,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_maxrange = value;
-				Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootTextBoxMaxRange.Text = value.ToString());
 			}
 		}
 
@@ -156,7 +157,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_lootdelay = value;
-				Assistant.Engine.MainWindow.AutolootLabelDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootLabelDelay.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutolootLabelDelay.Text = value.ToString());
 			}
 		}
 
@@ -167,7 +168,8 @@ namespace RazorEnhanced
 			set
 			{
 				m_autolootbag = value;
-				Assistant.Engine.MainWindow.AutoLootContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootContainerLabel.Text = "0x" + value.ToString("X8"));
+
 			}
 		}
 
@@ -178,7 +180,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_noopencorpse = value;
-				Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Checked = value));
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootNoOpenCheckBox.Checked = value);
 			}
 		}
 
@@ -187,10 +189,10 @@ namespace RazorEnhanced
 			if (!Client.Running)
 				return;
 
-			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
+			Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootLogBox.Items.Add(addlog));
+			Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootLogBox.SelectedIndex = s.AutoLootLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootLogBox.Items.Clear());
 		}
 
 		internal static void RefreshLists()
@@ -531,7 +533,9 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
 			else
-				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
+			{
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = true);
+			}
 		}
 
 		public static void Stop()
@@ -539,7 +543,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
 				Scripts.SendMessageScriptError("Script Error: Autoloot.Stop: Autoloot already sleeping");
 			else
-				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
+				Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = false);
 		}
 
 		public static bool Status()
@@ -547,37 +551,37 @@ namespace RazorEnhanced
 			return Assistant.Engine.MainWindow.AutolootCheckBox.Checked;
 		}
 
-		public static void ChangeList(string nomelista)
+		public static void ChangeList(string listName)
 		{
-			if (!UpdateListParam(nomelista))
+			if (!UpdateListParam(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Autoloot.ChangeList: Autoloot list: " + listName + " not exist");
 			}
 			else
 			{
-				m_autolootlist = nomelista;
-				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+				m_autolootlist = listName;
+				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // If it is running force stop list change and restart
 				{
-					Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
-					Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
+					Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = false);
+					Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootListSelect.SelectedIndex = s.AutoLootListSelect.Items.IndexOf(listName)); // Change list
+					Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = true);
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootListSelect.SelectedIndex = s.AutoLootListSelect.Items.IndexOf(listName));  // Change List
 				}
 			}
 		}
 
-		internal static bool UpdateListParam(string nomelista)
+		internal static bool UpdateListParam(string listName)
 		{
-			if (Settings.AutoLoot.ListExists(nomelista))
+			if (Settings.AutoLoot.ListExists(listName))
 			{
-				Settings.AutoLoot.ListDetailsRead(nomelista, out int bag, out int delay, out bool noopen, out int range);
+				Settings.AutoLoot.ListDetailsRead(listName, out int bag, out int delay, out bool noopen, out int range);
 				AutoLoot.AutoLootBag = bag;
 				AutoLoot.AutoLootDelay = delay;
 				AutoLoot.MaxRange = range;
-				AutoLoot.ListName = nomelista;
+				AutoLoot.ListName = listName;
 				AutoLoot.NoOpenCorpse = noopen;
 				return true;
 			}

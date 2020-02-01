@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Media;
@@ -482,7 +483,7 @@ namespace RazorEnhanced
 		// Lock stealth run
 		public static void NoRunStealthToggle(bool enable)
 		{
-				Engine.MainWindow.ChkNoRunStealth.Invoke(new Action(() => Engine.MainWindow.ChkNoRunStealth.Checked = enable));
+			Engine.MainWindow.SafeAction(s => s.ChkNoRunStealth.Checked = enable);
 		}
 
 		public static bool NoRunStealthStatus()

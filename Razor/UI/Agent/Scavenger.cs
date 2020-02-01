@@ -64,7 +64,7 @@ namespace Assistant
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
 				Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
+				this.Invoke((MethodInvoker)delegate { Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
 			}
 			else
 			{
@@ -112,7 +112,7 @@ namespace Assistant
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate
+			this.Invoke((MethodInvoker)delegate
 			{
 				RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, serial, true, Scavenger.MaxRange);
 				RazorEnhanced.Scavenger.RefreshLists();
@@ -176,7 +176,7 @@ namespace Assistant
 
 		private void scavengerEnableCheck_CheckedChanged(object sender, EventArgs e)
 		{
-			if (World.Player == null)  // offline 
+			if (World.Player == null)  // offline
 			{
 				if (scavengerCheckBox.Checked)
 				{

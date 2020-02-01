@@ -129,7 +129,7 @@ namespace Assistant
 				Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate
+			this.Invoke((MethodInvoker)delegate
 			{
 				Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, serial, Restock.RestockDestination, true);
 				Restock.RefreshLists();
@@ -179,7 +179,7 @@ namespace Assistant
 				Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate
+			this.Invoke((MethodInvoker)delegate
 			{
 				Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, Restock.RestockSource, serial, true);
 				Restock.RefreshLists();
@@ -204,7 +204,7 @@ namespace Assistant
 
 		internal void RestockStartExec()
 		{
-			if (World.Player == null)  // offline 
+			if (World.Player == null)  // offline
 			{
 				Restock.AddLog("You are not logged in game!");
 				return;
@@ -320,7 +320,7 @@ namespace Assistant
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString(), false);
 				RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, restockItem.Hue); });
+				this.Invoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, restockItem.Hue); });
 			}
 			else
 			{

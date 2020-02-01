@@ -103,7 +103,7 @@ namespace Assistant
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate {
+			this.Invoke((MethodInvoker)delegate {
 				RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, serial, RazorEnhanced.Organizer.OrganizerDestination, true);
 				RazorEnhanced.Organizer.RefreshLists();
 			});
@@ -153,7 +153,7 @@ namespace Assistant
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate {
+			this.Invoke((MethodInvoker)delegate {
 				RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, serial, true);
 				RazorEnhanced.Organizer.RefreshLists();
 			});
@@ -196,7 +196,7 @@ namespace Assistant
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString(), false);
 				RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Hue); });
+				this.Invoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Hue); });
 			}
 			else
 			{
@@ -223,7 +223,7 @@ namespace Assistant
 
 		internal void OrganizerStartExec()
 		{
-			if (World.Player == null)  // offline 
+			if (World.Player == null)  // offline
 			{
 				Organizer.AddLog("You are not logged in game!");
 				return;

@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -22,10 +23,10 @@ namespace RazorEnhanced
 			if (!Client.Running)
 				return;
 
-			Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.Items.Add(addlog)));
-			Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.SelectedIndex = Assistant.Engine.MainWindow.BandageHealLogBox.Items.Count - 1));
+			Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Add(addlog));
+			Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.SelectedIndex = s.BandageHealLogBox.Items.Count - 1);
 			if (Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
-				Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.Items.Clear()));
+				Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Clear());
 		}
 
 		internal static int TargetSerial
@@ -44,7 +45,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Engine.MainWindow.BandageHealtargetLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealtargetLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -56,7 +57,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_customid = value;
-				Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4"));
 			}
 		}
 
@@ -68,7 +69,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_customcolor = value;
-				Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4"));
 			}
 		}
 
@@ -80,7 +81,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_customdelay = value;
-				Engine.MainWindow.BandageHealdelayTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealdelayTextBox.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealdelayTextBox.Text = value.ToString());
 			}
 		}
 
@@ -92,7 +93,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_maxrange = value;
-				Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealMaxRangeTextBox.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealMaxRangeTextBox.Text = value.ToString());
 			}
 		}
 
@@ -104,7 +105,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_hplimit = value;
-				Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Engine.MainWindow.BandageHealhpTextBox.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealhpTextBox.Text = value.ToString());
 			}
 		}
 
@@ -117,7 +118,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Engine.MainWindow.BandageHealpoisonCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealpoisonCheckBox.Checked = value));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealpoisonCheckBox.Checked = value);
 			}
 		}
 
@@ -130,7 +131,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Engine.MainWindow.BandageHealmortalCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealmortalCheckBox.Checked = value));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealmortalCheckBox.Checked = value);
 			}
 		}
 
@@ -143,7 +144,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Engine.MainWindow.BandageHealhiddedCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealhiddedCheckBox.Checked = value));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealhiddedCheckBox.Checked = value);
 			}
 		}
 
@@ -156,7 +157,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Engine.MainWindow.BandageHealcountdownCheckBox.Invoke(new Action(() => Engine.MainWindow.BandageHealcountdownCheckBox.Checked = value));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcountdownCheckBox.Checked = value);
 			}
 		}
 
@@ -169,7 +170,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Engine.MainWindow.BandageHealUseTarget.Invoke(new Action(() => Engine.MainWindow.BandageHealUseTarget.Checked = value));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTarget.Checked = value);
 			}
 		}
 
@@ -256,14 +257,14 @@ namespace RazorEnhanced
 					Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
 					AddLog("Warning: Low bandage: " + bandageamount + " left");
 				}
-				
+
 				if (bandageamount != 0)        // Se le bende ci sono
 				{
 					AddLog("Using bandage (0x"+ bandageserial.ToString("X8") +") on Target (" + target.Serial.ToString()+")");
 
 					if (!UseTarget) // Uso nuovo packet
 						Items.UseItemOnMobile(bandageserial, target.Serial);
-					else 
+					else
 					{
 						Items.UseItem(bandageserial);
 						Target.WaitForTarget(1000, true);
@@ -390,7 +391,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: BandageHeal.Start: Bandage Heal already running");
 			}
 			else
-				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = true));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = true);
 		}
 
 		public static void Stop()
@@ -400,7 +401,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
 			}
 			else
-				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false));
+				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = false);
 		}
 
 		public static bool Status()

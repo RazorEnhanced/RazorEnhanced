@@ -89,9 +89,9 @@ namespace Assistant
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
 			this.SuspendLayout();
-			// 
+			//
 			// SplashScreen
-			// 
+			//
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.Maroon;
 			this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));

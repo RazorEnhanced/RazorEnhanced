@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -11,28 +12,6 @@ namespace RazorEnhanced
 {
 	public class Dress
 	{
-		internal class XXDressItem // Vecchia struttura da rimuovere fra qualche versione. rimasta per permetere conversione settings
-		{
-			private int m_Layer;
-			internal int Layer { get { return m_Layer; } }
-
-			private string m_Name;
-			internal string Name { get { return m_Name; } }
-
-			private int m_serial;
-			internal int Serial { get { return m_serial; } }
-
-			private bool m_Selected;
-			internal bool Selected { get { return m_Selected; } }
-
-			public XXDressItem(string name, int layer, int serial, bool selected)
-			{
-				m_Name = name;
-				m_Layer = layer;
-				m_serial = serial;
-				m_Selected = selected;
-			}
-		}
 
 		internal class DressItemNew	 : ListAbleItem
 		{
@@ -89,10 +68,10 @@ namespace RazorEnhanced
 			if (!Client.Running)
 				return;
 
-			Engine.MainWindow.DressLogBox.Invoke(new Action(() => Engine.MainWindow.DressLogBox.Items.Add(addlog)));
-			Engine.MainWindow.DressLogBox.Invoke(new Action(() => Engine.MainWindow.DressLogBox.SelectedIndex = Engine.MainWindow.DressLogBox.Items.Count - 1));
+			Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Add(addlog));
+			Engine.MainWindow.SafeAction(s => s.DressLogBox.SelectedIndex = s.DressLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.DressLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.DressLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.DressLogBox.Items.Clear()));
+				Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Clear());
 		}
 
 		private static int
@@ -104,7 +83,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_dressdelay = value;
-				Assistant.Engine.MainWindow.DressDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.DressDragDelay.Text = value.ToString()));
+				Engine.MainWindow.SafeAction(s => s.DressDragDelay.Text = value.ToString());
 			}
 		}
 
@@ -116,7 +95,8 @@ namespace RazorEnhanced
 			set
 			{
 				m_dressbag = value;
-				Assistant.Engine.MainWindow.DressBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.DressBagLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.SafeAction(s => s.DressBagLabel.Text = "0x" + value.ToString("X8"));
+
 			}
 		}
 
@@ -128,7 +108,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_dressconflict = value;
-				Assistant.Engine.MainWindow.DressCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.DressCheckBox.Checked = value));
+				Engine.MainWindow.SafeAction(s => s.DressCheckBox.Checked = value);
 			}
 		}
 
@@ -692,33 +672,33 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void ChangeList(string nomelista)
+		public static void ChangeList(string listName)
 		{
-			if (!UpdateListParam(nomelista))
+			if (!UpdateListParam(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Dress.ChangeList: Scavenger list: " + listName + " not exist");
 			}
 			else
 			{
-				if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
+				if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop change list e restart
 				{
-					Assistant.Engine.MainWindow.DressStopButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressStopButton.PerformClick()));
-					Assistant.Engine.MainWindow.DressListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = Assistant.Engine.MainWindow.DressListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.DressExecuteButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressExecuteButton.PerformClick()));
+					Engine.MainWindow.SafeAction(s => s.DressStopButton.PerformClick());
+					Engine.MainWindow.SafeAction(s => s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(listName));  // change list
+					Engine.MainWindow.SafeAction(s => s.DressExecuteButton.PerformClick());
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.DressListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = Assistant.Engine.MainWindow.DressListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Engine.MainWindow.SafeAction(s => s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(listName));  // change list
 				}
 			}
 		}
 
-		internal static bool UpdateListParam(string nomelista)
+		internal static bool UpdateListParam(string listName)
 		{
-			if (Settings.Dress.ListExists(nomelista))
+			if (Settings.Dress.ListExists(listName))
 			{
-				Settings.Dress.ListDetailsRead(nomelista, out int bag, out int delay, out bool conflict);
-				DressListName = nomelista;
+				Settings.Dress.ListDetailsRead(listName, out int bag, out int delay, out bool conflict);
+				DressListName = listName;
 				DressBag = bag;
 				DressDelay = delay;
 				DressConflict = conflict;

@@ -58,7 +58,6 @@ namespace Assistant
 		public bool Init(bool isOSI)
 		// returns false on cancel
 		{
-			m_Running = true;
 
 			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
 			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
@@ -74,6 +73,7 @@ namespace Assistant
 			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
 
 			RazorEnhanced.Shard selected = Client.Instance.SelectShard(shards);
+			m_Running = true;
 
 			if ((!isOSI) || (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
 			{
@@ -182,6 +182,30 @@ namespace Assistant
 
 			Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
+		}
+		[DllImport("user32.dll")]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		static extern bool SetForegroundWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+		public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern IntPtr ShowWindow(IntPtr hWnd, int nCmdShow);
+
+
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern IntPtr SetFocus(IntPtr hWnd);
+		public static void BringToFront(IntPtr hWnd)
+		{
+			const int HWND_TOP = 0;
+			const int SWP_NOMOVE = 2;
+			const int SWP_NOSIZE = 1;
+			const int SW_SHOW = 5;
+			SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+			ShowWindow(hWnd, SW_SHOW);
+			SetForegroundWindow(hWnd);
+			SetFocus(hWnd);
 		}
 		private static void Initialize(System.Reflection.Assembly a)
 		{

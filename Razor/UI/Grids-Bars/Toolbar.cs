@@ -137,7 +137,7 @@ namespace Assistant
 
 		private void ToolBarItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			this.BeginInvoke((MethodInvoker)delegate
+			this.Invoke((MethodInvoker)delegate
 			{
 				int index = toolboxcountComboBox.SelectedIndex;
 				Assistant.Item item = Assistant.World.FindItem(serial);

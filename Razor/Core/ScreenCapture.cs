@@ -147,9 +147,10 @@ namespace Assistant
 				Assistant.Engine.MainWindow.ScreenPath.Text = path;
 			}
 
+			// Credzba look here
 			if (lb.InvokeRequired)
 			{
-				lb.Invoke(new MethodInvoker(delegate
+				lb.BeginInvoke(new MethodInvoker(delegate
 				{
 					lock (m_lock)
 					{

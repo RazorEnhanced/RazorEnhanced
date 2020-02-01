@@ -436,7 +436,7 @@ namespace Assistant
 
         public override void SetTitleStr(string str)
         {
-            _setTitle(str);
+            //_setTitle(str);
         }
 
         public override bool OnMessage(MainForm razor, uint wParam, int lParam)

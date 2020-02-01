@@ -420,7 +420,7 @@ namespace Assistant
 		{
 			Assistant.Mobile mob = Assistant.World.FindMobile(serial);
 			if (mob != null)
-				targetbodydataGridView.BeginInvoke((MethodInvoker)delegate { targetbodydataGridView.Rows.Add(new object[] { "0x" + mob.Body.ToString("X4") }); });
+				targetbodydataGridView.Invoke((MethodInvoker)delegate { targetbodydataGridView.Rows.Add(new object[] { "0x" + mob.Body.ToString("X4") }); });
 		}
 
 		private void targetChoseHue_Click(object sender, EventArgs e)
@@ -433,7 +433,7 @@ namespace Assistant
 		{
 			Assistant.Mobile mob = Assistant.World.FindMobile(serial);
 			if (mob != null)
-				targethueGridView.BeginInvoke((MethodInvoker)delegate { targethueGridView.Rows.Add(new object[] { "0x" + mob.Hue.ToString("X4") }); });
+				targethueGridView.Invoke((MethodInvoker)delegate { targethueGridView.Rows.Add(new object[] { "0x" + mob.Hue.ToString("X4") }); });
 
 		}
 	}

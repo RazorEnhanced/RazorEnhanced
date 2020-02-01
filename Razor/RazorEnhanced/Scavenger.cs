@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -111,7 +112,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_lootdelay = value;
-				Assistant.Engine.MainWindow.ScavengerDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerDragDelay.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerDragDelay.Text = value.ToString());
 			}
 		}
 
@@ -122,7 +123,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_maxrange = value;
-				Assistant.Engine.MainWindow.ScavengerRange.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerRange.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerRange.Text = value.ToString());
 			}
 		}
 
@@ -133,7 +134,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_scavengerbag = value;
-				Assistant.Engine.MainWindow.ScavengerContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerContainerLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerContainerLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -142,10 +143,10 @@ namespace RazorEnhanced
 			if (!Client.Running)
 				return;
 
-			Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.SelectedIndex = Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count - 1));
+			Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerLogBox.Items.Add(addlog));
+			Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerLogBox.SelectedIndex = s.ScavengerLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerLogBox.Items.Clear());
 		}
 
 		internal static void RefreshLists()
@@ -175,7 +176,7 @@ namespace RazorEnhanced
 		internal static void InitGrid()
 		{
 			List<ScavengerList> lists = Settings.Scavenger.ListsRead();
-	
+
 			Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Clear();
 
 			foreach (ScavengerList l in lists)
@@ -437,7 +438,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Scavenger.Start: Scavenger already running");
 			}
 			else
-				Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = true));
+				Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = true);
 		}
 
 		public static void Stop()
@@ -447,7 +448,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Scavenger.Stop: Scavenger already sleeping");
 			}
 			else
-				Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false));
+				Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = false);
 		}
 
 		public static bool Status()
@@ -455,42 +456,42 @@ namespace RazorEnhanced
 			return Assistant.Engine.MainWindow.ScavengerCheckBox.Checked;
 		}
 
-		public static void ChangeList(string nomelista)
+		public static void ChangeList(string listName)
 		{
-			if (!UpdateListParam(nomelista))
+			if (!UpdateListParam(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Scavenger.ChangeList: Scavenger list: " + listName + " not exist");
 			}
 			else
 			{
-				if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+				if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true) // Se è in esecuzione forza stop change list e restart
 				{
-					Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false));
-					Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = true));
+					Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = false);
+					Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = true);
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName));  // change list
 				}
 			}
 		}
 
-		internal static bool UpdateListParam(string nomelista)
+		internal static bool UpdateListParam(string listName)
 		{
-			if (Settings.Scavenger.ListExists(nomelista))
+			if (Settings.Scavenger.ListExists(listName))
 			{
-				Settings.Scavenger.ListDetailsRead(nomelista, out int bag, out int delay, out int range);
+				Settings.Scavenger.ListDetailsRead(listName, out int bag, out int delay, out int range);
 				Scavenger.ScavengerBag = bag;
 				Scavenger.ScavengerDelay = delay;
 				Scavenger.MaxRange = range;
-				Scavenger.ScavengerListName = nomelista;
+				Scavenger.ScavengerListName = listName;
 				return true;
 			}
 			return false;
 		}
 
-		// Autostart al login 
+		// Autostart al login
 		private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
 
 		internal static void LoginAutostart()

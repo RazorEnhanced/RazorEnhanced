@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -164,7 +165,7 @@ namespace RazorEnhanced
 					color = "0x" + item.ColorNew.ToString("X4");
 
 				Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Add(new object[] { item.Selected.ToString(), "0x" + item.GraphReal.ToString("X4"), "0x" + item.GraphNew.ToString("X4"), color });
-			}	
+			}
 		}
 
 		private static List<GraphChangeData> m_graphfilterdata = new List<GraphChangeData>();
@@ -215,7 +216,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_carverblade = value;
-				Engine.MainWindow.AutoCarverBladeLabel.Invoke(new Action(() => Engine.MainWindow.AutoCarverBladeLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.SafeAction(s => s.AutoCarverBladeLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -275,7 +276,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_bonecutterblade = value;
-				Engine.MainWindow.BoneBladeLabel.Invoke(new Action(() => Engine.MainWindow.BoneBladeLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.SafeAction(s => s.BoneBladeLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -344,7 +345,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_autoremountdelay = value;
-				Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
+				Engine.MainWindow.SafeAction(s => s.RemountDelay.Text = value.ToString());
 			}
 		}
 
@@ -355,7 +356,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_autoremountedelay = value;
-				Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
+				Engine.MainWindow.SafeAction(s => s.RemountEDelay.Text = value.ToString());
 			}
 		}
 
@@ -366,7 +367,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_autoremountserial = value;
-				Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.SafeAction(s => s.RemountSerialLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 

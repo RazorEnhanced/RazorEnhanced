@@ -1,4 +1,5 @@
 ﻿using Assistant;
+using Assistant.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -83,7 +84,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_dragdelay = value;
-				Assistant.Engine.MainWindow.RestockDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockDragDelay.Text = value.ToString()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.RestockDragDelay.Text = value.ToString());
 			}
 		}
 
@@ -94,7 +95,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_sorucebag = value;
-				Assistant.Engine.MainWindow.RestockSourceLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockSourceLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.RestockSourceLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -105,7 +106,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_destinationbag = value;
-				Assistant.Engine.MainWindow.RestockDestinationLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockDestinationLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SafeAction(s => s.RestockDestinationLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
 
@@ -114,10 +115,11 @@ namespace RazorEnhanced
 			if (!Client.Running)
 				return;
 
-			Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.SelectedIndex = Assistant.Engine.MainWindow.RestockLogBox.Items.Count - 1));
+			Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.Items.Add(addlog));
+
+			Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.SelectedIndex = s.RestockLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.RestockLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.Items.Clear()));
+				Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.Items.Clear());
 		}
 
 		internal static void RefreshLists()
@@ -388,36 +390,36 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public static void ChangeList(string nomelista)
+		public static void ChangeList(string listName)
 		{
-			if (!UpdateListParam(nomelista))
+			if (!UpdateListParam(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Restock.ChangeList: Restock list: " + listName + " not exist");
 			}
 			else
 			{
-				if (Assistant.Engine.MainWindow.RestockStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
+				if (Assistant.Engine.MainWindow.RestockStop.Enabled == true) // Se è in esecuzione forza stop change list e restart
 				{
-					Assistant.Engine.MainWindow.RestockStop.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockStop.PerformClick()));
-					Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.RestockExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockExecute.PerformClick()));
+					Assistant.Engine.MainWindow.SafeAction(s => s.RestockStop.PerformClick());
+					Assistant.Engine.MainWindow.SafeAction(s => s.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => s.RestockExecute.PerformClick());
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.SafeAction(s => s.RestockListSelect.SelectedIndex = s.RestockListSelect.Items.IndexOf(listName));  // change list
 				}
 			}
 		}
 
-		internal static bool UpdateListParam(string nomelista)
+		internal static bool UpdateListParam(string listName)
 		{
-			if (Settings.Restock.ListExists(nomelista))
+			if (Settings.Restock.ListExists(listName))
 			{
-				Settings.Restock.ListDetailsRead(nomelista, out int bagsource, out int bagdestination, out int delay);
+				Settings.Restock.ListDetailsRead(listName, out int bagsource, out int bagdestination, out int delay);
 				Restock.RestockDelay = delay;
 				Restock.RestockSource = bagsource;
 				Restock.RestockDestination = bagdestination;
-				Restock.RestockListName = nomelista;
+				Restock.RestockListName = listName;
 				return true;
 			}
 			return false;

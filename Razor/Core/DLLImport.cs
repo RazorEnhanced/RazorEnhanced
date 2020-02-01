@@ -189,9 +189,6 @@ namespace Assistant
 			internal static unsafe extern bool GetPosition(int* x, int* y, int* z);
 
 			[DllImport("Crypt.dll")]
-			internal static unsafe extern void BringToFront(IntPtr hWnd);
-
-			[DllImport("Crypt.dll")]
 			internal static unsafe extern void DoFeatures(int features, bool oldversion);
 
 			//[DllImport("Crypt.dll")]
