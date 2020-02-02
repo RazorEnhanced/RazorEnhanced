@@ -11,6 +11,8 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Web.Security;
+using System.DirectoryServices;
+
 
 namespace RazorEnhanced
 {
@@ -235,17 +237,117 @@ namespace RazorEnhanced
 			File.WriteAllText(filename + "." + tableName, xml);
 
 		}
+		///
+
+		public static class StringCipher
+		{
+			// This constant is used to determine the keysize of the encryption algorithm in bits.
+			// We divide this by 8 within the code below to get the equivalent number of bytes.
+			private const int Keysize = 256;
+
+			// This constant determines the number of iterations for the password bytes generation function.
+			private const int DerivationIterations = 1000;
+
+			public static string Encrypt(string plainText, string passPhrase)
+			{
+				// Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
+				// so that the same Salt and IV values can be used when decrypting.
+				var saltStringBytes = Generate256BitsOfRandomEntropy();
+				var ivStringBytes = Generate256BitsOfRandomEntropy();
+				var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+				using (var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
+				{
+					var keyBytes = password.GetBytes(Keysize / 8);
+					using (var symmetricKey = new System.Security.Cryptography.RijndaelManaged())
+					{
+						symmetricKey.BlockSize = 256;
+						symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
+						symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+						using (var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
+						{
+							using (var memoryStream = new MemoryStream())
+							{
+								using (var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, encryptor, System.Security.Cryptography.CryptoStreamMode.Write))
+								{
+									cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+									cryptoStream.FlushFinalBlock();
+									// Create the final bytes as a concatenation of the random salt bytes, the random iv bytes and the cipher bytes.
+									var cipherTextBytes = saltStringBytes;
+									cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
+									cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
+									memoryStream.Close();
+									cryptoStream.Close();
+									return Convert.ToBase64String(cipherTextBytes);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			public static string Decrypt(string cipherText, string passPhrase)
+			{
+				// Get the complete stream of bytes that represent:
+				// [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
+				var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
+				// Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
+				var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
+				// Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
+				var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
+				// Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
+				var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
+
+				using (var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
+				{
+					var keyBytes = password.GetBytes(Keysize / 8);
+					using (var symmetricKey = new System.Security.Cryptography.RijndaelManaged())
+					{
+						symmetricKey.BlockSize = 256;
+						symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
+						symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+						using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
+						{
+							using (var memoryStream = new MemoryStream(cipherTextBytes))
+							{
+								using (var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, decryptor, System.Security.Cryptography.CryptoStreamMode.Read))
+								{
+									var plainTextBytes = new byte[cipherTextBytes.Length];
+									var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+									memoryStream.Close();
+									cryptoStream.Close();
+									return System.Text.Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			private static byte[] Generate256BitsOfRandomEntropy()
+			{
+				var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
+				using (var rngCsp = new System.Security.Cryptography.RNGCryptoServiceProvider())
+				{
+					// Fill the array with cryptographically secure random bytes.
+					rngCsp.GetBytes(randomBytes);
+				}
+				return randomBytes;
+			}
+		}
+
+		public static System.Security.Principal.SecurityIdentifier GetComputerSid()
+		{
+			return new System.Security.Principal.SecurityIdentifier((byte[])new DirectoryEntry(string.Format("WinNT://{0},Computer", Environment.MachineName)).Children.Cast<DirectoryEntry>().First().InvokeGet("objectSID"), 0).AccountDomainSid;
+		}
+		internal static string key = GetComputerSid().ToString();
 		// Passwords
-		public static string Protect(string text, string purpose)
+		public static string Protect(string text)
 		{
 			if (string.IsNullOrEmpty(text))
 				return "";
 			try
 			{
-				byte[] stream = System.Text.Encoding.UTF8.GetBytes(text);
-				var encodedValue = MachineKey.Protect(stream, purpose);
-
-				return Convert.ToBase64String(encodedValue);
+				return StringCipher.Encrypt(text, key);
 			}
 			catch (Exception e)
 			{
@@ -253,15 +355,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static string Unprotect(string text, string purpose)
+		public static string Unprotect(string text)
 		{
 			if (string.IsNullOrEmpty(text))
 				return "";
 			try
 			{
-				byte[] stream = Convert.FromBase64String(text);
-				byte[] decodedValue = MachineKey.Unprotect(stream, purpose);
-				return System.Text.Encoding.UTF8.GetString(decodedValue);
+				return StringCipher.Decrypt(text, key);
 			}
 			catch (Exception e)
 			{
@@ -283,9 +383,10 @@ namespace RazorEnhanced
 			public string Password;
 		}
 
+		//string pw = Security.FingerPrint.Value();
 		internal static DataTable LoadPasswords(string in_profile, string tableName)
 		{
-		 	string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced." + tableName.ToLower());
+			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced." + tableName.ToLower());
 
 			// ensure we load passwords from top level of profile
 			// all this cleanup code can go away by June of 2020
@@ -315,7 +416,7 @@ namespace RazorEnhanced
 				DataRow row = temp.NewRow();
 				row["IP"] = item.IP;
 				row["User"] = item.User;
-				row["Password"] = Unprotect(item.Password, "cypher");
+				row["Password"] = Unprotect(item.Password);
 				temp.Rows.Add(row);
 			}
 			return temp;
@@ -331,7 +432,7 @@ namespace RazorEnhanced
 				PasswordStorage item = new PasswordStorage();
 				item.IP = (string)row["IP"];
 				item.User = (string)row["User"];
-				item.Password = Protect((string)row["Password"], "cypher");
+				item.Password = Protect((string)row["Password"]);
 				items.Add(item);
 			}
 			File.WriteAllText(filename + '.' + table.TableName.ToLower(), Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented));
