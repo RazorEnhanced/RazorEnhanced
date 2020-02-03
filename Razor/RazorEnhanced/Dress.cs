@@ -390,31 +390,44 @@ namespace RazorEnhanced
 					Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
 					Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
-					bool dropWeapon = false;
+					bool dropWeaponL = false;
+					bool twoHandLeft = false;
+					bool dropWeaponR = false;
+					Assistant.Item newLeft = null;
 					foreach (DressItemNew item in items)
 					{
 						itemserial.Add((uint)item.Serial);
-						if (item.Layer == Layer.LeftHand || item.Layer == Layer.RightHand)
+						if (item.Layer == Layer.LeftHand)
 						{
-							dropWeapon = true;
+							if (lefth == null || item.Serial != lefth.Serial)
+							{
+								twoHandLeft = Assistant.World.FindItem(item.Serial).IsTwoHanded;
+							}
 						}
+
+						if (item.Layer == Layer.LeftHand && lefth != null &&  item.Serial != lefth.Serial)
+							{
+								dropWeaponL = true;
+							}
+						if (item.Layer == Layer.RightHand && righth != null && item.Serial != righth.Serial)
+							{
+								dropWeaponR = true;
+							}
 					}
 
-					if (dropWeapon == true)
+					List<ushort> dropLayer = new List<ushort>();
+					if (dropWeaponL || twoHandLeft)
 					{
-						List<ushort> dropLayer = new List<ushort>();
-						if (lefth != null)
-						{
-							dropLayer.Add((ushort)Layer.LeftHand);
-						}
-						if (righth != null)
-						{
-							dropLayer.Add((ushort)Layer.RightHand);
-						}
-						if (dropLayer.Count > 0)
-						{
-							Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(dropLayer));
-						}
+						dropLayer.Add((ushort)Layer.LeftHand);
+					}
+					if (dropWeaponR || twoHandLeft)
+					{
+						dropLayer.Add((ushort)Layer.RightHand);
+					}
+					if (dropLayer.Count > 0)
+					{
+						Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(dropLayer));
+						Thread.Sleep(m_dressdelay);
 					}
 
 					if (itemserial.Count > 0)
