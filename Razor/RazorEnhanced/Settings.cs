@@ -3399,7 +3399,7 @@ namespace RazorEnhanced
 						itemtoscan = (RazorEnhanced.Dress.DressItemNew)row["Item"];
 						if (itemtoscan.Layer == item.Layer)
 						{
-							RazorEnhanced.Dress.AddLog("Item repaced");
+							RazorEnhanced.Dress.AddLog("Item replaced");
 							row["Item"] = item;
 							found = true;
 						}
