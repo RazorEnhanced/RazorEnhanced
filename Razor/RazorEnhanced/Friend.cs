@@ -13,7 +13,6 @@ namespace RazorEnhanced
 {
     public class Friend
     {
-        [Serializable]
         public class FriendPlayer : ListAbleItem
         {
             private string m_Name;
@@ -23,6 +22,7 @@ namespace RazorEnhanced
             public int Serial { get { return m_Serial; } }
 
             private bool m_Selected;
+            [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
             public FriendPlayer(string name, int serial, bool selected)
