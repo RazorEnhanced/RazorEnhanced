@@ -192,6 +192,8 @@ namespace JsonData
             filter.RangeMin = RangeMin;
             filter.RangeMax = RangeMax;
             filter.Poisoned = Poisoned;
+            filter.IsHuman = IsHuman;
+            filter.IsGhost = IsGhost;
             filter.Blessed = Blessed;
             filter.Female = Female;
             filter.Warmode = Warmode;
