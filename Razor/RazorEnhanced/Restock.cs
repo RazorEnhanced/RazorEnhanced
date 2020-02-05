@@ -59,6 +59,7 @@ namespace RazorEnhanced
 			internal int Destination { get { return m_Destination; } }
 
 			private bool m_Selected;
+			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 
 			public RestockList(string description, int delay, int source, int destination, bool selected)

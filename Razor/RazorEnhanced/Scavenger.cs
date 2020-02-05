@@ -79,6 +79,7 @@ namespace RazorEnhanced
 			internal int Bag { get { return m_Bag; } }
 
 			private bool m_Selected;
+			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 
 			public ScavengerList(string description, int delay, int bag, bool selected, int range)

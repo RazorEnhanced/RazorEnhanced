@@ -101,6 +101,15 @@ namespace Assistant
 				RazorEnhanced.Friend.AddLog("Friends list changed to: " + friendListSelect.Text);
 		}
 
+		private void friendGuildListView_Checked(object sender, ItemCheckedEventArgs e)
+		{
+			if (friendguildListView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.Friend.UpdateSelectedGuild(item.Index);
+			}
+		}
+
 		private void friendlistView_PlayerChecked(object sender, ItemCheckedEventArgs e)
 		{
 			if (friendlistView.FocusedItem != null)

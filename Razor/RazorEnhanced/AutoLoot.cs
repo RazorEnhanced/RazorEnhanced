@@ -109,6 +109,7 @@ namespace RazorEnhanced
 			internal int Bag { get { return m_Bag; } }
 
 			private bool m_Selected;
+			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 
 			private bool m_Noopencorpse;

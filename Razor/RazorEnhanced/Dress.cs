@@ -51,6 +51,7 @@ namespace RazorEnhanced
 			internal bool Conflict { get { return m_Conflict; } }
 
 			private bool m_Selected;
+			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 
 			public DressList(string description, int delay, int bag, bool conflict, bool selected)

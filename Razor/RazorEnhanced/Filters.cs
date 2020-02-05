@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 
 namespace RazorEnhanced
 {
@@ -109,6 +112,7 @@ namespace RazorEnhanced
 		public class GraphChangeData
 		{
 			private bool m_Selected;
+			[JsonProperty("Selected")]
 			public bool Selected { get { return m_Selected; } }
 
 			private int m_GraphReal;

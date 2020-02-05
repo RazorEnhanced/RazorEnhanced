@@ -3245,6 +3245,8 @@ namespace Assistant
             this.friendguildListView.TabIndex = 77;
             this.friendguildListView.UseCompatibleStateImageBehavior = false;
             this.friendguildListView.View = System.Windows.Forms.View.Details;
+            this.friendguildListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.friendGuildListView_Checked);
+
             //
             // columnHeader63
             //

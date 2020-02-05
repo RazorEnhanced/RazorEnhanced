@@ -40,6 +40,7 @@ namespace RazorEnhanced
             public string Name { get { return m_Name; } }
 
             private bool m_Selected;
+            [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
             public FriendGuild(string name, bool selected)
@@ -76,6 +77,7 @@ namespace RazorEnhanced
             internal bool MINFRiend { get { return m_MINFriend; } }
 
             private bool m_Selected;
+            [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
             public FriendList(string description, bool autoacceptparty, bool preventattack, bool includeparty, bool slfriend, bool tbfriend, bool comfriend, bool minfriend, bool selected)
@@ -354,7 +356,24 @@ namespace RazorEnhanced
             RazorEnhanced.Friend.RefreshGuilds();
         }
 
-        internal static void UpdateSelectedPlayer(int i)
+        internal static void UpdateSelectedGuild(int i)
+        {
+            RazorEnhanced.Settings.Friend.GuildRead(FriendListName, out List<RazorEnhanced.Friend.FriendGuild> guilds);
+            if (guilds.Count != Engine.MainWindow.FriendGuildListView.Items.Count)
+            {
+                return;
+            }
+            ListViewItem lvi = Engine.MainWindow.FriendGuildListView.Items[i];
+            FriendGuild old = guilds[i];
+            if (lvi != null && old != null)
+            {
+                FriendGuild guild = new Friend.FriendGuild(old.Name, lvi.Checked);
+                RazorEnhanced.Settings.Friend.GuildReplace(RazorEnhanced.Friend.FriendListName, i, guild);
+            }
+
+        }
+
+            internal static void UpdateSelectedPlayer(int i)
         {
             RazorEnhanced.Settings.Friend.PlayersRead(FriendListName, out List<FriendPlayer> players);
 
