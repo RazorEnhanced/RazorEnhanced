@@ -2940,7 +2940,8 @@ namespace Assistant
 			{
 				int x = p.ReadInt32(), y = p.ReadInt32();
 
-				string layout = p.GetCompressedReader().ReadString();
+				PacketReader pr = p.GetCompressedReader();
+				string layout = pr.ReadString();
 
 				int numStrings = p.ReadInt32();
 				if (numStrings < 0 || numStrings > 256)

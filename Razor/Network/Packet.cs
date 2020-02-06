@@ -801,14 +801,16 @@ namespace Assistant
 
 	public unsafe sealed class PacketReader
 	{
-		private unsafe byte* m_Data;
+		//private unsafe byte* m_Data;
+		private byte[] m_Data;
 		private int m_Pos;
 		private int m_Length;
 		private bool m_Dyn;
 
 		internal unsafe PacketReader(byte* buff, int len, bool dyn)
 		{
-			m_Data = buff;
+			m_Data = new byte[len];
+			System.Runtime.InteropServices.Marshal.Copy((IntPtr)buff, m_Data, 0, len);
 			m_Length = len;
 			m_Pos = 0;
 			m_Dyn = dyn;
@@ -816,8 +818,9 @@ namespace Assistant
 
 		internal unsafe PacketReader(byte[] buff, bool dyn)
 		{
-			fixed (byte* p = buff)
-				m_Data = p;
+			//fixed (byte* p = buff)
+			//	m_Data = p;
+			m_Data = buff;
 			m_Length = buff.Length;
 			m_Pos = 0;
 			m_Dyn = dyn;
@@ -867,7 +870,7 @@ namespace Assistant
 		{
 			int fullLen = ReadInt32();
 			int destLen = 0;
-			byte[] buff;
+			byte[] buff = new byte[1];
 
 			if (fullLen >= 4)
 			{
@@ -897,7 +900,10 @@ namespace Assistant
 			{
 				buff = new byte[1];
 			}
-
+			//if (buff.Length == 65310)
+			//{
+			//	System.Diagnostics.Debugger.Break();
+			//}
 			return new PacketReader(buff, false);
 		}
 
@@ -1163,7 +1169,6 @@ namespace Assistant
 			StringBuilder sb = new StringBuilder();
 
 			int c;
-
 			while ((m_Pos + 1) < bound && (c = ReadUInt16()) != 0)
 				if (IsSafeChar(c))
 					sb.Append((char)c);
@@ -1221,7 +1226,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		internal unsafe byte PacketID { get { return *m_Data; } }
+		internal unsafe byte PacketID { get { return m_Data[0]; } }
 		internal int Position { get { return m_Pos; } set { m_Pos = value; } }
 
 		internal bool AtEnd { get { return m_Pos >= m_Length; } }
