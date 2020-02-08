@@ -2145,13 +2145,14 @@ namespace RazorEnhanced
 			general.Columns.Add("CapTimeStamp", typeof(bool));
 			general.Columns.Add("AutoCap", typeof(bool));
 
-			// Parametri Tab (Filtri veccchi)
+			// General Tab (Filter Sounds)
 			general.Columns.Add(Convert.ToString((int)LocString.BardMusic), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.BirdSounds), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.BullSounds), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.CatSounds), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.ChickenSounds), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.CyclopTitanSounds), typeof(bool));
+			general.Columns.Add(Convert.ToString((int)LocString.DeathStatus), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.DeerSounds), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.DogSounds), typeof(bool));
 			general.Columns.Add(Convert.ToString((int)LocString.DragonSounds), typeof(bool));
@@ -4609,6 +4610,12 @@ namespace RazorEnhanced
 				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+					if (!m_Dataset.Tables["GENERAL"].Columns.Contains(name))
+					{
+						// Bug where I forgot to initialize a sound
+						m_Dataset.Tables["GENERAL"].Columns.Add(name, typeof(bool));
+					}
+
 					row[name] = value;
 					Save();
 				}
@@ -4619,6 +4626,12 @@ namespace RazorEnhanced
 				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+					if (!m_Dataset.Tables["GENERAL"].Columns.Contains(name))
+					{
+						// Bug where I forgot to initialize a sound
+						m_Dataset.Tables["GENERAL"].Columns.Add(name, typeof(bool));
+					}
+
 					row[name] = value;
 					//Save();
 				}
