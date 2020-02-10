@@ -79,7 +79,7 @@ namespace RazorEnhanced
 
 						DateTime dt = DateTime.Now;
 						log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
-						log.Append(Environment.NewLine); 
+						log.Append(Environment.NewLine);
 
 						if (ex is SyntaxErrorException)
 						{
@@ -91,7 +91,7 @@ namespace RazorEnhanced
 							log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
 						}
 						else
-						{ 
+						{
 							log.Append("----> Generic Error:" + Environment.NewLine);
 							ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
 							string error = eo.FormatException(ex);
@@ -136,9 +136,14 @@ namespace RazorEnhanced
 				string result = String.Empty;
 				try
 				{
+					// none of this adds to the python path but I am leaving it here because there HAS to be a way to do this
+					//Environment.SetEnvironmentVariable("IRONPYTHONPATH", Misc.CurrentScriptDirectory());
 					m_Engine = Python.CreateEngine();
-					
 					//m_Engine.GetService<ExceptionOperations>().FormatException(exception);
+					//ICollection<string> paths = m_Engine.GetSearchPaths();
+					//paths.Add(Misc.CurrentScriptDirectory());
+					//m_Engine.SetSearchPaths(paths);
+					//
 					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
 					m_Scope = GetRazorScope(m_Engine);
 
@@ -480,7 +485,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				if (World.Player != null && Client.Running) // Parte agent 
+				if (World.Player != null && Client.Running) // Parte agent
 				{
 					if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
 					{
@@ -604,7 +609,7 @@ namespace RazorEnhanced
 			scope.SetVariable("Journal", new RazorEnhanced.Journal());
 			scope.SetVariable("Target", new RazorEnhanced.Target());
 			scope.SetVariable("Statics", new RazorEnhanced.Statics());
-			
+
 			scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
 			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
 			scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
@@ -623,7 +628,7 @@ namespace RazorEnhanced
 		internal static EnhancedScript Search(string filename)
 		{
 			foreach (KeyValuePair<string, EnhancedScript> pair in m_EnhancedScripts)
-			{ 
+			{
 				if (pair.Key.ToLower() == filename.ToLower())
 					return pair.Value;
 			}

@@ -176,7 +176,8 @@ namespace RazorEnhanced.UI
 				"Misc.MenuResponse", "Misc.HasQueryString",
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
 				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow",
-				"Misc.IgnoreObject", "Misc.CheckIgnoreObject", "Misc.ClearIgnore", "Misc.UnIgnoreObject"
+				"Misc.IgnoreObject", "Misc.CheckIgnoreObject", "Misc.ClearIgnore", "Misc.UnIgnoreObject",
+				"Misc.CurrentScriptDirectory"
 			};
 
 			string[] methodsTarget =

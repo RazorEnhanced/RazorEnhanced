@@ -93,6 +93,12 @@ namespace RazorEnhanced
 			SendMessage(msg, 945, wait);
 		}
 
+		public static string CurrentScriptDirectory()
+		{
+			string razorPath = System.IO.Path.Combine(Assistant.Engine.RootPath, "Scripts");
+			return razorPath;
+		}
+
 		internal static void SendMessage(string msg, int color, bool wait) //Main function of sendmessage
 		{
 			if (Assistant.World.Player != null)
