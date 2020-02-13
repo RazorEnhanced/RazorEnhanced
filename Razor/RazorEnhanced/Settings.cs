@@ -2325,7 +2325,7 @@ namespace RazorEnhanced
                     Assistant.Engine.RootPath, "jpg", false, false, false,
 
                     // Sound Filters
-                    false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
 					false, false, false, false, false,
 
                     // Parametri primo avvio tab general

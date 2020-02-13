@@ -56,7 +56,7 @@ namespace RazorEnhanced
 						File.Copy(backup, filename, true);
 						Load(false);
 					}
-					else 
+					else
 					{
 						throw;
 					}
@@ -155,6 +155,9 @@ namespace RazorEnhanced
 			}
 
 			Save();
+			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", name);
+			var dir = new DirectoryInfo(filename);
+			dir.Delete(true);
 		}
 
 		internal static bool Exist(string name)
@@ -217,6 +220,9 @@ namespace RazorEnhanced
 				}
 			}
 			Save();
+			string oldDirectory = Path.Combine(Assistant.Engine.RootPath, "Profiles", oldname);
+			string newDirectory = Path.Combine(Assistant.Engine.RootPath, "Profiles", newname);
+			System.IO.Directory.Move(oldDirectory, newDirectory);
 		}
 
 		// Funzioni richiamate dalla gui
@@ -330,7 +336,7 @@ namespace RazorEnhanced
 			// Abilito patch UOMod
 			UoMod.ProfileChange();
 
-			// Refresh list 
+			// Refresh list
 			Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = -1;
 			Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = -1;
 			Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = -1;
