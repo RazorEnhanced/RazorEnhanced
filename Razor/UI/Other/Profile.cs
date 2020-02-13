@@ -42,7 +42,9 @@ namespace Assistant
 					RazorEnhanced.Profiles.ProfileChange("default");
 					try
 					{
-						File.Delete(Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced." + profiletodelete + ".settings"));
+						string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profiletodelete);
+						var dir = new DirectoryInfo(filename);
+						dir.Delete(true);
 					}
 					catch
 					{ }

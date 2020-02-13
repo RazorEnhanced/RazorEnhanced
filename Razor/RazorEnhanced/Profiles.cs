@@ -155,9 +155,6 @@ namespace RazorEnhanced
 			}
 
 			Save();
-			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", name);
-			var dir = new DirectoryInfo(filename);
-			dir.Delete(true);
 		}
 
 		internal static bool Exist(string name)
@@ -220,9 +217,14 @@ namespace RazorEnhanced
 				}
 			}
 			Save();
-			string oldDirectory = Path.Combine(Assistant.Engine.RootPath, "Profiles", oldname);
-			string newDirectory = Path.Combine(Assistant.Engine.RootPath, "Profiles", newname);
-			System.IO.Directory.Move(oldDirectory, newDirectory);
+			try
+			{
+				string oldDirectory = Path.Combine(Assistant.Engine.RootPath, "Profiles", oldname);
+				string newDirectory = Path.Combine(Assistant.Engine.RootPath, "Profiles", newname);
+				System.IO.Directory.Move(oldDirectory, newDirectory);
+			}
+			catch
+			{ }
 		}
 
 		// Funzioni richiamate dalla gui
