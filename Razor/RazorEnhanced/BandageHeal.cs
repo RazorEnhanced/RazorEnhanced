@@ -252,7 +252,7 @@ namespace RazorEnhanced
 					Player.HeadMessage(10, "Bandage not found");
 					AddLog("Bandage not found");
 				}
-				else if (bandageamount < 11 && bandageamount > 0)
+				else if (bandageamount < 11 && bandageamount > 1)	 // don't warn on last bandaid to avoid constant message for everlasting bandage
 				{
 					Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
 					AddLog("Warning: Low bandage: " + bandageamount + " left");

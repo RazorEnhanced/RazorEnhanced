@@ -15,7 +15,8 @@ namespace RazorEnhanced
 	{
 		/////////////////// START - STATIC FIELD ///////////////////////
 		const ushort WallStaticID = 0x28A8;
-		const ushort WallStaticIDStone = 0x0750;
+		//const ushort WallStaticIDStone = 0x0750;
+		const ushort WallStaticIDStone = 0x0080;
 
 		internal enum WallColor : ushort
 		{
@@ -35,7 +36,7 @@ namespace RazorEnhanced
 					wall.Hue = (ushort)WallColor.Stone;
 			 		Assistant.Client.Instance.SendToClient(new WorldItem(wall));
 					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Stone, 3, Language.CliLocName, wall.Name, "[Wall Of Stone]"));
+				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, 0x0080, MessageType.Regular, (ushort)WallColor.Stone, 3, Language.CliLocName, wall.Name, "[Wall Of Stone]"));
 					return true;
 				case 0x3996:
 				case 0x398C:

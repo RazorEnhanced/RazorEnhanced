@@ -448,37 +448,38 @@ namespace RazorEnhanced
 						break;
 
 					case "Nearest":
-						Mobile closest = null;
+						Mobile closest = mobiles[0] as Mobile;
 						double closestDist = double.MaxValue;
-
-						foreach (Mobile m in mobiles)
-						{
-							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
-
-							if (!(dist < closestDist) && closest != null)
-								continue;
-
-							closestDist = dist;
-							closest = m;
+						if (closest != null) {
+							foreach (Mobile m in mobiles)
+							{
+								double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
+								if (dist < closestDist)
+								{
+									closestDist = dist;
+									closest = m;
+								}
+							}
+							result = closest;
 						}
-						result = closest;
 						break;
 
 					case "Farthest":
-						Mobile farthest = null;
+						Mobile farthest = mobiles[0] as Mobile;
 						double farthestDist = double.MinValue;
-
-						foreach (Mobile m in mobiles)
+						if (farthest != null)
 						{
-							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
-
-							if (!(dist > farthestDist) && farthest != null)
-								continue;
-
-							farthestDist = dist;
-							farthest = m;
+							foreach (Mobile m in mobiles)
+							{
+								double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
+								if (dist > farthestDist)
+								{
+									farthestDist = dist;
+									farthest = m;
+								}
+							}
+							result = farthest;
 						}
-						result = farthest;
 						break;
 
 					case "Weakest":
