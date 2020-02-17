@@ -5302,6 +5302,11 @@ namespace Assistant
             this.smartCPU.TabIndex = 53;
             this.smartCPU.Text = "Use smart CPU usage reduction";
             this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
+            if (!Assistant.Client.IsOSI)
+            {
+                this.smartCPU.Enabled = false;
+                this.smartCPU.Text = "Smart CPU not available with Classic UO";
+            }
             //
             // alwaysTop
             //
@@ -8786,8 +8791,6 @@ namespace Assistant
 			Filters.Filter.Load();
 			Filters.Filter.Draw(filters);
 			smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
-			if (smartCPU.Checked)
-		 		Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;
 
 			this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
 			rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");

@@ -821,7 +821,7 @@ namespace RazorEnhanced
 		{
 			Assistant.Item itemtograb = Assistant.World.FindItem(serial);
 
-			if (itemtograb != null && itemtograb.Serial.IsItem && itemtograb.Movable)
+			if (itemtograb != null && itemtograb.Serial.IsItem) // && OSI nothing was movable itemtograb.Movable)
 			{
 				Assistant.DragDropManager.DragDrop(itemtograb, itemtograb.Amount, World.Player.Backpack);
 			}
