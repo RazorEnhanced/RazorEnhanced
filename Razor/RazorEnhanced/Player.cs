@@ -1360,7 +1360,7 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
 
-		// Paperdool button click
+		// Paperdoll button click
 		public static void QuestButton()
 		{
 	 		Assistant.Client.Instance.SendToServerWait(new QuestButton(World.Player.Serial));

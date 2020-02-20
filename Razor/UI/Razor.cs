@@ -461,7 +461,7 @@ namespace Assistant
         private TabControl toolbarstab;
         private GroupBox uomodgroupbox;
         private RazorCheckBox uomodFPSCheckBox;
-        private RazorCheckBox uomodpaperdoolCheckBox;
+        private RazorCheckBox uomodpaperdollCheckBox;
         private RazorCheckBox uomodglobalsoundCheckBox;
         private Label labelHotride;
         private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
@@ -1125,7 +1125,7 @@ namespace Assistant
             this.txtSpellFormat = new RazorEnhanced.UI.RazorTextBox();
             this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
             this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
-            this.uomodpaperdoolCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.uomodpaperdollCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.uomodglobalsoundCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.uomodFPSCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.remountedelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1857,7 +1857,7 @@ namespace Assistant
             //
             // uomodgroupbox
             //
-            this.uomodgroupbox.Controls.Add(this.uomodpaperdoolCheckBox);
+            this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
             this.uomodgroupbox.Location = new System.Drawing.Point(192, 285);
@@ -5740,14 +5740,14 @@ namespace Assistant
             this.chkForceSpeechHue.Text = "Override Speech Hue";
             this.chkForceSpeechHue.CheckedChanged += new System.EventHandler(this.chkForceSpeechHue_CheckedChanged);
             //
-            // uomodpaperdoolCheckBox
+            // uomodpaperdollCheckBox
             //
-            this.uomodpaperdoolCheckBox.Location = new System.Drawing.Point(119, 15);
-            this.uomodpaperdoolCheckBox.Name = "uomodpaperdoolCheckBox";
-            this.uomodpaperdoolCheckBox.Size = new System.Drawing.Size(158, 22);
-            this.uomodpaperdoolCheckBox.TabIndex = 61;
-            this.uomodpaperdoolCheckBox.Text = "Show Paperdool Slot";
-            this.uomodpaperdoolCheckBox.CheckedChanged += new System.EventHandler(this.uomodpaperdoolCheckBox_CheckedChanged);
+            this.uomodpaperdollCheckBox.Location = new System.Drawing.Point(119, 15);
+            this.uomodpaperdollCheckBox.Name = "uomodpaperdollCheckBox";
+            this.uomodpaperdollCheckBox.Size = new System.Drawing.Size(158, 22);
+            this.uomodpaperdollCheckBox.TabIndex = 61;
+            this.uomodpaperdollCheckBox.Text = "Show Paperdoll Slot";
+            this.uomodpaperdollCheckBox.CheckedChanged += new System.EventHandler(this.uomodpaperdollCheckBox_CheckedChanged);
             //
             // uomodglobalsoundCheckBox
             //
@@ -8892,13 +8892,13 @@ namespace Assistant
 			if (Engine.ClientMajor >= 7 ) //&& Engine.ClientBuild < 49)
 			{
 				uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
-				uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
+				uomodpaperdollCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdoll");
 				uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
 			}
 			else
 			{
 				uomodFPSCheckBox.Enabled = false;
-				uomodpaperdoolCheckBox.Enabled = false;
+				uomodpaperdollCheckBox.Enabled = false;
 				uomodglobalsoundCheckBox.Enabled = false;
 			}
 
@@ -9357,11 +9357,11 @@ namespace Assistant
 			}
 		}
 
-		private void uomodpaperdoolCheckBox_CheckedChanged(object sender, EventArgs e)
+		private void uomodpaperdollCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (uomodpaperdoolCheckBox.Focused)
+			if (uomodpaperdollCheckBox.Focused)
 			{
-				if (uomodpaperdoolCheckBox.Checked)
+				if (uomodpaperdollCheckBox.Checked)
 				{
 					if (Engine.ClientBuild > 49)
 						MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -9370,7 +9370,7 @@ namespace Assistant
 				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_PAPERDOLL_SLOTS);
 
-				RazorEnhanced.Settings.General.WriteBool("UoModPaperdool", uomodpaperdoolCheckBox.Checked);
+				RazorEnhanced.Settings.General.WriteBool("UoModPaperdoll", uomodpaperdollCheckBox.Checked);
 			}
 		}
 

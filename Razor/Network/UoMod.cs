@@ -42,7 +42,7 @@ namespace Assistant
 		private static IntPtr m_modhandle = IntPtr.Zero;
 		private static bool m_soundpatch = false;
 		private static bool m_fpspatch = false;
-		private static bool m_paperdoolpatch = false;
+		private static bool m_paperdollpatch = false;
 		private static bool m_viewrangepatch = false;
 
 		// privileges
@@ -164,7 +164,7 @@ namespace Assistant
 					break;
                 case (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS:
 					DLLImport.Win.SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
-					m_paperdoolpatch = enable;
+					m_paperdollpatch = enable;
 					break;
 				case (int)PATCH_TYPE.PT_GLOBAL_SOUND:
 					DLLImport.Win.SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
@@ -197,10 +197,10 @@ namespace Assistant
 				m_fpspatch = true;
             }
 
-			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdool"))
+			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdoll"))
 			{
 				DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
-				m_paperdoolpatch = true;
+				m_paperdollpatch = true;
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("UoModSound"))
@@ -262,21 +262,21 @@ namespace Assistant
 				}
 			}
 
-			// Paperdool
-			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdool"))
+			// Paperdoll
+			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdoll"))
 			{
-				if (!m_paperdoolpatch)
+				if (!m_paperdollpatch)
 				{
 					DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
-					m_paperdoolpatch = true;
+					m_paperdollpatch = true;
 				}
 			}
 			else
 			{
-				if (m_paperdoolpatch)
+				if (m_paperdollpatch)
 				{
 					DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
-					m_paperdoolpatch = false;
+					m_paperdollpatch = false;
 				}
 			}
 

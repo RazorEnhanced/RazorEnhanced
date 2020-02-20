@@ -2284,7 +2284,7 @@ namespace RazorEnhanced
 
 			// Parametri UoMod
 			general.Columns.Add("UoModFPS", typeof(bool));
-			general.Columns.Add("UoModPaperdool", typeof(bool));
+			general.Columns.Add("UoModPaperdoll", typeof(bool));
 			general.Columns.Add("UoModSound", typeof(bool));
 
 			// Parametri Video Recorder
