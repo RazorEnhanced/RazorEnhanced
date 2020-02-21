@@ -55,8 +55,8 @@ namespace RazorEnhanced
 				}
 				catch { }
 			}
-
-            ProcessLootList();
+			uint lootbag = AutoLoot.GetLootBag();
+			ProcessLootList(lootbag);
 
 			if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
 			{
@@ -89,7 +89,7 @@ namespace RazorEnhanced
 							else
 							{
 								RazorEnhanced.Scavenger.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Grabbing");
-								RazorEnhanced.Items.Move(item.Serial, Scavenger.ScavengerBag, 0);
+								RazorEnhanced.Items.Move(item.Serial, Convert.ToInt32(Scavenger.GetScavengerBag()), 0);
 								Thread.Sleep(Scavenger.ScavengerDelay);
 								ScavengerSerialToGrab.TryDequeue(out itemserial);
 							}
@@ -141,7 +141,7 @@ namespace RazorEnhanced
 		}
 
         private static System.Object autolootLock = new System.Object();
-        internal static void ProcessLootList()
+        internal static void ProcessLootList(uint lootbag)
         {
             if (Monitor.TryEnter(autolootLock)) try
                 {
@@ -184,7 +184,7 @@ namespace RazorEnhanced
                                     else
                                     {
                                         RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
-                                        RazorEnhanced.Items.Move(item.Serial, AutoLoot.AutoLootBag, 0);
+                                        RazorEnhanced.Items.Move(item.Serial, Convert.ToInt32(lootbag), 0);
                                         Thread.Sleep(AutoLoot.AutoLootDelay);
                                         AutoLoot.SerialToGrabList.TryDequeue(out data);
                                     }
@@ -205,7 +205,7 @@ namespace RazorEnhanced
                 }
         }
 
-        private static bool CheckZLevel(int x, int y)
+		private static bool CheckZLevel(int x, int y)
 		{
 			int diff = x - y;
 
