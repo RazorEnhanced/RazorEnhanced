@@ -11,52 +11,56 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
 
-	//	internal static volatile bool HoldingItem = false;
+        //	internal static volatile bool HoldingItem = false;
 
-		internal static void AutoRun()
-		{
-			if (World.Player == null || !Client.Running)
-				return;
+        internal static void AutoRun()
+        {
+            if (World.Player == null || !Client.Running)
+                return;
 
-			if (World.Player.IsGhost)
-			{
-				Thread.Sleep(2000);
-				return;
-			}
+            if (World.Player.IsGhost)
+            {
+                Thread.Sleep(2000);
+                return;
+            }
 
-			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget && Player.Visible)
-			{
-				try
-				{
-					if (AutoLootSerialCorpseRefresh.TryPeek(out int itemserial))
-					{
-						Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget && Player.Visible)
+            {
+                try
+                {
+                    if (AutoLootSerialCorpseRefresh.TryPeek(out int itemserial))
+                    {
+                        Assistant.Item item = Assistant.World.FindItem(itemserial);
 
-						if (item == null)
-						{
-							AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
-							return;
-						}
+                        if (item == null)
+                        {
+                            AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
+                            return;
+                        }
 
-						if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= AutoLoot.MaxRange && CheckZLevel(item.Position.Z, World.Player.Position.Z))
-						{
-							RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
-							AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
-							Thread.Sleep(AutoLoot.AutoLootDelay);
-							if (item.Updated)
-								AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
-						}
-						else
-						{
-							AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
-							AutoLootSerialCorpseRefresh.Enqueue(itemserial);
-						}
-					}
-				}
-				catch { }
-			}
-			uint lootbag = AutoLoot.GetLootBag();
-			ProcessLootList(lootbag);
+                        if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= AutoLoot.MaxRange && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+                        {
+                            RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
+                            AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
+                            Thread.Sleep(AutoLoot.AutoLootDelay);
+                            if (item.Updated)
+                                AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
+                        }
+                        else
+                        {
+                            AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
+                            AutoLootSerialCorpseRefresh.Enqueue(itemserial);
+                        }
+                    }
+                }
+                catch { }
+            }
+            uint lootbag = AutoLoot.GetLootBag();
+            // at login, backpack is sometimes null
+            if (lootbag != 0)
+            {
+                ProcessLootList(lootbag);
+            }
 
 			if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
 			{

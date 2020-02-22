@@ -498,7 +498,11 @@ namespace RazorEnhanced
             {
                 Engine(autoLootList, mseconds, filter);
                 uint lootbag = GetLootBag();
-                DragDropManager.ProcessLootList(lootbag);
+                // at login, backpack is sometimes null
+                if (lootbag != 0)
+                {
+                    DragDropManager.ProcessLootList(lootbag);
+                }
             } else {
                 Scripts.SendMessageScriptError("Script Error: Autoloot.RunOnce: list specified is empty or doesn't exist");
             }
@@ -519,6 +523,10 @@ namespace RazorEnhanced
                         AddLog("Invalid Bag, Switch to backpack");
                         lootChangeMsgSent = true;
                     }
+                    if (World.Player == null || World.Player.Backpack == null || World.Player.Backpack.Serial == null)
+                    {
+                        return 0;
+                    }
                     return World.Player.Backpack.Serial.Value;
                 }
             }
@@ -529,6 +537,10 @@ namespace RazorEnhanced
                     Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack", 945, true);
                     AddLog("Invalid Bag, Switch to backpack");
                     lootChangeMsgSent = true;
+                }
+                if (World.Player == null || World.Player.Backpack == null || World.Player.Backpack.Serial == null)
+                {
+                    return 0;
                 }
                 return World.Player.Backpack.Serial.Value;
             }
