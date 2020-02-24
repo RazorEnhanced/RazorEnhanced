@@ -102,8 +102,10 @@ namespace Assistant
 		private static Mutex CommMutex;
 
 		private static Process ClientProc;
+        public override string SmartCpuText { get { return "Use smart CPU usage reduction"; } }
+        public override bool SmartCpuEnabled { get { return true; } }
 
-		private static bool m_Ready = false;
+        private static bool m_Ready = false;
 		public override bool Ready { get { return m_Ready; } }
 
 		public override Process ClientProcess { get { return ClientProc; } }
@@ -165,7 +167,12 @@ namespace Assistant
 		public override void RunUI()
 		{
 			Engine.MainWnd = new MainForm();
-			Application.Run(Engine.MainWnd);
+            //if (!Assistant.Client.IsOSI)
+            //{
+            //    Engine.MainWnd.g  generalTab.Controls  smartCPU .Enabled = false;
+            //    this.smartCPU.Text = "Smart CPU not available with Classic UO";
+            //}
+            Application.Run(Engine.MainWnd);
 		}
 		public override RazorEnhanced.Shard SelectShard(List<RazorEnhanced.Shard> shards)
 		{

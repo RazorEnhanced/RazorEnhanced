@@ -241,6 +241,11 @@
     <Compile Include="Network\UoMod.cs" />
     <Compile Include="Network\UoWarper.cs" />
     <Compile Include="Platform.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
@@ -633,6 +638,12 @@
     <None Include="Lib\ensurepip\_bundled\pip-8.1.1-py2.py3-none-any.whl" />
     <None Include="Lib\ensurepip\_bundled\setuptools-20.10.1-py2.py3-none-any.whl" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Client.datasource" />
+    <None Include="Properties\DataSources\Ultima.Client.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="RazorEnhanced\Resources\bug-add.png" />
     <None Include="RazorEnhanced\Resources\bug-delete.png" />
     <None Include="RazorEnhanced\Resources\document-close-2.png" />
@@ -1273,7 +1284,9 @@
       <Name>Ultima</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

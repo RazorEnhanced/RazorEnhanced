@@ -46,270 +46,273 @@ namespace Assistant
 
 		public static readonly int MaxBit = 26;
 	}
-	public abstract class Client
-	{
-		public static Client Instance;
-		public static bool IsOSI;
+    public abstract class Client
+    {
+        public static Client Instance;
+        public static bool IsOSI;
 
-		private static bool m_Running;
-		internal static bool Running { get { return m_Running; } }
-
-
-		public bool Init(bool isOSI)
-		// returns false on cancel
-		{
-
-			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
-			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
-			System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
-			// Profile
-			RazorEnhanced.Profiles.Load();
-
-			// Shard Bookmarks
-			RazorEnhanced.Shard.Load();
-
-			RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
-
-			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
-
-			RazorEnhanced.Shard selected = Client.Instance.SelectShard(shards);
-			m_Running = true;
-
-			if ((!isOSI) || (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
-			{
-				Instance.Start(selected);
-			}
-			else
-			{
-				RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-				DialogResult laucherdialog = launcher.ShowDialog();
-
-				if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
-				{
-					if (selected == null)
-					{
-						MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-					else
-					{
-						RazorEnhanced.Shard.Read(out shards);
-						selected = Instance.SelectShard(shards);
-						Instance.Start(selected);
-					}
-				}
-				else
-				{
-					m_Running = false;
-					return false;
-				}
-			}
-			return true;
-
-		}
+        private static bool m_Running;
+        internal static bool Running { get { return m_Running; } }
 
 
+        public bool Init(bool isOSI)
+        // returns false on cancel
+        {
 
-		internal void Start(RazorEnhanced.Shard selected)
-		{
-			ClientEncrypted = selected.PatchEnc;
-			ServerEncrypted = selected.OSIEnc;
-			string clientPath = selected.ClientPath;
-			string dataDir = selected.ClientFolder;
-			string addr = selected.Host;
-			int port = selected.Port;
+            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
+            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
+            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
+            // Profile
+            RazorEnhanced.Profiles.Load();
 
-			Ultima.Files.Directory = selected.ClientFolder;
-			if (!Language.Load("ENU"))
-			{
-				//SplashScreen.End();
-				MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
+            // Shard Bookmarks
+            RazorEnhanced.Shard.Load();
 
-			if (dataDir != null && Directory.Exists(dataDir))
-			{
-				Ultima.Files.SetMulPath(dataDir);
-			}
-			else
-			{
-				MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
+            RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
 
-			Language.LoadCliLoc();
-			Initialize(typeof(Assistant.Engine).Assembly);
+            RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
 
-			Assistant.Client.Instance.SetConnectionInfo(IPAddress.None, -1);
-			if (IsOSI)
-			{
-				Assistant.Client.Loader_Error result = Assistant.Client.Loader_Error.UNKNOWN_ERROR;
+            RazorEnhanced.Shard selected = Client.Instance.SelectShard(shards);
+            m_Running = true;
 
-				if (clientPath != null && File.Exists(clientPath))
-					result = Assistant.Client.Instance.LaunchClient(clientPath);
+            if ((!isOSI) || (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
+            {
+                Instance.Start(selected);
+            }
+            else
+            {
+                RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
+                DialogResult laucherdialog = launcher.ShowDialog();
 
-				if (result != Assistant.Client.Loader_Error.SUCCESS)
-				{
-					if (clientPath == null && File.Exists(clientPath))
-						MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					else
-						MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					//SplashScreen.End();
-					RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-					return;
-				}
-			}
+                if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
+                {
+                    if (selected == null)
+                    {
+                        MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        RazorEnhanced.Shard.Read(out shards);
+                        selected = Instance.SelectShard(shards);
+                        Instance.Start(selected);
+                    }
+                }
+                else
+                {
+                    m_Running = false;
+                    return false;
+                }
+            }
+            return true;
 
-
-			// if these are null then the registry entry does not exist (old razor version)
-			Engine.IP = Resolve(addr);
-			if (Engine.IP == IPAddress.None || port == 0)
-			{
-				MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				//SplashScreen.End();
-				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
-				return;
-			}
-
-			Engine.ClientBuild = FileVersionInfo.GetVersionInfo(clientPath).FileBuildPart;
-			Engine.ClientMajor = FileVersionInfo.GetVersionInfo(clientPath).FileMajorPart;
-
-			//SplashScreen.Start();
-			//m_ActiveWnd = SplashScreen.Instance;
-
-			Assistant.Client.Instance.SetConnectionInfo(Engine.IP, port);
-
-			Ultima.Multis.PostHSFormat = UsePostHSChanges;
-
-		}
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		static extern bool SetForegroundWindow(IntPtr hWnd);
-
-		[DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-		public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
-
-		[DllImport("user32.dll", SetLastError = true)]
-		public static extern IntPtr ShowWindow(IntPtr hWnd, int nCmdShow);
+        }
 
 
-		[DllImport("user32.dll", SetLastError = true)]
-		public static extern IntPtr SetFocus(IntPtr hWnd);
-		public static void BringToFront(IntPtr hWnd)
-		{
-			const int HWND_TOP = 0;
-			const int SWP_NOMOVE = 2;
-			const int SWP_NOSIZE = 1;
-			const int SW_SHOW = 5;
-			SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-			ShowWindow(hWnd, SW_SHOW);
-			SetForegroundWindow(hWnd);
-			SetFocus(hWnd);
-		}
-		private static void Initialize(System.Reflection.Assembly a)
-		{
-			Type[] types = a.GetTypes();
 
-			foreach (Type t in types)
-			{
-				MethodInfo init = t.GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
+        internal void Start(RazorEnhanced.Shard selected)
+        {
+            ClientEncrypted = selected.PatchEnc;
+            ServerEncrypted = selected.OSIEnc;
+            string clientPath = selected.ClientPath;
+            string dataDir = selected.ClientFolder;
+            string addr = selected.Host;
+            int port = selected.Port;
 
-				if (init != null)
-					init.Invoke(null, null);
-			}
-		}
+            Ultima.Files.Directory = selected.ClientFolder;
+            if (!Language.Load("ENU"))
+            {
+                //SplashScreen.End();
+                MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                return;
+            }
 
-		internal static IPAddress Resolve(string addr)
-		{
-			IPAddress ipAddr = IPAddress.None;
+            if (dataDir != null && Directory.Exists(dataDir))
+            {
+                Ultima.Files.SetMulPath(dataDir);
+            }
+            else
+            {
+                MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                return;
+            }
 
-			if (string.IsNullOrEmpty(addr))
-				return ipAddr;
+            Language.LoadCliLoc();
+            Initialize(typeof(Assistant.Engine).Assembly);
 
-			try
-			{
-				ipAddr = IPAddress.Parse(addr);
-			}
-			catch
-			{
-				try
-				{
-					IPHostEntry iphe = Dns.GetHostEntry(addr);
+            Assistant.Client.Instance.SetConnectionInfo(IPAddress.None, -1);
+            if (IsOSI)
+            {
+                Assistant.Client.Loader_Error result = Assistant.Client.Loader_Error.UNKNOWN_ERROR;
 
-					if (iphe.AddressList.Length > 0)
-						ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
-				}
-				catch
-				{
-				}
-			}
+                if (clientPath != null && File.Exists(clientPath))
+                    result = Assistant.Client.Instance.LaunchClient(clientPath);
 
-			return ipAddr;
-		}
+                if (result != Assistant.Client.Loader_Error.SUCCESS)
+                {
+                    if (clientPath == null && File.Exists(clientPath))
+                        MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                        MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //SplashScreen.End();
+                    RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                    return;
+                }
+            }
 
-		internal bool UsePostHSChanges
-		{
 
-			get
-			{
-				if (Engine.ClientVersion.Major > 7)
-				{
-					return true;
-				}
-				else if (Engine.ClientVersion.Major == 7)
-				{
-					if (Engine.ClientVersion.Minor > 0)
-					{
-						return true;
-					}
-					else if (Engine.ClientVersion.Build >= 9)
-					{
-						return true;
-					}
-				}
+            // if these are null then the registry entry does not exist (old razor version)
+            Engine.IP = Resolve(addr);
+            if (Engine.IP == IPAddress.None || port == 0)
+            {
+                MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //SplashScreen.End();
+                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                return;
+            }
 
-				return false;
-			}
-		}
+            Engine.ClientBuild = FileVersionInfo.GetVersionInfo(clientPath).FileBuildPart;
+            Engine.ClientMajor = FileVersionInfo.GetVersionInfo(clientPath).FileMajorPart;
 
-		public const int WM_USER = 0x400;
+            //SplashScreen.Start();
+            //m_ActiveWnd = SplashScreen.Instance;
 
-		public const int WM_COPYDATA = 0x4A;
-		public const int WM_UONETEVENT = WM_USER + 1;
+            Assistant.Client.Instance.SetConnectionInfo(Engine.IP, port);
 
-		private ulong m_Features = 0;
+            Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
-		public bool AllowBit(int bit)
-		{
-			// ENABLE IT ONLY FOR DEBUG
-			if (File.Exists(Path.Combine(Assistant.Engine.RootPath, "bypassnegotiate")))
-				return true;
-			return (m_Features & (1U << bit)) == 0;
-		}
+        }
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
 
-		public void SetFeatures(ulong features)
-		{
-			m_Features = features;
-		}
-		public abstract void RunUI();
-		public abstract RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards);
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
 
-		protected DateTime m_ConnectionStart;
-		//public  DateTime ConnectionStart { get; }
-		public  DateTime ConnectionStart => m_ConnectionStart;
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr ShowWindow(IntPtr hWnd, int nCmdShow);
 
-		protected static IPAddress m_LastConnection;
-		public  IPAddress LastConnection {
-			get {
-				if (m_LastConnection == null)
-					return Engine.IP;	  // CUO was not calling OnConnect soon enough
-				else
-					return m_LastConnection;
-			}
-		}
 
-		public abstract Process ClientProcess { get; }
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SetFocus(IntPtr hWnd);
+        public static void BringToFront(IntPtr hWnd)
+        {
+            const int HWND_TOP = 0;
+            const int SWP_NOMOVE = 2;
+            const int SWP_NOSIZE = 1;
+            const int SW_SHOW = 5;
+            SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+            ShowWindow(hWnd, SW_SHOW);
+            SetForegroundWindow(hWnd);
+            SetFocus(hWnd);
+        }
+        private static void Initialize(System.Reflection.Assembly a)
+        {
+            Type[] types = a.GetTypes();
+
+            foreach (Type t in types)
+            {
+                MethodInfo init = t.GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
+
+                if (init != null)
+                    init.Invoke(null, null);
+            }
+        }
+
+        internal static IPAddress Resolve(string addr)
+        {
+            IPAddress ipAddr = IPAddress.None;
+
+            if (string.IsNullOrEmpty(addr))
+                return ipAddr;
+
+            try
+            {
+                ipAddr = IPAddress.Parse(addr);
+            }
+            catch
+            {
+                try
+                {
+                    IPHostEntry iphe = Dns.GetHostEntry(addr);
+
+                    if (iphe.AddressList.Length > 0)
+                        ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
+                }
+                catch
+                {
+                }
+            }
+
+            return ipAddr;
+        }
+
+        internal bool UsePostHSChanges
+        {
+
+            get
+            {
+                if (Engine.ClientVersion.Major > 7)
+                {
+                    return true;
+                }
+                else if (Engine.ClientVersion.Major == 7)
+                {
+                    if (Engine.ClientVersion.Minor > 0)
+                    {
+                        return true;
+                    }
+                    else if (Engine.ClientVersion.Build >= 9)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        public const int WM_USER = 0x400;
+
+        public const int WM_COPYDATA = 0x4A;
+        public const int WM_UONETEVENT = WM_USER + 1;
+
+        private ulong m_Features = 0;
+
+        public bool AllowBit(int bit)
+        {
+            // ENABLE IT ONLY FOR DEBUG
+            if (File.Exists(Path.Combine(Assistant.Engine.RootPath, "bypassnegotiate")))
+                return true;
+            return (m_Features & (1U << bit)) == 0;
+        }
+
+        public void SetFeatures(ulong features)
+        {
+            m_Features = features;
+        }
+        public abstract void RunUI();
+        public abstract RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards);
+
+        protected DateTime m_ConnectionStart;
+        //public  DateTime ConnectionStart { get; }
+        public DateTime ConnectionStart => m_ConnectionStart;
+
+        protected static IPAddress m_LastConnection;
+        public IPAddress LastConnection {
+            get {
+                if (m_LastConnection == null)
+                    return Engine.IP;     // CUO was not calling OnConnect soon enough
+                else
+                    return m_LastConnection;
+            }
+        }
+
+        public abstract string SmartCpuText { get; }
+        public abstract bool SmartCpuEnabled { get; }
+
+        public abstract Process ClientProcess { get; }
 		public abstract  bool ClientRunning { get; }
 
 		public abstract void SetMapWndHandle(Form mapWnd);

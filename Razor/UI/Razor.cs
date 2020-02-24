@@ -693,6 +693,7 @@ namespace Assistant
         private RazorCheckBox bandagehealAutostartCheckBox;
         private RazorCheckBox bandagehealusetarget;
         private RazorButton paypalButton;
+        private BindingSource clientBindingSource;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -1155,8 +1156,6 @@ namespace Assistant
             this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptshowStartStopCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptSearchTextBox = new RazorEnhanced.UI.RazorTextBox();
-            this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.buttonScriptEditorNew = new RazorEnhanced.UI.RazorButton();
             this.buttonAddScript = new RazorEnhanced.UI.RazorButton();
             this.buttonRemoveScript = new RazorEnhanced.UI.RazorButton();
@@ -1166,6 +1165,8 @@ namespace Assistant
             this.scriptautostartcheckbox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptwaitmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
+            this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
             this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1403,6 +1404,7 @@ namespace Assistant
             this.DPSMeterClearButton = new RazorEnhanced.UI.RazorButton();
             this.discordrazorButton = new RazorEnhanced.UI.RazorButton();
             this.razorButtonWiki = new RazorEnhanced.UI.RazorButton();
+            this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1507,6 +1509,7 @@ namespace Assistant
             this.statusTab.SuspendLayout();
             this.datagridMenuStrip.SuspendLayout();
             this.scriptgridMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             this.SuspendLayout();
             //
             // tabs
@@ -3246,7 +3249,6 @@ namespace Assistant
             this.friendguildListView.UseCompatibleStateImageBehavior = false;
             this.friendguildListView.View = System.Windows.Forms.View.Details;
             this.friendguildListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.friendGuildListView_Checked);
-
             //
             // columnHeader63
             //
@@ -5296,17 +5298,14 @@ namespace Assistant
             //
             // smartCPU
             //
+            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientBindingSource, "SmartCpuText", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.clientBindingSource, "SmartCpuEnabled", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.smartCPU.Location = new System.Drawing.Point(253, 24);
             this.smartCPU.Name = "smartCPU";
             this.smartCPU.Size = new System.Drawing.Size(241, 22);
             this.smartCPU.TabIndex = 53;
             this.smartCPU.Text = "Use smart CPU usage reduction";
             this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
-            if (!Assistant.Client.IsOSI)
-            {
-                this.smartCPU.Enabled = false;
-                this.smartCPU.Text = "Smart CPU not available with Classic UO";
-            }
             //
             // alwaysTop
             //
@@ -6021,24 +6020,6 @@ namespace Assistant
             this.scriptSearchTextBox.Text = "Name to search..";
             this.scriptSearchTextBox.TextChanged += new System.EventHandler(this.scriptSearchTextBox_TextChanged);
             //
-            // scripterrorlogCheckBox
-            //
-            this.scripterrorlogCheckBox.Location = new System.Drawing.Point(488, 302);
-            this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
-            this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 22);
-            this.scripterrorlogCheckBox.TabIndex = 74;
-            this.scripterrorlogCheckBox.Text = "Log Script Error";
-            this.scripterrorlogCheckBox.CheckedChanged += new System.EventHandler(this.scripterrorlogCheckBox_CheckedChanged);
-            //
-            // showscriptmessageCheckBox
-            //
-            this.showscriptmessageCheckBox.Location = new System.Drawing.Point(488, 322);
-            this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
-            this.showscriptmessageCheckBox.Size = new System.Drawing.Size(175, 22);
-            this.showscriptmessageCheckBox.TabIndex = 72;
-            this.showscriptmessageCheckBox.Text = "Show Script Error Message";
-            this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
-            //
             // buttonScriptEditorNew
             //
             this.buttonScriptEditorNew.Location = new System.Drawing.Point(7, 72);
@@ -6123,6 +6104,24 @@ namespace Assistant
             this.scriptloopmodecheckbox.TabIndex = 49;
             this.scriptloopmodecheckbox.Text = "Loop Mode";
             this.scriptloopmodecheckbox.CheckedChanged += new System.EventHandler(this.scriptloopmodecheckbox_CheckedChanged);
+            //
+            // scripterrorlogCheckBox
+            //
+            this.scripterrorlogCheckBox.Location = new System.Drawing.Point(488, 302);
+            this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
+            this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 22);
+            this.scripterrorlogCheckBox.TabIndex = 74;
+            this.scripterrorlogCheckBox.Text = "Log Script Error";
+            this.scripterrorlogCheckBox.CheckedChanged += new System.EventHandler(this.scripterrorlogCheckBox_CheckedChanged);
+            //
+            // showscriptmessageCheckBox
+            //
+            this.showscriptmessageCheckBox.Location = new System.Drawing.Point(488, 322);
+            this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
+            this.showscriptmessageCheckBox.Size = new System.Drawing.Size(175, 22);
+            this.showscriptmessageCheckBox.TabIndex = 72;
+            this.showscriptmessageCheckBox.Text = "Show Script Error Message";
+            this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
             //
             // scriptlistView
             //
@@ -8424,6 +8423,10 @@ namespace Assistant
             this.razorButtonWiki.UseVisualStyleBackColor = true;
             this.razorButtonWiki.Click += new System.EventHandler(this.razorButtonWiki_Click);
             //
+            // clientBindingSource
+            //
+            this.clientBindingSource.DataSource = Assistant.Client.Instance;
+            //
             // MainForm
             //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -8592,6 +8595,7 @@ namespace Assistant
             this.statusTab.ResumeLayout(false);
             this.datagridMenuStrip.ResumeLayout(false);
             this.scriptgridMenuStrip.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
