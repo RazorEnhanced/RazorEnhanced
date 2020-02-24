@@ -1,9 +1,8 @@
 #pragma once
 #pragma pack(1)
 
-#include <stdint.h>
-
-#define DLL_VERSION "1.4.1"
+#define DLL_VERSION "0.6.62"
+#define DLL_VERSION_OLD "1.0.14"  // Not change IT!
 
 #define DLLFUNCTION __declspec(dllexport)
 #define DLLVAR DLLFUNCTION
@@ -46,18 +45,21 @@ enum UONET_MESSAGE
 	NOTO_HUE = 13,
 	DLL_ERROR = 14,
 
+	DEATH_MSG = 15,
+
+	CALIBRATE_POS = 16,
+	GET_POS = 17,
+
+	OPEN_RPV = 18,
+
 	SETWNDSIZE = 19,
+
+	FINDDATA = 20,
 
 	SMART_CPU = 21,
 	NEGOTIATE = 22,
 	SET_MAP_HWND = 23,
-
-	ON_TICK = 24,
-};
-
-enum class UONET_MESSAGE_COPYDATA
-{
-	POSITION = 1,
+	// ZIPPY REV 80	SET_FWD_HWND = 24,
 };
 
 //#define SHARED_BUFF_SIZE 0x80000 // Client's buffers are 500k
@@ -69,14 +71,6 @@ struct Buffer
 	BYTE Buff[SHARED_BUFF_SIZE];
 };
 
-#pragma pack(1)
-struct Position {
-	uint16_t x;
-	uint16_t y;
-	uint16_t z;
-};
-static_assert(sizeof(struct Position) == 6, "Incorrect size\n");
-
 struct SharedMemory
 {
 	// Do *not* mess with this struct.  Really.  I mean it.
@@ -87,14 +81,17 @@ struct SharedMemory
 
 	char TitleBar[1024];
 	bool ForceDisconn;
+	bool AllowDisconn;
 	unsigned int TotalSend;
 	unsigned int TotalRecv;
 	unsigned short PacketTable[256];
 	char DataPath[256];
-	int Position[3]; // added back temporarily
+	char DeathMsg[16];
+	int Position[3];
+	unsigned char CheatKey[16];
 	bool AllowNegotiate;
-	unsigned char AuthBits[16];
-	bool Reserved0;
+	unsigned char AuthBits[8];
+	bool IsHaxed;
 	unsigned int ServerIP;
 	unsigned short ServerPort;
 	char UOVersion[16];
@@ -103,12 +100,12 @@ struct SharedMemory
 class PatchInfo
 {
 public:
-	PatchInfo( DWORD addr, int len )
+	PatchInfo(DWORD addr, int len)
 	{
 		Address = addr;
 		Length = len;
 		Data = new char[Length];
-		memcpy( Data, (const void*)Address, Length );
+		memcpy(Data, (const void*)Address, Length);
 	}
 
 	~PatchInfo()
@@ -124,6 +121,9 @@ public:
 #define WM_PROCREADY WM_USER
 #define WM_UONETEVENT WM_USER+1
 #define WM_CUSTOMTITLE WM_USER+2
+#define WM_UOA_MSG WM_USER+3
+// ZIPPY REV 80#define WM_SETFWDWND WM_USER+4
+// ZIPPY REV 80#define WM_FWDPACKET WM_USER+5
 
 #ifndef WM_XBUTTONDOWN
 #define WM_XBUTTONDOWN                  0x020B
@@ -134,33 +134,26 @@ extern HINSTANCE hInstance;
 extern SharedMemory *pShared;
 extern HANDLE CommMutex;
 
-DLLFUNCTION int InstallLibrary( HWND PostWindow, DWORD pId );
-DLLFUNCTION void Shutdown( bool closeClient );
+DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pId);
+DLLFUNCTION void Shutdown(bool closeClient);
 DLLFUNCTION HWND FindUOWindow();
 DLLFUNCTION void *GetSharedAddress();
-DLLFUNCTION int GetPacketLength( unsigned char *data, int len );
-DLLFUNCTION bool IsDynLength( unsigned char packet );
+DLLFUNCTION int GetPacketLength(unsigned char *data, int len);
+DLLFUNCTION bool IsDynLength(unsigned char packet);
 DLLFUNCTION int GetUOProcId();
+DLLFUNCTION DWORD InitializeLibrary(const char *);
 DLLFUNCTION HANDLE GetCommMutex();
-DLLFUNCTION unsigned int TotalIn();
-DLLFUNCTION unsigned int TotalOut();
-DLLFUNCTION bool IsCalibrated();
-DLLFUNCTION void CalibratePosition(uint16_t x, uint16_t y, uint16_t z);
-DLLFUNCTION void OnAttach(void *params, int paramsLen);
-DLLFUNCTION void SetServer(unsigned int addr, unsigned short port);
-DLLFUNCTION const char *GetUOVersion();
 
-
-LRESULT CALLBACK UOAWndProc( HWND, UINT, WPARAM, LPARAM );
-void Log( const char *format, ... );
-void MemoryPatch( unsigned long, unsigned long );
-void MemoryPatch( unsigned long, int, int );
-void MemoryPatch( unsigned long, const void *, int );
-void RedrawTitleBar( HWND, bool );
+LRESULT CALLBACK UOAWndProc(HWND, UINT, WPARAM, LPARAM);
+void Log(const char *format, ...);
+void MemoryPatch(unsigned long, unsigned long);
+void MemoryPatch(unsigned long, int, int);
+void MemoryPatch(unsigned long, const void *, int);
+void RedrawTitleBar(HWND, bool);
 void CheckTitlebarAttr(HWND);
 void FreeArt();
 void InitThemes();
-bool PatchStatusBar( BOOL preAOS );
+bool PatchStatusBar(BOOL preAOS);
 
 //#define PACKET_TBL_STR "Got Logout OK packet!\0\0\0"
 //#define PACKET_TS_LEN 24
@@ -234,3 +227,93 @@ key2 ^= 0xA31D527F;
 // E8 C1 E7 1F 0B C7 33 05 memoryloc_2
 #define CRYPT_KEY_STR_MORE_NEW "\xE8\xC1\xE7\x1F\x0B\xC7\x33\x05"
 #define CRYPT_KEY_MORE_NEW_LEN 8
+
+#define ANIM_PATTERN_1 "\x55\x68"
+// \xn\xn\xn\xn
+#define ANIM_PATTERN_2 "\x68"
+// \xn\xn\xn\xn
+#define ANIM_PATTERN_3 "\xE8"
+// \xn\xn\xn\xn
+#define ANIM_PATTERN_4 "\x8B\xE8\x83\xC4\x08\x85\xED\x75"
+// \xn
+#define ANIM_PATTERN_5 "\xB8"
+// \xn\xn\xn\xn
+#define ANIM_PATTERN_6 "\x8B\xFF\xC6\x40\xFF\x04\xC6\x00\x02\x83\xC0\x02\x3D"
+// \xn\xn\xn\xn
+
+#define ANIM_PATTERN_LENGTH_1 2
+#define ANIM_PATTERN_LENGTH_2 1
+#define ANIM_PATTERN_LENGTH_3 1
+#define ANIM_PATTERN_LENGTH_4 8
+#define ANIM_PATTERN_LENGTH_5 1
+#define ANIM_PATTERN_LENGTH_6 13
+
+// #define ANIM_PATTERN_LENGTH 47
+
+/*var animPattern = new byte?[]
+{
+0x55,                               // push ebp
+0x68, null, null, null, null,       // push offset
+0x68, null, null, null, null,       // push offset
+0xe8, null, null, null, null,       // call offset
+0x8b, 0xe8,                         // mov ebp, eax
+0x83, 0xc4, 0x08,                   // add esp, 8
+0x85, 0xed,                         // test, ebp, ebp
+0x75, null,                         // jnz short
+0xb8, null, null, null, null,       // mov eax, offset
+0x8b, 0xff,                         // mov edi, edi
+0xc6, 0x40, 0xff, 0x04,             // mov [eax-1], 4
+0xc6, 0x00, 0x02,                   // mov [eax], 2
+0x83, 0xc0, 0x02,                   // add eax, 2
+0x3d, null, null, null, null        // cmp eax, dword
+};*/
+
+#define SPEEDHACK_PATTERN_1 "\x8B\xFE\x2B\x3D"
+// \xn\xn\xn\xn
+#define SPEEDHACK_PATTERN_2 "\x83\xFF"
+// \xn
+#define SPEEDHACK_PATTERN_3 "\x0F\x82"
+//\xn\xn\xn\xn"
+
+#define SPEEDHACK_PATTERN_LENGTH_1 4
+#define SPEEDHACK_PATTERN_LENGTH_2 2
+#define SPEEDHACK_PATTERN_LENGTH_3 2
+
+// #define SPEEDHACK_PATTERN_LENGTH 17
+
+/*var speedhackPattern = new byte?[]
+{
+0x8b, 0xfe,                          // mov edi, esi
+0x2b, 0x3d, null, null, null, null,  // sub edi, far
+0x83, 0xff, null,                    // cmp edi, byte
+0x0f, 0x82, null, null, null, null,  // jb short
+};*/
+
+/*  var animAddress = MemoryTools.FindPattern(animPattern, Process.GetCurrentProcess().MainModule);
+	var speedhackAddress = MemoryTools.FindPattern(speedhackPattern, Process.GetCurrentProcess().MainModule);
+	if (speedhackAddress == IntPtr.Zero || animAddress == IntPtr.Zero)
+	{
+		Trace.WriteLine("Smooth movement offsets not found", "Patch manager");
+		return;
+	}
+
+	using (new TemporaryVirtualProtect(animAddress, (uint)animPattern.Length, 0x0040))
+	{
+		MemoryManager.Write((void*)(animAddress.ToInt32() + 11), new byte[] {
+			0x33, 0xc0, 0x90, 0x90, 0x90    // xor eax, eax
+		});
+		MemoryManager.Write((void*)(animAddress.ToInt32() + 35), new byte[] {
+			0x08                            // mov [eax-1], 8
+		});
+		MemoryManager.Write((void*)(animAddress.ToInt32() + 38), new byte[] {
+			0x04                            // mov [eax], 2
+		});
+	}
+	using (new TemporaryVirtualProtect(speedhackAddress, (uint)speedhackPattern.Length, 0x0040))
+	{
+		MemoryManager.Write((void*)(speedhackAddress.ToInt32() + 10), new byte[] {
+			0x26,                           // cmp edi, 0x26
+		});
+	}
+
+ Trace.WriteLine("Smooth movement applied", "Patch manager");*/

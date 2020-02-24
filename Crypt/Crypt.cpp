@@ -5,9 +5,12 @@
 #include "OSIEncryption.h"
 #include "LoginEncryption.h"
 #include "MemFinder.h"
+#include "Obfuscation.h"
+#include <iostream>
+
 
 //*************************************************************************************
-//**************************************Variables**************************************
+//**************************************Varaibles**************************************
 //*************************************************************************************
 HHOOK hWndProcRetHook = NULL;
 HHOOK hGetMsgHook = NULL;
@@ -19,6 +22,7 @@ DWORD UOProcId = 0;
 HANDLE hFileMap = NULL;
 HMODULE hInstance = NULL;
 SOCKET CurrentConnection = 0;
+int ConnectedIP = 0;
 
 HANDLE CommMutex = NULL;
 
@@ -28,9 +32,11 @@ SharedMemory *pShared = NULL;
 
 LARGE_INTEGER PerfFreq, Counter;
 
+DWORD DeathMsgAddr = 0xFFFFFFFF;
 HWND hUOAWnd = NULL;
 
-SIZE DesiredSize = {800,600};
+SIZE DesiredSize = { 800, 600 };
+DWORD ResizeFuncaddr = 0;
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
 unsigned long RecvAddress, SendAddress, ConnectAddress, CloseSocketAddress, SelectAddress, CreateFileAAddress;
@@ -48,9 +54,13 @@ bool Forwarding = false;
 bool Forwarded = false;
 bool ClientEncrypted = false;
 bool ServerEncrypted = false;
+bool DwmAttrState = true;
+bool connected = false;
 
 enum CLIENT_TYPE { TWOD = 1, THREED = 2 };
 CLIENT_TYPE ClientType = TWOD;
+
+BYTE CryptChecksum[16] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15, };
 
 //**************************************OSI Only Stuff*********************************
 DWORD CryptSeed = 0x7f000001;
@@ -63,32 +73,33 @@ LoginEncryption *ServerLogin = NULL;
 //*************************************************************************************
 //**************************************Functions**************************************
 //*************************************************************************************
-LRESULT CALLBACK WndProcRetHookFunc( int, WPARAM, LPARAM );
-LRESULT CALLBACK GetMsgHookFunc( int, WPARAM, LPARAM );
+LRESULT CALLBACK WndProcRetHookFunc(int, WPARAM, LPARAM);
+LRESULT CALLBACK GetMsgHookFunc(int, WPARAM, LPARAM);
 
-bool HookFunction( const char *, const char *, int, unsigned long, unsigned long *, unsigned long * );
+bool HookFunction(const char *, const char *, int, unsigned long, unsigned long *, unsigned long *);
 void FlushSendData();
 
 bool CreateSharedMemory();
 void CloseSharedMemory();
 
 //Hooks:
-int HookRecv( SOCKET, char *, int, int );
-int HookSend( SOCKET, char *, int, int );
-int HookConnect( SOCKET, const sockaddr *, int );
-int HookCloseSocket( SOCKET );
-int HookSelect( int, fd_set*, fd_set*, fd_set*, const struct timeval * );
+int PASCAL HookRecv(SOCKET, char *, int, int);
+int PASCAL HookSend(SOCKET, char *, int, int);
+int PASCAL HookConnect(SOCKET, const sockaddr *, int);
+int PASCAL HookCloseSocket(SOCKET);
+int PASCAL HookSelect(int, fd_set*, fd_set*, fd_set*, const struct timeval *);
+//HANDLE WINAPI CreateFileAHook( LPCTSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE );
 
-typedef int (*NetIOFunc)(SOCKET, char *, int, int);
-typedef int (*ConnFunc)(SOCKET, const sockaddr *, int);
-typedef int (*CLSFunc)(SOCKET);
-typedef int (*SelectFunc)( int, fd_set*, fd_set*, fd_set*, const struct timeval* );
-typedef HANDLE (*CreateFileAFunc)(LPCTSTR,DWORD,DWORD,LPSECURITY_ATTRIBUTES,DWORD,DWORD,HANDLE);
+typedef int (PASCAL *NetIOFunc)(SOCKET, char *, int, int);
+typedef int (PASCAL *ConnFunc)(SOCKET, const sockaddr *, int);
+typedef int (PASCAL *CLSFunc)(SOCKET);
+typedef int (PASCAL *SelectFunc)(int, fd_set*, fd_set*, fd_set*, const struct timeval*);
+typedef HANDLE(WINAPI *CreateFileAFunc)(LPCTSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
 typedef char *(__cdecl *GetUOVersionFunc)();
 
 GetUOVersionFunc NativeGetUOVersion = NULL;
 
-BOOL APIENTRY DllMain( HANDLE hModule, DWORD dwReason, LPVOID )
+BOOL APIENTRY DllMain(HANDLE hModule, DWORD dwReason, LPVOID)
 {
 	DWORD postID, thisID;
 
@@ -96,27 +107,27 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD dwReason, LPVOID )
 	switch (dwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-		DisableThreadLibraryCalls( hInstance );
-		QueryPerformanceFrequency( &PerfFreq );
-		QueryPerformanceCounter( &Counter );
+		DisableThreadLibraryCalls(hInstance);
+		QueryPerformanceFrequency(&PerfFreq);
+		QueryPerformanceCounter(&Counter);
 		break;
 
 	case DLL_PROCESS_DETACH:
 		postID = 0;
 		thisID = GetCurrentProcessId();
-		if ( IsWindow( hRazorWnd ) )
-			GetWindowThreadProcessId( hRazorWnd, &postID );
+		if (IsWindow(hRazorWnd))
+			GetWindowThreadProcessId(hRazorWnd, &postID);
 
-		if ( thisID == postID || thisID == UOProcId )
+		if (thisID == postID || thisID == UOProcId)
 		{
-			if ( IsWindow( hRazorWnd ) )
-				PostMessage( hRazorWnd, WM_UONETEVENT, CLOSE, 0 );
+			if (IsWindow(hRazorWnd))
+				PostMessage(hRazorWnd, WM_UONETEVENT, CLOSE, 0);
 
-			if ( IsWindow( hUOWindow ) )
+			if (IsWindow(hUOWindow))
 			{
-				PostMessage( hUOWindow, WM_QUIT, 0, 0 );
-				SetForegroundWindow( hUOWindow );
-				SetFocus( hUOWindow );
+				PostMessage(hUOWindow, WM_QUIT, 0, 0);
+				SetForegroundWindow(hUOWindow);
+				SetFocus(hUOWindow);
 			}
 
 			CloseSharedMemory();
@@ -131,19 +142,20 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD dwReason, LPVOID )
 	return TRUE;
 }
 
+
 DLLFUNCTION void *GetSharedAddress()
 {
-	Log( "Get shared address [0x%x]", pShared );
+	Log("Get shared address [0x%x]", pShared);
 	return pShared;
 }
 
-DLLFUNCTION HWND FindUOWindow( void )
+DLLFUNCTION HWND FindUOWindow(void)
 {
-	if ( hUOWindow == NULL || !IsWindow(hUOWindow) )
+	if (hUOWindow == NULL || !IsWindow(hUOWindow))
 	{
-		HWND hWnd = FindWindow( "Ultima Online", NULL );
+		HWND hWnd = FindWindow("Ultima Online", NULL);
 		if (hWnd == NULL)
-			hWnd = FindWindow( "Ultima Online Third Dawn", NULL );
+			hWnd = FindWindow("Ultima Online Third Dawn", NULL);
 		return hWnd;
 	}
 	else
@@ -152,73 +164,95 @@ DLLFUNCTION HWND FindUOWindow( void )
 	}
 }
 
-DLLFUNCTION void SetDataPath( const char *path )
+DLLFUNCTION void SetDataPath(const char *path)
 {
-	WaitForSingleObject( CommMutex, INFINITE );
-	strncpy( pShared->DataPath, path, MAX_PATH);
-	ReleaseMutex( CommMutex );
+	WaitForSingleObject(CommMutex, INFINITE);
+	strncpy(pShared->DataPath, path, 256);
+	ReleaseMutex(CommMutex);
 }
 
-DLLFUNCTION int InstallLibrary( HWND PostWindow, DWORD pid, int flags )
+DLLFUNCTION void SetDeathMsg(const char *msg)
+{
+	WaitForSingleObject(CommMutex, INFINITE);
+	strncpy(pShared->DeathMsg, msg, 16);
+	ReleaseMutex(CommMutex);
+	PostMessage(hUOWindow, WM_UONETEVENT, DEATH_MSG, 0);
+}
+
+void PatchDeathMsg()
+{
+	if (DeathMsgAddr == 0xFFFFFFFF)
+		DeathMsgAddr = MemFinder::Find("You are dead.", 14);
+
+	if (DeathMsgAddr)
+	{
+		WaitForSingleObject(CommMutex, INFINITE);
+		strncpy((char*)DeathMsgAddr, pShared->DeathMsg, 16);
+		ReleaseMutex(CommMutex);
+	}
+}
+
+DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pid, int flags)
 {
 	DWORD UOTId = 0;
 
-	Log( "Initialize library..." );
+	Log("Initialize library...");
 
 	HWND hWnd = NULL;
-	if ( pid != 0 )
+	if (pid != 0)
 	{
-		hWnd = FindWindow( "Ultima Online", NULL );
-		while ( hWnd != NULL )
+		hWnd = FindWindow("Ultima Online", NULL);
+		while (hWnd != NULL)
 		{
-			UOTId = GetWindowThreadProcessId( hWnd, &UOProcId );
-			if ( UOProcId == pid )
+			UOTId = GetWindowThreadProcessId(hWnd, &UOProcId);
+			if (UOProcId == pid)
 				break;
-			hWnd = FindWindowEx( NULL, hWnd, "Ultima Online", NULL );
+			hWnd = FindWindowEx(NULL, hWnd, "Ultima Online", NULL);
 		}
 
-		if ( UOProcId != pid || hWnd == NULL )
+		if (UOProcId != pid || hWnd == NULL)
 		{
-			hWnd = FindWindow( "Ultima Online Third Dawn", NULL );
-			while ( hWnd != NULL )
+			hWnd = FindWindow("Ultima Online Third Dawn", NULL);
+			while (hWnd != NULL)
 			{
-				UOTId = GetWindowThreadProcessId( hWnd, &UOProcId );
+				UOTId = GetWindowThreadProcessId(hWnd, &UOProcId);
 				if (UOProcId == pid)
 					break;
-				hWnd = FindWindowEx( NULL, hWnd, "Ultima Online Third Dawn", NULL );
+				hWnd = FindWindowEx(NULL, hWnd, "Ultima Online Third Dawn", NULL);
 			}
 		}
 
-		if ( UOProcId != pid )
+		if (UOProcId != pid)
 			return NO_TID;
 	}
 	else
 	{
 		hWnd = FindUOWindow();
-		if ( hWnd != NULL )
-			UOTId = GetWindowThreadProcessId( hWnd, &UOProcId );
+		if (hWnd != NULL)
+			UOTId = GetWindowThreadProcessId(hWnd, &UOProcId);
 	}
 
 	hUOWindow = hWnd;
 	hRazorWnd = PostWindow;
 
-	if ( hUOWindow == NULL )
+	if (hUOWindow == NULL)
 		return NO_UOWND;
 
-	if ( !UOTId || !UOProcId )
+	if (!UOTId || !UOProcId)
 		return NO_TID;
 
-	if ( !CreateSharedMemory() )
+	if (!CreateSharedMemory())
 		return NO_SHAREMEM;
+	//memset( pShared, 0, sizeof(SharedMemory) );
 
-	pShared->Reserved0 = false;
+	pShared->IsHaxed = false;
 
-	hWndProcRetHook = SetWindowsHookEx( WH_CALLWNDPROCRET, WndProcRetHookFunc, hInstance, UOTId );
-	if ( !hWndProcRetHook )
+	hWndProcRetHook = SetWindowsHookEx(WH_CALLWNDPROCRET, WndProcRetHookFunc, hInstance, UOTId);
+	if (!hWndProcRetHook)
 		return NO_HOOK;
 
-	hGetMsgHook = SetWindowsHookEx( WH_GETMESSAGE, GetMsgHookFunc, hInstance, UOTId );
-	if ( !hGetMsgHook )
+	hGetMsgHook = SetWindowsHookEx(WH_GETMESSAGE, GetMsgHookFunc, hInstance, UOTId);
+	if (!hGetMsgHook)
 		return NO_HOOK;
 
 	WNDCLASS wc;
@@ -239,54 +273,54 @@ DLLFUNCTION int InstallLibrary( HWND PostWindow, DWORD pid, int flags )
 	if (hUOAWnd)
 		ShowWindow(hUOAWnd, FALSE);
 
-	ServerEncrypted = (flags&0x10) != 0;
-	ClientEncrypted = (flags&0x08) != 0;
+	ServerEncrypted = (flags & 0x10) != 0;
+	ClientEncrypted = (flags & 0x08) != 0;
 
-	PostMessage( hUOWindow, WM_PROCREADY, (WPARAM)flags, (LPARAM)hRazorWnd );
+	PostMessage(hUOWindow, WM_PROCREADY, (WPARAM)flags, (LPARAM)hRazorWnd);
 	return SUCCESS;
 }
 
-DLLFUNCTION void WaitForWindow( DWORD pid )
+DLLFUNCTION void WaitForWindow(DWORD pid)
 {
 	DWORD UOTId = 0;
 	DWORD exitCode;
-	HANDLE hProc = OpenProcess( PROCESS_QUERY_INFORMATION, FALSE, pid );
+	HANDLE hProc = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, pid);
 
 	UOProcId = 0;
 
 	do
 	{
-		Sleep( 10 );
-		HWND hWnd = FindWindow( "Ultima Online", NULL );
-		while ( hWnd != NULL )
+		Sleep(10);
+		HWND hWnd = FindWindow("Ultima Online", NULL);
+		while (hWnd != NULL)
 		{
-			UOTId = GetWindowThreadProcessId( hWnd, &UOProcId );
-			if ( UOProcId == pid )
+			UOTId = GetWindowThreadProcessId(hWnd, &UOProcId);
+			if (UOProcId == pid)
 				break;
-			hWnd = FindWindowEx( NULL, hWnd, "Ultima Online", NULL );
+			hWnd = FindWindowEx(NULL, hWnd, "Ultima Online", NULL);
 		}
 
-		if ( UOProcId != pid || hWnd == NULL )
+		if (UOProcId != pid || hWnd == NULL)
 		{
-			hWnd = FindWindow( "Ultima Online Third Dawn", NULL );
-			while ( hWnd != NULL )
+			hWnd = FindWindow("Ultima Online Third Dawn", NULL);
+			while (hWnd != NULL)
 			{
-				UOTId = GetWindowThreadProcessId( hWnd, &UOProcId );
+				UOTId = GetWindowThreadProcessId(hWnd, &UOProcId);
 				if (UOProcId == pid)
 					break;
-				hWnd = FindWindowEx( NULL, hWnd, "Ultima Online Third Dawn", NULL );
+				hWnd = FindWindowEx(NULL, hWnd, "Ultima Online Third Dawn", NULL);
 			}
 		}
 
-		GetExitCodeProcess( hProc, &exitCode );
-	} while ( UOProcId != pid && exitCode == STILL_ACTIVE );
+		GetExitCodeProcess(hProc, &exitCode);
+	} while (UOProcId != pid && exitCode == STILL_ACTIVE);
 
-	CloseHandle( hProc );
+	CloseHandle(hProc);
 }
 
-DLLFUNCTION void Shutdown( bool close )
+DLLFUNCTION void Shutdown(bool close)
 {
-	Log( "Shutdown" );
+	Log("Shutdown");
 
 	if (hUOAWnd && IsWindow(hUOAWnd))
 	{
@@ -295,8 +329,8 @@ DLLFUNCTION void Shutdown( bool close )
 		hUOAWnd = NULL;
 	}
 
-	if ( hUOWindow && IsWindow( hUOWindow ) )
-		PostMessage( hUOWindow, WM_QUIT, 0, 0 );
+	if (hUOWindow && IsWindow(hUOWindow))
+		PostMessage(hUOWindow, WM_QUIT, 0, 0);
 }
 
 DLLFUNCTION int GetUOProcId()
@@ -312,7 +346,7 @@ DLLFUNCTION HANDLE GetCommMutex()
 // totalsend and totalrecv are NOT mutex sync'd
 DLLFUNCTION unsigned int TotalOut()
 {
-	if ( pShared )
+	if (pShared)
 		return pShared->TotalSend;
 	else
 		return 0;
@@ -320,7 +354,7 @@ DLLFUNCTION unsigned int TotalOut()
 
 DLLFUNCTION unsigned int TotalIn()
 {
-	if ( pShared )
+	if (pShared)
 		return pShared->TotalRecv;
 	else
 		return 0;
@@ -331,145 +365,146 @@ DLLFUNCTION bool IsCalibrated()
 	return pShared && pShared->Position[0] == 0xFFFFFFFF && pShared->Position[1] == 0xDEADBEEF && pShared->Position[2] != 0 && pShared->Position[2] != 0xFFFFFFFF;
 }
 
-DLLFUNCTION void CalibratePosition( uint16_t x, uint16_t y, uint16_t z )
+DLLFUNCTION void CalibratePosition(int x, int y, int z)
 {
-	Position pos;
-	COPYDATASTRUCT copydata;
+	pShared->Position[2] = x;
+	pShared->Position[1] = y;
+	pShared->Position[0] = z;
 
-	pos.x = x;
-	pos.y = y;
-	pos.z = z;
-
-	copydata.dwData = (ULONG_PTR)UONET_MESSAGE_COPYDATA::POSITION;
-	copydata.cbData = sizeof(pos);
-	copydata.lpData = &pos;
-
-	SendMessage(hUOWindow, WM_COPYDATA, (WPARAM)hRazorWnd, (LPARAM)&copydata);
+	PostMessage(hUOWindow, WM_UONETEVENT, CALIBRATE_POS, 0);
 }
 
-/* These variables are used in the UO client process address space */
-
-/* 7.0.15.1 Client, Modified for Outlands
-   Located at 0x00A72BD8 */
-#pragma pack(1)
-struct PositionOutlands {
-	uint16_t x;
-	uint16_t y;
-	uint16_t z;
-};
-static_assert(sizeof(struct PositionOutlands) == 6, "Incorrect size\n");
-
-/* 5.0.8.3 Client, UO Renaissance
-   Located at address 0x007D7C58 */
-#pragma pack(1)
-struct PositionUOR {
-	uint32_t z;
-	uint32_t y;
-	uint32_t x;
-};
-static_assert(sizeof(struct PositionUOR) == 12, "Incorrect size\n");
-// UOR client this is at 0x007D7C60 (x is)
-
-// Fall back search. Not always reliable.
-#pragma pack(1)
-struct PositionGeneric {
-	uint32_t z;
-	uint32_t y;
-	uint32_t x;
-};
-static_assert(sizeof(struct PositionGeneric) == 12, "Incorrect size\n");
-
-Position g_TestPosition = {};
-Position g_LastPosition = {};
-void *g_ClientMem = nullptr;
-
-static void CheckPosition()
+DLLFUNCTION bool GetPosition(int *x, int *y, int *z)
 {
-	if (g_ClientMem == nullptr) {
-		if (strncmp(pShared->UOVersion, "5.0.8.3", sizeof(pShared->UOVersion)) == 0) {
-			/* On UOR, we know exactly where the position is. */
-			g_ClientMem = (void *)(0x007D7C60);
-		}
-		else if (strncmp(pShared->UOVersion, "7.0.15.1", sizeof(pShared->UOVersion)) == 0) {
-			/* Similarly on Outlands, we know where the position is. */
-			g_ClientMem = (void *)(0x00A72BD8);
-		} else {
-			/* Scan the region of memory in the client known to hold the player's position */
-			for (uintptr_t addr = 0x00500000; addr < 0x00C00000; addr += 2)
+	if (IsCalibrated())
+	{
+		int buffer[3];
+		DWORD Read = 0;
+		HANDLE hProc = OpenProcess(PROCESS_VM_READ, FALSE, UOProcId);
+		if (!hProc)
+			return false;
+
+		if (ReadProcessMemory(hProc, (void*)pShared->Position[2], buffer, sizeof(int) * 3, &Read))
+		{
+			if (Read == sizeof(int) * 3)
 			{
-				if (IsBadReadPtr((void*)addr, sizeof(PositionGeneric))) {
-					break;
-				}
-
-				PositionGeneric* mem = (PositionGeneric*)addr;
-
-				if (mem->x == g_TestPosition.x && mem->y == g_TestPosition.y && mem->z == g_TestPosition.z) {
-					g_ClientMem = mem;
-					break;
-				}
+				if (x)
+					*x = buffer[2];
+				if (y)
+					*y = buffer[1];
+				if (z)
+					*z = buffer[0];
+			}
+			else
+			{
+				Read = 0;
 			}
 		}
-	}
-
-	if (g_ClientMem != nullptr) {
-		Position pos;
-		if (strncmp(pShared->UOVersion, "5.0.8.3", sizeof(pShared->UOVersion)) == 0) {
-			PositionUOR *mem = (PositionUOR*)g_ClientMem;
-			pos.x = mem->x;
-			pos.y = mem->y;
-			pos.z = mem->z;
-		} else if (strncmp(pShared->UOVersion, "7.0.15.1", sizeof(pShared->UOVersion)) == 0) {
-			/* Similarly on Outlands, we know where the position is. */
-			PositionOutlands *mem = (PositionOutlands*)g_ClientMem;
-			pos.x = mem->x;
-			pos.y = mem->y;
-			pos.z = mem->z;
-		} else {
-			PositionGeneric *mem = (PositionGeneric*)g_ClientMem;
-			pos.x = mem->x;
-			pos.y = mem->y;
-			pos.z = mem->z;
+		else
+		{
+			Read = 0;
 		}
 
-		if (pos.x != g_LastPosition.x || pos.y != g_LastPosition.y || pos.z != g_LastPosition.z) {
-			/* Inform Razor of a position change */
+		CloseHandle(hProc);
 
-			COPYDATASTRUCT copydata;
-
-			copydata.dwData = (ULONG_PTR)UONET_MESSAGE_COPYDATA::POSITION;
-			copydata.cbData = sizeof(pos);
-			copydata.lpData = &pos;
-
-			SendMessage(hRazorWnd, WM_COPYDATA, (WPARAM)hUOWindow, (LPARAM)&copydata);
+		if (Read == sizeof(int) * 3 && (x == NULL || (*x >= 0 && *x < 8192)) && (y == NULL || (*y >= 0 && *y < 8192)))
+		{
+			return true;
 		}
-
-		g_LastPosition = pos;
-	}
-}
-
-void OnTick(HWND hwnd, UINT Message, UINT_PTR TimerId, DWORD dwTime) {
-	/* Scan client memory for position updates */
-	CheckPosition();
-
-	/* Post a message to Razor to indicate a game loop tick.*/
-	PostMessage(hRazorWnd, WM_UONETEVENT, ON_TICK, 0);
-}
-
-SIZE *SizePtr = NULL;
-void OnSetUOWindowSize( int width )
-{
-	if ( width != 800 && width != 600 ) // in case it actually the height for some reason
-	{
-		SizePtr->cx = 640;
-		SizePtr->cy = 480;
+		else
+		{
+			memset(pShared->Position, 0, sizeof(int) * 3);
+			return false;
+		}
 	}
 	else
 	{
-		*SizePtr = DesiredSize;
+		return false;
 	}
 }
 
-DLLFUNCTION void OnAttach( void *params, int paramsLen )
+DLLFUNCTION void BringToFront(HWND hWnd)
+{
+	SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+	ShowWindow(hWnd, SW_SHOW);
+	SetForegroundWindow(hWnd);
+	SetFocus(hWnd);
+}
+
+#define CHEATPROC_STR "jTjAjHjC"
+#define CHEATPROC_LEN 8
+
+DLLFUNCTION void SetAllowDisconn(bool newVal)
+{
+	if (pShared && CommMutex)
+	{
+		WaitForSingleObject(CommMutex, INFINITE);
+		pShared->AllowDisconn = newVal;
+		ReleaseMutex(CommMutex);
+	}
+}
+
+DLLFUNCTION BOOL HandleNegotiate(__int64 features)
+{
+	if (pShared && pShared->AuthBits && pShared->AllowNegotiate)
+	{
+		memcpy(pShared->AuthBits, &features, 8);
+
+		ServerNegotiated = true;
+
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+SIZE *SizePtr = NULL;
+void __stdcall OnSetUOWindowSize(int width)
+{
+	if (DesiredSize.cx != 0)   // Se diverso da 0 settata risoluzione definita da utente
+	{
+		if (connected) // Forza resize solo se connesso
+			*SizePtr = DesiredSize;
+		else // Dimensione standard finestra di login
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
+	}
+	else // In caso che non sia settata risoluzione dall'utente usa risoluzioni impostate nel client OSI
+	{
+		if (width == 800 && connected)
+		{
+			SizePtr->cx = 800;
+			SizePtr->cy = 600;
+		}
+		else if (width == 1024 && connected)
+		{
+			SizePtr->cx = 1024;
+			SizePtr->cy = 768;
+		}
+		else if (width == 1152 && connected)
+		{
+			SizePtr->cx = 1152;
+			SizePtr->cy = 864;
+		}
+		else if (width == 1280 && connected)
+		{
+			SizePtr->cx = 1280;
+			SizePtr->cy = 720;
+		}
+		else
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
+
+	}
+}
+
+DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 {
 	int count = 0;
 	DWORD addr = 0, oldProt;
@@ -477,151 +512,227 @@ DLLFUNCTION void OnAttach( void *params, int paramsLen )
 
 	UOProcId = GetCurrentProcessId();
 
-	if ( !CreateSharedMemory() )
+	if (!CreateSharedMemory())
 		return;
 
-		CopyFailed = false;
-		mf.AddEntry("UoClientApp", 12, 0x00500000);
-		mf.AddEntry("report\0", 8, 0x00500000);
-		mf.AddEntry("Another copy of ", 16, 0x00500000);
-		mf.AddEntry("\x00\x68\x88\x13\x00\x00\x56\xE8", 8);
-		mf.AddEntry("\x68\x88\x13\x00\x00", 5, 16, 0x00400000); // (end of a push offset), push 5000, push esi
-		mf.AddEntry("Electronic Arts Inc.", 20);
-		mf.AddEntry("intro.bik", 10);
-		mf.AddEntry("osilogo.bik", 12);
-		mf.AddEntry("\x80\x02\x00\x00\xE0\x01\x00\x00", 8, 0x00500000); // current screen size
-		mf.AddEntry("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16); // resize screen function
-		mf.AddEntry("\x57\x56\x6A\x00\x6A\x00\xE8", 7); // redraw screen/edge function
-		mf.AddEntry(PACKET_TBL_STR, PACKET_TS_LEN, 10, 0x00500000);
-		mf.AddEntry(CRYPT_KEY_STR, CRYPT_KEY_LEN);
-		mf.AddEntry(CRYPT_KEY_STR_3D, CRYPT_KEY_3D_LEN);
-		mf.AddEntry(CRYPT_KEY_STR_NEW, CRYPT_KEY_NEW_LEN);
-		mf.AddEntry(CRYPT_KEY_STR_MORE_NEW, CRYPT_KEY_MORE_NEW_LEN);
-		mf.AddEntry("UO Version %s", 12);
-		mf.AddEntry("Multiple Instances Running", 26, 0x00500000);
+	pShared->AllowDisconn = true;
 
-		memcpy( pShared->PacketTable, StaticPacketTable, 256*sizeof(short) );
+	CopyFailed = false;
 
-		mf.Execute();
+	mf.AddEntry("UoClientApp", 12, 0x00500000);
+	mf.AddEntry("report\0", 8, 0x00500000);
+	mf.AddEntry("Another copy of ", 16, 0x00500000);
+	mf.AddEntry("\x00\x68\x88\x13\x00\x00\x56\xE8", 8);
+	mf.AddEntry("\x68\x88\x13\x00\x00", 5, 16, 0x00400000); // (end of a push offset), push 5000, push esi
+	mf.AddEntry("Electronic Arts Inc.", 20);
+	mf.AddEntry("intro.bik", 10);
+	mf.AddEntry("osilogo.bik", 12);
+	mf.AddEntry("\x80\x02\x00\x00\xE0\x01\x00\x00", 8, 0x00500000); // current screen size
+	mf.AddEntry("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16, 0x00400000); // resize screen function
+	mf.AddEntry("\x57\x56\x6A\x00\x6A\x00\xE8", 7); // redraw screen/edge function
+	mf.AddEntry(PACKET_TBL_STR, PACKET_TS_LEN, 10, 0x00500000);
+	mf.AddEntry(CRYPT_KEY_STR, CRYPT_KEY_LEN);
+	mf.AddEntry(CRYPT_KEY_STR_3D, CRYPT_KEY_3D_LEN);
+	mf.AddEntry(CRYPT_KEY_STR_NEW, CRYPT_KEY_NEW_LEN);
+	mf.AddEntry(CRYPT_KEY_STR_MORE_NEW, CRYPT_KEY_MORE_NEW_LEN);
+	mf.AddEntry(CHEATPROC_STR, CHEATPROC_LEN);
+	mf.AddEntry("CHEAT %s", 8, 0x00500000);
+	mf.AddEntry("UO Version %s", 12);
+	mf.AddEntry("Multiple Instances Running", 26, 0x00500000);
 
+	//mf.AddEntry(ANIM_PATTERN_6, ANIM_PATTERN_LENGTH_6);
+
+	//mf.AddEntry(SPEEDHACK_PATTERN_1, SPEEDHACK_PATTERN_LENGTH_1);
+
+	memcpy(pShared->PacketTable, StaticPacketTable, 256 * sizeof(short));
+
+	const BYTE defaultCheatKey[] = { 0x98, 0x5B, 0x51, 0x7E, 0x11, 0x0C, 0x3D, 0x77, 0x2D, 0x28, 0x41, 0x22, 0x74, 0xAD, 0x5B, 0x39 };
+	memcpy(pShared->CheatKey, defaultCheatKey, 16);
+	bool newclient = true;
+	mf.Execute();
+
+	SizePtr = (SIZE*)mf.GetAddress("\x80\x02\x00\x00\xE0\x01\x00\x00", 8);
+	if (SizePtr)
+	{
+		addr = mf.GetAddress("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16);
+		if (addr)
+		{
+			ResizeFuncaddr = addr;
+			int i;
+			DWORD origAddr = addr;
+
+			VirtualProtect((void*)origAddr, 128, PAGE_EXECUTE_READWRITE, &oldProt);
+			for (i = 16; i < 128; i++)
+			{
+				if (*((BYTE*)(addr + i)) == 0xE9) // find the first jmp
+				{
+					memset((void*)addr, 0x90, i); // nop
+
+					// mov eax, dword [esp+4]
+					*((BYTE*)(addr + 0)) = 0x8B; // mov
+					*((BYTE*)(addr + 1)) = 0x44; //  eax
+					*((BYTE*)(addr + 2)) = 0x24; //  [esp
+					*((BYTE*)(addr + 3)) = 0x04; //      +4]
+					addr += 4;
+
+					*((BYTE*)addr) = 0x50; // push eax
+					addr++;
+					// call OnSetUOWindowSize
+					*((BYTE*)addr) = 0xE8;
+					*((DWORD*)(addr + 1)) = ((DWORD)OnSetUOWindowSize) - (addr + 5);
+					addr += 5;
+					newclient = false;
+					break;
+				}
+			}
+			VirtualProtect((void*)origAddr, 128, oldProt, &oldProt);
+		}
+	}
+
+	if (newclient)
+	{
 		SizePtr = (SIZE*)mf.GetAddress("\x80\x02\x00\x00\xE0\x01\x00\x00", 8);
 		if (SizePtr)
 		{
 			addr = mf.GetAddress("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16);
 			if (addr)
 			{
+				ResizeFuncaddr = addr;
 				int i;
 				DWORD origAddr = addr;
 
-				VirtualProtect((void*)origAddr, 128, PAGE_EXECUTE_READWRITE, &oldProt);
-				for (i = 16; i < 128; i++)
+				VirtualProtect((void*)origAddr, 0xC8, PAGE_EXECUTE_READWRITE, &oldProt);
+				for (i = 16; i < 200; i++)
 				{
-					if (*((BYTE*)(addr + i)) == 0xE9) // find the first jmp
+					if (*((BYTE*)(addr + i)) == 233 || *((BYTE*)(addr + i)) == 232)
 					{
 						memset((void*)addr, 0x90, i); // nop
 
-						// mov eax, dword [esp+4]
-						*((BYTE*)(addr + 0)) = 0x8B; // mov
-						*((BYTE*)(addr + 1)) = 0x44; //  eax
-						*((BYTE*)(addr + 2)) = 0x24; //  [esp
-						*((BYTE*)(addr + 3)) = 0x04; //      +4]
+						memset((void*)addr, 112, i);
+						*((BYTE*)(addr + 0)) = -117;
+						*((BYTE*)(addr + 1)) = 68;
+						*((BYTE*)(addr + 2)) = 36;
+						*((BYTE*)(addr + 3)) = 4;
 						addr += 4;
-
-						*((BYTE*)addr) = 0x50; // push eax
+						*((BYTE*)addr) = 80;
 						addr++;
-						// call OnSetUOWindowSize
-						*((BYTE*)addr) = 0xE8;
+						*((BYTE*)addr) = -24;
 						*((DWORD*)(addr + 1)) = ((DWORD)OnSetUOWindowSize) - (addr + 5);
 						addr += 5;
 						break;
 					}
 				}
-				VirtualProtect((void*)origAddr, 128, oldProt, &oldProt);
+				VirtualProtect((void*)origAddr, 0xC8, oldProt, &oldProt);
 			}
 		}
+	}
 
-		int i = 0;
-		while ((addr = mf.GetAddress(PACKET_TBL_STR, PACKET_TS_LEN, i++)) != 0)
+	int i = 0;
+	while ((addr = mf.GetAddress(PACKET_TBL_STR, PACKET_TS_LEN, i++)) != 0)
+	{
+		memset(pShared->PacketTable, 0xFF, 512);
+
+		addr += PACKET_TBL_OFFSET;
+		if (IsBadReadPtr((void*)addr, sizeof(ClientPacketInfo) * 128))
+			continue;
+		ClientPacketInfo *tbl = (ClientPacketInfo*)addr;
+
+		if (tbl[0].Id == 1 || tbl[0].Id == 2 || tbl[0].Id >= 256)
+			continue;
+
+		// this one isnt in order because OSI are idiots (0xF8)
+		pShared->PacketTable[tbl[0].Id] = tbl[0].Length;
+
+		int idx = 1;
+		bool got1 = false, got2 = false;
+		for (int prev = 0; prev < 255 && idx < 256; idx++)
 		{
-			memset(pShared->PacketTable, 0xFF, 512);
-
-			addr += PACKET_TBL_OFFSET;
-			if (IsBadReadPtr((void*)addr, sizeof(ClientPacketInfo) * 128))
-				continue;
-			ClientPacketInfo *tbl = (ClientPacketInfo*)addr;
-
-			if (tbl[0].Id == 1 || tbl[0].Id == 2 || tbl[0].Id >= 256)
-				continue;
-
-			// this one isnt in order because OSI are idiots (0xF8)
-			pShared->PacketTable[tbl[0].Id] = tbl[0].Length;
-
-			int idx = 1;
-			bool got1 = false, got2 = false;
-			for (int prev = 0; prev < 255 && idx < 256; idx++)
+			if (IsBadReadPtr((void*)(tbl + idx), sizeof(ClientPacketInfo)) ||
+				tbl[idx].Id <= prev || tbl[idx].Id >= 256)
 			{
-				if (IsBadReadPtr((void*)(tbl + idx), sizeof(ClientPacketInfo)) ||
-					tbl[idx].Id <= prev || tbl[idx].Id >= 256)
-				{
-					break;
-				}
-
-				got1 |= tbl[idx].Id == 1 && tbl[idx].Length == StaticPacketTable[1];
-				got2 |= tbl[idx].Id == 2 && tbl[idx].Length == StaticPacketTable[2];
-
-				prev = tbl[idx].Id;
-				if (pShared->PacketTable[prev] == 0xFFFF)
-					pShared->PacketTable[prev] = tbl[idx].Length;
+				break;
 			}
 
-			if (idx < 128 || !got1 || !got2)
-				continue;
-			else
-				break;
+			got1 |= tbl[idx].Id == 1 && tbl[idx].Length == StaticPacketTable[1];
+			got2 |= tbl[idx].Id == 2 && tbl[idx].Length == StaticPacketTable[2];
+
+			prev = tbl[idx].Id;
+			if (pShared->PacketTable[prev] == 0xFFFF)
+				pShared->PacketTable[prev] = tbl[idx].Length;
 		}
 
-		if (!addr)
-			CopyFailed = true;
+		if (idx < 128 || !got1 || !got2)
+			continue;
+		else
+			break;
+	}
 
-		addr = mf.GetAddress(CRYPT_KEY_STR, CRYPT_KEY_LEN);
+	if (!addr)
+		CopyFailed = true;
+
+	/*
+	i = 0;
+	while ((addr = mf.GetAddress(ANIM_PATTERN_6, ANIM_PATTERN_LENGTH_6, i++)) != 0)
+	{
+		//char blah[256];
+		//sprintf_s(blah, 256, "%02X %02X %02X %02X", *(unsigned char*)(addr), *(unsigned char*)(addr + 1), *(unsigned char*)(addr - 14), *(unsigned char*)(addr - 5));
+		//MessageBox(NULL, blah, "ANIM_PATTERN_6", MB_OK);
+		if (memcmp((void*)(addr - 14), ANIM_PATTERN_4, ANIM_PATTERN_LENGTH_4) != 0)
+			continue;
+
+		//MessageBox(NULL, "Matched", "ANIM_PATTERN_6", MB_OK);
+		DWORD origAddr = addr - 30;
+		VirtualProtect((void*)origAddr, 128, PAGE_EXECUTE_READWRITE, &oldProt);
+		memcpy((void*)(origAddr + 11), "\x33\xC0\x90\x90\x90", 5);
+		memcpy((void*)(origAddr + 35), "\x08", 1);
+		memcpy((void*)(origAddr + 38), "\x04", 1);
+		VirtualProtect((void*)origAddr, 128, oldProt, &oldProt);
+	}
+
+	i = 0;
+	while ((addr = mf.GetAddress(SPEEDHACK_PATTERN_1, SPEEDHACK_PATTERN_LENGTH_1, i++)) != 0)
+	{
+		//char blah[256];
+		//sprintf_s(blah, 256, "%02X %02X %02X %02X", *(unsigned char*)(addr+8), *(unsigned char*)(addr + 9), *(unsigned char*)(addr +11), *(unsigned char*)(addr +12));
+		//MessageBox(NULL, blah, "SPEEDHACK_PATTERN_1", MB_OK);
+		if (memcmp((void*)(addr + 8), SPEEDHACK_PATTERN_2, SPEEDHACK_PATTERN_LENGTH_2) != 0)
+			continue;
+
+		//MessageBox(NULL, "Matched", "SPEEDHACK_PATTERN_1", MB_OK);
+		DWORD origAddr = addr;
+		VirtualProtect((void*)origAddr, 128, PAGE_EXECUTE_READWRITE, &oldProt);
+		memcpy((void*)(origAddr + 10), "\x26", 1);
+		VirtualProtect((void*)origAddr, 128, oldProt, &oldProt);
+	}
+	*/
+
+	addr = mf.GetAddress(CRYPT_KEY_STR, CRYPT_KEY_LEN);
+	if (!addr)
+	{
+		addr = mf.GetAddress(CRYPT_KEY_STR_NEW, CRYPT_KEY_NEW_LEN);
+
 		if (!addr)
 		{
-			addr = mf.GetAddress(CRYPT_KEY_STR_NEW, CRYPT_KEY_NEW_LEN);
-
+			addr = mf.GetAddress(CRYPT_KEY_STR_MORE_NEW, CRYPT_KEY_MORE_NEW_LEN);
 			if (!addr)
 			{
-				addr = mf.GetAddress(CRYPT_KEY_STR_MORE_NEW, CRYPT_KEY_MORE_NEW_LEN);
-				if (!addr)
+				addr = mf.GetAddress(CRYPT_KEY_STR_3D, CRYPT_KEY_3D_LEN);
+				if (addr)
 				{
-					addr = mf.GetAddress(CRYPT_KEY_STR_3D, CRYPT_KEY_3D_LEN);
-					if (addr)
-					{
-						LoginEncryption::SetKeys((const DWORD*)(addr + CRYPT_KEY_3D_LEN), (const DWORD*)(addr + CRYPT_KEY_3D_LEN + 19));
-						ClientType = THREED;
-					}
-					else
-					{
-					CopyFailed = true;
-					}
+					LoginEncryption::SetKeys((const DWORD*)(addr + CRYPT_KEY_3D_LEN), (const DWORD*)(addr + CRYPT_KEY_3D_LEN + 19));
+					ClientType = THREED;
 				}
 				else
 				{
-					addr += CRYPT_KEY_MORE_NEW_LEN;
-
-					const DWORD *pKey1 = *((DWORD**)addr);
-					const DWORD *pKey2 = pKey1 + 1;
-					if (IsBadReadPtr(pKey2, 4) || IsBadReadPtr(pKey1, 4))
-						CopyFailed = true;
-					else
-						LoginEncryption::SetKeys(pKey1, pKey2);
+					CopyFailed = true;
 				}
 			}
 			else
 			{
-				addr += CRYPT_KEY_NEW_LEN;
+				addr += CRYPT_KEY_MORE_NEW_LEN;
 
 				const DWORD *pKey1 = *((DWORD**)addr);
-				const DWORD *pKey2 = pKey1 - 1;
+				const DWORD *pKey2 = pKey1 + 1;
 				if (IsBadReadPtr(pKey2, 4) || IsBadReadPtr(pKey1, 4))
 					CopyFailed = true;
 				else
@@ -630,129 +741,172 @@ DLLFUNCTION void OnAttach( void *params, int paramsLen )
 		}
 		else
 		{
-			LoginEncryption::SetKeys((const DWORD*)(addr + CRYPT_KEY_LEN), (const DWORD*)(addr + CRYPT_KEY_LEN + 6));
+			addr += CRYPT_KEY_NEW_LEN;
+
+			const DWORD *pKey1 = *((DWORD**)addr);
+			const DWORD *pKey2 = pKey1 - 1;
+			if (IsBadReadPtr(pKey2, 4) || IsBadReadPtr(pKey1, 4))
+				CopyFailed = true;
+			else
+				LoginEncryption::SetKeys(pKey1, pKey2);
 		}
+	}
+	else
+	{
+		LoginEncryption::SetKeys((const DWORD*)(addr + CRYPT_KEY_LEN), (const DWORD*)(addr + CRYPT_KEY_LEN + 6));
+	}
 
-		// Multi UO
-		addr = mf.GetAddress("UoClientApp", 12);
-		if (addr)
+	/*addr = mf.GetAddress( CHEATPROC_STR, CHEATPROC_LEN );
+	if ( addr )
+	{
+		addr = MemFinder::Find( "\x8A\x91", 2, addr, addr + 0x80 );
+		if ( addr )
 		{
-			VirtualProtect((void*)addr, 12, PAGE_READWRITE, &oldProt);
-			_snprintf((char*)addr, 12, "UoApp%d", UOProcId);
-			VirtualProtect((void*)addr, 12, oldProt, &oldProt);
+			addr += 2;
+
+			if ( !IsBadReadPtr( (void*)(*((DWORD*)addr)), 16 ) )
+				memcpy( pShared->CheatKey, (void*)(*((DWORD*)addr)), 16 );
 		}
-
-		addr = mf.GetAddress("Another copy of ", 16);
-		if (addr)
+	}
+	else
+	{
+		addr = mf.GetAddress( "CHEAT %s", 8 );
+		if ( addr )
 		{
-			char buff[5];
-
-			buff[0] = 0x68; // push
-			*((DWORD*)(&buff[1])) = addr;
-
-			addr = 0x00400000;
-			do {
-				addr = MemFinder::Find(buff, 5, addr, 0x00600000);
-				if (addr)
-				{
-					if ((*((unsigned char*)(addr - 5))) == 0x74) // jz?
-						MemoryPatch(addr - 5, 0xEB, 1); // change to jmp
-					addr += 5; // skip ahead to find the next instance
-				}
-			} while (addr > 0 && addr < 0x00600000);
+			addr -= 16;
+			if ( !IsBadReadPtr( (void*)(*((DWORD*)addr)), 16 ) )
+				memcpy( pShared->CheatKey, (void*)(*((DWORD*)addr)), 16 );
+			ClientType = THREED;
 		}
+	}*/
+	BYTE cheatKey[16] = { 0x98, 0x5B, 0x51, 0x7E, 0x11, 0x0C, 0x3D, 0x77, 0x2D, 0x28, 0x41, 0x22, 0x74, 0xAD, 0x5B, 0x39 };
+	memcpy(pShared->CheatKey, cheatKey, 16);
 
-		addr = mf.GetAddress("Multiple Instances Running", 26);
-		if (addr)
-		{
-			char buff[5];
+	// Multi UO
+	addr = mf.GetAddress("UoClientApp", 12);
+	if (addr)
+	{
+		VirtualProtect((void*)addr, 12, PAGE_READWRITE, &oldProt);
+		_snprintf((char*)addr, 12, "UoApp%d", UOProcId);
+		VirtualProtect((void*)addr, 12, oldProt, &oldProt);
+	}
 
-			buff[0] = 0x68; // push
-			*((DWORD*)(&buff[1])) = addr;
+	addr = mf.GetAddress("Another copy of ", 16);
+	if (addr)
+	{
+		char buff[5];
 
-			addr = 0x00400000;
-			do {
-				addr = MemFinder::Find(buff, 5, addr, 0x00600000);
-				if (addr)
-				{
-					char in = (*((unsigned char*)(addr - 4)));
-					if (in == 0x74 || in == 0x75) { // jz or jnz
-						MemoryPatch(addr - 4, 0xEB, 1); // change to jmp
-					}
-					addr += 5; // skip ahead to find the next instance
-				}
-			} while (addr > 0 && addr < 0x00600000);
-		}
+		buff[0] = 0x68; // push
+		*((DWORD*)(&buff[1])) = addr;
 
-		addr = mf.GetAddress("report\0", 8);
-		if (addr)
-		{
-			VirtualProtect((void*)addr, 12, PAGE_READWRITE, &oldProt);
-			_snprintf((char*)addr, 8, "r%d", UOProcId);
-			VirtualProtect((void*)addr, 12, oldProt, &oldProt);
-		}
-
-		// Splash screen crap:
-		for (int i = 0; i < 16; i++)
-		{
-			addr = mf.GetAddress("\x68\x88\x13\x00\x00", 5, i);
-			if (!addr)
-				break;
-			for (int e = 5; e < 24; e++)
-			{
-				if (*((BYTE*)(addr + e)) == 0x8B && *((BYTE*)(addr + e + 1)) == 0x3D)
-				{
-					MemoryPatch(addr + 1, 0x00000001); // change 5000ms to 1ms
-					i = 99;
-					break;
-				}
-			}
-		}
-		addr = mf.GetAddress("intro.bik", 10);
-		if (addr)
-			MemoryPatch(addr, "intro.SUX", 10);
-		addr = mf.GetAddress("ostlogo.bik", 12);
-		if (addr)
-			MemoryPatch(addr, "osilogo.SUX", 12);
-
-		addr = mf.GetAddress("Electronic Arts Inc.", 20);
-		if (addr)
-		{
-			addr -= 7;
-			VirtualProtect((void*)addr, 52, PAGE_EXECUTE_READWRITE, &oldProt);
-			strncpy((char*)addr, "[Powered by Razor - The cutting edge UO Assistant]\0", 52);
-			VirtualProtect((void*)addr, 52, oldProt, &oldProt);
-		}
-
-		NativeGetUOVersion = NULL;
-		if (ClientType == TWOD)
-		{
-			addr = mf.GetAddress("UO Version %s", 12);
+		addr = 0x00400000;
+		do {
+			addr = MemFinder::Find(buff, 5, addr, 0x00600000);
 			if (addr)
 			{
-				char temp[8];
-				temp[0] = 0x68;
-				*((DWORD*)&temp[1]) = addr;
+				if ((*((unsigned char*)(addr - 5))) == 0x74) // jz?
+					MemoryPatch(addr - 5, 0xEB, 1); // change to jmp
+				addr += 5; // skip ahead to find the next instance
+			}
+		} while (addr > 0 && addr < 0x00600000);
+	}
 
-				addr = MemFinder::Find(temp, 5);
+	addr = mf.GetAddress("Multiple Instances Running", 26);
+	if (addr)
+	{
+		char buff[5];
 
-				if (addr)
-				{
-					count = 0;
-					while (*((BYTE*)addr) != 0xE8 && count < 128)
-					{
-						addr--;
-						count++;
-					}
+		buff[0] = 0x68; // push
+		*((DWORD*)(&buff[1])) = addr;
 
-					if (*((BYTE*)addr) == 0xE8)
-						NativeGetUOVersion = (GetUOVersionFunc)((addr + 5) + *((DWORD*)(addr + 1)));
+		addr = 0x00400000;
+		do {
+			addr = MemFinder::Find(buff, 5, addr, 0x00600000);
+			if (addr)
+			{
+				char in = (*((unsigned char*)(addr - 4)));
+				if (in == 0x74 || in == 0x75) { // jz or jnz
+					MemoryPatch(addr - 4, 0xEB, 1); // change to jmp
 				}
+				addr += 5; // skip ahead to find the next instance
+			}
+		} while (addr > 0 && addr < 0x00600000);
+	}
+
+	addr = mf.GetAddress("report\0", 8);
+	if (addr)
+	{
+		VirtualProtect((void*)addr, 12, PAGE_READWRITE, &oldProt);
+		_snprintf((char*)addr, 8, "r%d", UOProcId);
+		VirtualProtect((void*)addr, 12, oldProt, &oldProt);
+	}
+
+	// Splash screen crap:
+	/*addr = mf.GetAddress( "\x00\x68\x88\x13\x00\x00\x56\xE8", 8 );
+	if ( addr )
+		MemoryPatch( addr+2, 0x00000005 ); // change 5000ms to 5ms*/
+	for (int i = 0; i < 16; i++)
+	{
+		addr = mf.GetAddress("\x68\x88\x13\x00\x00", 5, i);
+		if (!addr)
+			break;
+		for (int e = 5; e < 24; e++)
+		{
+			if (*((BYTE*)(addr + e)) == 0x8B && *((BYTE*)(addr + e + 1)) == 0x3D)
+			{
+				MemoryPatch(addr + 1, 0x00000001); // change 5000ms to 1ms
+				i = 99;
+				break;
 			}
 		}
+	}
+	addr = mf.GetAddress("intro.bik", 10);
+	if (addr)
+		MemoryPatch(addr, "intro.SUX", 10);
+	addr = mf.GetAddress("ostlogo.bik", 12);
+	if (addr)
+		MemoryPatch(addr, "osilogo.SUX", 12);
+
+	addr = mf.GetAddress("Electronic Arts Inc.", 20);
+	if (addr)
+	{
+		addr -= 7;
+		VirtualProtect((void*)addr, 52, PAGE_EXECUTE_READWRITE, &oldProt);
+		strncpy((char*)addr, "[Powered by Razor - The cutting edge UO Assistant]\0", 52);
+		VirtualProtect((void*)addr, 52, oldProt, &oldProt);
+	}
+
+	NativeGetUOVersion = NULL;
+	if (ClientType == TWOD)
+	{
+		addr = mf.GetAddress("UO Version %s", 12);
+		if (addr)
+		{
+			char temp[8];
+			temp[0] = 0x68;
+			*((DWORD*)&temp[1]) = addr;
+
+			addr = MemFinder::Find(temp, 5);
+
+			if (addr)
+			{
+				count = 0;
+				while (*((BYTE*)addr) != 0xE8 && count < 128)
+				{
+					addr--;
+					count++;
+				}
+
+				if (*((BYTE*)addr) == 0xE8)
+					NativeGetUOVersion = (GetUOVersionFunc)((addr + 5) + *((DWORD*)(addr + 1)));
+			}
+		}
+	}
+
+	//HookFunction( "kernel32.dll", "CreateFileA", 0, (unsigned long)CreateFileAHook, &OldCreateFileA, &CreateFileAAddress );
 }
 
-DLLFUNCTION void SetServer( unsigned int addr, unsigned short port )
+DLLFUNCTION void SetServer(unsigned int addr, unsigned short port)
 {
 	if (pShared)
 	{
@@ -763,51 +917,42 @@ DLLFUNCTION void SetServer( unsigned int addr, unsigned short port )
 
 DLLFUNCTION const char *GetUOVersion()
 {
-	if ( pShared )
+	if (pShared)
+	{
+		std::cout << "pshared";
+		std::cout << pShared->UOVersion << std::endl;
 		return pShared->UOVersion;
+	}
 	else
+	{
+		std::cout << "notpshared";
 		return "";
+	}
 }
 
 bool CreateSharedMemory()
 {
-	if (pShared)
-		return true;
-
 	char name[256];
 
 	CommMutex = NULL;
 	hFileMap = NULL;
 	pShared = NULL;
 
-	Log( "Creating shared mem, proc: %x", UOProcId );
+	Log("Creating shared mem, proc: %x", UOProcId);
 
-	sprintf( name, "UONetSharedCOMM_%x", UOProcId );
-
-	CommMutex = CreateMutex( NULL, FALSE, name );
-	if ( !CommMutex )
+	sprintf(name, "UONetSharedCOMM_%x", UOProcId);
+	CommMutex = CreateMutex(NULL, FALSE, name);
+	if (!CommMutex)
 		return false;
 
-	for (int i = 0; i < 30; i++) {
-		sprintf(name, "UONetSharedFM_%x%d", UOProcId, i);
-		hFileMap = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(SharedMemory), name);
-		if (!hFileMap || hFileMap == INVALID_HANDLE_VALUE) {
-			auto err = GetLastError();
-			continue;
-		}
-
-		pShared = (SharedMemory*)MapViewOfFile(hFileMap, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(SharedMemory));
-		if (!pShared) {
-			auto err = GetLastError();
-			continue;
-		}
-
-		break;
-	}
-
-	if (!pShared) {
+	sprintf(name, "UONetSharedFM_%x", UOProcId);
+	hFileMap = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(SharedMemory), name);
+	if (!hFileMap)
 		return false;
-	}
+
+	pShared = (SharedMemory*)MapViewOfFile(hFileMap, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+	if (!pShared)
+		return false;
 
 	//memset( pShared, 0, sizeof(SharedMemory) );
 
@@ -816,28 +961,28 @@ bool CreateSharedMemory()
 
 void CloseSharedMemory()
 {
-	Log( "Close shared memory" );
+	Log("Close shared memory");
 
-	if ( hWndProcRetHook )
-		UnhookWindowsHookEx( hWndProcRetHook );
-	if ( hGetMsgHook )
-		UnhookWindowsHookEx( hGetMsgHook );
+	if (hWndProcRetHook)
+		UnhookWindowsHookEx(hWndProcRetHook);
+	if (hGetMsgHook)
+		UnhookWindowsHookEx(hGetMsgHook);
 
-	if ( CommMutex )
-		CloseHandle( CommMutex );
+	if (CommMutex)
+		CloseHandle(CommMutex);
 	CommMutex = NULL;
-	if ( pShared )
-		UnmapViewOfFile( pShared );
+	if (pShared)
+		UnmapViewOfFile(pShared);
 	pShared = NULL;
-	if ( hFileMap )
-		CloseHandle( hFileMap );
+	if (hFileMap)
+		CloseHandle(hFileMap);
 	hFileMap = NULL;
 
 	//these are shared vars
 	hWndProcRetHook = NULL;
 	hGetMsgHook = NULL;
 
-	FreeArt();
+	//FreeArt();
 
 	delete ClientCrypt;
 	delete ClientLogin;
@@ -857,30 +1002,30 @@ void CreateEncryption()
 	delete ServerCrypt;
 	delete ServerLogin;
 
-	if ( ClientEncrypted )
+	if (ClientEncrypted)
 	{
 		ClientCrypt = new OSIEncryption();
 		ClientLogin = new LoginEncryption();
 	}
 
-	if ( ServerEncrypted )
+	if (ServerEncrypted)
 	{
 		ServerCrypt = new OSIEncryption();
 		ServerLogin = new LoginEncryption();
 	}
 }
 
-inline void Maintenance( Buffer &buff )
+inline void Maintenance(Buffer &buff)
 {
-	if ( buff.Length <= 0 )
+	if (buff.Length <= 0)
 	{
 		buff.Start = 0;
 		buff.Length = 0;
 	}
-	else if ( buff.Start > SHARED_BUFF_SIZE / 2 )
+	else if (buff.Start > SHARED_BUFF_SIZE / 2)
 	{
 		//shift all the data to the begining of the buffer
-		memmove( buff.Buff, &buff.Buff[buff.Start], buff.Length );
+		memmove(buff.Buff, &buff.Buff[buff.Start], buff.Length);
 		buff.Start = 0;
 	}
 }
@@ -890,90 +1035,94 @@ int RecvData()
 	int len = SHARED_BUFF_SIZE;
 	char buff[SHARED_BUFF_SIZE];
 
-	int ackLen = (*(NetIOFunc)OldRecv)(CurrentConnection,buff,len,0);
+	int ackLen = (*(NetIOFunc)OldRecv)(CurrentConnection, buff, len, 0);
 
-	if ( ackLen == SOCKET_ERROR )
+	if (ackLen == SOCKET_ERROR)
 	{
-		if ( WSAGetLastError() != WSAEWOULDBLOCK )
+		if (WSAGetLastError() != WSAEWOULDBLOCK)
 		{
-			WaitForSingleObject( CommMutex, INFINITE );
+			WaitForSingleObject(CommMutex, INFINITE);
 			pShared->ForceDisconn = true;
-			ReleaseMutex( CommMutex );
+			ReleaseMutex(CommMutex);
 		}
 		else
 		{
-			WSASetLastError( WSAEWOULDBLOCK );
+			WSASetLastError(WSAEWOULDBLOCK);
 		}
 
 		ackLen = -1;
 	}
-	else if ( ackLen > 0 )
+	else if (ackLen > 0)
 	{
-		if ( FirstRecv )
+		if (FirstRecv)
 		{
 			Compression::Reset();
 			FirstRecv = false;
+
+			// Chiamata resize appena viene aperta connessione
+			if (ResizeFuncaddr)
+				((void(*)(void))ResizeFuncaddr)();
 		}
 
-		WaitForSingleObject( CommMutex, INFINITE );
+		WaitForSingleObject(CommMutex, INFINITE);
 
 		pShared->TotalRecv += ackLen;
 
-		if ( LoginServer )
+		if (LoginServer)
 		{
-			memcpy( &pShared->InRecv.Buff[pShared->InRecv.Start+pShared->InRecv.Length], buff, ackLen );
+			memcpy(&pShared->InRecv.Buff[pShared->InRecv.Start + pShared->InRecv.Length], buff, ackLen);
 			pShared->InRecv.Length += ackLen;
 		}
 		else
 		{
-			if ( ServerEncrypted )
-				ServerCrypt->DecryptFromServer( (BYTE*)buff, (BYTE*)buff, ackLen );
+			if (ServerEncrypted)
+				ServerCrypt->DecryptFromServer((BYTE*)buff, (BYTE*)buff, ackLen);
 
-			int blen = Compression::Decompress( (char*)&pShared->InRecv.Buff[pShared->InRecv.Start+pShared->InRecv.Length], buff, ackLen );
+			int blen = Compression::Decompress((char*)&pShared->InRecv.Buff[pShared->InRecv.Start + pShared->InRecv.Length], buff, ackLen);
 			pShared->InRecv.Length += blen;
 
-			if ( !ServerNegotiated && !InGame && pShared && pShared->AllowNegotiate )
+			if (!ServerNegotiated && !InGame && pShared && pShared->AllowNegotiate)
 			{
 				int pos = pShared->InRecv.Start;
 				unsigned char *p_buff = &pShared->InRecv.Buff[pos];
 
-				while ( pos < pShared->InRecv.Length )
+				while (pos < pShared->InRecv.Length)
 				{
 					int left = pShared->InRecv.Length - pos;
-					int p_len = GetPacketLength( p_buff, left );
+					int p_len = GetPacketLength(p_buff, left);
 
-					if ( *p_buff == 0xA9 && p_len >= 1+2+1+30+30 && p_len <= left )
+					if (*p_buff == 0xA9 && p_len >= 1 + 2 + 1 + 30 + 30 && p_len <= left)
 					{
 						// character list
 
 						unsigned char hash[16], test[16];
 
-						memcpy( pShared->AuthBits, p_buff + 1+2+1+30+1, 8 );
+						memcpy(pShared->AuthBits, p_buff + 1 + 2 + 1 + 30 + 1, 8);
 
-						if ( p_buff[3] > 1 )
-							memcpy( hash, p_buff + 1+2+1+30+30+30+1, 16 );
+						if (p_buff[3] > 1)
+							memcpy(hash, p_buff + 1 + 2 + 1 + 30 + 30 + 30 + 1, 16);
 						else
-							memcpy( hash, p_buff + 1+2+1+30+1+8, 16 );
+							memcpy(hash, p_buff + 1 + 2 + 1 + 30 + 1 + 8, 16);
 
-						for ( int i = 0; i < p_buff[3]; i++ )
-							memset( p_buff + 1+2+1+ 30 + 60*i, 0, 30 );
+						for (int i = 0; i < p_buff[3]; i++)
+							memset(p_buff + 1 + 2 + 1 + 30 + 60 * i, 0, 30);
 
-						if ( memcmp( hash, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16 ) != 0 )
+						if (memcmp(hash, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) != 0)
 						{
-							OSIEncryption::MD5( p_buff, p_len, test );
+							OSIEncryption::MD5(p_buff, p_len, test);
 
-							ServerNegotiated = memcmp( hash, test, 16 ) == 0;
+							ServerNegotiated = memcmp(hash, test, 16) == 0;
 						}
 
-						if ( !ServerNegotiated )
-							memset( pShared->AuthBits, 0, 8 );
+						if (!ServerNegotiated)
+							memset(pShared->AuthBits, 0, 8);
 
 						Forwarding = Forwarded = false;
 
 						break;
 					}
 
-					if ( p_len <= 0 )
+					if (p_len <= 0)
 					{
 						break;
 					}
@@ -986,39 +1135,39 @@ int RecvData()
 			}
 		}
 
-		ReleaseMutex( CommMutex );
+		ReleaseMutex(CommMutex);
 
-		SendMessage( hRazorWnd, WM_UONETEVENT, RECV, 0 );
+		SendMessage(hRazorWnd, WM_UONETEVENT, RECV, 0);
 	}
 
 	return ackLen;
 }
 
-int HookRecv( SOCKET sock, char *buff, int len, int flags )
+int PASCAL HookRecv(SOCKET sock, char *buff, int len, int flags)
 {
 	int ackLen;
 
-	if ( sock == CurrentConnection && CurrentConnection )
+	if (sock == CurrentConnection && CurrentConnection)
 	{
-		WaitForSingleObject( CommMutex, INFINITE );
-		if ( pShared->ForceDisconn && pShared->OutRecv.Length <= 0 )
+		WaitForSingleObject(CommMutex, INFINITE);
+		if (pShared->ForceDisconn && pShared->AllowDisconn && pShared->OutRecv.Length <= 0)
 		{
-			ReleaseMutex( CommMutex );
-			WSASetLastError( WSAECONNRESET );
+			ReleaseMutex(CommMutex);
+			WSASetLastError(WSAECONNRESET);
 			return -1;
 		}
 
-		if ( LoginServer )
+		if (LoginServer)
 		{
-			if ( pShared->OutRecv.Length > 0 )
+			if (pShared->OutRecv.Length > 0)
 			{
 				ackLen = pShared->OutRecv.Length;
-				memcpy( buff, &pShared->OutRecv.Buff[pShared->OutRecv.Start], ackLen );
+				memcpy(buff, &pShared->OutRecv.Buff[pShared->OutRecv.Start], ackLen);
 
-				if ( ((BYTE)buff[0]) == 0x8C )
+				if (((BYTE)buff[0]) == 0x8C)
 					LoginServer = false;
 
-				if ( Forwarding )
+				if (Forwarding)
 					Seeded = Forwarded = true;
 
 				pShared->OutRecv.Start += ackLen;
@@ -1032,31 +1181,31 @@ int HookRecv( SOCKET sock, char *buff, int len, int flags )
 		else
 		{
 			ackLen = 0;
-			while ( pShared->OutRecv.Length > 0 )
+			while (pShared->OutRecv.Length > 0)
 			{
-				int blen = GetPacketLength( &pShared->OutRecv.Buff[pShared->OutRecv.Start], pShared->OutRecv.Length );
+				int blen = GetPacketLength(&pShared->OutRecv.Buff[pShared->OutRecv.Start], pShared->OutRecv.Length);
 
-				if ( blen <= 0 || blen > pShared->OutRecv.Length || ackLen+blen > len )
+				if (blen <= 0 || blen > pShared->OutRecv.Length || ackLen + blen > len)
 					break;
 
-				ackLen += Compression::Compress( &buff[ackLen], (char*)&pShared->OutRecv.Buff[pShared->OutRecv.Start], blen );
+				ackLen += Compression::Compress(&buff[ackLen], (char*)&pShared->OutRecv.Buff[pShared->OutRecv.Start], blen);
 
 				pShared->OutRecv.Start += blen;
 				pShared->OutRecv.Length -= blen;
 			}
 
-			if ( ClientEncrypted && ackLen > 0 )
-				ClientCrypt->EncryptForClient( (BYTE*)buff, (BYTE*)buff, ackLen );
+			if (ClientEncrypted && ackLen > 0)
+				ClientCrypt->EncryptForClient((BYTE*)buff, (BYTE*)buff, ackLen);
 		}
 
-		Maintenance( pShared->InRecv );
-		Maintenance( pShared->OutRecv );
+		Maintenance(pShared->InRecv);
+		Maintenance(pShared->OutRecv);
 
-		ReleaseMutex( CommMutex );
+		ReleaseMutex(CommMutex);
 
-		if ( ackLen == 0 )
+		if (ackLen == 0)
 		{
-			WSASetLastError( WSAEWOULDBLOCK );
+			WSASetLastError(WSAEWOULDBLOCK);
 			return -1;
 		}
 		else
@@ -1066,85 +1215,87 @@ int HookRecv( SOCKET sock, char *buff, int len, int flags )
 	}
 	else
 	{
-		return (*(NetIOFunc)OldRecv)(sock,buff,len,flags);
+		return (*(NetIOFunc)OldRecv)(sock, buff, len, flags);
 	}
 }
 
 int SkipSendData = 0;
-int HookSend( SOCKET sock, char *buff, int len, int flags )
+int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 {
 	int ackLen;
 
-	if ( sock == CurrentConnection && CurrentConnection )
+	if (sock == CurrentConnection && CurrentConnection)
 	{
-		if ( !Seeded )
+		if (!Seeded)
 		{
-			if ( len > 0 && ((BYTE)*buff) == ((BYTE)0xEF) )
+			if (len > 0 && ((BYTE)*buff) == ((BYTE)0xEF))
 				SkipSendData = 16;
 
-			if ( len >= 4 )
+			if (len >= 4)
 			{
 				Seeded = true;
 
 				CryptSeed = *((DWORD*)buff);
 
-				if ( ServerEncrypted )
+				if (ServerEncrypted)
 				{
-					ServerCrypt->Initialize( CryptSeed );
-					ServerLogin->Initialize( (BYTE*)&CryptSeed );
+					ServerCrypt->Initialize(CryptSeed);
+					ServerLogin->Initialize((BYTE*)&CryptSeed);
 				}
 
-				if ( ClientEncrypted )
+				if (ClientEncrypted)
 				{
-					ClientCrypt->Initialize( CryptSeed );
-					ClientLogin->Initialize( (BYTE*)&CryptSeed );
+					ClientCrypt->Initialize(CryptSeed);
+					ClientLogin->Initialize((BYTE*)&CryptSeed);
 				}
 
 				Compression::Reset();
 			}
 
-			ackLen = (*(NetIOFunc)OldSend)(sock,buff,len,flags);
+			ackLen = (*(NetIOFunc)OldSend)(sock, buff, len, flags);
 			pShared->TotalSend += len;
 		}
-		else if ( SkipSendData < len )
+		else if (SkipSendData < len)
 		{
 			SkipSendData = 0;
 
-			if ( FirstSend )
+			if (FirstSend)
 			{
 				FirstSend = false;
 
-				if ( ClientEncrypted )
-					LoginServer = ClientLogin->TestForLogin( (BYTE)buff[0] );
+				if (ClientEncrypted)
+					LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
 				else
-					LoginServer = LoginEncryption::IsLoginByte( (BYTE)buff[0] );
+					LoginServer = LoginEncryption::IsLoginByte((BYTE)buff[0]);
 
-				if ( LoginServer )
+				if (LoginServer)
 					Forwarding = Forwarded = false;
 			}
 
-			WaitForSingleObject( CommMutex, INFINITE );
+			WaitForSingleObject(CommMutex, INFINITE);
+
+			//memcpy( &pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length], buff, len );
 
 			if (ClientEncrypted)
 			{
-				if ( Forwarded )
+				if (Forwarded)
 				{
-					CryptSeed = LoginEncryption::GenerateBadSeed( CryptSeed );
+					CryptSeed = LoginEncryption::GenerateBadSeed(CryptSeed);
 
-					ClientCrypt->Initialize( CryptSeed );
+					ClientCrypt->Initialize(CryptSeed);
 
-					ClientCrypt->DecryptFromClient( (BYTE*)buff, (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length]), len );
-					ClientLogin->Decrypt( (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length]), (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length]), len );
+					ClientCrypt->DecryptFromClient((BYTE*)buff, (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start + pShared->InSend.Length]), len);
+					ClientLogin->Decrypt((BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start + pShared->InSend.Length]), (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start + pShared->InSend.Length]), len);
 
 					LoginServer = Forwarding = Forwarded = false;
 				}
 				else
 				{
-					if ( LoginServer )
+					if (LoginServer)
 					{
-						ClientLogin->Decrypt( (BYTE*)(buff), (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length]), len );
+						ClientLogin->Decrypt((BYTE*)(buff), (BYTE*)(&pShared->InSend.Buff[pShared->InSend.Start + pShared->InSend.Length]), len);
 
-						if ( ((BYTE)pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length]) == 0xA0 )
+						if (((BYTE)pShared->InSend.Buff[pShared->InSend.Start + pShared->InSend.Length]) == 0xA0)
 							Forwarding = true;
 					}
 					else
@@ -1153,31 +1304,29 @@ int HookSend( SOCKET sock, char *buff, int len, int flags )
 					}
 				}
 			}
-			else
-				memcpy( &pShared->InSend.Buff[pShared->InSend.Start+pShared->InSend.Length], buff, len );
 
 			pShared->InSend.Length += len;
-			ReleaseMutex( CommMutex );
+			ReleaseMutex(CommMutex);
 
-			SendMessage( hRazorWnd, WM_UONETEVENT, SEND, 0 );
+			SendMessage(hRazorWnd, WM_UONETEVENT, SEND, 0);
 
-			WaitForSingleObject( CommMutex, INFINITE );
+			WaitForSingleObject(CommMutex, INFINITE);
 			FlushSendData();
-			Maintenance( pShared->InSend );
-			ReleaseMutex( CommMutex );
+			Maintenance(pShared->InSend);
+			ReleaseMutex(CommMutex);
 
 			ackLen = len;//lie and say we sent it all -- or should we tell the truth? (probably not since then it could try to send it again..)
 		}
 		else
 		{
-			ackLen = (*(NetIOFunc)OldSend)(sock,buff,len,flags);
+			ackLen = (*(NetIOFunc)OldSend)(sock, buff, len, flags);
 			pShared->TotalSend += len;
 			SkipSendData -= len;
 		}
 	}
 	else
 	{
-		ackLen = (*(NetIOFunc)OldSend)(sock,buff,len,flags);
+		ackLen = (*(NetIOFunc)OldSend)(sock, buff, len, flags);
 	}
 
 	return ackLen;
@@ -1188,51 +1337,53 @@ int HookSend( SOCKET sock, char *buff, int len, int flags )
 
 void FlushSendData()
 {
-	WaitForSingleObject( CommMutex, INFINITE );
-	if ( pShared->OutSend.Length > 0 && CurrentConnection )
+	WaitForSingleObject(CommMutex, INFINITE);
+	if (pShared->OutSend.Length > 0 && CurrentConnection)
 	{
 		int ackLen = 0;
 		int outLen = pShared->OutSend.Length;
 
-		if ( !InGame && !LoginServer )
+		if (!InGame && !LoginServer)
 		{
 			int pos = pShared->OutSend.Start;
 			unsigned char *buff = &pShared->OutSend.Buff[pos];
 
-			while ( pos < outLen )
+			while (pos < outLen)
 			{
 				int left = pShared->OutSend.Length - pos;
-				int len = GetPacketLength( buff, left );
+				int len = GetPacketLength(buff, left);
 
-				if ( *buff == 0x5D && len >= 1+4+30+30 && len <= left )
+				if (*buff == 0x5D && len >= 1 + 4 + 30 + 30 && len <= left)
 				{
 					// play character
-					if ( pShared->AllowNegotiate && ServerNegotiated )
+					if (pShared->AllowNegotiate && ServerNegotiated)
 					{
 						// the first 2 bytes are 0
 						// the next 4 bytes are "flags" which say the user's client type (lbr,t2a,aos,etc)
 						// the rest are ignored, so we can use them for auth
-						memcpy( buff + 1 + 4 + 30 + 2 + 4, pShared->AuthBits, 8 );
-						memcpy( buff + 1 + 4 + 30 + 2 + 4 + 8, RAZOR_ID_KEY, RAZOR_ID_KEY_LEN );
+						memcpy(buff + 1 + 4 + 30 + 2 + 4, pShared->AuthBits, 8);
+						memcpy(buff + 1 + 4 + 30 + 2 + 4 + 8, RAZOR_ID_KEY, RAZOR_ID_KEY_LEN);
 					}
 
 					InGame = true;
+
 					break;
 				}
-				else if ( *buff == 0x00 && (*((DWORD*)&buff[1])) == 0xEDEDEDED && len >= 1+4+4+1+30+30 && len <= left )
+				else if (*buff == 0x00 && (*((DWORD*)&buff[1])) == 0xEDEDEDED && len >= 1 + 4 + 4 + 1 + 30 + 30 && len <= left)
 				{
 					// char creation
-					if ( pShared->AllowNegotiate && ServerNegotiated )
+					if (pShared->AllowNegotiate && ServerNegotiated)
 					{
-						memcpy( buff + 1 + 4 + 4 + 1 + 30 + 15, pShared->AuthBits, 8 );
-						memcpy( buff + 1 + 4 + 4 + 1 + 30 + 15 + 8, RAZOR_ID_KEY, min( 7, RAZOR_ID_KEY_LEN ) );
+						memcpy(buff + 1 + 4 + 4 + 1 + 30 + 15, pShared->AuthBits, 8);
+						memcpy(buff + 1 + 4 + 4 + 1 + 30 + 15 + 8, RAZOR_ID_KEY, min(7, RAZOR_ID_KEY_LEN));
 					}
 
 					InGame = true;
+
 					break;
 				}
 
-				if ( len <= 0 )
+				if (len <= 0)
 				{
 					break;
 				}
@@ -1244,26 +1395,26 @@ void FlushSendData()
 			} // END while
 		} // END if ( !InGame && !LoginServer
 
-		if ( ServerEncrypted )
+		if (ServerEncrypted)
 		{
-			if ( tempBuff == NULL )
+			if (tempBuff == NULL)
 				tempBuff = new char[SHARED_BUFF_SIZE];
 
-			if ( LoginServer )
-				ServerLogin->Encrypt( (BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen );
+			if (LoginServer)
+				ServerLogin->Encrypt((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
 			else
-				ServerCrypt->EncryptForServer( (BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen );
+				ServerCrypt->EncryptForServer((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
 
-			ackLen = (*(NetIOFunc)OldSend)(CurrentConnection,tempBuff,outLen,0);
+			ackLen = (*(NetIOFunc)OldSend)(CurrentConnection, tempBuff, outLen, 0);
 		}
 		else
 		{
-			ackLen = (*(NetIOFunc)OldSend)(CurrentConnection,(char*)&pShared->OutSend.Buff[pShared->OutSend.Start],outLen,0);
+			ackLen = (*(NetIOFunc)OldSend)(CurrentConnection, (char*)&pShared->OutSend.Buff[pShared->OutSend.Start], outLen, 0);
 		}
 
-		if ( ackLen == SOCKET_ERROR )
+		if (ackLen == SOCKET_ERROR)
 		{
-			if ( WSAGetLastError() != WSAEWOULDBLOCK )
+			if (WSAGetLastError() != WSAEWOULDBLOCK)
 				pShared->ForceDisconn = true;
 		}
 		else //if ( ackLen >= 0 )
@@ -1275,32 +1426,38 @@ void FlushSendData()
 		}
 	}
 
-	Maintenance( pShared->OutSend );
-	ReleaseMutex( CommMutex );
+	Maintenance(pShared->OutSend);
+	ReleaseMutex(CommMutex);
 }
 
-int HookConnect( SOCKET sock, const sockaddr *addr, int addrlen )
+int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 {
 	int retVal;
 
-	if ( addr && addrlen >= sizeof(sockaddr_in) )
+	if (addr && addrlen >= sizeof(sockaddr_in))
 	{
 		const sockaddr_in *old_addr = (const sockaddr_in *)addr;
 		sockaddr_in useAddr;
 
-		memcpy( &useAddr, old_addr, sizeof(sockaddr_in) );
+		memcpy(&useAddr, old_addr, sizeof(sockaddr_in));
 
-		if ( !Forwarded && pShared->ServerIP != 0 )
+		if (!Forwarded && pShared->ServerIP != 0)
 		{
 			useAddr.sin_addr.S_un.S_addr = pShared->ServerIP;
-			useAddr.sin_port = htons( pShared->ServerPort );
+			useAddr.sin_port = htons(pShared->ServerPort);
 		}
 
-		retVal = (*(ConnFunc)OldConnect)( sock, (sockaddr*)&useAddr, sizeof(sockaddr_in) );
+		/*char blah[256];
+		sprintf(blah, "%08X - %08X", useAddr.sin_addr.S_un.S_addr, pShared->ServerIP);
+		MessageBox(NULL, blah, "Connect To:", MB_OK);*/
 
-		if ( retVal != SOCKET_ERROR )
+		retVal = (*(ConnFunc)OldConnect)(sock, (sockaddr*)&useAddr, sizeof(sockaddr_in));
+
+		ConnectedIP = useAddr.sin_addr.S_un.S_addr;
+
+		if (retVal != SOCKET_ERROR)
 		{
-			Log( "Connecting to %i", sock );
+			Log("Connecting to %i", sock);
 
 			CreateEncryption();
 
@@ -1310,50 +1467,53 @@ int HookConnect( SOCKET sock, const sockaddr *addr, int addrlen )
 			FirstSend = true;
 			Forwarding = Forwarded = false;
 
-			WaitForSingleObject( CommMutex, INFINITE );
+			WaitForSingleObject(CommMutex, INFINITE);
 			CurrentConnection = sock;
 			pShared->OutRecv.Length = pShared->InRecv.Length = pShared->OutSend.Length = pShared->InSend.Length = 0;
 			pShared->ForceDisconn = false;
-			ReleaseMutex( CommMutex );
+			ReleaseMutex(CommMutex);
 
-			PostMessage( hRazorWnd, WM_UONETEVENT, CONNECT, useAddr.sin_addr.S_un.S_addr );
+			PostMessage(hRazorWnd, WM_UONETEVENT, CONNECT, useAddr.sin_addr.S_un.S_addr);
+			connected = true;
 		}
 	}
 	else
 	{
-		retVal = (*(ConnFunc)OldConnect)( sock, addr, addrlen );
+		retVal = (*(ConnFunc)OldConnect)(sock, addr, addrlen);
 	}
 
 	return retVal;
 }
 
-int HookCloseSocket( SOCKET sock )
+int PASCAL HookCloseSocket(SOCKET sock)
 {
-	int retVal = (*(CLSFunc)OldCloseSocket)( sock );
+	int retVal = (*(CLSFunc)OldCloseSocket)(sock);
 
-	if ( sock == CurrentConnection && sock != 0 )
+	if (sock == CurrentConnection && sock != 0)
 	{
-		Log( "Closing socket %i", sock );
+		Log("Closing socket %i", sock);
 		CurrentConnection = 0;
 
-		WaitForSingleObject( CommMutex, INFINITE );
+		WaitForSingleObject(CommMutex, INFINITE);
 		pShared->OutRecv.Length = pShared->InRecv.Length = pShared->OutSend.Length = pShared->InSend.Length = 0;
+		memset(pShared->Position, 0, 4 * 3);
 		pShared->TotalSend = pShared->TotalRecv = 0;
 		pShared->ForceDisconn = false;
-		ReleaseMutex( CommMutex );
+		ReleaseMutex(CommMutex);
 
 		ServerNegotiated = false;
 		InGame = false;
 
-		memset( pShared->AuthBits, 0, 8 );
+		memset(pShared->AuthBits, 0, 8);
 
-		PostMessage( hRazorWnd, WM_UONETEVENT, DISCONNECT, 0 );
+		PostMessage(hRazorWnd, WM_UONETEVENT, DISCONNECT, 0);
+		connected = false;
 	}
 
 	return retVal;
 }
 
-int HookSelect( int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptfd, const struct timeval *timeout )
+int PASCAL HookSelect(int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptfd, const struct timeval *timeout)
 {
 	bool checkRecv = false;
 	bool checkErr = false;
@@ -1361,30 +1521,30 @@ int HookSelect( int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptfd, con
 	int realRet = 0;
 	int myRet = 0;
 
-	if ( CurrentConnection )
+	if (CurrentConnection)
 	{
-		if ( readfd != NULL )
-			checkRecv = FD_ISSET( CurrentConnection, readfd );
+		if (readfd != NULL)
+			checkRecv = FD_ISSET(CurrentConnection, readfd);
 
-		if ( exceptfd != NULL )
-			checkErr = FD_ISSET( CurrentConnection, exceptfd );
+		if (exceptfd != NULL)
+			checkErr = FD_ISSET(CurrentConnection, exceptfd);
 	}
 
 	timeval myTimeout;
 
-	if ( SmartCPU )
+	if (SmartCPU)
 	{
 		int length = 0;
 
-		if ( Active )
+		if (Active)
 		{
 			LARGE_INTEGER end;
-			QueryPerformanceCounter( &end );
+			QueryPerformanceCounter(&end);
 
-			length = int( 1000000.0 * ((end.QuadPart-Counter.QuadPart)/double(PerfFreq.QuadPart)) );
+			length = int(1000000.0 * ((end.QuadPart - Counter.QuadPart) / double(PerfFreq.QuadPart)));
 		}
 
-		if ( length < 33333 )
+		if (length < 33333)
 		{
 			myTimeout.tv_sec = 0;
 			myTimeout.tv_usec = 33333 - length;
@@ -1392,41 +1552,41 @@ int HookSelect( int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptfd, con
 		}
 	}
 
-	realRet = (*(SelectFunc)OldSelect)( ndfs, readfd, writefd, exceptfd, timeout );
+	realRet = (*(SelectFunc)OldSelect)(ndfs, readfd, writefd, exceptfd, timeout);
 
-	if ( SmartCPU )
-		QueryPerformanceCounter( &Counter );
+	if (SmartCPU)
+		QueryPerformanceCounter(&Counter);
 
-	if ( checkRecv )
+	if (checkRecv)
 	{
-		if ( FD_ISSET( CurrentConnection, readfd ) )
+		if (FD_ISSET(CurrentConnection, readfd))
 		{
-			FD_CLR( CurrentConnection, readfd );
+			FD_CLR(CurrentConnection, readfd);
 			RecvData();
 			realRet--;
 		}
 
-		WaitForSingleObject( CommMutex, INFINITE );
-		if ( pShared->OutRecv.Length > 0 || ( pShared->ForceDisconn ) )
+		WaitForSingleObject(CommMutex, INFINITE);
+		if (pShared->OutRecv.Length > 0 || (pShared->ForceDisconn && pShared->AllowDisconn))
 		{
-			FD_SET( CurrentConnection, readfd );
+			FD_SET(CurrentConnection, readfd);
 			myRet++;
 		}
-		ReleaseMutex( CommMutex );
+		ReleaseMutex(CommMutex);
 	}
 
-	if ( checkErr && !FD_ISSET( CurrentConnection, exceptfd ) )
+	if (checkErr && !FD_ISSET(CurrentConnection, exceptfd))
 	{
-		WaitForSingleObject( CommMutex, INFINITE );
-		if ( pShared->ForceDisconn && pShared->OutRecv.Length <= 0 )
+		WaitForSingleObject(CommMutex, INFINITE);
+		if (pShared->ForceDisconn && pShared->AllowDisconn && pShared->OutRecv.Length <= 0)
 		{
-			FD_SET( CurrentConnection, exceptfd );
+			FD_SET(CurrentConnection, exceptfd);
 			myRet++;
 		}
-		ReleaseMutex( CommMutex );
+		ReleaseMutex(CommMutex);
 	}
 
-	if ( realRet < 0 )
+	if (realRet < 0)
 	{
 		return myRet;
 	}
@@ -1436,34 +1596,34 @@ int HookSelect( int ndfs, fd_set *readfd, fd_set *writefd, fd_set *exceptfd, con
 	}
 }
 
-bool HookFunction( const char *Dll, const char *FuncName, int Ordinal, unsigned long NewAddr,
-				  unsigned long *OldAddr, unsigned long *PatchAddr )
+bool HookFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned long NewAddr,
+	unsigned long *OldAddr, unsigned long *PatchAddr)
 {
 	DWORD baseAddr = (DWORD)GetModuleHandle(NULL);
-	if ( !baseAddr )
+	if (!baseAddr)
 		return false;
 
 	IMAGE_DOS_HEADER *idh = (IMAGE_DOS_HEADER *)baseAddr;
 
 	IMAGE_FILE_HEADER *ifh = (IMAGE_FILE_HEADER *)(baseAddr + idh->e_lfanew + sizeof(DWORD));
 
-	IMAGE_OPTIONAL_HEADER *ioh = (IMAGE_OPTIONAL_HEADER *)((DWORD)(ifh) + sizeof(IMAGE_FILE_HEADER));
+	IMAGE_OPTIONAL_HEADER *ioh = (IMAGE_OPTIONAL_HEADER *)((DWORD)(ifh)+sizeof(IMAGE_FILE_HEADER));
 
 	IMAGE_IMPORT_DESCRIPTOR *iid = (IMAGE_IMPORT_DESCRIPTOR *)(baseAddr + ioh->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 
-	while( iid->Name )
+	while (iid->Name)
 	{
-		if( _stricmp( Dll, (char *)(baseAddr + iid->Name) ) == 0 )
+		if (_stricmp(Dll, (char *)(baseAddr + iid->Name)) == 0)
 		{
 			IMAGE_THUNK_DATA * pThunk = (IMAGE_THUNK_DATA *)((DWORD)iid->OriginalFirstThunk + baseAddr);
 			IMAGE_THUNK_DATA * pThunk2 = (IMAGE_THUNK_DATA *)((DWORD)iid->FirstThunk + baseAddr);
 
-			while( pThunk->u1.AddressOfData )
+			while (pThunk->u1.AddressOfData)
 			{
 				char *name = NULL;
 				int ord;
 
-				if( pThunk->u1.Ordinal & 0x80000000 )
+				if (pThunk->u1.Ordinal & 0x80000000)
 				{
 					// Imported by ordinal only:
 					ord = pThunk->u1.Ordinal & 0xFFFF;
@@ -1476,11 +1636,11 @@ bool HookFunction( const char *Dll, const char *FuncName, int Ordinal, unsigned 
 					name = (char *)pName->Name;
 				}
 
-				if ( ord == Ordinal || ( name && FuncName && !strcmp( name, FuncName ) ) )
+				if (ord == Ordinal || (name && FuncName && !strcmp(name, FuncName)))
 				{
 					*OldAddr = (unsigned long)pThunk2->u1.Function;
 					*PatchAddr = (unsigned long)(&pThunk2->u1.Function);
-					MemoryPatch( *PatchAddr, NewAddr );
+					MemoryPatch(*PatchAddr, NewAddr);
 
 					return true;
 				}
@@ -1495,34 +1655,33 @@ bool HookFunction( const char *Dll, const char *FuncName, int Ordinal, unsigned 
 	return false;
 }
 
-
-bool FindFunction( const char *Dll, const char *FuncName, int Ordinal, unsigned long *ImpAddr, unsigned long *CallAddr )
+bool FindFunction(const char *Dll, const char *FuncName, int Ordinal, unsigned long *ImpAddr, unsigned long *CallAddr)
 {
 	DWORD baseAddr = (DWORD)GetModuleHandle(NULL);
-	if ( !baseAddr )
+	if (!baseAddr)
 		return false;
 
 	IMAGE_DOS_HEADER *idh = (IMAGE_DOS_HEADER *)baseAddr;
 
 	IMAGE_FILE_HEADER *ifh = (IMAGE_FILE_HEADER *)(baseAddr + idh->e_lfanew + sizeof(DWORD));
 
-	IMAGE_OPTIONAL_HEADER *ioh = (IMAGE_OPTIONAL_HEADER *)((DWORD)(ifh) + sizeof(IMAGE_FILE_HEADER));
+	IMAGE_OPTIONAL_HEADER *ioh = (IMAGE_OPTIONAL_HEADER *)((DWORD)(ifh)+sizeof(IMAGE_FILE_HEADER));
 
 	IMAGE_IMPORT_DESCRIPTOR *iid = (IMAGE_IMPORT_DESCRIPTOR *)(baseAddr + ioh->DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
 
-	while( iid->Name )
+	while (iid->Name)
 	{
-		if( _stricmp( Dll, (char *)(baseAddr + iid->Name) ) == 0 )
+		if (_stricmp(Dll, (char *)(baseAddr + iid->Name)) == 0)
 		{
 			IMAGE_THUNK_DATA * pThunk = (IMAGE_THUNK_DATA *)((DWORD)iid->OriginalFirstThunk + baseAddr);
 			IMAGE_THUNK_DATA * pThunk2 = (IMAGE_THUNK_DATA *)((DWORD)iid->FirstThunk + baseAddr);
 
-			while( pThunk->u1.AddressOfData )
+			while (pThunk->u1.AddressOfData)
 			{
 				char *name = NULL;
 				int ord;
 
-				if( pThunk->u1.Ordinal & 0x80000000 )
+				if (pThunk->u1.Ordinal & 0x80000000)
 				{
 					// Imported by ordinal only:
 					ord = pThunk->u1.Ordinal & 0xFFFF;
@@ -1535,7 +1694,7 @@ bool FindFunction( const char *Dll, const char *FuncName, int Ordinal, unsigned 
 					name = (char *)pName->Name;
 				}
 
-				if ( ord == Ordinal || ( name && FuncName && !strcmp( name, FuncName ) ) )
+				if (ord == Ordinal || (name && FuncName && !strcmp(name, FuncName)))
 				{
 					*ImpAddr = (unsigned long)pThunk2->u1.Function;
 					*CallAddr = (unsigned long)(&pThunk2->u1.Function);
@@ -1557,67 +1716,127 @@ bool FindFunction( const char *Dll, const char *FuncName, int Ordinal, unsigned 
 #define NOTO_HUE_LEN 16
 
 DWORD NotoLoc = 0;
-void SetCustomNotoHue( int hue )
+void SetCustomNotoHue(int hue)
 {
-	if ( !NotoLoc )
+	if (!NotoLoc)
 	{
-		NotoLoc = MemFinder::Find( NOTO_HUE_STR, NOTO_HUE_LEN );
-		if ( !NotoLoc )
+		NotoLoc = MemFinder::Find(NOTO_HUE_STR, NOTO_HUE_LEN);
+		if (!NotoLoc)
 			NotoLoc = 0xFFFFFFFF;
 	}
 
-	if ( NotoLoc != 0xFFFFFFFF )
-		*((int*)(NotoLoc + 8*4)) = hue;
+	if (NotoLoc != 0xFFFFFFFF)
+		*((int*)(NotoLoc + 8 * 4)) = hue;
 }
 
-bool PatchMemory( void )
+bool PatchMemory(void)
 {
-	Log( "Patching client functions." );
+	Log("Patching client functions.");
 
 	return
-		HookFunction( "wsock32.dll", "closesocket", 3, (unsigned long)HookCloseSocket, &OldCloseSocket, &CloseSocketAddress ) &&
-		HookFunction( "wsock32.dll", "connect", 4, (unsigned long)HookConnect, &OldConnect, &ConnectAddress ) &&
-		HookFunction( "wsock32.dll", "recv", 16, (unsigned long)HookRecv, &OldRecv, &RecvAddress ) &&
-		HookFunction( "wsock32.dll", "select", 18, (unsigned long)HookSelect, &OldSelect, &SelectAddress ) &&
-		HookFunction( "wsock32.dll", "send", 19, (unsigned long)HookSend, &OldSend, &SendAddress )
+		HookFunction("wsock32.dll", "closesocket", 3, (unsigned long)HookCloseSocket, &OldCloseSocket, &CloseSocketAddress) &&
+		HookFunction("wsock32.dll", "connect", 4, (unsigned long)HookConnect, &OldConnect, &ConnectAddress) &&
+		HookFunction("wsock32.dll", "recv", 16, (unsigned long)HookRecv, &OldRecv, &RecvAddress) &&
+		HookFunction("wsock32.dll", "select", 18, (unsigned long)HookSelect, &OldSelect, &SelectAddress) &&
+		HookFunction("wsock32.dll", "send", 19, (unsigned long)HookSend, &OldSend, &SendAddress)
 		;
+	//HookFunction( "wsock32.dll", "socket", 23, (unsigned long)HookSocket, &OldSocket, &SocketAddress)
+	//HookFunction( "wsock32.dll", "WSAAsyncSelect", 101, (unsigned long)HookAsyncSelect, &OldAsyncSelect, &AsyncSelectAddress );
 }
 
-void MemoryPatch( unsigned long Address, unsigned long value )
+void MemoryPatch(unsigned long Address, unsigned long value)
 {
-	MemoryPatch( Address, &value, 4 ); // sizeof(int)
+	MemoryPatch(Address, &value, 4); // sizeof(int)
 }
 
-void MemoryPatch( unsigned long Address, int value, int numBytes )
+void MemoryPatch(unsigned long Address, int value, int numBytes)
 {
-	MemoryPatch( Address, &value, numBytes );
+	MemoryPatch(Address, &value, numBytes);
 }
 
-void MemoryPatch( unsigned long Address, const void *value, int length )
+void MemoryPatch(unsigned long Address, const void *value, int length)
 {
 	DWORD OldProtect;
-	if ( !VirtualProtect( (void *)Address, length, PAGE_READWRITE, &OldProtect ) )
+	if (!VirtualProtect((void *)Address, length, PAGE_READWRITE, &OldProtect))
 		return;
 
-	memcpy( (void *)Address, value, length );
+	memcpy((void *)Address, value, length);
 
-	VirtualProtect( (void *)Address, length, OldProtect, &OldProtect );
+	VirtualProtect((void *)Address, length, OldProtect, &OldProtect);
 }
 
-bool CheckParent( HWND hCheck, HWND hComp )
+bool CheckParent(HWND hCheck, HWND hComp)
 {
-	hCheck = GetParent( hCheck );
-	while ( hCheck != hComp && hCheck != NULL )
-		hCheck = GetParent( hCheck );
+	hCheck = GetParent(hCheck);
+	while (hCheck != hComp && hCheck != NULL)
+		hCheck = GetParent(hCheck);
 
-	return ( hCheck == hComp );
+	return (hCheck == hComp);
 }
 
-void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg )
+vector<DWORD> addrList;
+void FindList(DWORD val, unsigned short size)
 {
+	if (size == 0xFFFF)
+	{
+		addrList.clear();
+		return;
+	}
+
+	if (size > 4 || size < 1) size = 4;
+
+	MemFinder mf;
+
+	mf.AddEntry(&val, size, 0x7FFF, 0x00400000);
+
+	mf.Execute();
+
+	DWORD addr;
+	if (addrList.size() == 0)
+	{
+		for (int i = 0; i < 0x7FFF; i++)
+		{
+			addr = mf.GetAddress(&val, size, i);
+			if (addr)
+				addrList.push_back(addr);
+			else
+				break;
+		}
+	}
+	else
+	{
+		vector<DWORD> newList;
+		for (unsigned int i = 0; i < addrList.size(); i++)
+		{
+			if (memcmp((void*)addrList[i], &val, size) == 0)
+				newList.push_back(addrList[i]);
+		}
+
+		addrList = newList;
+	}
+
+	PostMessage(hRazorWnd, WM_UONETEVENT, MAKELONG(FINDDATA, 0), addrList.size());
+	for (unsigned int i = 0; i < addrList.size() && i < 10; i++)
+		PostMessage(hRazorWnd, WM_UONETEVENT, MAKELONG(FINDDATA, i + 1), addrList[i]);
+}
+
+void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
+{
+	/*if ( SizePtr && ( SizePtr->cx != DesiredSize.cx || SizePtr->cy != DesiredSize.cy ) )// && ( SizePtr->cx != 640 || SizePtr->cy != 480 ) )
+	{
+		SizePtr->cx = DesiredSize.cx;
+		SizePtr->cy = DesiredSize.cy;
+
+		if ( RedrawGameEdge )
+		{
+			RedrawGameEdge();
+			RedrawUOScreen();
+		}
+	}*/
+
 	HWND hFore;
 
-	switch ( nMsg )
+	switch (nMsg)
 	{
 		// Custom messages
 	case WM_PROCREADY:
@@ -1625,50 +1844,75 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 		UOProcId = GetCurrentProcessId();
 		hUOWindow = hWnd;
 
-		if (!pShared) // If this failed the first time or was not run at all, try it once more before panicing
-			OnAttach(NULL, 0);
-
 		ClientEncrypted = (wParam & 0x08) != 0;
 		ServerEncrypted = (wParam & 0x10) != 0;
 
 		InitThemes();
 
-		if ( !pShared )
-			PostMessage( hRazorWnd, WM_UONETEVENT, NOT_READY, NO_SHAREMEM );
-		else if ( CopyFailed )
-			PostMessage( hRazorWnd, WM_UONETEVENT, NOT_READY, NO_COPY );
-		else if ( !PatchMemory() )
-			PostMessage( hRazorWnd, WM_UONETEVENT, NOT_READY, NO_PATCH );
-		else
-			PostMessage( hRazorWnd, WM_UONETEVENT, READY, SUCCESS );
+		if (!pShared) // If this failed the first time or was not run at all, try it once more before panicing
+			OnAttach(NULL, 0);
 
-		if ( pShared )
+		if (!pShared)
+			PostMessage(hRazorWnd, WM_UONETEVENT, NOT_READY, NO_SHAREMEM);
+		else if (CopyFailed)
+			PostMessage(hRazorWnd, WM_UONETEVENT, NOT_READY, NO_COPY);
+		else if (!PatchMemory())
+			PostMessage(hRazorWnd, WM_UONETEVENT, NOT_READY, NO_PATCH);
+		else
+			PostMessage(hRazorWnd, WM_UONETEVENT, READY, SUCCESS);
+
+		if (pShared)
 		{
 			pShared->AllowNegotiate = (wParam & 0x04) != 0;
 
 			pShared->UOVersion[0] = 0;
 
-			if ( NativeGetUOVersion != NULL )
-				strncpy( pShared->UOVersion, NativeGetUOVersion(), 16 );
+			if (NativeGetUOVersion != NULL)
+				strncpy(pShared->UOVersion, NativeGetUOVersion(), 16);
 		}
-
-		/* Start a timer that will call a callback each tick. We use this to implement
-		 * timers as well as scan client memory for position updates. */
-		SetTimer(hUOWindow, 0xAA, 25, OnTick);
 
 		break;
 
+		// ZIPPY REV 80
+		/*	case WM_SETFWDWND:
+				PostMessage( hPostWnd, WM_UONETEVENT, SET_FWD_HWND, lParam );
+				break;
+		*/
 	case WM_UONETEVENT:
-		switch ( LOWORD(wParam) )
+		switch (LOWORD(wParam))
 		{
 		case SEND:
 			FlushSendData();
 			break;
 		case STAT_BAR:
-			PatchStatusBar( (BOOL)lParam );
+			PatchStatusBar((BOOL)lParam);
 			break;
 		case NOTO_HUE:
-			SetCustomNotoHue( (int)lParam );
+			SetCustomNotoHue((int)lParam);
+			break;
+		case DEATH_MSG:
+			PatchDeathMsg();
+			break;
+		case CALIBRATE_POS:
+			WaitForSingleObject(CommMutex, INFINITE);
+			if (pShared->Position[0] >= -255 && pShared->Position[0] <= 255 && pShared->Position[1] >= 0 && pShared->Position[1] <= 8192 && pShared->Position[2] >= 0 && pShared->Position[2] <= 8192)
+			{
+				pShared->Position[2] = (int)MemFinder::Find(pShared->Position, sizeof(int) * 3, 0x00500000, 0x00C00000);
+				if (pShared->Position[2])
+				{
+					pShared->Position[0] = 0xFFFFFFFF;
+					pShared->Position[1] = 0xDEADBEEF;
+				}
+				else
+				{
+					memset(pShared->Position, 0, sizeof(int) * 3);
+				}
+			}
+			ReleaseMutex(CommMutex);
+			break;
+
+		case OPEN_RPV:
+			SendMessage(hRazorWnd, WM_UONETEVENT, OPEN_RPV, lParam);
 			break;
 
 		case SETWNDSIZE:
@@ -1676,37 +1920,50 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 			DesiredSize.cy = HIWORD(lParam);
 			break;
 
+		case FINDDATA:
+			FindList((DWORD)lParam, HIWORD(wParam));
+			break;
+
 		case SMART_CPU:
 			SmartCPU = lParam;
 			break;
 
 		case NEGOTIATE:
-			if ( pShared )
+			if (pShared)
 				pShared->AllowNegotiate = (lParam != 0);
 			break;
 
 		case SET_MAP_HWND:
 			hMapWnd = (HWND)lParam;
 			break;
+
+			// ZIPPY REV 80
+			/*		case SET_FWD_HWND:
+						PostMessage( hPostWnd, WM_UONETEVENT, SET_FWD_HWND, lParam );
+						break;
+			*/
 		}
 		break;
 
-	case WM_COPYDATA: {
-		COPYDATASTRUCT *copydata = (COPYDATASTRUCT *)lParam;
-
-		switch ((UONET_MESSAGE_COPYDATA)copydata->dwData) {
-		case UONET_MESSAGE_COPYDATA::POSITION:
-			g_TestPosition = *(Position *)copydata->lpData;
-			break;
-
+		/*case WM_SIZE:
+		if ( wParam == 2 && pMsg && pMsg->hwnd == hWnd  )
+		pMsg->lParam = lParam = MAKELONG( 800, 600 );
+		break;
+		case WM_GETMINMAXINFO:
+		if ( SetMaxSize )
+		{
+		((MINMAXINFO *)lParam)->ptMaxSize.x = 800;
+		((MINMAXINFO *)lParam)->ptMaxSize.y = 600;
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.x = 800;
+		((MINMAXINFO *)lParam)->ptMaxTrackSize.y = 600;
 		}
 		break;
-	}
+		*/
 
 		// Macro stuff
 	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN:
-		if ( pMsg && !SendMessage( hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam ) )
+		if (pMsg && !SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam))
 		{
 			// dont give the key to the client
 			pMsg->message = WM_NULL;
@@ -1717,35 +1974,35 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
-		if ( pMsg && wParam == VK_SNAPSHOT ) // VK_SNAPSHOT (Print Screen) Doesn't seem to send a KeyDown message
-			SendMessage( hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam );
+		if (pMsg && wParam == VK_SNAPSHOT) // VK_SNAPSHOT (Print Screen) Doesn't seem to send a KeyDown message
+			SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam);
 		break;
 
 	case WM_MOUSEWHEEL:
-		PostMessage( hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG( 0, (((short)HIWORD(wParam)) < 0 ? -1 : 1) ) );
+		PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(0, (((short)HIWORD(wParam)) < 0 ? -1 : 1)));
 		break;
 	case WM_MBUTTONDOWN:
-		PostMessage( hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG( 1, 0 ) );
+		PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(1, 0));
 		break;
 	case WM_XBUTTONDOWN:
-		PostMessage( hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG( HIWORD(wParam) + 1, 0 ) );
+		PostMessage(hRazorWnd, WM_UONETEVENT, MOUSE, MAKELONG(HIWORD(wParam) + 1, 0));
 		break;
 
 		//Activation tracking :
 	case WM_ACTIVATE:
 		Active = wParam;
-		PostMessage( hRazorWnd, WM_UONETEVENT, ACTIVATE, wParam );
+		PostMessage(hRazorWnd, WM_UONETEVENT, ACTIVATE, wParam);
 		break;
 	case WM_KILLFOCUS:
 		hFore = GetForegroundWindow();
-		if ( ((HWND)wParam) != hRazorWnd && hFore != hRazorWnd && ((HWND)wParam) != hMapWnd && hFore != hMapWnd
-			&& !CheckParent( hFore, hRazorWnd ) )
+		if (((HWND)wParam) != hRazorWnd && hFore != hRazorWnd && ((HWND)wParam) != hMapWnd && hFore != hMapWnd
+			&& !CheckParent(hFore, hRazorWnd))
 		{
-			PostMessage( hRazorWnd, WM_UONETEVENT, FOCUS, FALSE );
+			PostMessage(hRazorWnd, WM_UONETEVENT, FOCUS, FALSE);
 		}
 		break;
 	case WM_SETFOCUS:
-		PostMessage( hRazorWnd, WM_UONETEVENT, FOCUS, TRUE );
+		PostMessage(hRazorWnd, WM_UONETEVENT, FOCUS, TRUE);
 		break;
 
 		//Custom title bar:
@@ -1762,9 +2019,9 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 	}
 }
 
-LRESULT CALLBACK GetMsgHookFunc( int Code, WPARAM Flag, LPARAM pMsg )
+LRESULT CALLBACK GetMsgHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
 {
-	if ( Code >= 0 && Flag != PM_NOREMOVE ) //dont process messages until they are removed from the queue
+	if (Code >= 0 && Flag != PM_NOREMOVE) //dont process messages until they are removed from the queue
 	{
 		MSG *Msg = (MSG*)pMsg;
 		/*
@@ -1773,16 +2030,16 @@ LRESULT CALLBACK GetMsgHookFunc( int Code, WPARAM Flag, LPARAM pMsg )
 		Msg->message *= !(Disabled * 020);
 		Msg->message ^= 0x11;
 		*/
-		if ( Msg->hwnd == hUOWindow || ( hUOWindow == NULL && Msg->message == WM_PROCREADY ) )
-			MessageProc( Msg->hwnd, Msg->message, Msg->wParam, Msg->lParam, Msg );
+		if (Msg->hwnd == hUOWindow || (hUOWindow == NULL && Msg->message == WM_PROCREADY))
+			MessageProc(Msg->hwnd, Msg->message, Msg->wParam, Msg->lParam, Msg);
 	}
 
-	return CallNextHookEx( NULL, Code, Flag, pMsg );
+	return CallNextHookEx(NULL, Code, Flag, pMsg);
 }
 
-LRESULT CALLBACK WndProcRetHookFunc( int Code, WPARAM Flag, LPARAM pMsg )
+LRESULT CALLBACK WndProcRetHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
 {
-	if ( Code >= 0 )
+	if (Code >= 0)
 	{
 		CWPRETSTRUCT *Msg = (CWPRETSTRUCT *)(pMsg);
 		/*
@@ -1791,49 +2048,48 @@ LRESULT CALLBACK WndProcRetHookFunc( int Code, WPARAM Flag, LPARAM pMsg )
 		Msg->message *= !(Disabled * 020);
 		Msg->message ^= 0x11;
 		*/
-		if ( Msg->hwnd == hUOWindow || ( hUOWindow == NULL && Msg->message == WM_PROCREADY ) )
-			MessageProc( Msg->hwnd, Msg->message, Msg->wParam, Msg->lParam, NULL );
+		if (Msg->hwnd == hUOWindow || (hUOWindow == NULL && Msg->message == WM_PROCREADY))
+			MessageProc(Msg->hwnd, Msg->message, Msg->wParam, Msg->lParam, NULL);
 	}
 
-	return CallNextHookEx( NULL, Code, Flag, pMsg );
+	return CallNextHookEx(NULL, Code, Flag, pMsg);
 }
 
 LRESULT CALLBACK UOAWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (nMsg >= WM_USER + 200 && nMsg < WM_USER + 315)
-	   return SendMessage(hRazorWnd, nMsg, wParam, lParam);
+		return SendMessage(hRazorWnd, nMsg, wParam, lParam);
 	else
-	   return DefWindowProc(hWnd, nMsg, wParam, lParam);
+		return DefWindowProc(hWnd, nMsg, wParam, lParam);
 }
 
-void Log( const char *format, ... )
+void Log(const char *format, ...)
 {
 #ifdef _DEBUG
 #ifdef LOGGING
-	FILE *log = fopen( "Crypt.log", "a" );
-	if ( log )
+	FILE *log = fopen("C:\\Crypt.log", "a");
+	if (log)
 	{
 		char timeStr[256];
 		struct tm *newtime;
 		time_t aclock;
 
-		time( &aclock );
-		newtime = localtime( &aclock );
-		strncpy( timeStr, asctime( newtime ), 256 );
-		int len = (int)strlen( timeStr );
-		if ( timeStr[len-1] == '\n' )
-			timeStr[len-1] = 0;
+		time(&aclock);
+		newtime = localtime(&aclock);
+		strncpy(timeStr, asctime(newtime), 256);
+		int len = (int)strlen(timeStr);
+		if (timeStr[len - 1] == '\n')
+			timeStr[len - 1] = 0;
 
 		char OutTxt[512];
 		va_list argList;
-		va_start( argList, format );
-		_vsnprintf( OutTxt, 512, format, argList );
-		va_end( argList );
+		va_start(argList, format);
+		_vsnprintf(OutTxt, 512, format, argList);
+		va_end(argList);
 
-		fprintf( log, "%s: %s\n", timeStr, OutTxt );
-		fclose( log );
+		fprintf(log, "%s: %s\n", timeStr, OutTxt);
+		fclose(log);
 	}
 #endif
 #endif
 }
-
