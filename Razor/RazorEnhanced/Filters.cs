@@ -257,7 +257,7 @@ namespace RazorEnhanced
 		private static Items.Filter m_corpsefilter = new Items.Filter
 		{
 			RangeMax = 3,
-			Movable = false,
+			Movable = -1,
 			IsCorpse = 1,
 			OnGround = 1,
 			Enabled = true
@@ -321,7 +321,7 @@ namespace RazorEnhanced
 		{
 			Graphics = new List<int> { 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD, 0x0ECE, 0x0ECF, 0x0ED0, 0x0ED1, 0x0ED2 },
 			RangeMax = 1,
-			Movable = false,
+			Movable = -1,
 			IsCorpse = -1,
 			OnGround = 1,
 			Enabled = true
@@ -330,7 +330,7 @@ namespace RazorEnhanced
 		internal static void BoneCutterRun()
 		{
 			if (Assistant.Client.Instance.ServerEncrypted)
-				m_bonefilter.Movable = true;
+				m_bonefilter.Movable = -1;
 
 			BoneCutterEngine(m_bonefilter);
 		}

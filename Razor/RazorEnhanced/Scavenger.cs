@@ -373,14 +373,14 @@ namespace RazorEnhanced
 
         private static Items.Filter m_itemfilter = new Items.Filter
         {
-            Movable = true,
+            Movable = -1,
             OnGround = 1,
             Enabled = true
         };
 
         private static Items.Filter m_itemfilterOsi = new Items.Filter
         {
-            Movable = false,
+            Movable = -1,
             OnGround = 1,
             Enabled = true
         };

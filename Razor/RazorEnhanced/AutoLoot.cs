@@ -459,7 +459,7 @@ namespace RazorEnhanced
 
         private static Items.Filter m_corpsefilter = new Items.Filter
         {
-            Movable = false,
+            Movable = -1,
             IsCorpse = 1,
             OnGround = 1,
             Enabled = true

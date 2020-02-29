@@ -313,7 +313,7 @@ namespace RazorEnhanced
 			public List<int> Hues = new List<int>();
 			public double RangeMin = -1;
 			public double RangeMax = -1;
-			public bool Movable = true;
+			public int Movable = -1;
 			public bool CheckIgnoreObject = false;
 			public List<string> Layers = new List<string>();
 			public int OnGround = -1;
@@ -378,7 +378,10 @@ namespace RazorEnhanced
 							).ToList();
 						}
 
-						assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
+                        if (filter.Movable >= 0)
+                        {
+                            assistantItems = assistantItems.Where((i) => i.Movable == (filter.Movable>0)).ToList();
+                        }
 
 						if (filter.Layers.Count > 0)
 						{
@@ -966,7 +969,7 @@ namespace RazorEnhanced
 					itemFilter.Hues.Add(color);
 
 				List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
-				 
+
 				foreach (Item found in containeritem)  // Return frist one found
 					return found;
 
@@ -1113,7 +1116,7 @@ namespace RazorEnhanced
 		{
 			Item item = FindBySerial(serial);
 
-			if (item == null) //Intem 
+			if (item == null) //Intem
 				return;
 
 			// Prevent spamm message on left bottom screen
