@@ -387,55 +387,87 @@ namespace RazorEnhanced
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
 				{
-					List<uint> itemserial = new List<uint>();
-					Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
-					Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+                    // Problem with uo3d is the serveuo servers don't swap 1hand/2hand properly
+                    // but OSI does, so if delay is 0 let OSI swap fast otherwise handle udress for weapons
+                    if (m_dressdelay == 0)
+                    {
+                        List<uint> itemserial = new List<uint>();
+                        Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+                        Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
-					bool dropWeaponL = false;
-					bool twoHandLeft = false;
-					bool dropWeaponR = false;
-					Assistant.Item newLeft = null;
-					foreach (DressItemNew item in items)
-					{
-						itemserial.Add((uint)item.Serial);
-						if (item.Layer == Layer.LeftHand)
-						{
-							if (lefth == null || item.Serial != lefth.Serial)
-							{
-								twoHandLeft = Assistant.World.FindItem(item.Serial).IsTwoHanded;
-							}
-						}
+                        foreach (DressItemNew item in items)
+                        {
+                            var existingItem = Assistant.World.Player.GetItemOnLayer(item.Layer);
+                            if (existingItem == null || item.Serial != existingItem.Serial)
+                            {
+                                itemserial.Add((uint)item.Serial);
+                            }
+                        }
+                        if (itemserial.Count > 0)
+                        {
+                            RazorEnhanced.Dress.AddLog("Dressing...");
+                            Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(itemserial));
+                        }
+                    }
+                    else
+                    {
+                        // This logic is terrible .. The plan is
+                        // If your swapping weapons, and new weapon 1hand/2hand not equal to new 1/hand/2hand
+                        // then undress the existing weapons first
+                        List<uint> itemserial = new List<uint>();
+                        Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+                        Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
-						if (item.Layer == Layer.LeftHand && lefth != null &&  item.Serial != lefth.Serial)
-							{
-								dropWeaponL = true;
-							}
-						if (item.Layer == Layer.RightHand && righth != null && item.Serial != righth.Serial)
-							{
-								dropWeaponR = true;
-							}
-					}
+                        bool dropWeaponL = false;
+                        bool twoHandLeft = false;
+                        bool dropWeaponR = false;
+                        Assistant.Item newLeft = null;
+                        foreach (DressItemNew item in items)
+                        {
+                            var existingItem = Assistant.World.Player.GetItemOnLayer(item.Layer);
+                            if (existingItem == null || item.Serial != existingItem.Serial)
+                            {
+                                itemserial.Add((uint)item.Serial);
+                            }
+                            if (item.Layer == Layer.LeftHand)
+                            {
+                                if (lefth == null || item.Serial != lefth.Serial)
+                                {
+                                    twoHandLeft = Assistant.World.FindItem(item.Serial).IsTwoHanded;
+                                }
+                            }
 
-					List<ushort> dropLayer = new List<ushort>();
-					if (dropWeaponL || twoHandLeft)
-					{
-						dropLayer.Add((ushort)Layer.LeftHand);
-					}
-					if (dropWeaponR || twoHandLeft)
-					{
-						dropLayer.Add((ushort)Layer.RightHand);
-					}
-					if (dropLayer.Count > 0)
-					{
-						Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(dropLayer));
-						Thread.Sleep(m_dressdelay);
-					}
+                            if (item.Layer == Layer.LeftHand && lefth != null && item.Serial != lefth.Serial)
+                            {
+                                dropWeaponL = true;
+                            }
+                            if (item.Layer == Layer.RightHand && righth != null && item.Serial != righth.Serial)
+                            {
+                                dropWeaponR = true;
+                            }
+                        }
 
-					if (itemserial.Count > 0)
-					{
-						RazorEnhanced.Dress.AddLog("Dressing...");
-				 		Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(itemserial));
-					}
+                        List<ushort> dropLayer = new List<ushort>();
+                        if (dropWeaponL || twoHandLeft)
+                        {
+                            dropLayer.Add((ushort)Layer.LeftHand);
+                        }
+                        if (dropWeaponR || twoHandLeft)
+                        {
+                            dropLayer.Add((ushort)Layer.RightHand);
+                        }
+                        if (dropLayer.Count > 0)
+                        {
+                            Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(dropLayer));
+                            Thread.Sleep(m_dressdelay);
+                        }
+
+                        if (itemserial.Count > 0)
+                        {
+                            RazorEnhanced.Dress.AddLog("Dressing...");
+                            Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(itemserial));
+                        }
+                    }
 				}
 				else
 				{
