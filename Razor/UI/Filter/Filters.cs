@@ -370,7 +370,10 @@ namespace Assistant
 			 		Assistant.Client.Instance.SetGameSize(x, y);
 				else
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-			}
+			} else
+            {
+                Assistant.Client.Instance.SetGameSize(0, 0);
+            }
 		}
 
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)

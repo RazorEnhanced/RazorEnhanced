@@ -189,12 +189,28 @@ namespace Assistant
 			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
-		public override void SetGameSize(int x, int y)
-		{
-			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
-		}
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
 
-		public override Loader_Error LaunchClient(string client)
+        public override void SetGameSize(int x, int y)
+        {
+            const int HWND_TOP = 0;
+            const short SWP_NOMOVE = 0x0002;
+            const short SWP_NOZORDER = 0x0004;
+
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
+            // resizes the game size, not the internal size, so have to exit and restart unless I find smarter way
+            //if (x != 0)
+            //{
+            //    SetWindowPos(Assistant.Client.Instance.GetWindowHandle(),
+            //        HWND_TOP,
+            //        0, 0,
+            //        x, y,
+            //        SWP_NOMOVE | SWP_NOZORDER);
+            //}
+        }
+
+    public override Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Assistant.Engine.RootPath, "Crypt.dll");
 			uint pid = 0;

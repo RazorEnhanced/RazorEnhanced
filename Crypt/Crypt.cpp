@@ -35,7 +35,7 @@ LARGE_INTEGER PerfFreq, Counter;
 DWORD DeathMsgAddr = 0xFFFFFFFF;
 HWND hUOAWnd = NULL;
 
-SIZE DesiredSize = { 800, 600 };
+SIZE DesiredSize = { 0, 0 };
 DWORD ResizeFuncaddr = 0;
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
@@ -463,6 +463,7 @@ DLLFUNCTION BOOL HandleNegotiate(__int64 features)
 SIZE *SizePtr = NULL;
 void __stdcall OnSetUOWindowSize(int width)
 {
+    Log("width %d, desired x: %d y: %d", width, DesiredSize.cx, DesiredSize.cy);
 	if (DesiredSize.cx != 0)   // Se diverso da 0 settata risoluzione definita da utente
 	{
 		if (connected) // Forza resize solo se connesso
