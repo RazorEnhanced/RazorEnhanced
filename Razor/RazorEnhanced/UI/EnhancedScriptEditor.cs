@@ -199,7 +199,7 @@ namespace RazorEnhanced.UI
 			{
 				"Journal.Clear", "Journal.Search", "Journal.SearchByName", "Journal.SearchByColor",
 				"Journal.SearchByType", "Journal.GetLineText", "Journal.GetSpeechName", "Journal.WaitJournal",
-                "Journal.WaitJournalByName",
+                "Journal.WaitByName",
                 "Journal.GetTextBySerial", "Journal.GetTextByColor", "Journal.GetTextByName", "Journal.GetTextByType"
 			};
 
@@ -906,8 +906,8 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Journal.WaitJournal(string, int)", new string[] { "string TextToSearch", "int TimeoutJournal" }, "void", "Pause script and wait until text is present in journal, and text is case sensitive\n\tTimeout in Milliseconds");
 			descriptionJournal.Add("Journal.WaitJournal", tooltip);
 
-            tooltip = new ToolTipDescriptions("Journal.WaitJournalByName(string, int)", new string[] { "string NameToSearchFor", "int TimeoutJournal" }, "void", "Pause script and wait until the named person says something in journal, and text is case sensitive\n\tTimeout in Milliseconds");
-            descriptionJournal.Add("Journal.WaitJournalByName", tooltip);
+            tooltip = new ToolTipDescriptions("Journal.WaitByName(string, int)", new string[] { "string NameToSearchFor", "int TimeoutJournal" }, "void", "Pause script and wait until the named person says something in journal, and text is case sensitive\n\tTimeout in Milliseconds");
+            descriptionJournal.Add("Journal.WaitByName", tooltip);
 
 
             #endregion

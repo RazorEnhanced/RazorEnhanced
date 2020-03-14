@@ -239,7 +239,7 @@ namespace RazorEnhanced
 			return string.Empty; // found one of msgs list
 
 		}
-         public static bool WaitJournalByName(string name, int delay)
+         public static bool WaitByName(string name, int delay)
         {
             int subdelay = delay;
             while (subdelay > 0)
