@@ -229,7 +229,7 @@ namespace RazorEnhanced
 			{
 				foreach(string s in msgs)
 				{
-					if (Search(s)) 
+					if (Search(s))
 						return s; // found one of msgs list
 				}
 
@@ -239,5 +239,22 @@ namespace RazorEnhanced
 			return string.Empty; // found one of msgs list
 
 		}
-	}
+         public static bool WaitJournalByName(string name, int delay)
+        {
+            int subdelay = delay;
+            while (subdelay > 0)
+            {
+                foreach (JournalEntry entrys in World.Player.Journal)
+                {
+                    if (entrys.Name == name)
+                    {
+                        return true;
+                    }
+                }
+                Thread.Sleep(10);
+                subdelay -= 10;
+            }
+            return false;
+        }
+    }
 }

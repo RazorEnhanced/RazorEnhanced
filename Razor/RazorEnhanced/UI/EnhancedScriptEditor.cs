@@ -198,7 +198,8 @@ namespace RazorEnhanced.UI
 			{
 				"Journal.Clear", "Journal.Search", "Journal.SearchByName", "Journal.SearchByColor",
 				"Journal.SearchByType", "Journal.GetLineText", "Journal.GetSpeechName", "Journal.WaitJournal",
-				"Journal.GetTextBySerial", "Journal.GetTextByColor", "Journal.GetTextByName", "Journal.GetTextByType"
+                "Journal.WaitJournalByName",
+                "Journal.GetTextBySerial", "Journal.GetTextByColor", "Journal.GetTextByName", "Journal.GetTextByType"
 			};
 
 			string[] methodsAutoLoot =
@@ -901,11 +902,15 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Journal.WaitJournal(string, int)", new string[] { "string TextToSearch", "int TimeoutJournal" }, "void", "Pause script and wait until text is present in journal, and text is case sensitive\n\tTimeout in Milliseconds");
 			descriptionJournal.Add("Journal.WaitJournal", tooltip);
 
-			#endregion
+            tooltip = new ToolTipDescriptions("Journal.WaitJournalByName(string, int)", new string[] { "string NameToSearchFor", "int TimeoutJournal" }, "void", "Pause script and wait until the named person says something in journal, and text is case sensitive\n\tTimeout in Milliseconds");
+            descriptionJournal.Add("Journal.WaitJournalByName", tooltip);
 
-			#region Description AutoLoot
 
-			Dictionary<string, ToolTipDescriptions> descriptionAutoLoot = new Dictionary<string, ToolTipDescriptions>();
+            #endregion
+
+            #region Description AutoLoot
+
+            Dictionary<string, ToolTipDescriptions> descriptionAutoLoot = new Dictionary<string, ToolTipDescriptions>();
 
 			tooltip = new ToolTipDescriptions("AutoLoot.Status()", new string[] { "none" }, "bool", "Get status of autoloot engine\n\tTrue: is running, False: is not running");
 			descriptionAutoLoot.Add("AutoLoot.Status", tooltip);

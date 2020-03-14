@@ -112,7 +112,7 @@ namespace FastColoredTextBoxNS
 
         protected Regex SQLCommentRegex1,
                       SQLCommentRegex2,
-                      SQLCommentRegex3, 
+                      SQLCommentRegex3,
                       SQLCommentRegex4;
 
         protected Regex SQLFunctionsRegex;
@@ -384,8 +384,8 @@ namespace FastColoredTextBoxNS
         }
 
         /// <summary>
-        /// Uses the given <paramref name="doc"/> to parse a XML description and adds it as syntax descriptor. 
-        /// The syntax descriptor is used for highlighting when 
+        /// Uses the given <paramref name="doc"/> to parse a XML description and adds it as syntax descriptor.
+        /// The syntax descriptor is used for highlighting when
         /// <list type="bullet">
         ///     <item>Language property of FCTB is set to <see cref="Language.Custom"/></item>
         ///     <item>DescriptionFile property of FCTB has the same value as the method parameter <paramref name="descriptionFileName"/></item>
@@ -400,10 +400,10 @@ namespace FastColoredTextBoxNS
         }
 
         /// <summary>
-        /// Adds the given <paramref name="style"/> as resilient style. A resilient style is additionally available when highlighting is 
-        /// based on a syntax descriptor that has been derived from a XML description file. In the run of the highlighting routine 
-        /// the styles used by the FCTB are always dropped and replaced with the (initial) ones from the syntax descriptor. Resilient styles are 
-        /// added afterwards and can be used anyway. 
+        /// Adds the given <paramref name="style"/> as resilient style. A resilient style is additionally available when highlighting is
+        /// based on a syntax descriptor that has been derived from a XML description file. In the run of the highlighting routine
+        /// the styles used by the FCTB are always dropped and replaced with the (initial) ones from the syntax descriptor. Resilient styles are
+        /// added afterwards and can be used anyway.
         /// </summary>
         /// <param name="style">Style to add</param>
         public virtual void AddResilientStyle(Style style)
@@ -607,7 +607,7 @@ namespace FastColoredTextBoxNS
                                   \\.                         #   else: match an escaped sequence
                                 )
                                 | # OR
-            
+
                                 # match any char except double quote char ("")
                                 [^""]
                               )*
@@ -1349,7 +1349,7 @@ namespace FastColoredTextBoxNS
 			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContain|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse|NoOperation|ScriptRun|ScriptStop|ScriptStatus|PetRename|FocusUOWindow|ClearIgnore|CheckIgnoreObject|IgnoreObject|UnIgnoreObject|ScriptStopAll|ShardName";
 			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList|PromptGroundTarget|PromptTarget|TargetExecuteRelative|GetTargetFromList";
 			string GumpsFunctions = "CurrentGump|HasGump|CloseGump|ResetGump|WaitForGump|SendAction|SendAdvancedAction|LastGump|LastGumpGetLineList|LastGumpTextExist|LastGumpTextExistByLine|LastGumpRawData";
-			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal|GetTextBySerial|GetTextByColor|GetTextByName|GetTextByType";
+			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal|WaitJournalByName|GetTextBySerial|GetTextByColor|GetTextByName|GetTextByType";
 			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend|Pause|GetDamage|GetList";
 			string DressUndressAgentFunctions = "DressStatus|UnDressStatus|DressFStart|UnDressFStart|DressFStop|UnDressFStop";
 			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo|GetTileFlag|GetLandFlag|GetStaticsLandInfo|CheckDeedHouse";
@@ -1548,7 +1548,7 @@ namespace FastColoredTextBoxNS
 		SQL,
 		PHP,
 		JS,
-		Lua, 
+		Lua,
 		Python
 	}
 }
