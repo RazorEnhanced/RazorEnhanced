@@ -1442,9 +1442,54 @@ namespace RazorEnhanced
 			SpecialMoves.OnStun(true);
 		}
 
-		// Props
+        // Props
 
-		public static List<string> GetPropStringList()
+        // Layer to scan
+        private static List<Assistant.Layer> m_layer_props = new List<Layer>
+        {
+            Layer.RightHand,
+            Layer.LeftHand,
+            Layer.Shoes,
+            Layer.Pants,
+            Layer.Shirt,
+            Layer.Head,
+            Layer.Gloves,
+            Layer.Ring,
+            Layer.Talisman,
+            Layer.Neck,
+            Layer.Waist,
+            Layer.InnerTorso,
+            Layer.Bracelet,
+            Layer.Unused_xF,
+            Layer.MiddleTorso,
+            Layer.Earrings,
+            Layer.Arms,
+            Layer.Cloak,
+            Layer.Backpack,
+            Layer.OuterTorso,
+            Layer.OuterLegs,
+            Layer.InnerLegs
+        };
+
+        public static float SumAttribute(string attributename)
+        {
+            float attributevalue = 0;
+
+            foreach (Layer l in m_layer_props)
+            {
+                Assistant.Item itemtocheck = World.Player.GetItemOnLayer(l);
+                if (itemtocheck == null) // Slot vuoto
+                    continue;
+
+                if (!itemtocheck.PropsUpdated)
+                    RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+
+                attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+            }
+            return attributevalue;
+        }
+
+        public static List<string> GetPropStringList()
 		{
 			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
 

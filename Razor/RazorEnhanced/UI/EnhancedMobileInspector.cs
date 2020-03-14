@@ -27,7 +27,7 @@ namespace RazorEnhanced.UI
 			{
 				float attrib = 0;
 
-				attrib = GetAttribute(prop);
+				attrib = Player.SumAttribute(prop);
 				if (attrib > 0)
 					AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": "+ attrib);
 			}
@@ -120,50 +120,6 @@ namespace RazorEnhanced.UI
 			"Kinetic Eater",
 		};
 
-		// Layer to scan
-		private static List<Assistant.Layer> m_layer_props = new List<Layer>
-		{
-			Layer.RightHand,
-			Layer.LeftHand,
-			Layer.Shoes,
-			Layer.Pants,
-			Layer.Shirt,
-			Layer.Head,
-			Layer.Gloves,
-			Layer.Ring,
-			Layer.Talisman,
-			Layer.Neck,
-			Layer.Waist,
-			Layer.InnerTorso,
-			Layer.Bracelet,
-			Layer.Unused_xF,
-			Layer.MiddleTorso,
-			Layer.Earrings,
-			Layer.Arms,
-			Layer.Cloak,
-			Layer.Backpack,
-			Layer.OuterTorso,
-			Layer.OuterLegs,
-			Layer.InnerLegs
-		};
-
-		private float GetAttribute(string attributename)
-		{
-			float attributevalue = 0;
-
-			foreach (Layer l in m_layer_props)
-			{
-				Assistant.Item itemtocheck = m_mobile.GetItemOnLayer(l);
-				if (itemtocheck == null) // Slot vuoto
-					continue;
-
-				if (!itemtocheck.PropsUpdated)
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-			return attributevalue;
-        }
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{

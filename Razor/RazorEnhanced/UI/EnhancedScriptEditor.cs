@@ -142,7 +142,8 @@ namespace RazorEnhanced.UI
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
-				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
+				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList",
+                "Player.SumAttribute", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
 				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial", "Player.Flying"
 			};
@@ -470,7 +471,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.GetPropStringList()", new string[] { "none" }, "List<string>", "Get a list with all property name, if there are no\n\tproperties, list is empty");
 			descriptionPlayer.Add("Player.GetPropStringList", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.QuestButton()", new string[] { "none" }, "void", "Open quest menu linked to paperdoll quest button");
+            tooltip = new ToolTipDescriptions("Player.SumAttribute(string)", new string[] { "string Attribute" }, "float", "Scan the current layers and compute the value of the Attribute requested");
+            descriptionPlayer.Add("Player.SumAttribute", tooltip);
+
+            tooltip = new ToolTipDescriptions("Player.QuestButton()", new string[] { "none" }, "void", "Open quest menu linked to paperdoll quest button");
 			descriptionPlayer.Add("Player.QuestButton", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.GuildButton()", new string[] { "none" }, "void", "Open guild menu linked to paperdoll guild button");
