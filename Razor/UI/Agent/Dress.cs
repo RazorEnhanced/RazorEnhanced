@@ -152,6 +152,28 @@ namespace Assistant
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
+		private void dressClearListB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != String.Empty)
+			{
+				if (dressListView.SelectedItems.Count >= 1)
+				{
+					int index = dressListView.SelectedItems[0].Index;
+					string selection = dressListSelect.Text;
+
+					if (RazorEnhanced.Settings.Dress.ListExists(selection))
+					{
+						List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(selection);
+						if (index <= items.Count -1)
+						{
+							RazorEnhanced.Settings.Dress.ClearList(selection);
+							RazorEnhanced.Dress.RefreshItems();
+						}
+					}
+				}
+			}
+		}
+
 		private void dresslistView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
 			if (dressListView.FocusedItem != null)
