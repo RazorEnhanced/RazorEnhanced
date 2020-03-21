@@ -82,7 +82,7 @@ namespace Assistant
         private RazorCheckBox incomingMob;
         private System.Windows.Forms.TabPage enhancedFilterTab;
         private RazorCheckBox filterSnoop;
-        private RazorCheckBox smartCPU;
+        //private RazorCheckBox smartCPU;
         private RazorButton setLTHilight;
         private RazorCheckBox lthilight;
         private RazorCheckBox blockDis;
@@ -767,7 +767,7 @@ namespace Assistant
             this.clientPrio = new RazorEnhanced.UI.RazorComboBox();
             this.systray = new RazorEnhanced.UI.RazorRadioButton();
             this.taskbar = new RazorEnhanced.UI.RazorRadioButton();
-            this.smartCPU = new RazorEnhanced.UI.RazorCheckBox();
+            //this.smartCPU = new RazorEnhanced.UI.RazorCheckBox();
             this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label11 = new System.Windows.Forms.Label();
             this.opacity = new System.Windows.Forms.TrackBar();
@@ -1557,7 +1557,7 @@ namespace Assistant
             this.generalTab.Controls.Add(this.clientPrio);
             this.generalTab.Controls.Add(this.systray);
             this.generalTab.Controls.Add(this.taskbar);
-            this.generalTab.Controls.Add(this.smartCPU);
+            //this.generalTab.Controls.Add(this.smartCPU);
             this.generalTab.Controls.Add(this.label11);
             this.generalTab.Controls.Add(this.opacity);
             this.generalTab.Controls.Add(this.alwaysTop);
@@ -1794,14 +1794,14 @@ namespace Assistant
             // 
             // smartCPU
             // 
-            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientBindingSource, "SmartCpuText", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.clientBindingSource, "SmartCpuEnabled", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            this.smartCPU.Location = new System.Drawing.Point(253, 24);
-            this.smartCPU.Name = "smartCPU";
-            this.smartCPU.Size = new System.Drawing.Size(241, 22);
-            this.smartCPU.TabIndex = 53;
-            this.smartCPU.Text = "Use smart CPU usage reduction";
-            this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
+            //this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientBindingSource, "SmartCpuText", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            //this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.clientBindingSource, "SmartCpuEnabled", true, System.Windows.Forms.DataSourceUpdateMode.Never));
+            //this.smartCPU.Location = new System.Drawing.Point(253, 24);
+            //this.smartCPU.Name = "smartCPU";
+            //this.smartCPU.Size = new System.Drawing.Size(241, 22);
+            //this.smartCPU.TabIndex = 53;
+            //this.smartCPU.Text = "Use smart CPU usage reduction";
+            //this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
             // 
             // label
             // 
@@ -8806,7 +8806,7 @@ namespace Assistant
 			screenAutoCap.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCap");
 			Filters.Filter.Load();
 			Filters.Filter.Draw(filters);
-			smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
+			//smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
 
 			this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
 			rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");

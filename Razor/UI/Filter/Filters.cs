@@ -321,12 +321,12 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("LastTargTextFlags", showtargtext.Checked);
 		}
 
-		private void smartCPU_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if (smartCPU.Focused)
-				RazorEnhanced.Settings.General.WriteBool("SmartCPU", smartCPU.Checked);
-	 		Assistant.Client.Instance.SetSmartCPU(smartCPU.Checked);
-		}
+		//private void smartCPU_CheckedChanged(object sender, System.EventArgs e)
+		//{
+		//	if (smartCPU.Focused)
+		//		RazorEnhanced.Settings.General.WriteBool("SmartCPU", smartCPU.Checked);
+	 //		Assistant.Client.Instance.SetSmartCPU(smartCPU.Checked);
+		//}
 
 		private void blockDis_CheckedChanged(object sender, System.EventArgs e)
 		{

@@ -3250,6 +3250,17 @@ namespace RazorEnhanced
 				}
 			}
 
+			internal static void ClearList(string list)
+			{
+				for (int i = m_Dataset.Tables["DRESS_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["DRESS_ITEMS"].Rows[i];
+					if ((string)row["List"] == list)
+						row.Delete();
+					m_Dataset.Tables["DRESS_ITEMS"].AcceptChanges();
+				}
+			}
+
 			internal static void ListDelete(string description)
 			{
 				ClearList(description);
@@ -3364,17 +3375,7 @@ namespace RazorEnhanced
 
 				Save();
 			}
-
-			internal static void ClearList(string list)
-			{
-				for (int i = m_Dataset.Tables["DRESS_ITEMS"].Rows.Count - 1; i >= 0; i--)
-				{
-					DataRow row = m_Dataset.Tables["DRESS_ITEMS"].Rows[i];
-					if ((string)row["List"] == list)
-						row.Delete();
-				}				
-			}
-
+						
 			internal static void ItemReplace(string list, int index, RazorEnhanced.Dress.DressItemNew item)
 			{
 				int count = -1;
