@@ -421,7 +421,7 @@ namespace RazorEnhanced
                         bool dropWeaponL = false;
                         bool twoHandLeft = false;
                         bool dropWeaponR = false;
-                        Assistant.Item newLeft = null;
+                        //Assistant.Item newLeft = null;
                         foreach (DressItemNew item in items)
                         {
                             var existingItem = Assistant.World.Player.GetItemOnLayer(item.Layer);

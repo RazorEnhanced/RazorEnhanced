@@ -195,7 +195,8 @@ namespace RazorEnhanced
 			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
 			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
 			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend");
-			Engine.MainWindow.BandageHealtargetComboBox.Text = Settings.General.ReadString("BandageHealtargetComboBox");
+            Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend Or Self");
+            Engine.MainWindow.BandageHealtargetComboBox.Text = Settings.General.ReadString("BandageHealtargetComboBox");
 
 			if (Settings.General.ReadString("BandageHealtargetComboBox") == "Target")
 			{
@@ -334,7 +335,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void AutoRun()
+         internal static void AutoRun()
 		{
 			if (!Client.Running)
 				return;
@@ -356,17 +357,56 @@ namespace RazorEnhanced
 					target = Assistant.World.FindMobile(TargetSerial);
 					break;
 				case "Friend":
-					RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
-					{
-						Enabled = true,
-						Friend = 1,
-						RangeMax = m_maxrange
-					};
-					Mobile targ = RazorEnhanced.Mobiles.Select(RazorEnhanced.Mobiles.ApplyFilter(targfilter), "Weakest");
-					if (targ != null)
-						target = Assistant.World.FindMobile(targ.Serial);
+                    {
+                        RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
+                        {
+                            Enabled = true,
+                            Friend = 1,
+                            RangeMax = m_maxrange
+                        };
+                        Mobile targ = RazorEnhanced.Mobiles.Select(RazorEnhanced.Mobiles.ApplyFilter(targfilter), "Weakest");
+                        if (targ != null)
+                            target = Assistant.World.FindMobile(targ.Serial);
+                    }
 					break;
-			}
+                case "Friend Or Self":
+                    {
+                        RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
+                        {
+                            Enabled = true,
+                            Friend = 1,
+                            RangeMax = m_maxrange
+                        };
+                        List<Mobile> friends = RazorEnhanced.Mobiles.ApplyFilter(targfilter);
+                        Mobile targ = RazorEnhanced.Mobiles.Select(friends, "Weakest");
+                        if (targ == null)
+                        {
+                            target = World.Player;
+                        }
+                        else
+                        {
+                            int pct_life_friend = 100;
+                            if (targ.HitsMax > 0)
+                            {
+                                pct_life_friend = 100 * targ.Hits / targ.HitsMax;
+                            }
+
+                            int pct_life_me = 100;
+                            {
+                                pct_life_me = 100* World.Player.Hits / World.Player.HitsMax;
+                            }
+                            if (pct_life_friend < pct_life_me)
+                            {
+                                target = Assistant.World.FindMobile(targ.Serial);
+                            }
+                            else
+                            {
+                                target = World.Player;
+                            }
+                        }
+                    }
+                    break;
+            }
 
 			if (target == null)         // Verifica se il target è valido
 				return;

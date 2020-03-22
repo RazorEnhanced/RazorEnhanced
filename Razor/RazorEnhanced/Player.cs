@@ -1272,7 +1272,7 @@ namespace RazorEnhanced
 				Thread.Sleep(wait);
 			}
 			World.Player.WalkScriptRequest = 1;
-			int timeout = 0;
+			//int timeout = 0;
 			Client.Instance.RequestMove(dir);
 			m_LastWalk = DateTime.UtcNow;
 			// Waits until a move event is seen happenning

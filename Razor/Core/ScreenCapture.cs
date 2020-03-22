@@ -3,11 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
-
-using System;
 using System.Runtime.InteropServices;
-using System.Drawing;
-using System.Drawing.Imaging;
 using Assistant.UI;
 
 

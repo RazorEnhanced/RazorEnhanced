@@ -190,13 +190,13 @@ namespace Assistant
 		}
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+        public new static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
 
         public override void SetGameSize(int x, int y)
         {
-            const int HWND_TOP = 0;
-            const short SWP_NOMOVE = 0x0002;
-            const short SWP_NOZORDER = 0x0004;
+            //const int HWND_TOP = 0;
+            //const short SWP_NOMOVE = 0x0002;
+            //const short SWP_NOZORDER = 0x0004;
 
             DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
             // resizes the game size, not the internal size, so have to exit and restart unless I find smarter way
@@ -471,7 +471,7 @@ namespace Assistant
 		}
 
 		[DllImport("user32.dll")]
-		static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+		static new extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
 		public override bool OnMessage(MainForm razor, uint wParam, int lParam)
 		{
@@ -1029,7 +1029,8 @@ namespace Assistant
 		internal static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 		public void KeyPress(int keyCode)
 		{
-			const uint WM_KEYDOWN = 0x100, WM_KEYUP = 0x101;
+            const uint WM_KEYDOWN = 0x100;
+            //const uint WM_KEYUP = 0x101;
 			SendMessage(FindUOWindow(), WM_KEYDOWN, (IntPtr)keyCode, (IntPtr)1);
 		}
 

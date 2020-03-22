@@ -23,8 +23,6 @@ namespace JsonData
 
         string m_Name = "";
 
-        string m_name;
-
         [JsonProperty("Name")]
         public string Name
         {
