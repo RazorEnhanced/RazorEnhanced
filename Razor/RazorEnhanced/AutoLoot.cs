@@ -508,6 +508,14 @@ namespace RazorEnhanced
             }
         }
 
+        public static List<AutoLootItem> GetList(string lootListName)
+        {
+            if (Settings.AutoLoot.ListExists(lootListName)) {
+                return Settings.AutoLoot.ItemsRead(lootListName).FindAll(item => item.Graphics != -1);
+            }
+            return null;
+        }
+
         static bool lootChangeMsgSent = false;
         public static uint GetLootBag()
         {
