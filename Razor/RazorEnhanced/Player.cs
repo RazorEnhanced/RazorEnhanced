@@ -1264,41 +1264,49 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			TimeSpan t = DateTime.UtcNow - m_LastWalk;
-			const double MaxSpeed = 0.2;
-			if (t < TimeSpan.FromSeconds(MaxSpeed))
-			{
-				TimeSpan wait = TimeSpan.FromSeconds(MaxSpeed) - t;
-				Thread.Sleep(wait);
-			}
+            if (!Client.IsOSI)
+            {
+                TimeSpan t = DateTime.UtcNow - m_LastWalk;
+                const double MaxSpeed = 0.2;
+                if (t < TimeSpan.FromSeconds(MaxSpeed))
+                {
+                    TimeSpan wait = TimeSpan.FromSeconds(MaxSpeed) - t;
+                    Thread.Sleep(wait);
+                }
+            }
 			World.Player.WalkScriptRequest = 1;
-			//int timeout = 0;
+			int timeout = 0;
 			Client.Instance.RequestMove(dir);
 			m_LastWalk = DateTime.UtcNow;
 			// Waits until a move event is seen happenning
 			Console.WriteLine("Move {0} Sent", direction);
-			//while (World.Player.WalkScriptRequest < 2)
-			//{
-			//	Thread.Sleep(10);
-			//	timeout += 20;
-			//	Console.WriteLine("Move Waiting {0}", timeout);
-			//	if (timeout > 1500)
-			//	{
-			//		Console.WriteLine("Move Timeout");
-			//		break;
-			//	}
-			//}
-			//Console.WriteLine("Move {0} Complete {1}", direction, World.Player.WalkScriptRequest);
-			//if (World.Player.WalkScriptRequest == 2)
-			//{
-			//	World.Player.WalkScriptRequest = 0;
-				return true;
-			//}
-			//else
-			//{
-			//	World.Player.WalkScriptRequest = 0;
-			//	return false;
-			//}
+            if (Client.IsOSI)
+            {
+                while (World.Player.WalkScriptRequest < 2)
+                {
+                	Thread.Sleep(10);
+                	timeout += 20;
+                	Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
+                	if (timeout > 2500) //  Handle slower ping times
+                	{
+                		Console.WriteLine("Move Timeout {0}", direction);
+                		break;
+                	}
+                }
+                Console.WriteLine("Move {0} Complete {1}", direction, World.Player.WalkScriptRequest);
+                if (World.Player.WalkScriptRequest == 2)
+                {
+                    Console.WriteLine("Move Success {0}", direction);
+                    World.Player.WalkScriptRequest = 0;
+                    return true;
+                }
+                else
+                {
+                	World.Player.WalkScriptRequest = 0;
+                	return false;
+                }
+            }
+            return true;
 		}
 
 		public static void PathFindTo(Assistant.Point3D Location)

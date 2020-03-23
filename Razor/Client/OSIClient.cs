@@ -965,8 +965,8 @@ namespace Assistant
 					}
 					else
 					{
-						int something = len;
-						Debug.WriteLine("Packet id 0x{0:X}", data[0]);
+						//int something = len;
+						//Debug.WriteLine("Packet id 0x{0:X}", data[0]);
 					}
 
 					fixed (byte* ptr = data)
@@ -1081,7 +1081,7 @@ namespace Assistant
 
 		internal override void RequestMove(Direction m_Dir)
 		{
-			int direction;
+            int direction;
 
 			switch (m_Dir)
 			{
@@ -1116,7 +1116,7 @@ namespace Assistant
 
 			KeyPress(direction);
 
-		}
+        }
 		public override void PathFindTo(Assistant.Point3D location)
 		{
 			// Uses EasyUO to do the move
