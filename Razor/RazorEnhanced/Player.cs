@@ -1173,10 +1173,13 @@ namespace RazorEnhanced
 		{
 	 		Assistant.Client.Instance.SendToServerWait(new SetWarMode(warflag));
 		}
-		public static void Attack(Mobile m)
-		{
-			Attack(m.Serial);
-		}
+
+        // This seems useless, and Allows Mourn to attack barrels in some OSI encounter
+        // so in the future if not needed, delete 3/25/2020
+		//public static void Attack(Mobile m)
+		//{
+		//	Attack(m.Serial);
+		//}
 
 		public static void Attack(int serial)
 		{

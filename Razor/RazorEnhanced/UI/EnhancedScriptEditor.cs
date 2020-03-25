@@ -205,8 +205,8 @@ namespace RazorEnhanced.UI
 
 			string[] methodsAutoLoot =
 			{
-				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce"
-			};
+				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList"
+            };
 
 			string[] methodsScavenger =
 			{
@@ -931,11 +931,14 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("AutoLoot.RunOnce(string, double, Filter)", new string[] { "string AutoLootItemListName", "double DelayGrabInMs", "Filter FilterToSearch" }, "void", "Start autoloot with certain parameters. AutoLootitem is a list type for item\n\tdelay in seconds to grab and filter for search on ground");
 			descriptionAutoLoot.Add("AutoLoot.RunOnce", tooltip);
 
-			#endregion
+            tooltip = new ToolTipDescriptions("AutoLoot.GetList(string)", new string[] { "string AutoLootItemListName" }, "List<AutoLootItem>", "Returns a list of the autoloot items in the loot list name passed in\n\tInvalid name specified will return None");
+            descriptionAutoLoot.Add("AutoLoot.GetList", tooltip);
 
-			#region Description Scavenger
+            #endregion
 
-			Dictionary<string, ToolTipDescriptions> descriptionScavenger = new Dictionary<string, ToolTipDescriptions>();
+            #region Description Scavenger
+
+            Dictionary<string, ToolTipDescriptions> descriptionScavenger = new Dictionary<string, ToolTipDescriptions>();
 
 			tooltip = new ToolTipDescriptions("Scavenger.Status()", new string[] { "none" }, "bool", "Get status of scavenger engine\n\tTrue: is running, False: is not running");
 			descriptionScavenger.Add("Scavenger.Status", tooltip);
