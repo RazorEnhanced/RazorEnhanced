@@ -1174,17 +1174,16 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToServerWait(new SetWarMode(warflag));
 		}
 
-        // This seems useless, and Allows Mourn to attack barrels in some OSI encounter
-        // so in the future if not needed, delete 3/25/2020
-		//public static void Attack(Mobile m)
-		//{
-		//	Attack(m.Serial);
-		//}
+		public static void Attack(Mobile m)
+		{
+			Attack(m.Serial);
+		}
 
 		public static void Attack(int serial)
 		{
-			if (World.FindMobile(serial) == null) // Mob non piu esistente
-				return;
+            // make sure its either an item or a mobile, else server will disconnect you
+			if ((World.FindMobile(serial) == null) && (World.FindItem(serial) == null))
+                return;
 
 			Target.AttackMessage(serial, true);
 			if (Targeting.LastAttack != serial)
@@ -1195,13 +1194,14 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
         }
 
-		public static void AttackLast()
+
+        public static void AttackLast()
 		{
 			if (Targeting.LastAttack == 0) // Nessun last attack presente
 				return;
 
-			if (World.FindMobile(Targeting.LastAttack) == null) // Mob non piu esistente
-				return;
+            if ((World.FindMobile(Targeting.LastAttack) == null) && (World.FindItem(Targeting.LastAttack) == null))
+                return;
 
 			Target.AttackMessage((int)Targeting.LastAttack, true);
 
