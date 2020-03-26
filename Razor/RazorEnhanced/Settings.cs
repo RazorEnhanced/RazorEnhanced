@@ -2001,7 +2001,11 @@ namespace RazorEnhanced
 			hotkeyrow.ItemArray = new object[] { "SpellsMastery", "Boarding", Keys.None, true };
 			hotkey.Rows.Add(hotkeyrow);
 
-			hotkeyrow = hotkey.NewRow();
+            initCleric(hotkey);
+
+            initDruid(hotkey);
+
+            hotkeyrow = hotkey.NewRow();
 			hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honor", Keys.None, true };
 			hotkey.Rows.Add(hotkeyrow);
 
@@ -2073,7 +2077,103 @@ namespace RazorEnhanced
 
 
 		}
-		internal static DataTable InitGeneralSettings(string tableName)
+        internal static void initCleric(DataTable hotkey)
+        {
+            DataRow hotkeyrow = null;
+
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Angelic Faith", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            // Felix
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Banish Evil", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Dampen Spirit", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Divine Focus", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Hammer of Faith", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Purge", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Restoration", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Sacred Boon", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Sacrifice", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Smite", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Touch of Life", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Trial by Fire", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+        }
+        internal static void initDruid(DataTable hotkey)
+        {
+            DataRow hotkeyrow = null;
+
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Leaf whirlwind", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Hollow Reed", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Pack of Beasts", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Spring of Life", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Grasping Roots", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Blend with Forest", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Swarm of Insects", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Volcanic Eruption", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Summon Familiar", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Stone Circle", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Enchanted Grove", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Lure Stone", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Natures Passage", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Mushroom Gateway", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Restorative Soil", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Shield of Earth", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+        }
+
+        internal static DataTable InitGeneralSettings(string tableName)
 		{
 			// ----------- GENERAL SETTINGS ----------
 			DataTable general = new DataTable(tableName);
@@ -3375,7 +3475,7 @@ namespace RazorEnhanced
 
 				Save();
 			}
-						
+
 			internal static void ItemReplace(string list, int index, RazorEnhanced.Dress.DressItemNew item)
 			{
 				int count = -1;
@@ -4768,6 +4868,17 @@ namespace RazorEnhanced
 		// Funzione per cambiare la struttura dei save in caso di modifiche senza dover cancellare e rifare da 0
 		internal static void UpdateVersion(int previousVersion)
 		{
+            int realVersion = previousVersion;
+
+            if (realVersion == 1)
+            {
+                // felix
+                DataTable hotkey = m_Dataset.Tables["HOTKEYS"];
+                initCleric(hotkey);
+                initDruid(hotkey);
+                realVersion = 2;
+                General.WriteInt("SettingVersion", 2);
+            }
 
 			Save(true);
 		}

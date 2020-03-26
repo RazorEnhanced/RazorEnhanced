@@ -124,6 +124,8 @@ namespace RazorEnhanced
 			Mysticism,
 			Spellweaving,
 			Mastery,
+            Cleric,
+            Druid,
 			Script,
 			Skills
 		}
@@ -429,7 +431,13 @@ namespace RazorEnhanced
 				case GroupType.Mastery:
 					Spells.CastMastery(pl.Spell, false);
 					break;
-				case GroupType.Script:
+                case GroupType.Cleric:
+                    Spells.CastMastery(pl.Spell, false);
+                    break;
+                case GroupType.Druid:
+                    Spells.CastMastery(pl.Spell, false);
+                    break;
+                case GroupType.Script:
 					Misc.ScriptRun(pl.Spell);
 					break;
 				case GroupType.Skills:

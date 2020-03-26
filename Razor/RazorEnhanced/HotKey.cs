@@ -366,7 +366,15 @@ namespace RazorEnhanced
 						RazorEnhanced.Spells.CastMastery(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
-					case "Target":
+                    case "SpellsCleric":
+                        RazorEnhanced.Spells.CastCleric(RazorEnhanced.Settings.HotKey.FindString(k), false);
+                        break;
+
+                    case "SpellsDruid":
+                        RazorEnhanced.Spells.CastDruid(RazorEnhanced.Settings.HotKey.FindString(k), false);
+                        break;
+
+                    case "Target":
 						ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
@@ -1753,7 +1761,7 @@ namespace RazorEnhanced
 			foreach (HotKeyData keydata in keylist)
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(GenerateNode(keydata));
 
-			// Spells -- > Spellweaving
+			// Spells -- > Mysticism
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Mysticism");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMysticism");
 			foreach (HotKeyData keydata in keylist)
@@ -1771,8 +1779,20 @@ namespace RazorEnhanced
 			foreach (HotKeyData keydata in keylist)
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[12].Nodes.Add(GenerateNode(keydata));
 
-			// Target
-			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Target");
+            // Spells -- > Cleric
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Cleric");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsCleric");
+            foreach (HotKeyData keydata in keylist)
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[13].Nodes.Add(GenerateNode(keydata));
+
+            // Spells -- > Druid
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Druid");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsDruid");
+            foreach (HotKeyData keydata in keylist)
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[14].Nodes.Add(GenerateNode(keydata));
+
+            // Target
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Target");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Target");
 			foreach (HotKeyData keydata in keylist)
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add(GenerateNode(keydata));

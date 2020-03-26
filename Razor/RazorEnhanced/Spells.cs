@@ -158,7 +158,35 @@ namespace RazorEnhanced
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 		}
 
-		public static void Interrupt()
+        public static void CastCleric(string SpellName, bool wait = true)
+        {
+            if (World.Player == null)
+                return;
+
+            string spell = null;
+            m_ClericSpellName.TryGetValue(SpellName, out spell);
+
+            if (spell == null)
+                Scripts.SendMessageScriptError("Script Error: CastCleric: Invalid spell name: " + SpellName);
+            else
+                Player.ChatSay(5, spell);
+        }
+
+        public static void CastDruid(string SpellName, bool wait = true)
+        {
+            if (World.Player == null)
+                return;
+
+            string spell = null;
+            m_DruidSpellName.TryGetValue(SpellName, out spell);
+
+            if (spell == null)
+                Scripts.SendMessageScriptError("Script Error: CastDruid: Invalid spell name: " + SpellName);
+            else
+                Player.ChatSay(8, spell);
+        }
+
+        public static void Interrupt()
 		{
 			Assistant.Item item = FindUsedLayer();
 			if (item != null)
@@ -499,5 +527,42 @@ namespace RazorEnhanced
 			{ "Combat Training", 744 },
 			{ "Boarding", 745 },
 		};
-	}
+
+        private static Dictionary<string, string> m_ClericSpellName = new Dictionary<string, string>
+        {
+            { "Angelic Faith", "[cs AngelicFaith" },
+            {"Banish Evil", "[cs BanishEvil" },
+            { "Dampen Spirit", "[cs DampenSpirit" },
+            { "Divine Focus", "[cs DivineFocus" },
+            { "Hammer of Faith", "[cs HammerofFaith" },
+            { "Purge", "[cs Purge" },
+            { "Restoration", "[cs Restoration" },
+            { "Sacred Boon", "[cs SacredBoon" },
+            { "Sacrifice", "[cs Sacrifice" },
+            { "Smite", "[cs Smite" },
+            { "Touch of Life", "[cs TouchofLife" },
+            { "Trial by Fire", "[cs TrialbyFire" },
+        };
+        private static Dictionary<string, string> m_DruidSpellName = new Dictionary<string, string>
+        {
+            { "Leaf whirlwind", "[cs Leafwhirlwind" },
+            { "Hollow Reed", "[cs HollowReed" },
+            { "Pack of Beasts", "[cs PackofBeasts" },
+            { "Spring of Life", "[cs SpringofLife" },
+            { "Grasping Roots", "[cs GraspingRoots" },
+            { "Blend with Forest", "[cs BlendwithForest" },
+            { "Swarm of Insects", "[cs SwarmofInsects" },
+            { "Volcanic Eruption", "[cs VolcanicEruption" },
+            { "Summon Familiar", "[cs SummonFamiliar" },
+            { "Stone Circle", "[cs StoneCircle" },
+            { "Enchanted Grove", "[cs EnchantedGrove" },
+            { "Lure Stone", "[cs LureStone" },
+            { "Natures Passage", "[cs NaturesPassage" },
+            { "Mushroom Gateway", "[cs MushroomGateway" },
+            { "Restorative Soil", "[cs RestorativeSoil" },
+            { "Shield of Earth", "[cs ShieldofEarth" },
+        };
+
+
+    }
 }

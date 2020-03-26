@@ -150,7 +150,9 @@ namespace RazorEnhanced.UI
 
 			string[] methodsSpells =
 			{
-				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.CastMastery", "Spells.Interrupt", "Spells.CastLastSpell"
+				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu",
+                "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.CastMastery", "Spells.CastCleric", "Spells.CastDruid",
+                "Spells.Interrupt", "Spells.CastLastSpell"
 			};
 
 			string[] methodsMobiles =
@@ -205,7 +207,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsAutoLoot =
 			{
-				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList"
+				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList", "AutoLoot.GetLootBag"
             };
 
 			string[] methodsScavenger =
@@ -528,7 +530,13 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Spells.CastMastery(string)", new string[] { "string SpellName" }, "void", "Cast a Mastery spell by spell name\n\tCheck the wiki for the possible strings");
 			descriptionSpells.Add("Spells.CastMastery", tooltip);
 
-			tooltip = new ToolTipDescriptions("Spells.Interrupt()", new string[] { "none" }, "void", "Block current casting action.");
+            tooltip = new ToolTipDescriptions("Spells.CastCleric(string)", new string[] { "string SpellName" }, "void", "Cast a Cleric spell by spell name\n\tCheck the wiki for the possible strings");
+            descriptionSpells.Add("Spells.CastCleric", tooltip);
+
+            tooltip = new ToolTipDescriptions("Spells.CastDruid(string)", new string[] { "string SpellName" }, "void", "Cast a Druid spell by spell name\n\tCheck the wiki for the possible strings");
+            descriptionSpells.Add("Spells.CastDruid", tooltip);
+
+            tooltip = new ToolTipDescriptions("Spells.Interrupt()", new string[] { "none" }, "void", "Block current casting action.");
 			descriptionSpells.Add("Spells.Interrupt", tooltip);
 
 			tooltip = new ToolTipDescriptions("Spells.CastLastSpell()", new string[] { "none" }, "void", "Cast Last spell.");
@@ -933,6 +941,9 @@ namespace RazorEnhanced.UI
 
             tooltip = new ToolTipDescriptions("AutoLoot.GetList(string)", new string[] { "string AutoLootItemListName" }, "List<AutoLootItem>", "Returns a list of the autoloot items in the loot list name passed in\n\tInvalid name specified will return None");
             descriptionAutoLoot.Add("AutoLoot.GetList", tooltip);
+
+            tooltip = new ToolTipDescriptions("AutoLoot.GetLootBag()", new string[] { "none" }, "int", "Returns the Serial of the assigned loot bag");
+            descriptionAutoLoot.Add("AutoLoot.GetLootBag", tooltip);
 
             #endregion
 
