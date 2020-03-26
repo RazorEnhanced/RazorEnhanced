@@ -180,7 +180,7 @@ namespace RazorEnhanced.UI
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
 				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow",
 				"Misc.IgnoreObject", "Misc.CheckIgnoreObject", "Misc.ClearIgnore", "Misc.UnIgnoreObject",
-				"Misc.CurrentScriptDirectory"
+				"Misc.CurrentScriptDirectory", "Misc.CaptureNow"
 			};
 
 			string[] methodsTarget =
@@ -761,11 +761,14 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.ShardName()", new string[] { "none" }, "string", "Get currect shard name you play.");
 			descriptionMisc.Add("Misc.ShardName", tooltip);
 
-			#endregion
+            tooltip = new ToolTipDescriptions("Misc.CaptureNow()", new string[] { "none" }, "void", "Screen capture UO window");
+            descriptionMisc.Add("Misc.CaptureNow", tooltip);
 
-			#region Description Target
+            #endregion
 
-			Dictionary<string, ToolTipDescriptions> descriptionTarget = new Dictionary<string, ToolTipDescriptions>();
+            #region Description Target
+
+            Dictionary<string, ToolTipDescriptions> descriptionTarget = new Dictionary<string, ToolTipDescriptions>();
 
 			tooltip = new ToolTipDescriptions("Target.HasTarget()", new string[] { "none" }, "bool", "Get status of target if exists or not");
 			descriptionTarget.Add("Target.HasTarget", tooltip);

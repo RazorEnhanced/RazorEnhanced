@@ -461,7 +461,12 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static bool ScriptStatus(string scriptfile)
+        public static void CaptureNow()
+        {
+            ScreenCapManager.CaptureNow();
+        }
+
+        public static bool ScriptStatus(string scriptfile)
 		{
 			Scripts.EnhancedScript script = Scripts.Search(scriptfile);
 			if (script != null)
