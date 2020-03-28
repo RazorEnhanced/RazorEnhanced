@@ -102,8 +102,6 @@ namespace Assistant
 		private static Mutex CommMutex;
 
 		private static Process ClientProc;
-        public override string SmartCpuText { get { return "Use smart CPU usage reduction"; } }
-        public override bool SmartCpuEnabled { get { return true; } }
 
         private static bool m_Ready = false;
 		public override bool Ready { get { return m_Ready; } }

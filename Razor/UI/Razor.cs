@@ -692,7 +692,6 @@ namespace Assistant
         private RazorCheckBox bandagehealAutostartCheckBox;
         private RazorCheckBox bandagehealusetarget;
         private RazorButton paypalButton;
-        private BindingSource clientBindingSource;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -763,7 +762,6 @@ namespace Assistant
             this.systray = new RazorEnhanced.UI.RazorRadioButton();
             this.taskbar = new RazorEnhanced.UI.RazorRadioButton();
             this.smartCPU = new RazorEnhanced.UI.RazorCheckBox();
-            this.clientBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label11 = new System.Windows.Forms.Label();
             this.opacity = new System.Windows.Forms.TrackBar();
             this.alwaysTop = new RazorEnhanced.UI.RazorCheckBox();
@@ -1406,7 +1404,6 @@ namespace Assistant
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
@@ -1767,17 +1764,11 @@ namespace Assistant
             //
             // smartCPU
             //
-            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.clientBindingSource, "SmartCpuChecked", true));
-            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.clientBindingSource, "SmartCpuEnabled", true));
-            this.smartCPU.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.clientBindingSource, "SmartCpuText", true));
             this.smartCPU.Location = new System.Drawing.Point(253, 24);
             this.smartCPU.Name = "smartCPU";
             this.smartCPU.Size = new System.Drawing.Size(241, 22);
             this.smartCPU.TabIndex = 53;
-            //
-            // clientBindingSource
-            //
-            this.clientBindingSource.DataSource = Assistant.Client.Instance;
+            this.smartCPU.Text = "Use smart CPU usage reduction";
             //
             // label11
             //
@@ -8435,7 +8426,6 @@ namespace Assistant
             this.generalTab.PerformLayout();
             this.groupBox29.ResumeLayout(false);
             this.groupBox29.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clientBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.opacity)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.moreOptTab.ResumeLayout(false);
@@ -8779,7 +8769,14 @@ namespace Assistant
             screenAutoCap.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCap");
             Filters.Filter.Load();
             Filters.Filter.Draw(filters);
-            smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
+            if (Assistant.Client.IsOSI)
+            {
+                smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
+            }
+            else
+            {
+                smartCPU.Checked = false;
+            }
 
             this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
             rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
@@ -8895,6 +8892,13 @@ namespace Assistant
             videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
             videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
             videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
+        }
+
+        public void DisableSmartCpu(string newText)
+        {
+            this.smartCPU.Text = newText;
+            this.smartCPU.Enabled = false;
+            this.smartCPU.Checked = false;
         }
 
         private bool m_Initializing = false;
@@ -9385,7 +9389,8 @@ namespace Assistant
             ProcessStartInfo p = new ProcessStartInfo("https://www.paypal.me/credzba");
             Process.Start(p);
         }
-        // ----------------- UO MOD END -------------------
+
+             // ----------------- UO MOD END -------------------
     }
 }
 

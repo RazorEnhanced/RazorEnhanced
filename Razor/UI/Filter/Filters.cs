@@ -543,9 +543,12 @@ namespace Assistant
 		}
 
 
+        private void smartCPU_CheckedChanged(object sender, System.EventArgs e)
+        {
+            Assistant.Client.Instance.SmartCpuChecked = this.smartCPU.Checked;
+        }
 
-
-		private void taskbar_CheckedChanged(object sender, System.EventArgs e)
+    private void taskbar_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (taskbar.Focused)
 			{

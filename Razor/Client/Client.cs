@@ -309,9 +309,6 @@ namespace Assistant
             }
         }
 
-        public abstract string SmartCpuText { get; }
-        public abstract bool SmartCpuEnabled { get; }
-        //private bool m_SmartCpuChecked = true;
         public bool SmartCpuChecked { get { return RazorEnhanced.Settings.General.ReadBool("SmartCPU"); }
                                       set{
                                         RazorEnhanced.Settings.General.WriteBool("SmartCPU", value);

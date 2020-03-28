@@ -80,8 +80,6 @@ namespace Assistant
             get { return m_shardHost; }
             set { m_shardHost = value; }
         }
-        public override string SmartCpuText{ get { return "Not available with CUO"; } }
-        public override bool SmartCpuEnabled { get { return false; } }
 
         public override Process ClientProcess => m_ClientProcess;
         public override bool ClientRunning => m_ClientRunning;
@@ -223,6 +221,7 @@ namespace Assistant
             Engine.MainWnd = new MainForm();
             if (! IsOSI) {
                 Engine.MainWindow.SafeAction(s => { s.DisableRecorder(); });
+                Engine.MainWindow.SafeAction(s => { s.DisableSmartCpu("Not available with CUO"); });
             }
             Application.Run(Engine.MainWnd);
         }
