@@ -692,6 +692,8 @@ namespace Assistant
         private RazorCheckBox bandagehealAutostartCheckBox;
         private RazorCheckBox bandagehealusetarget;
         private RazorButton paypalButton;
+        private RazorCheckBox bandagehealusetext;
+        private RazorTextBox bandagehealusetextContent;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -1126,6 +1128,8 @@ namespace Assistant
             this.bandageheal = new System.Windows.Forms.TabPage();
             this.bandagehealAutostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.bandagehealusetextContent = new RazorEnhanced.UI.RazorTextBox();
+            this.bandagehealusetext = new RazorEnhanced.UI.RazorCheckBox();
             this.bandagehealusetarget = new RazorEnhanced.UI.RazorCheckBox();
             this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label46 = new System.Windows.Forms.Label();
@@ -5543,6 +5547,8 @@ namespace Assistant
             //
             // groupBox6
             //
+            this.groupBox6.Controls.Add(this.bandagehealusetextContent);
+            this.groupBox6.Controls.Add(this.bandagehealusetext);
             this.groupBox6.Controls.Add(this.bandagehealusetarget);
             this.groupBox6.Controls.Add(this.bandagehealmaxrangeTextBox);
             this.groupBox6.Controls.Add(this.label46);
@@ -5572,6 +5578,27 @@ namespace Assistant
             this.groupBox6.TabIndex = 74;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Settings";
+            //
+            // bandagehealusetextContent
+            //
+            this.bandagehealusetextContent.Enabled = false;
+            this.bandagehealusetextContent.Location = new System.Drawing.Point(184, 219);
+            this.bandagehealusetextContent.Name = "bandagehealusetextContent";
+            this.bandagehealusetextContent.Size = new System.Drawing.Size(127, 20);
+            this.bandagehealusetextContent.TabIndex = 94;
+            this.bandagehealusetextContent.Text = "[bandself";
+            this.bandagehealusetextContent.Leave += new System.EventHandler(this.bandagehealusetext_Content_Leave);
+            //
+            // bandagehealusetext
+            //
+            this.bandagehealusetext.AutoSize = true;
+            this.bandagehealusetext.Location = new System.Drawing.Point(184, 193);
+            this.bandagehealusetext.Name = "bandagehealusetext";
+            this.bandagehealusetext.Size = new System.Drawing.Size(128, 17);
+            this.bandagehealusetext.TabIndex = 93;
+            this.bandagehealusetext.Text = "Send text for self heal";
+            this.bandagehealusetext.UseVisualStyleBackColor = true;
+            this.bandagehealusetext.CheckedChanged += new System.EventHandler(this.bandagehealusetext_CheckedChanged);
             //
             // bandagehealusetarget
             //
@@ -8892,6 +8919,12 @@ namespace Assistant
             videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
             videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
             videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
+        }
+
+        public void SetBandSelfState()
+        {
+            bandagehealusetextContent.Enabled = bandagehealusetext.Checked;
+            BandageHealUseTarget.Enabled = !bandagehealusetext.Checked;
         }
 
         public void DisableSmartCpu(string newText)

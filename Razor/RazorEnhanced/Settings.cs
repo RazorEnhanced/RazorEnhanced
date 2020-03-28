@@ -2230,9 +2230,11 @@ namespace RazorEnhanced
 			general.Columns.Add("BandageHealhiddedCheckBox", typeof(bool));
 			general.Columns.Add("BandageHealMaxRangeTextBox", typeof(int));
 			general.Columns.Add("BandageHealUseTarget", typeof(bool));
+            general.Columns.Add("BandageHealUseText", typeof(bool));
+            general.Columns.Add("BandageHealUseTextContent", typeof(string));
 
-			// Parametri Tab (Enhanced Filters)
-			general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
+            // Parametri Tab (Enhanced Filters)
+            general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
 			general.Columns.Add("FlagsHighlightCheckBox", typeof(bool));
 			general.Columns.Add("ShowStaticFieldCheckBox", typeof(bool));
 			general.Columns.Add("BlockTradeRequestCheckBox", typeof(bool));
@@ -4928,10 +4930,20 @@ namespace RazorEnhanced
                 initCleric(hotkey);
                 initDruid(hotkey);
                 realVersion = 2;
-                General.WriteInt("SettingVersion", 2);
+                General.WriteInt("SettingVersion", realVersion);
+            }
+            if (realVersion == 2)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                general.Columns.Add("BandageHealUseText", typeof(bool));
+                general.Columns.Add("BandageHealUseTextContent", typeof(string));
+                Settings.General.WriteBool("BandageHealUseText", false);
+                Settings.General.WriteString("BandageHealUseTextContent", "[bandself");
+                realVersion = 3;
+                General.WriteInt("SettingVersion", realVersion);
             }
 
-			Save(true);
+            Save(true);
 		}
 
 

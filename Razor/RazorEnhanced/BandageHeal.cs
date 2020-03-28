@@ -161,7 +161,37 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static bool UseTarget
+
+internal static bool SelfHealUseText
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.BandageHealUseText.Checked;
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseText.Checked = value);
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextContent.Enabled = value);
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTarget.Enabled = !value);
+            }
+        }
+
+internal static string SelfHealUseTextContent
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.BandageHealUseTextContent.Text;
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextContent.Text = value);
+            }
+        }
+
+
+        internal static bool UseTarget
 		{
 			get
 			{
@@ -189,7 +219,10 @@ namespace RazorEnhanced
 			MortalBlock = Settings.General.ReadBool("BandageHealmortalCheckBox");
 			HiddenBlock = Settings.General.ReadBool("BandageHealhiddedCheckBox");
 			UseTarget = Settings.General.ReadBool("BandageHealUseTarget");
-			Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
+            SelfHealUseText = Settings.General.ReadBool("BandageHealUseText");
+            SelfHealUseTextContent = Settings.General.ReadString("BandageHealUseTextContent");
+
+            Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
 			Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
 			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
@@ -263,14 +296,20 @@ namespace RazorEnhanced
 				{
 					AddLog("Using bandage (0x"+ bandageserial.ToString("X8") +") on Target (" + target.Serial.ToString()+")");
 
-					if (!UseTarget) // Uso nuovo packet
-						Items.UseItemOnMobile(bandageserial, target.Serial);
-					else
-					{
-						Items.UseItem(bandageserial);
-						Target.WaitForTarget(1000, true);
-						Target.TargetExecute(target.Serial);
-					}
+                    if (SelfHealUseText)
+                    {
+                        Player.ChatSay(0, SelfHealUseTextContent);
+                    }
+                    else if (UseTarget) // Uso nuovo packet
+                    {
+                        Items.UseItem(bandageserial);
+                        Target.WaitForTarget(1000, true);
+                        Target.TargetExecute(target.Serial);
+                    }
+                    else
+                    {
+                        Items.UseItemOnMobile(bandageserial, target.Serial);
+                    }
 
 					if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
 					{

@@ -2,6 +2,8 @@
 using RazorEnhanced.UI;
 using System;
 using System.Windows.Forms;
+using Assistant.UI;
+
 
 namespace Assistant
 {
@@ -17,13 +19,15 @@ namespace Assistant
 		internal RazorCheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
 		internal RazorAgentNumOnlyTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
 		internal RazorAgentNumOnlyTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
-		internal RazorAgentNumOnlyTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
-		internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
+        internal RazorAgentNumOnlyTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
+        internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
 		internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
 		internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
 		internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
-		internal RazorCheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
-		internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
+		internal RazorCheckBox BandageHealUseText { get { return bandagehealusetext; } }
+        internal RazorTextBox BandageHealUseTextContent { get { return bandagehealusetextContent; } }
+        internal RazorCheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
+        internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
 		internal RazorCheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
 
 		private void bandagehealenableCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -220,10 +224,33 @@ namespace Assistant
 		}
 
 
-		private void bandagehealusetarget_CheckedChanged(object sender, EventArgs e)
+
+        private void bandagehealusetext_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bandagehealusetext.Focused)
+            {
+                Settings.General.WriteBool("BandageHealUseText", bandagehealusetext.Checked);
+                Engine.MainWindow.SafeAction(s => { s.SetBandSelfState(); });
+            }
+        }
+        private void bandagehealusetext_Content_Leave(object sender, EventArgs e)
+        {
+            if (bandagehealusetextContent.Text == String.Empty)
+                bandagehealusetextContent.Text = "[bandself";
+
+            Settings.General.WriteString("BandageHealUseTextContent", bandagehealusetextContent.Text);
+
+        }
+
+        private void bandagehealusetarget_CheckedChanged(object sender, EventArgs e)
 		{
-			if (bandagehealusetarget.Focused)
-				Settings.General.WriteBool("BandageHealUseTarget", bandagehealusetarget.Checked);
+            if (bandagehealusetarget.Focused)
+            {
+                Settings.General.WriteBool("BandageHealUseTarget", bandagehealusetarget.Checked);
+                bandagehealusetext.Enabled = !bandagehealusetarget.Checked;
+                BandageHealUseTextContent.Enabled = bandagehealusetext.Checked && bandagehealusetextContent.Enabled;
+            }
+
 		}
 
 		private void bandagehealmaxrangeTextBox_Leave(object sender, EventArgs e)
