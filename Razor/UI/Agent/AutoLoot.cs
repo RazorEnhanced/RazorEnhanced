@@ -245,19 +245,6 @@ namespace Assistant
 			}
 		}
 
-		private void autoLootButtonListExport_Click(object sender, EventArgs e)
-		{
-			if (autolootListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportAutoloot(autolootListSelect.Text);
-			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
-
-		private void autoLootImport_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportAutoloot();
-		}
-
 		private void autoLootTextBoxDelay_Leave(object sender, EventArgs e)
 		{
 

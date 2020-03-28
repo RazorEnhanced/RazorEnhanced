@@ -231,21 +231,22 @@ namespace RazorEnhanced
             {
                 if (l.Selected)
                 {
-                    List<AutoLoot.AutoLootItem> items = Settings.AutoLoot.ItemsRead(l.Description);
-
-                    foreach (AutoLootItem item in items)
+                    Dictionary<int, List<AutoLoot.AutoLootItem>> items = Settings.AutoLoot.ItemsRead(l.Description);
+                    foreach (KeyValuePair<int, List<AutoLoot.AutoLootItem>> entry in items)
                     {
-                        string color = "All";
-                        if (item.Color != -1)
-                            color = "0x" + item.Color.ToString("X4");
+                        foreach (AutoLootItem item in entry.Value)
+                        {
+                            string color = "All";
+                            if (item.Color != -1)
+                                color = "0x" + item.Color.ToString("X4");
 
-                        string itemid = "All";
-                        if (item.Graphics != -1)
-                            itemid = "0x" + item.Graphics.ToString("X4");
+                            string itemid = "All";
+                            if (item.Graphics != -1)
+                                itemid = "0x" + item.Graphics.ToString("X4");
 
-                        Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, item.Properties });
+                            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, item.Properties });
+                        }
                     }
-
                     break;
                 }
             }
@@ -356,7 +357,7 @@ namespace RazorEnhanced
             }
 
         }
-        internal static void Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
+        internal static void Engine(Dictionary<int, List<AutoLootItem>> autoLootList, int mseconds, Items.Filter filter)
         {
             List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
@@ -401,18 +402,38 @@ namespace RazorEnhanced
                 else
                     m_cont = corpo;
 
-                foreach (AutoLootItem autoLootItem in autoLootList)
+                // If container is empty move on
+                if (m_cont.Contains.Count() == 0)
                 {
-                    if (!autoLootItem.Selected)
-                        continue;
+                    continue;
+                }
 
-                    foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
+                // get all the all-ID lists
+                List<AutoLootItem> matchAll = null;
+                if (!autoLootList.TryGetValue(-1, out matchAll))
+                {
+                    matchAll = new List<AutoLootItem>();
+                }
+
+                foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
+                {
+                    // Check match all by graphics
+                    foreach (AutoLootItem autoLootItem in matchAll)
                     {
-                        if (autoLootItem.Graphics == oggettoContenuto.ItemID || autoLootItem.Graphics == -1)  // match ALL id
+                        if (autoLootItem.Color == oggettoContenuto.Hue || autoLootItem.Color == -1)
                         {
-                            if (autoLootItem.Color == oggettoContenuto.Hue || autoLootItem.Color == -1)
+                            GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
+                        }
+                    }
+                    // check if in dictionary by graphics
+                    List<AutoLootItem> autoLootItemList2 = null;
+                    if (autoLootList.TryGetValue(oggettoContenuto.ItemID, out autoLootItemList2))
+                    {
+                        foreach (AutoLootItem autoLootItem2 in autoLootItemList2)
+                        {
+                            if (autoLootItem2.Color == oggettoContenuto.Hue || autoLootItem2.Color == -1)
                             {
-                                GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
+                                GrabItem(autoLootItem2, oggettoContenuto, corpo.Serial);
                             }
                         }
                     }
@@ -493,7 +514,7 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
                 return;
             }
-        List<AutoLootItem> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
+        Dictionary<int, List<AutoLootItem>> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
         if (autoLootList.Count > 0)
             {
                 Engine(autoLootList, mseconds, filter);
@@ -511,7 +532,16 @@ namespace RazorEnhanced
         public static List<AutoLootItem> GetList(string lootListName)
         {
             if (Settings.AutoLoot.ListExists(lootListName)) {
-                return Settings.AutoLoot.ItemsRead(lootListName).FindAll(item => item.Graphics != -1);
+                List<AutoLootItem> retList = new List<AutoLootItem>();
+                var lootDict = Settings.AutoLoot.ItemsRead(lootListName);
+                foreach (KeyValuePair<int, List<AutoLootItem>> entry in lootDict)
+                {
+                    foreach (AutoLootItem lootItem in entry.Value.FindAll(item => item.Graphics != -1))
+                    {
+                        retList.Add(lootItem);
+                    }
+                }
+                return retList;
             }
             return null;
         }

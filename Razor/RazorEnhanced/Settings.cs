@@ -335,11 +335,48 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static System.Security.Principal.SecurityIdentifier GetComputerSid()
-		{
-			return new System.Security.Principal.SecurityIdentifier((byte[])new DirectoryEntry(string.Format("WinNT://{0},Computer", Environment.MachineName)).Children.Cast<DirectoryEntry>().First().InvokeGet("objectSID"), 0).AccountDomainSid;
-		}
-		internal static string key = GetComputerSid().ToString();
+        internal static bool IsLinux
+        {
+            get
+            {
+                int p = (int)Environment.OSVersion.Platform;
+                return (p == 4) || (p == 6) || (p == 128);
+            }
+        }
+
+        public static string GetComputerSid()
+        {
+            if (IsLinux)
+            {
+                try
+                {
+                    using (Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64))
+                    {
+                        using (Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Microsoft\\Cryptography"))
+                        {
+                            {
+                                if (key != null)
+                                {
+                                    var o = key.GetValue("MachineGuid");
+                                    if (o != null)
+                                    {
+                                        return o.ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                { }
+            }
+            else {
+                System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier((byte[])new DirectoryEntry(string.Format("WinNT://{0},Computer", Environment.MachineName)).Children.Cast<DirectoryEntry>().First().InvokeGet("objectSID"), 0).AccountDomainSid;
+                return sid.ToString();
+            }
+            return "Some crap I made up112.45678-234523";
+        }
+		internal static string key = GetComputerSid();
 		// Passwords
 		public static string Protect(string text)
 		{
@@ -2669,23 +2706,37 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static List<RazorEnhanced.AutoLoot.AutoLootItem> ItemsRead(string list)
+			internal static Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> ItemsRead(string list)
 			{
-				List<RazorEnhanced.AutoLoot.AutoLootItem> items = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
+                Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
 
-				if (RazorEnhanced.AutoLoot.LockTable)
-					return items;
+                if (RazorEnhanced.AutoLoot.LockTable)
+					return lootList;
 
 				if (ListExists(list))
 				{
 					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 					{
-						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
-							items.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
-					}
-				}
+                        if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
+                        {
+                            RazorEnhanced.AutoLoot.AutoLootItem autoLootItem = ((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
+                            List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItems = null;
+                            if (lootList.TryGetValue(autoLootItem.Graphics, out autoLootItems))
+                            {
+                                autoLootItems.Add(autoLootItem);
+                                lootList[autoLootItem.Graphics] = autoLootItems;
 
-				return items;
+                            }
+                            else
+                            {
+                                autoLootItems = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
+                                autoLootItems.Add(autoLootItem);
+                                lootList.Add(autoLootItem.Graphics, autoLootItems);
+                            }
+                        }
+                    }
+				}
+                return lootList;
             }
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse, out int range)
