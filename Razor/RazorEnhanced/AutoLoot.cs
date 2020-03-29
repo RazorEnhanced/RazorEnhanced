@@ -431,9 +431,12 @@ namespace RazorEnhanced
                     {
                         foreach (AutoLootItem autoLootItem2 in autoLootItemList2)
                         {
-                            if (autoLootItem2.Color == oggettoContenuto.Hue || autoLootItem2.Color == -1)
+                            if (autoLootItem2.Selected)
                             {
-                                GrabItem(autoLootItem2, oggettoContenuto, corpo.Serial);
+                                if (autoLootItem2.Color == oggettoContenuto.Hue || autoLootItem2.Color == -1)
+                                {
+                                    GrabItem(autoLootItem2, oggettoContenuto, corpo.Serial);
+                                }
                             }
                         }
                     }
