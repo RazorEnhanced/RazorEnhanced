@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 1;
+		private static int SettingVersion = 3;
 
 		private static string m_profileName = null;
 
@@ -2121,7 +2121,6 @@ namespace RazorEnhanced
             hotkeyrow = hotkey.NewRow();
             hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Angelic Faith", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
-            // Felix
             hotkeyrow = hotkey.NewRow();
             hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Banish Evil", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
@@ -2449,7 +2448,7 @@ namespace RazorEnhanced
 			// Composizione Parematri base primo avvio
 			object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
-                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true,
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[bandself",
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
@@ -4925,7 +4924,6 @@ namespace RazorEnhanced
 
             if (realVersion == 1)
             {
-                // felix
                 DataTable hotkey = m_Dataset.Tables["HOTKEYS"];
                 initCleric(hotkey);
                 initDruid(hotkey);
