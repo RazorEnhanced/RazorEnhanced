@@ -12,11 +12,81 @@ namespace RazorEnhanced
 {
     public class Vendor
     {
+        static public List<Assistant.Item> LastBuyList { get; set; }
+        static public Assistant.Mobile LastVendor { get; set; }
+
+        static public void StoreBuyList(PacketReader p, PacketHandlerEventArgs args)
+        {
+            Assistant.Serial serial = p.ReadUInt32();
+            ushort gump = p.ReadUInt16();
+
+            Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
+            if (vendor == null)
+                return;
+
+            Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
+            if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
+                return;
+            Vendor.LastVendor = vendor;
+            Vendor.LastBuyList = pack.Contains;
+        }
         public static void Buy(int vendorSerial, int itemID, int amount)
-        { }
+        {
+            if (LastVendor == null)
+                return;
+            if (LastBuyList == null)
+                return;
+            if (LastVendor.Serial == vendorSerial)
+            {
+                List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+                foreach (Assistant.Item listItem in LastBuyList)
+                {
+                    if (listItem.ItemID == itemID)
+                    {
+                        int buyAmount = Math.Min(amount, listItem.Amount);
+                        VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, 0);
+                        buyList.Add(item);
+                        Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
+                        int price = listItem.Price * buyAmount;
+                        string message = "Buy Function: bought " + buyAmount.ToString() + " items for " + price.ToString() + " gold coins";
+                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendorSerial));          // Journal buffer
+                        World.Player.SendMessage(message);
+                        return;
+                    }
+                }
+            }
+        }
+
+        public class BuyItem
+        {
+            public string Name { get; set; }
+            public int Serial { get; set; }
+            public int ItemID { get; set; }
+            public int Amount { get; set; }
+            public int Price { get; set; }
+
+        }
+        public static List<BuyItem> BuyList(int vendorSerial)
+        {
+            List<BuyItem> buyList = new List<BuyItem>();
+            if (LastVendor.Serial == vendorSerial)
+                foreach (Assistant.Item listItem in LastBuyList)
+                {
+                    BuyItem item = new BuyItem();
+                    item.Serial = listItem.Serial;
+                    var test = Items.FindBySerial(item.Serial);
+                    item.ItemID = listItem.ItemID;
+                    item.Amount = listItem.Amount;
+                    item.Price = listItem.Price;
+                    item.Name = listItem.Name;
+                    buyList.Add(item);
+                }
+            return buyList;
+        }
+
     }
 
-	public class SellAgent
+    public class SellAgent
 	{
 		private static string m_listname;
 		private static int m_sellbag;
@@ -641,7 +711,8 @@ namespace RazorEnhanced
 			int total = 0;
 			int cost = 0;
 			List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // Lista definita altrove (non rimuovere se si fa pulizia in giro)
-
+            Vendor.LastVendor = vendor;
+            Vendor.LastBuyList = pack.Contains;
 			for (int i = 0; i < pack.Contains.Count; i++)
 			{
 				if (pack.Contains[i] == null)
@@ -686,20 +757,6 @@ namespace RazorEnhanced
 			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}
 
-        public static void Buy(int vendorSerial, int itemSerial)
-        {
-            int amount = 1;
-            int price = 0;
-            List<VendorBuyItem> buyList = new List<VendorBuyItem>();
-            VendorBuyItem item = new VendorBuyItem(itemSerial, amount, price);
-            buyList.Add(item);
-            Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
-
-            string message = "Buy Function: bought " + amount.ToString() + " items for " + price.ToString() + " gold coins";
-            World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendorSerial));          // Journal buffer
-            World.Player.SendMessage(message);
-            AddLog("Bought " + amount.ToString() + " items for " + price.ToString() + " gold coins");
-        }
 		// Funzioni da script
 		public static void Enable()
 		{

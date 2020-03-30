@@ -262,6 +262,7 @@ namespace RazorEnhanced.UI
             string[] methodsVendor =
             {
                 "Vendor.Buy",
+                "Vendor.BuyList",
             };
 
             string[] methodsTimer =
@@ -1138,6 +1139,9 @@ namespace RazorEnhanced.UI
 
             tooltip = new ToolTipDescriptions("Vendor.Buy(vendorSerial, ItemId, amount)", new string[] { "int VendorSerial, int ItemID, int Amount" }, "void", "Send item buy request to specified vendor");
             descriptionVendor.Add("Vendor.Buy", tooltip);
+
+            tooltip = new ToolTipDescriptions("Vendor.BuyList()", new string[] { "void" }, "List<BuyItems>", "Returns the Data associated with the last vendor buy list requested");
+            descriptionVendor.Add("Vendor.BuyList", tooltip);
 
             #endregion
 

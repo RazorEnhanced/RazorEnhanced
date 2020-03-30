@@ -55,7 +55,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x21, new PacketViewerCallback(MovementRej));
 			PacketHandler.RegisterServerToClientViewer(0x22, new PacketViewerCallback(MovementAck));
 			PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(BeginContainerContent));
-			PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
+            PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(RazorEnhanced.Vendor.StoreBuyList));
+            PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
 			//PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
 			//PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
@@ -2467,7 +2468,7 @@ namespace Assistant
 									if (subcommand == 2)
 									{
 										int num = p.ReadInt32();
-										ushort idx = p.ReadUInt16();
+                                        ushort idx = p.ReadUInt16();
 										p.ReadUInt16(); // Flags 0x00 = enabled, 0x01 = disabled, 0x04 = highlighted
 										ent.ContextMenu.Add(idx, num);
 									}

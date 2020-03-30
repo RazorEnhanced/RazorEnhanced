@@ -121,26 +121,51 @@ namespace RazorEnhanced
 			Assistant.Client.Instance.SendToClient(new Disconnect());
 		}
 
+        public class Context
+        {
+         public int Response
+            { get; set; }
+         public string Entry
+            { get; set; }
+        }
 		// Context Menu
-		public static void WaitForContext(Mobile mob, int delay) // Delay in MS
+		public static List <Context> WaitForContext(Mobile mob, int delay) // Delay in MS
 		{
-			WaitForContext(mob.Serial, delay);
+			return WaitForContext(mob.Serial, delay);
 		}
 
-		public static void WaitForContext(Item i, int delay) // Delay in MS
+		public static List<Context> WaitForContext(Item i, int delay) // Delay in MS
 		{
-			WaitForContext(i.Serial, delay);
+			return WaitForContext(i.Serial, delay);
 		}
 
-		public static void WaitForContext(int ser, int delay) // Delay in MS
+		public static List<Context> WaitForContext(int ser, int delay) // Delay in MS
 		{
-	 		Assistant.Client.Instance.SendToServerWait(new ContextMenuRequest(ser));
+            List < Context > retList = new List<Context>();
+            Assistant.Client.Instance.SendToServerWait(new ContextMenuRequest(ser));
 			int subdelay = delay;
 			while (World.Player.HasContext != true && World.Player.ContextID != ser && subdelay > 0)
 			{
 				Thread.Sleep(2);
 				subdelay -= 2;
 			}
+            UOEntity ent = null;
+            Assistant.Serial menuOwner = new Assistant.Serial((uint)ser);
+            if (menuOwner.IsMobile)
+                ent = World.FindMobile(menuOwner);
+            else if (menuOwner.IsItem)
+                ent = World.FindItem(menuOwner);
+            if (ent != null)
+            {
+                foreach (var entry in ent.ContextMenu)
+                {
+                    Context temp = new Context();
+                    temp.Response = entry.Key;
+                    temp.Entry = Language.GetString(entry.Value);
+                    retList.Add(temp);
+                }
+            }
+            return retList;
 		}
 
 
