@@ -125,7 +125,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
-				"Statics", "DPSMeter", "PathFinding", "Timer"
+				"Statics", "DPSMeter", "PathFinding", "Timer", "Vendor"
 			};
 
 			#endregion
@@ -259,8 +259,12 @@ namespace RazorEnhanced.UI
 {
 				"PathFinding.Go", "PathFinding.Route"
 			};
+            string[] methodsVendor =
+            {
+                "Vendor.Buy",
+            };
 
-			string[] methodsTimer =
+            string[] methodsTimer =
 {
 				"Timer.Check", "Timer.Create"
 			};
@@ -296,7 +300,8 @@ namespace RazorEnhanced.UI
 					.Union(methodsDPSMeter)
 					.Union(methodsPathFinding)
 					.Union(methodsTimer)
-					.ToArray();
+                    .Union(methodsVendor)
+                    .ToArray();
 
 			#endregion
 
@@ -1120,16 +1125,25 @@ namespace RazorEnhanced.UI
 			Dictionary<string, ToolTipDescriptions> descriptionTimer = new Dictionary<string, ToolTipDescriptions>();
 
 			tooltip = new ToolTipDescriptions("Timer.Create()", new string[] { "string TimerName, int mstime" }, "void", "Create a timer object whit specific name and duration in ms");
-			descriptionPathFinding.Add("Timer.Create", tooltip);
+            descriptionTimer.Add("Timer.Create", tooltip);
 
 			tooltip = new ToolTipDescriptions("Timer.Check()", new string[] { "string TimerName" }, "bool", "Check if a timer object is expired or not, \n\t True if not expired, false if expired");
-			descriptionPathFinding.Add("Timer.Check", tooltip);
+            descriptionTimer.Add("Timer.Check", tooltip);
 
-			#endregion
+            #endregion
 
-			#region Description DPSMeter
+            #region Description Vendor
 
-			Dictionary<string, ToolTipDescriptions> descriptionDPSMeter = new Dictionary<string, ToolTipDescriptions>();
+            Dictionary<string, ToolTipDescriptions> descriptionVendor = new Dictionary<string, ToolTipDescriptions>();
+
+            tooltip = new ToolTipDescriptions("Vendor.Buy(vendorSerial, ItemId, amount)", new string[] { "int VendorSerial, int ItemID, int Amount" }, "void", "Send item buy request to specified vendor");
+            descriptionVendor.Add("Vendor.Buy", tooltip);
+
+            #endregion
+
+            #region Description DPSMeter
+
+            Dictionary<string, ToolTipDescriptions> descriptionDPSMeter = new Dictionary<string, ToolTipDescriptions>();
 
 			tooltip = new ToolTipDescriptions("DPSMeter.Status()", new string[] { "none" }, "bool", "Get status of DPS Meter engine\n\tTrue: is running, False: is not running");
 			descriptionBandageHeal.Add("DPSMeter.Status", tooltip);
@@ -1212,6 +1226,7 @@ namespace RazorEnhanced.UI
 				.Union(descriptionDPSMeter)
 				.Union(descriptionPathFinding)
 				.Union(descriptionTimer)
+                .Union(descriptionVendor)
 				.ToDictionary(x => x.Key, x => x.Value);
 
 			#endregion

@@ -10,6 +10,12 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
+    public class Vendor
+    {
+        public static void Buy(int vendorSerial, int itemID, int amount)
+        { }
+    }
+
 	public class SellAgent
 	{
 		private static string m_listname;
@@ -680,6 +686,20 @@ namespace RazorEnhanced
 			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}
 
+        public static void Buy(int vendorSerial, int itemSerial)
+        {
+            int amount = 1;
+            int price = 0;
+            List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+            VendorBuyItem item = new VendorBuyItem(itemSerial, amount, price);
+            buyList.Add(item);
+            Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
+
+            string message = "Buy Function: bought " + amount.ToString() + " items for " + price.ToString() + " gold coins";
+            World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendorSerial));          // Journal buffer
+            World.Player.SendMessage(message);
+            AddLog("Bought " + amount.ToString() + " items for " + price.ToString() + " gold coins");
+        }
 		// Funzioni da script
 		public static void Enable()
 		{

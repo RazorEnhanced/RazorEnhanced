@@ -622,7 +622,8 @@ namespace RazorEnhanced
 			scope.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
 			scope.SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
 			scope.SetVariable("Timer", new RazorEnhanced.Timer());
-			return scope;
+            scope.SetVariable("Vendor", new RazorEnhanced.Vendor());
+            return scope;
 		}
 
 		internal static EnhancedScript Search(string filename)
