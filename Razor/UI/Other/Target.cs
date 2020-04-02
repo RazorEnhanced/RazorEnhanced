@@ -397,19 +397,6 @@ namespace Assistant
 			RazorEnhanced.Target.SetLastTargetFromListHotKey(targetlistBox.SelectedItem.ToString());
 		}
 
-		private void targetImportButton_Click(object sender, EventArgs e)
-		{
-			ImportExport.ImportTargetFilter(targetlistBox);
-		}
-
-		private void targetExportButton_Click(object sender, EventArgs e)
-		{
-			if (targetlistBox.SelectedItem == null || string.IsNullOrEmpty(targetlistBox.SelectedItem.ToString()))
-				return;
-
-			ImportExport.ExportTargetFilter(targetlistBox.SelectedItem.ToString());
-		}
-
 		private void targetChoseBody_Click(object sender, EventArgs e)
 		{
 			if (targetbodydataGridView.Enabled)

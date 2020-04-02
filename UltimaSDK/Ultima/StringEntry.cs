@@ -69,12 +69,12 @@ namespace Ultima
 			if (m_FmtTxt == null)
 				m_FmtTxt = m_RegEx.Replace(m_Text, @"{$1}");
 			List<string> list = new List<string>();
-			list.Add("");		    
+			list.Add("");
 		    if (Number == 1041522) // ~1~~2~~3~ is being over-used on free shards
 		    {
 		        Regex get_ability = new Regex(@".*(Abilities: )([^,]+, )(.*)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
                 Match match = get_ability.Match(argstr);
-		        if (match.Success) 
+		        if (match.Success)
 		        {
 		            list.Add(match.Groups[1].Value);
 		            list.Add(match.Groups[2].Value);
@@ -86,8 +86,20 @@ namespace Ultima
 		        foreach (string s in argstr.Split('\t'))
 		            list.Add(s); // adds an extra on to the args array
 		    }
-
-		    return String.Format(m_FmtTxt, list.ToArray());
+            const string pattern = @"(?<!\{)(?>\{\{)*\{\d(.*?)";
+            var matches = Regex.Matches(m_FmtTxt, pattern);
+//            var totalMatchCount = matches.Count;
+            var uniqueMatchCount = matches.OfType<Match>().Select(m => m.Value).Distinct().Count();
+            var parameterMatchCount = (uniqueMatchCount == 0) ? 0 : matches.OfType<Match>().Select(m => m.Value).Distinct().Select(m => int.Parse(m.Replace("{", string.Empty))).Max() + 1;
+            int addEmpty = parameterMatchCount - list.Count;
+            if (addEmpty > 0)
+            {
+                for (int loop = 0; loop < addEmpty; loop++)
+                {
+                    list.Add("");
+                }
+            }
+            return String.Format(m_FmtTxt, list.ToArray());
 		}
 	}
 }

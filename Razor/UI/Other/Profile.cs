@@ -115,19 +115,5 @@ namespace Assistant
 			};
 			cloneprofile.Show();
 		}
-
-		private void profilesExportButton_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ExportProfiles(profilesComboBox.Text);
-		}
-
-		private void profilesImportButton_Click(object sender, EventArgs e)
-		{
-			EnhancedProfileImport importprofile = new EnhancedProfileImport
-			{
-				TopMost = true
-			};
-			importprofile.Show();
-		}
 	}
 }

@@ -172,12 +172,25 @@ internal static bool SelfHealUseText
             set
             {
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseText.Checked = value);
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextSelfContent.Enabled = value);
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextContent.Enabled = value);
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTarget.Enabled = !value);
             }
         }
 
-internal static string SelfHealUseTextContent
+internal static string SelfHealUseTextSelfContent
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.BandageHealUseTextSelfContent.Text;
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextSelfContent.Text = value);
+            }
+        }
+        internal static string SelfHealUseTextContent
         {
             get
             {
@@ -220,7 +233,9 @@ internal static string SelfHealUseTextContent
 			HiddenBlock = Settings.General.ReadBool("BandageHealhiddedCheckBox");
 			UseTarget = Settings.General.ReadBool("BandageHealUseTarget");
             SelfHealUseText = Settings.General.ReadBool("BandageHealUseText");
+            SelfHealUseTextSelfContent = Settings.General.ReadString("BandageHealUseTextSelfContent");
             SelfHealUseTextContent = Settings.General.ReadString("BandageHealUseTextContent");
+
 
             Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
@@ -298,7 +313,15 @@ internal static string SelfHealUseTextContent
 
                     if (SelfHealUseText)
                     {
-                        Player.ChatSay(0, SelfHealUseTextContent);
+                        if (target.Serial == Player.Serial)
+                        {
+                            Player.ChatSay(0, SelfHealUseTextSelfContent);
+                        } else
+                        {
+                            Player.ChatSay(0, SelfHealUseTextContent);
+                            Target.WaitForTarget(1000, true);
+                            Target.TargetExecute(target.Serial);
+                        }
                     }
                     else if (UseTarget) // Uso nuovo packet
                     {

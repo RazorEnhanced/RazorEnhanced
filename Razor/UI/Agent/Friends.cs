@@ -50,19 +50,6 @@ namespace Assistant
 			}
 		}
 
-		private void friendButtonImportList_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportFriends();
-		}
-
-		private void friendButtonExportList_Click(object sender, EventArgs e)
-		{
-			if (friendListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportFriends(friendListSelect.Text);
-			else
-				RazorEnhanced.Friend.AddLog("Friend list not selected!");
-		}
-
 		private void friendPartyCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (friendPartyCheckBox.Focused)

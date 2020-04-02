@@ -26,6 +26,8 @@ namespace Assistant
 		internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
 		internal RazorCheckBox BandageHealUseText { get { return bandagehealusetext; } }
         internal RazorTextBox BandageHealUseTextContent { get { return bandagehealusetextContent; } }
+        internal RazorTextBox BandageHealUseTextSelfContent { get { return bandagehealusetextSelfContent; } }
+
         internal RazorCheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
         internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
 		internal RazorCheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
@@ -236,9 +238,17 @@ namespace Assistant
         private void bandagehealusetext_Content_Leave(object sender, EventArgs e)
         {
             if (bandagehealusetextContent.Text == String.Empty)
-                bandagehealusetextContent.Text = "[bandself";
+                bandagehealusetextContent.Text = "[band";
 
             Settings.General.WriteString("BandageHealUseTextContent", bandagehealusetextContent.Text);
+
+        }
+        private void bandagehealusetextSelf_Content_Leave(object sender, EventArgs e)
+        {
+            if (bandagehealusetextSelfContent.Text == String.Empty)
+                bandagehealusetextSelfContent.Text = "[bandself";
+
+            Settings.General.WriteString("BandageHealUseTextSelfContent", bandagehealusetextSelfContent.Text);
 
         }
 
@@ -248,10 +258,10 @@ namespace Assistant
             {
                 Settings.General.WriteBool("BandageHealUseTarget", bandagehealusetarget.Checked);
                 bandagehealusetext.Enabled = !bandagehealusetarget.Checked;
-                BandageHealUseTextContent.Enabled = bandagehealusetext.Checked && bandagehealusetextContent.Enabled;
+                BandageHealUseTextSelfContent.Enabled = BandageHealUseTextContent.Enabled = bandagehealusetext.Checked && bandagehealusetext.Enabled;
             }
 
-		}
+        }
 
 		private void bandagehealmaxrangeTextBox_Leave(object sender, EventArgs e)
 		{

@@ -113,8 +113,6 @@ namespace Assistant
         private GroupBox groupBox13;
         private ListBox autolootLogBox;
         private Label autolootContainerLabel;
-        private RazorButton autoLootButtonListImport;
-        private RazorButton autoLootButtonListExport;
         private RazorButton autolootItemPropsB;
         private RazorButton autolootAddItemBTarget;
         private RazorButton autolootContainerButton;
@@ -128,8 +126,6 @@ namespace Assistant
         private Label label20;
         private RazorButton scavengerButtonRemoveList;
         private RazorButton scavengerButtonAddList;
-        private RazorButton scavengerButtonImport;
-        private RazorButton scavengerButtonExport;
         private RazorComboBox scavengerListSelect;
         private Label label22;
         private GroupBox groupBox12;
@@ -153,9 +149,7 @@ namespace Assistant
         private RazorButton organizerSetSourceB;
         private RazorButton organizerRemoveListB;
         private RazorButton organizerAddListB;
-        private RazorButton organizerImportListB;
         private RazorComboBox organizerListSelect;
-        private RazorButton organizerExportListB;
         private Label label24;
         private TabPage VendorBuy;
         private TabPage VendorSell;
@@ -165,9 +159,7 @@ namespace Assistant
         private RazorCheckBox buyEnableCheckBox;
         private RazorButton buyRemoveListButton;
         private RazorButton buyAddListButton;
-        private RazorButton buyImportListButton;
         private RazorComboBox buyListSelect;
-        private RazorButton buyExportListButton;
         private Label label25;
         private RazorButton sellAddTargerButton;
         private GroupBox groupBox20;
@@ -175,9 +167,7 @@ namespace Assistant
         private RazorCheckBox sellEnableCheckBox;
         private RazorButton sellRemoveListButton;
         private RazorButton sellAddListButton;
-        private RazorButton sellImportListButton;
         private RazorComboBox sellListSelect;
-        private RazorButton sellExportListButton;
         private Label label26;
         private Label sellBagLabel;
         private RazorButton sellSetBagButton;
@@ -204,9 +194,7 @@ namespace Assistant
         private ColumnHeader columnHeader27;
         private RazorButton dressRemoveListB;
         private RazorButton dressAddListB;
-        private RazorButton dressImportListB;
         private RazorComboBox dressListSelect;
-        private RazorButton dressExportListB;
         private Label label28;
         private NotifyIcon m_NotifyIcon;
         private OpenFileDialog openFileDialogscript;
@@ -225,9 +213,7 @@ namespace Assistant
         private ColumnHeader columnHeader30;
         private RazorButton friendButtonRemoveList;
         private RazorButton friendButtonAddList;
-        private RazorButton friendButtonImportList;
         private RazorComboBox friendListSelect;
-        private RazorButton friendButtonExportList;
         private Label labelfriend;
         private GroupBox friendGroupBox;
         private RazorButton friendAddTargetButton;
@@ -245,9 +231,7 @@ namespace Assistant
         private RazorButton restockSetSourceButton;
         private RazorButton restockRemoveListB;
         private RazorButton restockAddListB;
-        private RazorButton restockImportListB;
         private RazorComboBox restockListSelect;
-        private RazorButton restockExportListB;
         private Label label7;
         private TabPage bandageheal;
         private GroupBox groupBox6;
@@ -693,7 +677,10 @@ namespace Assistant
         private RazorCheckBox bandagehealusetarget;
         private RazorButton paypalButton;
         private RazorCheckBox bandagehealusetext;
+        private RazorTextBox bandagehealusetextSelfContent;
         private RazorTextBox bandagehealusetextContent;
+        private Label label77;
+        private Label label78;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -935,9 +922,7 @@ namespace Assistant
             this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.autoLootButtonRemoveList = new RazorEnhanced.UI.RazorButton();
             this.autolootButtonAddList = new RazorEnhanced.UI.RazorButton();
-            this.autoLootButtonListImport = new RazorEnhanced.UI.RazorButton();
             this.autolootListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.autoLootButtonListExport = new RazorEnhanced.UI.RazorButton();
             this.label20 = new System.Windows.Forms.Label();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.autolootLogBox = new System.Windows.Forms.ListBox();
@@ -967,9 +952,7 @@ namespace Assistant
             this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.scavengerButtonRemoveList = new RazorEnhanced.UI.RazorButton();
             this.scavengerButtonAddList = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonImport = new RazorEnhanced.UI.RazorButton();
             this.scavengerListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
             this.organizer = new System.Windows.Forms.TabPage();
             this.organizerCloneListB = new RazorEnhanced.UI.RazorButton();
             this.organizerExecuteButton = new System.Windows.Forms.Button();
@@ -995,9 +978,7 @@ namespace Assistant
             this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.organizerRemoveListB = new RazorEnhanced.UI.RazorButton();
             this.organizerAddListB = new RazorEnhanced.UI.RazorButton();
-            this.organizerImportListB = new RazorEnhanced.UI.RazorButton();
             this.organizerListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
             this.VendorBuy = new System.Windows.Forms.TabPage();
             this.buyCloneButton = new RazorEnhanced.UI.RazorButton();
             this.vendorbuydataGridView = new System.Windows.Forms.DataGridView();
@@ -1013,9 +994,7 @@ namespace Assistant
             this.buyEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.buyRemoveListButton = new RazorEnhanced.UI.RazorButton();
             this.buyAddListButton = new RazorEnhanced.UI.RazorButton();
-            this.buyImportListButton = new RazorEnhanced.UI.RazorButton();
             this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.buyExportListButton = new RazorEnhanced.UI.RazorButton();
             this.VendorSell = new System.Windows.Forms.TabPage();
             this.sellCloneListButton = new RazorEnhanced.UI.RazorButton();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
@@ -1035,9 +1014,7 @@ namespace Assistant
             this.sellEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.sellRemoveListButton = new RazorEnhanced.UI.RazorButton();
             this.sellAddListButton = new RazorEnhanced.UI.RazorButton();
-            this.sellImportListButton = new RazorEnhanced.UI.RazorButton();
             this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.sellExportListButton = new RazorEnhanced.UI.RazorButton();
             this.Dress = new System.Windows.Forms.TabPage();
             this.dressStopButton = new RazorEnhanced.UI.RazorButton();
             this.dressConflictCheckB = new RazorEnhanced.UI.RazorCheckBox();
@@ -1063,9 +1040,7 @@ namespace Assistant
             this.label28 = new System.Windows.Forms.Label();
             this.dressRemoveListB = new RazorEnhanced.UI.RazorButton();
             this.dressAddListB = new RazorEnhanced.UI.RazorButton();
-            this.dressImportListB = new RazorEnhanced.UI.RazorButton();
             this.dressListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.dressExportListB = new RazorEnhanced.UI.RazorButton();
             this.friends = new System.Windows.Forms.TabPage();
             this.groupBox34 = new System.Windows.Forms.GroupBox();
             this.FriendGuildAddButton = new RazorEnhanced.UI.RazorButton();
@@ -1094,9 +1069,7 @@ namespace Assistant
             this.labelfriend = new System.Windows.Forms.Label();
             this.friendButtonRemoveList = new RazorEnhanced.UI.RazorButton();
             this.friendButtonAddList = new RazorEnhanced.UI.RazorButton();
-            this.friendButtonImportList = new RazorEnhanced.UI.RazorButton();
             this.friendListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.friendButtonExportList = new RazorEnhanced.UI.RazorButton();
             this.restock = new System.Windows.Forms.TabPage();
             this.restockCloneListB = new RazorEnhanced.UI.RazorButton();
             this.restockExecuteButton = new System.Windows.Forms.Button();
@@ -1122,13 +1095,12 @@ namespace Assistant
             this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.restockRemoveListB = new RazorEnhanced.UI.RazorButton();
             this.restockAddListB = new RazorEnhanced.UI.RazorButton();
-            this.restockImportListB = new RazorEnhanced.UI.RazorButton();
             this.restockListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.restockExportListB = new RazorEnhanced.UI.RazorButton();
             this.bandageheal = new System.Windows.Forms.TabPage();
             this.bandagehealAutostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.bandagehealusetextContent = new RazorEnhanced.UI.RazorTextBox();
+            this.bandagehealusetextSelfContent = new RazorEnhanced.UI.RazorTextBox();
             this.bandagehealusetext = new RazorEnhanced.UI.RazorCheckBox();
             this.bandagehealusetarget = new RazorEnhanced.UI.RazorCheckBox();
             this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1405,6 +1377,8 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+            this.label77 = new System.Windows.Forms.Label();
+            this.label78 = new System.Windows.Forms.Label();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -2772,21 +2746,17 @@ namespace Assistant
             //
             // graphFilterImportButton
             //
-            this.graphFilterImportButton.Location = new System.Drawing.Point(129, 19);
+            this.graphFilterImportButton.Location = new System.Drawing.Point(0, 0);
             this.graphFilterImportButton.Name = "graphFilterImportButton";
-            this.graphFilterImportButton.Size = new System.Drawing.Size(71, 21);
-            this.graphFilterImportButton.TabIndex = 71;
-            this.graphFilterImportButton.Text = "Import";
-            this.graphFilterImportButton.Click += new System.EventHandler(this.graphFilterImportButton_Click);
+            this.graphFilterImportButton.Size = new System.Drawing.Size(75, 23);
+            this.graphFilterImportButton.TabIndex = 0;
             //
             // graphFilterExportButton
             //
-            this.graphFilterExportButton.Location = new System.Drawing.Point(206, 19);
+            this.graphFilterExportButton.Location = new System.Drawing.Point(0, 0);
             this.graphFilterExportButton.Name = "graphFilterExportButton";
-            this.graphFilterExportButton.Size = new System.Drawing.Size(71, 21);
-            this.graphFilterExportButton.TabIndex = 70;
-            this.graphFilterExportButton.Text = "Export";
-            this.graphFilterExportButton.Click += new System.EventHandler(this.graphFilterExportButton_Click);
+            this.graphFilterExportButton.Size = new System.Drawing.Size(75, 23);
+            this.graphFilterExportButton.TabIndex = 1;
             //
             // graphfilterdatagrid
             //
@@ -3313,9 +3283,7 @@ namespace Assistant
             this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
             this.eautoloot.Controls.Add(this.autoLootButtonRemoveList);
             this.eautoloot.Controls.Add(this.autolootButtonAddList);
-            this.eautoloot.Controls.Add(this.autoLootButtonListImport);
             this.eautoloot.Controls.Add(this.autolootListSelect);
-            this.eautoloot.Controls.Add(this.autoLootButtonListExport);
             this.eautoloot.Controls.Add(this.label20);
             this.eautoloot.Controls.Add(this.groupBox13);
             this.eautoloot.Controls.Add(this.autoLootCheckBox);
@@ -3329,7 +3297,7 @@ namespace Assistant
             //
             // autoLootButtonListClone
             //
-            this.autoLootButtonListClone.Location = new System.Drawing.Point(578, 12);
+            this.autoLootButtonListClone.Location = new System.Drawing.Point(424, 12);
             this.autoLootButtonListClone.Name = "autoLootButtonListClone";
             this.autoLootButtonListClone.Size = new System.Drawing.Size(70, 21);
             this.autoLootButtonListClone.TabIndex = 67;
@@ -3540,14 +3508,6 @@ namespace Assistant
             this.autolootButtonAddList.Text = "Add";
             this.autolootButtonAddList.Click += new System.EventHandler(this.autoLootButtonAddList_Click);
             //
-            // autoLootButtonListImport
-            //
-            this.autoLootButtonListImport.Location = new System.Drawing.Point(424, 12);
-            this.autoLootButtonListImport.Name = "autoLootButtonListImport";
-            this.autoLootButtonListImport.Size = new System.Drawing.Size(71, 21);
-            this.autoLootButtonListImport.TabIndex = 49;
-            this.autoLootButtonListImport.Text = "Import";
-            //
             // autolootListSelect
             //
             this.autolootListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -3557,14 +3517,6 @@ namespace Assistant
             this.autolootListSelect.Size = new System.Drawing.Size(183, 21);
             this.autolootListSelect.TabIndex = 55;
             this.autolootListSelect.SelectedIndexChanged += new System.EventHandler(this.autoLootListSelect_SelectedIndexChanged);
-            //
-            // autoLootButtonListExport
-            //
-            this.autoLootButtonListExport.Location = new System.Drawing.Point(501, 12);
-            this.autoLootButtonListExport.Name = "autoLootButtonListExport";
-            this.autoLootButtonListExport.Size = new System.Drawing.Size(71, 21);
-            this.autoLootButtonListExport.TabIndex = 48;
-            this.autoLootButtonListExport.Text = "Export";
             //
             // label20
             //
@@ -3619,9 +3571,7 @@ namespace Assistant
             this.escavenger.Controls.Add(this.scavengerCheckBox);
             this.escavenger.Controls.Add(this.scavengerButtonRemoveList);
             this.escavenger.Controls.Add(this.scavengerButtonAddList);
-            this.escavenger.Controls.Add(this.scavengerButtonImport);
             this.escavenger.Controls.Add(this.scavengerListSelect);
-            this.escavenger.Controls.Add(this.scavengerButtonExport);
             this.escavenger.Location = new System.Drawing.Point(4, 22);
             this.escavenger.Name = "escavenger";
             this.escavenger.Padding = new System.Windows.Forms.Padding(3);
@@ -3632,7 +3582,7 @@ namespace Assistant
             //
             // scavengerButtonClone
             //
-            this.scavengerButtonClone.Location = new System.Drawing.Point(571, 12);
+            this.scavengerButtonClone.Location = new System.Drawing.Point(423, 11);
             this.scavengerButtonClone.Name = "scavengerButtonClone";
             this.scavengerButtonClone.Size = new System.Drawing.Size(68, 21);
             this.scavengerButtonClone.TabIndex = 77;
@@ -3870,15 +3820,6 @@ namespace Assistant
             this.scavengerButtonAddList.Text = "Add";
             this.scavengerButtonAddList.Click += new System.EventHandler(this.scavengerAddList_Click);
             //
-            // scavengerButtonImport
-            //
-            this.scavengerButtonImport.Location = new System.Drawing.Point(423, 12);
-            this.scavengerButtonImport.Name = "scavengerButtonImport";
-            this.scavengerButtonImport.Size = new System.Drawing.Size(68, 21);
-            this.scavengerButtonImport.TabIndex = 59;
-            this.scavengerButtonImport.Text = "Import";
-            this.scavengerButtonImport.Click += new System.EventHandler(this.scavengerButtonImport_Click);
-            //
             // scavengerListSelect
             //
             this.scavengerListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -3888,15 +3829,6 @@ namespace Assistant
             this.scavengerListSelect.Size = new System.Drawing.Size(175, 21);
             this.scavengerListSelect.TabIndex = 61;
             this.scavengerListSelect.SelectedIndexChanged += new System.EventHandler(this.scavengertListSelect_SelectedIndexChanged);
-            //
-            // scavengerButtonExport
-            //
-            this.scavengerButtonExport.Location = new System.Drawing.Point(497, 12);
-            this.scavengerButtonExport.Name = "scavengerButtonExport";
-            this.scavengerButtonExport.Size = new System.Drawing.Size(68, 21);
-            this.scavengerButtonExport.TabIndex = 58;
-            this.scavengerButtonExport.Text = "Export";
-            this.scavengerButtonExport.Click += new System.EventHandler(this.scavengerButtonExport_Click);
             //
             // organizer
             //
@@ -3912,9 +3844,7 @@ namespace Assistant
             this.organizer.Controls.Add(this.organizerDragDelay);
             this.organizer.Controls.Add(this.organizerRemoveListB);
             this.organizer.Controls.Add(this.organizerAddListB);
-            this.organizer.Controls.Add(this.organizerImportListB);
             this.organizer.Controls.Add(this.organizerListSelect);
-            this.organizer.Controls.Add(this.organizerExportListB);
             this.organizer.Location = new System.Drawing.Point(4, 22);
             this.organizer.Name = "organizer";
             this.organizer.Padding = new System.Windows.Forms.Padding(3);
@@ -3925,7 +3855,7 @@ namespace Assistant
             //
             // organizerCloneListB
             //
-            this.organizerCloneListB.Location = new System.Drawing.Point(577, 12);
+            this.organizerCloneListB.Location = new System.Drawing.Point(425, 12);
             this.organizerCloneListB.Name = "organizerCloneListB";
             this.organizerCloneListB.Size = new System.Drawing.Size(70, 21);
             this.organizerCloneListB.TabIndex = 92;
@@ -4174,15 +4104,6 @@ namespace Assistant
             this.organizerAddListB.Text = "Add";
             this.organizerAddListB.Click += new System.EventHandler(this.organizerAddList_Click);
             //
-            // organizerImportListB
-            //
-            this.organizerImportListB.Location = new System.Drawing.Point(425, 12);
-            this.organizerImportListB.Name = "organizerImportListB";
-            this.organizerImportListB.Size = new System.Drawing.Size(70, 21);
-            this.organizerImportListB.TabIndex = 59;
-            this.organizerImportListB.Text = "Import";
-            this.organizerImportListB.Click += new System.EventHandler(this.organizerImportListB_Click);
-            //
             // organizerListSelect
             //
             this.organizerListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -4192,15 +4113,6 @@ namespace Assistant
             this.organizerListSelect.Size = new System.Drawing.Size(172, 21);
             this.organizerListSelect.TabIndex = 61;
             this.organizerListSelect.SelectedIndexChanged += new System.EventHandler(this.organizerListSelect_SelectedIndexChanged);
-            //
-            // organizerExportListB
-            //
-            this.organizerExportListB.Location = new System.Drawing.Point(501, 12);
-            this.organizerExportListB.Name = "organizerExportListB";
-            this.organizerExportListB.Size = new System.Drawing.Size(70, 21);
-            this.organizerExportListB.TabIndex = 58;
-            this.organizerExportListB.Text = "Export";
-            this.organizerExportListB.Click += new System.EventHandler(this.organizerExportListB_Click);
             //
             // VendorBuy
             //
@@ -4212,9 +4124,7 @@ namespace Assistant
             this.VendorBuy.Controls.Add(this.buyEnableCheckBox);
             this.VendorBuy.Controls.Add(this.buyRemoveListButton);
             this.VendorBuy.Controls.Add(this.buyAddListButton);
-            this.VendorBuy.Controls.Add(this.buyImportListButton);
             this.VendorBuy.Controls.Add(this.buyListSelect);
-            this.VendorBuy.Controls.Add(this.buyExportListButton);
             this.VendorBuy.Location = new System.Drawing.Point(4, 22);
             this.VendorBuy.Name = "VendorBuy";
             this.VendorBuy.Padding = new System.Windows.Forms.Padding(3);
@@ -4225,7 +4135,7 @@ namespace Assistant
             //
             // buyCloneButton
             //
-            this.buyCloneButton.Location = new System.Drawing.Point(565, 12);
+            this.buyCloneButton.Location = new System.Drawing.Point(419, 12);
             this.buyCloneButton.Name = "buyCloneButton";
             this.buyCloneButton.Size = new System.Drawing.Size(67, 21);
             this.buyCloneButton.TabIndex = 89;
@@ -4371,15 +4281,6 @@ namespace Assistant
             this.buyAddListButton.Text = "Add";
             this.buyAddListButton.Click += new System.EventHandler(this.buyAddList_Click);
             //
-            // buyImportListButton
-            //
-            this.buyImportListButton.Location = new System.Drawing.Point(419, 12);
-            this.buyImportListButton.Name = "buyImportListButton";
-            this.buyImportListButton.Size = new System.Drawing.Size(67, 21);
-            this.buyImportListButton.TabIndex = 65;
-            this.buyImportListButton.Text = "Import";
-            this.buyImportListButton.Click += new System.EventHandler(this.buyImportListButton_Click);
-            //
             // buyListSelect
             //
             this.buyListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -4389,15 +4290,6 @@ namespace Assistant
             this.buyListSelect.Size = new System.Drawing.Size(183, 21);
             this.buyListSelect.TabIndex = 67;
             this.buyListSelect.SelectedIndexChanged += new System.EventHandler(this.buyListSelect_SelectedIndexChanged);
-            //
-            // buyExportListButton
-            //
-            this.buyExportListButton.Location = new System.Drawing.Point(492, 12);
-            this.buyExportListButton.Name = "buyExportListButton";
-            this.buyExportListButton.Size = new System.Drawing.Size(67, 21);
-            this.buyExportListButton.TabIndex = 64;
-            this.buyExportListButton.Text = "Export";
-            this.buyExportListButton.Click += new System.EventHandler(this.buyExportListButton_Click);
             //
             // VendorSell
             //
@@ -4410,9 +4302,7 @@ namespace Assistant
             this.VendorSell.Controls.Add(this.sellEnableCheckBox);
             this.VendorSell.Controls.Add(this.sellRemoveListButton);
             this.VendorSell.Controls.Add(this.sellAddListButton);
-            this.VendorSell.Controls.Add(this.sellImportListButton);
             this.VendorSell.Controls.Add(this.sellListSelect);
-            this.VendorSell.Controls.Add(this.sellExportListButton);
             this.VendorSell.Location = new System.Drawing.Point(4, 22);
             this.VendorSell.Name = "VendorSell";
             this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
@@ -4423,7 +4313,7 @@ namespace Assistant
             //
             // sellCloneListButton
             //
-            this.sellCloneListButton.Location = new System.Drawing.Point(565, 12);
+            this.sellCloneListButton.Location = new System.Drawing.Point(419, 12);
             this.sellCloneListButton.Name = "sellCloneListButton";
             this.sellCloneListButton.Size = new System.Drawing.Size(67, 21);
             this.sellCloneListButton.TabIndex = 90;
@@ -4606,15 +4496,6 @@ namespace Assistant
             this.sellAddListButton.Text = "Add";
             this.sellAddListButton.Click += new System.EventHandler(this.sellAddList_Click);
             //
-            // sellImportListButton
-            //
-            this.sellImportListButton.Location = new System.Drawing.Point(419, 12);
-            this.sellImportListButton.Name = "sellImportListButton";
-            this.sellImportListButton.Size = new System.Drawing.Size(67, 21);
-            this.sellImportListButton.TabIndex = 76;
-            this.sellImportListButton.Text = "Import";
-            this.sellImportListButton.Click += new System.EventHandler(this.sellImportListButton_Click);
-            //
             // sellListSelect
             //
             this.sellListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -4624,15 +4505,6 @@ namespace Assistant
             this.sellListSelect.Size = new System.Drawing.Size(183, 21);
             this.sellListSelect.TabIndex = 78;
             this.sellListSelect.SelectedIndexChanged += new System.EventHandler(this.sellListSelect_SelectedIndexChanged);
-            //
-            // sellExportListButton
-            //
-            this.sellExportListButton.Location = new System.Drawing.Point(492, 12);
-            this.sellExportListButton.Name = "sellExportListButton";
-            this.sellExportListButton.Size = new System.Drawing.Size(67, 21);
-            this.sellExportListButton.TabIndex = 75;
-            this.sellExportListButton.Text = "Export";
-            this.sellExportListButton.Click += new System.EventHandler(this.sellExportListButton_Click);
             //
             // Dress
             //
@@ -4650,9 +4522,7 @@ namespace Assistant
             this.Dress.Controls.Add(this.label28);
             this.Dress.Controls.Add(this.dressRemoveListB);
             this.Dress.Controls.Add(this.dressAddListB);
-            this.Dress.Controls.Add(this.dressImportListB);
             this.Dress.Controls.Add(this.dressListSelect);
-            this.Dress.Controls.Add(this.dressExportListB);
             this.Dress.Location = new System.Drawing.Point(4, 22);
             this.Dress.Name = "Dress";
             this.Dress.Padding = new System.Windows.Forms.Padding(3);
@@ -4882,15 +4752,6 @@ namespace Assistant
             this.dressAddListB.Text = "Add";
             this.dressAddListB.Click += new System.EventHandler(this.dressAddListB_Click);
             //
-            // dressImportListB
-            //
-            this.dressImportListB.Location = new System.Drawing.Point(462, 12);
-            this.dressImportListB.Name = "dressImportListB";
-            this.dressImportListB.Size = new System.Drawing.Size(90, 21);
-            this.dressImportListB.TabIndex = 59;
-            this.dressImportListB.Text = "Import";
-            this.dressImportListB.Click += new System.EventHandler(this.dressImportListB_Click);
-            //
             // dressListSelect
             //
             this.dressListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -4900,15 +4761,6 @@ namespace Assistant
             this.dressListSelect.Size = new System.Drawing.Size(183, 21);
             this.dressListSelect.TabIndex = 61;
             this.dressListSelect.SelectedIndexChanged += new System.EventHandler(this.dressListSelect_SelectedIndexChanged);
-            //
-            // dressExportListB
-            //
-            this.dressExportListB.Location = new System.Drawing.Point(558, 12);
-            this.dressExportListB.Name = "dressExportListB";
-            this.dressExportListB.Size = new System.Drawing.Size(90, 21);
-            this.dressExportListB.TabIndex = 58;
-            this.dressExportListB.Text = "Export";
-            this.dressExportListB.Click += new System.EventHandler(this.dressExportListB_Click);
             //
             // friends
             //
@@ -4924,9 +4776,7 @@ namespace Assistant
             this.friends.Controls.Add(this.labelfriend);
             this.friends.Controls.Add(this.friendButtonRemoveList);
             this.friends.Controls.Add(this.friendButtonAddList);
-            this.friends.Controls.Add(this.friendButtonImportList);
             this.friends.Controls.Add(this.friendListSelect);
-            this.friends.Controls.Add(this.friendButtonExportList);
             this.friends.Location = new System.Drawing.Point(4, 22);
             this.friends.Name = "friends";
             this.friends.Padding = new System.Windows.Forms.Padding(3);
@@ -5190,15 +5040,6 @@ namespace Assistant
             this.friendButtonAddList.Text = "Add";
             this.friendButtonAddList.Click += new System.EventHandler(this.friendButtonAddList_Click);
             //
-            // friendButtonImportList
-            //
-            this.friendButtonImportList.Location = new System.Drawing.Point(462, 12);
-            this.friendButtonImportList.Name = "friendButtonImportList";
-            this.friendButtonImportList.Size = new System.Drawing.Size(90, 21);
-            this.friendButtonImportList.TabIndex = 59;
-            this.friendButtonImportList.Text = "Import";
-            this.friendButtonImportList.Click += new System.EventHandler(this.friendButtonImportList_Click);
-            //
             // friendListSelect
             //
             this.friendListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -5208,15 +5049,6 @@ namespace Assistant
             this.friendListSelect.Size = new System.Drawing.Size(183, 21);
             this.friendListSelect.TabIndex = 61;
             this.friendListSelect.SelectedIndexChanged += new System.EventHandler(this.friendListSelect_SelectedIndexChanged);
-            //
-            // friendButtonExportList
-            //
-            this.friendButtonExportList.Location = new System.Drawing.Point(558, 12);
-            this.friendButtonExportList.Name = "friendButtonExportList";
-            this.friendButtonExportList.Size = new System.Drawing.Size(90, 21);
-            this.friendButtonExportList.TabIndex = 58;
-            this.friendButtonExportList.Text = "Export";
-            this.friendButtonExportList.Click += new System.EventHandler(this.friendButtonExportList_Click);
             //
             // restock
             //
@@ -5232,9 +5064,7 @@ namespace Assistant
             this.restock.Controls.Add(this.restockDragDelay);
             this.restock.Controls.Add(this.restockRemoveListB);
             this.restock.Controls.Add(this.restockAddListB);
-            this.restock.Controls.Add(this.restockImportListB);
             this.restock.Controls.Add(this.restockListSelect);
-            this.restock.Controls.Add(this.restockExportListB);
             this.restock.Location = new System.Drawing.Point(4, 22);
             this.restock.Name = "restock";
             this.restock.Padding = new System.Windows.Forms.Padding(3);
@@ -5245,7 +5075,7 @@ namespace Assistant
             //
             // restockCloneListB
             //
-            this.restockCloneListB.Location = new System.Drawing.Point(562, 11);
+            this.restockCloneListB.Location = new System.Drawing.Point(416, 11);
             this.restockCloneListB.Name = "restockCloneListB";
             this.restockCloneListB.Size = new System.Drawing.Size(67, 21);
             this.restockCloneListB.TabIndex = 94;
@@ -5494,15 +5324,6 @@ namespace Assistant
             this.restockAddListB.Text = "Add";
             this.restockAddListB.Click += new System.EventHandler(this.restockAddListB_Click);
             //
-            // restockImportListB
-            //
-            this.restockImportListB.Location = new System.Drawing.Point(416, 11);
-            this.restockImportListB.Name = "restockImportListB";
-            this.restockImportListB.Size = new System.Drawing.Size(67, 21);
-            this.restockImportListB.TabIndex = 65;
-            this.restockImportListB.Text = "Import";
-            this.restockImportListB.Click += new System.EventHandler(this.restockImportB_Click);
-            //
             // restockListSelect
             //
             this.restockListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -5512,15 +5333,6 @@ namespace Assistant
             this.restockListSelect.Size = new System.Drawing.Size(183, 21);
             this.restockListSelect.TabIndex = 67;
             this.restockListSelect.SelectedIndexChanged += new System.EventHandler(this.restockListSelect_SelectedIndexChanged);
-            //
-            // restockExportListB
-            //
-            this.restockExportListB.Location = new System.Drawing.Point(489, 11);
-            this.restockExportListB.Name = "restockExportListB";
-            this.restockExportListB.Size = new System.Drawing.Size(67, 21);
-            this.restockExportListB.TabIndex = 64;
-            this.restockExportListB.Text = "Export";
-            this.restockExportListB.Click += new System.EventHandler(this.restockExportListB_Click);
             //
             // bandageheal
             //
@@ -5547,7 +5359,10 @@ namespace Assistant
             //
             // groupBox6
             //
+            this.groupBox6.Controls.Add(this.label78);
+            this.groupBox6.Controls.Add(this.label77);
             this.groupBox6.Controls.Add(this.bandagehealusetextContent);
+            this.groupBox6.Controls.Add(this.bandagehealusetextSelfContent);
             this.groupBox6.Controls.Add(this.bandagehealusetext);
             this.groupBox6.Controls.Add(this.bandagehealusetarget);
             this.groupBox6.Controls.Add(this.bandagehealmaxrangeTextBox);
@@ -5582,12 +5397,22 @@ namespace Assistant
             // bandagehealusetextContent
             //
             this.bandagehealusetextContent.Enabled = false;
-            this.bandagehealusetextContent.Location = new System.Drawing.Point(184, 219);
+            this.bandagehealusetextContent.Location = new System.Drawing.Point(254, 245);
             this.bandagehealusetextContent.Name = "bandagehealusetextContent";
-            this.bandagehealusetextContent.Size = new System.Drawing.Size(127, 20);
+            this.bandagehealusetextContent.Size = new System.Drawing.Size(82, 20);
             this.bandagehealusetextContent.TabIndex = 94;
-            this.bandagehealusetextContent.Text = "[bandself";
+            this.bandagehealusetextContent.Text = "[band";
             this.bandagehealusetextContent.Leave += new System.EventHandler(this.bandagehealusetext_Content_Leave);
+            //
+            // bandagehealusetextSelfContent
+            //
+            this.bandagehealusetextSelfContent.Enabled = false;
+            this.bandagehealusetextSelfContent.Location = new System.Drawing.Point(254, 219);
+            this.bandagehealusetextSelfContent.Name = "bandagehealusetextSelfContent";
+            this.bandagehealusetextSelfContent.Size = new System.Drawing.Size(82, 20);
+            this.bandagehealusetextSelfContent.TabIndex = 94;
+            this.bandagehealusetextSelfContent.Text = "[bandself";
+            this.bandagehealusetextSelfContent.Leave += new System.EventHandler(this.bandagehealusetextSelf_Content_Leave);
             //
             // bandagehealusetext
             //
@@ -7265,21 +7090,17 @@ namespace Assistant
             //
             // targetImportButton
             //
-            this.targetImportButton.Location = new System.Drawing.Point(7, 330);
+            this.targetImportButton.Location = new System.Drawing.Point(0, 0);
             this.targetImportButton.Name = "targetImportButton";
-            this.targetImportButton.Size = new System.Drawing.Size(49, 21);
-            this.targetImportButton.TabIndex = 51;
-            this.targetImportButton.Text = "Import";
-            this.targetImportButton.Click += new System.EventHandler(this.targetImportButton_Click);
+            this.targetImportButton.Size = new System.Drawing.Size(75, 23);
+            this.targetImportButton.TabIndex = 0;
             //
             // targetExportButton
             //
-            this.targetExportButton.Location = new System.Drawing.Point(71, 329);
+            this.targetExportButton.Location = new System.Drawing.Point(0, 0);
             this.targetExportButton.Name = "targetExportButton";
-            this.targetExportButton.Size = new System.Drawing.Size(49, 21);
-            this.targetExportButton.TabIndex = 50;
-            this.targetExportButton.Text = "Export";
-            this.targetExportButton.Click += new System.EventHandler(this.targetExportButton_Click);
+            this.targetExportButton.Size = new System.Drawing.Size(75, 23);
+            this.targetExportButton.TabIndex = 1;
             //
             // label76
             //
@@ -8430,6 +8251,25 @@ namespace Assistant
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
             //
+            // label77
+            //
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(207, 223);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(28, 13);
+            this.label77.TabIndex = 95;
+            this.label77.Text = "Self:";
+            this.label77.Click += new System.EventHandler(this.label77_Click);
+            //
+            // label78
+            //
+            this.label78.AutoSize = true;
+            this.label78.Location = new System.Drawing.Point(210, 249);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(36, 13);
+            this.label78.TabIndex = 96;
+            this.label78.Text = "Other:";
+            //
             // MainForm
             //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -8923,6 +8763,7 @@ namespace Assistant
 
         public void SetBandSelfState()
         {
+            bandagehealusetextSelfContent.Enabled = bandagehealusetext.Checked;
             bandagehealusetextContent.Enabled = bandagehealusetext.Checked;
             BandageHealUseTarget.Enabled = !bandagehealusetext.Checked;
         }
@@ -9423,7 +9264,12 @@ namespace Assistant
             Process.Start(p);
         }
 
-             // ----------------- UO MOD END -------------------
+        private void label77_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // ----------------- UO MOD END -------------------
     }
 }
 

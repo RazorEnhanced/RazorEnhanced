@@ -73,19 +73,6 @@ namespace Assistant
 			}
 		}
 
-		private void restockImportB_Click(object sender, EventArgs e)
-		{
-			ImportExport.ImportRestock();
-		}
-
-		private void restockExportListB_Click(object sender, EventArgs e)
-		{
-			if (restockListSelect.Text != String.Empty)
-				ImportExport.ExportRestock(restockListSelect.Text);
-			else
-				Restock.AddLog("Item list not selected!");
-		}
-
 		private void restockSetSourceButton_Click(object sender, EventArgs e)
 		{
 			RestockSetSource();
@@ -247,8 +234,6 @@ namespace Assistant
 				restockListSelect.InvokeRequired ||
 				restockAddListB.InvokeRequired ||
 				restockRemoveListB.InvokeRequired ||
-				restockExportListB.InvokeRequired ||
-				restockImportListB.InvokeRequired ||
 				restockDragDelay.InvokeRequired)
 			{
 				RestockFinishWorkCallback d = new RestockFinishWorkCallback(RestockFinishWork);
@@ -261,8 +246,6 @@ namespace Assistant
 				restockListSelect.Enabled = true;
 				restockAddListB.Enabled = true;
 				restockRemoveListB.Enabled = true;
-				restockExportListB.Enabled = true;
-				restockImportListB.Enabled = true;
 				restockDragDelay.Enabled = true;
 			}
 		}
@@ -276,8 +259,6 @@ namespace Assistant
 				restockListSelect.InvokeRequired ||
 				restockAddListB.InvokeRequired ||
 				restockRemoveListB.InvokeRequired ||
-				restockExportListB.InvokeRequired ||
-				restockImportListB.InvokeRequired ||
 				restockDragDelay.InvokeRequired)
 			{
 				RestockStartWorkCallback d = new RestockStartWorkCallback(RestockStartWork);
@@ -290,8 +271,6 @@ namespace Assistant
 				restockListSelect.Enabled = false;
 				restockAddListB.Enabled = false;
 				restockRemoveListB.Enabled = false;
-				restockExportListB.Enabled = false;
-				restockImportListB.Enabled = false;
 				restockDragDelay.Enabled = false;
 			}
 		}

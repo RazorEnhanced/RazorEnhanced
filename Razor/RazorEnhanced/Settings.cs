@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 3;
+		private static int SettingVersion = 4;
 
 		private static string m_profileName = null;
 
@@ -2231,6 +2231,8 @@ namespace RazorEnhanced
 			general.Columns.Add("BandageHealUseTarget", typeof(bool));
             general.Columns.Add("BandageHealUseText", typeof(bool));
             general.Columns.Add("BandageHealUseTextContent", typeof(string));
+            general.Columns.Add("BandageHealUseTextSelfContent", typeof(string));
+
 
             // Parametri Tab (Enhanced Filters)
             general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
@@ -2448,7 +2450,7 @@ namespace RazorEnhanced
 			// Composizione Parematri base primo avvio
 			object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
-                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[bandself",
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[bandself", "[band",
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
@@ -4936,11 +4938,18 @@ namespace RazorEnhanced
                 general.Columns.Add("BandageHealUseText", typeof(bool));
                 general.Columns.Add("BandageHealUseTextContent", typeof(string));
                 Settings.General.WriteBool("BandageHealUseText", false);
-                Settings.General.WriteString("BandageHealUseTextContent", "[bandself");
+                Settings.General.WriteString("BandageHealUseTextContent", "[band");
                 realVersion = 3;
                 General.WriteInt("SettingVersion", realVersion);
             }
-
+            if (realVersion == 3)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                general.Columns.Add("BandageHealUseTextSelfContent", typeof(string));
+                Settings.General.WriteString("BandageHealUseTextSelfContent", "[bandself");
+                realVersion = 4;
+                General.WriteInt("SettingVersion", realVersion);
+            }
             Save(true);
 		}
 

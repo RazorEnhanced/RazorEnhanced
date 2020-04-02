@@ -118,8 +118,6 @@ namespace Assistant
 				buyListSelect.Enabled = false;
 				buyAddListButton.Enabled = false;
 				buyRemoveListButton.Enabled = false;
-				buyImportListButton.Enabled = false;
-				buyExportListButton.Enabled = false;
 				buyCloneButton.Enabled = false;
 				BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (showagentmessageCheckBox.Checked)
@@ -131,26 +129,11 @@ namespace Assistant
 				buyListSelect.Enabled = true;
 				buyAddListButton.Enabled = true;
 				buyRemoveListButton.Enabled = true;
-				buyImportListButton.Enabled = true;
-				buyExportListButton.Enabled = true;
 				buyCloneButton.Enabled = true;
 				BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
 			}
-		}
-
-		private void buyImportListButton_Click(object sender, EventArgs e)
-		{
-			ImportExport.ImportBuy();
-		}
-
-		private void buyExportListButton_Click(object sender, EventArgs e)
-		{
-			if (buyListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportBuy(buyListSelect.Text);
-			else
-				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void vendorbuydataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)

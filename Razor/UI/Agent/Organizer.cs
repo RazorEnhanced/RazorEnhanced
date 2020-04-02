@@ -267,8 +267,6 @@ namespace Assistant
 				organizerListSelect.InvokeRequired ||
 				organizerAddListB.InvokeRequired ||
 				organizerRemoveListB.InvokeRequired ||
-				organizerExportListB.InvokeRequired ||
-				organizerImportListB.InvokeRequired ||
 				organizerDragDelay.InvokeRequired)
 			{
 				OrganizerStartWorkCallback d = new OrganizerStartWorkCallback(OrganizerStartWork);
@@ -281,8 +279,6 @@ namespace Assistant
 				organizerListSelect.Enabled = false;
 				organizerAddListB.Enabled = false;
 				organizerRemoveListB.Enabled = false;
-				organizerExportListB.Enabled = false;
-				organizerImportListB.Enabled = false;
 				organizerCloneListB.Enabled = false;
 				organizerDragDelay.Enabled = false;
 			}
@@ -297,8 +293,6 @@ namespace Assistant
 				organizerListSelect.InvokeRequired ||
 				organizerAddListB.InvokeRequired ||
 				organizerRemoveListB.InvokeRequired ||
-				organizerExportListB.InvokeRequired ||
-				organizerImportListB.InvokeRequired ||
 				organizerDragDelay.InvokeRequired)
 			{
 				OrganizerFinishWorkCallback d = new OrganizerFinishWorkCallback(OrganizerFinishWork);
@@ -311,25 +305,11 @@ namespace Assistant
 				organizerListSelect.Enabled = true;
 				organizerAddListB.Enabled = true;
 				organizerRemoveListB.Enabled = true;
-				organizerExportListB.Enabled = true;
-				organizerImportListB.Enabled = true;
 				organizerCloneListB.Enabled = true;
 				organizerDragDelay.Enabled = true;
 			}
 		}
 
-		private void organizerImportListB_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportOrganizer();
-		}
-
-		private void organizerExportListB_Click(object sender, EventArgs e)
-		{
-			if (organizerListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportOrganizer(organizerListSelect.Text);
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
 		private void organizerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridViewCell cell = organizerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];

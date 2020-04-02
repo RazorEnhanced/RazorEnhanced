@@ -201,8 +201,6 @@ namespace Assistant
 				ScavengerListSelect.Enabled = false;
 				scavengerButtonAddList.Enabled = false;
 				scavengerButtonRemoveList.Enabled = false;
-				scavengerButtonExport.Enabled = false;
-				scavengerButtonImport.Enabled = false;
 				scavengerButtonClone.Enabled = false;
 				scavengerDragDelay.Enabled = false;
 				scavengerRange.Enabled = false;
@@ -218,8 +216,6 @@ namespace Assistant
 				ScavengerListSelect.Enabled = true;
 				scavengerButtonAddList.Enabled = true;
 				scavengerButtonRemoveList.Enabled = true;
-				scavengerButtonExport.Enabled = true;
-				scavengerButtonImport.Enabled = true;
 				scavengerButtonClone.Enabled = true;
 				scavengerDragDelay.Enabled = true;
 				scavengerRange.Enabled = true;
@@ -251,19 +247,6 @@ namespace Assistant
 
 			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 			RazorEnhanced.Scavenger.RefreshLists();
-		}
-
-		private void scavengerButtonImport_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportScavenger();
-		}
-
-		private void scavengerButtonExport_Click(object sender, EventArgs e)
-		{
-			if (scavengerListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportScavenger(scavengerListSelect.Text);
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)

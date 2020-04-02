@@ -32,15 +32,14 @@
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.profilename = new RazorEnhanced.UI.RazorTextBox();
 			this.close = new RazorEnhanced.UI.RazorButton();
-			this.profileimport = new RazorEnhanced.UI.RazorButton();
 			this.label1 = new System.Windows.Forms.Label();
 			this.cloneNameLabel = new System.Windows.Forms.Label();
 			this.profilefilepathTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.chosefileButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
-			// 
+			//
 			// profilename
-			// 
+			//
 			this.profilename.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 			| System.Windows.Forms.AnchorStyles.Left)
 			| System.Windows.Forms.AnchorStyles.Right)));
@@ -50,9 +49,9 @@
 			this.profilename.Name = "profilename";
 			this.profilename.Size = new System.Drawing.Size(210, 20);
 			this.profilename.TabIndex = 0;
-			// 
+			//
 			// close
-			// 
+			//
 			this.close.Location = new System.Drawing.Point(39, 64);
 			this.close.Name = "close";
 			this.close.Size = new System.Drawing.Size(75, 23);
@@ -60,37 +59,27 @@
 			this.close.Text = "Close";
 			this.close.UseVisualStyleBackColor = true;
 			this.close.Click += new System.EventHandler(this.close_Click);
-			// 
-			// profileimport
-			// 
-			this.profileimport.Location = new System.Drawing.Point(196, 64);
-			this.profileimport.Name = "profileimport";
-			this.profileimport.Size = new System.Drawing.Size(75, 23);
-			this.profileimport.TabIndex = 3;
-			this.profileimport.Text = "Import";
-			this.profileimport.UseVisualStyleBackColor = true;
-			this.profileimport.Click += new System.EventHandler(this.profileadd_Click);
-			// 
+			//
 			// label1
-			// 
+			//
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(12, 33);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(63, 13);
 			this.label1.TabIndex = 5;
 			this.label1.Text = "New Name:";
-			// 
+			//
 			// cloneNameLabel
-			// 
+			//
 			this.cloneNameLabel.AutoSize = true;
 			this.cloneNameLabel.Location = new System.Drawing.Point(12, 9);
 			this.cloneNameLabel.Name = "cloneNameLabel";
 			this.cloneNameLabel.Size = new System.Drawing.Size(58, 13);
 			this.cloneNameLabel.TabIndex = 6;
 			this.cloneNameLabel.Text = "Profile File:";
-			// 
+			//
 			// profilefilepathTextBox
-			// 
+			//
 			this.profilefilepathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 			| System.Windows.Forms.AnchorStyles.Left)
 			| System.Windows.Forms.AnchorStyles.Right)));
@@ -101,9 +90,9 @@
 			this.profilefilepathTextBox.ReadOnly = true;
 			this.profilefilepathTextBox.Size = new System.Drawing.Size(183, 20);
 			this.profilefilepathTextBox.TabIndex = 7;
-			// 
+			//
 			// chosefileButton
-			// 
+			//
 			this.chosefileButton.BackgroundImage = global::Assistant.Properties.Resources.document_open_7;
 			this.chosefileButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.chosefileButton.Location = new System.Drawing.Point(278, 7);
@@ -112,9 +101,9 @@
 			this.chosefileButton.TabIndex = 8;
 			this.chosefileButton.UseVisualStyleBackColor = true;
 			this.chosefileButton.Click += new System.EventHandler(this.chosefileButton_Click);
-			// 
+			//
 			// EnhancedProfileImport
-			// 
+			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(310, 97);
@@ -122,7 +111,6 @@
 			this.Controls.Add(this.profilefilepathTextBox);
 			this.Controls.Add(this.cloneNameLabel);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.profileimport);
 			this.Controls.Add(this.close);
 			this.Controls.Add(this.profilename);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -139,7 +127,7 @@
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		private RazorTextBox profilename;
 		private RazorButton close;
-		private RazorButton profileimport;
+		//private RazorButton profileimport;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label cloneNameLabel;
 		private RazorTextBox profilefilepathTextBox;

@@ -208,19 +208,6 @@ namespace Assistant
 				RazorEnhanced.Dress.AddLog("Item list not selected!");
 		}
 
-		private void dressImportListB_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportDress();
-		}
-
-		private void dressExportListB_Click(object sender, EventArgs e)
-		{
-			if (dressListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportDress(dressListSelect.Text);
-			else
-				RazorEnhanced.Dress.AddLog("Item list not selected!");
-		}
-
 		private void razorButton10_Click(object sender, EventArgs e)
 		{
 			UndressStart();
@@ -259,8 +246,6 @@ namespace Assistant
 				undressExecuteButton.InvokeRequired ||
 				dressAddListB.InvokeRequired ||
 				dressRemoveListB.InvokeRequired ||
-				organizerExportListB.InvokeRequired ||
-				organizerImportListB.InvokeRequired ||
 				dressStopButton.InvokeRequired ||
 				organizerDragDelay.InvokeRequired)
 			{
@@ -275,8 +260,6 @@ namespace Assistant
 				undressExecuteButton.Enabled = true;
 				dressAddListB.Enabled = true;
 				dressRemoveListB.Enabled = true;
-				dressExportListB.Enabled = true;
-				dressImportListB.Enabled = true;
 				dressDragDelay.Enabled = true;
 			}
 		}
@@ -290,8 +273,6 @@ namespace Assistant
 				undressExecuteButton.InvokeRequired ||
 				dressAddListB.InvokeRequired ||
 				dressRemoveListB.InvokeRequired ||
-				organizerExportListB.InvokeRequired ||
-				organizerImportListB.InvokeRequired ||
 				dressStopButton.InvokeRequired ||
 				organizerDragDelay.InvokeRequired)
 			{
@@ -306,8 +287,6 @@ namespace Assistant
 				undressExecuteButton.Enabled = false;
 				dressAddListB.Enabled = false;
 				dressRemoveListB.Enabled = false;
-				dressExportListB.Enabled = false;
-				dressImportListB.Enabled = false;
 				dressDragDelay.Enabled = false;
 			}
 		}

@@ -144,8 +144,6 @@ namespace Assistant
 			{
 				autolootListSelect.Enabled = false;
 				autolootButtonAddList.Enabled = false;
-				autoLootButtonListExport.Enabled = false;
-				autoLootButtonListImport.Enabled = false;
 				autoLootButtonRemoveList.Enabled = false;
 				autoLootButtonListClone.Enabled = false;
 				autoLootTextBoxDelay.Enabled = false;
@@ -161,8 +159,6 @@ namespace Assistant
 			{
 				autolootListSelect.Enabled = true;
 				autolootButtonAddList.Enabled = true;
-				autoLootButtonListExport.Enabled = true;
-				autoLootButtonListImport.Enabled = true;
 				autoLootButtonRemoveList.Enabled = true;
 				autoLootButtonListClone.Enabled = true;
 				autoLootTextBoxDelay.Enabled = true;

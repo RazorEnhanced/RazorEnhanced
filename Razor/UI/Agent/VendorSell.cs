@@ -131,8 +131,6 @@ namespace Assistant
 					sellListSelect.Enabled = false;
 					sellAddListButton.Enabled = false;
 					sellRemoveListButton.Enabled = false;
-					sellImportListButton.Enabled = false;
-					sellExportListButton.Enabled = false;
 					sellCloneListButton.Enabled = false;
 					SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					if (showagentmessageCheckBox.Checked)
@@ -145,8 +143,6 @@ namespace Assistant
 				sellListSelect.Enabled = true;
 				sellAddListButton.Enabled = true;
 				sellRemoveListButton.Enabled = true;
-				sellImportListButton.Enabled = true;
-				sellExportListButton.Enabled = true;
 				sellCloneListButton.Enabled = true;
 				if (sellListSelect.Text != String.Empty)
 				{
@@ -200,19 +196,6 @@ namespace Assistant
 				RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true);
 				RazorEnhanced.SellAgent.RefreshLists();
 			});
-		}
-
-		private void sellImportListButton_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportSell();
-		}
-
-		private void sellExportListButton_Click(object sender, EventArgs e)
-		{
-			if (sellListSelect.Text != String.Empty)
-				RazorEnhanced.ImportExport.ExportSell(sellListSelect.Text);
-			else
-				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void vendorsellGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)

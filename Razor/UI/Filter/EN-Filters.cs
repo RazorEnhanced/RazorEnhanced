@@ -331,14 +331,5 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("MountSerial", serial);
 			}
 		}
-		private void graphFilterImportButton_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ImportGraphFilter();
-		}
-
-		private void graphFilterExportButton_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.ImportExport.ExportGraphFilter();
-		}
 	}
 }

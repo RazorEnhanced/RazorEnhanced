@@ -334,7 +334,6 @@
     </Compile>
     <Compile Include="RazorEnhanced\BandageHeal.cs" />
     <Compile Include="RazorEnhanced\Restock.cs" />
-    <Compile Include="RazorEnhanced\ImportExport.cs" />
     <Compile Include="RazorEnhanced\Filters.cs" />
     <Compile Include="RazorEnhanced\JsonData.cs" />
     <Compile Include="RazorEnhanced\Target.cs" />
