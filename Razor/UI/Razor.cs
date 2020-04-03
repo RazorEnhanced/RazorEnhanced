@@ -667,10 +667,6 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
         private RazorButton targetremoveButton;
         private Label label76;
-        private RazorButton graphFilterImportButton;
-        private RazorButton graphFilterExportButton;
-        private RazorButton targetImportButton;
-        private RazorButton targetExportButton;
         private RazorButton targetChoseHue;
         private RazorButton targetChoseBody;
         private RazorCheckBox bandagehealAutostartCheckBox;
@@ -848,8 +844,6 @@ namespace Assistant
             this.flagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
-            this.graphFilterImportButton = new RazorEnhanced.UI.RazorButton();
-            this.graphFilterExportButton = new RazorEnhanced.UI.RazorButton();
             this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1099,6 +1093,8 @@ namespace Assistant
             this.bandageheal = new System.Windows.Forms.TabPage();
             this.bandagehealAutostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label78 = new System.Windows.Forms.Label();
+            this.label77 = new System.Windows.Forms.Label();
             this.bandagehealusetextContent = new RazorEnhanced.UI.RazorTextBox();
             this.bandagehealusetextSelfContent = new RazorEnhanced.UI.RazorTextBox();
             this.bandagehealusetext = new RazorEnhanced.UI.RazorCheckBox();
@@ -1259,8 +1255,6 @@ namespace Assistant
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.targetbodyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox43 = new System.Windows.Forms.GroupBox();
-            this.targetImportButton = new RazorEnhanced.UI.RazorButton();
-            this.targetExportButton = new RazorEnhanced.UI.RazorButton();
             this.label76 = new System.Windows.Forms.Label();
             this.targetremoveButton = new RazorEnhanced.UI.RazorButton();
             this.targetaddButton = new RazorEnhanced.UI.RazorButton();
@@ -1377,8 +1371,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.label77 = new System.Windows.Forms.Label();
-            this.label78 = new System.Windows.Forms.Label();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -2733,8 +2725,6 @@ namespace Assistant
             //
             // groupBox23
             //
-            this.groupBox23.Controls.Add(this.graphFilterImportButton);
-            this.groupBox23.Controls.Add(this.graphFilterExportButton);
             this.groupBox23.Controls.Add(this.graphfilterdatagrid);
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(192, 14);
@@ -2743,20 +2733,6 @@ namespace Assistant
             this.groupBox23.TabIndex = 66;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
-            //
-            // graphFilterImportButton
-            //
-            this.graphFilterImportButton.Location = new System.Drawing.Point(0, 0);
-            this.graphFilterImportButton.Name = "graphFilterImportButton";
-            this.graphFilterImportButton.Size = new System.Drawing.Size(75, 23);
-            this.graphFilterImportButton.TabIndex = 0;
-            //
-            // graphFilterExportButton
-            //
-            this.graphFilterExportButton.Location = new System.Drawing.Point(0, 0);
-            this.graphFilterExportButton.Name = "graphFilterExportButton";
-            this.graphFilterExportButton.Size = new System.Drawing.Size(75, 23);
-            this.graphFilterExportButton.TabIndex = 1;
             //
             // graphfilterdatagrid
             //
@@ -5394,6 +5370,25 @@ namespace Assistant
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Settings";
             //
+            // label78
+            //
+            this.label78.AutoSize = true;
+            this.label78.Location = new System.Drawing.Point(210, 249);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(36, 13);
+            this.label78.TabIndex = 96;
+            this.label78.Text = "Other:";
+            //
+            // label77
+            //
+            this.label77.AutoSize = true;
+            this.label77.Location = new System.Drawing.Point(207, 223);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(28, 13);
+            this.label77.TabIndex = 95;
+            this.label77.Text = "Self:";
+            this.label77.Click += new System.EventHandler(this.label77_Click);
+            //
             // bandagehealusetextContent
             //
             this.bandagehealusetextContent.Enabled = false;
@@ -7074,8 +7069,6 @@ namespace Assistant
             //
             // groupBox43
             //
-            this.groupBox43.Controls.Add(this.targetImportButton);
-            this.groupBox43.Controls.Add(this.targetExportButton);
             this.groupBox43.Controls.Add(this.label76);
             this.groupBox43.Controls.Add(this.targetremoveButton);
             this.groupBox43.Controls.Add(this.targetaddButton);
@@ -7087,20 +7080,6 @@ namespace Assistant
             this.groupBox43.TabIndex = 49;
             this.groupBox43.TabStop = false;
             this.groupBox43.Text = "Shortcut";
-            //
-            // targetImportButton
-            //
-            this.targetImportButton.Location = new System.Drawing.Point(0, 0);
-            this.targetImportButton.Name = "targetImportButton";
-            this.targetImportButton.Size = new System.Drawing.Size(75, 23);
-            this.targetImportButton.TabIndex = 0;
-            //
-            // targetExportButton
-            //
-            this.targetExportButton.Location = new System.Drawing.Point(0, 0);
-            this.targetExportButton.Name = "targetExportButton";
-            this.targetExportButton.Size = new System.Drawing.Size(75, 23);
-            this.targetExportButton.TabIndex = 1;
             //
             // label76
             //
@@ -8250,25 +8229,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            //
-            // label77
-            //
-            this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(207, 223);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(28, 13);
-            this.label77.TabIndex = 95;
-            this.label77.Text = "Self:";
-            this.label77.Click += new System.EventHandler(this.label77_Click);
-            //
-            // label78
-            //
-            this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(210, 249);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(36, 13);
-            this.label78.TabIndex = 96;
-            this.label78.Text = "Other:";
             //
             // MainForm
             //
