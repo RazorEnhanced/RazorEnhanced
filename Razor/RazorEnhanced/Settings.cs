@@ -4125,7 +4125,9 @@ namespace RazorEnhanced
 					string name = theTarget.Name;
 					if (name == targetid)
 					{
-						row.Delete();
+                        target.HotKey = theTarget.HotKey;
+                        target.HotKeyPass = theTarget.HotKeyPass;
+                        row.Delete();
 						//m_Dataset.Tables["TARGETS"].Rows.Add(target);
 						row = m_Dataset.Tables["TARGETS"].NewRow();
 						row["Item"] = target;
