@@ -535,7 +535,7 @@ namespace Assistant
 					break;
 
 				case UONetMessage.Connect:
-					m_ConnectionStart = DateTime.Now;
+					m_ConnectionStart = DateTime.UtcNow;
 					try
 					{
 						m_LastConnection = new IPAddress((uint)lParam);
