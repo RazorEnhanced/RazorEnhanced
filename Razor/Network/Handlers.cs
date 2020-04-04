@@ -2060,10 +2060,25 @@ namespace Assistant
 					SysMessages.RemoveRange(0, 10);
 			}
 
-			if (type == MessageType.Spell)
+            string trimmed_text = text.Trim();
+            // ugly hack because OSI is not passing new spell words as type MessageType.Spell
+            if (Client.Instance.ServerEncrypted) // just a guess it is OSI
+            {
+                if (Spell.LastCastTime + TimeSpan.FromSeconds(2.0) > DateTime.Now
+                    && type == MessageType.Regular)
+                {
+                    Spell s = Spell.Get(trimmed_text);
+                    if (s != null)
+                    {
+                        type = MessageType.Spell;
+                    }
+                }
+            }
+
+            if (type == MessageType.Spell)
 			{
-				Spell s = Spell.Get(text.Trim());
-				bool replaced = false;
+                Spell s = Spell.Get(trimmed_text);
+                bool replaced = false;
 				if (s != null)
 				{
 					System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
