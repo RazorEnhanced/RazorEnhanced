@@ -339,8 +339,23 @@ namespace RazorEnhanced
         {
             get
             {
-                int p = (int)Environment.OSVersion.Platform;
-                return (p == 4) || (p == 6) || (p == 128);
+                try
+                {
+                    using (Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64))
+                    {
+                        using (Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Wine\\Drives"))
+                        {
+                            if (key != null)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                return false;
             }
         }
 
