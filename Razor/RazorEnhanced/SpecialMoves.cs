@@ -227,11 +227,11 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID ),
 			new AbilityInfo( AOSAbility.Block, NunchakuID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID ),
-			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, MaulID, WarMaceID, ScepterID, SledgeHammerID, GargishAxeID, DreadSwordID, NoDachiID, SerpentstoneStaffID ),
+			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, WarMaceID, ScepterID, SledgeHammerID, GargishAxeID, DreadSwordID, NoDachiID, SerpentstoneStaffID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, ElvenMacheteID, LajatangID ),
 			new AbilityInfo( AOSAbility.Disarm, FistsID, OrnateAxeID, RuneBladeID, GargishLanceID, WarCleaverID ),
 			new AbilityInfo( AOSAbility.Dismount, WandID, LanceID ),
-			new AbilityInfo( AOSAbility.DoubleStrike, PickaxeID, TwoHandedAxeID, DoubleAxeID, ScimitarID, KatanaID, CrescentBladeID, QuarterStaffID, DoubleBladedStaffID, RepeatingCrossbowID, DualShortAxesID, GargishKatanaID, GargishMaulID, GlassStaffID, NunchakuID, DualPointedSpearID ),
+			new AbilityInfo( AOSAbility.DoubleStrike, PickaxeID, TwoHandedAxeID, DoubleAxeID, ScimitarID, MaulID, KatanaID, CrescentBladeID, QuarterStaffID, DoubleBladedStaffID, RepeatingCrossbowID, DualShortAxesID, GargishKatanaID, GargishMaulID, GlassStaffID, NunchakuID, DualPointedSpearID ),
 			new AbilityInfo( AOSAbility.DualWield, GargishTekagiID, SaiID, TekagiID ),
 			new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID, GargishButcherKnifeID, AssassinSpikeID ),
 			new AbilityInfo( AOSAbility.LightningArrow, MagicalShortbowID ),
@@ -253,7 +253,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
 			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
 			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
-			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID, ElvenSpellbladeID, BoomerangID ),
+			new AbilityInfo( AOSAbility.BleedAttack, WarAxeID, ElvenSpellbladeID, BoomerangID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID),
 			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
@@ -264,7 +264,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.DoubleShot, YumiID ),
 			new AbilityInfo( AOSAbility.FrenziedWhirlwind, LajatangID ),
 			new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID, DualShortAxesID, GargishCleaverID, GargishDaggerID, GargishKryssID, GargishPikeID ),
-			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID, GargishBoneHarvesterID, GlassSwordID, GlassStaffID, ShortbladeID, SoulGlaiveID ),
+			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID, GargishBoneHarvesterID, GlassSwordID, GlassStaffID, ShortbladeID, WarMaceID, SoulGlaiveID ),
 			new AbilityInfo( AOSAbility.MovingShot, CompositeBowID, RepeatingCrossbowID ),
 			new AbilityInfo( AOSAbility.ParalyzingBlow, VikingSwordID, ScimitarID, ScytheID, GnarledStaffID, BlackStaffID, SpearID, FistsID, GargishScytheID, GargishGnarledStaffID, BloodbladeID ),
 			new AbilityInfo( AOSAbility.PsychicAttack, MagicalShortbowID ),
@@ -387,7 +387,7 @@ namespace Assistant
 				{
 			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
 			 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
-				} 
+				}
 				else
 				{
 			 		Assistant.Client.Instance.SendToServer(new UseAbility(a));
