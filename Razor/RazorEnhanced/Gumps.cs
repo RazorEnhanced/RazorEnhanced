@@ -58,7 +58,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			
+
 		}
 
 		public static void SendAction(uint gumpid, int buttonid)
@@ -121,6 +121,7 @@ namespace RazorEnhanced
 					entrie.EntryID = (ushort)entry;
 					entrie.Text = entryS[i];
 					entries[i] = entrie;
+                    i++;
 				}
 
 				if (gumpid == 0)
