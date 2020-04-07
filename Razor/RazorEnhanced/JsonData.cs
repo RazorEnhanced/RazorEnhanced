@@ -17,7 +17,8 @@ namespace JsonData
             "Farthest",
             "Weakest",
             "Strongest",
-            "Next"
+            "Next",
+            "Previous"
         };
 
 

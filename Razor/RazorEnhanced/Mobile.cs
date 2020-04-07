@@ -278,267 +278,273 @@ namespace RazorEnhanced
 		}
 	}
 
-	public class Mobiles
-	{
-		public static Mobile FindBySerial(int serial)
-		{
-			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
-			if (assistantMobile == null)
-				return null;
-			else
-			{
-				RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
-				return enhancedMobile;
-			}
-		}
+    public class Mobiles
+    {
+        public static Mobile FindBySerial(int serial)
+        {
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            if (assistantMobile == null)
+                return null;
+            else
+            {
+                RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
+                return enhancedMobile;
+            }
+        }
 
-		[Serializable]
-		public class Filter
-		{
-			public bool Enabled = true;
-			public List<int> Serials = new List<int>();
-			public List<int> Bodies = new List<int>();
-			public string Name = String.Empty;
-			public List<int> Hues = new List<int>();
-			public double RangeMin = -1;
-			public double RangeMax = -1;
-			public int Poisoned = -1;
-			public int Blessed = -1;
-			public int IsHuman = -1;
-			public int IsGhost = -1;
-			public int Female = -1;
-			public int Warmode = -1;
-			public int Friend = -1;
-			public int Paralized = -1;
-			public bool CheckIgnoreObject = false;
-			public List<byte> Notorieties = new List<byte>();
+        [Serializable]
+        public class Filter
+        {
+            public bool Enabled = true;
+            public List<int> Serials = new List<int>();
+            public List<int> Bodies = new List<int>();
+            public string Name = String.Empty;
+            public List<int> Hues = new List<int>();
+            public double RangeMin = -1;
+            public double RangeMax = -1;
+            public int Poisoned = -1;
+            public int Blessed = -1;
+            public int IsHuman = -1;
+            public int IsGhost = -1;
+            public int Female = -1;
+            public int Warmode = -1;
+            public int Friend = -1;
+            public int Paralized = -1;
+            public bool CheckIgnoreObject = false;
+            public List<byte> Notorieties = new List<byte>();
 
-			public Filter()
-			{
-			}
-		}
+            public Filter()
+            {
+            }
+        }
 
-		public static List<Mobile> ApplyFilter(Filter filter)
-		{
-			List<Mobile> result = new List<Mobile>();
-			List<Assistant.Mobile> assistantMobiles = new List<Assistant.Mobile>(World.Mobiles.Values.ToList());
+        public static List<Mobile> ApplyFilter(Filter filter)
+        {
+            List<Mobile> result = new List<Mobile>();
+            List<Assistant.Mobile> assistantMobiles = new List<Assistant.Mobile>(World.Mobiles.Values.ToList());
 
-			if (filter.Enabled)
-			{
-				if (filter.Serials.Count > 0)
-				{
-					assistantMobiles = assistantMobiles.Where((m) => filter.Serials.Contains((int)m.Serial.Value)).ToList();
-				}
-				else
-				{
-					if (filter.Name != String.Empty)
-					{
-						Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-						List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name)).ToList();
-						assistantMobiles = list;
-					}
+            if (filter.Enabled)
+            {
+                if (filter.Serials.Count > 0)
+                {
+                    assistantMobiles = assistantMobiles.Where((m) => filter.Serials.Contains((int)m.Serial.Value)).ToList();
+                }
+                else
+                {
+                    if (filter.Name != String.Empty)
+                    {
+                        Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
+                        List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name)).ToList();
+                        assistantMobiles = list;
+                    }
 
-					if (filter.Bodies.Count > 0)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => filter.Bodies.Contains(m.Body)).ToList();
-					}
+                    if (filter.Bodies.Count > 0)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => filter.Bodies.Contains(m.Body)).ToList();
+                    }
 
-					if (filter.Hues.Count > 0)
-					{
-						assistantMobiles = assistantMobiles.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
-					}
+                    if (filter.Hues.Count > 0)
+                    {
+                        assistantMobiles = assistantMobiles.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
+                    }
 
-					if (filter.RangeMin != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) =>
-							Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) >= filter.RangeMin
-						).ToList();
-					}
+                    if (filter.RangeMin != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) =>
+                            Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) >= filter.RangeMin
+                        ).ToList();
+                    }
 
-					if (filter.RangeMax != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) =>
-							Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) <= filter.RangeMax
-						).ToList();
-					}
+                    if (filter.RangeMax != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) =>
+                            Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) <= filter.RangeMax
+                        ).ToList();
+                    }
 
-					if (filter.Warmode != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.Warmode == Convert.ToBoolean(filter.Warmode)).ToList();
-					}
+                    if (filter.Warmode != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Warmode == Convert.ToBoolean(filter.Warmode)).ToList();
+                    }
 
-					if (filter.Poisoned != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.Poisoned == Convert.ToBoolean(filter.Poisoned)).ToList();
-					}
+                    if (filter.Poisoned != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Poisoned == Convert.ToBoolean(filter.Poisoned)).ToList();
+                    }
 
-					if (filter.Blessed != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.Blessed == Convert.ToBoolean(filter.Blessed)).ToList();
-					}
+                    if (filter.Blessed != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Blessed == Convert.ToBoolean(filter.Blessed)).ToList();
+                    }
 
-					if (filter.IsHuman != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.IsHuman == Convert.ToBoolean(filter.IsHuman)).ToList();
-					}
+                    if (filter.IsHuman != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.IsHuman == Convert.ToBoolean(filter.IsHuman)).ToList();
+                    }
 
-					if (filter.IsGhost != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.IsGhost == Convert.ToBoolean(filter.IsGhost)).ToList();
-					}
+                    if (filter.IsGhost != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.IsGhost == Convert.ToBoolean(filter.IsGhost)).ToList();
+                    }
 
-					if (filter.Female != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.Female == Convert.ToBoolean(filter.Female)).ToList();
-					}
+                    if (filter.Female != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Female == Convert.ToBoolean(filter.Female)).ToList();
+                    }
 
-					if (filter.Friend != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => RazorEnhanced.Friend.IsFriend(m.Serial) == Convert.ToBoolean(filter.Friend)).ToList();
-					}
+                    if (filter.Friend != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => RazorEnhanced.Friend.IsFriend(m.Serial) == Convert.ToBoolean(filter.Friend)).ToList();
+                    }
 
-					if (filter.Paralized != -1)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
-					}
+                    if (filter.Paralized != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
+                    }
 
-					if (filter.Notorieties.Count > 0)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => filter.Notorieties.Contains(m.Notoriety)).ToList();
-					}
+                    if (filter.Notorieties.Count > 0)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => filter.Notorieties.Contains(m.Notoriety)).ToList();
+                    }
 
-					if (filter.CheckIgnoreObject)
-					{
-						assistantMobiles = assistantMobiles.Where((m) => Misc.CheckIgnoreObject(m.Serial) != true).ToList();
-					}
+                    if (filter.CheckIgnoreObject)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => Misc.CheckIgnoreObject(m.Serial) != true).ToList();
+                    }
 
-					// Esclude Self dalla ricerca
-					assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
-				}
-			}
+                    // Esclude Self dalla ricerca
+                    assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
+                }
+            }
 
-			foreach (Assistant.Mobile assistantMobile in assistantMobiles)
-			{
-				RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
-				result.Add(enhancedMobile);
-			}
+            foreach (Assistant.Mobile assistantMobile in assistantMobiles)
+            {
+                RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
+                result.Add(enhancedMobile);
+            }
 
-			return result;
-		}
+            return result;
+        }
 
-		private static int m_lastidx = 0;
-		public static Mobile Select(List<Mobile> mobiles, string selector)
-		{
-			Mobile result = null;
+        private static int m_lastidx = 0;
+        public static Mobile Select(List<Mobile> mobiles, string selector)
+        {
+            // Remove ourself
+            List<Mobile> mobiles_reduced = mobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
+            if (mobiles_reduced.Count == 0)
+                return null;
 
-			if (mobiles.Count > 0)
-			{
-				// Esclude Last e self dalla ricerca
-				mobiles = mobiles.Where((m) => m.Serial != Targeting.GetLastTarger || m.Serial != World.Player.Serial).ToList();
+            Mobile result = mobiles_reduced[0]; // default to first entry
+            switch (selector)
+            {
+                case "Random":
+                    try
+                    {
+                        result = mobiles_reduced[Utility.Random(mobiles_reduced.Count)] as Mobile;
+                    }
+                    catch { }
 
-				switch (selector)
-				{
-					case "Random":
-						try
-						{
-							result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
-						}
-						catch { }
+                    break;
 
-						break;
+                case "Nearest":
+                    Mobile closest = mobiles_reduced[0] as Mobile;
+                    double closestDist = double.MaxValue;
+                    if (closest != null) {
+                        foreach (Mobile m in mobiles_reduced)
+                        {
+                            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
+                            if (dist < closestDist)
+                            {
+                                closestDist = dist;
+                                closest = m;
+                            }
+                        }
+                        result = closest;
+                    }
+                    break;
 
-					case "Nearest":
-						Mobile closest = mobiles[0] as Mobile;
-						double closestDist = double.MaxValue;
-						if (closest != null) {
-							foreach (Mobile m in mobiles)
-							{
-								double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
-								if (dist < closestDist)
-								{
-									closestDist = dist;
-									closest = m;
-								}
-							}
-							result = closest;
-						}
-						break;
+                case "Farthest":
+                    Mobile farthest = mobiles_reduced[0] as Mobile;
+                    double farthestDist = double.MinValue;
+                    if (farthest != null)
+                    {
+                        foreach (Mobile m in mobiles_reduced)
+                        {
+                            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
+                            if (dist > farthestDist)
+                            {
+                                farthestDist = dist;
+                                farthest = m;
+                            }
+                        }
+                        result = farthest;
+                    }
+                    break;
 
-					case "Farthest":
-						Mobile farthest = mobiles[0] as Mobile;
-						double farthestDist = double.MinValue;
-						if (farthest != null)
-						{
-							foreach (Mobile m in mobiles)
-							{
-								double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
-								if (dist > farthestDist)
-								{
-									farthestDist = dist;
-									farthest = m;
-								}
-							}
-							result = farthest;
-						}
-						break;
+                case "Weakest":
+                    Mobile weakest = mobiles_reduced[0] as Mobile;
+                    if (weakest != null)
+                    {
+                        int minHits = weakest.Hits;
+                        foreach (Mobile t in mobiles_reduced)
+                        {
+                            if (t == null)
+                                continue;
 
-					case "Weakest":
-						Mobile weakest = mobiles[0] as Mobile;
-						if (weakest != null)
-						{
-							int minHits = weakest.Hits;
-							foreach (Mobile t in mobiles)
-							{
-								if (t == null)
-									continue;
+                            int wounds = t.Hits;
+                            if (wounds < minHits)
+                            {
+                                weakest = t;
+                                minHits = wounds;
+                            }
+                        }
+                        result = weakest;
+                    }
+                    break;
 
-								int wounds = t.Hits;
-								if (wounds < minHits)
-								{
-									weakest = t;
-									minHits = wounds;
-								}
-							}
-							result = weakest;
-						}
-						break;
+                case "Strongest":
+                    Mobile strongest = mobiles_reduced[0] as Mobile;
+                    if (strongest != null)
+                    {
+                        int maxHits = strongest.Hits;
+                        foreach (Mobile t in mobiles_reduced)
+                        {
+                            if (t == null)
+                                continue;
 
-					case "Strongest":
-						Mobile strongest = mobiles[0] as Mobile;
-						if (strongest != null)
-						{
-							int maxHits = strongest.Hits;
-							foreach (Mobile t in mobiles)
-							{
-								if (t == null)
-									continue;
+                            int wounds = t.Hits;
+                            if (wounds <= maxHits)
+                                continue;
 
-								int wounds = t.Hits;
-								if (wounds <= maxHits)
-									continue;
+                            strongest = t;
+                            maxHits = wounds;
+                        }
+                        result = strongest;
+                    }
+                    break;
 
-								strongest = t;
-								maxHits = wounds;
-							}
-							result = strongest;
-						}
-						break;
+                case "Next":
+                    m_lastidx++;
+                    if (m_lastidx > mobiles_reduced.Count() - 1)
+                    {
+                        m_lastidx = 0;
+                    }
+                    result = mobiles_reduced[m_lastidx];
+                    break;
 
-					case "Next":
-						if (m_lastidx > mobiles.Count() -1) // Fuori range
-						{
-							m_lastidx = 0;
-							result = mobiles[m_lastidx];
-						}
-						else
-							result = mobiles[m_lastidx];
+                case "Previous":
+                    m_lastidx--;
+                    // note since m_lastidx is global it could be larger than the current list
+                    if ((m_lastidx > mobiles_reduced.Count() - 1) || (m_lastidx < 0))
+                        {
+                        m_lastidx = mobiles_reduced.Count() - 1;
+                    }
+                    result = mobiles_reduced[m_lastidx];
+                    break;
+            }
 
-						m_lastidx++;
-						break;
-				}
-			}
-			return result;
-		}
+            return result;
+        }
 
 		// USe
 
