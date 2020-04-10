@@ -368,27 +368,27 @@ namespace RazorEnhanced
                 return;
             }
 
-            foreach (RazorEnhanced.Item corpo in corpi)
+            foreach (RazorEnhanced.Item corpse in corpi)
             {
                 RazorEnhanced.Item m_sharedcont = null;
                 RazorEnhanced.Item m_OSIcont = null;
 
-                RefreshCorpse(corpo);
+                RefreshCorpse(corpse);
 
-                foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
+                foreach (RazorEnhanced.Item item in corpse.Contains)
                 {
                     // Blocco shared
-                    if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0) // Attende l'arrivo delle props
+                    if (item.ItemID == 0x0E75 && item.Properties.Count > 0) // Attende l'arrivo delle props
                     {
-                        if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties[0].ToString() == "Instanced loot container")  // Rilevato backpack possibile shared loot verifico props UODREAMS
+                        if (item.ItemID == 0x0E75 && item.Properties[0].ToString() == "Instanced loot container")  // Rilevato backpack possibile shared loot verifico props UODREAMS
                         {
-                            m_sharedcont = oggettoContenuto;
+                            m_sharedcont = item;
                             break;
                         }
                     }
-                    if (oggettoContenuto.IsCorpse)  // Rilevato contenitore OSI
+                    if (item.IsCorpse)  // Rilevato contenitore OSI
                     {
-                        m_OSIcont = oggettoContenuto;
+                        m_OSIcont = item;
                         break;
                     }
                 }
@@ -400,7 +400,7 @@ namespace RazorEnhanced
                 else if (m_OSIcont != null)
                     m_cont = m_OSIcont;
                 else
-                    m_cont = corpo;
+                    m_cont = corpse;
 
                 // If container is empty move on
                 if (m_cont.Contains.Count() == 0)
@@ -422,7 +422,7 @@ namespace RazorEnhanced
                     {
                         if (autoLootItem.Color == oggettoContenuto.Hue || autoLootItem.Color == -1)
                         {
-                            GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
+                            GrabItem(autoLootItem, oggettoContenuto, corpse.Serial);
                         }
                     }
                     // check if in dictionary by graphics
@@ -435,7 +435,7 @@ namespace RazorEnhanced
                             {
                                 if (autoLootItem2.Color == oggettoContenuto.Hue || autoLootItem2.Color == -1)
                                 {
-                                    GrabItem(autoLootItem2, oggettoContenuto, corpo.Serial);
+                                    GrabItem(autoLootItem2, oggettoContenuto, corpse.Serial);
                                 }
                             }
                         }
@@ -444,25 +444,25 @@ namespace RazorEnhanced
             }
         }
 
-        internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int corpseserial)
+        internal static void GrabItem(AutoLootItem autoLoootItem, Item grabItem, int corpseserial)
         {
             foreach (SerialToGrab item in SerialToGrabList)
-                if (item.ItemSerial == oggettoContenuto.Serial)
+                if (item.ItemSerial == grabItem.Serial)
                     return;
 
-            if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
+            if (!grabItem.Movable || !grabItem.Visible)
                 return;
 
-            SerialToGrab data = new SerialToGrab(oggettoContenuto.Serial, corpseserial);
+            SerialToGrab data = new SerialToGrab(grabItem.Serial, corpseserial);
 
             if (autoLoootItem.Properties.Count > 0) // Item con props
             {
-                Items.WaitForProps(oggettoContenuto, 1000);
+                Items.WaitForProps(grabItem, 1000);
 
                 bool propsOk = false;
                 foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
                 {
-                    int propsSuItemDaLootare = (int)RazorEnhanced.Items.GetPropValue(oggettoContenuto, props.Name);
+                    int propsSuItemDaLootare = (int)RazorEnhanced.Items.GetPropValue(grabItem, props.Name);
                     if (propsSuItemDaLootare >= props.Minimum && propsSuItemDaLootare <= props.Maximum)
                     {
                         propsOk = true;

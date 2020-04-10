@@ -187,7 +187,7 @@ namespace RazorEnhanced
                                     }
                                     else
                                     {
-                                        RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
+                                        RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Name.ToString() + ") ... Looting");
                                         RazorEnhanced.Items.Move(item.Serial, Convert.ToInt32(lootbag), 0);
                                         Thread.Sleep(AutoLoot.AutoLootDelay);
                                         AutoLoot.SerialToGrabList.TryDequeue(out data);

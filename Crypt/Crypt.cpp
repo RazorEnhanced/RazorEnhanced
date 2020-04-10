@@ -474,7 +474,7 @@ void __stdcall OnSetUOWindowSize(int width)
 			SizePtr->cy = 480;
 		}
 	}
-	else // In caso che non sia settata risoluzione dall'utente usa risoluzioni impostate nel client OSI
+	else // If no resolution set by the user, use the OSI settings
 	{
 		if (width == 800 && connected)
 		{
