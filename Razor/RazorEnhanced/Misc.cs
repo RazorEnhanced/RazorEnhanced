@@ -490,6 +490,46 @@ namespace RazorEnhanced
         {
             ScreenCapManager.CaptureNow();
         }
+        public class MapInfo
+        {
+            public MapInfo()
+            {
+                PinPosition = new RazorEnhanced.Point2D();
+                MapOrigin = new RazorEnhanced.Point2D();
+                MapEnd = new RazorEnhanced.Point2D();
+            }
+            public uint Serial;
+            public RazorEnhanced.Point2D PinPosition;
+            public RazorEnhanced.Point2D MapOrigin;
+            public RazorEnhanced.Point2D MapEnd;
+            public ushort Facet;
+            public int ThbNumber;
+            public string ThbName;
+        }
+
+        public static MapInfo GetMapInfo(uint serial)
+        {
+            MapInfo mapInfo = null;
+            MapItem mapItem = World.FindItem(serial) as MapItem;
+            if (mapItem != null)
+            {
+                mapInfo = new MapInfo();
+                mapInfo.Serial = mapItem.Serial;
+                mapInfo.PinPosition = mapItem.PinPosition;
+                mapInfo.MapOrigin = mapItem.m_MapOrigin;
+                mapInfo.MapEnd = mapItem.m_MapEnd;
+                mapInfo.Facet = mapItem.m_Facet;
+                mapInfo.ThbNumber = -1;
+                mapInfo.ThbName = "unknown";
+                MapItem.MapEntry mapEntry = mapItem.FindMapEntry();
+                if (mapEntry != null)
+                {
+                    mapInfo.ThbNumber = mapEntry.thbNumber;
+                    mapInfo.ThbName = mapEntry.thbName;
+                }
+            }
+            return mapInfo;
+        }
 
         public static bool ScriptStatus(string scriptfile)
 		{

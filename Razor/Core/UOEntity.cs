@@ -14,6 +14,7 @@ namespace Assistant
 
 		internal ObjectPropertyList ObjPropList { get { return m_ObjPropList; } }
 
+
 		internal UOEntity(Serial ser)
 		{
 			m_ObjPropList = new ObjectPropertyList(this);
@@ -70,7 +71,7 @@ namespace Assistant
 			return m_Serial.GetHashCode();
 		}
 
-		internal void ReadPropertyList(PacketReader p)
+		virtual internal void ReadPropertyList(PacketReader p)
 		{
 			m_ObjPropList.Read(p);
 		}

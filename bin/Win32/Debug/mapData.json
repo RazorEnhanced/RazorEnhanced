@@ -1,0 +1,19 @@
+[{
+    "facet": 0,
+    "xCoord": 1504,
+    "yCoord": 366,
+    "location": "Some Location",
+    "description": "far-northwest",
+    "thbNumber" : 5,
+    "thbName": "nwnea3"
+},
+{
+    "facet": 0,
+    "xCoord": 465,
+    "yCoord": 2099,
+    "location": "Some Location",
+    "description": "isle NW of skara brae",
+    "thbNumber" : 57,
+    "thbName": "swnwa5"
+}
+]

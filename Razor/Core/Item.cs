@@ -87,7 +87,22 @@ namespace Assistant
 			}
 		}
 
-		internal Item(Serial serial)
+        public static Item Factory(Serial serial, UInt32 itemID)
+        {
+            // during drag operation item may be removed from World
+            if (DragDropManager.Holding != null && DragDropManager.Holding.Serial == serial)
+            {
+                return DragDropManager.Holding;
+            }
+            switch (itemID)
+            {
+                case 0x14EC:
+                    return new MapItem(serial);
+                default:
+                    return new Item(serial);
+            }
+        }
+		protected Item(Serial serial)
 			: base(serial)
 		{
 			m_Items = new List<Item>();
@@ -756,4 +771,118 @@ namespace Assistant
 			set { m_HousePacket = value; }
 		}
 	}
+
+
+    internal class MapItem : Item
+    {
+        internal class MapEntry
+        {
+            public int facet;
+            public int xCoord;
+            public int yCoord;
+            public string location;
+            public string description;
+            public int thbNumber;
+            public string thbName;
+        }
+
+        internal static List<MapEntry> LoadMapData()
+        {
+            string allMapData = File.ReadAllText(Path.Combine(Assistant.Engine.RootPath, "mapData.json"));
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
+        }
+        static List<MapEntry> mapPoints = LoadMapData();
+        private RazorEnhanced.Point2D m_PinPosition;
+        internal RazorEnhanced.Point2D PinPosition {
+            get { return m_PinPosition; }
+            set
+            {
+                m_PinPosition = value;
+                FixUpLocation();
+            }
+                                                   }
+        public RazorEnhanced.Point2D m_MapOrigin;
+        internal RazorEnhanced.Point2D MapOrigin
+        {
+            get { return m_MapOrigin; }
+            set
+            {
+                m_MapOrigin = value;
+                FixUpLocation();
+            }
+        }
+
+        public RazorEnhanced.Point2D m_MapEnd;
+        internal RazorEnhanced.Point2D MapEnd
+        {
+            get { return m_MapEnd; }
+            set { m_MapEnd = value; }
+        }
+
+        public ushort m_Facet;
+        internal ushort Facet
+        {
+            get { return m_Facet; }
+            set { m_Facet = value; }
+        }
+        int m_FakePropIndex;
+        internal MapItem(Serial serial)
+            : base(serial)
+        {
+            m_PinPosition = new RazorEnhanced.Point2D();
+            m_MapOrigin = new RazorEnhanced.Point2D();
+            m_MapEnd = new RazorEnhanced.Point2D();
+            m_Facet = 0;
+            m_FakePropIndex = 0;
+
+        }
+        internal MapEntry FindMapEntry()
+        {
+            int xCoord = m_MapOrigin.X + (2 * m_PinPosition.X);
+            int yCoord = m_MapOrigin.Y + (2 * m_PinPosition.Y);
+            foreach (MapEntry entry in mapPoints)
+            {
+                if (m_Facet == entry.facet && xCoord == entry.xCoord && yCoord == entry.yCoord)
+                {
+                    return entry;
+                }
+            }
+            return null;
+        }
+        void FixUpLocation()
+        {
+            int xCoord = m_MapOrigin.X + (2 * m_PinPosition.X);
+            int yCoord = m_MapOrigin.Y + (2 * m_PinPosition.Y);
+            string location = String.Format("Location({0}, {1})",
+                xCoord,
+                yCoord
+                );
+            m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
+            MapEntry entry = FindMapEntry();
+            if (entry != null)
+            {
+                string thbNumber = String.Format("THB# {0}", entry.thbNumber);
+                string thbName = String.Format("{0}", entry.thbName);
+                m_ObjPropList.Content[m_FakePropIndex+1] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbNumber);
+                m_ObjPropList.Content[m_FakePropIndex+2] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbName);
+            }
+
+        }
+        override internal void ReadPropertyList(PacketReader p)
+        {
+            base.ReadPropertyList(p);
+            string location = String.Format("Location({0}, {1}",
+                m_MapOrigin.X + (2 * m_PinPosition.X),
+                m_MapOrigin.Y + (2 * m_PinPosition.Y)
+                );
+            m_FakePropIndex = m_ObjPropList.Content.Count;
+            // Fake+0 = coordinates
+            m_ObjPropList.Content.Add(new Assistant.ObjectPropertyList.OPLEntry(1042971, ""));
+            // Fake+1 = THB number
+            m_ObjPropList.Content.Add(new Assistant.ObjectPropertyList.OPLEntry(1042971, ""));
+            // Fake+2 = THB Name
+            m_ObjPropList.Content.Add(new Assistant.ObjectPropertyList.OPLEntry(1042971, ""));
+            FixUpLocation();
+        }
+    }
 }

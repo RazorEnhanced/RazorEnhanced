@@ -307,7 +307,7 @@ namespace RazorEnhanced
 			if (!Engine.MainWindow.SellCheckBox.Checked) // Filtro disabilitato
 				return;
 
-			Assistant.Item bag = new Assistant.Item(SellBag);
+			Assistant.Item bag = Assistant.Item.Factory(SellBag, 0);
 			if (bag == null) // Verifica HotBag
 			{
 				AddLog("Invalid or not accessible Container");

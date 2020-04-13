@@ -180,7 +180,7 @@ namespace RazorEnhanced.UI
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
 				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow",
 				"Misc.IgnoreObject", "Misc.CheckIgnoreObject", "Misc.ClearIgnore", "Misc.UnIgnoreObject",
-				"Misc.CurrentScriptDirectory", "Misc.CaptureNow"
+				"Misc.CurrentScriptDirectory", "Misc.CaptureNow", "Misc.GetMapInfo"
 			};
 
 			string[] methodsTarget =
@@ -770,6 +770,8 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Misc.CaptureNow()", new string[] { "none" }, "void", "Screen capture UO window");
             descriptionMisc.Add("Misc.CaptureNow", tooltip);
 
+            tooltip = new ToolTipDescriptions("Misc.GetMapInfo()", new string[] { "none" }, "MapInfo", "Return information about map serial");
+            descriptionMisc.Add("Misc.GetMapInfo", tooltip);
             #endregion
 
             #region Description Target

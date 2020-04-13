@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.IO;
 using Assistant.UI;
+using RazorEnhanced;
 
 namespace Assistant
 {
@@ -63,18 +64,20 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x2C, new PacketViewerCallback(MyDeath));
 			PacketHandler.RegisterServerToClientViewer(0x2D, new PacketViewerCallback(MobileStatInfo));
 			PacketHandler.RegisterServerToClientFilter(0x2E, new PacketFilterCallback(EquipmentUpdate));
-			PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
-			PacketHandler.RegisterServerToClientFilter(0x3C, new PacketFilterCallback(ContainerContent));
+            PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
+            PacketHandler.RegisterServerToClientFilter(0x3C, new PacketFilterCallback(ContainerContent));
 			PacketHandler.RegisterServerToClientViewer(0x4E, new PacketViewerCallback(PersonalLight));
 			PacketHandler.RegisterServerToClientViewer(0x4F, new PacketViewerCallback(GlobalLight));
-			PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
+            PacketHandler.RegisterServerToClientViewer(0x56, new PacketViewerCallback(PinLocation));
+            PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
 			PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
 			//PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
 			PacketHandler.RegisterServerToClientViewer(0x76, new PacketViewerCallback(ServerChange));
 			PacketHandler.RegisterServerToClientFilter(0x77, new PacketFilterCallback(MobileMoving));
 			PacketHandler.RegisterServerToClientFilter(0x78, new PacketFilterCallback(MobileIncoming));
 			PacketHandler.RegisterServerToClientViewer(0x7C, new PacketViewerCallback(SendMenu));
-			PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
+            PacketHandler.RegisterServerToClientViewer(0x90, new PacketViewerCallback(MapDetails));
+            PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
 			PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
 			PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
@@ -99,7 +102,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BuffDebuff));
 			PacketHandler.RegisterServerToClientViewer(0xF0, new PacketViewerCallback(RunUOProtocolExtention)); // Special RunUO protocol extentions (for KUOC/Razor)
 			PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(SAWorldItem));
-			PacketHandler.RegisterServerToClientViewer(0xF6, new PacketViewerCallback(MoveBoatHS));
+            PacketHandler.RegisterServerToClientViewer(0xF5, new PacketViewerCallback(MapDetails));
+            PacketHandler.RegisterServerToClientViewer(0xF6, new PacketViewerCallback(MoveBoatHS));
 		}
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
@@ -508,7 +512,7 @@ namespace Assistant
 			{
 				if (item == null)
 				{
-					World.AddItem(item = new Item(serial));
+					World.AddItem(item = Item.Factory(serial, 0));
 					item.Amount = amount;
 				}
 
@@ -545,7 +549,7 @@ namespace Assistant
 
 			if (item == null)
 			{
-				World.AddItem(item = new Item(iser));
+				World.AddItem(item = Item.Factory(iser, 0));
 				item.Layer = layer;
 			}
 
@@ -579,7 +583,7 @@ namespace Assistant
 			Item i = World.FindItem(iser);
 			if (i == null)
 			{
-				World.AddItem(i = new Item(iser));
+				World.AddItem(i = Item.Factory(iser, 0));
 			}
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
@@ -686,8 +690,8 @@ namespace Assistant
 			{
 				if (!serial.IsItem)
 					return;
-
-				World.AddItem(i = new Item(serial));
+                i = Item.Factory(serial, itemid);
+                World.AddItem(i);
 				i.IsNew = i.AutoStack = true;
 			}
 		/*	else
@@ -728,7 +732,7 @@ namespace Assistant
 			}
 			else
 			{
-				World.AddItem(new Item(ser));
+				World.AddItem(Item.Factory(ser, 0));
 				Item.UpdateContainers();
 			}
 			item = World.FindItem(ser);
@@ -750,7 +754,7 @@ namespace Assistant
 				Item item = World.FindItem(serial);
 				if (item == null)
 				{
-					World.AddItem(item = new Item(serial));
+					World.AddItem(item = Item.Factory(serial, 0));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -807,11 +811,15 @@ namespace Assistant
 			for (int i = 0; i < count; i++)
 			{
 				Serial serial = p.ReadUInt32();
-				// serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
-				Item item = World.FindItem(serial);
+                // serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
+                UInt16 itemID_pre = p.ReadUInt16();
+                sbyte itemID_byte = p.ReadSByte(); // signed, itemID offset
+                UInt16 itemID = (UInt16)(itemID_pre + itemID_byte);
+
+                Item item = World.FindItem(serial);
 				if (item == null)
 				{
-					World.AddItem(item = new Item(serial));
+					World.AddItem(item = Item.Factory(serial, itemID));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -823,8 +831,7 @@ namespace Assistant
 				if (!DragDropManager.EndHolding(serial))
 					continue;
 
-				item.ItemID = p.ReadUInt16();
-				item.ItemID = (ushort)(item.ItemID + p.ReadSByte());// signed, itemID offset
+				item.ItemID = itemID;
 				item.Amount = p.ReadUInt16();
 				if (item.Amount == 0)
 					item.Amount = 1;
@@ -859,7 +866,7 @@ namespace Assistant
 			bool isNew = false;
 			if (i == null)
 			{
-				World.AddItem(i = new Item(serial));
+				World.AddItem(i = Item.Factory(serial, 0));
 				isNew = true;
 				Item.UpdateContainers();
 			}
@@ -1732,7 +1739,7 @@ namespace Assistant
 				if (item == null)
 				{
 					isNew = true;
-					World.AddItem(item = new Item(serial));
+					World.AddItem(item = Item.Factory(serial, 0));
 				}
 				if (DragDropManager.EndHolding(serial))
 				{
@@ -1747,7 +1754,7 @@ namespace Assistant
 						item.ItemID = (ushort)(num & 16383);
 					}
 					item.Layer = (Layer)p.ReadByte();
-					if (Engine.UseNewMobileIncoming || (num & 32768) != 0)
+                    if (Engine.UseNewMobileIncoming || (num & 32768) != 0)
 					{
 						item.Hue = p.ReadUInt16();
 
@@ -1808,27 +1815,25 @@ namespace Assistant
 		private static void WorldItem(PacketReader p, PacketHandlerEventArgs args)
 		{
 			uint serial = p.ReadUInt32();
-			Item item = World.FindItem(serial & 0x7FFFFFFF);
+            if (!DragDropManager.EndHolding(serial))
+                return;
+
+            ushort itemID = p.ReadUInt16();
+            itemID = (ushort)(itemID & 0x7FFF);
+
+
+            Item item = World.FindItem(serial & 0x7FFFFFFF);
 			bool isNew = false;
 			if (item == null)
 			{
-				World.AddItem(item = new Item(serial & 0x7FFFFFFF));
+				World.AddItem(item = Item.Factory(serial & 0x7FFFFFFF, 0));
 				isNew = true;
 			}
-			/*else
-			{
-				item.CancelRemove();
-			}*/
 
-			if (!DragDropManager.EndHolding(serial))
-				return;
 
 			item.Container = null;
 
-			ushort itemID = p.ReadUInt16();
-			item.ItemID = (ushort)(itemID & 0x7FFF);
-
-			if ((serial & 0x80000000) != 0)
+            if ((serial & 0x80000000) != 0)
 				item.Amount = p.ReadUInt16();
 			else
 				item.Amount = 1;
@@ -1938,7 +1943,7 @@ namespace Assistant
 			bool isNew = false;
 			if (item == null)
 			{
-				World.AddItem(item = new Item(serial));
+				World.AddItem(item = Item.Factory(serial, 0));
 				isNew = true;
 			}
 			/*else
@@ -2869,7 +2874,78 @@ namespace Assistant
 			World.Player.HasMenu = true;
 		}
 
-		private static void HueResponse(PacketReader p, PacketHandlerEventArgs args)
+        enum MapMessageType
+        {
+            Add = 1,
+            Insert,
+            Move,
+            Remove,
+            Clear,
+            Edit,
+            EditResponse
+        }
+
+        private static void PinLocation(PacketReader p, PacketHandlerEventArgs args)
+        {
+            Serial serial = p.ReadUInt32();
+            Assistant.Item item = World.FindItem(serial);
+            byte action = p.ReadByte();
+
+            switch ((MapMessageType)action)
+            {
+                case MapMessageType.Add:
+                    p.ReadByte();     // skip 1
+                    ushort x = p.ReadUInt16();
+                    ushort y = p.ReadUInt16();
+                    MapItem mapItem = item as MapItem;
+                    if (mapItem != null)
+                    {
+                        mapItem.PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(x, y));
+                    }
+                    break;
+                case MapMessageType.Insert:
+                    break;
+                case MapMessageType.Move:
+                    break;
+                case MapMessageType.Remove:
+                    break;
+                case MapMessageType.Clear:
+                    break;
+                case MapMessageType.Edit:
+                    break;
+
+                case MapMessageType.EditResponse:
+                    break;
+            }
+        }
+
+            private static void MapDetails(PacketReader p, PacketHandlerEventArgs args)
+        {
+            uint serial = p.ReadUInt32();
+            ushort cornerImage = p.ReadUInt16();
+            ushort x1 = p.ReadUInt16();
+            ushort y1 = p.ReadUInt16();
+            ushort x2 = p.ReadUInt16();
+            ushort y2 = p.ReadUInt16();
+            ushort width = p.ReadUInt16();
+            ushort height = p.ReadUInt16();
+            ushort facet = p.ReadUInt16();
+            MapItem mapItem = World.FindItem(serial) as MapItem;
+            if (mapItem != null)
+            {
+                mapItem.PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(0, 0));
+                mapItem.MapOrigin = new RazorEnhanced.Point2D(new Assistant.Point2D(x1, y1));
+                mapItem.MapEnd = new RazorEnhanced.Point2D(new Assistant.Point2D(x2, y2));
+                mapItem.m_Facet = facet;
+            }
+
+
+        //MapGump(serial, gumpid, width, height);
+        //MultiMapLoader.Instance.LoadMap(width, height, startX, startY, endX, endY)
+
+
+    }
+    private static void HueResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial serial = p.ReadUInt32();
 			ushort iid = p.ReadUInt16();
