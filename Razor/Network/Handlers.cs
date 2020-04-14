@@ -581,16 +581,20 @@ namespace Assistant
 			Serial dser = p.ReadUInt32();
 
 			Item i = World.FindItem(iser);
-			if (i == null)
+            Item dest = World.FindItem(dser);
+            if (i == null)
 			{
-				World.AddItem(i = Item.Factory(iser, 0));
+                i = Item.Factory(iser, 0);
+                i.Container = dest;
+                World.AddItem(i);
 			}
-
-			if (RazorEnhanced.ScriptRecorder.OnRecord)
+            i.Container = dest;
+            if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
 
-			Item dest = World.FindItem(dser);
-			if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
+
+
+            if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
 				i.IsNew = true;
 
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))

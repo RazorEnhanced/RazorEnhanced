@@ -44,9 +44,14 @@ namespace Assistant
 			{
 				return m_Deleted;
 			}
-		}
+            set
+            {
+                m_Deleted = value;
+            }
 
-		internal Dictionary<ushort, int> ContextMenu
+        }
+
+        internal Dictionary<ushort, int> ContextMenu
 		{
 			get { return m_ContextMenu; }
 		}
