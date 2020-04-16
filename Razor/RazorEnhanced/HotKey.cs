@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Assistant.UI;
+using Assistant.Core.ActionQueue;
 
 namespace RazorEnhanced
 {
@@ -831,7 +832,7 @@ namespace RazorEnhanced
 
 			if (itemtograb != null && itemtograb.Serial.IsItem) // && OSI nothing was movable itemtograb.Movable)
 			{
-				Assistant.DragDropManager.DragDrop(itemtograb, itemtograb.Amount, World.Player.Backpack);
+				ActionQueueManager.DragDrop(itemtograb, itemtograb.Amount, World.Player.Backpack);
 			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);
@@ -848,7 +849,7 @@ namespace RazorEnhanced
 
 			if (itemtodrop != null && itemtodrop.Movable)
 			{
-				Assistant.DragDropManager.DragDrop(itemtodrop, World.Player.Position, itemtodrop.Amount);
+				ActionQueueManager.DragDrop(itemtodrop, World.Player.Position, itemtodrop.Amount);
 			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);

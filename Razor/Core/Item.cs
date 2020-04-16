@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Assistant.Core.ActionQueue;
 
 namespace Assistant
 {
@@ -89,13 +90,7 @@ namespace Assistant
 
         public static Item Factory(Serial serial, UInt32 itemID)
         {
-            // during drag operation item may be removed from World
-            if (DragDropManager.Holding != null && DragDropManager.Holding.Serial == serial)
-            {
-                // resurrecting this guy so mark him un-deleted
-                DragDropManager.Holding.Deleted = false;
-                return DragDropManager.Holding;
-            }
+            
             switch (itemID)
             {
                 case 0x14EC:
@@ -341,13 +336,13 @@ namespace Assistant
 			{
 				if (check.Container == null && check.ItemID == ItemID && check.Hue == Hue && Utility.InRange(World.Player.Position, check.Position, 2))
 				{
-					DragDropManager.DragDrop(this, check);
+					Core.ActionQueue.ActionQueueManager.DragDrop(this, check);
 					m_AutoStackCache.Add(Serial);
 					return;
 				}
 			}
 
-			DragDropManager.DragDrop(this, World.Player.Position);
+			ActionQueueManager.DragDrop(this, World.Player.Position);
 			m_AutoStackCache.Add(Serial);
 		}
 

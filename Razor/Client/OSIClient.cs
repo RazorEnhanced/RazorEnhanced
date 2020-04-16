@@ -459,7 +459,7 @@ namespace Assistant
 			PlayerData.FastWalkKey = 0;
 			World.Items.Clear();
 			World.Mobiles.Clear();
-			ActionQueue.Stop();
+			Core.ActionQueue.Queue.Stop();
 			StealthSteps.Unhide();
 
 			PacketHandlers.Party.Clear();
