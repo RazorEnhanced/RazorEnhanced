@@ -853,8 +853,18 @@ namespace Assistant
         }
         void FixUpLocation()
         {
-            int xCoord = m_MapOrigin.X + (2 * m_PinPosition.X);
-            int yCoord = m_MapOrigin.Y + (2 * m_PinPosition.Y);
+            string version = Client.Instance.GetClientVersion();
+            string[] versionParts = version.Split('.');
+            int majorVersion = Convert.ToInt32(versionParts[0]);
+            int multiplyier = 1;
+            if (majorVersion < 7)
+            {
+                multiplyier = 2;
+            }
+            if (m_Facet == 3)
+                multiplyier = 1;
+            int xCoord = m_MapOrigin.X + (multiplyier * m_PinPosition.X);
+            int yCoord = m_MapOrigin.Y + (multiplyier * m_PinPosition.Y);
             string location = String.Format("Location({0}, {1})",
                 xCoord,
                 yCoord
