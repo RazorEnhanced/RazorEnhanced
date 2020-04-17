@@ -1,8 +1,5 @@
-﻿using Assistant.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,10 +25,8 @@ namespace Assistant.Core.ActionQueue
                     }
                 }
 
-
                 Engine.LastActionPacket = DateTime.Now;
                 Client.Instance.SendToServerWait(queueItem.Packet);
-
                 queueItem.WaitHandle.Set();
             }
         }
