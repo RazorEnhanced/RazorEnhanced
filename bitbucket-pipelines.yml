@@ -1,6 +1,0 @@
-pipelines:
-  default:
-    - step:
-        script:
-          - nuget restore
-          - MONO_IOMAP=case msbuild /t:Clean,Build /p:Configuration='Debug' 'Razor.sln'
