@@ -6,12 +6,7 @@ namespace Assistant.Core.ActionQueue
 {
     internal class ActionQueueManager
     {
-        public static void Initialize()
-        {
-
-        }
-
-
+       
         internal static Task DragDrop(Item i, Serial to)
         {
             //======================================================
