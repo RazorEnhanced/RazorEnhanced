@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Globalization;
+using Assistant.Core.ActionQueue;
 
 namespace RazorEnhanced
 {
@@ -795,11 +796,11 @@ namespace RazorEnhanced
 			}
 
 			if (isMobile)
-				Assistant.DragDropManager.DragDrop(item, newamount, mbag.Serial);
+				ActionQueueManager.DragDrop(item, newamount, mbag.Serial);
 			else if (onLocation)
-				Assistant.DragDropManager.DragDrop(item, newamount, bag, loc);
+				ActionQueueManager.DragDrop(item, newamount, bag, loc);
 			else
-				Assistant.DragDropManager.DragDrop(item, newamount, bag);
+				ActionQueueManager.DragDrop(item, newamount, bag);
 		}
 
 		public static void MoveOnGround(Item source, int amount, int x, int y, int z)
@@ -823,9 +824,7 @@ namespace RazorEnhanced
 			if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-			Assistant.DragDropManager.DragDrop(item, loc, amounttodrop);
-			//Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
-			//Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
+			ActionQueueManager.DragDrop(item, loc, amounttodrop);
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount = 0)

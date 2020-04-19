@@ -17,6 +17,8 @@ namespace Assistant
 	{
 		private static string _rootPath = null;
 
+		public static DateTime LastActionPacket { get; set; }
+
 		public static string RootPath =>
 			_rootPath ?? (_rootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Engine)).Location));
 

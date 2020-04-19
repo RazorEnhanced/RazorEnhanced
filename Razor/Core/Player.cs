@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Assistant.Core.ActionQueue;
 
 namespace Assistant
 {
@@ -743,8 +744,7 @@ namespace Assistant
 					continue;
 
 				int dist = Utility.Distance(item.GetWorldPosition(), newPos);
-				if (item != DragDropManager.Holding && (dist > MultiVisRange || (!item.IsMulti && dist > VisRange)))
-					item.Remove();
+				
 			}
 
 			base.OnPositionChanging(newPos);
@@ -998,20 +998,14 @@ namespace Assistant
 					else if (right != null && right.IsTwoHanded)
 						free = right;
 
-					if (free != null)
-					{
-						if (DragDropManager.HasDragFor(free.Serial))
-							free = null;
-						else
-							DragDropManager.DragDrop(free, pack);
-					}
+					
 				}
 			}
 
-			ActionQueue.DoubleClick(silent, s);
+			ActionQueueManager.DoubleClick(s);
 
 			if (free != null)
-				DragDropManager.DragDrop(free, World.Player, free.Layer, true);
+				ActionQueueManager.DragDrop(free, World.Player, free.Layer, true);
 
 			if (s.IsItem)
 				World.Player.m_LastObj = s;

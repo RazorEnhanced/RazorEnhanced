@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using Assistant.UI;
+using Assistant.Core.ActionQueue;
 
 namespace Assistant
 {
@@ -131,8 +131,8 @@ namespace Assistant
 					if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
 #endif
 					{
-						DragDropManager.Drag(item, item.Amount);
-						DragDropManager.Drop(item, pack);
+						ActionQueueManager.Drag(item, item.Amount);
+						ActionQueueManager.Drop(item, pack);
 					}
 
 					item = World.Player.GetItemOnLayer(Layer.LeftHand);
@@ -142,8 +142,8 @@ namespace Assistant
 					if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
 #endif
 					{
-						DragDropManager.Drag(item, item.Amount);
-						DragDropManager.Drop(item, pack);
+						ActionQueueManager.Drag(item, item.Amount);
+						ActionQueueManager.Drop(item, pack);
 					}
 				}
 			}
