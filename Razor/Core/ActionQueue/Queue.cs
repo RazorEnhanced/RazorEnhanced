@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,8 +38,12 @@ namespace Assistant.Core.ActionQueue
             {
                 List<EventWaitHandle> handles = new List<EventWaitHandle>();
 
+                if (packets.Count() > 1)
+                    delaySend = false;
+
                 foreach (Packet packet in packets)
                 {
+
                     ActionQueueItem queueItem = new ActionQueueItem(packet, delaySend);
                     handles.Add(queueItem.WaitHandle);
                     _actionPacketQueue.Enqueue(queueItem, priority);
@@ -74,6 +79,7 @@ namespace Assistant.Core.ActionQueue
             return EnqueueActionPackets(
                 new Packet[] { new LiftRequest(serial, amount), new DropRequest(serial, point3d, containerSerial) },
                 priority, delaySend);
+            
 
         }
 
