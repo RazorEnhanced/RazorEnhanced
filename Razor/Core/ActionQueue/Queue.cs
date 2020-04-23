@@ -16,7 +16,7 @@ namespace Assistant.Core.ActionQueue
         {
             lock (_actionQueueLock)
             {
-                if (queueItem.DelaySend)
+                if (queueItem.DelaySend && RazorEnhanced.Settings.General.ReadBool("QueueActions"))
                 {
                     while (Engine.LastActionPacket +
                             TimeSpan.FromMilliseconds(RazorEnhanced.Settings.General.ReadInt("ObjectDelay")) >
@@ -38,11 +38,10 @@ namespace Assistant.Core.ActionQueue
             {
                 List<EventWaitHandle> handles = new List<EventWaitHandle>();
 
-                if (packets.Count() > 1)
-                    delaySend = false;
-
                 foreach (Packet packet in packets)
                 {
+                    if (packets.First() != packet)
+                        delaySend = false;
 
                     ActionQueueItem queueItem = new ActionQueueItem(packet, delaySend);
                     handles.Add(queueItem.WaitHandle);
@@ -60,7 +59,7 @@ namespace Assistant.Core.ActionQueue
 
         }
 
-        public static Task EnqueueDropContainer(int serial, int containerSerial, QueuePriority priority = QueuePriority.Low,
+        public static Task EnqueueDrop(int serial, int containerSerial, QueuePriority priority = QueuePriority.Low,
             bool delaySend = true)
         {
             return EnqueueActionPackets(new Packet[] { new DropRequest(World.FindItem(serial), World.FindItem(containerSerial)) }, priority, delaySend);
@@ -74,16 +73,17 @@ namespace Assistant.Core.ActionQueue
 
         }
 
-        public static Task EnqueueDragDrop(int serial, int amount, int containerSerial, Point3D point3d, QueuePriority priority = QueuePriority.Low, bool delaySend = true)
+        public static Task EnqueueDragDrop(int serial, int amount, int containerSerial, Point3D point3d, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true)
         {
             return EnqueueActionPackets(
                 new Packet[] { new LiftRequest(serial, amount), new DropRequest(serial, point3d, containerSerial) },
                 priority, delaySend);
-            
 
         }
 
-        public static Task EnqueueEquip(int serial, int amount, Mobile mobile, Layer layer, QueuePriority priority = QueuePriority.Low, bool delaySend = true)
+        public static Task EnqueueEquip(int serial, int amount, Mobile mobile, Layer layer, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true)
         {
             return EnqueueActionPackets(
                 new Packet[] { new LiftRequest(serial, amount), new EquipRequest(serial, mobile, layer) },
@@ -91,7 +91,17 @@ namespace Assistant.Core.ActionQueue
 
         }
 
-        public static Task EnqueueDoubleClick(Serial s, QueuePriority priority = QueuePriority.Low, bool delaySend = true)
+        public static Task EnqueueEquipDrop(int serial, Mobile mobile, Layer layer, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true)
+        {
+            return EnqueueActionPackets(
+                new Packet[] { new EquipRequest(serial, mobile, layer) },
+                priority, delaySend);
+
+        }
+
+        public static Task EnqueueDoubleClick(Serial s, QueuePriority priority = QueuePriority.Low,
+            bool delaySend = true)
         {
             return EnqueueActionPackets(new Packet[] { new DoubleClick(s) }, priority, delaySend);
         }

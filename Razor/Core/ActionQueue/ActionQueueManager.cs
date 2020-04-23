@@ -1,10 +1,10 @@
-using RazorEnhanced;
 using System.Threading.Tasks;
 
 namespace Assistant.Core.ActionQueue
 {
     internal class ActionQueueManager
     {
+        public static Item HoldingItem;
 
         internal static Task DragDrop(Item i, Serial to)
         {
@@ -56,14 +56,14 @@ namespace Assistant.Core.ActionQueue
             return Queue.EnqueueEquip(i.Serial, i.Amount, to, layer);
         }
 
-        internal static Task Drag(Item i, int amount, bool fromClient)
-        {
-            return Drag(i, amount, fromClient, false);
-        }
-
         internal static Task Drag(Item i, int amount)
         {
             return Queue.EnqueueDrag(i.Serial, amount);
+        }
+        //============================================================
+        internal static Task Drag(Item i, int amount, bool fromClient)
+        {
+            return Drag(i, amount, fromClient, false);
         }
 
         internal static Task Drag(Item i, int amount, bool fromClient, bool doLast)
@@ -76,10 +76,16 @@ namespace Assistant.Core.ActionQueue
         {
             return Queue.EnqueueDropRelative(i.Serial, dest, pt);
         }
+        //============================================================
 
         internal static Task Drop(Item i, Item to)
         {
-            return Queue.EnqueueDropContainer(i.Serial, to.Serial);
+            return Queue.EnqueueDrop(i.Serial, to.Serial);
+        }
+
+        internal static Task Drop(Item i, Mobile to, Layer layer)
+        {
+            return Queue.EnqueueEquipDrop(i.Serial, to, layer);
         }
 
         internal static Task DoubleClick(Serial s)

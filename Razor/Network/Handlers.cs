@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Assistant.UI;
 using Assistant.Core.ActionQueue;
+using System.Threading;
 
 namespace Assistant
 {
@@ -504,41 +505,22 @@ namespace Assistant
             ushort amount = p.ReadUInt16();
 
             Item item = World.FindItem(serial);
-            ushort iid = 0;
 
             if (item != null)
-                iid = item.ItemID.Value;
+                ActionQueueManager.HoldingItem = item;
+            else
+                ActionQueueManager.HoldingItem = null;
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-            {
-                if (item == null)
-                {
-                    World.AddItem(item = Item.Factory(serial, 0));
-                    item.Amount = amount;
-                }
+            args.Block = false;
 
-                ActionQueueManager.Drag(item, amount, true);
-                args.Block = true;
-            }
-            Engine.LastActionPacket = DateTime.Now;
         }
 
         private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
         {
-
-            args.Block = true;
+            ActionQueueManager.HoldingItem = null;
+            args.Block = false;
 
         }
-
-        /*	private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
-            {
-                RazorEnhanced.DragDropManager.HoldingItem = true;
-            }*/
-
-        /*	private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
-            {
-                RazorEnhanced.DragDropManager.HoldingItem = false;
-            }*/
 
         private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)
         {
@@ -565,8 +547,9 @@ namespace Assistant
             if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
                 RazorEnhanced.SpellGrid.UpdateSAIcon();
 
-            //if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-            //    args.Block = ActionQueueManager.Drop(item, m, layer);
+            ActionQueueManager.HoldingItem = null;
+            args.Block = false;
+            Engine.LastActionPacket = DateTime.Now;
         }
 
         private static void DropRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -593,13 +576,13 @@ namespace Assistant
             if (RazorEnhanced.ScriptRecorder.OnRecord)
                 RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
 
-
-
             if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
+            {
                 i.IsNew = true;
+                ActionQueueManager.HoldingItem = null;
+                args.Block = false;
+            }
 
-            //if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-            //    args.Block = ActionQueueManager.Drop(i, dser, newPos);
             Engine.LastActionPacket = DateTime.Now;
         }
 
