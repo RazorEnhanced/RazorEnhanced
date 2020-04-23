@@ -262,6 +262,7 @@ internal static string SelfHealUseTextSelfContent
 
 		internal static void EngineRun(Assistant.Mobile target)
 		{
+			
 			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
@@ -474,7 +475,6 @@ internal static string SelfHealUseTextSelfContent
 				return;
 			if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), m_maxrange)) // Verifica distanza
 				return;
-
 			EngineRun(target);
 		}
 

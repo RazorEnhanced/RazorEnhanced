@@ -9148,8 +9148,7 @@ namespace Assistant
                 if (!remountcheckbox.Enabled)
                     remountcheckbox.Enabled = true;
             }
-
-
+            
             if (!Assistant.Client.Instance.AllowBit(FeatureBit.AutoBandage))
             {
                 bandagehealenableCheckBox.Enabled = false;
