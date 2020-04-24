@@ -563,7 +563,7 @@ namespace Assistant
 
 				case UONetMessage.KeyDown:
 					//retVal = HotKey.OnKeyDown(lParam);
-					retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
+					retVal = RazorEnhanced.HotKey.KeyDown((Keys)(lParam));
 					break;
 
 				// Activation Tracking

@@ -85,11 +85,6 @@ namespace RazorEnhanced
 			}
 			return KeyDown(k);
 		}
-		internal static bool GameKeyDown(Keys k)
-		{
-			Debug.WriteLine("GKD keys: 0x{0:X}", k);
-			return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
-		}
 
 		internal static bool KeyDown(Keys k)
 		{

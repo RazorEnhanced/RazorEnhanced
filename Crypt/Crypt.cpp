@@ -1964,14 +1964,35 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 		// Macro stuff
 	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN:
-		if (pMsg && !SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, wParam))
+	{
+		/** Get the shift state and send it along with the keypress **/
+		int lcontrol = (int)(GetAsyncKeyState(VK_CONTROL));
+		int lalt = (int)(GetAsyncKeyState(VK_MENU));
+		int lshift = (int)(GetAsyncKeyState(VK_SHIFT));
+		unsigned int mods = 0;
+		if (lcontrol != 0)
+		{
+			mods |= 131072;
+		}
+		if (lshift != 0)
+		{
+			mods |= 65536;
+		}
+		if (lalt != 0)
+		{
+			mods |= 262144;
+		}
+		mods |= ((int)wParam);
+
+		if (pMsg && !SendMessage(hRazorWnd, WM_UONETEVENT, KEYDOWN, mods))
 		{
 			// dont give the key to the client
 			pMsg->message = WM_NULL;
 			pMsg->lParam = 0;
 			pMsg->wParam = 0;
 		}
-		break;
+	}
+	break;
 
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
