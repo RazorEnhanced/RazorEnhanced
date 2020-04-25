@@ -1065,8 +1065,43 @@ namespace RazorEnhanced
 			return GetPropStringByIndex(item.Serial, index);
 		}
 
-		public static float GetPropValue(int serial, string name)
+		
+		// Special case "Total Resist" so that items can be collected based on total resist
+			public static float GetTotalResistProp(int serial)
 		{
+			Assistant.Item assistantItem = World.FindItem((uint)serial);
+
+			float totalResist = 0;
+			if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+			{
+				for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
+				{
+					if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
+					{
+						if (assistantItem.ObjPropList.Content[i].Args != null)
+						{
+							float addIt = 0;
+							try
+							{
+								addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
+							}
+							catch
+							{
+								addIt = 1;  // Conversion error
+							}
+							totalResist += addIt;
+						}
+					}
+				}
+			}
+			return totalResist;
+		}
+
+			public static float GetPropValue(int serial, string name)
+		{
+			if (name.ToLower().Contains("total") && name.ToLower().Contains("resist"))
+				return GetTotalResistProp(serial);
+
 			Assistant.Item assistantItem = World.FindItem((uint)serial);
 
 			if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
