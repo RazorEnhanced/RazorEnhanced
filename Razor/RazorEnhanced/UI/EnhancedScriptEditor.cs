@@ -150,7 +150,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsSpells =
 			{
-				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu",
+                "Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu",
                 "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.CastMastery", "Spells.CastCleric", "Spells.CastDruid",
                 "Spells.Interrupt", "Spells.CastLastSpell"
 			};
@@ -512,7 +512,7 @@ namespace RazorEnhanced.UI
 
 			Dictionary<string, ToolTipDescriptions> descriptionSpells = new Dictionary<string, ToolTipDescriptions>();
 
-			tooltip = new ToolTipDescriptions("Spells.CastMagery(string)", new string[] { "string SpellName" }, "void", "Cast a magery spell by spell name\n\tCheck the wiki for the possible strings");
+            tooltip = new ToolTipDescriptions("Spells.CastMagery(string, mobile)", new string[] { "string SpellName, Mobile target" }, "void", "Cast a magery spell by spell name and (optionally) target mobile\n\tCheck the wiki for the possible strings");
 			descriptionSpells.Add("Spells.CastMagery", tooltip);
 
 			tooltip = new ToolTipDescriptions("Spells.CastNecro(string)", new string[] { "string SpellName" }, "void", "Cast a necro spell by spell name\n\tCheck the wiki for the possible strings");
