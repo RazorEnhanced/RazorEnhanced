@@ -768,7 +768,19 @@ namespace Assistant
 		}
 	}
 
-	internal sealed class DisarmRequest : Packet
+    internal sealed class CastTargetedSpell : Packet
+    {
+        internal CastTargetedSpell(ushort spell, uint target)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 2 + 4);
+            Write((ushort)0x2D); // cast targeted spell
+            Write(spell); // spell id
+            Write((uint)target);
+        }
+    }
+
+    internal sealed class DisarmRequest : Packet
 	{
 		internal DisarmRequest()
 			: base(0xBF)

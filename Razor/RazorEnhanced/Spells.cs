@@ -5,158 +5,231 @@ namespace RazorEnhanced
 {
 	public class Spells
 	{
-		// spell
-		public static void CastMagery(string SpellName, bool wait = true)
+        // spell
+        public static void CastMagery(string SpellName)
+        {
+            CastOnlyMagery(SpellName, true);
+        }
+        public static void CastMagery(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_MagerySpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastOnlyMagery(string SpellName, bool wait)
 		{
-			if (World.Player == null)
-				return;
+            bool success = CastOnlyGeneric(m_MagerySpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
+        }
+        public static void CastMagery(string SpellName, Mobile m, bool wait=true)
+        {
+            CastMagery(SpellName, (uint)m.Serial, wait);
+        }
 
-			Spell s = null;
-			int id = 0;
-			m_MagerySpellName.TryGetValue(SpellName, out id);
+        public static void CastNecro(string SpellName)
+        {
+            CastOnlyNecro(SpellName);
+        }
+        public static void CastNecro(string SpellName, Mobile m, bool wait = true)
+        {
+            CastNecro(SpellName, (uint)m.Serial, wait);
+        }
 
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
+        public static void CastNecro(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_NecroSpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
+        }
 
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
-
-		public static void CastNecro(string SpellName, bool wait = true)
+        public static void CastOnlyNecro(string SpellName, bool wait = true)
 		{
-			if (World.Player == null)
-				return;
-
-			Spell s = null;
-
-			int id = 0;
-			m_NecroSpellName.TryGetValue(SpellName, out id);
-
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
-
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
+            bool success = CastOnlyGeneric(m_NecroSpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
+        }
 
 
-		public static void CastChivalry(string SpellName, bool wait = true)
+        public static void CastChivalry(string SpellName)
+        {
+            CastOnlyChivalry(SpellName);
+        }
+        public static void CastChivalry(string SpellName, Mobile m, bool wait = true)
+        {
+            CastChivalry(SpellName, (uint)m.Serial, wait);
+        }
+
+        public static void CastChivalry(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_ChivalrySpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastOnlyChivalry(string SpellName, bool wait = true)
+            {
+            bool success = CastOnlyGeneric(m_ChivalrySpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastBushido(string SpellName)
+        {
+            CastOnlyBushido(SpellName);
+        }
+        //public static void CastBushido(string SpellName, Mobile m, bool wait = true)
+        //{
+        //    CastBushido(SpellName, (uint)m.Serial, wait);
+        //}
+
+        //public static void CastBushido(string SpellName, uint target, bool wait = true)
+        //{
+        //    bool success = CastTargetedGeneric(m_BushidoSpellName, SpellName, target, wait);
+        //    if (!success)
+        //        Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
+        //}
+
+        public static void CastOnlyBushido(string SpellName, bool wait = true)
 		{
-			if (World.Player == null)
-				return;
+            bool success = CastOnlyGeneric(m_BushidoSpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
+        }
 
-			Spell s = null;
+        public static void CastNinjitsu(string SpellName)
+        {
+            CastOnlyNinjitsu(SpellName);
+        }
+        public static void CastNinjitsu(string SpellName, Mobile m, bool wait = true)
+        {
+            CastNinjitsu(SpellName, (uint)m.Serial, wait);
+        }
 
-			int id = 0;
-			m_ChivalrySpellName.TryGetValue(SpellName, out id);
+        public static void CastNinjitsu(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_NinjitsuSpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
+        }
 
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
-
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
-
-		public static void CastBushido(string SpellName, bool wait = true)
+        public static void CastOnlyNinjitsu(string SpellName, bool wait = true)
 		{
-			if (World.Player == null)
-				return;
+            bool success = CastOnlyGeneric(m_NinjitsuSpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
+        }
 
-			Spell s = null;
+        public static void CastSpellweaving(string SpellName)
+        {
+            CastOnlySpellweaving(SpellName);
+        }
+        public static void CastSpellweaving(string SpellName, Mobile m, bool wait = true)
+        {
+            CastSpellweaving(SpellName, (uint)m.Serial, wait);
+        }
 
-			int id = 0;
-			m_BushidoSpellName.TryGetValue(SpellName, out id);
+        public static void CastSpellweaving(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_SpellweavingSpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
+        }
 
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
-
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
-
-		public static void CastNinjitsu(string SpellName, bool wait = true)
+        public static void CastOnlySpellweaving(string SpellName, bool wait = true)
 		{
-			if (World.Player == null)
-				return;
+            bool success = CastOnlyGeneric(m_SpellweavingSpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
+        }
 
-			Spell s = null;
+        public static void CastMysticism(string SpellName)
+        {
+            CastOnlyMysticism(SpellName);
+        }
+        public static void CastMysticism(string SpellName, Mobile m, bool wait = true)
+        {
+            CastMysticism(SpellName, (uint)m.Serial, wait);
+        }
 
-			int id = 0;
-			m_NinjitsuSpellName.TryGetValue(SpellName, out id);
+        public static void CastMysticism(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_MysticismSpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
+        }
 
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
-
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
-
-		public static void CastSpellweaving(string SpellName, bool wait = true)
+        public static void CastOnlyMysticism(string SpellName, bool wait = true)
 		{
-			if (World.Player == null)
-				return;
+            bool success = CastOnlyGeneric(m_MysticismSpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
+        }
 
-			Spell s = null;
+        public static void CastMastery(string SpellName)
+        {
+            CastOnlyMastery(SpellName);
+        }
+        public static void CastMastery(string SpellName, Mobile m, bool wait = true)
+        {
+            CastMastery(SpellName, (uint)m.Serial, wait);
+        }
 
-			int id = 0;
-			m_SpellweavingSpellName.TryGetValue(SpellName, out id);
+        public static void CastMastery(string SpellName, uint target, bool wait = true)
+        {
+            bool success = CastTargetedGeneric(m_MasterySpellName, SpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
+        }
 
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
-
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
-
-		public static void CastMysticism(string SpellName, bool wait = true)
+        public static void CastOnlyMastery(string SpellName, bool wait = true)
 		{
-			if (World.Player == null)
-				return;
-
-			Spell s = null;
-
-			int id = 0;
-			m_MysticismSpellName.TryGetValue(SpellName, out id);
-
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
-
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
+            bool success = CastOnlyGeneric(m_MasterySpellName, SpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
 		}
+        internal static bool CastOnlyGeneric(Dictionary<string, int> conversion, string SpellName, bool wait)
+        {
+            if (World.Player == null)
+                return true;
 
-		public static void CastMastery(string SpellName, bool wait = true)
-		{
-			if (World.Player == null)
-				return;
+            Spell s = null;
 
-			Spell s = null;
+            int id = 0;
+            conversion.TryGetValue(SpellName, out id);
 
-			int id = 0;
-			m_MasterySpellName.TryGetValue(SpellName, out id);
+            if (id > 0)
+                s = Spell.Get(id);
+            else
+                return false;
 
-			if (id > 0)
-				s = Spell.Get(id);
-			else
-				Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
+            if (s != null)
+                s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
+            return true;
+        }
 
-			if (s != null)
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-		}
+        internal static bool CastTargetedGeneric(Dictionary<string, int> conversion,
+            string SpellName, uint target, bool wait)
+        {
+            if (World.Player == null)
+                return true;
+
+            Spell s = null;
+
+            int id = 0;
+            conversion.TryGetValue(SpellName, out id);
+
+            if (id > 0)
+                s = Spell.Get(id);
+            else
+                return false;
+
+            if (s != null)
+                s.OnCast(new CastTargetedSpell((ushort)s.GetID(), target), wait);
+            return true;
+        }
+
 
         public static void CastCleric(string SpellName, bool wait = true)
         {
@@ -557,6 +630,7 @@ namespace RazorEnhanced
             { "Stone Circle", "[cs StoneCircle" },
             { "Enchanted Grove", "[cs EnchantedGrove" },
             { "Lure Stone", "[cs LureStone" },
+            { "Hurricane", "[cs Hurricane" },
             { "Natures Passage", "[cs NaturesPassage" },
             { "Mushroom Gateway", "[cs MushroomGateway" },
             { "Restorative Soil", "[cs RestorativeSoil" },

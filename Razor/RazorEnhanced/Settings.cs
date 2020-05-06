@@ -2211,6 +2211,9 @@ namespace RazorEnhanced
             hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Lure Stone", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
             hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Hurricane", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+            hotkeyrow = hotkey.NewRow();
             hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Natures Passage", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
             hotkeyrow = hotkey.NewRow();
