@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 4;
+		private static int SettingVersion = 5;
 
 		private static string m_profileName = null;
 
@@ -1329,7 +1329,11 @@ namespace RazorEnhanced
 			hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Last Spell", Keys.None, true };
 			hotkey.Rows.Add(hotkeyrow);
 
-			hotkeyrow = hotkey.NewRow();
+            hotkeyrow = hotkey.NewRow();
+            hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Last Spell Last Target", Keys.None, true };
+            hotkey.Rows.Add(hotkeyrow);
+
+            hotkeyrow = hotkey.NewRow();
 			hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Clumsy", Keys.None, true };
 			hotkey.Rows.Add(hotkeyrow);
 
@@ -4968,6 +4972,16 @@ namespace RazorEnhanced
                 general.Columns.Add("BandageHealUseTextSelfContent", typeof(string));
                 Settings.General.WriteString("BandageHealUseTextSelfContent", "[bandself");
                 realVersion = 4;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+
+            if (realVersion == 4)
+            {
+                DataTable hotkey = m_Dataset.Tables["HOTKEYS"];
+                DataRow hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Last Spell Last Target", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+                realVersion = 5;
                 General.WriteInt("SettingVersion", realVersion);
             }
             Save(true);

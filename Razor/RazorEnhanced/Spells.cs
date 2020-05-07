@@ -270,9 +270,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void CastLastSpell(bool wait = true)
-		{
-			if (World.Player.LastSpell != 0)
+        public static void CastLastSpell()
+        {
+            CastLastSpellInternal(true);
+        }
+        public static void CastLastSpellInternal(bool wait)
+        {
+            if (World.Player.LastSpell != 0)
 			{
 				Spell s = Spell.Get(World.Player.LastSpell);
 
@@ -281,7 +285,38 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static Assistant.Item FindUsedLayer()
+        public static void CastLastSpell(Mobile m, bool wait = true)
+        {
+            CastLastSpell((uint)m.Serial, wait);
+        }
+
+        public static void CastLastSpellLastTarget()
+        {
+            int lastTarget = Target.GetLast();
+            Mobile m = Mobiles.FindBySerial(lastTarget);
+            if (m != null)
+            {
+                CastLastSpell((uint)lastTarget, false);
+            }
+            else
+            {
+                Scripts.SendMessageScriptError("Last Target no longer exists");
+            }
+        }
+
+
+        public static void CastLastSpell(uint target, bool wait = true)
+        {
+            if (World.Player.LastSpell != 0)
+            {
+                Spell s = Spell.Get(World.Player.LastSpell);
+
+                if (s != null)
+                    s.OnCast(new CastTargetedSpell((ushort)s.GetID(), target), wait);
+            }
+        }
+
+        internal static Assistant.Item FindUsedLayer()
 		{
 			Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shoes);
 			if (layeritem != null)

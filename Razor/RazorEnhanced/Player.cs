@@ -1484,6 +1484,9 @@ namespace RazorEnhanced
 
         public static float SumAttribute(string attributename)
         {
+            if (World.Player == null)
+                return 0;
+
             float attributevalue = 0;
 
             foreach (Layer l in m_layer_props)

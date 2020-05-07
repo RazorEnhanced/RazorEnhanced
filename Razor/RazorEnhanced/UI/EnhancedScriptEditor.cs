@@ -545,7 +545,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Spells.Interrupt()", new string[] { "none" }, "void", "Block current casting action.");
 			descriptionSpells.Add("Spells.Interrupt", tooltip);
 
-			tooltip = new ToolTipDescriptions("Spells.CastLastSpell()", new string[] { "none" }, "void", "Cast Last spell.");
+			tooltip = new ToolTipDescriptions("Spells.CastLastSpell()", new string[] { "target(optional)" }, "void", "Cast Last spell optionally supply a target.");
 			descriptionSpells.Add("Spells.CastLastSpell", tooltip);
 
 			#endregion

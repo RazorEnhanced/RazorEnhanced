@@ -1474,10 +1474,15 @@ namespace RazorEnhanced
 					break;
 
 				case "Last Spell":
-					Spells.CastLastSpell(false);
+					Spells.CastLastSpellInternal(false);
 					break;
 
-				default:
+                case "Last Spell Last Target":
+                    Spells.CastLastSpellLastTarget();
+                    break;
+
+
+                default:
 					break;
 			}
 		}
@@ -1730,7 +1735,7 @@ namespace RazorEnhanced
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Magery");
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMagery");
 			foreach (HotKeyData keydata in keylist)
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(GenerateNode(keydata));
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(GenerateNode(keydata));
 
 			// Spells -- > Necro
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Necro");
