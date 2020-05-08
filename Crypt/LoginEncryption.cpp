@@ -55,13 +55,13 @@ BYTE LoginEncryption::Crypt( BYTE in )
 {
 	//m_Table[1] = (((((pt1 >> 1) | (pt0 << 31)) ^ LOGIN_KEY_1) >> 1) | (pt0<<31)) ^ LOGIN_KEY_1;
 	//m_Table[0] = ((pt0 >> 1) | (pt1 << 31)) ^ LOGIN_KEY_2;
-	
+
 	BYTE out = in ^ ((unsigned char)m_Table[0]);
 
 	DWORD OldT1 = m_Table[1];
 	m_Table[1] = ((((m_Table[1] >> 1) | (m_Table[0] << 31)) ^ ((*Key1)-1)) >> 1 | (m_Table[0] << 31)) ^ (*Key1);
 	m_Table[0] = ((m_Table[0]>>1) | (OldT1<<31)) ^ (*Key2);
-	
+
 	return out;
 }
 
@@ -72,7 +72,7 @@ bool LoginEncryption::TestForLogin( BYTE encrypted )
 
 bool LoginEncryption::IsLoginByte( BYTE unencrypted )
 {
-	return unencrypted == ((BYTE)0x80) || unencrypted == ((BYTE)0x48);
+	return unencrypted == (BYTE)0x80;
 }
 
 DWORD LoginEncryption::GenerateBadSeed( DWORD oldSeed )
