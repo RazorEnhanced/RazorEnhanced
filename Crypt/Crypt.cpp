@@ -24,6 +24,8 @@ HMODULE hInstance = NULL;
 SOCKET CurrentConnection = 0;
 int ConnectedIP = 0;
 
+sockaddr_in CurrentConnectionAddr;
+
 HANDLE CommMutex = NULL;
 
 char *tempBuff = NULL;
@@ -1264,8 +1266,16 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 			{
 				FirstSend = false;
 
-				if (ClientEncrypted)
-					LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
+                if (ClientEncrypted)
+                {
+                    LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
+                    // OSI was messing up the TestForLogin sometimes so
+                    // if it isn't the login server IP, FORCE LoginServer to false
+                    if (CurrentConnectionAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
+                    {
+                        LoginServer = false;
+                    }
+                }
 				else
 					LoginServer = LoginEncryption::IsLoginByte((BYTE)buff[0]);
 
@@ -1329,7 +1339,6 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 	{
 		ackLen = (*(NetIOFunc)OldSend)(sock, buff, len, flags);
 	}
-
 	return ackLen;
 }
 
@@ -1401,10 +1410,14 @@ void FlushSendData()
 			if (tempBuff == NULL)
 				tempBuff = new char[SHARED_BUFF_SIZE];
 
-			if (LoginServer)
-				ServerLogin->Encrypt((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
-			else
-				ServerCrypt->EncryptForServer((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
+            if (LoginServer)
+            {
+                ServerLogin->Encrypt((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
+            }
+            else
+            {
+                ServerCrypt->EncryptForServer((BYTE*)&pShared->OutSend.Buff[pShared->OutSend.Start], (BYTE*)tempBuff, outLen);
+            }
 
 			ackLen = (*(NetIOFunc)OldSend)(CurrentConnection, tempBuff, outLen, 0);
 		}
@@ -1448,10 +1461,12 @@ int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 			useAddr.sin_port = htons(pShared->ServerPort);
 		}
 
-		/*char blah[256];
+        CurrentConnectionAddr = useAddr;
+		/*
+        char blah[256];
 		sprintf(blah, "%08X - %08X", useAddr.sin_addr.S_un.S_addr, pShared->ServerIP);
-		MessageBox(NULL, blah, "Connect To:", MB_OK);*/
-
+		MessageBox(NULL, blah, "Connect To:", MB_OK);
+        */
 		retVal = (*(ConnFunc)OldConnect)(sock, (sockaddr*)&useAddr, sizeof(sockaddr_in));
 
 		ConnectedIP = useAddr.sin_addr.S_un.S_addr;
