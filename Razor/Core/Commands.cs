@@ -201,7 +201,8 @@ namespace Assistant
 				byte[] buffer = Encoding.ASCII.GetBytes(data);
 				int timeout = 1000;
 				RazorEnhanced.Misc.SendMessage("Address: " + Assistant.Client.Instance.LastConnection.ToString(), 33, false);
-				for (int i = 0; i < 5; i++)
+                const int NumPings = 5;
+				for (int i = 0; i < NumPings; i++)
 				{
 					PingReply reply = pingSender.Send(Assistant.Client.Instance.LastConnection, timeout, buffer, options);
 					if (reply.Status == IPStatus.Success)
@@ -222,7 +223,7 @@ namespace Assistant
 				if (max == int.MinValue)
 					RazorEnhanced.Misc.SendMessage("Server not respond to ping request", 33, false);
 				else
-					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / 4).ToString() + "ms - Min: " + min + "ms", 33, false);
+					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / NumPings).ToString() + "ms - Min: " + min + "ms", 33, false);
 
 
 			}).Start();
