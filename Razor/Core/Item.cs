@@ -96,13 +96,24 @@ namespace Assistant
                 DragDropManager.Holding.Deleted = false;
                 return DragDropManager.Holding;
             }
+            Item item = null;
             switch (itemID)
             {
                 case 0x14EC:
-                    return new MapItem(serial);
+                     item = new MapItem(serial);
+                    break;
+                case 0:
+                    item = new Item(serial);
+                    break;
                 default:
-                    return new Item(serial);
+                    item = new Item(serial);
+                    break;
             }
+            if (item != null)
+            {
+                item.ItemID = (ushort)itemID;
+            }
+            return item;
         }
 		protected Item(Serial serial)
 			: base(serial)

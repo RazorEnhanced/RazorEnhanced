@@ -1065,7 +1065,7 @@ namespace RazorEnhanced
 			return GetPropStringByIndex(item.Serial, index);
 		}
 
-		
+
 		// Special case "Total Resist" so that items can be collected based on total resist
 			public static float GetTotalResistProp(int serial)
 		{
@@ -1097,36 +1097,37 @@ namespace RazorEnhanced
 			return totalResist;
 		}
 
-			public static float GetPropValue(int serial, string name)
-		{
-			if (name.ToLower().Contains("total") && name.ToLower().Contains("resist"))
-				return GetTotalResistProp(serial);
+        public static float GetPropValue(int serial, string name)
+        {
+            if (name.ToLower().Contains("total") && name.ToLower().Contains("resist"))
+                return GetTotalResistProp(serial);
 
-			Assistant.Item assistantItem = World.FindItem((uint)serial);
+            Assistant.Item assistantItem = World.FindItem((uint)serial);
 
-			if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
-			{
-				for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
-				{
-					if (!assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
-						continue;
+            if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+            {
+                var content = assistantItem.ObjPropList.Content;
+                for (int i = 0; i < content.Count; i++)
+                {
+                    if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
+                        continue;
 
-					if (assistantItem.ObjPropList.Content[i].Args == null)  // Props exist but not have value
-						return 1;
+                    if (content[i].Args == null)  // Props exist but not have value
+                        return 1;
 
-					try
-					{
-						return Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
-					}
-					catch
-					{
-						return 1;  // Conversion error
-					}
+                    try
+                    {
+                        return Convert.ToSingle(Language.ParsePropsCliloc(content[i].Args), CultureInfo.InvariantCulture);
+                    }
+                    catch
+                    {
+                        return 1;  // Conversion error
+                    }
 
-				}
-			}
-			return 0;  // Item not exist or props not exist
-		}
+                }
+            }
+            return 0;  // Item not exist or props not exist
+        }
 
 		public static float GetPropValue(Item item, string name)
 		{

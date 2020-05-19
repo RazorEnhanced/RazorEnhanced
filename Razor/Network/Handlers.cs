@@ -100,7 +100,8 @@ namespace Assistant
 			//PacketHandler.RegisterServerToClientFilter(0xDC, new PacketFilterCallback(ServOPLHash));
 			PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(CompressedGump));
 			PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BuffDebuff));
-			PacketHandler.RegisterServerToClientViewer(0xF0, new PacketViewerCallback(RunUOProtocolExtention)); // Special RunUO protocol extentions (for KUOC/Razor)
+            PacketHandler.RegisterServerToClientViewer(0xE2, new PacketViewerCallback(TestAnimation));
+            PacketHandler.RegisterServerToClientViewer(0xF0, new PacketViewerCallback(RunUOProtocolExtention)); // Special RunUO protocol extentions (for KUOC/Razor)
 			PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(SAWorldItem));
             PacketHandler.RegisterServerToClientViewer(0xF5, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0xF6, new PacketViewerCallback(MoveBoatHS));
@@ -512,7 +513,7 @@ namespace Assistant
 			{
 				if (item == null)
 				{
-					World.AddItem(item = Item.Factory(serial, 0));
+					World.AddItem(item = Item.Factory(serial, iid));
 					item.Amount = amount;
 				}
 
@@ -549,6 +550,7 @@ namespace Assistant
 
 			if (item == null)
 			{
+                // This seems wrong Credzba
 				World.AddItem(item = Item.Factory(iser, 0));
 				item.Layer = layer;
 			}
@@ -754,11 +756,13 @@ namespace Assistant
 			for (int i = 0; i < count; i++)
 			{
 				Serial serial = p.ReadUInt32();
-				// serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
-				Item item = World.FindItem(serial);
+                Assistant.ItemID itemID = p.ReadUInt16();
+                itemID = (ushort)(itemID + p.ReadSByte());// signed, itemID offset
+                                                                    // serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
+                Item item = World.FindItem(serial);
 				if (item == null)
 				{
-					World.AddItem(item = Item.Factory(serial, 0));
+					World.AddItem(item = Item.Factory(serial, itemID));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -770,8 +774,7 @@ namespace Assistant
 				//if ( !DragDropManager.EndHolding( serial ) )
 				//	continue;
 
-				item.ItemID = p.ReadUInt16();
-				item.ItemID = (ushort)(item.ItemID + p.ReadSByte());// signed, itemID offset
+                item.ItemID = itemID;
 				item.Amount = p.ReadUInt16();
 				if (item.Amount == 0)
 					item.Amount = 1;
@@ -865,12 +868,13 @@ namespace Assistant
 		private static void EquipmentUpdate(Packet p, PacketHandlerEventArgs args)
 		{
 			Serial serial = p.ReadUInt32();
-
-			Item i = World.FindItem(serial);
+            ushort iid = p.ReadUInt16();
+            iid = (ushort)(iid + p.ReadSByte()); // signed, itemID offset
+            Item i = World.FindItem(serial);
 			bool isNew = false;
 			if (i == null)
 			{
-				World.AddItem(i = Item.Factory(serial, 0));
+				World.AddItem(i = Item.Factory(serial, iid));
 				isNew = true;
 				Item.UpdateContainers();
 			}
@@ -882,8 +886,7 @@ namespace Assistant
 			if (!DragDropManager.EndHolding(serial))
 				return;
 
-			ushort iid = p.ReadUInt16();
-			i.ItemID = (ushort)(iid + p.ReadSByte()); // signed, itemID offset
+            i.ItemID = iid;
 			i.Layer = (Layer)p.ReadByte();
 
 			Serial ser = p.ReadUInt32();// cont must be set after hue (for counters)
@@ -1830,7 +1833,7 @@ namespace Assistant
 			bool isNew = false;
 			if (item == null)
 			{
-				World.AddItem(item = Item.Factory(serial & 0x7FFFFFFF, 0));
+				World.AddItem(item = Item.Factory(serial & 0x7FFFFFFF, itemID));
 				isNew = true;
 			}
 
@@ -1943,11 +1946,14 @@ namespace Assistant
 			byte _artDataID = p.ReadByte();
 
 			uint serial = p.ReadUInt32();
-			Item item = World.FindItem(serial);
+            ushort itemID = p.ReadUInt16();
+            itemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
+
+            Item item = World.FindItem(serial);
 			bool isNew = false;
 			if (item == null)
 			{
-				World.AddItem(item = Item.Factory(serial, 0));
+				World.AddItem(item = Item.Factory(serial, itemID));
 				isNew = true;
 			}
 			/*else
@@ -1959,9 +1965,7 @@ namespace Assistant
 				return;
 
 			item.Container = null;
-
-			ushort itemID = p.ReadUInt16();
-			item.ItemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
+            item.ItemID = itemID;
 
 			item.Direction = p.ReadByte();
 
@@ -3156,7 +3160,15 @@ namespace Assistant
 			return (pieces.Length > 0);
 		}
 
-		private static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
+            private static void TestAnimation(PacketReader p, PacketHandlerEventArgs args)
+        {
+            int serial = p.ReadInt32();
+            short action = p.ReadInt16();
+            short frameCount = p.ReadInt16();
+            byte delay = p.ReadByte();
+
+        }
+            private static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial ser = p.ReadUInt32();
 			ushort icon = p.ReadUInt16();
