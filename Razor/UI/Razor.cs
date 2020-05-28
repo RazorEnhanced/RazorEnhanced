@@ -8045,6 +8045,7 @@ namespace Assistant
             this.advertisement.Location = new System.Drawing.Point(3, 3);
             this.advertisement.Name = "advertisement";
             this.advertisement.Size = new System.Drawing.Size(474, 231);
+            this.advertisement.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.advertisement.TabIndex = 11;
             this.advertisement.TabStop = false;
             //

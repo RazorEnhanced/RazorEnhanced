@@ -63,9 +63,15 @@ namespace RazorEnhanced
 				DataRow uod = shards.NewRow();
 				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
 				shards.Rows.Add(uod);
-				m_Dataset.Tables.Add(shards);
 
-				m_Dataset.AcceptChanges();
+                DataRow eventine = shards.NewRow();
+                eventine.ItemArray = new object[] { "UO Eventine", String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false };
+                shards.Rows.Add(eventine);
+
+                m_Dataset.Tables.Add(shards);
+
+
+                m_Dataset.AcceptChanges();
 			}
 		}
 
