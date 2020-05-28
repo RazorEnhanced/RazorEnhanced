@@ -102,7 +102,6 @@ namespace Assistant
         private RazorButton buttonScriptEditor;
         private Label labelStatus;
         private RazorButton razorButtonWiki;
-        private Panel panelLogo;
         private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
         private List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
         private List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
@@ -677,6 +676,8 @@ namespace Assistant
         private RazorTextBox bandagehealusetextContent;
         private Label label77;
         private Label label78;
+        private RazorButton advertisementLink;
+        private PictureBox advertisement;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -1345,9 +1346,10 @@ namespace Assistant
             this.DPSMeterStartButton = new RazorEnhanced.UI.RazorButton();
             this.DPSMeterClearButton = new RazorEnhanced.UI.RazorButton();
             this.statusTab = new System.Windows.Forms.TabPage();
+            this.advertisementLink = new RazorEnhanced.UI.RazorButton();
+            this.advertisement = new System.Windows.Forms.PictureBox();
             this.label71 = new System.Windows.Forms.Label();
             this.labelHotride = new System.Windows.Forms.Label();
-            this.panelLogo = new System.Windows.Forms.Panel();
             this.labelStatus = new System.Windows.Forms.Label();
             this.discordrazorButton = new RazorEnhanced.UI.RazorButton();
             this.razorButtonWiki = new RazorEnhanced.UI.RazorButton();
@@ -1473,6 +1475,7 @@ namespace Assistant
             this.filtergroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DpsMeterGridView)).BeginInit();
             this.statusTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.advertisement)).BeginInit();
             this.datagridMenuStrip.SuspendLayout();
             this.scriptgridMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -8012,9 +8015,10 @@ namespace Assistant
             //
             // statusTab
             //
+            this.statusTab.Controls.Add(this.advertisementLink);
+            this.statusTab.Controls.Add(this.advertisement);
             this.statusTab.Controls.Add(this.label71);
             this.statusTab.Controls.Add(this.labelHotride);
-            this.statusTab.Controls.Add(this.panelLogo);
             this.statusTab.Controls.Add(this.labelStatus);
             this.statusTab.Controls.Add(this.discordrazorButton);
             this.statusTab.Controls.Add(this.razorButtonWiki);
@@ -8023,6 +8027,26 @@ namespace Assistant
             this.statusTab.Size = new System.Drawing.Size(666, 366);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
+            //
+            // advertisementLink
+            //
+            this.advertisementLink.Location = new System.Drawing.Point(340, 240);
+            this.advertisementLink.Name = "advertisementLink";
+            this.advertisementLink.Size = new System.Drawing.Size(120, 37);
+            this.advertisementLink.TabIndex = 12;
+            this.advertisementLink.Text = "Eventine";
+            this.advertisementLink.UseVisualStyleBackColor = true;
+            this.advertisementLink.Click += new System.EventHandler(this.advertisement_Click);
+            //
+            // advertisement
+            //
+            this.advertisement.Image = ((System.Drawing.Image)(resources.GetObject("advertisement.Image")));
+            this.advertisement.InitialImage = ((System.Drawing.Image)(resources.GetObject("advertisement.InitialImage")));
+            this.advertisement.Location = new System.Drawing.Point(3, 3);
+            this.advertisement.Name = "advertisement";
+            this.advertisement.Size = new System.Drawing.Size(474, 231);
+            this.advertisement.TabIndex = 11;
+            this.advertisement.TabStop = false;
             //
             // label71
             //
@@ -8044,15 +8068,6 @@ namespace Assistant
     "penGL OrionUO Client project (you can point your browser to the link http://foru" +
     "m.orion-client.online for more info)";
             //
-            // panelLogo
-            //
-            this.panelLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelLogo.BackgroundImage")));
-            this.panelLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.panelLogo.Location = new System.Drawing.Point(11, 228);
-            this.panelLogo.Name = "panelLogo";
-            this.panelLogo.Size = new System.Drawing.Size(48, 49);
-            this.panelLogo.TabIndex = 7;
-            //
             // labelStatus
             //
             this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -8063,9 +8078,9 @@ namespace Assistant
             //
             // discordrazorButton
             //
-            this.discordrazorButton.Location = new System.Drawing.Point(216, 240);
+            this.discordrazorButton.Location = new System.Drawing.Point(174, 240);
             this.discordrazorButton.Name = "discordrazorButton";
-            this.discordrazorButton.Size = new System.Drawing.Size(145, 28);
+            this.discordrazorButton.Size = new System.Drawing.Size(135, 37);
             this.discordrazorButton.TabIndex = 9;
             this.discordrazorButton.Text = "Razor Enhanced Discord";
             this.discordrazorButton.UseVisualStyleBackColor = true;
@@ -8073,9 +8088,9 @@ namespace Assistant
             //
             // razorButtonWiki
             //
-            this.razorButtonWiki.Location = new System.Drawing.Point(65, 240);
+            this.razorButtonWiki.Location = new System.Drawing.Point(3, 240);
             this.razorButtonWiki.Name = "razorButtonWiki";
-            this.razorButtonWiki.Size = new System.Drawing.Size(145, 28);
+            this.razorButtonWiki.Size = new System.Drawing.Size(145, 37);
             this.razorButtonWiki.TabIndex = 6;
             this.razorButtonWiki.Text = "Razor Enhanced wiki";
             this.razorButtonWiki.UseVisualStyleBackColor = true;
@@ -8396,6 +8411,7 @@ namespace Assistant
             this.filtergroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DpsMeterGridView)).EndInit();
             this.statusTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.advertisement)).EndInit();
             this.datagridMenuStrip.ResumeLayout(false);
             this.scriptgridMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -8959,26 +8975,6 @@ namespace Assistant
             this.Close();
         }
 
-        private void razorButtonVisitUOD_Click(object sender, EventArgs e)
-        {
-            ProcessStartInfo p = new ProcessStartInfo("http://www.uodreams.com");
-            try
-            {
-                Process.Start(p);
-            }
-            catch { }
-        }
-
-        private void razorButtonCreateUODAccount_Click(object sender, EventArgs e)
-        {
-            ProcessStartInfo p = new ProcessStartInfo("http://www.gamesnet.it/register.php");
-            try
-            {
-                Process.Start(p);
-            }
-            catch { }
-        }
-
         private void razorButtonWiki_Click(object sender, EventArgs e)
         {
             ProcessStartInfo p = new ProcessStartInfo("http://www.razorenhanced.net/dokuwiki");
@@ -8988,6 +8984,17 @@ namespace Assistant
             }
             catch { }
         }
+
+        private void advertisement_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo p = new ProcessStartInfo("https://www.uoeventine.com/");
+            try
+            {
+                Process.Start(p);
+            }
+            catch { }
+        }
+
 
         private void discordrazorButton_Click(object sender, EventArgs e)
         {
