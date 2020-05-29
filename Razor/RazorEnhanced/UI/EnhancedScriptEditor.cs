@@ -172,7 +172,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsMisc =
 			{
-				"Misc.SendMessage", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
+				"Misc.SendMessage", "Misc.SendToClient", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
 				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
 				"Misc.SetSharedValue", "Misc.ScriptStopAll", "Misc.ShardName",
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
@@ -671,10 +671,13 @@ namespace RazorEnhanced.UI
 
 			Dictionary<string, ToolTipDescriptions> descriptionMisc = new Dictionary<string, ToolTipDescriptions>();
 
-			tooltip = new ToolTipDescriptions("Misc.SendMessage(string or int or bool, (optional)int)", new string[] { "string Message or int Value or bool Status", "int Color" }, "void", "Send a system message\n\tIf pass color, it colors the message");
-			descriptionMisc.Add("Misc.SendMessage", tooltip);
+            tooltip = new ToolTipDescriptions("Misc.SendMessage(string or int or bool, (optional)int)", new string[] { "string Message or int Value or bool Status", "int Color" }, "void", "Send a system message\n\tIf pass color, it colors the message");
+            descriptionMisc.Add("Misc.SendMessage", tooltip);
 
-			tooltip = new ToolTipDescriptions("Misc.Resync()", new string[] { "none" }, "void", "Resync game data");
+            tooltip = new ToolTipDescriptions("Misc.SendToClient(string)", new string[] { "string Message"}, "void", "Send a string to the client\nctrl characters can be sent with ^(u) where u is ctrl-u");
+            descriptionMisc.Add("Misc.SendToClient", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.Resync()", new string[] { "none" }, "void", "Resync game data");
 			descriptionMisc.Add("Misc.Resync", tooltip);
 
 			tooltip = new ToolTipDescriptions("Misc.Pause(int)", new string[] { "int Delay" }, "void", "Pause script for N milliseconds");

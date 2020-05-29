@@ -32,6 +32,12 @@ namespace RazorEnhanced
 			return distance;
 		}
 
+        public static void SendToClient(string keys)
+        {
+            DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
+            System.Windows.Forms.SendKeys.SendWait(keys);
+        }
+
 		// Sysmessage
 		public static void SendMessage(int num)
 		{
