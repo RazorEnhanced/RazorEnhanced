@@ -72,7 +72,7 @@ bool LoginEncryption::TestForLogin(BYTE encrypted)
 
 bool LoginEncryption::IsLoginByte(BYTE unencrypted)
 {
-	return unencrypted == ((BYTE)0x80) || unencrypted == ((BYTE)0x48);
+	return unencrypted == (BYTE)0x80;
 }
 
 DWORD LoginEncryption::GenerateBadSeed(DWORD oldSeed)

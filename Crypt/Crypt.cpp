@@ -23,6 +23,7 @@ HANDLE hFileMap = NULL;
 HMODULE hInstance = NULL;
 SOCKET CurrentConnection = 0;
 int ConnectedIP = 0;
+sockaddr_in CurrentConnectionAddr;
 
 HANDLE CommMutex = NULL;
 
@@ -1439,8 +1440,17 @@ int PASCAL HookSend(SOCKET sock, char *buff, int len, int flags)
 			{
 				FirstSend = false;
 
-				if (ClientEncrypted)
-					LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
+                if (ClientEncrypted)
+                {
+                    LoginServer = ClientLogin->TestForLogin((BYTE)buff[0]);
+                    // OSI was messing up the TestForLogin sometimes so
+                    // if it isn't the login server IP, FORCE LoginServer to false
+                    if (CurrentConnectionAddr.sin_addr.S_un.S_addr != pShared->ServerIP)
+                    {
+                        LoginServer = false;
+                    }
+
+                }
 				else
 					LoginServer = LoginEncryption::IsLoginByte((BYTE)buff[0]);
 
@@ -1623,6 +1633,7 @@ int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 			useAddr.sin_port = htons(pShared->ServerPort);
 		}
 
+        CurrentConnectionAddr = useAddr;
 		/*char blah[256];
 		sprintf(blah, "%08X - %08X", useAddr.sin_addr.S_un.S_addr, pShared->ServerIP);
 		MessageBox(NULL, blah, "Connect To:", MB_OK);*/
