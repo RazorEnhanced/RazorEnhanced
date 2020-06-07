@@ -864,6 +864,8 @@ namespace Assistant
         }
         void FixUpLocation()
         {
+            // This has issues with the fakeIndex do for now quit doing it
+            return;
             string version = Client.Instance.GetClientVersion();
             string[] versionParts = version.Split('.');
             int majorVersion = Convert.ToInt32(versionParts[0]);
@@ -880,6 +882,7 @@ namespace Assistant
                 xCoord,
                 yCoord
                 );
+            // The m_FakePropIndex at this point was beyond the end of the array
             m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
             MapEntry entry = FindMapEntry();
             if (entry != null)
