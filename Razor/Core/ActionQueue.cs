@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace Assistant
 {
@@ -16,7 +17,7 @@ namespace Assistant
 
 		internal static bool Debug = false;
 
-	/*	private static void Log(string str, params object[] args)
+		private static void Log(string str, params object[] args)
 		{
 			if (!Debug)
 				return;
@@ -34,7 +35,7 @@ namespace Assistant
 			catch
 			{
 			}
-		}*/
+		}
 
 		private class LiftReq
 		{
@@ -93,7 +94,7 @@ namespace Assistant
 
 		private static Dictionary<Serial, Queue<DropReq>> m_DropReqs = new Dictionary<Serial, Queue<DropReq>>();
 
-		private static LiftReq[] m_LiftReqs = new LiftReq[256];
+		private static LiftReq[] m_LiftReqs = new LiftReq[500];
 		private static byte m_Front, m_Back;
 
 		internal static Item Holding { get { return m_HoldingItem; } }
@@ -103,7 +104,7 @@ namespace Assistant
 
 		internal static void Clear()
 		{
-			//Log("Clearing....");
+			Log("Clearing....");
 
 			m_DropReqs.Clear();
 			for (int i = 0; i < 256; i++)
@@ -192,13 +193,14 @@ namespace Assistant
 
 			if (Full)
 			{
-				World.Player.SendMessage(MsgLevel.Error, LocString.DragDropQueueFull);
+                Log("Queue FULL {0}", lr);
+                World.Player.SendMessage(MsgLevel.Error, LocString.DragDropQueueFull);
 				if (fromClient)
 					Assistant.Client.Instance.SendToClient(new LiftRej());
 				return 0;
 			}
 
-			//Log("Queuing Drag request {0}", lr);
+			Log("Queuing Drag request {0}", lr);
 
 			if (m_Back >= m_LiftReqs.Length)
 				m_Back = 0;
@@ -211,7 +213,7 @@ namespace Assistant
 			// if the current last req must stay last, then insert this one in its place
 			if (prev != null && prev.DoLast)
 			{
-				//Log("Back-Queuing {0}", prev);
+				Log("Back-Queuing {0}", prev);
 				if (m_Back <= 0)
 					m_LiftReqs[m_LiftReqs.Length - 1] = lr;
 				else if (m_Back <= m_LiftReqs.Length)
@@ -231,7 +233,7 @@ namespace Assistant
 		{
 			if (m_Pending == i.Serial)
 			{
-				//Log("Equipping {0} to {1} (@{2})", i, to.Serial, layer);
+				Log("Equipping {0} to {1} (@{2})", i, to.Serial, layer);
 			 	Assistant.Client.Instance.SendToServer(new EquipRequest(i.Serial, to, layer));
 				m_Pending = Serial.Zero;
 				m_Lifted = DateTime.MinValue;
@@ -252,7 +254,7 @@ namespace Assistant
 
 				if (add)
 				{
-					//Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
+					Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
 
 					if (!m_DropReqs.ContainsKey(i.Serial))
 						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
@@ -263,7 +265,7 @@ namespace Assistant
 				}
 				else
 				{
-					//Log("Drop/Equip for {0} (to {1} (@{2})) not found, skipped", i, to == null ? Serial.Zero : to.Serial, layer);
+					Log("Drop/Equip for {0} (to {1} (@{2})) not found, skipped", i, to == null ? Serial.Zero : to.Serial, layer);
 					return false;
 				}
 			}
@@ -273,7 +275,7 @@ namespace Assistant
 		{
 			if (m_Pending == i.Serial)
 			{
-				//Log("Dropping {0} to {1} (@{2})", i, dest, pt);
+				Log("Dropping {0} to {1} (@{2})", i, dest, pt);
 
 			 	Assistant.Client.Instance.SendToServer(new DropRequest(i.Serial, pt, dest));
 				m_Pending = Serial.Zero;
@@ -295,7 +297,7 @@ namespace Assistant
 
 				if (add)
 				{
-					//Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
+					Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
 
 					if (!m_DropReqs.ContainsKey(i.Serial))
 						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
@@ -306,7 +308,7 @@ namespace Assistant
 				}
 				else
 				{
-					//Log("Drop for {0} (to {1} (@{2})) not found, skipped", i, dest, pt);
+					Log("Drop for {0} (to {1} (@{2})) not found, skipped", i, dest, pt);
 					return false;
 				}
 			}
@@ -324,7 +326,7 @@ namespace Assistant
 
 		internal static bool LiftReject()
 		{
-			//Log("Server rejected lift for item {0}", m_Holding);
+			Log("Server rejected lift for item {0}", m_Holding);
 			if (m_Holding == Serial.Zero)
 				return true;
 
@@ -379,7 +381,7 @@ namespace Assistant
 				{
 					Item i = World.FindItem(m_Pending);
 
-					//Log("Lift timeout, forced drop to pack for {0}", m_Pending);
+				    Log("Lift timeout, forced drop to pack for {0}", m_Pending);
 
 					if (World.Player != null)
 					{
@@ -401,7 +403,7 @@ namespace Assistant
 				}
 			}
 
-			if (m_Front == m_Back)
+			if (m_Front >= m_Back)
 			{
 				m_Front = m_Back = 0;
 				return ProcStatus.Nothing;
@@ -414,16 +416,17 @@ namespace Assistant
 
 			m_LiftReqs[m_Front] = null;
 			m_Front++;
-			if (lr != null)
+
+            if (lr != null)
 			{
-				//Log("Lifting {0}", lr);
+				Log("Lifting {0}", lr);
 
 				Item item = World.FindItem(lr.Serial);
 				if (item != null && item.Container == null)
 				{ // if the item is on the ground and out of range then dont grab it
 					if (Utility.Distance(item.GetWorldPosition(), World.Player.Position) > 3)
 					{
-						//Log("Item is too far away... uncaching.");
+						Log("Item is too far away... uncaching.");
 						return ProcStatus.Nothing;
 					}
 				}
@@ -441,7 +444,7 @@ namespace Assistant
 					m_Pending = Serial.Zero;
 					m_Lifted = DateTime.MinValue;
 
-					//Log("Dropping {0} to {1}", lr, dr.Serial);
+					Log("Dropping {0} to {1}", lr, dr.Serial);
 
 					if (dr.Serial.IsMobile && dr.Layer > Layer.Invalid && dr.Layer <= Layer.LastUserValid)
 					 	Assistant.Client.Instance.SendToServer(new EquipRequest(lr.Serial, dr.Serial, dr.Layer));
@@ -458,7 +461,7 @@ namespace Assistant
 			}
 			else
 			{
-				//Log("No lift to be done?!");
+				Log("No lift to be done?!");
 				return ProcStatus.Nothing;
 			}
 		}
@@ -504,8 +507,10 @@ namespace Assistant
 
 		internal static void Stop()
 		{
-			if (m_Timer != null && m_Timer.Running)
-				m_Timer.Stop();
+            if (m_Timer != null && m_Timer.Running)
+            {
+                m_Timer.Stop();
+            }
 			m_Queue.Clear();
 			DragDropManager.Clear();
 		}
@@ -532,31 +537,56 @@ namespace Assistant
 			}
 		}
 
-		private class ProcTimer : Timer
+		private class ProcTimer
 		{
-			private DateTime m_StartTime;
+
+            private DateTime m_StartTime;
 			private DateTime m_LastTick;
 
-			internal DateTime LastTick { get { return m_LastTick; } }
+            private ManualResetEvent m_stop = new ManualResetEvent(false);
+            private RegisteredWaitHandle m_registeredWait = null;
+            public bool Running
+            {
+                get { return null != m_registeredWait; }
+            }
 
-			internal ProcTimer()
-				: base(TimeSpan.Zero, TimeSpan.Zero)
-			{
-			}
+            internal DateTime LastTick { get { return m_LastTick; } }
 
-			internal void StartMe()
+            internal ProcTimer()
+            {
+                Stop();
+
+            }
+
+            internal void Start()
+            {
+                int interval = RazorEnhanced.Settings.General.ReadInt("ObjectDelay");
+                m_registeredWait = ThreadPool.RegisterWaitForSingleObject(m_stop, new WaitOrTimerCallback(OnTick),
+                                                                          null, interval, false);
+
+
+            }
+
+            internal void Stop()
+            {
+                if (m_registeredWait != null)
+                {
+                    m_registeredWait.Unregister(null);
+                    m_registeredWait = null;
+                }
+            }
+
+            internal void StartMe()
 			{
 				m_LastTick = DateTime.Now;
 				m_StartTime = DateTime.Now;
 
-				OnTick();
-
-				Delay = Interval;
+				OnTick(null, true);
 
 				Start();
 			}
 
-			protected override void OnTick()
+			protected void OnTick(object state, bool timeout)
 			{
 				List<Serial> requeue = null;
 
@@ -564,7 +594,6 @@ namespace Assistant
 
 				if (m_Queue != null && m_Queue.Count > 0)
 				{
-					this.Interval = TimeSpan.FromMilliseconds(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
 
 					while (m_Queue.Count > 0)
 					{
@@ -572,7 +601,7 @@ namespace Assistant
 						if (s == Serial.Zero) // dragdrop action
 						{
 							DragDropManager.ProcStatus status = DragDropManager.ProcessNext(m_Queue.Count - 1);
-							if (status != DragDropManager.ProcStatus.KeepWaiting)
+							if (status != DragDropManager.ProcStatus.KeepWaiting && m_Queue.Count > 0)
 							{
 								m_Queue.Dequeue(); // if not waiting then dequeue it
 
