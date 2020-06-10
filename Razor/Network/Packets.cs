@@ -768,6 +768,18 @@ namespace Assistant
 		}
 	}
 
+    internal sealed class UseTargetedItem : Packet
+    {
+        internal UseTargetedItem(uint useItem, uint target)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 4 + 4);
+            Write((ushort)0x2C); // use targeted item
+            Write(useItem); // use item
+            Write((uint)target); // on target
+        }
+    }
+
     internal sealed class CastTargetedSpell : Packet
     {
         internal CastTargetedSpell(ushort spell, uint target)
@@ -777,6 +789,18 @@ namespace Assistant
             Write((ushort)0x2D); // cast targeted spell
             Write(spell); // spell id
             Write((uint)target);
+        }
+    }
+
+    internal sealed class UseTargetedSkill : Packet
+    {
+        internal UseTargetedSkill(uint useSkill, uint target)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 2 + 4);
+            Write((ushort)0x2E); // use skill
+            Write(useSkill); // skill
+            Write((uint)target); // on target
         }
     }
 

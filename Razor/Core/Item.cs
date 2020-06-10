@@ -90,18 +90,18 @@ namespace Assistant
         public static Item Factory(Serial serial, UInt32 itemID)
         {
             // during drag operation item may be removed from World
-            //if (DragDropManager.Holding != null && DragDropManager.Holding.Serial == serial)
-            //{
-                // resurrecting this guy so mark him un-deleted
-                //DragDropManager.Holding.Deleted = false;
-                //return DragDropManager.Holding;
-            //}
+            if (itemID == 0 && DragDropManager.Holding != null && DragDropManager.Holding.Serial == serial)
+            {
+                // Dropping this item, but already deleted so use ItemID from dead one
+                // Because the itemID of dragged items is not on a drop packet
+                itemID = DragDropManager.Holding.ItemID;
+            }
             Item item = null;
             switch (itemID)
             {
-                //case 0x14EC:
-                     //item = new MapItem(serial);
-                    //break;
+                case 0x14EC:
+                    item = new MapItem(serial);
+                    break;
                 case 0:
                     item = new Item(serial);
                     break;

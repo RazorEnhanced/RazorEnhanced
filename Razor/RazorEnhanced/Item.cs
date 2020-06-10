@@ -880,7 +880,65 @@ namespace RazorEnhanced
 				UseItem(item.Serial);
 		}
 
-		public static void UseItem(int itemserial)
+        public static void UseItemOn(Item item, Item target)
+        {
+            if (item == null || target == null)
+                return;
+
+            UseItemOn(item.Serial, target.Serial);
+        }
+        public static void UseItemOn(int item, Item target)
+        {
+            if (target == null)
+                return;
+
+            UseItemOn(item, target.Serial);
+        }
+        public static void UseItemOn(Item item, int target)
+        {
+            if (item == null)
+                return;
+
+            UseItemOn(item.Serial, target);
+        }
+
+        public static void UseItemOn(int itemSerial, int targetSerial)
+        {
+            Assistant.Item item = Assistant.World.FindItem(itemSerial);
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Use Serial");
+                return;
+            }
+
+            Assistant.Item itemTarget = Assistant.World.FindItem(targetSerial);
+            Assistant.Mobile mobileTarget = Assistant.World.FindMobile(targetSerial);
+            if (itemTarget == null && mobileTarget == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItemOn: Invalid Target Serial");
+                return;
+            }
+
+            if (!item.Serial.IsItem)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItemOn: (" + item.Serial.ToString() + ") is not an item");
+                return;
+            }
+            if (itemTarget == null && !mobileTarget.Serial.IsMobile)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItemOn: (" + targetSerial.ToString() + ") is not a mobile");
+                return;
+            }
+            if (mobileTarget == null && !itemTarget.Serial.IsItem)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItemOn: (" + targetSerial.ToString() + ") is not an item");
+                return;
+            }
+
+            Assistant.Client.Instance.SendToServerWait(new UseTargetedItem((uint)itemSerial, (uint)targetSerial));
+        }
+
+        public static void UseItem(int itemserial)
 		{
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
 			if (item == null)
