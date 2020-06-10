@@ -901,17 +901,28 @@ namespace Assistant
             if (form is MainForm)
                 ((MainForm) form).UpdateTitle();
         }
-        internal static string ParsePropsCliloc(string propstring)
+        internal static string ParsePropsCliloc(string instring)
         {
+            // Some of the free servers are putting html attributes in, so just rip them out for our purposes
+            // for non-html I tested and it does nothing
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(instring);
+            StringBuilder sb = new StringBuilder();
+            foreach (HtmlAgilityPack.HtmlTextNode node in doc.DocumentNode.SelectNodes("//text()"))
+            {
+                sb.Append(node.Text);
+            }
+            string propString = sb.ToString();
+
             bool subprops = false;
             int i = 0;
 
-            if (propstring.Length > 7)
+            if (propString.Length > 7)
                 subprops = true;
 
             string number = string.Empty;
 
-            foreach (char str in propstring)
+            foreach (char str in propString)
             {
                 if (subprops)
                 {
