@@ -1165,23 +1165,26 @@ namespace RazorEnhanced
             if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
             {
                 var content = assistantItem.ObjPropList.Content;
-                for (int i = 0; i < content.Count; i++)
+                if (content != null)
                 {
-                    if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
-                        continue;
-
-                    if (content[i].Args == null)  // Props exist but not have value
-                        return 1;
-
-                    try
+                    for (int i = 0; i < content.Count; i++)
                     {
-                        return Convert.ToSingle(Language.ParsePropsCliloc(content[i].Args), CultureInfo.InvariantCulture);
-                    }
-                    catch
-                    {
-                        return 1;  // Conversion error
-                    }
+                        if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
+                            continue;
 
+                        if (content[i].Args == null)  // Props exist but not have value
+                            return 1;
+
+                        try
+                        {
+                            return Convert.ToSingle(Language.ParsePropsCliloc(content[i].Args), CultureInfo.InvariantCulture);
+                        }
+                        catch
+                        {
+                            return 1;  // Conversion error
+                        }
+
+                    }
                 }
             }
             return 0;  // Item not exist or props not exist
