@@ -23,7 +23,7 @@ namespace RazorEnhanced.UI
 				m_graphics = (string)row.Cells[2].Value;
 				m_color = (string)row.Cells[3].Value;
 
-				m_proplist = (List<AutoLoot.AutoLootItem.Property>)row.Cells[4].Value;
+				m_proplist = (List<AutoLoot.AutoLootItem.Property>)row.Cells[5].Value;
             }
 		}
 
@@ -222,7 +222,7 @@ namespace RazorEnhanced.UI
 
 				propslist.Add(new AutoLoot.AutoLootItem.Property(propname, min ,max));
             }
-			m_row.Cells[4].Value = propslist;
+			m_row.Cells[5].Value = propslist;
 			AutoLoot.CopyTable();
 		}
 
