@@ -1877,7 +1877,13 @@ namespace Assistant
 				{
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
 				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
-					if (World.Player != null && !RazorEnhanced.AutoLoot.AutoMode && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player.Visible)
+
+                    bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
+                    if (World.Player != null
+                        && !RazorEnhanced.AutoLoot.AutoMode
+                        && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses")
+                        && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange"))
+                        && (World.Player.Visible || lootHidden))
 				 		Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
 				}
 				else if (item.IsMulti)
@@ -1997,7 +2003,13 @@ namespace Assistant
 				{
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
 				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
-					if (World.Player != null && !RazorEnhanced.AutoLoot.AutoMode && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player.Visible)
+
+                    bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
+                    if (World.Player != null
+                        && !RazorEnhanced.AutoLoot.AutoMode
+                        && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses")
+                        && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange"))
+                        && (World.Player.Visible || lootHidden))
 				 		Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
 				}
 				else if (item.IsMulti)

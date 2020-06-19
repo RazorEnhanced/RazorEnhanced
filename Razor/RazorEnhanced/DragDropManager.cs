@@ -24,7 +24,11 @@ namespace RazorEnhanced
                 return;
             }
 
-            if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget && Player.Visible)
+            bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
+            if (AutoLootSerialCorpseRefresh.Count > 0
+                && Assistant.Engine.MainWindow.AutolootCheckBox.Checked
+                && !Targeting.HasTarget
+                && (Player.Visible || lootHidden))
             {
                 try
                 {
@@ -149,7 +153,9 @@ namespace RazorEnhanced
         {
             if (Monitor.TryEnter(autolootLock)) try
                 {
-                    if (Player.Visible && AutoLoot.SerialToGrabList.Count > 0)
+                    bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
+
+                    if ( (Player.Visible || lootHidden) && AutoLoot.SerialToGrabList.Count > 0)
                     {
                         try
                         {

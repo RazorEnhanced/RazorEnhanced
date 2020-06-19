@@ -679,6 +679,7 @@ namespace Assistant
         private DataGridViewTextBoxColumn AutolootColumnColor;
         private DataGridViewTextBoxColumn LootBagColumnID;
         private DataGridViewTextBoxColumn AutolootColumnProps;
+        private RazorCheckBox allowHiddenLooting;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -757,6 +758,7 @@ namespace Assistant
             this.opacityLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.moreOptTab = new System.Windows.Forms.TabPage();
+            this.allowHiddenLooting = new RazorEnhanced.UI.RazorCheckBox();
             this.filterNPC = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.setpathmapbutton = new System.Windows.Forms.Button();
@@ -908,6 +910,12 @@ namespace Assistant
             this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
             this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
             this.autolootdataGridView = new System.Windows.Forms.DataGridView();
+            this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LootBagColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.autoLootnoopenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.label21 = new System.Windows.Forms.Label();
             this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1369,12 +1377,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LootBagColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1815,6 +1817,7 @@ namespace Assistant
             //
             // moreOptTab
             //
+            this.moreOptTab.Controls.Add(this.allowHiddenLooting);
             this.moreOptTab.Controls.Add(this.filterNPC);
             this.moreOptTab.Controls.Add(this.groupBox17);
             this.moreOptTab.Controls.Add(this.label10);
@@ -1877,9 +1880,18 @@ namespace Assistant
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             //
+            // allowHiddenLooting
+            //
+            this.allowHiddenLooting.Location = new System.Drawing.Point(204, 117);
+            this.allowHiddenLooting.Name = "allowHiddenLooting";
+            this.allowHiddenLooting.Size = new System.Drawing.Size(190, 22);
+            this.allowHiddenLooting.TabIndex = 82;
+            this.allowHiddenLooting.Text = "Allow looting while hidden";
+            this.allowHiddenLooting.CheckedChanged += new System.EventHandler(this.hiddenLooting_CheckedChanged);
+            //
             // filterNPC
             //
-            this.filterNPC.Location = new System.Drawing.Point(204, 180);
+            this.filterNPC.Location = new System.Drawing.Point(204, 199);
             this.filterNPC.Name = "filterNPC";
             this.filterNPC.Size = new System.Drawing.Size(216, 22);
             this.filterNPC.TabIndex = 81;
@@ -2024,7 +2036,7 @@ namespace Assistant
             //
             // filterPoison
             //
-            this.filterPoison.Location = new System.Drawing.Point(204, 159);
+            this.filterPoison.Location = new System.Drawing.Point(204, 178);
             this.filterPoison.Name = "filterPoison";
             this.filterPoison.Size = new System.Drawing.Size(216, 22);
             this.filterPoison.TabIndex = 79;
@@ -2033,7 +2045,7 @@ namespace Assistant
             //
             // chknorunStealth
             //
-            this.chknorunStealth.Location = new System.Drawing.Point(204, 264);
+            this.chknorunStealth.Location = new System.Drawing.Point(204, 283);
             this.chknorunStealth.Name = "chknorunStealth";
             this.chknorunStealth.Size = new System.Drawing.Size(190, 22);
             this.chknorunStealth.TabIndex = 78;
@@ -2069,7 +2081,7 @@ namespace Assistant
             //
             // hiddedAutoOpenDoors
             //
-            this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 306);
+            this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 325);
             this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
             this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
             this.hiddedAutoOpenDoors.TabIndex = 74;
@@ -2213,7 +2225,7 @@ namespace Assistant
             //
             // autoOpenDoors
             //
-            this.autoOpenDoors.Location = new System.Drawing.Point(204, 285);
+            this.autoOpenDoors.Location = new System.Drawing.Point(204, 304);
             this.autoOpenDoors.Name = "autoOpenDoors";
             this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
             this.autoOpenDoors.TabIndex = 59;
@@ -2222,7 +2234,7 @@ namespace Assistant
             //
             // chkStealth
             //
-            this.chkStealth.Location = new System.Drawing.Point(204, 243);
+            this.chkStealth.Location = new System.Drawing.Point(204, 262);
             this.chkStealth.Name = "chkStealth";
             this.chkStealth.Size = new System.Drawing.Size(190, 22);
             this.chkStealth.TabIndex = 12;
@@ -2258,7 +2270,7 @@ namespace Assistant
             //
             // filterSnoop
             //
-            this.filterSnoop.Location = new System.Drawing.Point(204, 138);
+            this.filterSnoop.Location = new System.Drawing.Point(204, 157);
             this.filterSnoop.Name = "filterSnoop";
             this.filterSnoop.Size = new System.Drawing.Size(208, 22);
             this.filterSnoop.TabIndex = 49;
@@ -2280,7 +2292,7 @@ namespace Assistant
             //
             // incomingCorpse
             //
-            this.incomingCorpse.Location = new System.Drawing.Point(204, 222);
+            this.incomingCorpse.Location = new System.Drawing.Point(204, 241);
             this.incomingCorpse.Name = "incomingCorpse";
             this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
             this.incomingCorpse.TabIndex = 48;
@@ -2289,7 +2301,7 @@ namespace Assistant
             //
             // incomingMob
             //
-            this.incomingMob.Location = new System.Drawing.Point(204, 201);
+            this.incomingMob.Location = new System.Drawing.Point(204, 220);
             this.incomingMob.Name = "incomingMob";
             this.incomingMob.Size = new System.Drawing.Size(244, 22);
             this.incomingMob.TabIndex = 47;
@@ -2372,7 +2384,7 @@ namespace Assistant
             //
             // spamFilter
             //
-            this.spamFilter.Location = new System.Drawing.Point(204, 117);
+            this.spamFilter.Location = new System.Drawing.Point(204, 136);
             this.spamFilter.Name = "spamFilter";
             this.spamFilter.Size = new System.Drawing.Size(228, 22);
             this.spamFilter.TabIndex = 26;
@@ -3399,6 +3411,55 @@ namespace Assistant
             this.autolootdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
             this.autolootdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
             this.autolootdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+            //
+            // AutolootColumnX
+            //
+            this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnX.FalseValue = "False";
+            this.AutolootColumnX.HeaderText = "X";
+            this.AutolootColumnX.IndeterminateValue = "False";
+            this.AutolootColumnX.Name = "AutolootColumnX";
+            this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.AutolootColumnX.TrueValue = "True";
+            this.AutolootColumnX.Width = 22;
+            //
+            // AutolootColumnItemName
+            //
+            this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnItemName.HeaderText = "Item Name";
+            this.AutolootColumnItemName.Name = "AutolootColumnItemName";
+            this.AutolootColumnItemName.Width = 206;
+            //
+            // AutolootColumnItemID
+            //
+            this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnItemID.HeaderText = "Graphics";
+            this.AutolootColumnItemID.Name = "AutolootColumnItemID";
+            this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnItemID.Width = 54;
+            //
+            // AutolootColumnColor
+            //
+            this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnColor.HeaderText = "Color";
+            this.AutolootColumnColor.Name = "AutolootColumnColor";
+            this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnColor.Width = 54;
+            //
+            // LootBagColumnID
+            //
+            this.LootBagColumnID.HeaderText = "Bag";
+            this.LootBagColumnID.MaxInputLength = 65535;
+            this.LootBagColumnID.Name = "LootBagColumnID";
+            this.LootBagColumnID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.LootBagColumnID.Width = 54;
+            //
+            // AutolootColumnProps
+            //
+            this.AutolootColumnProps.HeaderText = "Props";
+            this.AutolootColumnProps.Name = "AutolootColumnProps";
+            this.AutolootColumnProps.Visible = false;
             //
             // autoLootnoopenCheckBox
             //
@@ -8208,55 +8269,6 @@ namespace Assistant
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
             //
-            // AutolootColumnX
-            //
-            this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnX.FalseValue = "False";
-            this.AutolootColumnX.HeaderText = "X";
-            this.AutolootColumnX.IndeterminateValue = "False";
-            this.AutolootColumnX.Name = "AutolootColumnX";
-            this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.AutolootColumnX.TrueValue = "True";
-            this.AutolootColumnX.Width = 22;
-            //
-            // AutolootColumnItemName
-            //
-            this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnItemName.HeaderText = "Item Name";
-            this.AutolootColumnItemName.Name = "AutolootColumnItemName";
-            this.AutolootColumnItemName.Width = 206;
-            //
-            // AutolootColumnItemID
-            //
-            this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnItemID.HeaderText = "Graphics";
-            this.AutolootColumnItemID.Name = "AutolootColumnItemID";
-            this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnItemID.Width = 54;
-            //
-            // AutolootColumnColor
-            //
-            this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnColor.HeaderText = "Color";
-            this.AutolootColumnColor.Name = "AutolootColumnColor";
-            this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnColor.Width = 54;
-            //
-            // LootBagColumnID
-            //
-            this.LootBagColumnID.HeaderText = "Bag";
-            this.LootBagColumnID.MaxInputLength = 65535;
-            this.LootBagColumnID.Name = "LootBagColumnID";
-            this.LootBagColumnID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.LootBagColumnID.Width = 54;
-            //
-            // AutolootColumnProps
-            //
-            this.AutolootColumnProps.HeaderText = "Props";
-            this.AutolootColumnProps.Name = "AutolootColumnProps";
-            this.AutolootColumnProps.Visible = false;
-            //
             // MainForm
             //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -8687,6 +8699,9 @@ namespace Assistant
             autoStackRes.Checked = RazorEnhanced.Settings.General.ReadBool("AutoStack");
             corpseRange.Enabled = openCorpses.Checked = RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses");
             corpseRange.Text = RazorEnhanced.Settings.General.ReadInt("CorpseRange").ToString();
+            allowHiddenLooting.Checked = hiddedAutoOpenDoors.Enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses");
+            allowHiddenLooting.Checked = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
+
             spamFilter.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSpam");
             filterSnoop.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg");
             filterPoison.Checked = RazorEnhanced.Settings.General.ReadBool("FilterPoison");
@@ -9245,6 +9260,13 @@ namespace Assistant
 
         private void label77_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void hiddenLooting_CheckedChanged(object sender, EventArgs e)
+        {
+            if (allowHiddenLooting.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AllowHiddenLooting", allowHiddenLooting.Checked);
 
         }
 
