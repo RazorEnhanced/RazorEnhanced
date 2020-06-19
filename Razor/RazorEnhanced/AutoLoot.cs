@@ -61,18 +61,23 @@ namespace RazorEnhanced
             private int m_Color;
             public int Color { get { return m_Color; } }
 
+            [JsonProperty("LootBagOverride")]
+            public int LootBagOverride
+            { get; set; }
+
             [JsonProperty("Selected")]
             internal bool Selected { get; set; }
 
             private List<Property> m_Properties;
             public List<Property> Properties { get { return m_Properties; } }
 
-            public AutoLootItem(string name, int graphics, int color, bool selected, List<Property> properties)
+            public AutoLootItem(string name, int graphics, int color, bool selected, int lootBag, List<Property> properties)
             {
                 m_Name = name;
                 m_Graphics = graphics;
                 m_Color = color;
                 Selected = selected;
+                LootBagOverride = lootBag;
                 m_Properties = properties;
             }
         }
@@ -85,10 +90,13 @@ namespace RazorEnhanced
             private int m_itemserial;
             public int ItemSerial { get { return m_itemserial; } }
 
-            public SerialToGrab(int itemserial, int corpseserial)
+            public int DestContainerOverride { get; set; }
+
+            public SerialToGrab(int itemserial, int corpseserial, int destContainerOverride)
             {
                 m_corpseserial = corpseserial;
                 m_itemserial = itemserial;
+                DestContainerOverride = destContainerOverride;
             }
         }
 
@@ -244,7 +252,10 @@ namespace RazorEnhanced
                             if (item.Graphics != -1)
                                 itemid = "0x" + item.Graphics.ToString("X4");
 
-                            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, item.Properties });
+                            string lootBag = "0x0";
+                            lootBag = "0x" + item.LootBagOverride.ToString("X4");
+
+                            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, lootBag, item.Properties });
                         }
                     }
                     break;
@@ -277,10 +288,14 @@ namespace RazorEnhanced
                 else
                     itemID = Convert.ToInt32((string)row.Cells[2].Value, 16);
 
-                if (row.Cells[4].Value != null)
-                    Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));
+                int lootbagOverride = 0;
+                lootbagOverride = Convert.ToInt32((string)row.Cells[4].Value, 16);
+
+
+                if (row.Cells[5].Value != null)
+                    Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, lootbagOverride, (List<AutoLootItem.Property>)row.Cells[5].Value));
                 else
-                    Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, new List<AutoLootItem.Property>()));
+                    Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, lootbagOverride, new List<AutoLootItem.Property>()));
             }
 
             Settings.Save(); // Salvo dati
@@ -314,9 +329,9 @@ namespace RazorEnhanced
                 bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
                 if (row.Cells[4].Value != null)
-                    Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));
+                    Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, Convert.ToInt32((string)row.Cells[4].Value, 16), (List<AutoLootItem.Property>)row.Cells[5].Value));
                 else
-                    Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<AutoLootItem.Property>()));
+                    Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, Convert.ToInt32((string)row.Cells[4].Value, 16), new List<AutoLootItem.Property>()));
             }
 
             Settings.Save(); // Salvo dati
@@ -338,7 +353,7 @@ namespace RazorEnhanced
 
         internal static void AddItemToList(string name, int graphics, int color)
         {
-            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), new List<AutoLootItem.Property>() });
+            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), "0x" + 0.ToString("X4"), new List<AutoLootItem.Property>() });
             CopyTable();
         }
 
@@ -415,27 +430,27 @@ namespace RazorEnhanced
                     matchAll = new List<AutoLootItem>();
                 }
 
-                foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
+                foreach (RazorEnhanced.Item item in m_cont.Contains)
                 {
                     // Check match all by graphics
                     foreach (AutoLootItem autoLootItem in matchAll)
                     {
-                        if (autoLootItem.Color == oggettoContenuto.Hue || autoLootItem.Color == -1)
+                        if (autoLootItem.Color == item.Hue || autoLootItem.Color == -1)
                         {
-                            GrabItem(autoLootItem, oggettoContenuto, corpse.Serial);
+                            GrabItem(autoLootItem, item, corpse.Serial);
                         }
                     }
                     // check if in dictionary by graphics
                     List<AutoLootItem> autoLootItemList2 = null;
-                    if (autoLootList.TryGetValue(oggettoContenuto.ItemID, out autoLootItemList2))
+                    if (autoLootList.TryGetValue(item.ItemID, out autoLootItemList2))
                     {
                         foreach (AutoLootItem autoLootItem2 in autoLootItemList2)
                         {
                             if (autoLootItem2.Selected)
                             {
-                                if (autoLootItem2.Color == oggettoContenuto.Hue || autoLootItem2.Color == -1)
+                                if (autoLootItem2.Color == item.Hue || autoLootItem2.Color == -1)
                                 {
-                                    GrabItem(autoLootItem2, oggettoContenuto, corpse.Serial);
+                                    GrabItem(autoLootItem2, item, corpse.Serial);
                                 }
                             }
                         }
@@ -453,7 +468,7 @@ namespace RazorEnhanced
             if (!grabItem.Movable || !grabItem.Visible)
                 return;
 
-            SerialToGrab data = new SerialToGrab(grabItem.Serial, corpseserial);
+            SerialToGrab data = new SerialToGrab(grabItem.Serial, corpseserial, autoLoootItem.LootBagOverride);
 
             if (autoLoootItem.Properties.Count > 0) // Item con props
             {

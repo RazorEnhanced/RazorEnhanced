@@ -2668,8 +2668,8 @@ namespace RazorEnhanced
 				for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
-					if ((string)row["List"] == list)
-						row.Delete();
+                    if (row.RowState != DataRowState.Deleted && (string)row["List"] == list)
+						    row.Delete();
 				}
 			}
 

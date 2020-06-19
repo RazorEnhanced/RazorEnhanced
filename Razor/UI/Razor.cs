@@ -473,11 +473,6 @@ namespace Assistant
         private DataGridView autolootdataGridView;
         private GroupBox groupBox14;
         private Label label55;
-        private DataGridViewCheckBoxColumn AutolootColumnX;
-        private DataGridViewTextBoxColumn AutolootColumnItemName;
-        private DataGridViewTextBoxColumn AutolootColumnItemID;
-        private DataGridViewTextBoxColumn AutolootColumnColor;
-        private DataGridViewTextBoxColumn AutolootColumnProps;
         private DataGridView vendorbuydataGridView;
         private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
@@ -678,6 +673,12 @@ namespace Assistant
         private Label label78;
         private RazorButton advertisementLink;
         private PictureBox advertisement;
+        private DataGridViewCheckBoxColumn AutolootColumnX;
+        private DataGridViewTextBoxColumn AutolootColumnItemName;
+        private DataGridViewTextBoxColumn AutolootColumnItemID;
+        private DataGridViewTextBoxColumn AutolootColumnColor;
+        private DataGridViewTextBoxColumn LootBagColumnID;
+        private DataGridViewTextBoxColumn AutolootColumnProps;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -907,11 +908,6 @@ namespace Assistant
             this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
             this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
             this.autolootdataGridView = new System.Windows.Forms.DataGridView();
-            this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.autoLootnoopenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.label21 = new System.Windows.Forms.Label();
             this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1373,6 +1369,12 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+            this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LootBagColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -3380,6 +3382,7 @@ namespace Assistant
             this.AutolootColumnItemName,
             this.AutolootColumnItemID,
             this.AutolootColumnColor,
+            this.LootBagColumnID,
             this.AutolootColumnProps});
             this.autolootdataGridView.Location = new System.Drawing.Point(9, 95);
             this.autolootdataGridView.Name = "autolootdataGridView";
@@ -3396,47 +3399,6 @@ namespace Assistant
             this.autolootdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
             this.autolootdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
             this.autolootdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
-            //
-            // AutolootColumnX
-            //
-            this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnX.FalseValue = "False";
-            this.AutolootColumnX.HeaderText = "X";
-            this.AutolootColumnX.IndeterminateValue = "False";
-            this.AutolootColumnX.Name = "AutolootColumnX";
-            this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.AutolootColumnX.TrueValue = "True";
-            this.AutolootColumnX.Width = 22;
-            //
-            // AutolootColumnItemName
-            //
-            this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnItemName.HeaderText = "Item Name";
-            this.AutolootColumnItemName.Name = "AutolootColumnItemName";
-            this.AutolootColumnItemName.Width = 206;
-            //
-            // AutolootColumnItemID
-            //
-            this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnItemID.HeaderText = "Graphics";
-            this.AutolootColumnItemID.Name = "AutolootColumnItemID";
-            this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnItemID.Width = 54;
-            //
-            // AutolootColumnColor
-            //
-            this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnColor.HeaderText = "Color";
-            this.AutolootColumnColor.Name = "AutolootColumnColor";
-            this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnColor.Width = 54;
-            //
-            // AutolootColumnProps
-            //
-            this.AutolootColumnProps.HeaderText = "Props";
-            this.AutolootColumnProps.Name = "AutolootColumnProps";
-            this.AutolootColumnProps.Visible = false;
             //
             // autoLootnoopenCheckBox
             //
@@ -8245,6 +8207,55 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            //
+            // AutolootColumnX
+            //
+            this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnX.FalseValue = "False";
+            this.AutolootColumnX.HeaderText = "X";
+            this.AutolootColumnX.IndeterminateValue = "False";
+            this.AutolootColumnX.Name = "AutolootColumnX";
+            this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.AutolootColumnX.TrueValue = "True";
+            this.AutolootColumnX.Width = 22;
+            //
+            // AutolootColumnItemName
+            //
+            this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnItemName.HeaderText = "Item Name";
+            this.AutolootColumnItemName.Name = "AutolootColumnItemName";
+            this.AutolootColumnItemName.Width = 206;
+            //
+            // AutolootColumnItemID
+            //
+            this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnItemID.HeaderText = "Graphics";
+            this.AutolootColumnItemID.Name = "AutolootColumnItemID";
+            this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnItemID.Width = 54;
+            //
+            // AutolootColumnColor
+            //
+            this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnColor.HeaderText = "Color";
+            this.AutolootColumnColor.Name = "AutolootColumnColor";
+            this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnColor.Width = 54;
+            //
+            // LootBagColumnID
+            //
+            this.LootBagColumnID.HeaderText = "Bag";
+            this.LootBagColumnID.MaxInputLength = 65535;
+            this.LootBagColumnID.Name = "LootBagColumnID";
+            this.LootBagColumnID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.LootBagColumnID.Width = 54;
+            //
+            // AutolootColumnProps
+            //
+            this.AutolootColumnProps.HeaderText = "Props";
+            this.AutolootColumnProps.Name = "AutolootColumnProps";
+            this.AutolootColumnProps.Visible = false;
             //
             // MainForm
             //
