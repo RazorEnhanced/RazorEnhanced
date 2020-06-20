@@ -220,13 +220,19 @@ namespace Assistant
 		private static int[] SoulGlaiveID = new int[] { 0x406B, 0x090A };
 		private static int[] UOPSword = new int[] { 0x26CE };
 
-		private static AbilityInfo[] m_Primary = new AbilityInfo[]
+        // Free server additions
+        private static int[] WhipMace = new int[] { 0xA289 };
+        private static int[] WhipFencing = new int[] { 0xA28A };
+        private static int[] WhipSword = new int[] { 0xA28B };
+
+
+        private static AbilityInfo[] m_Primary = new AbilityInfo[]
 		{
 			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID, SoulGlaiveID ),
-			new AbilityInfo( AOSAbility.ArmorPeirce, YumiID ),
-			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID ),
+			new AbilityInfo( AOSAbility.ArmorPeirce, YumiID, WhipFencing ),
+			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID, WhipSword ),
 			new AbilityInfo( AOSAbility.Block, NunchakuID ),
-			new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID ),
+			new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID, WhipMace ),
 			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, WarMaceID, ScepterID, SledgeHammerID, GargishAxeID, DreadSwordID, NoDachiID, SerpentstoneStaffID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, ElvenMacheteID, LajatangID ),
 			new AbilityInfo( AOSAbility.Disarm, FistsID, OrnateAxeID, RuneBladeID, GargishLanceID, WarCleaverID ),
@@ -272,7 +278,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.SerpentArrow, ElvenCompositeLongbowID ),
 			new AbilityInfo( AOSAbility.ShadowStrike, TwoHandedAxeID, CutlassID, SmithsHammerID, DaggerID, SledgeHammerID, AssassinSpikeID ),
 			new AbilityInfo( AOSAbility.TalonStrike, GargishTekagiID, TekagiID ),
-			new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID ),
+			new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID, WhipMace, WhipSword, WhipFencing ),
 			new AbilityInfo( AOSAbility.NerveStrike, BokutoID ),
             new AbilityInfo( AOSAbility.InfusedThrow, CycloneID )
 		};

@@ -435,9 +435,12 @@ namespace RazorEnhanced
                     // Check match all by graphics
                     foreach (AutoLootItem autoLootItem in matchAll)
                     {
-                        if (autoLootItem.Color == item.Hue || autoLootItem.Color == -1)
+                        if (autoLootItem.Selected)
                         {
-                            GrabItem(autoLootItem, item, corpse.Serial);
+                            if (autoLootItem.Color == item.Hue || autoLootItem.Color == -1)
+                            {
+                                GrabItem(autoLootItem, item, corpse.Serial);
+                            }
                         }
                     }
                     // check if in dictionary by graphics

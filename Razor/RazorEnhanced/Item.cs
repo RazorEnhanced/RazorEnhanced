@@ -1130,28 +1130,35 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = World.FindItem((uint)serial);
 
 			float totalResist = 0;
-			if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
-			{
-				for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
-				{
-					if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
-					{
-						if (assistantItem.ObjPropList.Content[i].Args != null)
-						{
-							float addIt = 0;
-							try
-							{
-								addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
-							}
-							catch
-							{
-								addIt = 1;  // Conversion error
-							}
-							totalResist += addIt;
-						}
-					}
-				}
-			}
+            try
+            {
+                if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+                {
+                    for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
+                    {
+                        if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
+                        {
+                            if (assistantItem.ObjPropList.Content[i].Args != null)
+                            {
+                                float addIt = 0;
+                                try
+                                {
+                                    addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
+                                }
+                                catch
+                                {
+                                    addIt = 1;  // Conversion error
+                                }
+                                totalResist += addIt;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (System.ArgumentOutOfRangeException ex)
+            {
+                // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
+            }
 			return totalResist;
 		}
 
@@ -1161,31 +1168,38 @@ namespace RazorEnhanced
                 return GetTotalResistProp(serial);
 
             Assistant.Item assistantItem = World.FindItem((uint)serial);
-
-            if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+            try
             {
-                var content = assistantItem.ObjPropList.Content;
-                if (content != null)
+                if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
                 {
-                    for (int i = 0; i < content.Count; i++)
+                    var content = assistantItem.ObjPropList.Content;
+                    if (content != null)
                     {
-                        if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
-                            continue;
-
-                        if (content[i].Args == null)  // Props exist but not have value
-                            return 1;
-
-                        try
+                        for (int i = 0; i < content.Count; i++)
                         {
-                            return Convert.ToSingle(Language.ParsePropsCliloc(content[i].Args), CultureInfo.InvariantCulture);
-                        }
-                        catch
-                        {
-                            return 1;  // Conversion error
-                        }
+                            if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
+                                continue;
 
+                            if (content[i].Args == null)  // Props exist but not have value
+                                return 1;
+
+                            try
+                            {
+                                return Convert.ToSingle(Language.ParsePropsCliloc(content[i].Args), CultureInfo.InvariantCulture);
+                            }
+                            catch
+                            {
+                                return 1;  // Conversion error
+                            }
+
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                // do nothing because sometimes the content[i] no longer existed so fall through
+                // and return 0
             }
             return 0;  // Item not exist or props not exist
         }
