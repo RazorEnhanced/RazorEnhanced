@@ -1333,7 +1333,7 @@ namespace FastColoredTextBoxNS
 
 			string GenericProps = "Serial|Hue|Position|X|Y|Z|Contains|Weight";
 			string PlayerProps = "Str|Int|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Gold|Luck|Followers|FollowersMax|MaxWeight|HasSpecial|Flying|StaticMount";
-			string MobileProps = "Name|Body|Color|Direction|Visible|Poisoned|YellowHits|Paralized|Human|WarMode|Female|Hits|HitsMax|Stam|StamMax|Mana|ManaMax|Backpack|Mount|Quiver|Notoriety|Map|InParty|Properties|Flying";
+			string MobileProps = "Name|Body|MobileID|Color|Direction|Visible|Poisoned|YellowHits|Paralized|Human|WarMode|Female|Hits|HitsMax|Stam|StamMax|Mana|ManaMax|Backpack|Mount|Quiver|Notoriety|Map|InParty|Properties|Flying";
 			string ItemsProps = "Amount|IsBagOfSending|IsContainer|IsCorpse|IsDoor|IsInBank|Movable|OnGround|ItemID|RootContainer|Container|Durability|MaxDurability";
 			string StaticProps = "StaticID|StaticHue|StaticZ";
 			string ItemFilterProps = "Enabled|Graphics|Hues|RangeMin|RangeMax|Layers|Serials";

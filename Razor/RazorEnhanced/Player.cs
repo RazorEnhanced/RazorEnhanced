@@ -134,7 +134,8 @@ namespace RazorEnhanced
 		public static int Gold { get { return Convert.ToInt32(World.Player.Gold); } }
 		public static int Luck { get { return World.Player.Luck; } }
 		public static int Body { get { return World.Player.Body; } }
-		public static int Serial { get { return World.Player.Serial; } }
+        public static int MobileID { get { return World.Player.Body; } }
+        public static int Serial { get { return World.Player.Serial; } }
 
 		// Follower
 		public static int FollowersMax { get { return World.Player.FollowersMax; } }

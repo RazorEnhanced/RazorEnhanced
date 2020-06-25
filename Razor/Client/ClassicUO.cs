@@ -24,15 +24,6 @@ namespace Assistant
 
         public static unsafe void Install(PluginHeader* plugin)
         {
-            ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
-            Install2(plugin, settings.IP);
-        }
-
-        public static unsafe void Install2(PluginHeader* plugin, string shard_host)
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
             AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
             {
                 string[] fields = e.Name.Split(',');
@@ -50,6 +41,16 @@ namespace Assistant
 
                 return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
             };
+
+
+            ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
+            Install2(plugin, settings.IP);
+        }
+
+        public static unsafe void Install2(PluginHeader* plugin, string shard_host)
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
             //SplashScreen.Start();
             m_ActiveWnd = SplashScreen.Instance;
