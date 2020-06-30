@@ -278,7 +278,7 @@ internal static string SelfHealUseTextSelfContent
 
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
 				{
-					if (Player.BuffsExist("Mortal Strike"))
+					if (Player.BuffsExist("Mortal Strike") && (target.Serial == Player.Serial))
 						return;
 				}
 

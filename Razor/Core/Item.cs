@@ -865,32 +865,38 @@ namespace Assistant
         void FixUpLocation()
         {
             // This has issues with the fakeIndex do for now quit doing it
-            return;
-            string version = Client.Instance.GetClientVersion();
-            string[] versionParts = version.Split('.');
-            int majorVersion = Convert.ToInt32(versionParts[0]);
-            int multiplyier = 1;
-            if (majorVersion < 7)
+            try
             {
-                multiplyier = 2;
+                string version = Client.Instance.GetClientVersion();
+                string[] versionParts = version.Split('.');
+                int majorVersion = Convert.ToInt32(versionParts[0]);
+                int multiplyier = 1;
+                if (majorVersion < 7)
+                {
+                    multiplyier = 2;
+                }
+                if (m_Facet == 3)
+                    multiplyier = 1;
+                int xCoord = m_MapOrigin.X + (multiplyier * m_PinPosition.X);
+                int yCoord = m_MapOrigin.Y + (multiplyier * m_PinPosition.Y);
+                string location = String.Format("Location({0}, {1})",
+                    xCoord,
+                    yCoord
+                    );
+                // The m_FakePropIndex at this point was beyond the end of the array
+                m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
+                MapEntry entry = FindMapEntry();
+                if (entry != null)
+                {
+                    string thbNumber = String.Format("THB# {0}", entry.thbNumber);
+                    string thbName = String.Format("{0}", entry.thbName);
+                    m_ObjPropList.Content[m_FakePropIndex + 1] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbNumber);
+                    m_ObjPropList.Content[m_FakePropIndex + 2] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbName);
+                }
             }
-            if (m_Facet == 3)
-                multiplyier = 1;
-            int xCoord = m_MapOrigin.X + (multiplyier * m_PinPosition.X);
-            int yCoord = m_MapOrigin.Y + (multiplyier * m_PinPosition.Y);
-            string location = String.Format("Location({0}, {1})",
-                xCoord,
-                yCoord
-                );
-            // The m_FakePropIndex at this point was beyond the end of the array
-            m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
-            MapEntry entry = FindMapEntry();
-            if (entry != null)
+            catch (Exception e)
             {
-                string thbNumber = String.Format("THB# {0}", entry.thbNumber);
-                string thbName = String.Format("{0}", entry.thbName);
-                m_ObjPropList.Content[m_FakePropIndex+1] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbNumber);
-                m_ObjPropList.Content[m_FakePropIndex+2] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbName);
+                // shold do something, but ...
             }
 
         }
