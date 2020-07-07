@@ -3399,7 +3399,7 @@ namespace Assistant
             this.autolootdataGridView.Location = new System.Drawing.Point(9, 95);
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
-            this.autolootdataGridView.Size = new System.Drawing.Size(356, 238);
+            this.autolootdataGridView.Size = new System.Drawing.Size(392, 238);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
@@ -3532,9 +3532,9 @@ namespace Assistant
             // groupBox13
             //
             this.groupBox13.Controls.Add(this.autolootLogBox);
-            this.groupBox13.Location = new System.Drawing.Point(371, 94);
+            this.groupBox13.Location = new System.Drawing.Point(407, 94);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(278, 239);
+            this.groupBox13.Size = new System.Drawing.Size(242, 239);
             this.groupBox13.TabIndex = 53;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Autoloot Log";
@@ -3542,9 +3542,9 @@ namespace Assistant
             // autolootLogBox
             //
             this.autolootLogBox.FormattingEnabled = true;
-            this.autolootLogBox.Location = new System.Drawing.Point(7, 18);
+            this.autolootLogBox.Location = new System.Drawing.Point(6, 19);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(265, 212);
+            this.autolootLogBox.Size = new System.Drawing.Size(232, 212);
             this.autolootLogBox.TabIndex = 0;
             //
             // autoLootCheckBox

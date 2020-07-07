@@ -2792,7 +2792,14 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				return m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
+                try
+                {
+                    return m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => ((string)row["Description"]).ToLower() == description.ToLower());
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
 			}
 
 			internal static void ListInsert(string description, int delay, int bag, int range)
