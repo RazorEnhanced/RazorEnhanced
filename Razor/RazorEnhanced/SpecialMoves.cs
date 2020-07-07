@@ -221,9 +221,9 @@ namespace Assistant
 		private static int[] UOPSword = new int[] { 0x26CE };
 
         // Free server additions
-        private static int[] WhipMace = new int[] { 0xA289 };
-        private static int[] WhipFencing = new int[] { 0xA28A };
-        private static int[] WhipSword = new int[] { 0xA28B };
+        private static int[] WhipMace = new int[] { 0xA289, 0xA291 };
+        private static int[] WhipFencing = new int[] { 0xA28A, 0xA292 };
+        private static int[] WhipSword = new int[] { 0xA28B, 0xA293 };
 
 
         private static AbilityInfo[] m_Primary = new AbilityInfo[]
