@@ -2473,7 +2473,7 @@ namespace RazorEnhanced
 			// Composizione Parematri base primo avvio
 			object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
-                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[bandself", "[band",
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself",
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
