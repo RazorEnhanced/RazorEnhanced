@@ -217,7 +217,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsOrganizer =
 			{
-				"Organizer.Status", "Organizer.FStart", "Organizer.FStop", "Organizer.ChangeList"
+				"Organizer.Status", "Organizer.FStart", "Organizer.FStop", "Organizer.ChangeList", "Organizer.RunOnce"
 			};
 
 			string[] methodsRestock =
@@ -998,11 +998,14 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Organizer.ChangeList(string)", new string[] { "strign ListName" }, "void", "Change list of organizer item. List must be exist in organizer GUI configuration");
 			descriptionOrganizer.Add("Organizer.ChangeList", tooltip);
 
-			#endregion
+            tooltip = new ToolTipDescriptions("Organizer.RunOnce(int source, int dest, int dragDelay, string organizerName)", new string[] { "int source, int list, int dragDelay, string organizerName" }, "void", "Run organizer once with specific parameters");
+            descriptionOrganizer.Add("Organizer.RunOnce", tooltip);
 
-			#region Description Restock
+            #endregion
 
-			Dictionary<string, ToolTipDescriptions> descriptionRestock = new Dictionary<string, ToolTipDescriptions>();
+            #region Description Restock
+
+            Dictionary<string, ToolTipDescriptions> descriptionRestock = new Dictionary<string, ToolTipDescriptions>();
 
 			tooltip = new ToolTipDescriptions("Restock.Status()", new string[] { "none" }, "bool", "Get status of restock engine\n\tTrue: is running, False: is not running");
 			descriptionRestock.Add("Restock.Status", tooltip);

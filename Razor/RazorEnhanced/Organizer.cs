@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	public class Organizer
 	{
 		private static int m_dragdelay;
-		private static int m_sorucebag;
+		private static int m_sourcebag;
 		private static int m_destinationbag;
 		private static string m_organizerlist;
 
@@ -91,11 +91,11 @@ namespace RazorEnhanced
 
 		internal static int OrganizerSource
 		{
-			get { return m_sorucebag; }
+			get { return m_sourcebag; }
 
 			set
 			{
-				m_sorucebag = value;
+				m_sourcebag = value;
 				Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerSourceLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
@@ -327,10 +327,46 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void Engine()
+
+        public static void RunOnce(string organizerName, int sourceBag, int destBag, int dragDelay)
+        {
+            // Check Bag
+            if (sourceBag == -1)
+            {
+                sourceBag = m_sourcebag;
+            }
+            Assistant.Item sbag = Assistant.World.FindItem(sourceBag);
+            if (sbag == null)
+            {
+                AddLog("Invalid Source Bag");
+                return;
+            }
+
+            if (destBag == -1)
+            {
+                destBag = m_destinationbag;
+            }
+            Assistant.Item dbag = Assistant.World.FindItem(destBag);
+            if (dbag == null)
+            {
+                AddLog("Invalid Destination Bag");
+                return;
+            }
+
+            if (dragDelay == -1)
+            {
+                dragDelay = m_dragdelay;
+            }
+
+            List<RazorEnhanced.Organizer.OrganizerItem>  organizerList = Settings.Organizer.ItemsRead(organizerName);
+
+            int exit = Engine(organizerList, dragDelay, sourceBag, destBag);
+        }
+
+            internal static void Engine()
 		{
 			// Check Bag
-			Assistant.Item sbag = Assistant.World.FindItem(m_sorucebag);
+			Assistant.Item sbag = Assistant.World.FindItem(m_sourcebag);
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
@@ -349,7 +385,7 @@ namespace RazorEnhanced
 				return;
 			}
 
-			int exit = Engine(Settings.Organizer.ItemsRead(m_organizerlist), m_dragdelay, m_sorucebag, m_destinationbag);
+			int exit = Engine(Settings.Organizer.ItemsRead(m_organizerlist), m_dragdelay, m_sourcebag, m_destinationbag);
 		}
 
 		private static Thread m_OrganizerThread;
