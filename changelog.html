@@ -1,16 +1,25 @@
 ﻿<p>
+    <strong>Version 0.7.6.5 [7/13/2020]</strong>
+    <br /> Correct transposed [band and [bandself on new installs
+    <br /> Add Organizer.RunOnce where you can specify source and dest containers
+    <br /> changed autoloot layout a bit so you can see the new item based destination override
+    <br /> Added alternate rotation itemIDs for whips
+    <br /> Fix bandaids to allow heal of others even if healer is mortally damaged
+    <br /> Re-enable map co-ordinates in map properties
+</p>
+<p>
     <strong>Version 0.7.6.4 [6/24/2020]</strong>
     <br /> Changed order of dll loading to help with CUO load issue (TY Karosho)
     <br /> Made Mobiles.MobileID a synonym for Mobiles.Body, because the inspector calls it MobileID
-<p<p>
+</p>
     <strong>Version 0.7.6.3 [6/23/2020]</strong>
     <br /> Added whips to weapon table
     <br /> Added try / catch for processing corpses where items might disappear
     <br /> Fixed bug in handling Selected box on autoloot
-<p><p>
+<p>
     <strong>Version 0.7.6.2 [6/19/2020]</strong>
     <br /> Bug fix, I messed up property edit on autoloot in 7.6.1
-<p>
+</p>
 <p>
     <strong>Version 0.7.6.1 [6/19/2020]</strong>
     <br /> ** These changes are backwards compatible. i.e. if you do nothing, everything should work like it did before
@@ -20,13 +29,13 @@
     <br />  If the Autoloot container doesn't exist, it will drop in your backpack
     <br />- While I was changing autoloot, Kolka happenned to ask if I could add an option to loot while stealthed.
     <br />  So I added it, but it defaults to False.
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.54 [6/11/2020]</strong>
     <br />- Revert a Gargoyle fix 8e25f671c210809d72efb9b548ac472762d232d8 It seems to override the standard Weapon Specials in an incorrect way
     <br />- Matsamilla helped make the Main web page more clear in terms of what packages to use
     <br />- Removing 7.6.X from release page as the Drag / Drop fixes are now in 7.5
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.53 [6/10/2020]</strong>
     <br />- fix an html parsing issue with inspector for Pandora
@@ -34,95 +43,95 @@
     <br />- Added functions for Items.UseItemOn and (removed) Player.UseSkillOn. After adding these I found only OSI
     <br />  Servers support UseItemOn, and no one supported UseSkillOn. I left them in as they are documented packets
     <br />  but realistic use is limited.
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.52 [6/8/2020]</strong>
     <br />- I fixed the mis-counting of items that was also causing RE to be confiused
     <br />  About the Serial # of items that have been dragged
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.51 [6/8/2020]</strong>
     <br />- I think I fixed the drag-drop problem CUO users were experiencing
     <br />  The problem appeared to be the dispatch Timer was dieing, and I think it was due to buffer overflow
     <br />  I recommend the object delay on options page never be less than 2X ping speed
     <br />  and the delay after a move should be at about 6X your ping speed
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.50 [6/7/2020]</strong>
     <br />- Remove the Map property that showed map co-ordinates after you decoded it.
     <br />  The co-ordinates were not perfect, and there is a bug inserting them into properties for the map.
-<p>
+</p>
 <p>
     <strong>Version 0.6.68.0 [6/2/2020]</strong>
     <br />- Backported the OSI login fix for the people that still use 6.x
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.49 [5/29/2020]</strong>
     <br />- Misc.SendToClient - sends keys to the UO client window. can contain control characters
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.48 [5/27/2020]</strong>
     <br />- Add advertisement :)
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.47 [5/19/2020]</strong>
     <br />- Fixed a bug in ping divisor that returned incorrect averages
     <br />- Fixed an Item.ItemID bug that was resulting in ItemID of 0
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.46 [5/10/2020]</strong>
     <br />- Fixed ANOTHER occasional fail to login accounts on OSI
     <br /> !! THANK YOU TO M4yH3m for letting me use his broken account !!
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.45 [5/8/2020]</strong>
     <br />- Fixed occasional fail to login accounts on OSI
     <br /> !! THANK YOU TO LENERDO for letting me use his broken account !!
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.44 [5/6/2020]</strong>
     <br />- Add new parameter to Spell.Cast functions to allow target to be passed on single line
     <br />  This uses a single packet to the server, so no targeting needed
     <br />  Older servers will not support this, so will have to use the old cast / wait target / target which still works
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.43 [4/25/2020]</strong>
     <br />- Change the way hot-keys are handled to make wine work better
     <br />- Add Total Resist as a property for autoloot
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.42 [4/14/2020]</strong>
     <br />- When ressurecting an Item from Drag container, I needed to mark it undeleted.
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.41 [4/13/2020]</strong>
     <br />- Added MapItem class and a fake property on a map after it is read to give its co-ordinates
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.40 [4/7/2020]</strong>
     <br />- Special for some weapons were showing wrong icon.
     <br />- Reviewed / altered the behaviour of Mobiles.Select (added Previous, altered lastTarget behaviour)
     <br />- NOTE: Previously LastTarget was never returned in a select, that is no longer true.
     If you want to remove LastTarget from the list selected, do it yourself between calls to Mobiles.Select
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.39 [4/5/2020]</strong>
     <br />- Gumps.SendAdvancedAction was not sending properties beyond the first on properly
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.38 [4/4/2020]</strong>
     <br />- Added a special hack for OSI spellwords in Mysticism and Spellcasting
     <br />- Changed the IsLinux implementation
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.37 [4/3/2020]</strong>
     <br />- Vet reward filter not working, was using local time instead of UTC time
     <br />- Hotkey lost after Target change - was not copying hotkey to updated target
-<p>
+</p>
 <p>
     <strong>Version 0.7.5.36 [4/3/2020]</strong>
     <br />- Bug fix, I left 4 buttons floating around blank and useless
-<p>
+</p>
     <strong>Version 0.7.5.35 [3/30/2020]</strong>
     <br />- Change incoming string processing to not except on missing # of parameters (warcry server was sending 1 string but using a 2 parameter Cliloc)
     <br />- Remove all the import export buttons and their code. Since files are all json, the files can just be copied
