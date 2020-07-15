@@ -250,6 +250,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
+    <Compile Include="RazorEnhanced\PythonEngine.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
     <Compile Include="RazorEnhanced\Multi.cs" />

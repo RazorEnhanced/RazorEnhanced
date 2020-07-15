@@ -1130,34 +1130,37 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = World.FindItem((uint)serial);
 
 			float totalResist = 0;
-            try
+            if (assistantItem != null)
             {
-                if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+                try
                 {
-                    for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
+                    if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
                     {
-                        if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
+                        for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
                         {
-                            if (assistantItem.ObjPropList.Content[i].Args != null)
+                            if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
                             {
-                                float addIt = 0;
-                                try
+                                if (assistantItem.ObjPropList.Content[i].Args != null)
                                 {
-                                    addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
+                                    float addIt = 0;
+                                    try
+                                    {
+                                        addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
+                                    }
+                                    catch
+                                    {
+                                        addIt = 1;  // Conversion error
+                                    }
+                                    totalResist += addIt;
                                 }
-                                catch
-                                {
-                                    addIt = 1;  // Conversion error
-                                }
-                                totalResist += addIt;
                             }
                         }
                     }
                 }
-            }
-            catch (System.ArgumentOutOfRangeException ex)
-            {
-                // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
+                catch (System.ArgumentOutOfRangeException ex)
+                {
+                    // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
+                }
             }
 			return totalResist;
 		}

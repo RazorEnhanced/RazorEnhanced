@@ -62,6 +62,7 @@ namespace RazorEnhanced.UI
 		private string m_Filename = String.Empty;
 		private string m_Filepath = String.Empty;
 
+		private PythonEngine m_pe;
 		private ScriptEngine m_Engine;
 		private ScriptSource m_Source;
 		private ScriptScope m_Scope;
@@ -81,8 +82,7 @@ namespace RazorEnhanced.UI
 
 		internal static void Init(string filename)
 		{
-			ScriptEngine engine = Python.CreateEngine();
-			m_EnhancedScriptEditor = new EnhancedScriptEditor(engine, filename);
+			m_EnhancedScriptEditor = new EnhancedScriptEditor(filename);
 			m_EnhancedScriptEditor.Show();
 		}
 
@@ -97,7 +97,7 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		internal EnhancedScriptEditor(ScriptEngine engine, string filename)
+		internal EnhancedScriptEditor(string filename)
 		{
 			InitializeComponent();
 			//Automenu Section
@@ -439,9 +439,6 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Player.AttackLast()", new string[] { "none" }, "void", "Force character to attack last target");
 			descriptionPlayer.Add("Player.AttackLast", tooltip);
-
-			tooltip = new ToolTipDescriptions("Player.InParty()", new string[] { "none" }, "bool", "Check if a character is in party\n\tTrue: is in party, False: is not in party");
-			descriptionPlayer.Add("Player.InParty", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.ChatParty(string, optional int)", new string[] { "string Message, optional int serial" }, "void", "Send a message to party chat, if specific a serial send private message");
 			descriptionPlayer.Add("Player.ChatParty", tooltip);
@@ -1322,8 +1319,11 @@ namespace RazorEnhanced.UI
 			m_popupMenu.Items.Width = m_popupMenu.Items.Width + 20;
 
 			this.Text = m_Title;
-			this.m_Engine = engine;
-			this.m_Engine.SetTrace(null);
+
+			m_pe = new PythonEngine();
+			m_Engine = m_pe.engine;
+			m_Scope = m_pe.scope;
+			m_Engine.SetTrace(null);
 
 
 
@@ -1497,8 +1497,9 @@ namespace RazorEnhanced.UI
 				m_Queue = new ConcurrentQueue<Command>();
 
 				string text = GetFastTextBoxText();
+
+
 				m_Source = m_Engine.CreateScriptSourceFromString(text);
-				m_Scope = RazorEnhanced.Scripts.GetRazorScope(m_Engine);
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 				m_Source.Execute(m_Scope);
 				SetErrorBox("Script " + m_Filename + " run completed!");

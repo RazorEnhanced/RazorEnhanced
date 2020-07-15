@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Scripting;
+using IronPython.Runtime;
 
 namespace RazorEnhanced
 {
@@ -136,16 +137,10 @@ namespace RazorEnhanced
 				string result = String.Empty;
 				try
 				{
-					// none of this adds to the python path but I am leaving it here because there HAS to be a way to do this
-					//Environment.SetEnvironmentVariable("IRONPYTHONPATH", Misc.CurrentScriptDirectory());
-					m_Engine = Python.CreateEngine();
-					//m_Engine.GetService<ExceptionOperations>().FormatException(exception);
-					//ICollection<string> paths = m_Engine.GetSearchPaths();
-					//paths.Add(Misc.CurrentScriptDirectory());
-					//m_Engine.SetSearchPaths(paths);
-					//
+					m_pe = new PythonEngine();
+					m_Engine = m_pe.engine;
+					m_Scope = m_pe.scope;
 					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
-					m_Scope = GetRazorScope(m_Engine);
 
 					if (traceFunc != null)
 						m_Engine.SetTrace(traceFunc);
@@ -336,6 +331,7 @@ namespace RazorEnhanced
 				set { m_StartMessage = value; }
 			}
 
+			private PythonEngine m_pe;
 			private ScriptEngine m_Engine;
 			private ScriptScope m_Scope;
 			private ScriptSource m_Source;
@@ -595,36 +591,6 @@ namespace RazorEnhanced
 			m_Timer.Start();
 		}
 
-		internal static ScriptScope GetRazorScope(ScriptEngine engine)
-		{
-			Dictionary<string, object> globals = new Dictionary<string, object>();
-
-			ScriptScope scope = engine.CreateScope(globals);
-			scope.SetVariable("Misc", new RazorEnhanced.Misc());
-			scope.SetVariable("Items", new RazorEnhanced.Items());
-			scope.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
-			scope.SetVariable("Player", new RazorEnhanced.Player());
-			scope.SetVariable("Spells", new RazorEnhanced.Spells());
-			scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
-			scope.SetVariable("Journal", new RazorEnhanced.Journal());
-			scope.SetVariable("Target", new RazorEnhanced.Target());
-			scope.SetVariable("Statics", new RazorEnhanced.Statics());
-
-			scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
-			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
-			scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
-			scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
-			scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
-			scope.SetVariable("Dress", new RazorEnhanced.Dress());
-			scope.SetVariable("Friend", new RazorEnhanced.Friend());
-			scope.SetVariable("Restock", new RazorEnhanced.Restock());
-			scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
-			scope.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
-			scope.SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
-			scope.SetVariable("Timer", new RazorEnhanced.Timer());
-            scope.SetVariable("Vendor", new RazorEnhanced.Vendor());
-            return scope;
-		}
 
 		internal static EnhancedScript Search(string filename)
 		{
