@@ -101,10 +101,12 @@ namespace RazorEnhanced
 				return false;
 			}
 
+            string workingOnTableName = "None Yet";
 			try
 			{
 				foreach (string tableName in initDict.Keys)
 				{
+                    workingOnTableName = tableName;
 					// PASSWORD moved to server area, so have to check both
 					if (File.Exists(profileFilename + "." + tableName) || File.Exists(serverFilename + "." + tableName))
 					{
@@ -153,7 +155,7 @@ namespace RazorEnhanced
 			{
 				if (try_recover == true)
 				{
-					MessageBox.Show("Error loading " + profileName + ", Try to restore from backup!");
+					MessageBox.Show("Error loading " + profileName + " {"+ workingOnTableName+"}"+", Trying to restore from backup");
 					Settings.RestoreBackup(profileName);
 					Load(profileName, false);
 				}
@@ -5051,7 +5053,7 @@ namespace RazorEnhanced
 				FileInfo[] Files = d.GetFiles("RazorEnhanced.settings.*");
 				foreach (FileInfo file in Files)
 				{
-					string dest = Path.Combine(Assistant.Engine.RootPath, "Profiles");
+					string dest = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName);
 					File.Copy(file.FullName, Path.Combine(dest, file.Name), true);
 				}
 
