@@ -180,8 +180,9 @@ namespace RazorEnhanced.UI
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
 				"Misc.ScriptStatus", "Misc.PetRename", "Misc.FocusUOWindow",
 				"Misc.IgnoreObject", "Misc.CheckIgnoreObject", "Misc.ClearIgnore", "Misc.UnIgnoreObject",
-				"Misc.CurrentScriptDirectory", "Misc.CaptureNow", "Misc.GetMapInfo"
-			};
+				"Misc.CurrentScriptDirectory", "Misc.CaptureNow", "Misc.GetMapInfo",
+                "Misc.CloseBackpack", "Misc.NextContPosition", "Misc.GetContPosition"
+            };
 
 			string[] methodsTarget =
 			{
@@ -677,7 +678,16 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Misc.Resync()", new string[] { "none" }, "void", "Resync game data");
 			descriptionMisc.Add("Misc.Resync", tooltip);
 
-			tooltip = new ToolTipDescriptions("Misc.Pause(int)", new string[] { "int Delay" }, "void", "Pause script for N milliseconds");
+            tooltip = new ToolTipDescriptions("Misc.CloseBackpack()", new string[] { "none" }, "void", "Close Player Backpack");
+            descriptionMisc.Add("Misc.CloseBackpack", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.NextContPosition()", new string[] { "int X, int Y" }, "void", "The next gump will open at X, Y");
+            descriptionMisc.Add("Misc.NextContPosition", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.GetContPosition()", new string[] { "Point" }, "void", "Return the co-ordinates of the most recent gump");
+            descriptionMisc.Add("Misc.GetContPosition", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.Pause(int)", new string[] { "int Delay" }, "void", "Pause script for N milliseconds");
 			descriptionMisc.Add("Misc.Pause", tooltip);
 
 			tooltip = new ToolTipDescriptions("Misc.Beep()", new string[] { "none" }, "void", "Play beep system sound");
