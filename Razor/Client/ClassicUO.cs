@@ -43,11 +43,11 @@ namespace Assistant
             };
 
 
-            ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
-            Install2(plugin, settings.IP);
+            //ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
+            Install2(plugin);
         }
 
-        public static unsafe void Install2(PluginHeader* plugin, string shard_host)
+        public static unsafe void Install2(PluginHeader* plugin)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -55,7 +55,9 @@ namespace Assistant
             //SplashScreen.Start();
             m_ActiveWnd = SplashScreen.Instance;
 
-            ClassicUOClient.ShardHost = shard_host;
+            ClassicUOClient.UOFilePath =
+                ((OnGetUOFilePath)Marshal.GetDelegateForFunctionPointer(plugin->GetUOFilePath, typeof(OnGetUOFilePath))
+                )();
 
             ClassicUOClient cuo = new ClassicUOClient();
             Client.Instance = cuo;
@@ -75,13 +77,8 @@ namespace Assistant
     public class ClassicUOClient : Client
     {
 
-        private static string m_shardHost;
-        public static string ShardHost
-        {
-            get { return m_shardHost; }
-            set { m_shardHost = value; }
-        }
 
+        public static string UOFilePath { get; set; }
         public override Process ClientProcess => m_ClientProcess;
         public override bool ClientRunning => m_ClientRunning;
         private uint m_In, m_Out;
@@ -235,20 +232,9 @@ namespace Assistant
         }
         public override RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards)
         {
-            foreach (var shard_iter in shards)
-            {
-                if (shard_iter.Host == ShardHost)
-                {
-                    return shard_iter;
-                }
-            }
-            ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
-            RazorEnhanced.Shard.Insert("Classic UO Default", Path.Combine(settings.UltimaOnlineDirectory, "client.exe"),
-                settings.UltimaOnlineDirectory, settings.IP, settings.Port, true, false);
             RazorEnhanced.Shard cuo_shard =
-                new RazorEnhanced.Shard("Classic UO Default", Path.Combine(settings.UltimaOnlineDirectory, "client.exe"),
-                settings.UltimaOnlineDirectory, settings.IP, settings.Port, true, false, true);
-            shards.Add(cuo_shard);
+                new RazorEnhanced.Shard("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
+                ClassicUOClient.UOFilePath, "127.0.0.1", 1000, true, false, true);
             return cuo_shard;
         }
 
@@ -550,77 +536,3 @@ namespace Assistant
     }
 }
 
-    namespace ClassicUO.Configuration
-    {
-    internal sealed class Settings
-    {
-        public static Settings Get()
-        {
-            string file = ClassicUO.Configuration.Settings.GetSettingsFilepath();
-            if (!File.Exists(file))
-            {
-                return null;
-            }
-
-            string text = File.ReadAllText(file);
-            text = System.Text.RegularExpressions.Regex.Replace(text,
-                                         @"(?<!\\)  # lookbehind: Check that previous character isn't a \
-                                                \\         # match a \
-                                                (?!\\)     # lookahead: Check that the following character isn't a \",
-                                    @"\\", System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace);
-            JsonSerializerSettings jsonsettings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All,
-                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead
-            };
-            ClassicUO.Configuration.Settings settings = JsonConvert.DeserializeObject<ClassicUO.Configuration.Settings>(text, jsonsettings);
-            return settings;
-        }
-            public static Settings GlobalSettings = new Settings();
-
-            [JsonConstructor]
-            public Settings()
-            {
-            }
-
-
-            [JsonProperty(PropertyName = "username")]
-            public string Username { get; set; } = string.Empty;
-
-            [JsonProperty(PropertyName = "password")]
-            public string Password { get; set; } = string.Empty;
-
-            [JsonProperty(PropertyName = "ip")] public string IP { get; set; } = "127.0.0.1";
-
-            [JsonProperty(PropertyName = "port")] public ushort Port { get; set; } = 2593;
-
-            [JsonProperty(PropertyName = "ultimaonlinedirectory")]
-            public string UltimaOnlineDirectory { get; set; } = "path/to/uo/";
-
-            [JsonProperty(PropertyName = "clientversion")]
-            public string ClientVersion { get; set; } = string.Empty;
-
-            [JsonProperty(PropertyName = "lastcharactername")]
-            public string LastCharacterName { get; set; } = string.Empty;
-
-            [JsonProperty(PropertyName = "cliloc")]
-            public string ClilocFile { get; set; } = "Cliloc.enu";
-
-            [JsonProperty(PropertyName = "lastservernum")]
-            public ushort LastServerNum { get; set; } = 1;
-
-            [JsonProperty(PropertyName = "shard_type")]
-            public int ShardType { get; set; } // 0 = normal (no customization), 1 = old, 2 = outlands??
-
-            [JsonProperty(PropertyName = "plugins")]
-            public string[] Plugins { get; set; } = { @"./Assistant/Razor.dll" };
-
-            public const string SETTINGS_FILENAME = "settings.json";
-
-            public static string GetSettingsFilepath()
-            {
-                string cuo_directory = System.IO.Path.GetDirectoryName(Application.ExecutablePath);
-                return Path.Combine(cuo_directory, SETTINGS_FILENAME);
-            }
-        }
-    }

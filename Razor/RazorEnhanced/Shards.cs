@@ -78,11 +78,11 @@ namespace RazorEnhanced
 		private string m_Description;
 		internal string Description { get { return m_Description; } }
 
-		private string m_ClientPath;
-		internal string ClientPath { get { return m_ClientPath; } }
 
-		private string m_ClientFolder;
-		internal string ClientFolder { get { return m_ClientFolder; } }
+		internal string ClientPath { get; set; }
+
+		//private string m_ClientFolder;
+		internal string ClientFolder { get; set; }
 
 		private string m_Host;
 		internal string Host { get { return m_Host; } }
@@ -102,8 +102,8 @@ namespace RazorEnhanced
 		public Shard(string description, string clientpath, string clientfolder, string host, int port, bool patchenc, bool osienc, bool selected)
 		{
 			m_Description = description;
-			m_ClientPath = clientpath;
-			m_ClientFolder = clientfolder;
+			ClientPath = clientpath;
+			ClientFolder = clientfolder;
 			m_Host = host;
 			m_Port = port;
 			m_PatchEnc = patchenc;

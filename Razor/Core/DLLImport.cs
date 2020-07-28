@@ -282,7 +282,8 @@ namespace Assistant
 
 			[DllImport("uo.dll")]
 			internal static extern double GetDouble(IntPtr handle, int index);
-		}
+
+        }
 
 	}
 }

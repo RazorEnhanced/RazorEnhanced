@@ -6,6 +6,7 @@ using System.Media;
 using System.Threading;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Drawing;
 
 namespace RazorEnhanced
 {
@@ -15,8 +16,55 @@ namespace RazorEnhanced
 		internal static bool BlockMenu = false;
 		internal static bool BlockGump = false;
 
-		//General
-		public static void Pause(int mseconds)
+        public static void CloseBackpack()
+        {
+            RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+
+            if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+            {
+                while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+                {
+                    Thread.Sleep(50);
+                }
+            }
+            RazorEnhanced.UoWarper.UODLLHandleClass.CloseBackpack();
+        }
+            // Container Experiment
+            // Misc.NextContPosition(80, 80)
+            public static void NextContPosition(int x, int y)
+        {
+            RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+
+            if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+            {
+                while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+                {
+                    Thread.Sleep(50);
+                }
+            }
+            RazorEnhanced.UoWarper.UODLLHandleClass.NextContPos(x, y);
+        }
+        // p = Misc.GetContPosition()
+        // Misc.SendMessage(p.X)
+        // Misc.SendMessage(p.Y)
+        public static Point GetContPosition()
+        {
+            RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+
+            if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+            {
+                while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+                {
+                    Thread.Sleep(50);
+                }
+            }
+            Point p = RazorEnhanced.UoWarper.UODLLHandleClass.GetContPos();
+            return p;
+        }
+
+
+        //General
+        public static void Pause(int mseconds)
 		{
 			System.Threading.Thread.Sleep(mseconds);
 		}

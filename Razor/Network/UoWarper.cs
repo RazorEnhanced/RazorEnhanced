@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using Assistant;
 
@@ -37,7 +38,69 @@ namespace RazorEnhanced
 				});
 			}
 
-			internal List<object> _executeCommand(bool ReturnResults, string CommandName, object[] args)
+            internal void CloseBackpack()
+            {
+                this._executeCommand(false, "Macro", new object[] { 9, 7 } );
+            }
+
+                internal void NextContPos(int X, int Y)
+            {
+                DLLImport.Uo.SetTop(_UOHandle, 0);
+                DLLImport.Uo.PushStrVal(_UOHandle, "Set");
+                DLLImport.Uo.PushStrVal(_UOHandle, "NextCPosX");
+                DLLImport.Uo.PushInteger(_UOHandle, X);
+                if (DLLImport.Uo.Execute(_UOHandle) != 0)
+                {
+                    return;
+                }
+
+                DLLImport.Uo.SetTop(_UOHandle, 0);
+                DLLImport.Uo.PushStrVal(_UOHandle, "Set");
+                DLLImport.Uo.PushStrVal(_UOHandle, "NextCPosY");
+                DLLImport.Uo.PushInteger(_UOHandle, Y);
+                if (DLLImport.Uo.Execute(_UOHandle) != 0)
+                {
+                    return;
+                }
+
+            }
+
+            internal Point GetContPos()
+            {
+                int x = -1;
+                DLLImport.Uo.SetTop(_UOHandle, 0);
+                DLLImport.Uo.PushStrVal(_UOHandle, "Get");
+                DLLImport.Uo.PushStrVal(_UOHandle, "ContPosX");
+                if (DLLImport.Uo.Execute(_UOHandle) == 0)
+                {
+                    int numRetValues = 0;
+                    numRetValues = DLLImport.Uo.GetTop(_UOHandle);
+                    if (numRetValues == 1)
+                    {
+                        x = DLLImport.Uo.GetInteger(_UOHandle, 1);
+                    }
+                }
+
+                int y = -1;
+                DLLImport.Uo.SetTop(_UOHandle, 0);
+                DLLImport.Uo.PushStrVal(_UOHandle, "Get");
+                DLLImport.Uo.PushStrVal(_UOHandle, "ContPosY");
+                if (DLLImport.Uo.Execute(_UOHandle) == 0)
+                {
+                    int numRetValues = 0;
+                    numRetValues = DLLImport.Uo.GetTop(_UOHandle);
+                    if (numRetValues == 1)
+                    {
+                        y = DLLImport.Uo.GetInteger(_UOHandle, 1);
+                    }
+                }
+
+                return new Point(x, y);
+
+            }
+
+
+            internal List<object> _executeCommand(bool ReturnResults, string CommandName, object[] args)
 			{
 				List<object> Results = new List<object>();
 				DLLImport.Uo.SetTop(_UOHandle, 0);
@@ -93,7 +156,7 @@ namespace RazorEnhanced
 					}
 				}
 				return Results;
-			}		
+			}
 		}
 	}
 }
