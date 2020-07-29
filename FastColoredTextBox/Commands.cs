@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS
@@ -238,7 +238,7 @@ namespace FastColoredTextBoxNS
             {
                 tb.Selection.BeginUpdate();
                 char cc = '\x0';
-                
+
                 if (ts.Count == 0)
                 {
                     InsertCharCommand.InsertLine(ts);
@@ -633,7 +633,7 @@ namespace FastColoredTextBoxNS
             for(int i = iLines.Count - 1; i >= 0; i--)
             {
                 var iLine = iLines[i];
-                
+
                 prevText.Add(ts[iLine].Text);//backward
                 ts.RemoveLine(iLine);
                 //ts.OnTextChanged(ranges[i].Start.iLine, ranges[i].End.iLine);

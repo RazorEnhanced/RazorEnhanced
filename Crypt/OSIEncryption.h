@@ -27,8 +27,8 @@ private:
 	static void CallHash( BYTE *key, const BYTE *challenge, unsigned int len );
 	static void CalcResponse( BYTE *result, BYTE *field );
 
-	keyInstance m_Key; 
-	cipherInstance m_Cipher; 
+	keyInstance m_Key;
+	cipherInstance m_Cipher;
 	unsigned int m_TFPos;
 	unsigned char m_XORPos;
 	BYTE m_TFTable[256];

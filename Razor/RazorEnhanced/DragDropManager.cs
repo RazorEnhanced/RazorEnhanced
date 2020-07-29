@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 using System.Collections.Concurrent;
 using System.Threading;
 using System;

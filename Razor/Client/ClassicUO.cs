@@ -1,4 +1,4 @@
-﻿using CUO_API;
+using CUO_API;
 using System;
 using System.Diagnostics;
 using System.IO;

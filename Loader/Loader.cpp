@@ -67,7 +67,7 @@ extern "C" __declspec(dllexport) DWORD __stdcall Load( const char *exe, const ch
 	}
 
 	Entry = (LPVOID)(ioh.ImageBase + ioh.AddressOfEntryPoint);
-	
+
 	//sprintf( buff, "magic: %X\nlfanew: %X\nimg_base: %X\naoep: %X\nmagic2: %X", idh.e_magic, idh.e_lfanew, ioh.ImageBase, ioh.AddressOfEntryPoint, ioh.Magic );
 	//MessageBox( NULL, buff, "Error", MB_OK );
 
@@ -98,7 +98,7 @@ extern "C" __declspec(dllexport) DWORD __stdcall Load( const char *exe, const ch
 
 	// allocate some space in the exe for our memory
 	DWORD ProcMem = 0;
-	
+
 	ProcMem = (DWORD)VirtualAllocEx( ProcInfo.hProcess, NULL, allocSize, MEM_COMMIT|MEM_RESERVE, PAGE_EXECUTE_READWRITE );
 	if ( !ProcMem )
 	{
@@ -123,7 +123,7 @@ extern "C" __declspec(dllexport) DWORD __stdcall Load( const char *exe, const ch
 		TerminateProcess( ProcInfo.hProcess, 0 );
 		return NO_VPROTECT;
 	}
-	
+
 	// read the old code at the entry point
 	if ( !ReadProcessMemory( ProcInfo.hProcess, Entry, buff, 8, &Num ) || Num != 8 )
 	{
@@ -169,19 +169,19 @@ extern "C" __declspec(dllexport) DWORD __stdcall Load( const char *exe, const ch
 
 		// go back to the original entry point
 		0xE9, 0,0,0,0,			// jmp  (offset)
-		
+
 		0x90, 0x90, 0x90, 0x90,	// nop (padding)
 	};
 
 	*((DWORD*)(LoadAsm+ 1)) = (DWORD)Entry; // data dest
-	*((DWORD*)(LoadAsm+ 7)) = *((DWORD*)&buff[0]); // 1st data 
+	*((DWORD*)(LoadAsm+ 7)) = *((DWORD*)&buff[0]); // 1st data
 	*((DWORD*)(LoadAsm+14)) = *((DWORD*)&buff[4]); // 2nd data
 
 	HMODULE hKernel = LoadLibrary( "Kernel32" );
 
 	*((DWORD*)(LoadAsm+19)) = (ProcMem + LoadAsmSize); // begining of dll name
 	*((DWORD*)(LoadAsm+24)) = ((DWORD)GetProcAddress( hKernel, "LoadLibraryA" )) - (ProcMem + 28); // offset to LoadLibraryA
-	
+
 	*((DWORD*)(LoadAsm+29)) = (ProcMem + LoadAsmSize + dllNameLen); // begining of function name
 	*((DWORD*)(LoadAsm+35)) = ((DWORD)GetProcAddress( hKernel, "GetProcAddress" )) - (ProcMem + 39); // offset to GetProcAddress
 

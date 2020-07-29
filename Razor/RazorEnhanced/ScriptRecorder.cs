@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 namespace RazorEnhanced
 {
 	public class ScriptRecorder

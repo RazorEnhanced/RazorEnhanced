@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -95,7 +95,7 @@ namespace FastColoredTextBoxNS
                 }
             }
             Flush(sb, tempSB, currentStyleId);
-           
+
             //build color table
             var list = new SortedList<int, Color>();
             foreach (var pair in colorTable)

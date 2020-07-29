@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -146,7 +146,7 @@ namespace FastColoredTextBoxNS
         bool Ctrl;
         bool Shift;
         bool Alt;
-        
+
         public string Modifiers
         {
             get

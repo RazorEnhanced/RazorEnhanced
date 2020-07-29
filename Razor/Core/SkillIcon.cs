@@ -1,4 +1,4 @@
-﻿namespace Assistant
+namespace Assistant
 {
 	internal enum SkillIcon : ushort
 	{

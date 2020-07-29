@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace FastColoredTextBoxNS
@@ -12,7 +12,7 @@ namespace FastColoredTextBoxNS
         {
             InitializeComponent();
         }
-        
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
