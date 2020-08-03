@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
@@ -59,7 +59,7 @@ namespace FastColoredTextBoxNS
                 if (currentTB == value)
                     return;
                 currentTB = value;
-                OnCurrentTBChanged(); 
+                OnCurrentTBChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace FastColoredTextBoxNS
             foreach(var line in lines)
                 line.IsChanged = false;
         }
-        
+
         public virtual Line CreateLine()
         {
             return new Line(GenerateUniqueLineId());

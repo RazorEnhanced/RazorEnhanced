@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 using System.Collections.Generic;
 
 namespace RazorEnhanced

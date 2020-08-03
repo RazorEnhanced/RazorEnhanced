@@ -1,4 +1,4 @@
-﻿using RazorEnhanced;
+using RazorEnhanced;
 using System;
 using System.Windows.Forms;
 

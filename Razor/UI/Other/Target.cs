@@ -1,4 +1,4 @@
-﻿using JsonData;
+using JsonData;
 using RazorEnhanced;
 using System;
 using System.Collections.Generic;

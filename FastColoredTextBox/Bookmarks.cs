@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -106,7 +106,7 @@ namespace FastColoredTextBoxNS
                         items[i].LineIndex = items[i].LineIndex + e.Count;
                 }
         }
-    
+
         public override void Dispose()
         {
             tb.LineInserted -= tb_LineInserted;

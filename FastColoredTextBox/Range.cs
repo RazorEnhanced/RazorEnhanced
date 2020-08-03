@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -202,7 +202,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Text of range
         /// </summary>
-        /// <remarks>This property has not 'set' accessor because undo/redo stack works only with 
+        /// <remarks>This property has not 'set' accessor because undo/redo stack works only with
         /// FastColoredTextBox.Selection range. So, if you want to set text, you need to use FastColoredTextBox.Selection
         /// and FastColoredTextBox.InsertText() mehtod.
         /// </remarks>

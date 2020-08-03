@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 using Assistant.UI;
 using System.Collections.Generic;
 using System.Collections.Concurrent;

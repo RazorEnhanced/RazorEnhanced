@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -63,7 +63,7 @@ namespace FastColoredTextBoxNS
                     var p = (KeyValuePair<char, Keys>)item;
                     UnderlayingControl.ProcessKey(p.Key, p.Value);
                 }
-                
+
             }
             UnderlayingControl.EndAutoUndo();
             UnderlayingControl.Selection.EndUpdate();
@@ -144,7 +144,7 @@ namespace FastColoredTextBoxNS
                 return sb.ToString();
             }
 
-            set 
+            set
             {
                 isRecording = false;
                 ClearMacros();

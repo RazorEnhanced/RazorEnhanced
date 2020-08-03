@@ -1,4 +1,4 @@
-﻿using Assistant.Filters;
+using Assistant.Filters;
 using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;

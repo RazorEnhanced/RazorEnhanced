@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 using JsonData;
 using Newtonsoft.Json;
 using System;

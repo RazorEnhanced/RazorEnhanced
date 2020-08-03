@@ -1,4 +1,4 @@
-﻿namespace RazorEnhanced
+namespace RazorEnhanced
 {
 	public class Property
 	{

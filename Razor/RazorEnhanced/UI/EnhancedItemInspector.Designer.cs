@@ -1,4 +1,4 @@
-﻿using IronPython.Modules;
+using IronPython.Modules;
 
 namespace RazorEnhanced.UI
 {

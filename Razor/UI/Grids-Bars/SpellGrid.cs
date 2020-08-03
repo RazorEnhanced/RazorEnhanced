@@ -1,4 +1,4 @@
-﻿using RazorEnhanced;
+using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
 using System.Drawing;

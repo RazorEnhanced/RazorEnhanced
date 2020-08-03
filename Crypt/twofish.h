@@ -10,7 +10,7 @@
     This sample is to assist implementers developing to the
 Cryptographic API Profile for AES Candidate Algorithm Submissions.
 Please consult this document as a cross-reference.
-    
+
     ANY CHANGES, WHERE APPROPRIATE, TO INFORMATION PROVIDED IN THIS FILE
 MUST BE DOCUMENTED. CHANGES ARE ONLY APPROPRIATE WHERE SPECIFIED WITH
 THE STRING "CHANGE POSSIBLE". FUNCTION CALLS AND THEIR PARAMETERS
@@ -84,7 +84,7 @@ typedef unsigned long DWORD;        /* 32-bit unsigned quantity */
 typedef DWORD fullSbox[4][256];
 
 /* The structure for key information */
-typedef struct 
+typedef struct
     {
     BYTE direction;                 /* Key used for encrypting or decrypting? */
 #if ALIGN32
@@ -115,7 +115,7 @@ typedef struct
     } keyInstance;
 
 /* The structure for cipher information */
-typedef struct 
+typedef struct
     {
     BYTE  mode;                     /* MODE_ECB, MODE_CBC, or MODE_CFB1 */
 #if ALIGN32

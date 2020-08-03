@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Printing;
 
@@ -16,7 +16,7 @@ namespace FastColoredTextBoxNS
         string toolTipText;
         string menuText;
         public AutocompleteMenu Parent { get; internal set; }
-        
+
 
         public AutocompleteItem()
         {
@@ -96,7 +96,7 @@ namespace FastColoredTextBoxNS
         /// Tooltip text.
         /// </summary>
         /// <remarks>For display tooltip text, ToolTipTitle must be not null</remarks>
-        public virtual string ToolTipText 
+        public virtual string ToolTipText
         {
             get{ return toolTipText; }
             set { toolTipText = value; }
@@ -255,7 +255,7 @@ namespace FastColoredTextBoxNS
     public class SuggestItem : AutocompleteItem
     {
         public SuggestItem(string text, int imageIndex):base(text, imageIndex)
-        {   
+        {
         }
 
         public override CompareResult Compare(string fragmentText)
