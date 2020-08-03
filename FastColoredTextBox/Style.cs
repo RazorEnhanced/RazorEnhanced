@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace FastColoredTextBoxNS
         /// </summary>
         public virtual bool IsExportable { get; set; }
         /// <summary>
-        /// Occurs when user click on StyleVisualMarker joined to this style 
+        /// Occurs when user click on StyleVisualMarker joined to this style
         /// </summary>
         public event EventHandler<VisualMarkerEventArgs> VisualMarkerClick;
 
@@ -37,7 +37,7 @@ namespace FastColoredTextBoxNS
         public abstract void Draw(Graphics gr, Point position, Range range);
 
         /// <summary>
-        /// Occurs when user click on StyleVisualMarker joined to this style 
+        /// Occurs when user click on StyleVisualMarker joined to this style
         /// </summary>
         public virtual void OnVisualMarkerClick(FastColoredTextBox tb, VisualMarkerEventArgs args)
         {
@@ -150,7 +150,7 @@ namespace FastColoredTextBoxNS
                 }
                 else
                 {
-                    //classic mode 
+                    //classic mode
                     for (int i = range.Start.iChar; i < range.End.iChar; i++)
                     {
                         //draw char
@@ -195,10 +195,10 @@ namespace FastColoredTextBoxNS
 
             if (BackgroundBrush is SolidBrush)
                 result.BackColor = (BackgroundBrush as SolidBrush).Color;
-            
+
             if (ForeBrush is SolidBrush)
                 result.ForeColor = (ForeBrush as SolidBrush).Color;
-            
+
             if ((FontStyle & FontStyle.Bold) != 0)
                 result.AdditionalTags += @"\b";
             if ((FontStyle & FontStyle.Italic) != 0)
@@ -229,7 +229,7 @@ namespace FastColoredTextBoxNS
                 base.Draw(gr, position, range);
 
                 int firstNonSpaceSymbolX = position.X;
-                
+
                 //find first non space symbol
                 for (int i = range.Start.iChar; i < range.End.iChar; i++)
                     if (range.tb[range.Start.iLine][i].c != ' ')

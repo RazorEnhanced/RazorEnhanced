@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 using JsonData;
 using System.Collections.Generic;
 using System.Threading;

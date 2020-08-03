@@ -1,2 +1,13 @@
+* text=auto
 *.zip filter=lfs diff=lfs merge=lfs -text
-text eol=lf
+*.c text
+*.h text
+*.cs text
+*.sln text eol=crlf
+*.csproj text eol=crlf
+*.manifest text eol=crlf
+*.config text eol=crlf
+*.resx text eol=crlf
+*.datasource text eol=crlf
+*.dll binary
+*.ico binary

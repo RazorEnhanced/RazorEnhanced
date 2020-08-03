@@ -1,4 +1,4 @@
-﻿namespace RazorEnhanced.UI
+namespace RazorEnhanced.UI
 {
 	partial class EnhancedFriendAddGuildManual
 	{

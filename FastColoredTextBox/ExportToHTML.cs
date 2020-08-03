@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Drawing;
 using System.Collections.Generic;
 
@@ -54,7 +54,7 @@ namespace FastColoredTextBoxNS
             sel.SelectAll();
             return GetHtml(sel);
         }
-        
+
         public string GetHtml(Range r)
         {
             this.tb = r.tb;
@@ -169,7 +169,7 @@ namespace FastColoredTextBoxNS
             }
             //add TextStyle css
             string result = "";
-            
+
             if (!hasTextStyle)
             {
                 //draw by default renderer

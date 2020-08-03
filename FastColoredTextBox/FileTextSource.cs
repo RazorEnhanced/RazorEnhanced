@@ -1,4 +1,4 @@
-﻿//#define debug
+//#define debug
 
 using System;
 using System.Collections.Generic;
@@ -162,7 +162,7 @@ namespace FastColoredTextBoxNS
             sourceFileLinePositions.AddRange(temp2);
             sourceFileLinePositions.TrimExcess();
             sourceFileLinePositions.RemoveRange(c, temp.Length);
-            
+
 
             fileEncoding = enc;
 
@@ -343,7 +343,7 @@ namespace FastColoredTextBoxNS
 
         public override Line this[int i]
         {
-            get 
+            get
             {
                 if (base.lines[i] != null)
                     return lines[i];

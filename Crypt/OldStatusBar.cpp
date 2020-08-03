@@ -296,22 +296,22 @@ bool PatchStatusBar( BOOL preAOS )
 	mf.Execute();
 
 	DWORD GumpString1 = mf.GetAddress( GUMP_STRING1, GS1_LEN );
-	if ( !GumpString1 ) 
+	if ( !GumpString1 )
 		return false;
 	GumpString1 -= GS1_OFFSET;
 
 	DWORD uuFmt = mf.GetAddress( "%u/%u", 6 );
-	if ( !uuFmt ) 
+	if ( !uuFmt )
 		return false;
 	DWORD uFmt = uuFmt + 3;
 
 	DWORD MinLoc = mf.GetAddress( MIN_STR, MIN_STR_LEN );
-	if ( !MinLoc ) 
+	if ( !MinLoc )
 		return false;
 	MinLoc += 1;
 
 	DWORD Start = mf.GetAddress( STATCODE_BEG, STATCODE_B_LEN );
-	if ( !Start ) 
+	if ( !Start )
 		return false;
 	Start += STATCODE_START_OFF;
 
