@@ -70,7 +70,10 @@ namespace RazorEnhanced
 					return 0;
 			}
 		}
-
+		public static string GetTileName(int itemid)
+		{
+			return TileData.ItemTable[itemid].Name ?? "";
+		}
 		public static bool GetTileFlag(int itemid, string flagname)
 		{
 			switch (flagname)
@@ -165,6 +168,10 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static string GetLandName(int itemid)
+		{
+			return TileData.LandTable[itemid].Name ?? "";
+		}
 		public static bool GetLandFlag(int itemid, string flagname)
 		{
 			switch (flagname)
