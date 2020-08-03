@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ultima;
@@ -72,8 +73,26 @@ namespace RazorEnhanced
 		}
 		public static string GetTileName(int itemid)
 		{
-			return TileData.ItemTable[itemid].Name ?? "";
+			try{
+				return TileData.ItemTable[itemid].Name;
+			}
+			catch (Exception e){
+				Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+itemid);
+				return "";
+			}
 		}
+
+		public static string GetLandName(int itemid)
+		{
+			try{
+				return TileData.LandTable[itemid].Name;
+			}
+			catch (Exception e){
+				Scripts.SendMessageScriptError("Script Error: GetLandName invalid landID " + itemid);
+				return "";
+			}
+		}
+
 		public static bool GetTileFlag(int itemid, string flagname)
 		{
 			switch (flagname)
@@ -168,10 +187,6 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static string GetLandName(int itemid)
-		{
-			return TileData.LandTable[itemid].Name ?? "";
-		}
 		public static bool GetLandFlag(int itemid, string flagname)
 		{
 			switch (flagname)
