@@ -514,9 +514,15 @@ namespace RazorEnhanced
 
             if (World.Player == null)
                 return;
-
-            m_corpsefilter.RangeMax = m_maxrange;
-            Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
+            try
+            {
+                m_corpsefilter.RangeMax = m_maxrange;
+                Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
+            }
+            catch (Exception ex)
+            {
+                //  If anything goes wrong just continue on
+            }
         }
 
         // Funzioni di controllo da script
