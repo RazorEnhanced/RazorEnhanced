@@ -34,7 +34,7 @@ namespace RazorEnhanced
 				return;
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-		 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
+				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
 		}
 
 		internal class EnhancedScript
@@ -72,6 +72,10 @@ namespace RazorEnhanced
 				{
 					if (ex is System.Threading.ThreadAbortException)
 						return;
+
+					string display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
+
+					SendMessageScriptError("ERROR "+ m_Filename + ":" + display_error.Replace("\n"," | "));
 
 					if (ScriptErrorLog) // enabled log of error
 					{
@@ -443,7 +447,7 @@ namespace RazorEnhanced
 					{
 						if (ScriptStartStopMessage && script.StartMessage)
 						{
-							Misc.SendMessage("Script <" + script.Filename + "> started.", 70, false);
+							Misc.SendMessage("START: "+script.Filename, 70, false);
 							script.StartMessage = false;
 							script.StopMessage = true;
 						}
@@ -468,7 +472,7 @@ namespace RazorEnhanced
 					{
 						if (ScriptStartStopMessage && script.StopMessage)
 						{
-							Misc.SendMessage("Script <" + script.Filename + "> stopped.", 70, false);
+							Misc.SendMessage("HALT: " + script.Filename, 70, false);
 							script.StartMessage = true;
 							script.StopMessage = false;
 						}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Ultima;
@@ -68,6 +69,27 @@ namespace RazorEnhanced
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetLandZ Invalid Map!");
 					return 0;
+			}
+		}
+		public static string GetTileName(int itemid)
+		{
+			try{
+				return TileData.ItemTable[itemid].Name;
+			}
+			catch (Exception e){
+				Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+itemid);
+				return "";
+			}
+		}
+
+		public static string GetLandName(int itemid)
+		{
+			try{
+				return TileData.LandTable[itemid].Name;
+			}
+			catch (Exception e){
+				Scripts.SendMessageScriptError("Script Error: GetLandName invalid landID " + itemid);
+				return "";
 			}
 		}
 

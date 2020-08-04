@@ -273,7 +273,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsStatics =
 			{
-				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
+				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetLandName", "Statics.GetTileName", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
 			};
 
 			string[] methodsGeneric =
@@ -1193,6 +1193,12 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Statics.GetStaticsTileInfo(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "List<TileInfo>", "Get static tiles info in a certain map at X, Y coordinates");
 			descriptionStatics.Add("Statics.GetStaticsTileInfo", tooltip);
+
+			tooltip = new ToolTipDescriptions("Statics.GetLandName(int)", new string[] { "int LandID" }, "List<TileInfo>", "Get name given a spacific landID ( see: GetLandID )");
+			descriptionStatics.Add("Statics.GetLandName", tooltip);
+
+			tooltip = new ToolTipDescriptions("Statics.GetTileName(int)", new string[] { "int TileID" }, "List<TileInfo>", "Get name given a spacific tileID ( see: GetStaticsLandInfo )");
+			descriptionStatics.Add("Statics.GetTileName", tooltip);
 
 			tooltip = new ToolTipDescriptions("Statics.GetStaticsLandInfo(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "List<TileInfo>", "Get land tile info in a certain map at X, Y coordinates");
 			descriptionStatics.Add("Statics.GetStaticsLandInfo", tooltip);
