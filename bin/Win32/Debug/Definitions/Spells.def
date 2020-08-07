@@ -232,3 +232,44 @@ H | 42 | 70 | Knockout |
 B | 43 | 70 | Whispering |
 B | 44 | 70 | Combat Training |
 B | 45 | 70 | Boarding |
+
+#
+# Druid
+#
+N | 1 | 80 | Shield of Earth | Kes En Sepa Ohm |
+N | 2 | 80 | Hollow Reed | En Crur Aeta Sec En Ess |
+N | 3 | 80 | Pack of Beast | En Sec Ohm Ess Sepa |
+N | 4 | 80 | Spring of Life | En Sepa Aete |
+N | 5 | 80 | Grasping Roots | En Ohm Sepa Tia Kes |
+N | 6 | 80 | Circle of Thorns | En Ess Ohm |
+N | 7 | 80 | Swarm of Insects | Ess Ohm En Sec Tia |
+N | 8 | 80 | Volcanic Eruption | Vauk Ohm En Tia Crur |
+N | 9 | 80 | Treefellow | Kes En Sepa Ohm |
+N | 10 | 80 | Deadly Spores | Telwa Nox |
+N | 11 | 80 | Enchanted Grove | En Ante Ohm Sepa |
+N | 12 | 80 | Lure Stone | En Kes Ohm Crur |
+N | 13 | 80 | Hurricane |  In Xen Hur |
+N | 14 | 80 | Mushroom Gateway | Vauk Sepa Ohm |
+N | 15 | 80 | Restorative Soil | Ohm Sepa Ante |
+N | 16 | 80 | Firefly | Kes En Crur |
+N | 17 | 80 | Forest Kin | Lore Sec En Sepa Ohm |
+N | 18 | 80 | BarkSkin | Porm Helma |
+N | 19 | 80 | ManaSpring | En Sepa Aete |
+N | 20 | 80 | Hibernate | En Xen Zu |
+
+#
+# Cleric
+#
+N | 1 | 90 | Angelic Faith | Angelus Terum |
+H | 2 | 90 | Banish Evil | Abigo Malus |
+H | 3 | 90 | Dampen Spirit | Abicio Spiritus |
+N | 4 | 90 | Divine Focus | Divinium Cogitatus |
+N | 5 | 90 | Hammer of Faith | Malleus Terum |
+B | 6 | 90 | Purge | Repurgo |
+B | 7 | 90 | Restoration | Reductio Aetas |
+B | 8 | 90 | Sacred Boon | Vir Consolatio |
+B | 9 | 90 | Sacrifice | Adoleo |
+H | 10 | 90 | Smite | Ferio |
+B | 11 | 90 | Touch of Life | Tactus Vitalis |
+N | 12 | 90 | Trial by Fire | Temptatio Exsuscito |
+

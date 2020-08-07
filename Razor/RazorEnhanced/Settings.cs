@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 6;
+		private static int SettingVersion = 7;
 
 		private static string m_profileName = null;
 
@@ -2389,8 +2389,8 @@ namespace RazorEnhanced
 			general.Columns.Add("EnhancedMapPath", typeof(string));
 			general.Columns.Add("FilterNPC", typeof(bool));
 
-			// Parametri Tab (Options -> Hues)
-			general.Columns.Add("LTHilight", typeof(int));
+            // Parametri Tab (Options -> Hues)
+            general.Columns.Add("LTHilight", typeof(int));
 			general.Columns.Add("NeutralSpellHue", typeof(int));
 			general.Columns.Add("HarmfulSpellHue", typeof(int));
 			general.Columns.Add("BeneficialSpellHue", typeof(int));
@@ -2410,9 +2410,10 @@ namespace RazorEnhanced
 			general.Columns.Add("BlockHealPoison", typeof(bool));
 			general.Columns.Add("AutoSearch", typeof(bool));
 			general.Columns.Add("NoSearchPouches", typeof(bool));
+            general.Columns.Add("DruidClericPackets", typeof(bool));
 
-			// Parametri Mappa
-			general.Columns.Add("MapX", typeof(int));
+            // Parametri Mappa
+            general.Columns.Add("MapX", typeof(int));
 			general.Columns.Add("MapY", typeof(int));
 			general.Columns.Add("MapW", typeof(int));
 			general.Columns.Add("MapH", typeof(int));
@@ -2515,7 +2516,7 @@ namespace RazorEnhanced
                     true, Keys.None,
 
                     // Parametri primo avvio interni
-                    "[{0}% / {1}%]", 0, String.Empty, false, false, true,
+                    "[{0}% / {1}%]", 0, String.Empty, false, false, true, false,
 
                      // Parametri primo avvio Mappa
                      200,200,200,200,
@@ -2542,11 +2543,11 @@ namespace RazorEnhanced
                      false, false, false
 				};
 
-			DataRow generalsettings = general.NewRow();
-			generalsettings.ItemArray = generalstartparam;
-			general.Rows.Add(generalsettings);
+            DataRow generalsettings = general.NewRow();
+            generalsettings.ItemArray = generalstartparam;
+            general.Rows.Add(generalsettings);
 
-			return general;
+            return general;
 
 		}
 
@@ -5000,6 +5001,14 @@ namespace RazorEnhanced
                 general.Columns.Add("AllowHiddenLooting", typeof(bool));
                 RazorEnhanced.Settings.General.WriteBool("AllowHiddenLooting", false);
                 realVersion = 6;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+            if (realVersion == 6)
+            {
+                DataTable general = m_Dataset.Tables["General"];
+                general.Columns.Add("DruidClericPackets", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("DruidClericPackets", false);
+                realVersion = 7;
                 General.WriteInt("SettingVersion", realVersion);
             }
 

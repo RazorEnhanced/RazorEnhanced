@@ -362,11 +362,11 @@ namespace RazorEnhanced
 						break;
 
                     case "SpellsCleric":
-                        RazorEnhanced.Spells.CastCleric(RazorEnhanced.Settings.HotKey.FindString(k), false);
+                        RazorEnhanced.Spells.CastOnlyCleric(RazorEnhanced.Settings.HotKey.FindString(k), false);
                         break;
 
                     case "SpellsDruid":
-                        RazorEnhanced.Spells.CastDruid(RazorEnhanced.Settings.HotKey.FindString(k), false);
+                        RazorEnhanced.Spells.CastOnlyDruid(RazorEnhanced.Settings.HotKey.FindString(k), false);
                         break;
 
                     case "Target":

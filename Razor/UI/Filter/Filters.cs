@@ -225,7 +225,14 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("CountStealthSteps", chkStealth.Checked);
 		}
 
-		private void setpathmapbutton_Click(object sender, EventArgs e)
+        private void druidClericPackets_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (druidClericPackets.Focused)
+                RazorEnhanced.Settings.General.WriteBool("DruidClericPackets", druidClericPackets.Checked);
+        }
+
+
+        private void setpathmapbutton_Click(object sender, EventArgs e)
 		{
 			openmaplocation.RestoreDirectory = true;
 			if (openmaplocation.ShowDialog(this) == DialogResult.OK)

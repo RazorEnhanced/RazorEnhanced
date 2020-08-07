@@ -43,36 +43,44 @@ namespace Assistant
 		{
 			get
 			{
-				if (Circle <= 8) // Mage
-					return 3002011 + ((Circle - 1) * 8) + Number - 1;
+                if (Circle <= 8) // Mage
+                    return 3002011 + ((Circle - 1) * 8) + Number - 1;
                 else if (Circle == 9) // Extended Mage Spells
                     return 2100 + Number - 1;
                 else if (Circle == 10) // Necr
-					return 1060509 + Number - 1;
-				else if (Circle == 20) // Chiv
-					return 1060585 + Number - 1;
-				else if (Circle == 40) // Bush
-					return 1060595 + Number - 1;
-				else if (Circle == 50) // Ninj
-					return 1060610 + Number - 1;
-				else if (Circle == 60)
-				{
-					if (Number < 78) // Spellweaving
-						return 1071026 + Number - 1;
-					else // Mysticism
-						return 1031678 + Number - 78;
-				}
-				else if (Circle == 70) // Mastery
-				{
-					if (Number >= 1 && Number <= 6)
-						return 1115612 + Number -1 ;
-					else if (Number >= 7 && Number <= 45)
-						return 1155896 + Number - 7;
-	                else
-						return -1;
-				}
+                    return 1060509 + Number - 1;
+                else if (Circle == 20) // Chiv
+                    return 1060585 + Number - 1;
+                else if (Circle == 40) // Bush
+                    return 1060595 + Number - 1;
+                else if (Circle == 50) // Ninj
+                    return 1060610 + Number - 1;
+                else if (Circle == 60)
+                {
+                    if (Number < 78) // Spellweaving
+                        return 1071026 + Number - 1;
+                    else // Mysticism
+                        return 1031678 + Number - 78;
+                }
+                else if (Circle == 70) // Mastery
+                {
+                    if (Number >= 1 && Number <= 6)
+                        return 1115612 + Number - 1;
+                    else if (Number >= 7 && Number <= 45)
+                        return 1155896 + Number - 7;
+                    else
+                        return -1;
+                }
+                else if (Circle == 80) // Druid
+                {
+                    return 2120 + Number - 1;
+                }
+                else if (Circle == 90) // Cleric
+                {
+                    return 2140 + Number - 1;
+                }
                 else
-					return -1;
+                    return -1;
 			}
 		}
 
@@ -336,13 +344,17 @@ namespace Assistant
 			// no code, this is here to make sure out static ctor is init'd by the core
 		}
 
-		internal static int ToID(int circle, int num)
-		{
-			if (circle < 10)
-				return ((circle - 1) * 8) + num;
-			else
-				return (circle * 10) + num;
-		}
+        internal static int ToID(int circle, int num)
+        {
+            if (circle < 10)
+                return ((circle - 1) * 8) + num;
+            if (circle == 80)
+                return 301 + num;
+            if (circle == 90)
+                return 341 + num;
+
+            return (circle * 10) + num;
+        }
 
 		internal static Spell Get(string power)
 		{

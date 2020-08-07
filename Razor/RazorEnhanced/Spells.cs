@@ -230,8 +230,31 @@ namespace RazorEnhanced
             return true;
         }
 
+        public static void CastCleric(string SpellName)
+        {
+            CastOnlyCleric(SpellName);
+        }
+        public static void CastCleric(string SpellName, Mobile m, bool wait = true)
+        {
+            CastCleric(SpellName, (uint)m.Serial, wait);
+        }
 
-        public static void CastCleric(string SpellName, bool wait = true)
+        public static void CastCleric(string SpellName, uint target, bool wait = true)
+        {
+            if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
+            {
+
+                bool success = CastTargetedGeneric(m_ClericSpellName, SpellName, target, wait);
+                if (!success)
+                    Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
+            }
+            else
+            {
+                CastOnlyCleric(SpellName, wait);
+            }
+        }
+
+        public static void CastOnlyCleric(string SpellName, bool wait = true)
         {
             if (World.Player == null)
                 return;
@@ -242,10 +265,46 @@ namespace RazorEnhanced
             if (spell == null)
                 Scripts.SendMessageScriptError("Script Error: CastCleric: Invalid spell name: " + SpellName);
             else
-                Player.ChatSay(5, spell);
+            {
+                if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
+                {
+                    bool success = CastOnlyGeneric(m_ClericSpellName, SpellName, wait);
+                    if (!success)
+                        Scripts.SendMessageScriptError("Script Error: CastCleric: Invalid spell name: " + SpellName);
+                }
+                else
+                {
+                    Player.ChatSay(5, spell);
+                }
+            }
+        }
+        // felix
+        public static void CastDruid(string SpellName)
+        {
+            CastOnlyDruid(SpellName);
+        }
+        public static void CastDruid(string SpellName, Mobile m, bool wait = true)
+        {
+            CastDruid(SpellName, (uint)m.Serial, wait);
         }
 
-        public static void CastDruid(string SpellName, bool wait = true)
+        public static void CastDruid(string SpellName, uint target, bool wait = true)
+        {
+            if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
+            {
+                bool success = CastTargetedGeneric(m_DruidSpellName, SpellName, target, wait);
+                if (!success)
+                    Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
+            }
+            else
+            {
+                CastOnlyDruid(SpellName, wait);
+            }
+        }
+
+
+
+        public static void CastOnlyDruid(string SpellName, bool wait = true)
         {
             if (World.Player == null)
                 return;
@@ -256,7 +315,18 @@ namespace RazorEnhanced
             if (spell == null)
                 Scripts.SendMessageScriptError("Script Error: CastDruid: Invalid spell name: " + SpellName);
             else
-                Player.ChatSay(8, spell);
+            {
+                if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
+                {
+                    bool success = CastOnlyGeneric(m_DruidSpellName, SpellName, wait);
+                    if (!success)
+                        Scripts.SendMessageScriptError("Script Error: CasDruid: Invalid spell name: " + SpellName);
+                }
+                else
+                {
+                    Player.ChatSay(8, spell);
+                }
+            }
         }
 
         public static void Interrupt()
@@ -646,6 +716,21 @@ namespace RazorEnhanced
 			{ "Boarding", 745 },
 		};
 
+        private static Dictionary<string, int> m_ClericSpellName = new Dictionary<string, int>
+        {
+            { "Angelic Faith", 342 },
+            {"Banish Evil", 343 },
+            { "Dampen Spirit", 344 },
+            { "Divine Focus", 345 },
+            { "Hammer of Faith", 346 },
+            { "Purge", 347 },
+            { "Restoration", 348 },
+            { "Sacred Boon", 349 },
+            { "Sacrifice", 350 },
+            { "Smite", 351 },
+            { "Touch of Life", 352 },
+            { "Trial by Fire", 353 },
+        };
         private static Dictionary<string, string> m_ClericSpellNameText = new Dictionary<string, string>
         {
             { "Angelic Faith", "[cs AngelicFaith" },
@@ -661,25 +746,53 @@ namespace RazorEnhanced
             { "Touch of Life", "[cs TouchofLife" },
             { "Trial by Fire", "[cs TrialbyFire" },
         };
+
+        private static Dictionary<string, int> m_DruidSpellName = new Dictionary<string, int>
+        {
+            { "Shield of Earth", 302 },
+            { "Hollow Reed", 303 },
+            { "Pack of Beast", 304 },
+            { "Spring of Life", 305 },
+            { "Grasping Roots", 306 },
+            { "Circle of Thorns", 307 },
+            { "Swarm of Insects", 308 },
+            { "Volcanic Eruption", 309 },
+            { "Treefellow", 310 },
+            { "Deadly Spores", 311 },
+            { "Enchanted Grove", 312 },
+            { "Lure Stone", 313 },
+            { "Hurricane", 314 },
+            { "Mushroom Gateway", 315 },
+            { "Restorative Soil", 316 },
+            { "FireFly", 317 },
+            { "Forest Kin", 318 },
+            { "BarkSkin", 319 },
+            { "ManaSpring", 320 },
+            { "Hibernate", 321 },
+        };
+
         private static Dictionary<string, string> m_DruidSpellNameText = new Dictionary<string, string>
         {
-            { "Leaf whirlwind", "[cs Leafwhirlwind" },
+            { "Shield of Earth", "[cs ShieldofEarth" },
             { "Hollow Reed", "[cs HollowReed" },
             { "Pack of Beasts", "[cs PackofBeasts" },
             { "Spring of Life", "[cs SpringofLife" },
-            { "Grasping Roots", "[cs GraspingRoots" },
-            { "Blend with Forest", "[cs BlendwithForest" },
+            { "Grasping Roots", "[cs graspingroots" },
+            { "Circle of Thorns", "[cs circleofthorns" },
             { "Swarm of Insects", "[cs SwarmofInsects" },
             { "Volcanic Eruption", "[cs VolcanicEruption" },
-            { "Summon Familiar", "[cs SummonFamiliar" },
-            { "Stone Circle", "[cs StoneCircle" },
+            { "Treefellow", "[cs treefellow" },
+            { "Deadly Spores", "[cs deadlyspores" },
             { "Enchanted Grove", "[cs EnchantedGrove" },
             { "Lure Stone", "[cs LureStone" },
             { "Hurricane", "[cs Hurricane" },
-            { "Natures Passage", "[cs NaturesPassage" },
             { "Mushroom Gateway", "[cs MushroomGateway" },
             { "Restorative Soil", "[cs RestorativeSoil" },
-            { "Shield of Earth", "[cs ShieldofEarth" },
+            { "FireFly", "[cs firefly" },
+            { "Forest Kin", "[cs forestkin" },
+            { "BarkSkin", "[cs barkskin" },
+            { "ManaSpring", "[cs manaspring" },
+            { "Hibernate", "[cs hibernate" },
         };
 
 
