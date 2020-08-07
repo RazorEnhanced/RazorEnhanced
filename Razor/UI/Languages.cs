@@ -547,7 +547,10 @@ namespace Assistant
         BirdSounds,
         AddAllMobilesTargetFilter,
         AddAllMobilesHumanoidTargetFilter,
-
+        Circle_9_Spells=2100,
+        Druid_Spells=2120,
+        Cleric_Spells=2140,
+        Last_Cleric_Spell=2151,
         __End
     }
 

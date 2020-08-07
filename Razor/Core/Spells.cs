@@ -30,14 +30,24 @@ namespace Assistant
 			WordsOfPower = power;
 			Reagents = reags;
 		}
+        internal Spell(char flag, int n, int c, string power)
+        {
+            Flag = (SpellFlag)flag;
+            Number = n;
+            Circle = c;
+            WordsOfPower = power;
+        }
 
-		internal int Name
+
+        internal int Name
 		{
 			get
 			{
 				if (Circle <= 8) // Mage
 					return 3002011 + ((Circle - 1) * 8) + Number - 1;
-				else if (Circle == 10) // Necr
+                else if (Circle == 9) // Extended Mage Spells
+                    return 2100 + Number - 1;
+                else if (Circle == 10) // Necr
 					return 1060509 + Number - 1;
 				else if (Circle == 20) // Chiv
 					return 1060585 + Number - 1;
@@ -189,19 +199,19 @@ namespace Assistant
 
 					try
 					{
-						if (split.Length >= 5)
-						{
-							string[] reags = new string[split.Length - 5];
-							for (int i = 5; i < split.Length; i++)
-								reags[i - 5] = split[i].ToLower().Trim();
-							Spell s = new Spell(split[0].Trim()[0], Convert.ToInt32(split[1].Trim()), Convert.ToInt32(split[2].Trim()), /*split[3].Trim(),*/ split[4].Trim(), reags);
+                        if (split.Length >= 5)
+                        {
+                            string[] reags = new string[split.Length - 5];
+                            for (int i = 5; i < split.Length; i++)
+                                reags[i - 5] = split[i].ToLower().Trim();
+                            Spell s = new Spell(split[0].Trim()[0], Convert.ToInt32(split[1].Trim()), Convert.ToInt32(split[2].Trim()), /*split[3].Trim(),*/ split[4].Trim(), reags);
 
-							m_SpellsByID[s.GetID()] = s;
+                            m_SpellsByID[s.GetID()] = s;
 
-							if (s.WordsOfPower != null && s.WordsOfPower.Trim().Length > 0)
-								m_SpellsByPower[s.WordsOfPower] = s;
-						}
-					}
+                            if (s.WordsOfPower != null && s.WordsOfPower.Trim().Length > 0)
+                                m_SpellsByPower[s.WordsOfPower] = s;
+                        }
+                    }
 					catch
 					{
 					}

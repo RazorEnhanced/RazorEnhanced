@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
-	public class Spells
-	{
+    public class Spells
+    {
         // spell
         public static void CastMagery(string SpellName)
         {
@@ -18,12 +18,12 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlyMagery(string SpellName, bool wait)
-		{
+        {
             bool success = CastOnlyGeneric(m_MagerySpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
         }
-        public static void CastMagery(string SpellName, Mobile m, bool wait=true)
+        public static void CastMagery(string SpellName, Mobile m, bool wait = true)
         {
             CastMagery(SpellName, (uint)m.Serial, wait);
         }
@@ -45,7 +45,7 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlyNecro(string SpellName, bool wait = true)
-		{
+        {
             bool success = CastOnlyGeneric(m_NecroSpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
@@ -69,7 +69,7 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlyChivalry(string SpellName, bool wait = true)
-            {
+        {
             bool success = CastOnlyGeneric(m_ChivalrySpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
@@ -92,7 +92,7 @@ namespace RazorEnhanced
         //}
 
         public static void CastOnlyBushido(string SpellName, bool wait = true)
-		{
+        {
             bool success = CastOnlyGeneric(m_BushidoSpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
@@ -115,7 +115,7 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlyNinjitsu(string SpellName, bool wait = true)
-		{
+        {
             bool success = CastOnlyGeneric(m_NinjitsuSpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
@@ -138,7 +138,7 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlySpellweaving(string SpellName, bool wait = true)
-		{
+        {
             bool success = CastOnlyGeneric(m_SpellweavingSpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
@@ -161,7 +161,7 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlyMysticism(string SpellName, bool wait = true)
-		{
+        {
             bool success = CastOnlyGeneric(m_MysticismSpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
@@ -184,11 +184,11 @@ namespace RazorEnhanced
         }
 
         public static void CastOnlyMastery(string SpellName, bool wait = true)
-		{
+        {
             bool success = CastOnlyGeneric(m_MasterySpellName, SpellName, wait);
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
-		}
+        }
         internal static bool CastOnlyGeneric(Dictionary<string, int> conversion, string SpellName, bool wait)
         {
             if (World.Player == null)
@@ -237,7 +237,7 @@ namespace RazorEnhanced
                 return;
 
             string spell = null;
-            m_ClericSpellName.TryGetValue(SpellName, out spell);
+            m_ClericSpellNameText.TryGetValue(SpellName, out spell);
 
             if (spell == null)
                 Scripts.SendMessageScriptError("Script Error: CastCleric: Invalid spell name: " + SpellName);
@@ -251,7 +251,7 @@ namespace RazorEnhanced
                 return;
 
             string spell = null;
-            m_DruidSpellName.TryGetValue(SpellName, out spell);
+            m_DruidSpellNameText.TryGetValue(SpellName, out spell);
 
             if (spell == null)
                 Scripts.SendMessageScriptError("Script Error: CastDruid: Invalid spell name: " + SpellName);
@@ -260,15 +260,15 @@ namespace RazorEnhanced
         }
 
         public static void Interrupt()
-		{
-			Assistant.Item item = FindUsedLayer();
-			if (item != null)
-			{
-				Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item, 1));
-				Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
-			}
-		}
+        {
+            Assistant.Item item = FindUsedLayer();
+            if (item != null)
+            {
+                Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item, 1));
+                Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
+            }
+        }
 
         public static void CastLastSpell()
         {
@@ -277,13 +277,13 @@ namespace RazorEnhanced
         public static void CastLastSpellInternal(bool wait)
         {
             if (World.Player.LastSpell != 0)
-			{
-				Spell s = Spell.Get(World.Player.LastSpell);
+            {
+                Spell s = Spell.Get(World.Player.LastSpell);
 
-				if (s != null)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
-			}
-		}
+                if (s != null)
+                    s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
+            }
+        }
 
         public static void CastLastSpell(Mobile m, bool wait = true)
         {
@@ -317,175 +317,185 @@ namespace RazorEnhanced
         }
 
         internal static Assistant.Item FindUsedLayer()
-		{
-			Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shoes);
-			if (layeritem != null)
-				return layeritem;
+        {
+            Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shoes);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Pants);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Pants);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shirt);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shirt);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Head);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Head);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Gloves);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Gloves);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Ring);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Ring);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Neck);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Neck);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Waist);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Waist);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerTorso);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerTorso);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Bracelet);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Bracelet);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.MiddleTorso);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.MiddleTorso);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Earrings);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Earrings);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Arms);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Arms);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Cloak);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Cloak);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterTorso);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterTorso);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterLegs);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterLegs);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerLegs);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerLegs);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+            if (layeritem != null)
+                return layeritem;
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
-			if (layeritem != null)
-				return layeritem;
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+            if (layeritem != null)
+                return layeritem;
 
-			return null;
-		}
+            return null;
+        }
 
-		//////////////////////////////////////////////////////////////
-		// Dizionari
-		//////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////
+        // Dizionari
+        //////////////////////////////////////////////////////////////
 
-		private static Dictionary<string, int> m_MagerySpellName = new Dictionary<string, int>
-		{
+        private static Dictionary<string, int> m_MagerySpellName = new Dictionary<string, int>
+        {
 			// Primo circolo magery
 			{ "Clumsy", 1 },
-			{ "Create Food", 2 },
-			{ "Feeblemind", 3 },
-			{ "Heal", 4 },
-			{ "Magic Arrow", 5 },
-			{ "Night Sight", 6 },
-			{ "Reactive Armor", 7 },
-			{ "Weaken", 8 },
+            { "Create Food", 2 },
+            { "Feeblemind", 3 },
+            { "Heal", 4 },
+            { "Magic Arrow", 5 },
+            { "Night Sight", 6 },
+            { "Reactive Armor", 7 },
+            { "Weaken", 8 },
 
 			// Secondo circolo magery
 			{ "Agility", 9 },
-			{ "Cunning", 10 },
-			{ "Cure", 11 },
-			{ "Harm", 12 },
-			{ "Magic Trap", 13 },
-			{ "Magic Untrap", 14 },
-			{ "Protection", 15 },
-			{ "Strength", 16 },
+            { "Cunning", 10 },
+            { "Cure", 11 },
+            { "Harm", 12 },
+            { "Magic Trap", 13 },
+            { "Magic Untrap", 14 },
+            { "Protection", 15 },
+            { "Strength", 16 },
 
 			// Terzo circolo magery
 			{ "Bless", 17 },
-			{ "Fireball", 18 },
-			{ "Magic Lock", 19 },
-			{ "Poison", 20 },
-			{ "Telekinesis", 21 },
-			{ "Teleport", 22 },
-			{ "Unlock", 23 },
-			{ "Wall of Stone", 24 },
+            { "Fireball", 18 },
+            { "Magic Lock", 19 },
+            { "Poison", 20 },
+            { "Telekinesis", 21 },
+            { "Teleport", 22 },
+            { "Unlock", 23 },
+            { "Wall of Stone", 24 },
 
 			// Quarto circolo magery
 			{ "Arch Cure", 25 },
-			{ "Arch Protection", 26 },
-			{ "Curse", 27 },
-			{ "Fire Field", 28 },
-			{ "Greater Heal", 29 },
-			{ "Lightning", 30 },
-			{ "Mana Drain", 31 },
-			{ "Recall", 32 },
+            { "Arch Protection", 26 },
+            { "Curse", 27 },
+            { "Fire Field", 28 },
+            { "Greater Heal", 29 },
+            { "Lightning", 30 },
+            { "Mana Drain", 31 },
+            { "Recall", 32 },
 
 			// Quinto circolo magery
 			{ "Blade Spirits", 33 },
-			{ "Dispel Field", 34 },
-			{ "Incognito", 35 },
-			{ "Magic Reflection", 36 },
-			{ "Mind Blast", 37 },
-			{ "Paralyze", 38 },
-			{ "Poison Field", 39 },
-			{ "Summon Creature", 40 },
+            { "Dispel Field", 34 },
+            { "Incognito", 35 },
+            { "Magic Reflection", 36 },
+            { "Mind Blast", 37 },
+            { "Paralyze", 38 },
+            { "Poison Field", 39 },
+            { "Summon Creature", 40 },
 
 			// Sesto circolo magery
 			{ "Dispel", 41 },
-			{ "Energy Bolt", 42 },
-			{ "Explosion", 43 },
-			{ "Invisibility", 44 },
-			{ "Mark", 45 },
-			{ "Mass Curse", 46 },
-			{ "Paralyze Field", 47 },
-			{ "Reveal", 48 },
+            { "Energy Bolt", 42 },
+            { "Explosion", 43 },
+            { "Invisibility", 44 },
+            { "Mark", 45 },
+            { "Mass Curse", 46 },
+            { "Paralyze Field", 47 },
+            { "Reveal", 48 },
 
 			// Settimo circolo magery
 			{ "Chain Lightning", 49 },
-			{ "Energy Field", 50 },
-			{ "Flamestrike", 51 },
-			{ "Gate Travel", 52 },
-			{ "Mana Vampire", 53 },
-			{ "Mass Dispel", 54 },
-			{ "Meteor Swarm", 55 },
-			{ "Polymorph", 56 },
+            { "Energy Field", 50 },
+            { "Flamestrike", 51 },
+            { "Gate Travel", 52 },
+            { "Mana Vampire", 53 },
+            { "Mass Dispel", 54 },
+            { "Meteor Swarm", 55 },
+            { "Polymorph", 56 },
 
 			// Ottavo circolo magery
 			{ "Earthquake", 57 },
-			{ "Energy Vortex", 58 },
-			{ "Resurrection", 59 },
-			{ "Summon Air Elemental", 60 },
+            { "Energy Vortex", 58 },
+            { "Resurrection", 59 },
+            { "Summon Air Elemental", 60 },
             { "Air Elemental", 60 },
             { "Summon Daemon", 61 },
-			{ "Summon Earth Elemental", 62 },
+            { "Summon Earth Elemental", 62 },
             { "Earth Elemental", 62 },
             { "Summon Fire Elemental", 63 },
             { "Fire Elemental", 63 },
             { "Water Elemental", 64 },
-            { "Summon Water Elemental", 64 }
+            { "Summon Water Elemental", 64 },
+            { "Ice Blast", 65 },
+            { "Lightning Wave", 66 },
+            { "Dust Storm", 67 },
+            { "Mass Calm", 68 },
+            { "Protean", 69},
+            { "Poison Dart", 70},
+            { "Void Matter", 71},
+            { "Tidal Rush", 72},
+            { "Crushing Boulder", 73},
+            { "Noxious Fumes", 74},
         };
 
 		private static Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
@@ -636,7 +646,7 @@ namespace RazorEnhanced
 			{ "Boarding", 745 },
 		};
 
-        private static Dictionary<string, string> m_ClericSpellName = new Dictionary<string, string>
+        private static Dictionary<string, string> m_ClericSpellNameText = new Dictionary<string, string>
         {
             { "Angelic Faith", "[cs AngelicFaith" },
             {"Banish Evil", "[cs BanishEvil" },
@@ -651,7 +661,7 @@ namespace RazorEnhanced
             { "Touch of Life", "[cs TouchofLife" },
             { "Trial by Fire", "[cs TrialbyFire" },
         };
-        private static Dictionary<string, string> m_DruidSpellName = new Dictionary<string, string>
+        private static Dictionary<string, string> m_DruidSpellNameText = new Dictionary<string, string>
         {
             { "Leaf whirlwind", "[cs Leafwhirlwind" },
             { "Hollow Reed", "[cs HollowReed" },

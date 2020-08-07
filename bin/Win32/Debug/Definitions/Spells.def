@@ -76,6 +76,17 @@ N | 6 | 8 | Summon Earth Elemental | Kal Vas Xen Ylem | BM | MR | SS
 N | 7 | 8 | Summon Fire Elemental | Kal Vas Xen Flam | BM | MR | SS | SA
 N | 8 | 8 | Summon Water Elemental | Kal Vas Xen An Flam | BM | MR | SS
 
+N | 1 | 9 | Ice Blast | Kal Vas Glacium |  BP | SA | SS
+N | 2 | 9 | Lightning Wave | Kal Grav Hur |  NS | MR | SS
+N | 3 | 9 | Dust Storm | Kal Hur Ylem |  BP | MR | SS
+N | 4 | 9 | Mass Calm | In Bet Cessabit |  NS | MR | SS
+N | 5 | 9 | Protean | Uus Xen Mani |  SS | BP | SA | MR | GL
+N | 6 | 9 | Poison Dart | Kal Vas Nox |  SS | SA | NS
+N | 7 | 9 | Void Matter | Uus Vas Ylem |  SA | BM | BP
+N | 8 | 9 | Tidal Rush | In Ort Fluctus |  NS | SS | MR
+N | 9 | 9 | Crushing Boulder | Vas Rel Ylem |  MR | BM | BP | NS
+N | 10 | 9 | Noxious Fumes | Uus Nox Hur |  NS | BM | GL
+
 #
 # Necromancy
 #
