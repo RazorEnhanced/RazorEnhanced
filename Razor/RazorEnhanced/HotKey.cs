@@ -1032,7 +1032,7 @@ namespace RazorEnhanced
 						else
 						{
 							if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
-								Items.UseItemOnMobile(bandageserial, World.Player.Serial, false);
+								Items.UseItem(bandageserial, World.Player.Serial, false);
 							else // Vecchi client
 							{
 								Items.UseItem(bandageserial);
@@ -1052,7 +1052,7 @@ namespace RazorEnhanced
 						else
 						{
 							if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
-								Items.UseItemOnMobile(bandageserial, Target.GetLast(), false);
+								Items.UseItem(bandageserial, Target.GetLast(), false);
 							else // Vecchi client
 							{
 								Items.UseItem(bandageserial);

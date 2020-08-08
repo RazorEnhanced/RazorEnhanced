@@ -331,7 +331,7 @@ internal static string SelfHealUseTextSelfContent
                     }
                     else
                     {
-                        Items.UseItemOnMobile(bandageserial, target.Serial);
+                        Items.UseItem(bandageserial, target.Serial, true);
                     }
 
 					if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))

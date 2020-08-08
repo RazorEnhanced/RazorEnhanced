@@ -850,29 +850,6 @@ namespace RazorEnhanced
         }
 
 		// Use item
-		public static void UseItemOnMobile(Item i, Mobile m)
-		{
-			Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(i.Serial, m.Serial));
-		}
-
-		public static void UseItemOnMobile(int itemserial, Mobile m)
-		{
-			Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(itemserial, m.Serial));
-		}
-
-		public static void UseItemOnMobile(Item i, int targetserial)
-		{
-			Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(i.Serial, targetserial));
-		}
-
-		public static void UseItemOnMobile(int itemserial, int targetserial, bool wait = true)
-		{
-			if (wait)
-		 		Assistant.Client.Instance.SendToServerWait(new UseItemOnTarget(itemserial, targetserial));
-			else
-		 		Assistant.Client.Instance.SendToServer(new UseItemOnTarget(itemserial, targetserial));
-		}
-
 
 		public static void UseItem(Item item)
 		{
@@ -880,29 +857,34 @@ namespace RazorEnhanced
 				UseItem(item.Serial);
 		}
 
-        public static void UseItemOn(Item item, Item target)
+        public static void UseItem(Item item, EnhancedEntity target)
         {
             if (item == null || target == null)
                 return;
 
-            UseItemOn(item.Serial, target.Serial);
+            UseItem(item.Serial, target.Serial, true);
         }
-        public static void UseItemOn(int item, Item target)
+        public static void UseItem(int item, EnhancedEntity target)
         {
             if (target == null)
                 return;
 
-            UseItemOn(item, target.Serial);
+            UseItem(item, target.Serial, true);
         }
-        public static void UseItemOn(Item item, int target)
+        public static void UseItem(Item item, int target)
         {
             if (item == null)
                 return;
 
-            UseItemOn(item.Serial, target);
+            UseItem(item.Serial, target, true);
         }
 
-        public static void UseItemOn(int itemSerial, int targetSerial)
+        public static void UseItem(int itemSerial, int targetSerial)
+        {
+            UseItem(itemSerial, targetSerial, true);
+        }
+
+            public static void UseItem(int itemSerial, int targetSerial, bool wait)
         {
             Assistant.Item item = Assistant.World.FindItem(itemSerial);
             if (item == null)
@@ -935,7 +917,10 @@ namespace RazorEnhanced
                 return;
             }
 
-            Assistant.Client.Instance.SendToServerWait(new UseTargetedItem((uint)itemSerial, (uint)targetSerial));
+            if (wait)
+                Assistant.Client.Instance.SendToServerWait(new UseTargetedItem((uint)itemSerial, (uint)targetSerial));
+            else
+                Assistant.Client.Instance.SendToServer(new UseTargetedItem((uint)itemSerial, (uint)targetSerial));
         }
 
         public static void UseItem(int itemserial)
