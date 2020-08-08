@@ -290,7 +290,7 @@ namespace RazorEnhanced
 			string text = string.Empty;
             try
 			{
-				text = World.Player.MenuEntry[index].ModelText;
+				text = World.Player.MenuEntry[index-1].ModelText;
 			}
 			catch { }
 			AddLog("Misc.MenuResponse(\"" + text+ "\")");
