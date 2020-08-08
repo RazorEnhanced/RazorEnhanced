@@ -293,7 +293,7 @@ namespace RazorEnhanced
 				text = World.Player.MenuEntry[index].ModelText;
 			}
 			catch { }
-			AddLog("Misc.MenuResponse(" + text+ ")");
+			AddLog("Misc.MenuResponse(\"" + text+ "\")");
 		}
 
 		internal static void Record_Movement(Direction dir)
