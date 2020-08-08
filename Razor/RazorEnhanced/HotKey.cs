@@ -1443,7 +1443,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				RazorEnhanced.Player.UseSkill(function,false);
+				RazorEnhanced.Player.UseSkillOnly(function,false);
 			}
 		}
 

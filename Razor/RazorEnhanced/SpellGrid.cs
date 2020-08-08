@@ -441,7 +441,7 @@ namespace RazorEnhanced
 					Misc.ScriptRun(pl.Spell);
 					break;
 				case GroupType.Skills:
-					Player.UseSkill(pl.Spell, false);
+					Player.UseSkillOnly(pl.Spell, false);
 					break;
 				default:
 					break;
