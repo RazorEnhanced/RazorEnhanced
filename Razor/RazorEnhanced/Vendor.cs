@@ -463,7 +463,7 @@ namespace RazorEnhanced
 		{
 			if (!UpdateListParam(listName))
             {
-				Scripts.SendMessageScriptError("Script Error: Sell.ChangeList: Scavenger list: " + listName + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Sell.ChangeList: Sell list: " + listName + " not exist");
 			}
 			else
 			{
@@ -793,7 +793,7 @@ namespace RazorEnhanced
 		{
 			if (!Engine.MainWindow.BuyListSelect.Items.Contains(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Buy.ChangeList: Scavenger list: " + listName + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Buy.ChangeList: BuyList list: " + listName + " not exist");
 			}
 			else
 			{
