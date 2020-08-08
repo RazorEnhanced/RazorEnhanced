@@ -1084,9 +1084,9 @@ namespace RazorEnhanced
             }
 
             if (wait)
-                Assistant.Client.Instance.SendToServerWait(new UseTargetedSkill((uint)skill, (uint)targetSerial));
+                Assistant.Client.Instance.SendToServerWait(new UseTargetedSkill((ushort)skill, (uint)targetSerial));
             else
-                Assistant.Client.Instance.SendToServer(new UseTargetedSkill((uint)skill, (uint)targetSerial));
+                Assistant.Client.Instance.SendToServer(new UseTargetedSkill((ushort)skill, (uint)targetSerial));
 
             if (skill == SkillName.Hiding)
                 StealthSteps.Hide();

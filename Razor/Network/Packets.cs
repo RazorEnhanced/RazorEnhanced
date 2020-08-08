@@ -794,7 +794,7 @@ namespace Assistant
 
     internal sealed class UseTargetedSkill : Packet
     {
-        internal UseTargetedSkill(uint useSkill, uint target)
+        internal UseTargetedSkill(ushort useSkill, uint target)
             : base(0xBF)
         {
             EnsureCapacity(1 + 2 + 2 + 2 + 4);
