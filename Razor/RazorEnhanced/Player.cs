@@ -1068,7 +1068,7 @@ namespace RazorEnhanced
             Assistant.Mobile mobileTarget = Assistant.World.FindMobile(targetSerial);
             if (itemTarget == null && mobileTarget == null)
             {
-                Scripts.SendMessageScriptError("Script Error: UseItemOn: Invalid Target");
+                Scripts.SendMessageScriptError("Script Error: UseSkill: Invalid Target");
                 return;
             }
 

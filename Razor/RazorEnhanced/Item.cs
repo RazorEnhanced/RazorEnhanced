@@ -897,23 +897,23 @@ namespace RazorEnhanced
             Assistant.Mobile mobileTarget = Assistant.World.FindMobile(targetSerial);
             if (itemTarget == null && mobileTarget == null)
             {
-                Scripts.SendMessageScriptError("Script Error: UseItemOn: Invalid Target Serial");
+                Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Target Serial");
                 return;
             }
 
             if (!item.Serial.IsItem)
             {
-                Scripts.SendMessageScriptError("Script Error: UseItemOn: (" + item.Serial.ToString() + ") is not an item");
+                Scripts.SendMessageScriptError("Script Error: UseItem: (" + item.Serial.ToString() + ") is not an item");
                 return;
             }
             if (itemTarget == null && !mobileTarget.Serial.IsMobile)
             {
-                Scripts.SendMessageScriptError("Script Error: UseItemOn: (" + targetSerial.ToString() + ") is not a mobile");
+                Scripts.SendMessageScriptError("Script Error: UseItem: (" + targetSerial.ToString() + ") is not a mobile");
                 return;
             }
             if (mobileTarget == null && !itemTarget.Serial.IsItem)
             {
-                Scripts.SendMessageScriptError("Script Error: UseItemOn: (" + targetSerial.ToString() + ") is not an item");
+                Scripts.SendMessageScriptError("Script Error: UseItem: (" + targetSerial.ToString() + ") is not an item");
                 return;
             }
 
