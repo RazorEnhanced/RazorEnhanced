@@ -469,7 +469,7 @@ namespace RazorEnhanced
 			int i = 1;
 			foreach (PlayerData.MenuItem menuentry in World.Player.MenuEntry)
 			{
-				if (menuentry.ModelText.Contains(submenu))
+				if (menuentry.ModelText.ToLower() == submenu.ToLower())
 				{
 			 		Assistant.Client.Instance.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)i, menuentry.ModelID, menuentry.ModelColor));
 					World.Player.MenuEntry.Clear();
