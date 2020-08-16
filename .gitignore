@@ -33,3 +33,5 @@
 /bin/Win32/Release/Razor.exe.config
 *~
 /bin/Win32/Debug
+*.htm
+bin/

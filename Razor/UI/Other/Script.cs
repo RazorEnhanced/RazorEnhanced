@@ -111,7 +111,7 @@ namespace Assistant
 
 					row["Status"] = "Stopped";
 				}
-				else
+				/*else  // 17/08/2020 Removed loading not exist script file
 				{
 					ListViewItem listitem = new ListViewItem();
 
@@ -132,7 +132,7 @@ namespace Assistant
 					scriptlistView.Items.Add(listitem);
 
 					row["Status"] = "Error";
-				}
+				}*/
 			}
 			scriptlistView.EndUpdate();
 		}
