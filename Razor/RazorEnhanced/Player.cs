@@ -69,6 +69,13 @@ namespace RazorEnhanced
         public static String Name { get { return World.Player.Name; } }
         public static byte Notoriety { get { return World.Player.Notoriety; } }
 
+
+        public static void ToggleAlwaysRun()
+        {
+            RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+        }
+
+
         public static Item Backpack
         {
             get

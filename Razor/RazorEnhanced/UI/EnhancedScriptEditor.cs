@@ -145,8 +145,9 @@ namespace RazorEnhanced.UI
 				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList",
                 "Player.SumAttribute", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
-				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial", "Player.Flying"
-			};
+				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial", "Player.Flying",
+                "Player.ToggleAlwaysRun",
+            };
 
 			string[] methodsSpells =
 			{
@@ -315,8 +316,8 @@ namespace RazorEnhanced.UI
 				"Player.PoisonResistance", "Player.StaticMount",
 				"Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bank",
 				"Player.Gold", "Player.Luck", "Player.Body", "Player.HasSpecial",
-				"Player.Followers", "Player.FollowersMax", "Player.MaxWeight", "Player.Str", "Player.Dex", "Player.Int"
-			};
+				"Player.Followers", "Player.FollowersMax", "Player.MaxWeight", "Player.Str", "Player.Dex", "Player.Int",
+            };
 
 			string[] propsPositions =
 			{
@@ -356,7 +357,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.SpellIsEnabled(string)", new string[] { "string SpellName" }, "bool", "Get a bool value if specific spell is enabled (red Icon) or not\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.SpellIsEnabled", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.BuffsExist(string)", new string[] { "string BuffName" }, "bool", "Get a bool value if specific buff exist or not\n\tCheck the wiki for the possible strings");
+            tooltip = new ToolTipDescriptions("Player.ToggleAlwaysRun()", new string[] { "string SkillName" }, "void", "Toggles the Always Run in the UI, but you can only tell on/off from journal");
+            descriptionPlayer.Add("Player.ToggleAlwaysRun", tooltip);
+
+            tooltip = new ToolTipDescriptions("Player.BuffsExist(string)", new string[] { "string BuffName" }, "bool", "Get a bool value if specific buff exist or not\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.BuffsExist", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.GetBuffDescription(BuffIcon)", new string[] { "BuffIcon Name" }, "string", "Get description of a specific BuffIcon");

@@ -99,6 +99,12 @@ namespace RazorEnhanced
 
             }
 
+            internal void ToggleAlwaysRun()
+            {
+                this._executeCommand(false, "Macro", new object[] { 32, 0 });
+            }
+
+
 
             internal List<object> _executeCommand(bool ReturnResults, string CommandName, object[] args)
 			{
