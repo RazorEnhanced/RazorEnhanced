@@ -66,7 +66,7 @@ namespace RazorEnhanced
             { get; set; }
 
             [JsonProperty("Selected")]
-            internal bool Selected { get; set; }
+            public bool Selected { get; set; }
 
             private List<Property> m_Properties;
             public List<Property> Properties { get { return m_Properties; } }
@@ -570,6 +570,7 @@ namespace RazorEnhanced
                 }
                 return retList;
             }
+            Misc.SendMessage("Autoloot: Invalid Loot List Name", 945, true);
             return null;
         }
 
