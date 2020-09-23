@@ -303,6 +303,7 @@ namespace RazorEnhanced
             public List<int> Hues = new List<int>();
             public double RangeMin = -1;
             public double RangeMax = -1;
+            public bool CheckLineOfSite = false;
             public int Poisoned = -1;
             public int Blessed = -1;
             public int IsHuman = -1;
@@ -317,6 +318,359 @@ namespace RazorEnhanced
             public Filter()
             {
             }
+        }
+
+        internal static bool IsVisible(Assistant.Mobile mobile)
+        {
+            if (mobile.Position.X == Player.Position.X
+                && mobile.Position.Y == Player.Position.Y
+                && mobile.Position.Z == Player.Position.Z
+                )
+            {
+                return true;
+            }
+            List<Assistant.Point3D> coords = CoordsToMobile(mobile);
+            return CheckCoords(mobile, coords);
+        }
+
+        internal static List<Assistant.Mobile> CheckLineOfSite(List<Assistant.Mobile> inAssistantMobiles)
+        {
+            List<Assistant.Mobile> outAssistantMobile = new List<Assistant.Mobile>();
+            foreach (Assistant.Mobile mobile in inAssistantMobiles)
+            {
+                if (IsVisible(mobile))
+                {
+                    outAssistantMobile.Add(mobile);
+                }
+            }
+            return outAssistantMobile;
+        }
+
+        internal static bool Terrain(Assistant.Mobile mobile, List<int> zlist)
+        {
+            if (zlist.Count == 0)
+            {
+                return true;
+            }
+
+            int playerZ = World.Player.Position.Z;
+            int mobileZ = mobile.Position.Z;
+
+            if (playerZ > mobileZ)
+            {
+                int altitude = playerZ - mobileZ;
+                int steps = altitude / zlist.Count();
+                int count = 0;
+                while (count < zlist.Count())
+                {
+                    int acceptible = mobileZ + (steps * count);
+                    if (zlist[count] > acceptible + 14)
+                    {
+                        return false;
+                    }
+                    count++;
+                }
+            }
+            else if (playerZ < mobileZ)
+            {
+                int altitude = mobileZ - playerZ;
+                int steps = altitude / zlist.Count();
+                int count = 0;
+                while (count < zlist.Count())
+                {
+                    int acceptible = mobileZ - (steps * count);
+                    if (zlist[count] > acceptible + 10)
+                    {
+                        return false;
+                    }
+                    count++;
+                }
+            }
+            else
+            {
+                // if all entries are the same, or within playerZ+8 it is okay
+                foreach (int entry in zlist)
+                {
+                    if (entry != zlist[0])
+                    {
+                        if (entry > (playerZ + 8))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+
+            return true;
+        }
+
+        static List<int> WallTypes = new List<int> { 0x015e, 0x015f, 0x0160 };
+        internal static bool IsStaticWall(Assistant.Mobile mobile, Statics.TileInfo checkStatic)
+        {
+            string staticName = Statics.GetTileName(checkStatic.StaticID);
+
+            bool isInList = WallTypes.IndexOf(checkStatic.StaticID) != -1;
+            if (isInList ||
+                (staticName.IndexOf("wall", StringComparison.OrdinalIgnoreCase) >= 0
+                && staticName.IndexOf("torch", StringComparison.OrdinalIgnoreCase) == -1)
+                )
+            {
+                if (Player.Position.Z >= (checkStatic.StaticZ + 20) || mobile.Position.Z >= (checkStatic.StaticZ + 20))
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        internal static bool IsFloorBlocking(Assistant.Mobile mobile, Statics.TileInfo checkStatic)
+        {
+            string staticName = Statics.GetTileName(checkStatic.StaticID);
+            if (staticName.IndexOf("roof", StringComparison.OrdinalIgnoreCase) >= 0
+                || staticName.IndexOf("planks", StringComparison.OrdinalIgnoreCase) >= 0
+                || staticName.IndexOf("pavers", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                if (checkStatic.StaticZ > Player.Position.Z && checkStatic.StaticZ <= mobile.Position.Z)
+                {
+                    return true;
+                }
+                if (checkStatic.StaticZ <= Player.Position.Z && checkStatic.StaticZ > mobile.Position.Z)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal static bool CheckTile(Assistant.Mobile mobile, int x, int y, int z)
+        {
+            int tile = Statics.GetLandID(x, y, Player.Map);
+            List<Statics.TileInfo> statics = Statics.GetStaticsTileInfo(x, y, Player.Map);
+
+            foreach (var checkStatic in statics)
+            {
+                if (IsStaticWall(mobile, checkStatic) || IsFloorBlocking(mobile, checkStatic))
+                {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            return true;
+        }
+
+        internal static bool CheckCoords(Assistant.Mobile mobile, List<Assistant.Point3D> coords)
+        {
+            List<int> zlist = new List<int>();
+            List<Assistant.Point3D> badLand = new List<Assistant.Point3D>();
+
+            foreach (var coord in coords)
+            {
+                zlist.Add(coord.Z);
+                if (CheckTile(mobile, coord.X, coord.Y, coord.Z) == false)
+                {
+                    return false;
+                }
+            }
+            if (Terrain(mobile, zlist) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        internal static List<Assistant.Point3D> CoordsToMobile(Assistant.Mobile mobile)
+        {
+            Assistant.Point3D playerPosition = World.Player.Position;
+            Assistant.Point3D mobPosition = mobile.Position;
+            int xDist = Math.Abs(mobPosition.X - playerPosition.X);
+            int yDist = Math.Abs(mobPosition.Y - playerPosition.Y);
+            int zDist = Math.Abs(mobPosition.Z - playerPosition.Z);
+
+            Assistant.Direction dir = Direction.North;
+            if (mobPosition.Y < playerPosition.Y && mobPosition.X == playerPosition.X)
+            {
+                dir = Direction.North;
+            }
+            else if (mobPosition.Y > playerPosition.Y && mobPosition.X == playerPosition.X)
+            {
+                dir = Direction.South;
+            }
+            else if (mobPosition.Y == playerPosition.Y && mobPosition.X > playerPosition.X)
+            {
+                dir = Direction.East;
+            }
+            else if (mobPosition.Y == playerPosition.Y && mobPosition.X < playerPosition.X)
+            {
+                dir = Direction.West;
+            }
+            else if (mobPosition.Y >= playerPosition.Y && mobPosition.X >= playerPosition.X)
+            {
+                dir = Direction.Down;
+            }
+            else if (mobPosition.Y > playerPosition.Y && mobPosition.X < playerPosition.X)
+            {
+                dir = Direction.Left;
+            }
+            else if (mobPosition.Y < playerPosition.Y && mobPosition.X < playerPosition.X)
+            {
+                dir = Direction.Up;
+            }
+            else if (mobPosition.Y < playerPosition.Y && mobPosition.X > playerPosition.X)
+            {
+                dir = Direction.Right;
+            }
+            List<Assistant.Point3D> coords = new List<Assistant.Point3D>();
+            int mobX = mobPosition.X;
+            int mobY = mobPosition.Y;
+            if (dir == Direction.North)
+            {
+                while (mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobY += 1;
+                }
+            }
+            else if (dir == Direction.South)
+            {
+                while (mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobY -= 1;
+                }
+            }
+            else if (dir == Direction.East)
+            {
+                while (mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobX -= 1;
+                }
+            }
+            else if (dir == Direction.West)
+            {
+                while (mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobX += 1;
+                }
+            }
+            else if (dir == Direction.Up)
+            {
+                int off = Math.Abs(xDist - yDist);
+                if (xDist > yDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobX -= 1;
+                    }
+                }
+                if (yDist > xDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobY -= 1;
+                    }
+                }
+
+                while (mobX != playerPosition.X && mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobX += 1;
+                    mobY += 1;
+                }
+            }
+            else if (dir == Direction.Down)
+            {
+                int off = Math.Abs(xDist - yDist);
+                if (xDist > yDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobX -= 1;
+                    }
+                }
+                if (yDist > xDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobY -= 1;
+                    }
+                }
+
+                while (mobX != playerPosition.X && mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobX -= 1;
+                    mobY -= 1;
+                }
+            }
+            else if (dir == Direction.Left)
+            {
+                int off = Math.Abs(xDist - yDist);
+                if (xDist > yDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobX -= 1;
+                    }
+                }
+                if (yDist > xDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobY -= 1;
+                    }
+                }
+
+                while (mobX != playerPosition.X && mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobX += 1;
+                    mobY -= 1;
+                }
+            }
+            else if (dir == Direction.Right)
+            {
+                int off = Math.Abs(xDist - yDist);
+                if (xDist > yDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobX -= 1;
+                    }
+                }
+                if (yDist > xDist)
+                {
+                    while (off-- > 0)
+                    {
+                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                        mobY -= 1;
+                    }
+                }
+
+                while (mobX != playerPosition.X && mobY != playerPosition.Y)
+                {
+                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
+                    mobX -= 1;
+                    mobY += 1;
+                }
+            }
+            coords.Add(new Assistant.Point3D(playerPosition.X, playerPosition.Y, Statics.GetLandZ(playerPosition.X, playerPosition.Y, Player.Map)));
+
+            return coords;
         }
 
         public static List<Mobile> ApplyFilter(Filter filter)
@@ -415,6 +769,12 @@ namespace RazorEnhanced
 
                     // Esclude Self dalla ricerca
                     assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
+
+                    // check line of site last because its expensive
+                    if (filter.CheckLineOfSite)
+                    {
+                        assistantMobiles = CheckLineOfSite(assistantMobiles);
+                    }
                 }
             }
 

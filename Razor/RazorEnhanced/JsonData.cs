@@ -81,6 +81,7 @@ namespace JsonData
             filter.Hues = mobileFilter.Hues;
             filter.RangeMin = mobileFilter.RangeMin;
             filter.RangeMax = mobileFilter.RangeMax;
+            filter.CheckLineOfSite = mobileFilter.CheckLineOfSite;
             filter.Poisoned = mobileFilter.Poisoned;
             filter.Blessed = mobileFilter.Blessed;
             filter.Female = mobileFilter.Female;
@@ -128,6 +129,9 @@ namespace JsonData
 
         [JsonProperty("RangeMax")]
         public double RangeMax { get => rangeMax; set => rangeMax = value; }
+
+        [JsonProperty("CheckLineOfSite")]
+        public bool CheckLineOfSite { get; set; }
 
         private int poisoned = 0;
 
