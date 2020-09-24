@@ -494,7 +494,7 @@ namespace RazorEnhanced
 	public class BuyAgent
 	{
 		private static string m_listname;
-
+		private static bool m_comparename;
 		[Serializable]
 		public class BuyAgentItem  : ListAbleItem
 		{
@@ -526,14 +526,19 @@ namespace RazorEnhanced
 		internal class BuyAgentList
 		{
 			private string m_Description;
+			private bool m_CompareName;
 			internal string Description { get { return m_Description; } }
 
 			[JsonProperty("Selected")]
 			internal bool Selected { get; set;}
 
-			public BuyAgentList(string description, bool selected)
+			[JsonProperty("CompareName")]
+			internal bool CompareName { get; set; }
+
+			public BuyAgentList(string description, bool comparename, bool selected)
 			{
 				m_Description = description;
+				m_CompareName = comparename;
 				Selected = selected;
 			}
 		}
@@ -544,7 +549,17 @@ namespace RazorEnhanced
 			set { m_listname = value; }
 		}
 
-		internal static void AddLog(string addlog)
+		internal static bool CompareName
+		{
+			get { return m_comparename; }
+			set 
+				{ 
+					m_comparename = value;
+					Assistant.Engine.MainWindow.SafeAction(s => s.BuyCompareNameCheckBox.Checked = value);
+				}
+		}
+
+	internal static void AddLog(string addlog)
 		{
 			if (Client.Running)
 			{
@@ -571,6 +586,7 @@ namespace RazorEnhanced
 				if (l.Selected)
 				{
 					m_listname = l.Description;
+					m_comparename = l.CompareName;
 					Engine.MainWindow.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(l.Description);
 				}
 			}
@@ -610,7 +626,7 @@ namespace RazorEnhanced
 				if (l.Selected)
 				{
 					List<BuyAgentItem> items = Settings.BuyAgent.ItemsRead(l.Description);
-
+					
 					foreach (BuyAgentItem item in items)
 					{
 						string color = "All";
@@ -678,6 +694,7 @@ namespace RazorEnhanced
 
 		internal static void EnableBuyFilter()
 		{
+			PacketHandler.RegisterServerToClientViewer(0x74, new PacketViewerCallback(ShopList));
 			PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(DisplayBuy));
 		}
 
@@ -692,6 +709,36 @@ namespace RazorEnhanced
 				return false;
 		}
 
+		private static bool CheckName(string vendoritemname, string listitemname)
+		{
+			if (!CompareName) // In Compare name not enabled return valid all compare
+				return true;
+
+			if (vendoritemname.ToLower() == listitemname.ToLower())
+				return true;
+			else
+				return false;
+		}
+
+		internal static List<String> m_shoplist = new List<string>();
+		private static void ShopList(PacketReader p, PacketHandlerEventArgs args)
+		{
+			Assistant.Serial serial = p.ReadUInt32();
+			byte itemcount = p.ReadByte();
+
+			if (itemcount < 1) // No item
+				return;
+
+			m_shoplist.Clear();
+			for (int i = 0; i < itemcount; i++)
+			{
+				p.ReadUInt32(); // Price
+				int textlenght = p.ReadByte(); // lenght name 
+				string itemname = p.ReadStringSafe(textlenght); // real item name show
+				m_shoplist.Add(itemname);
+			}
+
+		}
 		private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (!Engine.MainWindow.BuyCheckBox.Checked) // Filtro disabilitato
@@ -699,7 +746,7 @@ namespace RazorEnhanced
 
 			Assistant.Serial serial = p.ReadUInt32();
 			ushort gump = p.ReadUInt16();
-
+			
 			Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
 			if (vendor == null)
 				return;
@@ -717,15 +764,19 @@ namespace RazorEnhanced
 			{
 				if (pack.Contains[i] == null)
 					continue;
-
+	
+				if (m_comparename) // if namecheck enabled assign real item name show in vendor list
+					pack.Contains[i].Name = m_shoplist[i];
+				
 				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(m_listname);
-
+				
 				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{
+					int x = 0;
 					if (!buyItem.Selected)
 						continue;
 
-					if (buyItem.Graphics != pack.Contains[i].ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue))
+					if (buyItem.Graphics != pack.Contains[i].ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue) || !RazorEnhanced.BuyAgent.CheckName(pack.Contains[i].Name, buyItem.Name))
 						continue;
 
 					if (pack.Contains[i].Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
@@ -745,6 +796,7 @@ namespace RazorEnhanced
 				}
 			}
 
+			m_shoplist.Clear(); 
 			if (buyList.Count <= 0)
 				return;
 
@@ -789,15 +841,26 @@ namespace RazorEnhanced
 			return Engine.MainWindow.BuyCheckBox.Checked;
 		}
 
+		internal static bool UpdateListParam(string listName)
+		{
+			if (Settings.BuyAgent.ListExists(listName))
+			{
+				BuyAgent.CompareName = Settings.BuyAgent.CompareNameRead(listName);
+				BuyAgent.BuyListName = listName;
+				return true;
+			}
+			return false;
+		}
+
 		public static void ChangeList(string listName)
 		{
-			if (!Engine.MainWindow.BuyListSelect.Items.Contains(listName))
+
+			if (!UpdateListParam(listName))
 			{
-				Scripts.SendMessageScriptError("Script Error: Buy.ChangeList: BuyList list: " + listName + " not exist");
+				Scripts.SendMessageScriptError("Script Error: BuyAgent.ChangeList: Sell list: " + listName + " not exist");
 			}
 			else
 			{
-				m_listname = listName;
 				if (Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop change list e restart
 				{
 					Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = false);

@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 7;
+		private static int SettingVersion = 8;
 
 		private static string m_profileName = null;
 
@@ -566,6 +566,7 @@ namespace RazorEnhanced
 		{               // ----------- BUY AGENT ----------
 			DataTable buy_lists = new DataTable(tableName);
 			buy_lists.Columns.Add("Description", typeof(string));
+			buy_lists.Columns.Add("CompareName", typeof(bool));
 			buy_lists.Columns.Add("Selected", typeof(bool));
 			return buy_lists;
 		}
@@ -3277,13 +3278,14 @@ namespace RazorEnhanced
 
 				DataRow newRow = m_Dataset.Tables["BUY_LISTS"].NewRow();
 				newRow["Description"] = description;
+				newRow["CompareName"] = false;
 				newRow["Selected"] = true;
 				m_Dataset.Tables["BUY_LISTS"].Rows.Add(newRow);
 
 				Save();
 			}
 
-			internal static void ListUpdate(string description, bool selected)
+			internal static void ListUpdate(string description, bool comparename, bool selected)
 			{
 				bool found = m_Dataset.Tables["BUY_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
@@ -3302,12 +3304,18 @@ namespace RazorEnhanced
 						if ((string)row["Description"] == description)
 						{
 							row["Selected"] = selected;
+							row["CompareName"] = comparename;
 							break;
 						}
 					}
 
 					Save();
 				}
+			}
+
+			internal static bool CompareNameRead(string listname)
+			{
+				return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows where (string)row["Description"] == listname select Convert.ToBoolean(row["CompareName"])).FirstOrDefault();
 			}
 
 			internal static void ClearList(string list)
@@ -3340,7 +3348,7 @@ namespace RazorEnhanced
 
 			internal static List<RazorEnhanced.BuyAgent.BuyAgentList> ListsRead()
 			{
-				return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows let description = (string) row["Description"] let selected = (bool) row["Selected"] select new RazorEnhanced.BuyAgent.BuyAgentList(description, selected)).ToList();
+				return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows let description = (string) row["Description"] let comparename = (bool)row["CompareName"] let selected = (bool) row["Selected"] select new RazorEnhanced.BuyAgent.BuyAgentList(description, comparename, selected)).ToList();
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
@@ -5011,8 +5019,19 @@ namespace RazorEnhanced
                 realVersion = 7;
                 General.WriteInt("SettingVersion", realVersion);
             }
+			if (realVersion == 7)
+			{
+				DataTable buylist = m_Dataset.Tables["BUY_LISTS"];
+				buylist.Columns.Add("CompareName", typeof(bool));
+				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+				{
+					row["CompareName"] = false;
+				}
+				realVersion = 8;
+				General.WriteInt("SettingVersion", realVersion);
+			}
 
-            Save(true);
+			Save(true);
 		}
 
 

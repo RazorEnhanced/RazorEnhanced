@@ -10,17 +10,19 @@ namespace Assistant
 		internal RazorCheckBox BuyCheckBox { get { return buyEnableCheckBox; } }
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
 		internal RazorComboBox BuyListSelect { get { return buyListSelect; } }
+		internal RazorCheckBox BuyCompareNameCheckBox { get { return buyCompareNameCheckBox; } }
 		internal DataGridView VendorBuyDataGridView { get { return vendorbuydataGridView; } }
 
 		private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (buyListSelect.Text != String.Empty)
 			{
-				BuyAgent.BuyListName = buyListSelect.Text;
+				BuyAgent.UpdateListParam(buyListSelect.Text);
 
 				if (buyListSelect.Focused)
 				{
-					Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
+					Settings.BuyAgent.ListUpdate(buyListSelect.Text, RazorEnhanced.BuyAgent.CompareName, true);
+
 					BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
 				}
 			}
@@ -162,6 +164,15 @@ namespace Assistant
 			e.Row.Cells[2].Value = "0x0000";
 			e.Row.Cells[3].Value = 999;
 			e.Row.Cells[4].Value = "0x0000";
+		}
+
+		private void buyCompareNameCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (buyCompareNameCheckBox.Focused)
+			{
+				Settings.BuyAgent.ListUpdate(buyListSelect.Text, buyCompareNameCheckBox.Checked, true);
+				BuyAgent.CompareName = buyCompareNameCheckBox.Checked;
+			}
 		}
 	}
 }
