@@ -1141,7 +1141,7 @@ namespace RazorEnhanced.UI
 
 			Dictionary<string, ToolTipDescriptions> descriptionTimer = new Dictionary<string, ToolTipDescriptions>();
 
-			tooltip = new ToolTipDescriptions("Timer.Create()", new string[] { "string TimerName, int mstime" }, "void", "Create a timer object whit specific name and duration in ms");
+			tooltip = new ToolTipDescriptions("Timer.Create()", new string[] { "string TimerName, int mstime, optional string Message" }, "void", "Create a timer object whit specific name and duration in ms, Optional can add message when timer end");
             descriptionTimer.Add("Timer.Create", tooltip);
 
 			tooltip = new ToolTipDescriptions("Timer.Check()", new string[] { "string TimerName" }, "bool", "Check if a timer object is expired or not, \n\t True if not expired, false if expired");

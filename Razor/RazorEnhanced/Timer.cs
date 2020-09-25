@@ -2,12 +2,14 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Ultima;
 using System.Timers;
+using System;
 
 namespace RazorEnhanced
 {
 	public class ScriptTimer : System.Timers.Timer
 	{
 		internal string Name;
+		internal string Message;
 	}
 
 	public class Timer
@@ -15,7 +17,11 @@ namespace RazorEnhanced
 		private static ConcurrentDictionary<string, ScriptTimer> m_timers = new ConcurrentDictionary<string, ScriptTimer>();
         public static ConcurrentDictionary<string, ScriptTimer> Timers { get => m_timers; set => m_timers = value; }
 
-        public static void Create(string name, int delay)
+		public static void Create(string name, int delay)
+		{
+			Create(name, delay, String.Empty);
+		}
+		public static void Create(string name, int delay, string message)
 		{
 			if (m_timers.ContainsKey(name)) // Timer Exist
 			{
@@ -31,6 +37,7 @@ namespace RazorEnhanced
 			newtimer.Interval = delay;
 			newtimer.Enabled = true;
 			newtimer.Name = name;
+			newtimer.Message = message;
 			m_timers[name] = newtimer;
 		}
 
@@ -54,6 +61,9 @@ namespace RazorEnhanced
 		private static void OnTimedEvent(object source, ElapsedEventArgs e)
 		{
 			ScriptTimer t = (ScriptTimer)source;
+			if (t.Message != String.Empty) // If timer have a end Message
+				Misc.SendMessage(t.Message);
+
 			t.Close();
 			m_timers.TryRemove(t.Name, out ScriptTimer tt); // Remove timer
 			t = null;
