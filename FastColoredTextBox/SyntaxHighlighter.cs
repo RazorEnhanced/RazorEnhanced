@@ -1337,7 +1337,7 @@ namespace FastColoredTextBoxNS
 			string ItemsProps = "Amount|IsBagOfSending|IsContainer|IsCorpse|IsDoor|IsInBank|Movable|OnGround|ItemID|RootContainer|Container|Durability|MaxDurability";
 			string StaticProps = "StaticID|StaticHue|StaticZ";
 			string ItemFilterProps = "Enabled|Graphics|Hues|RangeMin|RangeMax|Layers|Serials";
-			string MobileFilterProps = "Bodies|Notorieties|CheckIgnoreObject";
+			string MobileFilterProps = "Bodies|Notorieties|CheckIgnoreObject|CheckLineOfSite";
 			string PathFindProps = "DebugMessage|StopIfStuck|MaxRetry";
 			RazorPropsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7})\b", GenericProps, PlayerProps, MobileProps, ItemsProps, StaticProps, ItemFilterProps, MobileFilterProps, PathFindProps), RegexCompiledOption);
 
