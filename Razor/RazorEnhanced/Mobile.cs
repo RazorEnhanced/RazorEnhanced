@@ -411,17 +411,19 @@ namespace RazorEnhanced
         {
             string staticName = Statics.GetTileName(checkStatic.StaticID);
 
-            bool isInList = WallTypes.IndexOf(checkStatic.StaticID) != -1;
-            if (isInList ||
-                (staticName.IndexOf("wall", StringComparison.OrdinalIgnoreCase) >= 0
-                && staticName.IndexOf("torch", StringComparison.OrdinalIgnoreCase) == -1)
-                )
+            bool wall = Statics.GetTileFlag(checkStatic.StaticID, "Wall");
+            if (wall)
             {
                 if (Player.Position.Z >= (checkStatic.StaticZ + 20) || mobile.Position.Z >= (checkStatic.StaticZ + 20))
                 {
                     return false;
                 }
-                return true;
+                int height = Statics.GetTileHeight(checkStatic.StaticID);
+                bool blocking = Statics.GetTileFlag(checkStatic.StaticID, "NoShoot");
+                if (blocking ) // && height > 5)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -445,22 +447,21 @@ namespace RazorEnhanced
             return false;
         }
 
+        // returns true if clear or false if blocked
         internal static bool CheckTile(Assistant.Mobile mobile, int x, int y, int z)
         {
             int tile = Statics.GetLandID(x, y, Player.Map);
             List<Statics.TileInfo> statics = Statics.GetStaticsTileInfo(x, y, Player.Map);
 
+            bool blocked = false;
             foreach (var checkStatic in statics)
             {
                 if (IsStaticWall(mobile, checkStatic) || IsFloorBlocking(mobile, checkStatic))
                 {
-                    return false;
-                }
-                else {
-                    return true;
+                    blocked = true; ;
                 }
             }
-            return true;
+            return !blocked;
         }
 
         internal static bool CheckCoords(Assistant.Mobile mobile, List<Assistant.Point3D> coords)
@@ -486,189 +487,37 @@ namespace RazorEnhanced
 
         internal static List<Assistant.Point3D> CoordsToMobile(Assistant.Mobile mobile)
         {
+            List<Assistant.Point3D> coords = new List<Assistant.Point3D>();
+
             Assistant.Point3D playerPosition = World.Player.Position;
             Assistant.Point3D mobPosition = mobile.Position;
-            int xDist = Math.Abs(mobPosition.X - playerPosition.X);
-            int yDist = Math.Abs(mobPosition.Y - playerPosition.Y);
-            int zDist = Math.Abs(mobPosition.Z - playerPosition.Z);
 
-            Assistant.Direction dir = Direction.North;
-            if (mobPosition.Y < playerPosition.Y && mobPosition.X == playerPosition.X)
-            {
-                dir = Direction.North;
-            }
-            else if (mobPosition.Y > playerPosition.Y && mobPosition.X == playerPosition.X)
-            {
-                dir = Direction.South;
-            }
-            else if (mobPosition.Y == playerPosition.Y && mobPosition.X > playerPosition.X)
-            {
-                dir = Direction.East;
-            }
-            else if (mobPosition.Y == playerPosition.Y && mobPosition.X < playerPosition.X)
-            {
-                dir = Direction.West;
-            }
-            else if (mobPosition.Y >= playerPosition.Y && mobPosition.X >= playerPosition.X)
-            {
-                dir = Direction.Down;
-            }
-            else if (mobPosition.Y > playerPosition.Y && mobPosition.X < playerPosition.X)
-            {
-                dir = Direction.Left;
-            }
-            else if (mobPosition.Y < playerPosition.Y && mobPosition.X < playerPosition.X)
-            {
-                dir = Direction.Up;
-            }
-            else if (mobPosition.Y < playerPosition.Y && mobPosition.X > playerPosition.X)
-            {
-                dir = Direction.Right;
-            }
-            List<Assistant.Point3D> coords = new List<Assistant.Point3D>();
-            int mobX = mobPosition.X;
-            int mobY = mobPosition.Y;
-            if (dir == Direction.North)
-            {
-                while (mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobY += 1;
-                }
-            }
-            else if (dir == Direction.South)
-            {
-                while (mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobY -= 1;
-                }
-            }
-            else if (dir == Direction.East)
-            {
-                while (mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobX -= 1;
-                }
-            }
-            else if (dir == Direction.West)
-            {
-                while (mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobX += 1;
-                }
-            }
-            else if (dir == Direction.Up)
-            {
-                int off = Math.Abs(xDist - yDist);
-                if (xDist > yDist)
-                {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobX -= 1;
-                    }
-                }
-                if (yDist > xDist)
-                {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobY -= 1;
-                    }
-                }
+            // player is x0 mob is x1 in m = (y1?y0)/(x1?x0)
+            float slope = (float)((float)mobPosition.Y - playerPosition.Y) / ((float)mobPosition.X - playerPosition.X);
 
-                while (mobX != playerPosition.X && mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobX += 1;
-                    mobY += 1;
-                }
-            }
-            else if (dir == Direction.Down)
+            // for every x compute the y
+            for (int x = Math.Min(playerPosition.X, mobPosition.X); x <= Math.Max(playerPosition.X, mobPosition.X); x++)
             {
-                int off = Math.Abs(xDist - yDist);
-                if (xDist > yDist)
+                // formula for y is y = m* (x-x0) + y0
+                if (x != playerPosition.X)
                 {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobX -= 1;
-                    }
-                }
-                if (yDist > xDist)
-                {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobY -= 1;
-                    }
-                }
-
-                while (mobX != playerPosition.X && mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobX -= 1;
-                    mobY -= 1;
+                    int y = (int)(slope * ((float)x - playerPosition.X) + playerPosition.Y);
+                    coords.Add(new Assistant.Point3D(x, y, Statics.GetLandZ(x, y, Player.Map)));
                 }
             }
-            else if (dir == Direction.Left)
+
+            // for every y compute the x
+            for (int y = Math.Min(playerPosition.Y, mobPosition.Y); y <= Math.Max(playerPosition.Y, mobPosition.Y); y++)
             {
-                int off = Math.Abs(xDist - yDist);
-                if (xDist > yDist)
+                // formula for x is  x = ((y?y0)/m) + x0
+                if (y != playerPosition.Y)
                 {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobX -= 1;
-                    }
-                }
-                if (yDist > xDist)
-                {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobY -= 1;
-                    }
-                }
-
-                while (mobX != playerPosition.X && mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobX += 1;
-                    mobY -= 1;
+                    int x = (int)((((float)y - playerPosition.Y) / slope) + playerPosition.X);
+                    coords.Add(new Assistant.Point3D(x, y, Statics.GetLandZ(x, y, Player.Map)));
                 }
             }
-            else if (dir == Direction.Right)
-            {
-                int off = Math.Abs(xDist - yDist);
-                if (xDist > yDist)
-                {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobX -= 1;
-                    }
-                }
-                if (yDist > xDist)
-                {
-                    while (off-- > 0)
-                    {
-                        coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                        mobY -= 1;
-                    }
-                }
 
-                while (mobX != playerPosition.X && mobY != playerPosition.Y)
-                {
-                    coords.Add(new Assistant.Point3D(mobX, mobY, Statics.GetLandZ(mobX, mobY, Player.Map)));
-                    mobX -= 1;
-                    mobY += 1;
-                }
-            }
-            coords.Add(new Assistant.Point3D(playerPosition.X, playerPosition.Y, Statics.GetLandZ(playerPosition.X, playerPosition.Y, Player.Map)));
+            //coords.Add(new Assistant.Point3D(playerPosition.X, playerPosition.Y, Statics.GetLandZ(playerPosition.X, playerPosition.Y, Player.Map)));
 
             return coords;
         }
@@ -769,13 +618,13 @@ namespace RazorEnhanced
 
                     // Esclude Self dalla ricerca
                     assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
-
-                    // check line of site last because its expensive
-                    if (filter.CheckLineOfSite)
-                    {
-                        assistantMobiles = CheckLineOfSite(assistantMobiles);
-                    }
                 }
+                // check line of site last because its expensive
+                if (filter.CheckLineOfSite)
+                {
+                    assistantMobiles = CheckLineOfSite(assistantMobiles);
+                }
+
             }
 
             foreach (Assistant.Mobile assistantMobile in assistantMobiles)

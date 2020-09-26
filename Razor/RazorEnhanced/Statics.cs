@@ -93,7 +93,12 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static bool GetTileFlag(int itemid, string flagname)
+        public static int GetTileHeight(int itemid)
+        {
+            return TileData.ItemTable[itemid].Height;
+        }
+
+        public static bool GetTileFlag(int itemid, string flagname)
 		{
 			switch (flagname)
 			{
@@ -335,7 +340,7 @@ namespace RazorEnhanced
 					return tileinfo;
 			}
 			tileinfo = new TileInfo(tile.ID, 0, tile.Z);
-			
+
 			return tileinfo;
 		}
 
