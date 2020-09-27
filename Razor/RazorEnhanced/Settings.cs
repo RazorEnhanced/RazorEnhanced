@@ -5022,7 +5022,11 @@ namespace RazorEnhanced
 			if (realVersion == 7)
 			{
 				DataTable buylist = m_Dataset.Tables["BUY_LISTS"];
-				buylist.Columns.Add("CompareName", typeof(bool));
+                // quick fix for crash people were having, have not traced down root cause
+                if (!buylist.Columns.Contains("CompareName"))
+                {
+                    buylist.Columns.Add("CompareName", typeof(bool));
+                }
 				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
 				{
 					row["CompareName"] = false;
