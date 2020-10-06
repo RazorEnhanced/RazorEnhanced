@@ -1058,6 +1058,52 @@ namespace RazorEnhanced
             Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
         }
 
+        public static int GetStatStatus(string statname)
+        {
+            if (!Enum.TryParse<StatName>(statname, out StatName stat))
+            {
+                Scripts.SendMessageScriptError("Script Error: GetStatStatus: " + statname + " not valid");
+                return -1;
+            }
+            Scripts.SendMessageScriptError("Script Error: GetStatStatus: not implemented");
+            return (int)-1;
+        }
+
+        public static void SetStatStatus(string statname, int status)
+        {
+            if (status < 0 || status > 2)
+            {
+                Scripts.SendMessageScriptError("Script Error: SetStatStatus: status: " + status + " not valid");
+                return;
+            }
+
+            if (!Enum.TryParse<StatName>(statname, out StatName skill))
+            {
+                Scripts.SendMessageScriptError("Script Error: SetStatStatus: " + statname + " not valid");
+                return;
+            }
+
+            LockType type = (LockType)status;
+
+            Assistant.Client.Instance.SendToServer(new SetStatLock((int)skill, type));
+
+            //World.Player.Skills[(int)skill].Lock = t;
+            //Engine.MainWindow.SafeAction(s => s.UpdateSkill(World.Player.Skills[(int)skill]));
+
+           // Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
+        }
+
+
+
+
+        /// <summary>
+        /// //////
+        /// </summary>
+        /// <param name="skillname"></param>
+        /// <param name="target"></param>
+        /// <param name="wait"></param>
+
+
         public static void UseSkill(string skillname, EnhancedEntity target, bool wait = true)
         {
             UseSkill(skillname, target.Serial, wait);

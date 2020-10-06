@@ -137,7 +137,7 @@ namespace RazorEnhanced.UI
 				"Player.BuffsExist", "Player.GetBuffDescription", "Player.SpellIsEnabled",
 				"Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
 				"Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer", "Player.EquipUO3D",
-				"Player.GetSkillValue", "Player.GetSkillCap", "Player.SetSkillStatus", "Player.GetSkillStatus", "Player.GetRealSkillValue", "Player.UseSkill", "Player.ChatSay",
+				"Player.GetSkillValue", "Player.GetSkillCap", "Player.SetStatStatus", "Player.SetSkillStatus", "Player.GetSkillStatus", "Player.GetRealSkillValue", "Player.UseSkill", "Player.ChatSay",
 				"Player.ChatEmote", "Player.ChatWhisper","Player.ChatChannel",
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
@@ -393,7 +393,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.GetAssistantLayer(string)", new string[] { "string LayerName" }, "Layer", "Retrives HexID from the Layer's name");
 			descriptionPlayer.Add("Player.GetAssistantLayer", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.GetSkillValue(string)", new string[] { "string SkillName" }, "dobule", "Get current value of a specific skill\n\tCheck the wiki for the possible strings");
+            tooltip = new ToolTipDescriptions("Player.SetStatStatus(string, int)", new string[] { "string StatName, int Status" }, "void", "Set status for a certain stat\n\tUP: 0, DOWN: 1, LOCKED: 2\n\tCheck the wiki for the possible strings");
+            descriptionPlayer.Add("Player.SetStatStatus", tooltip);
+
+            tooltip = new ToolTipDescriptions("Player.GetSkillValue(string)", new string[] { "string SkillName" }, "dobule", "Get current value of a specific skill\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.GetSkillValue", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.GetSkillCap(string)", new string[] { "string SkillName" }, "double", "Get current value of a specific skillcap\n\tCheck the wiki for the possible strings");
@@ -1336,13 +1339,6 @@ namespace RazorEnhanced.UI
 			m_popupMenu.Items.Width = m_popupMenu.Items.Width + 20;
 
 			this.Text = m_Title;
-
-			m_pe = new PythonEngine();
-			m_Engine = m_pe.engine;
-			m_Scope = m_pe.scope;
-			m_Engine.SetTrace(null);
-
-
 
 			if (filename != null && File.Exists(filename))
 			{

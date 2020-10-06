@@ -102,6 +102,12 @@ namespace Assistant
 		Humility = 0x6,
 		Justice = 0x7
 	}
+    public enum StatName
+    {
+        Strength = 0,
+        Dexterity = 1,
+        Intelligence = 2,
+    };
 
 	public enum SkillName
 	{

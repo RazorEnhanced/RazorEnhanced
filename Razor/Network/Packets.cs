@@ -350,7 +350,21 @@ namespace Assistant
 		}
 	}
 
-	internal sealed class AsciiMessage : Packet
+    internal sealed class SetStatLock : Packet
+    {
+        internal SetStatLock(int statType, LockType type)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 1 + 1);
+            Write((short)0x1A);
+            Write((byte)(statType));
+            Write((byte)(type));
+        }
+    }
+
+
+
+    internal sealed class AsciiMessage : Packet
 	{
 		internal AsciiMessage(Serial serial, int graphic, MessageType type, int hue, int font, string name, string text)
 			: base(0x1C)
