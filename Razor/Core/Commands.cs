@@ -6,6 +6,7 @@ using System.Threading;
 using System.Net.NetworkInformation;
 using RazorEnhanced.UI;
 using Assistant.UI;
+using Newtonsoft.Json;
 
 namespace Assistant
 {
@@ -301,7 +302,7 @@ namespace Assistant
 			{
 				int value = pvSrc.ReadInt16();
 				int count = (value & 0xFFF0) >> 4;
-				keys = new List<ushort> {(ushort) value};
+				keys = new List<ushort> { (ushort)value };
 
 				for (int i = 0; i < count; ++i)
 				{
@@ -336,31 +337,45 @@ namespace Assistant
 			if (text.Length <= 1)
 				return;
 
+			if (Client.IsOSI)
 			{
 				if (text[0] == '-' && text[1] != '-')
 				{
-					text = text.Substring(1).ToLower();
-					string[] split = text.Split(' ', '\t');
-					if (m_List.ContainsKey(split[0]))
-					{
-						CommandCallback call = (CommandCallback)m_List[split[0]];
-						if (call != null)
-						{
-							string[] param = new String[split.Length - 1];
-							for (int i = 0; i < param.Length; i++)
-								param[i] = split[i + 1];
-							call(param);
-
-							args.Block = true;
-						}
-					}
+					args.Block = ExecCommand(text);
 				}
 				else if (text[0] == '-' && text[1] == '-')
 				{
 					args.Block = true;
-				 	Assistant.UOAssist.PostTextSend(text.Substring(2));
+					Assistant.UOAssist.PostTextSend(text.Substring(2));
 				}
 			}
+			else
+			{
+				if (text[0] == '<')
+				{
+					args.Block = ExecCommand(text);
+				}
+			}
+		}
+
+		private static bool ExecCommand(string text)
+		{
+			text = text.Substring(1).ToLower();
+			string[] split = text.Split(' ', '\t');
+			if (m_List.ContainsKey(split[0]))
+			{
+				CommandCallback call = (CommandCallback)m_List[split[0]];
+				if (call != null)
+				{
+					string[] param = new String[split.Length - 1];
+					for (int i = 0; i < param.Length; i++)
+						param[i] = split[i + 1];
+					call(param);
+
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }
