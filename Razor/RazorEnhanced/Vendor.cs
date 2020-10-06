@@ -430,12 +430,6 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Enable()
 		{
-			if (!Assistant.Client.Instance.AllowBit(FeatureBit.SellAgent))
-			{
-				Scripts.SendMessageScriptError("SellAgent Not Allowed!");
-				return;
-			}
-
 			if (Engine.MainWindow.SellCheckBox.Checked == true)
 			{
 				Scripts.SendMessageScriptError("Script Error: Sell.Enable: Filter alredy enabled");
@@ -812,12 +806,6 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Enable()
 		{
-			if (!Assistant.Client.Instance.AllowBit(FeatureBit.BuyAgent))
-			{
-				Scripts.SendMessageScriptError("BuyAgent Not Allowed!");
-				return;
-			}
-
 			if (Engine.MainWindow.BuyCheckBox.Checked == true)
 			{
 				Scripts.SendMessageScriptError("Script Error: Buy.Enable: Filter alredy enabled");
