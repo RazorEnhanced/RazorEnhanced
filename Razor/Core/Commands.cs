@@ -263,9 +263,13 @@ namespace Assistant
 		internal static void ListCommands(string[] param)
 		{
 			RazorEnhanced.Misc.SendMessage("Command List:", 33, false);
+			string suffix = "<";
+			if (Client.IsOSI)
+				suffix = "-";
+
 			foreach (string cmd in m_List.Keys)
 			{
-				RazorEnhanced.Misc.SendMessage("-" + cmd, 33, false);
+				RazorEnhanced.Misc.SendMessage(suffix + cmd, 33, false);
 			}
 		}
 
