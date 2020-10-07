@@ -232,7 +232,7 @@ namespace Assistant
 
 		private static void PlayScript(string[] param)
 		{
-			if (param == null && param[0] == null)
+			if (param == null || param.Length == 0) 
 				return;
 
 			RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
