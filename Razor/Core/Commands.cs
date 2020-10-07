@@ -238,7 +238,10 @@ namespace Assistant
 			RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
 			if (script != null)
 			{
-				script.Run = true;
+				if (script.Run)
+					script.Stop();
+				else
+					script.Run = true;
 			}
 			else
 				RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist",33, false);
