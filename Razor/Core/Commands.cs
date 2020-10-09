@@ -240,7 +240,6 @@ namespace Assistant
 
 			if (param.Length > 1)
 			{
-				RazorEnhanced.AutoLoot.AddLog("CALL");
 				for (int i = 1; i < param.Length; i++)
 				{
 					scriptname = scriptname + " " + param[i];
