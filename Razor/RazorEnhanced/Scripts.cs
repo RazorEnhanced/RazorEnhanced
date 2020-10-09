@@ -600,10 +600,9 @@ namespace RazorEnhanced
 		{
 			foreach (KeyValuePair<string, EnhancedScript> pair in m_EnhancedScripts)
 			{
-				if (pair.Key.ToLower() == filename.ToLower())
+				if (String.Compare(pair.Key.ToLower(),filename.ToLower()) == 0)
 					return pair.Value;
 			}
-
 			return null;
 		}
 

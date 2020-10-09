@@ -235,7 +235,19 @@ namespace Assistant
 			if (param == null || param.Length == 0) 
 				return;
 
-			RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
+			string scriptname = String.Empty;
+			scriptname = param[0];
+
+			if (param.Length > 1)
+			{
+				RazorEnhanced.AutoLoot.AddLog("CALL");
+				for (int i = 1; i < param.Length; i++)
+				{
+					scriptname = scriptname + " " + param[i];
+				}
+			}
+
+			RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(scriptname);
 			if (script != null)
 			{
 				if (script.Run)
