@@ -432,6 +432,10 @@ namespace RazorEnhanced
 
                 foreach (RazorEnhanced.Item item in m_cont.Contains)
                 {
+                    if (! item.IsLootable )
+                    {
+                        continue;
+                    }
                     // Check match all by graphics
                     foreach (AutoLootItem autoLootItem in matchAll)
                     {
@@ -504,6 +508,7 @@ namespace RazorEnhanced
             Movable = -1,
             IsCorpse = 1,
             OnGround = 1,
+            IsDoor = -1,
             Enabled = true
         };
 

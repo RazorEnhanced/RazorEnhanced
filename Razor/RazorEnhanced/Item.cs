@@ -110,8 +110,9 @@ namespace RazorEnhanced
 		public bool IsCorpse { get { return m_AssistantItem.IsCorpse; } }
 
 		public bool IsDoor { get { return m_AssistantItem.IsDoor; } }
+        public bool IsLootable { get { return m_AssistantItem.IsLootable; } }
 
-		public bool IsResource { get { return m_AssistantItem.IsResource; } }
+        public bool IsResource { get { return m_AssistantItem.IsResource; } }
 
 		public bool IsPotion { get { return m_AssistantItem.IsPotion; } }
 
@@ -319,6 +320,7 @@ namespace RazorEnhanced
 			public int OnGround = -1;
 			public int IsCorpse = -1;
 			public int IsContainer = -1;
+            public int IsDoor = -1;
 
 			public Filter()
 			{
@@ -414,7 +416,12 @@ namespace RazorEnhanced
 							assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
 						}
 
-						if (filter.CheckIgnoreObject)
+						if (filter.IsDoor != -1)
+                        {
+                            assistantItems = assistantItems.Where((i) => i.IsDoor == Convert.ToBoolean(filter.IsDoor)).ToList();
+                        }
+
+                        if (filter.CheckIgnoreObject)
 						{
 							assistantItems = assistantItems.Where((i) => Misc.CheckIgnoreObject(i.Serial) != true).ToList();
 						}
@@ -433,7 +440,7 @@ namespace RazorEnhanced
 			return result;
 		}
 
-		public static Item Select(List<Item> items, string selector)
+        public static Item Select(List<Item> items, string selector)
 		{
 			Item result = null;
 

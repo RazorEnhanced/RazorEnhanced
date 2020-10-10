@@ -260,7 +260,8 @@ namespace RazorEnhanced
 			RangeMax = 3,
 			Movable = -1,
 			IsCorpse = 1,
-			OnGround = 1,
+            IsDoor = -1,
+            OnGround = 1,
 			Enabled = true
 		};
 
@@ -324,7 +325,8 @@ namespace RazorEnhanced
 			RangeMax = 1,
 			Movable = -1,
 			IsCorpse = -1,
-			OnGround = 1,
+            IsDoor = -1,
+            OnGround = 1,
 			Enabled = true
 		};
 

@@ -530,20 +530,24 @@ namespace Assistant
 
 		internal bool OnGround { get { return Container == null; } }
 
-		internal static ushort[] m_containerID =
-		new ushort[] { 0x0E75, 0x0E76, 0x0E77, 0x0E78, 0x0E79, 0x0E80, 0x0E83, 0x2814, 0x2DE9, 0x2DEA,
-						0x2006, 0xECA, 0xECB, 0xECC, 0xECD, 0xECE, 0xECF,0xED0, 0xED1, 0xED2, 0x9A93,
-						0xE76, 0x2256, 0x2257, 0xE77, 0xE7F, 0xE7A, 0x24D5, 0x24D6, 0x24D9, 0x24DA,
-						0x990, 0x9AC, 0x9B1, 0x24D7, 0x24D8, 0x24DD, 0xE40, 0xE41, 0xE7D, 0x9AA, 0x9A94,
-						0xE7E, 0x9A9, 0xE3C, 0xE3D, 0xE3E, 0xE3F, 0xA30, 0xA38,0xE42,0xE43, 0x2DF1, 0x2DF2,
-						0xE7C, 0x9AB, 0xE80, 0x9A8, 0x3E65, 0x3E93, 0x3EAE, 0x3EB9, 0x2DF3, 0x2DF4, 0x2813,
-						0xA97, 0xA98, 0xA99, 0xA9A, 0xA9B, 0xA9C, 0xA9D, 0xA9E, 0xA4C, 0xA4D, 0xA50, 0xA51,
-						0xA4E, 0xA4F, 0xA52, 0xA53, 0xA2C,0xA34, 0x1E5E, 0x232A, 0x232B, 0x2857, 0x2858,
-						0x285B, 0x285C, 0x285D, 0x285E, 0x2859, 0x285A, 0x24DB, 0x24DC, 0x280B, 0x280C,
-						0x280F, 0x2810, 0x280D, 0x280E, 0x2811, 0x2812, 0x2815, 0x2816, 0x2817, 0x2818,
-						0x46A2, 0x46A3, 0x46A4, 0x46A5, 0x46A6, 0x46A7, 0x9A91, 0x9A92,
-						0x2FB7, 0x3171 // Quiver
-						};
+        internal static HashSet<int> LoadContainersData()
+        {
+            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "ContainersData.json");
+            if (File.Exists(pathName))
+            {
+                string containersData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(containersData);
+            }
+            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
+            if (File.Exists(pathName))
+            {
+                string containersData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(containersData);
+            }
+            return new HashSet<int>();
+        }
+
+        internal static HashSet<int> m_containerID = LoadContainersData();
 
 		internal bool IsContainer
 		{
@@ -610,95 +614,68 @@ namespace Assistant
 			get { return m_ItemID.Value == 0x2006 || (m_ItemID.Value >= 0x0ECA && m_ItemID.Value <= 0x0ED2); }
 		}
 
-		internal bool IsDoor
+        internal static HashSet<int> LoadDoorData()
+        {
+            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "DoorData.json");
+            if (File.Exists(pathName))
+            {
+                string doorData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(doorData);
+            }
+            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "DoorData.json");
+            if (File.Exists(pathName))
+            {
+                string doorData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(doorData);
+            }
+            return new HashSet<int>();
+        }
+
+        internal static HashSet<int> DoorData = LoadDoorData();
+
+        internal bool IsDoor
 		{
-			get
-			{
-				ushort iid = m_ItemID.Value;
-				if (iid >= 1653 && iid <= 1668) // Metal Door
-					return true;
-				else if (iid >= 8173 && iid <= 8188) // Metal Gate
-					return true;
-				else if (iid >= 1685 && iid <= 1700) // Rattan Door
-					return true;
-				else if (iid >= 1701 && iid <= 1716) // Dark Wood Door
-					return true;
-				else if (iid >= 1717 && iid <= 1732) // Wood Door
-					return true;
-				else if (iid >= 1749 && iid <= 1764) // Light Wood Door
-					return true;
-				else if (iid >= 1765 && iid <= 1780) // Wood and Metal Door
-					return true;
-				else if (iid >= 2084 && iid <= 2099) // Tall Wrought Iron Gate
-					return true;
-				else if (iid >= 2105 && iid <= 2120) // Light Wood Gate
-					return true;
-				else if (iid >= 2124 && iid <= 2139) // Short Wrought Iron Gate
-					return true;
-				else if (iid >= 2150 && iid <= 2165) // Dark Wood Gate
-					return true;
-				else if (iid >= 804 && iid <= 819) // Weathered Stone Secret Door
-					return true;
-				else if (iid >= 820 && iid <= 835) // Dark Wood Secret Door
-					return true;
-				else if (iid >= 836 && iid <= 851) // Light Wood Secret Door
-					return true;
-				else if (iid >= 852 && iid <= 867) // Grey Stone Secret Door
-					return true;
-				else if ((iid >= 9247 && iid <= 9248) || (iid >= 9251 && iid <= 9252)) // Japanese Doors
-					return true;
-				else if (iid >= 10765 && iid <= 10772) // Sliding Doors 1
-					return true;
-				else if (iid >= 10757 && iid <= 10764) // Sliding Doors 2
-					return true;
-				else if (iid >= 10773 && iid <= 10780) // Sliding Doors 3
-					return true;
-				else if ((iid >= 12716 && iid <= 12719) || (iid >= 11590 && iid <= 11593)) // Elvan Wood Door
-					return true;
-				else if ((iid >= 11619 && iid <= 11622) || (iid >= 12704 && iid <= 12707)) // Elvan White Wooden Door 1
-					return true;
-				else if ((iid >= 11623 && iid <= 11626) || (iid >= 12708 && iid <= 12710)) // Elvan Ornate Door
-					return true;
-				else if ((iid >= 11627 && iid <= 11630) || (iid >= 12712 && iid <= 12715)) // Elvan Kia Wood Door 2
-					return true;
-				else if ((iid >= 12700 && iid <= 12703) || (iid >= 12258 && iid <= 12261)) // Elvan Moon Door
-					return true;
-				else if (iid >= 13947 && iid <= 13962) // Crystal Door
-					return true;
-				else if (iid >= 13963 && iid <= 13978) // Shadow Door
-					return true;
-				else if (iid >= 16541 && iid <= 16546) // Gargish Carved Green Door
-					return true;
-				else if (iid >= 16652 && iid <= 16659) // Gargish Brown Door
-					return true;
-				else if (iid >= 16834 && iid <= 16841) // Sun Door
-					return true;
-				else if (iid >= 16847 && iid <= 16854) // Gargish Grey Door
-					return true;
-				else if (iid >= 17262 && iid <= 17277) // Gargish Set Door
-					return true;
-				else if (iid >= 18141 && iid <= 18148) // Ruined Door
-					return true;
-				else if (iid >= 19746 && iid <= 19753) // Gargish Blue Door
-					return true;
-				else if (iid >= 20680 && iid <= 20695) // Gargish Red Doors
-					return true;
-				else if (iid >= 20802 && iid <= 20809) // Gargish Prison Door
-					return true;
-				else if (iid >= 1733 && iid <= 1748) // Metal Doors (Dungeon)
-					return true;
-				else if (iid >= 788 && iid <= 803) // Hidden Door (brick)
-					return true;
-				else if (iid >= 1669 && iid <= 1684) // Barred Metal Gate
-					return true;
-				else if (iid >= 1781 && iid <= 1783) // Portcullis
-					return true;
-				else
-					return false;
-			}
+            get
+            {
+                ushort iid = m_ItemID.Value;
+                return DoorData.Contains(iid);
+            }
 		}
 
-		internal bool IsResource
+
+        internal static HashSet<int> LoadNotLootableData()
+        {
+            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "NotLootableData.json");
+            if (File.Exists(pathName))
+            {
+                string notLootableData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(notLootableData);
+            }
+            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "NotLootableData.json");
+            if (File.Exists(pathName))
+            {
+                string notLootableData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(notLootableData);
+            }
+            return new HashSet<int>();
+        }
+
+        //hair beards and horns
+        static HashSet<int> NotLootable = LoadNotLootableData();
+        internal  bool IsLootable
+        {
+            // Eventine owner found looting items was trying to loot hair and beards.
+            // This caused big delay, so I will introduce this "lootable" property
+            // but for now all its going to do is return true for anything
+            // except beards and hair
+            get
+            {
+                ushort iid = m_ItemID.Value;
+                return !NotLootable.Contains(iid);
+            }
+        }
+
+        internal bool IsResource
 		{
 			get
 			{
@@ -801,19 +778,35 @@ namespace Assistant
 
         internal static List<MapEntry> LoadMapData()
         {
-            string allMapData = File.ReadAllText(Path.Combine(Assistant.Engine.RootPath, "mapData.json"));
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
+            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "mapData.json");
+            if (File.Exists(pathName))
+            {
+                string allMapData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
+            }
+            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "mapData.json");
+            if (File.Exists(pathName))
+            {
+                string allMapData = File.ReadAllText(pathName);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
+            }
+
+            return new List<MapEntry>();
+
         }
         static List<MapEntry> mapPoints = LoadMapData();
+
         private RazorEnhanced.Point2D m_PinPosition;
-        internal RazorEnhanced.Point2D PinPosition {
+        internal RazorEnhanced.Point2D PinPosition
+        {
             get { return m_PinPosition; }
             set
             {
                 m_PinPosition = value;
                 FixUpLocation();
             }
-                                                   }
+        }
+
         public RazorEnhanced.Point2D m_MapOrigin;
         internal RazorEnhanced.Point2D MapOrigin
         {
