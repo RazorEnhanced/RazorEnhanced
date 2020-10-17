@@ -257,9 +257,9 @@ namespace Assistant
 		{
 
 			new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
-			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
+			new AbilityInfo( AOSAbility.ArmorIgnore,  BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
 			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
-			new AbilityInfo( AOSAbility.BleedAttack, WarAxeID, ElvenSpellbladeID, BoomerangID ),
+			new AbilityInfo( AOSAbility.BleedAttack, LargeBattleAxeID, WarAxeID, ElvenSpellbladeID, BoomerangID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID),
 			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),

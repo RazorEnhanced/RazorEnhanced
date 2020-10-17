@@ -75,6 +75,7 @@ namespace Assistant
 
 		private bool m_Updated;
 
+        private static readonly object LockingVar = new object();
 		internal bool Updated
 		{
 			get { return m_Updated; }
@@ -530,21 +531,25 @@ namespace Assistant
 
 		internal bool OnGround { get { return Container == null; } }
 
+
         internal static HashSet<int> LoadContainersData()
         {
-            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "ContainersData.json");
-            if (File.Exists(pathName))
+            lock (LockingVar)
             {
-                string containersData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(containersData);
+                string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "ContainersData.json");
+                if (File.Exists(pathName))
+                {
+                    string containersData = File.ReadAllText(pathName);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(containersData);
+                }
+                pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
+                if (File.Exists(pathName))
+                {
+                    string containersData = File.ReadAllText(pathName);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(containersData);
+                }
             }
-            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
-            if (File.Exists(pathName))
-            {
-                string containersData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(containersData);
-            }
-            return new HashSet<int>();
+                return new HashSet<int>();
         }
 
         internal static HashSet<int> m_containerID = LoadContainersData();
@@ -616,17 +621,21 @@ namespace Assistant
 
         internal static HashSet<int> LoadDoorData()
         {
-            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "DoorData.json");
-            if (File.Exists(pathName))
+            lock (LockingVar)
             {
-                string doorData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(doorData);
-            }
-            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "DoorData.json");
-            if (File.Exists(pathName))
-            {
-                string doorData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(doorData);
+
+                string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "DoorData.json");
+                if (File.Exists(pathName))
+                {
+                    string doorData = File.ReadAllText(pathName);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(doorData);
+                }
+                pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "DoorData.json");
+                if (File.Exists(pathName))
+                {
+                    string doorData = File.ReadAllText(pathName);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(doorData);
+                }
             }
             return new HashSet<int>();
         }
@@ -645,17 +654,21 @@ namespace Assistant
 
         internal static HashSet<int> LoadNotLootableData()
         {
-            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "NotLootableData.json");
-            if (File.Exists(pathName))
+            lock (LockingVar)
             {
-                string notLootableData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(notLootableData);
-            }
-            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "NotLootableData.json");
-            if (File.Exists(pathName))
-            {
-                string notLootableData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(notLootableData);
+
+                string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "NotLootableData.json");
+                if (File.Exists(pathName))
+                {
+                    string notLootableData = File.ReadAllText(pathName);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(notLootableData);
+                }
+                pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "NotLootableData.json");
+                if (File.Exists(pathName))
+                {
+                    string notLootableData = File.ReadAllText(pathName);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<HashSet<int>>(notLootableData);
+                }
             }
             return new HashSet<int>();
         }
