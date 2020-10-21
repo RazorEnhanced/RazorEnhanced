@@ -1,3 +1,4 @@
+using ConcurrentCollections;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -533,7 +534,7 @@ namespace Assistant
 		internal bool OnGround { get { return Container == null; } }
 
 
-        internal static ConcurrentBag<int> LoadContainersData()
+        internal static ConcurrentHashSet<int> LoadContainersData()
         {
             lock (LockingVar)
             {
@@ -541,19 +542,19 @@ namespace Assistant
                 if (File.Exists(pathName))
                 {
                     string containersData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentBag<int>>(containersData);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(containersData);
                 }
                 pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
                 if (File.Exists(pathName))
                 {
                     string containersData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentBag<int>>(containersData);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(containersData);
                 }
             }
-                return new ConcurrentBag<int>();
+                return new ConcurrentHashSet<int>();
         }
 
-        internal static ConcurrentBag<int> m_containerID = LoadContainersData();
+        internal static ConcurrentHashSet<int> m_containerID = LoadContainersData();
 
 		internal bool IsContainer
 		{
@@ -620,7 +621,7 @@ namespace Assistant
 			get { return m_ItemID.Value == 0x2006 || (m_ItemID.Value >= 0x0ECA && m_ItemID.Value <= 0x0ED2); }
 		}
 
-        internal static ConcurrentBag<int> LoadDoorData()
+        internal static ConcurrentHashSet<int> LoadDoorData()
         {
             lock (LockingVar)
             {
@@ -629,19 +630,19 @@ namespace Assistant
                 if (File.Exists(pathName))
                 {
                     string doorData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentBag<int>>(doorData);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(doorData);
                 }
                 pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "DoorData.json");
                 if (File.Exists(pathName))
                 {
                     string doorData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentBag<int>>(doorData);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(doorData);
                 }
             }
-            return new ConcurrentBag<int>();
+            return new ConcurrentHashSet<int>();
         }
 
-        internal static ConcurrentBag<int> DoorData = LoadDoorData();
+        internal static ConcurrentHashSet<int> DoorData = LoadDoorData();
 
         internal bool IsDoor
 		{
@@ -653,7 +654,7 @@ namespace Assistant
 		}
 
 
-        internal static ConcurrentBag<int> LoadNotLootableData()
+        internal static ConcurrentHashSet<int> LoadNotLootableData()
         {
             lock (LockingVar)
             {
@@ -662,20 +663,20 @@ namespace Assistant
                 if (File.Exists(pathName))
                 {
                     string notLootableData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentBag<int>>(notLootableData);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(notLootableData);
                 }
                 pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "NotLootableData.json");
                 if (File.Exists(pathName))
                 {
                     string notLootableData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentBag<int>>(notLootableData);
+                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(notLootableData);
                 }
             }
-            return new ConcurrentBag<int>();
+            return new ConcurrentHashSet<int>();
         }
 
         //hair beards and horns
-        static ConcurrentBag<int> NotLootable = LoadNotLootableData();
+        static ConcurrentHashSet<int> NotLootable = LoadNotLootableData();
         internal  bool IsLootable
         {
             // Eventine owner found looting items was trying to loot hair and beards.
