@@ -39,7 +39,31 @@ namespace RazorEnhanced
 
 		internal class EnhancedScript
 		{
-			internal void Start()
+            internal bool StopMessage { get; set; }
+            internal bool StartMessage { get; set; }
+            private PythonEngine m_pe;
+            private ScriptEngine m_Engine;
+            private ScriptScope m_Scope;
+            private ScriptSource m_Source;
+            internal DateTime FileChangeDate { get; set; }
+
+            internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
+            {
+                StartMessage = true;
+                StopMessage = false;
+                m_Filename = filename;
+                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
+                DateTime lastModified = DateTime.MinValue;
+                FileChangeDate = lastModified;
+                m_Text = text;
+                m_Wait = wait;
+                m_Loop = loop;
+                m_Run = run;
+                m_AutoStart = autostart;
+                m_Thread = new Thread(AsyncStart);
+            }
+
+            internal void Start()
 			{
 				if (IsRunning || !IsUnstarted)
 					return;
@@ -58,15 +82,26 @@ namespace RazorEnhanced
 
 			private void AsyncStart()
 			{
-				if (m_Source == null)
-					return;
+
 
 				if (World.Player == null)
 					return;
 
 				try
 				{
-					m_Source.Execute(m_Scope);
+                    string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
+                    DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
+                    if (FileChangeDate < lastModified)
+                    {
+                        ReadText();
+                        FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
+                        Create(null);
+                    }
+
+                    if (m_Source == null)
+                    	return;
+                    m_Source.Execute(m_Scope);
+
 				}
 				catch (Exception ex)
 				{
@@ -117,7 +152,17 @@ namespace RazorEnhanced
 				}
 			}
 
-			internal void Stop()
+            internal void ReadText()
+            {
+                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
+                if (File.Exists(fullpath))
+                {
+                    m_Text = File.ReadAllText(fullpath);
+                }
+            }
+
+
+            internal void Stop()
 			{
 				if (!IsStopped)
 					try
@@ -321,35 +366,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			private bool m_StopMessage = false;
-			internal bool StopMessage
-			{
-				get { return m_StopMessage; }
-				set { m_StopMessage = value; }
-			}
 
-			private bool m_StartMessage = true;
-			internal bool StartMessage
-			{
-				get { return m_StartMessage; }
-				set { m_StartMessage = value; }
-			}
-
-			private PythonEngine m_pe;
-			private ScriptEngine m_Engine;
-			private ScriptScope m_Scope;
-			private ScriptSource m_Source;
-
-			internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
-			{
-				m_Filename = filename;
-				m_Text = text;
-				m_Wait = wait;
-				m_Loop = loop;
-				m_Run = run;
-				m_AutoStart = autostart;
-				m_Thread = new Thread(AsyncStart);
-			}
 		}
 
 		internal class ScriptTimer
@@ -377,7 +394,7 @@ namespace RazorEnhanced
 			{
                 m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
 
-				foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
+				foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
 				{
 					if (script.IsRunning)
 					{
@@ -441,7 +458,7 @@ namespace RazorEnhanced
 
 			private void OnTick(object state)
 			{
-				foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
+				foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
 				{
 					if (script.Run)
 					{
@@ -595,21 +612,52 @@ namespace RazorEnhanced
 			m_Timer.Start();
 		}
 
+        static void ScriptChanged(object sender, FileSystemEventArgs e)
+        {
+            string fullPath = e.FullPath;
+            string filename = e.Name;
+            string onlyFilename = Path.GetFileName(fullPath);
+            foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
+            {
+                //if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
+                pair.Value.FileChangeDate = DateTime.MinValue;
+            }
+        }
 
-		internal static EnhancedScript Search(string filename)
+        static System.IO.FileSystemWatcher Watcher = SetupFileWatcher();
+
+        static System.IO.FileSystemWatcher SetupFileWatcher()
+        {
+            System.IO.FileSystemWatcher watcher = new System.IO.FileSystemWatcher();
+
+            watcher.Path = Path.Combine(Assistant.Engine.RootPath, "Scripts");
+            watcher.Filter = "*.py";
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.IncludeSubdirectories = true;
+            watcher.Changed += new FileSystemEventHandler(ScriptChanged);
+            watcher.EnableRaisingEvents = true;
+
+            return watcher;
+        }
+
+
+
+
+        internal static EnhancedScript Search(string filename)
 		{
-			foreach (KeyValuePair<string, EnhancedScript> pair in m_EnhancedScripts)
+			foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
 			{
-				if (String.Compare(pair.Key.ToLower(),filename.ToLower()) == 0)
+				if (pair.Key.ToLower() == filename.ToLower())
 					return pair.Value;
 			}
+
 			return null;
 		}
 
 		// Autostart
 		internal static void AutoStart()
 		{
-			foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
+			foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
 			{
 				if (!script.IsRunning && script.AutoStart)
 					script.Start();

@@ -23,7 +23,7 @@ namespace Assistant
 
 			if (File.Exists(fullpath))
 			{
-				text = File.ReadAllText(fullpath);
+				//text = File.ReadAllText(fullpath);
 			}
 			else
 			{
@@ -31,16 +31,17 @@ namespace Assistant
 			}
 
 			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
-			string result = script.Create(null);
+			//string result = script.Create(null);
 
-			if (result == "Created")
+			//if (result == "Created")
+            if (true)
 			{
 				Scripts.EnhancedScripts.TryAdd(filename, script);
 			}
-			else
-			{
-				status = "ERROR: " + result;
-			}
+			//else
+			//{
+			//	status = "ERROR: " + result;
+			//}
 
 			return status;
 		}
@@ -335,26 +336,26 @@ namespace Assistant
 					string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts",
 						scriptname);
 
-					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
-					{
-						string text = File.ReadAllText(fullpath);
-						bool loop = script.Loop;
-						bool wait = script.Wait;
-						bool run = script.Run;
-						bool autostart = script.AutoStart;
-						bool isRunning = script.IsRunning;
+                    if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
+                    {
+                        //string text = File.ReadAllText(fullpath);
+                        //bool loop = script.Loop;
+                        //bool wait = script.Wait;
+                        //bool run = script.Run;
+                        //bool autostart = script.AutoStart;
+                        bool isRunning = script.IsRunning;
 
-						if (isRunning)
-							script.Stop();
+                        if (isRunning)
+                            script.Stop();
 
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
-							loop, run, autostart);
-						reloaded.Create(null);
-						Scripts.EnhancedScripts[scriptname] = reloaded;
+                        //Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
+                        //	loop, run, autostart);
+                        //reloaded.Create(null);
+                        Scripts.EnhancedScripts[scriptname].FileChangeDate = DateTime.MinValue;
 
-						if (isRunning)
-							reloaded.Start();
-					}
+                        if (isRunning)
+                            script.Start();
+                    }
 				}
 			}
 		}
