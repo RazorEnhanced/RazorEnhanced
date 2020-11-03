@@ -14,6 +14,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Text;
 using FastColoredTextBoxNS;
+using IronPython.Compiler;
 
 namespace RazorEnhanced.UI
 {
@@ -1515,10 +1516,28 @@ namespace RazorEnhanced.UI
 
 				string text = GetFastTextBoxText();
 
-
-				m_Source = m_Engine.CreateScriptSourceFromString(text);
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
-				m_Source.Execute(m_Scope);
+
+				/*Dalamar: BEGIN "fix python env" */
+				//EXECUTION OF THE SCRIPT
+				//Refactoring option, the whole block can be replaced by:
+				//
+				//m_pe.Execute(text);
+				
+				m_Source = m_Engine.CreateScriptSourceFromString(text);
+
+				// "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+				PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+				pco.ModuleName = "__main__";
+				pco.Module |= ModuleOptions.Initialize;
+				CompiledCode compiled = m_Source.Compile(pco);
+				compiled.Execute(m_Scope);
+				
+				// "-": DONT execute directly, unless you are not planning to import external modules.
+				//m_Source.Execute(m_Scope);
+
+				/*Dalamar: END*/
+
 				SetErrorBox("Script " + m_Filename + " run completed!");
 				SetStatusLabel("IDLE", Color.DarkTurquoise);
 			}
