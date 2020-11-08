@@ -561,6 +561,17 @@ namespace RazorEnhanced
             }
         }
 
+        // Note: This can be controlled by script but does not persist the change.
+        // Only if the check box is manually changed is the change persisted
+        public static bool SetNoOpenCorpse(bool value)
+        {
+            bool oldValue = m_noopencorpse;
+            m_noopencorpse = value;
+            Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootNoOpenCheckBox.Checked = value);
+            return oldValue;
+        }
+
+
         public static List<AutoLootItem> GetList(string lootListName)
         {
             if (Settings.AutoLoot.ListExists(lootListName)) {

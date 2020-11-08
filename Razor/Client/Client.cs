@@ -229,11 +229,7 @@ namespace Assistant
             if (string.IsNullOrEmpty(addr))
                 return ipAddr;
 
-            try
-            {
-                ipAddr = IPAddress.Parse(addr);
-            }
-            catch
+            if (!IPAddress.TryParse(addr, out ipAddr))
             {
                 try
                 {

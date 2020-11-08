@@ -210,7 +210,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsAutoLoot =
 			{
-				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList", "AutoLoot.GetLootBag"
+				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList", "AutoLoot.GetLootBag", "AutoLoot.SetNoOpenCorpse"
             };
 
 			string[] methodsScavenger =
@@ -968,6 +968,9 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("AutoLoot.GetLootBag()", new string[] { "none" }, "int", "Returns the Serial of the assigned loot bag");
             descriptionAutoLoot.Add("AutoLoot.GetLootBag", tooltip);
 
+            tooltip = new ToolTipDescriptions("AutoLoot.SetNoOpenCorpse(True|False)", new string[] { "bool True/False" }, "bool", "Temporarily changes the Autoloot open corpse setting");
+            descriptionAutoLoot.Add("AutoLoot.SetNoOpenCorpse", tooltip);
+
             #endregion
 
             #region Description Scavenger
@@ -1501,66 +1504,71 @@ namespace RazorEnhanced.UI
 				SetStatusLabel("SCRIPT RUNNING", Color.Green);
 			}
 
-			try
-			{
-				if (debug)
-				{
-					m_Breaktrace = true;
-				}
-				else
-				{
-					m_Breaktrace = false;
-				}
+            try
+            {
+                if (debug)
+                {
+                    m_Breaktrace = true;
+                }
+                else
+                {
+                    m_Breaktrace = false;
+                }
 
-				m_Queue = new ConcurrentQueue<Command>();
+                m_Queue = new ConcurrentQueue<Command>();
 
-				string text = GetFastTextBoxText();
+                string text = GetFastTextBoxText();
 
-				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
+                m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 
-				/*Dalamar: BEGIN "fix python env" */
-				//EXECUTION OF THE SCRIPT
-				//Refactoring option, the whole block can be replaced by:
-				//
-				//m_pe.Execute(text);
-				
-				m_Source = m_Engine.CreateScriptSourceFromString(text);
+                /*Dalamar: BEGIN "fix python env" */
+                //EXECUTION OF THE SCRIPT
+                //Refactoring option, the whole block can be replaced by:
+                //
+                //m_pe.Execute(text);
 
-				// "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-				PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-				pco.ModuleName = "__main__";
-				pco.Module |= ModuleOptions.Initialize;
-				CompiledCode compiled = m_Source.Compile(pco);
-				compiled.Execute(m_Scope);
-				
-				// "-": DONT execute directly, unless you are not planning to import external modules.
-				//m_Source.Execute(m_Scope);
+                m_Source = m_Engine.CreateScriptSourceFromString(text);
 
-				/*Dalamar: END*/
+                // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+                PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+                pco.ModuleName = "__main__";
+                pco.Module |= ModuleOptions.Initialize;
+                CompiledCode compiled = m_Source.Compile(pco);
+                compiled.Execute(m_Scope);
 
-				SetErrorBox("Script " + m_Filename + " run completed!");
-				SetStatusLabel("IDLE", Color.DarkTurquoise);
-			}
-			catch (Exception ex)
-			{
-				if (ex is SyntaxErrorException)
-				{
-					SyntaxErrorException se = ex as SyntaxErrorException;
-					SetErrorBox("Syntax Error:");
-					SetErrorBox("--> LINE: " + se.Line);
-					SetErrorBox("--> COLUMN: " + se.Column);
-					SetErrorBox("--> SEVERITY: " + se.Severity);
-					SetErrorBox("--> MESSAGE: " + se.Message);
-				}
-				else
-				{
-					SetErrorBox("Generic Error:");
-					ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
-					string error = eo.FormatException(ex);
-					SetErrorBox("--> MESSAGE: " + error);
-				}
-				SetStatusLabel("IDLE", Color.DarkTurquoise);
-			}
+                // "-": DONT execute directly, unless you are not planning to import external modules.
+                //m_Source.Execute(m_Scope);
+
+                /*Dalamar: END*/
+
+                SetErrorBox("Script " + m_Filename + " run completed!");
+                SetStatusLabel("IDLE", Color.DarkTurquoise);
+            }
+            catch (IronPython.Runtime.Exceptions.SystemExitException ex)
+            {
+                Stop();
+                // sys.exit - terminate the thread
+            }
+            catch (Exception ex)
+            {
+                if (ex is SyntaxErrorException)
+                {
+                    SyntaxErrorException se = ex as SyntaxErrorException;
+                    SetErrorBox("Syntax Error:");
+                    SetErrorBox("--> LINE: " + se.Line);
+                    SetErrorBox("--> COLUMN: " + se.Column);
+                    SetErrorBox("--> SEVERITY: " + se.Severity);
+                    SetErrorBox("--> MESSAGE: " + se.Message);
+                }
+                else
+                {
+                    SetErrorBox("Generic Error:");
+                    ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
+                    string error = eo.FormatException(ex);
+                    SetErrorBox("--> MESSAGE: " + error);
+                }
+                SetStatusLabel("IDLE", Color.DarkTurquoise);
+            }
 
 			if (Scripts.ScriptEditorThread != null)
 				Scripts.ScriptEditorThread.Abort();
