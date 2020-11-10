@@ -104,7 +104,7 @@ namespace RazorEnhanced
                     //EXECUTION OF THE SCRIPT
                     //Refactoring option, the whole block can be replaced by:
                     //
-                    m_pe.Execute(m_Text);
+                    //m_pe.Execute(m_Text);
 
                     m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
                     // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
