@@ -31,7 +31,10 @@ namespace Assistant.Filters
             base.OnDisable();
             if (Assistant.Client.Instance.Ready)
             {
-                Client.Instance.ForceSendToClient(new SeasonChange(World.Player.Season, true));
+                if (World.Player != null)
+                {
+                    Client.Instance.ForceSendToClient(new SeasonChange(World.Player.Season, true));
+                }
             }
         }
         public override void OnEnable()
@@ -39,7 +42,10 @@ namespace Assistant.Filters
             base.OnEnable();
             if (Assistant.Client.Instance.Ready)
             {
-                Client.Instance.ForceSendToClient(new SeasonChange(0, true));
+                if (World.Player != null)
+                {
+                    Client.Instance.ForceSendToClient(new SeasonChange(0, true));
+                }
             }
         }
 
