@@ -14,7 +14,9 @@ namespace Assistant
 		internal RazorComboBox ToolBoxStyleComboBox { get { return toolboxstyleComboBox; } }
 		internal RazorComboBox ToolBoxSizeComboBox { get { return toolboxsizeComboBox; } }
 		internal RazorCheckBox ShowHitsToolBarCheckBox { get { return showhitsToolBarCheckBox; } }
-		internal RazorCheckBox ShowStaminaToolBarCheckBox { get { return showstaminaToolBarCheckBox; } }
+        internal RazorCheckBox ShowTitheToolBarCheckBox { get { return showtitheToolBarCheckBox; } }
+
+        internal RazorCheckBox ShowStaminaToolBarCheckBox { get { return showstaminaToolBarCheckBox; } }
 		internal RazorCheckBox ShowManaToolBarCheckBox { get { return showmanaToolBarCheckBox; } }
 		internal RazorCheckBox ShowWeightToolBarCheckBox { get { return showweightToolBarCheckBox; } }
 		internal RazorCheckBox ShowFollowerToolBarCheckBox { get { return showfollowerToolBarCheckBox; } }
@@ -249,7 +251,17 @@ namespace Assistant
 			}
 		}
 
-		private void showstaminaToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void showtitheToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showtitheToolBarCheckBox.Focused)
+            {
+                RazorEnhanced.Settings.General.WriteBool("ShowTitheToolBarCheckBox", showtitheToolBarCheckBox.Checked);
+                RazorEnhanced.ToolBar.Close();
+                RazorEnhanced.ToolBar.Open();
+            }
+        }
+
+        private void showstaminaToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showstaminaToolBarCheckBox.Focused)
 			{

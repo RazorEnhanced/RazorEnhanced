@@ -40,7 +40,7 @@ namespace RazorEnhanced
 	}
 
 	internal class ToolBar
-	{  
+	{
 		private static int m_slot = 0;
 
 		private static bool m_lock = false;
@@ -62,7 +62,9 @@ namespace RazorEnhanced
 		private static Label m_manalabelSH = new Label();
 		private static Label m_staminalabelSH = new Label();
 		private static Label m_weightlabelSH = new Label();
-		private static Label m_followerlabelSH = new Label();
+        private static Label m_tithelabelSH = new Label();
+
+        private static Label m_followerlabelSH = new Label();
 
 		// Piccola verticale
 		private static Label m_strlabelSV = new Label();
@@ -72,7 +74,9 @@ namespace RazorEnhanced
 		private static Label m_intlabelSV = new Label();
 		private static Label m_manalabelSV = new Label();
 		private static Label m_weightlabelSV = new Label();
-		private static Label m_weightmaxlabelSV = new Label();
+        private static Label m_tithelabelSV = new Label();
+
+        private static Label m_weightmaxlabelSV = new Label();
 		private static Label m_followerlabelSV = new Label();
 
 		// Grande orizzontale e verticale
@@ -83,7 +87,9 @@ namespace RazorEnhanced
 		private static Label m_labelBarStaminaBHV = new Label();
 		private static Label m_labelTextStaminaBHV = new Label();
 		private static Label m_labelTextWeightBHV = new Label();
-		private static Label m_labelTextFollowerBHV = new Label();
+        private static Label m_labelTextTitheBHV = new Label();
+
+        private static Label m_labelTextFollowerBHV = new Label();
 
 		private static List<Panel> m_panellist = new List<Panel>();
 		private static List<Label> m_panelcount = new List<Label>();
@@ -128,7 +134,7 @@ namespace RazorEnhanced
 				m_labelTextHitsBHV.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
 				m_labelBarHitsBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
 				m_labelBarHitsBHV.BackColor = GetColor(percent);
-			} 
+			}
 			else
 			{
 				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
@@ -197,7 +203,29 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateWeight(int maxweight, int weight)
+        internal static void UpdateTithe(int tithe)
+        {
+            if (m_form == null)
+                return;
+
+            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+            {
+                m_labelTextTitheBHV.Text = "Tithe: " + tithe.ToString();
+            }
+            else
+            {
+                if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+                {
+                    m_tithelabelSV.Text = "T: " + tithe.ToString();
+                }
+                else
+                {
+                    m_tithelabelSH.Text = tithe.ToString();
+                }
+            }
+        }
+
+        internal static void UpdateWeight(int maxweight, int weight)
 		{
 			if (m_form == null)
 				return;
@@ -364,7 +392,7 @@ namespace RazorEnhanced
 
 					if (Settings.General.ReadString("ToolBoxSizeComboBox") != "Big")
 						m_panellist[x].BackgroundImageLayout = ImageLayout.None;
-	
+
 					m_panellist[x].Enabled = true;
 					m_panelcount[x].Text = "0";
 					m_panellist[x].BackColor = SystemColors.Control;
@@ -387,7 +415,9 @@ namespace RazorEnhanced
 				UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
 				UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
 				UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);
-				UpdateFollower();
+                UpdateTithe(Assistant.World.Player.Tithe);
+
+                UpdateFollower();
 				UpdateCount();
 			}
 		}
@@ -500,7 +530,7 @@ namespace RazorEnhanced
 					DrawToolBarSH();
 				}
 			}
-				
+
 		}
 
 		//////////////////////////////////////////////////////////////
@@ -521,7 +551,7 @@ namespace RazorEnhanced
 			if (m_lock)
 			{
 				menuItem.Text = "UnLock";
-				menuItem.Click += new System.EventHandler(menuItemUnLock_Click);	
+				menuItem.Click += new System.EventHandler(menuItemUnLock_Click);
 			}
 			else
 			{
@@ -751,8 +781,32 @@ namespace RazorEnhanced
 				offsetstat += 30;
 				paneloffset += 29;
 			}
+            //
 
-			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+            if (Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
+            {
+                m_labelTextTitheBHV = new Label
+                {
+                    BackColor = System.Drawing.Color.Transparent,
+                    Location = new Point(12, offsetstat + 6),
+                    Name = "labelTextTithe",
+                    Size = new Size(100, 16),
+                    TabIndex = 5,
+                    Text = "Tithe: 99999999",
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+                };
+
+                m_form.Controls.Add(m_labelTextTitheBHV);
+
+                sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSpazioStat);
+
+                height += 29;
+                offsetstat += 30;
+                paneloffset += 29;
+            }
+
+            //
+            if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
 				m_labelTextFollowerBHV = new Label
 				{
@@ -803,7 +857,7 @@ namespace RazorEnhanced
 					Size = new Size(42, 42),
 					TabIndex = 10,
 				};
-				
+
 				Label labeltemp2 = new Label
 				{
 					AutoSize = true,
@@ -854,18 +908,18 @@ namespace RazorEnhanced
 			m_form = new ToolBarForm();
 			m_form.SuspendLayout();
 
-			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro.Width;
+			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BigBarHorizontalSpaceStat.Width;
 			int offsetstat = 10;
 			int paneloffset = 18;
 
 
-			// Genero Sfondo
-			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro;
+			// Generic Background
+			Bitmap tempBackground = Assistant.Properties.Resources.BigBarHorizontalSpaceStat;
 
 			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox") || Settings.General.ReadBool("ShowStaminaToolBarCheckBox") || Settings.General.ReadBool("ShowManaToolBarCheckBox") ||
-				Settings.General.ReadBool("ShowWeightToolBarCheckBox") || Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+				Settings.General.ReadBool("ShowWeightToolBarCheckBox") || Settings.General.ReadBool("ShowFollowerToolBarCheckBox") || Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
 			{
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaleSpazioStat);
+				tempBackground = BackgroundAddHorizontal(tempBackground, Assistant.Properties.Resources.BarraGrandeOrizzontaleSpazioStat);
 				width += 106;
 				paneloffset += 106;
 			}
@@ -958,7 +1012,7 @@ namespace RazorEnhanced
 				offsetstat += 23;
 			}
 
-			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+            if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
 				m_labelTextWeightBHV = new Label
 				{
@@ -976,7 +1030,29 @@ namespace RazorEnhanced
 				offsetstat += 18;
 			}
 
-			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+            //
+            if (Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
+            {
+                m_labelTextTitheBHV = new Label
+                {
+                    BackColor = System.Drawing.Color.Transparent,
+                    Location = new Point(12, offsetstat),
+                    Name = "labelTextTithe",
+                    Size = new Size(100, 16),
+                    TabIndex = 1,
+                    Text = "Tithe: 00000000",
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+                };
+
+                m_form.Controls.Add(m_labelTextTitheBHV);
+
+                offsetstat += 18;
+            }
+
+            //
+
+
+            if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
 				m_labelTextFollowerBHV = new Label
 				{
@@ -1001,7 +1077,7 @@ namespace RazorEnhanced
 			for (int i = 0; i < m_slot; i += 2)
 			{
 				//Genero sfondo slot
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaleSlot);
+				tempBackground = BackgroundAddHorizontal(tempBackground, Assistant.Properties.Resources.BarraGrandeOrizzontaleSlot);
 
 				Label labeltemp1 = new Label
 				{
@@ -1065,7 +1141,7 @@ namespace RazorEnhanced
 				paneloffset += 60;
 			}
 
-			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro);
+			m_form.BackgroundImage = BackgroundAddHorizontal(tempBackground, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro);
 			InitEvent();
 		}
 
@@ -1216,7 +1292,29 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+            //
+            if (Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
+            {
+                m_tithelabelSV = new Label
+                {
+                    AutoSize = true,
+                    Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Location = new Point(5, offsetstat),
+                    Name = "label1",
+                    Size = new Size(50, 12),
+                    TabIndex = 0,
+                    Text = "T: 99999999"
+                };
+                m_form.Controls.Add(m_tithelabelSV);
+
+                sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
+                height += 29;
+                offsetstat += 30;
+                paneloffset += 29;
+            }
+
+            //
+            if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
 				m_followerlabelSV = new Label
 				{
@@ -1243,7 +1341,7 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSlot);
 
 				// Aggiungo panel dinamici
-				
+
 				Label labeltemp = new Label
 				{
 					AutoSize = true,
@@ -1256,7 +1354,7 @@ namespace RazorEnhanced
 					TabIndex = 1,
 					Text = "000"
 				};
-				
+
 				Panel paneltemp = new Panel
 				{
 					BackgroundImageLayout = ImageLayout.Center,
@@ -1327,7 +1425,7 @@ namespace RazorEnhanced
 				};
 				m_form.Controls.Add(m_hitslabelSH);
 
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
 				offsetstat += 56;
@@ -1363,7 +1461,7 @@ namespace RazorEnhanced
 				};
 				m_form.Controls.Add(m_manalabelSH);
 
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
 				offsetstat += 56;
@@ -1399,14 +1497,16 @@ namespace RazorEnhanced
 				};
 				m_form.Controls.Add(m_staminalabelSH);
 
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
 				offsetstat += 56;
 				paneloffset += 51;
 			}
+            //
 
-			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+
+            if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
 				Label m_weight_label = new Label
 				{
@@ -1435,14 +1535,51 @@ namespace RazorEnhanced
 				};
 				m_form.Controls.Add(m_weightlabelSH);
 
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
 				offsetstat += 49;
 				paneloffset += 51;
 			}
+            if (Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
+            {
+                Label m_tithe_label = new Label
+                {
+                    AutoSize = false,
+                    Width = 5,
+                    Height = 5,
+                    Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Location = new Point(offsetstat + 12, 3),
+                    Name = "t",
+                    Size = new Size(20, 12),
+                    TabIndex = 10,
+                    Text = "T",
+                    BackColor = Color.Transparent
+                };
+                m_form.Controls.Add(m_tithe_label);
 
-			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+                m_tithelabelSH = new Label
+                {
+                    AutoSize = true,
+                    Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    Location = new Point(offsetstat - 5, 14),
+                    Name = "tithelabel",
+                    Size = new Size(49, 12),
+                    TabIndex = 2,
+                    Text = "T: 9999999"
+                };
+                m_form.Controls.Add(m_tithelabelSH);
+
+                sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+
+                width += 51;
+                offsetstat += 49;
+                paneloffset += 51;
+            }
+
+            //
+
+            if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
 				Label m_follower_label = new Label
 				{
@@ -1471,7 +1608,7 @@ namespace RazorEnhanced
 				};
 				m_form.Controls.Add(m_followerlabelSH);
 
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
 				offsetstat += 50;
@@ -1485,10 +1622,10 @@ namespace RazorEnhanced
 			for (int i = 0; i < m_slot; i++)
 			{
 				//Genero sfondo slot
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSlot);
+				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSlot);
 
 				// Aggiungo panel dinamici
-				
+
 				Label labeltemp = new Label
 				{
 					AutoSize = true,
@@ -1524,7 +1661,7 @@ namespace RazorEnhanced
 				paneloffset += 36;
 			}
 
-			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaBordoDestro);
+			m_form.BackgroundImage = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaBordoDestro);
 			InitEvent();
 		}
 
@@ -1564,7 +1701,7 @@ namespace RazorEnhanced
 			return outputImage;
 		}
 
-		private static Bitmap BackGroundAddOrizzontale(Image firstImage, Image secondImage)
+		private static Bitmap BackgroundAddHorizontal(Image firstImage, Image secondImage)
 		{
 			int outputImageWidth = firstImage.Width + secondImage.Width;
 
@@ -1594,7 +1731,7 @@ namespace RazorEnhanced
 			return (resizedImage);
 		}
 
-		
+
 		public static Bitmap CropImage(Bitmap img)
 		{
 			Point min = new Point(int.MaxValue, int.MaxValue);
@@ -1612,7 +1749,7 @@ namespace RazorEnhanced
 							min.X = x;
 						}
 						if (y < min.Y)
-						{ 
+						{
 							min.Y = y;
 					}
 
