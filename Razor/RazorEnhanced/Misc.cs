@@ -551,11 +551,13 @@ namespace RazorEnhanced
                 PinPosition = new RazorEnhanced.Point2D();
                 MapOrigin = new RazorEnhanced.Point2D();
                 MapEnd = new RazorEnhanced.Point2D();
+                Multiplier = 1;
             }
             public uint Serial;
             public RazorEnhanced.Point2D PinPosition;
             public RazorEnhanced.Point2D MapOrigin;
             public RazorEnhanced.Point2D MapEnd;
+            public int Multiplier;
             public ushort Facet;
             public int ThbNumber;
             public string ThbName;
@@ -572,6 +574,7 @@ namespace RazorEnhanced
                 mapInfo.PinPosition = mapItem.PinPosition;
                 mapInfo.MapOrigin = mapItem.m_MapOrigin;
                 mapInfo.MapEnd = mapItem.m_MapEnd;
+                mapInfo.Multiplier = mapItem.Multiplier;
                 mapInfo.Facet = mapItem.m_Facet;
                 mapInfo.ThbNumber = -1;
                 mapInfo.ThbName = "unknown";
