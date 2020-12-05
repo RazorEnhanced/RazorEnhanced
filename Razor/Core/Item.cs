@@ -840,6 +840,15 @@ namespace Assistant
             set { m_MapEnd = value; }
         }
 
+
+        public int m_Multiplier;
+        internal int Multiplier
+        {
+            get { return m_Multiplier; }
+            set { m_Multiplier = value; }
+        }
+
+
         public ushort m_Facet;
         internal ushort Facet
         {
@@ -875,18 +884,12 @@ namespace Assistant
             // This has issues with the fakeIndex do for now quit doing it
             try
             {
-                string version = Client.Instance.GetClientVersion();
-                string[] versionParts = version.Split('.');
-                int majorVersion = Convert.ToInt32(versionParts[0]);
-                int multiplyier = 1;
-                if (majorVersion < 7)
+                if (Multiplier == 0)
                 {
-                    multiplyier = 2;
+                    return;
                 }
-                if (m_Facet == 3)
-                    multiplyier = 1;
-                int xCoord = m_MapOrigin.X + (multiplyier * m_PinPosition.X);
-                int yCoord = m_MapOrigin.Y + (multiplyier * m_PinPosition.Y);
+                int xCoord = m_MapOrigin.X + (Multiplier * m_PinPosition.X);
+                int yCoord = m_MapOrigin.Y + (Multiplier * m_PinPosition.Y);
                 string location = String.Format("Location({0}, {1})",
                     xCoord,
                     yCoord
