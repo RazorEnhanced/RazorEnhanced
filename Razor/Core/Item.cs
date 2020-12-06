@@ -780,36 +780,6 @@ namespace Assistant
 
     internal class MapItem : Item
     {
-        internal class MapEntry
-        {
-            public int facet;
-            public int xCoord;
-            public int yCoord;
-            public string location;
-            public string description;
-            public int thbNumber;
-            public string thbName;
-        }
-
-        internal static List<MapEntry> LoadMapData()
-        {
-            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "mapData.json");
-            if (File.Exists(pathName))
-            {
-                string allMapData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
-            }
-            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "mapData.json");
-            if (File.Exists(pathName))
-            {
-                string allMapData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
-            }
-
-            return new List<MapEntry>();
-
-        }
-        static List<MapEntry> mapPoints = LoadMapData();
 
         private RazorEnhanced.Point2D m_PinPosition;
         internal RazorEnhanced.Point2D PinPosition
@@ -866,19 +836,6 @@ namespace Assistant
             m_FakePropIndex = 0;
 
         }
-        internal MapEntry FindMapEntry()
-        {
-            int xCoord = m_MapOrigin.X + (2 * m_PinPosition.X);
-            int yCoord = m_MapOrigin.Y + (2 * m_PinPosition.Y);
-            foreach (MapEntry entry in mapPoints)
-            {
-                if (m_Facet == entry.facet && xCoord == entry.xCoord && yCoord == entry.yCoord)
-                {
-                    return entry;
-                }
-            }
-            return null;
-        }
         void FixUpLocation()
         {
             // This has issues with the fakeIndex do for now quit doing it
@@ -896,14 +853,6 @@ namespace Assistant
                     );
                 // The m_FakePropIndex at this point was beyond the end of the array
                 m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
-                MapEntry entry = FindMapEntry();
-                if (entry != null)
-                {
-                    string thbNumber = String.Format("THB# {0}", entry.thbNumber);
-                    string thbName = String.Format("{0}", entry.thbName);
-                    m_ObjPropList.Content[m_FakePropIndex + 1] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbNumber);
-                    m_ObjPropList.Content[m_FakePropIndex + 2] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbName);
-                }
             }
             catch (Exception e)
             {
