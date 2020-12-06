@@ -40,7 +40,32 @@ namespace Assistant
 			return mobile;
 		}
 
-		internal static List<Mobile> MobilesInRange(int range)
+        internal static List<CorpseItem> CorpsesInRange(int range)
+        {
+            List<CorpseItem> list = new List<CorpseItem>();
+
+            if (World.Player == null)
+                return list;
+
+            foreach (Item m in World.Items.Values)
+            {
+                if (m.ItemID == 0x2006)
+                {
+                    CorpseItem corpse = m as CorpseItem;
+                    if (corpse != null)
+                    {
+                        if (Utility.InRange(World.Player.Position, corpse.Position, range))
+                        {
+                            list.Add(corpse);
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        internal static List<Mobile> MobilesInRange(int range)
 		{
 			List<Mobile> list = new List<Mobile>();
 

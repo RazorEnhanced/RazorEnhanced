@@ -367,7 +367,7 @@ namespace RazorEnhanced
                     m_IgnoreCorpseList.Enqueue(corpo.Serial);
                 }
 
-                if (m_IgnoreCorpseList.Count > 100)
+                if (m_IgnoreCorpseList.Count > 200)
                     m_IgnoreCorpseList.Dequeue();
             }
 

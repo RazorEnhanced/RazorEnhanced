@@ -105,6 +105,9 @@ namespace Assistant
                 case 0x14EC:
                     item = new MapItem(serial);
                     break;
+                case 0x2006:
+                    item = new CorpseItem(serial);
+                    break;
                 case 0:
                     item = new Item(serial);
                     break;
@@ -777,6 +780,17 @@ namespace Assistant
 		}
 	}
 
+    internal class CorpseItem : Item
+    {
+        // Used for the open corpse option to ensure it is only openned first time
+        internal bool Opened { get; set; }
+        internal CorpseItem(Serial serial)
+            : base(serial)
+        {
+            Opened = false;
+        }
+
+    }
 
     internal class MapItem : Item
     {

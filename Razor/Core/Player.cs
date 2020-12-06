@@ -694,9 +694,32 @@ namespace Assistant
 			Resync();
 		}
 
-		internal bool MoveAck(byte seq)
+        internal void CheckCorpseOpen()
+        {
+            bool enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses");
+            if (!enabled)
+            {
+                return;
+            }
+            int range = RazorEnhanced.Settings.General.ReadInt("CorpseRange");
+            List<CorpseItem> list = World.CorpsesInRange(range);
+
+            foreach (CorpseItem corpse in list)
+            {
+                if (! corpse.Opened)
+                {
+                    corpse.Opened = true;
+                    Assistant.Client.Instance.SendToServer(new DoubleClick(corpse.Serial));
+                    // I wonder if  I need a delay
+                }
+            }
+        }
+
+        internal bool MoveAck(byte seq)
 		{
-			m_OutstandingMoves--;
+            CheckCorpseOpen();
+
+            m_OutstandingMoves--;
 
 			MoveEntry e;
 			m_MoveInfo.TryGetValue(seq, out e);
