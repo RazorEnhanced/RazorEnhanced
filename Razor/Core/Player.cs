@@ -696,6 +696,11 @@ namespace Assistant
 
         internal void CheckCorpseOpen()
         {
+            if (Targeting.HasTarget)
+            {
+                // if not marked open, we'll get them when he isn't targeting
+                return;
+            }
             bool enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses");
             if (!enabled)
             {
@@ -710,7 +715,7 @@ namespace Assistant
                 {
                     corpse.Opened = true;
                     Assistant.Client.Instance.SendToServer(new DoubleClick(corpse.Serial));
-                    // I wonder if  I need a delay
+                    System.Threading.Thread.Sleep(500);
                 }
             }
         }
