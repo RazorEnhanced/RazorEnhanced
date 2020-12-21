@@ -311,16 +311,24 @@ namespace Assistant
 					if (m_AutoStack)
 						AutoStackResource();
 
-					if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
-					{
-						PacketHandlers.IgnoreGumps.Add(this);
-						PlayerData.DoubleClick(this);
+                    if (RazorEnhanced.Settings.General.ReadBool("AutoSearch")
+                        && IsContainer
+                        && !(IsPouch && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
+                        && !this.IsBagOfSending
+                        )
+                    {
+                        PacketHandlers.IgnoreGumps.Add(this);
+                        PlayerData.DoubleClick(this);
 
-						for (int c = 0; c < Contains.Count; c++)
-						{
-							Item icheck = (Item)Contains[c];
-							if (icheck.IsContainer && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
-							{
+                        for (int c = 0; c < Contains.Count; c++)
+                        {
+                            Item icheck = (Item)Contains[c];
+                            if (icheck.IsContainer)
+                            {
+                                if (icheck.IsPouch && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
+                                    continue;
+                                if (icheck.IsBagOfSending)
+                                    continue;
 								PacketHandlers.IgnoreGumps.Add(icheck);
 								PlayerData.DoubleClick(icheck);
 							}

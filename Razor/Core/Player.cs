@@ -715,7 +715,7 @@ namespace Assistant
                 {
                     corpse.Opened = true;
                     Assistant.Client.Instance.SendToServer(new DoubleClick(corpse.Serial));
-                    System.Threading.Thread.Sleep(500);
+                    //System.Threading.Thread.Sleep(500);
                 }
             }
         }
