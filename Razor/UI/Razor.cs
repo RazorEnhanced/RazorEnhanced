@@ -1147,6 +1147,7 @@ namespace Assistant
             this.closeToolBarButton = new RazorEnhanced.UI.RazorButton();
             this.openToolBarButton = new RazorEnhanced.UI.RazorButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.showtitheToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarremoveslotButton = new RazorEnhanced.UI.RazorButton();
             this.toolbaraddslotButton = new RazorEnhanced.UI.RazorButton();
             this.toolbarslot_label = new System.Windows.Forms.Label();
@@ -1382,7 +1383,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.showtitheToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1675,7 +1675,7 @@ namespace Assistant
             this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.forceSizeY.Location = new System.Drawing.Point(411, 99);
             this.forceSizeY.Name = "forceSizeY";
-            this.forceSizeY.Size = new System.Drawing.Size(30, 20);
+            this.forceSizeY.Size = new System.Drawing.Size(253, 20);
             this.forceSizeY.TabIndex = 64;
             this.forceSizeY.TextChanged += new System.EventHandler(this.forceSizeY_TextChanged);
             //
@@ -1688,7 +1688,7 @@ namespace Assistant
             this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.forceSizeX.Location = new System.Drawing.Point(375, 99);
             this.forceSizeX.Name = "forceSizeX";
-            this.forceSizeX.Size = new System.Drawing.Size(30, 20);
+            this.forceSizeX.Size = new System.Drawing.Size(253, 20);
             this.forceSizeX.TabIndex = 63;
             this.forceSizeX.TextChanged += new System.EventHandler(this.forceSizeX_TextChanged);
             //
@@ -1881,9 +1881,9 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.txtSpellFormat);
             this.moreOptTab.Controls.Add(this.chkForceSpellHue);
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
-            this.moreOptTab.Location = new System.Drawing.Point(4, 40);
+            this.moreOptTab.Location = new System.Drawing.Point(4, 58);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(666, 366);
+            this.moreOptTab.Size = new System.Drawing.Size(413, 219);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             //
@@ -2124,7 +2124,7 @@ namespace Assistant
             this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.healthFmt.Location = new System.Drawing.Point(537, 181);
             this.healthFmt.Name = "healthFmt";
-            this.healthFmt.Size = new System.Drawing.Size(46, 20);
+            this.healthFmt.Size = new System.Drawing.Size(0, 20);
             this.healthFmt.TabIndex = 71;
             this.healthFmt.TextChanged += new System.EventHandler(this.healthFmt_TextChanged);
             //
@@ -2155,7 +2155,7 @@ namespace Assistant
             this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ltRange.Location = new System.Drawing.Point(491, 117);
             this.ltRange.Name = "ltRange";
-            this.ltRange.Size = new System.Drawing.Size(32, 20);
+            this.ltRange.Size = new System.Drawing.Size(0, 20);
             this.ltRange.TabIndex = 41;
             this.ltRange.TextChanged += new System.EventHandler(this.ltRange_TextChanged);
             //
@@ -2186,7 +2186,7 @@ namespace Assistant
             this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtObjDelay.Location = new System.Drawing.Point(530, 54);
             this.txtObjDelay.Name = "txtObjDelay";
-            this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
+            this.txtObjDelay.Size = new System.Drawing.Size(0, 20);
             this.txtObjDelay.TabIndex = 37;
             this.txtObjDelay.TextChanged += new System.EventHandler(this.txtObjDelay_TextChanged);
             //
@@ -2304,7 +2304,7 @@ namespace Assistant
             this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.corpseRange.Location = new System.Drawing.Point(355, 96);
             this.corpseRange.Name = "corpseRange";
-            this.corpseRange.Size = new System.Drawing.Size(24, 20);
+            this.corpseRange.Size = new System.Drawing.Size(0, 20);
             this.corpseRange.TabIndex = 23;
             this.corpseRange.TextChanged += new System.EventHandler(this.corpseRange_TextChanged);
             //
@@ -2436,7 +2436,7 @@ namespace Assistant
             this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpellFormat.Location = new System.Drawing.Point(106, 196);
             this.txtSpellFormat.Name = "txtSpellFormat";
-            this.txtSpellFormat.Size = new System.Drawing.Size(87, 20);
+            this.txtSpellFormat.Size = new System.Drawing.Size(0, 20);
             this.txtSpellFormat.TabIndex = 5;
             this.txtSpellFormat.TextChanged += new System.EventHandler(this.txtSpellFormat_TextChanged);
             //
@@ -2466,9 +2466,9 @@ namespace Assistant
             this.enhancedFilterTab.Controls.Add(this.groupBox23);
             this.enhancedFilterTab.Controls.Add(this.groupBox10);
             this.enhancedFilterTab.Controls.Add(this.groupBox9);
-            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 40);
+            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 58);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
-            this.enhancedFilterTab.Size = new System.Drawing.Size(666, 366);
+            this.enhancedFilterTab.Size = new System.Drawing.Size(413, 219);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
             //
@@ -2783,6 +2783,7 @@ namespace Assistant
             this.graphfilterdatagrid.Location = new System.Drawing.Point(6, 47);
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
+            this.graphfilterdatagrid.RowHeadersWidth = 62;
             this.graphfilterdatagrid.Size = new System.Drawing.Size(271, 208);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -2802,6 +2803,7 @@ namespace Assistant
             this.dataGridViewCheckBoxColumn4.FalseValue = "False";
             this.dataGridViewCheckBoxColumn4.HeaderText = "X";
             this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
+            this.dataGridViewCheckBoxColumn4.MinimumWidth = 8;
             this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
             this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -2812,6 +2814,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
+            this.dataGridViewTextBoxColumn16.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
             this.dataGridViewTextBoxColumn16.Width = 75;
             //
@@ -2819,6 +2822,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
+            this.dataGridViewTextBoxColumn17.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
             this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn17.Width = 75;
@@ -2827,6 +2831,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
+            this.dataGridViewTextBoxColumn18.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
             this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn18.Width = 75;
@@ -2834,8 +2839,10 @@ namespace Assistant
             // dataGridViewTextBoxColumn19
             //
             this.dataGridViewTextBoxColumn19.HeaderText = "Props";
+            this.dataGridViewTextBoxColumn19.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
             this.dataGridViewTextBoxColumn19.Visible = false;
+            this.dataGridViewTextBoxColumn19.Width = 150;
             //
             // mobfilterCheckBox
             //
@@ -2956,10 +2963,10 @@ namespace Assistant
             this.scriptingTab.Controls.Add(this.scripterrorlogCheckBox);
             this.scriptingTab.Controls.Add(this.showscriptmessageCheckBox);
             this.scriptingTab.Controls.Add(this.scriptlistView);
-            this.scriptingTab.Location = new System.Drawing.Point(4, 40);
+            this.scriptingTab.Location = new System.Drawing.Point(4, 58);
             this.scriptingTab.Name = "scriptingTab";
             this.scriptingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptingTab.Size = new System.Drawing.Size(666, 366);
+            this.scriptingTab.Size = new System.Drawing.Size(413, 219);
             this.scriptingTab.TabIndex = 12;
             this.scriptingTab.Text = "Scripting";
             //
@@ -3418,6 +3425,7 @@ namespace Assistant
             this.autolootdataGridView.Location = new System.Drawing.Point(9, 95);
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
+            this.autolootdataGridView.RowHeadersWidth = 62;
             this.autolootdataGridView.Size = new System.Drawing.Size(392, 238);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -3437,6 +3445,7 @@ namespace Assistant
             this.AutolootColumnX.FalseValue = "False";
             this.AutolootColumnX.HeaderText = "X";
             this.AutolootColumnX.IndeterminateValue = "False";
+            this.AutolootColumnX.MinimumWidth = 8;
             this.AutolootColumnX.Name = "AutolootColumnX";
             this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
@@ -3447,6 +3456,7 @@ namespace Assistant
             //
             this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.AutolootColumnItemName.HeaderText = "Item Name";
+            this.AutolootColumnItemName.MinimumWidth = 8;
             this.AutolootColumnItemName.Name = "AutolootColumnItemName";
             this.AutolootColumnItemName.Width = 206;
             //
@@ -3454,6 +3464,7 @@ namespace Assistant
             //
             this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.AutolootColumnItemID.HeaderText = "Graphics";
+            this.AutolootColumnItemID.MinimumWidth = 8;
             this.AutolootColumnItemID.Name = "AutolootColumnItemID";
             this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.AutolootColumnItemID.Width = 54;
@@ -3462,6 +3473,7 @@ namespace Assistant
             //
             this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.AutolootColumnColor.HeaderText = "Color";
+            this.AutolootColumnColor.MinimumWidth = 8;
             this.AutolootColumnColor.Name = "AutolootColumnColor";
             this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.AutolootColumnColor.Width = 54;
@@ -3470,6 +3482,7 @@ namespace Assistant
             //
             this.LootBagColumnID.HeaderText = "Bag";
             this.LootBagColumnID.MaxInputLength = 65535;
+            this.LootBagColumnID.MinimumWidth = 8;
             this.LootBagColumnID.Name = "LootBagColumnID";
             this.LootBagColumnID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.LootBagColumnID.Width = 54;
@@ -3477,8 +3490,10 @@ namespace Assistant
             // AutolootColumnProps
             //
             this.AutolootColumnProps.HeaderText = "Props";
+            this.AutolootColumnProps.MinimumWidth = 8;
             this.AutolootColumnProps.Name = "AutolootColumnProps";
             this.AutolootColumnProps.Visible = false;
+            this.AutolootColumnProps.Width = 150;
             //
             // autoLootnoopenCheckBox
             //
@@ -3563,7 +3578,7 @@ namespace Assistant
             this.autolootLogBox.FormattingEnabled = true;
             this.autolootLogBox.Location = new System.Drawing.Point(6, 19);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(232, 212);
+            this.autolootLogBox.Size = new System.Drawing.Size(232, 186);
             this.autolootLogBox.TabIndex = 0;
             //
             // autoLootCheckBox
@@ -3680,6 +3695,7 @@ namespace Assistant
             this.scavengerdataGridView.Location = new System.Drawing.Point(9, 95);
             this.scavengerdataGridView.Name = "scavengerdataGridView";
             this.scavengerdataGridView.RowHeadersVisible = false;
+            this.scavengerdataGridView.RowHeadersWidth = 62;
             this.scavengerdataGridView.Size = new System.Drawing.Size(356, 238);
             this.scavengerdataGridView.TabIndex = 72;
             this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -3699,6 +3715,7 @@ namespace Assistant
             this.ScavengerX.FalseValue = "False";
             this.ScavengerX.HeaderText = "X";
             this.ScavengerX.IndeterminateValue = "False";
+            this.ScavengerX.MinimumWidth = 8;
             this.ScavengerX.Name = "ScavengerX";
             this.ScavengerX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ScavengerX.TrueValue = "True";
@@ -3708,6 +3725,7 @@ namespace Assistant
             //
             this.ScavengerItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ScavengerItemName.HeaderText = "Item Name";
+            this.ScavengerItemName.MinimumWidth = 8;
             this.ScavengerItemName.Name = "ScavengerItemName";
             this.ScavengerItemName.Width = 206;
             //
@@ -3715,6 +3733,7 @@ namespace Assistant
             //
             this.ScavenerGraphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ScavenerGraphics.HeaderText = "Graphics";
+            this.ScavenerGraphics.MinimumWidth = 8;
             this.ScavenerGraphics.Name = "ScavenerGraphics";
             this.ScavenerGraphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ScavenerGraphics.Width = 54;
@@ -3723,6 +3742,7 @@ namespace Assistant
             //
             this.ScavengerColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ScavengerColor.HeaderText = "Color";
+            this.ScavengerColor.MinimumWidth = 8;
             this.ScavengerColor.Name = "ScavengerColor";
             this.ScavengerColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ScavengerColor.Width = 54;
@@ -3730,8 +3750,10 @@ namespace Assistant
             // ScavengerProp
             //
             this.ScavengerProp.HeaderText = "Prop";
+            this.ScavengerProp.MinimumWidth = 8;
             this.ScavengerProp.Name = "ScavengerProp";
             this.ScavengerProp.Visible = false;
+            this.ScavengerProp.Width = 150;
             //
             // groupBox12
             //
@@ -3748,7 +3770,7 @@ namespace Assistant
             this.scavengerLogBox.FormattingEnabled = true;
             this.scavengerLogBox.Location = new System.Drawing.Point(7, 18);
             this.scavengerLogBox.Name = "scavengerLogBox";
-            this.scavengerLogBox.Size = new System.Drawing.Size(265, 212);
+            this.scavengerLogBox.Size = new System.Drawing.Size(265, 186);
             this.scavengerLogBox.TabIndex = 0;
             //
             // label23
@@ -3946,7 +3968,7 @@ namespace Assistant
             this.organizerSetSourceB.Name = "organizerSetSourceB";
             this.organizerSetSourceB.Size = new System.Drawing.Size(90, 21);
             this.organizerSetSourceB.TabIndex = 66;
-            this.organizerSetSourceB.Text = "Set Bag";
+            this.organizerSetSourceB.Text = "Set Source";
             this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
             //
             // organizerSetDestinationB
@@ -3955,7 +3977,7 @@ namespace Assistant
             this.organizerSetDestinationB.Name = "organizerSetDestinationB";
             this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 21);
             this.organizerSetDestinationB.TabIndex = 69;
-            this.organizerSetDestinationB.Text = "Set Bag";
+            this.organizerSetDestinationB.Text = "Set Dest";
             this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
             //
             // organizerSourceLabel
@@ -3989,6 +4011,7 @@ namespace Assistant
             this.organizerdataGridView.Name = "organizerdataGridView";
             this.organizerdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.organizerdataGridView.RowHeadersVisible = false;
+            this.organizerdataGridView.RowHeadersWidth = 62;
             this.organizerdataGridView.Size = new System.Drawing.Size(357, 220);
             this.organizerdataGridView.TabIndex = 89;
             this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -4007,6 +4030,7 @@ namespace Assistant
             this.dataGridViewCheckBoxColumn2.FalseValue = "False";
             this.dataGridViewCheckBoxColumn2.HeaderText = "X";
             this.dataGridViewCheckBoxColumn2.IndeterminateValue = "False";
+            this.dataGridViewCheckBoxColumn2.MinimumWidth = 8;
             this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
             this.dataGridViewCheckBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewCheckBoxColumn2.ToolTipText = "Check This for enable item in list";
@@ -4017,6 +4041,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn5.HeaderText = "Item Name";
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
             this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn5.ToolTipText = "Here the item name";
@@ -4026,6 +4051,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn6.HeaderText = "Graphics";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn6.ToolTipText = "Here Graphics item ID";
@@ -4035,6 +4061,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn8.HeaderText = "Color";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
             this.dataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn8.ToolTipText = "Here item color, use -1 for all color";
@@ -4044,6 +4071,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn7.HeaderText = "Amount";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn7.ToolTipText = "Here amount to move, use -1 for all item";
@@ -4064,7 +4092,7 @@ namespace Assistant
             this.organizerLogBox.FormattingEnabled = true;
             this.organizerLogBox.Location = new System.Drawing.Point(6, 19);
             this.organizerLogBox.Name = "organizerLogBox";
-            this.organizerLogBox.Size = new System.Drawing.Size(265, 225);
+            this.organizerLogBox.Size = new System.Drawing.Size(265, 212);
             this.organizerLogBox.TabIndex = 0;
             //
             // label27
@@ -4189,6 +4217,7 @@ namespace Assistant
             this.vendorbuydataGridView.Name = "vendorbuydataGridView";
             this.vendorbuydataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorbuydataGridView.RowHeadersVisible = false;
+            this.vendorbuydataGridView.RowHeadersWidth = 62;
             this.vendorbuydataGridView.Size = new System.Drawing.Size(357, 274);
             this.vendorbuydataGridView.TabIndex = 88;
             this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -4207,6 +4236,7 @@ namespace Assistant
             this.dataGridViewCheckBoxColumn1.FalseValue = "False";
             this.dataGridViewCheckBoxColumn1.HeaderText = "X";
             this.dataGridViewCheckBoxColumn1.IndeterminateValue = "False";
+            this.dataGridViewCheckBoxColumn1.MinimumWidth = 8;
             this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
             this.dataGridViewCheckBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewCheckBoxColumn1.ToolTipText = "Check This for enable item in list";
@@ -4217,6 +4247,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn1.HeaderText = "Item Name";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn1.ToolTipText = "Here the item name";
@@ -4226,6 +4257,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn2.HeaderText = "Graphics";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn2.ToolTipText = "Here Graphics item ID";
@@ -4235,6 +4267,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn3.HeaderText = "Amount";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn3.ToolTipText = "Here Item Amount to sell";
@@ -4244,6 +4277,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn4.HeaderText = "Color";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn4.ToolTipText = "Here item color, use -1 for all color";
@@ -4264,7 +4298,7 @@ namespace Assistant
             this.buyLogBox.FormattingEnabled = true;
             this.buyLogBox.Location = new System.Drawing.Point(7, 18);
             this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(265, 212);
+            this.buyLogBox.Size = new System.Drawing.Size(265, 186);
             this.buyLogBox.TabIndex = 0;
             //
             // label25
@@ -4405,6 +4439,7 @@ namespace Assistant
             this.vendorsellGridView.Name = "vendorsellGridView";
             this.vendorsellGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorsellGridView.RowHeadersVisible = false;
+            this.vendorsellGridView.RowHeadersWidth = 62;
             this.vendorsellGridView.Size = new System.Drawing.Size(357, 238);
             this.vendorsellGridView.TabIndex = 87;
             this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -4423,6 +4458,7 @@ namespace Assistant
             this.VendorSellX.FalseValue = "False";
             this.VendorSellX.HeaderText = "X";
             this.VendorSellX.IndeterminateValue = "False";
+            this.VendorSellX.MinimumWidth = 8;
             this.VendorSellX.Name = "VendorSellX";
             this.VendorSellX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.VendorSellX.ToolTipText = "Check This for enable item in list";
@@ -4433,6 +4469,7 @@ namespace Assistant
             //
             this.VendorSellItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.VendorSellItemName.HeaderText = "Item Name";
+            this.VendorSellItemName.MinimumWidth = 8;
             this.VendorSellItemName.Name = "VendorSellItemName";
             this.VendorSellItemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.VendorSellItemName.ToolTipText = "Here the item name";
@@ -4442,6 +4479,7 @@ namespace Assistant
             //
             this.VendorSellGraphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.VendorSellGraphics.HeaderText = "Graphics";
+            this.VendorSellGraphics.MinimumWidth = 8;
             this.VendorSellGraphics.Name = "VendorSellGraphics";
             this.VendorSellGraphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.VendorSellGraphics.ToolTipText = "Here Graphics item ID";
@@ -4451,6 +4489,7 @@ namespace Assistant
             //
             this.VendorSellAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.VendorSellAmount.HeaderText = "Amount";
+            this.VendorSellAmount.MinimumWidth = 8;
             this.VendorSellAmount.Name = "VendorSellAmount";
             this.VendorSellAmount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.VendorSellAmount.ToolTipText = "Here Item Amount to sell";
@@ -4460,6 +4499,7 @@ namespace Assistant
             //
             this.VendorSellColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.VendorSellColor.HeaderText = "Color";
+            this.VendorSellColor.MinimumWidth = 8;
             this.VendorSellColor.Name = "VendorSellColor";
             this.VendorSellColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.VendorSellColor.ToolTipText = "Here item color, use -1 for all color";
@@ -4480,7 +4520,7 @@ namespace Assistant
             this.sellLogBox.FormattingEnabled = true;
             this.sellLogBox.Location = new System.Drawing.Point(7, 18);
             this.sellLogBox.Name = "sellLogBox";
-            this.sellLogBox.Size = new System.Drawing.Size(265, 225);
+            this.sellLogBox.Size = new System.Drawing.Size(265, 212);
             this.sellLogBox.TabIndex = 0;
             //
             // label26
@@ -4673,7 +4713,7 @@ namespace Assistant
             this.dressLogBox.FormattingEnabled = true;
             this.dressLogBox.Location = new System.Drawing.Point(7, 18);
             this.dressLogBox.Name = "dressLogBox";
-            this.dressLogBox.Size = new System.Drawing.Size(265, 199);
+            this.dressLogBox.Size = new System.Drawing.Size(265, 173);
             this.dressLogBox.TabIndex = 0;
             //
             // dressSetBagB
@@ -4979,7 +5019,7 @@ namespace Assistant
             this.friendLogBox.FormattingEnabled = true;
             this.friendLogBox.Location = new System.Drawing.Point(6, 19);
             this.friendLogBox.Name = "friendLogBox";
-            this.friendLogBox.Size = new System.Drawing.Size(259, 173);
+            this.friendLogBox.Size = new System.Drawing.Size(259, 134);
             this.friendLogBox.TabIndex = 0;
             //
             // friendIncludePartyCheckBox
@@ -5220,6 +5260,7 @@ namespace Assistant
             this.restockdataGridView.Name = "restockdataGridView";
             this.restockdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.restockdataGridView.RowHeadersVisible = false;
+            this.restockdataGridView.RowHeadersWidth = 62;
             this.restockdataGridView.Size = new System.Drawing.Size(357, 220);
             this.restockdataGridView.TabIndex = 90;
             this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
@@ -5238,6 +5279,7 @@ namespace Assistant
             this.dataGridViewCheckBoxColumn3.FalseValue = "False";
             this.dataGridViewCheckBoxColumn3.HeaderText = "X";
             this.dataGridViewCheckBoxColumn3.IndeterminateValue = "False";
+            this.dataGridViewCheckBoxColumn3.MinimumWidth = 8;
             this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
             this.dataGridViewCheckBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewCheckBoxColumn3.ToolTipText = "Check This for enable item in list";
@@ -5248,6 +5290,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn9.HeaderText = "Item Name";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn9.ToolTipText = "Here the item name";
@@ -5257,6 +5300,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn10.HeaderText = "Graphics";
+            this.dataGridViewTextBoxColumn10.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
             this.dataGridViewTextBoxColumn10.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn10.ToolTipText = "Here Graphics item ID";
@@ -5266,6 +5310,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn11.HeaderText = "Color";
+            this.dataGridViewTextBoxColumn11.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
             this.dataGridViewTextBoxColumn11.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn11.ToolTipText = "Here item color, use -1 for all color";
@@ -5275,6 +5320,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn12.HeaderText = "Limit";
+            this.dataGridViewTextBoxColumn12.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
             this.dataGridViewTextBoxColumn12.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn12.ToolTipText = "Here amount limit to move";
@@ -5295,7 +5341,7 @@ namespace Assistant
             this.restockLogBox.FormattingEnabled = true;
             this.restockLogBox.Location = new System.Drawing.Point(7, 18);
             this.restockLogBox.Name = "restockLogBox";
-            this.restockLogBox.Size = new System.Drawing.Size(265, 225);
+            this.restockLogBox.Size = new System.Drawing.Size(265, 212);
             this.restockLogBox.TabIndex = 0;
             //
             // label13
@@ -5728,7 +5774,7 @@ namespace Assistant
             this.bandagehealLogBox.FormattingEnabled = true;
             this.bandagehealLogBox.Location = new System.Drawing.Point(7, 18);
             this.bandagehealLogBox.Name = "bandagehealLogBox";
-            this.bandagehealLogBox.Size = new System.Drawing.Size(265, 303);
+            this.bandagehealLogBox.Size = new System.Drawing.Size(265, 264);
             this.bandagehealLogBox.TabIndex = 0;
             //
             // bandagehealenableCheckBox
@@ -5744,9 +5790,9 @@ namespace Assistant
             // toolbarTab
             //
             this.toolbarTab.Controls.Add(this.toolbarstab);
-            this.toolbarTab.Location = new System.Drawing.Point(4, 40);
+            this.toolbarTab.Location = new System.Drawing.Point(4, 58);
             this.toolbarTab.Name = "toolbarTab";
-            this.toolbarTab.Size = new System.Drawing.Size(666, 366);
+            this.toolbarTab.Size = new System.Drawing.Size(413, 219);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Toolbars";
             //
@@ -5889,6 +5935,17 @@ namespace Assistant
             this.groupBox4.TabIndex = 61;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Layout";
+            //
+            // showtitheToolBarCheckBox
+            //
+            this.showtitheToolBarCheckBox.AutoSize = true;
+            this.showtitheToolBarCheckBox.Location = new System.Drawing.Point(181, 145);
+            this.showtitheToolBarCheckBox.Name = "showtitheToolBarCheckBox";
+            this.showtitheToolBarCheckBox.Size = new System.Drawing.Size(80, 17);
+            this.showtitheToolBarCheckBox.TabIndex = 80;
+            this.showtitheToolBarCheckBox.Text = "Show Tithe";
+            this.showtitheToolBarCheckBox.UseVisualStyleBackColor = true;
+            this.showtitheToolBarCheckBox.CheckedChanged += new System.EventHandler(this.showtitheToolBarCheckBox_CheckedChanged);
             //
             // toolbarremoveslotButton
             //
@@ -6488,9 +6545,9 @@ namespace Assistant
             this.emptyTab.Controls.Add(this.groupBox45);
             this.emptyTab.Controls.Add(this.groupBox44);
             this.emptyTab.Controls.Add(this.groupBox43);
-            this.emptyTab.Location = new System.Drawing.Point(4, 40);
+            this.emptyTab.Location = new System.Drawing.Point(4, 58);
             this.emptyTab.Name = "emptyTab";
-            this.emptyTab.Size = new System.Drawing.Size(666, 366);
+            this.emptyTab.Size = new System.Drawing.Size(413, 219);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Targetting";
             //
@@ -7030,6 +7087,7 @@ namespace Assistant
             this.targethueGridView.Location = new System.Drawing.Point(7, 43);
             this.targethueGridView.Name = "targethueGridView";
             this.targethueGridView.RowHeadersVisible = false;
+            this.targethueGridView.RowHeadersWidth = 62;
             this.targethueGridView.Size = new System.Drawing.Size(95, 233);
             this.targethueGridView.TabIndex = 70;
             this.targethueGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targethueGridView_CellEndEdit);
@@ -7046,6 +7104,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn21.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn21.HeaderText = "Hue";
+            this.dataGridViewTextBoxColumn21.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
             this.dataGridViewTextBoxColumn21.Width = 75;
             //
@@ -7092,6 +7151,7 @@ namespace Assistant
             this.targetbodydataGridView.Location = new System.Drawing.Point(7, 43);
             this.targetbodydataGridView.Name = "targetbodydataGridView";
             this.targetbodydataGridView.RowHeadersVisible = false;
+            this.targetbodydataGridView.RowHeadersWidth = 62;
             this.targetbodydataGridView.Size = new System.Drawing.Size(95, 233);
             this.targetbodydataGridView.TabIndex = 70;
             this.targetbodydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.targetbodydataGridView_CellEndEdit);
@@ -7108,6 +7168,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn20.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn20.HeaderText = "Body ID";
+            this.dataGridViewTextBoxColumn20.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
             this.dataGridViewTextBoxColumn20.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn20.Width = 75;
@@ -7178,7 +7239,7 @@ namespace Assistant
             this.targetlistBox.FormattingEnabled = true;
             this.targetlistBox.Location = new System.Drawing.Point(7, 72);
             this.targetlistBox.Name = "targetlistBox";
-            this.targetlistBox.Size = new System.Drawing.Size(113, 251);
+            this.targetlistBox.Size = new System.Drawing.Size(113, 225);
             this.targetlistBox.TabIndex = 0;
             this.targetlistBox.SelectedIndexChanged += new System.EventHandler(this.targetlistBox_SelectedIndexChanged);
             //
@@ -7193,9 +7254,9 @@ namespace Assistant
             this.skillsTab.Controls.Add(this.setlocks);
             this.skillsTab.Controls.Add(this.resetDelta);
             this.skillsTab.Controls.Add(this.skillList);
-            this.skillsTab.Location = new System.Drawing.Point(4, 40);
+            this.skillsTab.Location = new System.Drawing.Point(4, 58);
             this.skillsTab.Name = "skillsTab";
-            this.skillsTab.Size = new System.Drawing.Size(666, 366);
+            this.skillsTab.Size = new System.Drawing.Size(413, 219);
             this.skillsTab.TabIndex = 2;
             this.skillsTab.Text = "Skills";
             //
@@ -7329,10 +7390,10 @@ namespace Assistant
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox28);
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox27);
             this.enhancedHotKeytabPage.Controls.Add(this.hotkeytreeView);
-            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 40);
+            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 58);
             this.enhancedHotKeytabPage.Name = "enhancedHotKeytabPage";
             this.enhancedHotKeytabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(666, 366);
+            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(413, 219);
             this.enhancedHotKeytabPage.TabIndex = 15;
             this.enhancedHotKeytabPage.Text = "HotKey";
             this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
@@ -7533,9 +7594,9 @@ namespace Assistant
             this.screenshotTab.Controls.Add(this.screensList);
             this.screenshotTab.Controls.Add(this.screenPrev);
             this.screenshotTab.Controls.Add(this.dispTime);
-            this.screenshotTab.Location = new System.Drawing.Point(4, 40);
+            this.screenshotTab.Location = new System.Drawing.Point(4, 58);
             this.screenshotTab.Name = "screenshotTab";
-            this.screenshotTab.Size = new System.Drawing.Size(666, 366);
+            this.screenshotTab.Size = new System.Drawing.Size(413, 219);
             this.screenshotTab.TabIndex = 8;
             this.screenshotTab.Text = "Screen Shots";
             //
@@ -7584,7 +7645,7 @@ namespace Assistant
             this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.screenPath.Location = new System.Drawing.Point(7, 14);
             this.screenPath.Name = "screenPath";
-            this.screenPath.Size = new System.Drawing.Size(196, 20);
+            this.screenPath.Size = new System.Drawing.Size(0, 20);
             this.screenPath.TabIndex = 7;
             this.screenPath.TextChanged += new System.EventHandler(this.screenPath_TextChanged);
             //
@@ -7665,10 +7726,10 @@ namespace Assistant
             this.videoTab.Controls.Add(this.videorecbutton);
             this.videoTab.Controls.Add(this.videostopbutton);
             this.videoTab.Controls.Add(this.groupBox15);
-            this.videoTab.Location = new System.Drawing.Point(4, 40);
+            this.videoTab.Location = new System.Drawing.Point(4, 58);
             this.videoTab.Name = "videoTab";
             this.videoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.videoTab.Size = new System.Drawing.Size(666, 366);
+            this.videoTab.Size = new System.Drawing.Size(413, 219);
             this.videoTab.TabIndex = 16;
             this.videoTab.Text = "Video Recorder";
             //
@@ -7859,10 +7920,10 @@ namespace Assistant
             this.DPStabPage.Controls.Add(this.DPSMeterStopButton);
             this.DPStabPage.Controls.Add(this.DPSMeterStartButton);
             this.DPStabPage.Controls.Add(this.DPSMeterClearButton);
-            this.DPStabPage.Location = new System.Drawing.Point(4, 40);
+            this.DPStabPage.Location = new System.Drawing.Point(4, 58);
             this.DPStabPage.Name = "DPStabPage";
             this.DPStabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DPStabPage.Size = new System.Drawing.Size(666, 366);
+            this.DPStabPage.Size = new System.Drawing.Size(413, 219);
             this.DPStabPage.TabIndex = 17;
             this.DPStabPage.Text = "DPS Meter";
             this.DPStabPage.UseVisualStyleBackColor = true;
@@ -7980,6 +8041,7 @@ namespace Assistant
             this.DpsMeterGridView.Location = new System.Drawing.Point(8, 6);
             this.DpsMeterGridView.Name = "DpsMeterGridView";
             this.DpsMeterGridView.RowHeadersVisible = false;
+            this.DpsMeterGridView.RowHeadersWidth = 62;
             this.DpsMeterGridView.Size = new System.Drawing.Size(355, 352);
             this.DpsMeterGridView.TabIndex = 65;
             //
@@ -7987,6 +8049,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn13.HeaderText = "Serial";
+            this.dataGridViewTextBoxColumn13.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             this.dataGridViewTextBoxColumn13.ReadOnly = true;
             this.dataGridViewTextBoxColumn13.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -7996,6 +8059,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn14.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn14.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
             this.dataGridViewTextBoxColumn14.ReadOnly = true;
             this.dataGridViewTextBoxColumn14.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -8005,6 +8069,7 @@ namespace Assistant
             //
             this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn15.HeaderText = "Damage";
+            this.dataGridViewTextBoxColumn15.MinimumWidth = 8;
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
             this.dataGridViewTextBoxColumn15.ReadOnly = true;
             this.dataGridViewTextBoxColumn15.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -8075,9 +8140,9 @@ namespace Assistant
             this.statusTab.Controls.Add(this.labelStatus);
             this.statusTab.Controls.Add(this.discordrazorButton);
             this.statusTab.Controls.Add(this.razorButtonWiki);
-            this.statusTab.Location = new System.Drawing.Point(4, 40);
+            this.statusTab.Location = new System.Drawing.Point(4, 58);
             this.statusTab.Name = "statusTab";
-            this.statusTab.Size = new System.Drawing.Size(666, 366);
+            this.statusTab.Size = new System.Drawing.Size(413, 219);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             //
@@ -8171,6 +8236,7 @@ namespace Assistant
             //
             // datagridMenuStrip
             //
+            this.datagridMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.datagridMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteRowToolStripMenuItem});
             this.datagridMenuStrip.Name = "datagridMenuStrip";
@@ -8185,6 +8251,7 @@ namespace Assistant
             //
             // scriptgridMenuStrip
             //
+            this.scriptgridMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.scriptgridMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.modifyToolStripMenuItem,
             this.flagsToolStripMenuItem,
@@ -8298,17 +8365,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            //
-            // showtitheToolBarCheckBox
-            //
-            this.showtitheToolBarCheckBox.AutoSize = true;
-            this.showtitheToolBarCheckBox.Location = new System.Drawing.Point(181, 145);
-            this.showtitheToolBarCheckBox.Name = "showtitheToolBarCheckBox";
-            this.showtitheToolBarCheckBox.Size = new System.Drawing.Size(80, 17);
-            this.showtitheToolBarCheckBox.TabIndex = 80;
-            this.showtitheToolBarCheckBox.Text = "Show Tithe";
-            this.showtitheToolBarCheckBox.UseVisualStyleBackColor = true;
-            this.showtitheToolBarCheckBox.CheckedChanged += new System.EventHandler(this.showtitheToolBarCheckBox_CheckedChanged);
             //
             // MainForm
             //

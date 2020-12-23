@@ -75,8 +75,15 @@ namespace Assistant
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
+        private bool AcceptibleOrganizerTarget(Assistant.Item organizerBag)
+        {
+            if (organizerBag.ItemID == 0x2259)
+                return true;
 
-		private void OrganizerSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+            return organizerBag.Serial.IsItem && organizerBag.IsContainer;
+        }
+
+        private void OrganizerSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item organizerBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (organizerBag == null)
@@ -88,7 +95,7 @@ namespace Assistant
 				return;
 			}
 
-			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer)
+			if (organizerBag != null && AcceptibleOrganizerTarget(organizerBag))
 			{
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString(), false);
@@ -138,7 +145,7 @@ namespace Assistant
 				return;
 			}
 
-			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer)
+			if (organizerBag != null && AcceptibleOrganizerTarget(organizerBag))
 			{
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString(), false);
