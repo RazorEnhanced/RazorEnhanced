@@ -281,6 +281,22 @@ namespace RazorEnhanced
 
     public class Mobiles
     {
+
+        public struct LastTrackingInfo
+        {
+            public UInt16 x;
+            public UInt16 y;
+            public UInt32 serial;
+            public DateTime lastUpdate;
+        }
+
+        internal static LastTrackingInfo lastTrackingInfo;
+
+        public static LastTrackingInfo GetTrackingInfo()
+        {
+            return lastTrackingInfo;
+        }
+
         public static Mobile FindBySerial(int serial)
         {
             Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));

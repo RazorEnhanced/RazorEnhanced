@@ -161,7 +161,8 @@ namespace RazorEnhanced.UI
 			{
 				"Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
 				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Select", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
-				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist", "Mobiles.WaitForStats"
+				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist", "Mobiles.WaitForStats",
+                "Mobiles.GetTrackingInfo"
 			};
 
 			string[] methodsItems =
@@ -560,7 +561,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Mobiles.FindBySerial(int)", new string[] { "int MobileSerial" }, "Mobile", "Find mobile instance by specific serial");
 			descriptionMobiles.Add("Mobiles.FindBySerial", tooltip);
 
-			tooltip = new ToolTipDescriptions("Mobiles.UseMobile(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "void", "Use (double click) specific mobile");
+            tooltip = new ToolTipDescriptions("Mobiles.GetTrackingInfo()", new string[] { "none" }, "TrackingStruct", "Return the most recent tracking info");
+            descriptionMobiles.Add("Mobiles.GetTrackingInfo", tooltip);
+
+            tooltip = new ToolTipDescriptions("Mobiles.UseMobile(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "void", "Use (double click) specific mobile");
 			descriptionMobiles.Add("Mobiles.UseMobile", tooltip);
 
 			tooltip = new ToolTipDescriptions("Mobiles.SingleClick(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "void", "Perform a single click on specific mobile");

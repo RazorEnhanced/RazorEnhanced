@@ -89,7 +89,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientFilter(0xAE, new PacketFilterCallback(UnicodeSpeech));
 			PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(SendGump));
 			PacketHandler.RegisterServerToClientViewer(0xB9, new PacketViewerCallback(Features));
-			PacketHandler.RegisterServerToClientViewer(0xBC, new PacketViewerCallback(ChangeSeason));
+            PacketHandler.RegisterServerToClientViewer(0xBA, new PacketViewerCallback(TrackingArrow));
+            PacketHandler.RegisterServerToClientViewer(0xBC, new PacketViewerCallback(ChangeSeason));
 			PacketHandler.RegisterServerToClientViewer(0xBF, new PacketViewerCallback(ExtendedPacket));
 			PacketHandler.RegisterServerToClientFilter(0xC1, new PacketFilterCallback(OnLocalizedMessage));
 			PacketHandler.RegisterServerToClientViewer(0xC2, new PacketViewerCallback(UnicodePromptRecevied));
@@ -3004,7 +3005,19 @@ namespace Assistant
 				World.Player.Features = p.ReadUInt16();
 		}
 
-		private static void PersonalLight(PacketReader p, PacketHandlerEventArgs args)
+
+		private static void TrackingArrow(PacketReader p, PacketHandlerEventArgs args)
+		{
+            byte active = p.ReadByte();
+            Mobiles.lastTrackingInfo.x  = p.ReadUInt16();
+            Mobiles.lastTrackingInfo.y = p.ReadUInt16();
+            Mobiles.lastTrackingInfo.serial = p.ReadUInt32();
+            Mobiles.lastTrackingInfo.lastUpdate = DateTime.Now;
+            System.Diagnostics.Debug.WriteLine("Serial: 0x{0:X} at x:{1} y:{2}",
+                Mobiles.lastTrackingInfo.serial, Mobiles.lastTrackingInfo.x, Mobiles.lastTrackingInfo.y);
+        }
+
+        private static void PersonalLight(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null || args.Block)
 				return;
