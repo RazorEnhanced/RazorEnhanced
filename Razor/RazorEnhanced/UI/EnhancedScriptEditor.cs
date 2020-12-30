@@ -618,7 +618,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Items.DropItemGroundSelf(Item, int)", new string[] { "Item ItemInstance", "int Amount" }, "void", "Drop on character feets specified item with certain amount.\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
 			descriptionItems.Add("Items.DropItemGroundSelf", tooltip);
 
-			tooltip = new ToolTipDescriptions("Items.UseItem(Item or int)", new string[] { "Item ItemInstance or int ItemSerial" }, "void", "Use (double click) specified item.");
+			tooltip = new ToolTipDescriptions("Items.UseItem(Item or int, (optional)int target)", new string[] { "Item ItemInstance or int ItemSerial, TargetSerial" }, "void", "Use (double click) specified item and optionally target targetSerial.");
 			descriptionItems.Add("Items.UseItem", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.SingleClick(Item or int)", new string[] { "Item ItemInstance or int ItemSerial" }, "void", "Perform a single click on a specific item");
