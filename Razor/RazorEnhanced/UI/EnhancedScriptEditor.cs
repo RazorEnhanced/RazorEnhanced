@@ -175,7 +175,8 @@ namespace RazorEnhanced.UI
 
 			string[] methodsMisc =
 			{
-				"Misc.SendMessage", "Misc.SendToClient", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
+				"Misc.SendMessage", "Misc.SendToClient", "Misc.ResetPrompt", "Misc.HasPrompt", "Misc.WaitForPrompt", "Misc.CancelPrompt", "Misc.ResponsePrompt",
+                "Misc.NoOperation", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
 				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
 				"Misc.SetSharedValue", "Misc.ScriptStopAll", "Misc.ShardName",
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
@@ -708,7 +709,22 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.ContextReply(int or Mobile or Item, int or string)", new string[] { "int Serial or Mobile MobileInstance or Item ItemInstance", "int MenuID or MenuText" }, "void", "Response to a context menu on mobile or item. \n\tMenuID is base zero if use number, if use string is menu text");
 			descriptionMisc.Add("Misc.ContextReply", tooltip);
 
-			tooltip = new ToolTipDescriptions("Misc.ReadSharedValue(string)", new string[] { "string NameOfValue" }, "object", "Read a shared value, if value not exist return null");
+            tooltip = new ToolTipDescriptions("Misc.ResetPrompt()", new string[] { "none" }, "void", "Reset the prompt response");
+            descriptionMisc.Add("Misc.ResetPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.HasPrompt()", new string[] { "none" }, "bool", "Player has a prompt waiting");
+            descriptionMisc.Add("Misc.HasPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.WaitForPrompt(int)", new string[] { "int delay" }, "void", "Wait for player prompt");
+            descriptionMisc.Add("Misc.WaitForPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.CancelPrompt()", new string[] { "none" }, "void", "cancel the player prompt");
+            descriptionMisc.Add("Misc.CancelPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.ResponsePrompt(string)", new string[] { "string reply" }, "void", "Respong to the outstanding player prompt");
+            descriptionMisc.Add("Misc.ResponsePrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.ReadSharedValue(string)", new string[] { "string NameOfValue" }, "object", "Read a shared value, if value not exist return null");
 			descriptionMisc.Add("Misc.ReadSharedValue", tooltip);
 
 			tooltip = new ToolTipDescriptions("Misc.RemoveSharedValue(string)", new string[] { "string NameOfValue" }, "void", "Remove a shared value");
