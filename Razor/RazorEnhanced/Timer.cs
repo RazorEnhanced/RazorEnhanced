@@ -6,11 +6,32 @@ using System;
 
 namespace RazorEnhanced
 {
-	public class ScriptTimer : System.Timers.Timer
-	{
-		internal string Name;
-		internal string Message;
-	}
+    public class ScriptTimer : System.Timers.Timer
+    {
+        internal string Name;
+        internal string Message;
+        internal DateTime m_dueTime;
+
+        public ScriptTimer() : base() => this.Elapsed += this.ElapsedAction;
+        protected new void Dispose()
+        {
+            this.Elapsed -= this.ElapsedAction;
+            base.Dispose();
+        }
+
+        public double TimeLeft => (this.m_dueTime - DateTime.Now).TotalMilliseconds;
+        public new void Start()
+        {
+            this.m_dueTime = DateTime.Now.AddMilliseconds(this.Interval);
+            base.Start();
+        }
+
+        private void ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (this.AutoReset)
+                this.m_dueTime = DateTime.Now.AddMilliseconds(this.Interval);
+        }
+    }
 
 	public class Timer
 	{
@@ -38,6 +59,7 @@ namespace RazorEnhanced
 			newtimer.Enabled = true;
 			newtimer.Name = name;
 			newtimer.Message = message;
+            newtimer.Start();
 			m_timers[name] = newtimer;
 		}
 
@@ -58,7 +80,25 @@ namespace RazorEnhanced
 			return false;
 		}
 
-		private static void OnTimedEvent(object source, ElapsedEventArgs e)
+        public static int Remaining(string name)
+        {
+            if (m_timers.ContainsKey(name)) // Timer Exist
+            {
+                if (m_timers.TryGetValue(name, out ScriptTimer t)) // Get timer data
+                {
+                    if (t != null)
+                        return (int)t.TimeLeft;
+                    else
+                        return -1;
+                }
+                else
+                    return -1;
+            }
+            return -1;
+        }
+
+
+        private static void OnTimedEvent(object source, ElapsedEventArgs e)
 		{
 			ScriptTimer t = (ScriptTimer)source;
 			if (t.Message != String.Empty) // If timer have a end Message
