@@ -209,6 +209,35 @@ namespace Assistant
             SetForegroundWindow(hWnd);
             SetFocus(hWnd);
         }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;        // x position of upper-left corner
+            public int Top;         // y position of upper-left corner
+            public int Right;       // x position of lower-right corner
+            public int Bottom;      // y position of lower-right corner
+        }
+
+        public System.Drawing.Rectangle GetUoWindowPos()
+        {
+            RECT rect;
+            System.Drawing.Rectangle outRect = new System.Drawing.Rectangle(-1, -1, 0, 0);
+            if (GetWindowRect(new HandleRef(this, Assistant.Client.Instance.GetWindowHandle()), out rect))
+            {
+                outRect.X = rect.Left;
+                outRect.Y = rect.Top;
+                outRect.Width = rect.Right - rect.Left;
+                outRect.Height = rect.Bottom - rect.Top;
+            }
+            return outRect;
+        }
+
+
+
         private static void Initialize(System.Reflection.Assembly a)
         {
             Type[] types = a.GetTypes();

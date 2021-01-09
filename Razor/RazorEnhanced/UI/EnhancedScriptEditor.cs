@@ -177,7 +177,8 @@ namespace RazorEnhanced.UI
 			{
 				"Misc.SendMessage", "Misc.SendToClient", "Misc.ResetPrompt", "Misc.HasPrompt", "Misc.WaitForPrompt", "Misc.CancelPrompt", "Misc.ResponsePrompt",
                 "Misc.NoOperation", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
-				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
+				"Misc.ContextReply", "Misc.MouseMove", "Misc.MouseLocation",
+                "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
 				"Misc.SetSharedValue", "Misc.ScriptStopAll", "Misc.ShardName",
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
@@ -721,8 +722,14 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Misc.CancelPrompt()", new string[] { "none" }, "void", "cancel the player prompt");
             descriptionMisc.Add("Misc.CancelPrompt", tooltip);
 
-            tooltip = new ToolTipDescriptions("Misc.ResponsePrompt(string)", new string[] { "string reply" }, "void", "Respong to the outstanding player prompt");
+            tooltip = new ToolTipDescriptions("Misc.ResponsePrompt(string)", new string[] { "string reply" }, "void", "Respond to the outstanding player prompt");
             descriptionMisc.Add("Misc.ResponsePrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.MouseLocation()", new string[] { "none" }, "point", "Returns the X/Y co-ordinates of the mouse location relative to the window origin");
+            descriptionMisc.Add("Misc.MouseLocation", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.MouseMove()", new string[] { "int X, int Y" }, "void", "Moves the mouse cursor to the X/Y relative to window origin");
+            descriptionMisc.Add("Misc.MouseMove", tooltip);
 
             tooltip = new ToolTipDescriptions("Misc.ReadSharedValue(string)", new string[] { "string NameOfValue" }, "object", "Read a shared value, if value not exist return null");
 			descriptionMisc.Add("Misc.ReadSharedValue", tooltip);

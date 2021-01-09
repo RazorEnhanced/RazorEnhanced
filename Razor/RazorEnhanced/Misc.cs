@@ -319,8 +319,32 @@ namespace RazorEnhanced
 			return;
 		}
 
-		// Shared Script data
-		private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
+
+        public static Point MouseLocation()
+        {
+            System.Drawing.Rectangle windowRect = Client.Instance.GetUoWindowPos();
+            Point p = System.Windows.Forms.Cursor.Position;
+            if (windowRect.X == -1 || windowRect.Y == -1)
+            {
+                return new Point(-1, -1);
+            }
+            p.X = p.X - windowRect.X;
+            p.Y = p.Y - windowRect.Y;
+            return p;
+        }
+        public static void MouseMove(int posX, int posY)
+        {
+            System.Drawing.Rectangle windowRect = Client.Instance.GetUoWindowPos();
+            if (windowRect.X == -1 || windowRect.Y == -1)
+            {
+                return;
+            }
+            System.Drawing.Point thePoint = new System.Drawing.Point(posX + windowRect.X, posY + windowRect.Y);
+            System.Windows.Forms.Cursor.Position = thePoint;
+        }
+
+        // Shared Script data
+        private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
         public static ConcurrentDictionary<string, object> SharedScriptData { get => m_sharedscriptdata; set => m_sharedscriptdata = value; }
 
         public static object ReadSharedValue(string name)
