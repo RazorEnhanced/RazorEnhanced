@@ -12,7 +12,6 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Scripting;
 using IronPython.Runtime;
-using IronPython.Compiler;
 
 namespace RazorEnhanced
 {
@@ -99,25 +98,9 @@ namespace RazorEnhanced
                         Create(null);
                     }
 
-
-					/*Dalamar: BEGIN "fix python env" */
-					//EXECUTION OF THE SCRIPT
-					//Refactoring option, the whole block can be replaced by:
-					//
-					m_pe.Execute(m_Text);
-
-					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
-					// "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-					PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-					pco.ModuleName = "__main__";
-					pco.Module |= ModuleOptions.Initialize;
-					CompiledCode compiled = m_Source.Compile(pco);
-					compiled.Execute(m_Scope);
-
-					// "-": DONT execute directly, unless you are not planning to import external modules.
-					//m_Source.Execute(m_Scope);
-					
-					/*Dalamar: END*/
+                    if (m_Source == null)
+                    	return;
+                    m_Source.Execute(m_Scope);
 
 				}
 				catch (Exception ex)
@@ -206,7 +189,7 @@ namespace RazorEnhanced
 					m_pe = new PythonEngine();
 					m_Engine = m_pe.engine;
 					m_Scope = m_pe.scope;
-					
+					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
 
 					if (traceFunc != null)
 						m_Engine.SetTrace(traceFunc);

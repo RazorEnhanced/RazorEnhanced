@@ -8,7 +8,6 @@ using IronPython.Runtime;
 using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
-using IronPython.Compiler;
 
 namespace RazorEnhanced
 {
@@ -21,20 +20,9 @@ namespace RazorEnhanced
         public PythonEngine() {
 			engine = Python.CreateEngine();
 
-			/*Dalamar: BEGIN*/
-			var paths = engine.GetSearchPaths();
-			// Add "Scripts" forlder
-			paths.Add(Misc.CurrentScriptDirectory());
-			// Add defult IronPython installlation folder ( allow import os, json, and all the other standar python modules )
-			if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 2.7"))
-			{
-				paths.Add(@"C:\Program Files\IronPython 2.7\Lib");
-				paths.Add(@"C:\Program Files\IronPython 2.7\DLLs");
-				paths.Add(@"C:\Program Files\IronPython 2.7");
-				paths.Add(@"C:\Program Files\IronPython 2.7\lib\site-packages");
-			}
+            var paths = engine.GetSearchPaths();
+            paths.Add(Misc.CurrentScriptDirectory());
 			engine.SetSearchPaths(paths);
-			/*Dalamar: END*/
 
 			engine.Runtime.Globals.SetVariable("Misc", new RazorEnhanced.Misc());
 			engine.Runtime.Globals.SetVariable("Items", new RazorEnhanced.Items());
@@ -66,25 +54,5 @@ namespace RazorEnhanced
 			scope = engine.Runtime.Globals;
 		}
 
-		/*Dalamar: BEGIN*/
-		public void Execute(String text) {
-			if (text == null) return;
-
-			ScriptSource m_Source = this.engine.CreateScriptSourceFromString(text);
-			if (m_Source == null) return;
-
-			//EXECUTE
-			//USE: PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-			PythonCompilerOptions pco = (PythonCompilerOptions) this.engine.GetCompilerOptions(this.scope);
-			pco.ModuleName = "__main__";
-			pco.Module |= ModuleOptions.Initialize;
-			CompiledCode compiled = m_Source.Compile(pco);
-			compiled.Execute(this.scope);
-
-			//DONT USE: Execute directly, unless you are not planning to import external modules.
-			//m_Source.Execute(m_Scope);
-
-		}
-		/*Dalamar: END*/
 	}
 }
