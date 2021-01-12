@@ -288,6 +288,25 @@ namespace Assistant
 						.ToUpperInvariant();
 		}
 
+        internal bool InSubFolder(string parent, string child)
+        {
+            //return child.Equals(parent, StringComparison.OrdinalIgnoreCase);
+            DirectoryInfo di1 = new DirectoryInfo(parent);
+            DirectoryInfo di2 = new DirectoryInfo(child);
+            bool isParent = false;
+            while (di2.Parent != null)
+            {
+                if (di2.Parent.FullName == di1.FullName)
+                {
+                    isParent = true;
+                    break;
+                }
+                else di2 = di2.Parent;
+            }
+            return isParent;
+
+        }
+
 		private void AddScriptInGrid()
 		{
 			DialogResult result = openFileDialogscript.ShowDialog();
@@ -298,7 +317,7 @@ namespace Assistant
 				string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
 				string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 
-				if (scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase ))
+                if (InSubFolder(razorPath, scriptPath))
 				{
 					Scripts.EnhancedScript script = Scripts.Search(filename);
 					if (script == null)
