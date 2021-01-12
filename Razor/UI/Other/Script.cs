@@ -288,33 +288,34 @@ namespace Assistant
 						.ToUpperInvariant();
 		}
 
+
 		private void AddScriptInGrid()
 		{
-			DialogResult result = openFileDialogscript.ShowDialog();
+            DialogResult result = openFileDialogscript.ShowDialog();
 
-			if (result == DialogResult.OK) // Test result.
-			{
-				string filename = Path.GetFileName(openFileDialogscript.FileName);
-				string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
-				string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
+            if (result == DialogResult.OK) // Test result.
+            {
+                string filename = Path.GetFileName(openFileDialogscript.FileName);
+                string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
+                string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 
-				if (scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase ))
-				{
-					Scripts.EnhancedScript script = Scripts.Search(filename);
-					if (script == null)
-					{
-						scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
-						ReloadScriptTable();
-					}
-				}
-				else
-				{
-					MessageBox.Show("Error, Script file must be in Scripts folder!");
-				}
-			}
-		}
+                if (scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    Scripts.EnhancedScript script = Scripts.Search(filename);
+                    if (script == null)
+                    {
+                        scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
+                        ReloadScriptTable();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error, Script file must be in Scripts folder!");
+                }
+            }
+        }
 
-		private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			AddScriptInGrid();
 		}

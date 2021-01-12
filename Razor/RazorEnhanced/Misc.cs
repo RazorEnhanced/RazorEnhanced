@@ -319,8 +319,32 @@ namespace RazorEnhanced
 			return;
 		}
 
-		// Shared Script data
-		private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
+
+        public static Point MouseLocation()
+        {
+            System.Drawing.Rectangle windowRect = Client.Instance.GetUoWindowPos();
+            Point p = System.Windows.Forms.Cursor.Position;
+            if (windowRect.X == -1 || windowRect.Y == -1)
+            {
+                return new Point(-1, -1);
+            }
+            p.X = p.X - windowRect.X;
+            p.Y = p.Y - windowRect.Y;
+            return p;
+        }
+        public static void MouseMove(int posX, int posY)
+        {
+            System.Drawing.Rectangle windowRect = Client.Instance.GetUoWindowPos();
+            if (windowRect.X == -1 || windowRect.Y == -1)
+            {
+                return;
+            }
+            System.Drawing.Point thePoint = new System.Drawing.Point(posX + windowRect.X, posY + windowRect.Y);
+            System.Windows.Forms.Cursor.Position = thePoint;
+        }
+
+        // Shared Script data
+        private static ConcurrentDictionary<string, object> m_sharedscriptdata = new ConcurrentDictionary<string, object>();
         public static ConcurrentDictionary<string, object> SharedScriptData { get => m_sharedscriptdata; set => m_sharedscriptdata = value; }
 
         public static object ReadSharedValue(string name)
@@ -557,8 +581,6 @@ namespace RazorEnhanced
             public RazorEnhanced.Point2D MapOrigin;
             public RazorEnhanced.Point2D MapEnd;
             public ushort Facet;
-            public int ThbNumber;
-            public string ThbName;
         }
 
         public static MapInfo GetMapInfo(uint serial)
@@ -569,18 +591,10 @@ namespace RazorEnhanced
             {
                 mapInfo = new MapInfo();
                 mapInfo.Serial = mapItem.Serial;
-                mapInfo.PinPosition = mapItem.PinPosition;
+                mapInfo.PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(mapItem.PinPosition.X * mapItem.Multiplier, mapItem.PinPosition.Y * mapItem.Multiplier));
                 mapInfo.MapOrigin = mapItem.m_MapOrigin;
                 mapInfo.MapEnd = mapItem.m_MapEnd;
                 mapInfo.Facet = mapItem.m_Facet;
-                mapInfo.ThbNumber = -1;
-                mapInfo.ThbName = "unknown";
-                MapItem.MapEntry mapEntry = mapItem.FindMapEntry();
-                if (mapEntry != null)
-                {
-                    mapInfo.ThbNumber = mapEntry.thbNumber;
-                    mapInfo.ThbName = mapEntry.thbName;
-                }
             }
             return mapInfo;
         }

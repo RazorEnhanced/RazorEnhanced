@@ -105,6 +105,9 @@ namespace Assistant
                 case 0x14EC:
                     item = new MapItem(serial);
                     break;
+                case 0x2006:
+                    item = new CorpseItem(serial);
+                    break;
                 case 0:
                     item = new Item(serial);
                     break;
@@ -308,16 +311,24 @@ namespace Assistant
 					if (m_AutoStack)
 						AutoStackResource();
 
-					if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
-					{
-						PacketHandlers.IgnoreGumps.Add(this);
-						PlayerData.DoubleClick(this);
+                    if (RazorEnhanced.Settings.General.ReadBool("AutoSearch")
+                        && IsContainer
+                        && !(IsPouch && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
+                        && !this.IsBagOfSending
+                        )
+                    {
+                        PacketHandlers.IgnoreGumps.Add(this);
+                        PlayerData.DoubleClick(this);
 
-						for (int c = 0; c < Contains.Count; c++)
-						{
-							Item icheck = (Item)Contains[c];
-							if (icheck.IsContainer && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
-							{
+                        for (int c = 0; c < Contains.Count; c++)
+                        {
+                            Item icheck = (Item)Contains[c];
+                            if (icheck.IsContainer)
+                            {
+                                if (icheck.IsPouch && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
+                                    continue;
+                                if (icheck.IsBagOfSending)
+                                    continue;
 								PacketHandlers.IgnoreGumps.Add(icheck);
 								PlayerData.DoubleClick(icheck);
 							}
@@ -777,39 +788,20 @@ namespace Assistant
 		}
 	}
 
+    internal class CorpseItem : Item
+    {
+        // Used for the open corpse option to ensure it is only openned first time
+        internal bool Opened { get; set; }
+        internal CorpseItem(Serial serial)
+            : base(serial)
+        {
+            Opened = false;
+        }
+
+    }
 
     internal class MapItem : Item
     {
-        internal class MapEntry
-        {
-            public int facet;
-            public int xCoord;
-            public int yCoord;
-            public string location;
-            public string description;
-            public int thbNumber;
-            public string thbName;
-        }
-
-        internal static List<MapEntry> LoadMapData()
-        {
-            string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "mapData.json");
-            if (File.Exists(pathName))
-            {
-                string allMapData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
-            }
-            pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "mapData.json");
-            if (File.Exists(pathName))
-            {
-                string allMapData = File.ReadAllText(pathName);
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<MapEntry>>(allMapData);
-            }
-
-            return new List<MapEntry>();
-
-        }
-        static List<MapEntry> mapPoints = LoadMapData();
 
         private RazorEnhanced.Point2D m_PinPosition;
         internal RazorEnhanced.Point2D PinPosition
@@ -840,6 +832,15 @@ namespace Assistant
             set { m_MapEnd = value; }
         }
 
+
+        public int m_Multiplier;
+        internal int Multiplier
+        {
+            get { return m_Multiplier; }
+            set { m_Multiplier = value; }
+        }
+
+
         public ushort m_Facet;
         internal ushort Facet
         {
@@ -857,50 +858,23 @@ namespace Assistant
             m_FakePropIndex = 0;
 
         }
-        internal MapEntry FindMapEntry()
-        {
-            int xCoord = m_MapOrigin.X + (2 * m_PinPosition.X);
-            int yCoord = m_MapOrigin.Y + (2 * m_PinPosition.Y);
-            foreach (MapEntry entry in mapPoints)
-            {
-                if (m_Facet == entry.facet && xCoord == entry.xCoord && yCoord == entry.yCoord)
-                {
-                    return entry;
-                }
-            }
-            return null;
-        }
         void FixUpLocation()
         {
             // This has issues with the fakeIndex do for now quit doing it
             try
             {
-                string version = Client.Instance.GetClientVersion();
-                string[] versionParts = version.Split('.');
-                int majorVersion = Convert.ToInt32(versionParts[0]);
-                int multiplyier = 1;
-                if (majorVersion < 7)
+                if (Multiplier == 0)
                 {
-                    multiplyier = 2;
+                    return;
                 }
-                if (m_Facet == 3)
-                    multiplyier = 1;
-                int xCoord = m_MapOrigin.X + (multiplyier * m_PinPosition.X);
-                int yCoord = m_MapOrigin.Y + (multiplyier * m_PinPosition.Y);
+                int xCoord = m_MapOrigin.X + (Multiplier * m_PinPosition.X);
+                int yCoord = m_MapOrigin.Y + (Multiplier * m_PinPosition.Y);
                 string location = String.Format("Location({0}, {1})",
                     xCoord,
                     yCoord
                     );
                 // The m_FakePropIndex at this point was beyond the end of the array
                 m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
-                MapEntry entry = FindMapEntry();
-                if (entry != null)
-                {
-                    string thbNumber = String.Format("THB# {0}", entry.thbNumber);
-                    string thbName = String.Format("{0}", entry.thbName);
-                    m_ObjPropList.Content[m_FakePropIndex + 1] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbNumber);
-                    m_ObjPropList.Content[m_FakePropIndex + 2] = new Assistant.ObjectPropertyList.OPLEntry(1042971, thbName);
-                }
             }
             catch (Exception e)
             {

@@ -69,7 +69,13 @@ namespace Assistant
 					sb.Append(String.Format("W:{0}/{1} ", World.Player.Weight, World.Player.MaxWeight));
 			}
 
-			sb.Append("  ");
+            // Tithe
+            if (Engine.MainWindow.ShowTitheToolBarCheckBox.Checked)
+            {
+                    sb.Append(String.Format("T:{0} ", World.Player.Tithe));
+            }
+
+            sb.Append("  ");
 
 			List <RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 

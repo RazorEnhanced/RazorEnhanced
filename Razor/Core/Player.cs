@@ -694,9 +694,37 @@ namespace Assistant
 			Resync();
 		}
 
-		internal bool MoveAck(byte seq)
+        internal void CheckCorpseOpen()
+        {
+            if (Targeting.HasTarget)
+            {
+                // if not marked open, we'll get them when he isn't targeting
+                return;
+            }
+            bool enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses");
+            if (!enabled)
+            {
+                return;
+            }
+            int range = RazorEnhanced.Settings.General.ReadInt("CorpseRange");
+            List<CorpseItem> list = World.CorpsesInRange(range);
+
+            foreach (CorpseItem corpse in list)
+            {
+                if (! corpse.Opened)
+                {
+                    corpse.Opened = true;
+                    Assistant.Client.Instance.SendToServer(new DoubleClick(corpse.Serial));
+                    //System.Threading.Thread.Sleep(500);
+                }
+            }
+        }
+
+        internal bool MoveAck(byte seq)
 		{
-			m_OutstandingMoves--;
+            CheckCorpseOpen();
+
+            m_OutstandingMoves--;
 
 			MoveEntry e;
 			m_MoveInfo.TryGetValue(seq, out e);

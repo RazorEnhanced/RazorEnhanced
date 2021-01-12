@@ -134,7 +134,7 @@ namespace Assistant
 
 			if (p != null)
 			{
-				List<PacketFilterCallback> list;
+                List<PacketFilterCallback> list;
 				m_ServerFilters.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
 					result |= ProcessFilters(list, p);

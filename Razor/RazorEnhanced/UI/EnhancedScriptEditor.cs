@@ -14,6 +14,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Text;
 using FastColoredTextBoxNS;
+using IronPython.Compiler;
 
 namespace RazorEnhanced.UI
 {
@@ -160,7 +161,8 @@ namespace RazorEnhanced.UI
 			{
 				"Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
 				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Select", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
-				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist", "Mobiles.WaitForStats"
+				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist", "Mobiles.WaitForStats",
+                "Mobiles.GetTrackingInfo"
 			};
 
 			string[] methodsItems =
@@ -173,8 +175,10 @@ namespace RazorEnhanced.UI
 
 			string[] methodsMisc =
 			{
-				"Misc.SendMessage", "Misc.SendToClient", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
-				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
+				"Misc.SendMessage", "Misc.SendToClient", "Misc.ResetPrompt", "Misc.HasPrompt", "Misc.WaitForPrompt", "Misc.CancelPrompt", "Misc.ResponsePrompt",
+                "Misc.NoOperation", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
+				"Misc.ContextReply", "Misc.MouseMove", "Misc.MouseLocation",
+                "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
 				"Misc.SetSharedValue", "Misc.ScriptStopAll", "Misc.ShardName",
 				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
@@ -209,7 +213,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsAutoLoot =
 			{
-				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList", "AutoLoot.GetLootBag"
+				"AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce", "AutoLoot.GetList", "AutoLoot.GetLootBag", "AutoLoot.SetNoOpenCorpse"
             };
 
 			string[] methodsScavenger =
@@ -559,7 +563,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Mobiles.FindBySerial(int)", new string[] { "int MobileSerial" }, "Mobile", "Find mobile instance by specific serial");
 			descriptionMobiles.Add("Mobiles.FindBySerial", tooltip);
 
-			tooltip = new ToolTipDescriptions("Mobiles.UseMobile(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "void", "Use (double click) specific mobile");
+            tooltip = new ToolTipDescriptions("Mobiles.GetTrackingInfo()", new string[] { "none" }, "TrackingStruct", "Return the most recent tracking info");
+            descriptionMobiles.Add("Mobiles.GetTrackingInfo", tooltip);
+
+            tooltip = new ToolTipDescriptions("Mobiles.UseMobile(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "void", "Use (double click) specific mobile");
 			descriptionMobiles.Add("Mobiles.UseMobile", tooltip);
 
 			tooltip = new ToolTipDescriptions("Mobiles.SingleClick(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "void", "Perform a single click on specific mobile");
@@ -613,7 +620,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Items.DropItemGroundSelf(Item, int)", new string[] { "Item ItemInstance", "int Amount" }, "void", "Drop on character feets specified item with certain amount.\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
 			descriptionItems.Add("Items.DropItemGroundSelf", tooltip);
 
-			tooltip = new ToolTipDescriptions("Items.UseItem(Item or int)", new string[] { "Item ItemInstance or int ItemSerial" }, "void", "Use (double click) specified item.");
+			tooltip = new ToolTipDescriptions("Items.UseItem(Item or int, (optional)int target)", new string[] { "Item ItemInstance or int ItemSerial, TargetSerial" }, "void", "Use (double click) specified item and optionally target targetSerial.");
 			descriptionItems.Add("Items.UseItem", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.SingleClick(Item or int)", new string[] { "Item ItemInstance or int ItemSerial" }, "void", "Perform a single click on a specific item");
@@ -703,7 +710,28 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.ContextReply(int or Mobile or Item, int or string)", new string[] { "int Serial or Mobile MobileInstance or Item ItemInstance", "int MenuID or MenuText" }, "void", "Response to a context menu on mobile or item. \n\tMenuID is base zero if use number, if use string is menu text");
 			descriptionMisc.Add("Misc.ContextReply", tooltip);
 
-			tooltip = new ToolTipDescriptions("Misc.ReadSharedValue(string)", new string[] { "string NameOfValue" }, "object", "Read a shared value, if value not exist return null");
+            tooltip = new ToolTipDescriptions("Misc.ResetPrompt()", new string[] { "none" }, "void", "Reset the prompt response");
+            descriptionMisc.Add("Misc.ResetPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.HasPrompt()", new string[] { "none" }, "bool", "Player has a prompt waiting");
+            descriptionMisc.Add("Misc.HasPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.WaitForPrompt(int)", new string[] { "int delay" }, "void", "Wait for player prompt");
+            descriptionMisc.Add("Misc.WaitForPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.CancelPrompt()", new string[] { "none" }, "void", "cancel the player prompt");
+            descriptionMisc.Add("Misc.CancelPrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.ResponsePrompt(string)", new string[] { "string reply" }, "void", "Respond to the outstanding player prompt");
+            descriptionMisc.Add("Misc.ResponsePrompt", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.MouseLocation()", new string[] { "none" }, "point", "Returns the X/Y co-ordinates of the mouse location relative to the window origin");
+            descriptionMisc.Add("Misc.MouseLocation", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.MouseMove()", new string[] { "int X, int Y" }, "void", "Moves the mouse cursor to the X/Y relative to window origin");
+            descriptionMisc.Add("Misc.MouseMove", tooltip);
+
+            tooltip = new ToolTipDescriptions("Misc.ReadSharedValue(string)", new string[] { "string NameOfValue" }, "object", "Read a shared value, if value not exist return null");
 			descriptionMisc.Add("Misc.ReadSharedValue", tooltip);
 
 			tooltip = new ToolTipDescriptions("Misc.RemoveSharedValue(string)", new string[] { "string NameOfValue" }, "void", "Remove a shared value");
@@ -966,6 +994,9 @@ namespace RazorEnhanced.UI
 
             tooltip = new ToolTipDescriptions("AutoLoot.GetLootBag()", new string[] { "none" }, "int", "Returns the Serial of the assigned loot bag");
             descriptionAutoLoot.Add("AutoLoot.GetLootBag", tooltip);
+
+            tooltip = new ToolTipDescriptions("AutoLoot.SetNoOpenCorpse(True|False)", new string[] { "bool True/False" }, "bool", "Temporarily changes the Autoloot open corpse setting");
+            descriptionAutoLoot.Add("AutoLoot.SetNoOpenCorpse", tooltip);
 
             #endregion
 
@@ -1500,48 +1531,71 @@ namespace RazorEnhanced.UI
 				SetStatusLabel("SCRIPT RUNNING", Color.Green);
 			}
 
-			try
-			{
-				if (debug)
-				{
-					m_Breaktrace = true;
-				}
-				else
-				{
-					m_Breaktrace = false;
-				}
+            try
+            {
+                if (debug)
+                {
+                    m_Breaktrace = true;
+                }
+                else
+                {
+                    m_Breaktrace = false;
+                }
 
-				m_Queue = new ConcurrentQueue<Command>();
+                m_Queue = new ConcurrentQueue<Command>();
 
-				string text = GetFastTextBoxText();
+                string text = GetFastTextBoxText();
 
+                m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 
-				m_Source = m_Engine.CreateScriptSourceFromString(text);
-				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
-				m_Source.Execute(m_Scope);
-				SetErrorBox("Script " + m_Filename + " run completed!");
-				SetStatusLabel("IDLE", Color.DarkTurquoise);
-			}
-			catch (Exception ex)
-			{
-				if (ex is SyntaxErrorException)
-				{
-					SyntaxErrorException se = ex as SyntaxErrorException;
-					SetErrorBox("Syntax Error:");
-					SetErrorBox("--> LINE: " + se.Line);
-					SetErrorBox("--> COLUMN: " + se.Column);
-					SetErrorBox("--> SEVERITY: " + se.Severity);
-					SetErrorBox("--> MESSAGE: " + se.Message);
-				}
-				else
-				{
-					SetErrorBox("Generic Error:");
-					ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
-					string error = eo.FormatException(ex);
-					SetErrorBox("--> MESSAGE: " + error);
-				}
-				SetStatusLabel("IDLE", Color.DarkTurquoise);
-			}
+                /*Dalamar: BEGIN "fix python env" */
+                //EXECUTION OF THE SCRIPT
+                //Refactoring option, the whole block can be replaced by:
+                //
+                //m_pe.Execute(text);
+
+                m_Source = m_Engine.CreateScriptSourceFromString(text);
+
+                // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+                PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+                pco.ModuleName = "__main__";
+                pco.Module |= ModuleOptions.Initialize;
+                CompiledCode compiled = m_Source.Compile(pco);
+                compiled.Execute(m_Scope);
+
+                // "-": DONT execute directly, unless you are not planning to import external modules.
+                //m_Source.Execute(m_Scope);
+
+                /*Dalamar: END*/
+
+                SetErrorBox("Script " + m_Filename + " run completed!");
+                SetStatusLabel("IDLE", Color.DarkTurquoise);
+            }
+            catch (IronPython.Runtime.Exceptions.SystemExitException ex)
+            {
+                Stop();
+                // sys.exit - terminate the thread
+            }
+            catch (Exception ex)
+            {
+                if (ex is SyntaxErrorException)
+                {
+                    SyntaxErrorException se = ex as SyntaxErrorException;
+                    SetErrorBox("Syntax Error:");
+                    SetErrorBox("--> LINE: " + se.Line);
+                    SetErrorBox("--> COLUMN: " + se.Column);
+                    SetErrorBox("--> SEVERITY: " + se.Severity);
+                    SetErrorBox("--> MESSAGE: " + se.Message);
+                }
+                else
+                {
+                    SetErrorBox("Generic Error:");
+                    ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
+                    string error = eo.FormatException(ex);
+                    SetErrorBox("--> MESSAGE: " + error);
+                }
+                SetStatusLabel("IDLE", Color.DarkTurquoise);
+            }
 
 			if (Scripts.ScriptEditorThread != null)
 				Scripts.ScriptEditorThread.Abort();

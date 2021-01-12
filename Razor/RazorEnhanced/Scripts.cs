@@ -12,6 +12,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Scripting;
 using IronPython.Runtime;
+using IronPython.Compiler;
 
 namespace RazorEnhanced
 {
@@ -87,8 +88,8 @@ namespace RazorEnhanced
 				if (World.Player == null)
 					return;
 
-				try
-				{
+                try
+                {
                     string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
                     DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
                     if (FileChangeDate < lastModified)
@@ -98,58 +99,79 @@ namespace RazorEnhanced
                         Create(null);
                     }
 
-                    if (m_Source == null)
-                    	return;
-                    m_Source.Execute(m_Scope);
 
-				}
-				catch (Exception ex)
-				{
-					if (ex is System.Threading.ThreadAbortException)
-						return;
+                    /*Dalamar: BEGIN "fix python env" */
+                    //EXECUTION OF THE SCRIPT
+                    //Refactoring option, the whole block can be replaced by:
+                    //
+                    //m_pe.Execute(m_Text);
 
-					string display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
+                    m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
+                    // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+                    PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+                    pco.ModuleName = "__main__";
+                    pco.Module |= ModuleOptions.Initialize;
+                    CompiledCode compiled = m_Source.Compile(pco);
+                    compiled.Execute(m_Scope);
 
-					SendMessageScriptError("ERROR "+ m_Filename + ":" + display_error.Replace("\n"," | "));
+                    // "-": DONT execute directly, unless you are not planning to import external modules.
+                    //m_Source.Execute(m_Scope);
 
-					if (ScriptErrorLog) // enabled log of error
-					{
-						StringBuilder log = new StringBuilder();
-						log.Append(Environment.NewLine + "============================ START REPORT ============================ " + Environment.NewLine);
+                    /*Dalamar: END*/
 
-						DateTime dt = DateTime.Now;
-						log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
-						log.Append(Environment.NewLine);
+                }
+                catch (IronPython.Runtime.Exceptions.SystemExitException ex )
+                {
+                    Stop();
+                    // sys.exit - terminate the thread
+                }
+                catch (Exception ex)
+                {
+                    if (ex is System.Threading.ThreadAbortException)
+                        return;
 
-						if (ex is SyntaxErrorException)
-						{
-							SyntaxErrorException se = ex as SyntaxErrorException;
-							log.Append("----> Syntax Error:" + Environment.NewLine);
-							log.Append("-> LINE: " + se.Line + Environment.NewLine);
-							log.Append("-> COLUMN: " + se.Column + Environment.NewLine);
-							log.Append("-> SEVERITY: " + se.Severity + Environment.NewLine);
-							log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
-						}
-						else
-						{
-							log.Append("----> Generic Error:" + Environment.NewLine);
-							ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
-							string error = eo.FormatException(ex);
-							log.Append(error);
-						}
+                    string display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
 
-						log.Append(Environment.NewLine);
-						log.Append("============================ END REPORT ============================ ");
-						log.Append(Environment.NewLine);
+                    SendMessageScriptError("ERROR " + m_Filename + ":" + display_error.Replace("\n", " | "));
 
-						try // For prevent crash in case of file are busy or inaccessible
-						{
-							File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Filename + ".ERROR", log.ToString());
-						}
-						catch { }
-						log.Clear();
-					}
-				}
+                    if (ScriptErrorLog) // enabled log of error
+                    {
+                        StringBuilder log = new StringBuilder();
+                        log.Append(Environment.NewLine + "============================ START REPORT ============================ " + Environment.NewLine);
+
+                        DateTime dt = DateTime.Now;
+                        log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
+                        log.Append(Environment.NewLine);
+
+                        if (ex is SyntaxErrorException)
+                        {
+                            SyntaxErrorException se = ex as SyntaxErrorException;
+                            log.Append("----> Syntax Error:" + Environment.NewLine);
+                            log.Append("-> LINE: " + se.Line + Environment.NewLine);
+                            log.Append("-> COLUMN: " + se.Column + Environment.NewLine);
+                            log.Append("-> SEVERITY: " + se.Severity + Environment.NewLine);
+                            log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
+                        }
+                        else
+                        {
+                            log.Append("----> Generic Error:" + Environment.NewLine);
+                            ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
+                            string error = eo.FormatException(ex);
+                            log.Append(error);
+                        }
+
+                        log.Append(Environment.NewLine);
+                        log.Append("============================ END REPORT ============================ ");
+                        log.Append(Environment.NewLine);
+
+                        try // For prevent crash in case of file are busy or inaccessible
+                        {
+                            File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Filename + ".ERROR", log.ToString());
+                        }
+                        catch { }
+                        log.Clear();
+                    }
+                }
 			}
 
             internal void ReadText()
@@ -189,9 +211,12 @@ namespace RazorEnhanced
 					m_pe = new PythonEngine();
 					m_Engine = m_pe.engine;
 					m_Scope = m_pe.scope;
-					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
 
-					if (traceFunc != null)
+                    var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_Engine) as PythonContext;
+                    var hooks = pc.SystemState.Get__dict__()["path_hooks"] as List;
+                    hooks.Clear();
+
+                    if (traceFunc != null)
 						m_Engine.SetTrace(traceFunc);
 
 					result = "Created";
