@@ -683,6 +683,7 @@ namespace Assistant
         private RazorCheckBox druidClericPackets;
 		private RazorCheckBox buyCompareNameCheckBox;
         private RazorCheckBox showtitheToolBarCheckBox;
+        private Label label79;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -733,6 +734,7 @@ namespace Assistant
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
+            this.label79 = new System.Windows.Forms.Label();
             this.paypalButton = new RazorEnhanced.UI.RazorButton();
             this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
             this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
@@ -1519,6 +1521,7 @@ namespace Assistant
             //
             // generalTab
             //
+            this.generalTab.Controls.Add(this.label79);
             this.generalTab.Controls.Add(this.paypalButton);
             this.generalTab.Controls.Add(this.openchangelogButton);
             this.generalTab.Controls.Add(this.notshowlauncher);
@@ -1542,6 +1545,15 @@ namespace Assistant
             this.generalTab.Size = new System.Drawing.Size(666, 366);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
+            //
+            // label79
+            //
+            this.label79.AutoSize = true;
+            this.label79.Location = new System.Drawing.Point(431, 102);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(14, 13);
+            this.label79.TabIndex = 70;
+            this.label79.Text = "X";
             //
             // paypalButton
             //
@@ -1673,9 +1685,9 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.forceSizeY.BackColor = System.Drawing.Color.White;
             this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.forceSizeY.Location = new System.Drawing.Point(411, 99);
+            this.forceSizeY.Location = new System.Drawing.Point(450, 99);
             this.forceSizeY.Name = "forceSizeY";
-            this.forceSizeY.Size = new System.Drawing.Size(253, 20);
+            this.forceSizeY.Size = new System.Drawing.Size(50, 20);
             this.forceSizeY.TabIndex = 64;
             this.forceSizeY.TextChanged += new System.EventHandler(this.forceSizeY_TextChanged);
             //
@@ -1688,7 +1700,7 @@ namespace Assistant
             this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.forceSizeX.Location = new System.Drawing.Point(375, 99);
             this.forceSizeX.Name = "forceSizeX";
-            this.forceSizeX.Size = new System.Drawing.Size(253, 20);
+            this.forceSizeX.Size = new System.Drawing.Size(50, 20);
             this.forceSizeX.TabIndex = 63;
             this.forceSizeX.TextChanged += new System.EventHandler(this.forceSizeX_TextChanged);
             //
@@ -1881,9 +1893,9 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.txtSpellFormat);
             this.moreOptTab.Controls.Add(this.chkForceSpellHue);
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
-            this.moreOptTab.Location = new System.Drawing.Point(4, 58);
+            this.moreOptTab.Location = new System.Drawing.Point(4, 40);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(413, 219);
+            this.moreOptTab.Size = new System.Drawing.Size(666, 366);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             //
@@ -2124,7 +2136,7 @@ namespace Assistant
             this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.healthFmt.Location = new System.Drawing.Point(537, 181);
             this.healthFmt.Name = "healthFmt";
-            this.healthFmt.Size = new System.Drawing.Size(0, 20);
+            this.healthFmt.Size = new System.Drawing.Size(253, 20);
             this.healthFmt.TabIndex = 71;
             this.healthFmt.TextChanged += new System.EventHandler(this.healthFmt_TextChanged);
             //
@@ -2155,7 +2167,7 @@ namespace Assistant
             this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ltRange.Location = new System.Drawing.Point(491, 117);
             this.ltRange.Name = "ltRange";
-            this.ltRange.Size = new System.Drawing.Size(0, 20);
+            this.ltRange.Size = new System.Drawing.Size(253, 20);
             this.ltRange.TabIndex = 41;
             this.ltRange.TextChanged += new System.EventHandler(this.ltRange_TextChanged);
             //
@@ -2186,7 +2198,7 @@ namespace Assistant
             this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtObjDelay.Location = new System.Drawing.Point(530, 54);
             this.txtObjDelay.Name = "txtObjDelay";
-            this.txtObjDelay.Size = new System.Drawing.Size(0, 20);
+            this.txtObjDelay.Size = new System.Drawing.Size(253, 20);
             this.txtObjDelay.TabIndex = 37;
             this.txtObjDelay.TextChanged += new System.EventHandler(this.txtObjDelay_TextChanged);
             //
@@ -2304,7 +2316,7 @@ namespace Assistant
             this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.corpseRange.Location = new System.Drawing.Point(355, 96);
             this.corpseRange.Name = "corpseRange";
-            this.corpseRange.Size = new System.Drawing.Size(0, 20);
+            this.corpseRange.Size = new System.Drawing.Size(253, 20);
             this.corpseRange.TabIndex = 23;
             this.corpseRange.TextChanged += new System.EventHandler(this.corpseRange_TextChanged);
             //
@@ -2436,7 +2448,7 @@ namespace Assistant
             this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpellFormat.Location = new System.Drawing.Point(106, 196);
             this.txtSpellFormat.Name = "txtSpellFormat";
-            this.txtSpellFormat.Size = new System.Drawing.Size(0, 20);
+            this.txtSpellFormat.Size = new System.Drawing.Size(253, 20);
             this.txtSpellFormat.TabIndex = 5;
             this.txtSpellFormat.TextChanged += new System.EventHandler(this.txtSpellFormat_TextChanged);
             //
@@ -2466,9 +2478,9 @@ namespace Assistant
             this.enhancedFilterTab.Controls.Add(this.groupBox23);
             this.enhancedFilterTab.Controls.Add(this.groupBox10);
             this.enhancedFilterTab.Controls.Add(this.groupBox9);
-            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 58);
+            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 40);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
-            this.enhancedFilterTab.Size = new System.Drawing.Size(413, 219);
+            this.enhancedFilterTab.Size = new System.Drawing.Size(666, 366);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
             //
@@ -2963,10 +2975,10 @@ namespace Assistant
             this.scriptingTab.Controls.Add(this.scripterrorlogCheckBox);
             this.scriptingTab.Controls.Add(this.showscriptmessageCheckBox);
             this.scriptingTab.Controls.Add(this.scriptlistView);
-            this.scriptingTab.Location = new System.Drawing.Point(4, 58);
+            this.scriptingTab.Location = new System.Drawing.Point(4, 40);
             this.scriptingTab.Name = "scriptingTab";
             this.scriptingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptingTab.Size = new System.Drawing.Size(413, 219);
+            this.scriptingTab.Size = new System.Drawing.Size(666, 366);
             this.scriptingTab.TabIndex = 12;
             this.scriptingTab.Text = "Scripting";
             //
@@ -5790,9 +5802,9 @@ namespace Assistant
             // toolbarTab
             //
             this.toolbarTab.Controls.Add(this.toolbarstab);
-            this.toolbarTab.Location = new System.Drawing.Point(4, 58);
+            this.toolbarTab.Location = new System.Drawing.Point(4, 40);
             this.toolbarTab.Name = "toolbarTab";
-            this.toolbarTab.Size = new System.Drawing.Size(413, 219);
+            this.toolbarTab.Size = new System.Drawing.Size(666, 366);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Toolbars";
             //
@@ -6545,9 +6557,9 @@ namespace Assistant
             this.emptyTab.Controls.Add(this.groupBox45);
             this.emptyTab.Controls.Add(this.groupBox44);
             this.emptyTab.Controls.Add(this.groupBox43);
-            this.emptyTab.Location = new System.Drawing.Point(4, 58);
+            this.emptyTab.Location = new System.Drawing.Point(4, 40);
             this.emptyTab.Name = "emptyTab";
-            this.emptyTab.Size = new System.Drawing.Size(413, 219);
+            this.emptyTab.Size = new System.Drawing.Size(666, 366);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Targetting";
             //
@@ -7254,9 +7266,9 @@ namespace Assistant
             this.skillsTab.Controls.Add(this.setlocks);
             this.skillsTab.Controls.Add(this.resetDelta);
             this.skillsTab.Controls.Add(this.skillList);
-            this.skillsTab.Location = new System.Drawing.Point(4, 58);
+            this.skillsTab.Location = new System.Drawing.Point(4, 40);
             this.skillsTab.Name = "skillsTab";
-            this.skillsTab.Size = new System.Drawing.Size(413, 219);
+            this.skillsTab.Size = new System.Drawing.Size(666, 366);
             this.skillsTab.TabIndex = 2;
             this.skillsTab.Text = "Skills";
             //
@@ -7390,10 +7402,10 @@ namespace Assistant
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox28);
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox27);
             this.enhancedHotKeytabPage.Controls.Add(this.hotkeytreeView);
-            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 58);
+            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 40);
             this.enhancedHotKeytabPage.Name = "enhancedHotKeytabPage";
             this.enhancedHotKeytabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(413, 219);
+            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(666, 366);
             this.enhancedHotKeytabPage.TabIndex = 15;
             this.enhancedHotKeytabPage.Text = "HotKey";
             this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
@@ -7594,9 +7606,9 @@ namespace Assistant
             this.screenshotTab.Controls.Add(this.screensList);
             this.screenshotTab.Controls.Add(this.screenPrev);
             this.screenshotTab.Controls.Add(this.dispTime);
-            this.screenshotTab.Location = new System.Drawing.Point(4, 58);
+            this.screenshotTab.Location = new System.Drawing.Point(4, 40);
             this.screenshotTab.Name = "screenshotTab";
-            this.screenshotTab.Size = new System.Drawing.Size(413, 219);
+            this.screenshotTab.Size = new System.Drawing.Size(666, 366);
             this.screenshotTab.TabIndex = 8;
             this.screenshotTab.Text = "Screen Shots";
             //
@@ -7645,7 +7657,7 @@ namespace Assistant
             this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.screenPath.Location = new System.Drawing.Point(7, 14);
             this.screenPath.Name = "screenPath";
-            this.screenPath.Size = new System.Drawing.Size(0, 20);
+            this.screenPath.Size = new System.Drawing.Size(253, 20);
             this.screenPath.TabIndex = 7;
             this.screenPath.TextChanged += new System.EventHandler(this.screenPath_TextChanged);
             //
@@ -7726,10 +7738,10 @@ namespace Assistant
             this.videoTab.Controls.Add(this.videorecbutton);
             this.videoTab.Controls.Add(this.videostopbutton);
             this.videoTab.Controls.Add(this.groupBox15);
-            this.videoTab.Location = new System.Drawing.Point(4, 58);
+            this.videoTab.Location = new System.Drawing.Point(4, 40);
             this.videoTab.Name = "videoTab";
             this.videoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.videoTab.Size = new System.Drawing.Size(413, 219);
+            this.videoTab.Size = new System.Drawing.Size(666, 366);
             this.videoTab.TabIndex = 16;
             this.videoTab.Text = "Video Recorder";
             //
@@ -7920,10 +7932,10 @@ namespace Assistant
             this.DPStabPage.Controls.Add(this.DPSMeterStopButton);
             this.DPStabPage.Controls.Add(this.DPSMeterStartButton);
             this.DPStabPage.Controls.Add(this.DPSMeterClearButton);
-            this.DPStabPage.Location = new System.Drawing.Point(4, 58);
+            this.DPStabPage.Location = new System.Drawing.Point(4, 40);
             this.DPStabPage.Name = "DPStabPage";
             this.DPStabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DPStabPage.Size = new System.Drawing.Size(413, 219);
+            this.DPStabPage.Size = new System.Drawing.Size(666, 366);
             this.DPStabPage.TabIndex = 17;
             this.DPStabPage.Text = "DPS Meter";
             this.DPStabPage.UseVisualStyleBackColor = true;
@@ -8140,9 +8152,9 @@ namespace Assistant
             this.statusTab.Controls.Add(this.labelStatus);
             this.statusTab.Controls.Add(this.discordrazorButton);
             this.statusTab.Controls.Add(this.razorButtonWiki);
-            this.statusTab.Location = new System.Drawing.Point(4, 58);
+            this.statusTab.Location = new System.Drawing.Point(4, 40);
             this.statusTab.Name = "statusTab";
-            this.statusTab.Size = new System.Drawing.Size(413, 219);
+            this.statusTab.Size = new System.Drawing.Size(666, 366);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             //
@@ -9369,7 +9381,7 @@ namespace Assistant
             ScriptGridOpen();
         }
 
-		// ----------------- UO MOD END -------------------
-	}
+        // ----------------- UO MOD END -------------------
+    }
 }
 
