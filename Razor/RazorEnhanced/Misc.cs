@@ -637,10 +637,20 @@ namespace RazorEnhanced
 
 		public static void FocusUOWindow()
 		{
-			if (DLLImport.Win.IsIconic(Assistant.Client.Instance.GetWindowHandle()))  // Minimized
-				DLLImport.Win.ShowWindow(Assistant.Client.Instance.GetWindowHandle(),3);
-			else // Only not focused
-				DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
+            /* ShowWindow:
+             * DOCS: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow
+             * SW_MAXIMIZE = 3    //Maximizes the specified window.
+             * SW_MINIMIZE = 6    //Minimizes the specified window and activates the next top - level window in the Z order.
+             * SW_RESTORE = 9  //Activates and displays the window.If the window is minimized or maximized, the system restores it to its original size and position. An application should specify this flag when restoring a minimized window.
+             * SW_SHOW  = 5    //Activates the window and displays it in its current size and position.
+             * SW_SHOWDEFAULT = 10    //Sets the show state based on the SW_ value specified in the STARTUPINFO structure passed to the CreateProcess function by the program that started the application.
+             */
+
+            if (DLLImport.Win.IsIconic(Assistant.Client.Instance.GetWindowHandle())){ // Minimized
+                DLLImport.Win.ShowWindow(Assistant.Client.Instance.GetWindowHandle(), 9); // 9 -> restore
+            }
+
+			DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
 		}
 
 		public static string ShardName()

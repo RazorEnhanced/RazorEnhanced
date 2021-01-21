@@ -72,7 +72,11 @@ namespace RazorEnhanced
 
         public static void ToggleAlwaysRun()
         {
-            RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+            if (Client.IsOSI){
+                RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+            }
+            //TODO: check how to set "always run" on CUO
+
         }
 
 
@@ -1401,7 +1405,7 @@ namespace RazorEnhanced
                 	Thread.Sleep(10);
                 	timeout += 20;
                 	Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
-                	if (timeout > 2500) //  Handle slower ping times
+                	if (timeout > 100) //  Handle slower ping times
                 	{
                 		Console.WriteLine("Move Timeout {0}", direction);
                 		break;

@@ -787,59 +787,58 @@ namespace RazorEnhanced
             public bool DebugMessage = false;
             public bool StopIfStuck = false;
             public bool IgnoreMobile = false;
-            public bool UseResync = true;
+            public bool UseResync = false;
             public int MaxRetry = -1;
+            public float Timeout = -1;
 
             public Route()
             {
             }
         }
 
+
+        // Dalamar: Exposed "RazorEnhanced.Tile" to Python via Pathfind in order to be able to create List[Tile] to feed directly to
+        public static Tile Tile(int x, int y){
+            return new Tile(x,y);
+        }
+
         public static bool Go(Route r)
         {
-            if (r.StopIfStuck) // make one attempt if this enable
-                return Engine(r);
-            else
-            {
-                if (r.MaxRetry == -1) // Try to reach destination whit no limit
-                {
-                    bool l = true;
+            if ( r.StopIfStuck ) { r.MaxRetry = 1; }
 
-                    while (l) // call pathfind engine until is true
-                        l = !Engine(r);
+            DateTime timeStart, timeEnd;
+            timeStart = DateTime.Now;
+            timeEnd = (r.Timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(r.Timeout);
 
-                    return true; // Destination reach
-                }
-                else  // Try to reach destination whit count retry
-                {
-                    bool l = true;
-                    while (l)
-                    {
-                        if (r.MaxRetry == 0)
-                            return false; // Destination not reach
-
-                        l = !Engine(r);
-                        r.MaxRetry -= 1;
-                    }
-
-                    return true; // Destination reach
-                }
+            float timeLeft;
+            List<Tile> road;
+            bool success;
+            while ( r.MaxRetry == -1 || r.MaxRetry > 0 ) {
+                road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
+                timeLeft = (int) timeEnd.Subtract(DateTime.Now).TotalSeconds;
+                success = RunPath(road, timeLeft, r.DebugMessage, r.UseResync);
+                if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
+                if (success) { return true; }
+                if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
             }
-
-
+            return false;
         }
-        private static bool Engine(Route r)
-        {
-            List<Tile> road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
-            if (road == null) // No way to destination
-            {
-                Misc.SendMessage("PathFind: Destination not valid", 33);
-                return false;
-            }
 
-            foreach (Tile step in road)
+        public static List<Tile> GetPath(int x, int y, bool ignoremob) {
+            return PathMove.GetPath(x, y, ignoremob);
+        }
+
+        public static bool RunPath(List<Tile> path, float timeout=-1, bool debugMessage=false, bool useResync = true)
+        {
+            if (path == null) { return false; }
+            DateTime timeStart, timeEnd;
+            timeStart = DateTime.Now;
+            timeEnd = (timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(timeout);
+
+            Tile dst = path.Last();
+            foreach (Tile step in path)
             {
-                if (Player.Position.X == r.X && Player.Position.Y == r.Y)
+                if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
                 {
                     Misc.SendMessage("PathFind: Destination reached", 66);
                     return true;
@@ -847,53 +846,59 @@ namespace RazorEnhanced
                 bool walkok = false;
                 if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
                 {
-                    Rotate(Direction.East, r.DebugMessage);
-                    walkok = Run(Direction.East, r.DebugMessage);
+                    Rotate(Direction.East, debugMessage);
+                    walkok = Run(Direction.East, debugMessage);
                 }
                 else if (step.X < Player.Position.X && step.Y == Player.Position.Y) // West
                 {
-                    Rotate(Direction.West, r.DebugMessage);
-                    walkok = Run(Direction.West, r.DebugMessage);
+                    Rotate(Direction.West, debugMessage);
+                    walkok = Run(Direction.West, debugMessage);
                 }
                 else if (step.X == Player.Position.X && step.Y < Player.Position.Y) //North
                 {
-                    Rotate(Direction.North, r.DebugMessage);
-                    walkok = Run(Direction.North, r.DebugMessage);
+                    Rotate(Direction.North, debugMessage);
+                    walkok = Run(Direction.North, debugMessage);
                 }
                 else if (step.X == Player.Position.X && step.Y > Player.Position.Y) //South
                 {
-                    Rotate(Direction.South, r.DebugMessage);
-                    walkok = Run(Direction.South, r.DebugMessage);
+                    Rotate(Direction.South, debugMessage);
+                    walkok = Run(Direction.South, debugMessage);
                 }
                 else if (step.X > Player.Position.X && step.Y > Player.Position.Y) //Down
                 {
-                    Rotate(Direction.Down, r.DebugMessage);
-                    walkok = Run(Direction.Down, r.DebugMessage);
+                    Rotate(Direction.Down, debugMessage);
+                    walkok = Run(Direction.Down, debugMessage);
                 }
                 else if (step.X < Player.Position.X && step.Y < Player.Position.Y) //UP
                 {
-                    Rotate(Direction.Up, r.DebugMessage);
-                    walkok = Run(Direction.Up, r.DebugMessage);
+                    Rotate(Direction.Up, debugMessage);
+                    walkok = Run(Direction.Up, debugMessage);
                 }
                 else if (step.X > Player.Position.X && step.Y < Player.Position.Y) //Right
                 {
-                    Rotate(Direction.Right, r.DebugMessage);
-                    walkok = Run(Direction.Right, r.DebugMessage);
+                    Rotate(Direction.Right, debugMessage);
+                    walkok = Run(Direction.Right, debugMessage);
                 }
                 else if (step.X < Player.Position.X && step.Y > Player.Position.Y) //Left
                 {
-                    Rotate(Direction.Left, r.DebugMessage);
-                    walkok = Run(Direction.Left, r.DebugMessage);
+                    Rotate(Direction.Left, debugMessage);
+                    walkok = Run(Direction.Left, debugMessage);
                 }
                 else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
                     walkok = true;
 
+                if (timeout >= 0 && DateTime.Now.CompareTo(timeEnd) > 0) {
+                    if (debugMessage)
+                        Misc.SendMessage("PathFind: RunPath run TIMEOUT", 33);
+                    return false;
+                }
+
                 if (!walkok)
                 {
-                    if (r.DebugMessage)
+                    if (debugMessage)
                         Misc.SendMessage("PathFind: Move action FAIL", 33);
 
-                    if (r.UseResync)
+                    if (useResync)
                     {
                         Misc.Resync();
                         Misc.Pause(200);
@@ -903,19 +908,18 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    if (r.DebugMessage)
+                    if (debugMessage)
                         Misc.SendMessage("PathFind: Move action OK", 66);
                 }
             }
 
-            if (Player.Position.X == r.X && Player.Position.Y == r.Y)
+            if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
             {
                 Misc.SendMessage("PathFind: Destination reached", 66);
                 return true;
             }
             else
             {
-                Go(r);
                 return false;
             }
         }
