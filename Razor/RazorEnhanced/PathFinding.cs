@@ -810,16 +810,16 @@ namespace RazorEnhanced
             timeStart = DateTime.Now;
             timeEnd = (r.Timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(r.Timeout);
 
-            float timeLeft = r.Timeout;
+            float timeLeft;
             List<Tile> road;
-            bool success = false;
+            bool success;
             while ( r.MaxRetry == -1 || r.MaxRetry > 0 ) {
                 road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
                 timeLeft = (int) timeEnd.Subtract(DateTime.Now).TotalSeconds;
                 success = RunPath(road, timeLeft, r.DebugMessage, r.UseResync);
-                r.MaxRetry -= 1;
-                if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
+                if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
                 if (success) { return true; }
+                if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
             }
             return false;
         }
