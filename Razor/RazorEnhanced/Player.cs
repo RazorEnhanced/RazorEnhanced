@@ -72,7 +72,11 @@ namespace RazorEnhanced
 
         public static void ToggleAlwaysRun()
         {
-            RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+            if (Client.IsOSI){
+                RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+            } 
+            //TODO: check how to set "always run" on CUO
+
         }
 
 
@@ -1366,11 +1370,11 @@ namespace RazorEnhanced
 		// Moving
 		public static bool Walk(string direction, bool waitPosition = true)  // Return true se walk ok false se rifiutato da server
 		{
-			return Run(direction, waitPosition);
+			return Run(direction, false, waitPosition);
 		}
 
 		private static DateTime m_LastWalk = DateTime.MinValue;
-		public static bool Run(string direction, bool waitPosition = true)    // Return true se walk ok false se rifiutato da server
+		public static bool Run(string direction, bool run=true, bool waitPosition = true)    // Return true se walk ok false se rifiutato da server
 		{
 			if (!Enum.TryParse<Direction>(direction, out Direction dir))
 			{
@@ -1381,7 +1385,7 @@ namespace RazorEnhanced
             
             m_LastWalk = DateTime.UtcNow;
 			World.Player.WalkScriptRequest = 1;
-			Client.Instance.RequestMove(dir);
+			Client.Instance.RequestMove(dir, run);
 			
 			// Waits until a move event is seen happenning
 			Console.WriteLine("Move {0} Sent", direction);

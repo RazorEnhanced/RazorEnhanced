@@ -1075,8 +1075,9 @@ namespace Assistant
 			Up = 0x26, // up
 		}
 
-		internal override void RequestMove(Direction m_Dir)
+		internal override void RequestMove(Direction m_Dir, bool run)
 		{
+            //NOTE: "run" is unused by the OSI client, see Player.ToggleAlwaysRun() 
             int direction;
 
 			switch (m_Dir)

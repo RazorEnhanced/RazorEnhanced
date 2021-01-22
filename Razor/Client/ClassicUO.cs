@@ -502,9 +502,9 @@ namespace Assistant
             return m_Out;
         }
 
-        internal override void RequestMove(Direction m_Dir)
+        internal override void RequestMove(Direction m_Dir, bool run)
         {
-            _requestMove((int) m_Dir, true);
+            _requestMove((int) m_Dir, run);
         }
 
         public override void PathFindTo(Assistant.Point3D Location)
