@@ -3,110 +3,40 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
-using System;
-using System.Diagnostics;
 
 namespace RazorEnhanced
 {
-    public class Journal
-    {
-        public class JournalEntry
-        {
-            private string m_Text;
-            public string Text { get { return m_Text; } }
-
-            private string m_Type;
-            public string Type { get { return m_Type; } }
-
-            private int m_Color;
-            public int Color { get { return m_Color; } }
-
-            private string m_Name;
-            public string Name { get { return m_Name; } }
-
-            private int m_Serial;
-            public int Serial { get { return m_Serial; } }
-
-            private double m_Timestamp;
-            public double Timestamp { get { return m_Timestamp; } }
-
-            public JournalEntry(string text, string type, int color, string name, int serial, double timestamp = -1)
-            {
-                m_Text = text;
-                m_Type = type;
-                m_Color = color;
-                m_Name = name;
-                m_Serial = serial;
-                m_Timestamp = (timestamp == -1) ? Journal.Timestamp(DateTime.Now) : timestamp;
-            }
-        }
-
-        static double Timestamp(DateTime date)
-        {
-            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            TimeSpan diff = date - origin;
-            return diff.TotalSeconds;
-        }
-
-        private static JournalPointerList m_pointerRegistry = new JournalPointerList();
-
-        public class JournalPointerList
-        {
-            const string DEFAULT = "_default";
-
-            private List<JournalEntry> pointers;
-            private Dictionary<int, Dictionary<string, JournalEntry>> byThread;
-            public JournalPointerList()
-            {
-                pointers = new List<JournalEntry>();
-                byThread = new Dictionary<int, Dictionary<string, JournalEntry>>();
-            }
-
-            private bool ExistPointer(int pid, string name)
-            {
-                return (byThread.ContainsKey(pid) && byThread[pid].ContainsKey(name));
-            }
-
-            public void Cleanup(int pid)
-            {
-                foreach (JournalEntry je in byThread[pid].Values ) {
-                    pointers.Remove(je);
-                }
-                byThread.Remove(pid);
-            }
-
-            public JournalEntry GetPointer(string name = null)
-            {
-                if (name == null) { name = DEFAULT; }
-                int pid = Thread.CurrentThread.ManagedThreadId;
-                if (!ExistPointer(pid, name))
-                {
-                    return SetPointer(name);
-                }
-
-                return byThread[pid][name];
-            }
-
-            public JournalEntry SetPointer(string name = null)
-            {
-                if (name == null) { name = DEFAULT; }
-                int pid = Thread.CurrentThread.ManagedThreadId;
-                if (!byThread.ContainsKey(pid))
-                {
-                    byThread[pid] = new Dictionary<string, JournalEntry>();
-                }
-                byThread[pid][name] = World.Player.Journal.Last();
-
-                return byThread[pid][name];
-            }
-        }
-
-
-
-
-        public static void Clear()
+	public class Journal
+	{
+		public class JournalEntry
 		{
-            //TODO: scan the registry and cleanup up to the oldest pointer.
+			private string m_Text;
+			public string Text { get { return m_Text; } }
+
+			private string m_Type;
+			public string Type { get { return m_Type; } }
+
+			private int m_Color;
+			public int Color { get { return m_Color; } }
+
+			private string m_Name;
+			public string Name { get { return m_Name; } }
+
+			private int m_Serial;
+			public int Serial { get { return m_Serial; } }
+
+			public JournalEntry(string text, string type, int color, string name, int serial)
+			{
+				m_Text = text;
+				m_Type = type;
+				m_Color = color;
+				m_Name = name;
+				m_Serial = serial;
+			}
+		}
+
+		public static void Clear()
+		{
 			ConcurrentQueue<JournalEntry> Journal = new ConcurrentQueue<JournalEntry>();
 			Interlocked.Exchange(ref World.Player.Journal, Journal);
 		}
