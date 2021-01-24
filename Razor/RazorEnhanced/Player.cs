@@ -72,7 +72,11 @@ namespace RazorEnhanced
 
         public static void ToggleAlwaysRun()
         {
-            RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+            if (Client.IsOSI){
+                RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
+            } 
+            //TODO: check how to set "always run" on CUO
+
         }
 
 
