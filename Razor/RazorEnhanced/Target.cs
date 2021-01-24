@@ -15,7 +15,7 @@ namespace RazorEnhanced
 			return Assistant.Targeting.HasTarget;
 		}
 
-		public static bool WaitForTarget(int delay, bool noshow = false)
+		public static void WaitForTarget(int delay, bool noshow = false)
 		{
 			int subdelay = delay;
 			Assistant.Targeting.NoShowTarget = noshow;
@@ -27,8 +27,7 @@ namespace RazorEnhanced
 					break;
 			}
 			Assistant.Targeting.NoShowTarget = false;
-            return Assistant.Targeting.HasTarget;
-        }
+		}
 
 		public static void TargetExecute(int serial)
 		{
@@ -142,7 +141,7 @@ namespace RazorEnhanced
 
 		public static int GetLast()
 		{
-			return (int)Assistant.Targeting.GetLastTarget;
+			return (int)Assistant.Targeting.GetLastTarger;
 		}
 
 		public static int GetLastAttack()

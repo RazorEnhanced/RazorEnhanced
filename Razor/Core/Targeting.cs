@@ -61,7 +61,7 @@ namespace Assistant
 
 		internal static bool NoShowTarget { get { return m_NoShowTarget; } set { m_NoShowTarget = value; } }
 
-		internal static uint GetLastTarget
+		internal static uint GetLastTarger
 		{
 			get
 			{
