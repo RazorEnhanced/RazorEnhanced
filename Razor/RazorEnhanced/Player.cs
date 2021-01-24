@@ -1368,57 +1368,62 @@ namespace RazorEnhanced
 		}
 
 		// Moving
-		public static bool Walk(string direction, bool waitPosition = true)  // Return true se walk ok false se rifiutato da server
+		public static bool Walk(string direction)  // Return true se walk ok false se rifiutato da server
 		{
-			return Run(direction, false, waitPosition);
+			return Run(direction);
 		}
 
 		private static DateTime m_LastWalk = DateTime.MinValue;
-		public static bool Run(string direction, bool run=true, bool waitPosition = true)    // Return true se walk ok false se rifiutato da server
+		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
 		{
 			if (!Enum.TryParse<Direction>(direction, out Direction dir))
 			{
-				Scripts.SendMessageScriptError("Script Error: Run: Direction '" + direction + "' is not valid");
-                Thread.Sleep(50); //Avoid flooding the client 
+				Scripts.SendMessageScriptError("Script Error: Run: " + direction + " not valid");
 				return false;
 			}
-            
-            m_LastWalk = DateTime.UtcNow;
-			World.Player.WalkScriptRequest = 1;
-			Client.Instance.RequestMove(dir, run);
-			
-			// Waits until a move event is seen happenning
-			Console.WriteLine("Move {0} Sent", direction);
-            if ( waitPosition ) // wait "maxPing" millisec or until position is "confirmd"         WalkScriptRequest == 2
-            {
-                double maxPing = 300;    //TODO: find the average ping of the user? possible ? 
-                TimeSpan MaxWait = TimeSpan.FromMilliseconds(maxPing); // 300 ms for bad ping ?
 
-                while (World.Player.WalkScriptRequest == 1)       // <2
+            if (!Client.IsOSI)
+            {
+                TimeSpan t = DateTime.UtcNow - m_LastWalk;
+                const double MaxSpeed = 0.2;
+                if (t < TimeSpan.FromSeconds(MaxSpeed))
                 {
-                    Thread.Sleep(1);
-                    if (DateTime.UtcNow - m_LastWalk > MaxWait) // timeout: Handle slower ping times
-                    {
-                        Console.WriteLine("Move Timeout {0}", direction);
-                        break;
-                    }
+                    TimeSpan wait = TimeSpan.FromSeconds(MaxSpeed) - t;
+                    Thread.Sleep(wait);
                 }
             }
-
-            Console.WriteLine("Move {0} Complete {1}", direction, World.Player.WalkScriptRequest);
-            if (World.Player.WalkScriptRequest == 2)
+			World.Player.WalkScriptRequest = 1;
+			int timeout = 0;
+			Client.Instance.RequestMove(dir);
+			m_LastWalk = DateTime.UtcNow;
+			// Waits until a move event is seen happenning
+			Console.WriteLine("Move {0} Sent", direction);
+            if (Client.IsOSI)
             {
-                Console.WriteLine("Move Success {0}", direction);
-                World.Player.WalkScriptRequest = 0;
-                return true;
+                while (World.Player.WalkScriptRequest < 2)
+                {
+                	Thread.Sleep(10);
+                	timeout += 20;
+                	Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
+                	if (timeout > 2500) //  Handle slower ping times
+                	{
+                		Console.WriteLine("Move Timeout {0}", direction);
+                		break;
+                	}
+                }
+                Console.WriteLine("Move {0} Complete {1}", direction, World.Player.WalkScriptRequest);
+                if (World.Player.WalkScriptRequest == 2)
+                {
+                    Console.WriteLine("Move Success {0}", direction);
+                    World.Player.WalkScriptRequest = 0;
+                    return true;
+                }
+                else
+                {
+                	World.Player.WalkScriptRequest = 0;
+                	return false;
+                }
             }
-            else
-            {
-                World.Player.WalkScriptRequest = 0;
-                return false;
-            }
-            
-
             return true;
 		}
 
