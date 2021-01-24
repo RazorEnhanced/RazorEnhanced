@@ -997,10 +997,10 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				case "Attack Last Target":
-					if (World.FindMobile(Targeting.GetLastTarger) != null)
+					if (World.FindMobile(Targeting.GetLastTarget) != null)
 					{
-						Targeting.LastAttack = Targeting.GetLastTarger;
-						Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.GetLastTarger));
+						Targeting.LastAttack = Targeting.GetLastTarget;
+						Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.GetLastTarget));
 					}
 					break;
 				case "Attack Last":
