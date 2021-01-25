@@ -787,7 +787,7 @@ namespace RazorEnhanced
             public bool DebugMessage = false;
             public bool StopIfStuck = false;
             public bool IgnoreMobile = false;
-            public bool UseResync = true;
+            public bool UseResync = false;
             public int MaxRetry = -1;
             public float Timeout = -1;
 
@@ -797,11 +797,11 @@ namespace RazorEnhanced
         }
 
 
-        // Dalamar: Exposed "RazorEnhanced.Tile" to Python via Pathfind in order to be able to create List[Tile] to feed directly to 
+        // Dalamar: Exposed "RazorEnhanced.Tile" to Python via Pathfind in order to be able to create List[Tile] to feed directly to
         public static Tile Tile(int x, int y){
             return new Tile(x,y);
         }
-        
+
         public static bool Go(Route r)
         {
             if ( r.StopIfStuck ) { r.MaxRetry = 1; }
@@ -824,10 +824,10 @@ namespace RazorEnhanced
             return false;
         }
 
-        public static List<Tile> GetPath(int x, int y, bool ignoremob) { 
+        public static List<Tile> GetPath(int x, int y, bool ignoremob) {
             return PathMove.GetPath(x, y, ignoremob);
         }
-        
+
         public static bool RunPath(List<Tile> path, float timeout=-1, bool debugMessage=false, bool useResync = true)
         {
             if (path == null) { return false; }
@@ -890,7 +890,7 @@ namespace RazorEnhanced
                 if (timeout >= 0 && DateTime.Now.CompareTo(timeEnd) > 0) {
                     if (debugMessage)
                         Misc.SendMessage("PathFind: RunPath run TIMEOUT", 33);
-                    return false; 
+                    return false;
                 }
 
                 if (!walkok)

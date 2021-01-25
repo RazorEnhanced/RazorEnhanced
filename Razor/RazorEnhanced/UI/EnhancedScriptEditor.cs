@@ -169,7 +169,7 @@ namespace RazorEnhanced.UI
 			{
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.Select", "Items.BackpackCount", 
+				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.Select", "Items.BackpackCount",
                 "Items.ContainerCount", "Items.UseItemByID", "Items.Hide", "Items.ContextExist", "Items.FindByID"
 			};
 
@@ -262,7 +262,7 @@ namespace RazorEnhanced.UI
 				"DPSMeter.Status", "DPSMeter.Start", "DPSMeter.Stop", "DPSMeter.Pause", "DPSMeter.GetDamage"
 			};
 
-			string[] methodsPathFinding = 
+			string[] methodsPathFinding =
             {
 				"PathFinding.Go", "PathFinding.Route", "Pathfinding.GetPath", "Pathfinding.RunPath", "Pathfinding.Tile",
             };
@@ -1174,7 +1174,7 @@ namespace RazorEnhanced.UI
             descriptionPathFinding.Add("PathFinding.RunPath", tooltip);
 
             tooltip = new ToolTipDescriptions("PathFinding.Tile(int x, int y )", new string[] { " (x, y) <int,int> world coordinates " }, "new Tile()", "Returns a Tile object compabile with RunPath( List<Tile> path, ... ). Useful for custom made paths.");
-            descriptionPathFinding.Add("PathFinding.RunPath", tooltip);
+            descriptionPathFinding.Add("PathFinding.Tile", tooltip);
 
             #endregion
 
