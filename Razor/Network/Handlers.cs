@@ -3149,7 +3149,7 @@ namespace Assistant
 					case "tilepic":
 						// TilePic [x] [y] [id]
 						// Adds a Tilepicture to the gump. [id] defines the tile graphic-id. For example use InsideUO to get them.
-						World.Player.CurrentGumpTile.Add(int.Parse(gumpParams[3]));
+						World.Player.CurrentGumpTile.Add((int)float.Parse(gumpParams[3]));
 						break;
 				}
 			}
