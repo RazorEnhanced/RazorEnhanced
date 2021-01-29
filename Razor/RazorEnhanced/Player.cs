@@ -1368,13 +1368,13 @@ namespace RazorEnhanced
 		}
 
 		// Moving
-		public static bool Walk(string direction)  // Return true se walk ok false se rifiutato da server
+		public static bool Walk(string direction, bool checkPosition = true)  // Return true se walk ok false se rifiutato da server
 		{
-			return Run(direction);
+			return Run(direction, checkPosition);
 		}
 
 		private static DateTime m_LastWalk = DateTime.MinValue;
-		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
+		public static bool Run(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
 		{
 			if (!Enum.TryParse<Direction>(direction, out Direction dir))
 			{
@@ -1382,7 +1382,7 @@ namespace RazorEnhanced
 				return false;
 			}
 
-            if (!Client.IsOSI)
+            if (checkPosition && !Client.IsOSI)
             {
                 TimeSpan t = DateTime.UtcNow - m_LastWalk;
                 const double MaxSpeed = 0.2;
@@ -1398,7 +1398,7 @@ namespace RazorEnhanced
 			m_LastWalk = DateTime.UtcNow;
 			// Waits until a move event is seen happenning
 			Console.WriteLine("Move {0} Sent", direction);
-            if (Client.IsOSI)
+            if (checkPosition && Client.IsOSI)
             {
                 while (World.Player.WalkScriptRequest < 2)
                 {
@@ -1424,6 +1424,7 @@ namespace RazorEnhanced
                 	return false;
                 }
             }
+
             return true;
 		}
 
