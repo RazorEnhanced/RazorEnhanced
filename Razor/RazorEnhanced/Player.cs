@@ -1405,7 +1405,7 @@ namespace RazorEnhanced
                 	Thread.Sleep(10);
                 	timeout += 20;
                 	Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
-                	if (timeout > 100) //  Handle slower ping times
+                	if (timeout > 1000) //  Handle slower ping times
                 	{
                 		Console.WriteLine("Move Timeout {0}", direction);
                 		break;
