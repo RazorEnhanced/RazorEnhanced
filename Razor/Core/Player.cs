@@ -674,9 +674,10 @@ namespace Assistant
 			get { return walkScriptRequest; }
 			set
 			{
-				//if ( (walkScriptRequest < 2) && (value >= 2))
-				//	System.Threading.Thread.Sleep(500);
-				walkScriptRequest = value;
+                //Console.WriteLine("walkScriptRequest - {0}", value);
+                //if ( (walkScriptRequest < 2) && (value >= 2))
+                //	System.Threading.Thread.Sleep(500);
+                walkScriptRequest = value;
 			}
 		}
 
