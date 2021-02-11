@@ -1353,7 +1353,8 @@ namespace FastColoredTextBoxNS
 			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal|WaitByName|GetTextBySerial|GetTextByColor|GetTextByName|GetTextByType";
 			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend|Pause|GetDamage|GetList";
 			string DressUndressAgentFunctions = "DressStatus|UnDressStatus|DressFStart|UnDressFStart|DressFStop|UnDressFStop";
-			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo|GetTileFlag|GetLandFlag|GetStaticsLandInfo|CheckDeedHouse";
+			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo|GetTileFlag|GetLandFlag|GetStaticsLandInfo|CheckDeedHouse|GetLandName|GetTileName";
+			string PathFindingFunctions = "Route|Go|Tile|GetPath|RunPath";
 			string TimerFunctions = "Check|Create";
             string VendorFunctions = "Buy";
 			RazorFunctionsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14})\b",
