@@ -1347,6 +1347,11 @@ namespace RazorEnhanced
 		{
 	 		Assistant.Client.Instance.SendToServerWait(new PartyInvite());
 		}
+        
+        public static void PartyAccept(int serial = 0)
+        {
+            Assistant.Client.Instance.SendToServerWait(new AcceptParty(serial));
+        }
 
 		public static void LeaveParty()
 		{

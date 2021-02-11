@@ -142,7 +142,7 @@ namespace RazorEnhanced.UI
 				"Player.ChatEmote", "Player.ChatWhisper","Player.ChatChannel",
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
-				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
+				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyAccept", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
 				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList",
                 "Player.SumAttribute", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
@@ -456,10 +456,13 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.PartyCanLoot(bool)", new string[] { "bool Flag" }, "void", "Set player party CanLoot flag\n\tTrue: Members can loot me, False: Member can't loot me");
 			descriptionPlayer.Add("Player.PartyCanLoot", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.PartyInvite()", new string[] { "none" }, "void", "Open a target prompt to invite new members");
-			descriptionPlayer.Add("Player.PartyInvite", tooltip);
+            tooltip = new ToolTipDescriptions("Player.PartyInvite()", new string[] { "none" }, "void", "Open a target prompt to invite new members");
+            descriptionPlayer.Add("Player.PartyInvite", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.PartyLeave()", new string[] { "none" }, "void", "Leave from party");
+            tooltip = new ToolTipDescriptions("Player.PartyAccept(int serial = 0)", new string[] { "int Serial = 0" }, "void", "Accept party invites. Serial: Specify the serial of the Party Leader who sent the invitation. Useful in case of multiple invitations.");
+            descriptionPlayer.Add("Player.PartyAccept", tooltip);
+
+            tooltip = new ToolTipDescriptions("Player.PartyLeave()", new string[] { "none" }, "void", "Leave from party");
 			descriptionPlayer.Add("Player.PartyLeave", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.KickMember(int)", new string[] { "int SerialPersonToKick" }, "void", "Kick a member from party by serial\n\tOnly for party leader");
