@@ -1342,7 +1342,7 @@ namespace FastColoredTextBoxNS
 			RazorPropsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7})\b", GenericProps, PlayerProps, MobileProps, ItemsProps, StaticProps, ItemFilterProps, MobileFilterProps, PathFindProps), RegexCompiledOption);
 
 			string GenericFunctions = "GetItemOnLayer|GetAssistantLayer|FindBySerial|Filter|ApplyFilter|Select|SingleClick|WaitForProps|SumAttribute|GetPropValue|GetPropStringByIndex|GetPropStringList|Message";
-			string PlayerFunctions = "BuffsExist|GetBuffDescription|HeadMessage|InRangeMobile|InRangeItem|UnEquipItemByLayer|EquipItem|CheckLayer|GetSkillValue|GetSkillCap|GetSkillStatus|GetRealSkillValue|UseSkill|ChatSay|MapSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|Run|PathFindTo|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA|Fly|ChatChannel|EquipUO3D|SpellIsEnabled|SetSkillStatus|SetStatStatus|ToggleAlwaysRun";
+			string PlayerFunctions = "BuffsExist|GetBuffDescription|HeadMessage|InRangeMobile|InRangeItem|UnEquipItemByLayer|EquipItem|CheckLayer|GetSkillValue|GetSkillCap|GetSkillStatus|GetRealSkillValue|UseSkill|ChatSay|MapSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyAccept|PartyLeave|KickMember|InvokeVirtue|Walk|Run|PathFindTo|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA|Fly|ChatChannel|EquipUO3D|SpellIsEnabled|SetSkillStatus|SetStatStatus|ToggleAlwaysRun";
 
             string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism|CastCleric|CastDruid|CastMastery|Interrupt|CastLastSpell|CastLastSpell";
 			string MobileFunctions = "UseMobile|ContextExist|WaitForStats|GetTrackingInfo";
@@ -1353,8 +1353,8 @@ namespace FastColoredTextBoxNS
 			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal|WaitByName|GetTextBySerial|GetTextByColor|GetTextByName|GetTextByType";
 			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend|Pause|GetDamage|GetList";
 			string DressUndressAgentFunctions = "DressStatus|UnDressStatus|DressFStart|UnDressFStart|DressFStop|UnDressFStop";
-			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo|GetTileFlag|GetLandFlag|GetStaticsLandInfo|CheckDeedHouse";
-			string PathFindingFunctions = "Route|Go";
+			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo|GetTileFlag|GetLandFlag|GetStaticsLandInfo|CheckDeedHouse|GetLandName|GetTileName";
+			string PathFindingFunctions = "Route|Go|Tile|GetPath|RunPath";
 			string TimerFunctions = "Check|Create";
             string VendorFunctions = "Buy";
 			RazorFunctionsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11}|{12}|{13}|{14})\b",
