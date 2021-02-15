@@ -74,7 +74,8 @@ namespace RazorEnhanced
 					{ "PASSWORD", LoadPasswords },
 					{ "RESTOCK_ITEMS", LoadItems<RazorEnhanced.Restock.RestockItem> },
 					{ "SCAVENGER_ITEMS", LoadItems<RazorEnhanced.Scavenger.ScavengerItem> },
-					{ "SELL_ITEMS", LoadItems<RazorEnhanced.SellAgent.SellAgentItem> },
+                    { "SCRIPTING", LoadScripting },
+                    { "SELL_ITEMS", LoadItems<RazorEnhanced.SellAgent.SellAgentItem> },
 					{ "TARGETS", LoadItems<TargetGUI> },
 		};
 		internal static Dictionary<string, saveFN> saveDict = new Dictionary<string, saveFN>()
@@ -88,6 +89,7 @@ namespace RazorEnhanced
 					{ "PASSWORD", SavePasswords },
 					{ "RESTOCK_ITEMS", SaveItems<RazorEnhanced.Restock.RestockItem> },
 					{ "SCAVENGER_ITEMS", SaveItems<RazorEnhanced.Scavenger.ScavengerItem> },
+                    { "SCRIPTING", SaveScripting },
 					{ "SELL_ITEMS", SaveItems<RazorEnhanced.SellAgent.SellAgentItem> },
 					{ "TARGETS", SaveItems<TargetGUI> },
 		};
@@ -186,17 +188,35 @@ namespace RazorEnhanced
 			return true;
 
 		}
-		//private static DataTable LoadAutoLoot(string filename, string tableName)
-		//{
-		//List<JsonData.AutoLootItem> autolootItems = JsonData.AutoLootItem.FromJson(File.ReadAllText(filename + "." + tableName));
-		//DataTable temp = initDict[tableName]();
-		//foreach (JsonData.AutoLootItem item in autolootItems)
-		//{
-		//	temp.Rows.Add(item);
-		//}
-		//return temp;
-		//}
-		internal static DataTable InitItems<T>(string tableName) where T : ListAbleItem
+        private static DataTable LoadScripting(string filename, string tableName)
+        {
+            List<RazorEnhanced.Scripts.ScriptItem> scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
+            DataTable temp = initDict[tableName](tableName);
+            foreach (RazorEnhanced.Scripts.ScriptItem item in scriptItems)
+            {
+                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                if (File.Exists(fullpath))
+                {
+                    DataRow row = temp.NewRow();
+                    row["Filename"] = item.Filename;
+                    //row["Flag"]  UNUSED
+                    row["Status"] = item.Status;
+                    row["Loop"] = item.Loop;
+                    row["Wait"] = item.Wait;
+                    row["HotKey"] = item.Hotkey;
+                    row["HotKeyPass"] = item.HotKeyPass;
+                    row["AutoStart"] = item.AutoStart;
+                    temp.Rows.Add(row);
+                }
+                else
+                {
+                    // drop it from scripts as it doesn't exist
+                }
+
+        }
+            return temp;
+        }
+            internal static DataTable InitItems<T>(string tableName) where T : ListAbleItem
 		{
 			DataTable items = new DataTable(tableName);
 			items.Columns.Add("List", typeof(string));
@@ -217,8 +237,26 @@ namespace RazorEnhanced
 			return temp;
 		}
 
-		//
-		private static void SaveItems<T>(string filename, string tableName, DataTable targets) where T : ListAbleItem
+        //
+        private static void SaveScripting(string filename, string tableName, DataTable targets)
+        {
+            List<RazorEnhanced.Scripts.ScriptItem> items = new List<RazorEnhanced.Scripts.ScriptItem>();
+            foreach (DataRow row in targets.Rows)
+            {
+                RazorEnhanced.Scripts.ScriptItem item = new RazorEnhanced.Scripts.ScriptItem();
+                item.Filename = Convert.ToString(row["Filename"]);
+                item.Status = Convert.ToString(row["Status"]);
+                item.Loop = Convert.ToBoolean(row["Loop"]);
+                item.Wait = Convert.ToBoolean(row["Wait"]);
+                item.Hotkey = (System.Windows.Forms.Keys)(row["HotKey"]);
+                item.HotKeyPass = Convert.ToBoolean(row["HotKeyPass"]);
+                item.AutoStart = Convert.ToBoolean(row["AutoStart"]);
+                items.Add(item);
+            }
+            string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(filename + "." + tableName, xml);
+        }
+        private static void SaveItems<T>(string filename, string tableName, DataTable targets) where T : ListAbleItem
 		{
 			List<T> items = new List<T>();
 			foreach (DataRow row in targets.Rows)
@@ -506,7 +544,7 @@ namespace RazorEnhanced
 			// Scripting
 			DataTable scripting = new DataTable(tableName);
 			scripting.Columns.Add("Filename", typeof(string));
-			scripting.Columns.Add("Flag", typeof(Bitmap));
+			scripting.Columns.Add("Flag", typeof(Bitmap));    // note appears unused
 			scripting.Columns.Add("Status", typeof(string));
 			scripting.Columns.Add("Loop", typeof(bool));
 			scripting.Columns.Add("Wait", typeof(bool));

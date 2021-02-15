@@ -37,8 +37,20 @@ namespace RazorEnhanced
 			if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
 				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
 		}
+        public class ScriptItem : ListAbleItem
+        {
+            public string Filename { get; set;}
+            //public string Flag { get; set; }  // appears unused
+            public string Status { get; set; }
+            public bool Loop { get; set; }
+            public bool Wait { get; set; }
+            public Keys Hotkey { get; set; }
+            public bool HotKeyPass { get; set; }
+            public bool AutoStart { get; set; }
+        }
 
-		internal class EnhancedScript
+
+        internal class EnhancedScript
 		{
             internal bool StopMessage { get; set; }
             internal bool StartMessage { get; set; }

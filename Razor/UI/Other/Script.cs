@@ -112,28 +112,22 @@ namespace Assistant
 
 					row["Status"] = "Stopped";
 				}
-				/*else  // 17/08/2020 Removed loading not exist script file
+				else
 				{
-					ListViewItem listitem = new ListViewItem();
-
+                    // 17/08/2020 Removed loading not exist script file
+                    // 2/15/2021 added back to avoid hotkey issue,
+                    //    removed bad file entries at load in settings so should never happen
+                    ListViewItem listitem = new ListViewItem();
 					listitem.SubItems.Add("File Not Found");
-
 					listitem.SubItems.Add("Error");
-
 					listitem.SubItems.Add("No");
-
 					listitem.SubItems.Add("No");
-
 					listitem.SubItems.Add("No");
-
 					listitem.SubItems.Add(HotKey.KeyString(key));
-
 					listitem.SubItems.Add("No");
-
 					scriptlistView.Items.Add(listitem);
-
 					row["Status"] = "Error";
-				}*/
+				}
 			}
 			scriptlistView.EndUpdate();
 		}
