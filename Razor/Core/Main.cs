@@ -191,7 +191,10 @@ namespace Assistant
 		[STAThread]
 		public static void Main(string[] Args)
 		{
-			Application.ThreadException += ApplicationThreadException;
+            //TODO: Remove me, it's just a convenient hook for debugging, this needs to be placed elsewere
+            RazorEnhanced.AutoDoc.ExportPythonAPI();
+
+            Application.ThreadException += ApplicationThreadException;
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 

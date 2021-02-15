@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Text;
 using FastColoredTextBoxNS;
 using IronPython.Compiler;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced.UI
 {
@@ -85,7 +86,7 @@ namespace RazorEnhanced.UI
 		{
 			m_EnhancedScriptEditor = new EnhancedScriptEditor(filename);
 			m_EnhancedScriptEditor.Show();
-		}
+        }
 
 		internal static void End()
 		{
@@ -101,8 +102,10 @@ namespace RazorEnhanced.UI
 		internal EnhancedScriptEditor(string filename)
 		{
 			InitializeComponent();
-			//Automenu Section
-			m_popupMenu = new AutocompleteMenu(fastColoredTextBoxEditor);
+            InitSyntaxtHighlight();
+
+            //Automenu Section
+            m_popupMenu = new AutocompleteMenu(fastColoredTextBoxEditor);
 			m_popupMenu.Items.ImageList = imageList2;
 			m_popupMenu.SearchPattern = @"[\w\.:=!<>]";
 			m_popupMenu.AllowTabKey = true;
@@ -115,25 +118,30 @@ namespace RazorEnhanced.UI
 			{
 				"and", "assert", "break", "class", "continue", "def", "del", "elif", "else", "except", "exec",
 				"finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or", "pass", "print",
-				"raise", "return", "try", "while", "yield", "None", "True", "False", "as"
+				"raise", "return", "try", "while", "yield", "None", "True", "False", "as", "sorted", "filter"
 			};
 
-			#endregion
+            #endregion
 
-			#region Classes Autocomplete
-
-			string[] classes =
+            #region Classes Autocomplete
+            
+			string[] old_classes =
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
 				"Statics", "DPSMeter", "PathFinding", "Timer", "Vendor"
 			};
 
-			#endregion
+            #endregion
 
-			#region Methods Autocomplete
+            //Dalamar: AutoDoc
+            string[] classes = AutoDoc.GetClasses().ToArray();
 
-			string[] methodsPlayer =
+
+
+            #region Methods Autocomplete
+
+            string[] methodsPlayer =
 			{
 				"Player.BuffsExist", "Player.GetBuffDescription", "Player.SpellIsEnabled",
 				"Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
@@ -286,8 +294,12 @@ namespace RazorEnhanced.UI
 			{
 				"GetItemOnLayer", "GetAssistantLayer", "DistanceTo"
 			};
+            #endregion
+            //Dalamar: AutoDoc
+            string[] methods = AutoDoc.GetMethods(true, true, false).ToArray();
 
-			string[] methods =
+            
+			string[] old_methods =
 				methodsPlayer.Union(methodsSpells)
 					.Union(methodsMobiles)
 					.Union(methodsItems)
@@ -310,12 +322,13 @@ namespace RazorEnhanced.UI
 					.Union(methodsTimer)
                     .Union(methodsVendor)
                     .ToArray();
+            
 
-			#endregion
+           
 
-			#region Props Autocomplete
+            #region Props Autocomplete
 
-			string[] propsPlayer =
+            string[] propsPlayer =
 			{
 				"Player.StatCap", "Player.AR", "Player.FireResistance", "Player.ColdResistance", "Player.EnergyResistance",
 				"Player.PoisonResistance", "Player.StaticMount",
@@ -328,10 +341,10 @@ namespace RazorEnhanced.UI
 			{
 				"Position.X", "Position.Y", "Position.Z"
 			};
+            
+            string[] propsWithCheck = AutoDoc.GetProperties(true).Union(propsPlayer).Union(propsPositions).ToArray();
 
-			string[] propsWithCheck = propsPlayer.Union(propsPositions).ToArray();
-
-			string[] propsGeneric =
+            string[] propsGeneric =
 			{
 				"Serial", "Hue", "Name", "Body", "Color", "Direction", "Visible", "Poisoned", "YellowHits", "Paralized",
 				"Human", "WarMode", "Female", "Hits", "HitsMax", "Stam", "StamMax", "Mana", "ManaMax", "Backpack", "Mount",
@@ -347,7 +360,7 @@ namespace RazorEnhanced.UI
 				"DebugMessage", "StopIfStuck", "MaxRetry", "Timeout"
 			};
 
-			string[] props = propsGeneric;
+			string[] props = AutoDoc.GetProperties().Union(propsGeneric).ToArray();
 
 			#endregion
 
@@ -1272,9 +1285,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("DistanceTo(Mobile)", new string[] { "Mobile MobileInstance" }, "int", "Return a value about distance from the mobile\n\tWorks only on Item Instances");
 			descriptionGenerics.Add("DistanceTo", tooltip);
 
-			#endregion
+            #endregion
+            #endregion
 
-			Dictionary<string, ToolTipDescriptions> descriptionMethods =
+            Dictionary<string, ToolTipDescriptions> old_descriptionMethods =
 				descriptionPlayer
 				.Union(descriptionSpells)
 				.Union(descriptionMobiles)
@@ -1299,12 +1313,92 @@ namespace RazorEnhanced.UI
                 .Union(descriptionVendor)
 				.ToDictionary(x => x.Key, x => x.Value);
 
-			#endregion
+            
 
-			List<AutocompleteItem> items = new List<AutocompleteItem>();
+            var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
+            foreach (var docitem in AutoDoc.GetPythonAPI() ) {
+                if (docitem.itemKind == DocItem.KindMethod) {
+                    var method = (DocMethod)docitem;
+                    var methodName = method.itemClass + "." + method.itemName;
+                    var prms_name = new List<String>();
+                    var prms_type = new List<String>();
+                    var prms_name_type = new List<String>();
+                    foreach (var prm in method.paramList) {
+                        prms_name.Add(prm.itemName);
+                        prms_type.Add(prm.itemType);
+                        prms_name_type.Add(prm.itemType + " " + prm.itemName);
+                    }
+                    var methodSignNames = $"{methodName}({String.Join(",", prms_name)})";
+                    var methodSignTypes = $"{methodName}({String.Join(",", prms_type)})";
+                    var methodSignNameTypes = $"{methodName}({String.Join(",", prms_name_type)})";
 
-			//Permette la creazione del menu con la singola keyword
-			Array.Sort(keywords);
+                    var methodKey = methodSignNames;
+                    tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type.ToArray() , method.returnType, method.itemDescription.Trim()+"\n");
+                    if (autodocMethods.ContainsKey(methodKey))
+                    {
+                        autodocMethods[methodKey].Notes += "\n"+ methodSignNameTypes;
+                        if (method.itemDescription.Length > 0) {
+                            autodocMethods[methodKey].Notes += "\n" + method.itemDescription.Trim()+"\n---";
+                        }
+                    }
+                    else {
+                        autodocMethods.Add(methodKey, tooltip);
+                    }
+
+                }
+                
+            }
+
+            var descriptionMethods = descriptionGenerics.Union(autodocMethods).ToDictionary(x => x.Key, x => x.Value);
+
+
+         
+
+            //Dalamar
+            //Remove this, it's just debug
+            //REMOVE: begin
+
+            //Classes
+            var classes_diff = new List<String>(old_classes);
+            foreach (var cls in classes) {
+                //if found, remove because =. if not add as new methods
+                if (!classes_diff.Remove(cls)) 
+                {
+                    classes_diff.Add("(new)" + cls);
+                }
+            }
+            File.WriteAllText("classes_diff.csv", String.Join("\n", classes_diff));
+
+            //Methods
+            var methods_diff = new List<String>(old_methods);
+            foreach (var mtd in methods)
+            {
+                //if found, remove because =. if not add as new methods
+                if (!methods_diff.Remove(mtd))
+                {
+                    methods_diff.Add("(new)" + mtd);
+                }
+            }
+            File.WriteAllText("methods_diff.csv", String.Join("\n", methods_diff));
+
+            //Tooltips
+            var desc_diff = new List<String>(old_descriptionMethods.Keys);
+            foreach (var dsc in descriptionMethods.Keys)
+            {
+                //if found, remove because =. if not add as new methods
+                if (!desc_diff.Remove(dsc))
+                {
+                    desc_diff.Add("(new)" + dsc);
+                }
+            }
+            File.WriteAllText("tooltip_diff.csv", String.Join("\n", desc_diff));
+
+            //REMOVE: end
+
+            List<AutocompleteItem> items = new List<AutocompleteItem>();
+
+            //Permette la creazione del menu con la singola keyword
+            Array.Sort(keywords);
 			foreach (var item in keywords)
 				items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
 			//Permette la creazione del menu con la singola classe
@@ -1396,6 +1490,46 @@ namespace RazorEnhanced.UI
 				fastColoredTextBoxEditor.Text = File.ReadAllText(filename);
 			}
 		}
+
+        private void InitSyntaxtHighlight() {
+            //Dalamar: Trying to inject SyntaxHighlight (and Autocomplete) from AutoDoc
+            //TODO: make it work 
+            // # Syntax Highlight
+            List<String> itemList;
+            List<String> escaped;
+            String pattern;
+            // ## Classes
+            itemList = AutoDoc.GetClasses();
+            escaped = new List<String>();
+            foreach (var name in itemList)
+            {
+                escaped.Add(Regex.Escape(name));
+            }
+            pattern = $@"\b({String.Join("|", escaped)})\b";
+            this.fastColoredTextBoxEditor.SyntaxHighlighter.RazorClassKeywordRegex = new Regex(pattern, RegexOptions.Compiled);
+
+            // ## Properties
+            itemList = AutoDoc.GetProperties();
+            escaped = new List<String>();
+            foreach (var name in itemList)
+            {
+                escaped.Add(Regex.Escape(name));
+            }
+            pattern = $@"\b({String.Join("|", escaped)})\b";
+            this.fastColoredTextBoxEditor.SyntaxHighlighter.RazorPropsKeywordRegex = new Regex(pattern, RegexOptions.Compiled);
+
+            // ## Functions
+            itemList = AutoDoc.GetMethods();
+            escaped = new List<String>();
+            foreach (var name in itemList)
+            {
+                escaped.Add(Regex.Escape(name));
+            }
+            pattern = $@"\b({String.Join("|", escaped)})\b";
+            this.fastColoredTextBoxEditor.SyntaxHighlighter.RazorFunctionsKeywordRegex = new Regex(pattern, RegexOptions.Compiled);
+
+        }
+
 
 		private TracebackDelegate OnTraceback(TraceBackFrame frame, string result, object payload)
 		{
@@ -2296,15 +2430,18 @@ namespace RazorEnhanced.UI
 		public string Title;
 		public string[] Parameters;
 		public string Returns;
-		public string Description;
+        public string Description;
+        public string Notes;
 
-		public ToolTipDescriptions(string title, string[] parameter, string returns, string description)
+        public ToolTipDescriptions(string title, string[] parameter, string returns, string description, string notes="")
 		{
 			Title = title;
 			Parameters = parameter;
 			Returns = returns;
 			Description = description;
-		}
+            Notes = notes;
+
+        }
 
 		public string ToolTipDescription()
 		{
@@ -2319,9 +2456,15 @@ namespace RazorEnhanced.UI
 
 			complete_description += "\nDescription:";
 
-			complete_description += "\n\t" + Description;
-
-			return complete_description;
+            if (Description.Length > 0)
+            {
+                complete_description += "\n" + Description.Trim();
+            }
+            
+            if (Notes.Length > 0){
+                complete_description += "\n---" + Notes;
+            }
+            return complete_description;
 		}
 	}
 

@@ -658,5 +658,14 @@ namespace RazorEnhanced
 			return World.ShardName;
 		}
 
+        /// <summary>
+        /// Return a string containing list RE Python API list in JSON format.
+        /// </summary>
+        /// <param name="path">Default: RazorEnhanced.json</param>
+        /// <param name="pretty">Default: True - Export a more readble version | False - Export a more compact version</param>
+        public static void ExportPythonAPI(string path=null, bool pretty=true) {
+             AutoDoc.ExportPythonAPI(path, pretty);
+        }
+
 	}
 }
