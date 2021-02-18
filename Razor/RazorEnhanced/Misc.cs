@@ -673,7 +673,6 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// @nodoc
         /// Returns the latest HotKeyEvent recorded by razor.
         /// The HotKeyEvent has 2 properties:
         /// hke.Key: enum System.Windows.Forms.Keys
