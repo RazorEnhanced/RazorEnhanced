@@ -21,6 +21,7 @@ namespace RazorEnhanced
         public String itemClass;
         public String itemName;
         public String itemDescription;
+        public bool flagAutocomplete = false;
 
         public DocItem(String xmlKey, String className, String propertyName, String description) {
             this.xmlKey = xmlKey;
@@ -96,6 +97,8 @@ namespace RazorEnhanced
     class AutoDoc
     {
         const String DEFAULT_EXPORT_PATH = "RazorEnhanced.json";
+        const String TAG_AUTOCOMPLETE = "@autocomplete"; 
+        const String TAG_NODOC = "@nodoc";
 
         private static List<DocItem> cachedDocs;
 
@@ -234,6 +237,7 @@ namespace RazorEnhanced
                 typeof(PathFinding.Route),
                 typeof(Items.Filter),
                 typeof(Mobiles.Filter),
+                typeof(HotKeyEvent),
             };
             
 
@@ -285,6 +289,10 @@ namespace RazorEnhanced
             return name;
         }
 
+        public static bool HasTag(string tag, string text) {
+            return text.Contains(tag);        
+        }
+
         public static List<DocItem> ReadClass(Type type, BindingFlags flags)
         {
             var result = new List<DocItem>();
@@ -304,6 +312,7 @@ namespace RazorEnhanced
                 var returnType = method.ReturnType.Name;
                 var paramList = new List<DocMethodParam>();
                 var methodSummary = XMLDocReader.GetDocumentation(method);
+                if ( HasTag(TAG_NODOC, methodSummary) ) continue;
 
                 var prms = method.GetParameters();
                 foreach (var prm in prms)
@@ -312,13 +321,14 @@ namespace RazorEnhanced
                     var paramName = prm.Name;
                     var paramType = ParamType(prm);
                     var defaultValue = ( prm.DefaultValue != null ? prm.DefaultValue.ToString() : null ) ;
-                    var paramSummary = ""; // XMLDocReader.GetDocumentation(prm);
+                    var paramSummary = XMLDocReader.GetDocumentation(prm);
 
                     var param = new DocMethodParam(paramName, paramType, defaultValue, paramSummary);
                     paramList.Add( param );
                 }
                 
                 var mtd = new DocMethod(methodKey, className, methodName,returnType, methodSummary, paramList);
+                if (HasTag(TAG_AUTOCOMPLETE, methodSummary)) mtd.flagAutocomplete = true;
                 result.Add(mtd);
             }
 
@@ -329,7 +339,7 @@ namespace RazorEnhanced
                 var propKey = XMLKeyComposer.GetKey(prop);
                 var itemName = prop.Name;
                 var propertyType = prop.PropertyType.Name;
-                var propSummary = ""; // XMLDocReader.GetDocumentation(prop);
+                var propSummary = XMLDocReader.GetDocumentation(prop);
                 
                 var prt = new DocProperty(propKey, className, itemName, propertyType, propSummary);
                 result.Add(prt);
