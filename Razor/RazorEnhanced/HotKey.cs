@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Assistant.UI;
+using System;
 
 namespace RazorEnhanced
 {
@@ -16,22 +17,48 @@ namespace RazorEnhanced
 		Shift = 0x0004
 	}
 
-	internal class HotKey
-	{
-		public class HotKeyData
-		{
-			private string m_Name;
-			public string Name { get { return m_Name; } }
+    public class HotKeyEvent
+    {
+        public static HotKeyEvent LastEvent;
 
-			private Keys m_Key;
-			public Keys Key { get { return m_Key; } }
+        public static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
+        public Keys HotKey;
+        public double Timestamp;
 
-			public HotKeyData(string name, Keys key)
-			{
-				m_Name = name;
-				m_Key = key;
-			}
-		}
+        public static HotKeyEvent AddEvent(Keys k) {
+            LastEvent = new HotKeyEvent(k);
+            return LastEvent;
+        }
+
+        public HotKeyEvent(Keys key)
+        {
+            this.HotKey = key;
+            this.Timestamp = DateTime.Now.Subtract(UnixTimeBegin).TotalSeconds;
+        }
+
+    }
+
+    internal class HotKey
+    {
+        
+
+        public class HotKeyData
+        {
+            private string m_Name;
+            public string Name { get { return m_Name; } }
+
+            private Keys m_Key;
+            public Keys Key { get { return m_Key; } }
+
+            public HotKeyData(string name, Keys key)
+            {
+                m_Name = name;
+                m_Key = key;
+            }
+        }
+
+        
+        
 
 		internal static Keys NormalKey { get { return m_key; } set { m_key = value; } }
 		private static Keys m_key;
@@ -88,6 +115,8 @@ namespace RazorEnhanced
 
 		internal static bool KeyDown(Keys k)
 		{
+            HotKeyEvent.AddEvent(k);
+
 			Debug.WriteLine("KD Keys: 0x{0:X}", k);
 			bool hotTextFocused = false;
 			bool hotTextMasterFocused = false;
