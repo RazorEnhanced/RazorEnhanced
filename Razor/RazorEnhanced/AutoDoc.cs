@@ -97,10 +97,95 @@ namespace RazorEnhanced
     class AutoDoc
     {
         const String DEFAULT_EXPORT_PATH = "RazorEnhanced.json";
+        const String DEFAULT_DOCS_PATH = "./Docs/";
         const String TAG_AUTOCOMPLETE = "@autocomplete"; 
         const String TAG_NODOC = "@nodoc";
 
         private static List<DocItem> cachedDocs;
+
+
+        private static string html_main = @"
+            <html>
+                <header>
+                    <link rel=stylesheet href='style.css' type='text/css'/>
+                </header>
+                <body>
+                    {0}
+                </body>
+            </html>
+        ";
+
+        public static void ExportHTML(string path = null)
+        {
+            if (path == null) { path = DEFAULT_DOCS_PATH; }
+            var docs = GetPythonAPI();
+
+            List<DocItem> classList = docs.FindAll(doc => doc.itemKind == DocItem.KindClass);
+            List<DocItem> propsList = docs.FindAll(doc => doc.itemKind == DocItem.KindProperty);
+            List<DocItem> methodList = docs.FindAll(doc => doc.itemKind == DocItem.KindMethod);
+            
+            //Sort alphabetically
+            //classList.Sort( (c1,c2) => c1.itemClass.CompareTo(c2.itemClass) );
+            // Create main index.html
+            var classListHtml = new List<string>();
+            foreach (var cls in classList) {
+                classListHtml.Add($"<li><a href='{cls.itemClass}.html'>{cls.itemClass}</a></li>");
+            }
+            var menu = $"<ul>\n{String.Join("\n",classListHtml)}\n</ul>";
+            Directory.CreateDirectory(path);
+            File.WriteAllText(path + "index.html", String.Format(html_main, menu));
+
+            // Create per-class docs
+            foreach (var cls in classList)
+            {
+                var className = cls.itemClass;
+                var classProps = propsList.FindAll(doc => doc.itemClass == className);
+                var classMethod = methodList.FindAll(doc => doc.itemClass == className);
+
+                //Sort A-Z
+                classProps.Sort((c1, c2) => c1.itemName.CompareTo(c2.itemName));
+                classMethod.Sort((c1, c2) => c1.itemName.CompareTo(c2.itemName));
+
+                // Get props
+                var propsListHtml = new List<string>();
+                foreach (var prop in classProps)
+                {
+                    var propName = $"<div class='property_name'>{className}.{prop.itemName}</div>";
+                    var propDesc = $"<div class='property_desc'>{prop.itemDescription}</div>";
+                    propsListHtml.Add( $"{propName}\n{propDesc}\n" );
+                }
+
+                // Get methods
+                var methodListHtml = new List<string>();
+                foreach (DocMethod method in classMethod)
+                {
+                    var argsSign = new List<String>();
+                    var argsList = new List<String>();
+                    foreach (DocMethodParam arg in method.paramList) {
+                        var sign = $"<div class='arg_type'>{arg.itemType}</div> <div class='arg_name'>{arg.itemName}</div>";
+                        argsSign.Add(sign);
+                        argsList.Add($"<li>{sign} <div class='arg_desc'>{arg.itemDescription}</div></li>");
+                    }
+                    var argSignHtml = $"<div class='method_arg_list'>{String.Join(", ", argsSign)}</div>";
+                    var argListHtml = $"<ul>\n{String.Join("\n", argsList)}</ul>";
+                    var methodName = $"<div class='method_name'>{className}.{method.itemName}({argSignHtml})</div>";
+                    var methodDesc = $"<div class='method_desc'>{method.itemDescription}</div>";
+                    
+                    methodListHtml.Add($"<hr/>{methodName}<br/>{argListHtml}<br/>{methodDesc}<br/>");
+                }
+
+                // Assable page
+                var propsHtml = String.Join("\n", propsListHtml);
+                var methodsHtml = $@"<div class='method_list'>{String.Join("\n", methodListHtml)}</div>";
+
+                var classHtml = $@"<div class='class_name'>{className}</div>";
+                var classDescHtml = $@"<div class='class_desc'>{cls.itemDescription}</div>";
+
+                var content = $@"{classHtml}{classDescHtml}{propsHtml}{methodsHtml}";
+                File.WriteAllText(path + className + ".html", String.Format(html_main, content));
+            }
+        }
+
 
         /// <summary>
         /// Export the API to disk. 
@@ -327,7 +412,7 @@ namespace RazorEnhanced
                     paramList.Add( param );
                 }
                 
-                var mtd = new DocMethod(methodKey, className, methodName,returnType, methodSummary, paramList);
+                var mtd = new DocMethod(methodKey, className, methodName, returnType, methodSummary, paramList);
                 if (HasTag(TAG_AUTOCOMPLETE, methodSummary)) mtd.flagAutocomplete = true;
                 result.Add(mtd);
             }
