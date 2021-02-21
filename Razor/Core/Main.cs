@@ -194,6 +194,7 @@ namespace Assistant
             //TODO: Remove me, it's just a convenient hook for debugging, this needs to be placed elsewere
             RazorEnhanced.AutoDoc.ExportPythonAPI();
             RazorEnhanced.AutoDoc.ExportHTML();
+            RazorEnhanced.AutoDoc.ExportMKDocs();
 
             Application.ThreadException += ApplicationThreadException;
 

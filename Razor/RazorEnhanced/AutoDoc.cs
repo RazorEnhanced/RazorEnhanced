@@ -96,8 +96,9 @@ namespace RazorEnhanced
     /// </summary>
     class AutoDoc
     {
-        const String DEFAULT_EXPORT_PATH = "RazorEnhanced.json";
-        const String DEFAULT_DOCS_PATH = "./Docs/";
+        const String DEFAULT_JSON_PATH = "RazorEnhanced.json";
+        const String DEFAULT_HTML_PATH = "./DocsHTML/";
+        const String DEFAULT_MD_PATH = "./Docs/";
         const String TAG_AUTOCOMPLETE = "@autocomplete"; 
         const String TAG_NODOC = "@nodoc";
 
@@ -117,7 +118,7 @@ namespace RazorEnhanced
 
         public static void ExportHTML(string path = null)
         {
-            if (path == null) { path = DEFAULT_DOCS_PATH; }
+            if (path == null) { path = DEFAULT_HTML_PATH; }
             var docs = GetPythonAPI();
 
             List<DocItem> classList = docs.FindAll(doc => doc.itemKind == DocItem.KindClass);
@@ -185,6 +186,90 @@ namespace RazorEnhanced
                 File.WriteAllText(path + className + ".html", String.Format(html_main, content));
             }
         }
+        
+        public static void ExportMKDocs(string path = null)
+        {
+            if (path == null) { path = DEFAULT_MD_PATH; }
+            var docs = GetPythonAPI();
+
+            List<DocItem> classList = docs.FindAll(doc => doc.itemKind == DocItem.KindClass);
+            List<DocItem> propsList = docs.FindAll(doc => doc.itemKind == DocItem.KindProperty);
+            List<DocItem> methodList = docs.FindAll(doc => doc.itemKind == DocItem.KindMethod);
+
+            //Sort alphabetically
+            //classList.Sort( (c1,c2) => c1.itemClass.CompareTo(c2.itemClass) );
+            // Create main index.html
+            var classListYaml = new List<string>();
+            foreach (var cls in classList)
+            {
+                classListYaml.Add($"    - {cls.itemClass}: {cls.itemClass}.md");
+            }
+
+            String index;
+            index  = "site_name: Razor Enhaced\n";
+            index += "nav:\n";
+            index += "  - Classes:\n";
+            index += String.Join("\n", classListYaml) +"\n";
+            index += "theme:\n";
+            index += "  name: readthedocs\n";
+
+            Directory.CreateDirectory(path);
+            File.WriteAllText(path + "mkdocs.yml",index);
+
+            // Create per-class docs
+            foreach (var cls in classList)
+            {
+                var className = cls.itemClass;
+                var classProps = propsList.FindAll(doc => doc.itemClass == className);
+                var classMethod = methodList.FindAll(doc => doc.itemClass == className);
+
+                //Sort A-Z
+                classProps.Sort((c1, c2) => c1.itemName.CompareTo(c2.itemName));
+                classMethod.Sort((c1, c2) => c1.itemName.CompareTo(c2.itemName));
+
+                // Get props
+                var propsListMD = new List<string>();
+                foreach (var prop in classProps)
+                {
+                    var propName = $"- `{className}.{prop.itemName}`";
+                    var propDesc = prop.itemDescription != ""? "\n"+prop.itemDescription:"";
+                    propsListMD.Add($"{propName}{propDesc}");
+                }
+
+                // Get methods
+                var methodListMD = new List<string>();
+                foreach (DocMethod method in classMethod)
+                {
+                    var argsSign = new List<String>();
+                    var argsList = new List<String>();
+                    foreach (DocMethodParam arg in method.paramList)
+                    {
+                        var sign = $"{arg.itemType} {arg.itemName}";
+                        argsSign.Add(sign);
+                        argsList.Add($"- `{arg.itemType} {arg.itemName}` {arg.itemDescription}");
+                    }
+                    var argListDM = $"\n{String.Join("\n", argsList)}";
+                    var methodName = $"`{className}.{method.itemName}({String.Join(", ", argsSign)})`";
+                    var methodDesc = method.itemDescription;
+
+                    methodListMD.Add($"{methodName}\n{argListDM}\n{methodDesc}");
+                }
+
+                // Assable page
+                var propsMD = String.Join("\n", propsListMD);
+                var methodsMD = String.Join("\n", methodListMD);
+
+                var classMD = $@"# {className}";
+                var classDescMD = cls.itemDescription+"\n\n";
+
+                String content;
+                content  = $"{classMD}";
+                content += $"{classDescMD}";
+                content += $"{propsMD}";
+                content += $"{methodsMD}";
+                File.WriteAllText(path + className + ".md", content);
+            }
+        }
 
 
         /// <summary>
@@ -199,7 +284,7 @@ namespace RazorEnhanced
         /// <param name="path">Define the output path</param>
         /// <param name="pretty">Output readable JSON (Default: True)</param>
         public static void ExportPythonAPI(string path=null, bool pretty=true) {
-            if (path == null) { path = DEFAULT_EXPORT_PATH; }
+            if (path == null) { path = DEFAULT_JSON_PATH; }
 
             String json_txt;
 
