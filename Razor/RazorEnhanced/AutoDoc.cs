@@ -411,7 +411,7 @@ namespace RazorEnhanced
             };
             
 
-            BindingFlags flags = BindingFlags.Public | BindingFlags.Static;
+            BindingFlags flags = BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
             var listDocItems = new List<DocItem>();
             foreach (var docSection in docSections)
             {
