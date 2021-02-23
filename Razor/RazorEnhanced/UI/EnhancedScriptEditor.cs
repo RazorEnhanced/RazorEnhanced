@@ -1316,35 +1316,32 @@ namespace RazorEnhanced.UI
             
 
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
-            foreach (var docitem in AutoDoc.GetPythonAPI() ) {
-                if (docitem.itemKind == DocItem.KindMethod) {
-                    var method = (DocMethod)docitem;
-                    var methodName = method.itemClass + "." + method.itemName;
-                    var prms_name = new List<String>();
-                    var prms_type = new List<String>();
-                    var prms_name_type = new List<String>();
-                    foreach (var prm in method.paramList) {
-                        prms_name.Add(prm.itemName);
-                        prms_type.Add(prm.itemType);
-                        prms_name_type.Add(prm.itemType + " " + prm.itemName);
-                    }
-                    var methodSignNames = $"{methodName}({String.Join(",", prms_name)})";
-                    var methodSignTypes = $"{methodName}({String.Join(",", prms_type)})";
-                    var methodSignNameTypes = $"{methodName}({String.Join(",", prms_name_type)})";
+            foreach (var docitem in AutoDoc.GetPythonAPI().methods ) {
+                var method = (DocMethod)docitem;
+                var methodName = method.itemClass + "." + method.itemName;
+                var prms_name = new List<String>();
+                var prms_type = new List<String>();
+                var prms_name_type = new List<String>();
+                foreach (var prm in method.paramList) {
+                    prms_name.Add(prm.itemName);
+                    prms_type.Add(prm.itemType);
+                    prms_name_type.Add(prm.itemType + " " + prm.itemName);
+                }
+                var methodSignNames = $"{methodName}({String.Join(",", prms_name)})";
+                var methodSignTypes = $"{methodName}({String.Join(",", prms_type)})";
+                var methodSignNameTypes = $"{methodName}({String.Join(",", prms_name_type)})";
 
-                    var methodKey = methodSignNames;
-                    tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type.ToArray() , method.returnType, method.itemDescription.Trim()+"\n");
-                    if (autodocMethods.ContainsKey(methodKey))
-                    {
-                        autodocMethods[methodKey].Notes += "\n"+ methodSignNameTypes;
-                        if (method.itemDescription.Length > 0) {
-                            autodocMethods[methodKey].Notes += "\n" + method.itemDescription.Trim()+"\n---";
-                        }
+                var methodKey = methodSignNames;
+                tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type.ToArray() , method.returnType, method.itemDescription.Trim()+"\n");
+                if (autodocMethods.ContainsKey(methodKey))
+                {
+                    autodocMethods[methodKey].Notes += "\n"+ methodSignNameTypes;
+                    if (method.itemDescription.Length > 0) {
+                        autodocMethods[methodKey].Notes += "\n" + method.itemDescription.Trim()+"\n---";
                     }
-                    else {
-                        autodocMethods.Add(methodKey, tooltip);
-                    }
-
+                }
+                else {
+                    autodocMethods.Add(methodKey, tooltip);
                 }
                 
             }
@@ -1358,6 +1355,7 @@ namespace RazorEnhanced.UI
             //Remove this, it's just debug
             //REMOVE: begin
 
+            /*
             //Classes
             var classes_diff = new List<String>(old_classes);
             foreach (var cls in classes) {
@@ -1392,8 +1390,8 @@ namespace RazorEnhanced.UI
                 }
             }
             File.WriteAllText("tooltip_diff.csv", String.Join("\n", desc_diff));
-
             //REMOVE: end
+            */
 
             List<AutocompleteItem> items = new List<AutocompleteItem>();
 

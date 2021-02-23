@@ -10,6 +10,30 @@ using System.Xml.Linq;
 namespace RazorEnhanced
 {
     [Serializable]
+    class DocSettings {
+        public string version = Assembly.GetAssembly(typeof(DocSettings)).ImageRuntimeVersion;
+        public string baseName = "RazorEnhanced.";
+    }
+
+    [Serializable]
+    class DocContainer {
+        public DocSettings settings = new DocSettings();
+
+        public List<DocClass> classes = new List<DocClass>();
+        public List<DocMethod> constructors = new List<DocMethod>();
+        public List<DocProperty> properties = new List<DocProperty>();
+        public List<DocMethod> methods = new List<DocMethod>();
+
+        public void AddRange(DocContainer otherContainer) {
+            classes.AddRange(otherContainer.classes);
+            properties.AddRange(otherContainer.properties);
+            methods.AddRange(otherContainer.methods);
+            properties.AddRange(otherContainer.properties);
+        }
+    }
+
+
+    [Serializable]
     class DocItem {
         public const String KindItem = "item";      // Generic or Unkown (TODO: Make it sensible)
         public const String KindClass = "class";      // Generic or Unkown (TODO: Make it sensible)
@@ -97,12 +121,12 @@ namespace RazorEnhanced
     class AutoDoc
     {
         const String DEFAULT_JSON_PATH = "RazorEnhanced.json";
-        const String DEFAULT_HTML_PATH = "./DocsHTML/";
+        const String DEFAULT_HTML_PATH = "./Docs/HTML/";
         const String DEFAULT_MD_PATH = "./Docs/";
-        const String TAG_AUTOCOMPLETE = "@autocomplete"; 
+        const String TAG_AUTOCOMPLETE = "@autocomplete";
         const String TAG_NODOC = "@nodoc";
 
-        private static List<DocItem> cachedDocs;
+        private static DocContainer cachedDocs;
 
 
         private static string html_main = @"
@@ -115,16 +139,15 @@ namespace RazorEnhanced
                 </body>
             </html>
         ";
-
         public static void ExportHTML(string path = null)
         {
             if (path == null) { path = DEFAULT_HTML_PATH; }
             var docs = GetPythonAPI();
 
-            List<DocItem> classList = docs.FindAll(doc => doc.itemKind == DocItem.KindClass);
-            List<DocItem> propsList = docs.FindAll(doc => doc.itemKind == DocItem.KindProperty);
-            List<DocItem> methodList = docs.FindAll(doc => doc.itemKind == DocItem.KindMethod);
-            
+            List<DocClass> classList = docs.classes;
+            List<DocProperty> propsList = docs.properties;
+            List<DocMethod> methodList = docs.methods;
+
             //Sort alphabetically
             //classList.Sort( (c1,c2) => c1.itemClass.CompareTo(c2.itemClass) );
             // Create main index.html
@@ -132,7 +155,7 @@ namespace RazorEnhanced
             foreach (var cls in classList) {
                 classListHtml.Add($"<li><a href='{cls.itemClass}.html'>{cls.itemClass}</a></li>");
             }
-            var menu = $"<ul>\n{String.Join("\n",classListHtml)}\n</ul>";
+            var menu = $"<ul>\n{String.Join("\n", classListHtml)}\n</ul>";
             Directory.CreateDirectory(path);
             File.WriteAllText(path + "index.html", String.Format(html_main, menu));
 
@@ -153,7 +176,7 @@ namespace RazorEnhanced
                 {
                     var propName = $"<div class='property_name'>{className}.{prop.itemName}</div>";
                     var propDesc = $"<div class='property_desc'>{prop.itemDescription}</div>";
-                    propsListHtml.Add( $"{propName}\n{propDesc}\n" );
+                    propsListHtml.Add($"{propName}\n{propDesc}\n");
                 }
 
                 // Get methods
@@ -171,7 +194,7 @@ namespace RazorEnhanced
                     var argListHtml = $"<ul>\n{String.Join("\n", argsList)}</ul>";
                     var methodName = $"<div class='method_name'>{className}.{method.itemName}({argSignHtml})</div>";
                     var methodDesc = $"<div class='method_desc'>{method.itemDescription}</div>";
-                    
+
                     methodListHtml.Add($"<hr/>{methodName}<br/>{argListHtml}<br/>{methodDesc}<br/>");
                 }
 
@@ -186,15 +209,16 @@ namespace RazorEnhanced
                 File.WriteAllText(path + className + ".html", String.Format(html_main, content));
             }
         }
-        
+
+
         public static void ExportMKDocs(string path = null)
         {
             if (path == null) { path = DEFAULT_MD_PATH; }
             var docs = GetPythonAPI();
 
-            List<DocItem> classList = docs.FindAll(doc => doc.itemKind == DocItem.KindClass);
-            List<DocItem> propsList = docs.FindAll(doc => doc.itemKind == DocItem.KindProperty);
-            List<DocItem> methodList = docs.FindAll(doc => doc.itemKind == DocItem.KindMethod);
+            List<DocClass> classList = docs.classes;
+            List<DocProperty> propsList = docs.properties;
+            List<DocMethod> methodList = docs.methods;
 
             //Sort alphabetically
             //classList.Sort( (c1,c2) => c1.itemClass.CompareTo(c2.itemClass) );
@@ -206,15 +230,22 @@ namespace RazorEnhanced
             }
 
             String index;
-            index  = "site_name: Razor Enhaced\n";
+            index = "site_name: Razor Enhaced\n";
+            index += "docs_dir: ./MKDocs/\n";
             index += "nav:\n";
             index += "  - Classes:\n";
-            index += String.Join("\n", classListYaml) +"\n";
+            index += String.Join("\n", classListYaml) + "\n";
             index += "theme:\n";
             index += "  name: readthedocs\n";
+            index += "markdown_extensions:\n";
+            index += "  - codehilite\n";
+            //index += "      linenums: False\n";
+            //index += "      use_pygments: True\n";
+
 
             Directory.CreateDirectory(path);
-            File.WriteAllText(path + "mkdocs.yml",index);
+            Directory.CreateDirectory(path + "MKDocs/");
+            File.WriteAllText(path + "mkdocs.yml", index);
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -229,10 +260,10 @@ namespace RazorEnhanced
 
                 // Get props
                 var propsListMD = new List<string>();
-                foreach (var prop in classProps)
+                foreach (DocProperty prop in classProps)
                 {
-                    var propName = $"- `{className}.{prop.itemName}`";
-                    var propDesc = prop.itemDescription != ""? "\n"+prop.itemDescription:"";
+                    var propName = $"### {className}.{prop.itemName} __{prop.propertyType}__";
+                    var propDesc = prop.itemDescription != "" ? "\n" + prop.itemDescription : "";
                     propsListMD.Add($"{propName}{propDesc}");
                 }
 
@@ -244,30 +275,32 @@ namespace RazorEnhanced
                     var argsList = new List<String>();
                     foreach (DocMethodParam arg in method.paramList)
                     {
-                        var sign = $"{arg.itemType} {arg.itemName}";
+                        var sign = $"{arg.itemName}";
                         argsSign.Add(sign);
-                        argsList.Add($"- `{arg.itemType} {arg.itemName}` {arg.itemDescription}");
+                        argsList.Add($"- **{arg.itemName}**: {arg.itemType} {arg.itemDescription}");
                     }
-                    var argListDM = $"\n{String.Join("\n", argsList)}";
-                    var methodName = $"`{className}.{method.itemName}({String.Join(", ", argsSign)})`";
+                    var argListDM = $"{String.Join("\n", argsList)}";
+                    var methodTitle = $"### {className}.{method.itemName}";
+                    var methodName = $"```\n{className}.{method.itemName}({String.Join(", ", argsSign)}) -> {method.returnType}\n```";
+                    var methodBody = $"\n{methodName}\n{argListDM}\n".Trim();
                     var methodDesc = method.itemDescription;
 
-                    methodListMD.Add($"{methodName}\n{argListDM}\n{methodDesc}");
+                    methodListMD.Add($"{methodTitle}\n{methodBody}\n{methodDesc}".Trim());
                 }
 
                 // Assable page
                 var propsMD = String.Join("\n", propsListMD);
                 var methodsMD = String.Join("\n", methodListMD);
 
-                var classMD = $@"# {className}";
-                var classDescMD = cls.itemDescription+"\n\n";
+                var classMD = $@"# {className}  ";
+                var classDescMD = cls.itemDescription + "  \n\n";
 
                 String content;
-                content  = $"{classMD}";
-                content += $"{classDescMD}";
-                content += $"{propsMD}";
-                content += $"{methodsMD}";
-                File.WriteAllText(path + className + ".md", content);
+                content = classMD;
+                content += classDescMD;
+                content += $"## Properties  \n{propsMD} \n";
+                content += $"## Methods  \n{methodsMD}";
+                File.WriteAllText(path + "MKDocs/" + className + ".md", content);
             }
         }
 
@@ -283,12 +316,12 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="path">Define the output path</param>
         /// <param name="pretty">Output readable JSON (Default: True)</param>
-        public static void ExportPythonAPI(string path=null, bool pretty=true) {
+        public static void ExportPythonAPI(string path = null, bool pretty = true) {
             if (path == null) { path = DEFAULT_JSON_PATH; }
 
             String json_txt;
 
-            List<DocItem> docs = GetPythonAPI();
+            DocContainer docs = GetPythonAPI();
             if (pretty) {
                 var options = new JsonSerializerSettings();
                 options.Formatting = Newtonsoft.Json.Formatting.Indented;
@@ -300,15 +333,28 @@ namespace RazorEnhanced
             File.WriteAllText(path, json_txt);
         }
 
+        public static bool JsonDocExists(){
+            return File.Exists(DEFAULT_JSON_PATH);
+        }
+
+        public static void ImportPythonAPI(string path = null)
+        {
+            if (path == null) { path = DEFAULT_JSON_PATH; }
+
+            if ( JsonDocExists() )
+            {
+                var json_txt = File.ReadAllText(DEFAULT_JSON_PATH);
+                cachedDocs = JsonConvert.DeserializeObject<DocContainer>(json_txt);
+            }
+        }
+
         public static List<String> GetClasses()
         {
             var docs = GetPythonAPI();
             var names = new HashSet<String>();
-            foreach (var doc in docs)
+            foreach (var doc in docs.classes)
             {
-                if (doc.itemKind == DocItem.KindClass) { 
-                    names.Add(doc.itemName);
-                }
+                names.Add(doc.itemName);
             }
             return new List<String>(names);
         }
@@ -317,12 +363,9 @@ namespace RazorEnhanced
         {
             var docs = GetPythonAPI();
             var names = new HashSet<String>();
-            foreach (var doc in docs)
+            foreach (var doc in docs.properties)
             {
-                if (doc.itemKind == DocItem.KindProperty)
-                {
-                    names.Add( withClass ? doc.itemClass + "." + doc.itemName : doc.itemName);
-                }
+               names.Add( withClass ? doc.itemClass + "." + doc.itemName : doc.itemName);
             }
             
             return new List<String>(names);
@@ -332,31 +375,27 @@ namespace RazorEnhanced
         {
             var docs = GetPythonAPI();
             var names = new HashSet<String>();
-            foreach (var doc in docs)
+            foreach (var method in docs.methods)
             {
-                if (doc.itemKind == DocItem.KindMethod)
+                var methodName = withClass ? method.itemClass + "." + method.itemName : method.itemName;
+                    
+                if (withTypes || withNames)
                 {
-                    var method = (DocMethod)doc;
-                    var methodName = withClass ? method.itemClass + "." + method.itemName : method.itemName;
-                    
-                    if (withTypes || withNames)
+                    var prms = new List<String>();
+                    foreach (var prm in method.paramList)
                     {
-                        var prms = new List<String>();
-                        foreach (var prm in method.paramList)
-                        {
-                            String prm_txt;
-                            if (withTypes && withNames) { prm_txt = prm.itemType + " " + prm.itemName; }
-                            else if (withTypes) { prm_txt = prm.itemType; }
-                            else { prm_txt = prm.itemName; }
-                            prms.Add(prm_txt);
-                        }
-                        names.Add($"{methodName}({String.Join(",", prms)})");
+                        String prm_txt;
+                        if (withTypes && withNames) { prm_txt = prm.itemType + " " + prm.itemName; }
+                        else if (withTypes) { prm_txt = prm.itemType; }
+                        else { prm_txt = prm.itemName; }
+                        prms.Add(prm_txt);
                     }
-                    else {
-                        names.Add(methodName);
-                    }
-                    
+                    names.Add($"{methodName}({String.Join(",", prms)})");
                 }
+                else {
+                    names.Add(methodName);
+                }
+                    
             }
             return new List<String>(names);
         }
@@ -364,9 +403,10 @@ namespace RazorEnhanced
         /// <summary>
         /// Use reflection to generete the Python API List
         /// </summary>
-        public static List<DocItem> GetPythonAPI()
+        public static DocContainer GetPythonAPI()
         {
             if (cachedDocs != null) { return cachedDocs; }
+
             Misc.SendMessage("AutoDoc v0.01", 20);
             var docSections = new List<Type> {
                 // Test
@@ -412,14 +452,14 @@ namespace RazorEnhanced
             
 
             BindingFlags flags = BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
-            var listDocItems = new List<DocItem>();
+            cachedDocs = new DocContainer();
+            
             foreach (var docSection in docSections)
             {
-                var classDocItems = AutoDoc.ReadClass(docSection, flags);
-                listDocItems.AddRange(classDocItems);
+                var classDocs = AutoDoc.ReadClass(docSection, flags);
+                cachedDocs.AddRange(classDocs);
             }
 
-            cachedDocs = listDocItems;
             return cachedDocs;
         }
 
@@ -463,25 +503,30 @@ namespace RazorEnhanced
             return text.Contains(tag);        
         }
 
-        public static List<DocItem> ReadClass(Type type, BindingFlags flags)
+        public static DocContainer ReadClass(Type type, BindingFlags flags)
         {
-            var result = new List<DocItem>();
+            var result = new DocContainer();
 
             var classKey = XMLKeyComposer.GetKey(type);
             var className = type.Name;
             var classSummary = XMLDocReader.GetDocumentation(type);
-            result.Add( new DocClass(classKey, className, classSummary) );
+            result.classes.Add( new DocClass(classKey, className, classSummary) );
 
 
             // Methods
             var methods = type.GetMethods(flags);
             foreach (var method in methods)
             {
+                // Skip: setter, getter, operator-overloader, etc
+                if (method.IsSpecialName) { continue; }
+
                 var methodKey = XMLKeyComposer.GetKey(method);
                 var methodName = method.Name;
                 var returnType = method.ReturnType.Name;
                 var paramList = new List<DocMethodParam>();
-                var methodSummary = XMLDocReader.GetDocumentation(method);
+
+                var documentation = XMLDocReader.GetDocumentation(method);
+                var methodSummary = XMLDocReader.ExtractXML(documentation, "summary");
                 if ( HasTag(TAG_NODOC, methodSummary) ) continue;
 
                 var prms = method.GetParameters();
@@ -499,7 +544,7 @@ namespace RazorEnhanced
                 
                 var mtd = new DocMethod(methodKey, className, methodName, returnType, methodSummary, paramList);
                 if (HasTag(TAG_AUTOCOMPLETE, methodSummary)) mtd.flagAutocomplete = true;
-                result.Add(mtd);
+                result.methods.Add(mtd);
             }
 
             // Properties
@@ -510,9 +555,22 @@ namespace RazorEnhanced
                 var itemName = prop.Name;
                 var propertyType = prop.PropertyType.Name;
                 var propSummary = XMLDocReader.GetDocumentation(prop);
-                
+
                 var prt = new DocProperty(propKey, className, itemName, propertyType, propSummary);
-                result.Add(prt);
+                result.properties.Add(prt);
+            }
+
+            // Fields
+            var fields = type.GetFields(flags);
+            foreach (var field in fields)
+            {
+                var fieldKey = XMLKeyComposer.GetKey(field);
+                var itemName = field.Name;
+                var fieldType = field.FieldType.Name;
+                var fieldSummary = XMLDocReader.GetDocumentation(field);
+
+                var prt = new DocProperty(fieldKey, className, itemName, fieldType, fieldSummary);
+                result.properties.Add(prt);
             }
 
             return result;
@@ -698,16 +756,15 @@ namespace RazorEnhanced
         public static string GetDocumentation(ParameterInfo parameterInfo)
         {
             string memberDocumentation = GetDocumentation(parameterInfo.Member);
-            if (memberDocumentation != null)
+            if (memberDocumentation != "")
             {
-                string regexPattern = 
-                Regex.Escape(String.Format("<param name=\"{0}\">", parameterInfo.Name)) +
-                ".*?" +
-                Regex.Escape(@"</param>");
-                Match match = Regex.Match(memberDocumentation, regexPattern);
+                var name = Regex.Escape(parameterInfo.Name);
+                var pattern = new Regex( $"<param +name=\"{name}\">([^<]*)</param>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                Match match = pattern.Match(memberDocumentation);
                 if (match.Success)
                 {
-                    return match.Value;
+                    var txt = match.Groups[1].Value;
+                    return RemoveBaseIndentation(txt);
                 }
             }
             return "";
@@ -723,18 +780,17 @@ namespace RazorEnhanced
             }
             return text.Trim();
         }
-
-        //used only by XPathQuery, allocated once, reused always 
-        private static XmlDocument _query_doc = new XmlDocument();
-        public static List<String> XPathQuery(string text, string xpath) {
-            _query_doc.LoadXml($"<xml>{text}</xml>");
-            var nodes = new List<String>();
-            foreach (XmlNode node in _query_doc.SelectNodes($"xml/{xpath}")) {
-                var txt = RemoveBaseIndentation(node.InnerText);
-                nodes.Add(txt);
+        
+        public static String ExtractXML(string text, string tag) {
+            tag = Regex.Escape(tag);
+            var pattern = new Regex($"<{tag}>(.*)</{tag}>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            Match match = pattern.Match(text);
+            if (match.Success)
+            {
+                var txt = match.Groups[1].Value;
+                return RemoveBaseIndentation(txt);
             }
-
-            return nodes;
+            return "";
         }
 
 
@@ -743,23 +799,19 @@ namespace RazorEnhanced
             <member name="M:RazorEnhanced.Items.Move(System.Int32,RazorEnhanced.Mobile,System.Int32)">
         */
 
-        
+
         public static string GetDocumentation(MethodInfo methodInfo)
         {
             string key = XMLKeyComposer.GetKey(methodInfo);
             loadedXmlDocumentation.TryGetValue(key, out string documentation);
-            if (documentation == null) { return ""; }
-            var res = XPathQuery(documentation, "summary");
-            return String.Join("\n", res);
+            return documentation ?? "";
         }
 
         public static string GetDocumentation(ConstructorInfo constructorInfo)
         {
             string key = XMLKeyComposer.GetKey(constructorInfo);
             loadedXmlDocumentation.TryGetValue(key, out string documentation);
-            if (documentation == null) { return ""; }
-            var res = XPathQuery(documentation, "summary");
-            return String.Join("\n", res);
+            return documentation ?? "";
         }
 
         
@@ -767,27 +819,21 @@ namespace RazorEnhanced
         {
             string key = XMLKeyComposer.GetKey(propertyInfo);
             loadedXmlDocumentation.TryGetValue(key, out string documentation);
-            if (documentation == null) { return ""; }
-            var res = XPathQuery(documentation, "summary");
-            return String.Join("\n", res);
+            return documentation ?? "";
         }
 
         public static string GetDocumentation(EventInfo eventInfo)
         {
             string key = XMLKeyComposer.GetKey(eventInfo);
             loadedXmlDocumentation.TryGetValue(key, out string documentation);
-            if (documentation == null) { return ""; }
-            var res = XPathQuery(documentation, "summary");
-            return String.Join("\n", res);
+            return documentation ?? "";
         }
 
         public static string GetDocumentation(FieldInfo fieldInfo)
         {
             string key = XMLKeyComposer.GetKey(fieldInfo);
             loadedXmlDocumentation.TryGetValue(key, out string documentation);
-            if (documentation == null) { return ""; }
-            var res = XPathQuery(documentation, "summary");
-            return String.Join("\n", res);
+            return documentation ?? "";
         }
 
 

@@ -188,14 +188,16 @@ namespace Assistant
 
 		private static string m_Version;
 
-		[STAThread]
-		public static void Main(string[] Args)
-		{
-            //TODO: Remove me, it's just a convenient hook for debugging, this needs to be placed elsewere
-            RazorEnhanced.AutoDoc.ExportPythonAPI();
-            RazorEnhanced.AutoDoc.ExportHTML();
-            RazorEnhanced.AutoDoc.ExportMKDocs();
-
+        [STAThread]
+        public static void Main(string[] Args)
+        {
+            //Dalamar
+            //TODO: is this a good entry point for generating the docs ? 
+            if ( !RazorEnhanced.AutoDoc.JsonDocExists() ) { 
+                RazorEnhanced.AutoDoc.ExportPythonAPI();
+                RazorEnhanced.AutoDoc.ExportHTML();
+                RazorEnhanced.AutoDoc.ExportMKDocs();
+            }
             Application.ThreadException += ApplicationThreadException;
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
