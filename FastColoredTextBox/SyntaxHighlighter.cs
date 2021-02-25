@@ -94,9 +94,9 @@ namespace FastColoredTextBoxNS
 		protected Regex PythonStringRegex1;
 		protected Regex PythonStringRegex2;
 
-		protected Regex RazorClassKeywordRegex;
-		protected Regex RazorPropsKeywordRegex;
-		protected Regex RazorFunctionsKeywordRegex;
+		public Regex RazorClassKeywordRegex;
+        public Regex RazorPropsKeywordRegex;
+        public Regex RazorFunctionsKeywordRegex;
 
 		protected Regex PHPCommentRegex1,
                       PHPCommentRegex2,
@@ -1407,7 +1407,7 @@ namespace FastColoredTextBoxNS
 
 		protected void PythonAutoIndentNeeded(object sender, AutoIndentEventArgs args)
 		{
-			if (Regex.IsMatch(args.LineText, @"^[^""']*\:"))
+			if (Regex.IsMatch(args.LineText, @"\A[^""']*\:\s*\z"))
 			{
 				args.ShiftNextLines = args.TabLength;
 			}
