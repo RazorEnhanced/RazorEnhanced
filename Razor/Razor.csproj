@@ -253,6 +253,7 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Network\Ping.cs" />
     <Compile Include="Network\PacketTable.cs" />
     <Compile Include="Network\UoMod.cs" />
     <Compile Include="Network\UoWarper.cs" />

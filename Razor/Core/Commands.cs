@@ -16,7 +16,8 @@ namespace Assistant
 		{
 			Command.Register("where", new CommandCallback(Where));
 			Command.Register("ping", new CommandCallback(Ping));
-			Command.Register("reducecpu", new CommandCallback(ReNice));
+            Command.Register("pping", new CommandCallback(Packet_Ping));
+            Command.Register("reducecpu", new CommandCallback(ReNice));
 			Command.Register("renice", new CommandCallback(ReNice));
 			Command.Register("help", new CommandCallback(Command.ListCommands));
 			Command.Register("listcommand", new CommandCallback(Command.ListCommands));
@@ -185,8 +186,26 @@ namespace Assistant
 			World.Player.SendMessage(MsgLevel.Force, LocString.CurLoc, World.Player.Position, mapStr);
 		}
 
-		internal static void Ping(string[] param)
+        internal static void Packet_Ping(string[] param)
+        {
+            int num_packets = 5;
+            if (param.Length > 0)
+            {
+                try
+                {
+                    num_packets = int.Parse(param[0]);
+                }
+                catch (Exception e)
+                {
+                    num_packets = 5;
+                }
+            }
+            Assistant.Ping.StartPing(num_packets);
+        }
+
+        internal static void Ping(string[] param)
 		{
+            Packet_Ping(param);
 			new Thread(() =>
 			{
 				int max = int.MinValue;
@@ -218,11 +237,11 @@ namespace Assistant
 					else
 					if (reply.Status == IPStatus.Success)
 					{
-						RazorEnhanced.Misc.SendMessage("Ping Failed", 33, false);
+						RazorEnhanced.Misc.SendMessage("Network Ping Failed", 33, false);
 					}
 				}
 				if (max == int.MinValue)
-					RazorEnhanced.Misc.SendMessage("Server not respond to ping request", 33, false);
+					RazorEnhanced.Misc.SendMessage("Network Server not respond to ping request", 33, false);
 				else
 					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / NumPings).ToString() + "ms - Min: " + min + "ms", 33, false);
 
@@ -232,7 +251,7 @@ namespace Assistant
 
 		private static void PlayScript(string[] param)
 		{
-			if (param == null || param.Length == 0) 
+			if (param == null || param.Length == 0)
 				return;
 
 			string scriptname = String.Empty;
