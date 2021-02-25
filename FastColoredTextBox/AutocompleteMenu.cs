@@ -638,10 +638,6 @@ namespace FastColoredTextBoxNS
                 newText = "";
             }
             newText = newText + item;
-            if (item.ToolTipText != null)
-            {
-                newText = newText + "()";
-            }
 
             //replace text of fragment
             var tb = fragment.tb;
