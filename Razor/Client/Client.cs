@@ -87,7 +87,7 @@ namespace Assistant
                 RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
                 DialogResult laucherdialog = launcher.ShowDialog();
 
-                if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
+                if (laucherdialog == DialogResult.OK)                   // Avvia solo se premuto launch e non se exit
                 {
                     if (selected == null)
                     {
@@ -97,7 +97,27 @@ namespace Assistant
                     {
                         RazorEnhanced.Shard.Read(out shards);
                         selected = Instance.SelectShard(shards);
-                        Instance.Start(selected);
+                        if (launcher.ActiveControl.Text == "Launch CUO")
+                        {
+                            // Spin up CUO
+                            Process cuo = new Process();
+                            cuo.StartInfo.FileName = selected.CUOClient;
+                            int osiEnc = 0;
+                            if (selected.OSIEnc)
+                            {
+                                osiEnc = 5;
+                            }
+                            cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -encryption {3} -plugins \"{4}\"",
+                                                        selected.Host, selected.Port, selected.ClientFolder, osiEnc,
+                                                        System.Reflection.Assembly.GetExecutingAssembly().Location);
+                            cuo.Start();
+                            m_Running = false;
+                            return false;
+                        }
+                        else
+                        {
+                            Instance.Start(selected);
+                        }
                     }
                 }
                 else

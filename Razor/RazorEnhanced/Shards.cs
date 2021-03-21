@@ -30,7 +30,19 @@ namespace RazorEnhanced
 				try
 				{
 					m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(filename));
-					File.Copy(filename, backup, true);
+                    DataTableCollection tables = m_Dataset.Tables;
+
+                    DataTable shards = m_Dataset.Tables["SHARDS"];
+                    if (!shards.Columns.Contains("CUOClient"))
+                    {
+                        shards.Columns.Add("CUOClient", typeof(string));
+                        foreach (DataRow row in shards.Rows)
+                        {
+                            row["CUOClient"] = string.Empty;
+                        }
+                    }
+
+                    File.Copy(filename, backup, true);
 				}
 				catch (Exception e)
 				{
@@ -54,18 +66,19 @@ namespace RazorEnhanced
 				shards.Columns.Add("Description", typeof(string)); // Key
 				shards.Columns.Add("ClientPath", typeof(string));
 				shards.Columns.Add("ClientFolder", typeof(string));
-				shards.Columns.Add("Host", typeof(string));
+                shards.Columns.Add("CUOClient", typeof(string));
+                shards.Columns.Add("Host", typeof(string));
 				shards.Columns.Add("Port", typeof(long));
 				shards.Columns.Add("PatchEnc", typeof(bool));
 				shards.Columns.Add("OSIEnc", typeof(bool));
 				shards.Columns.Add("Selected", typeof(bool));
 
 				DataRow uod = shards.NewRow();
-				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
+				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
 				shards.Rows.Add(uod);
 
                 DataRow eventine = shards.NewRow();
-                eventine.ItemArray = new object[] { "UO Eventine", String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false };
+                eventine.ItemArray = new object[] { "UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false };
                 shards.Rows.Add(eventine);
 
                 m_Dataset.Tables.Add(shards);
@@ -80,9 +93,10 @@ namespace RazorEnhanced
 
 
 		internal string ClientPath { get; set; }
+        internal string CUOClient { get; set; }
 
-		//private string m_ClientFolder;
-		internal string ClientFolder { get; set; }
+        //private string m_ClientFolder;
+        internal string ClientFolder { get; set; }
 
 		private string m_Host;
 		internal string Host { get { return m_Host; } }
@@ -99,11 +113,12 @@ namespace RazorEnhanced
 		private bool m_Selected;
 		internal bool Selected { get { return m_Selected; } }
 
-		public Shard(string description, string clientpath, string clientfolder, string host, int port, bool patchenc, bool osienc, bool selected)
+		public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected)
 		{
 			m_Description = description;
 			ClientPath = clientpath;
 			ClientFolder = clientfolder;
+            CUOClient = cuoClient;
 			m_Host = host;
 			m_Port = port;
 			m_PatchEnc = patchenc;
@@ -116,7 +131,7 @@ namespace RazorEnhanced
 			return m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 		}
 
-		internal static void Insert(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc)
+		internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc)
 		{
 			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
 			{
@@ -127,6 +142,7 @@ namespace RazorEnhanced
 			newRow["Description"] = description;
 			newRow["ClientPath"] = clientpath;
 			newRow["ClientFolder"] = clientfolder;
+            newRow["CUOClient"] = cuoClient;
 			newRow["Host"] = host;
 			newRow["Port"] = port;
 			newRow["PatchEnc"] = parchenc;
@@ -137,7 +153,7 @@ namespace RazorEnhanced
 			Save();
 		}
 
-		internal static void Update(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc, bool selected)
+		internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc, bool selected)
 		{
 			bool found = m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
@@ -158,6 +174,7 @@ namespace RazorEnhanced
 						row["Description"] = description;
 						row["ClientPath"] = clientpath;
 						row["ClientFolder"] = clientfolder;
+                        row["CUOClient"] = cuoClient;
 						row["Host"] = host;
 						row["Port"] = port;
 						row["PatchEnc"] = parchenc;
@@ -214,21 +231,22 @@ namespace RazorEnhanced
 		{
 			List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
 
-			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-			{
-				string description = (string)row["Description"];
-				string clientpath = (string)row["ClientPath"];
-				string clientfolder = (string)row["ClientFolder"];
-				string host = (string)row["Host"];
-				long testPort = (long)row["Port"];
-				int port = (int)testPort;
-				bool patchenc = (bool)row["PatchEnc"];
-				bool osienc = (bool)row["OSIEnc"];
-				bool selected = (bool)row["Selected"];
+            foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+            {
+                string description = (string)row["Description"];
+                string clientpath = (string)row["ClientPath"];
+                string clientfolder = (string)row["ClientFolder"];
+                string cuoClient = (string)row["CUOClient"];
+                string host = (string)row["Host"];
+                long testPort = (long)row["Port"];
+                int port = (int)testPort;
+                bool patchenc = (bool)row["PatchEnc"];
+                bool osienc = (bool)row["OSIEnc"];
+                bool selected = (bool)row["Selected"];
 
-				RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, host, port, patchenc, osienc, selected);
-				shardsOut.Add(shard);
-			}
+                RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected);
+                shardsOut.Add(shard);
+            }
 
 			shards = shardsOut;
 		}

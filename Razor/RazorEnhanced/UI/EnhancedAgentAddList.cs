@@ -10,8 +10,8 @@ namespace RazorEnhanced.UI
 		// 1- Autoloot
 		// 2- Scavenger
 		// 3- Organizer
-		// 4- Buy 
-		// 5- Sell 
+		// 4- Buy
+		// 5- Sell
 		// 6- Dress
 		// 7- Friend
 		// 8- Restock
@@ -19,8 +19,8 @@ namespace RazorEnhanced.UI
 		// 10 - Clone autoloot
 		// 11 - Clone Scavenger
 		// 12 - Clone Organizer
-		// 13- Clone Buy 
-		// 14- Clone Sell 
+		// 13- Clone Buy
+		// 14- Clone Sell
 		// 17- Clone Restock
 
 		private int m_agentid = 0;
@@ -190,7 +190,7 @@ namespace RazorEnhanced.UI
 						Restock.AddList(newList);
 						break;
 					case 9:
-						RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", 0, false, false);
+						RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "Optional", "0.0.0.0", 0, false, false);
 						break;
 					case 10:
 						AutoLoot.CloneList(newList);

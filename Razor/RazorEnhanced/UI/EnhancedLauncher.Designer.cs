@@ -36,6 +36,9 @@ namespace RazorEnhanced.UI
             this.addShard = new RazorEnhanced.UI.RazorButton();
             this.shardlistCombobox = new RazorEnhanced.UI.RazorComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cuoPathClick = new System.Windows.Forms.Button();
+            this.cuoClientLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.osiEnc = new RazorEnhanced.UI.RazorCheckBox();
             this.patchEnc = new RazorEnhanced.UI.RazorCheckBox();
             this.portLabel = new RazorEnhanced.UI.RazorTextBox();
@@ -48,9 +51,10 @@ namespace RazorEnhanced.UI
             this.bNameCopy = new System.Windows.Forms.Button();
             this.clientPathLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.checkupdatebutton = new RazorEnhanced.UI.RazorButton();
             this.quit = new RazorEnhanced.UI.RazorButton();
             this.okay = new RazorEnhanced.UI.RazorButton();
-            this.checkupdatebutton = new RazorEnhanced.UI.RazorButton();
+            this.launchCUO = new RazorEnhanced.UI.RazorButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -117,6 +121,9 @@ namespace RazorEnhanced.UI
             //
             // groupBox2
             //
+            this.groupBox2.Controls.Add(this.cuoPathClick);
+            this.groupBox2.Controls.Add(this.cuoClientLabel);
+            this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.osiEnc);
             this.groupBox2.Controls.Add(this.patchEnc);
             this.groupBox2.Controls.Add(this.portLabel);
@@ -131,14 +138,44 @@ namespace RazorEnhanced.UI
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(12, 69);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(373, 124);
+            this.groupBox2.Size = new System.Drawing.Size(373, 153);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Shard Config";
             //
+            // cuoPathClick
+            //
+            this.cuoPathClick.BackgroundImage = global::Assistant.Properties.Resources.document_open_7;
+            this.cuoPathClick.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.cuoPathClick.Location = new System.Drawing.Point(6, 67);
+            this.cuoPathClick.Name = "cuoPathClick";
+            this.cuoPathClick.Size = new System.Drawing.Size(20, 20);
+            this.cuoPathClick.TabIndex = 18;
+            this.cuoPathClick.UseVisualStyleBackColor = true;
+            this.cuoPathClick.Click += new System.EventHandler(this.cuoClient_Click);
+            //
+            // cuoClientLabel
+            //
+            this.cuoClientLabel.ForeColor = System.Drawing.Color.SteelBlue;
+            this.cuoClientLabel.Location = new System.Drawing.Point(118, 70);
+            this.cuoClientLabel.Name = "cuoClientLabel";
+            this.cuoClientLabel.Size = new System.Drawing.Size(249, 13);
+            this.cuoClientLabel.TabIndex = 17;
+            this.cuoClientLabel.Text = "Optional";
+            this.cuoClientLabel.Click += new System.EventHandler(this.cuoClient_Click);
+            //
+            // label4
+            //
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(32, 70);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "CUO Client:";
+            //
             // osiEnc
             //
-            this.osiEnc.Location = new System.Drawing.Point(208, 93);
+            this.osiEnc.Location = new System.Drawing.Point(217, 125);
             this.osiEnc.Name = "osiEnc";
             this.osiEnc.Size = new System.Drawing.Size(140, 22);
             this.osiEnc.TabIndex = 15;
@@ -148,7 +185,7 @@ namespace RazorEnhanced.UI
             // patchEnc
             //
             this.patchEnc.BackColor = System.Drawing.SystemColors.Control;
-            this.patchEnc.Location = new System.Drawing.Point(6, 92);
+            this.patchEnc.Location = new System.Drawing.Point(15, 124);
             this.patchEnc.Name = "patchEnc";
             this.patchEnc.Size = new System.Drawing.Size(140, 22);
             this.patchEnc.TabIndex = 14;
@@ -163,7 +200,7 @@ namespace RazorEnhanced.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.portLabel.BackColor = System.Drawing.Color.White;
             this.portLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.portLabel.Location = new System.Drawing.Point(332, 66);
+            this.portLabel.Location = new System.Drawing.Point(333, 101);
             this.portLabel.Name = "portLabel";
             this.portLabel.Size = new System.Drawing.Size(35, 20);
             this.portLabel.TabIndex = 13;
@@ -173,7 +210,7 @@ namespace RazorEnhanced.UI
             // label7
             //
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(297, 68);
+            this.label7.Location = new System.Drawing.Point(299, 101);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 13);
             this.label7.TabIndex = 12;
@@ -186,7 +223,7 @@ namespace RazorEnhanced.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hostLabel.BackColor = System.Drawing.Color.White;
             this.hostLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.hostLabel.Location = new System.Drawing.Point(93, 66);
+            this.hostLabel.Location = new System.Drawing.Point(95, 101);
             this.hostLabel.Name = "hostLabel";
             this.hostLabel.Size = new System.Drawing.Size(200, 20);
             this.hostLabel.TabIndex = 11;
@@ -195,7 +232,7 @@ namespace RazorEnhanced.UI
             // label6
             //
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 69);
+            this.label6.Location = new System.Drawing.Point(7, 103);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(82, 13);
             this.label6.TabIndex = 10;
@@ -259,10 +296,20 @@ namespace RazorEnhanced.UI
             this.label2.TabIndex = 4;
             this.label2.Text = "Client Location:";
             //
+            // checkupdatebutton
+            //
+            this.checkupdatebutton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.checkupdatebutton.Location = new System.Drawing.Point(205, 229);
+            this.checkupdatebutton.Name = "checkupdatebutton";
+            this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
+            this.checkupdatebutton.TabIndex = 10;
+            this.checkupdatebutton.Text = "Check Update";
+            this.checkupdatebutton.Click += new System.EventHandler(this.checkupdatebutton_Click);
+            //
             // quit
             //
             this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.quit.Location = new System.Drawing.Point(283, 199);
+            this.quit.Location = new System.Drawing.Point(295, 229);
             this.quit.Name = "quit";
             this.quit.Size = new System.Drawing.Size(84, 21);
             this.quit.TabIndex = 9;
@@ -272,29 +319,30 @@ namespace RazorEnhanced.UI
             // okay
             //
             this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okay.Location = new System.Drawing.Point(30, 199);
+            this.okay.Location = new System.Drawing.Point(27, 229);
             this.okay.Name = "okay";
             this.okay.Size = new System.Drawing.Size(84, 21);
             this.okay.TabIndex = 8;
             this.okay.Text = "Launch";
             this.okay.Click += new System.EventHandler(this.okay_Click);
             //
-            // checkupdatebutton
+            // launchCUO
             //
-            this.checkupdatebutton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.checkupdatebutton.Location = new System.Drawing.Point(157, 199);
-            this.checkupdatebutton.Name = "checkupdatebutton";
-            this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
-            this.checkupdatebutton.TabIndex = 10;
-            this.checkupdatebutton.Text = "Check Update";
-            this.checkupdatebutton.Click += new System.EventHandler(this.checkupdatebutton_Click);
-
+            this.launchCUO.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.launchCUO.Enabled = false;
+            this.launchCUO.Location = new System.Drawing.Point(116, 229);
+            this.launchCUO.Name = "launchCUO";
+            this.launchCUO.Size = new System.Drawing.Size(84, 21);
+            this.launchCUO.TabIndex = 11;
+            this.launchCUO.Text = "Launch CUO";
+            this.launchCUO.Click += new System.EventHandler(this.launchCUO_Click);
             //
             // EnhancedLauncher
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(397, 231);
+            this.ClientSize = new System.Drawing.Size(397, 259);
+            this.Controls.Add(this.launchCUO);
             this.Controls.Add(this.checkupdatebutton);
             this.Controls.Add(this.quit);
             this.Controls.Add(this.okay);
@@ -337,5 +385,9 @@ namespace RazorEnhanced.UI
 		public RazorComboBox shardlistCombobox;
 		private System.Windows.Forms.OpenFileDialog openclientlocation;
         private RazorButton checkupdatebutton;
+        private System.Windows.Forms.Button cuoPathClick;
+        private System.Windows.Forms.Label cuoClientLabel;
+        private System.Windows.Forms.Label label4;
+        private RazorButton launchCUO;
     }
 }

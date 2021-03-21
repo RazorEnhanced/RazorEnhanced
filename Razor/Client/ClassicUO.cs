@@ -234,7 +234,7 @@ namespace Assistant
         {
             RazorEnhanced.Shard cuo_shard =
                 new RazorEnhanced.Shard("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
-                ClassicUOClient.UOFilePath, "127.0.0.1", 1000, true, false, true);
+                ClassicUOClient.UOFilePath, "", "127.0.0.1", 1000, true, false, true);
             return cuo_shard;
         }
 
