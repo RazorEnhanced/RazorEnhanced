@@ -18,6 +18,12 @@ namespace RazorEnhanced
         internal static bool BlockMenu = false;
         internal static bool BlockGump = false;
 
+        public static void ClearDragQueue()
+        {
+            Assistant.DragDropManager.Clear();
+        }
+
+
         public static void CloseBackpack()
         {
             RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
@@ -678,8 +684,8 @@ namespace RazorEnhanced
         /// hke.Key: enum System.Windows.Forms.Keys
         /// hke.Timestamp: double repesenting the UnixTimestamp, compatible with python's time.time()
         /// </summary>
-        /// 
-        /// 
+        ///
+        ///
         /// <example>
         /// last = Misc.LastHotKey()
         /// while True:
