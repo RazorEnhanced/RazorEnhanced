@@ -42,16 +42,16 @@ namespace RazorEnhanced.UI
                 groupBox2.Enabled = false;
 
             if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
-                okay.Enabled = true;
-            else
-                okay.Enabled = false;
-
-            if (File.Exists(cuoClientLabel.Text))
             {
-                launchCUO.Enabled = true;
+                okay.Enabled = true;
+                if (File.Exists(cuoClientLabel.Text))
+                {
+                    launchCUO.Enabled = true;
+                }
             }
             else
             {
+                okay.Enabled = false;
                 launchCUO.Enabled = false;
             }
         }

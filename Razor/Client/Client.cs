@@ -107,9 +107,12 @@ namespace Assistant
                             {
                                 osiEnc = 5;
                             }
-                            cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -encryption {3} -plugins \"{4}\"",
+                            var version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+                            string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", version.FileMajorPart, version.FileMinorPart, version.FileBuildPart, version.FilePrivatePart);
+                            cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
                                                         selected.Host, selected.Port, selected.ClientFolder, osiEnc,
-                                                        System.Reflection.Assembly.GetExecutingAssembly().Location);
+                                                        System.Reflection.Assembly.GetExecutingAssembly().Location,
+                                                        verString);
                             cuo.Start();
                             m_Running = false;
                             return false;
