@@ -124,7 +124,7 @@ namespace RazorEnhanced.UI
             #endregion
 
             #region Classes Autocomplete
-            
+
 			string[] old_classes =
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
@@ -298,7 +298,7 @@ namespace RazorEnhanced.UI
             //Dalamar: AutoDoc
             string[] methods = AutoDoc.GetMethods(true, true, false).ToArray();
 
-            
+
 			string[] old_methods =
 				methodsPlayer.Union(methodsSpells)
 					.Union(methodsMobiles)
@@ -322,9 +322,9 @@ namespace RazorEnhanced.UI
 					.Union(methodsTimer)
                     .Union(methodsVendor)
                     .ToArray();
-            
 
-           
+
+
 
             #region Props Autocomplete
 
@@ -341,7 +341,7 @@ namespace RazorEnhanced.UI
 			{
 				"Position.X", "Position.Y", "Position.Z"
 			};
-            
+
             string[] propsWithCheck = AutoDoc.GetProperties(true).Union(propsPlayer).Union(propsPositions).ToArray();
 
             string[] propsGeneric =
@@ -1313,7 +1313,7 @@ namespace RazorEnhanced.UI
                 .Union(descriptionVendor)
 				.ToDictionary(x => x.Key, x => x.Value);
 
-            
+
 
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
             foreach (var docitem in AutoDoc.GetPythonAPI().methods ) {
@@ -1343,13 +1343,13 @@ namespace RazorEnhanced.UI
                 else {
                     autodocMethods.Add(methodKey, tooltip);
                 }
-                
+
             }
 
             var descriptionMethods = descriptionGenerics.Union(autodocMethods).ToDictionary(x => x.Key, x => x.Value);
 
 
-         
+
 
             //Dalamar
             //Remove this, it's just debug
@@ -1360,7 +1360,7 @@ namespace RazorEnhanced.UI
             var classes_diff = new List<String>(old_classes);
             foreach (var cls in classes) {
                 //if found, remove because =. if not add as new methods
-                if (!classes_diff.Remove(cls)) 
+                if (!classes_diff.Remove(cls))
                 {
                     classes_diff.Add("(new)" + cls);
                 }
@@ -1491,7 +1491,7 @@ namespace RazorEnhanced.UI
 
         private void InitSyntaxtHighlight() {
             //Dalamar: Trying to inject SyntaxHighlight (and Autocomplete) from AutoDoc
-            //TODO: make it work 
+            //TODO: make it work
             // # Syntax Highlight
             List<String> itemList;
             List<String> escaped;
@@ -1657,24 +1657,24 @@ namespace RazorEnhanced.UI
 				SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
 		}
 
-		private void AsyncStart(bool debug)
-		{
-			if (ScriptRecorder.OnRecord)
-			{
-				SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
-				return;
-			}
+        private void AsyncStart(bool debug)
+        {
+            if (ScriptRecorder.OnRecord)
+            {
+                SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
+                return;
+            }
 
-			if (debug)
-			{
-				SetErrorBox("Starting Script in debug mode: " + m_Filename);
-				SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
-			}
-			else
-			{
-				SetErrorBox("Starting Script: " + m_Filename);
-				SetStatusLabel("SCRIPT RUNNING", Color.Green);
-			}
+            if (debug)
+            {
+                SetErrorBox("Starting Script in debug mode: " + m_Filename);
+                SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
+            }
+            else
+            {
+                SetErrorBox("Starting Script: " + m_Filename);
+                SetStatusLabel("SCRIPT RUNNING", Color.Green);
+            }
 
             try
             {
@@ -1690,31 +1690,43 @@ namespace RazorEnhanced.UI
                 m_Queue = new ConcurrentQueue<Command>();
 
                 string text = GetFastTextBoxText();
+                var checkUOS = text.Substring(0, 2);   // you want it to be UOS it better start with UOS style comment
+                if (checkUOS == "//")
+                {
+                    string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    UOSteamEngine uosteam = UOSteamEngine.Instance;
+                    uosteam.Execute(lines);
+                    SetErrorBox("Script " + m_Filename + " run completed!");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                }
+                else
+                {
 
-                m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
+                    m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 
-                /*Dalamar: BEGIN "fix python env" */
-                //EXECUTION OF THE SCRIPT
-                //Refactoring option, the whole block can be replaced by:
-                //
-                //m_pe.Execute(text);
+                    /*Dalamar: BEGIN "fix python env" */
+                    //EXECUTION OF THE SCRIPT
+                    //Refactoring option, the whole block can be replaced by:
+                    //
+                    //m_pe.Execute(text);
 
-                m_Source = m_Engine.CreateScriptSourceFromString(text);
+                    m_Source = m_Engine.CreateScriptSourceFromString(text);
 
-                // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-                PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-                pco.ModuleName = "__main__";
-                pco.Module |= ModuleOptions.Initialize;
-                CompiledCode compiled = m_Source.Compile(pco);
-                compiled.Execute(m_Scope);
+                    // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+                    PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+                    pco.ModuleName = "__main__";
+                    pco.Module |= ModuleOptions.Initialize;
+                    CompiledCode compiled = m_Source.Compile(pco);
+                    compiled.Execute(m_Scope);
 
-                // "-": DONT execute directly, unless you are not planning to import external modules.
-                //m_Source.Execute(m_Scope);
+                    // "-": DONT execute directly, unless you are not planning to import external modules.
+                    //m_Source.Execute(m_Scope);
 
-                /*Dalamar: END*/
+                    /*Dalamar: END*/
 
-                SetErrorBox("Script " + m_Filename + " run completed!");
-                SetStatusLabel("IDLE", Color.DarkTurquoise);
+                    SetErrorBox("Script " + m_Filename + " run completed!");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                }
             }
             catch (IronPython.Runtime.Exceptions.SystemExitException ex)
             {
@@ -1742,9 +1754,9 @@ namespace RazorEnhanced.UI
                 SetStatusLabel("IDLE", Color.DarkTurquoise);
             }
 
-			if (Scripts.ScriptEditorThread != null)
-				Scripts.ScriptEditorThread.Abort();
-		}
+            if (Scripts.ScriptEditorThread != null)
+                Scripts.ScriptEditorThread.Abort();
+        }
 
 		private void Stop()
 		{
@@ -2014,7 +2026,7 @@ namespace RazorEnhanced.UI
 		{
 			OpenFileDialog open = new OpenFileDialog
 			{
-				Filter = "Script Files|*.py;*.txt",
+				Filter = "Script Files|*.py;*.txt;*.uos",
 				RestoreDirectory = true
 			};
 			if (open.ShowDialog() == DialogResult.OK)
@@ -2087,7 +2099,7 @@ namespace RazorEnhanced.UI
 		{
 			SaveFileDialog save = new SaveFileDialog
 			{
-				Filter = "Script Files|*.py|Script Files|*.txt",
+				Filter = "Python Files|*.py|Script Files|*.txt|UOSteam Files|*.uos",
 				RestoreDirectory = true
 			};
 			save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
@@ -2458,7 +2470,7 @@ namespace RazorEnhanced.UI
             {
                 complete_description += "\n" + Description.Trim();
             }
-            
+
             if (Notes.Length > 0){
                 complete_description += "\n---" + Notes;
             }

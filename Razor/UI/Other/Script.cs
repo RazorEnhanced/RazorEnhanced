@@ -285,6 +285,7 @@ namespace Assistant
 
 		private void AddScriptInGrid()
 		{
+            openFileDialogscript.Filter = "Script Files|*.py;*.uos;*.txt";
             DialogResult result = openFileDialogscript.ShowDialog();
 
             if (result == DialogResult.OK) // Test result.

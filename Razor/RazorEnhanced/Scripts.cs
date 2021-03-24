@@ -103,34 +103,43 @@ namespace RazorEnhanced
                 try
                 {
                     string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
-                    DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
-                    if (FileChangeDate < lastModified)
+                    string ext = Path.GetExtension(fullpath);
+                    if (ext.Equals(".uos", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        ReadText();
-                        FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
-                        Create(null);
+                        UOSteamEngine uosteam = UOSteamEngine.Instance;
+                        uosteam.Execute(fullpath);
                     }
+                    else
+                    {
+
+                        DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
+                        if (FileChangeDate < lastModified)
+                        {
+                            ReadText();
+                            FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
+                            Create(null);
+                        }
 
 
-                    /*Dalamar: BEGIN "fix python env" */
-                    //EXECUTION OF THE SCRIPT
-                    //Refactoring option, the whole block can be replaced by:
-                    //
-                    //m_pe.Execute(m_Text);
+                        /*Dalamar: BEGIN "fix python env" */
+                        //EXECUTION OF THE SCRIPT
+                        //Refactoring option, the whole block can be replaced by:
+                        //
+                        //m_pe.Execute(m_Text);
 
-                    m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
-                    // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-                    PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-                    pco.ModuleName = "__main__";
-                    pco.Module |= ModuleOptions.Initialize;
-                    CompiledCode compiled = m_Source.Compile(pco);
-                    compiled.Execute(m_Scope);
+                        m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
+                        // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+                        PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+                        pco.ModuleName = "__main__";
+                        pco.Module |= ModuleOptions.Initialize;
+                        CompiledCode compiled = m_Source.Compile(pco);
+                        compiled.Execute(m_Scope);
 
-                    // "-": DONT execute directly, unless you are not planning to import external modules.
-                    //m_Source.Execute(m_Scope);
+                        // "-": DONT execute directly, unless you are not planning to import external modules.
+                        //m_Source.Execute(m_Scope);
 
-                    /*Dalamar: END*/
-
+                        /*Dalamar: END*/
+                    }
                 }
                 catch (IronPython.Runtime.Exceptions.SystemExitException ex )
                 {
