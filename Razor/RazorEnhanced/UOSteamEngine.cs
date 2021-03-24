@@ -20,9 +20,13 @@ namespace RazorEnhanced
 
         }
 
-        public void Execute(String text)
+        public void Execute(string filename)
         {
-            if (text == null) return;
+            if (filename == null) return;
+            var root = Lexer.Lex(filename);
+            UOScript.Script script = new UOScript.Script(root);
+            UOScript.Interpreter.StartScript(script);
+            while (UOScript.Interpreter.ExecuteScript()) { };
 
         }
 
@@ -81,7 +85,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("createlist", CreateList);
             UOScript.Interpreter.RegisterCommandHandler("clearlist", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("info", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("pause", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("pause", Pause);
             UOScript.Interpreter.RegisterCommandHandler("ping", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("playmacro", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("playsound", DummyCommand);
@@ -228,6 +232,15 @@ namespace RazorEnhanced
 
             return true;
         }
+        private static bool Pause(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            int delay = args[0].AsInt();
+            Misc.Pause(delay);
+            Console.WriteLine("Executing command {0} {1}", command, args);
+
+            return true;
+        }
+
         private static bool DummyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Console.WriteLine("Executing command {0} {1}", command, args);
