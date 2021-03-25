@@ -14,8 +14,31 @@ namespace RazorEnhanced
 {
     class UOSteamEngine
     {
+        // useOnceIgnoreList
+        private static List<int> m_serialUseOnceIgnoreList;
+        internal static Dictionary<string, int> m_alias;
+        // Aliases
+        /*backpack
+        bank
+        enemy
+        friend
+        ground
+        last
+        lasttarget
+        lastobject
+        lefthand
+        mount
+        righthand
+        self*/
+
         public UOSteamEngine()
         {
+            m_serialUseOnceIgnoreList = new List<int>();
+            m_alias = new Dictionary<string, int>();
+            m_alias.Add("backpack", Player.Backpack.Serial);
+            m_alias.Add("self", Player.Serial);
+            m_alias.Add("any", -1);
+
             RegisterCommands();
 
         }
@@ -51,18 +74,18 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("bandageself", BandageSelf);
             UOScript.Interpreter.RegisterCommandHandler("usetype", UseType);
             UOScript.Interpreter.RegisterCommandHandler("useobject", UseObject);
-            UOScript.Interpreter.RegisterCommandHandler("useonce", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("moveitem", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("useonce", UseOnce);
+            UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", CleanUseQueue);
+            UOScript.Interpreter.RegisterCommandHandler("moveitem", MoveItem);
             UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("movetype", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("walk", Walk);
-            UOScript.Interpreter.RegisterCommandHandler("turn", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("run", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("useskill", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("feed", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("rename", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("turn", Turn);
+            UOScript.Interpreter.RegisterCommandHandler("run", Walk); // I dunno how to make him run
+            UOScript.Interpreter.RegisterCommandHandler("useskill", UseSkill);
+            UOScript.Interpreter.RegisterCommandHandler("feed", Feed);
+            UOScript.Interpreter.RegisterCommandHandler("rename", RenamePet);
             UOScript.Interpreter.RegisterCommandHandler("shownames", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("togglehands", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("equipitem", DummyCommand);
@@ -191,19 +214,6 @@ namespace RazorEnhanced
             // Object attributes
 
 
-            // Aliases
-            /*backpack
-            bank
-            enemy
-            friend
-            ground
-            last
-            lasttarget
-            lastobject
-            lefthand
-            mount
-            righthand
-            self*/
 
         }
         private static IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
@@ -261,7 +271,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 Misc.SendMessage("set ability not proper syntax");
-                return false;
+                return true;
             }
             string ability = args[0].AsString().ToLower();
             bool on = args[1].AsBool();
@@ -313,7 +323,7 @@ namespace RazorEnhanced
                     }
                     break;
                 default:
-                    return false;
+                    return true;
             }
 
             return true;
@@ -327,7 +337,9 @@ namespace RazorEnhanced
             else
             {
                 int serial = args[0].AsInt();
-                Player.Attack(serial);
+                Mobile mobile = Mobiles.FindBySerial(serial);
+                if (mobile != null)
+                    Player.Attack(mobile);
             }
 
             return true;
@@ -347,12 +359,36 @@ namespace RazorEnhanced
             return true;
         }
 
-        private static bool ClearHands(string command, UOScript.Argument[] args, bool quiet, bool force)
+        private static bool Turn(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Player.UnEquipItemByLayer("RightHand", false);
-            Player.UnEquipItemByLayer("LeftHand", false);
+            if (args.Length == 1)
+            {
+                string direction = args[0].AsString();
+                if (Player.Direction != direction)
+                    Player.Walk(direction);
+            }
 
             return true;
+        }
+
+
+        private static bool ClearHands(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0 || args[0].AsString().ToLower() == "both")
+            {
+                Player.UnEquipItemByLayer("RightHand", false);
+                Player.UnEquipItemByLayer("LeftHand", false);
+            }
+            if (args.Length == 1)
+            {
+                if (args[0].AsString().ToLower() == "right")
+                    Player.UnEquipItemByLayer("RightHand", false);
+                if (args[0].AsString().ToLower() == "left")
+                    Player.UnEquipItemByLayer("LeftHand", false);
+            }
+
+
+                return true;
         }
         private static bool ClickObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -376,7 +412,7 @@ namespace RazorEnhanced
             if (args.Length == 0)
             {
                 Misc.SendMessage("Insufficient parameters");
-                return false;
+                return true;
             }
             int itemID = args[0].AsInt();
             int color = -1;
@@ -404,10 +440,143 @@ namespace RazorEnhanced
             if (args.Length == 0)
             {
                 Misc.SendMessage("Insufficient parameters");
-                return false;
+                return true;
             }
             int serial = args[0].AsInt();
             Items.UseItem(serial);
+
+            return true;
+        }
+
+        private static bool UseOnce(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            // This is a bit problematic
+            // UOSteam highlights the selected item red in your backpack, and it searches recursively to find the item id
+            // Current logic for us, only searches 1 deep .. maybe thats enough for now
+            if (args.Length == 0)
+            {
+                Misc.SendMessage("Insufficient parameters");
+                return true;
+            }
+
+            int itemID = args[0].AsInt();
+            int color = -1;
+            if (args.Length > 1)
+            {
+                color = args[1].AsInt();
+            }
+            List<Item> items = Player.Backpack.Contains;
+            Item selectedItem = null;
+
+            foreach (Item item in items)
+            {
+                if (item.ItemID == itemID && (!m_serialUseOnceIgnoreList.Contains(item.Serial)))
+                    selectedItem = item;
+            }
+
+            if (selectedItem != null)
+            {
+                m_serialUseOnceIgnoreList.Add(selectedItem.Serial);
+                Items.UseItem(selectedItem.Serial);
+            }
+
+            return true;
+        }
+
+        private static bool CleanUseQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            m_serialUseOnceIgnoreList.Clear();
+            return true;
+        }
+
+
+        private static bool MoveItem(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("Insufficient parameters");
+                return true;
+            }
+            int source = args[0].AsInt();
+            int dest = args[1].AsInt();
+            int x = -1;
+            int y = -1;
+            int z = -1;
+            int amount = -1;
+
+            if (args.Length == 3)
+            {
+                amount = args[2].AsInt();
+            }
+
+            if (args.Length > 5)
+            {
+                x = args[2].AsInt();
+                y = args[3].AsInt();
+                z = args[4].AsInt();
+                amount = args[5].AsInt();
+            }
+            Items.Move(source, dest, amount, x, y);
+
+            return true;
+        }
+        private static bool UseSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length != 1)
+            {
+                Misc.SendMessage("Insufficient parameters");
+                return true;
+            }
+            string skill = args[0].AsString();
+
+            Player.UseSkill(skill);
+
+            return true;
+        }
+
+        // Feed doesn't support food groups etc unless someone adds it
+        private static bool Feed(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("Insufficient parameters");
+                return false;
+            }
+            int target = args[0].AsInt();
+            int graphic = args[1].AsInt();
+            int color = -1;
+            int amount = 1;
+
+            if (args.Length > 2)
+            {
+                color = args[2].AsInt();
+            }
+            if (args.Length > 3)
+            {
+                amount = args[1].AsInt();
+            }
+            Item food = Items.FindByID(graphic, color, Player.Backpack.Serial);
+            if (food != null)
+            {
+                if (target == Player.Serial)
+                    Items.UseItem(food.Serial);
+                else
+                    Items.Move(food, target, amount);
+            }
+            return true;
+        }
+
+        private static bool RenamePet(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length != 2)
+            {
+                Misc.SendMessage("Incorrect parameters");
+                return true;
+            }
+            int serial = args[0].AsInt();
+            string newName = args[1].AsString();
+
+            Misc.PetRename(serial, newName);
 
             return true;
         }
@@ -523,6 +692,11 @@ namespace RazorEnhanced
                 }
                 else if (int.TryParse(token, out val))
                     return val;
+
+                if (UOSteamEngine.m_alias.ContainsKey(token))
+                {
+                    return UOSteamEngine.m_alias[token];
+                }
 
                 throw new RunTimeError(null, "Cannot convert argument to int");
             }
