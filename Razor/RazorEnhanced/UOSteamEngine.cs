@@ -29,14 +29,23 @@ namespace RazorEnhanced
             while (UOScript.Interpreter.ExecuteScript()) { };
 
         }
+        public void Execute(string[] textLines)
+        {
+            var root = Lexer.Lex(textLines);
+            UOScript.Script script = new UOScript.Script(root);
+            UOScript.Interpreter.StartScript(script);
+            while (UOScript.Interpreter.ExecuteScript()) { };
+
+        }
+
 
         public static void RegisterCommands()
         {
             // Commands. From UOSteam Documentation
             UOScript.Interpreter.RegisterCommandHandler("fly", FlyCommand);
             UOScript.Interpreter.RegisterCommandHandler("land", LandCommand);
-            UOScript.Interpreter.RegisterCommandHandler("setability", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("attack", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("setability", SetAbility);
+            UOScript.Interpreter.RegisterCommandHandler("attack", Attack);
             UOScript.Interpreter.RegisterCommandHandler("clearhands", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("clickobject", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("bandageself", DummyCommand);
@@ -48,7 +57,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("movetype", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("walk", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("walk", Walk);
             UOScript.Interpreter.RegisterCommandHandler("turn", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("run", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("useskill", DummyCommand);
@@ -84,7 +93,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("removelist", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("createlist", CreateList);
             UOScript.Interpreter.RegisterCommandHandler("clearlist", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("info", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("info", Info);
             UOScript.Interpreter.RegisterCommandHandler("pause", Pause);
             UOScript.Interpreter.RegisterCommandHandler("ping", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("playmacro", DummyCommand);
@@ -103,8 +112,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("logoutbutton", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("virtue", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("msg", MsgCommand);
-            UOScript.Interpreter.RegisterCommandHandler("headmsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("partymsg", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("headmsg", HeadMsg);
+            UOScript.Interpreter.RegisterCommandHandler("partymsg", PartyMsg);
             UOScript.Interpreter.RegisterCommandHandler("guildmsg", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("allymsg", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("whispermsg", DummyCommand);
@@ -221,14 +230,14 @@ namespace RazorEnhanced
         private static bool LandCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
-            Console.WriteLine("Executing command {0} {1}", command, args);
+            //Console.WriteLine("Executing command {0} {1}", command, args);
 
             return true;
         }
         private static bool FlyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(true);
-            Console.WriteLine("Executing command {0} {1}", command, args);
+            //Console.WriteLine("Executing command {0} {1}", command, args);
 
             return true;
         }
@@ -236,7 +245,104 @@ namespace RazorEnhanced
         {
             int delay = args[0].AsInt();
             Misc.Pause(delay);
-            Console.WriteLine("Executing command {0} {1}", command, args);
+            //Console.WriteLine("Executing command {0} {1}", command, args);
+
+            return true;
+        }
+        private static bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
+
+            return true;
+        }
+
+        private static bool SetAbility(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("set ability not proper syntax");
+                return false;
+            }
+            string ability = args[0].AsString().ToLower();
+            bool on = args[1].AsBool();
+
+            switch (ability)
+            {
+                case "primary":
+                    if (on)
+                    {
+                        Player.WeaponPrimarySA();
+                    }
+                    else
+                    {
+                        // I dunno how to turn off
+                        Player.WeaponPrimarySA();
+                    }
+                    break;
+                case "secondary":
+                    if (on)
+                    {
+                        Player.WeaponSecondarySA();
+                    }
+                    else
+                    {
+                        // I dunno how to turn off
+                        Player.WeaponSecondarySA();
+                    }
+                    break;
+                case "stun":
+                    if (on)
+                    {
+                        Player.WeaponStunSA();
+                    }
+                    else
+                    {
+                        // I dunno how to turn off
+                        Player.WeaponStunSA();
+                    }
+                    break;
+                case "disarm":
+                    if (on)
+                    {
+                        Player.WeaponDisarmSA();
+                    }
+                    else
+                    {
+                        // I dunno how to turn off
+                        Player.WeaponDisarmSA();
+                    }
+                    break;
+                default:
+                    return false;
+            }
+
+            return true;
+        }
+        private static bool Attack(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length < 1)
+            {
+                Player.SetWarMode(true);
+            }
+            else
+            {
+                int serial = args[0].AsInt();
+                Player.Attack(serial);
+            }
+
+            return true;
+        }
+
+        private static bool Walk(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0)
+                Player.Walk(Player.Direction);
+
+            if (args.Length == 1)
+            {
+                string direction = args[0].AsString();
+                Player.Walk(direction);
+            }
 
             return true;
         }
@@ -248,9 +354,59 @@ namespace RazorEnhanced
             return true;
         }
 
+        private static bool HeadMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            string msg = args[0].AsString();
+            int color = 0;
+            int mobile = Player.Serial;
+            if (args.Length == 2)
+            {
+                int value = args[1].AsInt();
+                if (value < 1024)
+                    color = value;
+                else
+                    mobile = value;
+            }
+            if (args.Length == 3)
+            {
+                color = args[1].AsInt();
+                mobile = args[2].AsInt();
+            }
+
+            Mobiles.Message(mobile, color, msg);
+
+            return true;
+        }
+
+        // Not implemented properly .. I dunno how to do a party only msg
+        private static bool PartyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            string msg = args[0].AsString();
+            if (args.Length == 1)
+            {
+                Misc.SendMessage(msg);
+            }
+            if (args.Length == 2)
+            {
+                int color = args[1].AsInt();
+                Misc.SendMessage(msg, color);
+            }
+
+            return true;
+        }
+
         private static bool MsgCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Console.WriteLine("Msg {0}", args[0].AsString());
+            string msg = args[0].AsString();
+            if (args.Length == 1)
+            {
+                Misc.SendMessage(msg);
+            }
+            if (args.Length == 2)
+            {
+                int color = args[1].AsInt();
+                Misc.SendMessage(msg, color);
+            }
 
             return true;
         }

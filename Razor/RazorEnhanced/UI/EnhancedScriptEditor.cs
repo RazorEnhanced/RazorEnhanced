@@ -1657,24 +1657,24 @@ namespace RazorEnhanced.UI
 				SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
 		}
 
-		private void AsyncStart(bool debug)
-		{
-			if (ScriptRecorder.OnRecord)
-			{
-				SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
-				return;
-			}
+        private void AsyncStart(bool debug)
+        {
+            if (ScriptRecorder.OnRecord)
+            {
+                SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
+                return;
+            }
 
-			if (debug)
-			{
-				SetErrorBox("Starting Script in debug mode: " + m_Filename);
-				SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
-			}
-			else
-			{
-				SetErrorBox("Starting Script: " + m_Filename);
-				SetStatusLabel("SCRIPT RUNNING", Color.Green);
-			}
+            if (debug)
+            {
+                SetErrorBox("Starting Script in debug mode: " + m_Filename);
+                SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
+            }
+            else
+            {
+                SetErrorBox("Starting Script: " + m_Filename);
+                SetStatusLabel("SCRIPT RUNNING", Color.Green);
+            }
 
             try
             {
@@ -1690,31 +1690,41 @@ namespace RazorEnhanced.UI
                 m_Queue = new ConcurrentQueue<Command>();
 
                 string text = GetFastTextBoxText();
+                var checkUOS = text.Substring(0, 2);   // you want it to be UOS it better start with UOS style comment
+                if (checkUOS == "//")
+                {
+                    string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    UOSteamEngine uosteam = new UOSteamEngine();
+                    uosteam.Execute(lines);
+                }
+                else
+                {
 
-                m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
+                    m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 
-                /*Dalamar: BEGIN "fix python env" */
-                //EXECUTION OF THE SCRIPT
-                //Refactoring option, the whole block can be replaced by:
-                //
-                //m_pe.Execute(text);
+                    /*Dalamar: BEGIN "fix python env" */
+                    //EXECUTION OF THE SCRIPT
+                    //Refactoring option, the whole block can be replaced by:
+                    //
+                    //m_pe.Execute(text);
 
-                m_Source = m_Engine.CreateScriptSourceFromString(text);
+                    m_Source = m_Engine.CreateScriptSourceFromString(text);
 
-                // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-                PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-                pco.ModuleName = "__main__";
-                pco.Module |= ModuleOptions.Initialize;
-                CompiledCode compiled = m_Source.Compile(pco);
-                compiled.Execute(m_Scope);
+                    // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+                    PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
+                    pco.ModuleName = "__main__";
+                    pco.Module |= ModuleOptions.Initialize;
+                    CompiledCode compiled = m_Source.Compile(pco);
+                    compiled.Execute(m_Scope);
 
-                // "-": DONT execute directly, unless you are not planning to import external modules.
-                //m_Source.Execute(m_Scope);
+                    // "-": DONT execute directly, unless you are not planning to import external modules.
+                    //m_Source.Execute(m_Scope);
 
-                /*Dalamar: END*/
+                    /*Dalamar: END*/
 
-                SetErrorBox("Script " + m_Filename + " run completed!");
-                SetStatusLabel("IDLE", Color.DarkTurquoise);
+                    SetErrorBox("Script " + m_Filename + " run completed!");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                }
             }
             catch (IronPython.Runtime.Exceptions.SystemExitException ex)
             {
@@ -1742,9 +1752,9 @@ namespace RazorEnhanced.UI
                 SetStatusLabel("IDLE", Color.DarkTurquoise);
             }
 
-			if (Scripts.ScriptEditorThread != null)
-				Scripts.ScriptEditorThread.Abort();
-		}
+            if (Scripts.ScriptEditorThread != null)
+                Scripts.ScriptEditorThread.Abort();
+        }
 
 		private void Stop()
 		{
