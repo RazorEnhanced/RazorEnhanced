@@ -8,161 +8,161 @@ using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
-	public class BandageHeal
-	{
-		private static bool m_AutoMode;
+    public class BandageHeal
+    {
+        private static bool m_AutoMode;
 
-		internal static bool AutoMode
-		{
-			get { return m_AutoMode; }
-			set { m_AutoMode = value; }
-		}
+        internal static bool AutoMode
+        {
+            get { return m_AutoMode; }
+            set { m_AutoMode = value; }
+        }
 
-		internal static void AddLog(string addlog)
-		{
-			if (!Client.Running)
-				return;
+        internal static void AddLog(string addlog)
+        {
+            if (!Client.Running)
+                return;
 
-			Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Add(addlog));
-			Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.SelectedIndex = s.BandageHealLogBox.Items.Count - 1);
-			if (Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
-				Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Clear());
-		}
+            Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Add(addlog));
+            Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.SelectedIndex = s.BandageHealLogBox.Items.Count - 1);
+            if (Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
+                Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Clear());
+        }
 
-		internal static int TargetSerial
-		{
-			get
-			{
-				int serial = 0;
-				try
-				{
-					serial = Convert.ToInt32(Engine.MainWindow.BandageHealtargetLabel.Text, 16);
-				}
-				catch
-				{ }
-				return serial;
-			}
+        internal static int TargetSerial
+        {
+            get
+            {
+                int serial = 0;
+                try
+                {
+                    serial = Convert.ToInt32(Engine.MainWindow.BandageHealtargetLabel.Text, 16);
+                }
+                catch
+                { }
+                return serial;
+            }
 
-			set
-			{
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealtargetLabel.Text = "0x" + value.ToString("X8"));
-			}
-		}
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealtargetLabel.Text = "0x" + value.ToString("X8"));
+            }
+        }
 
-		private static int m_customid;
-		internal static int CustomID
-		{
-			get { return m_customid; }
+        private static int m_customid;
+        internal static int CustomID
+        {
+            get { return m_customid; }
 
-			set
-			{
-				m_customid = value;
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4"));
-			}
-		}
+            set
+            {
+                m_customid = value;
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4"));
+            }
+        }
 
-		private static int m_customcolor;
-		internal static int CustomColor
-		{
-			get { return m_customcolor; }
+        private static int m_customcolor;
+        internal static int CustomColor
+        {
+            get { return m_customcolor; }
 
-			set
-			{
-				m_customcolor = value;
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4"));
-			}
-		}
+            set
+            {
+                m_customcolor = value;
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4"));
+            }
+        }
 
-		private static int m_customdelay;
-		internal static int CustomDelay
-		{
-			get { return m_customdelay; }
+        private static int m_customdelay;
+        internal static int CustomDelay
+        {
+            get { return m_customdelay; }
 
-			set
-			{
-				m_customdelay = value;
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealdelayTextBox.Text = value.ToString());
-			}
-		}
+            set
+            {
+                m_customdelay = value;
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealdelayTextBox.Text = value.ToString());
+            }
+        }
 
-		private static int m_maxrange;
-		internal static int MaxRange
-		{
-			get { return m_maxrange; }
+        private static int m_maxrange;
+        internal static int MaxRange
+        {
+            get { return m_maxrange; }
 
-			set
-			{
-				m_maxrange = value;
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealMaxRangeTextBox.Text = value.ToString());
-			}
-		}
+            set
+            {
+                m_maxrange = value;
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealMaxRangeTextBox.Text = value.ToString());
+            }
+        }
 
-		private static int m_hplimit;
-		internal static int HpLimit
-		{
-			get { return m_hplimit; }
+        private static int m_hplimit;
+        internal static int HpLimit
+        {
+            get { return m_hplimit; }
 
-			set
-			{
-				m_hplimit = value;
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealhpTextBox.Text = value.ToString());
-			}
-		}
+            set
+            {
+                m_hplimit = value;
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealhpTextBox.Text = value.ToString());
+            }
+        }
 
-		internal static bool PoisonBlock
-		{
-			get
-			{
-				return Engine.MainWindow.BandageHealpoisonCheckBox.Checked;
-			}
+        internal static bool PoisonBlock
+        {
+            get
+            {
+                return Engine.MainWindow.BandageHealpoisonCheckBox.Checked;
+            }
 
-			set
-			{
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealpoisonCheckBox.Checked = value);
-			}
-		}
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealpoisonCheckBox.Checked = value);
+            }
+        }
 
-		internal static bool MortalBlock
-		{
-			get
-			{
-				return Engine.MainWindow.BandageHealmortalCheckBox.Checked;
-			}
+        internal static bool MortalBlock
+        {
+            get
+            {
+                return Engine.MainWindow.BandageHealmortalCheckBox.Checked;
+            }
 
-			set
-			{
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealmortalCheckBox.Checked = value);
-			}
-		}
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealmortalCheckBox.Checked = value);
+            }
+        }
 
-		internal static bool HiddenBlock
-		{
-			get
-			{
-				return Engine.MainWindow.BandageHealhiddedCheckBox.Checked;
-			}
+        internal static bool HiddenBlock
+        {
+            get
+            {
+                return Engine.MainWindow.BandageHealhiddedCheckBox.Checked;
+            }
 
-			set
-			{
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealhiddedCheckBox.Checked = value);
-			}
-		}
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealhiddedCheckBox.Checked = value);
+            }
+        }
 
-		internal static bool ShowCountdown
-		{
-			get
-			{
-				return Engine.MainWindow.BandageHealcountdownCheckBox.Checked;
-			}
+        internal static bool ShowCountdown
+        {
+            get
+            {
+                return Engine.MainWindow.BandageHealcountdownCheckBox.Checked;
+            }
 
-			set
-			{
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcountdownCheckBox.Checked = value);
-			}
-		}
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealcountdownCheckBox.Checked = value);
+            }
+        }
 
 
-internal static bool SelfHealUseText
+        internal static bool SelfHealUseText
         {
             get
             {
@@ -178,7 +178,7 @@ internal static bool SelfHealUseText
             }
         }
 
-internal static string SelfHealUseTextSelfContent
+        internal static string SelfHealUseTextSelfContent
         {
             get
             {
@@ -205,33 +205,33 @@ internal static string SelfHealUseTextSelfContent
 
 
         internal static bool UseTarget
-		{
-			get
-			{
-				return Assistant.Engine.MainWindow.BandageHealUseTarget.Checked;
-			}
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.BandageHealUseTarget.Checked;
+            }
 
-			set
-			{
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTarget.Checked = value);
-			}
-		}
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTarget.Checked = value);
+            }
+        }
 
-		internal static void LoadSettings()
-		{
-			ShowCountdown = Settings.General.ReadBool("BandageHealcountdownCheckBox");
-			TargetSerial = Settings.General.ReadInt("BandageHealtargetLabel");
-			Engine.MainWindow.BandageHealcustomCheckBox.Checked = Settings.General.ReadBool("BandageHealcustomCheckBox");
-			CustomID = Settings.General.ReadInt("BandageHealcustomIDTextBox");
-			CustomColor = Settings.General.ReadInt("BandageHealcustomcolorTextBox");
-			Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = Settings.General.ReadBool("BandageHealdexformulaCheckBox");
-			CustomDelay = Settings.General.ReadInt("BandageHealdelayTextBox");
-			HpLimit = Settings.General.ReadInt("BandageHealhpTextBox");
-			MaxRange = Settings.General.ReadInt("BandageHealMaxRangeTextBox");
-			PoisonBlock = Settings.General.ReadBool("BandageHealpoisonCheckBox");
-			MortalBlock = Settings.General.ReadBool("BandageHealmortalCheckBox");
-			HiddenBlock = Settings.General.ReadBool("BandageHealhiddedCheckBox");
-			UseTarget = Settings.General.ReadBool("BandageHealUseTarget");
+        internal static void LoadSettings()
+        {
+            ShowCountdown = Settings.General.ReadBool("BandageHealcountdownCheckBox");
+            TargetSerial = Settings.General.ReadInt("BandageHealtargetLabel");
+            Engine.MainWindow.BandageHealcustomCheckBox.Checked = Settings.General.ReadBool("BandageHealcustomCheckBox");
+            CustomID = Settings.General.ReadInt("BandageHealcustomIDTextBox");
+            CustomColor = Settings.General.ReadInt("BandageHealcustomcolorTextBox");
+            Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+            CustomDelay = Settings.General.ReadInt("BandageHealdelayTextBox");
+            HpLimit = Settings.General.ReadInt("BandageHealhpTextBox");
+            MaxRange = Settings.General.ReadInt("BandageHealMaxRangeTextBox");
+            PoisonBlock = Settings.General.ReadBool("BandageHealpoisonCheckBox");
+            MortalBlock = Settings.General.ReadBool("BandageHealmortalCheckBox");
+            HiddenBlock = Settings.General.ReadBool("BandageHealhiddedCheckBox");
+            UseTarget = Settings.General.ReadBool("BandageHealUseTarget");
             SelfHealUseText = Settings.General.ReadBool("BandageHealUseText");
             SelfHealUseTextSelfContent = Settings.General.ReadString("BandageHealUseTextSelfContent");
             SelfHealUseTextContent = Settings.General.ReadString("BandageHealUseTextContent");
@@ -239,165 +239,172 @@ internal static string SelfHealUseTextSelfContent
 
             Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
-			Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
-			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
-			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
-			Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend");
+            Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
+            Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
+            Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
+            Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend");
             Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend Or Self");
             Engine.MainWindow.BandageHealtargetComboBox.Text = Settings.General.ReadString("BandageHealtargetComboBox");
 
-			if (Settings.General.ReadString("BandageHealtargetComboBox") == "Target")
-			{
-				Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
-				Engine.MainWindow.BandageHealtargetLabel.Enabled = true;
-			}
-			else
-			{
-				Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
-				Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
-			}
-		}
+            if (Settings.General.ReadString("BandageHealtargetComboBox") == "Target")
+            {
+                Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
+                Engine.MainWindow.BandageHealtargetLabel.Enabled = true;
+            }
+            else
+            {
+                Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
+                Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
+            }
+        }
 
-		// Core
+        // Core
 
-		internal static void EngineRun(Assistant.Mobile target)
-		{
-			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
-			{
-				if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
-				{
-					if (!World.Player.Visible)  // Esce se attivo blocco hidded
-						return;
-				}
+        internal static void EngineRun(Assistant.Mobile target)
+        {
+            if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
+            {
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
+                {
+                    if (!World.Player.Visible)  // Esce se attivo blocco hidded
+                        return;
+                }
 
-				if (RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox"))
-				{
-					if (target.Poisoned) // Esce se attivo blocco poison
-						return;
-				}
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox"))
+                {
+                    if (target.Poisoned) // Esce se attivo blocco poison
+                        return;
+                }
 
-				if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
-				{
-					if (Player.BuffsExist("Mortal Strike") && (target.Serial == Player.Serial))
-						return;
-				}
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
+                {
+                    if (Player.BuffsExist("Mortal Strike") && (target.Serial == Player.Serial))
+                        return;
+                }
+                Heal(target);
+            }
+            else        // Fine bende
+            {
+                Thread.Sleep(5000);
+            }
+        }
 
-				// Id base bende
-				int bandageamount = 0;
-				int bandageid = 0x0E21;
-				int bandagecolor = -1;
 
-				if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
-				{
-					bandageid = m_customid;
-					bandagecolor = m_customcolor;
-				}
-				int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
+        internal static void Heal(Assistant.Mobile target)
+        {
+            // Id base bende
+            int bandageamount = 0;
+            int bandageid = 0x0E21;
+            int bandagecolor = -1;
 
-				// Conteggio bende
-				bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
-				if (bandageamount == 0)
-				{
-					Player.HeadMessage(10, "Bandage not found");
-					AddLog("Bandage not found");
-				}
-				else if (bandageamount < 11 && bandageamount > 1)	 // don't warn on last bandaid to avoid constant message for everlasting bandage
-				{
-					Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-					AddLog("Warning: Low bandage: " + bandageamount + " left");
-				}
+            if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
+            {
+                bandageid = m_customid;
+                bandagecolor = m_customcolor;
+            }
+            int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
 
-				if (bandageamount != 0)        // Se le bende ci sono
-				{
-					AddLog("Using bandage (0x"+ bandageserial.ToString("X8") +") on Target (" + target.Serial.ToString()+")");
+            // Conteggio bende
+            bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
+            if (bandageamount == 0)
+            {
+                Player.HeadMessage(10, "Bandage not found");
+                AddLog("Bandage not found");
+            }
+            else if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
+            {
+                Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+                AddLog("Warning: Low bandage: " + bandageamount + " left");
+            }
 
-                    if (SelfHealUseText)
+            if (bandageamount != 0)        // Se le bende ci sono
+            {
+                AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
+
+                if (SelfHealUseText)
+                {
+                    if (target.Serial == Player.Serial)
                     {
-                        if (target.Serial == Player.Serial)
-                        {
-                            Player.ChatSay(0, SelfHealUseTextSelfContent);
-                        } else
-                        {
-                            Player.ChatSay(0, SelfHealUseTextContent);
-                            Target.WaitForTarget(1000, true);
-                            Target.TargetExecute(target.Serial);
-                        }
-                    }
-                    else if (UseTarget) // Uso nuovo packet
-                    {
-                        Items.UseItem(bandageserial);
-                        Target.WaitForTarget(1000, true);
-                        Target.TargetExecute(target.Serial);
+                        Player.ChatSay(0, SelfHealUseTextSelfContent);
                     }
                     else
                     {
-                        Items.UseItem(bandageserial, target.Serial, true);
+                        Player.ChatSay(0, SelfHealUseTextContent);
+                        Target.WaitForTarget(1000, true);
+                        Target.TargetExecute(target.Serial);
                     }
+                }
+                else if (UseTarget) // Uso nuovo packet
+                {
+                    Items.UseItem(bandageserial);
+                    Target.WaitForTarget(1000, true);
+                    Target.TargetExecute(target.Serial);
+                }
+                else
+                {
+                    Items.UseItem(bandageserial, target.Serial, true);
+                }
 
-					if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
-					{
-						double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
-						if (delay < 1) // Limite per evitare che si vada in negativo
-							delay = 100;
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
+                {
+                    double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
+                    if (delay < 1) // Limite per evitare che si vada in negativo
+                        delay = 100;
 
-						if (ShowCountdown)          // Se deve mostrare il cooldown
-						{
-							int second = 0;
+                    if (ShowCountdown)          // Se deve mostrare il cooldown
+                    {
+                        int second = 0;
 
-							var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
-							int first = int.Parse(delays[0]);
-							if (delays.Count() > 1)
-								second = int.Parse(delays[1]);
+                        var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
+                        int first = int.Parse(delays[0]);
+                        if (delays.Count() > 1)
+                            second = int.Parse(delays[1]);
 
-							while (first > 0)
-							{
-								Player.HeadMessage(10, (first / 1000).ToString());
-								first = first - 1000;
-								Thread.Sleep(1000);
-							}
-							Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-						}
-						else
-						{
-							Thread.Sleep((Int32)delay + 300);
-						}
-					}
-					else                // Se ho un delay custom
-					{
-						double delay = m_customdelay;
-						if (ShowCountdown)          // Se deve mostrare il cooldown
-						{
-							double subdelay = delay / 1000;
+                        while (first > 0)
+                        {
+                            Player.HeadMessage(10, (first / 1000).ToString());
+                            first = first - 1000;
+                            Thread.Sleep(1000);
+                        }
+                        Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
+                    }
+                    else
+                    {
+                        Thread.Sleep((Int32)delay + 300);
+                    }
+                }
+                else                // Se ho un delay custom
+                {
+                    double delay = m_customdelay;
+                    if (ShowCountdown)          // Se deve mostrare il cooldown
+                    {
+                        double subdelay = delay / 1000;
 
-							int second = 0;
+                        int second = 0;
 
-							var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
-							int first = int.Parse(delays[0]);
-							if (delays.Count() > 1)
-								second = int.Parse(delays[1]);
+                        var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
+                        int first = int.Parse(delays[0]);
+                        if (delays.Count() > 1)
+                            second = int.Parse(delays[1]);
 
-							while (first > 0)
-							{
-								Player.HeadMessage(10, first.ToString());
-								first--;
-								Thread.Sleep(1000);
-							}
-							Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-						}
-						else
-						{
-							Thread.Sleep((Int32)delay + 300);
-						}
-					}
-				}
-				else        // Fine bende
-				{
-					Thread.Sleep(5000);
-				}
-			}
-		}
+                        while (first > 0)
+                        {
+                            Player.HeadMessage(10, first.ToString());
+                            first--;
+                            Thread.Sleep(1000);
+                        }
+                        Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
+                    }
+                    else
+                    {
+                        Thread.Sleep((Int32)delay + 300);
+                    }
+                }
+            }
+        }
 
-         internal static void AutoRun()
+
+    internal static void AutoRun()
 		{
 			if (!Client.Running)
 				return;

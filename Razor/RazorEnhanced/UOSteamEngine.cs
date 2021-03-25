@@ -46,11 +46,11 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("land", LandCommand);
             UOScript.Interpreter.RegisterCommandHandler("setability", SetAbility);
             UOScript.Interpreter.RegisterCommandHandler("attack", Attack);
-            UOScript.Interpreter.RegisterCommandHandler("clearhands", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("clickobject", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("bandageself", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("usetype", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("useobject", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("clearhands", ClearHands);
+            UOScript.Interpreter.RegisterCommandHandler("clickobject", ClickObject);
+            UOScript.Interpreter.RegisterCommandHandler("bandageself", BandageSelf);
+            UOScript.Interpreter.RegisterCommandHandler("usetype", UseType);
+            UOScript.Interpreter.RegisterCommandHandler("useobject", UseObject);
             UOScript.Interpreter.RegisterCommandHandler("useonce", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("moveitem", DummyCommand);
@@ -343,6 +343,71 @@ namespace RazorEnhanced
                 string direction = args[0].AsString();
                 Player.Walk(direction);
             }
+
+            return true;
+        }
+
+        private static bool ClearHands(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            Player.UnEquipItemByLayer("RightHand", false);
+            Player.UnEquipItemByLayer("LeftHand", false);
+
+            return true;
+        }
+        private static bool ClickObject(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 1)
+            {
+                int serial = args[0].AsInt();
+                Items.SingleClick(serial);
+            }
+
+            return true;
+        }
+
+        private static bool BandageSelf(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            BandageHeal.Heal(Assistant.World.Player);
+            return true;
+        }
+
+        private static bool UseType(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0)
+            {
+                Misc.SendMessage("Insufficient parameters");
+                return false;
+            }
+            int itemID = args[0].AsInt();
+            int color = -1;
+            int container = -1;
+            if (args.Length > 1)
+            {
+                color = args[1].AsInt();
+            }
+            if (args.Length > 2)
+            {
+                container = args[2].AsInt();
+            }
+
+            Item item = Items.FindByID(itemID, color, container);
+            if (item != null)
+            {
+                Items.UseItem(item.Serial);
+            }
+
+            return true;
+        }
+
+        private static bool UseObject(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0)
+            {
+                Misc.SendMessage("Insufficient parameters");
+                return false;
+            }
+            int serial = args[0].AsInt();
+            Items.UseItem(serial);
 
             return true;
         }
