@@ -106,7 +106,7 @@ namespace RazorEnhanced
                     string ext = Path.GetExtension(fullpath);
                     if (ext.Equals(".uos", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        UOSteamEngine uosteam = new UOSteamEngine();
+                        UOSteamEngine uosteam = UOSteamEngine.Instance;
                         uosteam.Execute(fullpath);
                     }
                     else
