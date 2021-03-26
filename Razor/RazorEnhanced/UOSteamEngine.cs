@@ -12,6 +12,7 @@ using IronPython.Compiler;
 
 namespace RazorEnhanced
 {
+    // 
     class UOSteamEngine
     {
         private int m_toggle_LeftSave;
@@ -76,6 +77,7 @@ namespace RazorEnhanced
 
         }
 
+        // Abstract Placeholders
 
         public void RegisterCommands()
         {
@@ -92,103 +94,103 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("useonce", this.UseOnce);
             UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", this.CleanUseQueue);
             UOScript.Interpreter.RegisterCommandHandler("moveitem", this.MoveItem);
-            UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("movetype", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", this.MoveItemOffset); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("movetype", this.MoveType); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("walk", this.Walk);
             UOScript.Interpreter.RegisterCommandHandler("turn", this.Turn);
             UOScript.Interpreter.RegisterCommandHandler("run", this.Walk); // I dunno how to make him run
             UOScript.Interpreter.RegisterCommandHandler("useskill", this.UseSkill);
             UOScript.Interpreter.RegisterCommandHandler("feed", this.Feed);
             UOScript.Interpreter.RegisterCommandHandler("rename", this.RenamePet);
-            UOScript.Interpreter.RegisterCommandHandler("shownames", this.NotImplemented);
+            UOScript.Interpreter.RegisterCommandHandler("shownames", this.ShowNames);
             UOScript.Interpreter.RegisterCommandHandler("togglehands", this.ToggleHands);
-            UOScript.Interpreter.RegisterCommandHandler("equipitem", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("togglemounted", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("equipwand", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("buy", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("sell", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("clearbuy", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("clearsell", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("organizer", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("autoloot", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("dress", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("undress", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("dressconfig", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("togglescavenger", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("counter", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("unsetalias", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("togglemounted", this.ToggleMounted); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("equipwand", this.EquipWand); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("undress", this.Undress); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnsetAlias); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("setalias", this.SetAlias);
             UOScript.Interpreter.RegisterCommandHandler("promptalias", this.PromptAlias);
-            UOScript.Interpreter.RegisterCommandHandler("waitforgump", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("replygump", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("closegump", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("clearjournal", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("waitforjournal", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("poplist", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("pushlist", PushList);
-            UOScript.Interpreter.RegisterCommandHandler("removelist", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("createlist", CreateList);
-            UOScript.Interpreter.RegisterCommandHandler("clearlist", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("info", Info);
+            UOScript.Interpreter.RegisterCommandHandler("waitforgump", this.WaitForGump); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("replygump", this.ReplyGump); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("closegump", this.CloseGump); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clearjournal", this.ClearJournal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforjournal", this.WaitForJournal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("poplist", this.PopList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("pushlist", this.PushList);
+            UOScript.Interpreter.RegisterCommandHandler("removelist", this.RemoveList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("createlist", this.CreateList);
+            UOScript.Interpreter.RegisterCommandHandler("clearlist", this.ClearList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("info", this.Info);
             UOScript.Interpreter.RegisterCommandHandler("pause", this.Pause);
-            UOScript.Interpreter.RegisterCommandHandler("ping", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("playmacro", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("playsound", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("resync", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("snapshot", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("hotkeys", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("where", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("messagebox", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("mapuo", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("clickscreen", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("paperdoll", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("helpbutton", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("guildbutton", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("questsbutton", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("logoutbutton", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("virtue", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("msg", MsgCommand);
-            UOScript.Interpreter.RegisterCommandHandler("headmsg", HeadMsg);
-            UOScript.Interpreter.RegisterCommandHandler("partymsg", PartyMsg);
-            UOScript.Interpreter.RegisterCommandHandler("guildmsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("allymsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("whispermsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("yellmsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("sysmsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("chatmsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("emotemsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("promptmsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("timermsg", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("waitforprompt", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("cancelprompt", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("addfriend", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("removefriend", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("contextmenu", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("waitforcontext", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("ignoreobject", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("clearignorelist", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("setskill", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("waitforproperties", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("waitforcontents", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("miniheal", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("bigheal", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("cast", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("chivalryheal", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("waitfortarget", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("canceltarget", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("target", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("targettype", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("targetground", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("targettile", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("targettileoffset", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("targettilerelative", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("settimer", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("removetimer", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("createtimer", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("ping", this.Ping); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("playmacro", this.PlayMacro); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("where", this.Where); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("msg", this.MsgCommand);
+            UOScript.Interpreter.RegisterCommandHandler("headmsg", this.HeadMsg);
+            UOScript.Interpreter.RegisterCommandHandler("partymsg", this.PartyMsg);
+            UOScript.Interpreter.RegisterCommandHandler("guildmsg", this.GuildMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("allymsg", this.AllyMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("whispermsg", this.WhisperMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("yellmsg", this.YellMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("sysmsg", this.SysMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("chatmsg", this.ChatMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("emotemsg", this.EmoteMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("promptmsg", this.PromptMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("timermsg", this.TimerMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("target", this.Target); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer); //TODO: This method is a stub. Remove after successful testing.
 
 
             // Expressions
@@ -252,6 +254,21 @@ namespace RazorEnhanced
             return "test";
         }
 
+        private bool DummyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            Console.WriteLine("UOS: DummyCommand {0} {1}", command, args);
+            return true;
+        }
+
+        private bool NotImplemented(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            Console.WriteLine("UOS: NotImplemented {0} {1}", command, args);
+            return false;
+        }
+
+
+        // Commands: Stable
+
         private bool LandCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
@@ -268,7 +285,7 @@ namespace RazorEnhanced
             Misc.Pause(delay);
             return true;
         }
-        private static bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
+        private bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
             return true;
@@ -588,13 +605,6 @@ namespace RazorEnhanced
 
             return true;
         }
-        private bool NotImplemented(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            Console.WriteLine("Executing command {0} {1}", command, args);
-
-            return true;
-        }
-
 
         private bool ToggleHands(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -667,14 +677,8 @@ namespace RazorEnhanced
             return true;
         }
 
-        private static bool DummyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            Console.WriteLine("Executing command {0} {1}", command, args);
 
-            return true;
-        }
-
-        private static bool HeadMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        private bool HeadMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             string msg = args[0].AsString();
             int color = 0;
@@ -698,8 +702,28 @@ namespace RazorEnhanced
             return true;
         }
 
-        // Not implemented properly .. I dunno how to do a party only msg
-        private static bool PartyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        //TODO: Not implemented properly .. I dunno how to do a party only msg
+        private bool PartyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            
+            if (args.Length == 1)
+            {
+                string msg = args[0].AsString();
+                Player.ChatParty(msg);           
+            }
+
+            if (args.Length >= 2)
+            {
+                // 2nd parameter of ChatParty is Serial, to send private messages, not color, what0's
+                int color = args[1].AsInt();
+                Misc.SendMessage(color);
+                
+            }
+
+            return true;
+        }
+
+        private bool MsgCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             string msg = args[0].AsString();
             if (args.Length == 1)
@@ -715,23 +739,7 @@ namespace RazorEnhanced
             return true;
         }
 
-        private static bool MsgCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            string msg = args[0].AsString();
-            if (args.Length == 1)
-            {
-                Misc.SendMessage(msg);
-            }
-            if (args.Length == 2)
-            {
-                int color = args[1].AsInt();
-                Misc.SendMessage(msg, color);
-            }
-
-            return true;
-        }
-
-        private static bool CreateList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        private bool CreateList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Console.WriteLine("Creating list {0}", args[0].AsString());
 
@@ -740,7 +748,7 @@ namespace RazorEnhanced
             return true;
         }
 
-        private static bool PushList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        private bool PushList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
 
@@ -750,7 +758,443 @@ namespace RazorEnhanced
         }
 
 
+        //Dalamar: Create all stubs for methods
+        private bool MoveItemOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool MoveType(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool MoveTypeOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool EquipItem(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ToggleMounted(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool EquipWand(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Buy(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Sell(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClearBuy(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClearSell(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Organizer(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Autoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Dress(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Undress(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool DressConfig(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ToggleAutoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ToggleScavenger(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Counter(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool UnsetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForGump(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ReplyGump(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool CloseGump(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClearJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool PopList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool RemoveList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClearList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Ping(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool PlayMacro(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool PlaySound(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Resync(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Snapshot(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Hotkeys(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Where(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool MessageBox(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool MapUO(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClickScreen(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Paperdoll(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool HelpButton(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool GuildButton(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool QuestsButton(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool LogoutButton(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Virtue(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool GuildMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool AllyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WhisperMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool YellMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool SysMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ChatMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool EmoteMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool PromptMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool TimerMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForPrompt(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool CancelPrompt(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool AddFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool RemoveFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ContextMenu(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForContext(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool IgnoreObject(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClearIgnoreList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool SetSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForProperties(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool AutoColorPick(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForContents(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool MiniHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool BigHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Cast(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ChivalryHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool WaitForTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool CancelTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool TargetType(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool TargetGround(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool TargetTile(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool TargetTileOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool TargetTileRelative(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ClearTargetQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool SetTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool RemoveTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool CreateTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool ShowNames(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     namespace UOScript
     // This code from  https://github.com/jaedan/steam-engine.git
