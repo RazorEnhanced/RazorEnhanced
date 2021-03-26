@@ -19,20 +19,7 @@ namespace RazorEnhanced
         private int m_toggle_RightSave;
         // useOnceIgnoreList
         private List<int> m_serialUseOnceIgnoreList;
-        internal Dictionary<string, int> m_alias;
-        // Aliases
-        /*backpack
-        bank
-        enemy
-        friend
-        ground
-        last
-        lasttarget
-        lastobject
-        lefthand
-        mount
-        righthand
-        self*/
+
 
         private static UOSteamEngine instance = null;
         public static UOSteamEngine Instance
@@ -51,10 +38,10 @@ namespace RazorEnhanced
         private UOSteamEngine()
         {
             m_serialUseOnceIgnoreList = new List<int>();
-            m_alias = new Dictionary<string, int>();
             UOScript.Interpreter.SetAlias("backpack", (uint)Player.Backpack.Serial);
             UOScript.Interpreter.SetAlias("self", (uint)Player.Serial);
             UOScript.Interpreter.SetAlias("any", UInt32.MaxValue);
+
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
         }
@@ -192,7 +179,6 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer); //TODO: This method is a stub. Remove after successful testing.
 
-
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("contents", DummyExpression);
@@ -229,10 +215,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("name", DummyStringExpression);
 
             // Object attributes
-
-
-
         }
+        
         private static IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
@@ -274,17 +258,20 @@ namespace RazorEnhanced
             Player.Fly(false);
             return true;
         }
+        
         private bool FlyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(true);
             return true;
         }
+        
         private  bool Pause(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             int delay = args[0].AsInt();
             Misc.Pause(delay);
             return true;
         }
+        
         private bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
@@ -647,6 +634,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        private bool UnSetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 1)
+            {
+                return PromptAlias(command, args, quiet, force);
+                string alias = args[0].AsString();
+                UOScript.Interpreter.UnSetAlias(alias);
+            }
+
+            return true;
+        }
+
 
         private bool SetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -657,7 +656,7 @@ namespace RazorEnhanced
             if (args.Length == 2)
             {
                 string alias = args[0].AsString();
-                uint value = args[0].AsUInt();
+                uint value = args[1].AsUInt();
                 UOScript.Interpreter.SetAlias(alias, value);
             }
 
@@ -715,8 +714,8 @@ namespace RazorEnhanced
             if (args.Length >= 2)
             {
                 // 2nd parameter of ChatParty is Serial, to send private messages, not color, what0's
-                int color = args[1].AsInt();
-                Misc.SendMessage(color);
+                int serial = args[1].AsInt();
+                Player.ChatParty(msg, serial);  
                 
             }
 
@@ -2327,6 +2326,10 @@ namespace RazorEnhanced
                 return uint.MaxValue;
             }
 
+            public static void UnSetAlias(string alias)
+            {
+                _aliases.Remove(alias);
+            }
             public static void SetAlias(string alias, uint serial)
             {
                 _aliases[alias] = serial;
