@@ -18,20 +18,7 @@ namespace RazorEnhanced
         private int m_toggle_RightSave;
         // useOnceIgnoreList
         private List<int> m_serialUseOnceIgnoreList;
-        internal Dictionary<string, int> m_alias;
-        // Aliases
-        /*backpack
-        bank
-        enemy
-        friend
-        ground
-        last
-        lasttarget
-        lastobject
-        lefthand
-        mount
-        righthand
-        self*/
+
 
         private static UOSteamEngine instance = null;
         public static UOSteamEngine Instance
@@ -50,10 +37,10 @@ namespace RazorEnhanced
         private UOSteamEngine()
         {
             m_serialUseOnceIgnoreList = new List<int>();
-            m_alias = new Dictionary<string, int>();
             UOScript.Interpreter.SetAlias("backpack", (uint)Player.Backpack.Serial);
             UOScript.Interpreter.SetAlias("self", (uint)Player.Serial);
             UOScript.Interpreter.SetAlias("any", UInt32.MaxValue);
+
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
         }
@@ -118,7 +105,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("togglescavenger", DummyCommand);
             UOScript.Interpreter.RegisterCommandHandler("counter", DummyCommand);
-            UOScript.Interpreter.RegisterCommandHandler("unsetalias", DummyCommand);
+            UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnSetAlias);
             UOScript.Interpreter.RegisterCommandHandler("setalias", this.SetAlias);
             UOScript.Interpreter.RegisterCommandHandler("promptalias", this.PromptAlias);
             UOScript.Interpreter.RegisterCommandHandler("waitforgump", DummyCommand);
@@ -637,6 +624,17 @@ namespace RazorEnhanced
             return true;
         }
 
+        private bool UnSetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 1)
+            {
+                return PromptAlias(command, args, quiet, force);
+                string alias = args[0].AsString();
+                UOScript.Interpreter.UnSetAlias(alias);
+            }
+
+            return true;
+        }
 
         private bool SetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -647,7 +645,7 @@ namespace RazorEnhanced
             if (args.Length == 2)
             {
                 string alias = args[0].AsString();
-                uint value = args[0].AsUInt();
+                uint value = args[1].AsUInt();
                 UOScript.Interpreter.SetAlias(alias, value);
             }
 
@@ -1883,6 +1881,10 @@ namespace RazorEnhanced
                 return uint.MaxValue;
             }
 
+            public static void UnSetAlias(string alias)
+            {
+                _aliases.Remove(alias);
+            }
             public static void SetAlias(string alias, uint serial)
             {
                 _aliases[alias] = serial;
