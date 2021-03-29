@@ -104,9 +104,9 @@ namespace RazorEnhanced
             }
         }
 
-// Abstract Placeholders
+        // Abstract Placeholders
 
-public void RegisterCommands()
+        public void RegisterCommands()
         {
             // Commands. From UOSteam Documentation
             UOScript.Interpreter.RegisterCommandHandler("fly", this.FlyCommand);
@@ -259,8 +259,8 @@ public void RegisterCommands()
             UOScript.Interpreter.RegisterExpressionHandler("name", DummyStringExpression);
 
             // Object attributes
-
-        private static IComparable CountType(string expression, UOScript.Argument[] args, bool quiet)
+        }
+        private IComparable CountType(string expression, UOScript.Argument[] args, bool quiet)
         {
 
             if (args.Length == 3)
@@ -284,9 +284,7 @@ public void RegisterCommands()
         }
 
 
-        }
-
-        private static IComparable FindAlias(string expression, UOScript.Argument[] args, bool quiet)
+        IComparable FindAlias(string expression, UOScript.Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -1690,7 +1688,7 @@ public void RegisterCommands()
                 else if (uint.TryParse(token, out val))
                     return val;
 
-                throw new RunTimeError(null, "Cannot convert "+token+" argument to uint");
+                throw new RunTimeError(null, "Cannot convert " + token + " argument to uint");
             }
 
             public static ushort ToUShort(string token)
@@ -2293,9 +2291,9 @@ public void RegisterCommands()
                                 var arg = UOScript.Interpreter.GetListValue(listName, 0);
 
                                 if (arg != null)
-                                    _scope.SetVar(varName+"[]", arg);
+                                    _scope.SetVar(varName + "[]", arg);
                                 else
-                                    _scope.ClearVar(varName+"[]");
+                                    _scope.ClearVar(varName + "[]");
                             }
                             else
                             {
@@ -2308,13 +2306,13 @@ public void RegisterCommands()
                                 var arg = UOScript.Interpreter.GetListValue(listName, idx);
 
                                 if (arg != null)
-                                    _scope.SetVar(varName+"[]", arg);
+                                    _scope.SetVar(varName + "[]", arg);
                                 else
-                                    _scope.ClearVar(varName+"[]");
+                                    _scope.ClearVar(varName + "[]");
                             }
 
                             // Check loop condition
-                            var i = _scope.GetVar(varName+"[]");
+                            var i = _scope.GetVar(varName + "[]");
 
                             if (i != null)
                             {
@@ -3832,5 +3830,4 @@ public void RegisterCommands()
             return result.ToArray();
         }
     }
-
 }
