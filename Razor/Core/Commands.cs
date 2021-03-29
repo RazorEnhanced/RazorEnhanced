@@ -146,7 +146,7 @@ namespace Assistant
 			EnhancedScriptEditor.InspectGumps();
 		}
 
-		private static void Where(string[] param)
+		internal static void Where(string[] param)
 		{
 			string mapStr;
 			switch (World.Player.Map)

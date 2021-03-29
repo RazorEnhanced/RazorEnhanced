@@ -132,53 +132,53 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("rename", this.RenamePet);
             UOScript.Interpreter.RegisterCommandHandler("shownames", this.ShowNames);
             UOScript.Interpreter.RegisterCommandHandler("togglehands", this.ToggleHands);
-            UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("togglemounted", this.ToggleMounted); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem);
+            UOScript.Interpreter.RegisterCommandHandler("togglemounted", this.ToggleMounted);
             UOScript.Interpreter.RegisterCommandHandler("equipwand", this.EquipWand); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy);
+            UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell);
+            UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy);
+            UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell);
+            UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer);
             UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("autotargetobject", this.AutoTargetObject);
-            UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("undress", this.Undress); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress);
+            UOScript.Interpreter.RegisterCommandHandler("undress", this.Undress);
+            UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); // I can't tell what this is intended to do in UOS
+            UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot);
+            UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger);
+            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //This has no meaning in RE
             UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnSetAlias);
             UOScript.Interpreter.RegisterCommandHandler("setalias", this.SetAlias);
             UOScript.Interpreter.RegisterCommandHandler("promptalias", this.PromptAlias);
             UOScript.Interpreter.RegisterCommandHandler("waitforgump", this.WaitForGump);
             UOScript.Interpreter.RegisterCommandHandler("replygump", this.ReplyGump);
-            UOScript.Interpreter.RegisterCommandHandler("closegump", this.CloseGump); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearjournal", this.ClearJournal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforjournal", this.WaitForJournal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("poplist", this.PopList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("closegump", this.CloseGump); // kind of done, RE can't do paperdolls ...
+            UOScript.Interpreter.RegisterCommandHandler("clearjournal", this.ClearJournal);
+            UOScript.Interpreter.RegisterCommandHandler("waitforjournal", this.WaitForJournal);
+            UOScript.Interpreter.RegisterCommandHandler("poplist", this.PopList);
             UOScript.Interpreter.RegisterCommandHandler("pushlist", this.PushList);
-            UOScript.Interpreter.RegisterCommandHandler("removelist", this.RemoveList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("removelist", this.RemoveList);
             UOScript.Interpreter.RegisterCommandHandler("createlist", this.CreateList);
-            UOScript.Interpreter.RegisterCommandHandler("clearlist", this.ClearList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clearlist", this.ClearList);
             UOScript.Interpreter.RegisterCommandHandler("info", this.Info);
             UOScript.Interpreter.RegisterCommandHandler("pause", this.Pause);
-            UOScript.Interpreter.RegisterCommandHandler("ping", this.Ping); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("playmacro", this.PlayMacro); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("ping", this.Ping);
+            UOScript.Interpreter.RegisterCommandHandler("playmacro", this.PlayMacro);
+            UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound);
+            UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync);
+            UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot);
             UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("where", this.Where); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("where", this.Where);
+            UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox);
             UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
+            UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue);
             UOScript.Interpreter.RegisterCommandHandler("msg", this.MsgCommand);
             UOScript.Interpreter.RegisterCommandHandler("headmsg", this.HeadMsg);
             UOScript.Interpreter.RegisterCommandHandler("partymsg", this.PartyMsg);
@@ -195,28 +195,28 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu);
+            UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext);
+            UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject);
+            UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList);
+            UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill);
+            UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
             UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
             UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast);
             UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("target", this.Target); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget);
+            UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget);
+            UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget);
+            UOScript.Interpreter.RegisterCommandHandler("target", this.Target);
             UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue);
             UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer); //TODO: This method is a stub. Remove after successful testing.
@@ -224,6 +224,7 @@ namespace RazorEnhanced
 
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", FindAlias);
+            UOScript.Interpreter.RegisterExpressionHandler("organizing", Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("skill", DummyExpression);
@@ -246,8 +247,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("gumpexists", GumpExists);
             UOScript.Interpreter.RegisterExpressionHandler("injournal", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("listexists", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("list", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("inlist", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("list", ListCount);
+            UOScript.Interpreter.RegisterExpressionHandler("inlist", InList);
             UOScript.Interpreter.RegisterExpressionHandler("timer", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", DummyExpression);
 
@@ -295,6 +296,12 @@ namespace RazorEnhanced
 
             return false;
         }
+
+        IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            return RazorEnhanced.Organizer.Status();
+        }
+
 
         private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -398,18 +405,38 @@ namespace RazorEnhanced
             return -1;
         }
 
+        private static IComparable ListCount(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                string listName = args[0].AsString();
+                return UOScript.Interpreter.ListLength(listName);
+            }
+
+            return 0;
+        }
+
+        private static IComparable InList(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                string listName = args[0].AsString();
+                return UOScript.Interpreter.ListContains(listName, args[1]);  // This doesn't seem right
+            }
+            return 0;
+        }
+
+
 
         private static IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
-
             return 0;
         }
 
         private static int DummyIntExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
-
             return 3;
         }
 
@@ -930,10 +957,16 @@ namespace RazorEnhanced
 
         private bool PushList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            if (args.Length >= 2)
+            if (args.Length == 2)
             {
                 Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
                 UOScript.Interpreter.PushList(args[0].AsString(), args[1], true, false);
+            }
+            if (args.Length == 3)
+            {
+                string frontBack = args[2].AsString().ToLower();
+                Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
+                UOScript.Interpreter.PushList(args[0].AsString(), args[1], (frontBack == "front"), false);
             }
             return true;
         }
@@ -1197,27 +1230,77 @@ namespace RazorEnhanced
 
         private bool Buy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string buyListName = args[0].AsString().ToLower();
+                if (Settings.BuyAgent.ListExists(buyListName))
+                {
+                    BuyAgent.ChangeList(buyListName);
+                    BuyAgent.Enable();
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Buy List {0} does not exist", buyListName), 55);
+                }
+
+            }
+            return true;
         }
 
         private bool Sell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string sellListName = args[0].AsString().ToLower();
+                if (Settings.SellAgent.ListExists(sellListName))
+                {
+                    SellAgent.ChangeList(sellListName);
+                    SellAgent.Enable();
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Sell List {0} does not exist", sellListName), 55);
+                }
+
+            }
+            return true;
+
         }
 
         private bool ClearBuy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            BuyAgent.Disable();
+            return true;
         }
 
         private bool ClearSell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            SellAgent.Disable();
+            return true;
         }
 
         private bool Organizer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string organizerName = args[0].AsString();
+                RazorEnhanced.Organizer.RunOnce(organizerName, -1, -1, -1);
+            }
+            if (args.Length == 2)
+            {
+                string organizerName = args[0].AsString();
+                uint source = args[1].AsSerial();
+                RazorEnhanced.Organizer.RunOnce(organizerName, (int)source, -1, -1);
+            }
+            if (args.Length == 3)
+            {
+                string organizerName = args[0].AsString();
+                uint source = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                RazorEnhanced.Organizer.RunOnce(organizerName, (int)source, (int)dest, -1);
+            }
+
+            return true;
         }
 
         private bool AutoTargetObject(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1237,12 +1320,40 @@ namespace RazorEnhanced
 
         private bool Dress(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            if (args.Length == 1)
+            {
+                string dressListName = args[0].AsString();
+                if (Settings.Dress.ListExists(dressListName))
+                {
+                    RazorEnhanced.Dress.ChangeList(dressListName);
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Dress List {0} does not exist", dressListName), 55);
+                }
+            }
+            RazorEnhanced.Dress.DressFStart();
+            return true;
         }
 
         private bool Undress(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            if (args.Length == 1)
+            {
+                string unDressListName = args[0].AsString();
+                if (Settings.Dress.ListExists(unDressListName))
+                {
+                    RazorEnhanced.Dress.ChangeList(unDressListName);
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("UnDress List {0} does not exist", unDressListName), 55);
+                }
+            }
+            RazorEnhanced.Dress.UnDressFStart();
+            return true;
         }
 
         private bool DressConfig(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1252,12 +1363,28 @@ namespace RazorEnhanced
 
         private bool ToggleAutoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (RazorEnhanced.AutoLoot.Status())
+            {
+                RazorEnhanced.AutoLoot.Stop();
+            }
+            else
+            {
+                RazorEnhanced.AutoLoot.Start();
+            }
+            return true;
         }
 
         private bool ToggleScavenger(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (RazorEnhanced.Scavenger.Status())
+            {
+                RazorEnhanced.Scavenger.Stop();
+            }
+            else
+            {
+                RazorEnhanced.Scavenger.Start();
+            }
+            return true;
         }
 
         private bool Counter(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1299,32 +1426,57 @@ namespace RazorEnhanced
 
         private bool CloseGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            if (args.Length == 2)
+            {
+                string container = args[0].AsString().ToLower(); // I can only do containers
+                if (container == "container")
+                {
+                    uint gumpid = args[1].AsSerial();
+                    Gumps.CloseGump(gumpid);
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Unable to closegumps on {0} type objects", container), 55);
+                }
+            }
+            return true;
         }
 
         private bool ClearJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Journal.Clear();
+            return true;
         }
 
         private bool WaitForJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length > 1)
+            {
+                string text = args[0].AsString();
+                int delay = args[1].AsInt();
+                Journal.WaitJournal(text, delay);
+            }
+            return true;
         }
 
         private bool PopList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            string frontBack = args[1].AsString().ToLower();
+            UOScript.Interpreter.PopList(args[0].AsString(), (frontBack == "front"));
+            return true;
         }
 
         private bool RemoveList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            UOScript.Interpreter.DestroyList(args[0].AsString());
+            return true;
         }
 
         private bool ClearList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            UOScript.Interpreter.ClearList(args[0].AsString());
+            return true;
         }
 
         private bool Ping(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1345,7 +1497,13 @@ namespace RazorEnhanced
 
         private bool PlaySound(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string filename = args[0].AsString();
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(filename);
+                player.Play();
+            }
+            return true;
         }
 
         private bool Resync(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1356,7 +1514,8 @@ namespace RazorEnhanced
 
         private bool Snapshot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Assistant.ScreenCapManager.CaptureNow();
+            return true;
         }
 
         private bool Hotkeys(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1366,12 +1525,24 @@ namespace RazorEnhanced
 
         private bool Where(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
+            Assistant.Commands.Where(null);
             return NotImplemented(command, args, quiet, force);
         }
 
         private bool MessageBox(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            string title = "not specified";
+            string body = "empty";
+            if (args.Length > 0)
+            {
+                title = args[0].AsString();
+            }
+            if (args.Length > 1)
+            {
+                title = args[1].AsString();
+            }
+            System.Windows.Forms.MessageBox.Show(body, title);
+            return true;
         }
 
         private bool MapUO(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1379,9 +1550,69 @@ namespace RazorEnhanced
             return NotImplemented(command, args, quiet, force);
         }
 
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool SetCursorPos(int x, int y);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+        public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+        public const int MOUSEEVENTF_LEFTUP = 0x0004;
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        public const int MOUSEEVENTF_RIGHTUP = 0x0010;
+
+        //This simulates a left mouse click
+        internal static void LeftMouseClick(int xpos, int ypos)
+        {
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_RIGHTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_RIGHTUP, xpos, ypos, 0, 0);
+        }
+        internal static void RightMouseClick(int xpos, int ypos)
+        {
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
+        }
+
         private bool ClickScreen(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("Invalid parameters", 55);
+                return true;
+            }
+            int x = args[0].AsInt();
+            int y = args[1].AsInt();
+            string singleDouble = "single";
+            string leftRight = "left";
+
+            if (args.Length > 2)
+                singleDouble = args[2].AsString().ToLower();
+            if (args.Length > 3)
+                leftRight = args[3].AsString().ToLower();
+
+            if (leftRight == "left")
+            {
+                LeftMouseClick(x, y);
+                if (singleDouble == "double")
+                {
+                    System.Threading.Thread.Sleep(50);
+                    LeftMouseClick(x, y);
+                }
+            }
+            else
+            {
+                RightMouseClick(x, y);
+                if (singleDouble == "double")
+                {
+                    System.Threading.Thread.Sleep(50);
+                    RightMouseClick(x, y);
+                }
+            }
+
+            return true;
         }
 
         private bool Paperdoll(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1406,12 +1637,19 @@ namespace RazorEnhanced
 
         private bool LogoutButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Misc.Disconnect();
+            return true;
         }
 
         private bool Virtue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string virtue = args[0].AsString().ToLower();
+                Player.InvokeVirtue(virtue);
+            }
+
+            return true;
         }
 
         private bool GuildMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1490,27 +1728,72 @@ namespace RazorEnhanced
 
         private bool ContextMenu(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // docs say something about options, guessing thats the selection ?
+            if (args.Length == 2)
+            {
+                uint serial = args[0].AsSerial();
+                string option = args[1].AsString();
+                Misc.ContextReply ((int)serial, option);
+            }
+
+            return true;
         }
 
         private bool WaitForContext(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // docs say something about options, I have no idea what that means
+            int timeout = 5000;
+            if (args.Length > 1)
+            {
+                timeout = args[1].AsInt();
+            }
+            if (args.Length > 0)
+            {
+                uint serial = args[0].AsSerial();
+                Misc.WaitForContext((int)serial, timeout);
+            }
+
+            return true;
         }
 
         private bool IgnoreObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                Misc.IgnoreObject((int)serial);
+            }
+            return true;
         }
 
         private bool ClearIgnoreList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Misc.ClearIgnore();
+            return true;
         }
 
         private bool SetSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2)
+            {
+                string skill = args[0].AsString().ToLower();
+                string action = args[1].AsString().ToLower();
+                int setAs = 0;
+                switch (action)
+                {
+                    case "up":
+                        setAs = 0;
+                        break;
+                    case "down":
+                        setAs = 1;
+                        break;
+                    case "locked":
+                        setAs = 2;
+                        break;
+                }
+                Player.SetSkillStatus(skill, setAs);
+            }
+            return true;
         }
 
         private bool WaitForProperties(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1560,7 +1843,13 @@ namespace RazorEnhanced
 
         private bool Cast(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string spell = args[0].AsString().ToLower();
+                Spells.CastMagery(spell);
+            }
+
+            return true;
         }
 
         private bool ChivalryHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1570,22 +1859,41 @@ namespace RazorEnhanced
 
         private bool WaitForTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            int delay = 1000;
+            bool show = false;
+            if (args.Length > 0)
+            {
+                delay = args[0].AsInt();
+            }
+            if (args.Length > 1)
+            {
+                show = args[1].AsBool();
+            }
+
+            RazorEnhanced.Target.WaitForTarget(delay, show);
+            return true;
         }
 
         private bool CancelAutoTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Assistant.Targeting.CancelAutoTarget();
+            return true;
         }
 
         private bool CancelTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            RazorEnhanced.Target.Cancel();
+            return true;
         }
 
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                RazorEnhanced.Target.TargetExecute((int)serial);
+            }
+            return true;
         }
 
         private bool TargetType(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1615,7 +1923,8 @@ namespace RazorEnhanced
 
         private bool ClearTargetQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            RazorEnhanced.Target.ClearQueue();
+            return true;
         }
 
         private bool SetTimer(string command, UOScript.Argument[] args, bool quiet, bool force)

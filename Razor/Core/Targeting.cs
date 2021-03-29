@@ -343,9 +343,13 @@ namespace Assistant
                 if (!DoAutoTarget())
                     ResendTarget();
             }
-
-            //TargetInfo x;
         }
+        internal static void CancelAutoTarget()
+        {
+            m_AutoTarget = null;
+            m_QueueTarget = null;
+        }
+
         internal static bool DoLastTarget()
         {
             TargetInfo targ;
