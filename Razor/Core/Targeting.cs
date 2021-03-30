@@ -31,7 +31,8 @@ namespace Assistant
 		private static volatile bool m_NoShowTarget;
         private static bool m_ClientTarget;
 		private static TargetInfo m_LastTarget;
-		private static TargetInfo m_LastGroundTarg;
+        private static TargetInfo m_AutoTarget;
+        private static TargetInfo m_LastGroundTarg;
 		private static TargetInfo m_LastBeneTarg;
 		private static TargetInfo m_LastHarmTarg;
 
@@ -49,8 +50,10 @@ namespace Assistant
 		private delegate bool QueueTarget();
 
 		private static QueueTarget TargetSelfAction = new QueueTarget(DoTargetSelf);
-		private static QueueTarget LastTargetAction = new QueueTarget(DoLastTarget);
-		private static QueueTarget m_QueueTarget;
+        private static QueueTarget LastTargetAction = new QueueTarget(DoLastTarget);
+        private static QueueTarget AutoTargetAction = new QueueTarget(DoAutoTarget);
+
+        private static QueueTarget m_QueueTarget;
 
 		private static uint m_SpellTargID = 0;
 		internal static uint SpellTargetID { get { return m_SpellTargID; } set { m_SpellTargID = value; } }
@@ -330,31 +333,125 @@ namespace Assistant
 				m_QueueTarget = LastTargetAction;
 			}
 		}
+        internal static void SetAutoTarget(uint serial)
+        {
+            m_AutoTarget = new TargetInfo();
+            m_AutoTarget.Serial = new Serial(serial);
+            m_QueueTarget = AutoTargetAction;
+            if (m_HasTarget)
+            {
+                if (!DoAutoTarget())
+                    ResendTarget();
+            }
+        }
+        internal static void CancelAutoTarget()
+        {
+            m_AutoTarget = null;
+            m_QueueTarget = null;
+        }
 
-		internal static bool DoLastTarget()
+        internal static bool DoLastTarget()
+        {
+            TargetInfo targ;
+            if (Engine.MainWindow.SmartLastTarget.Checked)
+            {
+                if (m_AllowGround && m_LastGroundTarg != null)
+                    targ = m_LastGroundTarg;
+                else if (m_CurFlags == 1)
+                    targ = m_LastHarmTarg;
+                else if (m_CurFlags == 2)
+                    targ = m_LastBeneTarg;
+                else
+                    targ = m_LastTarget;
+
+                if (targ == null)
+                    targ = m_LastTarget;
+            }
+            else
+            {
+                if (m_AllowGround && m_LastGroundTarg != null)
+                    targ = m_LastGroundTarg;
+                else
+                    targ = m_LastTarget;
+            }
+
+            if (targ == null)
+                return false;
+
+            Point3D pos = Point3D.Zero;
+            if (targ.Serial.IsMobile)
+            {
+                Mobile m = World.FindMobile(targ.Serial);
+                if (m != null)
+                {
+                    pos = m.Position;
+
+                    targ.X = pos.X;
+                    targ.Y = pos.Y;
+                    targ.Z = pos.Z;
+                }
+                else
+                {
+                    pos = Point3D.Zero;
+                }
+            }
+            else if (targ.Serial.IsItem)
+            {
+                Item i = World.FindItem(targ.Serial);
+                if (i != null)
+                {
+                    pos = i.GetWorldPosition();
+
+                    targ.X = i.Position.X;
+                    targ.Y = i.Position.Y;
+                    targ.Z = i.Position.Z;
+                }
+                else
+                {
+                    pos = Point3D.Zero;
+                    targ.X = targ.Y = targ.Z = 0;
+                }
+            }
+            else
+            {
+                if (!m_AllowGround && (targ.Serial == Serial.Zero || targ.Serial >= 0x80000000))
+                {
+                    World.Player.SendMessage(MsgLevel.Warning, LocString.LTGround);
+                    return false;
+                }
+                else
+                {
+                    pos = new Point3D(targ.X, targ.Y, targ.Z);
+                }
+            }
+
+            if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
+            {
+                if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
+                    m_QueueTarget = LastTargetAction;
+                World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
+                return false;
+            }
+
+            if (CheckHealPoisonTarg(m_CurrentID, targ.Serial))
+                return false;
+
+            CancelClientTarget(false);
+            m_HasTarget = false;
+
+            targ.TargID = m_CurrentID;
+
+            if (m_Intercept)
+                OneTimeResponse(targ);
+            else
+                Assistant.Client.Instance.SendToServer(new TargetResponse(targ));
+            return true;
+        }
+
+        internal static bool DoAutoTarget()
 		{
 			TargetInfo targ;
-			if (Engine.MainWindow.SmartLastTarget.Checked)
-			{
-				if (m_AllowGround && m_LastGroundTarg != null)
-					targ = m_LastGroundTarg;
-				else if (m_CurFlags == 1)
-					targ = m_LastHarmTarg;
-				else if (m_CurFlags == 2)
-					targ = m_LastBeneTarg;
-				else
-					targ = m_LastTarget;
-
-				if (targ == null)
-					targ = m_LastTarget;
-			}
-			else
-			{
-				if (m_AllowGround && m_LastGroundTarg != null)
-					targ = m_LastGroundTarg;
-				else
-					targ = m_LastTarget;
-			}
+            targ = m_AutoTarget;
 
 			if (targ == null)
 				return false;
@@ -409,7 +506,7 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
-					m_QueueTarget = LastTargetAction;
+					m_QueueTarget = AutoTargetAction;
 				World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
 				return false;
 			}

@@ -12,9 +12,10 @@ using IronPython.Compiler;
 
 namespace RazorEnhanced
 {
-    // 
+    //
     class UOSteamEngine
     {
+        private int m_lastMount;
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
         // useOnceIgnoreList
@@ -40,10 +41,34 @@ namespace RazorEnhanced
             m_serialUseOnceIgnoreList = new List<int>();
             UOScript.Interpreter.SetAlias("backpack", (uint)Player.Backpack.Serial);
             UOScript.Interpreter.SetAlias("self", (uint)Player.Serial);
-            UOScript.Interpreter.SetAlias("any", UInt32.MaxValue);
+            UOScript.Interpreter.SetAlias("found", 0);
+            UOScript.Interpreter.SetAlias("enemy", 0);
+            UOScript.Interpreter.SetAlias("bank", 0);
+            UOScript.Interpreter.SetAlias("friend", 0);
+            UOScript.Interpreter.RegisterAliasHandler("ground", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("any", AliasHandler);
+            UOScript.Interpreter.SetAlias("last", 0);
+            UOScript.Interpreter.SetAlias("lasttarget", 0);
+            UOScript.Interpreter.SetAlias("lastobject", 0);
+            UOScript.Interpreter.SetAlias("lefthand", 0);
+            UOScript.Interpreter.SetAlias("mount", 0);
+            UOScript.Interpreter.SetAlias("righthand", 0);
 
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
+            m_lastMount = 0;
+        }
+
+        uint AliasHandler(string alias)
+        {
+            int everywhere = -1;
+            if (0 == String.Compare(alias, "ground", true))
+                return (uint)everywhere;
+            if (0 == String.Compare(alias, "any", true))
+                return (uint)everywhere;
+
+
+            return 0;
         }
 
         public void Execute(string filename)
@@ -52,7 +77,15 @@ namespace RazorEnhanced
             var root = Lexer.Lex(filename);
             UOScript.Script script = new UOScript.Script(root);
             UOScript.Interpreter.StartScript(script);
-            while (UOScript.Interpreter.ExecuteScript()) { };
+            try
+            {
+                while (UOScript.Interpreter.ExecuteScript()) { };
+            }
+            catch (Exception e)
+            {
+                UOScript.Interpreter.StopScript();
+                throw;
+            }
 
         }
         public void Execute(string[] textLines)
@@ -60,8 +93,15 @@ namespace RazorEnhanced
             var root = Lexer.Lex(textLines);
             UOScript.Script script = new UOScript.Script(root);
             UOScript.Interpreter.StartScript(script);
-            while (UOScript.Interpreter.ExecuteScript()) { };
-
+            try
+            {
+                while (UOScript.Interpreter.ExecuteScript()) { };
+            }
+            catch (Exception e)
+            {
+                UOScript.Interpreter.StopScript();
+                throw;
+            }
         }
 
         // Abstract Placeholders
@@ -81,9 +121,9 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("useonce", this.UseOnce);
             UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", this.CleanUseQueue);
             UOScript.Interpreter.RegisterCommandHandler("moveitem", this.MoveItem);
-            UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", this.MoveItemOffset); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("movetype", this.MoveType); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", this.MoveItemOffset);
+            UOScript.Interpreter.RegisterCommandHandler("movetype", this.MoveType);
+            UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset);
             UOScript.Interpreter.RegisterCommandHandler("walk", this.Walk);
             UOScript.Interpreter.RegisterCommandHandler("turn", this.Turn);
             UOScript.Interpreter.RegisterCommandHandler("run", this.Walk); // I dunno how to make him run
@@ -92,52 +132,53 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("rename", this.RenamePet);
             UOScript.Interpreter.RegisterCommandHandler("shownames", this.ShowNames);
             UOScript.Interpreter.RegisterCommandHandler("togglehands", this.ToggleHands);
-            UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("togglemounted", this.ToggleMounted); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem);
+            UOScript.Interpreter.RegisterCommandHandler("togglemounted", this.ToggleMounted);
             UOScript.Interpreter.RegisterCommandHandler("equipwand", this.EquipWand); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy);
+            UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell);
+            UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy);
+            UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell);
+            UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer);
             UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("undress", this.Undress); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnsetAlias); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("autotargetobject", this.AutoTargetObject);
+            UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress);
+            UOScript.Interpreter.RegisterCommandHandler("undress", this.Undress);
+            UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); // I can't tell what this is intended to do in UOS
+            UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot);
+            UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger);
+            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //This has no meaning in RE
+            UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnSetAlias);
             UOScript.Interpreter.RegisterCommandHandler("setalias", this.SetAlias);
             UOScript.Interpreter.RegisterCommandHandler("promptalias", this.PromptAlias);
-            UOScript.Interpreter.RegisterCommandHandler("waitforgump", this.WaitForGump); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("replygump", this.ReplyGump); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("closegump", this.CloseGump); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearjournal", this.ClearJournal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforjournal", this.WaitForJournal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("poplist", this.PopList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforgump", this.WaitForGump);
+            UOScript.Interpreter.RegisterCommandHandler("replygump", this.ReplyGump);
+            UOScript.Interpreter.RegisterCommandHandler("closegump", this.CloseGump); // kind of done, RE can't do paperdolls ...
+            UOScript.Interpreter.RegisterCommandHandler("clearjournal", this.ClearJournal);
+            UOScript.Interpreter.RegisterCommandHandler("waitforjournal", this.WaitForJournal);
+            UOScript.Interpreter.RegisterCommandHandler("poplist", this.PopList);
             UOScript.Interpreter.RegisterCommandHandler("pushlist", this.PushList);
-            UOScript.Interpreter.RegisterCommandHandler("removelist", this.RemoveList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("removelist", this.RemoveList);
             UOScript.Interpreter.RegisterCommandHandler("createlist", this.CreateList);
-            UOScript.Interpreter.RegisterCommandHandler("clearlist", this.ClearList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("clearlist", this.ClearList);
             UOScript.Interpreter.RegisterCommandHandler("info", this.Info);
             UOScript.Interpreter.RegisterCommandHandler("pause", this.Pause);
-            UOScript.Interpreter.RegisterCommandHandler("ping", this.Ping); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("playmacro", this.PlayMacro); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("ping", this.Ping);
+            UOScript.Interpreter.RegisterCommandHandler("playmacro", this.PlayMacro);
+            UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound);
+            UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync);
+            UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot);
             UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("where", this.Where); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("where", this.Where);
+            UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox);
             UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
+            UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue);
             UOScript.Interpreter.RegisterCommandHandler("msg", this.MsgCommand);
             UOScript.Interpreter.RegisterCommandHandler("headmsg", this.HeadMsg);
             UOScript.Interpreter.RegisterCommandHandler("partymsg", this.PartyMsg);
@@ -154,56 +195,60 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu);
+            UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext);
+            UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject);
+            UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList);
+            UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill);
+            UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
             UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
             UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast);
             UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("target", this.Target); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget);
+            UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget);
+            UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget);
+            UOScript.Interpreter.RegisterCommandHandler("target", this.Target);
             UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue);
             UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer); //TODO: This method is a stub. Remove after successful testing.
 
+
             // Expressions
-            UOScript.Interpreter.RegisterExpressionHandler("findalias", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("findalias", FindAlias);
+            UOScript.Interpreter.RegisterExpressionHandler("organizing", Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("skill", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("findobject", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("useobject", this.UseObjExp);
             UOScript.Interpreter.RegisterExpressionHandler("distance", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("inrange", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("buffexists", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("property", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("findtype", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("property", Property);
+            UOScript.Interpreter.RegisterExpressionHandler("findtype", FindType);
             UOScript.Interpreter.RegisterExpressionHandler("findlayer", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("skillstate", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("counttype", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("counttype", CountType);
             UOScript.Interpreter.RegisterExpressionHandler("counttypeground", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("findwand", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("inparty", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("infriendslist", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("war", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("ingump", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("gumpexists", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("gumpexists", GumpExists);
             UOScript.Interpreter.RegisterExpressionHandler("injournal", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("listexists", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("list", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("inlist", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("list", ListCount);
+            UOScript.Interpreter.RegisterExpressionHandler("inlist", InList);
             UOScript.Interpreter.RegisterExpressionHandler("timer", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", DummyExpression);
 
@@ -216,18 +261,182 @@ namespace RazorEnhanced
 
             // Object attributes
         }
-        
+        private IComparable CountType(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 3)
+            {
+                int graphic = args[0].AsInt();
+                int color = args[1].AsInt();
+                uint container = args[2].AsSerial();
+                int count = Items.ContainerCount((int)container, graphic, color);
+                return count;
+            }
+
+            return false;
+        }
+
+
+        private IComparable UseObjExp(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            UseObject(expression, args, quiet, false);
+            return true;
+        }
+
+
+        IComparable FindAlias(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 1)
+            {
+                string alias = args[0].AsString();
+                return UOScript.Interpreter.FindAlias(alias);
+            }
+
+            return false;
+        }
+
+        IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            return RazorEnhanced.Organizer.Status();
+        }
+
+
+        private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            Item item = null;
+            if (args.Length == 1)
+            {
+                int type = args[0].AsInt();
+                item = Items.FindByID(type, -1, -1);
+            }
+            if (args.Length == 2)
+            {
+                int type = args[0].AsInt();
+                int color = args[1].AsInt();
+                item = Items.FindByID(type, color, -1);
+            }
+            if (args.Length == 3)
+            {
+                int type = args[0].AsInt();
+                int color = args[1].AsInt();
+                uint source = args[2].AsSerial();
+                item = Items.FindByID(type, color, (int)source);
+            }
+            if (args.Length == 4)
+            {
+                int type = args[0].AsInt();
+                int color = args[1].AsInt();
+                uint source = args[2].AsSerial();
+                int amount = args[3].AsInt();
+                item = Items.FindByID(type, color, (int)source);
+                if (item != null)
+                {
+                    if (amount != -1 && item.Amount != amount)
+                    {
+                        item = null;
+                    }
+                }
+            }
+            if (args.Length == 5)
+            {
+                int type = args[0].AsInt();
+                int color = args[1].AsInt();
+                uint source = args[2].AsSerial();
+                int amount = args[3].AsInt();
+                int range = args[4].AsInt();
+                item = Items.FindByID(type, color, (int)source, range);
+                if (item != null)
+                {
+                    if (item.Amount != amount)
+                    {
+                        item = null;
+                    }
+                }
+            }
+
+            if (item == null)
+            {
+                UOScript.Interpreter.UnSetAlias("found");
+                return false;
+            }
+
+            UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
+            return true;
+
+        }
+
+        private static IComparable Property(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 2)
+            {
+                string findProp = args[0].AsString();
+                uint serial = args[1].AsSerial();
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    List<String> props = Items.GetPropStringList((int)serial);
+                    foreach (String prop in props)
+                    {
+                        if (0 == String.Compare(findProp, prop, true))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private static IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Gumps.HasGump();
+            }
+
+            if (args.Length == 1)
+            {
+                int gumpid = args[0].AsInt();
+                return (gumpid - Gumps.CurrentGump());
+            }
+            return -1;
+        }
+
+        private static IComparable ListCount(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                string listName = args[0].AsString();
+                return UOScript.Interpreter.ListLength(listName);
+            }
+
+            return 0;
+        }
+
+        private static IComparable InList(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                string listName = args[0].AsString();
+                return UOScript.Interpreter.ListContains(listName, args[1]);  // This doesn't seem right
+            }
+            return 0;
+        }
+
+
+
         private static IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
-
             return 0;
         }
 
         private static int DummyIntExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
-
             return 3;
         }
 
@@ -247,7 +456,7 @@ namespace RazorEnhanced
         private bool NotImplemented(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Console.WriteLine("UOS: NotImplemented {0} {1}", command, args);
-            return false;
+            return true;
         }
 
 
@@ -258,20 +467,20 @@ namespace RazorEnhanced
             Player.Fly(false);
             return true;
         }
-        
+
         private bool FlyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(true);
             return true;
         }
-        
-        private  bool Pause(string command, UOScript.Argument[] args, bool quiet, bool force)
+
+        private bool Pause(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             int delay = args[0].AsInt();
             Misc.Pause(delay);
             return true;
         }
-        
+
         private bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
@@ -400,7 +609,7 @@ namespace RazorEnhanced
             }
 
 
-                return true;
+            return true;
         }
         private bool ClickObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -638,14 +847,12 @@ namespace RazorEnhanced
         {
             if (args.Length == 1)
             {
-                return PromptAlias(command, args, quiet, force);
                 string alias = args[0].AsString();
                 UOScript.Interpreter.UnSetAlias(alias);
             }
 
             return true;
         }
-
 
         private bool SetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -656,7 +863,7 @@ namespace RazorEnhanced
             if (args.Length == 2)
             {
                 string alias = args[0].AsString();
-                uint value = args[1].AsUInt();
+                uint value = args[1].AsSerial();
                 UOScript.Interpreter.SetAlias(alias, value);
             }
 
@@ -685,7 +892,7 @@ namespace RazorEnhanced
             if (args.Length == 2)
             {
                 int value = (int)args[1].AsSerial();
-                if (value < 1024)
+                if (value < 10240)
                     color = value;
                 else
                     mobile = value;
@@ -704,19 +911,19 @@ namespace RazorEnhanced
         //TODO: Not implemented properly .. I dunno how to do a party only msg
         private bool PartyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            
+
             if (args.Length == 1)
             {
                 string msg = args[0].AsString();
-                Player.ChatParty(msg);           
+                Player.ChatParty(msg);
             }
 
             if (args.Length >= 2)
             {
+                string msg = args[0].AsString();
                 // 2nd parameter of ChatParty is Serial, to send private messages, not color, what0's
                 int serial = args[1].AsInt();
-                Player.ChatParty(msg, serial);  
-                
+                Player.ChatParty(msg, serial);
             }
 
             return true;
@@ -740,19 +947,27 @@ namespace RazorEnhanced
 
         private bool CreateList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Console.WriteLine("Creating list {0}", args[0].AsString());
-
-            UOScript.Interpreter.CreateList(args[0].AsString());
-
+            if (args.Length >= 1)
+            {
+                Console.WriteLine("Creating list {0}", args[0].AsString());
+                UOScript.Interpreter.CreateList(args[0].AsString());
+            }
             return true;
         }
 
         private bool PushList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
-
-            UOScript.Interpreter.PushList(args[0].AsString(), args[1], true, false);
-
+            if (args.Length == 2)
+            {
+                Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
+                UOScript.Interpreter.PushList(args[0].AsString(), args[1], true, false);
+            }
+            if (args.Length == 3)
+            {
+                string frontBack = args[2].AsString().ToLower();
+                Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
+                UOScript.Interpreter.PushList(args[0].AsString(), args[1], (frontBack == "front"), false);
+            }
             return true;
         }
 
@@ -760,27 +975,252 @@ namespace RazorEnhanced
         //Dalamar: Create all stubs for methods
         private bool MoveItemOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            uint serial = args[0].AsSerial();
+            // string ground = args[1].AsString();
+            if (args.Length == 2)
+            {
+                Items.DropItemGroundSelf((int)serial);
+            }
+
+            if (args.Length == 3)
+            {
+                int amount = args[2].AsInt();
+                Items.DropItemGroundSelf((int)serial, amount);
+            }
+            if (args.Length == 5)
+            {
+                int x = args[2].AsInt();
+                int y = args[3].AsInt();
+                int z = args[4].AsInt();
+                Items.MoveOnGround((int)serial, -1, x, y, z);
+            }
+
+            if (args.Length == 6)
+            {
+                int x = args[2].AsInt();
+                int y = args[3].AsInt();
+                int z = args[4].AsInt();
+                int amount = args[5].AsInt();
+                Items.MoveOnGround((int)serial, amount, x, y, z);
+            }
+
+            return true;
         }
 
         private bool MoveType(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 3)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                Item item = Items.FindByID(id, -1, (int)src);
+                if (item != null)
+                {
+                    Items.Move(item.Serial, (int)dest, item.Amount);
+                }
+            }
+            if (args.Length == 4)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                int color = args[3].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.Move(item.Serial, (int)dest, item.Amount);
+                }
+            }
+            if (args.Length == 5)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                int color = args[3].AsInt();
+                int amount = args[4].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.Move(item.Serial, (int)dest, amount);
+                }
+            }
+            if (args.Length == 6)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                int x = args[3].AsInt();
+                int y = args[4].AsInt();
+                int z = args[5].AsInt();
+                Item item = Items.FindByID(id, -1, (int)src);
+                if (item != null)
+                {
+                    Items.Move(item.Serial, (int)dest, 0, x, y);
+                }
+            }
+            if (args.Length == 7)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                int x = args[3].AsInt();
+                int y = args[4].AsInt();
+                int z = args[5].AsInt();
+                int color = args[6].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.Move(item.Serial, (int)dest, -1, x, y);
+                }
+            }
+            if (args.Length == 8)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                int x = args[3].AsInt();
+                int y = args[4].AsInt();
+                int z = args[5].AsInt();
+                int color = args[6].AsInt();
+                int amount = args[7].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.Move(item.Serial, (int)dest, amount, x, y);
+                }
+            }
+
+            return true;
         }
 
         private bool MoveTypeOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2 || args.Length == 3)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                Item item = Items.FindByID(id, -1, (int)src);
+                if (item != null)
+                {
+                    Items.DropItemGroundSelf(item.Serial);
+                }
+            }
+            if (args.Length == 4)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                //uint dest = args[2].AsSerial();
+                int color = args[3].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.MoveOnGround(item.Serial, 0, Player.Position.X, Player.Position.Y, Player.Position.Z);
+                }
+            }
+            if (args.Length == 5)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                // uint dest = args[2].AsSerial();
+                int color = args[3].AsInt();
+                int amount = args[4].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
+                }
+            }
+            if (args.Length == 6)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                //uint dest = args[2].AsSerial();
+                int x = args[3].AsInt();
+                int y = args[4].AsInt();
+                int z = args[5].AsInt();
+                Item item = Items.FindByID(id, -1, (int)src);
+                if (item != null)
+                {
+                    Items.MoveOnGround(item.Serial, 0, x, y, z);
+                }
+            }
+            if (args.Length == 7)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                //uint dest = args[2].AsSerial();
+                int x = args[3].AsInt();
+                int y = args[4].AsInt();
+                int z = args[5].AsInt();
+                int color = args[6].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.MoveOnGround(item.Serial, 0, x, y, z);
+                }
+            }
+            if (args.Length == 8)
+            {
+                int id = args[0].AsInt();
+                uint src = args[1].AsSerial();
+                //uint dest = args[2].AsSerial();
+                int x = args[3].AsInt();
+                int y = args[4].AsInt();
+                int z = args[5].AsInt();
+                int color = args[6].AsInt();
+                int amount = args[7].AsInt();
+                Item item = Items.FindByID(id, color, (int)src);
+                if (item != null)
+                {
+                    Items.MoveOnGround(item.Serial, amount, x, y, z);
+                }
+            }
+
+            return true;
         }
 
         private bool EquipItem(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1 || args.Length == 2)
+            {
+                uint serial = args[0].AsSerial();
+                //int layer = args[1].AsInt();
+                Player.EquipItem((int)serial);
+            }
+            return true;
         }
 
         private bool ToggleMounted(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // uosteam has a crappy implementation
+            // I am gonna change how it works a bit
+            if (null != Player.Mount)
+            {
+                m_lastMount = Player.Mount.Serial;
+                UOScript.Interpreter.SetAlias("mount", (uint)m_lastMount);
+                Mobiles.UseMobile(Player.Serial);
+            }
+            else
+            {
+                Mobile mount = null;
+                if (m_lastMount == 0)
+                {
+                    m_lastMount = (int)UOScript.Interpreter.GetAlias("mount");
+                    if (m_lastMount == 0)
+                    {
+                        RazorEnhanced.Target target = new RazorEnhanced.Target();
+                        m_lastMount = target.PromptTarget("Select a new mount");
+                    }
+                }
+                mount = Mobiles.FindBySerial(m_lastMount);
+                if (mount != null)
+                {
+                    Items.UseItem(mount.Serial);
+                }
+
+            }
+            return true;
         }
 
         private bool EquipWand(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -790,27 +1230,87 @@ namespace RazorEnhanced
 
         private bool Buy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string buyListName = args[0].AsString().ToLower();
+                if (Settings.BuyAgent.ListExists(buyListName))
+                {
+                    BuyAgent.ChangeList(buyListName);
+                    BuyAgent.Enable();
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Buy List {0} does not exist", buyListName), 55);
+                }
+
+            }
+            return true;
         }
 
         private bool Sell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string sellListName = args[0].AsString().ToLower();
+                if (Settings.SellAgent.ListExists(sellListName))
+                {
+                    SellAgent.ChangeList(sellListName);
+                    SellAgent.Enable();
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Sell List {0} does not exist", sellListName), 55);
+                }
+
+            }
+            return true;
+
         }
 
         private bool ClearBuy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            BuyAgent.Disable();
+            return true;
         }
 
         private bool ClearSell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            SellAgent.Disable();
+            return true;
         }
 
         private bool Organizer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string organizerName = args[0].AsString();
+                RazorEnhanced.Organizer.RunOnce(organizerName, -1, -1, -1);
+            }
+            if (args.Length == 2)
+            {
+                string organizerName = args[0].AsString();
+                uint source = args[1].AsSerial();
+                RazorEnhanced.Organizer.RunOnce(organizerName, (int)source, -1, -1);
+            }
+            if (args.Length == 3)
+            {
+                string organizerName = args[0].AsString();
+                uint source = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                RazorEnhanced.Organizer.RunOnce(organizerName, (int)source, (int)dest, -1);
+            }
+
+            return true;
+        }
+
+        private bool AutoTargetObject(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                Assistant.Targeting.SetAutoTarget(serial);
+            }
+            return true;
         }
 
         private bool Autoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -820,12 +1320,40 @@ namespace RazorEnhanced
 
         private bool Dress(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            if (args.Length == 1)
+            {
+                string dressListName = args[0].AsString();
+                if (Settings.Dress.ListExists(dressListName))
+                {
+                    RazorEnhanced.Dress.ChangeList(dressListName);
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Dress List {0} does not exist", dressListName), 55);
+                }
+            }
+            RazorEnhanced.Dress.DressFStart();
+            return true;
         }
 
         private bool Undress(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            if (args.Length == 1)
+            {
+                string unDressListName = args[0].AsString();
+                if (Settings.Dress.ListExists(unDressListName))
+                {
+                    RazorEnhanced.Dress.ChangeList(unDressListName);
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("UnDress List {0} does not exist", unDressListName), 55);
+                }
+            }
+            RazorEnhanced.Dress.UnDressFStart();
+            return true;
         }
 
         private bool DressConfig(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -835,12 +1363,28 @@ namespace RazorEnhanced
 
         private bool ToggleAutoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (RazorEnhanced.AutoLoot.Status())
+            {
+                RazorEnhanced.AutoLoot.Stop();
+            }
+            else
+            {
+                RazorEnhanced.AutoLoot.Start();
+            }
+            return true;
         }
 
         private bool ToggleScavenger(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (RazorEnhanced.Scavenger.Status())
+            {
+                RazorEnhanced.Scavenger.Stop();
+            }
+            else
+            {
+                RazorEnhanced.Scavenger.Start();
+            }
+            return true;
         }
 
         private bool Counter(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -850,72 +1394,128 @@ namespace RazorEnhanced
 
         private bool UnsetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                UOScript.Interpreter.UnSetAlias(args[0].AsString());
+                return true;
+            }
+            return true;
         }
 
         private bool WaitForGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2)
+            {
+                uint gumpid = args[0].AsUInt();
+                int delay = args[1].AsInt();
+                Gumps.WaitForGump(gumpid, delay);
+            }
+            return true;
         }
 
         private bool ReplyGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2)
+            {
+                uint gumpid = args[0].AsUInt();
+                int buttonid = args[1].AsInt();
+                Gumps.SendAction(gumpid, buttonid);
+            }
+            return true;
         }
 
         private bool CloseGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            if (args.Length == 2)
+            {
+                string container = args[0].AsString().ToLower(); // I can only do containers
+                if (container == "container")
+                {
+                    uint gumpid = args[1].AsSerial();
+                    Gumps.CloseGump(gumpid);
+                }
+                else
+                {
+                    Misc.SendMessage(String.Format("Unable to closegumps on {0} type objects", container), 55);
+                }
+            }
+            return true;
         }
 
         private bool ClearJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Journal.Clear();
+            return true;
         }
 
         private bool WaitForJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length > 1)
+            {
+                string text = args[0].AsString();
+                int delay = args[1].AsInt();
+                Journal.WaitJournal(text, delay);
+            }
+            return true;
         }
 
         private bool PopList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            string frontBack = args[1].AsString().ToLower();
+            UOScript.Interpreter.PopList(args[0].AsString(), (frontBack == "front"));
+            return true;
         }
 
         private bool RemoveList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            UOScript.Interpreter.DestroyList(args[0].AsString());
+            return true;
         }
 
         private bool ClearList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            UOScript.Interpreter.ClearList(args[0].AsString());
+            return true;
         }
 
         private bool Ping(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Assistant.Commands.Ping(null);
+            return true;
         }
 
         private bool PlayMacro(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string script = args[0].AsString();
+                Misc.ScriptRun(script);
+            }
+            return true;
         }
 
         private bool PlaySound(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string filename = args[0].AsString();
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(filename);
+                player.Play();
+            }
+            return true;
         }
 
         private bool Resync(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Misc.Resync();
+            return true;
         }
 
         private bool Snapshot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Assistant.ScreenCapManager.CaptureNow();
+            return true;
         }
 
         private bool Hotkeys(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -925,12 +1525,24 @@ namespace RazorEnhanced
 
         private bool Where(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
+            Assistant.Commands.Where(null);
             return NotImplemented(command, args, quiet, force);
         }
 
         private bool MessageBox(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            string title = "not specified";
+            string body = "empty";
+            if (args.Length > 0)
+            {
+                title = args[0].AsString();
+            }
+            if (args.Length > 1)
+            {
+                title = args[1].AsString();
+            }
+            System.Windows.Forms.MessageBox.Show(body, title);
+            return true;
         }
 
         private bool MapUO(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -938,9 +1550,69 @@ namespace RazorEnhanced
             return NotImplemented(command, args, quiet, force);
         }
 
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool SetCursorPos(int x, int y);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+        public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+        public const int MOUSEEVENTF_LEFTUP = 0x0004;
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        public const int MOUSEEVENTF_RIGHTUP = 0x0010;
+
+        //This simulates a left mouse click
+        internal static void LeftMouseClick(int xpos, int ypos)
+        {
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_RIGHTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_RIGHTUP, xpos, ypos, 0, 0);
+        }
+        internal static void RightMouseClick(int xpos, int ypos)
+        {
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
+        }
+
         private bool ClickScreen(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("Invalid parameters", 55);
+                return true;
+            }
+            int x = args[0].AsInt();
+            int y = args[1].AsInt();
+            string singleDouble = "single";
+            string leftRight = "left";
+
+            if (args.Length > 2)
+                singleDouble = args[2].AsString().ToLower();
+            if (args.Length > 3)
+                leftRight = args[3].AsString().ToLower();
+
+            if (leftRight == "left")
+            {
+                LeftMouseClick(x, y);
+                if (singleDouble == "double")
+                {
+                    System.Threading.Thread.Sleep(50);
+                    LeftMouseClick(x, y);
+                }
+            }
+            else
+            {
+                RightMouseClick(x, y);
+                if (singleDouble == "double")
+                {
+                    System.Threading.Thread.Sleep(50);
+                    RightMouseClick(x, y);
+                }
+            }
+
+            return true;
         }
 
         private bool Paperdoll(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -965,12 +1637,19 @@ namespace RazorEnhanced
 
         private bool LogoutButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Misc.Disconnect();
+            return true;
         }
 
         private bool Virtue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string virtue = args[0].AsString().ToLower();
+                Player.InvokeVirtue(virtue);
+            }
+
+            return true;
         }
 
         private bool GuildMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -995,7 +1674,16 @@ namespace RazorEnhanced
 
         private bool SysMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                Misc.SendMessage(args[0].AsString());
+            }
+            if (args.Length == 2)
+            {
+                Misc.SendMessage(args[0].AsString(), args[1].AsInt(), false);
+            }
+
+            return true;
         }
 
         private bool ChatMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1040,32 +1728,87 @@ namespace RazorEnhanced
 
         private bool ContextMenu(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // docs say something about options, guessing thats the selection ?
+            if (args.Length == 2)
+            {
+                uint serial = args[0].AsSerial();
+                string option = args[1].AsString();
+                Misc.ContextReply ((int)serial, option);
+            }
+
+            return true;
         }
 
         private bool WaitForContext(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // docs say something about options, I have no idea what that means
+            int timeout = 5000;
+            if (args.Length > 1)
+            {
+                timeout = args[1].AsInt();
+            }
+            if (args.Length > 0)
+            {
+                uint serial = args[0].AsSerial();
+                Misc.WaitForContext((int)serial, timeout);
+            }
+
+            return true;
         }
 
         private bool IgnoreObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                Misc.IgnoreObject((int)serial);
+            }
+            return true;
         }
 
         private bool ClearIgnoreList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Misc.ClearIgnore();
+            return true;
         }
 
         private bool SetSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2)
+            {
+                string skill = args[0].AsString().ToLower();
+                string action = args[1].AsString().ToLower();
+                int setAs = 0;
+                switch (action)
+                {
+                    case "up":
+                        setAs = 0;
+                        break;
+                    case "down":
+                        setAs = 1;
+                        break;
+                    case "locked":
+                        setAs = 2;
+                        break;
+                }
+                Player.SetSkillStatus(skill, setAs);
+            }
+            return true;
         }
 
         private bool WaitForProperties(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2)
+            {
+                uint serial = args[0].AsSerial();
+                int timeout = args[1].AsInt();
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    Items.WaitForProps(item, timeout);
+                }
+            }
+            return true;
         }
 
         private bool AutoColorPick(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1075,7 +1818,17 @@ namespace RazorEnhanced
 
         private bool WaitForContents(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 2)
+            {
+                uint serial = args[0].AsSerial();
+                int timeout = args[0].AsInt();
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    Items.WaitForContents(item, timeout);
+                }
+            }
+            return true;
         }
 
         private bool MiniHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1090,7 +1843,13 @@ namespace RazorEnhanced
 
         private bool Cast(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string spell = args[0].AsString().ToLower();
+                Spells.CastMagery(spell);
+            }
+
+            return true;
         }
 
         private bool ChivalryHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1100,17 +1859,41 @@ namespace RazorEnhanced
 
         private bool WaitForTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            int delay = 1000;
+            bool show = false;
+            if (args.Length > 0)
+            {
+                delay = args[0].AsInt();
+            }
+            if (args.Length > 1)
+            {
+                show = args[1].AsBool();
+            }
+
+            RazorEnhanced.Target.WaitForTarget(delay, show);
+            return true;
+        }
+
+        private bool CancelAutoTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            Assistant.Targeting.CancelAutoTarget();
+            return true;
         }
 
         private bool CancelTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            RazorEnhanced.Target.Cancel();
+            return true;
         }
 
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                RazorEnhanced.Target.TargetExecute((int)serial);
+            }
+            return true;
         }
 
         private bool TargetType(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1140,7 +1923,8 @@ namespace RazorEnhanced
 
         private bool ClearTargetQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            RazorEnhanced.Target.ClearQueue();
+            return true;
         }
 
         private bool SetTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1169,30 +1953,6 @@ namespace RazorEnhanced
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     namespace UOScript
@@ -1237,7 +1997,7 @@ namespace RazorEnhanced
                 else if (uint.TryParse(token, out val))
                     return val;
 
-                throw new RunTimeError(null, "Cannot convert argument to uint");
+                throw new RunTimeError(null, "Cannot convert " + token + " argument to uint");
             }
 
             public static ushort ToUShort(string token)
@@ -1332,6 +2092,12 @@ namespace RazorEnhanced
                 if (arg != null)
                     return arg.AsInt();
 
+                if (UOScript.Interpreter.FindAlias(_node.Lexeme))
+                {
+                    int value = (int)UOScript.Interpreter.GetAlias(_node.Lexeme);
+                    return value;
+                }
+
                 return TypeConverter.ToInt(_node.Lexeme);
             }
 
@@ -1345,6 +2111,12 @@ namespace RazorEnhanced
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
                     return arg.AsUInt();
+
+                if (UOScript.Interpreter.FindAlias(_node.Lexeme))
+                {
+                    uint value = UOScript.Interpreter.GetAlias(_node.Lexeme);
+                    return value;
+                }
 
                 return TypeConverter.ToUInt(_node.Lexeme);
             }
@@ -1375,11 +2147,18 @@ namespace RazorEnhanced
                     return arg.AsSerial();
 
                 // Resolve it as a global alias next
-                uint serial = UOScript.Interpreter.GetAlias(_node.Lexeme);
-                if (serial != uint.MaxValue)
+                if (UOScript.Interpreter.FindAlias(_node.Lexeme))
+                {
+                    uint serial = UOScript.Interpreter.GetAlias(_node.Lexeme);
                     return serial;
+                }
 
-                return AsUInt();
+                uint val;
+                if (uint.TryParse(_node.Lexeme, out val))
+                    return AsUInt();
+
+                // This is a bad place to be
+                return 0;
             }
 
             // Treat the argument as a string
@@ -1804,7 +2583,8 @@ namespace RazorEnhanced
                             // foreach VAR in LIST
                             // The iterator's name is the hash code of the for loop's ASTNode.
                             var varName = node.FirstChild().Lexeme;
-                            var listName = node.FirstChild().Next().Lexeme;
+                            //var listName = node.FirstChild().Next().Lexeme; this was getting invalid list name
+                            var listName = node.FirstChild().Lexeme;
                             var iterName = node.GetHashCode().ToString();
 
                             // When we first enter the loop, push a new scope
@@ -1820,9 +2600,9 @@ namespace RazorEnhanced
                                 var arg = UOScript.Interpreter.GetListValue(listName, 0);
 
                                 if (arg != null)
-                                    _scope.SetVar(varName, arg);
+                                    _scope.SetVar(varName + "[]", arg);
                                 else
-                                    _scope.ClearVar(varName);
+                                    _scope.ClearVar(varName + "[]");
                             }
                             else
                             {
@@ -1835,13 +2615,13 @@ namespace RazorEnhanced
                                 var arg = UOScript.Interpreter.GetListValue(listName, idx);
 
                                 if (arg != null)
-                                    _scope.SetVar(varName, arg);
+                                    _scope.SetVar(varName + "[]", arg);
                                 else
-                                    _scope.ClearVar(varName);
+                                    _scope.ClearVar(varName + "[]");
                             }
 
                             // Check loop condition
-                            var i = _scope.GetVar(varName);
+                            var i = _scope.GetVar(varName + "[]");
 
                             if (i != null)
                             {
@@ -2157,7 +2937,7 @@ namespace RazorEnhanced
 
             private bool EvaluateUnaryExpression(ref ASTNode node)
             {
-                node = EvaluateModifiers(node, out bool quiet, out _, out bool not);
+                node = EvaluateModifiers(node, out bool quiet, out _, out bool ifnot);
 
                 var handler = UOScript.Interpreter.GetExpressionHandler(node.Lexeme);
 
@@ -2166,7 +2946,7 @@ namespace RazorEnhanced
 
                 var result = handler(node.Lexeme, ConstructArguments(ref node), quiet);
 
-                if (not)
+                if (ifnot)
                     return CompareOperands(ASTNodeType.EQUAL, result, false);
                 else
                     return CompareOperands(ASTNodeType.EQUAL, result, true);
@@ -2325,6 +3105,14 @@ namespace RazorEnhanced
 
                 return uint.MaxValue;
             }
+            public static bool FindAlias(string alias)
+            {
+                // If a handler is explicitly registered, call that.
+                if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
+                    return true;
+
+                return _aliases.ContainsKey(alias);
+            }
 
             public static void UnSetAlias(string alias)
             {
@@ -2458,6 +3246,7 @@ namespace RazorEnhanced
 
             public static bool StartScript(Script script)
             {
+
                 if (_activeScript != null)
                     return false;
 
@@ -3350,5 +4139,4 @@ namespace RazorEnhanced
             return result.ToArray();
         }
     }
-
 }
