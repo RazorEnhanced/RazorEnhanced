@@ -21,6 +21,8 @@ namespace RazorEnhanced
         // useOnceIgnoreList
         private List<int> m_serialUseOnceIgnoreList;
 
+        private string DEFAULT_FRIEND_LIST = "UOS";
+
 
         private static UOSteamEngine instance = null;
         public static UOSteamEngine Instance
@@ -175,20 +177,20 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton); 
+            UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton); 
             UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
             UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue);
             UOScript.Interpreter.RegisterCommandHandler("msg", this.MsgCommand);
             UOScript.Interpreter.RegisterCommandHandler("headmsg", this.HeadMsg);
             UOScript.Interpreter.RegisterCommandHandler("partymsg", this.PartyMsg);
-            UOScript.Interpreter.RegisterCommandHandler("guildmsg", this.GuildMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("allymsg", this.AllyMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("whispermsg", this.WhisperMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("yellmsg", this.YellMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("sysmsg", this.SysMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("chatmsg", this.ChatMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("emotemsg", this.EmoteMsg); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("guildmsg", this.GuildMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("allymsg", this.AllyMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("whispermsg", this.WhisperMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("yellmsg", this.YellMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("sysmsg", this.SysMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("chatmsg", this.ChatMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("emotemsg", this.EmoteMsg); 
             UOScript.Interpreter.RegisterCommandHandler("promptmsg", this.PromptMsg); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("timermsg", this.TimerMsg); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt); //TODO: This method is a stub. Remove after successful testing.
@@ -1429,7 +1431,7 @@ namespace RazorEnhanced
 
             if (args.Length == 2)
             {
-                string container = args[0].AsString().ToLower(); // I can only do containers
+                string container = args[0].AsString().ToLower(); 
                 if (container == "container")
                 {
                     uint gumpid = args[1].AsSerial();
@@ -1627,12 +1629,14 @@ namespace RazorEnhanced
 
         private bool GuildButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Player.GuildButton();
+            return true;
         }
 
         private bool QuestsButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Player.QuestButton();
+            return true;
         }
 
         private bool LogoutButton(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1654,22 +1658,54 @@ namespace RazorEnhanced
 
         private bool GuildMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string msg = args[0].AsString();
+                Player.ChatGuild(msg);
+            }
+            return true;
         }
 
         private bool AllyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                string msg = args[0].AsString();
+                Player.ChatAlliance(msg);
+            }
+            return true;
         }
 
         private bool WhisperMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1 || args.Length == 2)
+            {
+                int color = 40;
+                if (args.Length == 2) 
+                {
+                    color = args[1].AsInt();
+                }
+
+                string msg = args[0].AsString();
+                Player.ChatWhisper(color, msg);
+            }
+            return true;
         }
 
         private bool YellMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1 || args.Length == 2)
+            {
+                int color = 170;
+                if (args.Length == 2) 
+                {
+                    color = args[1].AsInt();
+                }
+
+                string msg = args[0].AsString();
+                Player.ChatYell(color, msg);
+            }
+            return true;
         }
 
         private bool SysMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1688,12 +1724,34 @@ namespace RazorEnhanced
 
         private bool ChatMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1 || args.Length == 2)
+            {
+                int color = 70;
+                if (args.Length == 2) 
+                {
+                    color = args[1].AsInt();
+                }
+
+                string msg = args[0].AsString();
+                Player.ChatSay(color, msg);
+            }
+            return true;
         }
 
         private bool EmoteMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1 || args.Length == 2)
+            {
+                int color = 70;
+                if (args.Length == 2) 
+                {
+                    color = args[1].AsInt();
+                }
+
+                string msg = args[0].AsString();
+                Player.ChatEmote(color, msg);
+            }
+            return true;
         }
 
         private bool PromptMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1718,11 +1776,36 @@ namespace RazorEnhanced
 
         private bool AddFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
+            // docs say something about options, guessing thats the selection ?
+            // docs sucks and I stuggle to find examples on what params it takes
+            // 
+            // TODO: Hypothetical implementation: 0 args -> prompt for serial, 1 arg = serial
+            // once verified, remove NotImplemented below
+            var list_name = DEFAULT_FRIEND_LIST;
+            if (!RazorEnhanced.Settings.Friend.ListExists(list_name)) {
+                RazorEnhanced.Settings.Friend.ListInsert(list_name, true, true, false, false, false, false, false);
+            }
+
+            int serial = -1;
+            if (args.Length == 0) {
+                serial = new Target().PromptTarget();
+            }else if (args.Length == 1)
+            {
+                serial = args[0].AsInt();
+            }
+                
+
+            if (serial > 0 ) { 
+                var new_friend = Mobiles.FindBySerial(serial);
+                string name = new_friend.Name;
+                Friend.AddPlayer(list_name, name, serial);
+            }
             return NotImplemented(command, args, quiet, force);
         }
 
         private bool RemoveFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
+            // the Razor API for removing a frend is not pretty ( agent code, midex up with form code a bit, NotImplemented for now ) 
             return NotImplemented(command, args, quiet, force);
         }
 
