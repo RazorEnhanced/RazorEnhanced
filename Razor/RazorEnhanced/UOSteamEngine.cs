@@ -191,11 +191,11 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("sysmsg", this.SysMsg); 
             UOScript.Interpreter.RegisterCommandHandler("chatmsg", this.ChatMsg); 
             UOScript.Interpreter.RegisterCommandHandler("emotemsg", this.EmoteMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("promptmsg", this.PromptMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("timermsg", this.TimerMsg); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("promptmsg", this.PromptMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("timermsg", this.TimerMsg); 
+            UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt); 
+            UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt); 
+            UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //not so much
             UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu);
             UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext);
@@ -205,10 +205,10 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
             UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
-            UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal); 
+            UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal); 
             UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast);
-            UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal); 
             UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget);
             UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget);
             UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget);
@@ -1756,22 +1756,44 @@ namespace RazorEnhanced
 
         private bool PromptMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                var msg = args[0].AsString();
+                Misc.ResponsePrompt(msg);
+            }
+            return true;
         }
 
         private bool TimerMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            //Verrify/Guessing parameter order.
+            if (args.Length == 2)
+            {
+                var delay = args[0].AsInt();
+                var msg = args[1].AsString();
+                var color = 20;
+                if (args.Length == 3) {
+                    color = args[2].AsInt();
+                }
+                Task.Delay(delay).ContinueWith( t => Misc.SendMessage(msg, color) );
+            }
+            return true;
         }
 
         private bool WaitForPrompt(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length == 1)
+            {
+                var delay = args[0].AsInt();
+                Misc.WaitForPrompt(delay);
+            }
+            return true;
         }
 
         private bool CancelPrompt(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            Misc.CancelPrompt();
+            return true;
         }
 
         private bool AddFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1914,14 +1936,70 @@ namespace RazorEnhanced
             return true;
         }
 
+
+        //Not a UOS Function, utility method for autocure within big/small heal
+        private bool SelfCure()
+        {
+            if (Player.Poisoned) {
+                RazorEnhanced.Target.Cancel();
+                Spells.CastMagery("Cure");
+                RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
+                if (RazorEnhanced.Target.HasTarget())
+                {
+                    RazorEnhanced.Target.Self();
+                }
+                RazorEnhanced.Target.Cancel();
+                return true;
+            }
+            return false;
+        }
+
         private bool MiniHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (SelfCure()) { return true;  }
+
+            RazorEnhanced.Target.Cancel();
+            Spells.CastMagery("Heal");
+            RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
+
+            if (RazorEnhanced.Target.HasTarget())
+            {
+                if (args.Length == 0)
+                {
+                    RazorEnhanced.Target.Self();
+                }
+                else
+                {
+                    var serial = args[0].AsInt();
+                    RazorEnhanced.Target.TargetExecute(serial);
+                }
+                RazorEnhanced.Target.Cancel();
+            }
+            return true;
         }
 
         private bool BigHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (SelfCure()) { return true; }
+
+            RazorEnhanced.Target.Cancel();
+            Spells.CastMagery("Greater Heal");
+            RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
+
+            if (RazorEnhanced.Target.HasTarget())
+            {
+                if (args.Length == 0)
+                {
+                    RazorEnhanced.Target.Self();
+                }
+                else
+                {
+                    var serial = args[0].AsInt();
+                    RazorEnhanced.Target.TargetExecute(serial);
+                }
+                RazorEnhanced.Target.Cancel();
+            }
+            return true;
         }
 
         private bool Cast(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1937,7 +2015,22 @@ namespace RazorEnhanced
 
         private bool ChivalryHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            RazorEnhanced.Target.Cancel();
+            Spells.CastChivalry("Close Wounds");
+            RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
+
+            if (RazorEnhanced.Target.HasTarget()) { 
+                if (args.Length == 0)
+                {
+                    RazorEnhanced.Target.Self();
+                }
+                else {
+                    var serial = args[0].AsInt();
+                    RazorEnhanced.Target.TargetExecute(serial);
+                }
+                RazorEnhanced.Target.Cancel();
+            }
+            return true;
         }
 
         private bool WaitForTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
