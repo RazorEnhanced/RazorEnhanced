@@ -37,6 +37,22 @@ namespace RazorEnhanced
             }
             RazorEnhanced.UoWarper.UODLLHandleClass.CloseBackpack();
         }
+
+        public static void OpenPaperdoll()
+        {
+            RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+
+            if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+            {
+                while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+                {
+                    Thread.Sleep(50);
+                }
+            }
+            RazorEnhanced.UoWarper.UODLLHandleClass.OpenPaperdoll();
+        }
+
+
         // Container Experiment
         // Misc.NextContPosition(80, 80)
         public static void NextContPosition(int x, int y)
