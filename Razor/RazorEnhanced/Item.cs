@@ -1313,13 +1313,24 @@ namespace RazorEnhanced
 					{
 						if (itemcontenuti.ItemID == itemid)
 							count = count + itemcontenuti.Amount;
-					}
+                        if (itemcontenuti.IsContainer)
+                        {
+                            int recurseCount = ContainerCount(itemcontenuti.Serial, itemid, color ); // recall for sub container
+                            count = count + recurseCount;
+                        }
+                    }
 					else
 					{
 						if (itemcontenuti.ItemID == itemid && itemcontenuti.Hue == color)
 							count = count + itemcontenuti.Amount;
-					}
-				}
+                        if (itemcontenuti.IsContainer)
+                        {
+                            int recurseCount = ContainerCount(itemcontenuti.Serial, itemid, color); // recall for sub container
+                            count = count + recurseCount;
+                        }
+
+                    }
+                }
 			}
 			else
 			{
