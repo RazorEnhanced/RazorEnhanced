@@ -225,44 +225,49 @@ namespace RazorEnhanced
 
 
             // Expressions
-            UOScript.Interpreter.RegisterExpressionHandler("findalias", FindAlias);
-            UOScript.Interpreter.RegisterExpressionHandler("organizing", Organizing);
-            UOScript.Interpreter.RegisterExpressionHandler("contents", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("inregion", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("skill", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("findobject", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
+            UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
+            UOScript.Interpreter.RegisterExpressionHandler("contents", this.Contents);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill); //TODO: This method is a stub. Remove after successful testing.   
+            UOScript.Interpreter.RegisterExpressionHandler("findobject", this.FindObject); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("useobject", this.UseObjExp);
-            UOScript.Interpreter.RegisterExpressionHandler("distance", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("inrange", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("buffexists", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("property", Property);
-            UOScript.Interpreter.RegisterExpressionHandler("findtype", FindType);
-            UOScript.Interpreter.RegisterExpressionHandler("findlayer", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("skillstate", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("counttype", CountType);
-            UOScript.Interpreter.RegisterExpressionHandler("counttypeground", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("findwand", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("inparty", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("infriendslist", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("war", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("ingump", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("gumpexists", GumpExists);
-            UOScript.Interpreter.RegisterExpressionHandler("injournal", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("listexists", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("list", ListCount);
-            UOScript.Interpreter.RegisterExpressionHandler("inlist", InList);
-            UOScript.Interpreter.RegisterExpressionHandler("timer", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("timerexists", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("distance", this.Distance); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("inrange", this.InRange);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("buffexists", this.BuffExists); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("property", this.Property);
+            UOScript.Interpreter.RegisterExpressionHandler("findtype", this.FindType);
+            UOScript.Interpreter.RegisterExpressionHandler("findlayer", this.FindLayer);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("skillstate", this.SkillState);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("counttype", this.CountType);
+            UOScript.Interpreter.RegisterExpressionHandler("counttypeground", this.CountTypeGround); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("findwand", this.FindWand);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("inparty", this.InParty); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("infriendslist", this.InFriendList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("war", this.War); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGmups);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
+            UOScript.Interpreter.RegisterExpressionHandler("injournal", this.InJournal); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("listexists", this.ListExists); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("list", this.ListCount);
+            UOScript.Interpreter.RegisterExpressionHandler("inlist", this.InList);
+            UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer); //TODO: This method is a stub. Remove after successful testing. 
+            UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists); //TODO: This method is a stub. Remove after successful testing.
 
             // Player Attributes
-            UOScript.Interpreter.RegisterExpressionHandler("mana", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("x", DummyIntExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("y", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("z", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("name", DummyStringExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("mana", this.Mana); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("name", this.Name); //TODO: This method is a stub. Remove after successful testing.
 
             // Object attributes
+
+            //Dal: is there something missing here ? 
         }
+
+        //Expressions
+
         private IComparable CountType(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -305,7 +310,7 @@ namespace RazorEnhanced
         }
 
 
-        private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
         {
             Item item = null;
             if (args.Length == 1)
@@ -369,7 +374,7 @@ namespace RazorEnhanced
 
         }
 
-        private static IComparable Property(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable Property(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 2)
             {
@@ -392,7 +397,7 @@ namespace RazorEnhanced
             return false;
         }
 
-        private static IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -407,7 +412,7 @@ namespace RazorEnhanced
             return -1;
         }
 
-        private static IComparable ListCount(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable ListCount(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 1)
             {
@@ -418,7 +423,7 @@ namespace RazorEnhanced
             return 0;
         }
 
-        private static IComparable InList(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable InList(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 1)
             {
@@ -427,22 +432,26 @@ namespace RazorEnhanced
             }
             return 0;
         }
+        
+        private IComparable ExpressionNotImplemented(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            Console.WriteLine("Expression: NotImplemented {0} {1}", expression, args);
+            return 0;
+        }
 
-
-
-        private static IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
             return 0;
         }
 
-        private static int DummyIntExpression(string expression, UOScript.Argument[] args, bool quiet)
+        private int DummyIntExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
             return 3;
         }
 
-        private static string DummyStringExpression(string expression, UOScript.Argument[] args, bool quiet)
+        private string DummyStringExpression(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Executing expression {0} {1}", expression, args);
 
@@ -460,6 +469,117 @@ namespace RazorEnhanced
             Console.WriteLine("UOS: NotImplemented {0} {1}", command, args);
             return true;
         }
+
+        //Stubs for not implemented (yet ) 
+
+        private bool Contents(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool InRegion(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool Skill(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool FindObject(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+
+        private bool Distance(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool InRange(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool BuffExists(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool FindLayer(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool SkillState(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool CountTypeGround(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool FindWand(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool InParty(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool InFriendList(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool  War(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool  InGmups(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+        private bool InJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool ListExists(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool Timer(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool TimerExists(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool Mana(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool X(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool Y(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool Z(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+        private bool Name(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            return NotImplemented(command, args, quiet, force);
+        }
+
+
+
 
 
         // Commands: Stable
