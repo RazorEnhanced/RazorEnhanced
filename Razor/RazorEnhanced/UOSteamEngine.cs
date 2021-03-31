@@ -177,24 +177,24 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton); 
-            UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton); 
+            UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton);
+            UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton);
             UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
             UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue);
             UOScript.Interpreter.RegisterCommandHandler("msg", this.MsgCommand);
             UOScript.Interpreter.RegisterCommandHandler("headmsg", this.HeadMsg);
             UOScript.Interpreter.RegisterCommandHandler("partymsg", this.PartyMsg);
-            UOScript.Interpreter.RegisterCommandHandler("guildmsg", this.GuildMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("allymsg", this.AllyMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("whispermsg", this.WhisperMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("yellmsg", this.YellMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("sysmsg", this.SysMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("chatmsg", this.ChatMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("emotemsg", this.EmoteMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("promptmsg", this.PromptMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("timermsg", this.TimerMsg); 
-            UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt); 
-            UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt); 
+            UOScript.Interpreter.RegisterCommandHandler("guildmsg", this.GuildMsg);
+            UOScript.Interpreter.RegisterCommandHandler("allymsg", this.AllyMsg);
+            UOScript.Interpreter.RegisterCommandHandler("whispermsg", this.WhisperMsg);
+            UOScript.Interpreter.RegisterCommandHandler("yellmsg", this.YellMsg);
+            UOScript.Interpreter.RegisterCommandHandler("sysmsg", this.SysMsg);
+            UOScript.Interpreter.RegisterCommandHandler("chatmsg", this.ChatMsg);
+            UOScript.Interpreter.RegisterCommandHandler("emotemsg", this.EmoteMsg);
+            UOScript.Interpreter.RegisterCommandHandler("promptmsg", this.PromptMsg);
+            UOScript.Interpreter.RegisterCommandHandler("timermsg", this.TimerMsg);
+            UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt);
+            UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt);
             UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //not so much
             UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu);
@@ -205,10 +205,10 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
             UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
-            UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal); 
-            UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal); 
+            UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal);
+            UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal);
             UOScript.Interpreter.RegisterCommandHandler("cast", this.Cast);
-            UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal); 
+            UOScript.Interpreter.RegisterCommandHandler("chivalryheal", this.ChivalryHeal);
             UOScript.Interpreter.RegisterCommandHandler("waitfortarget", this.WaitForTarget);
             UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget);
             UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget);
@@ -1431,7 +1431,7 @@ namespace RazorEnhanced
 
             if (args.Length == 2)
             {
-                string container = args[0].AsString().ToLower(); 
+                string container = args[0].AsString().ToLower();
                 if (container == "container")
                 {
                     uint gumpid = args[1].AsSerial();
@@ -1619,7 +1619,10 @@ namespace RazorEnhanced
 
         private bool Paperdoll(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            Misc.OpenPaperdoll();
+
+            return true;
         }
 
         private bool HelpButton(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -1681,7 +1684,7 @@ namespace RazorEnhanced
             if (args.Length == 1 || args.Length == 2)
             {
                 int color = 40;
-                if (args.Length == 2) 
+                if (args.Length == 2)
                 {
                     color = args[1].AsInt();
                 }
@@ -1697,7 +1700,7 @@ namespace RazorEnhanced
             if (args.Length == 1 || args.Length == 2)
             {
                 int color = 170;
-                if (args.Length == 2) 
+                if (args.Length == 2)
                 {
                     color = args[1].AsInt();
                 }
@@ -1727,7 +1730,7 @@ namespace RazorEnhanced
             if (args.Length == 1 || args.Length == 2)
             {
                 int color = 70;
-                if (args.Length == 2) 
+                if (args.Length == 2)
                 {
                     color = args[1].AsInt();
                 }
@@ -1743,7 +1746,7 @@ namespace RazorEnhanced
             if (args.Length == 1 || args.Length == 2)
             {
                 int color = 70;
-                if (args.Length == 2) 
+                if (args.Length == 2)
                 {
                     color = args[1].AsInt();
                 }
@@ -1800,7 +1803,7 @@ namespace RazorEnhanced
         {
             // docs say something about options, guessing thats the selection ?
             // docs sucks and I stuggle to find examples on what params it takes
-            // 
+            //
             // TODO: Hypothetical implementation: 0 args -> prompt for serial, 1 arg = serial
             // once verified, remove NotImplemented below
             var list_name = DEFAULT_FRIEND_LIST;
@@ -1815,9 +1818,9 @@ namespace RazorEnhanced
             {
                 serial = args[0].AsInt();
             }
-                
 
-            if (serial > 0 ) { 
+
+            if (serial > 0 ) {
                 var new_friend = Mobiles.FindBySerial(serial);
                 string name = new_friend.Name;
                 Friend.AddPlayer(list_name, name, serial);
@@ -1827,7 +1830,7 @@ namespace RazorEnhanced
 
         private bool RemoveFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            // the Razor API for removing a frend is not pretty ( agent code, midex up with form code a bit, NotImplemented for now ) 
+            // the Razor API for removing a frend is not pretty ( agent code, midex up with form code a bit, NotImplemented for now )
             return NotImplemented(command, args, quiet, force);
         }
 
@@ -2019,7 +2022,7 @@ namespace RazorEnhanced
             Spells.CastChivalry("Close Wounds");
             RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
 
-            if (RazorEnhanced.Target.HasTarget()) { 
+            if (RazorEnhanced.Target.HasTarget()) {
                 if (args.Length == 0)
                 {
                     RazorEnhanced.Target.Self();
@@ -2329,9 +2332,14 @@ namespace RazorEnhanced
                     return serial;
                 }
 
-                uint val;
-                if (uint.TryParse(_node.Lexeme, out val))
+                try
+                {
                     return AsUInt();
+                }
+                catch (RunTimeError e)
+                {
+                    // invalid numeric
+                }
 
                 // This is a bad place to be
                 return 0;

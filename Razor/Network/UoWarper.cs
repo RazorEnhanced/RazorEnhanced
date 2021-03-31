@@ -38,6 +38,11 @@ namespace RazorEnhanced
 				});
 			}
 
+            internal void OpenPaperdoll()
+            {
+                this._executeCommand(false, "Macro", new object[] { 8, 1 });
+            }
+
             internal void CloseBackpack()
             {
                 this._executeCommand(false, "Macro", new object[] { 9, 7 } );
