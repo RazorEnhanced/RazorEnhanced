@@ -271,7 +271,7 @@ namespace RazorEnhanced
                 int graphic = args[0].AsInt();
                 int color = args[1].AsInt();
                 uint container = args[2].AsSerial();
-                int count = Items.ContainerCount((int)container, graphic, color);
+                int count = Items.ContainerCount((int)container, graphic, color, true);
                 return count;
             }
 
