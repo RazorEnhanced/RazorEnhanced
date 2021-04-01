@@ -41,14 +41,14 @@ namespace RazorEnhanced
         private UOSteamEngine()
         {
             m_serialUseOnceIgnoreList = new List<int>();
-            UOScript.Interpreter.SetAlias("backpack", (uint)Player.Backpack.Serial);
-            UOScript.Interpreter.SetAlias("self", (uint)Player.Serial);
-            UOScript.Interpreter.SetAlias("found", 0);
-            UOScript.Interpreter.SetAlias("enemy", 0);
-            UOScript.Interpreter.SetAlias("bank", 0);
-            UOScript.Interpreter.SetAlias("friend", 0);
             UOScript.Interpreter.RegisterAliasHandler("ground", AliasHandler);
             UOScript.Interpreter.RegisterAliasHandler("any", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("backpack", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("self", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("bank", AliasHandler);
+            UOScript.Interpreter.SetAlias("found", 0);
+            UOScript.Interpreter.SetAlias("enemy", 0);
+            UOScript.Interpreter.SetAlias("friend", 0);
             UOScript.Interpreter.SetAlias("last", 0);
             UOScript.Interpreter.SetAlias("lasttarget", 0);
             UOScript.Interpreter.SetAlias("lastobject", 0);
@@ -64,12 +64,24 @@ namespace RazorEnhanced
         uint AliasHandler(string alias)
         {
             int everywhere = -1;
-            if (0 == String.Compare(alias, "ground", true))
-                return (uint)everywhere;
-            if (0 == String.Compare(alias, "any", true))
-                return (uint)everywhere;
-
-
+            switch (alias.ToLower())
+            {
+                case "ground":
+                    return (uint)everywhere;
+                    break;
+                case "any":
+                    return (uint)everywhere;
+                    break;
+                case "backpack":
+                    return (uint)Player.Backpack.Serial;
+                    break;
+                case "self":
+                    return (uint)Player.Serial;
+                    break;
+                case "bank":
+                    return (uint)Player.Bank.Serial;
+                    break;
+            }
             return 0;
         }
 
@@ -227,7 +239,7 @@ namespace RazorEnhanced
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", FindAlias);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", Organizing);
-            UOScript.Interpreter.RegisterExpressionHandler("contents", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("skill", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("findobject", DummyExpression);
@@ -238,17 +250,17 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("property", Property);
             UOScript.Interpreter.RegisterExpressionHandler("findtype", FindType);
             UOScript.Interpreter.RegisterExpressionHandler("findlayer", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("skillstate", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("counttype", CountType);
+            UOScript.Interpreter.RegisterExpressionHandler("skillstate", this.SkillState);
+            UOScript.Interpreter.RegisterExpressionHandler("counttype", this.CountType);
             UOScript.Interpreter.RegisterExpressionHandler("counttypeground", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("findwand", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("inparty", DummyExpression);
             UOScript.Interpreter.RegisterExpressionHandler("infriendslist", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("war", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("ingump", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("gumpexists", GumpExists);
-            UOScript.Interpreter.RegisterExpressionHandler("injournal", DummyExpression);
-            UOScript.Interpreter.RegisterExpressionHandler("listexists", DummyExpression);
+            UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
+            UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGump);
+            UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
+            UOScript.Interpreter.RegisterExpressionHandler("injournal", this.InJournal);
+            UOScript.Interpreter.RegisterExpressionHandler("listexists", this.ListExists);
             UOScript.Interpreter.RegisterExpressionHandler("list", ListCount);
             UOScript.Interpreter.RegisterExpressionHandler("inlist", InList);
             UOScript.Interpreter.RegisterExpressionHandler("timer", DummyExpression);
@@ -263,6 +275,28 @@ namespace RazorEnhanced
 
             // Object attributes
         }
+
+
+        private IComparable CountContents(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                Item container = Items.FindBySerial((int)serial);
+                if (container != null)
+                {
+                    if (!container.IsContainer)
+                        return 0;
+                    List<Item> list = container.Contains;
+                    return list.Count;
+                }
+                return 0;
+            }
+
+            return false;
+        }
+
         private IComparable CountType(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -278,6 +312,31 @@ namespace RazorEnhanced
             return false;
         }
 
+
+
+        private IComparable InJournal(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 1)
+            {
+                string text = args[0].AsString();
+                return Journal.Search(text);
+            }
+
+            return false;
+        }
+
+        private IComparable ListExists(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 1)
+            {
+                string list = args[0].AsString();
+                return UOScript.Interpreter.ListExists(list);
+            }
+
+            return false;
+        }
 
         private IComparable UseObjExp(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -392,7 +451,40 @@ namespace RazorEnhanced
             return false;
         }
 
-        private static IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
+
+        private IComparable InGump(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 2)
+            {
+                uint gumpid = args[0].AsSerial();
+                string text = args[1].AsString();
+                uint curGumpid = Gumps.CurrentGump();
+                if (gumpid == 0xffffffff || gumpid == curGumpid)
+                {
+                    return Gumps.LastGumpTextExist(text);
+                }
+
+            }
+            return false;
+        }
+
+        private IComparable InWarMode(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.WarMode;
+                }
+            }
+            return false;
+        }
+
+
+        private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -428,6 +520,26 @@ namespace RazorEnhanced
             return 0;
         }
 
+
+
+        private IComparable SkillState(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                string skill = args[0].AsString();
+                int value = Player.GetSkillStatus(skill);
+                switch (value)
+                {
+                    case 0:
+                        return "up";
+                    case 1:
+                        return "down";
+                    case 2:
+                        return "locked";
+                }
+            }
+            return "unknown";
+        }
 
 
         private static IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
@@ -2428,6 +2540,7 @@ namespace RazorEnhanced
 
                 node = node.Next();
 
+                bool comment = false;
                 while (node != null)
                 {
                     switch (node.Type)
@@ -2442,8 +2555,11 @@ namespace RazorEnhanced
                         case ASTNodeType.GREATER_THAN_OR_EQUAL:
                             return args.ToArray();
                     }
+                    if (node.Lexeme == "//")
+                        comment = true;
 
-                    args.Add(new Argument(this, node));
+                    if (! comment)
+                        args.Add(new Argument(this, node));
 
                     node = node.Next();
                 }
