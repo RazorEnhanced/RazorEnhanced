@@ -317,7 +317,7 @@ namespace RazorEnhanced
 
 
         #endregion
-        
+
         #region Expressions
 
 
@@ -426,6 +426,7 @@ namespace RazorEnhanced
             {
                 int type = args[0].AsInt();
                 int color = args[1].AsInt();
+                string sourceCheck = args[2].AsString();
                 uint source = args[2].AsSerial();
                 item = Items.FindByID(type, color, (int)source);
             }
@@ -438,7 +439,7 @@ namespace RazorEnhanced
                 item = Items.FindByID(type, color, (int)source);
                 if (item != null)
                 {
-                    if (amount != -1 && item.Amount != amount)
+                    if (amount != -1 && item.Amount < amount)
                     {
                         item = null;
                     }
@@ -454,7 +455,7 @@ namespace RazorEnhanced
                 item = Items.FindByID(type, color, (int)source, range);
                 if (item != null)
                 {
-                    if (item.Amount != amount)
+                    if (amount != -1 && item.Amount < amount)
                     {
                         item = null;
                     }
@@ -600,7 +601,7 @@ namespace RazorEnhanced
             return ExpressionNotImplemented(expression, args, quiet);
         }
 
-        
+
 
 
         private IComparable Skill(string expression, UOScript.Argument[] args, bool quiet)
@@ -679,7 +680,6 @@ namespace RazorEnhanced
 
 
         // Commands: Stable
-
         private bool LandCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
@@ -2350,7 +2350,7 @@ namespace RazorEnhanced
     }
 
 
-    #region Parser/Interpreter 
+    #region Parser/Interpreter
 
     namespace UOScript
     // This code from  https://github.com/jaedan/steam-engine.git
@@ -2371,6 +2371,7 @@ namespace RazorEnhanced
             {
                 int val;
 
+                token = token.Replace("(", "").Replace(")", "");  // get rid of ( or ) if its there
                 if (token.StartsWith("0x"))
                 {
                     if (int.TryParse(token.Substring(2), System.Globalization.NumberStyles.HexNumber, UOScript.Interpreter.Culture, out val))
@@ -2609,6 +2610,13 @@ namespace RazorEnhanced
 
         public class Script
         {
+            bool Debug { get; set; }
+
+            public Script()
+            {
+                Debug = false;
+            }
+
             private ASTNode _statement;
 
             private Scope _scope;
@@ -3178,6 +3186,11 @@ namespace RazorEnhanced
             {
                 UOScript.Interpreter.ClearTimeout();
                 _statement = _statement.Next();
+                if (Debug)
+                {
+                    if (_statement != null)
+                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber));
+                }
             }
 
             private ASTNode EvaluateModifiers(ASTNode node, out bool quiet, out bool force, out bool not)
@@ -3211,16 +3224,31 @@ namespace RazorEnhanced
             {
                 node = EvaluateModifiers(node, out bool quiet, out bool force, out _);
 
-                var handler = UOScript.Interpreter.GetCommandHandler(node.Lexeme);
+                var cont = true;
+                if (node.Lexeme.ToLower() == "debug")
+                {
+                    var args = ConstructArguments(ref node);
+                    if (args.Length == 1)
+                    {
+                        bool debugSetting = false;
+                        if (args[0].AsString().ToLower() == "on")
+                            debugSetting = true;
+                        Debug = debugSetting;
+                    }
+                    cont = true;
+                }
+                else
+                {
+                    var handler = UOScript.Interpreter.GetCommandHandler(node.Lexeme);
 
-                if (handler == null)
-                    throw new RunTimeError(node, "Unknown command");
+                    if (handler == null)
+                        throw new RunTimeError(node, "Unknown command");
 
-                var cont = handler(node.Lexeme, ConstructArguments(ref node), quiet, force);
+                    cont = handler(node.Lexeme, ConstructArguments(ref node), quiet, force);
 
-                if (node != null)
-                    throw new RunTimeError(node, "Command did not consume all available arguments");
-
+                    if (node != null)
+                        throw new RunTimeError(node, "Command did not consume all available arguments");
+                }
                 return cont;
             }
 
