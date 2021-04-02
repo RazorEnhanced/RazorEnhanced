@@ -141,7 +141,7 @@ namespace RazorEnhanced
                         /*Dalamar: END*/
                     }
                 }
-                catch (IronPython.Runtime.Exceptions.SystemExitException ex )
+                catch (IronPython.Runtime.Exceptions.SystemExitException ex)
                 {
                     Stop();
                     // sys.exit - terminate the thread
@@ -151,8 +151,10 @@ namespace RazorEnhanced
                     if (ex is System.Threading.ThreadAbortException)
                         return;
 
-                    string display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
-
+                    string display_error = ex.Message;
+                    if ( m_Engine != null ) { 
+                        display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
+                    }
                     SendMessageScriptError("ERROR " + m_Filename + ":" + display_error.Replace("\n", " | "));
 
                     if (ScriptErrorLog) // enabled log of error
@@ -176,9 +178,7 @@ namespace RazorEnhanced
                         else
                         {
                             log.Append("----> Generic Error:" + Environment.NewLine);
-                            ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
-                            string error = eo.FormatException(ex);
-                            log.Append(error);
+                            log.Append(display_error);
                         }
 
                         log.Append(Environment.NewLine);

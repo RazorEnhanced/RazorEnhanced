@@ -9,6 +9,7 @@ using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using IronPython.Compiler;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -85,27 +86,24 @@ namespace RazorEnhanced
             return 0;
         }
 
+
+
         public void Execute(string filename)
         {
-            if (filename == null) return;
             var root = Lexer.Lex(filename);
             UOScript.Script script = new UOScript.Script(root);
-            UOScript.Interpreter.StartScript(script);
-            try
-            {
-                while (UOScript.Interpreter.ExecuteScript()) { };
-            }
-            catch (Exception e)
-            {
-                UOScript.Interpreter.StopScript();
-                throw;
-            }
+            Execute(script);
 
         }
         public void Execute(string[] textLines)
         {
             var root = Lexer.Lex(textLines);
             UOScript.Script script = new UOScript.Script(root);
+            Execute(script);
+        }
+
+        public void Execute(UOScript.Script script)
+        {
             UOScript.Interpreter.StartScript(script);
             try
             {
@@ -117,6 +115,8 @@ namespace RazorEnhanced
                 throw;
             }
         }
+
+
 
         // Abstract Placeholders
 
@@ -600,10 +600,7 @@ namespace RazorEnhanced
         {
             return ExpressionNotImplemented(expression, args, quiet);
         }
-
-
-
-
+        
         private IComparable Skill(string expression, UOScript.Argument[] args, bool quiet)
         {
             return ExpressionNotImplemented(expression, args, quiet);
@@ -2359,7 +2356,17 @@ namespace RazorEnhanced
         {
             public ASTNode Node;
 
-            public RunTimeError(ASTNode node, string error) : base(error)
+            public static String BuildErrorMessage(ASTNode node, string error) {
+                String msg = "\n";
+                msg  = String.Format("Error:\t{0}\n", error);
+                msg += String.Format("Type:\t{0}\n", node.Type);
+                msg += String.Format("Word:\t{0}\n", node.Lexeme);
+                msg += String.Format("Line:\t{0}\n", node.LineNumber + 1);
+                msg += String.Format("Code:\t{0}\n", Lexer.GetLine(node.LineNumber) ); 
+                return msg;
+            }
+
+            public RunTimeError(ASTNode node, string error) : base( BuildErrorMessage(node,error) )
             {
                 Node = node;
             }
@@ -3923,9 +3930,17 @@ namespace RazorEnhanced
         }
     }
 
+
+    //TODO: convert to "non static"  ( generic methos Slice gives issue, would need rewrite, but later down the roadmap )
     public static class Lexer
     {
         private static int _curLine = 0;
+        private static string[] _lines;
+        private static string _filename = ""; // can be empty 
+
+        public static string GetLine(int lineNum) {
+            return _lines[lineNum];
+        }
 
         public static T[] Slice<T>(this T[] src, int start, int end)
         {
@@ -3945,6 +3960,7 @@ namespace RazorEnhanced
 
         public static ASTNode Lex(string[] lines)
         {
+            _lines = lines;
             ASTNode node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0);
 
             try
@@ -3971,6 +3987,11 @@ namespace RazorEnhanced
 
         public static ASTNode Lex(string fname)
         {
+            _filename = fname;
+            var lines = System.IO.File.ReadAllLines(fname);
+            return Lexer.Lex(lines);
+
+            /*  Dalamar
             ASTNode node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0);
 
             using (var file = new System.IO.StreamReader(fname))
@@ -4008,9 +4029,10 @@ namespace RazorEnhanced
             }
 
             return node;
+            */
         }
 
-        private static TextParser _tfp = new TextParser("", new char[] { ' ' }, new char[] { }, new char[] { '\'', '\'', '"', '"' });
+        private static TextParser _tfp = new TextParser("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
         private static void ParseLine(ASTNode node, string line)
         {
             line = line.Trim();
@@ -4423,14 +4445,15 @@ namespace RazorEnhanced
 
     internal class TextParser
     {
-        private readonly char[] _delimiters, _comments, _quotes;
+        private readonly char[] _delimiters, _quotes;
+        private readonly string[] _comments;
         private int _eol;
         private int _pos;
         private int _Size;
         private string _string;
         private bool _trim;
 
-        public TextParser(string str, char[] delimiters, char[] comments, char[] quotes)
+        public TextParser(string str, char[] delimiters, string[] comments, char[] quotes)
         {
             _delimiters = delimiters;
             _comments = comments;
@@ -4461,13 +4484,19 @@ namespace RazorEnhanced
 
             for (int i = 0; i < _comments.Length && !result; i++)
             {
-                result = _string[_pos] == _comments[i];
+                //Dalamar: added support for inline comments ( multi char )
+                var comment = _comments[i];
+                var char_left = _string.Length - _pos;
 
+                result = _string.Substring(_pos, Math.Min(char_left, comment.Length) ) == comment;
+
+                /*
                 if (result && i + 1 < _comments.Length && _comments[i] == _comments[i + 1] && _pos + 1 < _eol)
                 {
                     result = _string[_pos] == _string[_pos + 1];
                     i++;
                 }
+                */
             }
 
             return result;
