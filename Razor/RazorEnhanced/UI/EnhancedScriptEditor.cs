@@ -1749,7 +1749,11 @@ namespace RazorEnhanced.UI
                     SetErrorBox("Generic Error:");
                     ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
                     string error = eo.FormatException(ex);
-                    SetErrorBox("--> MESSAGE: " + error);
+                    error = error.Trim();
+                    error = Regex.Replace(error, "\n\n", "\n");     //remove empty lines
+                    foreach (var line in error.Split('\n') ) {
+                        SetErrorBox(line);
+                    }
                 }
                 SetStatusLabel("IDLE", Color.DarkTurquoise);
             }
