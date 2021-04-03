@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JsonData;
+using Newtonsoft.Json;
 
 using IronPython.Runtime;
 using IronPython.Hosting;
@@ -19,6 +21,7 @@ namespace RazorEnhanced
         private int m_lastMount;
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
+
         // useOnceIgnoreList
         private List<int> m_serialUseOnceIgnoreList;
 
@@ -60,6 +63,8 @@ namespace RazorEnhanced
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
             m_lastMount = 0;
+
+            string configFile = System.IO.Path.Combine(Assistant.Engine.RootPath, "Config", "UOS.config.json");
         }
 
         uint AliasHandler(string alias)
@@ -182,13 +187,13 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound);
             UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync);
             UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot);
-            UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //toggles hot keys .. not going to implement
             UOScript.Interpreter.RegisterCommandHandler("where", this.Where);
             UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox);
-            UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); // not going to implement
+            UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen);
+            UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll);
+            UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //not going to implement
             UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton);
             UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton);
             UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
@@ -208,14 +213,14 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt);
             UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt);
             UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //not so much
-            UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); // not implemented, use the gui
             UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu);
             UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext);
             UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject);
             UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList);
             UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill);
             UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
-            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); // I dont see the need. not going to implement
             UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
             UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal);
             UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal);
@@ -241,21 +246,21 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill);
             UOScript.Interpreter.RegisterExpressionHandler("findobject", this.FindObject);
             UOScript.Interpreter.RegisterExpressionHandler("useobject", this.UseObjExp);
             UOScript.Interpreter.RegisterExpressionHandler("distance", this.Distance);
-            UOScript.Interpreter.RegisterExpressionHandler("inrange", this.InRange); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("buffexists", this.BuffExists); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("inrange", this.InRange);
+            UOScript.Interpreter.RegisterExpressionHandler("buffexists", this.BuffExists);
             UOScript.Interpreter.RegisterExpressionHandler("property", Property);
             UOScript.Interpreter.RegisterExpressionHandler("findtype", FindType);
-            UOScript.Interpreter.RegisterExpressionHandler("findlayer", this.FindLayer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("findlayer", this.FindLayer);
             UOScript.Interpreter.RegisterExpressionHandler("skillstate", this.SkillState);
             UOScript.Interpreter.RegisterExpressionHandler("counttype", this.CountType);
-            UOScript.Interpreter.RegisterExpressionHandler("counttypeground", this.CountTypeGround);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("counttypeground", this.CountTypeGround);
             UOScript.Interpreter.RegisterExpressionHandler("findwand", this.FindWand); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("inparty", this.InParty); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("infriendlist", this.InFriendList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("infriendlist", this.InFriendList);
             UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
             UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGump);
             UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
@@ -603,7 +608,15 @@ namespace RazorEnhanced
 
         private IComparable Skill(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Skill requires parameters");
+                return false;
+            }
+
+            string skillname = args[0].AsString();
+            double skillvalue = Player.GetSkillValue(skillname);
+            return skillvalue;
         }
         private IComparable FindObject(string expression, UOScript.Argument[] args, bool quiet)
         {
