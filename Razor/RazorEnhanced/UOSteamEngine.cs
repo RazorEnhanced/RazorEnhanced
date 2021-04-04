@@ -272,11 +272,35 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);  //TODO: This method is a stub. Remove after successful testing.
 
             // Player Attributes
-            UOScript.Interpreter.RegisterExpressionHandler("mana", this.Mana);  //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);  //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("name", this.Name); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("weight", (string expression, UOScript.Argument[] args, bool quiet) => Player.Weight);
+            UOScript.Interpreter.RegisterExpressionHandler("maxweight", (string expression, UOScript.Argument[] args, bool quiet) => Player.MaxWeight);
+            UOScript.Interpreter.RegisterExpressionHandler("diffweight", (string expression, UOScript.Argument[] args, bool quiet) => Player.MaxWeight - Player.Weight);
+            UOScript.Interpreter.RegisterExpressionHandler("mana", (string expression, UOScript.Argument[] args, bool quiet) => Player.Mana);
+            UOScript.Interpreter.RegisterExpressionHandler("maxmana", (string expression, UOScript.Argument[] args, bool quiet) => Player.ManaMax);
+            UOScript.Interpreter.RegisterExpressionHandler("hits", (string expression, UOScript.Argument[] args, bool quiet) => Player.Hits);
+            UOScript.Interpreter.RegisterExpressionHandler("diffhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax - Player.Hits);
+            UOScript.Interpreter.RegisterExpressionHandler("maxhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax);
+            UOScript.Interpreter.RegisterExpressionHandler("stam", (string expression, UOScript.Argument[] args, bool quiet) => Player.Stam);
+            UOScript.Interpreter.RegisterExpressionHandler("maxstam", (string expression, UOScript.Argument[] args, bool quiet) => Player.StamMax);
+            UOScript.Interpreter.RegisterExpressionHandler("dex", (string expression, UOScript.Argument[] args, bool quiet) => Player.Dex);
+            UOScript.Interpreter.RegisterExpressionHandler("int", (string expression, UOScript.Argument[] args, bool quiet) => Player.Int);
+            UOScript.Interpreter.RegisterExpressionHandler("str", (string expression, UOScript.Argument[] args, bool quiet) => Player.Str);
+            UOScript.Interpreter.RegisterExpressionHandler("physical", (string expression, UOScript.Argument[] args, bool quiet) => Player.AR);
+            UOScript.Interpreter.RegisterExpressionHandler("fire", (string expression, UOScript.Argument[] args, bool quiet) => Player.FireResistance);
+            UOScript.Interpreter.RegisterExpressionHandler("cold", (string expression, UOScript.Argument[] args, bool quiet) => Player.ColdResistance);
+            UOScript.Interpreter.RegisterExpressionHandler("poison", (string expression, UOScript.Argument[] args, bool quiet) => Player.PoisonResistance);
+            UOScript.Interpreter.RegisterExpressionHandler("energy", (string expression, UOScript.Argument[] args, bool quiet) => Player.EnergyResistance);
+
+            UOScript.Interpreter.RegisterExpressionHandler("followers", (string expression, UOScript.Argument[] args, bool quiet) => Player.Followers);
+            UOScript.Interpreter.RegisterExpressionHandler("maxfollowers", (string expression, UOScript.Argument[] args, bool quiet) => Player.FollowersMax);
+            UOScript.Interpreter.RegisterExpressionHandler("gold", (string expression, UOScript.Argument[] args, bool quiet) => Player.Gold);
+            UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
+            UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
+
+            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);
+            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y);
+            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z);
+            UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
 
             // Object attributes
         }
@@ -791,6 +815,10 @@ namespace RazorEnhanced
         {
             return Player.Mana;
         }
+        private IComparable MaxMana(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            return Player.ManaMax;
+        }
         private IComparable X(string expression, UOScript.Argument[] args, bool quiet)
         {
             return Player.Position.X;
@@ -979,7 +1007,7 @@ namespace RazorEnhanced
 
         private bool BandageSelf(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            BandageHeal.Heal(Assistant.World.Player);
+            //BandageHeal.Heal(Assistant.World.Player);
             return true;
         }
 
@@ -4475,7 +4503,7 @@ namespace RazorEnhanced
                 unary = true;
 
             if (unary && binary)
-                throw new SyntaxError(node, "Invalid expression");
+                throw new SyntaxError(node, String.Format("Invalid expression at line {0}", node.LineNumber));
 
             if (unary)
                 ParseUnaryExpression(node, lexemes);

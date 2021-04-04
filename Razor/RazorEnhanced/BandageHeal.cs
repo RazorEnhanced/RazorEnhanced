@@ -281,151 +281,145 @@ namespace RazorEnhanced
                     if (Player.BuffsExist("Mortal Strike") && (target.Serial == Player.Serial))
                         return;
                 }
-                Heal(target);
-            }
-            else        // Fine bende
-            {
-                Thread.Sleep(5000);
-            }
-        }
 
+                // Id base bende
+                int bandageamount = 0;
+                int bandageid = 0x0E21;
+                int bandagecolor = -1;
 
-        internal static void Heal(Assistant.Mobile target)
-        {
-            // Id base bende
-            int bandageamount = 0;
-            int bandageid = 0x0E21;
-            int bandagecolor = -1;
-
-            if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
-            {
-                bandageid = m_customid;
-                bandagecolor = m_customcolor;
-            }
-            int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
-
-            // Conteggio bende
-            bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
-            if (bandageamount == 0)
-            {
-                Player.HeadMessage(10, "Bandage not found");
-                AddLog("Bandage not found");
-            }
-            else if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
-            {
-                Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                AddLog("Warning: Low bandage: " + bandageamount + " left");
-            }
-
-            if (bandageamount != 0)        // Se le bende ci sono
-            {
-                AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
-
-                if (SelfHealUseText)
+                if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
                 {
-                    if (target.Serial == Player.Serial)
+                    bandageid = m_customid;
+                    bandagecolor = m_customcolor;
+                }
+                int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
+
+                // Conteggio bende
+                bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
+                if (bandageamount == 0)
+                {
+                    Player.HeadMessage(10, "Bandage not found");
+                    AddLog("Bandage not found");
+                }
+                else if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
+                {
+                    Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+                    AddLog("Warning: Low bandage: " + bandageamount + " left");
+                }
+
+                if (bandageamount != 0)        // Se le bende ci sono
+                {
+                    AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
+
+                    if (SelfHealUseText)
                     {
-                        Player.ChatSay(0, SelfHealUseTextSelfContent);
+                        if (target.Serial == Player.Serial)
+                        {
+                            Player.ChatSay(0, SelfHealUseTextSelfContent);
+                        }
+                        else
+                        {
+                            Player.ChatSay(0, SelfHealUseTextContent);
+                            Target.WaitForTarget(1000, true);
+                            Target.TargetExecute(target.Serial);
+                        }
                     }
-                    else
+                    else if (UseTarget) // Uso nuovo packet
                     {
-                        Player.ChatSay(0, SelfHealUseTextContent);
+                        Items.UseItem(bandageserial);
                         Target.WaitForTarget(1000, true);
                         Target.TargetExecute(target.Serial);
                     }
-                }
-                else if (UseTarget) // Uso nuovo packet
-                {
-                    Items.UseItem(bandageserial);
-                    Target.WaitForTarget(1000, true);
-                    Target.TargetExecute(target.Serial);
-                }
-                else
-                {
-                    Items.UseItem(bandageserial, target.Serial, true);
-                }
-
-                if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
-                {
-                    double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
-                    if (delay < 1) // Limite per evitare che si vada in negativo
-                        delay = 100;
-
-                    if (ShowCountdown)          // Se deve mostrare il cooldown
-                    {
-                        int second = 0;
-
-                        var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
-                        int first = int.Parse(delays[0]);
-                        if (delays.Count() > 1)
-                            second = int.Parse(delays[1]);
-
-                        while (first > 0)
-                        {
-                            Player.HeadMessage(10, (first / 1000).ToString());
-                            first = first - 1000;
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-                    }
                     else
                     {
-                        Thread.Sleep((Int32)delay + 300);
+                        Items.UseItem(bandageserial, target.Serial, true);
+                    }
+
+                    if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
+                    {
+                        double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
+                        if (delay < 1) // Limite per evitare che si vada in negativo
+                            delay = 100;
+
+                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        {
+                            int second = 0;
+
+                            var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
+                            int first = int.Parse(delays[0]);
+                            if (delays.Count() > 1)
+                                second = int.Parse(delays[1]);
+
+                            while (first > 0)
+                            {
+                                Player.HeadMessage(10, (first / 1000).ToString());
+                                first = first - 1000;
+                                Thread.Sleep(1000);
+                            }
+                            Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
+                        }
+                        else
+                        {
+                            Thread.Sleep((Int32)delay + 300);
+                        }
+                    }
+                    else                // Se ho un delay custom
+                    {
+                        double delay = m_customdelay;
+                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        {
+                            double subdelay = delay / 1000;
+
+                            int second = 0;
+
+                            var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
+                            int first = int.Parse(delays[0]);
+                            if (delays.Count() > 1)
+                                second = int.Parse(delays[1]);
+
+                            while (first > 0)
+                            {
+                                Player.HeadMessage(10, first.ToString());
+                                first--;
+                                Thread.Sleep(1000);
+                            }
+                            Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
+                        }
+                        else
+                        {
+                            Thread.Sleep((Int32)delay + 300);
+                        }
                     }
                 }
-                else                // Se ho un delay custom
+                else        // Fine bende
                 {
-                    double delay = m_customdelay;
-                    if (ShowCountdown)          // Se deve mostrare il cooldown
-                    {
-                        double subdelay = delay / 1000;
-
-                        int second = 0;
-
-                        var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
-                        int first = int.Parse(delays[0]);
-                        if (delays.Count() > 1)
-                            second = int.Parse(delays[1]);
-
-                        while (first > 0)
-                        {
-                            Player.HeadMessage(10, first.ToString());
-                            first--;
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-                    }
-                    else
-                    {
-                        Thread.Sleep((Int32)delay + 300);
-                    }
+                    Thread.Sleep(5000);
                 }
             }
         }
 
+        internal static void AutoRun()
+        {
+            if (!Client.Running)
+                return;
 
-    internal static void AutoRun()
-		{
-			if (!Client.Running)
-				return;
+            if (World.Player == null)
+                return;
 
-			if (World.Player == null)
-				return;
+            if (World.Player.IsGhost)
+                return;
 
-			if (World.Player.IsGhost)
-				return;
+            Assistant.Mobile target = null;
 
-			Assistant.Mobile target = null;
-
-			switch (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox"))
-			{
-				case "Self":
-					target = World.Player;
-					break;
-				case "Target":
-					target = Assistant.World.FindMobile(TargetSerial);
-					break;
-				case "Friend":
+            switch (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox"))
+            {
+                case "Self":
+                    target = World.Player;
+                    break;
+                case "Target":
+                    target = Assistant.World.FindMobile(TargetSerial);
+                    break;
+                case "Friend":
                     {
                         RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
                         {
@@ -437,7 +431,7 @@ namespace RazorEnhanced
                         if (targ != null)
                             target = Assistant.World.FindMobile(targ.Serial);
                     }
-					break;
+                    break;
                 case "Friend Or Self":
                     {
                         RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
@@ -462,7 +456,7 @@ namespace RazorEnhanced
 
                             int pct_life_me = 100;
                             {
-                                pct_life_me = 100* World.Player.Hits / World.Player.HitsMax;
+                                pct_life_me = 100 * World.Player.Hits / World.Player.HitsMax;
                             }
                             if (pct_life_friend < pct_life_me)
                             {
@@ -477,72 +471,72 @@ namespace RazorEnhanced
                     break;
             }
 
-			if (target == null)         // Verifica se il target è valido
-				return;
-			if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), m_maxrange)) // Verifica distanza
-				return;
+            if (target == null)         // Verifica se il target è valido
+                return;
+            if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), m_maxrange)) // Verifica distanza
+                return;
 
-			EngineRun(target);
-		}
+            EngineRun(target);
+        }
 
-		// Funzioni da script
-		public static void Start()
-		{
-			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-			{
-				Scripts.SendMessageScriptError("Script Error: BandageHeal.Start: Bandage Heal already running");
-			}
-			else
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = true);
-		}
+        // Funzioni da script
+        public static void Start()
+        {
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+            {
+                Scripts.SendMessageScriptError("Script Error: BandageHeal.Start: Bandage Heal already running");
+            }
+            else
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = true);
+        }
 
-		public static void Stop()
-		{
-			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == false)
-			{
-				Scripts.SendMessageScriptError("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
-			}
-			else
-				Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = false);
-		}
+        public static void Stop()
+        {
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == false)
+            {
+                Scripts.SendMessageScriptError("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
+            }
+            else
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = false);
+        }
 
-		public static bool Status()
-		{
-			return Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked;
-		}
+        public static bool Status()
+        {
+            return Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked;
+        }
 
-		internal static int SearchBandage(int itemid, int color)
-		{
-			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter
-			{
-				Enabled = true
-			};
-			itemFilter.Graphics.Add(itemid);
+        internal static int SearchBandage(int itemid, int color)
+        {
+            // Genero filtro item
+            Items.Filter itemFilter = new Items.Filter
+            {
+                Enabled = true
+            };
+            itemFilter.Graphics.Add(itemid);
 
-			if (color != -1)
-				itemFilter.Hues.Add(color);
+            if (color != -1)
+                itemFilter.Hues.Add(color);
 
-			List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
-			foreach (Item found in containeritem)
-			{
-				if (!found.IsInBank && found.RootContainer == World.Player.Serial)
-				{
-					return found.Serial;
-				}
-			}
-			return 0;
-		}
+            foreach (Item found in containeritem)
+            {
+                if (!found.IsInBank && found.RootContainer == World.Player.Serial)
+                {
+                    return found.Serial;
+                }
+            }
+            return 0;
+        }
 
-		private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
+        private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
 
-		internal static void LoginAutostart()
-		{
-			if (!Status())
-			{
-				m_autostart.Start();
-			}
-		}
-	}
+        internal static void LoginAutostart()
+        {
+            if (!Status())
+            {
+                m_autostart.Start();
+            }
+        }
+    }
 }
