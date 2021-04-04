@@ -1007,7 +1007,7 @@ namespace RazorEnhanced
 
         private bool BandageSelf(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            //BandageHeal.Heal(Assistant.World.Player);
+            BandageHeal.Heal(Assistant.World.Player);
             return true;
         }
 
