@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JsonData;
+using Newtonsoft.Json;
 
 using IronPython.Runtime;
 using IronPython.Hosting;
@@ -19,6 +21,7 @@ namespace RazorEnhanced
         private int m_lastMount;
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
+
         // useOnceIgnoreList
         private List<int> m_serialUseOnceIgnoreList;
 
@@ -60,6 +63,8 @@ namespace RazorEnhanced
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
             m_lastMount = 0;
+
+            string configFile = System.IO.Path.Combine(Assistant.Engine.RootPath, "Config", "UOS.config.json");
         }
 
         uint AliasHandler(string alias)
@@ -182,13 +187,13 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("playsound", this.PlaySound);
             UOScript.Interpreter.RegisterCommandHandler("resync", this.Resync);
             UOScript.Interpreter.RegisterCommandHandler("snapshot", this.Snapshot);
-            UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("hotkeys", this.Hotkeys); //toggles hot keys .. not going to implement
             UOScript.Interpreter.RegisterCommandHandler("where", this.Where);
             UOScript.Interpreter.RegisterCommandHandler("messagebox", this.MessageBox);
-            UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("mapuo", this.MapUO); // not going to implement
+            UOScript.Interpreter.RegisterCommandHandler("clickscreen", this.ClickScreen);
+            UOScript.Interpreter.RegisterCommandHandler("paperdoll", this.Paperdoll);
+            UOScript.Interpreter.RegisterCommandHandler("helpbutton", this.HelpButton); //not going to implement
             UOScript.Interpreter.RegisterCommandHandler("guildbutton", this.GuildButton);
             UOScript.Interpreter.RegisterCommandHandler("questsbutton", this.QuestsButton);
             UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
@@ -208,14 +213,14 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("waitforprompt", this.WaitForPrompt);
             UOScript.Interpreter.RegisterCommandHandler("cancelprompt", this.CancelPrompt);
             UOScript.Interpreter.RegisterCommandHandler("addfriend", this.AddFriend); //not so much
-            UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("removefriend", this.RemoveFriend); // not implemented, use the gui
             UOScript.Interpreter.RegisterCommandHandler("contextmenu", this.ContextMenu);
             UOScript.Interpreter.RegisterCommandHandler("waitforcontext", this.WaitForContext);
             UOScript.Interpreter.RegisterCommandHandler("ignoreobject", this.IgnoreObject);
             UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList);
             UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill);
             UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
-            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); // I dont see the need. not going to implement
             UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
             UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal);
             UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal);
@@ -241,21 +246,21 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("findobject", this.FindObject); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill);
+            UOScript.Interpreter.RegisterExpressionHandler("findobject", this.FindObject);
             UOScript.Interpreter.RegisterExpressionHandler("useobject", this.UseObjExp);
-            UOScript.Interpreter.RegisterExpressionHandler("distance", this.Distance); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("inrange", this.InRange); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("buffexists", this.BuffExists); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("distance", this.Distance);
+            UOScript.Interpreter.RegisterExpressionHandler("inrange", this.InRange);
+            UOScript.Interpreter.RegisterExpressionHandler("buffexists", this.BuffExists);
             UOScript.Interpreter.RegisterExpressionHandler("property", Property);
             UOScript.Interpreter.RegisterExpressionHandler("findtype", FindType);
-            UOScript.Interpreter.RegisterExpressionHandler("findlayer", this.FindLayer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("findlayer", this.FindLayer);
             UOScript.Interpreter.RegisterExpressionHandler("skillstate", this.SkillState);
             UOScript.Interpreter.RegisterExpressionHandler("counttype", this.CountType);
-            UOScript.Interpreter.RegisterExpressionHandler("counttypeground", this.CountTypeGround);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("counttypeground", this.CountTypeGround);
             UOScript.Interpreter.RegisterExpressionHandler("findwand", this.FindWand); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("inparty", this.InParty); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("infriendslist", this.InFriendList); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("infriendlist", this.InFriendList);
             UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
             UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGump);
             UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
@@ -267,11 +272,35 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);  //TODO: This method is a stub. Remove after successful testing.
 
             // Player Attributes
-            UOScript.Interpreter.RegisterExpressionHandler("mana", this.Mana);  //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);  //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("name", this.Name); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("weight", (string expression, UOScript.Argument[] args, bool quiet) => Player.Weight);
+            UOScript.Interpreter.RegisterExpressionHandler("maxweight", (string expression, UOScript.Argument[] args, bool quiet) => Player.MaxWeight);
+            UOScript.Interpreter.RegisterExpressionHandler("diffweight", (string expression, UOScript.Argument[] args, bool quiet) => Player.MaxWeight - Player.Weight);
+            UOScript.Interpreter.RegisterExpressionHandler("mana", (string expression, UOScript.Argument[] args, bool quiet) => Player.Mana);
+            UOScript.Interpreter.RegisterExpressionHandler("maxmana", (string expression, UOScript.Argument[] args, bool quiet) => Player.ManaMax);
+            UOScript.Interpreter.RegisterExpressionHandler("hits", (string expression, UOScript.Argument[] args, bool quiet) => Player.Hits);
+            UOScript.Interpreter.RegisterExpressionHandler("diffhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax - Player.Hits);
+            UOScript.Interpreter.RegisterExpressionHandler("maxhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax);
+            UOScript.Interpreter.RegisterExpressionHandler("stam", (string expression, UOScript.Argument[] args, bool quiet) => Player.Stam);
+            UOScript.Interpreter.RegisterExpressionHandler("maxstam", (string expression, UOScript.Argument[] args, bool quiet) => Player.StamMax);
+            UOScript.Interpreter.RegisterExpressionHandler("dex", (string expression, UOScript.Argument[] args, bool quiet) => Player.Dex);
+            UOScript.Interpreter.RegisterExpressionHandler("int", (string expression, UOScript.Argument[] args, bool quiet) => Player.Int);
+            UOScript.Interpreter.RegisterExpressionHandler("str", (string expression, UOScript.Argument[] args, bool quiet) => Player.Str);
+            UOScript.Interpreter.RegisterExpressionHandler("physical", (string expression, UOScript.Argument[] args, bool quiet) => Player.AR);
+            UOScript.Interpreter.RegisterExpressionHandler("fire", (string expression, UOScript.Argument[] args, bool quiet) => Player.FireResistance);
+            UOScript.Interpreter.RegisterExpressionHandler("cold", (string expression, UOScript.Argument[] args, bool quiet) => Player.ColdResistance);
+            UOScript.Interpreter.RegisterExpressionHandler("poison", (string expression, UOScript.Argument[] args, bool quiet) => Player.PoisonResistance);
+            UOScript.Interpreter.RegisterExpressionHandler("energy", (string expression, UOScript.Argument[] args, bool quiet) => Player.EnergyResistance);
+
+            UOScript.Interpreter.RegisterExpressionHandler("followers", (string expression, UOScript.Argument[] args, bool quiet) => Player.Followers);
+            UOScript.Interpreter.RegisterExpressionHandler("maxfollowers", (string expression, UOScript.Argument[] args, bool quiet) => Player.FollowersMax);
+            UOScript.Interpreter.RegisterExpressionHandler("gold", (string expression, UOScript.Argument[] args, bool quiet) => Player.Gold);
+            UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
+            UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
+
+            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);
+            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y);
+            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z);
+            UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
 
             // Object attributes
         }
@@ -600,41 +629,176 @@ namespace RazorEnhanced
         {
             return ExpressionNotImplemented(expression, args, quiet);
         }
-        
+
         private IComparable Skill(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Skill requires parameters");
+                return false;
+            }
+
+            string skillname = args[0].AsString();
+            double skillvalue = Player.GetSkillValue(skillname);
+            return skillvalue;
         }
         private IComparable FindObject(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Find Object requires parameters");
+                return false;
+            }
+            UOScript.Interpreter.UnSetAlias("found");
+            Item item = null;
+            if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                item = Items.FindBySerial((int)serial);
+                if (item == null)
+                    return false;
+            }
+
+            if (args.Length >= 2)
+            {
+                int color = args[1].AsInt();
+                if (item.Hue != color)
+                    return false;
+            }
+            if (args.Length >= 3)
+            {
+                int container = (int)args[2].AsSerial();
+                if (item.Container != container)
+                    return false;
+            }
+            if (args.Length >= 4)
+            {
+                int amount = args[3].AsInt();
+                if (item.Amount < amount)
+                    return false;
+            }
+            if (args.Length >= 5)
+            {
+                int maxRange = args[4].AsInt();
+                if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y) > maxRange)
+                    return false;
+            }
+
+            UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
+            return true;
         }
         private IComparable Distance(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Find Object requires parameters");
+                return false;
+            }
+            uint serial = args[0].AsSerial();
+            Item item = null;
+            item = Items.FindBySerial((int)serial);
+            if (item == null)
+                return false;
+
+            return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
         }
+
         private IComparable InRange(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 2)
+            {
+                throw new UOScript.RunTimeError(null, "Find Object requires parameters");
+                return false;
+            }
+            uint serial = args[0].AsSerial();
+            int range = args[1].AsInt();
+            Item item = null;
+            item = Items.FindBySerial((int)serial);
+            if (item == null)
+                return false;
+
+            int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
+
+            return (range <= distance);
         }
         private IComparable BuffExists(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length >= 1)
+            {
+                return Player.BuffsExist(args[0].AsString());
+            }
+
+            return false;
+
         }
 
         private IComparable FindLayer(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 2)
+            {
+                throw new UOScript.RunTimeError(null, "Find Object requires parameters");
+                return false;
+            }
+            uint serial = args[0].AsSerial();
+            Assistant.Mobile mobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            if (mobile == null)
+                return false;
+
+            Assistant.Layer layer = (Assistant.Layer)args[1].AsInt();
+            Assistant.Item item = mobile.GetItemOnLayer(layer);
+            if (item != null)
+            {
+                UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
+                return true;
+            }
+            return false;
         }
 
         private IComparable CountTypeGround(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1)
+                return 0;
+
+            Items.Filter filter = new Items.Filter();
+            filter.OnGround = 1;
+
+            if (args.Length > 0)
+            {
+                int itemID = args[0].AsInt();
+                filter.Graphics.Add(itemID);
+            }
+            if (args.Length > 1)
+            {
+                int color = args[1].AsInt();
+                filter.Hues.Add(color);
+            }
+            if (args.Length > 2)
+            {
+                int range = args[2].AsInt();
+                filter.RangeMax = range;
+            }
+
+            List<Item> items = Items.ApplyFilter(filter);
+            int count = 0;
+            foreach (Item i in items)
+                count += i.Amount;
+            return count;
         }
 
         private IComparable InFriendList(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length > 0)
+            {
+                uint serial = args[0].AsSerial();
+                Friend.FriendPlayer player = new Friend.FriendPlayer("FAKE", (int)serial, true);
+                string selection = Friend.FriendListName;
+                if (RazorEnhanced.Settings.Friend.ListExists(selection))
+                {
+                    if (RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
+                        return true;
+                }
+            }
+            return false;
         }
 
         private IComparable Timer(string expression, UOScript.Argument[] args, bool quiet)
@@ -649,23 +813,27 @@ namespace RazorEnhanced
         // Player Attributes
         private IComparable Mana(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return Player.Mana;
+        }
+        private IComparable MaxMana(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            return Player.ManaMax;
         }
         private IComparable X(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return Player.Position.X;
         }
         private IComparable Y(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return Player.Position.Y;
         }
         private IComparable Z(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return Player.Position.Z;
         }
         private IComparable Name(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return Player.Name;
         }
 
 
@@ -1741,7 +1909,7 @@ namespace RazorEnhanced
         private bool Where(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Commands.Where(null);
-            return NotImplemented(command, args, quiet, force);
+            return true;
         }
 
         private bool MessageBox(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -2038,7 +2206,7 @@ namespace RazorEnhanced
                 string name = new_friend.Name;
                 Friend.AddPlayer(list_name, name, serial);
             }
-            return NotImplemented(command, args, quiet, force);
+            return true;
         }
 
         private bool RemoveFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -2359,10 +2527,13 @@ namespace RazorEnhanced
             public static String BuildErrorMessage(ASTNode node, string error) {
                 String msg = "\n";
                 msg  = String.Format("Error:\t{0}\n", error);
-                msg += String.Format("Type:\t{0}\n", node.Type);
-                msg += String.Format("Word:\t{0}\n", node.Lexeme);
-                msg += String.Format("Line:\t{0}\n", node.LineNumber + 1);
-                msg += String.Format("Code:\t{0}\n", Lexer.GetLine(node.LineNumber) ); 
+                if (node != null)
+                {
+                    msg += String.Format("Type:\t{0}\n", node.Type);
+                    msg += String.Format("Word:\t{0}\n", node.Lexeme);
+                    msg += String.Format("Line:\t{0}\n", node.LineNumber + 1);
+                    msg += String.Format("Code:\t{0}\n", Lexer.GetLine(node.LineNumber));
+                }
                 return msg;
             }
 
@@ -3936,7 +4107,7 @@ namespace RazorEnhanced
     {
         private static int _curLine = 0;
         private static string[] _lines;
-        private static string _filename = ""; // can be empty 
+        private static string _filename = ""; // can be empty
 
         public static string GetLine(int lineNum) {
             return _lines[lineNum];
@@ -4332,7 +4503,7 @@ namespace RazorEnhanced
                 unary = true;
 
             if (unary && binary)
-                throw new SyntaxError(node, "Invalid expression");
+                throw new SyntaxError(node, String.Format("Invalid expression at line {0}", node.LineNumber));
 
             if (unary)
                 ParseUnaryExpression(node, lexemes);
