@@ -390,7 +390,7 @@ namespace RazorEnhanced
         private IComparable InJournal(string expression, UOScript.Argument[] args, bool quiet)
         {
 
-            if (args.Length == 1)
+            if (args.Length >= 1)
             {
                 string text = args[0].AsString();
                 return Journal.Search(text);
@@ -568,7 +568,7 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 int gumpid = args[0].AsInt();
-                return (gumpid - Gumps.CurrentGump());
+                return (gumpid == Gumps.CurrentGump());
             }
             return -1;
         }
@@ -2390,8 +2390,8 @@ namespace RazorEnhanced
         {
             if (args.Length == 1)
             {
-                string spell = args[0].AsString().ToLower();
-                Spells.CastMagery(spell);
+                string spell = args[0].AsString();
+                Spells.Cast(spell);
             }
 
             return true;
@@ -2824,6 +2824,11 @@ namespace RazorEnhanced
             private void PopScope()
             {
                 _scope = _scope.Parent;
+            }
+
+            internal Scope CurrentScope()
+            {
+                return _scope;
             }
 
             private Argument[] ConstructArguments(ref ASTNode node)
@@ -3805,7 +3810,6 @@ namespace RazorEnhanced
                     throw new RunTimeError(null, "List does not exist");
 
                 var idx = front ? 0 : _lists[name].Count - 1;
-
                 _lists[name].RemoveAt(idx);
 
                 return _lists[name].Count > 0;
@@ -4585,14 +4589,6 @@ namespace RazorEnhanced
 
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
 
-            }
-            else if (lexemes.Length == 3 && lexemes[1] == "to")
-            {
-                // for X to LIST
-                var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
-
-                loop.Push(ASTNodeType.STRING, lexemes[2], _curLine);
-                loop.Push(ASTNodeType.LIST, lexemes[2].Substring(0, lexemes[2].Length - 2), _curLine);
             }
             else
             {
