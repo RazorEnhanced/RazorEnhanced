@@ -4572,15 +4572,14 @@ namespace RazorEnhanced
             // iterate a fixed number of times. The other two iterate
             // parts of lists. We call those second two FOREACH.
 
-            // We're intentionally deprecating two of the variants here.
-            // The for X to Y variant, where both X and Y are integers,
-            // is useless. It can be just written as for X.
+            // We're intentionally deprecating one of the variants here.
             // The for X to Y in LIST variant may have some niche uses, but
             // is annoying to implement.
 
             // The for X loop remains supported as is, while the
-            // for X in LIST form is actually transformed into a foreach
-            // statement.
+            // The for X to Y variant, where both X and Y are integers,
+            // is transformed to a for X.
+            // for X in LIST form is unsupported and will probably crash
 
             if (lexemes.Length == 1)
             {
@@ -4590,6 +4589,23 @@ namespace RazorEnhanced
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
 
             }
+            else if (lexemes.Length == 3)
+            {
+                // for X
+                var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
+                // ignore the 0 to part .. maybe can make this smarter
+                try
+                {
+                    int from = Int32.Parse(lexemes[0]);
+                    int to = Int32.Parse(lexemes[2]);
+                    ParseValue(loop, String.Format("{0}", to - from ), ASTNodeType.STRING);
+                }
+                catch (FormatException e)
+                {
+                    ParseValue(loop, lexemes[2], ASTNodeType.STRING);
+                }
+            }
+
             else
             {
                 throw new SyntaxError(statement, "Invalid for loop");
