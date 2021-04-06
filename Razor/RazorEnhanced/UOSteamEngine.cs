@@ -1317,12 +1317,12 @@ namespace RazorEnhanced
             string msg = args[0].AsString();
             if (args.Length == 1)
             {
-                Misc.SendMessage(msg);
+                Player.ChatSay(0, msg);
             }
             if (args.Length == 2)
             {
                 int color = args[1].AsInt();
-                Misc.SendMessage(msg, color);
+                Player.ChatSay(color, msg);
             }
 
             return true;
