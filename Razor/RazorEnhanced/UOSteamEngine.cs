@@ -531,11 +531,14 @@ namespace RazorEnhanced
             if (args.Length == 2)
             {
                 uint gumpid = args[0].AsSerial();
-                string text = args[1].AsString();
+                string serach_text = args[1].AsString().ToLower();
                 uint curGumpid = Gumps.CurrentGump();
+
                 if (gumpid == 0xffffffff || gumpid == curGumpid)
                 {
-                    return Gumps.LastGumpTextExist(text);
+                    var gump_text = String.Join("\n", Gumps.LastGumpGetLineList()).ToLower();
+                    return gump_text.Contains(serach_text);
+                    
                 }
 
             }
@@ -714,12 +717,13 @@ namespace RazorEnhanced
             int range = args[1].AsInt();
             Item item = null;
             item = Items.FindBySerial((int)serial);
-            if (item == null)
-                return false;
+            if (item == null) { 
+               return false;
+            }
 
             int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
 
-            return (range <= distance);
+            return (distance <= range);
         }
         private IComparable BuffExists(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -1834,7 +1838,7 @@ namespace RazorEnhanced
 
         private bool WaitForJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            if (args.Length > 1)
+            if (args.Length == 2)
             {
                 string text = args[0].AsString();
                 int delay = args[1].AsInt();
