@@ -390,7 +390,7 @@ namespace RazorEnhanced
         private IComparable InJournal(string expression, UOScript.Argument[] args, bool quiet)
         {
 
-            if (args.Length == 1)
+            if (args.Length >= 1)
             {
                 string text = args[0].AsString();
                 return Journal.Search(text);
@@ -568,7 +568,7 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 int gumpid = args[0].AsInt();
-                return (gumpid - Gumps.CurrentGump());
+                return (gumpid == Gumps.CurrentGump());
             }
             return -1;
         }
@@ -1317,12 +1317,12 @@ namespace RazorEnhanced
             string msg = args[0].AsString();
             if (args.Length == 1)
             {
-                Misc.SendMessage(msg);
+                Player.ChatSay(0, msg);
             }
             if (args.Length == 2)
             {
                 int color = args[1].AsInt();
-                Misc.SendMessage(msg, color);
+                Player.ChatSay(color, msg);
             }
 
             return true;
@@ -2390,8 +2390,8 @@ namespace RazorEnhanced
         {
             if (args.Length == 1)
             {
-                string spell = args[0].AsString().ToLower();
-                Spells.CastMagery(spell);
+                string spell = args[0].AsString();
+                Spells.Cast(spell);
             }
 
             return true;
@@ -2824,6 +2824,11 @@ namespace RazorEnhanced
             private void PopScope()
             {
                 _scope = _scope.Parent;
+            }
+
+            internal Scope CurrentScope()
+            {
+                return _scope;
             }
 
             private Argument[] ConstructArguments(ref ASTNode node)
@@ -3805,7 +3810,6 @@ namespace RazorEnhanced
                     throw new RunTimeError(null, "List does not exist");
 
                 var idx = front ? 0 : _lists[name].Count - 1;
-
                 _lists[name].RemoveAt(idx);
 
                 return _lists[name].Count > 0;
@@ -4568,15 +4572,14 @@ namespace RazorEnhanced
             // iterate a fixed number of times. The other two iterate
             // parts of lists. We call those second two FOREACH.
 
-            // We're intentionally deprecating two of the variants here.
-            // The for X to Y variant, where both X and Y are integers,
-            // is useless. It can be just written as for X.
+            // We're intentionally deprecating one of the variants here.
             // The for X to Y in LIST variant may have some niche uses, but
             // is annoying to implement.
 
             // The for X loop remains supported as is, while the
-            // for X in LIST form is actually transformed into a foreach
-            // statement.
+            // The for X to Y variant, where both X and Y are integers,
+            // is transformed to a for X.
+            // for X in LIST form is unsupported and will probably crash
 
             if (lexemes.Length == 1)
             {
@@ -4586,14 +4589,23 @@ namespace RazorEnhanced
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
 
             }
-            else if (lexemes.Length == 3 && lexemes[1] == "to")
+            else if (lexemes.Length == 3)
             {
-                // for X to LIST
-                var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
-
-                loop.Push(ASTNodeType.STRING, lexemes[2], _curLine);
-                loop.Push(ASTNodeType.LIST, lexemes[2].Substring(0, lexemes[2].Length - 2), _curLine);
+                // for X
+                var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
+                // ignore the 0 to part .. maybe can make this smarter
+                try
+                {
+                    int from = Int32.Parse(lexemes[0]);
+                    int to = Int32.Parse(lexemes[2]);
+                    ParseValue(loop, String.Format("{0}", to - from ), ASTNodeType.STRING);
+                }
+                catch (FormatException e)
+                {
+                    ParseValue(loop, lexemes[2], ASTNodeType.STRING);
+                }
             }
+
             else
             {
                 throw new SyntaxError(statement, "Invalid for loop");

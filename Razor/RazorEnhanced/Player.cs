@@ -992,10 +992,32 @@ namespace RazorEnhanced
                 return null;
         }
 
+        internal static string GuessSkillName(string originalName)
+        {
+            int distance = 99;
+            string closest = "";
+
+            foreach (string skill in Enum.GetNames(typeof(SkillName)))
+            {
+                int computeDistance = UOAssist.LevenshteinDistance(skill, originalName);
+                if (computeDistance < distance)
+                {
+                    distance = computeDistance;
+                    closest = skill;
+                }
+            }
+
+            if (distance < 99)
+                return closest;
+            return originalName;
+
+        }
+
         // Skill
         public static double GetSkillValue(string skillname)
         {
-            if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            string guessedSkillName = GuessSkillName(skillname);
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
             {
                 Scripts.SendMessageScriptError("Script Error: GetSkillValue: " + skillname + " not valid");
                 return -1;
@@ -1006,7 +1028,8 @@ namespace RazorEnhanced
 
         public static double GetRealSkillValue(string skillname)
         {
-            if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            string guessedSkillName = GuessSkillName(skillname);
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
             {
                 Scripts.SendMessageScriptError("Script Error: GetRealSkillValue: " + skillname + " not valid");
                 return -1;
@@ -1018,7 +1041,8 @@ namespace RazorEnhanced
 
         public static double GetSkillCap(string skillname)
         {
-            if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            string guessedSkillName = GuessSkillName(skillname);
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
             {
                 Scripts.SendMessageScriptError("Script Error: GetSkillCap: " + skillname + " not valid");
                 return -1;
@@ -1029,7 +1053,8 @@ namespace RazorEnhanced
 
         public static int GetSkillStatus(string skillname)
         {
-            if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            string guessedSkillName = GuessSkillName(skillname);
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
             {
                 Scripts.SendMessageScriptError("Script Error: GetSkillStatus: " + skillname + " not valid");
                 return -1;
@@ -1040,13 +1065,14 @@ namespace RazorEnhanced
 
         public static void SetSkillStatus(string skillname, int status)
         {
+            string guessedSkillName = GuessSkillName(skillname);
             if (status < 0 || status > 2)
             {
                 Scripts.SendMessageScriptError("Script Error: SetSkillStatus: status: " + status + " not valid");
                 return;
             }
 
-            if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
             {
                 Scripts.SendMessageScriptError("Script Error: SetSkillStatus: " + skillname + " not valid");
                 return;
@@ -1115,7 +1141,8 @@ namespace RazorEnhanced
         }
         public static void UseSkill(string skillname, int targetSerial, bool wait=true)
         {
-            if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            string guessedSkillName = GuessSkillName(skillname);
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
             {
                 Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
                 return;
@@ -1167,7 +1194,8 @@ namespace RazorEnhanced
 
         public static void UseSkillOnly(string skillname, bool wait)
 		{
-			if (!Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill))
+            string guessedSkillName = GuessSkillName(skillname);
+            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
 			{
 				Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
 				return;
@@ -1347,7 +1375,7 @@ namespace RazorEnhanced
 		{
 	 		Assistant.Client.Instance.SendToServerWait(new PartyInvite());
 		}
-        
+
         public static void PartyAccept(int serial = 0)
         {
             Assistant.Client.Instance.SendToServerWait(new AcceptParty(serial));

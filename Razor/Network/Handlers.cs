@@ -283,14 +283,14 @@ namespace Assistant
 					}*/
 				case 0x15: // context menu response
 					{
-						UOEntity ent = null;
+						//UOEntity ent = null;
 						Serial ser = p.ReadUInt32();
 						ushort idx = p.ReadUInt16();
 
-						if (ser.IsMobile)
-							ent = World.FindMobile(ser);
-						else if (ser.IsItem)
-							ent = World.FindItem(ser);
+						//if (ser.IsMobile)
+						//	ent = World.FindMobile(ser);
+						//else if (ser.IsItem)
+						//	ent = World.FindItem(ser);
 
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
 							RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
@@ -1220,7 +1220,7 @@ namespace Assistant
 			uint id = p.ReadUInt32();
 			uint type = p.ReadUInt32();
 
-			World.Player.HasPrompt = false;
+			World.Player.HasPrompt = true;
 			World.Player.PromptSenderSerial = serial;
 			World.Player.PromptID = id;
 			World.Player.PromptType = type;
@@ -1359,7 +1359,7 @@ namespace Assistant
 			Mobile m = World.FindMobile(pvSrc.ReadUInt32());
 			if (m == null)
 				return;
-			PlayerData p = World.Player;
+			//PlayerData p = World.Player;
 
 			m.HitsMax = pvSrc.ReadUInt16();
 			m.Hits = pvSrc.ReadUInt16();
