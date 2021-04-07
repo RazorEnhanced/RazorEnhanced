@@ -12,6 +12,7 @@ using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using IronPython.Compiler;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -121,6 +122,14 @@ namespace RazorEnhanced
             }
         }
 
+        public class IllegalArgumentException : Exception {
+            public IllegalArgumentException(string msg) : base(msg){}
+        }
+
+        public void WrongParameterCount(string commands, int expected, int given, string message="") {
+            var msg = String.Format("{0} expect {1} parameters, {2} given. {message}");
+            throw new IllegalArgumentException(msg);
+        }
 
 
         // Abstract Placeholders
@@ -4383,14 +4392,6 @@ namespace RazorEnhanced
                         ParseForLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
-                case "foreach":
-                    {
-                        if (lexemes.Length != 4)
-                            throw new SyntaxError(node, "Script compilation error");
-
-                        ParseForEachLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
-                        break;
-                    }
                 case "endfor":
                     if (lexemes.Length > 1)
                         throw new SyntaxError(node, "Script compilation error");
@@ -4585,49 +4586,86 @@ namespace RazorEnhanced
             // is transformed to a for X.
             // for X in LIST form is unsupported and will probably crash
 
+
+            // Reworking FOR implementation
+            /* Dalamar
+            for (end)                                ->    lexemes.Length == 1
+            for (start) to (end)                     ->    lexemes.Length == 3
+            for (start) to ('list name')             ->    lexemes.Length == 3 && startswith '
+            for (start) to (end) in ('list name')    ->    lexemes.Length == 5
+            */
+
+            //TODO: pre-copiled regex never change, move outside            
+            var matchListName = new Regex("[a-zA-Z]+", RegexOptions.Compiled);
+            var matchNumber = new Regex("^[0-9]+$", RegexOptions.Compiled);
+
+
+            //Common Syntax check
+            if (!matchNumber.IsMatch(lexemes[0]))
+            {
+                throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
+            }
+
+            if (lexemes.Length > 1 && lexemes[1] != "to")
+            {
+                throw new SyntaxError(statement, "Invalid for loop: missing 'to' keyword");
+            }
+            
+
+
+
+            //CASE: for (end)
             if (lexemes.Length == 1)
             {
-                // for X
+                if (!matchNumber.IsMatch(lexemes[0])) {
+                    throw new SyntaxError(statement, "Invalid for loop: expected number got "+ lexemes[0]);
+                }
                 var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
-
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
-
             }
+            //CASE: for (start) to (end) in ('list name')
+            else if (lexemes.Length == 5)
+            {
+                if (!matchNumber.IsMatch(lexemes[2]))
+                {
+                    throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
+                }
+                if ( lexemes[3] != "in" && matchListName.IsMatch(lexemes[4]) ){
+                    throw new SyntaxError(statement, "Invalid for loop: missing 'in' keyword");
+                }
+                // should i crop the list and the loop as if it was the normal list ?
+                var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
+                ParseValue(loop, lexemes[0], ASTNodeType.STRING);
+                ParseValue(loop, lexemes[2], ASTNodeType.STRING);
+                ParseValue(loop, lexemes[4], ASTNodeType.LIST);
+            }
+            //CASE: for (start) to ('list name')
+            else if (lexemes.Length == 3 && matchListName.IsMatch(lexemes[2])  )
+            {
+                var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
+                ParseValue(loop, lexemes[0], ASTNodeType.STRING);
+                ParseValue(loop, lexemes[2], ASTNodeType.LIST);
+            }
+            //CASE: for (start) to (end)
             else if (lexemes.Length == 3)
             {
-                // for X
-                var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
-                // ignore the 0 to part .. maybe can make this smarter
-                try
+                if (!matchNumber.IsMatch(lexemes[2]))
                 {
-                    int from = Int32.Parse(lexemes[0]);
-                    int to = Int32.Parse(lexemes[2]);
-                    ParseValue(loop, String.Format("{0}", to - from ), ASTNodeType.STRING);
+                    throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
-                catch (FormatException e)
-                {
-                    ParseValue(loop, lexemes[2], ASTNodeType.STRING);
-                }
-            }
+                int from = Int32.Parse(lexemes[0]);
+                int to = Int32.Parse(lexemes[2]);
 
+                var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
+                ParseValue(loop, String.Format("{0}", to - from), ASTNodeType.STRING);
+            }
+            //CASE: syntax error
             else
             {
                 throw new SyntaxError(statement, "Invalid for loop");
             }
         }
-
-        private static void ParseForEachLoop(ASTNode statement, string[] lexemes)
-        {
-            // foreach X in LIST
-            var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
-
-            if (lexemes[1] != "in")
-                throw new SyntaxError(statement, "Invalid foreach loop");
-
-            // This is the iterator name
-            ParseValue(loop, lexemes[0], ASTNodeType.STRING);
-            loop.Push(ASTNodeType.LIST, lexemes[2], _curLine);
-        }
+        
     }
 
     internal class TextParser
