@@ -3329,24 +3329,35 @@ namespace RazorEnhanced
                         }
                     case ASTNodeType.ENDFOR:
                         // Walk backward to the for statement
+                        // track depth in case there is a nested for
+                        // Walk backward to the for statement
                         _statement = _statement.Prev();
+
+                        // track depth in case there is a nested for
+                        depth = 0;
 
                         while (_statement != null)
                         {
                             node = _statement.FirstChild();
 
-                            if (node.Type == ASTNodeType.FOR ||
-                                node.Type == ASTNodeType.FOREACH)
+                            if (node.Type == ASTNodeType.ENDFOR)
                             {
-                                break;
+                                depth++;
+                            }
+                            else if (node.Type == ASTNodeType.FOR || node.Type == ASTNodeType.FOREACH)
+                            {
+                                if (depth == 0)
+                                {
+                                    break;
+                                }
+                                depth--;                                                                                                                                           
                             }
 
                             _statement = _statement.Prev();
-                        }
 
+                        }
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected endfor");
-
                         break;
                     case ASTNodeType.BREAK:
                         // Walk until the end of the loop
@@ -4669,9 +4680,9 @@ namespace RazorEnhanced
                 throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
             }
 
-            if (lexemes.Length > 1 && lexemes[1] != "to")
+            if (lexemes.Length > 1 && ( lexemes[1] != "to" || lexemes[1] != "in" ) )
             {
-                throw new SyntaxError(statement, "Invalid for loop: missing 'to' keyword");
+                throw new SyntaxError(statement, "Invalid for loop: missing 'to/in' keyword");
             }
             
 
@@ -4693,8 +4704,9 @@ namespace RazorEnhanced
                 {
                     throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
-                if ( lexemes[3] != "in" ){
-                    throw new SyntaxError(statement, "Invalid for loop: missing 'in' keyword");
+                if ( lexemes[3] != "in" && lexemes[3] != "to" )
+                {
+                    throw new SyntaxError(statement, "Invalid for loop: missing 'in/to' keyword");
                 }
                 if (!matchListName.IsMatch(lexemes[4]))
                 {
