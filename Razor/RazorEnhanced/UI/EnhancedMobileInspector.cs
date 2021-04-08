@@ -207,16 +207,16 @@ namespace RazorEnhanced.UI
 
 			lNotoriety.Text = m_mobile.Notoriety.ToString();
 
-			switch (m_mobile.Direction & Assistant.Direction.Mask)
+			switch (m_mobile.Direction & Assistant.Direction.mask)
 			{
-				case Assistant.Direction.North: lDirection.Text = "North"; break;
-				case Assistant.Direction.South: lDirection.Text = "South"; break;
-				case Assistant.Direction.West: lDirection.Text = "West"; break;
-				case Assistant.Direction.East: lDirection.Text = "East"; break;
-				case Assistant.Direction.Right: lDirection.Text = "Right"; break;
-				case Assistant.Direction.Left: lDirection.Text = "Left"; break;
-				case Assistant.Direction.Down: lDirection.Text = "Down"; break;
-				case Assistant.Direction.Up: lDirection.Text = "Up"; break;
+				case Assistant.Direction.north: lDirection.Text = "North"; break;
+				case Assistant.Direction.south: lDirection.Text = "South"; break;
+				case Assistant.Direction.west: lDirection.Text = "West"; break;
+				case Assistant.Direction.east: lDirection.Text = "East"; break;
+				case Assistant.Direction.right: lDirection.Text = "Right"; break;
+				case Assistant.Direction.left: lDirection.Text = "Left"; break;
+				case Assistant.Direction.down: lDirection.Text = "Down"; break;
+				case Assistant.Direction.up: lDirection.Text = "Up"; break;
 				default: lDirection.Text = "Undefined"; break;
 			}
 

@@ -168,16 +168,16 @@ namespace RazorEnhanced
         {
             get
             {
-                switch (World.Player.Direction & Assistant.Direction.Mask)
+                switch (World.Player.Direction & Assistant.Direction.mask)
                 {
-                    case Assistant.Direction.North: return "North";
-                    case Assistant.Direction.South: return "South";
-                    case Assistant.Direction.West: return "West";
-                    case Assistant.Direction.East: return "East";
-                    case Assistant.Direction.Right: return "Right";
-                    case Assistant.Direction.Left: return "Left";
-                    case Assistant.Direction.Down: return "Down";
-                    case Assistant.Direction.Up: return "Up";
+                    case Assistant.Direction.north: return "North";
+                    case Assistant.Direction.south: return "South";
+                    case Assistant.Direction.west: return "West";
+                    case Assistant.Direction.east: return "East";
+                    case Assistant.Direction.right: return "Right";
+                    case Assistant.Direction.left: return "Left";
+                    case Assistant.Direction.down: return "Down";
+                    case Assistant.Direction.up: return "Up";
                     default: return "Undefined";
                 }
             }
@@ -1409,7 +1409,7 @@ namespace RazorEnhanced
 		private static DateTime m_LastWalk = DateTime.MinValue;
 		public static bool Run(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
 		{
-			if (!Enum.TryParse<Direction>(direction, out Direction dir))
+			if (!Enum.TryParse<Direction>(direction.ToLower(), out Direction dir))
 			{
 				Scripts.SendMessageScriptError("Script Error: Run: " + direction + " not valid");
 				return false;
@@ -1466,25 +1466,14 @@ namespace RazorEnhanced
 			PathFindTo(Location.X, Location.Y, Location.Z);
 		}
 
-		public static void PathFindTo(int x, int y, int z)
-		{
-			PathFindToPacket(x, y, z);
-			//UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			//while (!UoWarper.UODLLHandleClass.Open())
-			//{
-			//	Thread.Sleep(50);
-			//}
-			//UoWarper.UODLLHandleClass.Pathfind(x, y, z);
-		}
+        public static void PathFindTo(int x, int y, int z)
+        {
+            PathFindToPacket(x, y, z);
+        }
 
-		internal static void PathFindToPacket(Assistant.Point3D location)
+
+        internal static void PathFindToPacket(Assistant.Point3D location)
 		{
-			//UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			//while (!UoWarper.UODLLHandleClass.Open())
-			//{
-			//	Thread.Sleep(50);
-			//}
-			//UoWarper.UODLLHandleClass.Pathfind(location.X, location.Y, location.Z);
 			Assistant.Client.Instance.PathFindTo(location);
 		}
 

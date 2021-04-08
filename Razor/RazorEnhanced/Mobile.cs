@@ -82,16 +82,16 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				switch (m_AssistantMobile.Direction & Assistant.Direction.Mask)
+				switch (m_AssistantMobile.Direction & Assistant.Direction.mask)
 				{
-					case Assistant.Direction.North: return "North";
-					case Assistant.Direction.South: return "South";
-					case Assistant.Direction.West: return "West";
-					case Assistant.Direction.East: return "East";
-					case Assistant.Direction.Right: return "Right";
-					case Assistant.Direction.Left: return "Left";
-					case Assistant.Direction.Down: return "Down";
-					case Assistant.Direction.Up: return "Up";
+					case Assistant.Direction.north: return "North";
+					case Assistant.Direction.south: return "South";
+					case Assistant.Direction.west: return "West";
+					case Assistant.Direction.east: return "East";
+					case Assistant.Direction.right: return "Right";
+					case Assistant.Direction.left: return "Left";
+					case Assistant.Direction.down: return "Down";
+					case Assistant.Direction.up: return "Up";
 					default: return "Undefined";
 				}
 			}

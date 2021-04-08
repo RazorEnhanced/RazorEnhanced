@@ -8,17 +8,21 @@ namespace Assistant
 	[Flags]
 	internal enum Direction : byte
 	{
-		North = 0x0,
-		Right = 0x1,
-		East = 0x2,
-		Down = 0x3,
-		South = 0x4,
-		Left = 0x5,
-		West = 0x6,
-		Mask = 0x7,
-		Up = 0x7,
-		Running = 0x80,
-		ValueMask = 0x87
+		north = 0x0,
+		right = 0x1,
+        northeast = 0x1,
+        east = 0x2,
+		down = 0x3,
+        southeast = 0x3,
+        south = 0x4,
+		left = 0x5,
+        southwest = 0x5,
+        west = 0x6,
+		mask = 0x7,
+		up = 0x7,
+        northwest = 0x7,
+        running = 0x80,
+		valuemask = 0x87
 	}
 
 	public class Mobile : UOEntity
