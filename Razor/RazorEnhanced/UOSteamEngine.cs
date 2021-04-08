@@ -175,7 +175,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); // I can't tell what this is intended to do in UOS
             UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot);
             UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger);
-            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //This has no meaning in RE
+            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter ); //This has no meaning in RE
             UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnSetAlias);
             UOScript.Interpreter.RegisterCommandHandler("setalias", this.SetAlias);
             UOScript.Interpreter.RegisterCommandHandler("promptalias", this.PromptAlias);
@@ -2471,6 +2471,12 @@ namespace RazorEnhanced
 
         private bool TargetType(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
+            // targettype (graphic) [color] [range]
+            if (args.Length == 0) { WrongParameterCount(command, 1, 0);}
+            var graphics = args[0].AsInt();
+            var color = (args.Length >= 2 ? args[1].AsInt() : -1);
+            var range = (args.Length >=3 ? args[3].AsString() : "backpack");
+
             return NotImplemented(command, args, quiet, force);
         }
 
@@ -4680,7 +4686,7 @@ namespace RazorEnhanced
                 throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
             }
 
-            if (lexemes.Length > 1 && ( lexemes[1] != "to" || lexemes[1] != "in" ) )
+            if (lexemes.Length > 1 && lexemes[1] != "to" && lexemes[1] != "in" )
             {
                 throw new SyntaxError(statement, "Invalid for loop: missing 'to/in' keyword");
             }
