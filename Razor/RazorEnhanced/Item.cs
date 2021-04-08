@@ -274,6 +274,14 @@ namespace RazorEnhanced
 				return 0; // item senza maxdur
 			}
 		}
+
+		public System.Drawing.Bitmap Image
+		{
+			get 
+			{ 
+				return Items.GetImage(m_AssistantItem.ItemID, m_AssistantItem.Hue); 
+			}
+		}
 	}
 
 	public class Items
@@ -1395,6 +1403,39 @@ namespace RazorEnhanced
 			}
 
 			return -1; // Se non trovata
+		}
+
+		public static System.Drawing.Bitmap GetImage(int itemID, int hue = 0)
+		{
+			System.Drawing.Bitmap bitmapImage = null;
+
+			try
+			{
+				// Get original cached Bitmap Static
+				System.Drawing.Bitmap bitmapOriginal = Ultima.Art.GetStatic(itemID);
+				{
+					if (bitmapOriginal != null)
+					{
+						bitmapImage = bitmapOriginal;
+
+						if (hue > 0)
+						{
+							// Create clone to preserve original cached bitmap!
+							System.Drawing.Bitmap bitmapDeepCopy = new System.Drawing.Bitmap(bitmapOriginal);
+
+							bool onlyHueGrayPixels = (hue & 0x8000) != 0;
+							hue = (hue & 0x3FFF) - 1;
+							Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
+							m_hue.ApplyTo(bitmapDeepCopy, onlyHueGrayPixels);
+
+							bitmapImage = bitmapDeepCopy;
+						}
+					}
+				}
+			}
+			catch { Misc.SendMessage("Items.GetBitmapImage() exception => itemID: " + itemID +", hue: " + hue); }
+
+			return bitmapImage;
 		}
 	}
 }
