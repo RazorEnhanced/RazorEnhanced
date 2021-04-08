@@ -12,6 +12,7 @@ using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using IronPython.Compiler;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -121,6 +122,14 @@ namespace RazorEnhanced
             }
         }
 
+        public class IllegalArgumentException : Exception {
+            public IllegalArgumentException(string msg) : base(msg){}
+        }
+
+        public void WrongParameterCount(string commands, int expected, int given, string message="") {
+            var msg = String.Format("{0} expect {1} parameters, {2} given. {message}");
+            throw new IllegalArgumentException(msg);
+        }
 
 
         // Abstract Placeholders
@@ -1347,7 +1356,7 @@ namespace RazorEnhanced
             if (args.Length == 2)
             {
                 Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
-                UOScript.Interpreter.PushList(args[0].AsString(), args[1], true, false);
+                UOScript.Interpreter.PushList(args[0].AsString(), args[1], false, false);
             }
             if (args.Length == 3)
             {
@@ -3105,7 +3114,7 @@ namespace RazorEnhanced
                     case ASTNodeType.FOR:
                         {
                             // The iterator variable's name is the hash code of the for loop's ASTNode.
-                            var iterName = node.GetHashCode().ToString();
+                            var iterName = node.GetHashCode().ToString(); // + "_" + node.LineNumber.ToString();
 
                             // When we first enter the loop, push a new scope
                             if (_scope.StartNode != node)
@@ -3156,13 +3165,13 @@ namespace RazorEnhanced
                                 {
                                     node = _statement.FirstChild();
 
-                                    if (node.Type == ASTNodeType.FOR ||
-                                        node.Type == ASTNodeType.FOREACH)
+                                    if (node.Type == ASTNodeType.FOR || node.Type == ASTNodeType.FOREACH)
                                     {
                                         depth++;
                                     }
                                     else if (node.Type == ASTNodeType.ENDFOR)
                                     {
+                                        
                                         if (depth == 0)
                                         {
                                             PopScope();
@@ -3170,8 +3179,8 @@ namespace RazorEnhanced
                                             Advance();
                                             break;
                                         }
-
                                         depth--;
+
                                     }
 
                                     Advance();
@@ -3181,48 +3190,104 @@ namespace RazorEnhanced
                         break;
                     case ASTNodeType.FOREACH:
                         {
-                            // foreach VAR in LIST
-                            // The iterator's name is the hash code of the for loop's ASTNode.
-                            var varName = node.FirstChild().Lexeme;
-                            //var listName = node.FirstChild().Next().Lexeme; this was getting invalid list name
-                            var listName = node.FirstChild().Lexeme;
-                            var iterName = node.GetHashCode().ToString();
+                            /*Dalamar
+                            ORIGINAL UOS Behaviour:  
+                            All list iteration start from 0 and provide in list_name[] the first item of the list while in the forloop.
+                            The start/end parameter simply "cap" the list size to a lower value as folloing:
 
+                            for (start) to ('list name')
+                            n_interations = list_length - start
+
+                            for (start) to (end) in ('list name')
+                            n_interations = ( end - start )
+                            
+                            this second case falls back to the first.
+
+
+                            PS: feels like writing intentionally broken code, but it's 100% UOSteam behaviour
+                            */
+
+                            // The iterator's name is the hash code of the for loop's ASTNode.
+                            var children = node.Children();
+                            ASTNode startParam = children[0];
+                            ASTNode endParam = null;
+                            ASTNode listParam = null;
+                            if (children.Length == 2)
+                            {
+                                listParam = children[1];
+                            }
+                            else {
+                                endParam = children[1];
+                                listParam = children[2];
+                            }
+
+
+                            string listName = listParam.Lexeme;
+                            int listSize = UOScript.Interpreter.ListLength(listName);
+
+                            string iterName = listParam.GetHashCode().ToString(); //+"_"+ listParam.LineNumber.ToString();
+                            string varName = listName + "[]";
+
+
+                            int num_iter = listSize;
+                            int start = int.Parse(startParam.Lexeme);
+                            if (endParam == null)
+                            {
+                                num_iter = listSize - start;
+                            }
+                            else {
+                                int end = int.Parse(endParam.Lexeme) + 1; // +1 is important
+                                if (end > listSize)
+                                {
+                                    throw new RunTimeError(node, "Invalid for loop: END parameter must be smaller then the list size ("+ listSize + "), " + (end-1) + " given ");
+                                }
+                                num_iter = end - start;
+                            }
+
+
+                            if (num_iter <= 0)
+                            {
+                                throw new RunTimeError(node, "Invalid for loop: loop count must be greater then 0, " + num_iter.ToString() + " given ");
+                            }
+
+                            var idx = 0;
                             // When we first enter the loop, push a new scope
                             if (_scope.StartNode != node)
                             {
                                 PushScope(node);
-
+                                
                                 // Create a dummy argument that acts as our iterator object
-                                var iter = new ASTNode(ASTNodeType.INTEGER, "0", node, 0);
+                                var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
                                 _scope.SetVar(iterName, new Argument(this, iter));
 
                                 // Make the user-chosen variable have the value for the front of the list
                                 var arg = UOScript.Interpreter.GetListValue(listName, 0);
 
-                                if (arg != null)
-                                    _scope.SetVar(varName + "[]", arg);
+                                if (arg == null || 0 >= num_iter )
+                                    _scope.ClearVar(varName);
                                 else
-                                    _scope.ClearVar(varName + "[]");
+                                    _scope.SetVar(varName, arg);
                             }
                             else
                             {
                                 // Increment the iterator argument
-                                var idx = _scope.GetVar(iterName).AsInt() + 1;
+                                idx = _scope.GetVar(iterName).AsInt() + 1;
                                 var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
                                 _scope.SetVar(iterName, new Argument(this, iter));
 
                                 // Update the user-chosen variable
                                 var arg = UOScript.Interpreter.GetListValue(listName, idx);
 
-                                if (arg != null)
-                                    _scope.SetVar(varName + "[]", arg);
-                                else
-                                    _scope.ClearVar(varName + "[]");
+                                if (arg == null || idx >= num_iter) {   
+                                    _scope.ClearVar(varName);
+                                }else { 
+                                    _scope.SetVar(varName, arg); 
+                                }
                             }
 
+
                             // Check loop condition
-                            var i = _scope.GetVar(varName + "[]");
+                            var i = _scope.GetVar(varName);
 
                             if (i != null)
                             {
@@ -3240,8 +3305,7 @@ namespace RazorEnhanced
                                 {
                                     node = _statement.FirstChild();
 
-                                    if (node.Type == ASTNodeType.FOR ||
-                                        node.Type == ASTNodeType.FOREACH)
+                                    if (node.Type == ASTNodeType.FOR || node.Type == ASTNodeType.FOREACH)
                                     {
                                         depth++;
                                     }
@@ -4092,6 +4156,14 @@ namespace RazorEnhanced
             return _children.First.Value;
         }
 
+        public ASTNode[] Children()
+        {
+            if (_children == null || _children.First == null)
+                return null;
+
+            return _children.ToArray();
+        }
+
         public ASTNode Next()
         {
             if (_node == null || _node.Next == null)
@@ -4383,14 +4455,6 @@ namespace RazorEnhanced
                         ParseForLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
-                case "foreach":
-                    {
-                        if (lexemes.Length != 4)
-                            throw new SyntaxError(node, "Script compilation error");
-
-                        ParseForEachLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
-                        break;
-                    }
                 case "endfor":
                     if (lexemes.Length > 1)
                         throw new SyntaxError(node, "Script compilation error");
@@ -4585,49 +4649,96 @@ namespace RazorEnhanced
             // is transformed to a for X.
             // for X in LIST form is unsupported and will probably crash
 
+
+            // Reworking FOR implementation
+            /* Dalamar
+            for (end)                                ->    lexemes.Length == 1
+            for (start) to (end)                     ->    lexemes.Length == 3
+            for (start) to ('list name')             ->    lexemes.Length == 3 && startswith '
+            for (start) to (end) in ('list name')    ->    lexemes.Length == 5
+            */
+
+            //TODO: pre-copiled regex never change, move outside            
+            var matchListName = new Regex("[a-zA-Z]+", RegexOptions.Compiled);
+            var matchNumber = new Regex("^[0-9]+$", RegexOptions.Compiled);
+
+
+            //Common Syntax check
+            if (!matchNumber.IsMatch(lexemes[0]))
+            {
+                throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
+            }
+
+            if (lexemes.Length > 1 && lexemes[1] != "to")
+            {
+                throw new SyntaxError(statement, "Invalid for loop: missing 'to' keyword");
+            }
+            
+
+
+
+            //CASE: for (end)
             if (lexemes.Length == 1)
             {
-                // for X
+                if (!matchNumber.IsMatch(lexemes[0])) {
+                    throw new SyntaxError(statement, "Invalid for loop: expected number got "+ lexemes[0]);
+                }
                 var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
-
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
-
             }
+            //CASE: for (start) to (end) in ('list name')
+            else if (lexemes.Length == 5)
+            {
+                if (!matchNumber.IsMatch(lexemes[2]))
+                {
+                    throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
+                }
+                if ( lexemes[3] != "in" ){
+                    throw new SyntaxError(statement, "Invalid for loop: missing 'in' keyword");
+                }
+                if (!matchListName.IsMatch(lexemes[4]))
+                {
+                    throw new SyntaxError(statement, "Invalid for loop: list names must contain letters");
+                }
+                
+                var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
+                ParseValue(loop, lexemes[0], ASTNodeType.STRING);
+                ParseValue(loop, lexemes[2], ASTNodeType.STRING);
+                ParseValue(loop, lexemes[4], ASTNodeType.LIST);
+            }
+            //CASE: for (start) to ('list name')
+            else if (lexemes.Length == 3 && matchListName.IsMatch(lexemes[2])  )
+            {          
+                var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
+                ParseValue(loop, lexemes[0], ASTNodeType.STRING);
+                ParseValue(loop, lexemes[2], ASTNodeType.LIST);
+            }
+            //CASE: for (start) to (end)
             else if (lexemes.Length == 3)
             {
-                // for X
-                var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
-                // ignore the 0 to part .. maybe can make this smarter
-                try
+                if (!matchNumber.IsMatch(lexemes[2]))
                 {
-                    int from = Int32.Parse(lexemes[0]);
-                    int to = Int32.Parse(lexemes[2]);
-                    ParseValue(loop, String.Format("{0}", to - from ), ASTNodeType.STRING);
+                    throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
-                catch (FormatException e)
-                {
-                    ParseValue(loop, lexemes[2], ASTNodeType.STRING);
-                }
-            }
+                int from = Int32.Parse(lexemes[0]);
+                int to = Int32.Parse(lexemes[2]);
+                int length = to - from;
 
+                if (length < 0)
+                {
+                    throw new SyntaxError(statement, "Invalid for loop: loop count must be greater then 0, " + length.ToString() + " given ");
+                }
+
+                var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
+                ParseValue(loop, length.ToString(), ASTNodeType.STRING);
+            }
+            //CASE: syntax error
             else
             {
                 throw new SyntaxError(statement, "Invalid for loop");
             }
         }
-
-        private static void ParseForEachLoop(ASTNode statement, string[] lexemes)
-        {
-            // foreach X in LIST
-            var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
-
-            if (lexemes[1] != "in")
-                throw new SyntaxError(statement, "Invalid foreach loop");
-
-            // This is the iterator name
-            ParseValue(loop, lexemes[0], ASTNodeType.STRING);
-            loop.Push(ASTNodeType.LIST, lexemes[2], _curLine);
-        }
+        
     }
 
     internal class TextParser
