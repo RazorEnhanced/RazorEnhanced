@@ -4704,8 +4704,9 @@ namespace RazorEnhanced
                 {
                     throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
-                if ( lexemes[3] != "in" ){
-                    throw new SyntaxError(statement, "Invalid for loop: missing 'in' keyword");
+                if ( lexemes[3] != "in" && lexemes[3] != "to" )
+                {
+                    throw new SyntaxError(statement, "Invalid for loop: missing 'in/to' keyword");
                 }
                 if (!matchListName.IsMatch(lexemes[4]))
                 {
