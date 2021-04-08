@@ -1081,28 +1081,28 @@ namespace Assistant
 
 			switch (m_Dir)
 			{
-				case Direction.Down:
+				case Direction.down:
 					direction = (int)KeyboardDir.Down;
 					break;
-				case Direction.East:
+				case Direction.east:
 					direction = (int)KeyboardDir.East;
 					break;
-				case Direction.Left:
+				case Direction.left:
 					direction = (int)KeyboardDir.Left;
 					break;
-				case Direction.North:
+				case Direction.north:
 					direction = (int)KeyboardDir.North;
 					break;
-				case Direction.Right:
+				case Direction.right:
 					direction = (int)KeyboardDir.Right;
 					break;
-				case Direction.South:
+				case Direction.south:
 					direction = (int)KeyboardDir.South;
 					break;
-				case Direction.Up:
+				case Direction.up:
 					direction = (int)KeyboardDir.Up;
 					break;
-				case Direction.West:
+				case Direction.west:
 					direction = (int)KeyboardDir.West;
 					break;
 				default:

@@ -55,16 +55,16 @@ namespace Assistant
 
 		internal static void Offset(Direction d, ref int x, ref int y)
 		{
-			switch (d & Direction.Mask)
+			switch (d & Direction.mask)
 			{
-				case Direction.North: --y; break;
-				case Direction.South: ++y; break;
-				case Direction.West: --x; break;
-				case Direction.East: ++x; break;
-				case Direction.Right: ++x; --y; break;
-				case Direction.Left: --x; ++y; break;
-				case Direction.Down: ++x; ++y; break;
-				case Direction.Up: --x; --y; break;
+				case Direction.north: --y; break;
+				case Direction.south: ++y; break;
+				case Direction.west: --x; break;
+				case Direction.east: ++x; break;
+				case Direction.right: ++x; --y; break;
+				case Direction.left: --x; ++y; break;
+				case Direction.down: ++x; ++y; break;
+				case Direction.up: --x; --y; break;
 			}
 		}
 

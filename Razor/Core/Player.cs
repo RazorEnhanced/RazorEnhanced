@@ -606,14 +606,14 @@ namespace Assistant
 			else
 				m_MoveInfo[seq] = e;
 
-			e.IsStep = (dir & Direction.Mask) == (Direction & Direction.Mask);
+			e.IsStep = (dir & Direction.mask) == (Direction & Direction.mask);
 			e.Dir = dir;
 
 			ProcessMove(dir);
 
 			e.Position = Position;
 
-			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
+			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
 			{
 				int x = Position.X, y = Position.Y;
 				Utility.Offset(e.Dir, ref x, ref y);
@@ -655,11 +655,11 @@ namespace Assistant
 
 		internal void ProcessMove(Direction dir)
 		{
-			if ((dir & Direction.Mask) == (this.Direction & Direction.Mask))
+			if ((dir & Direction.mask) == (this.Direction & Direction.mask))
 			{
 				int x = Position.X, y = Position.Y;
 
-				Utility.Offset(dir & Direction.Mask, ref x, ref y);
+				Utility.Offset(dir & Direction.mask, ref x, ref y);
 
 				int newZ = Position.Z;
 				try { newZ = Assistant.Facet.ZTop(Map, x, y, newZ); }

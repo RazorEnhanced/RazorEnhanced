@@ -650,9 +650,9 @@ namespace Assistant
 			Direction dir = (Direction)p.ReadByte();
 			if (!World.Player.Visible && Engine.MainWindow.ChkNoRunStealth.Checked)
 			{
-				if ((dir & Direction.Running) == Direction.Running)
+				if ((dir & Direction.running) == Direction.running)
 				{
-					dir &= ~Direction.Running;
+					dir &= ~Direction.running;
 					p.Seek(-1, SeekOrigin.Current);
 					p.Write((byte)dir);
 				}

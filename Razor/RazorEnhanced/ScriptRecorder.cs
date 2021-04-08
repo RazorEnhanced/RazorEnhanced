@@ -30,7 +30,7 @@ namespace RazorEnhanced
 			if (dest != 0xFFFFFFFF)
 				AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
 			else
-				AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");	
+				AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");
 		}
 
 		/*internal static void Record_ClientSingleClick(Assistant.Serial ser)
@@ -298,38 +298,38 @@ namespace RazorEnhanced
 
 		internal static void Record_Movement(Direction dir)
 		{
-			if ((dir & Direction.Running) == Direction.Running)
+			if ((dir & Direction.running) == Direction.running)
 			{
-				switch (World.Player.Direction & Direction.Mask)
+				switch (World.Player.Direction & Direction.mask)
 				{
-					case Direction.North: AddLog("Player.Run(\"North\")"); break;
-					case Direction.South: AddLog("Player.Run(\"South\")"); break;
-					case Direction.West: AddLog("Player.Run(\"West\")"); break;
-					case Direction.East: AddLog("Player.Run(\"East\")"); break;
-					case Direction.Right: AddLog("Player.Run(\"Right\")"); break;
-					case Direction.Left: AddLog("Player.Run(\"Left\")"); break;
-					case Direction.Down: AddLog("Player.Run(\"Down\")"); break;
-					case Direction.Up: AddLog("Player.Run(\"Up\")"); break;
+					case Direction.north: AddLog("Player.Run(\"North\")"); break;
+					case Direction.south: AddLog("Player.Run(\"South\")"); break;
+					case Direction.west: AddLog("Player.Run(\"West\")"); break;
+					case Direction.east: AddLog("Player.Run(\"East\")"); break;
+					case Direction.right: AddLog("Player.Run(\"Right\")"); break;
+					case Direction.left: AddLog("Player.Run(\"Left\")"); break;
+					case Direction.down: AddLog("Player.Run(\"Down\")"); break;
+					case Direction.up: AddLog("Player.Run(\"Up\")"); break;
 					default: break;
 				}
 			}
 			else
 			{
-				switch (World.Player.Direction & Direction.Mask)
+				switch (World.Player.Direction & Direction.mask)
 				{
-					case Direction.North: AddLog("Player.Walk(\"North\")"); break;
-					case Direction.South: AddLog("Player.Walk(\"South\")"); break;
-					case Direction.West: AddLog("Player.Walk(\"West\")"); break;
-					case Direction.East: AddLog("Player.Walk(\"East\")"); break;
-					case Direction.Right: AddLog("Player.Walk(\"Right\")"); break;
-					case Direction.Left: AddLog("Player.Walk(\"Left\")"); break;
-					case Direction.Down: AddLog("Player.Walk(\"Down\")"); break;
-					case Direction.Up: AddLog("Player.Walk(\"Up\")"); break;
+					case Direction.north: AddLog("Player.Walk(\"North\")"); break;
+					case Direction.south: AddLog("Player.Walk(\"South\")"); break;
+					case Direction.west: AddLog("Player.Walk(\"West\")"); break;
+					case Direction.east: AddLog("Player.Walk(\"East\")"); break;
+					case Direction.right: AddLog("Player.Walk(\"Right\")"); break;
+					case Direction.left: AddLog("Player.Walk(\"Left\")"); break;
+					case Direction.down: AddLog("Player.Walk(\"Down\")"); break;
+					case Direction.up: AddLog("Player.Walk(\"Up\")"); break;
 					default: break;
 				}
 			}
 		}
-	
+
 
 		internal static void Record_Target(TargetInfo info)
 		{
