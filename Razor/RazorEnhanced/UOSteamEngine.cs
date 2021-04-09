@@ -239,15 +239,17 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget);
             UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget);
             UOScript.Interpreter.RegisterCommandHandler("target", this.Target);
-            UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType);
+            UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround);
+            UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile);
+            UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset);
+            UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative);
+            UOScript.Interpreter.RegisterCommandHandler("targetresource", this.TargetResource);
             UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue);
-            UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("warmode", this.WarMode);
+            UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer);
+            UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer);
+            UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer);
 
 
             // Expressions
@@ -271,14 +273,15 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("inparty", this.InParty); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("infriendlist", this.InFriendList);
             UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
+            UOScript.Interpreter.RegisterExpressionHandler("poisoned", this.Poisoned);
             UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGump);
             UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
             UOScript.Interpreter.RegisterExpressionHandler("injournal", this.InJournal);
             UOScript.Interpreter.RegisterExpressionHandler("listexists", this.ListExists);
             UOScript.Interpreter.RegisterExpressionHandler("list", this.ListCount);
             UOScript.Interpreter.RegisterExpressionHandler("inlist", this.InList);
-            UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer);
+            UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);
 
             // Player Attributes
             UOScript.Interpreter.RegisterExpressionHandler("weight", (string expression, UOScript.Argument[] args, bool quiet) => Player.Weight);
@@ -569,6 +572,27 @@ namespace RazorEnhanced
             return false;
         }
 
+        private IComparable Poisoned(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 0)
+            {
+                return Player.Poisoned;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Poisoned;
+                }
+            }
+
+            return false;
+        }
+
+
 
         private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -816,11 +840,15 @@ namespace RazorEnhanced
 
         private IComparable Timer(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
+
+            return UOScript.Interpreter.GetTimer(args[0].AsString()).TotalMilliseconds;
+
         }
         private IComparable TimerExists(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
+            return UOScript.Interpreter.TimerExists(args[0].AsString());
         }
 
         // Player Attributes
@@ -2458,6 +2486,26 @@ namespace RazorEnhanced
             RazorEnhanced.Target.Cancel();
             return true;
         }
+        private bool TargetResource(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            // targetresource serial (ore/sand/wood/graves/red mushrooms)
+            if (args.Length != 2)
+            {
+                WrongParameterCount(command, 2, args.Length);
+            }
+            uint tool = args[0].AsSerial();
+            string resource = args[1].AsString();
+            RazorEnhanced.Target.TargetResource((int)tool, resource);
+
+            return true;
+
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                RazorEnhanced.Target.TargetExecute((int)serial);
+            }
+            return true;
+        }
 
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -2478,23 +2526,24 @@ namespace RazorEnhanced
             var range = (args.Length >=3 ? args[2].AsInt() : Player.Backpack.Serial);
 
             Item itm = null;
-            // Container (Range: Container Serial) 
-            if (range > 18) 
+            // Container (Range: Container Serial)
+            if (range > 18)
             {
                 itm = Items.FindByID(graphic, color, range);
             }
             else
-            { 
+            {
                 var options = new Items.Filter();
                 options.Graphics.Add( graphic );
-                options.Hues.Add( color );
+                if (color != -1)
+                    options.Hues.Add( color );
                 options.RangeMin = -1;
                 options.RangeMax = range;
                 options.OnGround = 1;
-                
+
 
                 var item_list = Items.ApplyFilter(options);
-                if (item_list.Count > 0) { 
+                if (item_list.Count > 0) {
                     item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1) );
                     itm = item_list[0];
                 }
@@ -2508,29 +2557,236 @@ namespace RazorEnhanced
                 RazorEnhanced.Target.TargetExecute(itm);
             }
 
-
-
-            return NotImplemented(command, args, quiet, force);
+            return true;
         }
 
         private bool TargetGround(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // targettype (graphic) [color] [range]
+            if (args.Length == 0) { WrongParameterCount(command, 1, 0); }
+            var graphic = args[0].AsInt();
+            var color = (args.Length >= 2 ? args[1].AsInt() : -1);
+            var range = (args.Length >= 3 ? args[2].AsInt() : -1);
+
+            Item itm = null;
+            var options = new Items.Filter();
+            options.Graphics.Add(graphic);
+            if (color != -1)
+                options.Hues.Add(color);
+            options.RangeMin = -1;
+            options.RangeMax = range;
+            options.OnGround = 1;
+
+
+            var item_list = Items.ApplyFilter(options);
+            if (item_list.Count > 0)
+            {
+                item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                itm = item_list[0];
+            }
+
+
+            if (itm == null)
+            {
+                if (!quiet) { Misc.SendMessage("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString()); }
+            }
+            else
+            {
+                RazorEnhanced.Target.TargetExecute(itm);
+            }
+
+            return true;
         }
 
+        internal static int[] LastTileTarget = new int[4] {0, 0, 0, 0};
         private bool TargetTile(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
+            if (args.Length == 2 || args.Length == 4) // then graphic specified just use it
+            {
+                int graphic = 0;
+                if (args.Length == 2)
+                    graphic = args[1].AsInt();
+                if (args.Length == 4)
+                    graphic = args[3].AsInt();
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                options.OnGround = 1;
+                var item_list = Items.ApplyFilter(options);
+                Item itm = null;
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    itm = item_list[0];
+                }
+                if (itm == null)
+                {
+                    if (!quiet) { Misc.SendMessage("targettile: graphic " + graphic.ToString() + " not found"); }
+                }
+                else
+                {
+                    LastTileTarget[0] = itm.Position.X;
+                    LastTileTarget[1] = itm.Position.Y;
+                    LastTileTarget[2] = itm.Position.Z;
+                    var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+                    if (tiles2.Count > 0)
+                    {
+                        LastTileTarget[2] = tiles2[0].StaticZ;
+                        LastTileTarget[3] = tiles2[0].StaticID;
+                    }
+                    RazorEnhanced.Target.TargetExecute(itm);
+                }
+                return true;
+            }
+            // if we get here graphic wasnt specified
+
+
+            if (args[0].AsString() == "current")
+            {
+                LastTileTarget[0] = Player.Position.X;
+                LastTileTarget[1] = Player.Position.Y;
+                LastTileTarget[2] = Player.Position.Z;
+            }
+
+            if (args.Length == 3)
+            {
+                LastTileTarget[0] = args[0].AsInt();
+                LastTileTarget[1] = args[1].AsInt();
+                LastTileTarget[2] = args[2].AsInt();
+            }
+            var tiles = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+            if (tiles.Count > 0)
+            {
+                LastTileTarget[2] = tiles[0].StaticZ;
+                LastTileTarget[3] = tiles[0].StaticID;
+            }
+
+            RazorEnhanced.Target.TargetExecute(LastTileTarget[0], LastTileTarget[1], LastTileTarget[2], LastTileTarget[3]);
+            return true;
         }
 
         private bool TargetTileOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length < 3) { WrongParameterCount(command, 3, args.Length); }
+            if (args.Length == 4) // then graphic specified just use it
+            {
+                int graphic = 0;
+                if (args.Length == 4)
+                    graphic = args[3].AsInt();
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                options.OnGround = 1;
+                var item_list = Items.ApplyFilter(options);
+                Item itm = null;
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    itm = item_list[0];
+                }
+                if (itm == null)
+                {
+                    if (!quiet) { Misc.SendMessage("targettile: graphic " + graphic.ToString() + " not found"); }
+                }
+                else
+                {
+                    LastTileTarget[0] = itm.Position.X;
+                    LastTileTarget[1] = itm.Position.Y;
+                    LastTileTarget[2] = itm.Position.Z;
+                    var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+                    if (tiles2.Count > 0)
+                    {
+                        LastTileTarget[2] = tiles2[0].StaticZ;
+                        LastTileTarget[3] = tiles2[0].StaticID;
+                    }
+                    RazorEnhanced.Target.TargetExecute(itm);
+                }
+                return true;
+            }
+            // if we get here graphic wasnt specified
+            LastTileTarget[0] = Player.Position.X + args[0].AsInt();
+            LastTileTarget[1] = Player.Position.Y + args[1].AsInt();
+            LastTileTarget[2] = Player.Position.Z + args[2].AsInt();
+            var tiles = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+            if (tiles.Count > 0)
+            {
+                LastTileTarget[2] = tiles[0].StaticZ;
+                LastTileTarget[3] = tiles[0].StaticID;
+            }
+
+            RazorEnhanced.Target.TargetExecute(LastTileTarget[0], LastTileTarget[1], LastTileTarget[2], LastTileTarget[3]);
+            return true;
         }
 
         private bool TargetTileRelative(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // targettilerelative   (serial) (range) [reverse = 'true' or 'false'] [graphic]
+            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            uint serial = args[0].AsSerial();
+            int range = args[1].AsInt();
+            bool reverse = false;
+            int graphic = -1;
+            if (args.Length == 3)
+            {
+                try
+                {
+                    reverse = args[2].AsBool();
+                }
+                catch (UOScript.RunTimeError e)
+                {
+                    // Maybe it was a graphic
+                    graphic = args[2].AsInt();
+                }
+            }
+            if (args.Length == 4)
+            {
+                    reverse = args[2].AsBool();
+                    graphic = args[3].AsInt();
+            }
+
+            Item itm = null;
+            if (graphic != -1)
+            {
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                options.RangeMax = range;
+                options.OnGround = 1;
+                var item_list = Items.ApplyFilter(options);
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    itm = item_list[0];
+                }
+                if (itm == null)
+                {
+                    if (!quiet)
+                    {
+                        Misc.SendMessage("targettilerelative: graphic " + graphic.ToString() + " not found in range " + range.ToString());
+                    }
+                }
+                else
+                {
+                    RazorEnhanced.Target.TargetExecute(itm);
+                }
+                return true;
+            }
+
+            if (reverse)
+                range = 0 - range;
+            RazorEnhanced.Target.TargetExecuteRelative((int)serial, range);
+
+            return true;
+        }
+        private bool WarMode(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            // warmode on/off
+            if (args.Length != 1)
+            {
+                WrongParameterCount(command, 1, args.Length);
+            }
+            bool onOff = args[0].AsBool();
+            Player.SetWarMode(onOff);
+
+            return true;
         }
 
         private bool ClearTargetQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -2541,17 +2797,35 @@ namespace RazorEnhanced
 
         private bool SetTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 2)
+            {
+                WrongParameterCount(command, 2, args.Length);
+            }
+
+            UOScript.Interpreter.SetTimer(args[0].AsString(), args[0].AsInt());
+            return true;
         }
 
         private bool RemoveTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 1)
+            {
+                WrongParameterCount(command, 1, args.Length);
+            }
+
+            UOScript.Interpreter.RemoveTimer(args[0].AsString());
+            return true;
         }
 
         private bool CreateTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 1)
+            {
+                WrongParameterCount(command, 1, args.Length);
+            }
+
+            UOScript.Interpreter.CreateTimer(args[0].AsString());
+            return true;
         }
 
         private bool ShowNames(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -2656,7 +2930,15 @@ namespace RazorEnhanced
             public static bool ToBool(string token)
             {
                 bool val;
-
+                switch (token)
+                {
+                    case "on":
+                        token = "true";
+                        break;
+                    case "off":
+                        token = "false";
+                        break;
+                }
                 if (bool.TryParse(token, out val))
                     return val;
 
