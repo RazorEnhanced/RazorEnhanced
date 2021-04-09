@@ -547,7 +547,7 @@ namespace RazorEnhanced
                 {
                     var gump_text = String.Join("\n", Gumps.LastGumpGetLineList()).ToLower();
                     return gump_text.Contains(serach_text);
-                    
+
                 }
 
             }
@@ -726,7 +726,7 @@ namespace RazorEnhanced
             int range = args[1].AsInt();
             Item item = null;
             item = Items.FindBySerial((int)serial);
-            if (item == null) { 
+            if (item == null) {
                return false;
             }
 
@@ -2713,6 +2713,9 @@ namespace RazorEnhanced
                     return value;
                 }
 
+                arg = CheckIsListElement(_node.Lexeme);
+                if (arg != null)
+                    return arg.AsUInt();
                 return TypeConverter.ToUInt(_node.Lexeme);
             }
 
@@ -2723,6 +2726,10 @@ namespace RazorEnhanced
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
+                if (arg != null)
+                    return arg.AsUShort();
+
+                arg = CheckIsListElement(_node.Lexeme);
                 if (arg != null)
                     return arg.AsUShort();
 
@@ -2750,6 +2757,9 @@ namespace RazorEnhanced
 
                 try
                 {
+                    arg = CheckIsListElement(_node.Lexeme);
+                    if (arg != null)
+                        return arg.AsUInt();
                     return AsUInt();
                 }
                 catch (RunTimeError e)
@@ -2772,7 +2782,27 @@ namespace RazorEnhanced
                 if (arg != null)
                     return arg.AsString();
 
+                arg = CheckIsListElement(_node.Lexeme);
+                if (arg != null)
+                    return arg.AsString();
+
                 return _node.Lexeme;
+            }
+
+            internal Argument CheckIsListElement(string token)
+            {
+                Regex rx = new Regex(@"(\S+)\[(\d+)\]");
+                Match match = rx.Match(token);
+                if (match.Success)
+                {
+                    string list = match.Groups[1].Value;
+                    int index = int.Parse(match.Groups[2].Value);
+                    if (UOScript.Interpreter.ListExists(list))
+                    {
+                        return UOScript.Interpreter.GetListValue(list, index);
+                    }
+                }
+                return null;
             }
 
             public bool AsBool()
@@ -3177,7 +3207,7 @@ namespace RazorEnhanced
                                     }
                                     else if (node.Type == ASTNodeType.ENDFOR)
                                     {
-                                        
+
                                         if (depth == 0)
                                         {
                                             PopScope();
@@ -3197,7 +3227,7 @@ namespace RazorEnhanced
                     case ASTNodeType.FOREACH:
                         {
                             /*Dalamar
-                            ORIGINAL UOS Behaviour:  
+                            ORIGINAL UOS Behaviour:
                             All list iteration start from 0 and provide in list_name[] the first item of the list while in the forloop.
                             The start/end parameter simply "cap" the list size to a lower value as folloing:
 
@@ -3206,7 +3236,7 @@ namespace RazorEnhanced
 
                             for (start) to (end) in ('list name')
                             n_interations = ( end - start )
-                            
+
                             this second case falls back to the first.
 
 
@@ -3261,7 +3291,7 @@ namespace RazorEnhanced
                             if (_scope.StartNode != node)
                             {
                                 PushScope(node);
-                                
+
                                 // Create a dummy argument that acts as our iterator object
                                 var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
                                 _scope.SetVar(iterName, new Argument(this, iter));
@@ -3284,10 +3314,10 @@ namespace RazorEnhanced
                                 // Update the user-chosen variable
                                 var arg = UOScript.Interpreter.GetListValue(listName, idx);
 
-                                if (arg == null || idx >= num_iter) {   
+                                if (arg == null || idx >= num_iter) {
                                     _scope.ClearVar(varName);
-                                }else { 
-                                    _scope.SetVar(varName, arg); 
+                                }else {
+                                    _scope.SetVar(varName, arg);
                                 }
                             }
 
@@ -3356,7 +3386,7 @@ namespace RazorEnhanced
                                 {
                                     break;
                                 }
-                                depth--;                                                                                                                                           
+                                depth--;
                             }
 
                             _statement = _statement.Prev();
@@ -4675,7 +4705,7 @@ namespace RazorEnhanced
             for (start) to (end) in ('list name')    ->    lexemes.Length == 5
             */
 
-            //TODO: pre-copiled regex never change, move outside            
+            //TODO: pre-copiled regex never change, move outside
             var matchListName = new Regex("[a-zA-Z]+", RegexOptions.Compiled);
             var matchNumber = new Regex("^[0-9]+$", RegexOptions.Compiled);
 
@@ -4690,7 +4720,7 @@ namespace RazorEnhanced
             {
                 throw new SyntaxError(statement, "Invalid for loop: missing 'to/in' keyword");
             }
-            
+
 
 
 
@@ -4718,7 +4748,7 @@ namespace RazorEnhanced
                 {
                     throw new SyntaxError(statement, "Invalid for loop: list names must contain letters");
                 }
-                
+
                 var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
                 ParseValue(loop, lexemes[2], ASTNodeType.STRING);
@@ -4726,7 +4756,7 @@ namespace RazorEnhanced
             }
             //CASE: for (start) to ('list name')
             else if (lexemes.Length == 3 && matchListName.IsMatch(lexemes[2])  )
-            {          
+            {
                 var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
                 ParseValue(loop, lexemes[2], ASTNodeType.LIST);
@@ -4756,7 +4786,7 @@ namespace RazorEnhanced
                 throw new SyntaxError(statement, "Invalid for loop");
             }
         }
-        
+
     }
 
     internal class TextParser
