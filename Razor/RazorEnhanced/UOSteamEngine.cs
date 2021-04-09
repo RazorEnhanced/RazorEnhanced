@@ -2473,9 +2473,42 @@ namespace RazorEnhanced
         {
             // targettype (graphic) [color] [range]
             if (args.Length == 0) { WrongParameterCount(command, 1, 0);}
-            var graphics = args[0].AsInt();
-            var color = (args.Length >= 2 ? args[1].AsInt() : -1);
-            var range = (args.Length >=3 ? args[3].AsString() : "backpack");
+            var graphic = args[0].AsInt();
+            var color = (args.Length >=2 ? args[1].AsInt() : -1);
+            var range = (args.Length >=3 ? args[2].AsInt() : Player.Backpack.Serial);
+
+            Item itm = null;
+            // Container (Range: Container Serial) 
+            if (range > 18) 
+            {
+                itm = Items.FindByID(graphic, color, range);
+            }
+            else
+            { 
+                var options = new Items.Filter();
+                options.Graphics.Add( graphic );
+                options.Hues.Add( color );
+                options.RangeMin = -1;
+                options.RangeMax = range;
+                options.OnGround = 1;
+                
+
+                var item_list = Items.ApplyFilter(options);
+                if (item_list.Count > 0) { 
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1) );
+                    itm = item_list[0];
+                }
+            }
+
+            if (itm == null)
+            {
+                if (!quiet) { Misc.SendMessage("targettype: graphic "+ graphic.ToString() + " not found in range " + range.ToString() ); }
+            }
+            else {
+                RazorEnhanced.Target.TargetExecute(itm);
+            }
+
+
 
             return NotImplemented(command, args, quiet, force);
         }
