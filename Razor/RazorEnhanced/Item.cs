@@ -277,9 +277,9 @@ namespace RazorEnhanced
 
 		public System.Drawing.Bitmap Image
 		{
-			get 
-			{ 
-				return Items.GetImage(m_AssistantItem.ItemID, m_AssistantItem.Hue); 
+			get
+			{
+				return Items.GetImage(m_AssistantItem.ItemID, m_AssistantItem.Hue);
 			}
 		}
 	}
@@ -293,7 +293,33 @@ namespace RazorEnhanced
 				WaitForContents(bag, delay);
 		}
 
-		public static void WaitForContents(Item bag, int delay) // Delay in MS
+
+
+        /// <summary>
+        /// Experimental function to color items
+        /// @nodoc
+        /// </summary>
+        /// <param name="serial"></param>
+        /// <param name="color"></param>
+        ///
+        public static void Color(int serial, int color)
+        {
+            // Apply color for valid flag
+            RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial(serial);
+            Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+            if (assistantItem == null)
+                return;
+
+            assistantItem.Hue = (ushort)color;
+            if (i.Container == 0)
+                Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));
+            else
+                Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
+        }
+
+
+
+        public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
 			if (!bag.IsCorpse && !bag.IsContainer)
 				return;

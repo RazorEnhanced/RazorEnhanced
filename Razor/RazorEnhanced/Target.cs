@@ -110,8 +110,43 @@ namespace RazorEnhanced
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
 			Assistant.Targeting.Target(location, gfx, true);
 		}
+        public static void TargetResource(Item item, string ResourceNameTarget)
+        {
+            TargetResource(item.Serial, ResourceNameTarget);
+        }
 
-		public static void Cancel()
+        public static void TargetResource(int SerialItem, string ResourceNameTarget)
+        {
+            Assistant.Item item = Assistant.World.FindItem(SerialItem);
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Use Serial");
+                return;
+            }
+            switch (ResourceNameTarget)
+            {
+                case "ore":
+                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x00));
+                    break;
+                case "sand":
+                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x01));
+                    break;
+                case "wood":
+                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x02));
+                    break;
+                case "graves":
+                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x03));
+                    break;
+                case "red_mushroom":
+                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x04));
+                    break;
+                default:
+                    Misc.SendMessage("Valid resource types are ore, sand, wood, graves, or red mushroom");
+                    break;
+            }
+        }
+
+        public static void Cancel()
 		{
 			//Assistant.Targeting.CancelClientTarget(true);
 			Assistant.Targeting.CancelOneTimeTarget(true);
@@ -241,7 +276,7 @@ namespace RazorEnhanced
                 m_pgtarget = new Point3D(pt.X, pt.Y, pt.Z);
 		}
 
-		// Check Poison 
+		// Check Poison
 		private static bool CheckHealPoisonTarg(Assistant.Serial ser)
 		{
 			if (World.Player == null)
@@ -302,7 +337,7 @@ namespace RazorEnhanced
 			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 			if (targetdata != null)
 			{
-				Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();			
+				Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
 				string selector = targetdata.TargetGuiObject.Selector;
 
 				List<Mobile> filterresult;
@@ -322,7 +357,7 @@ namespace RazorEnhanced
 			if (targetdata == null)
 				return null;
 
-			
+
 			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
 			string selector = targetdata.TargetGuiObject.Selector;
 
