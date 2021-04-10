@@ -909,6 +909,8 @@ namespace Assistant
         {
             // Some of the free servers are putting html attributes in, so just rip them out for our purposes
             // for non-html I tested and it does nothing
+            if (instring.Length == 0)
+                return "";
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(instring);
             StringBuilder sb = new StringBuilder();
