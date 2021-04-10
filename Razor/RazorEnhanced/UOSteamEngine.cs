@@ -250,7 +250,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer);
             UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer);
             UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer);
-
+            UOScript.Interpreter.RegisterCommandHandler("getenemy", this.GetEnemy);
+            UOScript.Interpreter.RegisterCommandHandler("getfriend", this.GetFriend);
 
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
@@ -282,6 +283,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("inlist", this.InList);
             UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer);
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);
+            UOScript.Interpreter.RegisterExpressionHandler("targetexists", this.TargetExists);
+
 
             // Player Attributes
             UOScript.Interpreter.RegisterExpressionHandler("weight", (string expression, UOScript.Argument[] args, bool quiet) => Player.Weight);
@@ -850,6 +853,14 @@ namespace RazorEnhanced
             if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
             return UOScript.Interpreter.TimerExists(args[0].AsString());
         }
+
+        private IComparable TargetExists(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0) { WrongParameterCount(expression, 1, args.Length); }
+
+            return true;
+        }
+
 
         // Player Attributes
         private IComparable Mana(string expression, UOScript.Argument[] args, bool quiet)
@@ -2513,6 +2524,120 @@ namespace RazorEnhanced
             {
                 uint serial = args[0].AsSerial();
                 RazorEnhanced.Target.TargetExecute((int)serial);
+            }
+            return true;
+        }
+
+        private bool GetEnemy(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
+
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            bool nearest = false;
+            foreach (var arg in args)
+            {
+                string argStr = arg.ToString().ToLower();
+                switch (argStr)
+                {
+                    case "friend":
+                        filter.Notorieties.Add(1);
+                        break;
+                    case "innoncent":
+                        filter.Notorieties.Add(2);
+                        break;
+                    case "criminal":
+                    case "gray":
+                        filter.Notorieties.Add(3);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "murderer":
+                        filter.Notorieties.Add(6);
+                        break;
+                    case "enemy":
+                        filter.Notorieties.Add(6);
+                        filter.Notorieties.Add(5);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "humanoid":
+                        filter.IsHuman = 1;
+                        break;
+                    case "closest":
+                    case "nearest":
+                        nearest = true;
+                        break;
+                }
+            }
+            var list = Mobiles.ApplyFilter(filter);
+            if (list.Count > 0)
+            {
+                Mobile anEnemy = list[0];
+                if (nearest)
+                {
+                    anEnemy = Mobiles.Select(list, "Nearest");
+                }
+                UOScript.Interpreter.SetAlias("enemy", (uint)anEnemy.Serial);
+            }
+            else
+            {
+                UOScript.Interpreter.UnSetAlias("enemy");
+            }
+            return true;
+        }
+        private bool GetFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
+
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            bool nearest = false;
+            foreach (var arg in args)
+            {
+                string argStr = arg.ToString().ToLower();
+                switch (argStr)
+                {
+                    case "friend":
+                        filter.Notorieties.Add(1);
+                        break;
+                    case "innoncent":
+                        filter.Notorieties.Add(2);
+                        break;
+                    case "criminal":
+                    case "gray":
+                        filter.Notorieties.Add(3);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "murderer":
+                        filter.Notorieties.Add(6);
+                        break;
+                    case "enemy":
+                        filter.Notorieties.Add(6);
+                        filter.Notorieties.Add(5);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "invulnerable":
+                        filter.Notorieties.Add(7);
+                        break;
+                    case "humanoid":
+                        filter.IsHuman = 1;
+                        break;
+                    case "closest":
+                    case "nearest":
+                        nearest = true;
+                        break;
+                }
+            }
+            var list = Mobiles.ApplyFilter(filter);
+            if (list.Count > 0)
+            {
+                Mobile anEnemy = list[0];
+                if (nearest)
+                {
+                    anEnemy = Mobiles.Select(list, "Nearest");
+                }
+                UOScript.Interpreter.SetAlias("friend", (uint)anEnemy.Serial);
+            }
+            else
+            {
+                UOScript.Interpreter.UnSetAlias("friend");
             }
             return true;
         }
