@@ -1149,7 +1149,7 @@ namespace RazorEnhanced
 
         private bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
+            Misc.Inspect();
             return true;
         }
 
