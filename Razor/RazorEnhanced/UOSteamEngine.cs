@@ -255,6 +255,8 @@ namespace RazorEnhanced
 
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
+            UOScript.Interpreter.RegisterExpressionHandler("x", this.LocationX);
+            UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
@@ -444,6 +446,37 @@ namespace RazorEnhanced
             }
 
             return false;
+        }
+
+        IComparable LocationX(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "X location requires a serial");
+                return 0;
+            }
+
+            uint serial = args[0].AsSerial();
+            Mobile mobile = Mobiles.FindBySerial((int)serial);
+            if (mobile != null)
+                return mobile.Position.X;
+
+            return 0;
+        }
+        IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Y location requires a serial");
+                return 0;
+            }
+
+            uint serial = args[0].AsSerial();
+            Mobile mobile = Mobiles.FindBySerial((int)serial);
+            if (mobile != null)
+                return mobile.Position.Y;
+
+            return 0;
         }
 
         IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
