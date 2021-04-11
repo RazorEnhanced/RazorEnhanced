@@ -158,7 +158,6 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("useskill", this.UseSkill);
             UOScript.Interpreter.RegisterCommandHandler("feed", this.Feed);
             UOScript.Interpreter.RegisterCommandHandler("rename", this.RenamePet);
-            UOScript.Interpreter.RegisterCommandHandler("release", this.ReleasePet);
             UOScript.Interpreter.RegisterCommandHandler("shownames", this.ShowNames);
             UOScript.Interpreter.RegisterCommandHandler("togglehands", this.ToggleHands);
             UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem);
@@ -1412,24 +1411,6 @@ namespace RazorEnhanced
                 else
                     Items.Move(food, target, amount);
             }
-            return true;
-        }
-
-        private bool ReleasePet(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            if (args.Length < 1)
-            {
-                throw new UOScript.RunTimeError(null, "ReleasePet requires pet identifier");
-                return true;
-            }
-
-            int serial = (int)args[0].AsSerial();
-            Misc.WaitForContext(serial, 2000);
-            Misc.ContextReply(serial, "Release");
-            Gumps.WaitForGump(0, 2000);
-            if (Gumps.HasGump())
-                Gumps.SendAction(0, 2);
-
             return true;
         }
 
