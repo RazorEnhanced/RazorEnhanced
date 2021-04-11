@@ -258,6 +258,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
             UOScript.Interpreter.RegisterExpressionHandler("x", this.LocationX);
             UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
+            UOScript.Interpreter.RegisterExpressionHandler("z", this.LocationZ);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
@@ -315,9 +316,6 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
             UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
 
-            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);
-            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y);
-            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z);
             UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
 
             // Object attributes
@@ -476,6 +474,21 @@ namespace RazorEnhanced
             Mobile mobile = Mobiles.FindBySerial((int)serial);
             if (mobile != null)
                 return mobile.Position.Y;
+
+            return 0;
+        }
+        IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Z location requires a serial");
+                return 0;
+            }
+
+            uint serial = args[0].AsSerial();
+            Mobile mobile = Mobiles.FindBySerial((int)serial);
+            if (mobile != null)
+                return mobile.Position.Z;
 
             return 0;
         }
@@ -1096,14 +1109,6 @@ namespace RazorEnhanced
         private IComparable MaxMana(string expression, UOScript.Argument[] args, bool quiet)
         {
             return Player.ManaMax;
-        }
-        private IComparable X(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Position.X;
-        }
-        private IComparable Y(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Position.Y;
         }
         private IComparable Z(string expression, UOScript.Argument[] args, bool quiet)
         {
