@@ -166,6 +166,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy);
             UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell);
             UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy);
+            UOScript.Interpreter.RegisterCommandHandler("location", this.Location);
             UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell);
             UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer);
             UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
@@ -2366,6 +2367,15 @@ namespace RazorEnhanced
                 string msg = args[0].AsString();
                 Player.ChatYell(color, msg);
             }
+            return true;
+        }
+
+        private bool Location(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            uint serial = args[0].AsSerial();
+            Mobile m = Mobiles.FindBySerial((int)serial);
+            Misc.SendMessage(String.Format("Position({0}, {1})", m.Position.X, m.Position.Y), 32, false);
+
             return true;
         }
 
