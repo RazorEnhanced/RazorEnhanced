@@ -3721,46 +3721,52 @@ namespace RazorEnhanced
                             }
 
 
-                            if (num_iter <= 0)
+                            if (num_iter > 0)
                             {
-                                throw new RunTimeError(node, "Invalid for loop: loop count must be greater then 0, " + num_iter.ToString() + " given ");
-                            }
 
-                            var idx = 0;
-                            // When we first enter the loop, push a new scope
-                            if (_scope.StartNode != node)
-                            {
-                                PushScope(node);
+                                var idx = 0;
+                                // When we first enter the loop, push a new scope
+                                if (_scope.StartNode != node)
+                                {
+                                    PushScope(node);
 
-                                // Create a dummy argument that acts as our iterator object
-                                var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
-                                _scope.SetVar(iterName, new Argument(this, iter));
+                                    // Create a dummy argument that acts as our iterator object
+                                    var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
+                                    _scope.SetVar(iterName, new Argument(this, iter));
 
-                                // Make the user-chosen variable have the value for the front of the list
-                                var arg = UOScript.Interpreter.GetListValue(listName, 0);
+                                    // Make the user-chosen variable have the value for the front of the list
+                                    var arg = UOScript.Interpreter.GetListValue(listName, 0);
 
-                                if (arg == null || 0 >= num_iter )
-                                    _scope.ClearVar(varName);
+                                    if (arg == null || 0 >= num_iter)
+                                        _scope.ClearVar(varName);
+                                    else
+                                        _scope.SetVar(varName, arg);
+                                }
                                 else
-                                    _scope.SetVar(varName, arg);
+                                {
+                                    // Increment the iterator argument
+                                    idx = _scope.GetVar(iterName).AsInt() + 1;
+                                    var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
+                                    _scope.SetVar(iterName, new Argument(this, iter));
+
+                                    // Update the user-chosen variable
+                                    var arg = UOScript.Interpreter.GetListValue(listName, idx);
+
+                                    if (arg == null || idx >= num_iter)
+                                    {
+                                        _scope.ClearVar(varName);
+                                    }
+                                    else
+                                    {
+                                        _scope.SetVar(varName, arg);
+                                    }
+                                }
                             }
                             else
                             {
-                                // Increment the iterator argument
-                                idx = _scope.GetVar(iterName).AsInt() + 1;
-                                var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
-                                _scope.SetVar(iterName, new Argument(this, iter));
-
-                                // Update the user-chosen variable
-                                var arg = UOScript.Interpreter.GetListValue(listName, idx);
-
-                                if (arg == null || idx >= num_iter) {
-                                    _scope.ClearVar(varName);
-                                }else {
-                                    _scope.SetVar(varName, arg);
-                                }
+                                // nothing to do - force end
+                                _scope.ClearVar(varName);
                             }
-
 
                             // Check loop condition
                             var i = _scope.GetVar(varName);
@@ -3927,7 +3933,7 @@ namespace RazorEnhanced
                 if (Debug)
                 {
                     if (_statement != null)
-                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber));
+                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber+1));
                 }
             }
 
