@@ -158,6 +158,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("useskill", this.UseSkill);
             UOScript.Interpreter.RegisterCommandHandler("feed", this.Feed);
             UOScript.Interpreter.RegisterCommandHandler("rename", this.RenamePet);
+            UOScript.Interpreter.RegisterCommandHandler("release", this.ReleasePet);
             UOScript.Interpreter.RegisterCommandHandler("shownames", this.ShowNames);
             UOScript.Interpreter.RegisterCommandHandler("togglehands", this.ToggleHands);
             UOScript.Interpreter.RegisterCommandHandler("equipitem", this.EquipItem);
@@ -456,7 +457,7 @@ namespace RazorEnhanced
         /// So this function will look for both and return the list
         ///   if it is an item it can't be a mobile and vica-versa
         /// </summary>
-        internal static List<int> FindByType_ground(int graphic, int color, int amount, int range )
+        internal static List<int> FindByType_ground(int graphic, int color, int amount, int range)
         {
             List<int> retList = new List<int>();
             // Search for items first
@@ -495,19 +496,72 @@ namespace RazorEnhanced
             {
                 foreach (var m in mobiles)
                 {
-                        retList.Add(m.Serial);
+                    retList.Add(m.Serial);
                 }
                 //return retList;
             }
 
             return retList;
         }
+
+        internal static int CountType_ground(int graphic, int color, int range)
+        {
+            int retCount = 0;
+
+            // Search for items first
+            Items.Filter itemFilter = new Items.Filter
+            {
+                Enabled = true
+            };
+            itemFilter.Graphics.Add(graphic);
+            itemFilter.RangeMax = range;
+            itemFilter.OnGround = 1;
+            if (color != -1)
+                itemFilter.Hues.Add(color);
+            List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+            if (items.Count > 0)
+            {
+                foreach (var i in items)
+                {
+                    retCount += i.Amount;
+                }
+            }
+
+            Mobiles.Filter mobileFilter = new Mobiles.Filter
+            {
+                Enabled = true
+            };
+            mobileFilter.Bodies.Add(graphic);
+            mobileFilter.RangeMax = range;
+            if (color != -1)
+                mobileFilter.Hues.Add(color);
+            List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
+
+            if (mobiles.Count > 0)
+            {
+                foreach (var m in mobiles)
+                {
+                    retCount += 1;
+                }
+            }
+
+            return retCount;
+        }
+
+
         private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
         {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "FindType requires parameters");
+                return false;
+            }
+
+            int type = args[0].AsInt();
             int serial = -1;
             if (args.Length == 1 || args.Length == 2)
             {
-                int type = args[0].AsInt();
                 int color = -1;
                 if (args.Length == 2)
                     color = args[1].AsInt();
@@ -529,7 +583,6 @@ namespace RazorEnhanced
             if (args.Length >= 3)
             {
                 UOScript.Interpreter.UnSetAlias("found");
-                int type = args[0].AsInt();
                 int color = args[1].AsInt();
                 string groundCheck = args[2].AsString().ToLower();
                 uint source = args[2].AsSerial();
@@ -576,10 +629,18 @@ namespace RazorEnhanced
 
         private static IComparable Property(string expression, UOScript.Argument[] args, bool quiet)
         {
-            if (args.Length == 2)
+            if (args.Length < 2)
             {
-                string findProp = args[0].AsString();
-                uint serial = args[1].AsSerial();
+                throw new UOScript.RunTimeError(null, "Property requires 2 parameters");
+                return false;
+            }
+
+            string findProp = args[0].AsString();
+            uint serial = args[1].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
+            if (thing.IsItem)
+            {
                 Item item = Items.FindBySerial((int)serial);
                 if (item != null)
                 {
@@ -594,6 +655,20 @@ namespace RazorEnhanced
                 }
             }
 
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    foreach (var prop in item.Properties)
+                    {
+                        if (0 == String.Compare(findProp, prop.ToString(), true))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
             return false;
         }
 
@@ -651,8 +726,6 @@ namespace RazorEnhanced
 
             return false;
         }
-
-
 
         private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -738,6 +811,8 @@ namespace RazorEnhanced
             double skillvalue = Player.GetSkillValue(skillname);
             return skillvalue;
         }
+
+
         private IComparable FindObject(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -746,40 +821,66 @@ namespace RazorEnhanced
                 return false;
             }
             UOScript.Interpreter.UnSetAlias("found");
-            Item item = null;
-            if (args.Length >= 1)
-            {
-                uint serial = args[0].AsSerial();
-                item = Items.FindBySerial((int)serial);
-                if (item == null)
-                    return false;
-            }
+            int color = -1;
+            int amount = -1;
+            int container = -1;
+            int range = -1;
+
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
 
             if (args.Length >= 2)
             {
-                int color = args[1].AsInt();
-                if (item.Hue != color)
-                    return false;
+                color = args[1].AsInt();
             }
             if (args.Length >= 3)
             {
-                int container = (int)args[2].AsSerial();
-                if (item.Container != container)
-                    return false;
+                container = (int)args[2].AsSerial();
             }
             if (args.Length >= 4)
             {
-                int amount = args[3].AsInt();
-                if (item.Amount < amount)
-                    return false;
+                amount = args[3].AsInt();
             }
             if (args.Length >= 5)
             {
-                int maxRange = args[4].AsInt();
-                if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y) > maxRange)
-                    return false;
+                range = args[4].AsInt();
             }
 
+            if (thing.IsMobile)
+            {
+                Mobile mobile = Mobiles.FindBySerial((int)serial);
+                if (mobile != null)
+                {
+                    if (color == -1 || color == mobile.Hue)
+                    {
+                        UOScript.Interpreter.SetAlias("found", (uint)mobile.Serial);
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // must be an item
+            Item item = Items.FindBySerial((int)serial);
+            if (item == null)
+                return false;
+
+            // written this way because I hate if ! && !
+            if (color != -1)
+                if (item.Hue != color)
+                    return false;
+
+            if (container != -1)
+                if (item.Container != container)
+                    return false;
+
+            if (amount != -1)
+                if (item.Amount < amount)
+                    return false;
+
+            if (range != -1)
+                if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y) > range)
+                    return false;
             UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
             return true;
         }
@@ -787,16 +888,36 @@ namespace RazorEnhanced
         {
             if (args.Length < 1)
             {
-                throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                throw new UOScript.RunTimeError(null, "Distance Object requires parameters");
+                return Int32.MaxValue;
             }
-            uint serial = args[0].AsSerial();
-            Item item = null;
-            item = Items.FindBySerial((int)serial);
-            if (item == null)
-                return false;
 
-            return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
+            int x = -1;
+            int y = -1;
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item == null)
+                    return Int32.MaxValue;
+                x = item.Position.X;
+                y = item.Position.Y;
+            }
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item == null)
+                    return Int32.MaxValue;
+                x = item.Position.X;
+                y = item.Position.Y;
+            }
+
+            if (x == -1 || y == -1)
+                return Int32.MaxValue;
+
+            return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
         }
 
         private IComparable InRange(string expression, UOScript.Argument[] args, bool quiet)
@@ -807,15 +928,35 @@ namespace RazorEnhanced
                 return false;
             }
             uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
             int range = args[1].AsInt();
-            Item item = null;
-            item = Items.FindBySerial((int)serial);
-            if (item == null) {
-               return false;
+            int x = -1;
+            int y = -1;
+
+            if (thing.IsMobile)
+            {
+                Mobile mobile = Mobiles.FindBySerial((int)serial);
+                if (mobile != null)
+                {
+                    x = mobile.Position.X;
+                    y = mobile.Position.Y;
+                }
+            }
+            if (thing.IsMobile)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    x = item.Position.X;
+                    y = item.Position.Y;
+                }
             }
 
-            int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
+            if (x == -1 || y == -1)
+                return false;
 
+            int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
             return (distance <= range);
         }
         private IComparable BuffExists(string expression, UOScript.Argument[] args, bool quiet)
@@ -854,31 +995,26 @@ namespace RazorEnhanced
         private IComparable CountTypeGround(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
-                return 0;
-
-            Items.Filter filter = new Items.Filter();
-            filter.OnGround = 1;
-
-            if (args.Length > 0)
             {
-                int itemID = args[0].AsInt();
-                filter.Graphics.Add(itemID);
+                throw new UOScript.RunTimeError(null, "CountTypeGround requires parameters");
+                return 0;
             }
+
+            int graphic = args[0].AsInt();
+            int color = -1;
+            int range = -1;
+            //
             if (args.Length > 1)
             {
-                int color = args[1].AsInt();
-                filter.Hues.Add(color);
+                color = args[1].AsInt();
             }
             if (args.Length > 2)
             {
-                int range = args[2].AsInt();
-                filter.RangeMax = range;
+                range = args[2].AsInt();
             }
 
-            List<Item> items = Items.ApplyFilter(filter);
-            int count = 0;
-            foreach (Item i in items)
-                count += i.Amount;
+            int count = CountType_ground(graphic, color, range);
+
             return count;
         }
 
@@ -1276,6 +1412,24 @@ namespace RazorEnhanced
                 else
                     Items.Move(food, target, amount);
             }
+            return true;
+        }
+
+        private bool ReleasePet(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "ReleasePet requires pet identifier");
+                return true;
+            }
+
+            int serial = (int)args[0].AsSerial();
+            Misc.WaitForContext(serial, 2000);
+            Misc.ContextReply(serial, "Release");
+            Gumps.WaitForGump(0, 2000);
+            if (Gumps.HasGump())
+                Gumps.SendAction(0, 2);
+
             return true;
         }
 
@@ -3617,6 +3771,9 @@ namespace RazorEnhanced
                         }
                     case ASTNodeType.ENDWHILE:
                         // Walk backward to the while statement
+                        bool curDebug = Debug;
+                        Debug = false; // dont print our internal movement
+
                         _statement = _statement.Prev();
 
                         depth = 0;
@@ -3639,7 +3796,7 @@ namespace RazorEnhanced
 
                             _statement = _statement.Prev();
                         }
-
+                        Debug = curDebug;
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected endwhile");
 
@@ -3870,6 +4027,9 @@ namespace RazorEnhanced
                         // Walk backward to the for statement
                         // track depth in case there is a nested for
                         // Walk backward to the for statement
+                        curDebug = Debug;
+                        Debug = false; // dont print our internal movement
+
                         _statement = _statement.Prev();
 
                         // track depth in case there is a nested for
@@ -3895,11 +4055,15 @@ namespace RazorEnhanced
                             _statement = _statement.Prev();
 
                         }
+                        Debug = curDebug;
+
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected endfor");
                         break;
                     case ASTNodeType.BREAK:
                         // Walk until the end of the loop
+                        curDebug = Debug;
+                        Debug = false; // dont print our internal movement
                         Advance();
 
                         depth = 0;
@@ -3933,9 +4097,13 @@ namespace RazorEnhanced
                         }
 
                         PopScope();
+                        Debug = curDebug;
                         break;
                     case ASTNodeType.CONTINUE:
                         // Walk backward to the loop statement
+                        curDebug = Debug;
+                        Debug = false; // dont print our internal movement
+
                         _statement = _statement.Prev();
 
                         depth = 0;
@@ -3961,7 +4129,7 @@ namespace RazorEnhanced
 
                             _statement = _statement.Prev();
                         }
-
+                        Debug = curDebug;
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected continue");
                         break;
@@ -3990,7 +4158,7 @@ namespace RazorEnhanced
                 if (Debug)
                 {
                     if (_statement != null)
-                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber+1));
+                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber+1), 32);
                 }
             }
 
