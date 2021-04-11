@@ -451,69 +451,126 @@ namespace RazorEnhanced
             return RazorEnhanced.Organizer.Status();
         }
 
+        /// <summary>
+        /// The problem is UOS findbyid will find either mobil or item, but RE seperates them
+        /// So this function will look for both and return the list
+        ///   if it is an item it can't be a mobile and vica-versa
+        /// </summary>
+        internal static List<int> FindByType_ground(int graphic, int color, int amount, int range )
+        {
+            List<int> retList = new List<int>();
+            // Search for items first
+            Items.Filter itemFilter = new Items.Filter
+            {
+                Enabled = true
+            };
+            itemFilter.Graphics.Add(graphic);
+            itemFilter.RangeMax = range;
+            itemFilter.OnGround = 1;
+            if (color != -1)
+                itemFilter.Hues.Add(color);
+            List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
+            if (items.Count > 0)
+            {
+                foreach (var i in items)
+                {
+                    if ((amount <= 0) || (i.Amount >= amount))
+                        retList.Add(i.Serial);
+                }
+                //return retList;
+            }
+
+            Mobiles.Filter mobileFilter = new Mobiles.Filter
+            {
+                Enabled = true
+            };
+            mobileFilter.Bodies.Add(graphic);
+            mobileFilter.RangeMax = range;
+            if (color != -1)
+                mobileFilter.Hues.Add(color);
+            List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
+
+            if (mobiles.Count > 0)
+            {
+                foreach (var m in mobiles)
+                {
+                        retList.Add(m.Serial);
+                }
+                //return retList;
+            }
+
+            return retList;
+        }
         private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
         {
-            Item item = null;
-            if (args.Length == 1)
+            int serial = -1;
+            if (args.Length == 1 || args.Length == 2)
             {
                 int type = args[0].AsInt();
-                item = Items.FindByID(type, -1, -1);
-            }
-            if (args.Length == 2)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                item = Items.FindByID(type, color, -1);
-            }
-            if (args.Length == 3)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                string sourceCheck = args[2].AsString();
-                uint source = args[2].AsSerial();
-                item = Items.FindByID(type, color, (int)source);
-            }
-            if (args.Length == 4)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                uint source = args[2].AsSerial();
-                int amount = args[3].AsInt();
-                item = Items.FindByID(type, color, (int)source);
-                if (item != null)
-                {
-                    if (amount != -1 && item.Amount < amount)
-                    {
-                        item = null;
-                    }
-                }
-            }
-            if (args.Length == 5)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                uint source = args[2].AsSerial();
-                int amount = args[3].AsInt();
-                int range = args[4].AsInt();
-                item = Items.FindByID(type, color, (int)source, range);
-                if (item != null)
-                {
-                    if (amount != -1 && item.Amount < amount)
-                    {
-                        item = null;
-                    }
-                }
-            }
+                int color = -1;
+                if (args.Length == 2)
+                    color = args[1].AsInt();
 
-            if (item == null)
+                List<int> results = FindByType_ground(type, color, -1, -1);
+                if (results.Count > 0)
+                {
+                    serial = results[0];
+                }
+                else
+                {
+                    Item item = Items.FindByID(type, color, -1);
+                    if (item != null)
+                    {
+                        serial = item.Serial;
+                    }
+                }
+            }
+            if (args.Length >= 3)
             {
                 UOScript.Interpreter.UnSetAlias("found");
-                return false;
+                int type = args[0].AsInt();
+                int color = args[1].AsInt();
+                string groundCheck = args[2].AsString().ToLower();
+                uint source = args[2].AsSerial();
+                int amount = -1;
+                if (args.Length >= 4)
+                    args[3].AsInt();
+                int range = -1;
+                if (args.Length == 5)
+                    range = args[4].AsInt();
+                if (groundCheck == "ground")
+                {
+                    List<int> results = FindByType_ground(type, color, amount, range);
+                    if (results.Count > 0)
+                    {
+                        serial = results[0];
+                    }
+                }
+                else
+                {
+                    Item item = Items.FindByID(type, color, (int)source, range);
+                    if (item != null)
+                    {
+                        if (amount != -1 && item.Amount < amount)
+                        {
+                            item = null;
+                        }
+                        if (item != null)
+                        {
+                            serial = item.Serial;
+                        }
+                    }
+                }
             }
 
-            UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
-            return true;
+            if (serial != -1)
+            {
+                UOScript.Interpreter.SetAlias("found", (uint)serial);
+                return true;
+            }
+
+            return false;
 
         }
 
