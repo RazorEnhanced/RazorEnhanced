@@ -619,7 +619,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    Item item = Items.FindByID(type, color, -1);
+                    Item item = Items.FindByID(type, color, -1, true);
                     if (item != null)
                     {
                         serial = item.Serial;
@@ -1313,7 +1313,7 @@ namespace RazorEnhanced
                 container = args[2].AsInt();
             }
 
-            Item item = Items.FindByID(itemID, color, container);
+            Item item = Items.FindByID(itemID, color, container, true);
             if (item != null)
             {
                 Items.UseItem(item.Serial);
@@ -1442,7 +1442,7 @@ namespace RazorEnhanced
             {
                 amount = args[1].AsInt();
             }
-            Item food = Items.FindByID(graphic, color, Player.Backpack.Serial);
+            Item food = Items.FindByID(graphic, color, Player.Backpack.Serial, true);
             if (food != null)
             {
                 if (target == Player.Serial)
@@ -1680,7 +1680,7 @@ namespace RazorEnhanced
                 int id = args[0].AsInt();
                 uint src = args[1].AsSerial();
                 uint dest = args[2].AsSerial();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, item.Amount);
@@ -1692,7 +1692,7 @@ namespace RazorEnhanced
                 uint src = args[1].AsSerial();
                 uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, item.Amount);
@@ -1705,7 +1705,7 @@ namespace RazorEnhanced
                 uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
                 int amount = args[4].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, amount);
@@ -1719,7 +1719,7 @@ namespace RazorEnhanced
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, 0, x, y);
@@ -1734,7 +1734,7 @@ namespace RazorEnhanced
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, -1, x, y);
@@ -1750,7 +1750,7 @@ namespace RazorEnhanced
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
                 int amount = args[7].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, amount, x, y);
@@ -1766,7 +1766,7 @@ namespace RazorEnhanced
             {
                 int id = args[0].AsInt();
                 uint src = args[1].AsSerial();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.DropItemGroundSelf(item.Serial);
@@ -1778,7 +1778,7 @@ namespace RazorEnhanced
                 uint src = args[1].AsSerial();
                 //uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, 0, Player.Position.X, Player.Position.Y, Player.Position.Z);
@@ -1791,7 +1791,7 @@ namespace RazorEnhanced
                 // uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
                 int amount = args[4].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
@@ -1805,7 +1805,7 @@ namespace RazorEnhanced
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, 0, x, y, z);
@@ -1820,7 +1820,7 @@ namespace RazorEnhanced
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, 0, x, y, z);
@@ -1836,7 +1836,7 @@ namespace RazorEnhanced
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
                 int amount = args[7].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, amount, x, y, z);
@@ -2894,7 +2894,7 @@ namespace RazorEnhanced
             // Container (Range: Container Serial)
             if (range > 18)
             {
-                itm = Items.FindByID(graphic, color, range);
+                itm = Items.FindByID(graphic, color, -1, range);
             }
             else
             {

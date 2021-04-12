@@ -1036,7 +1036,7 @@ namespace RazorEnhanced
 					}
 					else if (recursive && i.IsContainer)
 					{
-                        Item recursItem = FindByID(itemid, color, i.Serial); // recall for sub container
+                        Item recursItem = FindByID(itemid, color, i.Serial, recursive); // recall for sub container
                         if (recursItem != null)
                             return recursItem;
                     }
@@ -1063,7 +1063,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static Item FindByID(int itemid, int color, int container, int range, bool recursive=false)
+        public static Item FindByID(int itemid, int color, int container, int range)
         {
             if (container != -1)  // search in specific container
             {
@@ -1088,9 +1088,9 @@ namespace RazorEnhanced
                             return i;
                         }
                     }
-                    else if (recursive && i.IsContainer)
+                    else if (i.IsContainer && range > 0)
                     {
-                        Item recursItem = FindByID(itemid, color, i.Serial); // recall for sub container
+                        Item recursItem = FindByID(itemid, color, i.Serial, range-1); // recall for sub container
                         if (recursItem != null)
                             return recursItem;
                     }
