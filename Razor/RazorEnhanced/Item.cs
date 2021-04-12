@@ -1088,7 +1088,7 @@ namespace RazorEnhanced
                             return i;
                         }
                     }
-                    else if (i.IsContainer && range > 0)
+                    else if (i.IsContainer && range != 0)
                     {
                         Item recursItem = FindByID(itemid, color, i.Serial, range-1); // recall for sub container
                         if (recursItem != null)
@@ -1349,7 +1349,7 @@ namespace RazorEnhanced
 							count = count + itemToCount.Amount;
                         if (recursive && itemToCount.IsContainer)
                         {
-                            int recurseCount = ContainerCount(itemToCount.Serial, itemid, color ); // recall for sub container
+                            int recurseCount = ContainerCount(itemToCount, itemid, color ); // recall for sub container
                             count = count + recurseCount;
                         }
                     }
@@ -1359,7 +1359,7 @@ namespace RazorEnhanced
 							count = count + itemToCount.Amount;
                         if (recursive &&  itemToCount.IsContainer)
                         {
-                            int recurseCount = ContainerCount(itemToCount.Serial, itemid, color); // recall for sub container
+                            int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
                             count = count + recurseCount;
                         }
 

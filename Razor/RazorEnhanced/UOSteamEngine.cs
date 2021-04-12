@@ -782,7 +782,7 @@ namespace RazorEnhanced
 
             if (args.Length == 1)
             {
-                int gumpid = args[0].AsInt();
+                uint gumpid = args[0].AsUInt();
                 return (gumpid == Gumps.CurrentGump());
             }
             return -1;
