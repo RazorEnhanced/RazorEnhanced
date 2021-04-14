@@ -277,8 +277,6 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("findwand", this.FindWand); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("inparty", this.InParty); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("infriendlist", this.InFriendList);
-            UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
-            UOScript.Interpreter.RegisterExpressionHandler("poisoned", this.Poisoned);
             UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGump);
             UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
             UOScript.Interpreter.RegisterExpressionHandler("injournal", this.InJournal);
@@ -296,9 +294,6 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("diffweight", (string expression, UOScript.Argument[] args, bool quiet) => Player.MaxWeight - Player.Weight);
             UOScript.Interpreter.RegisterExpressionHandler("mana", (string expression, UOScript.Argument[] args, bool quiet) => Player.Mana);
             UOScript.Interpreter.RegisterExpressionHandler("maxmana", (string expression, UOScript.Argument[] args, bool quiet) => Player.ManaMax);
-            UOScript.Interpreter.RegisterExpressionHandler("hits", (string expression, UOScript.Argument[] args, bool quiet) => Player.Hits);
-            UOScript.Interpreter.RegisterExpressionHandler("diffhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax - Player.Hits);
-            UOScript.Interpreter.RegisterExpressionHandler("maxhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax);
             UOScript.Interpreter.RegisterExpressionHandler("stam", (string expression, UOScript.Argument[] args, bool quiet) => Player.Stam);
             UOScript.Interpreter.RegisterExpressionHandler("maxstam", (string expression, UOScript.Argument[] args, bool quiet) => Player.StamMax);
             UOScript.Interpreter.RegisterExpressionHandler("dex", (string expression, UOScript.Argument[] args, bool quiet) => Player.Dex);
@@ -316,42 +311,37 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
             UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
 
+            UOScript.Interpreter.RegisterExpressionHandler("hits", this.Hits);
+            UOScript.Interpreter.RegisterExpressionHandler("diffhits", this.DiffHits);
+            UOScript.Interpreter.RegisterExpressionHandler("maxhits", this.MaxHits);
+
             UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
+            UOScript.Interpreter.RegisterExpressionHandler("dead", this.IsDead);
+            UOScript.Interpreter.RegisterExpressionHandler("direction", this.Direction);
+            UOScript.Interpreter.RegisterExpressionHandler("flying", this.IsFlying);
+            UOScript.Interpreter.RegisterExpressionHandler("paralyzed", this.IsParalyzed);
+            UOScript.Interpreter.RegisterExpressionHandler("poisoned", this.IsPoisoned);
+            UOScript.Interpreter.RegisterExpressionHandler("mounted", this.IsMounted);
+            UOScript.Interpreter.RegisterExpressionHandler("yellowhits", this.YellowHits);
+            UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
+            UOScript.Interpreter.RegisterExpressionHandler("criminal", this.IsCriminal);
+            UOScript.Interpreter.RegisterExpressionHandler("enemy", this.IsEnemy);
+            UOScript.Interpreter.RegisterExpressionHandler("friend", this.IsFriend);
+            UOScript.Interpreter.RegisterExpressionHandler("gray", this.IsGray);
+            UOScript.Interpreter.RegisterExpressionHandler("innocent", this.IsInnocent);
+            UOScript.Interpreter.RegisterExpressionHandler("murderer", this.IsMurderer);
+
+
 
             // Object attributes
         }
 
         #region Dummy and Placeholders
 
-        private IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            Console.WriteLine("Executing expression {0} {1}", expression, args);
-            return 0;
-        }
-
         private IComparable ExpressionNotImplemented(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Expression Not Implemented {0} {1}", expression, args);
             return 0;
-        }
-
-        private int DummyIntExpression(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            Console.WriteLine("Executing expression {0} {1}", expression, args);
-            return 3;
-        }
-
-        private string DummyStringExpression(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            Console.WriteLine("Executing expression {0} {1}", expression, args);
-
-            return "test";
-        }
-
-        private bool DummyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            Console.WriteLine("UOS: DummyCommand {0} {1}", command, args);
-            return true;
         }
 
         private bool NotImplemented(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -753,7 +743,7 @@ namespace RazorEnhanced
             return false;
         }
 
-        private IComparable Poisoned(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable IsPoisoned(string expression, UOScript.Argument[] args, bool quiet)
         {
 
             if (args.Length == 0)
@@ -772,6 +762,207 @@ namespace RazorEnhanced
 
             return false;
         }
+        private IComparable Name(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Name;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Name;
+                }
+            }
+
+            return false;
+        }
+        private IComparable IsDead(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.IsGhost;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.IsGhost;
+                }
+            }
+
+            return false;
+        }
+        private IComparable Direction(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Direction;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Direction;
+                }
+            }
+
+            return false;
+        }
+        private IComparable IsFlying(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            uint serial = (uint)Player.Serial;
+            if (args.Length >= 1)
+            {
+                serial = args[0].AsSerial();
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)serial);
+            if (theMobile != null)
+            {
+                return theMobile.Flying;
+            }
+            return false;
+        }
+        private IComparable IsParalyzed(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Paralized;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Paralized;
+            }
+            return false;
+        }
+        private IComparable IsMounted(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Mount != null;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Mount != null;
+            }
+            return false;
+        }
+        private IComparable YellowHits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.YellowHits;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.YellowHits;
+            }
+            return false;
+        }
+        /*
+         // hue color #30
+			0x000000, // black		unused 0
+			0x30d0e0, // blue		0x0059 1
+			0x60e000, // green		0x003F 2
+			0x9090b2, // greyish	0x03b2 3
+			0x909090, // grey		   "   4
+			0xd88038, // orange		0x0090 5
+			0xb01000, // red		0x0022 6
+			0xe0e000, // yellow		0x0035 7
+        */
+        private IComparable IsCriminal(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 4;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 4;
+            }
+            return false;
+        }
+        private IComparable IsMurderer(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 6;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 6;
+            }
+            return false;
+        }
+
+        private IComparable IsEnemy(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "enemy requires parameters");
+                return false;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.IsHuman && (theMobile.Notoriety >= 4 && theMobile.Notoriety <= 6);
+            }
+            return false;
+        }
+        private IComparable IsFriend(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "friend requires parameters");
+                return false;
+            }
+
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.IsHuman && theMobile.Notoriety < 4;
+            }
+            return false;
+        }
+        private IComparable IsGray(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 3;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 3;
+            }
+            return false;
+        }
+        private IComparable IsInnocent(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 2;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 2;
+            }
+            return false;
+        }
+
 
         private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -1100,6 +1291,66 @@ namespace RazorEnhanced
             return true;
         }
 
+        private IComparable Hits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Hits;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Hits;
+                }
+            }
+
+            return false;
+
+            return Player.Hits;
+        }
+        private IComparable DiffHits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.HitsMax - Player.Hits;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.HitsMax - theMobile.Hits;
+                }
+            }
+
+            return false;
+        }
+
+        private IComparable MaxHits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.HitsMax;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.HitsMax;
+                }
+            }
+
+            return false;
+
+        }
+
+
 
         // Player Attributes
         private IComparable Mana(string expression, UOScript.Argument[] args, bool quiet)
@@ -1114,11 +1365,6 @@ namespace RazorEnhanced
         {
             return Player.Position.Z;
         }
-        private IComparable Name(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Name;
-        }
-
 
 
 
@@ -2776,7 +3022,7 @@ namespace RazorEnhanced
             bool nearest = false;
             foreach (var arg in args)
             {
-                string argStr = arg.ToString().ToLower();
+                string argStr = arg.AsString().ToLower();
                 switch (argStr)
                 {
                     case "friend":
@@ -2786,6 +3032,8 @@ namespace RazorEnhanced
                         filter.Notorieties.Add(2);
                         break;
                     case "criminal":
+                        filter.Notorieties.Add(4);
+                        break;
                     case "gray":
                         filter.Notorieties.Add(3);
                         filter.Notorieties.Add(4);
@@ -2831,7 +3079,7 @@ namespace RazorEnhanced
             bool nearest = false;
             foreach (var arg in args)
             {
-                string argStr = arg.ToString().ToLower();
+                string argStr = arg.AsString().ToLower();
                 switch (argStr)
                 {
                     case "friend":
@@ -3926,8 +4174,8 @@ namespace RazorEnhanced
                             PS: feels like writing intentionally broken code, but it's 100% UOSteam behaviour
                             */
 
-                            // The iterator's name is the hash code of the for loop's ASTNode.
-                            var children = node.Children();
+        // The iterator's name is the hash code of the for loop's ASTNode.
+        var children = node.Children();
                             ASTNode startParam = children[0];
                             ASTNode endParam = null;
                             ASTNode listParam = null;
