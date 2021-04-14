@@ -114,7 +114,29 @@ namespace RazorEnhanced
         {
             TargetResource(item.Serial, ResourceNameTarget);
         }
+        public static void TargetResource(Item item, int ResourceNumber)
+        {
+            TargetResource(item.Serial, ResourceNumber);
+        }
 
+        public static void TargetResource(int SerialItem, int ResourceNumber)
+        {
+            Assistant.Item item = Assistant.World.FindItem(SerialItem);
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Use Serial");
+                return;
+            }
+            Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, (uint)ResourceNumber));
+        }
+
+        /// <summary>
+        /// shovel = Items.FindByID(0x0F39, 0, Player.Backpack.Serial)
+        ///     if shovel != None:
+        ///         Target.TargetResource(shovel, 6)
+        /// </summary>
+        /// <param name="SerialItem"></param>
+        /// <param name="ResourceNameTarget"></param>
         public static void TargetResource(int SerialItem, string ResourceNameTarget)
         {
             Assistant.Item item = Assistant.World.FindItem(SerialItem);
@@ -123,27 +145,35 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Use Serial");
                 return;
             }
+
+            int number = -1;
             switch (ResourceNameTarget)
             {
                 case "ore":
-                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x00));
+                    number = 0;
                     break;
                 case "sand":
-                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x01));
+                    number = 1;
                     break;
                 case "wood":
-                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x02));
+                    number = 2;
                     break;
                 case "graves":
-                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x03));
+                    number = 3;
                     break;
                 case "red_mushroom":
-                    Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, 0x04));
+                    number = 4;
                     break;
                 default:
-                    Misc.SendMessage("Valid resource types are ore, sand, wood, graves, or red mushroom");
+                    System.Int32.TryParse(ResourceNameTarget, out number);
                     break;
             }
+            if (number >= 0)
+                TargetResource(SerialItem, number);
+            else
+                Misc.SendMessage("Valid resource types are ore, sand, wood, graves, red mushroom, or a number");
+
+
         }
 
         public static void Cancel()

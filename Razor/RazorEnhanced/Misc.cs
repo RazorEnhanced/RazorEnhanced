@@ -23,6 +23,10 @@ namespace RazorEnhanced
             Assistant.DragDropManager.Clear();
         }
 
+        public static void Inspect()
+        {
+            Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
+        }
 
         public static void CloseBackpack()
         {

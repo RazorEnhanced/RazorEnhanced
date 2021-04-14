@@ -166,6 +166,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("buy", this.Buy);
             UOScript.Interpreter.RegisterCommandHandler("sell", this.Sell);
             UOScript.Interpreter.RegisterCommandHandler("clearbuy", this.ClearBuy);
+            UOScript.Interpreter.RegisterCommandHandler("location", this.Location);
             UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell);
             UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer);
             UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
@@ -239,19 +240,25 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("canceltarget", this.CancelTarget);
             UOScript.Interpreter.RegisterCommandHandler("cancelautotarget", this.CancelAutoTarget);
             UOScript.Interpreter.RegisterCommandHandler("target", this.Target);
-            UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterCommandHandler("targettype", this.TargetType);
+            UOScript.Interpreter.RegisterCommandHandler("targetground", this.TargetGround);
+            UOScript.Interpreter.RegisterCommandHandler("targettile", this.TargetTile);
+            UOScript.Interpreter.RegisterCommandHandler("targettileoffset", this.TargetTileOffset);
+            UOScript.Interpreter.RegisterCommandHandler("targettilerelative", this.TargetTileRelative);
+            UOScript.Interpreter.RegisterCommandHandler("targetresource", this.TargetResource);
             UOScript.Interpreter.RegisterCommandHandler("cleartargetqueue", this.ClearTargetQueue);
-            UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer); //TODO: This method is a stub. Remove after successful testing.
-
+            UOScript.Interpreter.RegisterCommandHandler("warmode", this.WarMode);
+            UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer);
+            UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer);
+            UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer);
+            UOScript.Interpreter.RegisterCommandHandler("getenemy", this.GetEnemy);
+            UOScript.Interpreter.RegisterCommandHandler("getfriend", this.GetFriend);
 
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
+            UOScript.Interpreter.RegisterExpressionHandler("x", this.LocationX);
+            UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
+            UOScript.Interpreter.RegisterExpressionHandler("z", this.LocationZ);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
@@ -270,15 +277,16 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("findwand", this.FindWand); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("inparty", this.InParty); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterExpressionHandler("infriendlist", this.InFriendList);
-            UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
             UOScript.Interpreter.RegisterExpressionHandler("ingump", this.InGump);
             UOScript.Interpreter.RegisterExpressionHandler("gumpexists", this.GumpExists);
             UOScript.Interpreter.RegisterExpressionHandler("injournal", this.InJournal);
             UOScript.Interpreter.RegisterExpressionHandler("listexists", this.ListExists);
             UOScript.Interpreter.RegisterExpressionHandler("list", this.ListCount);
             UOScript.Interpreter.RegisterExpressionHandler("inlist", this.InList);
-            UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer); //TODO: This method is a stub. Remove after successful testing.
-            UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);  //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer);
+            UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);
+            UOScript.Interpreter.RegisterExpressionHandler("targetexists", this.TargetExists);
+
 
             // Player Attributes
             UOScript.Interpreter.RegisterExpressionHandler("weight", (string expression, UOScript.Argument[] args, bool quiet) => Player.Weight);
@@ -286,9 +294,6 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("diffweight", (string expression, UOScript.Argument[] args, bool quiet) => Player.MaxWeight - Player.Weight);
             UOScript.Interpreter.RegisterExpressionHandler("mana", (string expression, UOScript.Argument[] args, bool quiet) => Player.Mana);
             UOScript.Interpreter.RegisterExpressionHandler("maxmana", (string expression, UOScript.Argument[] args, bool quiet) => Player.ManaMax);
-            UOScript.Interpreter.RegisterExpressionHandler("hits", (string expression, UOScript.Argument[] args, bool quiet) => Player.Hits);
-            UOScript.Interpreter.RegisterExpressionHandler("diffhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax - Player.Hits);
-            UOScript.Interpreter.RegisterExpressionHandler("maxhits", (string expression, UOScript.Argument[] args, bool quiet) => Player.HitsMax);
             UOScript.Interpreter.RegisterExpressionHandler("stam", (string expression, UOScript.Argument[] args, bool quiet) => Player.Stam);
             UOScript.Interpreter.RegisterExpressionHandler("maxstam", (string expression, UOScript.Argument[] args, bool quiet) => Player.StamMax);
             UOScript.Interpreter.RegisterExpressionHandler("dex", (string expression, UOScript.Argument[] args, bool quiet) => Player.Dex);
@@ -306,45 +311,37 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
             UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
 
-            UOScript.Interpreter.RegisterExpressionHandler("x", this.X);
-            UOScript.Interpreter.RegisterExpressionHandler("y", this.Y);
-            UOScript.Interpreter.RegisterExpressionHandler("z", this.Z);
+            UOScript.Interpreter.RegisterExpressionHandler("hits", this.Hits);
+            UOScript.Interpreter.RegisterExpressionHandler("diffhits", this.DiffHits);
+            UOScript.Interpreter.RegisterExpressionHandler("maxhits", this.MaxHits);
+
             UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
+            UOScript.Interpreter.RegisterExpressionHandler("dead", this.IsDead);
+            UOScript.Interpreter.RegisterExpressionHandler("direction", this.Direction);
+            UOScript.Interpreter.RegisterExpressionHandler("flying", this.IsFlying);
+            UOScript.Interpreter.RegisterExpressionHandler("paralyzed", this.IsParalyzed);
+            UOScript.Interpreter.RegisterExpressionHandler("poisoned", this.IsPoisoned);
+            UOScript.Interpreter.RegisterExpressionHandler("mounted", this.IsMounted);
+            UOScript.Interpreter.RegisterExpressionHandler("yellowhits", this.YellowHits);
+            UOScript.Interpreter.RegisterExpressionHandler("war", this.InWarMode);
+            UOScript.Interpreter.RegisterExpressionHandler("criminal", this.IsCriminal);
+            UOScript.Interpreter.RegisterExpressionHandler("enemy", this.IsEnemy);
+            UOScript.Interpreter.RegisterExpressionHandler("friend", this.IsFriend);
+            UOScript.Interpreter.RegisterExpressionHandler("gray", this.IsGray);
+            UOScript.Interpreter.RegisterExpressionHandler("innocent", this.IsInnocent);
+            UOScript.Interpreter.RegisterExpressionHandler("murderer", this.IsMurderer);
+
+
 
             // Object attributes
         }
 
         #region Dummy and Placeholders
 
-        private IComparable DummyExpression(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            Console.WriteLine("Executing expression {0} {1}", expression, args);
-            return 0;
-        }
-
         private IComparable ExpressionNotImplemented(string expression, UOScript.Argument[] args, bool quiet)
         {
             Console.WriteLine("Expression Not Implemented {0} {1}", expression, args);
             return 0;
-        }
-
-        private int DummyIntExpression(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            Console.WriteLine("Executing expression {0} {1}", expression, args);
-            return 3;
-        }
-
-        private string DummyStringExpression(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            Console.WriteLine("Executing expression {0} {1}", expression, args);
-
-            return "test";
-        }
-
-        private bool DummyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            Console.WriteLine("UOS: DummyCommand {0} {1}", command, args);
-            return true;
         }
 
         private bool NotImplemented(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -440,83 +437,246 @@ namespace RazorEnhanced
             return false;
         }
 
+        IComparable LocationX(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "X location requires a serial");
+                return 0;
+            }
+
+            uint serial = args[0].AsSerial();
+            Mobile mobile = Mobiles.FindBySerial((int)serial);
+            if (mobile != null)
+                return mobile.Position.X;
+
+            return 0;
+        }
+        IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Y location requires a serial");
+                return 0;
+            }
+
+            uint serial = args[0].AsSerial();
+            Mobile mobile = Mobiles.FindBySerial((int)serial);
+            if (mobile != null)
+                return mobile.Position.Y;
+
+            return 0;
+        }
+        IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "Z location requires a serial");
+                return 0;
+            }
+
+            uint serial = args[0].AsSerial();
+            Mobile mobile = Mobiles.FindBySerial((int)serial);
+            if (mobile != null)
+                return mobile.Position.Z;
+
+            return 0;
+        }
+
         IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
         {
             return RazorEnhanced.Organizer.Status();
         }
 
+        /// <summary>
+        /// The problem is UOS findbyid will find either mobil or item, but RE seperates them
+        /// So this function will look for both and return the list
+        ///   if it is an item it can't be a mobile and vica-versa
+        /// </summary>
+        internal static List<int> FindByType_ground(int graphic, int color, int amount, int range)
+        {
+            List<int> retList = new List<int>();
+            // Search for items first
+            Items.Filter itemFilter = new Items.Filter
+            {
+                Enabled = true
+            };
+            itemFilter.Graphics.Add(graphic);
+            itemFilter.RangeMax = range;
+            itemFilter.OnGround = 1;
+            if (color != -1)
+                itemFilter.Hues.Add(color);
+            List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+            if (items.Count > 0)
+            {
+                foreach (var i in items)
+                {
+                    if ((amount <= 0) || (i.Amount >= amount))
+                        retList.Add(i.Serial);
+                }
+                //return retList;
+            }
+
+            Mobiles.Filter mobileFilter = new Mobiles.Filter
+            {
+                Enabled = true
+            };
+            mobileFilter.Bodies.Add(graphic);
+            mobileFilter.RangeMax = range;
+            if (color != -1)
+                mobileFilter.Hues.Add(color);
+            List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
+
+            if (mobiles.Count > 0)
+            {
+                foreach (var m in mobiles)
+                {
+                    retList.Add(m.Serial);
+                }
+                //return retList;
+            }
+
+            return retList;
+        }
+
+        internal static int CountType_ground(int graphic, int color, int range)
+        {
+            int retCount = 0;
+
+            // Search for items first
+            Items.Filter itemFilter = new Items.Filter
+            {
+                Enabled = true
+            };
+            itemFilter.Graphics.Add(graphic);
+            itemFilter.RangeMax = range;
+            itemFilter.OnGround = 1;
+            if (color != -1)
+                itemFilter.Hues.Add(color);
+            List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+            if (items.Count > 0)
+            {
+                foreach (var i in items)
+                {
+                    retCount += i.Amount;
+                }
+            }
+
+            Mobiles.Filter mobileFilter = new Mobiles.Filter
+            {
+                Enabled = true
+            };
+            mobileFilter.Bodies.Add(graphic);
+            mobileFilter.RangeMax = range;
+            if (color != -1)
+                mobileFilter.Hues.Add(color);
+            List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
+
+            if (mobiles.Count > 0)
+            {
+                foreach (var m in mobiles)
+                {
+                    retCount += 1;
+                }
+            }
+
+            return retCount;
+        }
+
 
         private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
         {
-            Item item = null;
-            if (args.Length == 1)
+            if (args.Length < 1)
             {
-                int type = args[0].AsInt();
-                item = Items.FindByID(type, -1, -1);
-            }
-            if (args.Length == 2)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                item = Items.FindByID(type, color, -1);
-            }
-            if (args.Length == 3)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                string sourceCheck = args[2].AsString();
-                uint source = args[2].AsSerial();
-                item = Items.FindByID(type, color, (int)source);
-            }
-            if (args.Length == 4)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                uint source = args[2].AsSerial();
-                int amount = args[3].AsInt();
-                item = Items.FindByID(type, color, (int)source);
-                if (item != null)
-                {
-                    if (amount != -1 && item.Amount < amount)
-                    {
-                        item = null;
-                    }
-                }
-            }
-            if (args.Length == 5)
-            {
-                int type = args[0].AsInt();
-                int color = args[1].AsInt();
-                uint source = args[2].AsSerial();
-                int amount = args[3].AsInt();
-                int range = args[4].AsInt();
-                item = Items.FindByID(type, color, (int)source, range);
-                if (item != null)
-                {
-                    if (amount != -1 && item.Amount < amount)
-                    {
-                        item = null;
-                    }
-                }
-            }
-
-            if (item == null)
-            {
-                UOScript.Interpreter.UnSetAlias("found");
+                throw new UOScript.RunTimeError(null, "FindType requires parameters");
                 return false;
             }
 
-            UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
-            return true;
+            int type = args[0].AsInt();
+            int serial = -1;
+            if (args.Length == 1 || args.Length == 2)
+            {
+                int color = -1;
+                if (args.Length == 2)
+                    color = args[1].AsInt();
+
+                List<int> results = FindByType_ground(type, color, -1, -1);
+                if (results.Count > 0)
+                {
+                    serial = results[0];
+                }
+                else
+                {
+                    Item item = Items.FindByID(type, color, -1, true);
+                    if (item != null)
+                    {
+                        serial = item.Serial;
+                    }
+                }
+            }
+            if (args.Length >= 3)
+            {
+                UOScript.Interpreter.UnSetAlias("found");
+                int color = args[1].AsInt();
+                string groundCheck = args[2].AsString().ToLower();
+                uint source = args[2].AsSerial();
+                int amount = -1;
+                if (args.Length >= 4)
+                    args[3].AsInt();
+                int range = -1;
+                if (args.Length == 5)
+                    range = args[4].AsInt();
+                if (groundCheck == "ground")
+                {
+                    List<int> results = FindByType_ground(type, color, amount, range);
+                    if (results.Count > 0)
+                    {
+                        serial = results[0];
+                    }
+                }
+                else
+                {
+                    Item item = Items.FindByID(type, color, (int)source, range);
+                    if (item != null)
+                    {
+                        if (amount != -1 && item.Amount < amount)
+                        {
+                            item = null;
+                        }
+                        if (item != null)
+                        {
+                            serial = item.Serial;
+                        }
+                    }
+                }
+            }
+
+            if (serial != -1)
+            {
+                UOScript.Interpreter.SetAlias("found", (uint)serial);
+                return true;
+            }
+
+            return false;
 
         }
 
         private static IComparable Property(string expression, UOScript.Argument[] args, bool quiet)
         {
-            if (args.Length == 2)
+            if (args.Length < 2)
             {
-                string findProp = args[0].AsString();
-                uint serial = args[1].AsSerial();
+                throw new UOScript.RunTimeError(null, "Property requires 2 parameters");
+                return false;
+            }
+
+            string findProp = args[0].AsString();
+            uint serial = args[1].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
+            if (thing.IsItem)
+            {
                 Item item = Items.FindBySerial((int)serial);
                 if (item != null)
                 {
@@ -531,6 +691,20 @@ namespace RazorEnhanced
                 }
             }
 
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    foreach (var prop in item.Properties)
+                    {
+                        if (0 == String.Compare(findProp, prop.ToString(), true))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
             return false;
         }
 
@@ -569,6 +743,226 @@ namespace RazorEnhanced
             return false;
         }
 
+        private IComparable IsPoisoned(string expression, UOScript.Argument[] args, bool quiet)
+        {
+
+            if (args.Length == 0)
+            {
+                return Player.Poisoned;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Poisoned;
+                }
+            }
+
+            return false;
+        }
+        private IComparable Name(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Name;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Name;
+                }
+            }
+
+            return false;
+        }
+        private IComparable IsDead(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.IsGhost;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.IsGhost;
+                }
+            }
+
+            return false;
+        }
+        private IComparable Direction(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Direction;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Direction;
+                }
+            }
+
+            return false;
+        }
+        private IComparable IsFlying(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            uint serial = (uint)Player.Serial;
+            if (args.Length >= 1)
+            {
+                serial = args[0].AsSerial();
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)serial);
+            if (theMobile != null)
+            {
+                return theMobile.Flying;
+            }
+            return false;
+        }
+        private IComparable IsParalyzed(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Paralized;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Paralized;
+            }
+            return false;
+        }
+        private IComparable IsMounted(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Mount != null;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Mount != null;
+            }
+            return false;
+        }
+        private IComparable YellowHits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.YellowHits;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.YellowHits;
+            }
+            return false;
+        }
+        /*
+         // hue color #30
+			0x000000, // black		unused 0
+			0x30d0e0, // blue		0x0059 1
+			0x60e000, // green		0x003F 2
+			0x9090b2, // greyish	0x03b2 3
+			0x909090, // grey		   "   4
+			0xd88038, // orange		0x0090 5
+			0xb01000, // red		0x0022 6
+			0xe0e000, // yellow		0x0035 7
+        */
+        private IComparable IsCriminal(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 4;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 4;
+            }
+            return false;
+        }
+        private IComparable IsMurderer(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 6;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 6;
+            }
+            return false;
+        }
+
+        private IComparable IsEnemy(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "enemy requires parameters");
+                return false;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.IsHuman && (theMobile.Notoriety >= 4 && theMobile.Notoriety <= 6);
+            }
+            return false;
+        }
+        private IComparable IsFriend(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "friend requires parameters");
+                return false;
+            }
+
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.IsHuman && theMobile.Notoriety < 4;
+            }
+            return false;
+        }
+        private IComparable IsGray(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 3;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 3;
+            }
+            return false;
+        }
+        private IComparable IsInnocent(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Notoriety == 2;
+            }
+            Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
+            if (theMobile != null)
+            {
+                return theMobile.Notoriety == 2;
+            }
+            return false;
+        }
+
 
         private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -579,7 +973,7 @@ namespace RazorEnhanced
 
             if (args.Length == 1)
             {
-                int gumpid = args[0].AsInt();
+                uint gumpid = args[0].AsUInt();
                 return (gumpid == Gumps.CurrentGump());
             }
             return -1;
@@ -654,6 +1048,8 @@ namespace RazorEnhanced
             double skillvalue = Player.GetSkillValue(skillname);
             return skillvalue;
         }
+
+
         private IComparable FindObject(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -662,40 +1058,66 @@ namespace RazorEnhanced
                 return false;
             }
             UOScript.Interpreter.UnSetAlias("found");
-            Item item = null;
-            if (args.Length >= 1)
-            {
-                uint serial = args[0].AsSerial();
-                item = Items.FindBySerial((int)serial);
-                if (item == null)
-                    return false;
-            }
+            int color = -1;
+            int amount = -1;
+            int container = -1;
+            int range = -1;
+
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
 
             if (args.Length >= 2)
             {
-                int color = args[1].AsInt();
-                if (item.Hue != color)
-                    return false;
+                color = args[1].AsInt();
             }
             if (args.Length >= 3)
             {
-                int container = (int)args[2].AsSerial();
-                if (item.Container != container)
-                    return false;
+                container = (int)args[2].AsSerial();
             }
             if (args.Length >= 4)
             {
-                int amount = args[3].AsInt();
-                if (item.Amount < amount)
-                    return false;
+                amount = args[3].AsInt();
             }
             if (args.Length >= 5)
             {
-                int maxRange = args[4].AsInt();
-                if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y) > maxRange)
-                    return false;
+                range = args[4].AsInt();
             }
 
+            if (thing.IsMobile)
+            {
+                Mobile mobile = Mobiles.FindBySerial((int)serial);
+                if (mobile != null)
+                {
+                    if (color == -1 || color == mobile.Hue)
+                    {
+                        UOScript.Interpreter.SetAlias("found", (uint)mobile.Serial);
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // must be an item
+            Item item = Items.FindBySerial((int)serial);
+            if (item == null)
+                return false;
+
+            // written this way because I hate if ! && !
+            if (color != -1)
+                if (item.Hue != color)
+                    return false;
+
+            if (container != -1)
+                if (item.Container != container)
+                    return false;
+
+            if (amount != -1)
+                if (item.Amount < amount)
+                    return false;
+
+            if (range != -1)
+                if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y) > range)
+                    return false;
             UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
             return true;
         }
@@ -703,16 +1125,36 @@ namespace RazorEnhanced
         {
             if (args.Length < 1)
             {
-                throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                throw new UOScript.RunTimeError(null, "Distance Object requires parameters");
+                return Int32.MaxValue;
             }
-            uint serial = args[0].AsSerial();
-            Item item = null;
-            item = Items.FindBySerial((int)serial);
-            if (item == null)
-                return false;
 
-            return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
+            int x = -1;
+            int y = -1;
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item == null)
+                    return Int32.MaxValue;
+                x = item.Position.X;
+                y = item.Position.Y;
+            }
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item == null)
+                    return Int32.MaxValue;
+                x = item.Position.X;
+                y = item.Position.Y;
+            }
+
+            if (x == -1 || y == -1)
+                return Int32.MaxValue;
+
+            return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
         }
 
         private IComparable InRange(string expression, UOScript.Argument[] args, bool quiet)
@@ -723,15 +1165,35 @@ namespace RazorEnhanced
                 return false;
             }
             uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
             int range = args[1].AsInt();
-            Item item = null;
-            item = Items.FindBySerial((int)serial);
-            if (item == null) {
-               return false;
+            int x = -1;
+            int y = -1;
+
+            if (thing.IsMobile)
+            {
+                Mobile mobile = Mobiles.FindBySerial((int)serial);
+                if (mobile != null)
+                {
+                    x = mobile.Position.X;
+                    y = mobile.Position.Y;
+                }
+            }
+            if (thing.IsMobile)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    x = item.Position.X;
+                    y = item.Position.Y;
+                }
             }
 
-            int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y);
+            if (x == -1 || y == -1)
+                return false;
 
+            int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
             return (distance <= range);
         }
         private IComparable BuffExists(string expression, UOScript.Argument[] args, bool quiet)
@@ -770,31 +1232,26 @@ namespace RazorEnhanced
         private IComparable CountTypeGround(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
-                return 0;
-
-            Items.Filter filter = new Items.Filter();
-            filter.OnGround = 1;
-
-            if (args.Length > 0)
             {
-                int itemID = args[0].AsInt();
-                filter.Graphics.Add(itemID);
+                throw new UOScript.RunTimeError(null, "CountTypeGround requires parameters");
+                return 0;
             }
+
+            int graphic = args[0].AsInt();
+            int color = -1;
+            int range = -1;
+            //
             if (args.Length > 1)
             {
-                int color = args[1].AsInt();
-                filter.Hues.Add(color);
+                color = args[1].AsInt();
             }
             if (args.Length > 2)
             {
-                int range = args[2].AsInt();
-                filter.RangeMax = range;
+                range = args[2].AsInt();
             }
 
-            List<Item> items = Items.ApplyFilter(filter);
-            int count = 0;
-            foreach (Item i in items)
-                count += i.Amount;
+            int count = CountType_ground(graphic, color, range);
+
             return count;
         }
 
@@ -816,12 +1273,84 @@ namespace RazorEnhanced
 
         private IComparable Timer(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
+
+            return UOScript.Interpreter.GetTimer(args[0].AsString()).TotalMilliseconds;
+
         }
         private IComparable TimerExists(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
+            return UOScript.Interpreter.TimerExists(args[0].AsString());
         }
+
+        private IComparable TargetExists(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0) { WrongParameterCount(expression, 1, args.Length); }
+
+            return true;
+        }
+
+        private IComparable Hits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.Hits;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.Hits;
+                }
+            }
+
+            return false;
+
+            return Player.Hits;
+        }
+        private IComparable DiffHits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.HitsMax - Player.Hits;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.HitsMax - theMobile.Hits;
+                }
+            }
+
+            return false;
+        }
+
+        private IComparable MaxHits(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 0)
+            {
+                return Player.HitsMax;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.HitsMax;
+                }
+            }
+
+            return false;
+
+        }
+
+
 
         // Player Attributes
         private IComparable Mana(string expression, UOScript.Argument[] args, bool quiet)
@@ -832,23 +1361,10 @@ namespace RazorEnhanced
         {
             return Player.ManaMax;
         }
-        private IComparable X(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Position.X;
-        }
-        private IComparable Y(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Position.Y;
-        }
         private IComparable Z(string expression, UOScript.Argument[] args, bool quiet)
         {
             return Player.Position.Z;
         }
-        private IComparable Name(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Name;
-        }
-
 
 
 
@@ -879,7 +1395,7 @@ namespace RazorEnhanced
 
         private bool Info(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Assistant.Targeting.OneTimeTarget(true, new Assistant.Targeting.TargetResponseCallback(Assistant.Commands.GetInfoTarget_Callback));
+            Misc.Inspect();
             return true;
         }
 
@@ -1043,7 +1559,7 @@ namespace RazorEnhanced
                 container = args[2].AsInt();
             }
 
-            Item item = Items.FindByID(itemID, color, container);
+            Item item = Items.FindByID(itemID, color, container, true);
             if (item != null)
             {
                 Items.UseItem(item.Serial);
@@ -1172,7 +1688,7 @@ namespace RazorEnhanced
             {
                 amount = args[1].AsInt();
             }
-            Item food = Items.FindByID(graphic, color, Player.Backpack.Serial);
+            Item food = Items.FindByID(graphic, color, Player.Backpack.Serial, true);
             if (food != null)
             {
                 if (target == Player.Serial)
@@ -1410,7 +1926,7 @@ namespace RazorEnhanced
                 int id = args[0].AsInt();
                 uint src = args[1].AsSerial();
                 uint dest = args[2].AsSerial();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, item.Amount);
@@ -1422,7 +1938,7 @@ namespace RazorEnhanced
                 uint src = args[1].AsSerial();
                 uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, item.Amount);
@@ -1435,7 +1951,7 @@ namespace RazorEnhanced
                 uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
                 int amount = args[4].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, amount);
@@ -1449,7 +1965,7 @@ namespace RazorEnhanced
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, 0, x, y);
@@ -1464,7 +1980,7 @@ namespace RazorEnhanced
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, -1, x, y);
@@ -1480,7 +1996,7 @@ namespace RazorEnhanced
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
                 int amount = args[7].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, amount, x, y);
@@ -1496,7 +2012,7 @@ namespace RazorEnhanced
             {
                 int id = args[0].AsInt();
                 uint src = args[1].AsSerial();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.DropItemGroundSelf(item.Serial);
@@ -1508,7 +2024,7 @@ namespace RazorEnhanced
                 uint src = args[1].AsSerial();
                 //uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, 0, Player.Position.X, Player.Position.Y, Player.Position.Z);
@@ -1521,7 +2037,7 @@ namespace RazorEnhanced
                 // uint dest = args[2].AsSerial();
                 int color = args[3].AsInt();
                 int amount = args[4].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
@@ -1535,7 +2051,7 @@ namespace RazorEnhanced
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
-                Item item = Items.FindByID(id, -1, (int)src);
+                Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, 0, x, y, z);
@@ -1550,7 +2066,7 @@ namespace RazorEnhanced
                 int y = args[4].AsInt();
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, 0, x, y, z);
@@ -1566,7 +2082,7 @@ namespace RazorEnhanced
                 int z = args[5].AsInt();
                 int color = args[6].AsInt();
                 int amount = args[7].AsInt();
-                Item item = Items.FindByID(id, color, (int)src);
+                Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
                 {
                     Items.MoveOnGround(item.Serial, amount, x, y, z);
@@ -2105,6 +2621,15 @@ namespace RazorEnhanced
             return true;
         }
 
+        private bool Location(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            uint serial = args[0].AsSerial();
+            Mobile m = Mobiles.FindBySerial((int)serial);
+            Misc.SendMessage(String.Format("Position({0}, {1})", m.Position.X, m.Position.Y), 32, false);
+
+            return true;
+        }
+
         private bool SysMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2458,6 +2983,26 @@ namespace RazorEnhanced
             RazorEnhanced.Target.Cancel();
             return true;
         }
+        private bool TargetResource(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            // targetresource serial (ore/sand/wood/graves/red mushrooms)
+            if (args.Length != 2)
+            {
+                WrongParameterCount(command, 2, args.Length);
+            }
+            uint tool = args[0].AsSerial();
+            string resource = args[1].AsString();
+            RazorEnhanced.Target.TargetResource((int)tool, resource);
+
+            return true;
+
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                RazorEnhanced.Target.TargetExecute((int)serial);
+            }
+            return true;
+        }
 
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -2465,6 +3010,122 @@ namespace RazorEnhanced
             {
                 uint serial = args[0].AsSerial();
                 RazorEnhanced.Target.TargetExecute((int)serial);
+            }
+            return true;
+        }
+
+        private bool GetEnemy(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
+
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            bool nearest = false;
+            foreach (var arg in args)
+            {
+                string argStr = arg.AsString().ToLower();
+                switch (argStr)
+                {
+                    case "friend":
+                        filter.Notorieties.Add(1);
+                        break;
+                    case "innoncent":
+                        filter.Notorieties.Add(2);
+                        break;
+                    case "criminal":
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "gray":
+                        filter.Notorieties.Add(3);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "murderer":
+                        filter.Notorieties.Add(6);
+                        break;
+                    case "enemy":
+                        filter.Notorieties.Add(6);
+                        filter.Notorieties.Add(5);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "humanoid":
+                        filter.IsHuman = 1;
+                        break;
+                    case "closest":
+                    case "nearest":
+                        nearest = true;
+                        break;
+                }
+            }
+            var list = Mobiles.ApplyFilter(filter);
+            if (list.Count > 0)
+            {
+                Mobile anEnemy = list[0];
+                if (nearest)
+                {
+                    anEnemy = Mobiles.Select(list, "Nearest");
+                }
+                UOScript.Interpreter.SetAlias("enemy", (uint)anEnemy.Serial);
+            }
+            else
+            {
+                UOScript.Interpreter.UnSetAlias("enemy");
+            }
+            return true;
+        }
+        private bool GetFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
+
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            bool nearest = false;
+            foreach (var arg in args)
+            {
+                string argStr = arg.AsString().ToLower();
+                switch (argStr)
+                {
+                    case "friend":
+                        filter.Notorieties.Add(1);
+                        break;
+                    case "innoncent":
+                        filter.Notorieties.Add(2);
+                        break;
+                    case "criminal":
+                    case "gray":
+                        filter.Notorieties.Add(3);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "murderer":
+                        filter.Notorieties.Add(6);
+                        break;
+                    case "enemy":
+                        filter.Notorieties.Add(6);
+                        filter.Notorieties.Add(5);
+                        filter.Notorieties.Add(4);
+                        break;
+                    case "invulnerable":
+                        filter.Notorieties.Add(7);
+                        break;
+                    case "humanoid":
+                        filter.IsHuman = 1;
+                        break;
+                    case "closest":
+                    case "nearest":
+                        nearest = true;
+                        break;
+                }
+            }
+            var list = Mobiles.ApplyFilter(filter);
+            if (list.Count > 0)
+            {
+                Mobile anEnemy = list[0];
+                if (nearest)
+                {
+                    anEnemy = Mobiles.Select(list, "Nearest");
+                }
+                UOScript.Interpreter.SetAlias("friend", (uint)anEnemy.Serial);
+            }
+            else
+            {
+                UOScript.Interpreter.UnSetAlias("friend");
             }
             return true;
         }
@@ -2478,23 +3139,24 @@ namespace RazorEnhanced
             var range = (args.Length >=3 ? args[2].AsInt() : Player.Backpack.Serial);
 
             Item itm = null;
-            // Container (Range: Container Serial) 
-            if (range > 18) 
+            // Container (Range: Container Serial)
+            if (range > 18)
             {
-                itm = Items.FindByID(graphic, color, range);
+                itm = Items.FindByID(graphic, color, -1, range);
             }
             else
-            { 
+            {
                 var options = new Items.Filter();
                 options.Graphics.Add( graphic );
-                options.Hues.Add( color );
+                if (color != -1)
+                    options.Hues.Add( color );
                 options.RangeMin = -1;
                 options.RangeMax = range;
                 options.OnGround = 1;
-                
+
 
                 var item_list = Items.ApplyFilter(options);
-                if (item_list.Count > 0) { 
+                if (item_list.Count > 0) {
                     item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1) );
                     itm = item_list[0];
                 }
@@ -2508,29 +3170,236 @@ namespace RazorEnhanced
                 RazorEnhanced.Target.TargetExecute(itm);
             }
 
-
-
-            return NotImplemented(command, args, quiet, force);
+            return true;
         }
 
         private bool TargetGround(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // targettype (graphic) [color] [range]
+            if (args.Length == 0) { WrongParameterCount(command, 1, 0); }
+            var graphic = args[0].AsInt();
+            var color = (args.Length >= 2 ? args[1].AsInt() : -1);
+            var range = (args.Length >= 3 ? args[2].AsInt() : -1);
+
+            Item itm = null;
+            var options = new Items.Filter();
+            options.Graphics.Add(graphic);
+            if (color != -1)
+                options.Hues.Add(color);
+            options.RangeMin = -1;
+            options.RangeMax = range;
+            options.OnGround = 1;
+
+
+            var item_list = Items.ApplyFilter(options);
+            if (item_list.Count > 0)
+            {
+                item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                itm = item_list[0];
+            }
+
+
+            if (itm == null)
+            {
+                if (!quiet) { Misc.SendMessage("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString()); }
+            }
+            else
+            {
+                RazorEnhanced.Target.TargetExecute(itm);
+            }
+
+            return true;
         }
 
+        internal static int[] LastTileTarget = new int[4] {0, 0, 0, 0};
         private bool TargetTile(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
+            if (args.Length == 2 || args.Length == 4) // then graphic specified just use it
+            {
+                int graphic = 0;
+                if (args.Length == 2)
+                    graphic = args[1].AsInt();
+                if (args.Length == 4)
+                    graphic = args[3].AsInt();
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                options.OnGround = 1;
+                var item_list = Items.ApplyFilter(options);
+                Item itm = null;
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    itm = item_list[0];
+                }
+                if (itm == null)
+                {
+                    if (!quiet) { Misc.SendMessage("targettile: graphic " + graphic.ToString() + " not found"); }
+                }
+                else
+                {
+                    LastTileTarget[0] = itm.Position.X;
+                    LastTileTarget[1] = itm.Position.Y;
+                    LastTileTarget[2] = itm.Position.Z;
+                    var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+                    if (tiles2.Count > 0)
+                    {
+                        LastTileTarget[2] = tiles2[0].StaticZ;
+                        LastTileTarget[3] = tiles2[0].StaticID;
+                    }
+                    RazorEnhanced.Target.TargetExecute(itm);
+                }
+                return true;
+            }
+            // if we get here graphic wasnt specified
+
+
+            if (args[0].AsString() == "current")
+            {
+                LastTileTarget[0] = Player.Position.X;
+                LastTileTarget[1] = Player.Position.Y;
+                LastTileTarget[2] = Player.Position.Z;
+            }
+
+            if (args.Length == 3)
+            {
+                LastTileTarget[0] = args[0].AsInt();
+                LastTileTarget[1] = args[1].AsInt();
+                LastTileTarget[2] = args[2].AsInt();
+            }
+            var tiles = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+            if (tiles.Count > 0)
+            {
+                LastTileTarget[2] = tiles[0].StaticZ;
+                LastTileTarget[3] = tiles[0].StaticID;
+            }
+
+            RazorEnhanced.Target.TargetExecute(LastTileTarget[0], LastTileTarget[1], LastTileTarget[2], LastTileTarget[3]);
+            return true;
         }
 
         private bool TargetTileOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length < 3) { WrongParameterCount(command, 3, args.Length); }
+            if (args.Length == 4) // then graphic specified just use it
+            {
+                int graphic = 0;
+                if (args.Length == 4)
+                    graphic = args[3].AsInt();
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                options.OnGround = 1;
+                var item_list = Items.ApplyFilter(options);
+                Item itm = null;
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    itm = item_list[0];
+                }
+                if (itm == null)
+                {
+                    if (!quiet) { Misc.SendMessage("targettile: graphic " + graphic.ToString() + " not found"); }
+                }
+                else
+                {
+                    LastTileTarget[0] = itm.Position.X;
+                    LastTileTarget[1] = itm.Position.Y;
+                    LastTileTarget[2] = itm.Position.Z;
+                    var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+                    if (tiles2.Count > 0)
+                    {
+                        LastTileTarget[2] = tiles2[0].StaticZ;
+                        LastTileTarget[3] = tiles2[0].StaticID;
+                    }
+                    RazorEnhanced.Target.TargetExecute(itm);
+                }
+                return true;
+            }
+            // if we get here graphic wasnt specified
+            LastTileTarget[0] = Player.Position.X + args[0].AsInt();
+            LastTileTarget[1] = Player.Position.Y + args[1].AsInt();
+            LastTileTarget[2] = Player.Position.Z + args[2].AsInt();
+            var tiles = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+            if (tiles.Count > 0)
+            {
+                LastTileTarget[2] = tiles[0].StaticZ;
+                LastTileTarget[3] = tiles[0].StaticID;
+            }
+
+            RazorEnhanced.Target.TargetExecute(LastTileTarget[0], LastTileTarget[1], LastTileTarget[2], LastTileTarget[3]);
+            return true;
         }
 
         private bool TargetTileRelative(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            // targettilerelative   (serial) (range) [reverse = 'true' or 'false'] [graphic]
+            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            uint serial = args[0].AsSerial();
+            int range = args[1].AsInt();
+            bool reverse = false;
+            int graphic = -1;
+            if (args.Length == 3)
+            {
+                try
+                {
+                    reverse = args[2].AsBool();
+                }
+                catch (UOScript.RunTimeError e)
+                {
+                    // Maybe it was a graphic
+                    graphic = args[2].AsInt();
+                }
+            }
+            if (args.Length == 4)
+            {
+                    reverse = args[2].AsBool();
+                    graphic = args[3].AsInt();
+            }
+
+            Item itm = null;
+            if (graphic != -1)
+            {
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                options.RangeMax = range;
+                options.OnGround = 1;
+                var item_list = Items.ApplyFilter(options);
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    itm = item_list[0];
+                }
+                if (itm == null)
+                {
+                    if (!quiet)
+                    {
+                        Misc.SendMessage("targettilerelative: graphic " + graphic.ToString() + " not found in range " + range.ToString());
+                    }
+                }
+                else
+                {
+                    RazorEnhanced.Target.TargetExecute(itm);
+                }
+                return true;
+            }
+
+            if (reverse)
+                range = 0 - range;
+            RazorEnhanced.Target.TargetExecuteRelative((int)serial, range);
+
+            return true;
+        }
+        private bool WarMode(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            // warmode on/off
+            if (args.Length != 1)
+            {
+                WrongParameterCount(command, 1, args.Length);
+            }
+            bool onOff = args[0].AsBool();
+            Player.SetWarMode(onOff);
+
+            return true;
         }
 
         private bool ClearTargetQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -2541,17 +3410,35 @@ namespace RazorEnhanced
 
         private bool SetTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 2)
+            {
+                WrongParameterCount(command, 2, args.Length);
+            }
+
+            UOScript.Interpreter.SetTimer(args[0].AsString(), args[0].AsInt());
+            return true;
         }
 
         private bool RemoveTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 1)
+            {
+                WrongParameterCount(command, 1, args.Length);
+            }
+
+            UOScript.Interpreter.RemoveTimer(args[0].AsString());
+            return true;
         }
 
         private bool CreateTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 1)
+            {
+                WrongParameterCount(command, 1, args.Length);
+            }
+
+            UOScript.Interpreter.CreateTimer(args[0].AsString());
+            return true;
         }
 
         private bool ShowNames(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -2656,7 +3543,15 @@ namespace RazorEnhanced
             public static bool ToBool(string token)
             {
                 bool val;
-
+                switch (token)
+                {
+                    case "on":
+                        token = "true";
+                        break;
+                    case "off":
+                        token = "false";
+                        break;
+                }
                 if (bool.TryParse(token, out val))
                     return val;
 
@@ -3153,6 +4048,9 @@ namespace RazorEnhanced
                         }
                     case ASTNodeType.ENDWHILE:
                         // Walk backward to the while statement
+                        bool curDebug = Debug;
+                        Debug = false; // dont print our internal movement
+
                         _statement = _statement.Prev();
 
                         depth = 0;
@@ -3175,7 +4073,7 @@ namespace RazorEnhanced
 
                             _statement = _statement.Prev();
                         }
-
+                        Debug = curDebug;
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected endwhile");
 
@@ -3276,8 +4174,8 @@ namespace RazorEnhanced
                             PS: feels like writing intentionally broken code, but it's 100% UOSteam behaviour
                             */
 
-                            // The iterator's name is the hash code of the for loop's ASTNode.
-                            var children = node.Children();
+        // The iterator's name is the hash code of the for loop's ASTNode.
+        var children = node.Children();
                             ASTNode startParam = children[0];
                             ASTNode endParam = null;
                             ASTNode listParam = null;
@@ -3314,46 +4212,52 @@ namespace RazorEnhanced
                             }
 
 
-                            if (num_iter <= 0)
+                            if (num_iter > 0)
                             {
-                                throw new RunTimeError(node, "Invalid for loop: loop count must be greater then 0, " + num_iter.ToString() + " given ");
-                            }
 
-                            var idx = 0;
-                            // When we first enter the loop, push a new scope
-                            if (_scope.StartNode != node)
-                            {
-                                PushScope(node);
+                                var idx = 0;
+                                // When we first enter the loop, push a new scope
+                                if (_scope.StartNode != node)
+                                {
+                                    PushScope(node);
 
-                                // Create a dummy argument that acts as our iterator object
-                                var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
-                                _scope.SetVar(iterName, new Argument(this, iter));
+                                    // Create a dummy argument that acts as our iterator object
+                                    var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
+                                    _scope.SetVar(iterName, new Argument(this, iter));
 
-                                // Make the user-chosen variable have the value for the front of the list
-                                var arg = UOScript.Interpreter.GetListValue(listName, 0);
+                                    // Make the user-chosen variable have the value for the front of the list
+                                    var arg = UOScript.Interpreter.GetListValue(listName, 0);
 
-                                if (arg == null || 0 >= num_iter )
-                                    _scope.ClearVar(varName);
+                                    if (arg == null || 0 >= num_iter)
+                                        _scope.ClearVar(varName);
+                                    else
+                                        _scope.SetVar(varName, arg);
+                                }
                                 else
-                                    _scope.SetVar(varName, arg);
+                                {
+                                    // Increment the iterator argument
+                                    idx = _scope.GetVar(iterName).AsInt() + 1;
+                                    var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
+                                    _scope.SetVar(iterName, new Argument(this, iter));
+
+                                    // Update the user-chosen variable
+                                    var arg = UOScript.Interpreter.GetListValue(listName, idx);
+
+                                    if (arg == null || idx >= num_iter)
+                                    {
+                                        _scope.ClearVar(varName);
+                                    }
+                                    else
+                                    {
+                                        _scope.SetVar(varName, arg);
+                                    }
+                                }
                             }
                             else
                             {
-                                // Increment the iterator argument
-                                idx = _scope.GetVar(iterName).AsInt() + 1;
-                                var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
-                                _scope.SetVar(iterName, new Argument(this, iter));
-
-                                // Update the user-chosen variable
-                                var arg = UOScript.Interpreter.GetListValue(listName, idx);
-
-                                if (arg == null || idx >= num_iter) {
-                                    _scope.ClearVar(varName);
-                                }else {
-                                    _scope.SetVar(varName, arg);
-                                }
+                                // nothing to do - force end
+                                _scope.ClearVar(varName);
                             }
-
 
                             // Check loop condition
                             var i = _scope.GetVar(varName);
@@ -3400,6 +4304,9 @@ namespace RazorEnhanced
                         // Walk backward to the for statement
                         // track depth in case there is a nested for
                         // Walk backward to the for statement
+                        curDebug = Debug;
+                        Debug = false; // dont print our internal movement
+
                         _statement = _statement.Prev();
 
                         // track depth in case there is a nested for
@@ -3425,11 +4332,15 @@ namespace RazorEnhanced
                             _statement = _statement.Prev();
 
                         }
+                        Debug = curDebug;
+
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected endfor");
                         break;
                     case ASTNodeType.BREAK:
                         // Walk until the end of the loop
+                        curDebug = Debug;
+                        Debug = false; // dont print our internal movement
                         Advance();
 
                         depth = 0;
@@ -3463,9 +4374,13 @@ namespace RazorEnhanced
                         }
 
                         PopScope();
+                        Debug = curDebug;
                         break;
                     case ASTNodeType.CONTINUE:
                         // Walk backward to the loop statement
+                        curDebug = Debug;
+                        Debug = false; // dont print our internal movement
+
                         _statement = _statement.Prev();
 
                         depth = 0;
@@ -3491,7 +4406,7 @@ namespace RazorEnhanced
 
                             _statement = _statement.Prev();
                         }
-
+                        Debug = curDebug;
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected continue");
                         break;
@@ -3520,7 +4435,7 @@ namespace RazorEnhanced
                 if (Debug)
                 {
                     if (_statement != null)
-                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber));
+                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber+1), 32);
                 }
             }
 
