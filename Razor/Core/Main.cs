@@ -195,7 +195,7 @@ namespace Assistant
             //TODO: is this a good entry point for generating the docs ? 
             if ( !RazorEnhanced.AutoDocIO.JsonDocExists() ) { 
                 RazorEnhanced.AutoDocIO.ExportPythonAPI();
-                RazorEnhanced.AutoDocIO.ExportPy();
+                //RazorEnhanced.AutoDocIO.ExportPy();
                 //RazorEnhanced.AutoDocIO.ExportHTML();
                 //RazorEnhanced.AutoDocIO.ExportMKDocs();
             }
