@@ -695,7 +695,7 @@ namespace RazorEnhanced
         /// <param name="pretty">Default: True - Export a more readble version | False - Export a more compact version</param>
         public static void ExportPythonAPI(string path = null, bool pretty = true)
         {
-            AutoDoc.ExportPythonAPI(path, pretty);
+            AutoDocIO.ExportPythonAPI(path, pretty);
         }
 
         /// <summary>

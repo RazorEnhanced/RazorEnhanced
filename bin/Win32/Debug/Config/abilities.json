@@ -1,0 +1,130 @@
+﻿{
+  "abilities": {
+    "ability": [
+      {
+        "name": "Armor Ignore",
+        "id": "1"
+      },
+      {
+        "name": "Bleed Attack",
+        "id": "2"
+      },
+      {
+        "name": "Concussion Blow",
+        "id": "3"
+      },
+      {
+        "name": "Crushing Blow",
+        "id": "4"
+      },
+      {
+        "name": "Disarm",
+        "id": "5"
+      },
+      {
+        "name": "Dismount",
+        "id": "6"
+      },
+      {
+        "name": "Double Strike",
+        "id": "7"
+      },
+      {
+        "name": "Infectious Strike",
+        "id": "8"
+      },
+      {
+        "name": "Mortal Strike",
+        "id": "9"
+      },
+      {
+        "name": "Moving Shot",
+        "id": "10"
+      },
+      {
+        "name": "Paralyzing Blow",
+        "id": "11"
+      },
+      {
+        "name": "Shadow Strike",
+        "id": "12"
+      },
+      {
+        "name": "Whirlwind Attack",
+        "id": "13"
+      },
+      {
+        "name": "Riding Swipe",
+        "id": "14"
+      },
+      {
+        "name": "Frenzied Whirlwind",
+        "id": "15"
+      },
+      {
+        "name": "Block",
+        "id": "16"
+      },
+      {
+        "name": "Defense Mastery",
+        "id": "17"
+      },
+      {
+        "name": "Nerve Strike",
+        "id": "18"
+      },
+      {
+        "name": "Talon Strike",
+        "id": "19"
+      },
+      {
+        "name": "Feint",
+        "id": "20"
+      },
+      {
+        "name": "Dual Wield",
+        "id": "21"
+      },
+      {
+        "name": "Double Shot",
+        "id": "22"
+      },
+      {
+        "name": "Armor Pierce",
+        "id": "23"
+      },
+      {
+        "name": "Bladeweave",
+        "id": "24"
+      },
+      {
+        "name": "Force Arrow",
+        "id": "25"
+      },
+      {
+        "name": "Lightning Arrow",
+        "id": "26"
+      },
+      {
+        "name": "Psychic Attack",
+        "id": "27"
+      },
+      {
+        "name": "Serpent Arrow",
+        "id": "28"
+      },
+      {
+        "name": "Force Of Nature",
+        "id": "29"
+      },
+      {
+        "name": "Infused Throw",
+        "id": "30"
+      },
+      {
+        "name": "Mystic Arc",
+        "id": "31"
+      }
+    ]
+  }
+}

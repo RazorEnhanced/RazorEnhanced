@@ -1,0 +1,138 @@
+﻿{
+  "properties": {
+    "property": [
+      {
+        "group": "Magic",
+        "name": "Faster Casting"
+      },
+      {
+        "group": "Magic",
+        "name": "Faster Cast Recovery"
+      },
+      {
+        "group": "Magic",
+        "name": "Spell Damage Increase"
+      },
+      {
+        "group": "Magic",
+        "name": "Spell Channeling"
+      },
+      {
+        "group": "Status",
+        "name": "Hit Point Increase"
+      },
+      {
+        "group": "Status",
+        "name": "Stamina Increase"
+      },
+      {
+        "group": "Status",
+        "name": "Mana Increase"
+      },
+      {
+        "group": "Status",
+        "name": "Strength Bonus"
+      },
+      {
+        "group": "Status",
+        "name": "Dexterity Bonus"
+      },
+      {
+        "group": "Status",
+        "name": "Intelligence Bonus"
+      },
+      {
+        "group": "Status",
+        "name": "Intelligence Bonus"
+      },
+      {
+        "group": "Status",
+        "name": "Hit Point Regeneration"
+      },
+      {
+        "group": "Status",
+        "name": "Mana Regeneration"
+      },
+      {
+        "group": "Others",
+        "name": "Lower Reagent Cost"
+      },
+      {
+        "group": "Others",
+        "name": "Lower Mana Cost"
+      },
+      {
+        "group": "Others",
+        "name": "Defense Chance Increase"
+      },
+      {
+        "group": "Weapons",
+        "name": "Damage Increase"
+      },
+      {
+        "group": "Weapons",
+        "name": "Hit Chance Increase"
+      },
+      {
+        "group": "Weapons",
+        "name": "Hit Mana Leech"
+      },
+      {
+        "group": "Weapons",
+        "name": "Hit Life Leech"
+      },
+      {
+        "group": "Weapons",
+        "name": "Hit Stamina Leech"
+      },
+      {
+        "group": "Weapons",
+        "name": "Hit Lightning"
+      },
+      {
+        "group": "Weapons",
+        "name": "Hit Fireball"
+      },
+      {
+        "group": "Weapons",
+        "name": "Swing Speed Increase"
+      },
+      {
+        "group": "Weapons",
+        "name": "Balanced"
+      },
+      {
+        "group": "Weapons",
+        "name": "Velocity"
+      },
+      {
+        "group": "Weapons",
+        "name": "Splintering Weapon"
+      },
+      {
+        "group": "Resistances",
+        "name": "Physical Resist"
+      },
+      {
+        "group": "Resistances",
+        "name": "Fire Resist"
+      },
+      {
+        "group": "Resistances",
+        "name": "Cold Resist"
+      },
+      {
+        "group": "Resistances",
+        "name": "Poison Resist"
+      },
+      {
+        "group": "Resistances",
+        "name": "Energy Resist"
+      },
+      {
+        "group": "Others",
+        "name": "Luck"
+      }
+    ]
+  }
+}
