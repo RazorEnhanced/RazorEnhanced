@@ -1,0 +1,194 @@
+﻿{
+  "bufficons": {
+    "icon": [
+      {
+        "id": "1001",
+        "name": "Dismount"
+      },
+      {
+        "id": "1002",
+        "name": "Disarm"
+      },
+      {
+        "id": "1005",
+        "name": "Night Sight"
+      },
+      {
+        "id": "1006",
+        "name": "Death Strike"
+      },
+      {
+        "id": "1007",
+        "name": "Evil Omen"
+      },
+      {
+        "id": "1009",
+        "name": "Regeneration"
+      },
+      {
+        "id": "1010",
+        "name": "Divine Fury"
+      },
+      {
+        "id": "1011",
+        "name": "Enemy Of One"
+      },
+      {
+        "id": "1012",
+        "name": "Hiding"
+      },
+      {
+        "id": "1013",
+        "name": "Meditation"
+      },
+      {
+        "id": "1014",
+        "name": "Blood Oath Caster"
+      },
+      {
+        "id": "1015",
+        "name": "Blood Oath"
+      },
+      {
+        "id": "1016",
+        "name": "Corpse Skin"
+      },
+      {
+        "id": "1017",
+        "name": "Mind rot"
+      },
+      {
+        "id": "1018",
+        "name": "Pain Spike"
+      },
+      {
+        "id": "1019",
+        "name": "Strangle"
+      },
+      {
+        "id": "1020",
+        "name": "Gift of Renewal"
+      },
+      {
+        "id": "1021",
+        "name": "Attune Weapon"
+      },
+      {
+        "id": "1022",
+        "name": "Thunderstorm"
+      },
+      {
+        "id": "1023",
+        "name": "Essence of Wind"
+      },
+      {
+        "id": "1024",
+        "name": "Ethereal Voyage"
+      },
+      {
+        "id": "1025",
+        "name": "Gift Of Life"
+      },
+      {
+        "id": "1026",
+        "name": "Arcane Empowerment"
+      },
+      {
+        "id": "1027",
+        "name": "Mortal Strike"
+      },
+      {
+        "id": "1028",
+        "name": "Reactive Armor"
+      },
+      {
+        "id": "1029",
+        "name": "Protection"
+      },
+      {
+        "id": "1030",
+        "name": "Arch Protection"
+      },
+      {
+        "id": "1031",
+        "name": "Magic Reflection"
+      },
+      {
+        "id": "1032",
+        "name": "Incognito"
+      },
+      {
+        "id": "1033",
+        "name": "Disguised"
+      },
+      {
+        "id": "1034",
+        "name": "Animal Form"
+      },
+      {
+        "id": "1035",
+        "name": "Polymorph"
+      },
+      {
+        "id": "1036",
+        "name": "Invisibility"
+      },
+      {
+        "id": "1037",
+        "name": "Paralyze"
+      },
+      {
+        "id": "1038",
+        "name": "Poison"
+      },
+      {
+        "id": "1039",
+        "name": "Bleed"
+      },
+      {
+        "id": "1040",
+        "name": "Clumsy"
+      },
+      {
+        "id": "1041",
+        "name": "Feeblemind"
+      },
+      {
+        "id": "1042",
+        "name": "Weaken"
+      },
+      {
+        "id": "1043",
+        "name": "Curse"
+      },
+      {
+        "id": "1044",
+        "name": "Mass Curse"
+      },
+      {
+        "id": "1045",
+        "name": "Agility"
+      },
+      {
+        "id": "1046",
+        "name": "Cunning"
+      },
+      {
+        "id": "1047",
+        "name": "Strength"
+      },
+      {
+        "id": "1048",
+        "name": "Bless"
+      },
+      {
+        "id": "1049",
+        "name": "Sleep"
+      },
+      {
+        "id": "1051",
+        "name": "Spell Plague"
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+﻿{
+  "bodies": {
+    "humanoid": {
+      "body": [
+        {
+          "name": "Human Male",
+          "graphic": "0x190"
+        },
+        {
+          "name": "Human Female",
+          "graphic": "0x191"
+        },
+        {
+          "name": "Elf Male",
+          "graphic": "0x25d"
+        },
+        {
+          "name": "Elf Female",
+          "graphic": "0x25e"
+        },
+        {
+          "name": "Gargoly Male",
+          "graphic": "0x29a"
+        },
+        {
+          "name": "Gargoly Female",
+          "graphic": "0x29b"
+        }
+      ]
+    },
+    "transformation": {
+      "body": [
+        {
+          "name": "Horrific Beast",
+          "graphic": "0x2ea"
+        },
+        {
+          "name": "Wraith Male",
+          "graphic": "0x2ec"
+        },
+        {
+          "name": "Wraith Female",
+          "graphic": "0x2eb"
+        },
+        {
+          "name": "Lich",
+          "graphic": "0x2ed"
+        },
+        {
+          "name": "Vampire Male",
+          "graphic": "0x2e8"
+        },
+        {
+          "name": "Vampire Female",
+          "graphic": "0x2e9"
+        },
+        {
+          "name": "Llama",
+          "graphic": "0xdc"
+        },
+        {
+          "name": "Wolf",
+          "graphic": "0x19"
+        },
+        {
+          "name": "Ethereal Voyage",
+          "graphic": "0x302"
+        },
+        {
+          "name": "Reaper Form",
+          "graphic": "0x11d"
+        },
+        {
+          "name": "Stone Form",
+          "graphic": "0x2c1"
+        },
+        {
+          "name": "Tribal Male",
+          "graphic": "0xb7"
+        },
+        {
+          "name": "Tribal Female",
+          "graphic": "0xb8"
+        }
+      ]
+    }
+  }
+}

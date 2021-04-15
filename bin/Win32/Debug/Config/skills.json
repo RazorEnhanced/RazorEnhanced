@@ -1,0 +1,127 @@
+﻿{
+  "skills": {
+    "skill": [
+      {"name": "Alchemy"},
+      {
+        "name": "Anatomy",
+        "passive": "false"
+      },
+      {
+        "name": "Animal Lore",
+        "passive": "false"
+      },
+      {
+        "name": "Item Identification",
+        "passive": "false"
+      },
+      {
+        "name": "Arms Lore",
+        "passive": "false"
+      },
+      {"name": "Parrying"},
+      {
+        "name": "Begging",
+        "passive": "false"
+      },
+      {"name": "Blacksmithy"},
+      {"name": "Bowcraft"},
+      {
+        "name": "Peacemaking",
+        "passive": "false"
+      },
+      {"name": "Camping"},
+      {"name": "Carpentry"},
+      {"name": "Cartography"},
+      {"name": "Cooking"},
+      {
+        "name": "Detecting Hidden",
+        "passive": "false"
+      },
+      {
+        "name": "Discordance",
+        "passive": "false"
+      },
+      {
+        "name": "Evaluating Intelligence",
+        "passive": "false"
+      },
+      {"name": "Healing"},
+      {"name": "Fishing"},
+      {"name": "Forensic Evaluation"},
+      {"name": "Herding"},
+      {
+        "name": "Hiding",
+        "passive": "false"
+      },
+      {
+        "name": "Provocation",
+        "passive": "false"
+      },
+      {"name": "Inscription"},
+      {"name": "Lockpicking"},
+      {"name": "Magery"},
+      {"name": "Resisting Spells"},
+      {"name": "Tactics"},
+      {"name": "Snooping"},
+      {"name": "Musicianship"},
+      {
+        "name": "Poisoning",
+        "passive": "false"
+      },
+      {"name": "Archery"},
+      {
+        "name": "Spirit Speak",
+        "passive": "false"
+      },
+      {
+        "name": "Stealing",
+        "passive": "false"
+      },
+      {"name": "Tailoring"},
+      {
+        "name": "Animal Taming",
+        "passive": "false"
+      },
+      {
+        "name": "Taste Identification",
+        "passive": "false"
+      },
+      {"name": "Tinkering"},
+      {
+        "name": "Tracking",
+        "passive": "false"
+      },
+      {"name": "Veterinary"},
+      {"name": "Swordsmanship"},
+      {"name": "Mace Fighting"},
+      {"name": "Fencing"},
+      {"name": "Wrestling"},
+      {"name": "Lumberjacking"},
+      {"name": "Mining"},
+      {
+        "name": "Meditation",
+        "passive": "false"
+      },
+      {
+        "name": "Stealth",
+        "passive": "false"
+      },
+      {
+        "name": "Remove Trap",
+        "passive": "false"
+      },
+      {"name": "Necromancy"},
+      {"name": "Focus"},
+      {"name": "Chivalry"},
+      {"name": "Bushido"},
+      {"name": "Ninjitsu"},
+      {"name": "Spellweaving"},
+      {"name": "Mysticism"},
+      {
+        "name": "Imbuing",
+        "passive": "false"
+      },
+      {"name": "Throwing"}
+    ]
+  }
+}
