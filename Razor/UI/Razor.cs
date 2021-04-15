@@ -916,6 +916,12 @@ namespace Assistant
             this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
             this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
             this.autolootdataGridView = new System.Windows.Forms.DataGridView();
+            this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LootBagColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.autoLootnoopenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.label21 = new System.Windows.Forms.Label();
             this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -1379,12 +1385,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LootBagColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -2984,7 +2984,7 @@ namespace Assistant
             //
             // scriptshowStartStopCheckBox
             //
-            this.scriptshowStartStopCheckBox.Location = new System.Drawing.Point(781, 500);
+            this.scriptshowStartStopCheckBox.Location = new System.Drawing.Point(781, 490);
             this.scriptshowStartStopCheckBox.Name = "scriptshowStartStopCheckBox";
             this.scriptshowStartStopCheckBox.Size = new System.Drawing.Size(280, 32);
             this.scriptshowStartStopCheckBox.TabIndex = 76;
@@ -2994,9 +2994,9 @@ namespace Assistant
             // groupBox42
             //
             this.groupBox42.Controls.Add(this.scriptSearchTextBox);
-            this.groupBox42.Location = new System.Drawing.Point(771, 364);
+            this.groupBox42.Location = new System.Drawing.Point(780, 364);
             this.groupBox42.Name = "groupBox42";
-            this.groupBox42.Size = new System.Drawing.Size(280, 79);
+            this.groupBox42.Size = new System.Drawing.Size(280, 71);
             this.groupBox42.TabIndex = 75;
             this.groupBox42.TabStop = false;
             this.groupBox42.Text = "Search";
@@ -3024,7 +3024,7 @@ namespace Assistant
             this.groupBox31.Controls.Add(this.buttonScriptPlay);
             this.groupBox31.Location = new System.Drawing.Point(771, 164);
             this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(280, 200);
+            this.groupBox31.Size = new System.Drawing.Size(280, 194);
             this.groupBox31.TabIndex = 50;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Script Operation";
@@ -3184,7 +3184,7 @@ namespace Assistant
             //
             // scripterrorlogCheckBox
             //
-            this.scripterrorlogCheckBox.Location = new System.Drawing.Point(781, 441);
+            this.scripterrorlogCheckBox.Location = new System.Drawing.Point(781, 431);
             this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
             this.scripterrorlogCheckBox.Size = new System.Drawing.Size(256, 33);
             this.scripterrorlogCheckBox.TabIndex = 74;
@@ -3193,7 +3193,7 @@ namespace Assistant
             //
             // showscriptmessageCheckBox
             //
-            this.showscriptmessageCheckBox.Location = new System.Drawing.Point(781, 471);
+            this.showscriptmessageCheckBox.Location = new System.Drawing.Point(781, 461);
             this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
             this.showscriptmessageCheckBox.Size = new System.Drawing.Size(280, 32);
             this.showscriptmessageCheckBox.TabIndex = 72;
@@ -3215,10 +3215,10 @@ namespace Assistant
             this.scriptlistView.GridLines = true;
             this.scriptlistView.HideSelection = false;
             this.scriptlistView.LabelWrap = false;
-            this.scriptlistView.Location = new System.Drawing.Point(13, 9);
+            this.scriptlistView.Location = new System.Drawing.Point(8, 3);
             this.scriptlistView.MultiSelect = false;
             this.scriptlistView.Name = "scriptlistView";
-            this.scriptlistView.Size = new System.Drawing.Size(749, 517);
+            this.scriptlistView.Size = new System.Drawing.Size(749, 519);
             this.scriptlistView.TabIndex = 48;
             this.scriptlistView.UseCompatibleStateImageBehavior = false;
             this.scriptlistView.View = System.Windows.Forms.View.Details;
@@ -3451,6 +3451,62 @@ namespace Assistant
             this.autolootdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
             this.autolootdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
             this.autolootdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
+            //
+            // AutolootColumnX
+            //
+            this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnX.FalseValue = "False";
+            this.AutolootColumnX.HeaderText = "X";
+            this.AutolootColumnX.IndeterminateValue = "False";
+            this.AutolootColumnX.MinimumWidth = 8;
+            this.AutolootColumnX.Name = "AutolootColumnX";
+            this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.AutolootColumnX.TrueValue = "True";
+            this.AutolootColumnX.Width = 30;
+            //
+            // AutolootColumnItemName
+            //
+            this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnItemName.HeaderText = "Item Name";
+            this.AutolootColumnItemName.MinimumWidth = 8;
+            this.AutolootColumnItemName.Name = "AutolootColumnItemName";
+            this.AutolootColumnItemName.Width = 310;
+            //
+            // AutolootColumnItemID
+            //
+            this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnItemID.HeaderText = "Graphics";
+            this.AutolootColumnItemID.MinimumWidth = 8;
+            this.AutolootColumnItemID.Name = "AutolootColumnItemID";
+            this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnItemID.Width = 80;
+            //
+            // AutolootColumnColor
+            //
+            this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.AutolootColumnColor.HeaderText = "Color";
+            this.AutolootColumnColor.MinimumWidth = 8;
+            this.AutolootColumnColor.Name = "AutolootColumnColor";
+            this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.AutolootColumnColor.Width = 80;
+            //
+            // LootBagColumnID
+            //
+            this.LootBagColumnID.HeaderText = "Bag";
+            this.LootBagColumnID.MaxInputLength = 65535;
+            this.LootBagColumnID.MinimumWidth = 8;
+            this.LootBagColumnID.Name = "LootBagColumnID";
+            this.LootBagColumnID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.LootBagColumnID.Width = 130;
+            //
+            // AutolootColumnProps
+            //
+            this.AutolootColumnProps.HeaderText = "Props";
+            this.AutolootColumnProps.MinimumWidth = 8;
+            this.AutolootColumnProps.Name = "AutolootColumnProps";
+            this.AutolootColumnProps.Visible = false;
+            this.AutolootColumnProps.Width = 150;
             //
             // autoLootnoopenCheckBox
             //
@@ -8336,62 +8392,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            //
-            // AutolootColumnX
-            //
-            this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnX.FalseValue = "False";
-            this.AutolootColumnX.HeaderText = "X";
-            this.AutolootColumnX.IndeterminateValue = "False";
-            this.AutolootColumnX.MinimumWidth = 8;
-            this.AutolootColumnX.Name = "AutolootColumnX";
-            this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.AutolootColumnX.TrueValue = "True";
-            this.AutolootColumnX.Width = 30;
-            //
-            // AutolootColumnItemName
-            //
-            this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnItemName.HeaderText = "Item Name";
-            this.AutolootColumnItemName.MinimumWidth = 8;
-            this.AutolootColumnItemName.Name = "AutolootColumnItemName";
-            this.AutolootColumnItemName.Width = 310;
-            //
-            // AutolootColumnItemID
-            //
-            this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnItemID.HeaderText = "Graphics";
-            this.AutolootColumnItemID.MinimumWidth = 8;
-            this.AutolootColumnItemID.Name = "AutolootColumnItemID";
-            this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnItemID.Width = 80;
-            //
-            // AutolootColumnColor
-            //
-            this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutolootColumnColor.HeaderText = "Color";
-            this.AutolootColumnColor.MinimumWidth = 8;
-            this.AutolootColumnColor.Name = "AutolootColumnColor";
-            this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.AutolootColumnColor.Width = 80;
-            //
-            // LootBagColumnID
-            //
-            this.LootBagColumnID.HeaderText = "Bag";
-            this.LootBagColumnID.MaxInputLength = 65535;
-            this.LootBagColumnID.MinimumWidth = 8;
-            this.LootBagColumnID.Name = "LootBagColumnID";
-            this.LootBagColumnID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.LootBagColumnID.Width = 130;
-            //
-            // AutolootColumnProps
-            //
-            this.AutolootColumnProps.HeaderText = "Props";
-            this.AutolootColumnProps.MinimumWidth = 8;
-            this.AutolootColumnProps.Name = "AutolootColumnProps";
-            this.AutolootColumnProps.Visible = false;
-            this.AutolootColumnProps.Width = 150;
             //
             // MainForm
             //
