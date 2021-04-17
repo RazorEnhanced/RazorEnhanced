@@ -199,7 +199,7 @@ namespace Assistant
                 //RazorEnhanced.AutoDocIO.ExportHTML();
                 //RazorEnhanced.AutoDocIO.ExportMKDocs();
             }
-            RazorEnhanced.Config.load();
+            RazorEnhanced.Config.LoadAll();
 
             Application.ThreadException += ApplicationThreadException;
 

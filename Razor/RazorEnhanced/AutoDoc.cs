@@ -608,6 +608,14 @@ namespace RazorEnhanced
         public const String TAG_AUTOCOMPLETE = "@autocomplete";
         /// <summary>@nodoc</summary>
         public const String TAG_NODOC = "@nodoc";
+        /// <summary>@nodoc</summary>
+        public const String TAG_DEPRECATE = "@deprecate";
+        /// <summary>@nodoc</summary>
+        public const String TAG_EXPERIMENTAL = "@experimental";
+        /// <summary>@nodoc</summary>
+        public const String TAG_TESTING = "@testing";
+        /// <summary>@nodoc</summary>
+        public const String TAG_STABLE = "@stable";
 
         private static DocContainer cachedDocs;
 

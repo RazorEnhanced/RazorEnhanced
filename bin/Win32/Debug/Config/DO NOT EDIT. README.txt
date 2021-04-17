@@ -1,0 +1,27 @@
++---------------------------------------------------------------------------------------------+
+|The files in this folder are AUTOMATICALLY GENERATED and WILL be overwritten WITHOUT notice. |
++---------------------------------------------------------------------------------------------+
+
+# EDITING:
+  This files are to be edited as they are used internally by RE function propertly, altering 
+  the content of this files will lead to a change in RE behaviours.
+  Editining the config files is mainly intended for users which play on Cusom free shards to 
+  match server settings. 
+
+
+# HOWTO:
+  In order to customize the files:
+  1. Copy the file you want to customize from ./Config/ to ./Data/
+  2. Edit the copy inside ./Data/
+
+
+# WARNING: 
+  Customized config inside ./Data/ will NOT recive updates. 
+  Customized copies need to be maintained manually.
+
+# ISSUES:
+  In case of errors, restore the original .json taken from the latest version of RE.
+
++---------------------------------------------------------------------------------------------+
+|For help refer to the official Discord server, more details at: http://razorenhanced.net/    |
++---------------------------------------------------------------------------------------------+

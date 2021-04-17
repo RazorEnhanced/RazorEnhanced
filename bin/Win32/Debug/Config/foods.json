@@ -1,169 +1,45 @@
 ﻿{
-  "foods": {
-    "group": [
-      {
-        "name": "Fish",
-        "food": [
-          {
-            "name": "Fish Steak",
-            "graphic": "0x97B"
-          },
-          {
-            "name": "Raw Fish Steak",
-            "graphic": "0x097A"
-          }
-        ]
-      },
-      {
-        "name": "Fruits and Vegetables",
-        "food": [
-          {
-            "name": "Honeydew Melon",
-            "graphic": "0xC74"
-          },
-          {
-            "name": "Yellow Gourd",
-            "graphic": "0xC64"
-          },
-          {
-            "name": "Green Gourd",
-            "graphic": "0xC66"
-          },
-          {
-            "name": "Banana",
-            "graphic": "0x171f"
-          },
-          {
-            "name": "Lemon",
-            "graphic": "0x1728"
-          },
-          {
-            "name": "Lime",
-            "graphic": "0x172a"
-          },
-          {
-            "name": "Grape",
-            "graphic": "0x9D1"
-          },
-          {
-            "name": "Peach",
-            "graphic": "0x9D2"
-          },
-          {
-            "name": "Pear",
-            "graphic": "0x994"
-          },
-          {
-            "name": "Apple",
-            "graphic": "0x9D0"
-          },
-          {
-            "name": "Watermelon",
-            "graphic": "0xC5C"
-          },
-          {
-            "name": "Squash",
-            "graphic": "0xc72"
-          },
-          {
-            "name": "Cantaloupe",
-            "graphic": "0xc79"
-          },
-          {
-            "name": "Carrot",
-            "graphic": "0xc78"
-          },
-          {
-            "name": "Cabbage",
-            "graphic": "0xc7b"
-          },
-          {
-            "name": "Onion",
-            "graphic": "0xc6d"
-          },
-          {
-            "name": "Lettuce",
-            "graphic": "0xc70"
-          },
-          {
-            "name": "Pumpkin",
-            "graphic": "0xC6A"
-          }
-        ]
-      },
-      {
-        "name": "Meat",
-        "food": [
-          {
-            "name": "Bacon",
-            "graphic": "0x979"
-          },
-          {
-            "name": "Cooked Bird",
-            "graphic": "0x9B7"
-          },
-          {
-            "name": "Sausage",
-            "graphic": "0x9C0"
-          },
-          {
-            "name": "Ham",
-            "graphic": "0x9C9"
-          },
-          {
-            "name": "Ribs",
-            "graphic": "0x9F2"
-          },
-          {
-            "name": "Lamb Leg",
-            "graphic": "0x160a"
-          },
-          {
-            "name": "Chicken Leg",
-            "graphic": "0x1608"
-          },
-          {
-            "name": "Raw Bird",
-            "graphic": "0x9B9"
-          },
-          {
-            "name": "Raw Ribs",
-            "graphic": "0x9F1"
-          },
-          {
-            "name": "Raw Lamb Leg",
-            "graphic": "0x1609"
-          },
-          {
-            "name": "Raw Chicken Leg",
-            "graphic": "0x1607"
-          },
-          {
-            "name": "Head",
-            "graphic": "0x1DA0"
-          },
-          {
-            "name": "Left Arm",
-            "graphic": "0x1DA1"
-          },
-          {
-            "name": "Left Leg",
-            "graphic": "0x1DA3"
-          },
-          {
-            "name": "Torso",
-            "graphic": "0x1D9F"
-          },
-          {
-            "name": "Right Arm",
-            "graphic": "0x1DA2"
-          },
-          {
-            "name": "Right Leg",
-            "graphic": "0x1DA4"
-          }
-        ]
-      }
-    ]
+  "Fish": {
+    "Fish Steak": "0x97B",
+    "Raw Fish Steak": "0x097A"
+  },
+  "FruitsAndVegetables": {
+    "Honeydew Melon": "0xC74",
+    "Yellow Gourd": "0xC64",
+    "Green Gourd": "0xC66",
+    "Banana": "0x171f",
+    "Lemon": "0x1728",
+    "Lime": "0x172a",
+    "Grape": "0x9D1",
+    "Peach": "0x9D2",
+    "Pear": "0x994",
+    "Apple": "0x9D0",
+    "Watermelon": "0xC5C",
+    "Squash": "0xc72",
+    "Cantaloupe": "0xc79",
+    "Carrot": "0xc78",
+    "Cabbage": "0xc7b",
+    "Onion": "0xc6d",
+    "Lettuce": "0xc70",
+    "Pumpkin": "0xC6A"
+  },
+  "Meat": {
+    "Bacon": "0x979",
+    "Cooked Bird": "0x9B7",
+    "Sausage": "0x9C0",
+    "Ham": "0x9C9",
+    "Ribs": "0x9F2",
+    "Lamb Leg": "0x160a",
+    "Chicken Leg": "0x1608",
+    "Raw Bird": "0x9B9",
+    "Raw Ribs": "0x9F1",
+    "Raw Lamb Leg": "0x1609",
+    "Raw Chicken Leg": "0x1607",
+    "Head": "0x1DA0",
+    "Left Arm": "0x1DA1",
+    "Left Leg": "0x1DA3",
+    "Torso": "0x1D9F",
+    "Right Arm": "0x1DA2",
+    "Right Leg": "0x1DA4"
   }
 }

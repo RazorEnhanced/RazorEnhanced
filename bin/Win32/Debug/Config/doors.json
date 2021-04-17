@@ -1,1159 +1,1041 @@
-﻿{
-  "doors": [
-      {
-        "name": "Metal Door",
-        "door": [
-          {
-            "opened": "1658",
-            "closed": "1657"
-          },
-          {
-            "opened": "1660",
-            "closed": "1659"
-          },
-          {
-            "opened": "1654",
-            "closed": "1653"
-          },
-          {
-            "opened": "1656",
-            "closed": "1655"
-          },
-          {
-            "opened": "1662",
-            "closed": "1661"
-          },
-          {
-            "opened": "1664",
-            "closed": "1663"
-          },
-          {
-            "opened": "1666",
-            "closed": "1665"
-          },
-          {
-            "opened": "1668",
-            "closed": "1667"
-          }
-        ]
-      },
-      {
-        "name": "Metal Gate",
-        "door": [
-          {
-            "opened": "8178",
-            "closed": "8177"
-          },
-          {
-            "opened": "8180",
-            "closed": "8179"
-          },
-          {
-            "opened": "8174",
-            "closed": "8173"
-          },
-          {
-            "opened": "8176",
-            "closed": "8175"
-          },
-          {
-            "opened": "8182",
-            "closed": "8181"
-          },
-          {
-            "opened": "8184",
-            "closed": "8183"
-          },
-          {
-            "opened": "8186",
-            "closed": "8185"
-          },
-          {
-            "opened": "8188",
-            "closed": "8187"
-          }
-        ]
-      },
-      {
-        "name": "Rattan Door",
-        "door": [
-          {
-            "opened": "1690",
-            "closed": "1689"
-          },
-          {
-            "opened": "1692",
-            "closed": "1691"
-          },
-          {
-            "opened": "1686",
-            "closed": "1685"
-          },
-          {
-            "opened": "1688",
-            "closed": "1687"
-          },
-          {
-            "opened": "1694",
-            "closed": "1693"
-          },
-          {
-            "opened": "1696",
-            "closed": "1695"
-          },
-          {
-            "opened": "1698",
-            "closed": "1697"
-          },
-          {
-            "opened": "1700",
-            "closed": "1699"
-          }
-        ]
-      },
-      {
-        "name": "Dark Wood Door",
-        "door": [
-          {
-            "opened": "1706",
-            "closed": "1705"
-          },
-          {
-            "opened": "1708",
-            "closed": "1707"
-          },
-          {
-            "opened": "1702",
-            "closed": "1701"
-          },
-          {
-            "opened": "1704",
-            "closed": "1703"
-          },
-          {
-            "opened": "1710",
-            "closed": "1709"
-          },
-          {
-            "opened": "1712",
-            "closed": "1711"
-          },
-          {
-            "opened": "1714",
-            "closed": "1713"
-          },
-          {
-            "opened": "1716",
-            "closed": "1715"
-          }
-        ]
-      },
-      {
-        "name": "Wood Door",
-        "door": [
-          {
-            "opened": "1722",
-            "closed": "1721"
-          },
-          {
-            "opened": "1724",
-            "closed": "1723"
-          },
-          {
-            "opened": "1718",
-            "closed": "1717"
-          },
-          {
-            "opened": "1720",
-            "closed": "1719"
-          },
-          {
-            "opened": "1726",
-            "closed": "1725"
-          },
-          {
-            "opened": "1728",
-            "closed": "1727"
-          },
-          {
-            "opened": "1730",
-            "closed": "1729"
-          },
-          {
-            "opened": "1732",
-            "closed": "1731"
-          }
-        ]
-      },
-      {
-        "name": "Light Wood Door",
-        "door": [
-          {
-            "opened": "1754",
-            "closed": "1753"
-          },
-          {
-            "opened": "1756",
-            "closed": "1755"
-          },
-          {
-            "opened": "1750",
-            "closed": "1749"
-          },
-          {
-            "opened": "1752",
-            "closed": "1751"
-          },
-          {
-            "opened": "1758",
-            "closed": "1757"
-          },
-          {
-            "opened": "1760",
-            "closed": "1759"
-          },
-          {
-            "opened": "1762",
-            "closed": "1761"
-          },
-          {
-            "opened": "1764",
-            "closed": "1763"
-          }
-        ]
-      },
-      {
-        "name": "Wood and Metal Door",
-        "door": [
-          {
-            "opened": "1770",
-            "closed": "1769"
-          },
-          {
-            "opened": "1772",
-            "closed": "1771"
-          },
-          {
-            "opened": "1766",
-            "closed": "1765"
-          },
-          {
-            "opened": "1768",
-            "closed": "1767"
-          },
-          {
-            "opened": "1774",
-            "closed": "1773"
-          },
-          {
-            "opened": "1776",
-            "closed": "1775"
-          },
-          {
-            "opened": "1778",
-            "closed": "1777"
-          },
-          {
-            "opened": "1780",
-            "closed": "1779"
-          }
-        ]
-      },
-      {
-        "name": "Tall Wrought Iron Gate",
-        "door": [
-          {
-            "opened": "2089",
-            "closed": "2088"
-          },
-          {
-            "opened": "2091",
-            "closed": "2090"
-          },
-          {
-            "opened": "2085",
-            "closed": "2084"
-          },
-          {
-            "opened": "2087",
-            "closed": "2086"
-          },
-          {
-            "opened": "2093",
-            "closed": "2092"
-          },
-          {
-            "opened": "2095",
-            "closed": "2094"
-          },
-          {
-            "opened": "2097",
-            "closed": "2096"
-          },
-          {
-            "opened": "2099",
-            "closed": "2098"
-          }
-        ]
-      },
-      {
-        "name": "Light Wood Gate",
-        "door": [
-          {
-            "opened": "2110",
-            "closed": "2109"
-          },
-          {
-            "opened": "2112",
-            "closed": "2111"
-          },
-          {
-            "opened": "2106",
-            "closed": "2105"
-          },
-          {
-            "opened": "2108",
-            "closed": "2107"
-          },
-          {
-            "opened": "2114",
-            "closed": "2113"
-          },
-          {
-            "opened": "2116",
-            "closed": "2115"
-          },
-          {
-            "opened": "2118",
-            "closed": "2117"
-          },
-          {
-            "opened": "2120",
-            "closed": "2119"
-          }
-        ]
-      },
-      {
-        "name": "Short Wrought Iron Gate",
-        "door": [
-          {
-            "opened": "2129",
-            "closed": "2128"
-          },
-          {
-            "opened": "2131",
-            "closed": "2130"
-          },
-          {
-            "opened": "2125",
-            "closed": "2124"
-          },
-          {
-            "opened": "2127",
-            "closed": "2126"
-          },
-          {
-            "opened": "2133",
-            "closed": "2132"
-          },
-          {
-            "opened": "2135",
-            "closed": "2134"
-          },
-          {
-            "opened": "2137",
-            "closed": "2136"
-          },
-          {
-            "opened": "2139",
-            "closed": "2138"
-          }
-        ]
-      },
-      {
-        "name": "Dark Wood Gate",
-        "door": [
-          {
-            "opened": "2155",
-            "closed": "2154"
-          },
-          {
-            "opened": "2157",
-            "closed": "2156"
-          },
-          {
-            "opened": "2151",
-            "closed": "2150"
-          },
-          {
-            "opened": "2153",
-            "closed": "2152"
-          },
-          {
-            "opened": "2159",
-            "closed": "2158"
-          },
-          {
-            "opened": "2161",
-            "closed": "2160"
-          },
-          {
-            "opened": "2163",
-            "closed": "2162"
-          },
-          {
-            "opened": "2165",
-            "closed": "2164"
-          }
-        ]
-      },
-      {
-        "name": "Weathered Stone Secret Door",
-        "door": [
-          {
-            "opened": "809",
-            "closed": "808"
-          },
-          {
-            "opened": "811",
-            "closed": "810"
-          },
-          {
-            "opened": "805",
-            "closed": "804"
-          },
-          {
-            "opened": "807",
-            "closed": "806"
-          },
-          {
-            "opened": "813",
-            "closed": "812"
-          },
-          {
-            "opened": "815",
-            "closed": "814"
-          },
-          {
-            "opened": "817",
-            "closed": "816"
-          },
-          {
-            "opened": "819",
-            "closed": "818"
-          }
-        ]
-      },
-      {
-        "name": "Dark Wood Secret Door",
-        "door": [
-          {
-            "opened": "825",
-            "closed": "824"
-          },
-          {
-            "opened": "827",
-            "closed": "826"
-          },
-          {
-            "opened": "821",
-            "closed": "820"
-          },
-          {
-            "opened": "823",
-            "closed": "822"
-          },
-          {
-            "opened": "829",
-            "closed": "828"
-          },
-          {
-            "opened": "831",
-            "closed": "830"
-          },
-          {
-            "opened": "833",
-            "closed": "832"
-          },
-          {
-            "opened": "835",
-            "closed": "834"
-          }
-        ]
-      },
-      {
-        "name": "Light Wood Secret Door",
-        "door": [
-          {
-            "opened": "841",
-            "closed": "840"
-          },
-          {
-            "opened": "843",
-            "closed": "842"
-          },
-          {
-            "opened": "837",
-            "closed": "836"
-          },
-          {
-            "opened": "839",
-            "closed": "838"
-          },
-          {
-            "opened": "845",
-            "closed": "844"
-          },
-          {
-            "opened": "847",
-            "closed": "846"
-          },
-          {
-            "opened": "849",
-            "closed": "848"
-          },
-          {
-            "opened": "851",
-            "closed": "850"
-          }
-        ]
-      },
-      {
-        "name": "Grey Stone Secret Door",
-        "door": [
-          {
-            "opened": "857",
-            "closed": "856"
-          },
-          {
-            "opened": "859",
-            "closed": "858"
-          },
-          {
-            "opened": "853",
-            "closed": "852"
-          },
-          {
-            "opened": "855",
-            "closed": "854"
-          },
-          {
-            "opened": "861",
-            "closed": "860"
-          },
-          {
-            "opened": "863",
-            "closed": "862"
-          },
-          {
-            "opened": "865",
-            "closed": "864"
-          },
-          {
-            "opened": "867",
-            "closed": "866"
-          }
-        ]
-      },
-      {
-        "name": "Japanese Doors",
-        "door": [
-          {
-            "opened": "9252",
-            "closed": "9251"
-          },
-          {
-            "opened": "9248",
-            "closed": "9247"
-          }
-        ]
-      },
-      {
-        "name": "Sliding Doors 1",
-        "door": [
-          {
-            "opened": "10768",
-            "closed": "10767"
-          },
-          {
-            "opened": "10766",
-            "closed": "10765"
-          },
-          {
-            "opened": "10772",
-            "closed": "10771"
-          },
-          {
-            "opened": "10770",
-            "closed": "10769"
-          }
-        ]
-      },
-      {
-        "name": "Sliding Doors 2",
-        "door": [
-          {
-            "opened": "10760",
-            "closed": "10759"
-          },
-          {
-            "opened": "10758",
-            "closed": "10757"
-          },
-          {
-            "opened": "10764",
-            "closed": "10763"
-          },
-          {
-            "opened": "10762",
-            "closed": "10761"
-          }
-        ]
-      },
-      {
-        "name": "Sliding Doors 3",
-        "door": [
-          {
-            "opened": "10776",
-            "closed": "10775"
-          },
-          {
-            "opened": "10774",
-            "closed": "10773"
-          },
-          {
-            "opened": "10780",
-            "closed": "10779"
-          },
-          {
-            "opened": "10778",
-            "closed": "10777"
-          }
-        ]
-      },
-      {
-        "name": "Elvan Wood Door",
-        "door": [
-          {
-            "opened": "12719",
-            "closed": "12718"
-          },
-          {
-            "opened": "12717",
-            "closed": "12716"
-          },
-          {
-            "opened": "11593",
-            "closed": "11592"
-          },
-          {
-            "opened": "11591",
-            "closed": "11590"
-          }
-        ]
-      },
-      {
-        "name": "Elvan White Wooden Door 1",
-        "door": [
-          {
-            "opened": "11622",
-            "closed": "11621"
-          },
-          {
-            "opened": "12705",
-            "closed": "12704"
-          },
-          {
-            "opened": "11620",
-            "closed": "11619"
-          },
-          {
-            "opened": "12707",
-            "closed": "12706"
-          }
-        ]
-      },
-      {
-        "name": "Elvan Ornate Door",
-        "door": [
-          {
-            "opened": "11626",
-            "closed": "11625"
-          },
-          {
-            "opened": "12709",
-            "closed": "12708"
-          },
-          {
-            "opened": "11624",
-            "closed": "11623"
-          },
-          {
-            "opened": "12711",
-            "closed": "12710"
-          }
-        ]
-      },
-      {
-        "name": "Elvan Kia Wood Door 2",
-        "door": [
-          {
-            "opened": "11630",
-            "closed": "11629"
-          },
-          {
-            "opened": "12715",
-            "closed": "12714"
-          },
-          {
-            "opened": "11628",
-            "closed": "11627"
-          },
-          {
-            "opened": "12713",
-            "closed": "12712"
-          }
-        ]
-      },
-      {
-        "name": "Elvan Moon Door",
-        "door": [
-          {
-            "opened": "12261",
-            "closed": "12260"
-          },
-          {
-            "opened": "12701",
-            "closed": "12700"
-          },
-          {
-            "opened": "12259",
-            "closed": "12258"
-          },
-          {
-            "opened": "12703",
-            "closed": "12702"
-          }
-        ]
-      },
-      {
-        "name": "Crystal Door",
-        "door": [
-          {
-            "opened": "13952",
-            "closed": "13951"
-          },
-          {
-            "opened": "13954",
-            "closed": "13953"
-          },
-          {
-            "opened": "13948",
-            "closed": "13947"
-          },
-          {
-            "opened": "13950",
-            "closed": "13949"
-          },
-          {
-            "opened": "13956",
-            "closed": "13955"
-          },
-          {
-            "opened": "13958",
-            "closed": "13957"
-          },
-          {
-            "opened": "13960",
-            "closed": "13959"
-          },
-          {
-            "opened": "13962",
-            "closed": "13961"
-          }
-        ]
-      },
-      {
-        "name": "Shadow Door",
-        "door": [
-          {
-            "opened": "13968",
-            "closed": "13967"
-          },
-          {
-            "opened": "13970",
-            "closed": "13969"
-          },
-          {
-            "opened": "13964",
-            "closed": "13963"
-          },
-          {
-            "opened": "13966",
-            "closed": "13965"
-          },
-          {
-            "opened": "13972",
-            "closed": "13971"
-          },
-          {
-            "opened": "13974",
-            "closed": "13973"
-          },
-          {
-            "opened": "13976",
-            "closed": "13975"
-          },
-          {
-            "opened": "13978",
-            "closed": "13977"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Carved Green Door",
-        "door": [
-          {
-            "opened": "16540",
-            "closed": "16539"
-          },
-          {
-            "opened": "16542",
-            "closed": "16541"
-          },
-          {
-            "opened": "16544",
-            "closed": "16543"
-          },
-          {
-            "opened": "16546",
-            "closed": "16545"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Brown Door",
-        "door": [
-          {
-            "opened": "16653",
-            "closed": "16652"
-          },
-          {
-            "opened": "16655",
-            "closed": "16654"
-          },
-          {
-            "opened": "16657",
-            "closed": "16656"
-          },
-          {
-            "opened": "16659",
-            "closed": "16658"
-          }
-        ]
-      },
-      {
-        "name": "Sun Door",
-        "door": [
-          {
-            "opened": "16835",
-            "closed": "16834"
-          },
-          {
-            "opened": "16837",
-            "closed": "16836"
-          },
-          {
-            "opened": "16839",
-            "closed": "16838"
-          },
-          {
-            "opened": "16841",
-            "closed": "16840"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Grey Door",
-        "door": [
-          {
-            "opened": "16848",
-            "closed": "16847"
-          },
-          {
-            "opened": "16850",
-            "closed": "16849"
-          },
-          {
-            "opened": "16852",
-            "closed": "16851"
-          },
-          {
-            "opened": "16854",
-            "closed": "16853"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Set Door",
-        "door": [
-          {
-            "opened": "17263",
-            "closed": "17262"
-          },
-          {
-            "opened": "17265",
-            "closed": "17264"
-          },
-          {
-            "opened": "17267",
-            "closed": "17266"
-          },
-          {
-            "opened": "17269",
-            "closed": "17268"
-          },
-          {
-            "opened": "17271",
-            "closed": "17270"
-          },
-          {
-            "opened": "17273",
-            "closed": "17272"
-          },
-          {
-            "opened": "17275",
-            "closed": "17274"
-          },
-          {
-            "opened": "17277",
-            "closed": "17276"
-          }
-        ]
-      },
-      {
-        "name": "Ruined Door",
-        "door": [
-          {
-            "opened": "18142",
-            "closed": "18141"
-          },
-          {
-            "opened": "18144",
-            "closed": "18143"
-          },
-          {
-            "opened": "18146",
-            "closed": "18145"
-          },
-          {
-            "opened": "18148",
-            "closed": "18147"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Blue Door",
-        "door": [
-          {
-            "opened": "19747",
-            "closed": "19746"
-          },
-          {
-            "opened": "19749",
-            "closed": "19748"
-          },
-          {
-            "opened": "19751",
-            "closed": "19750"
-          },
-          {
-            "opened": "19753",
-            "closed": "19752"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Red Doors",
-        "door": [
-          {
-            "opened": "20681",
-            "closed": "20680"
-          },
-          {
-            "opened": "20683",
-            "closed": "20682"
-          },
-          {
-            "opened": "20689",
-            "closed": "20688"
-          },
-          {
-            "opened": "20691",
-            "closed": "20690"
-          },
-          {
-            "opened": "20685",
-            "closed": "20684"
-          },
-          {
-            "opened": "20687",
-            "closed": "20686"
-          },
-          {
-            "opened": "20693",
-            "closed": "20692"
-          },
-          {
-            "opened": "20695",
-            "closed": "20694"
-          }
-        ]
-      },
-      {
-        "name": "Gargish Prison Door",
-        "door": [
-          {
-            "opened": "20803",
-            "closed": "20802"
-          },
-          {
-            "opened": "20805",
-            "closed": "20804"
-          },
-          {
-            "opened": "20807",
-            "closed": "20806"
-          },
-          {
-            "opened": "20809",
-            "closed": "20808"
-          }
-        ]
-      },
-      {
-        "name": "Metal Doors (Dungeon)",
-        "door": [
-          {
-            "opened": "1738",
-            "closed": "1737"
-          },
-          {
-            "opened": "1740",
-            "closed": "1739"
-          },
-          {
-            "opened": "1734",
-            "closed": "1733"
-          },
-          {
-            "opened": "1736",
-            "closed": "1735"
-          },
-          {
-            "opened": "1742",
-            "closed": "1741"
-          },
-          {
-            "opened": "1744",
-            "closed": "1743"
-          },
-          {
-            "opened": "1746",
-            "closed": "1745"
-          },
-          {
-            "opened": "1748",
-            "closed": "1747"
-          }
-        ]
-      },
-      {
-        "name": "Hidden Door (brick)",
-        "door": [
-          {
-            "opened": "793",
-            "closed": "792"
-          },
-          {
-            "opened": "795",
-            "closed": "794"
-          },
-          {
-            "opened": "789",
-            "closed": "788"
-          },
-          {
-            "opened": "791",
-            "closed": "790"
-          },
-          {
-            "opened": "797",
-            "closed": "796"
-          },
-          {
-            "opened": "799",
-            "closed": "798"
-          },
-          {
-            "opened": "801",
-            "closed": "800"
-          },
-          {
-            "opened": "803",
-            "closed": "802"
-          }
-        ]
-      },
-      {
-        "name": "Barred Metal Gate",
-        "door": [
-          {
-            "opened": "1674",
-            "closed": "1673"
-          },
-          {
-            "opened": "1676",
-            "closed": "1675"
-          },
-          {
-            "opened": "1670",
-            "closed": "1669"
-          },
-          {
-            "opened": "1672",
-            "closed": "1671"
-          },
-          {
-            "opened": "1678",
-            "closed": "1677"
-          },
-          {
-            "opened": "1680",
-            "closed": "1679"
-          },
-          {
-            "opened": "1682",
-            "closed": "1681"
-          },
-          {
-            "opened": "1684",
-            "closed": "1683"
-          }
-        ]
-      },
-      {
-        "name": "Portcullis",
-        "door": [
-          {
-            "opened": "1782",
-            "closed": "1781"
-          },
-          {
-            "opened": "1783",
-            "closed": "1782"
-          }
-        ]
-      }
-    ]
+﻿{ "DoorType":{
+  "Metal Door": [
+    {
+      "Open": "1658",
+      "Close": "1657"
+    },
+    {
+      "Open": "1660",
+      "Close": "1659"
+    },
+    {
+      "Open": "1654",
+      "Close": "1653"
+    },
+    {
+      "Open": "1656",
+      "Close": "1655"
+    },
+    {
+      "Open": "1662",
+      "Close": "1661"
+    },
+    {
+      "Open": "1664",
+      "Close": "1663"
+    },
+    {
+      "Open": "1666",
+      "Close": "1665"
+    },
+    {
+      "Open": "1668",
+      "Close": "1667"
+    }
+  ],
+  "Metal Gate": [
+    {
+      "Open": "8178",
+      "Close": "8177"
+    },
+    {
+      "Open": "8180",
+      "Close": "8179"
+    },
+    {
+      "Open": "8174",
+      "Close": "8173"
+    },
+    {
+      "Open": "8176",
+      "Close": "8175"
+    },
+    {
+      "Open": "8182",
+      "Close": "8181"
+    },
+    {
+      "Open": "8184",
+      "Close": "8183"
+    },
+    {
+      "Open": "8186",
+      "Close": "8185"
+    },
+    {
+      "Open": "8188",
+      "Close": "8187"
+    }
+  ],
+  "Rattan Door": [
+    {
+      "Open": "1690",
+      "Close": "1689"
+    },
+    {
+      "Open": "1692",
+      "Close": "1691"
+    },
+    {
+      "Open": "1686",
+      "Close": "1685"
+    },
+    {
+      "Open": "1688",
+      "Close": "1687"
+    },
+    {
+      "Open": "1694",
+      "Close": "1693"
+    },
+    {
+      "Open": "1696",
+      "Close": "1695"
+    },
+    {
+      "Open": "1698",
+      "Close": "1697"
+    },
+    {
+      "Open": "1700",
+      "Close": "1699"
+    }
+  ],
+  "Dark Wood Door": [
+    {
+      "Open": "1706",
+      "Close": "1705"
+    },
+    {
+      "Open": "1708",
+      "Close": "1707"
+    },
+    {
+      "Open": "1702",
+      "Close": "1701"
+    },
+    {
+      "Open": "1704",
+      "Close": "1703"
+    },
+    {
+      "Open": "1710",
+      "Close": "1709"
+    },
+    {
+      "Open": "1712",
+      "Close": "1711"
+    },
+    {
+      "Open": "1714",
+      "Close": "1713"
+    },
+    {
+      "Open": "1716",
+      "Close": "1715"
+    }
+  ],
+  "Wood Door": [
+    {
+      "Open": "1722",
+      "Close": "1721"
+    },
+    {
+      "Open": "1724",
+      "Close": "1723"
+    },
+    {
+      "Open": "1718",
+      "Close": "1717"
+    },
+    {
+      "Open": "1720",
+      "Close": "1719"
+    },
+    {
+      "Open": "1726",
+      "Close": "1725"
+    },
+    {
+      "Open": "1728",
+      "Close": "1727"
+    },
+    {
+      "Open": "1730",
+      "Close": "1729"
+    },
+    {
+      "Open": "1732",
+      "Close": "1731"
+    }
+  ],
+  "Light Wood Door": [
+    {
+      "Open": "1754",
+      "Close": "1753"
+    },
+    {
+      "Open": "1756",
+      "Close": "1755"
+    },
+    {
+      "Open": "1750",
+      "Close": "1749"
+    },
+    {
+      "Open": "1752",
+      "Close": "1751"
+    },
+    {
+      "Open": "1758",
+      "Close": "1757"
+    },
+    {
+      "Open": "1760",
+      "Close": "1759"
+    },
+    {
+      "Open": "1762",
+      "Close": "1761"
+    },
+    {
+      "Open": "1764",
+      "Close": "1763"
+    }
+  ],
+  "Wood and Metal Door": [
+    {
+      "Open": "1770",
+      "Close": "1769"
+    },
+    {
+      "Open": "1772",
+      "Close": "1771"
+    },
+    {
+      "Open": "1766",
+      "Close": "1765"
+    },
+    {
+      "Open": "1768",
+      "Close": "1767"
+    },
+    {
+      "Open": "1774",
+      "Close": "1773"
+    },
+    {
+      "Open": "1776",
+      "Close": "1775"
+    },
+    {
+      "Open": "1778",
+      "Close": "1777"
+    },
+    {
+      "Open": "1780",
+      "Close": "1779"
+    }
+  ],
+  "Tall Wrought Iron Gate": [
+    {
+      "Open": "2089",
+      "Close": "2088"
+    },
+    {
+      "Open": "2091",
+      "Close": "2090"
+    },
+    {
+      "Open": "2085",
+      "Close": "2084"
+    },
+    {
+      "Open": "2087",
+      "Close": "2086"
+    },
+    {
+      "Open": "2093",
+      "Close": "2092"
+    },
+    {
+      "Open": "2095",
+      "Close": "2094"
+    },
+    {
+      "Open": "2097",
+      "Close": "2096"
+    },
+    {
+      "Open": "2099",
+      "Close": "2098"
+    }
+  ],
+  "Light Wood Gate": [
+    {
+      "Open": "2110",
+      "Close": "2109"
+    },
+    {
+      "Open": "2112",
+      "Close": "2111"
+    },
+    {
+      "Open": "2106",
+      "Close": "2105"
+    },
+    {
+      "Open": "2108",
+      "Close": "2107"
+    },
+    {
+      "Open": "2114",
+      "Close": "2113"
+    },
+    {
+      "Open": "2116",
+      "Close": "2115"
+    },
+    {
+      "Open": "2118",
+      "Close": "2117"
+    },
+    {
+      "Open": "2120",
+      "Close": "2119"
+    }
+  ],
+  "Short Wrought Iron Gate": [
+    {
+      "Open": "2129",
+      "Close": "2128"
+    },
+    {
+      "Open": "2131",
+      "Close": "2130"
+    },
+    {
+      "Open": "2125",
+      "Close": "2124"
+    },
+    {
+      "Open": "2127",
+      "Close": "2126"
+    },
+    {
+      "Open": "2133",
+      "Close": "2132"
+    },
+    {
+      "Open": "2135",
+      "Close": "2134"
+    },
+    {
+      "Open": "2137",
+      "Close": "2136"
+    },
+    {
+      "Open": "2139",
+      "Close": "2138"
+    }
+  ],
+  "Dark Wood Gate": [
+    {
+      "Open": "2155",
+      "Close": "2154"
+    },
+    {
+      "Open": "2157",
+      "Close": "2156"
+    },
+    {
+      "Open": "2151",
+      "Close": "2150"
+    },
+    {
+      "Open": "2153",
+      "Close": "2152"
+    },
+    {
+      "Open": "2159",
+      "Close": "2158"
+    },
+    {
+      "Open": "2161",
+      "Close": "2160"
+    },
+    {
+      "Open": "2163",
+      "Close": "2162"
+    },
+    {
+      "Open": "2165",
+      "Close": "2164"
+    }
+  ],
+  "Weathered Stone Secret Door": [
+    {
+      "Open": "809",
+      "Close": "808"
+    },
+    {
+      "Open": "811",
+      "Close": "810"
+    },
+    {
+      "Open": "805",
+      "Close": "804"
+    },
+    {
+      "Open": "807",
+      "Close": "806"
+    },
+    {
+      "Open": "813",
+      "Close": "812"
+    },
+    {
+      "Open": "815",
+      "Close": "814"
+    },
+    {
+      "Open": "817",
+      "Close": "816"
+    },
+    {
+      "Open": "819",
+      "Close": "818"
+    }
+  ],
+  "Dark Wood Secret Door": [
+    {
+      "Open": "825",
+      "Close": "824"
+    },
+    {
+      "Open": "827",
+      "Close": "826"
+    },
+    {
+      "Open": "821",
+      "Close": "820"
+    },
+    {
+      "Open": "823",
+      "Close": "822"
+    },
+    {
+      "Open": "829",
+      "Close": "828"
+    },
+    {
+      "Open": "831",
+      "Close": "830"
+    },
+    {
+      "Open": "833",
+      "Close": "832"
+    },
+    {
+      "Open": "835",
+      "Close": "834"
+    }
+  ],
+  "Light Wood Secret Door": [
+    {
+      "Open": "841",
+      "Close": "840"
+    },
+    {
+      "Open": "843",
+      "Close": "842"
+    },
+    {
+      "Open": "837",
+      "Close": "836"
+    },
+    {
+      "Open": "839",
+      "Close": "838"
+    },
+    {
+      "Open": "845",
+      "Close": "844"
+    },
+    {
+      "Open": "847",
+      "Close": "846"
+    },
+    {
+      "Open": "849",
+      "Close": "848"
+    },
+    {
+      "Open": "851",
+      "Close": "850"
+    }
+  ],
+  "Grey Stone Secret Door": [
+    {
+      "Open": "857",
+      "Close": "856"
+    },
+    {
+      "Open": "859",
+      "Close": "858"
+    },
+    {
+      "Open": "853",
+      "Close": "852"
+    },
+    {
+      "Open": "855",
+      "Close": "854"
+    },
+    {
+      "Open": "861",
+      "Close": "860"
+    },
+    {
+      "Open": "863",
+      "Close": "862"
+    },
+    {
+      "Open": "865",
+      "Close": "864"
+    },
+    {
+      "Open": "867",
+      "Close": "866"
+    }
+  ],
+  "Japanese Doors": [
+    {
+      "Open": "9252",
+      "Close": "9251"
+    },
+    {
+      "Open": "9248",
+      "Close": "9247"
+    }
+  ],
+  "Sliding Doors 1": [
+    {
+      "Open": "10768",
+      "Close": "10767"
+    },
+    {
+      "Open": "10766",
+      "Close": "10765"
+    },
+    {
+      "Open": "10772",
+      "Close": "10771"
+    },
+    {
+      "Open": "10770",
+      "Close": "10769"
+    }
+  ],
+  "Sliding Doors 2": [
+    {
+      "Open": "10760",
+      "Close": "10759"
+    },
+    {
+      "Open": "10758",
+      "Close": "10757"
+    },
+    {
+      "Open": "10764",
+      "Close": "10763"
+    },
+    {
+      "Open": "10762",
+      "Close": "10761"
+    }
+  ],
+  "Sliding Doors 3": [
+    {
+      "Open": "10776",
+      "Close": "10775"
+    },
+    {
+      "Open": "10774",
+      "Close": "10773"
+    },
+    {
+      "Open": "10780",
+      "Close": "10779"
+    },
+    {
+      "Open": "10778",
+      "Close": "10777"
+    }
+  ],
+  "Elvan Wood Door": [
+    {
+      "Open": "12719",
+      "Close": "12718"
+    },
+    {
+      "Open": "12717",
+      "Close": "12716"
+    },
+    {
+      "Open": "11593",
+      "Close": "11592"
+    },
+    {
+      "Open": "11591",
+      "Close": "11590"
+    }
+  ],
+  "Elvan White Wooden Door 1": [
+    {
+      "Open": "11622",
+      "Close": "11621"
+    },
+    {
+      "Open": "12705",
+      "Close": "12704"
+    },
+    {
+      "Open": "11620",
+      "Close": "11619"
+    },
+    {
+      "Open": "12707",
+      "Close": "12706"
+    }
+  ],
+  "Elvan Ornate Door": [
+    {
+      "Open": "11626",
+      "Close": "11625"
+    },
+    {
+      "Open": "12709",
+      "Close": "12708"
+    },
+    {
+      "Open": "11624",
+      "Close": "11623"
+    },
+    {
+      "Open": "12711",
+      "Close": "12710"
+    }
+  ],
+  "Elvan Kia Wood Door 2": [
+    {
+      "Open": "11630",
+      "Close": "11629"
+    },
+    {
+      "Open": "12715",
+      "Close": "12714"
+    },
+    {
+      "Open": "11628",
+      "Close": "11627"
+    },
+    {
+      "Open": "12713",
+      "Close": "12712"
+    }
+  ],
+  "Elvan Moon Door": [
+    {
+      "Open": "12261",
+      "Close": "12260"
+    },
+    {
+      "Open": "12701",
+      "Close": "12700"
+    },
+    {
+      "Open": "12259",
+      "Close": "12258"
+    },
+    {
+      "Open": "12703",
+      "Close": "12702"
+    }
+  ],
+  "Crystal Door": [
+    {
+      "Open": "13952",
+      "Close": "13951"
+    },
+    {
+      "Open": "13954",
+      "Close": "13953"
+    },
+    {
+      "Open": "13948",
+      "Close": "13947"
+    },
+    {
+      "Open": "13950",
+      "Close": "13949"
+    },
+    {
+      "Open": "13956",
+      "Close": "13955"
+    },
+    {
+      "Open": "13958",
+      "Close": "13957"
+    },
+    {
+      "Open": "13960",
+      "Close": "13959"
+    },
+    {
+      "Open": "13962",
+      "Close": "13961"
+    }
+  ],
+  "Shadow Door": [
+    {
+      "Open": "13968",
+      "Close": "13967"
+    },
+    {
+      "Open": "13970",
+      "Close": "13969"
+    },
+    {
+      "Open": "13964",
+      "Close": "13963"
+    },
+    {
+      "Open": "13966",
+      "Close": "13965"
+    },
+    {
+      "Open": "13972",
+      "Close": "13971"
+    },
+    {
+      "Open": "13974",
+      "Close": "13973"
+    },
+    {
+      "Open": "13976",
+      "Close": "13975"
+    },
+    {
+      "Open": "13978",
+      "Close": "13977"
+    }
+  ],
+  "Gargish Carved Green Door": [
+    {
+      "Open": "16540",
+      "Close": "16539"
+    },
+    {
+      "Open": "16542",
+      "Close": "16541"
+    },
+    {
+      "Open": "16544",
+      "Close": "16543"
+    },
+    {
+      "Open": "16546",
+      "Close": "16545"
+    }
+  ],
+  "Gargish Brown Door": [
+    {
+      "Open": "16653",
+      "Close": "16652"
+    },
+    {
+      "Open": "16655",
+      "Close": "16654"
+    },
+    {
+      "Open": "16657",
+      "Close": "16656"
+    },
+    {
+      "Open": "16659",
+      "Close": "16658"
+    }
+  ],
+  "Sun Door": [
+    {
+      "Open": "16835",
+      "Close": "16834"
+    },
+    {
+      "Open": "16837",
+      "Close": "16836"
+    },
+    {
+      "Open": "16839",
+      "Close": "16838"
+    },
+    {
+      "Open": "16841",
+      "Close": "16840"
+    }
+  ],
+  "Gargish Grey Door": [
+    {
+      "Open": "16848",
+      "Close": "16847"
+    },
+    {
+      "Open": "16850",
+      "Close": "16849"
+    },
+    {
+      "Open": "16852",
+      "Close": "16851"
+    },
+    {
+      "Open": "16854",
+      "Close": "16853"
+    }
+  ],
+  "Gargish Set Door": [
+    {
+      "Open": "17263",
+      "Close": "17262"
+    },
+    {
+      "Open": "17265",
+      "Close": "17264"
+    },
+    {
+      "Open": "17267",
+      "Close": "17266"
+    },
+    {
+      "Open": "17269",
+      "Close": "17268"
+    },
+    {
+      "Open": "17271",
+      "Close": "17270"
+    },
+    {
+      "Open": "17273",
+      "Close": "17272"
+    },
+    {
+      "Open": "17275",
+      "Close": "17274"
+    },
+    {
+      "Open": "17277",
+      "Close": "17276"
+    }
+  ],
+  "Ruined Door": [
+    {
+      "Open": "18142",
+      "Close": "18141"
+    },
+    {
+      "Open": "18144",
+      "Close": "18143"
+    },
+    {
+      "Open": "18146",
+      "Close": "18145"
+    },
+    {
+      "Open": "18148",
+      "Close": "18147"
+    }
+  ],
+  "Gargish Blue Door": [
+    {
+      "Open": "19747",
+      "Close": "19746"
+    },
+    {
+      "Open": "19749",
+      "Close": "19748"
+    },
+    {
+      "Open": "19751",
+      "Close": "19750"
+    },
+    {
+      "Open": "19753",
+      "Close": "19752"
+    }
+  ],
+  "Gargish Red Doors": [
+    {
+      "Open": "20681",
+      "Close": "20680"
+    },
+    {
+      "Open": "20683",
+      "Close": "20682"
+    },
+    {
+      "Open": "20689",
+      "Close": "20688"
+    },
+    {
+      "Open": "20691",
+      "Close": "20690"
+    },
+    {
+      "Open": "20685",
+      "Close": "20684"
+    },
+    {
+      "Open": "20687",
+      "Close": "20686"
+    },
+    {
+      "Open": "20693",
+      "Close": "20692"
+    },
+    {
+      "Open": "20695",
+      "Close": "20694"
+    }
+  ],
+  "Gargish Prison Door": [
+    {
+      "Open": "20803",
+      "Close": "20802"
+    },
+    {
+      "Open": "20805",
+      "Close": "20804"
+    },
+    {
+      "Open": "20807",
+      "Close": "20806"
+    },
+    {
+      "Open": "20809",
+      "Close": "20808"
+    }
+  ],
+  "Metal Doors (Dungeon)": [
+    {
+      "Open": "1738",
+      "Close": "1737"
+    },
+    {
+      "Open": "1740",
+      "Close": "1739"
+    },
+    {
+      "Open": "1734",
+      "Close": "1733"
+    },
+    {
+      "Open": "1736",
+      "Close": "1735"
+    },
+    {
+      "Open": "1742",
+      "Close": "1741"
+    },
+    {
+      "Open": "1744",
+      "Close": "1743"
+    },
+    {
+      "Open": "1746",
+      "Close": "1745"
+    },
+    {
+      "Open": "1748",
+      "Close": "1747"
+    }
+  ],
+  "Hidden Door (brick)": [
+    {
+      "Open": "793",
+      "Close": "792"
+    },
+    {
+      "Open": "795",
+      "Close": "794"
+    },
+    {
+      "Open": "789",
+      "Close": "788"
+    },
+    {
+      "Open": "791",
+      "Close": "790"
+    },
+    {
+      "Open": "797",
+      "Close": "796"
+    },
+    {
+      "Open": "799",
+      "Close": "798"
+    },
+    {
+      "Open": "801",
+      "Close": "800"
+    },
+    {
+      "Open": "803",
+      "Close": "802"
+    }
+  ],
+  "Barred Metal Gate": [
+    {
+      "Open": "1674",
+      "Close": "1673"
+    },
+    {
+      "Open": "1676",
+      "Close": "1675"
+    },
+    {
+      "Open": "1670",
+      "Close": "1669"
+    },
+    {
+      "Open": "1672",
+      "Close": "1671"
+    },
+    {
+      "Open": "1678",
+      "Close": "1677"
+    },
+    {
+      "Open": "1680",
+      "Close": "1679"
+    },
+    {
+      "Open": "1682",
+      "Close": "1681"
+    },
+    {
+      "Open": "1684",
+      "Close": "1683"
+    }
+  ],
+  "Portcullis": [
+    {
+      "Open": "1782",
+      "Close": "1781"
+    },
+    {
+      "Open": "1783",
+      "Close": "1782"
+    }
+  ]
+  }
 }

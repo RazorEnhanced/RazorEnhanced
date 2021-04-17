@@ -217,7 +217,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Config.cs" />
+    <Compile Include="RazorEnhanced\Config.cs" />
     <Compile Include="Core\SkillIcon.cs" />
     <Compile Include="Core\DLLImport.cs" />
     <Compile Include="Core\TitleBar.cs" />
