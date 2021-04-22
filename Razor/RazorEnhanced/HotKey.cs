@@ -1320,8 +1320,8 @@ namespace RazorEnhanced
 				case "Smoke Bomb":
 					if (pack != null)
 					{
-						if (!UseItemByIdHue(pack, 0x2808, 0))
-							World.Player.SendMessage(MsgLevel.Warning, "No item left");
+                        if (!(UseItemByIdHue(pack, 0x2808, 0) || UseItemByIdHue(pack, 0x2809, 0)))   // Try: smoke bomb (0x2808) or egg bomb (0x2809)
+                            World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 

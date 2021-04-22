@@ -15,7 +15,7 @@ namespace RazorEnhanced
 			return Assistant.Targeting.HasTarget;
 		}
 
-		public static void WaitForTarget(int delay, bool noshow = false)
+		public static bool WaitForTarget(int delay, bool noshow = false)
 		{
 			int subdelay = delay;
 			Assistant.Targeting.NoShowTarget = noshow;
@@ -23,11 +23,12 @@ namespace RazorEnhanced
 			{
 				Thread.Sleep(2);
 				subdelay -= 2;
-				if (subdelay <= 0)
-					break;
+                if (subdelay <= 0)
+                    break;
 			}
 			Assistant.Targeting.NoShowTarget = false;
-		}
+            return HasTarget();
+        }
 
 		public static void TargetExecute(int serial)
 		{
