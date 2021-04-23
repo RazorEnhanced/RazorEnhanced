@@ -317,7 +317,8 @@ namespace RazorEnhanced
 
             UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
             UOScript.Interpreter.RegisterExpressionHandler("dead", this.IsDead);
-            UOScript.Interpreter.RegisterExpressionHandler("direction", this.Direction);
+            UOScript.Interpreter.RegisterExpressionHandler("direction", this.Direction); //Dalamar: Fix original UOS direction, in numbers
+            UOScript.Interpreter.RegisterExpressionHandler("directionname", this.DirectionName);  //Dalamar: Added RE style directions with names
             UOScript.Interpreter.RegisterExpressionHandler("flying", this.IsFlying);
             UOScript.Interpreter.RegisterExpressionHandler("paralyzed", this.IsParalyzed);
             UOScript.Interpreter.RegisterExpressionHandler("poisoned", this.IsPoisoned);
@@ -798,7 +799,7 @@ namespace RazorEnhanced
 
             return false;
         }
-        private IComparable Direction(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable DirectionName(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -812,6 +813,38 @@ namespace RazorEnhanced
                 {
                     return theMobile.Direction;
                 }
+            }
+
+            return false;
+        }
+
+        private IComparable Direction(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            //UOS Direction -  Start in top-right-corner: 0 | North. Inclements: clockwise
+            Dictionary<string, int> dir_num = new Dictionary<string, int>() {
+                {"North",0}, {"Right",1}, {"East",2}, {"Down",3}, 
+                {"South",4}, {"Left",5},  {"West",6}, {"Up",7},
+                
+                
+            };
+
+            string direction = null;
+            if (args.Length == 0)
+            {
+                direction = Player.Direction;
+            }
+            else if (args.Length >= 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    direction = theMobile.Direction;
+                }
+            }
+
+            if ( dir_num.ContainsKey(direction)  ){ 
+                return dir_num[Player.Direction]; 
             }
 
             return false;
@@ -1893,27 +1926,27 @@ namespace RazorEnhanced
             {
                 Items.DropItemGroundSelf((int)serial);
             }
+            else 
+            { 
+                int amount = -1;
+                if (args.Length == 3)
+                {
+                    amount = args[2].AsInt();
+                    Items.DropItemGroundSelf((int)serial, amount);
+                }
+                else if (args.Length >= 5)
+                {
+                    var ppos = Player.Position;
+                    int X = args[2].AsInt() + ppos.X;
+                    int Y = args[3].AsInt() + ppos.Y;
+                    int Z = args[4].AsInt() + ppos.Z;
 
-            if (args.Length == 3)
-            {
-                int amount = args[2].AsInt();
-                Items.DropItemGroundSelf((int)serial, amount);
-            }
-            if (args.Length == 5)
-            {
-                int x = args[2].AsInt();
-                int y = args[3].AsInt();
-                int z = args[4].AsInt();
-                Items.MoveOnGround((int)serial, -1, x, y, z);
-            }
-
-            if (args.Length == 6)
-            {
-                int x = args[2].AsInt();
-                int y = args[3].AsInt();
-                int z = args[4].AsInt();
-                int amount = args[5].AsInt();
-                Items.MoveOnGround((int)serial, amount, x, y, z);
+                    amount = (args.Length == 6) ? args[5].AsInt() : -1;
+                    Items.MoveOnGround((int)serial, amount, X,Y,Z );
+                }
+                else {
+                    WrongParameterCount(command, 5, args.Length, "Valid args num: 2,3,5,6");
+                }
             }
 
             return true;
