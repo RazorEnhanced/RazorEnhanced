@@ -272,7 +272,7 @@ namespace RazorEnhanced.UI
         {
             // AutoUpdater
             AutoUpdater.ReportErrors = true;
-            AutoUpdater.Start("http://www.RazorEnhanced.net/download/RazorEnhancedAutoUpdater.xml");
+            AutoUpdater.Start("http://www.RazorEnhanced.net/download/RazorEnhancedAutoUpdater8.xml");
         }
 
         private void cuoClient_Click(object sender, EventArgs e)
