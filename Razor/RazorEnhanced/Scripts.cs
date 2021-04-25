@@ -152,7 +152,7 @@ namespace RazorEnhanced
                         return;
 
                     string display_error = ex.Message;
-                    if ( m_Engine != null ) { 
+                    if ( m_Engine != null ) {
                         display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
                     }
                     SendMessageScriptError("ERROR " + m_Filename + ":" + display_error.Replace("\n", " | "));
@@ -234,7 +234,7 @@ namespace RazorEnhanced
 					m_Scope = m_pe.scope;
 
                     var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_Engine) as PythonContext;
-                    var hooks = pc.SystemState.Get__dict__()["path_hooks"] as List;
+                    PythonDictionary hooks = (PythonDictionary)pc.SystemState.Get__dict__()["path_hooks"];
                     hooks.Clear();
 
                     if (traceFunc != null)
