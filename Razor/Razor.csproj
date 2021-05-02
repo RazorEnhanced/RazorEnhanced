@@ -265,6 +265,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\AutoDoc.cs" />
+    <Compile Include="RazorEnhanced\CSharpEngine.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\PythonEngine.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
