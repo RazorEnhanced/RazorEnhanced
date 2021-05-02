@@ -868,13 +868,13 @@ namespace Assistant
 
 		internal PacketReader GetCompressedReader()
 		{
-			int fullLen = ReadInt32();
+			int fullLen = ReadInt32(); // Compressed Gump data length (CLen or CTxtLen)
 			int destLen = 0;
 			byte[] buff = new byte[1];
 
 			if (fullLen >= 4)
 			{
-				int packLen = ReadInt32();
+				int packLen = ReadInt32(); // Decompressed Gump data length (DLen or DTxtLen)
 				destLen = packLen;
 
 				if (destLen < 0)
