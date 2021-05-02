@@ -16,6 +16,9 @@ using System.Text;
 using FastColoredTextBoxNS;
 using IronPython.Compiler;
 using System.Text.RegularExpressions;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
+using System.Reflection;
 
 namespace RazorEnhanced.UI
 {
@@ -1690,10 +1693,32 @@ namespace RazorEnhanced.UI
                 m_Queue = new ConcurrentQueue<Command>();
 
                 string text = GetFastTextBoxText();
-                var checkUOS = text.Substring(0, 2);   // you want it to be UOS it better start with UOS style comment
-                if (checkUOS == "//")
+                if (text.Length >= 4 && text.Substring(0, 4).ToUpper() == "//C#")
+				{
+					CSharpEngine csharpEngine = CSharpEngine.Instance;
+
+					// If compile error occurs a SyntaxErrorException is thrown
+					bool compileErrors = csharpEngine.CompileFromText(text, out StringBuilder compileMessages, out Assembly assembly);
+					if (compileMessages.Length > 0)
+					{
+						SetErrorBox("C# compile warning:");
+						SetErrorBox(compileMessages.ToString());
+					}
+					csharpEngine.Execute(assembly);
+
+					SetErrorBox("Script " + m_Filename + " run completed!");
+					SetStatusLabel("IDLE", Color.DarkTurquoise);
+				} 
+                else if ((text.Length >= 2) && ((text.Substring(0, 2) == "//") || (text.Substring(0, 5).ToUpper() == "//UOS")) )   // you want it to be UOS it better start with UOS style comment
                 {
-                    string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    // Deprecation of // 
+					if ((text.Substring(0, 2) == "//") && !(text.Substring(0, 5).ToUpper() == "//UOS"))
+					{
+						string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
+						SetErrorBox(message);
+						Misc.SendMessage(message);
+					}
+     				string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     UOSteamEngine uosteam = UOSteamEngine.Instance;
                     uosteam.Execute(lines);
                     SetErrorBox("Script " + m_Filename + " run completed!");
@@ -2030,7 +2055,7 @@ namespace RazorEnhanced.UI
 		{
 			OpenFileDialog open = new OpenFileDialog
 			{
-				Filter = "Script Files|*.py;*.txt;*.uos",
+				Filter = "Script Files|*.py;*.txt;*.uos;*.cs",
 				RestoreDirectory = true
 			};
 			if (open.ShowDialog() == DialogResult.OK)
@@ -2103,7 +2128,7 @@ namespace RazorEnhanced.UI
 		{
 			SaveFileDialog save = new SaveFileDialog
 			{
-				Filter = "Python Files|*.py|Script Files|*.txt|UOSteam Files|*.uos",
+				Filter = "Python Files|*.py|Script Files|*.txt|UOSteam Files|*.uos|C# Files|*.cs",
 				RestoreDirectory = true
 			};
 			save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
@@ -2144,7 +2169,7 @@ namespace RazorEnhanced.UI
 				{
 					SaveFileDialog save = new SaveFileDialog
 					{
-						Filter = "Script Files|*.py|Script Files|*.txt",
+						Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
 						FileName = m_Filename
 					};
 

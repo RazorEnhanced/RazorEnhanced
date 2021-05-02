@@ -13,6 +13,9 @@ using System.Windows.Forms;
 using Microsoft.Scripting;
 using IronPython.Runtime;
 using IronPython.Compiler;
+using System.CodeDom.Compiler;
+using System.Reflection;
+using Microsoft.CSharp;
 
 namespace RazorEnhanced
 {
@@ -95,8 +98,6 @@ namespace RazorEnhanced
 
 			private void AsyncStart()
 			{
-
-
 				if (World.Player == null)
 					return;
 
@@ -104,14 +105,37 @@ namespace RazorEnhanced
                 {
                     string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
                     string ext = Path.GetExtension(fullpath);
-                    if (ext.Equals(".uos", StringComparison.InvariantCultureIgnoreCase))
+
+					if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        UOSteamEngine uosteam = UOSteamEngine.Instance;
+						CSharpEngine csharpEngine = CSharpEngine.Instance;
+                        bool compileErrors = csharpEngine.CompileFromFile(fullpath, true, out StringBuilder compileMessages, out Assembly assembly);
+						if (compileMessages.Length > 0)
+                        {
+							Misc.SendMessage(compileMessages.ToString());
+						}
+						if (compileErrors == true)
+                        {
+							Stop();
+							return;
+						} 
+						csharpEngine.Execute(assembly);
+					}
+                    else if (ext.Equals(".uos", StringComparison.InvariantCultureIgnoreCase))
+                    {
+						// Using // only will be deprecated instead of //UOS
+						var text = System.IO.File.ReadAllLines(fullpath);
+						if ((text[0].Substring(0, 2) == "//") && text[0].Length < 5)
+						{
+							string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
+							Misc.SendMessage(message);
+						}
+
+						UOSteamEngine uosteam = UOSteamEngine.Instance;
                         uosteam.Execute(fullpath);
                     }
                     else
                     {
-
                         DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
                         if (FileChangeDate < lastModified)
                         {
@@ -119,7 +143,6 @@ namespace RazorEnhanced
                             FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
                             Create(null);
                         }
-
 
                         /*Dalamar: BEGIN "fix python env" */
                         //EXECUTION OF THE SCRIPT

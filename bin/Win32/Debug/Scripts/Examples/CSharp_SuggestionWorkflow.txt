@@ -1,0 +1,18 @@
+/*
+RE C# Workflow Suggestion:
+ 
+// Setting up the Work space
+1.) Create a new MSVS project (Visual Forms for example)
+2.) Add the Razor project to your project
+// Setting up the namespaces
+3a.) Copy(Drag&Drop) the 'RazorEnhanced files' into your empty project
+3b.) Remove the Razor project
+4.) If you want to use forms add a reference to your project for windows forms at the Solution Explorer -> References
+// Switching between RE files
+5.) MSVS -> File -> OpenFile/SaveAs -> RE Script Folder
+// Setting up RE
+6.) Add your script to the script grid from the RE Script Folder
+7.) Assign a key-macro to this script for play
+8.) Create Code / use the UO journal for debug
+*/
+ 
