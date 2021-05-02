@@ -213,6 +213,19 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static List<string> LastGumpRawText()
+		{
+			try
+			{
+				return new List<string>(World.Player.CurrentGumpRawText);
+			}
+			catch
+			{
+				return new List<string>();
+			}
+		}
+
+
 		public static List<int> LastGumpTile()
 		{
 			try

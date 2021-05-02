@@ -3062,19 +3062,42 @@ namespace Assistant
 
 		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
+			// Packet Build
+			// BYTE[1] Cmd
+			// BYTE[2] len
+			// BYTE[4] Player Serial
+			// BYTE[4] Gump ID
+			// BYTE[4] x
+			// BYTE[4] y
+			// BYTE[4] Compressed Gump Layout Length(CLen)
+			// BYTE[4] Decompressed Gump Layout Length(DLen)
+			// BYTE[CLen - 4] Gump Data, zlib compressed
+			// BYTE[4] Number of text lines
+			// BYTE[4] Compressed Text Line Length(CTxtLen)
+			// BYTE[4] Decompressed Text Line Length(DTxtLen)
+			// BYTE[CTxtLen - 4] Gump's Compressed Text data, zlib compressed
+			// 
+			// Notes
+			// text lines is in Big - Endian Unicode formate, not NULL terminated
+			// loop:
+			// 	BYTE[2] Length
+			// 	BYTE[Length * 2] text
+			// endloop
+
 			if (World.Player == null)
 				return;
 
-			uint currentgumps = p.ReadUInt32();
-			uint currentgumpi = p.ReadUInt32();
+			uint currentgumps = p.ReadUInt32(); // Player Serial
+			uint currentgumpi = p.ReadUInt32(); // Gump ID
 			try
 			{
-				int x = p.ReadInt32(), y = p.ReadInt32();
+				int x = p.ReadInt32(), y = p.ReadInt32(); // Position
 
+				// Decompression of Gump layout section
 				PacketReader pr = p.GetCompressedReader();
 				string layout = pr.ReadString();
 
-				int numStrings = p.ReadInt32();
+				int numStrings = p.ReadInt32(); // Number of text lines
 				if (numStrings < 0 || numStrings > 256)
 					numStrings = 0;
 
@@ -3082,26 +3105,43 @@ namespace Assistant
 				World.Player.CurrentGumpStrings.Clear();
 				World.Player.CurrentGumpTile.Clear();
 
+				// Parsing the uncompressed Gump Layout section
+				// It is looking for all numbers and if one is a valid index for the cliloc, will be converted into string
 				string[] numbers = Regex.Split(layout, @"\D+");
 				foreach (string value in numbers)
 				{
 					if (!string.IsNullOrEmpty(value))
 					{
 						int i = int.Parse(value);
+						// If this is a valid id of a cliloc string
 						if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
 							World.Player.CurrentGumpStrings.Add(Language.GetString(i));
 					}
 				}
 
+				// Decompressing text data
 				PacketReader pComp = p.GetCompressedReader();
 				int len = 0;
 				int x1 = 0;
 				string[] stringlistparse = new string[numStrings];
 
-				while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
+				// This reads all the text data
+				// The separator for each section seems to be 4 words all 0s
+				// Each string starts with a word containing the length of the number of chars (unicode) to read 
+
+				//while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0) // This seems not valid on OSI server that sometimes sends zeros
+				while (!pComp.AtEnd)
 				{
-					string tempstring = pComp.ReadUnicodeString(len);
-					stringlistparse[x1] = tempstring;
+					len = pComp.ReadInt16();
+					if (len > 0)
+					{
+						string tempstring = pComp.ReadUnicodeString(len);
+						stringlistparse[x1] = tempstring;
+					}  
+					else
+                    {
+						stringlistparse[x1] = "";  
+					}
 					x1++;
 				}
 
@@ -3112,7 +3152,8 @@ namespace Assistant
 				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
 
 				World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
-				}
+				World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
+			}
 
 			catch { }
 
