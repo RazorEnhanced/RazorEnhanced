@@ -11,9 +11,7 @@ namespace RazorEnhanced
 {
     class CSharpEngine
     {
-        private static CompilerParameters m_parameters = null;
         private static CSharpEngine m_instance = null;
-
         public static CSharpEngine Instance
         {
             get
@@ -28,19 +26,26 @@ namespace RazorEnhanced
 
         private CSharpEngine()
         {
-            m_parameters = new CompilerParameters();
+        }
+
+        private CompilerParameters CompilerSettings(bool IncludeDebugInformation)
+        {
+            CompilerParameters parameters = new CompilerParameters();
             List<string> assemblies = GetReferenceAssemblies();
             foreach (string assembly in assemblies)
             {
-                m_parameters.ReferencedAssemblies.Add(assembly);
+                parameters.ReferencedAssemblies.Add(assembly);
             }
 
-            m_parameters.GenerateInMemory = true; // True - memory generation, false - external file generation
-            m_parameters.GenerateExecutable = false; // True - exe file generation, false - dll file generation
-            m_parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
-            m_parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
+            parameters.GenerateInMemory = true; // True - memory generation, false - external file generation
+            parameters.GenerateExecutable = false; // True - exe file generation, false - dll file generation
+            parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
+            parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
             //parameters.CompilerOptions = "/optimize"; // Set compiler argument to optimize output.
+            parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
+            return parameters;
         }
+
 
         private List<string> GetReferenceAssemblies()
         {
@@ -96,10 +101,9 @@ namespace RazorEnhanced
 
         public bool CompileFromText(string source, out StringBuilder errorwarnings, out Assembly assembly)
         {
-            // When compiler is invoked from the editor it's always in debug mode
-            m_parameters.IncludeDebugInformation = true; // Build in debug
             CSharpCodeProvider provider = new CSharpCodeProvider();
-            CompilerResults results = provider.CompileAssemblyFromSource(m_parameters, source); // Compiling
+            CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
+            CompilerResults results = provider.CompileAssemblyFromSource(compileParameters, source); // Compiling
 
             assembly = null;
             bool has_error = ManageCompileResult(results, out errorwarnings);
@@ -118,10 +122,9 @@ namespace RazorEnhanced
 
         public bool CompileFromFile(string path, bool debug, out StringBuilder errorwarnings, out Assembly assembly)
         {
-            m_parameters.IncludeDebugInformation = debug; // Build in DEBUG or RELEASE
-
             CSharpCodeProvider provider = new CSharpCodeProvider();
-            CompilerResults results = provider.CompileAssemblyFromFile(m_parameters, path); // Compiling
+            CompilerParameters compileParameters = CompilerSettings(debug);
+            CompilerResults results = provider.CompileAssemblyFromFile(compileParameters, path); // Compiling
 
             assembly = null;
             bool has_error = ManageCompileResult(results, out errorwarnings);
