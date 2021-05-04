@@ -292,22 +292,36 @@ namespace Assistant
             {
                 string filename = Path.GetFileName(openFileDialogscript.FileName);
                 string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
-                string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
+				string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 
-                if (scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase))
+				// Checking if py script is in Scripts folder
+				if (Path.GetExtension(filename) == ".py" && !scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase))
+				{
+					MessageBox.Show("Error, Python script file must be in Scripts folder!", "Razor Enhanced", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+				
+				// Checkig if script is in a subfolder of Scripts
+				if (!scriptPath.Contains(razorPath))
+				{
+					MessageBox.Show("Error, UOS and C# scripts must be in Scripts or a subfolder", "Razor Enhanced", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+
+				string subfolder = scriptPath.Replace(razorPath, "");
+				if (subfolder.Length > 0)
+				{
+					subfolder = subfolder.Remove(0, 1) + "\\"; // Remove first 2 \\
+				}
+				filename = subfolder + filename;
+				
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+                if (script == null)
                 {
-                    Scripts.EnhancedScript script = Scripts.Search(filename);
-                    if (script == null)
-                    {
-                        scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
-                        ReloadScriptTable();
-                    }
+					scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
+                    ReloadScriptTable();
                 }
-                else
-                {
-                    MessageBox.Show("Error, Script file must be in Scripts folder!");
-                }
-            }
+             }
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
