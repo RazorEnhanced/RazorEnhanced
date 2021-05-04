@@ -959,7 +959,6 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "friend requires parameters");
-                return false;
             }
 
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
@@ -3082,12 +3081,15 @@ namespace RazorEnhanced
                     case "humanoid":
                         filter.IsHuman = 1;
                         break;
+                    case "transformation":
+                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc 
                     case "closest":
                     case "nearest":
                         nearest = true;
                         break;
                 }
             }
+
             var list = Mobiles.ApplyFilter(filter);
             if (list.Count > 0)
             {
@@ -3096,6 +3098,20 @@ namespace RazorEnhanced
                 {
                     anEnemy = Mobiles.Select(list, "Nearest");
                 }
+                
+                
+                int color = 20; 
+                switch (anEnemy.Notoriety){
+                    case 1: color = 190; break;
+                    case 2: color = 168; break;
+                    case 3:
+                    case 4: color = 1000; break;
+                    case 5: color = 140; break;
+                    case 6: color = 138; break;
+                    case 7: color = 153; break;       
+                }
+                RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
+                Player.HeadMessage(color, "[Enemy] " + anEnemy.Name);
                 UOScript.Interpreter.SetAlias("enemy", (uint)anEnemy.Serial);
             }
             else
@@ -3140,6 +3156,8 @@ namespace RazorEnhanced
                     case "humanoid":
                         filter.IsHuman = 1;
                         break;
+                    case "transformation":
+                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc 
                     case "closest":
                     case "nearest":
                         nearest = true;
@@ -3154,6 +3172,20 @@ namespace RazorEnhanced
                 {
                     anEnemy = Mobiles.Select(list, "Nearest");
                 }
+                
+                int color = 20;
+                switch (anEnemy.Notoriety)
+                {
+                    case 1: color = 190; break;
+                    case 2: color = 168; break;
+                    case 3:
+                    case 4: color = 1000; break;
+                    case 5: color = 140; break;
+                    case 6: color = 138; break;
+                    case 7: color = 153; break;
+                }
+                RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
+                Player.HeadMessage(color, "[Friend] " + anEnemy.Name);
                 UOScript.Interpreter.SetAlias("friend", (uint)anEnemy.Serial);
             }
             else
