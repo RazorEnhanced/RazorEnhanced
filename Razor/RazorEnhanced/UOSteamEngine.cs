@@ -51,15 +51,20 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterAliasHandler("backpack", AliasHandler);
             UOScript.Interpreter.RegisterAliasHandler("self", AliasHandler);
             UOScript.Interpreter.RegisterAliasHandler("bank", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("lasttarget", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("last", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("mount", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("lefthand", AliasHandler);
+            UOScript.Interpreter.RegisterAliasHandler("righthand", AliasHandler);
+
+            //UOScript.Interpreter.RegisterAliasHandler("lastobject", AliasHandler);  //TODO: how to you get the "last object" in razor ? 
+            UOScript.Interpreter.SetAlias("lastobject", 0); //TODO: not implemented
+
             UOScript.Interpreter.SetAlias("found", 0);
             UOScript.Interpreter.SetAlias("enemy", 0);
             UOScript.Interpreter.SetAlias("friend", 0);
-            UOScript.Interpreter.SetAlias("last", 0);
-            UOScript.Interpreter.SetAlias("lasttarget", 0);
-            UOScript.Interpreter.SetAlias("lastobject", 0);
-            UOScript.Interpreter.SetAlias("lefthand", 0);
-            UOScript.Interpreter.SetAlias("mount", 0);
-            UOScript.Interpreter.SetAlias("righthand", 0);
+            
+            
 
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
@@ -73,27 +78,24 @@ namespace RazorEnhanced
             int everywhere = -1;
             switch (alias.ToLower())
             {
-                case "ground":
-                    return (uint)everywhere;
-                    break;
-                case "any":
-                    return (uint)everywhere;
-                    break;
-                case "backpack":
-                    return (uint)Player.Backpack.Serial;
-                    break;
-                case "self":
-                    return (uint)Player.Serial;
-                    break;
-                case "bank":
-                    return (uint)Player.Bank.Serial;
-                    break;
+                case "ground":       return (uint)everywhere;
+                case "any":          return (uint)everywhere;
+                case "backpack":     return (uint)Player.Backpack.Serial;
+                case "self":         return (uint)Player.Serial;
+                case "bank":         return (uint)Player.Bank.Serial;
+                case "mount":        return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ? 
+                case "lefthand":     return (uint)Player.GetItemOnLayer("LeftHand").Serial;
+                case "righthand":    return (uint)Player.GetItemOnLayer("RightHand").Serial;
+                case "lasttarget":   return (uint)RazorEnhanced.Target.GetLast();
+                case "last":         return (uint)RazorEnhanced.Target.GetLast();
+                //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
+                
+
             }
             return 0;
         }
 
-
-
+        
         public void Execute(string filename)
         {
             var root = Lexer.Lex(filename);
@@ -251,8 +253,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("settimer", this.SetTimer);
             UOScript.Interpreter.RegisterCommandHandler("removetimer", this.RemoveTimer);
             UOScript.Interpreter.RegisterCommandHandler("createtimer", this.CreateTimer);
-            UOScript.Interpreter.RegisterCommandHandler("getenemy", this.GetEnemy);
-            UOScript.Interpreter.RegisterCommandHandler("getfriend", this.GetFriend);
+            UOScript.Interpreter.RegisterCommandHandler("getenemy", this.GetEnemy); //TODO: add "transformations" list
+            UOScript.Interpreter.RegisterCommandHandler("getfriend", this.GetFriend); //TODO: add "transformations" list
 
             // Expressions
             UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
@@ -286,6 +288,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer);
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);
             UOScript.Interpreter.RegisterExpressionHandler("targetexists", this.TargetExists);
+            
 
 
             // Player Attributes
@@ -310,6 +313,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("gold", (string expression, UOScript.Argument[] args, bool quiet) => Player.Gold);
             UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
             UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
+            UOScript.Interpreter.RegisterExpressionHandler("waitingfortarget", this.WaitingForTarget ); //TODO: loose approximation, see inside
 
             UOScript.Interpreter.RegisterExpressionHandler("hits", this.Hits);
             UOScript.Interpreter.RegisterExpressionHandler("diffhits", this.DiffHits);
@@ -396,12 +400,19 @@ namespace RazorEnhanced
 
         private IComparable InJournal(string expression, UOScript.Argument[] args, bool quiet)
         {
-
-            if (args.Length >= 1)
+                                                  
+            if (args.Length == 1)
             {
                 string text = args[0].AsString();
                 return Journal.Search(text);
             }
+            if ( args.Length == 2 ) {
+                string text = args[0].AsString();
+                string texttype = args[1].AsString();
+                texttype = texttype.Substring(0,1).ToUpper() + texttype.Substring(1).ToLower();  // syStEm -> System
+                return Journal.SearchByType(text, texttype);
+            }
+
 
             return false;
         }
@@ -1321,6 +1332,13 @@ namespace RazorEnhanced
             if (args.Length == 0) { WrongParameterCount(expression, 1, args.Length); }
 
             return true;
+        }
+
+        private IComparable WaitingForTarget(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            //TODO: This is an very loose approximation. Waitingfortarget should know if there is any "pending target" coming from the server.  
+            //UOS Tester: Lermster#2355          
+            return RazorEnhanced.Target.HasTarget();
         }
 
         private IComparable Hits(string expression, UOScript.Argument[] args, bool quiet)
@@ -3102,13 +3120,13 @@ namespace RazorEnhanced
                 
                 int color = 20; 
                 switch (anEnemy.Notoriety){
-                    case 1: color = 190; break;
-                    case 2: color = 168; break;
+                    case 1: color = 190; break; //Blue
+                    case 2: color = 168; break; //Green
                     case 3:
-                    case 4: color = 1000; break;
-                    case 5: color = 140; break;
-                    case 6: color = 138; break;
-                    case 7: color = 153; break;       
+                    case 4: color = 1000; break; //Gray
+                    case 5: color = 140; break; //Orange
+                    case 6: color = 138; break; //Red
+                    case 7: color = 153; break; //Yellow      
                 }
                 RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
                 Player.HeadMessage(color, "[Enemy] " + anEnemy.Name);
@@ -3176,13 +3194,13 @@ namespace RazorEnhanced
                 int color = 20;
                 switch (anEnemy.Notoriety)
                 {
-                    case 1: color = 190; break;
-                    case 2: color = 168; break;
+                    case 1: color = 190; break; //Blue
+                    case 2: color = 168; break; //Green
                     case 3:
-                    case 4: color = 1000; break;
-                    case 5: color = 140; break;
-                    case 6: color = 138; break;
-                    case 7: color = 153; break;
+                    case 4: color = 1000; break; //Gray
+                    case 5: color = 140; break; //Orange
+                    case 6: color = 138; break; //Red
+                    case 7: color = 153; break; //Yellow
                 }
                 RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
                 Player.HeadMessage(color, "[Friend] " + anEnemy.Name);
@@ -3685,7 +3703,9 @@ namespace RazorEnhanced
                     int value = (int)UOScript.Interpreter.GetAlias(_node.Lexeme);
                     return value;
                 }
-
+                arg = CheckIsListElement(_node.Lexeme);
+                if (arg != null)
+                    return arg.AsInt();
                 return TypeConverter.ToInt(_node.Lexeme);
             }
 
@@ -3802,6 +3822,16 @@ namespace RazorEnhanced
             {
                 if (_node.Lexeme == null)
                     throw new RunTimeError(_node, "Cannot convert argument to bool");
+
+                // Try to resolve it as a scoped variable first
+                var arg = _script.Lookup(_node.Lexeme);
+                if (arg != null)
+                    return arg.AsBool();
+
+                arg = CheckIsListElement(_node.Lexeme);
+                if (arg != null)
+                    return arg.AsBool();
+
 
                 return TypeConverter.ToBool(_node.Lexeme);
             }
