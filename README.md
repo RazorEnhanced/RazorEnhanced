@@ -24,7 +24,7 @@ The original project was last updated May 2nd, 2014 and while over 50 forks exis
 * [Jaedan](https://github.com/jaedan) (which this version is based on) who updated the project to compile and work in Visual Studio 2017 and made improvements to Crypt.dll that enabled this project to move forward.
 * [SaschaKP](https://github.com/SaschaKP) who made several performance changes from generic to non-generic collections that I incorporated in the first release.
 
-Razor Enhaced has been [developed](https://bitbucket.org/RazorFork/razor-enhanced/) mainly by [Alexdan2](https://github.com/alexdan) and MagnetoStaff from february 2015 untill january 2019. The actual repo is a frok from that.
+Razor Enhaced has been [developed](https://bitbucket.org/RazorFork/razor-enhanced/) mainly by [Alexdan2](https://github.com/alexdan) and MagnetoStaff from february 2015 untill january 2019. The actual repo is a fork from that.
 
 ## Bug Reporting
 
@@ -41,7 +41,7 @@ Suggestions are very welcome too.
 ## Contributions
 
 Contributions are always welcome, fell free to fork the repository and send us a pull request.     
-Feel free to come talk to us on discord too, before undertaking the effort, so we can discuss and andjust to fit your addition to the current codebase in a graceful way.   
+Feel free to come talk to us on discord too, before undertaking the effort, so we can discuss and and just to fit your addition to the current codebase in a graceful way.   
 
 
 
