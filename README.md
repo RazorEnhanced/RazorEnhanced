@@ -6,6 +6,15 @@ Cuurently Requires: **.Net Framework 4.8**
 
 ## Reference
 
+
+<img src="https://discordapp.com/api/guilds/[SERVER ID]/widget.png?style=shield" alt="Discord Shield"/>
+
+<img src="https://discordapp.com/api/guilds/292282788311203841/widget.png?style=banner1" alt="Discord Razor Enhanced"/>
+
+
+![Discord Shield](https://discordapp.com/api/guilds/292282788311203841/widget.png?style=shield)
+
+
 - **Website:**  http://razorenhanced.net/   
 - **Discord:** https://discordapp.com/invite/P3Q7mKT   
 - **WIKI:** http://razorenhanced.net/dokuwiki/doku.php   
