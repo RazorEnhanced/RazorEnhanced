@@ -15,10 +15,10 @@ Cuurently Requires: **.Net Framework 4.8**
 ## Bug Reporting
 While the core of Razor Enhanced is to be considered mature and stable, the project it's very active and many new features are currently in beta.
 
-To make sure that you bug report is properly handles, Please report any bug by:
-1- Opening an issue on github: https://github.com/ultimarazorenhanced/RazorEnhanced/issues/new
-2- Posting the link to the issue it in the dedicated channel: https://discord.gg/eUrRpC2w5Y
-   ( automation is on the way ) 
+To make sure that you bug report is properly handles, Please report any bug by:     
+1- Opening an issue on github: https://github.com/ultimarazorenhanced/RazorEnhanced/issues/new     
+2- Posting the link to the issue it in the dedicated channel: https://discord.gg/eUrRpC2w5Y    
+   ( automation is on the way )     
 
 _In case you have multiple bug you want to report, please open one issue for each one, separately._
 Suggestions are very welcome too.
