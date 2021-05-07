@@ -30,37 +30,36 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-
-    - name: Read AssemblyVersion
-      id: assembly_file
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: ./Razor/Properties/AssemblyInfo.cs
-    
-    - uses: actions-ecosystem/action-regex-match@v2
-        id: get_version
-        with:
-          text: ${{ steps.assembly_file.outputs }}
-          regex: 'AssemblyVersion\("(?'version'\d{1,2}.\d{1,2}.\d{1,2}.\d{1,2})(?'variant'[a-z]?)(?:-(?'release'[a-z]+))?"\)'
-
     
     
-  - name: Should Build AssemblyVersion
-      id: build_type
-      uses: actions/github-script@v4
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        result-encoding: string
-        script: return steps.regex-match.outputs.match != '' ("refs/tags/", '');
+    
+    - name: Grab Version
+      id: get_version
+      shell: powershell
+      run: |
+        $version = Select-String -Path Razor/Properties/AssemblyInfo.cs  -Pattern 'AssemblyVersion\(\"([\w.-]+)\"\)' -AllMatches |  %{$_.Matches.Groups[1].Value}
+        echo "::set-output name=version::$version"
+    
+    - name: Show Version
+      run: echo "${{steps.get_version.outputs.version}}"
+      
+    - name: GitHub Tag Exists
+      uses: mukunku/tag-exists-action@v1.0.0
+      id: checkTag
+      with: 
+        tag: "v${{steps.get_version.outputs.version}}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1
-     
-    - name: No need for build build
-      if: ${{ true }}
+    - run: echo ${{ steps.checkTag.outputs.exists }}
+          
+    - name: Version number not valid
+      if: ${{ !steps.checkTag.outputs.exists }}
       uses: andymckay/cancel-action@0.2
-
+    # build   
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1 
+      
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
@@ -77,14 +76,14 @@ jobs:
       with:
         files: bin/Win32/Debug
         recursive: true
-        dest: RazorEnhanced-${{ steps.get_tag.outputs.result }}.zip
+        dest: RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
 
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: "v${{steps.get_version.outputs.version}}"
+        release_name: RazorEnhanced ${{steps.get_version.outputs.version}}
         draft: false
         prerelease: false
 
@@ -92,6 +91,6 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./RazorEnhanced-${{ steps.get_tag.outputs.result }}.zip
-        asset_name: RazorEnhanced-${{ steps.get_tag.outputs.result }}.zip
+        asset_path: ./RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
+        asset_name: RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
         asset_content_type: application/zip
