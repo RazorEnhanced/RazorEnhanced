@@ -1,10 +1,4 @@
-name: Build RazorEnhanced on TAG
-
-on:
-  push:
-    tags:
-      - 'v*'
-      
+name: Build RazorEnhanced on TAG      
 on:
   workflow_dispatch:      
 
