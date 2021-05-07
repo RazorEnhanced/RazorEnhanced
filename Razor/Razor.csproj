@@ -19,7 +19,7 @@
     <DelaySign>false</DelaySign>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Assistant</RootNamespace>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>Assistant.Engine</StartupObject>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -797,8 +797,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>XCOPY  $(SolutionDir)packages\IronPython.StdLib.2.7.9\content\Lib  $(TargetDir)Lib\  /y /s
+XCOPY  $(SolutionDir)BuildSupplementalFiles\*  $(TargetDir)  /y /s</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
