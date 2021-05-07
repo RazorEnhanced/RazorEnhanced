@@ -30,18 +30,19 @@ Razor Enhaced has been [developed](https://bitbucket.org/RazorFork/razor-enhance
 
 While the core of Razor Enhanced is to be considered mature and stable, the project it's very active and many new features are currently in beta.
 
-To make sure that you bug report is properly handles, Please report any bug by:    
-1- Opening an issue on github: https://github.com/ultimarazorenhanced/RazorEnhanced/issues/new     
-2- Posting the link to the issue it in the dedicated channel: https://discord.gg/eUrRpC2w5Y      
-   ( automation is on the way )      
+To make sure that your bug report is properly handled, please follow these steps:\
+1- Open an [issue](https://github.com/ultimarazorenhanced/RazorEnhanced/issues/new) on GitHub.\
+2- Post the link of the issue in the discord [dedicated channel](https://discord.gg/eUrRpC2w5Y).\
+   ( Automation is on the way )     
 
 _In case you have multiple bugs you want to report, please open one issue for each one, separately._
 Suggestions are very welcome too.
 
 ## Contributions
 
-Contributions are always welcome, fell free to fork the repository and send us a pull request.     
-Feel free to come talk to us on discord too, before undertaking the effort, so we can discuss and and just to fit your addition to the current codebase in a graceful way.   
+Contributions are always welcome, feel free to fork the repository and send us a pull request.\
+If you need an how-to for sending pull requests, try this git workflow tutorial from [Aaron Meurer](https://github.com/asmeurer/git-workflow).\
+We suggest you to reach us on [discord](https://discordapp.com/invite/P3Q7mKT) so we can discuss your ideas and adjust it to fit the current codebase in a graceful way.
 
 
 
