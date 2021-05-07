@@ -3030,7 +3030,10 @@ namespace RazorEnhanced
 
         private bool CancelTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            RazorEnhanced.Target.Cancel();
+            //https://discord.com/channels/292282788311203841/383331237269602325/839987031853105183
+            //Target.Execute(0x0) is a better form of Target.Cancel
+            RazorEnhanced.Target.TargetExecute(0x0);
+            //RazorEnhanced.Target.Cancel();
             return true;
         }
         private bool TargetResource(string command, UOScript.Argument[] args, bool quiet, bool force)
