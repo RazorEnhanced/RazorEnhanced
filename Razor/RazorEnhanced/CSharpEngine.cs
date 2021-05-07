@@ -137,12 +137,34 @@ namespace RazorEnhanced
 
         public void Execute(Assembly assembly)
         {
-            Type program = assembly.GetType("RazorEnhanced.Script");
-
             // This is important for methods visibility. Check if all of these flags are really needed.
             BindingFlags bf = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.InvokeMethod;
 
-            MethodInfo run = program.GetMethod("Run", bf);
+            MethodInfo run = null;
+
+            // Search trough all methods and finds Run then calls it
+            foreach (Type mt in assembly.GetTypes())
+            {
+                if (mt != null)
+                {
+                    run = mt.GetMethod("Run", bf);
+                    if (run != null) 
+                    {
+                        break;
+                    }
+                }
+            }
+
+            // If Run method does not exists would be rised an exception later but better to throw a
+            // SyntaxErrorException now and log it too
+            if (run == null)
+            {
+                string error = "Required method 'public void Run() missing from script.";
+                Misc.SendMessage(error);
+                throw new Microsoft.Scripting.SyntaxErrorException(error,null, new SourceSpan(), 0, Severity.FatalError);
+            }
+
+            // Creates an instance of the class runs the Run method
             object scriptInstance = Activator.CreateInstance(run.DeclaringType);
             run.Invoke(scriptInstance, null);
         }
