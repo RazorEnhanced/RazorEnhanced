@@ -12,7 +12,7 @@ namespace Assistant.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,6 +20,15 @@ namespace Assistant.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string druidClericPackets_CheckedChanged {
+            get {
+                return ((string)(this["druidClericPackets_CheckedChanged"]));
             }
         }
         
@@ -37,10 +46,22 @@ namespace Assistant.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool druidClericPackets_CheckedChanged {
+        [global::System.Configuration.DefaultSettingValueAttribute("Top, Left")]
+        public global::System.Windows.Forms.AnchorStyles appSetting {
             get {
-                return ((bool)(this["druidClericPackets_CheckedChanged"]));
+                return ((global::System.Windows.Forms.AnchorStyles)(this["appSetting"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Top, Bottom, Left")]
+        public global::System.Windows.Forms.AnchorStyles stretch {
+            get {
+                return ((global::System.Windows.Forms.AnchorStyles)(this["stretch"]));
+            }
+            set {
+                this["stretch"] = value;
             }
         }
     }
