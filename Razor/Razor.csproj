@@ -261,6 +261,11 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\Config.cs" />
     <Compile Include="Core\SkillIcon.cs" />
     <Compile Include="Core\DLLImport.cs" />
@@ -303,11 +308,6 @@
     <Compile Include="Network\UoMod.cs" />
     <Compile Include="Network\UoWarper.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\AutoDoc.cs" />
     <Compile Include="RazorEnhanced\CSharpEngine.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
