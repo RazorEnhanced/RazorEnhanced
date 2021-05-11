@@ -3503,7 +3503,7 @@ namespace RazorEnhanced
                 WrongParameterCount(command, 2, args.Length);
             }
 
-            UOScript.Interpreter.SetTimer(args[0].AsString(), args[0].AsInt());
+            UOScript.Interpreter.SetTimer(args[0].AsString(), args[1].AsInt());
             return true;
         }
 
@@ -3696,7 +3696,7 @@ namespace RazorEnhanced
             public int AsInt()
             {
                 if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, "Cannot convert argument to int");
+                    throw new RunTimeError(_node, $"Cannot convert argument to int: {_node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
@@ -3718,7 +3718,7 @@ namespace RazorEnhanced
             public uint AsUInt()
             {
                 if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, "Cannot convert argument to uint");
+                    throw new RunTimeError(_node, $"Cannot convert argument to uint: {_node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
@@ -3740,7 +3740,7 @@ namespace RazorEnhanced
             public ushort AsUShort()
             {
                 if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, "Cannot convert argument to ushort");
+                    throw new RunTimeError(_node, $"Cannot convert argument to ushort {_node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
@@ -3759,7 +3759,7 @@ namespace RazorEnhanced
             public uint AsSerial()
             {
                 if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, "Cannot convert argument to serial");
+                    throw new RunTimeError(_node, $"Cannot convert argument to serial {_node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
@@ -3793,7 +3793,7 @@ namespace RazorEnhanced
             public string AsString()
             {
                 if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, "Cannot convert argument to string");
+                    throw new RunTimeError(_node, $"Cannot convert argument to string {_node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
@@ -3826,7 +3826,7 @@ namespace RazorEnhanced
             public bool AsBool()
             {
                 if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, "Cannot convert argument to bool");
+                    throw new RunTimeError(_node, $"Cannot convert argument to bool {_node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
