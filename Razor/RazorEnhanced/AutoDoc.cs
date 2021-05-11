@@ -136,7 +136,6 @@ namespace RazorEnhanced
         public const String DEFAULT_MD_PATH = "./Docs/";
         public const String DEFAULT_SPHINX_PATH = "./Docs/Sphinx/";
 
-
         public static bool JsonDocExists(string path = null)
         {
             if (path == null) { path = DEFAULT_JSON_PATH; }
@@ -180,8 +179,8 @@ namespace RazorEnhanced
 
         private static String IDT(int num) { return new String('\t', num); }
         private static string Q3 = "\"\"\"";
-        private static Regex NL = new Regex("\n",RegexOptions.Multiline|RegexOptions.Compiled);
-        private static string IndentText(string IDT, string text) { return NL.Replace(text,"\n"+IDT); }
+        private static Regex NL = new Regex("\n", RegexOptions.Multiline | RegexOptions.Compiled);
+        private static string IndentText(string IDT, string text) { return NL.Replace(text, "\n" + IDT); }
 
         public static void ExportPy(string path = null)
         {
@@ -202,41 +201,41 @@ namespace RazorEnhanced
 
             String content;
 
-            var header = Q3+"\n";
+            var header = Q3 + "\n";
             header += "This module represents the scripting PythonAPI available in RazorEnhanced.\n";
-            header += "This sclass it's intended NOT to be used in code, but to generate documentation and autocomplete for external editors.\n";
-            header += Q3+"\n";
+            header += "This class is NOT intended to be used as code, but to provice autocomplete in external editors and generation documentation.\n";
+            header += Q3 + "\n";
 
 
             header += "from System.Collections.Generic import List\n";
             header += "from System import Byte, Int32\n";
 
+            //Or should i replace with "python types" ? 
             header += "class String(str): pass\n";
             header += "class List(list): pass\n";
             header += "class Dictionary(dict): pass\n";
             header += "class Object: pass\n";
 
-            header += "class Boolean(bool): pass \n";
+
+            header += "class Boolean(bool): pass\n";
             header += "class Byte(int): pass\n";
+            header += "class Int(int): pass \n";
             header += "class Int32(int): pass \n";
             header += "class UInt32(int): pass\n";
             header += "class Float(float): pass\n";
+            header += "class Single(float): pass\n";
             header += "class Double(double): pass\n";
-            
-            
+
+
+
 
 
             header += "\n";
-
-
 
             var classListPy = new List<String>();
             // Create per-class docs
             foreach (var cls in classList)
             {
-
-                
-                
                 var classTree = cls.itemClass.Split('.');
                 var className = classTree.Last();
                 var classDescription = cls.itemDescription;
@@ -271,7 +270,7 @@ namespace RazorEnhanced
                     string propDescription = prop.itemDescription == "" ? "A " + prop.itemName : IndentText(IDT2, prop.itemDescription);
 
                     //Property + Docstrings
-                    propName  = $"{IDT1}@property\n";
+                    propName = $"{IDT1}@property\n";
                     propName += $"{IDT1}def {prop.itemName}(self):\n";
                     propName += $"{IDT2}{Q3}{propDescription}\n";
                     propName += $"{IDT2}:rtype: {prop.propertyType} \n";
@@ -295,7 +294,7 @@ namespace RazorEnhanced
                 //foreach (DocMethod method in classMethod)
                 foreach (string methodName in classMethodNames)
                 {
-                    var sameNameMethods = classMethod.Where(method => method.itemName == methodName).OrderByDescending(method => method.paramList.Count() );
+                    var sameNameMethods = classMethod.Where(method => method.itemName == methodName).OrderByDescending(method => method.paramList.Count());
                     var firstMethod = sameNameMethods.First();
                     var lastMethod = sameNameMethods.Last();
                     var cnt = sameNameMethods.Count();
@@ -305,7 +304,7 @@ namespace RazorEnhanced
                         string argSign, argDocs;
                         var argsSign = new List<String>();
                         var argsDocs = new List<String>();
-                        
+
 
 
                         int arg_num = 0;
@@ -329,16 +328,17 @@ namespace RazorEnhanced
                                 {
                                     argSign += arg.itemDefaultValue;
                                 }
-                                
+
                             }
-                            if (method.xmlKey != firstMethod.xmlKey) {
+                            if (method.xmlKey != firstMethod.xmlKey)
+                            {
                                 argSign = $"{arg.itemType}: {argSign}"; //Prentend we have typings 
                             }
                             argsSign.Add(argSign);
 
 
                             //Build list of params docstring, only for first method
-                            
+
                             if (method.xmlKey == firstMethod.xmlKey)
                             {
                                 string argDescription = arg.itemDescription == "" ? "A " + arg.itemName : IndentText(IDT2, arg.itemDescription);
@@ -346,14 +346,14 @@ namespace RazorEnhanced
                                 argDocs += $"{IDT2}:type  {arg.itemName}: {arg.itemType}\n";
                                 argsDocs.Add(argDocs);
                             }
-                            
+
 
                             arg_num++;
                         }
 
                         if (!method.isStatic)
                         {
-                            argsSign.Insert(0,"self");
+                            argsSign.Insert(0, "self");
                         }
 
                         //Write actualt python "def"
@@ -366,9 +366,10 @@ namespace RazorEnhanced
                             methodPy += $"{IDT1}def {method.itemName}({String.Join(", ", argsSign)}):\n";
                             methodPy += $"{IDT2}{Q3}\n";
                             methodPy += $"{String.Join("\n", argsDocs)}\n";
-                            
+
                         }
-                        else {
+                        else
+                        {
                             /*
                             methodPy += $"{IDT2}.. py:function:: {method.itemName}({String.Join(", ", argsSign)})";
                             if (method.returnType != "Void")
@@ -379,7 +380,7 @@ namespace RazorEnhanced
                             */
                         }
                     }
-                   
+
                     if (firstMethod.returnType != "Void")
                     {
                         //methodPy += $"{IDT2}:return: return description\n"; //TODO: add parser for <return></return> ( probably an overkill, the summery should do ) 
