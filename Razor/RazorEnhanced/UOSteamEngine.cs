@@ -2462,7 +2462,8 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 string filename = args[0].AsString();
-                System.Media.SoundPlayer player = new System.Media.SoundPlayer(filename);
+                string fullpath = Path.Combine(Assistant.Engine.RootPath, filename);
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(fullpath);
                 player.Play();
             }
             return true;
