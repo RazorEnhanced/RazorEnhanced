@@ -58,14 +58,14 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterAliasHandler("lefthand", AliasHandler);
             UOScript.Interpreter.RegisterAliasHandler("righthand", AliasHandler);
 
-            //UOScript.Interpreter.RegisterAliasHandler("lastobject", AliasHandler);  //TODO: how to you get the "last object" in razor ? 
+            //UOScript.Interpreter.RegisterAliasHandler("lastobject", AliasHandler);  //TODO: how to you get the "last object" in razor ?
             UOScript.Interpreter.SetAlias("lastobject", 0); //TODO: not implemented
 
             UOScript.Interpreter.SetAlias("found", 0);
             UOScript.Interpreter.SetAlias("enemy", 0);
             UOScript.Interpreter.SetAlias("friend", 0);
-            
-            
+
+
 
             m_toggle_LeftSave = 0;
             m_toggle_RightSave = 0;
@@ -84,19 +84,19 @@ namespace RazorEnhanced
                 case "backpack":     return (uint)Player.Backpack.Serial;
                 case "self":         return (uint)Player.Serial;
                 case "bank":         return (uint)Player.Bank.Serial;
-                case "mount":        return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ? 
+                case "mount":        return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ?
                 case "lefthand":     return (uint)Player.GetItemOnLayer("LeftHand").Serial;
                 case "righthand":    return (uint)Player.GetItemOnLayer("RightHand").Serial;
                 case "lasttarget":   return (uint)RazorEnhanced.Target.GetLast();
                 case "last":         return (uint)RazorEnhanced.Target.GetLast();
                 //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
-                
+
 
             }
             return 0;
         }
 
-        
+
         public void Execute(string filename)
         {
             var root = Lexer.Lex(filename);
@@ -289,7 +289,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("timer", this.Timer);
             UOScript.Interpreter.RegisterExpressionHandler("timerexists", this.TimerExists);
             UOScript.Interpreter.RegisterExpressionHandler("targetexists", this.TargetExists);
-            
+
 
 
             // Player Attributes
@@ -337,7 +337,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("innocent", this.IsInnocent);
             UOScript.Interpreter.RegisterExpressionHandler("murderer", this.IsMurderer);
 
-
+            UOScript.Interpreter.RegisterExpressionHandler("bandage", this.Bandage);
 
             // Object attributes
         }
@@ -401,7 +401,7 @@ namespace RazorEnhanced
 
         private IComparable InJournal(string expression, UOScript.Argument[] args, bool quiet)
         {
-                                                  
+
             if (args.Length == 1)
             {
                 string text = args[0].AsString();
@@ -834,10 +834,10 @@ namespace RazorEnhanced
         {
             //UOS Direction -  Start in top-right-corner: 0 | North. Inclements: clockwise
             Dictionary<string, int> dir_num = new Dictionary<string, int>() {
-                {"North",0}, {"Right",1}, {"East",2}, {"Down",3}, 
+                {"North",0}, {"Right",1}, {"East",2}, {"Down",3},
                 {"South",4}, {"Left",5},  {"West",6}, {"Up",7},
-                
-                
+
+
             };
 
             string direction = null;
@@ -855,8 +855,8 @@ namespace RazorEnhanced
                 }
             }
 
-            if ( dir_num.ContainsKey(direction)  ){ 
-                return dir_num[Player.Direction]; 
+            if ( dir_num.ContainsKey(direction)  ){
+                return dir_num[Player.Direction];
             }
 
             return false;
@@ -1005,6 +1005,14 @@ namespace RazorEnhanced
                 return theMobile.Notoriety == 2;
             }
             return false;
+        }
+
+        private IComparable Bandage(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
+            if (count > 0 &&  (Player.Hits < Player.HitsMax || Player.Poisoned) )
+                BandageHeal.Heal(Assistant.World.Player);
+            return count;
         }
 
 
@@ -1337,8 +1345,8 @@ namespace RazorEnhanced
 
         private IComparable WaitingForTarget(string expression, UOScript.Argument[] args, bool quiet)
         {
-            //TODO: This is an very loose approximation. Waitingfortarget should know if there is any "pending target" coming from the server.  
-            //UOS Tester: Lermster#2355          
+            //TODO: This is an very loose approximation. Waitingfortarget should know if there is any "pending target" coming from the server.
+            //UOS Tester: Lermster#2355
             return RazorEnhanced.Target.HasTarget();
         }
 
@@ -1944,8 +1952,8 @@ namespace RazorEnhanced
             {
                 Items.DropItemGroundSelf((int)serial);
             }
-            else 
-            { 
+            else
+            {
                 int amount = -1;
                 if (args.Length == 3)
                 {
@@ -3105,7 +3113,7 @@ namespace RazorEnhanced
                         filter.IsHuman = 1;
                         break;
                     case "transformation":
-                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc 
+                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc
                     case "closest":
                     case "nearest":
                         nearest = true;
@@ -3121,9 +3129,9 @@ namespace RazorEnhanced
                 {
                     anEnemy = Mobiles.Select(list, "Nearest");
                 }
-                
-                
-                int color = 20; 
+
+
+                int color = 20;
                 switch (anEnemy.Notoriety){
                     case 1: color = 190; break; //Blue
                     case 2: color = 168; break; //Green
@@ -3131,7 +3139,7 @@ namespace RazorEnhanced
                     case 4: color = 1000; break; //Gray
                     case 5: color = 140; break; //Orange
                     case 6: color = 138; break; //Red
-                    case 7: color = 153; break; //Yellow      
+                    case 7: color = 153; break; //Yellow
                 }
                 RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
                 Player.HeadMessage(color, "[Enemy] " + anEnemy.Name);
@@ -3180,7 +3188,7 @@ namespace RazorEnhanced
                         filter.IsHuman = 1;
                         break;
                     case "transformation":
-                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc 
+                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc
                     case "closest":
                     case "nearest":
                         nearest = true;
@@ -3195,7 +3203,7 @@ namespace RazorEnhanced
                 {
                     anEnemy = Mobiles.Select(list, "Nearest");
                 }
-                
+
                 int color = 20;
                 switch (anEnemy.Notoriety)
                 {
