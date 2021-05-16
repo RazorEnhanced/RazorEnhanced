@@ -77,17 +77,25 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static bool SearchByType(string text, string type)
-		{
-			try
-			{
-				return World.Player.Journal.Where(entrys => entrys.Type.ToString() == type).Any(entrys => entrys.Text.Contains(text));
-			}
-			catch
-			{
-				return false;
-			}
-		}
+        public static bool SearchByType(string text, string type)
+        {
+            try
+            {
+                foreach (var entry in World.Player.Journal)
+                {
+                    if (entry.Type.ToString() == type && entry.Text.Contains(text))
+                    {
+                        return true;
+                    }
+                }
+                //return World.Player.Journal.Where(entrys => entrys.Type.ToString() == type).Any(entrys => entrys.Text.Contains(text));
+            }
+            catch
+            {
+                // Do nothing
+            }
+            return false;
+        }
 
 		public static string GetLineText(string text, bool addname = false)
 		{
