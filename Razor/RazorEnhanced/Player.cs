@@ -857,13 +857,23 @@ namespace RazorEnhanced
         {
             if (World.Player == null || World.Player.Buffs == null)
                 return false;
-
-            for (int i = 0; i < World.Player.Buffs.Count; i++)
+            string useBuffname = GuessBuffName(buffname);
+            if (Enum.TryParse(useBuffname, out BuffIcon myBuff))
             {
-                if (GetBuffDescription(World.Player.Buffs[i]) == buffname)
-                    return true;
+                for (int i = 0; i < World.Player.Buffs.Count; i++)
+                {
+                    if (World.Player.Buffs[i] == myBuff)
+                        return true;
+                }
             }
-
+            else
+            {
+                for (int i = 0; i < World.Player.Buffs.Count; i++)
+                {
+                    if (GetBuffDescription(World.Player.Buffs[i]) == useBuffname)
+                        return true;
+                }
+            }
             return false;
         }
 
@@ -1012,7 +1022,26 @@ namespace RazorEnhanced
             return originalName;
 
         }
+        internal static string GuessBuffName(string originalName)
+        {
+            int distance = 99;
+            string closest = "";
 
+            foreach (string buff in Enum.GetNames(typeof(BuffIcon)))
+            {
+                int computeDistance = UOAssist.LevenshteinDistance(buff, originalName);
+                if (computeDistance < distance)
+                {
+                    distance = computeDistance;
+                    closest = buff;
+                }
+            }
+
+            if (distance < 99)
+                return closest;
+            return originalName;
+
+        }
         // Skill
         public static double GetSkillValue(string skillname)
         {
