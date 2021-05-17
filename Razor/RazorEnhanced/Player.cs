@@ -55,6 +55,39 @@ namespace RazorEnhanced
 
         // Flags
         public static bool IsGhost { get { return World.Player.IsGhost; } }
+        public static string Area()
+        {
+            ConfigFiles.RegionByArea.Area area = Area(Player.Map, Player.Position.X, Player.Position.Y);
+            if (area == null)
+                return "unknown";
+
+            return area.areaName;
+        }
+        public static string Zone()
+        {
+            ConfigFiles.RegionByArea.Area area = Area(Player.Map, Player.Position.X, Player.Position.Y);
+            if (area == null)
+                return "unknown";
+
+            return area.zoneName;
+        }
+
+        internal static ConfigFiles.RegionByArea.Area Area(int map, int x, int y)
+        {
+            if (ConfigFiles.RegionByArea.AllFacets.ContainsKey(map))
+            {
+                ConfigFiles.RegionByArea.Facet facet = ConfigFiles.RegionByArea.AllFacets[Player.Map];
+                foreach (ConfigFiles.RegionByArea.Area area in facet.areas)
+                {
+                    foreach (System.Drawing.Rectangle rect in area.rect)
+                    {
+                        if (rect.Contains((Int32)x, (Int32)y))
+                            return area;
+                    }
+                }
+            }
+            return null;
+        }
 
         public static bool Poisoned { get { return World.Player.Poisoned; } }
         public static bool YellowHits { get { return World.Player.Blessed; } }
@@ -72,7 +105,8 @@ namespace RazorEnhanced
 
         public static void ToggleAlwaysRun()
         {
-            if (Client.IsOSI){
+            if (Client.IsOSI)
+            {
                 RazorEnhanced.UoWarper.UODLLHandleClass.ToggleAlwaysRun();
             }
             //TODO: check how to set "always run" on CUO
@@ -1149,7 +1183,7 @@ namespace RazorEnhanced
             //World.Player.Skills[(int)skill].Lock = t;
             //Engine.MainWindow.SafeAction(s => s.UpdateSkill(World.Player.Skills[(int)skill]));
 
-           // Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
+            // Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
         }
 
 
@@ -1168,7 +1202,7 @@ namespace RazorEnhanced
             UseSkill(skillname, target.Serial, wait);
             return;
         }
-        public static void UseSkill(string skillname, int targetSerial, bool wait=true)
+        public static void UseSkill(string skillname, int targetSerial, bool wait = true)
         {
             string guessedSkillName = GuessSkillName(skillname);
             if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
@@ -1222,227 +1256,227 @@ namespace RazorEnhanced
         }
 
         public static void UseSkillOnly(string skillname, bool wait)
-		{
+        {
             string guessedSkillName = GuessSkillName(skillname);
             if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
-			{
-				Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
-				return;
-			}
+            {
+                Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
+                return;
+            }
 
-			if (wait)
-		 		Assistant.Client.Instance.SendToServerWait(new UseSkill((int)skill));
-			else
-		 		Assistant.Client.Instance.SendToServer(new UseSkill((int)skill));
+            if (wait)
+                Assistant.Client.Instance.SendToServerWait(new UseSkill((int)skill));
+            else
+                Assistant.Client.Instance.SendToServer(new UseSkill((int)skill));
 
-			if (skill == SkillName.Hiding)
-				StealthSteps.Hide();
+            if (skill == SkillName.Hiding)
+                StealthSteps.Hide();
 
-			else if (skill == SkillName.Stealth)
-			{
-				if (!World.Player.Visible) // Trigger stealth step counter
-					StealthSteps.Hide();
-			}
-		}
-		// Map Message
-		public static void MapSay(int num)
-		{
-			MapSay(num.ToString());
-		}
+            else if (skill == SkillName.Stealth)
+            {
+                if (!World.Player.Visible) // Trigger stealth step counter
+                    StealthSteps.Hide();
+            }
+        }
+        // Map Message
+        public static void MapSay(int num)
+        {
+            MapSay(num.ToString());
+        }
 
-		public static void MapSay(string msg)
-		{
-			if (msg != null && msg != string.Empty)
-		 		Assistant.UOAssist.PostTextSend(msg);
-		}
+        public static void MapSay(string msg)
+        {
+            if (msg != null && msg != string.Empty)
+                Assistant.UOAssist.PostTextSend(msg);
+        }
 
-		// Game Message
-		public static void ChatSay(int hue, int num)
-		{
-			ChatSay(hue, num.ToString());
-		}
+        // Game Message
+        public static void ChatSay(int hue, int num)
+        {
+            ChatSay(hue, num.ToString());
+        }
 
-		public static void ChatSay(int hue, string msg)
-		{
-			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
-			if (kw.Count == 1 && kw[0] == 0)
-			{
-		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
-			}
-			else
-			{
-		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
-			}
-		}
-		public static void ChatGuild(int num)
-		{
-			ChatGuild(num.ToString());
-		}
+        public static void ChatSay(int hue, string msg)
+        {
+            List<ushort> kw = EncodedSpeech.GetKeywords(msg);
+            if (kw.Count == 1 && kw[0] == 0)
+            {
+                Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
+            }
+            else
+            {
+                Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
+            }
+        }
+        public static void ChatGuild(int num)
+        {
+            ChatGuild(num.ToString());
+        }
 
-		public static void ChatGuild(string msg)
-		{
-			if (Assistant.Client.Instance.ServerEncrypted) // is OSI
-		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Guild, 1, 1, "ENU", new List<ushort>(), msg));
-			else
-		 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
-		}
+        public static void ChatGuild(string msg)
+        {
+            if (Assistant.Client.Instance.ServerEncrypted) // is OSI
+                Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Guild, 1, 1, "ENU", new List<ushort>(), msg));
+            else
+                Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+        }
 
-		public static void ChatAlliance(int num)
-		{
-			ChatAlliance(num.ToString());
-		}
+        public static void ChatAlliance(int num)
+        {
+            ChatAlliance(num.ToString());
+        }
 
-		public static void ChatAlliance(string msg)
-		{
-			if (Assistant.Client.Instance.ServerEncrypted) // is OSI
-		 		Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Alliance, 1, 1, "ENU", new List<ushort>(), msg));
-			else
-		 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
-		}
+        public static void ChatAlliance(string msg)
+        {
+            if (Assistant.Client.Instance.ServerEncrypted) // is OSI
+                Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Alliance, 1, 1, "ENU", new List<ushort>(), msg));
+            else
+                Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
+        }
 
-		public static void ChatEmote(int hue, int num)
-		{
-			ChatEmote(hue, num.ToString());
-		}
+        public static void ChatEmote(int hue, int num)
+        {
+            ChatEmote(hue, num.ToString());
+        }
 
-		public static void ChatEmote(int hue, string msg)
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
-		}
+        public static void ChatEmote(int hue, string msg)
+        {
+            Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
+        }
 
-		public static void ChatWhisper(int hue, int num)
-		{
-			ChatWhisper(hue, num.ToString());
-		}
+        public static void ChatWhisper(int hue, int num)
+        {
+            ChatWhisper(hue, num.ToString());
+        }
 
-		public static void ChatWhisper(int hue, string msg)
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
-		}
+        public static void ChatWhisper(int hue, string msg)
+        {
+            Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
+        }
 
-		public static void ChatYell(int hue, int num)
-		{
-			ChatYell(hue, num.ToString());
-		}
+        public static void ChatYell(int hue, int num)
+        {
+            ChatYell(hue, num.ToString());
+        }
 
-		public static void ChatYell(int hue, string msg)
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
-		}
+        public static void ChatYell(int hue, string msg)
+        {
+            Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
+        }
 
-		public static void ChatChannel(int num)
-		{
-			ChatChannel(num.ToString());
-		}
+        public static void ChatChannel(int num)
+        {
+            ChatChannel(num.ToString());
+        }
 
-		public static void ChatChannel(string msg)
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new ChatAction(0x61, Language.CliLocName, msg));
-		}
+        public static void ChatChannel(string msg)
+        {
+            Assistant.Client.Instance.SendToServerWait(new ChatAction(0x61, Language.CliLocName, msg));
+        }
 
-		// attack
-		public static void SetWarMode(bool warflag)
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new SetWarMode(warflag));
-		}
+        // attack
+        public static void SetWarMode(bool warflag)
+        {
+            Assistant.Client.Instance.SendToServerWait(new SetWarMode(warflag));
+        }
 
-		public static void Attack(Mobile m)
-		{
-			Attack(m.Serial);
-		}
+        public static void Attack(Mobile m)
+        {
+            Attack(m.Serial);
+        }
 
-		public static void Attack(int serial)
-		{
+        public static void Attack(int serial)
+        {
             // make sure its either an item or a mobile, else server will disconnect you
-			if ((World.FindMobile(serial) == null) && (World.FindItem(serial) == null))
+            if ((World.FindMobile(serial) == null) && (World.FindItem(serial) == null))
                 return;
 
-			Target.AttackMessage(serial, true);
-			if (Targeting.LastAttack != serial)
-			{
-		 		Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
-				Targeting.LastAttack = (uint)serial;
-			}
-	 		Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
+            Target.AttackMessage(serial, true);
+            if (Targeting.LastAttack != serial)
+            {
+                Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
+                Targeting.LastAttack = (uint)serial;
+            }
+            Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
         }
 
 
         public static void AttackLast()
-		{
-			if (Targeting.LastAttack == 0) // Nessun last attack presente
-				return;
+        {
+            if (Targeting.LastAttack == 0) // Nessun last attack presente
+                return;
 
             if ((World.FindMobile(Targeting.LastAttack) == null) && (World.FindItem(Targeting.LastAttack) == null))
                 return;
 
-			Target.AttackMessage((int)Targeting.LastAttack, true);
+            Target.AttackMessage((int)Targeting.LastAttack, true);
 
-	 		Assistant.Client.Instance.SendToServerWait(new AttackReq(Targeting.LastAttack));
-		}
+            Assistant.Client.Instance.SendToServerWait(new AttackReq(Targeting.LastAttack));
+        }
 
-		// Virtue
-		public static void InvokeVirtue(string virtue)
-		{
-			if (!Enum.TryParse<Virtues>(virtue, out Virtues v))
-			{
-				Scripts.SendMessageScriptError("Script Error: InvokeVirtue: " + virtue + " not valid");
-				return;
-			}
+        // Virtue
+        public static void InvokeVirtue(string virtue)
+        {
+            if (!Enum.TryParse<Virtues>(virtue, out Virtues v))
+            {
+                Scripts.SendMessageScriptError("Script Error: InvokeVirtue: " + virtue + " not valid");
+                return;
+            }
 
-	 		Assistant.Client.Instance.SendToServerWait(new InvokeVirtue((byte)v));
-		}
+            Assistant.Client.Instance.SendToServerWait(new InvokeVirtue((byte)v));
+        }
 
-		public static void ChatParty(string msg, int serial = 0)
-		{
-			if (serial != 0)
-		 		Assistant.Client.Instance.SendToServerWait(new SendPartyMessagePrivate(serial, msg));
-			else
-		 		Assistant.Client.Instance.SendToServerWait(new SendPartyMessage(msg));
-		}
+        public static void ChatParty(string msg, int serial = 0)
+        {
+            if (serial != 0)
+                Assistant.Client.Instance.SendToServerWait(new SendPartyMessagePrivate(serial, msg));
+            else
+                Assistant.Client.Instance.SendToServerWait(new SendPartyMessage(msg));
+        }
 
-		public static void PartyInvite()
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new PartyInvite());
-		}
+        public static void PartyInvite()
+        {
+            Assistant.Client.Instance.SendToServerWait(new PartyInvite());
+        }
 
         public static void PartyAccept(int serial = 0)
         {
             Assistant.Client.Instance.SendToServerWait(new AcceptParty(serial));
         }
 
-		public static void LeaveParty()
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
-		}
+        public static void LeaveParty()
+        {
+            Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
+        }
 
-		public static void KickMember(int serial)
-		{
-			uint userial = Convert.ToUInt16(serial);
-	 		Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(userial));
-		}
+        public static void KickMember(int serial)
+        {
+            uint userial = Convert.ToUInt16(serial);
+            Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(userial));
+        }
 
-		public static void PartyCanLoot(bool CanLoot)
-		{
-			if (CanLoot)
-			 		Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x1));
-				else
-			 		Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x0));
-		}
+        public static void PartyCanLoot(bool CanLoot)
+        {
+            if (CanLoot)
+                Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x1));
+            else
+                Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x0));
+        }
 
-		// Moving
-		public static bool Walk(string direction, bool checkPosition = true)  // Return true se walk ok false se rifiutato da server
-		{
-			return Run(direction, checkPosition);
-		}
+        // Moving
+        public static bool Walk(string direction, bool checkPosition = true)  // Return true se walk ok false se rifiutato da server
+        {
+            return Run(direction, checkPosition);
+        }
 
-		private static DateTime m_LastWalk = DateTime.MinValue;
-		public static bool Run(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
-		{
-			if (!Enum.TryParse<Direction>(direction.ToLower(), out Direction dir))
-			{
-				Scripts.SendMessageScriptError("Script Error: Run: " + direction + " not valid");
-				return false;
-			}
+        private static DateTime m_LastWalk = DateTime.MinValue;
+        public static bool Run(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
+        {
+            if (!Enum.TryParse<Direction>(direction.ToLower(), out Direction dir))
+            {
+                Scripts.SendMessageScriptError("Script Error: Run: " + direction + " not valid");
+                return false;
+            }
 
             if (checkPosition && !Client.IsOSI)
             {
@@ -1454,24 +1488,24 @@ namespace RazorEnhanced
                     Thread.Sleep(wait);
                 }
             }
-			World.Player.WalkScriptRequest = 1;
-			int timeout = 0;
-			Client.Instance.RequestMove(dir);
-			m_LastWalk = DateTime.UtcNow;
-			// Waits until a move event is seen happenning
-			Console.WriteLine("Move {0} Sent", direction);
+            World.Player.WalkScriptRequest = 1;
+            int timeout = 0;
+            Client.Instance.RequestMove(dir);
+            m_LastWalk = DateTime.UtcNow;
+            // Waits until a move event is seen happenning
+            Console.WriteLine("Move {0} Sent", direction);
             if (checkPosition && Client.IsOSI)
             {
                 while (World.Player.WalkScriptRequest < 2)
                 {
-                	Thread.Sleep(10);
-                	timeout += 20;
-                	Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
-                	if (timeout > 1000) //  Handle slower ping times
-                	{
-                		Console.WriteLine("Move Timeout {0}", direction);
-                		break;
-                	}
+                    Thread.Sleep(10);
+                    timeout += 20;
+                    Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
+                    if (timeout > 1000) //  Handle slower ping times
+                    {
+                        Console.WriteLine("Move Timeout {0}", direction);
+                        break;
+                    }
                 }
                 Console.WriteLine("Move {0} Complete {1}", direction, World.Player.WalkScriptRequest);
                 if (World.Player.WalkScriptRequest == 2)
@@ -1482,18 +1516,18 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                	World.Player.WalkScriptRequest = 0;
-                	return false;
+                    World.Player.WalkScriptRequest = 0;
+                    return false;
                 }
             }
 
             return true;
-		}
+        }
 
-		public static void PathFindTo(Assistant.Point3D Location)
-		{
-			PathFindTo(Location.X, Location.Y, Location.Z);
-		}
+        public static void PathFindTo(Assistant.Point3D Location)
+        {
+            PathFindTo(Location.X, Location.Y, Location.Z);
+        }
 
         public static void PathFindTo(int x, int y, int z)
         {
@@ -1502,123 +1536,123 @@ namespace RazorEnhanced
 
 
         internal static void PathFindToPacket(Assistant.Point3D location)
-		{
-			Assistant.Client.Instance.PathFindTo(location);
-		}
-
-		internal static void PathFindToPacket(int x, int y, int z)
-		{
-			Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
-			PathFindToPacket(loc);
+        {
+            Assistant.Client.Instance.PathFindTo(location);
         }
 
-		// Fly
-		public static void Fly(bool on)
-		{
-			if (on)
-			{
-				if (!World.Player.Flying)
-			 		Assistant.Client.Instance.SendToServerWait(new ToggleFly());
-			}
-			else
-			{
-				if (World.Player.Flying)
-			 		Assistant.Client.Instance.SendToServerWait(new ToggleFly());
-			}
-		}
+        internal static void PathFindToPacket(int x, int y, int z)
+        {
+            Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
+            PathFindToPacket(loc);
+        }
 
-		// Message
-		public static void HeadMessage(int hue, int num)
-		{
-			HeadMessage(hue, num.ToString());
-		}
+        // Fly
+        public static void Fly(bool on)
+        {
+            if (on)
+            {
+                if (!World.Player.Flying)
+                    Assistant.Client.Instance.SendToServerWait(new ToggleFly());
+            }
+            else
+            {
+                if (World.Player.Flying)
+                    Assistant.Client.Instance.SendToServerWait(new ToggleFly());
+            }
+        }
 
-		public static void HeadMessage(int hue, string message)
-		{
-	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
-		}
+        // Message
+        public static void HeadMessage(int hue, int num)
+        {
+            HeadMessage(hue, num.ToString());
+        }
 
-		// Paperdoll button click
-		public static void QuestButton()
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new QuestButton(World.Player.Serial));
-		}
+        public static void HeadMessage(int hue, string message)
+        {
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
+        }
 
-		public static void GuildButton()
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new GuildButton(World.Player.Serial));
-		}
+        // Paperdoll button click
+        public static void QuestButton()
+        {
+            Assistant.Client.Instance.SendToServerWait(new QuestButton(World.Player.Serial));
+        }
 
-		// Range
-		public static bool InRangeMobile(Mobile mob, int range)
-		{
-			if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
-				return true;
-			else
-				return false;
-		}
+        public static void GuildButton()
+        {
+            Assistant.Client.Instance.SendToServerWait(new GuildButton(World.Player.Serial));
+        }
 
-		public static bool InRangeMobile(int mobserial, int range)
-		{
-			Assistant.Mobile mob = World.FindMobile(mobserial);
-			if (mob != null)
-			{
-				if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
-					return true;
-				else
-					return false;
-			}
-			else
-				return false;
-		}
+        // Range
+        public static bool InRangeMobile(Mobile mob, int range)
+        {
+            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
+                return true;
+            else
+                return false;
+        }
 
-		public static bool InRangeItem(Item i, int range)
-		{
-			if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= range)
-				return true;
-			else
-				return false;
-		}
+        public static bool InRangeMobile(int mobserial, int range)
+        {
+            Assistant.Mobile mob = World.FindMobile(mobserial);
+            if (mob != null)
+            {
+                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
 
-		public static bool InRangeItem(int itemserial, int range)
-		{
-			Assistant.Item item = World.FindItem(itemserial);
-			if (item != null)
-			{
-				if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
-					return true;
-				else
-					return false;
-			}
-			else
-				return false;
-		}
+        public static bool InRangeItem(Item i, int range)
+        {
+            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= range)
+                return true;
+            else
+                return false;
+        }
 
-		// Weapon SA
-		public static void WeaponPrimarySA()
-		{
-			SpecialMoves.SetPrimaryAbility(true);
-		}
+        public static bool InRangeItem(int itemserial, int range)
+        {
+            Assistant.Item item = World.FindItem(itemserial);
+            if (item != null)
+            {
+                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
+        }
 
-		public static void WeaponSecondarySA()
-		{
-			SpecialMoves.SetSecondaryAbility(true);
-		}
+        // Weapon SA
+        public static void WeaponPrimarySA()
+        {
+            SpecialMoves.SetPrimaryAbility(true);
+        }
 
-		public static void WeaponClearSA()
-		{
-			SpecialMoves.ClearAbilities(true);
-		}
+        public static void WeaponSecondarySA()
+        {
+            SpecialMoves.SetSecondaryAbility(true);
+        }
 
-		public static void WeaponDisarmSA()
-		{
-			SpecialMoves.OnDisarm(true);
-		}
+        public static void WeaponClearSA()
+        {
+            SpecialMoves.ClearAbilities(true);
+        }
 
-		public static void WeaponStunSA()
-		{
-			SpecialMoves.OnStun(true);
-		}
+        public static void WeaponDisarmSA()
+        {
+            SpecialMoves.OnDisarm(true);
+        }
+
+        public static void WeaponStunSA()
+        {
+            SpecialMoves.OnStun(true);
+        }
 
         // Props
 
@@ -1671,45 +1705,45 @@ namespace RazorEnhanced
         }
 
         public static List<string> GetPropStringList()
-		{
-			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+        {
+            List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
 
-			return props.Select(prop => prop.ToString()).ToList();
-		}
+            return props.Select(prop => prop.ToString()).ToList();
+        }
 
-		public static string GetPropStringByIndex(int index)
-		{
-			string propstring = String.Empty;
+        public static string GetPropStringByIndex(int index)
+        {
+            string propstring = String.Empty;
 
-			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
-			if (props.Count > index)
-				propstring = props[index].ToString();
+            List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+            if (props.Count > index)
+                propstring = props[index].ToString();
 
-			return propstring;
-		}
+            return propstring;
+        }
 
-		public static int GetPropValue(string name)
-		{
-			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+        public static int GetPropValue(string name)
+        {
+            List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
 
-			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-			{
-				if (!prop.ToString().ToLower().Contains(name.ToLower()))
-					continue;
+            foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+            {
+                if (!prop.ToString().ToLower().Contains(name.ToLower()))
+                    continue;
 
-				if (prop.Args == null)  // Props esiste ma non ha valore
-					return 1;
+                if (prop.Args == null)  // Props esiste ma non ha valore
+                    return 1;
 
-				try
-				{
-					return (Convert.ToInt32(Language.ParsePropsCliloc(prop.Args)));
-				}
-				catch
-				{
-					return 1;  // errore di conversione ma esiste
-				}
-			}
-			return 0;  // Non esiste
-		}
-	}
+                try
+                {
+                    return (Convert.ToInt32(Language.ParsePropsCliloc(prop.Args)));
+                }
+                catch
+                {
+                    return 1;  // errore di conversione ma esiste
+                }
+            }
+            return 0;  // Non esiste
+        }
+    }
 }
