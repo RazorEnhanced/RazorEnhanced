@@ -263,7 +263,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("z", this.LocationZ);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
-            UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion); //TODO: This method is a stub. Remove after successful testing.
+            UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion);
             UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill);
             UOScript.Interpreter.RegisterExpressionHandler("findobject", this.FindObject);
             UOScript.Interpreter.RegisterExpressionHandler("useobject", this.UseObjExp);
@@ -1074,7 +1074,43 @@ namespace RazorEnhanced
 
         private IComparable InRegion(string expression, UOScript.Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            if (args.Length < 1)
+            {
+                throw new UOScript.RunTimeError(null, "inregion requires parameters");
+                return false;
+            }
+
+            string desiredRegion = args[0].AsString();
+            string region = Player.Zone();
+            if (args.Length == 1)
+            {
+                return desiredRegion.ToLower() == region.ToLower();
+            }
+            if (args.Length == 3)
+            {
+                uint serial = args[1].AsSerial();
+                Mobile mobile = Mobiles.FindBySerial((int)serial);
+                if (mobile == null)
+                    return false;
+                int range = args[2].AsInt();
+                ConfigFiles.RegionByArea.Area area = Player.Area(Player.Map, mobile.Position.X, mobile.Position.Y);
+                if (area == null)
+                    return false;
+                if (desiredRegion.ToLower() != area.zoneName.ToLower())
+                    return false;
+
+                foreach (System.Drawing.Rectangle rect in area.rect)
+                {
+                    if (rect.Contains(mobile.Position.X, mobile.Position.Y))
+                    {
+                        System.Drawing.Rectangle desiredRect = new System.Drawing.Rectangle(rect.X - range, rect.Y - range, rect.Width - range, rect.Height - range);
+                        if (desiredRect.Contains(mobile.Position.X, mobile.Position.Y))
+                            return true;
+                    }
+                }
+                return false;
+            }
+            return false;
         }
 
         private IComparable FindWand(string expression, UOScript.Argument[] args, bool quiet)
