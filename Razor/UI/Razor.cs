@@ -8758,7 +8758,7 @@ namespace Assistant
             AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
 
-        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+            private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {
             if (Client.IsOSI)
             {
@@ -8782,6 +8782,7 @@ namespace Assistant
                             {
                                 if (AutoUpdater.DownloadUpdate())
                                 {
+                                    Assistant.Client.Instance.ClientProcess.Kill();
                                     Application.Exit();
                                     Thread.Sleep(2000); // attesa uscita
                                 }
