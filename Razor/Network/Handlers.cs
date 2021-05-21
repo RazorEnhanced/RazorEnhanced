@@ -2071,20 +2071,21 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
+            if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
+            {
+                SysMessages.Add(text.ToLower());
+                if (SysMessages.Count >= 25)
+                    SysMessages.RemoveRange(0, 10);
+                type = MessageType.System;
+            }
+
+            World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
 			if (World.Player.Journal.Count > 100)
 			{
 				RazorEnhanced.Journal.JournalEntry ra;
 				World.Player.Journal.TryDequeue(out ra);
 			}
 
-			if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
-			{
-				SysMessages.Add(text.ToLower());
-
-				if (SysMessages.Count >= 25)
-					SysMessages.RemoveRange(0, 10);
-			}
 
             string trimmed_text = text.Trim();
             // ugly hack because OSI is not passing new spell words as type MessageType.Spell
@@ -3076,7 +3077,7 @@ namespace Assistant
 			// BYTE[4] Compressed Text Line Length(CTxtLen)
 			// BYTE[4] Decompressed Text Line Length(DTxtLen)
 			// BYTE[CTxtLen - 4] Gump's Compressed Text data, zlib compressed
-			// 
+			//
 			// Notes
 			// text lines is in Big - Endian Unicode formate, not NULL terminated
 			// loop:
@@ -3127,7 +3128,7 @@ namespace Assistant
 
 				// This reads all the text data
 				// The separator for each section seems to be 4 words all 0s
-				// Each string starts with a word containing the length of the number of chars (unicode) to read 
+				// Each string starts with a word containing the length of the number of chars (unicode) to read
 
 				//while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0) // This seems not valid on OSI server that sometimes sends zeros
 				while (!pComp.AtEnd)
@@ -3137,10 +3138,10 @@ namespace Assistant
 					{
 						string tempstring = pComp.ReadUnicodeString(len);
 						stringlistparse[x1] = tempstring;
-					}  
+					}
 					else
                     {
-						stringlistparse[x1] = "";  
+						stringlistparse[x1] = "";
 					}
 					x1++;
 				}
