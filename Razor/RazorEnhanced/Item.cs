@@ -1020,7 +1020,7 @@ namespace RazorEnhanced
 		}
 
 		// Find item by id
-		public static Item FindByID(int itemid, int color, int container, bool recursive=false)
+		public static Item FindByID(int itemid, int color, int container, bool recursive=false, bool considerIgnoreList=true)
 		{
 			if (container != -1)  // search in specific container
 			{
@@ -1032,6 +1032,9 @@ namespace RazorEnhanced
 				}
 				foreach (Item i in cont.Contains)
 				{
+                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+
 					if (i.ItemID == itemid) // check item id
 					{
 						if (color != -1) // color -1 ALL
@@ -1046,7 +1049,7 @@ namespace RazorEnhanced
 					}
 					else if (recursive && i.IsContainer)
 					{
-                        Item recursItem = FindByID(itemid, color, i.Serial, recursive); // recall for sub container
+                        Item recursItem = FindByID(itemid, color, i.Serial, recursive, considerIgnoreList); // recall for sub container
                         if (recursItem != null)
                             return recursItem;
                     }
@@ -1060,6 +1063,7 @@ namespace RazorEnhanced
 					Enabled = true
 				};
 				itemFilter.Graphics.Add(itemid);
+				itemFilter.CheckIgnoreObject = considerIgnoreList;
 
 				if (color != -1)
 					itemFilter.Hues.Add(color);
@@ -1073,7 +1077,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static Item FindByID(int itemid, int color, int container, int range)
+        public static Item FindByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
         {
             if (container != -1)  // search in specific container
             {
@@ -1086,6 +1090,9 @@ namespace RazorEnhanced
                 }
                 foreach (Item i in cont.Contains)
                 {
+                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+
                     if (i.ItemID == itemid) // check item id
                     {
                         if (color != -1) // color -1 ALL
@@ -1100,7 +1107,7 @@ namespace RazorEnhanced
                     }
                     else if (i.IsContainer && range != 0)
                     {
-                        Item recursItem = FindByID(itemid, color, i.Serial, range-1); // recall for sub container
+                        Item recursItem = FindByID(itemid, color, i.Serial, range-1, considerIgnoreList); // recall for sub container
                         if (recursItem != null)
                             return recursItem;
                     }
@@ -1115,6 +1122,7 @@ namespace RazorEnhanced
                 };
                 itemFilter.Graphics.Add(itemid);
                 itemFilter.RangeMax = range;
+                itemFilter.CheckIgnoreObject = considerIgnoreList;
 
                 if (color != -1)
                     itemFilter.Hues.Add(color);
