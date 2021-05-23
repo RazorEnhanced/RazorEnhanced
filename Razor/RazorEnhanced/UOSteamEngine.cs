@@ -1884,7 +1884,7 @@ namespace RazorEnhanced
             {
                 string alias = args[0].AsString();
                 RazorEnhanced.Target target = new RazorEnhanced.Target();
-                int value = target.PromptTarget("Target Alias");
+                int value = target.PromptTarget("Target Alias for "+alias);
                 UOScript.Interpreter.SetAlias(alias, (uint)value);
             }
             return true;

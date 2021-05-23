@@ -1960,15 +1960,17 @@ namespace Assistant
 			bool isNew = false;
 			if (item == null)
 			{
-				World.AddItem(item = Item.Factory(serial, itemID));
-				isNew = true;
+
+                World.AddItem(item = Item.Factory(serial, itemID));
+                isNew = true;
 			}
-			/*else
+            /*else
 			{
 				item.CancelRemove();
 			}*/
 
-			if (!DragDropManager.EndHolding(serial))
+
+            if (!DragDropManager.EndHolding(serial))
 				return;
 
 			item.Container = null;
@@ -2022,7 +2024,15 @@ namespace Assistant
 
 			Item.UpdateContainers();
 
-			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+            int color = RazorEnhanced.Items.Hued(item.Serial);
+            if (color != -1)
+            {
+                item.Hue = (ushort)color;
+                args.Block = true;
+                Assistant.Client.Instance.SendToClient(new WorldItem(item));
+            }
+            //
+            if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
 		}
 
