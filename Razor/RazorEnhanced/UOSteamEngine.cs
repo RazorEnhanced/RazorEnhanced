@@ -458,10 +458,27 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Mobile mobile = Mobiles.FindBySerial((int)serial);
-            if (mobile != null)
-                return mobile.Position.X;
+            Assistant.Serial thing = new Assistant.Serial(serial);
+            ///
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Position.X;
+                }
+            }
 
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Position.X;
+                }
+            }
+
+            throw new UOScript.RunTimeError(null, "X location serial not found");
             return 0;
         }
         IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
@@ -473,10 +490,26 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Mobile mobile = Mobiles.FindBySerial((int)serial);
-            if (mobile != null)
-                return mobile.Position.Y;
+            Assistant.Serial thing = new Assistant.Serial(serial);
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Position.Y;
+                }
+            }
 
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Position.Y;
+                }
+            }
+
+            throw new UOScript.RunTimeError(null, "Y location serial not found");
             return 0;
         }
         IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
@@ -488,10 +521,26 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Mobile mobile = Mobiles.FindBySerial((int)serial);
-            if (mobile != null)
-                return mobile.Position.Z;
+            Assistant.Serial thing = new Assistant.Serial(serial);
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Position.Z;
+                }
+            }
 
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Position.Z;
+                }
+            }
+
+            throw new UOScript.RunTimeError(null, "Z location serial not found");
             return 0;
         }
 
