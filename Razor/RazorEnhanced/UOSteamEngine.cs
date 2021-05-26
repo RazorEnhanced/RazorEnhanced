@@ -1317,7 +1317,7 @@ namespace RazorEnhanced
                     y = mobile.Position.Y;
                 }
             }
-            if (thing.IsMobile)
+            if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
                 if (item != null)
