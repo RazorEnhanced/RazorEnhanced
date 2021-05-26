@@ -1,6 +1,6 @@
 ### Dont run this
 ###It break the repo by creating refs that match branch names
-throw
+##throw
 
 name: Build RazorEnhanced on TAG      
 on:
