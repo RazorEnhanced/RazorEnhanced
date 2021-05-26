@@ -382,10 +382,14 @@ namespace Assistant
 			{
 				int die = 100;
 				object cont = this.Container;
+				object _rootContainer = cont;
 				while (cont != null && cont is Item && die-- > 0)
+				{
 					cont = ((Item)cont).Container;
+					if (cont != null) _rootContainer = cont;
+				}
 
-				return cont;
+				return _rootContainer;
 			}
 		}
 
