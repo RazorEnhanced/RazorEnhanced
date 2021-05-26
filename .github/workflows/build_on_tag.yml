@@ -1,10 +1,12 @@
 ### Dont run this
 ###It break the repo by creating refs that match branch names
-throw
+##throw
 
 name: Build RazorEnhanced on TAG      
 on:
-  workflow_dispatch:      
+  push:
+    branches-ignore:
+      - '**'    
 
 env:
   # Path to the solution file relative to the root of the project.
