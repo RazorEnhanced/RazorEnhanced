@@ -418,7 +418,7 @@ namespace RazorEnhanced
             Assistant.Item bag = Assistant.World.FindItem(Scavenger.ScavengerBag);
             if (bag != null)
             {
-                if (bag.RootContainer != World.Player)
+                if (bag.RootContainer != World.Player.Backpack)
                 {
                     if (!lootChangeMsgSent)
                     {

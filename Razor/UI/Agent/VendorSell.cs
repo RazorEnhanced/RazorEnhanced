@@ -119,7 +119,7 @@ namespace Assistant
 			{
 				Assistant.Item bag = Assistant.World.FindItem(SellAgent.SellBag);
 
-				if (bag != null && (bag.RootContainer != World.Player || !bag.IsContainer))
+				if (bag != null && (bag.RootContainer != World.Player.Backpack || !bag.IsContainer))
 				{
 					SellAgent.AddLog("Invalid or not accessible Container!");
 					if (showagentmessageCheckBox.Checked)
@@ -177,7 +177,7 @@ namespace Assistant
 			if (sellBag == null)
 				return;
 
-			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer && sellBag.RootContainer == Assistant.World.Player)
+			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer && sellBag.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("Container set to: " + sellBag.ToString(), false);

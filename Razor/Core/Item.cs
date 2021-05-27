@@ -378,15 +378,31 @@ namespace Assistant
 
 		internal object RootContainer
 		{
-			get
-			{
-				int die = 100;
-				object cont = this.Container;
-				while (cont != null && cont is Item && die-- > 0)
-					cont = ((Item)cont).Container;
+            get
+            {
+                // if container is null or not an item just return it
+                if (this.Container == null)
+                    return this.Container;
 
-				return cont;
-			}
+                if (! (this.Container is Item) )
+                    return this.Container;
+
+                // try to search parent containers until parent is null or not an item
+                // example of ! an Item is Player -> Backpack -> Items
+                // the root of Items should be Backpack not player even though the Container of a Backpack is the player
+                //
+                // if more than 100 give up and return original Container
+                int maxTry = 100;
+                Item cont = (Item)this.Container;
+                while (cont.Container != null && (cont.Container is Item))
+                {
+                    cont = (Item)cont.Container;
+                    if (maxTry-- < 1)
+                        return this.Container;
+                }
+
+                return cont;
+            }
 		}
 
 		internal bool IsChildOf(object parent)

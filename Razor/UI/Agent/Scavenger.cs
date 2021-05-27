@@ -97,7 +97,7 @@ namespace Assistant
 			if (scavengerBag == null)
 				return;
 
-			if (scavengerBag != null && scavengerBag.Serial.IsItem && scavengerBag.IsContainer && scavengerBag.RootContainer == Assistant.World.Player)
+			if (scavengerBag != null && scavengerBag.Serial.IsItem && scavengerBag.IsContainer && scavengerBag.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString(), false);
