@@ -36,7 +36,7 @@ namespace RazorEnhanced
     [Serializable]
     class DocSettings
     {
-        public string version = typeof(AutoDoc).Assembly.GetName().Version.ToString();
+        public string version = AutoDoc.GetAssemblyVersion();
         public string baseName = "RazorEnhanced.";
     }
 
@@ -142,7 +142,49 @@ namespace RazorEnhanced
         public static bool JsonDocExists(string path = null)
         {
             if (path == null) { path = DEFAULT_JSON_PATH; }
-            return File.Exists(path);
+            return Exists(path);
+        }
+
+        public static bool UpdateDocs(bool update = false)
+        { 
+            if (!JsonDocExists())
+            {
+                update = true;
+            }
+            else {
+                var docs = AutoDoc.GetPythonAPI(useCache: !update);
+                if (!AutoDoc.MatchAssemblyVersion(docs))
+                {
+                    update = true;
+                }
+
+            }
+
+            if (update) { 
+                ExportPythonAPI();
+                ExportPy();
+            }
+            
+            return update;
+        }
+
+        public static bool Exists(string path)
+        {
+            var fullpath = Path.Combine(Assistant.Engine.RootPath, path);
+            return File.Exists(fullpath);
+        }
+
+
+        public static void WriteAllText(string path, string contents)
+        {
+            var fullpath = Path.Combine(Assistant.Engine.RootPath, path);
+            File.WriteAllText(fullpath, contents);
+        }
+
+        public static string ReadAllText(string path)
+        {
+            var fullpath = Path.Combine(Assistant.Engine.RootPath, path);
+            return File.ReadAllText(fullpath);
         }
 
 
@@ -168,14 +210,14 @@ namespace RazorEnhanced
             {
                 json_txt = JsonConvert.SerializeObject(docs);
             }
-            File.WriteAllText(path, json_txt);
+            WriteAllText(path, json_txt);
         }
 
         public static DocContainer ImportPythonAPI(string path = null)
         {
             if (path == null) { path = DEFAULT_JSON_PATH; }
 
-            var json_txt = File.ReadAllText(DEFAULT_JSON_PATH);
+            var json_txt = ReadAllText(DEFAULT_JSON_PATH);
             return JsonConvert.DeserializeObject<DocContainer>(json_txt);
         }
 
@@ -225,7 +267,7 @@ namespace RazorEnhanced
 
             String content;
 
-            var header = Q3 + $" Version: { typeof(AutoDoc).Assembly.GetName().Version }\n";
+            var header = Q3 + $" Version: { AutoDoc.GetAssemblyVersion() }\n";
             header += "This module represents the scripting PythonAPI available in RazorEnhanced.\n";
             header += "This class is NOT intended to be used as code, but to provice autocomplete in external editors and generation documentation.\n";
             header += Q3 + "\n";
@@ -432,7 +474,7 @@ namespace RazorEnhanced
             var classListPyTxt = String.Join("\n", classListPy);
 
             content = header + classListPyTxt;
-            File.WriteAllText(path, content);
+            WriteAllText(path, content);
         }
 
 
@@ -469,7 +511,7 @@ namespace RazorEnhanced
             }
             var menu = $"<ul>\n{String.Join("\n", classListHtml)}\n</ul>";
             Directory.CreateDirectory(path);
-            File.WriteAllText(path + "index.html", String.Format(html_main, menu));
+            WriteAllText(path + "index.html", String.Format(html_main, menu));
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -519,7 +561,7 @@ namespace RazorEnhanced
                 var classDescHtml = $@"<div class='class_desc'>{cls.itemDescription}</div>";
 
                 var content = $@"{classHtml}{classDescHtml}{propsHtml}{methodsHtml}";
-                File.WriteAllText(path + className + ".html", String.Format(html_main, content));
+                WriteAllText(path + className + ".html", String.Format(html_main, content));
             }
         }
 
@@ -558,7 +600,7 @@ namespace RazorEnhanced
 
             Directory.CreateDirectory(path);
             Directory.CreateDirectory(path + "MKDocs/");
-            File.WriteAllText(path + "mkdocs.yml", index);
+            WriteAllText(path + "mkdocs.yml", index);
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -613,7 +655,7 @@ namespace RazorEnhanced
                 content += classDescMD;
                 content += $"## Properties  \n{propsMD} \n";
                 content += $"## Methods  \n{methodsMD}";
-                File.WriteAllText(path + "MKDocs/" + className + ".md", content);
+                WriteAllText(path + "MKDocs/" + className + ".md", content);
             }
         }
 
@@ -660,7 +702,7 @@ namespace RazorEnhanced
 
             Directory.CreateDirectory(path);
             Directory.CreateDirectory(path + "api/");
-            File.WriteAllText(path + "api/index.rst", index);
+            WriteAllText(path + "api/index.rst", index);
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -739,7 +781,7 @@ namespace RazorEnhanced
                     content += $"Methods\n--------------\n{methodsRST}\n";
                 }
 
-                File.WriteAllText(path + $"api/{className.Replace('.', '_')}.rst", content);
+                WriteAllText(path + $"api/{className.Replace('.', '_')}.rst", content);
             }
         }
 
@@ -792,9 +834,15 @@ namespace RazorEnhanced
         /// </summary>
         public static DocContainer GetPythonAPI(bool useCache = true)
         {
-            if (useCache && CachedDocs != null) { return CachedDocs; }
+           
+            if (useCache && CachedDocs != null ) {
+                if (MatchAssemblyVersion(CachedDocs)) {
+                    return CachedDocs;
+                }
+            }
 
-            Misc.SendMessage("AutoDoc v0.01", 20);
+
+            Misc.SendMessage("AutoDoc v0.1", 20);
             var docSections = new List<Type> {
                 // Test
                 // typeof(AutoDoc),
@@ -1040,6 +1088,16 @@ namespace RazorEnhanced
             return signature;
         }
 
+        public static string GetAssemblyVersion() {
+            return Assistant.Engine.Version;
+        }
+
+        public static bool MatchAssemblyVersion(DocContainer docs)
+        {
+            var current_version = GetAssemblyVersion();
+            var docs_version = docs.settings.version.ToString();
+            return current_version == docs_version;
+        }
 
         public static String ResolveType(Type param)
         {
