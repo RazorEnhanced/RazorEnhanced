@@ -36,7 +36,7 @@ namespace RazorEnhanced
     [Serializable]
     class DocSettings
     {
-        public string version = Assembly.GetAssembly(typeof(DocSettings)).ImageRuntimeVersion;
+        public string version = typeof(AutoDoc).Assembly.GetName().Version.ToString();
         public string baseName = "RazorEnhanced.";
     }
 
@@ -48,6 +48,7 @@ namespace RazorEnhanced
         public const String KindClass = "class";      // Generic or Unkown (TODO: Make it sensible)
         public const String KindMethod = "method";
         public const String KindProperty = "property";
+        public const String KindConstructor = "constructor";
 
         public String xmlKey;
         public String itemKind;
@@ -132,8 +133,8 @@ namespace RazorEnhanced
     /// </summary>
     class AutoDocIO
     {
-        public const String DEFAULT_JSON_PATH = "RazorEnhanced.json";
-        public const String DEFAULT_PY_PATH = "Autocomplete.py";
+        public const String DEFAULT_JSON_PATH = "Config/AutoComplete.json";
+        public const String DEFAULT_PY_PATH = "Config/AutoComplete.py";
         public const String DEFAULT_HTML_PATH = "./Docs/HTML/";
         public const String DEFAULT_MD_PATH = "./Docs/";
         public const String DEFAULT_SPHINX_PATH = "./Docs/Sphinx/";
@@ -224,7 +225,7 @@ namespace RazorEnhanced
 
             String content;
 
-            var header = Q3 + "\n";
+            var header = Q3 + $" Version: { typeof(AutoDoc).Assembly.GetName().Version }\n";
             header += "This module represents the scripting PythonAPI available in RazorEnhanced.\n";
             header += "This class is NOT intended to be used as code, but to provice autocomplete in external editors and generation documentation.\n";
             header += Q3 + "\n";
@@ -396,7 +397,7 @@ namespace RazorEnhanced
                     {
                         methodPy += $"{IDT2}Returns\n";
                         methodPy += $"{IDT2}-------\n";
-                        var returnDocTypes = returnTypes.Select((method => ReplacePythonTypes(method.returnType)));
+                        var returnDocTypes = returnTypes.Select((returnType => ReplacePythonTypes(returnType)));
                         methodPy += $"{IDT2}{ String.Join(", ", returnDocTypes) }\n";
                         var returnDocDescs = String.Join("\n", returnDescs).Trim();
                         if (returnDocDescs.Length > 0) { 
