@@ -721,6 +721,37 @@ namespace RazorEnhanced
         {
             return HotKeyEvent.LastEvent;
         }
+
+
+        /// <summary>
+        /// Enable or disable the Seasons filter forcing a specific season
+        /// 0: Spring, 1: Summer, 2: Fall, 3: Winter, 4: Desolation
+        /// Season filter state will be saved on logout but not the season flag that will be recovered to 0: Spring
+        /// </summary>
+        /// <param name="enable">Enable or disable the Seasons filter</param>
+        /// <param name="seasonFlag"> Season flag </param>
+        public static void FilterSeason(Boolean enable, byte seasonFlag)
+        {
+            System.Collections.ArrayList filters = Assistant.Filters.Filter.List;
+            System.Windows.Forms.CheckState checkState;
+
+            checkState = (enable == true) ? System.Windows.Forms.CheckState.Checked : System.Windows.Forms.CheckState.Unchecked;
+
+            int cnt = 0;
+            foreach (var filter in filters)
+            {
+                if (filter is Assistant.Filters.SeasonFilter seasons)
+                {
+                    World.Player.ForcedSeason = seasonFlag;
+                    // Setting the Checked box on the Seasons Filter enabling or disabling the Filter
+                    System.Windows.Forms.CheckedListBox checkbox = Engine.MainWindow.Controls["tabs"].Controls["generalTab"].Controls["groupBox1"].Controls["filters"] as System.Windows.Forms.CheckedListBox;
+                    Client.Instance.ForceSendToClient(new SeasonChange(World.Player.ForcedSeason, true));
+                    checkbox.SetItemCheckState(cnt, checkState);
+                    break;
+                }
+                cnt++;
+            }
+        }
     }
 
 }

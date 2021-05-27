@@ -217,6 +217,7 @@ namespace Assistant
 		private byte m_GlobalLight;
 		private ushort m_Features;
 		private byte m_Season;
+		private byte m_ForcedSeason;
 		private int[] m_MapPatches = new int[10];
 
 		private bool m_SkillsSent;
@@ -983,6 +984,7 @@ namespace Assistant
 		internal sbyte LocalLightLevel { get { return m_LocalLight; } set { m_LocalLight = value; } }
 		internal byte GlobalLightLevel { get { return m_GlobalLight; } set { m_GlobalLight = value; } }
 		internal byte Season { get { return m_Season; } set { m_Season = value; } }
+		internal byte ForcedSeason { get { return m_ForcedSeason; } set { m_ForcedSeason = value; } }
 		internal ushort Features { get { return m_Features; } set { m_Features = value; } }
 		internal int[] MapPatches { get { return m_MapPatches; } set { m_MapPatches = value; } }
 
