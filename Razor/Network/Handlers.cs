@@ -591,6 +591,11 @@ namespace Assistant
                 i.Container = dest;
                 World.AddItem(i);
 			}
+            else
+            {
+                // being dropped amount may change
+                i.Amount = 0;
+            }
             i.Container = dest;
             if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
