@@ -51,7 +51,7 @@ namespace Assistant
 			if (blade == null)
 				return;
 
-			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
+			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString(), false);
@@ -86,7 +86,7 @@ namespace Assistant
 			if (blade == null)
 				return;
 
-			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
+			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
 					Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString(), false);

@@ -1009,7 +1009,7 @@ namespace RazorEnhanced
 
 			foreach (Item found in containeritem)
 			{
-				if (!found.IsInBank && found.RootContainer == World.Player.Serial)
+				if (!found.IsInBank && found.RootContainer == World.Player.Backpack.Serial  )
 				{
 					RazorEnhanced.Items.UseItem(found);
 					return true;
@@ -1410,9 +1410,9 @@ namespace RazorEnhanced
 		{
 			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
 			if (color == -1)
-				items = items.Where((i) => i.RootContainer == World.Player && i.ItemID == itemid && i.IsInBank == false).ToList();
+				items = items.Where((i) => i.RootContainer == World.Player.Backpack && i.ItemID == itemid && i.IsInBank == false).ToList();
 			else
-				items = items.Where((i) => i.RootContainer == World.Player && i.ItemID == itemid && i.Hue == color && i.IsInBank == false).ToList();
+				items = items.Where((i) => i.RootContainer == World.Player.Backpack && i.ItemID == itemid && i.Hue == color && i.IsInBank == false).ToList();
 
 			int amount = 0;
 			foreach (Assistant.Item i in items)

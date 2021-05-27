@@ -46,7 +46,7 @@ namespace Assistant
 			if (autoLootBag == null)
 				return;
 
-			if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsContainer && autoLootBag.RootContainer == Assistant.World.Player)
+			if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsContainer && autoLootBag.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString(), false);

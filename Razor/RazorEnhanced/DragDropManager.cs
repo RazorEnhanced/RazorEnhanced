@@ -80,7 +80,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if (item.RootContainer == World.Player)
+						if (item.RootContainer == World.Player.Backpack)
 						{
 							ScavengerSerialToGrab.TryDequeue(out itemserial);
 							return;
@@ -169,7 +169,7 @@ namespace RazorEnhanced
                                     return;
                                 }
 
-                                if (item.RootContainer == World.Player)
+                                if (item.RootContainer == World.Player.Backpack)
                                 {
                                     AutoLoot.SerialToGrabList.TryDequeue(out data);
                                     return;
