@@ -592,6 +592,10 @@ namespace RazorEnhanced
         }
 
         // Funzioni da script
+
+        /// <summary>
+        /// Start BandageHeal Agent.
+        /// </summary>
         public static void Start()
         {
             if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
@@ -602,6 +606,9 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = true);
         }
 
+        /// <summary>
+        /// Stop BandageHeal Agent.
+        /// </summary>
         public static void Stop()
         {
             if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == false)
@@ -612,6 +619,10 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = false);
         }
 
+        /// <summary>
+        /// Check BandageHeal Agent status, returns a bool value.
+        /// </summary>
+        /// <returns>True: is running - False: otherwise</returns>
         public static bool Status()
         {
             return Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked;

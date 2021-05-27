@@ -392,6 +392,11 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Check if Player is in FriendList, returns a bool value.
+        /// </summary>
+        /// <param name="serial">Serial you want to check</param>
+        /// <returns>True: if is a friend - False: otherwise</returns>
         public static bool IsFriend(int serial)
         {
             RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out List<FriendPlayer> players);
@@ -444,18 +449,25 @@ namespace RazorEnhanced
             }
             return false;
         }
-        public static void AddPlayer(string selection, string name, int serial)
+
+        /// <summary>
+        /// Add the player specified to the Friend list named in FriendListName parameter
+        /// </summary>
+        /// <param name="friendlist">Name of the the Friend List. (See Agent tab)</param>
+        /// <param name="name">Name of the Friend want to add.</param>
+        /// <param name="serial">Serial of the Friend you want to add.</param>
+        public static void AddPlayer(string friendlist, string name, int serial)
         {
             FriendPlayer player = new FriendPlayer(name, serial, true);
 
-            if (RazorEnhanced.Settings.Friend.ListExists(selection))
+            if (RazorEnhanced.Settings.Friend.ListExists(friendlist))
             {
-                if (!RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
+                if (!RazorEnhanced.Settings.Friend.PlayerExists(friendlist, player))
                 {
                     if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
                         RazorEnhanced.Misc.SendMessage("Friend added: " + name, false);
                     RazorEnhanced.Friend.AddLog("Friend added: " + name);
-                    RazorEnhanced.Settings.Friend.PlayerInsert(selection, player);
+                    RazorEnhanced.Settings.Friend.PlayerInsert(friendlist, player);
                     RazorEnhanced.Friend.RefreshPlayers();
                 }
                 else
@@ -469,7 +481,7 @@ namespace RazorEnhanced
         }
 
 
-            private static bool GetFaction(string name, int serial)
+        private static bool GetFaction(string name, int serial)
         {
             Assistant.Mobile target = Assistant.World.FindMobile(serial);
 
@@ -503,29 +515,38 @@ namespace RazorEnhanced
         }
 
 
-        public static void ChangeList(string nameList)
+        /// <summary>
+        /// Change friend list, List must be exist in friend list GUI configuration
+        /// </summary>
+        /// <param name="friendlist">Name of the list of friend.</param>
+        public static void ChangeList(string friendlist)
         {
-            if (!Engine.MainWindow.FriendListSelect.Items.Contains(nameList))
+            if (!Engine.MainWindow.FriendListSelect.Items.Contains(friendlist))
             {
-                Scripts.SendMessageScriptError("Script Error: Friend.ChangeList: Friend List: " + nameList + " not exist");
+                Scripts.SendMessageScriptError("Script Error: Friend.ChangeList: Friend List: " + friendlist + " not exist");
             }
             else
             {
-                Engine.MainWindow.SafeAction(s => s.FriendListSelect.SelectedIndex = s.FriendListSelect.Items.IndexOf(nameList));
+                Engine.MainWindow.SafeAction(s => s.FriendListSelect.SelectedIndex = s.FriendListSelect.Items.IndexOf(friendlist));
 
             }
         }
 
-        public static List<int> GetList(string nameList)
+        /// <summary>
+        /// Retrive list of serial in list, List must be exist in friend Agent tab.
+        /// </summary>
+        /// <param name="friendlist">Name of the list of friend.</param>
+        /// <returns></returns>
+        public static List<int> GetList(string friendlist)
         {
             List<int> friendserials = new List<int>();
-            if (!Engine.MainWindow.FriendListSelect.Items.Contains(nameList))
+            if (!Engine.MainWindow.FriendListSelect.Items.Contains(friendlist))
             {
-                Scripts.SendMessageScriptError("Script Error: Friend.GetList: Friend List: " + nameList + " not exist");
+                Scripts.SendMessageScriptError("Script Error: Friend.GetList: Friend List: " + friendlist + " not exist");
             }
             else
             {
-                RazorEnhanced.Settings.Friend.PlayersRead(nameList, out List<FriendPlayer> players);
+                RazorEnhanced.Settings.Friend.PlayersRead(friendlist, out List<FriendPlayer> players);
                 foreach (FriendPlayer player in players)
                     friendserials.Add(player.Serial);
             }

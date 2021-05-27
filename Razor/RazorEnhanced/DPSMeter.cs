@@ -7,7 +7,10 @@ using System;
 
 namespace RazorEnhanced
 {
-	internal class DPSMeter
+    /// <summary>
+    /// The DPSMeter class implements a Damage Per Second meter which can be useful to tune meta-builds.(???)
+    /// </summary>
+    internal class DPSMeter
 	{
 		public class DamageData
 		{
@@ -83,29 +86,47 @@ namespace RazorEnhanced
 			ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
 
-		// Parte comandi da script
+        // Parte comandi da script
 
-		public static bool Status()
+        /// <summary>
+        /// Check DPSMeter Agent status, returns a bool value.
+        /// </summary>
+        /// <returns>True: is running - False: otherwise</returns>
+        public static bool Status()
 		{
 			return Enabled;
 		}
 
+        /// <summary>
+        /// Start DPSMeter engine.
+        /// </summary>
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterStartB.Enabled)
 				Engine.MainWindow.SafeAction(s => s.DPSMeterStartB.PerformClick());
 		}
+        /// <summary>
+        /// Stop DPSMeter engine.
+        /// </summary>
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterStopB.Enabled)
 				Engine.MainWindow.SafeAction(s => s.DPSMeterStopB.PerformClick());
 		}
+        /// <summary>
+        /// Pause DPSMeter data recording.
+        /// </summary>
 		public static void Pause()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterPauseB.Enabled)
 				Engine.MainWindow.SafeAction(s => s.DPSMeterPauseB.PerformClick());
 		}
 
+        /// <summary>
+        /// Get total damage per Mobile.
+        /// </summary>
+        /// <param name="serial">Serial of the Mobile.</param>
+        /// <returns>Total damage.</returns>
 		public static int GetDamage(int serial)
 		{
 			if (m_damagedata.ContainsKey((uint)serial))
