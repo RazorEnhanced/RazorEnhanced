@@ -36,7 +36,7 @@ namespace RazorEnhanced
     [Serializable]
     class DocSettings
     {
-        public string version = Assembly.GetAssembly(typeof(DocSettings)).ImageRuntimeVersion;
+        public string version = AutoDoc.GetAssemblyVersion();
         public string baseName = "RazorEnhanced.";
     }
 
@@ -48,6 +48,7 @@ namespace RazorEnhanced
         public const String KindClass = "class";      // Generic or Unkown (TODO: Make it sensible)
         public const String KindMethod = "method";
         public const String KindProperty = "property";
+        public const String KindConstructor = "constructor";
 
         public String xmlKey;
         public String itemKind;
@@ -92,13 +93,15 @@ namespace RazorEnhanced
     class DocMethod : DocItem
     {
         public String returnType;
+        public String returnDesc;
         public List<DocMethodParam> paramList;
         public bool isStatic;
 
-        public DocMethod(String xmlKey, String className, String methodName, String returnType, String description, List<DocMethodParam> paramList, bool isStatic) : base(xmlKey, className, methodName, description)
+        public DocMethod(String xmlKey, String className, String methodName, String returnType, String returnDesc, String description, List<DocMethodParam> paramList, bool isStatic) : base(xmlKey, className, methodName, description)
         {
             this.itemKind = DocItem.KindMethod;
             this.returnType = returnType;
+            this.returnDesc = returnDesc;
             this.paramList = paramList;
             this.isStatic = isStatic;
         }
@@ -130,8 +133,8 @@ namespace RazorEnhanced
     /// </summary>
     class AutoDocIO
     {
-        public const String DEFAULT_JSON_PATH = "RazorEnhanced.json";
-        public const String DEFAULT_PY_PATH = "RazorEnhanced.py";
+        public const String DEFAULT_JSON_PATH = "Config/AutoComplete.json";
+        public const String DEFAULT_PY_PATH = "Config/AutoComplete.py";
         public const String DEFAULT_HTML_PATH = "./Docs/HTML/";
         public const String DEFAULT_MD_PATH = "./Docs/";
         public const String DEFAULT_SPHINX_PATH = "./Docs/Sphinx/";
@@ -139,7 +142,49 @@ namespace RazorEnhanced
         public static bool JsonDocExists(string path = null)
         {
             if (path == null) { path = DEFAULT_JSON_PATH; }
-            return File.Exists(path);
+            return Exists(path);
+        }
+
+        public static bool UpdateDocs(bool update = false)
+        { 
+            if (!JsonDocExists())
+            {
+                update = true;
+            }
+            else {
+                var docs = AutoDoc.GetPythonAPI(useCache: !update);
+                if (!AutoDoc.MatchAssemblyVersion(docs))
+                {
+                    update = true;
+                }
+
+            }
+
+            if (update) { 
+                ExportPythonAPI();
+                ExportPy();
+            }
+            
+            return update;
+        }
+
+        public static bool Exists(string path)
+        {
+            var fullpath = Path.Combine(Assistant.Engine.RootPath, path);
+            return File.Exists(fullpath);
+        }
+
+
+        public static void WriteAllText(string path, string contents)
+        {
+            var fullpath = Path.Combine(Assistant.Engine.RootPath, path);
+            File.WriteAllText(fullpath, contents);
+        }
+
+        public static string ReadAllText(string path)
+        {
+            var fullpath = Path.Combine(Assistant.Engine.RootPath, path);
+            return File.ReadAllText(fullpath);
         }
 
 
@@ -154,7 +199,7 @@ namespace RazorEnhanced
 
             String json_txt;
 
-            DocContainer docs = AutoDoc.GetPythonAPI();
+            DocContainer docs = AutoDoc.GetPythonAPI(false);
             if (pretty)
             {
                 var options = new JsonSerializerSettings();
@@ -165,22 +210,43 @@ namespace RazorEnhanced
             {
                 json_txt = JsonConvert.SerializeObject(docs);
             }
-            File.WriteAllText(path, json_txt);
+            WriteAllText(path, json_txt);
         }
 
         public static DocContainer ImportPythonAPI(string path = null)
         {
             if (path == null) { path = DEFAULT_JSON_PATH; }
 
-            var json_txt = File.ReadAllText(DEFAULT_JSON_PATH);
+            var json_txt = ReadAllText(DEFAULT_JSON_PATH);
             return JsonConvert.DeserializeObject<DocContainer>(json_txt);
         }
 
 
         private static String IDT(int num) { return new String('\t', num); }
         private static string Q3 = "\"\"\"";
-        private static Regex NL = new Regex("\n", RegexOptions.Multiline | RegexOptions.Compiled);
+        private static Regex NL = new Regex("\n[ \t]*", RegexOptions.Multiline | RegexOptions.Compiled);
         private static string IndentText(string IDT, string text) { return NL.Replace(text, "\n" + IDT); }
+
+        private static string ReplacePythonTypes(string typeName, bool addQuotes=false) {
+            switch (typeName) {
+                case "null": return "None";
+                case "String": return "str";
+                case "Boolean": return "bool";
+                case "Object": return "object";
+
+                //int
+                case "Byte": 
+                case "Int":
+                case "Int32": return "int";
+                //float
+                case "Float":
+                case "Single": 
+                case "Double": return "float";
+
+            }
+            if (addQuotes) { return '"' + typeName + '"'; }
+            return typeName;
+        }
 
         public static void ExportPy(string path = null)
         {
@@ -201,30 +267,32 @@ namespace RazorEnhanced
 
             String content;
 
-            var header = Q3 + "\n";
+            var header = Q3 + $" Version: { AutoDoc.GetAssemblyVersion() }\n";
             header += "This module represents the scripting PythonAPI available in RazorEnhanced.\n";
             header += "This class is NOT intended to be used as code, but to provice autocomplete in external editors and generation documentation.\n";
             header += Q3 + "\n";
+            header += "from typing import *\n";
 
-
-            header += "from System.Collections.Generic import List\n";
-            header += "from System import Byte, Int32\n";
+            // header += "from System.Collections.Generic import List\n";
+            // header += "from System import Byte, Int32\n";
+            
+        
 
             //Or should i replace with "python types" ? 
             header += "class String(str): pass\n";
-            header += "class List(list): pass\n";
-            header += "class Dictionary(dict): pass\n";
+            // header += "class List(list): pass\n";
+            // header += "class Dictionary(dict): pass\n";
             header += "class Object: pass\n";
 
 
-            header += "class Boolean(bool): pass\n";
+            header += "class Boolean: pass\n";
             header += "class Byte(int): pass\n";
             header += "class Int(int): pass \n";
             header += "class Int32(int): pass \n";
             header += "class UInt32(int): pass\n";
             header += "class Float(float): pass\n";
             header += "class Single(float): pass\n";
-            header += "class Double(double): pass\n";
+            header += "class Double(float): pass\n";
 
 
 
@@ -236,6 +304,7 @@ namespace RazorEnhanced
             // Create per-class docs
             foreach (var cls in classList)
             {
+                var classFullName = cls.itemClass;
                 var classTree = cls.itemClass.Split('.');
                 var className = classTree.Last();
                 var classDescription = cls.itemDescription;
@@ -246,8 +315,8 @@ namespace RazorEnhanced
                 var IDT2 = IDT(depth + 1);
                 var IDT3 = IDT(depth + 2);
 
-                var classProps = propsList.FindAll(doc => doc.itemClass == className);
-                var classMethod = methodList.FindAll(doc => doc.itemClass == className);
+                var classProps = propsList.FindAll(doc => doc.itemClass == classFullName);
+                var classMethod = methodList.FindAll(doc => doc.itemClass == classFullName);
 
 
 
@@ -264,133 +333,125 @@ namespace RazorEnhanced
                 {
                     string propName;
                     //Docscring only
-                    //propName  = $"{IDT2}:var {prop.itemName}: { IndentText(IDT2, prop.itemDescription) }\n";
-                    //propName += $"{IDT2}:vartype {prop.itemName}: {prop.propertyType}";
+                    
 
-                    string propDescription = prop.itemDescription == "" ? "A " + prop.itemName : IndentText(IDT2, prop.itemDescription);
+                    string propDescription = IndentText(IDT2, prop.itemDescription);
+                    var propType = ReplacePythonTypes(prop.propertyType,true);
 
                     //Property + Docstrings
-                    propName = $"{IDT1}@property\n";
-                    propName += $"{IDT1}def {prop.itemName}(self):\n";
-                    propName += $"{IDT2}{Q3}{propDescription}\n";
-                    propName += $"{IDT2}:rtype: {prop.propertyType} \n";
-                    propName += $"{IDT2}{Q3}\n";
-                    propName += $"{IDT2}return\n";
+                    propName  = $"{IDT1}@property\n";
+                    propName += $"{IDT1}def {prop.itemName}(self) -> {propType}: ";
+                    if (propDescription.Trim().Length > 0)
+                    {
+                        propName += $"\n{IDT2}{Q3}{propDescription}{Q3}\n";
+                    }
+                    propName += $"return {propType.Trim('"')}() \n";
+                    
+
                     propName += $"{IDT1}\n";
                     propName += $"{IDT1}@{prop.itemName}.setter\n";
-                    propName += $"{IDT1}def {prop.itemName}(self, value):\n";
-                    propName += $"{IDT2}{Q3}\n";
-                    propName += $"{IDT2}:param {prop.itemName}: {propDescription}\n";
-                    propName += $"{IDT2}:type  {prop.itemName}: {prop.propertyType}";
-                    propName += $"{IDT2}{Q3}\n";
-                    propName += $"{IDT2}pass\n";
-
+                    propName += $"{IDT1}def {prop.itemName}(self, {prop.itemName}: {propType}): pass\n";
                     propsListPy.Add(propName);
                 }
 
                 // Get methods
-                //var methodListPy = new List<string>();
-                var methodPy = "";
+                var methodListPy = new List<string>();
+                
+
                 //foreach (DocMethod method in classMethod)
                 foreach (string methodName in classMethodNames)
                 {
+
                     var sameNameMethods = classMethod.Where(method => method.itemName == methodName).OrderByDescending(method => method.paramList.Count());
                     var firstMethod = sameNameMethods.First();
-                    var lastMethod = sameNameMethods.Last();
-                    var cnt = sameNameMethods.Count();
-                    foreach (var method in sameNameMethods)
-                    {
+                    var isStaticMethod = firstMethod.isStatic;
+                    var methodParamsTypes = AutoDoc.GetMethodAllParamsTypes(className, methodName);
+                    var methodParamsDescs = AutoDoc.GetMethodAllParamsDescs(className, methodName);
+                    var methodDescs = sameNameMethods.Select((method => method.itemDescription)).Distinct().ToList();
+                    var returnTypes = sameNameMethods.Select(method => method.returnType).Where(returnType => returnType != "Void").Distinct().ToList();
+                    var returnDescs = sameNameMethods.Select((method => method.returnDesc)).Distinct().ToList();
 
-                        string argSign, argDocs;
-                        var argsSign = new List<String>();
-                        var argsDocs = new List<String>();
-
-
-
-                        int arg_num = 0;
-                        foreach (DocMethodParam arg in method.paramList)
+                    //Build method params: Signature + Docstring
+                    var methodParamsSign = new List<string>();
+                    var methodParamsDocs = new List<string>();
+                    foreach (var paramName in methodParamsTypes) {
+                        //Signature
+                        var methodParam = paramName.Key + ": ";
+                        var paramsTypes = paramName.Value;
+                        var paramsSignTypes = paramsTypes.Select((typeName) => ReplacePythonTypes(typeName,true)).ToList();
+                        if (paramsTypes.Count() == 1)
                         {
-                            //Build list of params in signature
-                            argSign = arg.itemName;
-                            var addDefault = (method == firstMethod && arg_num > lastMethod.paramList.Count());
-                            if (arg.itemHasDefault || addDefault)
-                            {
-                                argSign += " = ";
-                                if (arg.itemDefaultValue == null || addDefault)
-                                {
-                                    argSign += "None";
-                                }
-                                else if (arg.itemType.ToLower() == "string")
-                                {
-                                    argSign += '"' + arg.itemDefaultValue.Replace("\"", "\\\"") + '"';
-                                }
-                                else
-                                {
-                                    argSign += arg.itemDefaultValue;
-                                }
-
-                            }
-                            if (method.xmlKey != firstMethod.xmlKey)
-                            {
-                                argSign = $"{arg.itemType}: {argSign}"; //Prentend we have typings 
-                            }
-                            argsSign.Add(argSign);
-
-
-                            //Build list of params docstring, only for first method
-
-                            if (method.xmlKey == firstMethod.xmlKey)
-                            {
-                                string argDescription = arg.itemDescription == "" ? "A " + arg.itemName : IndentText(IDT2, arg.itemDescription);
-                                argDocs = $"{IDT2}:param {arg.itemName}: {argDescription}\n";
-                                argDocs += $"{IDT2}:type  {arg.itemName}: {arg.itemType}\n";
-                                argsDocs.Add(argDocs);
-                            }
-
-
-                            arg_num++;
+                            methodParam += paramsSignTypes.First();
                         }
-
-                        if (!method.isStatic)
-                        {
-                            argsSign.Insert(0, "self");
+                        else {
+                            methodParam += $"Union[{ String.Join(", ", paramsSignTypes) }]";
                         }
+                        methodParamsSign.Add(methodParam);
 
-                        //Write actualt python "def"
-                        if (method.xmlKey == firstMethod.xmlKey)
-                        {
-                            if (method.isStatic)
-                            {
-                                methodPy += $"{IDT1}@staticmethod\n";
-                            }
-                            methodPy += $"{IDT1}def {method.itemName}({String.Join(", ", argsSign)}):\n";
-                            methodPy += $"{IDT2}{Q3}\n";
-                            methodPy += $"{String.Join("\n", argsDocs)}\n";
-
+                        //Docs
+                        string paramDocs;
+                        var paramsDocTypes = paramsTypes.Select((typeName) => ReplacePythonTypes(typeName)).ToList();
+                        var paramDesc = methodParamsDescs[paramName.Key];
+                        var paramDescs = String.Join("\n", paramDesc).Trim();
+                        paramDocs  = $"{IDT2}{paramName.Key}: {String.Join(" or ", paramsDocTypes)}";
+                        if (paramDescs.Length > 0) { 
+                            paramDocs += $"\n{IDT3}{IndentText(IDT3, paramDescs)}";
                         }
-                        else
-                        {
-                            /*
-                            methodPy += $"{IDT2}.. py:function:: {method.itemName}({String.Join(", ", argsSign)})";
-                            if (method.returnType != "Void")
-                            {
-                                methodPy += $" -> {method.returnType}";
-                            }
-                            methodPy += "\n";
-                            */
-                        }
+                        methodParamsDocs.Add(paramDocs);
                     }
 
-                    if (firstMethod.returnType != "Void")
+
+                    //Build Signature
+                    if (!isStaticMethod) {
+                        methodParamsSign.Insert(0, "self");
+                    }
+                    var methodSign = $"{methodName}({String.Join(", ", methodParamsSign)})";
+                    var returnSignTypes = returnTypes.Select((returnType => ReplacePythonTypes(returnType, true))).Distinct().ToList();
+                    if (returnSignTypes.Count == 1)
                     {
-                        //methodPy += $"{IDT2}:return: return description\n"; //TODO: add parser for <return></return> ( probably an overkill, the summery should do ) 
-                        methodPy += $"{IDT2}:rtype: {firstMethod.returnType}\n";
+                        methodSign += $" -> {returnSignTypes[0]}";
+                    }
+                    else if (returnTypes.Count > 1)
+                    {
+                        methodSign += $" -> Union[{ String.Join(", ", returnSignTypes) }]";
+                    }
+
+                    //Build Doc
+
+
+
+                    var methodPy = "";
+                    if (isStaticMethod)
+                    {
+                        methodPy += $"{IDT1}@staticmethod\n";
+                    }
+                    methodPy += $"{IDT1}def {methodSign}:\n";
+                    methodPy += $"{IDT2}{Q3}{ IndentText(IDT2, String.Join("\n", methodDescs) ) }\n";
+                    methodPy += $"{IDT2}\n";
+                    if (methodParamsDocs.Count > 0) { 
+                        methodPy += $"{IDT2}Parameters\n";
+                        methodPy += $"{IDT2}----------\n";
+                        methodPy += $"{ String.Join("\n", methodParamsDocs) }\n";
+                        methodPy += $"{IDT2}\n";
+                    }
+
+                    if (returnTypes.Count > 0)
+                    {
+                        methodPy += $"{IDT2}Returns\n";
+                        methodPy += $"{IDT2}-------\n";
+                        var returnDocTypes = returnTypes.Select((returnType => ReplacePythonTypes(returnType)));
+                        methodPy += $"{IDT2}{ String.Join(", ", returnDocTypes) }\n";
+                        var returnDocDescs = String.Join("\n", returnDescs).Trim();
+                        if (returnDocDescs.Length > 0) { 
+                            methodPy += $"{IDT3}{  IndentText(IDT3, returnDocDescs) }\n";
+                        }
+                        methodPy += $"{IDT2}\n";
                     }
                     methodPy += $"{IDT2}{Q3}\n";
-                    methodPy += $"{IDT2}return\n";
-                    methodPy += $"{IDT2}\n";
+                    //methodPy += $"{IDT2}return\n";
+                    //methodPy += $"{IDT2}\n";
 
-                    //methodListPy.Add(methodPy);
+                    methodListPy.Add(methodPy);
 
                 }
 
@@ -405,8 +466,7 @@ namespace RazorEnhanced
                 //classPy += $"{IDT1}def __init(self)__:\n";     //TODO: get contructor
 
                 classPy += String.Join("\n", propsListPy) + "\n";
-                classPy += methodPy;
-                //classPy += String.Join("\n", methodListPy) + "\n";
+                classPy += String.Join("\n", methodListPy) + "\n";
 
                 classListPy.Add(classPy);
             }
@@ -414,7 +474,7 @@ namespace RazorEnhanced
             var classListPyTxt = String.Join("\n", classListPy);
 
             content = header + classListPyTxt;
-            File.WriteAllText(path, content);
+            WriteAllText(path, content);
         }
 
 
@@ -451,7 +511,7 @@ namespace RazorEnhanced
             }
             var menu = $"<ul>\n{String.Join("\n", classListHtml)}\n</ul>";
             Directory.CreateDirectory(path);
-            File.WriteAllText(path + "index.html", String.Format(html_main, menu));
+            WriteAllText(path + "index.html", String.Format(html_main, menu));
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -501,7 +561,7 @@ namespace RazorEnhanced
                 var classDescHtml = $@"<div class='class_desc'>{cls.itemDescription}</div>";
 
                 var content = $@"{classHtml}{classDescHtml}{propsHtml}{methodsHtml}";
-                File.WriteAllText(path + className + ".html", String.Format(html_main, content));
+                WriteAllText(path + className + ".html", String.Format(html_main, content));
             }
         }
 
@@ -540,7 +600,7 @@ namespace RazorEnhanced
 
             Directory.CreateDirectory(path);
             Directory.CreateDirectory(path + "MKDocs/");
-            File.WriteAllText(path + "mkdocs.yml", index);
+            WriteAllText(path + "mkdocs.yml", index);
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -595,7 +655,7 @@ namespace RazorEnhanced
                 content += classDescMD;
                 content += $"## Properties  \n{propsMD} \n";
                 content += $"## Methods  \n{methodsMD}";
-                File.WriteAllText(path + "MKDocs/" + className + ".md", content);
+                WriteAllText(path + "MKDocs/" + className + ".md", content);
             }
         }
 
@@ -642,7 +702,7 @@ namespace RazorEnhanced
 
             Directory.CreateDirectory(path);
             Directory.CreateDirectory(path + "api/");
-            File.WriteAllText(path + "api/index.rst", index);
+            WriteAllText(path + "api/index.rst", index);
 
             // Create per-class docs
             foreach (var cls in classList)
@@ -721,7 +781,7 @@ namespace RazorEnhanced
                     content += $"Methods\n--------------\n{methodsRST}\n";
                 }
 
-                File.WriteAllText(path + $"api/{className.Replace('.', '_')}.rst", content);
+                WriteAllText(path + $"api/{className.Replace('.', '_')}.rst", content);
             }
         }
 
@@ -772,14 +832,20 @@ namespace RazorEnhanced
         /// <summary>
         /// Use reflection to generete the Python API List
         /// </summary>
-        public static DocContainer GetPythonAPI()
+        public static DocContainer GetPythonAPI(bool useCache = true)
         {
-            if (CachedDocs != null) { return CachedDocs; }
+           
+            if (useCache && CachedDocs != null ) {
+                if (MatchAssemblyVersion(CachedDocs)) {
+                    return CachedDocs;
+                }
+            }
 
-            Misc.SendMessage("AutoDoc v0.01", 20);
+
+            Misc.SendMessage("AutoDoc v0.1", 20);
             var docSections = new List<Type> {
                 // Test
-                typeof(AutoDoc),
+                // typeof(AutoDoc),
                 // API
                 typeof(Misc),
                 typeof(Item),
@@ -832,9 +898,6 @@ namespace RazorEnhanced
             return CachedDocs;
         }
 
-
-
-
         public static DocContainer ReadClass(Type type, BindingFlags flags)
         {
             var result = new DocContainer();
@@ -862,6 +925,7 @@ namespace RazorEnhanced
 
                 var documentation = XMLCommentReader.GetDocumentation(method);
                 var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
+                var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
                 if (HasTag(TAG_NODOC, methodSummary)) continue;
 
                 var prms = method.GetParameters();
@@ -878,7 +942,7 @@ namespace RazorEnhanced
                     paramList.Add(param);
                 }
 
-                var mtd = new DocMethod(methodKey, className, methodName, returnType, methodSummary, paramList, methodIsStatic);
+                var mtd = new DocMethod(methodKey, className, methodName, returnType, returnDesc, methodSummary, paramList, methodIsStatic);
                 if (HasTag(TAG_AUTOCOMPLETE, methodSummary)) mtd.flagAutocomplete = true;
                 result.methods.Add(mtd);
             }
@@ -915,9 +979,10 @@ namespace RazorEnhanced
                 var fieldSummary = XMLCommentReader.ExtractXML(documentation, "summary");
                 if (HasTag(TAG_NODOC, fieldSummary)) continue;
 
-                var prt = new DocProperty(fieldKey, className, itemName, fieldType, fieldSummary, true);
+                var prt = new DocProperty(fieldKey, className, itemName, fieldType, fieldSummary, fieldIsStatic);
                 result.properties.Add(prt);
             }
+
 
             return result;
         }
@@ -947,6 +1012,47 @@ namespace RazorEnhanced
 
             return new List<String>(names);
         }
+
+        public static Dictionary<string, List<string>> GetMethodAllParamsTypes(string className, string methodName)
+        {
+            var docs = GetPythonAPI();
+            var sameNameMethods = docs.methods.Where((method) => method.itemClass == className && method.itemName == methodName).OrderByDescending(method => method.paramList.Count());
+            var longestMethod = sameNameMethods.First();
+
+            var result = new Dictionary<string, List<string>>();
+            var argNames = longestMethod.paramList.Select((param) => param.itemName);
+
+            int arg_num = 0;
+            foreach (var argName in argNames)
+            {
+                var types = sameNameMethods.Select((method) => method.paramList.Count() > arg_num ? method.paramList[arg_num].itemType : "null");
+                result[argName] = types.Distinct().ToList();
+                arg_num++;
+            }
+
+            return result;
+        }
+
+        public static Dictionary<string, List<string>> GetMethodAllParamsDescs(string className, string methodName)
+        {
+            var docs = GetPythonAPI();
+            var sameNameMethods = docs.methods.Where((method) => method.itemClass == className && method.itemName == methodName).OrderByDescending(method => method.paramList.Count());
+            var longestMethod = sameNameMethods.First();
+
+            var result = new Dictionary<string, List<string>>();
+            var argNames = longestMethod.paramList.Select((param) => param.itemName);
+
+            int arg_num = 0;
+            foreach (var argName in argNames)
+            {
+                var descs = sameNameMethods.Where((method) => method.paramList.Count() > arg_num).Select((method) => method.paramList[arg_num].itemDescription);
+                result[argName] = descs.Distinct().ToList();
+                arg_num++;
+            }
+
+            return result;
+        }
+
 
         public static List<String> GetMethods(bool withClass = false, bool withNames = false, bool withTypes = false)
         {
@@ -982,6 +1088,16 @@ namespace RazorEnhanced
             return signature;
         }
 
+        public static string GetAssemblyVersion() {
+            return Assistant.Engine.Version;
+        }
+
+        public static bool MatchAssemblyVersion(DocContainer docs)
+        {
+            var current_version = GetAssemblyVersion();
+            var docs_version = docs.settings.version.ToString();
+            return current_version == docs_version;
+        }
 
         public static String ResolveType(Type param)
         {

@@ -193,12 +193,7 @@ namespace Assistant
         {
             //Dalamar
             //TODO: is this a good entry point for generating the docs ? 
-            if ( !RazorEnhanced.AutoDocIO.JsonDocExists() ) { 
-                RazorEnhanced.AutoDocIO.ExportPythonAPI();
-                //RazorEnhanced.AutoDocIO.ExportPy();
-                //RazorEnhanced.AutoDocIO.ExportHTML();
-                //RazorEnhanced.AutoDocIO.ExportMKDocs();
-            }
+            RazorEnhanced.AutoDocIO.UpdateDocs();
             RazorEnhanced.Config.LoadAll();
 
             Application.ThreadException += ApplicationThreadException;
