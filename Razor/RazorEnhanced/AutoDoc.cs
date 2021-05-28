@@ -146,7 +146,10 @@ namespace RazorEnhanced
         }
 
         public static bool UpdateDocs(bool update = false)
-        { 
+        {
+            //TODO: Remove manual override
+            update = true;
+
             if (!JsonDocExists())
             {
                 update = true;
@@ -343,7 +346,8 @@ namespace RazorEnhanced
                     propName += $"{IDT1}def {prop.itemName}(self) -> {propType}: ";
                     if (propDescription.Trim().Length > 0)
                     {
-                        propName += $"\n{IDT2}{Q3}{propDescription}{Q3}\n";
+                        propName += $"\n{IDT2}{Q3}{propDescription}{Q3}";
+                        propName += $"\n{IDT2}";
                     }
                     propName += $"return {propType.Trim('"')}() \n";
                     
@@ -924,6 +928,7 @@ namespace RazorEnhanced
                 var paramList = new List<DocMethodParam>();
 
                 var documentation = XMLCommentReader.GetDocumentation(method);
+                documentation = XMLCommentReader.RemoveBaseIndentation(documentation);
                 var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
                 var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
                 if (HasTag(TAG_NODOC, methodSummary)) continue;
@@ -937,6 +942,7 @@ namespace RazorEnhanced
                     var hasDefault = prm.HasDefaultValue;
                     var defaultValue = (prm.DefaultValue != null ? prm.DefaultValue.ToString() : null);
                     var paramSummary = XMLCommentReader.GetDocumentation(prm);
+                    paramSummary = XMLCommentReader.RemoveBaseIndentation(paramSummary);
 
                     var param = new DocMethodParam(paramName, paramType, paramSummary, hasDefault, defaultValue);
                     paramList.Add(param);

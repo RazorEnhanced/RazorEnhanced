@@ -1316,8 +1316,6 @@ namespace RazorEnhanced.UI
                 .Union(descriptionVendor)
 				.ToDictionary(x => x.Key, x => x.Value);
 
-
-
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
             foreach (var docitem in AutoDoc.GetPythonAPI().methods ) {
                 var method = (DocMethod)docitem;
@@ -1325,26 +1323,37 @@ namespace RazorEnhanced.UI
                 var prms_name = new List<String>();
                 var prms_type = new List<String>();
                 var prms_name_type = new List<String>();
+                var prms_name_type_desc = new List<String>();
                 foreach (var prm in method.paramList) {
                     prms_name.Add(prm.itemName);
                     prms_type.Add(prm.itemType);
-                    prms_name_type.Add(prm.itemType + " " + prm.itemName);
+                    
+
+                    string name_type = $"{prm.itemName}: {prm.itemType}";
+                    prms_name_type.Add(name_type);
+
+                    string name_type_desc = name_type;
+                    if (prm.itemDescription.Trim().Length>0) {
+                        name_type_desc += $"\n    {prm.itemDescription.Trim()}";
+                    }
+                    prms_name_type_desc.Add(name_type_desc); 
                 }
                 var methodSignNames = $"{methodName}({String.Join(",", prms_name)})";
                 var methodSignTypes = $"{methodName}({String.Join(",", prms_type)})";
                 var methodSignNameTypes = $"{methodName}({String.Join(",", prms_name_type)})";
 
                 var methodKey = methodSignNames;
-                tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type.ToArray() , method.returnType, method.itemDescription.Trim()+"\n");
-                if (autodocMethods.ContainsKey(methodKey))
+
+                if (!autodocMethods.ContainsKey(methodKey)) {
+                    tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type_desc.ToArray(), method.returnType, method.itemDescription.Trim() + "\n");
+                    autodocMethods.Add(methodKey, tooltip);
+                }
+                else
                 {
                     autodocMethods[methodKey].Notes += "\n"+ methodSignNameTypes;
                     if (method.itemDescription.Length > 0) {
-                        autodocMethods[methodKey].Notes += "\n" + method.itemDescription.Trim()+"\n---";
+                        autodocMethods[methodKey].Notes += "\n    " + method.itemDescription.Trim()+"\n";
                     }
-                }
-                else {
-                    autodocMethods.Add(methodKey, tooltip);
                 }
 
             }
@@ -2482,26 +2491,33 @@ namespace RazorEnhanced.UI
 
         }
 
-		public string ToolTipDescription()
-		{
-			string complete_description = String.Empty;
+        public string ToolTipDescription()
+        {
+            string complete_description = "";
 
-			complete_description += "Parameters: ";
-
-			foreach (string parameter in Parameters)
-				complete_description += "\n\t" + parameter;
-
-			complete_description += "\nReturns: " + Returns;
-
-			complete_description += "\nDescription:";
-
-            if (Description.Length > 0)
+            //Description
+            if (Description.Trim().Length > 0)
             {
-                complete_description += "\n" + Description.Trim();
+                complete_description += Description.Trim() + "\n";
             }
 
+            //Parameters
+            complete_description += "\nParameters: ";
+            if (Parameters.Length > 0)
+            {
+                complete_description += "\n" + String.Join("\n", Parameters.Select(text=>"- "+text));
+            }
+            else {
+                complete_description += "None";
+            }
+            complete_description += "\n";
+
+            //Return
+            complete_description += $"\nReturns: {Returns}";
+
+            //Notes
             if (Notes.Length > 0){
-                complete_description += "\n---" + Notes;
+                complete_description += "\n---\n" + Notes;
             }
             return complete_description;
 		}

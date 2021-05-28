@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
+    /// <summary>@nodoc</summary>
     public class Vendor
     {
+        /// <summary>@nodoc</summary>
         static public List<Assistant.Item> LastBuyList { get; set; }
+
+        /// <summary>@nodoc</summary>
         static public Assistant.Mobile LastVendor { get; set; }
 
+        /// <summary>@nodoc</summary>
         static public void StoreBuyList(PacketReader p, PacketHandlerEventArgs args)
         {
             Assistant.Serial serial = p.ReadUInt32();
@@ -30,6 +35,8 @@ namespace RazorEnhanced
             Vendor.LastVendor = vendor;
             Vendor.LastBuyList = pack.Contains;
         }
+
+        
         public static void Buy(int vendorSerial, int itemID, int amount)
         {
             if (LastVendor == null)
@@ -86,6 +93,10 @@ namespace RazorEnhanced
 
     }
 
+
+    /// <summary>
+    /// This class allow you to interect with the SellAgent, via scripting.
+    /// </summary>
     public class SellAgent
 	{
 		private static string m_listname;
@@ -485,6 +496,10 @@ namespace RazorEnhanced
 		}
 	}
 
+
+    /// <summary>
+    /// This class allow you to interect with the BuyAgent, via scripting.
+    /// </summary>
 	public class BuyAgent
 	{
 		private static string m_listname;
@@ -553,7 +568,7 @@ namespace RazorEnhanced
 				}
 		}
 
-	internal static void AddLog(string addlog)
+	    internal static void AddLog(string addlog)
 		{
 			if (Client.Running)
 			{
@@ -803,8 +818,24 @@ namespace RazorEnhanced
 			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}
 
-		// Funzioni da script
-		public static void Enable()
+
+        internal static bool UpdateListParam(string listName)
+        {
+            if (Settings.BuyAgent.ListExists(listName))
+            {
+                BuyAgent.CompareName = Settings.BuyAgent.CompareNameRead(listName);
+                BuyAgent.BuyListName = listName;
+                return true;
+            }
+            return false;
+        }
+
+        // Funzioni da script
+
+        /// <summary>
+        /// Enable BuyAgent on the currently active list.
+        /// </summary>
+        public static void Enable()
 		{
 			if (Engine.MainWindow.BuyCheckBox.Checked == true)
 			{
@@ -814,6 +845,9 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = true);
 		}
 
+        /// <summary>
+        /// Disable BuyAgent Agent.
+        /// </summary>
 		public static void Disable()
 		{
 			if (Engine.MainWindow.BuyCheckBox.Checked == false)
@@ -824,23 +858,21 @@ namespace RazorEnhanced
 				Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = false);
 		}
 
+        /// <summary>
+        /// Check BuyAgent Agent status
+        /// </summary>
+        /// <returns>True: if the BuyAgent is active - False: otherwise</returns>
 		public static bool Status()
 		{
 			return Engine.MainWindow.BuyCheckBox.Checked;
 		}
 
-		internal static bool UpdateListParam(string listName)
-		{
-			if (Settings.BuyAgent.ListExists(listName))
-			{
-				BuyAgent.CompareName = Settings.BuyAgent.CompareNameRead(listName);
-				BuyAgent.BuyListName = listName;
-				return true;
-			}
-			return false;
-		}
 
-		public static void ChangeList(string listName)
+        /// <summary>
+        /// Change the BuyAgent's active list.
+        /// </summary>
+        /// <param name="listName">Name of an existing buy list.</param>
+        public static void ChangeList(string listName)
 		{
 
 			if (!UpdateListParam(listName))
