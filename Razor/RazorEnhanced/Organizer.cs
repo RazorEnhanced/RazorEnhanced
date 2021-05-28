@@ -276,10 +276,13 @@ namespace RazorEnhanced
 			Item sourceBag = Items.FindBySerial(sourceBagserail);
 			Item destinationBag = Items.FindBySerial(destinationBagserial);
 
-			// Check if container is updated
-			RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
-			Items.WaitForContents(sourceBag, 1000);
-			Thread.Sleep(mseconds);
+            // Check if container is updated
+            if (sourceBag.ContainerUpdated == false)
+            {
+                RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
+                Items.WaitForContents(sourceBag, 1000);
+                Thread.Sleep(mseconds);
+            }
 
 			// Inizia scansione
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
