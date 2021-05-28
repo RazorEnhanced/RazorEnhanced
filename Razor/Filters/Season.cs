@@ -44,7 +44,7 @@ namespace Assistant.Filters
             {
                 if (World.Player != null)
                 {
-                    Client.Instance.ForceSendToClient(new SeasonChange(0, true));
+                    Client.Instance.ForceSendToClient(new SeasonChange(World.Player.ForcedSeason, true));
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace Assistant.Filters
             if (Client.Instance.AllowBit(FeatureBit.WeatherFilter))
             {
                 args.Block = true;
-                Client.Instance.ForceSendToClient(new SeasonChange(0, true));
+                Client.Instance.ForceSendToClient(new SeasonChange(World.Player.ForcedSeason, true));
             }
         }
     }
