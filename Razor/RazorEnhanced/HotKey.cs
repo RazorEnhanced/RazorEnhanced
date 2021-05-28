@@ -19,9 +19,9 @@ namespace RazorEnhanced
 
     public class HotKeyEvent
     {
-        public static HotKeyEvent LastEvent;
+        private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
 
-        public static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
+        public static HotKeyEvent LastEvent;
         public Keys HotKey;
         public double Timestamp;
 
@@ -32,8 +32,8 @@ namespace RazorEnhanced
 
         public HotKeyEvent(Keys key)
         {
-            this.HotKey = key;
-            this.Timestamp = DateTime.Now.Subtract(UnixTimeBegin).TotalSeconds;
+            HotKey = key;
+            Timestamp = DateTime.Now.Subtract(UnixTimeBegin).TotalSeconds;
         }
 
     }

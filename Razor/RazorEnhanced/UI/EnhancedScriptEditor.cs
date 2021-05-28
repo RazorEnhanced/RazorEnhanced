@@ -1316,8 +1316,6 @@ namespace RazorEnhanced.UI
                 .Union(descriptionVendor)
 				.ToDictionary(x => x.Key, x => x.Value);
 
-
-
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
             foreach (var docitem in AutoDoc.GetPythonAPI().methods ) {
                 var method = (DocMethod)docitem;
@@ -1328,7 +1326,14 @@ namespace RazorEnhanced.UI
                 foreach (var prm in method.paramList) {
                     prms_name.Add(prm.itemName);
                     prms_type.Add(prm.itemType);
-                    prms_name_type.Add(prm.itemType + " " + prm.itemName);
+                    
+
+                    string descStr = $"- {prm.itemName}: {prm.itemType}";
+                    if (prm.itemDescription.Trim().Length>0) {
+                        descStr += $"\n   {prm.itemDescription.Trim()}";
+                    }
+
+                    prms_name_type.Add(descStr);
                 }
                 var methodSignNames = $"{methodName}({String.Join(",", prms_name)})";
                 var methodSignTypes = $"{methodName}({String.Join(",", prms_type)})";
@@ -2482,26 +2487,33 @@ namespace RazorEnhanced.UI
 
         }
 
-		public string ToolTipDescription()
-		{
-			string complete_description = String.Empty;
+        public string ToolTipDescription()
+        {
+            string complete_description = "";
 
-			complete_description += "Parameters: ";
-
-			foreach (string parameter in Parameters)
-				complete_description += "\n\t" + parameter;
-
-			complete_description += "\nReturns: " + Returns;
-
-			complete_description += "\nDescription:";
-
-            if (Description.Length > 0)
+            //Description
+            if (Description.Trim().Length > 0)
             {
-                complete_description += "\n" + Description.Trim();
+                complete_description += Description.Trim() + "\n";
             }
 
+            //Parameters
+            complete_description += "\nParameters: ";
+            if (Parameters.Length > 0)
+            {
+                complete_description += "\n" + String.Join("\n", Parameters);
+            }
+            else {
+                complete_description += "None";
+            }
+            complete_description += "\n";
+
+            //Return
+            complete_description += $"\nReturns: {Returns}";
+
+            //Notes
             if (Notes.Length > 0){
-                complete_description += "\n---" + Notes;
+                complete_description += "\n---\n" + Notes;
             }
             return complete_description;
 		}
