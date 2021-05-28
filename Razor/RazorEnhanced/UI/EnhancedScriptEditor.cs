@@ -1323,33 +1323,37 @@ namespace RazorEnhanced.UI
                 var prms_name = new List<String>();
                 var prms_type = new List<String>();
                 var prms_name_type = new List<String>();
+                var prms_name_type_desc = new List<String>();
                 foreach (var prm in method.paramList) {
                     prms_name.Add(prm.itemName);
                     prms_type.Add(prm.itemType);
                     
 
-                    string descStr = $"- {prm.itemName}: {prm.itemType}";
-                    if (prm.itemDescription.Trim().Length>0) {
-                        descStr += $"\n   {prm.itemDescription.Trim()}";
-                    }
+                    string name_type = $"{prm.itemName}: {prm.itemType}";
+                    prms_name_type.Add(name_type);
 
-                    prms_name_type.Add(descStr);
+                    string name_type_desc = name_type;
+                    if (prm.itemDescription.Trim().Length>0) {
+                        name_type_desc += $"\n    {prm.itemDescription.Trim()}";
+                    }
+                    prms_name_type_desc.Add(name_type_desc); 
                 }
                 var methodSignNames = $"{methodName}({String.Join(",", prms_name)})";
                 var methodSignTypes = $"{methodName}({String.Join(",", prms_type)})";
                 var methodSignNameTypes = $"{methodName}({String.Join(",", prms_name_type)})";
 
                 var methodKey = methodSignNames;
-                tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type.ToArray() , method.returnType, method.itemDescription.Trim()+"\n");
-                if (autodocMethods.ContainsKey(methodKey))
+
+                if (!autodocMethods.ContainsKey(methodKey)) {
+                    tooltip = new ToolTipDescriptions(methodSignNames, prms_name_type_desc.ToArray(), method.returnType, method.itemDescription.Trim() + "\n");
+                    autodocMethods.Add(methodKey, tooltip);
+                }
+                else
                 {
                     autodocMethods[methodKey].Notes += "\n"+ methodSignNameTypes;
                     if (method.itemDescription.Length > 0) {
-                        autodocMethods[methodKey].Notes += "\n" + method.itemDescription.Trim()+"\n---";
+                        autodocMethods[methodKey].Notes += "\n    " + method.itemDescription.Trim()+"\n";
                     }
-                }
-                else {
-                    autodocMethods.Add(methodKey, tooltip);
                 }
 
             }
@@ -2501,7 +2505,7 @@ namespace RazorEnhanced.UI
             complete_description += "\nParameters: ";
             if (Parameters.Length > 0)
             {
-                complete_description += "\n" + String.Join("\n", Parameters);
+                complete_description += "\n" + String.Join("\n", Parameters.Select(text=>"- "+text));
             }
             else {
                 complete_description += "None";
