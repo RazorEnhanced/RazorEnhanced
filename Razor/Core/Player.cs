@@ -798,7 +798,7 @@ namespace Assistant
 
 			foreach (Item i in itemlist)
 			{
-				if (i.RootContainer != World.Player.Backpack)
+				if (i.RootContainer != World.Player)
 					i.Remove();
 			}
 
