@@ -4885,9 +4885,6 @@ namespace RazorEnhanced
 
         public static class Interpreter
         {
-            // Aliases only hold serial numbers
-            private static Dictionary<string, uint> _aliases = new Dictionary<string, uint>();
-
             // Lists
             private static Dictionary<string, List<Argument>> _lists = new Dictionary<string, List<Argument>>();
 
@@ -4973,8 +4970,10 @@ namespace RazorEnhanced
                     return handler(alias);
 
                 uint value;
-                if (_aliases.TryGetValue(alias, out value))
-                    return value;
+                if (Misc.CheckSharedValue(alias))
+                {
+                    return (uint)Misc.ReadSharedValue(alias);
+                }
 
                 return uint.MaxValue;
             }
@@ -4984,16 +4983,16 @@ namespace RazorEnhanced
                 if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
                     return true;
 
-                return _aliases.ContainsKey(alias);
+                return Misc.CheckSharedValue(alias);
             }
 
             public static void UnSetAlias(string alias)
             {
-                _aliases.Remove(alias);
+                Misc.RemoveSharedValue(alias);
             }
             public static void SetAlias(string alias, uint serial)
             {
-                _aliases[alias] = serial;
+                Misc.SetSharedValue(alias, serial);
             }
 
             public static void CreateList(string name)
