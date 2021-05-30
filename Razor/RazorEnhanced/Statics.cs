@@ -3,9 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using Ultima;
 
+
+
 namespace RazorEnhanced
 {
-	public class Statics
+    /// <summary>
+    /// The Statics class provides access to informations about the Map, down to the individual tile.
+    /// When using this function it's important to remember the distinction between Land and Tile:
+    /// Land
+    /// ----
+    /// For a given (X,Y,map) there can be only 1 (0 zero) Land item, and has 1 specific Z coordinate.
+    /// 
+    /// Tile
+    /// ----
+    /// For a given (X,Y,map) there can be any number of Tile items.
+    /// </summary>
+    public class Statics
 	{
 		private static bool m_loaded = false;
 
@@ -19,10 +32,24 @@ namespace RazorEnhanced
 			Ultima.Map.InitializeMap("Tokuno");
 			Ultima.Map.InitializeMap("TerMur");
 			m_loaded = true;
-		}
+        }
 
-		// Blocco info sul terreno
-		public static int GetLandID(int x, int y, int map)
+        // Blocco info sul terreno
+        /// <summary>
+        /// Land: Return the StaticID of the Land item, give the coordinates and map.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="map">
+        ///     0 = Felucca
+		///		1 = Trammel
+        ///     2 = Ilshenar
+		///	    3 = Malas
+		///		4 = Tokuno
+        ///		5 = TerMur
+        /// </param>
+        /// <returns>Return the StaticID of the Land tile </returns>
+        public static int GetLandID(int x, int y, int map)
 		{
 			if (!m_loaded)
 				LoadMapData();
@@ -47,7 +74,22 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static int GetLandZ(int x, int y, int map)
+        /// <summary>
+        /// Land: Return the Z coordinate (height) of the Land item, give the coordinates and map.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="map">
+        ///     0 = Felucca
+		///		1 = Trammel
+        ///     2 = Ilshenar
+		///	    3 = Malas
+		///		4 = Tokuno
+        ///		5 = TerMur
+        /// </param>
+        /// <returns></returns>
+
+        public static int GetLandZ(int x, int y, int map)
 		{
 			if (!m_loaded)
 				LoadMapData();
@@ -71,117 +113,156 @@ namespace RazorEnhanced
 					return 0;
 			}
 		}
-		public static string GetTileName(int itemid)
-		{
-			try{
-				return TileData.ItemTable[itemid].Name;
-			}
-			catch (Exception e){
-				Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+itemid);
-				return "";
-			}
-		}
 
-		public static string GetLandName(int itemid)
-		{
-			try{
-				return TileData.LandTable[itemid].Name;
-			}
-			catch (Exception e){
-				Scripts.SendMessageScriptError("Script Error: GetLandName invalid landID " + itemid);
-				return "";
-			}
-		}
-
-        public static int GetTileHeight(int itemid)
+        /// <summary>
+        /// Land: Get the name of a Land item given the StaticID.
+        /// </summary>
+        /// <param name="StaticID">Land item StaticID.</param>
+        /// <returns>The name of the Land item.</returns>
+        public static string GetLandName(int StaticID)
         {
-            return TileData.ItemTable[itemid].Height;
+            try
+            {
+                return TileData.LandTable[StaticID].Name;
+            }
+            catch (Exception e)
+            {
+                Scripts.SendMessageScriptError("Script Error: GetLandName invalid landID " + StaticID);
+                return "";
+            }
         }
 
-        public static bool GetTileFlag(int itemid, string flagname)
+        /// <summary>
+        /// Tile: Get the name of a Tile item given the StaticID.
+        /// </summary>
+        /// <param name="StaticID">Tile item StaticID.</param>
+        /// <returns>The name of the Land item.</returns>
+        public static string GetTileName(int StaticID)
+		{
+			try{
+				return TileData.ItemTable[StaticID].Name;
+			}
+			catch (Exception e){
+				Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+StaticID);
+				return "";
+			}
+		}
+
+        /// <summary>
+        /// Tile: Get hight of a Tile item, in Z coordinate reference.
+        /// </summary>
+        /// <param name="StaticID">Tile item StaticID.</param>
+        /// <returns>Height of a Tile item.</returns>
+        public static int GetTileHeight(int StaticID)
+        {
+            return TileData.ItemTable[StaticID].Height;
+        }
+
+        /// <summary>
+        /// Tile: Check Flag value of a given Tile item.
+        /// </summary>
+        /// <param name="StaticID">StaticID of a Tile item.</param>
+        /// <param name="flagname">
+        ///     None
+        ///     Translucent
+        ///     Wall
+        ///     Damaging
+        ///     Impassable
+        ///     Surface
+        ///     Bridge
+        ///     Window
+        ///     NoShoot
+        ///     Foliage
+        ///     HoverOver
+        ///     Roof
+        ///     Door
+        ///     Wet
+        /// </param>
+        /// <returns>True: if the Flag is active - False: otherwise</returns>
+        public static bool GetTileFlag(int StaticID, string flagname)
 		{
 			switch (flagname)
 			{
 				case "None":
-					if (TileData.ItemTable[itemid].Flags == TileFlag.None)
+					if (TileData.ItemTable[StaticID].Flags == TileFlag.None)
 						return true;
 					else
 						return false;
 
 				case "Translucent": // The tile is rendered with partial alpha-transparency.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Translucent) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Translucent) != 0)
 						return true;
 					else
 						return false;
 
 				case "Wall": // The tile is a wall.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Wall) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Wall) != 0)
 						return true;
 					else
 						return false;
 
 				case "Damaging": // The tile can cause damage when moved over.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Damaging) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Damaging) != 0)
 						return true;
 					else
 						return false;
 
 				case "Impassable": // The tile may not be moved over or through.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Impassable) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Impassable) != 0)
 						return true;
 					else
 						return false;
 
 				case "Surface": // The tile is a surface. It may be moved over, but not through.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Surface) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Surface) != 0)
 						return true;
 					else
 						return false;
 
 				case "Bridge": // The tile is a stair, ramp, or ladder.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Bridge) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Bridge) != 0)
 						return true;
 					else
 						return false;
 
 				case "Window": // The tile is a window.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Window) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Window) != 0)
 						return true;
 					else
 						return false;
 
 				case "NoShoot": // The tile blocks line of sight.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.NoShoot) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.NoShoot) != 0)
 						return true;
 					else
 						return false;
 
 				case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Foliage) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Foliage) != 0)
 						return true;
 					else
 						return false;
 
 				case "HoverOver": // Gargoyles can fly over
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.HoverOver) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.HoverOver) != 0)
 						return true;
 					else
 						return false;
 
 				case "Roof": // The tile is a slanted roof.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Roof) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Roof) != 0)
 						return true;
 					else
 						return false;
 
 				case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Door) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Door) != 0)
 						return true;
 					else
 						return false;
 
 				case "Wet":
-					if ((TileData.ItemTable[itemid].Flags & TileFlag.Wet) != 0)
+					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Wet) != 0)
 						return true;
 					else
 						return false;
@@ -192,6 +273,27 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Land: Check Flag value of a given Land item.
+        /// </summary>
+        /// <param name="StaticID">StaticID of a Land item.</param>
+        /// <param name="flagname">
+        ///     None
+        ///     Translucent
+        ///     Wall
+        ///     Damaging
+        ///     Impassable
+        ///     Surface
+        ///     Bridge
+        ///     Window
+        ///     NoShoot
+        ///     Foliage
+        ///     HoverOver
+        ///     Roof
+        ///     Door
+        ///     Wet
+        /// </param>
+        /// <returns>True: if the Flag is active - False: otherwise</returns>
 		public static bool GetLandFlag(int itemid, string flagname)
 		{
 			switch (flagname)
@@ -287,8 +389,11 @@ namespace RazorEnhanced
 		}
 
 
-		// Blocco info su statici
-		public class TileInfo
+        // Blocco info su statici
+        /// <summary>
+        /// The TileInfo class hold the values represeting Tile or Land items for a given X,Y coordinate.
+        /// </summary>
+        public class TileInfo
 		{
 			private int m_StaticID;
 			public int StaticID { get { return m_StaticID; } }
@@ -307,6 +412,20 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Land: Return a TileInfo representing the Land item for a given X,Y, map.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="map">
+        ///     0 = Felucca
+		///		1 = Trammel
+        ///     2 = Ilshenar
+		///	    3 = Malas
+		///		4 = Tokuno
+        ///		5 = TerMur
+        /// </param>
+        /// <returns>A single TileInfo related a Land item.</returns>
 		public static TileInfo GetStaticsLandInfo(int x, int y, int map)
 		{
 			if (!m_loaded)
@@ -344,6 +463,20 @@ namespace RazorEnhanced
 			return tileinfo;
 		}
 
+        /// <summary>
+        /// Tile: Return a list of TileInfo representing the Tile items for a given X,Y, map.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="map">
+        ///     0 = Felucca
+		///		1 = Trammel
+        ///     2 = Ilshenar
+		///	    3 = Malas
+		///		4 = Tokuno
+        ///		5 = TerMur
+        /// </param>
+        /// <returns>A list of TileInfo related to Tile items.</returns>
 		public static List<TileInfo> GetStaticsTileInfo(int x, int y, int map)
 		{
 			if (!m_loaded)
@@ -388,6 +521,13 @@ namespace RazorEnhanced
 			return tileinfo;
 		}
 
+        /// <summary>
+        /// Check if the given Tile is occupied by a private house.
+        /// Need to be in-sight, on most servers the maximum distance is 18 tiles.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <returns>True: The tile is occupied - False: otherwise</returns>
 		public static bool CheckDeedHouse(int x, int y)
 		{
 			List<Multi.MultiData> multidata = Assistant.World.Multis.Values.ToList();

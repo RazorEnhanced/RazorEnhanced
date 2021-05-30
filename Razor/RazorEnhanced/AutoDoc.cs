@@ -854,17 +854,22 @@ namespace RazorEnhanced
                 typeof(Misc),
                 typeof(Item),
                 typeof(Items),
+                typeof(Items.Filter),
                 typeof(Mobile),
                 typeof(Mobiles),
+                typeof(Mobiles.Filter),
                 typeof(Player),
                 typeof(Spells),
                 typeof(Gumps),
                 typeof(Journal),
+                typeof(Journal.JournalEntry),
                 typeof(Target),
                 typeof(Statics),
+                typeof(Statics.TileInfo),
 
                 // API Agents
                 typeof(AutoLoot),
+                typeof(AutoLoot.AutoLootItem),
                 typeof(Scavenger),
                 typeof(SellAgent),
                 typeof(BuyAgent),
@@ -874,19 +879,18 @@ namespace RazorEnhanced
                 typeof(Restock),
                 typeof(BandageHeal),
                 typeof(PathFinding),
+                typeof(PathFinding.Route),
+                typeof(Tile),
                 typeof(DPSMeter),
                 typeof(Timer),
                 typeof(Vendor),
+                typeof(Vendor.BuyItem),
 
                 // Other classes
                 typeof(Point2D),
                 typeof(Point3D),
-                typeof(Tile),
                 typeof(Property),
-                typeof(PathFinding.Route),
-                typeof(Items.Filter),
-                typeof(Mobiles.Filter),
-                typeof(HotKeyEvent),
+                typeof(HotKeyEvent)               
             };
 
 

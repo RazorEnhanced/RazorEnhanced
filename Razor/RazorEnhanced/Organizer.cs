@@ -10,7 +10,10 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-	public class Organizer
+    /// <summary>
+    /// The Scavenger class allow you to interect with the Scavenger Agent, via scripting.
+    /// </summary>
+    public class Organizer
 	{
 		private static int m_dragdelay;
 		private static int m_sourcebag;
@@ -414,8 +417,12 @@ namespace RazorEnhanced
 			}
 		}
 
-		// Funzioni da script
-		public static void FStart()
+        // Funzioni da script
+
+        /// <summary>
+        /// Start the Organizer Agent on the currently active list.
+        /// </summary>
+        public static void FStart()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerExecute.Enabled == true)
 				Assistant.Engine.MainWindow.OrganizerStartExec();
@@ -425,6 +432,10 @@ namespace RazorEnhanced
 			}
 		}
 
+
+        /// <summary>
+        /// Stop the Organizer Agent.
+        /// </summary>
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
@@ -435,6 +446,10 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Check Organizer Agent status
+        /// </summary>
+        /// <returns>True: if the Organizer is running - False: otherwise</returns>
 		public static bool Status()
 		{
 			if (m_OrganizerThread != null && ((m_OrganizerThread.ThreadState & ThreadState.Running) != 0 || (m_OrganizerThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_OrganizerThread.ThreadState & ThreadState.AbortRequested) != 0))
@@ -443,7 +458,12 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public static void ChangeList(string listName)
+
+        /// <summary>
+        /// Change the Organizer's active list.
+        /// </summary>
+        /// <param name="listName">Name of an existing organizer list.</param>
+        public static void ChangeList(string listName)
 		{
 			if (!UpdateListParam(listName))
 			{

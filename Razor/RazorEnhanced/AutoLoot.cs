@@ -18,6 +18,10 @@ namespace RazorEnhanced
 
     };
 
+
+    /// <summary>
+    /// The Autoloot class allow to interact with the Autoloot Agent, via scripting.
+    /// </summary>
     public class AutoLoot
     {
         private static int m_lootdelay;
@@ -374,6 +378,7 @@ namespace RazorEnhanced
         }
         internal static void Engine(Dictionary<int, List<AutoLootItem>> autoLootList, int mseconds, Items.Filter filter)
         {
+            //TODO: msecond it's unused
             List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
             if (World.Player != null && World.Player.IsGhost)
@@ -531,6 +536,10 @@ namespace RazorEnhanced
         }
 
         // Funzioni di controllo da script
+
+        /// <summary>
+        /// Reset the Autoloot ignore list.
+        /// </summary>
         public static void ResetIgnore()
         {
             m_IgnoreCorpseList.Clear();
@@ -539,7 +548,13 @@ namespace RazorEnhanced
             Scavenger.ResetIgnore();
         }
 
-        public static void RunOnce(string lootListName, int mseconds, Items.Filter filter)
+        /// <summary>
+        /// Start Autoloot with custom parameters.
+        /// </summary>
+        /// <param name="lootListName">Name of the Autoloot listfilter for search on ground.</param>
+        /// <param name="millisec">Delay in milliseconds. (unused)</param>
+        /// <param name="filter">Item filter</param>
+        public static void RunOnce(string lootListName, int millisec, Items.Filter filter)
         {
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
             {
@@ -549,7 +564,7 @@ namespace RazorEnhanced
         Dictionary<int, List<AutoLootItem>> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
         if (autoLootList.Count > 0)
             {
-                Engine(autoLootList, mseconds, filter);
+                Engine(autoLootList, millisec, filter);
                 uint lootbag = GetLootBag();
                 // at login, backpack is sometimes null
                 if (lootbag != 0)
@@ -561,17 +576,29 @@ namespace RazorEnhanced
             }
         }
 
-        // Note: This can be controlled by script but does not persist the change.
-        // Only if the check box is manually changed is the change persisted
-        public static bool SetNoOpenCorpse(bool value)
+        
+
+        /// <summary>
+        /// Toggle "No Open Corpse" on/off. The change doesn't persist if you reopen razor.
+        /// </summary>
+        /// <param name="noOpen">True: "No Open Corpse" is active - False: otherwise</param>
+        /// <returns>Previous value of "No Open Corpse"</returns>
+        public static bool SetNoOpenCorpse(bool noOpen)
         {
+            // Note: This can be controlled by script but does not persist the change.
+            // Only if the check box is manually changed is the change persisted
             bool oldValue = m_noopencorpse;
-            m_noopencorpse = value;
-            Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootNoOpenCheckBox.Checked = value);
+            m_noopencorpse = noOpen;
+            Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootNoOpenCheckBox.Checked = noOpen);
             return oldValue;
         }
 
 
+        /// <summary>
+        /// Given an AutoLoot list name, return a list of AutoLootItem associated.
+        /// </summary>
+        /// <param name="lootListName">Name of the AutoLoot list.</param>
+        /// <returns></returns>
         public static List<AutoLootItem> GetList(string lootListName)
         {
             if (Settings.AutoLoot.ListExists(lootListName)) {
@@ -590,7 +617,15 @@ namespace RazorEnhanced
             return null;
         }
 
+        /// <summary>
+        /// @nodoc
+        /// </summary>
         static bool lootChangeMsgSent = false;
+
+        /// <summary>
+        /// Get current Autoloot destination container.
+        /// </summary>
+        /// <returns>Serial of the container.</returns>
         public static uint GetLootBag()
         {
             // Check bag
@@ -630,6 +665,9 @@ namespace RazorEnhanced
             return bag.Serial.Value;
         }
 
+        /// <summary>
+        /// Start the Autoloot Agent on the currently active list.
+        /// </summary>
         public static void Start()
         {
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
@@ -640,6 +678,9 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Stop the Autoloot Agent.
+        /// </summary>
         public static void Stop()
         {
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
@@ -648,10 +689,19 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = false);
         }
 
+        /// <summary>
+        /// Check Autoloot Agent status
+        /// </summary>
+        /// <returns>True: if the Autoloot is running - False: otherwise</returns>
         public static bool Status()
         {
             return Assistant.Engine.MainWindow.AutolootCheckBox.Checked;
         }
+
+        /// <summary>
+        /// Change the Autoloot's active list.
+        /// </summary>
+        /// <param name="listName">Name of an existing organizer list.</param>
 
         public static void ChangeList(string listName)
         {

@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// The Scavenger class allow you to interect with the Scavenger Agent, via scripting.
+    /// </summary>
     public class Scavenger
     {
         private static int m_lootdelay;
@@ -399,7 +402,20 @@ namespace RazorEnhanced
         }
 
         // Funzioni da script
-        public static void RunOnce(List<ScavengerItem> scavengerList, int mseconds, Items.Filter filter)
+
+       
+
+
+
+
+        /// <summary>   
+        /// @nodoc
+        /// Run the Scavenger Agent once on the currently active list, for a given amount of time, using a filter. 
+        /// </summary>
+        /// <param name="scavengerList"></param>
+        /// <param name="millisec"></param>
+        /// <param name="filter"></param>
+        public static void RunOnce(List<ScavengerItem> scavengerList, int millisec, Items.Filter filter)
         {
             if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
             {
@@ -407,11 +423,19 @@ namespace RazorEnhanced
             }
             else
             {
-                Engine(scavengerList, mseconds, filter);
+                Engine(scavengerList, millisec, filter);
             }
         }
 
+        /// <summary>
+        /// @nodoc
+        /// </summary>
         static bool lootChangeMsgSent = false;
+
+        /// <summary>
+        /// Get current Scravenger destination container.
+        /// </summary>
+        /// <returns>Serial of the container.</returns>
         public static uint GetScavengerBag()
         {
             // Check bag
@@ -443,6 +467,12 @@ namespace RazorEnhanced
             return bag.Serial.Value;
         }
 
+        
+
+
+        /// <summary>
+        /// Start the Scavenger Agent on the currently active list.
+        /// </summary>
         public static void Start()
         {
             if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
@@ -453,6 +483,9 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = true);
         }
 
+        /// <summary>
+        /// Stop the Scavenger Agent.
+        /// </summary>
         public static void Stop()
         {
             if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
@@ -463,11 +496,20 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = false);
         }
 
+        /// <summary>
+        /// Check Scavenger Agent status
+        /// </summary>
+        /// <returns>True: if the Scavenger is running - False: otherwise</returns>
         public static bool Status()
         {
             return Assistant.Engine.MainWindow.ScavengerCheckBox.Checked;
         }
 
+
+        /// <summary>
+        /// Change the Scavenger's active list.
+        /// </summary>
+        /// <param name="listName">Name of an existing organizer list.</param>
         public static void ChangeList(string listName)
         {
             if (!UpdateListParam(listName))

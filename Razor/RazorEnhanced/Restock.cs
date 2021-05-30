@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// The Restock class allow you to interact with the Restock Agent, via scripting.
+    /// </summary>
+
 	public class Restock
 	{
 		private static int m_dragdelay;
@@ -361,9 +365,20 @@ namespace RazorEnhanced
 			}
 		}
 
-		// Funzioni da script
+        // Funzioni da script
 
-		public static void FStart()
+
+
+
+        
+
+
+        
+
+        /// <summary>
+        /// Start the Restock Agent on the currently active list.
+        /// </summary>
+        public static void FStart()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
 				Assistant.Engine.MainWindow.RestockStartExec();
@@ -373,6 +388,10 @@ namespace RazorEnhanced
 			}
 		}
 
+
+        /// <summary>
+        /// Stop the Restock Agent.
+        /// </summary>
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
@@ -383,6 +402,10 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Check Restock Agent status
+        /// </summary>
+        /// <returns>True: if the Restock is running - False: otherwise</returns>
 		public static bool Status()
 		{
 			if (m_RestockThread != null && ((m_RestockThread.ThreadState & ThreadState.Running) != 0 || (m_RestockThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_RestockThread.ThreadState & ThreadState.AbortRequested) != 0) )
@@ -391,7 +414,12 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public static void ChangeList(string listName)
+
+        /// <summary>
+        /// Change the Restock's active list.
+        /// </summary>
+        /// <param name="listName">Name of an existing restock list.</param>
+        public static void ChangeList(string listName)
 		{
 			if (!UpdateListParam(listName))
 			{
