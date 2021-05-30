@@ -12,8 +12,6 @@ namespace RazorEnhanced
     /// </summary>
 	public class Journal
 	{
-
-
         /// <summary>
         /// The JournalEntry class rapresents a line in the Journal.
         /// </summary>
@@ -35,6 +33,9 @@ namespace RazorEnhanced
 			public int Serial { get { return m_Serial; } }
 
             private double m_Timestamp;
+            /// <summary>
+            /// Timestamp as UnixTimestap, the number of seconds elapsed since 01-Jan-1970.
+            /// </summary>
             public double Timestamp { get { return m_Timestamp; } }
 
             private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
@@ -67,10 +68,10 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// Get a copy of all Journal lines as JournalEntry. The list can be limited to most recent events.
+        /// Get a copy of all Journal lines as JournalEntry. The list can be filtered to include only most recent events.
         /// </summary>
-        /// <param name="afterTimestap"></param>
-        /// <returns></returns>
+        /// <param name="afterTimestap">Timestap as standard UnixTime, seconds since 01-Jan-1970. (default: -1, no filter)</param>
+        /// <returns>List of JournalEntry</returns>
         public static List<JournalEntry> GetJournalEntry(double afterTimestap = -1)
         {
             var journalEntries = new List<JournalEntry>();
