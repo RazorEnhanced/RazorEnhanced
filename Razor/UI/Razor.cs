@@ -8780,7 +8780,7 @@ namespace Assistant
                         {
                             try
                             {
-                                if (AutoUpdater.DownloadUpdate())
+                                if (AutoUpdater.DownloadUpdate(args))
                                 {
                                     Assistant.Client.Instance.ClientProcess.Kill();
                                     Application.Exit();
