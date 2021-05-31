@@ -1,11 +1,10 @@
-﻿using Microsoft.CSharp;
-using Microsoft.Scripting;
-using System;
+﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
+using Microsoft.Scripting;
+using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 
 namespace RazorEnhanced
 {
@@ -42,6 +41,8 @@ namespace RazorEnhanced
             parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
             parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
             //parameters.CompilerOptions = "/optimize"; // Set compiler argument to optimize output.
+            //parameters.CompilerOptions = "-langversion:7.3";
+            //parameters.CompilerOptions = "-parallel";
             parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
             return parameters;
         }
@@ -71,16 +72,16 @@ namespace RazorEnhanced
             return list;
         }
 
-        private bool ManageCompileResult(CompilerResults results, out StringBuilder errorwarnings)
+        private bool ManageCompileResult(CompilerResults results, out List<string> errorwarnings)
         {
+            errorwarnings = new List<string>();
             bool has_error = true;
 
-            StringBuilder sb = new StringBuilder();
             if (results.Errors.HasErrors)
             {
                 foreach (CompilerError error in results.Errors)
                 {
-                    sb.AppendLine(String.Format("Error ({0}) at line {1}: {2}", error.ErrorNumber, error.Line, error.ErrorText));
+                    errorwarnings.Add(String.Format("Error ({0}) at line {1}: {2}", error.ErrorNumber, error.Line, error.ErrorText));
                 }
             }
             else
@@ -91,17 +92,34 @@ namespace RazorEnhanced
                 {
                     foreach (CompilerError warning in results.Errors)
                     {
-                        sb.AppendLine(String.Format("Warning ({0}) at line {1}: {2}", warning.ErrorNumber, warning.Line, warning.ErrorText));
+                        errorwarnings.Add(String.Format("Warning ({0}) at line {1}: {2}", warning.ErrorNumber, warning.Line, warning.ErrorText));
                     }
                 }
             }
-            errorwarnings = sb;
             return has_error;
         }
 
-        public bool CompileFromText(string source, out StringBuilder errorwarnings, out Assembly assembly)
+        class options : IProviderOptions
         {
-            CSharpCodeProvider provider = new CSharpCodeProvider();
+            string _compilerVersion = "7.3";
+            IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
+
+            public string CompilerVersion { get => _compilerVersion; set { _compilerVersion = value; } }
+            public bool WarnAsError => false;
+            public bool UseAspNetSettings => true;
+            public string CompilerFullPath => Path.Combine(Assistant.Engine.RootPath, "roslyn", "csc.exe");
+            public int CompilerServerTimeToLive => 0;
+            //IDictionary<string, string> IProviderOptions.AllOptions => new Dictionary<string, string>() { }; //{ { "CompilerVersion", "v7.3" } };
+            IDictionary<string, string> IProviderOptions.AllOptions { get => _compilerOptions; }
+            IDictionary<string, string> Options { set { _compilerOptions = value; } } // For Debug
+
+        }
+
+        public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
+        {
+            options opt = new options();
+            CSharpCodeProvider provider = new CSharpCodeProvider(opt);
+            
             CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
             CompilerResults results = provider.CompileAssemblyFromSource(compileParameters, source); // Compiling
 
@@ -120,11 +138,20 @@ namespace RazorEnhanced
             return has_error;
         }
 
-        public bool CompileFromFile(string path, bool debug, out StringBuilder errorwarnings, out Assembly assembly)
+        // https://medium.com/swlh/replace-codedom-with-roslyn-but-bin-roslyn-csc-exe-not-found-6a5dd9290bf2
+        // https://stackoverflow.com/questions/20018979/how-can-i-target-a-specific-language-version-using-codedom
+        // https://docs.microsoft.com/it-it/dotnet/api/microsoft.csharp.csharpcodeprovider.-ctor?view=net-5.0
+        // https://github.com/aspnet/RoslynCodeDomProvider/blob/main/src/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/Util/IProviderOptions.cs
+        // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
+        public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
         {
-            CSharpCodeProvider provider = new CSharpCodeProvider();
+            options opt = new options();
+            CSharpCodeProvider provider = new CSharpCodeProvider(opt);
+
+            Misc.SendMessage("Compiling C# Script");
             CompilerParameters compileParameters = CompilerSettings(debug);
             CompilerResults results = provider.CompileAssemblyFromFile(compileParameters, path); // Compiling
+            Misc.SendMessage("Compile Done");
 
             assembly = null;
             bool has_error = ManageCompileResult(results, out errorwarnings);
