@@ -1707,11 +1707,14 @@ namespace RazorEnhanced.UI
 					CSharpEngine csharpEngine = CSharpEngine.Instance;
 
 					// If compile error occurs a SyntaxErrorException is thrown
-					bool compileErrors = csharpEngine.CompileFromText(text, out StringBuilder compileMessages, out Assembly assembly);
-					if (compileMessages.Length > 0)
+					bool compileErrors = csharpEngine.CompileFromText(text, out List<string> compileMessages, out Assembly assembly);
+					if (compileMessages.Count > 0)
 					{
 						SetErrorBox("C# compile warning:");
-						SetErrorBox(compileMessages.ToString());
+						foreach (string str in compileMessages)
+						{
+							SetErrorBox(str);
+						}
 					}
 					csharpEngine.Execute(assembly);
 
