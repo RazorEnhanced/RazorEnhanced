@@ -369,8 +369,8 @@ namespace RazorEnhanced
                     var sameNameMethods = classMethod.Where(method => method.itemName == methodName).OrderByDescending(method => method.paramList.Count());
                     var firstMethod = sameNameMethods.First();
                     var isStaticMethod = firstMethod.isStatic;
-                    var methodParamsTypes = AutoDoc.GetMethodAllParamsTypes(className, methodName);
-                    var methodParamsDescs = AutoDoc.GetMethodAllParamsDescs(className, methodName);
+                    var methodParamsTypes = AutoDoc.GetMethodAllParamsTypes(classFullName, methodName);
+                    var methodParamsDescs = AutoDoc.GetMethodAllParamsDescs(classFullName, methodName);
                     var methodDescs = sameNameMethods.Select((method => method.itemDescription)).Distinct().ToList();
                     var returnTypes = sameNameMethods.Select(method => method.returnType).Where(returnType => returnType != "Void").Distinct().ToList();
                     var returnDescs = sameNameMethods.Select((method => method.returnDesc)).Distinct().ToList();
