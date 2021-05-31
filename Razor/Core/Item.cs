@@ -600,7 +600,31 @@ namespace Assistant
 			}
 		}
 
-		internal bool IsBagOfSending
+        internal bool IsLootableTarget
+        {
+            get
+            {
+                //if (IsBagOfSending)
+                //    return false;
+                // Should be false but checking for it is difficult
+
+                if (!IsContainer)
+                    return false;
+
+                if (IsInBank)
+                    return false;
+
+                if (RootContainer == World.Player.Backpack)
+                    return true;
+                if (this == World.Player.Backpack)
+                    return true;
+
+                return false;
+
+            }
+        }
+
+        internal bool IsBagOfSending
 		{
 			get
 			{

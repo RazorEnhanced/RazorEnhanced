@@ -103,7 +103,10 @@ namespace RazorEnhanced
 
 		public bool IsBagOfSending { get { return m_AssistantItem.IsBagOfSending; } }
 
-		public bool IsInBank { get { return m_AssistantItem.IsInBank; } }
+        internal bool IsLootableTarget
+        { get { return m_AssistantItem.IsLootableTarget; } }
+
+        public bool IsInBank { get { return m_AssistantItem.IsInBank; } }
 
 		public bool IsPouch { get { return m_AssistantItem.IsPouch; } }
 
@@ -1009,7 +1012,7 @@ namespace RazorEnhanced
 
 			foreach (Item found in containeritem)
 			{
-				if (!found.IsInBank && found.RootContainer == World.Player.Backpack.Serial  )
+				if (found.IsLootableTarget  )
 				{
 					RazorEnhanced.Items.UseItem(found);
 					return true;
@@ -1408,11 +1411,12 @@ namespace RazorEnhanced
 
         public static int BackpackCount(int itemid, int color = -1)
 		{
+            return 0;
 			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
 			if (color == -1)
-				items = items.Where((i) => i.RootContainer == World.Player.Backpack && i.ItemID == itemid && i.IsInBank == false).ToList();
+				items = items.Where((i) => i.IsLootableTarget && i.ItemID == itemid ).ToList();
 			else
-				items = items.Where((i) => i.RootContainer == World.Player.Backpack && i.ItemID == itemid && i.Hue == color && i.IsInBank == false).ToList();
+				items = items.Where((i) => i.IsLootableTarget && i.ItemID == itemid && i.Hue == color).ToList();
 
 			int amount = 0;
 			foreach (Assistant.Item i in items)

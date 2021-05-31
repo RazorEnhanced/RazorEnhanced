@@ -644,7 +644,7 @@ namespace RazorEnhanced
 
             foreach (Item found in containeritem)
             {
-                if (!found.IsInBank && found.RootContainer == World.Player.Backpack.Serial)
+                if (found.IsLootableTarget)
                 {
                     return found.Serial;
                 }
