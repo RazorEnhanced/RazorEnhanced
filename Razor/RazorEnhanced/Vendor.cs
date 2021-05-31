@@ -10,7 +10,10 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-    /// <summary>@nodoc</summary>
+    /// <summary>
+    /// @experimental
+    /// The Vendor class allow you to read the list items purchased last.
+    /// </summary>
     public class Vendor
     {
         /// <summary>@nodoc</summary>
@@ -36,7 +39,10 @@ namespace RazorEnhanced
             Vendor.LastBuyList = pack.Contains;
         }
 
-        
+        /// <summary>
+        /// @nodoc
+        /// This method needs to be restructured/redesigned before being documented.
+        /// </summary>
         public static void Buy(int vendorSerial, int itemID, int amount)
         {
             if (LastVendor == null)
@@ -64,6 +70,9 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// The BuyItem class store informations about a recently purchased item.
+        /// </summary>
         public class BuyItem
         {
             public string Name { get; set; }
@@ -73,10 +82,16 @@ namespace RazorEnhanced
             public int Price { get; set; }
 
         }
-        public static List<BuyItem> BuyList(int vendorSerial)
+
+        /// <summary>
+        /// Get the list of items purchased in the last trade, with a specific Vendor.
+        /// </summary>
+        /// <param name="vendorSerial">Serial of the Vendor (default: -1 - most recent trade)</param>
+        /// <returns>A list of BuyItem</returns>
+        public static List<BuyItem> BuyList(int vendorSerial=-1)
         {
             List<BuyItem> buyList = new List<BuyItem>();
-            if (LastVendor.Serial == vendorSerial)
+            if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
                 foreach (Assistant.Item listItem in LastBuyList)
                 {
                     BuyItem item = new BuyItem();
@@ -95,7 +110,7 @@ namespace RazorEnhanced
 
 
     /// <summary>
-    /// This class allow you to interect with the SellAgent, via scripting.
+    /// The SellAgent class allow you to interect with the SellAgent, via scripting.
     /// </summary>
     public class SellAgent
 	{
@@ -498,7 +513,7 @@ namespace RazorEnhanced
 
 
     /// <summary>
-    /// This class allow you to interect with the BuyAgent, via scripting.
+    /// The BuyAgent class allow you to interect with the BuyAgent, via scripting.
     /// </summary>
 	public class BuyAgent
 	{

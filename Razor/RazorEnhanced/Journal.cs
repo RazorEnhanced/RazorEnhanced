@@ -1,4 +1,5 @@
 using Assistant;
+using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
@@ -6,9 +7,15 @@ using System.Linq;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// The Journal class provides access to the message Journal.
+    /// </summary>
 	public class Journal
 	{
-		public class JournalEntry
+        /// <summary>
+        /// The JournalEntry class rapresents a line in the Journal.
+        /// </summary>
+        public class JournalEntry
 		{
 			private string m_Text;
 			public string Text { get { return m_Text; } }
@@ -25,22 +32,69 @@ namespace RazorEnhanced
 			private int m_Serial;
 			public int Serial { get { return m_Serial; } }
 
-			public JournalEntry(string text, string type, int color, string name, int serial)
-			{
-				m_Text = text;
-				m_Type = type;
-				m_Color = color;
-				m_Name = name;
-				m_Serial = serial;
-			}
-		}
+            private double m_Timestamp;
+            /// <summary>
+            /// Timestamp as UnixTimestap, the number of seconds elapsed since 01-Jan-1970.
+            /// </summary>
+            public double Timestamp { get { return m_Timestamp; } }
 
+            private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
+
+
+            public JournalEntry Copy() {
+                return new JournalEntry(this);
+            }
+
+            public JournalEntry(string text, string type, int color, string name, int serial)
+            {
+                m_Text = text;
+                m_Type = type;
+                m_Color = color;
+                m_Name = name;
+                m_Serial = serial;
+                m_Timestamp = DateTime.Now.Subtract(UnixTimeBegin).TotalSeconds;
+            }
+
+            public JournalEntry(JournalEntry from)
+            {
+                m_Text = from.Text;
+                m_Type = from.Type;
+                m_Color = from.Color;
+                m_Name = from.Name;
+                m_Serial = from.Serial;
+                m_Timestamp = from.Timestamp;
+            }
+        }
+
+
+        /// <summary>
+        /// Get a copy of all Journal lines as JournalEntry. The list can be filtered to include only most recent events.
+        /// </summary>
+        /// <param name="afterTimestap">Timestap as standard UnixTime, seconds since 01-Jan-1970. (default: -1, no filter)</param>
+        /// <returns>List of JournalEntry</returns>
+        public static List<JournalEntry> GetJournalEntry(double afterTimestap = -1)
+        {
+            var journalEntries = new List<JournalEntry>();
+            if (World.Player.Journal == null) { return journalEntries; }
+
+            journalEntries.AddRange(World.Player.Journal.Where( journalEntry => journalEntry.Timestamp > afterTimestap ).Select(journalEntry => journalEntry.Copy() ));
+            return journalEntries;
+        }
+
+        /// <summary>
+        /// Removes all entry from the Jorunal. This operation is Global for all Razor.
+        /// </summary>
 		public static void Clear()
 		{
 			ConcurrentQueue<JournalEntry> Journal = new ConcurrentQueue<JournalEntry>();
 			Interlocked.Exchange(ref World.Player.Journal, Journal);
 		}
 
+        /// <summary>
+        /// Search in the Journal for the occurrence of text. (case sensitive)
+        /// </summary>
+        /// <param name="text">Text to search.</param>
+        /// <returns>True: Text is found - False: otherwise</returns>
 		public static bool Search(string text)
 		{
 			try
@@ -53,6 +107,12 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Search in the Journal for the occurrence of text, for a given soruce. (case sensitive)
+        /// </summary>
+        /// <param name="text">Text to search.</param>
+        /// <param name="name">Name of the source.</param>
+        /// <returns>True: Text is found - False: otherwise</returns>
 		public static bool SearchByName(string text, string name)
 		{
 			try
@@ -65,6 +125,12 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Search in the Journal for the occurrence of text, for a given color. (case sensitive)
+        /// </summary>
+        /// <param name="text">Text to search.</param>
+        /// <param name="color">Color of the message.</param>
+        /// <returns>True: Text is found - False: otherwise</returns>
 		public static bool SearchByColor(string text, int color)
 		{
 			try
@@ -77,6 +143,26 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Search in the Journal for the occurrence of text, for a given type. (case sensitive)
+        /// </summary>
+        /// <param name="text">Text to search.</param>
+        /// <param name="type">
+        ///     Regular
+        ///     System
+        ///     Emote
+        ///     Label
+        ///     Focus
+        ///     Whisper
+        ///     Yell
+        ///     Spell
+        ///     Guild
+        ///     Alliance
+        ///     Party
+        ///     Encoded
+        ///     Special
+        /// </param>
+        /// <returns>True: Text is found - False: otherwise</returns>
         public static bool SearchByType(string text, string type)
         {
             try
@@ -97,6 +183,12 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// Search and return the most recent line Journal containing the given text. (case sensitive)
+        /// </summary>
+        /// <param name="text">Text to search.</param>
+        /// <param name="addname">Prepend source name. (default: False)</param>
+        /// <returns>Return the full line - Empty string if not found.</returns>
 		public static string GetLineText(string text, bool addname = false)
 		{
 			string result = string.Empty;
@@ -120,7 +212,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<string> GetTextBySerial(int serial)
+        /// <summary>
+        /// Returns all the lines present in the Journal for a given serial.
+        /// </summary>
+        /// <param name="serial">Serial of the soruce.</param>
+        /// <param name="addname">Prepend source name. (default: False)</param>
+        /// <returns>A list of Journal as lines of text.</returns>
+		public static List<string> GetTextBySerial(int serial, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
@@ -129,8 +227,11 @@ namespace RazorEnhanced
 				{
 					if (entrys.Serial == serial)
 					{
-						result.Add(entrys.Text);
-					}
+                        if (addname)
+                            result.Add(entrys.Name + ": " + entrys.Text);
+                        else
+                            result.Add(entrys.Text);
+                    }
 				}
 				return result;
 			}
@@ -140,7 +241,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<string> GetTextByColor(int color, bool addname = false)
+        /// <summary>
+        /// Returns all the lines present in the Journal for a given color.
+        /// </summary>
+        /// <param name="color">Color of the soruce.</param>
+        /// <param name="addname">Prepend source name. (default: False)</param>
+        /// <returns>A list of Journal as lines of text.</returns>
+        public static List<string> GetTextByColor(int color, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
@@ -163,7 +270,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<string> GetTextByName(string name)
+        /// <summary>
+        /// Returns all the lines present in the Journal for a given source name. (case sensitive)
+        /// </summary>
+        /// <param name="name">Name of the soruce.</param>
+        /// <param name="addname">Prepend source name. (default: False)</param>
+        /// <returns>A list of Journal as lines of text.</returns>
+		public static List<string> GetTextByName(string name, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
@@ -172,8 +285,11 @@ namespace RazorEnhanced
 				{
 					if (entrys.Name == name)
 					{
-						result.Add(entrys.Text);
-					}
+                        if (addname)
+                            result.Add(entrys.Name + ": " + entrys.Text);
+                        else
+                            result.Add(entrys.Text);
+                    }
 				}
 				return result;
 			}
@@ -183,6 +299,26 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Returns all the lines present in the Journal for a given type. (case sensitive)
+        /// </summary>
+        /// <param name="type">
+        ///     Regular
+        ///     System
+        ///     Emote
+        ///     Label
+        ///     Focus
+        ///     Whisper
+        ///     Yell
+        ///     Spell
+        ///     Guild
+        ///     Alliance
+        ///     Party
+        ///     Encoded
+        ///     Special
+        /// </param>
+        /// <param name="addname">Prepend source name. (default: False)</param>
+        /// <returns>A list of Journal as lines of text.</returns>
 		public static List<string> GetTextByType(string type, bool addname = false)
 		{
 			List<string> result = new List<string>();
@@ -206,6 +342,10 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get list of speakers.
+        /// </summary>
+        /// <returns>List of speakers as text.</returns>
 		public static List<string> GetSpeechName()
 		{
 			List<string> result = new List<string>();
@@ -220,6 +360,12 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Pause script and wait for maximum amount of time, for a specific text to appear in Journal. (case sensitive)
+        /// </summary>
+        /// <param name="text">Text to search.</param>
+        /// <param name="delay">Maximum pause in milliseconds.</param>
+        /// <returns>True: Text is found - False: otherwise</returns>
 		public static bool WaitJournal(string text, int delay)
 		{
 			int subdelay = delay;
@@ -231,6 +377,13 @@ namespace RazorEnhanced
             return Search(text);
 		}
 
+
+        /// <summary>
+        /// Pause script and wait for maximum amount of time, for any of the text in the list to appear in Journal. (case sensitive)
+        /// </summary>
+        /// <param name="msgs">List of text to search.</param>
+        /// <param name="delay">Maximum pause in milliseconds.</param>
+        /// <returns>Return the first line in the journal. Empty string: otherwise</returns>
 		public static string WaitJournal(List<string> msgs, int delay)
 		{
 			int subdelay = delay;
@@ -248,7 +401,14 @@ namespace RazorEnhanced
 			return string.Empty; // found one of msgs list
 
 		}
-         public static bool WaitByName(string name, int delay)
+
+        /// <summary>
+        /// Pause script and wait for maximum amount of time, for a specific soruce to appear in Jorunal. (case sensitive)
+        /// </summary>
+        /// <param name="name">Name of the soruce.</param>
+        /// <param name="delay">Maximum pause in milliseconds.</param>
+        /// <returns></returns>
+        public static bool WaitByName(string name, int delay)
         {
             int subdelay = delay;
             while (subdelay > 0)
@@ -265,5 +425,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        
     }
+
+
+
 }
