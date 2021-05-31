@@ -982,22 +982,22 @@ namespace RazorEnhanced
             Assistant.Client.Instance.SendToServerWait(new PartyInvite());
         }
 
-        public static bool PartyAccept(int serial = 0)
+        public static bool PartyAccept(int serial = 0, bool force=false)
         {
-            if (World.Player.InParty)
+            if (!force && World.Player.InParty )
             {
-                Misc.SendMessage("PartyAccept: You are already in a party.");
+                Misc.SendMessage("Player.PartyAccept: You are already in a party.");
                 return true;
             }
             Assistant.Client.Instance.SendToServerWait(new AcceptParty(serial));
             return World.Player.InParty;
         }
 
-        public static void LeaveParty()
+        public static void LeaveParty(bool force=false)
         {
-            if (!World.Player.InParty)
+            if (!force && !World.Player.InParty)
             {
-                Misc.SendMessage("PartyAccept: You are not in a party.");
+                Misc.SendMessage("Player.LeaveParty: You are not in a party.");
                 return;
             }
             Assistant.Client.Instance.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
