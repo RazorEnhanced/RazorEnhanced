@@ -46,9 +46,14 @@ namespace Assistant
 			if (autoLootBag == null)
 				return;
 
-			if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsContainer && autoLootBag.RootContainer == Assistant.World.Player.Backpack)
+            bool bagOfSending = false;
+            string prop = Items.GetPropStringByIndex(serial, 0);
+            if (prop.IndexOf("bag of sending", 0, StringComparison.CurrentCultureIgnoreCase) != -1)
+                bagOfSending = true;
+
+            if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsLootableTarget && (!bagOfSending))
 			{
-				if (showagentmessageCheckBox.Checked)
+                if (showagentmessageCheckBox.Checked)
 					RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString(), false);
 				RazorEnhanced.AutoLoot.AddLog("Autoloot Container set to: " + autoLootBag.ToString());
 				AutoLoot.AutoLootBag = (int)autoLootBag.Serial.Value;

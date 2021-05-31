@@ -632,7 +632,7 @@ namespace RazorEnhanced
             Assistant.Item bag = Assistant.World.FindItem(AutoLoot.AutoLootBag);
             if (bag != null)
             {
-                if (bag.RootContainer != World.Player.Backpack)
+                if (! bag.IsLootableTarget)
                 {
                     if (!lootChangeMsgSent)
                     {
