@@ -600,6 +600,20 @@ namespace Assistant
 			}
 		}
 
+
+        internal bool IsInBackpack
+        {
+            get
+            {
+                if (RootContainer == World.Player.Backpack)
+                    return true;
+                if (this == World.Player.Backpack)
+                    return true;
+
+                return false;
+            }
+        }
+
         internal bool IsLootableTarget
         {
             get

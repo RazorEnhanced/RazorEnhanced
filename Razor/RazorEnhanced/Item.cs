@@ -103,6 +103,9 @@ namespace RazorEnhanced
 
 		public bool IsBagOfSending { get { return m_AssistantItem.IsBagOfSending; } }
 
+        internal bool IsInBackpack
+        { get { return m_AssistantItem.IsInBackpack; } }
+
         internal bool IsLootableTarget
         { get { return m_AssistantItem.IsLootableTarget; } }
 
@@ -1411,12 +1414,11 @@ namespace RazorEnhanced
 
         public static int BackpackCount(int itemid, int color = -1)
 		{
-            return 0;
 			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
 			if (color == -1)
-				items = items.Where((i) => i.IsLootableTarget && i.ItemID == itemid ).ToList();
+				items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid ).ToList();
 			else
-				items = items.Where((i) => i.IsLootableTarget && i.ItemID == itemid && i.Hue == color).ToList();
+				items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid && i.Hue == color).ToList();
 
 			int amount = 0;
 			foreach (Assistant.Item i in items)
