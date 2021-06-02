@@ -9,6 +9,7 @@ using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using IronPython.Compiler;
+using System.IO;
 
 namespace RazorEnhanced
 {
@@ -21,22 +22,28 @@ namespace RazorEnhanced
         public PythonEngine() {
 			engine = Python.CreateEngine();
 
-			/*Dalamar: BEGIN*/
-			var paths = engine.GetSearchPaths();
-			// Add "Scripts" forlder
-			paths.Add(Misc.CurrentScriptDirectory());
-			// Add defult IronPython installlation folder ( allow import os, json, and all the other standar python modules )
-			if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 2.7"))
-			{
-				paths.Add(@"C:\Program Files\IronPython 2.7\Lib");
-				paths.Add(@"C:\Program Files\IronPython 2.7\DLLs");
-				paths.Add(@"C:\Program Files\IronPython 2.7");
-				paths.Add(@"C:\Program Files\IronPython 2.7\lib\site-packages");
-			}
-			engine.SetSearchPaths(paths);
-			/*Dalamar: END*/
 
-			engine.Runtime.Globals.SetVariable("Misc", new RazorEnhanced.Misc());
+            //Paths for IronPython 3.4
+            var paths = new List<string>();
+            var basepath = Assistant.Engine.RootPath;
+            // IronPython 3.4 add some default absolute paths: ./, ./Lib, ./DLLs
+            // When run via CUO the paths are messed up, so we ditch the default ones and put the correct ones
+            paths.Add(basepath);
+            paths.Add(Misc.CurrentScriptDirectory());
+            paths.Add(Path.Combine(basepath, "Libs"));
+            paths.Add(Path.Combine(basepath, "DLLs"));
+            engine.SetSearchPaths(paths);
+
+            // Add also defult IronPython 3.4 installlation folder, if present
+            if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 3.4"))
+            {
+                paths.Add(@"C:\Program Files\IronPython 3.4");
+                paths.Add(@"C:\Program Files\IronPython 3.4\Lib"); 
+            	paths.Add(@"C:\Program Files\IronPython 3.4\DLLs");
+                paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
+            }
+
+            engine.Runtime.Globals.SetVariable("Misc", new RazorEnhanced.Misc());
 			engine.Runtime.Globals.SetVariable("Items", new RazorEnhanced.Items());
 			engine.Runtime.Globals.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
 			engine.Runtime.Globals.SetVariable("Player", new RazorEnhanced.Player());
