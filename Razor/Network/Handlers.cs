@@ -736,21 +736,30 @@ namespace Assistant
 			Item item = World.FindItem(ser);
 			if (item != null)
 			{
-				if (item.Contains.Count > 0)
-                {
-					List<Serial> toBeUpdated = new List<Serial>();
-					foreach (Item x in item.Contains)
-                    {
-						if (x.PropsUpdated == false)
-                        {
-							toBeUpdated.Add(x.Serial);
+				// Simone:
+				// The following code is trying to fix missing properties of items inside a container that is never been opened.
+				// Note: This behaviour is only present with ClassicUO version >= 0.1.5.x due to an optimization(https://github.com/andreakarasho/ClassicUO/pull/1226)
+				// When a container is opened, serial of all its items with PropsUpdated == false, are sent to server with MegaCliloc packet
+				// that is the bulk items request update. (https://docs.polserver.com/packets/index.php?Packet=0xD6)
+				if (Client.IsOSI == false)
+				{
+					if (item.Contains.Count > 0)
+					{
+						List<Serial> itemsWithoutProps = new List<Serial>();
+						foreach (Item itm in item.Contains)
+						{
+							if (itm.PropsUpdated == false)
+							{
+								itemsWithoutProps.Add(itm.Serial);
+							}
+						}
+						if (itemsWithoutProps.Count > 0)
+						{
+							Client.Instance.SendToServer(new MegaCliloc(itemsWithoutProps));
 						}
 					}
-					if (toBeUpdated.Count > 0)
-                    {
-						Assistant.Client.Instance.SendToServer(new MegaCliloc(toBeUpdated));
-					}
 				}
+				// End FIX
 
 				if (m_IgnoreGumps.Contains(item))
 				{
