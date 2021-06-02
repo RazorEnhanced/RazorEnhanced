@@ -30,7 +30,7 @@ namespace RazorEnhanced
             // When run via CUO the paths are messed up, so we ditch the default ones and put the correct ones
             paths.Add(basepath);
             paths.Add(Misc.CurrentScriptDirectory());
-            paths.Add(Path.Combine(basepath, "Libs"));
+            paths.Add(Path.Combine(basepath, "Lib"));
             paths.Add(Path.Combine(basepath, "DLLs"));
             engine.SetSearchPaths(paths);
 
@@ -38,7 +38,7 @@ namespace RazorEnhanced
             if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 3.4"))
             {
                 paths.Add(@"C:\Program Files\IronPython 3.4");
-                paths.Add(@"C:\Program Files\IronPython 3.4\Lib"); 
+                paths.Add(@"C:\Program Files\IronPython 3.4\Lib");
             	paths.Add(@"C:\Program Files\IronPython 3.4\DLLs");
                 paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
             }
