@@ -1015,7 +1015,7 @@ namespace RazorEnhanced
 
 			foreach (Item found in containeritem)
 			{
-				if (found.IsLootableTarget  )
+				if (found.IsInBackpack)
 				{
 					RazorEnhanced.Items.UseItem(found);
 					return true;
