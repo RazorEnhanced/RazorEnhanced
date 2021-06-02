@@ -736,6 +736,22 @@ namespace Assistant
 			Item item = World.FindItem(ser);
 			if (item != null)
 			{
+				if (item.Contains.Count > 0)
+                {
+					List<Serial> toBeUpdated = new List<Serial>();
+					foreach (Item x in item.Contains)
+                    {
+						if (x.PropsUpdated == false)
+                        {
+							toBeUpdated.Add(x.Serial);
+						}
+					}
+					if (toBeUpdated.Count > 0)
+                    {
+						Assistant.Client.Instance.SendToServer(new MegaCliloc(toBeUpdated));
+					}
+				}
+
 				if (m_IgnoreGumps.Contains(item))
 				{
 					m_IgnoreGumps.Remove(item);
