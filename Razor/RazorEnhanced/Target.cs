@@ -5,16 +5,29 @@ using System.Threading;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// The Target class provides various method for targeting Land, Items and Mobiles in game.
+    /// </summary>
 	public class Target
 	{
 		private int m_ptarget;
 		private RazorEnhanced.Point3D m_pgtarget;
 
+        /// <summary>
+        /// Get status if have in-game cursor has target shape.
+        /// </summary>
+        /// <returns>True: Cursor has target - False: otherwise</returns>
 		public static bool HasTarget()
 		{
 			return Assistant.Targeting.HasTarget;
 		}
 
+        /// <summary>
+        /// Wait for the cursor to show the target, pause the script for a maximum amount of time. and optional flag True or False. True Not show cursor, false show it
+        /// </summary>
+        /// <param name="delay">Maximum amount to wait, in milliseconds</param>
+        /// <param name="noshow">Pevent the cursor to display the target.</param>
+        /// <returns></returns>
 		public static bool WaitForTarget(int delay, bool noshow = false)
 		{
 			int subdelay = delay;
@@ -30,7 +43,28 @@ namespace RazorEnhanced
             return HasTarget();
         }
 
-		public static void TargetExecute(int serial)
+        /// <summary>
+        /// Execute target on specific serial, item, mobile, X Y Z point.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="z">Z coordinate.</param>
+        /// <param name="StaticID">ID of Land/Tile</param>
+        public static void TargetExecute(int x, int y, int z, int StaticID)
+        {
+            Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+            Assistant.Targeting.Target(location, StaticID, true);
+        }
+
+        public static void TargetExecute(int x, int y, int z)
+        {
+            Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+            Assistant.Targeting.Target(location, true);
+        }
+
+
+        /// <param name="serial">Serial of the Target</param>
+        public static void TargetExecute(int serial)
 		{
 			if (!CheckHealPoisonTarg(serial))
 			{
@@ -38,12 +72,14 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <param name="item">Item object to Target.</param>
 		public static void TargetExecute(RazorEnhanced.Item item)
 		{
 			Assistant.Targeting.Target(item.Serial, true);
 		}
 
-		public static void TargetExecute(RazorEnhanced.Mobile mobile)
+        /// <param name="mobile">Mobile object to Target.</param>
+        public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
 			{
@@ -51,96 +87,87 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void TargetExecuteRelative(int serial, int offset)
-		{
-			Mobile m = Mobiles.FindBySerial(serial);
-			if (m != null)
-				TargetExecuteRelative(m, offset);
-		}
 
-		public static void TargetExecuteRelative(Mobile m, int offset)
+        /// <summary>
+        /// Execute target on specific land point with offset distance from Mobile. Distance is calculated by target Mobile.Direction.
+        /// </summary>
+        /// <param name="mobile">Mobile object to target.</param>
+        /// <param name="offset">Distance from the target.</param>
+        public static void TargetExecuteRelative(Mobile mobile, int offset)
 		{
 			Assistant.Point2D relpos = new Assistant.Point2D();
-			switch (m.Direction)
+			switch (mobile.Direction)
 				{
 				case "North":
-					relpos.X = m.Position.X;
-					relpos.Y = m.Position.Y - offset;
+					relpos.X = mobile.Position.X;
+					relpos.Y = mobile.Position.Y - offset;
 					break;
 				case "South":
-					relpos.X = m.Position.X;
-					relpos.Y = m.Position.Y + offset;
+					relpos.X = mobile.Position.X;
+					relpos.Y = mobile.Position.Y + offset;
 					break;
 				case "West":
-					relpos.X = m.Position.X - offset;
-					relpos.Y = m.Position.Y;
+					relpos.X = mobile.Position.X - offset;
+					relpos.Y = mobile.Position.Y;
 					break;
 				case "East":
-					relpos.X = m.Position.X + offset;
-					relpos.Y = m.Position.Y;
+					relpos.X = mobile.Position.X + offset;
+					relpos.Y = mobile.Position.Y;
 					break;
 				case "Up":
-					relpos.X = m.Position.X - offset;
-					relpos.Y = m.Position.Y - offset;
+					relpos.X = mobile.Position.X - offset;
+					relpos.Y = mobile.Position.Y - offset;
 					break;
 				case "Down":
-					relpos.X = m.Position.X + offset;
-					relpos.Y = m.Position.Y + offset;
+					relpos.X = mobile.Position.X + offset;
+					relpos.Y = mobile.Position.Y + offset;
 					break;
 				case "Left":
-					relpos.X = m.Position.X - offset;
-					relpos.Y = m.Position.Y + offset;
+					relpos.X = mobile.Position.X - offset;
+					relpos.Y = mobile.Position.Y + offset;
 					break;
 				case "Right":
-					relpos.X = m.Position.X + offset;
-					relpos.Y = m.Position.Y - offset;
+					relpos.X = mobile.Position.X + offset;
+					relpos.Y = mobile.Position.Y - offset;
 					break;
 			}
 			Assistant.Point3D location = new Assistant.Point3D(relpos.X, relpos.Y, Statics.GetLandZ(relpos.X, relpos.Y, Player.Map));
 			Assistant.Targeting.Target(location, true);
 		}
-
-		public static void TargetExecute(int x, int y, int z)
-		{
-			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
-			Assistant.Targeting.Target(location, true);
-		}
-
-		public static void TargetExecute(int x, int y, int z, int gfx)
-		{
-			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
-			Assistant.Targeting.Target(location, gfx, true);
-		}
-        public static void TargetResource(Item item, string ResourceNameTarget)
+        /// <param name="serial">Serial of the mobile</param>
+        public static void TargetExecuteRelative(int serial, int offset)
         {
-            TargetResource(item.Serial, ResourceNameTarget);
-        }
-        public static void TargetResource(Item item, int ResourceNumber)
-        {
-            TargetResource(item.Serial, ResourceNumber);
+            Mobile m = Mobiles.FindBySerial(serial);
+            if (m != null)
+                TargetExecuteRelative(m, offset);
         }
 
-        public static void TargetResource(int SerialItem, int ResourceNumber)
+        /// <summary>
+        /// Find and target a resource using the specified item.
+        /// </summary>
+        /// <param name="item_serial">Item object to use.</param>
+        /// <param name="resource_number"> Resource as standard name or custom number
+        ///     0: ore
+        ///     1: sand
+        ///     2: wood
+        ///     3: graves
+        ///     4: red_mushrooms
+        ///     n: custom 
+        /// </param>
+        public static void TargetResource(int item_serial, int resource_number)
         {
-            Assistant.Item item = Assistant.World.FindItem(SerialItem);
+            Assistant.Item item = Assistant.World.FindItem(item_serial);
             if (item == null)
             {
                 Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Use Serial");
                 return;
             }
-            Client.Instance.SendToServer(new TargeByResource((uint)SerialItem, (uint)ResourceNumber));
+            Client.Instance.SendToServer(new TargeByResource((uint)item_serial, (uint)resource_number));
         }
-
-        /// <summary>
-        /// shovel = Items.FindByID(0x0F39, 0, Player.Backpack.Serial)
-        ///     if shovel != None:
-        ///         Target.TargetResource(shovel, 6)
-        /// </summary>
-        /// <param name="SerialItem"></param>
-        /// <param name="ResourceNameTarget"></param>
-        public static void TargetResource(int SerialItem, string ResourceNameTarget)
+        
+        public static void TargetResource(int item_serial, string resource_name)
         {
-            Assistant.Item item = Assistant.World.FindItem(SerialItem);
+            Assistant.Item item = Assistant.World.FindItem(item_serial);
             if (item == null)
             {
                 Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Use Serial");
@@ -148,7 +175,7 @@ namespace RazorEnhanced
             }
 
             int number = -1;
-            switch (ResourceNameTarget)
+            switch (resource_name)
             {
                 case "ore":
                     number = 0;
@@ -166,50 +193,82 @@ namespace RazorEnhanced
                     number = 4;
                     break;
                 default:
-                    System.Int32.TryParse(ResourceNameTarget, out number);
+                    System.Int32.TryParse(resource_name, out number);
                     break;
             }
             if (number >= 0)
-                TargetResource(SerialItem, number);
+                TargetResource(item_serial, number);
             else
                 Misc.SendMessage("Valid resource types are ore, sand, wood, graves, red mushroom, or a number");
-
-
         }
 
+        /// <param name="item">Item object to use.</param>
+        public static void TargetResource(Item item, string resouce_name)
+        {
+            TargetResource(item.Serial, resouce_name);
+        }
+        
+        public static void TargetResource(Item item, int resoruce_number)
+        {
+            TargetResource(item.Serial, resoruce_number);
+        }
+
+        /// <summary>
+        /// Cancel the current target.
+        /// </summary>
         public static void Cancel()
 		{
 			//Assistant.Targeting.CancelClientTarget(true);
 			Assistant.Targeting.CancelOneTimeTarget(true);
 		}
 
+        /// <summary>
+        /// Execute the target on the Player.
+        /// </summary>
 		public static void Self()
 		{
 			if (World.Player != null)
 				TargetExecute(World.Player.Serial);
 		}
 
+        /// <summary>
+        /// Enqueue the next target on the Player.
+        /// </summary>
 		public static void SelfQueued()
 		{
 			Assistant.Targeting.TargetSelf(true);
 		}
 
+        /// <summary>
+        /// Execute the target on the last Item or Mobile targeted.
+        /// </summary>
 		public static void Last()
 		{
 			if (!CheckHealPoisonTarg(GetLast()))
 				Assistant.Targeting.LastTarget();
 		}
 
+        /// <summary>
+        /// Enqueue the next target on the last Item or Mobile targeted.
+        /// </summary>
 		public static void LastQueued()
 		{
 			Assistant.Targeting.LastTarget(true);
 		}
 
+        /// <summary>
+        /// Get serial number of last target
+        /// </summary>
+        /// <returns>Serial as number.</returns>
 		public static int GetLast()
 		{
 			return (int)Assistant.Targeting.GetLastTarger;
 		}
 
+        /// <summary>
+        /// Get serial number of last attack target
+        /// </summary>
+        /// <returns>Serial as number.</returns>
 		public static int GetLastAttack()
 		{
 			return (int)Assistant.Targeting.LastAttack;
@@ -222,32 +281,52 @@ namespace RazorEnhanced
 				SetLast(mob.Serial);
 		}
 
+        /// <summary>
+        /// Set the last target to specific mobile, using the serial.
+        /// </summary>
+        /// <param name="serial">Serial of the Mobile.</param>
+        /// <param name="wait">Wait confirmation from the server.</param>
 		public static void SetLast(int serial, bool wait = true)
 		{
 			TargetMessage(serial, wait); // Process message for highlight
 			Assistant.Targeting.SetLastTarget(serial, 0, wait);
 		}
 
+        /// <summary>
+        /// Clear Queue Target.
+        /// </summary>
 		public static void ClearQueue()
 		{
 			Assistant.Targeting.ClearQueue();
 		}
 
+        /// <summary>
+        /// Clear the last target.
+        /// </summary>
 		public static void ClearLast()
 		{
 			Assistant.Targeting.ClearLast();
 		}
 
+        /// <summary>
+        /// Clear last target and target queue.
+        /// </summary>
 		public static void ClearLastandQueue()
 		{
 			Assistant.Targeting.ClearQueue();
 			Assistant.Targeting.ClearLast();
 		}
 
-		public int PromptTarget(string message = "Select Item or Mobile")
+        /// <summary>
+        /// Prompt a target in-game, wait for the Player to select an Item or a Mobile. Can also specific a text message for prompt.
+        /// </summary>
+        /// <param name="message">Hint on what to select.</param>
+        /// <param name="color">Color of the message. (default: 945, gray)</param>
+        /// <returns>Serial of the selected object.</returns>
+		public int PromptTarget(string message = "Select Item or Mobile", int color = 945)
 		{
 			m_ptarget = -1;
-			Misc.SendMessage(message, 945, true);
+			Misc.SendMessage(message, color, true);
 			Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
@@ -259,7 +338,7 @@ namespace RazorEnhanced
 			Thread.Sleep(100);
 
 			if (m_ptarget == -1)
-				Misc.SendMessage("Prompt Target Cancelled", 945, true);
+				Misc.SendMessage("Prompt Target Cancelled", color, true);
 
 			return m_ptarget;
 		}
@@ -268,12 +347,17 @@ namespace RazorEnhanced
 		{
 			m_ptarget = serial;
 		}
-
-		public Point3D PromptGroundTarget(string message = "Select Ground Position")
+        /// <summary>
+        /// Prompt a target in-game, wait for the Player to select the ground. Can also specific a text message for prompt.
+        /// </summary>
+        /// <param name="message">Hint on what to select.</param>
+        /// <param name="color">Color of the message. (default: 945, gray)</param>
+        /// <returns>A Point3D object, containing the X,Y,Z coordinate</returns>
+		public Point3D PromptGroundTarget(string message = "Select Ground Position", int color = 945)
 		{
 			m_pgtarget = Point3D.MinusOne;
 
-			Misc.SendMessage(message, 945, true);
+			Misc.SendMessage(message, color, true);
 			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(PromptGroundTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
@@ -285,7 +369,7 @@ namespace RazorEnhanced
 			Thread.Sleep(100);
 
 			if (m_pgtarget.X == -1)
-				Misc.SendMessage("Prompt Gorund Target Cancelled", 945, true);
+				Misc.SendMessage("Prompt Gorund Target Cancelled", color, true);
 
 			return m_pgtarget;
 		}
@@ -363,9 +447,14 @@ namespace RazorEnhanced
 
 			return m_NotoHues[mob.Notoriety];
 		}
-		public static void SetLastTargetFromList(string targetid)
+
+        /// <summary>
+        /// Set Last Target from GUI filter selector, in Targetting tab.
+        /// </summary>
+        /// <param name="target_name">Name of the target filter.</param>
+		public static void SetLastTargetFromList(string target_name)
 		{
-			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 			if (targetdata != null)
 			{
 				Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
@@ -382,9 +471,15 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static Mobile GetTargetFromList(string targetid)
+
+        /// <summary>
+        /// Get Mobile object from GUI filter selector, in Targetting tab.
+        /// </summary>
+        /// <param name="target_name">Name of the target filter.</param>
+        /// <returns>Mobile object matching. None: not found</returns>
+        public static Mobile GetTargetFromList(string target_name)
 		{
-			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 			if (targetdata == null)
 				return null;
 
@@ -427,9 +522,14 @@ namespace RazorEnhanced
 				Targeting.SetLastTarget(mobile.Serial, 0, false);
 		}
 
-		public static void PerformTargetFromList(string targetid)
+
+        /// <summary>
+        /// Execute Target from GUI filter selector, in Targetting tab.
+        /// </summary>
+        /// <param name="target_name">Name of the target filter.</param>
+		public static void PerformTargetFromList(string target_name)
 		{
-			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 
 			if (targetdata == null)
 				return;
@@ -449,9 +549,13 @@ namespace RazorEnhanced
 			SetLast(mobtarget);
 		}
 
-		public static void AttackTargetFromList(string targetid)
+        /// <summary>
+        /// Attack Target from gui filter selector, in Targetting tab.
+        /// </summary>
+        /// <param name="target_name"></param>
+		public static void AttackTargetFromList(string target_name)
 		{
-			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
+			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 
 			if (targetdata == null)
 				return;

@@ -18,29 +18,55 @@ namespace RazorEnhanced
         public class JournalEntry
 		{
 			private string m_Text;
+            /// <summary>
+            /// Actual content of the Journal Line.
+            /// </summary>
 			public string Text { get { return m_Text; } }
 
 			private string m_Type;
-			public string Type { get { return m_Type; } }
+            /// <summary>
+            ///     Regular
+            ///     System
+            ///     Emote
+            ///     Label
+            ///     Focus
+            ///     Whisper
+            ///     Yell
+            ///     Spell
+            ///     Guild
+            ///     Alliance
+            ///     Party
+            ///     Encoded
+            ///     Special
+            /// </summary>
+            public string Type { get { return m_Type; } }
 
 			private int m_Color;
+            /// <summary>
+            /// Color of the text.
+            /// </summary>
 			public int Color { get { return m_Color; } }
 
 			private string m_Name;
+            /// <summary>
+            /// Name of the source, can be a Mobile or an Item.
+            /// </summary>
 			public string Name { get { return m_Name; } }
 
 			private int m_Serial;
-			public int Serial { get { return m_Serial; } }
+            /// <summary>
+            /// Name of the source, can be a Mobile or an Item.
+            /// </summary>
+            public int Serial { get { return m_Serial; } }
 
             private double m_Timestamp;
             /// <summary>
-            /// Timestamp as UnixTimestap, the number of seconds elapsed since 01-Jan-1970.
+            /// Timestamp as UnixTime, the number of seconds elapsed since 01-Jan-1970.
             /// </summary>
             public double Timestamp { get { return m_Timestamp; } }
 
             private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
-
-
+            
             public JournalEntry Copy() {
                 return new JournalEntry(this);
             }
@@ -68,17 +94,28 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// Get a copy of all Journal lines as JournalEntry. The list can be filtered to include only most recent events.
+        /// Get a copy of all Journal lines as JournalEntry. The list can be filtered to include *only* most recent events.
         /// </summary>
-        /// <param name="afterTimestap">Timestap as standard UnixTime, seconds since 01-Jan-1970. (default: -1, no filter)</param>
+        /// <param name="afterTimestap">Timestap as UnixTime, the number of seconds elapsed since 01-Jan-1970. (default: -1, no filter)</param>
         /// <returns>List of JournalEntry</returns>
         public static List<JournalEntry> GetJournalEntry(double afterTimestap = -1)
         {
             var journalEntries = new List<JournalEntry>();
             if (World.Player.Journal == null) { return journalEntries; }
 
-            journalEntries.AddRange(World.Player.Journal.Where( journalEntry => journalEntry.Timestamp > afterTimestap ).Select(journalEntry => journalEntry.Copy() ));
+            journalEntries.AddRange(World.Player.Journal.Where(journalEntry => journalEntry.Timestamp > afterTimestap).Select(journalEntry => journalEntry.Copy()));
             return journalEntries;
+        }
+
+        /// <summary>
+        /// Get a copy of all Journal lines as JournalEntry. The list can be filtered to include *only* most recent events.
+        /// </summary>
+        /// <param name="afterJournalEntry">A JournalEntry object (default: null, no filter)</param>
+        /// <returns>List of JournalEntry</returns>
+        public static List<JournalEntry> GetJournalEntry(JournalEntry afterJournalEntry = null)
+        {
+            var afterTimestap = afterJournalEntry == null ? -1 : afterJournalEntry.Timestamp;
+            return GetJournalEntry(afterTimestap);
         }
 
         /// <summary>
