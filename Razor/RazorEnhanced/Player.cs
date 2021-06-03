@@ -984,6 +984,7 @@ namespace RazorEnhanced
 
         public static bool PartyAccept(int serial = 0, bool force=false)
         {
+            //Dalamar: about "force" option. On some shard "dobule party" is considered a feature as double the change of dropping artys
             if (!force && World.Player.InParty )
             {
                 Misc.SendMessage("Player.PartyAccept: You are already in a party.");

@@ -852,6 +852,8 @@ namespace RazorEnhanced
                 // typeof(AutoDoc),
                 // API
                 typeof(Misc),
+                typeof(Misc.Context),
+                typeof(Misc.MapInfo),
                 typeof(Item),
                 typeof(Items),
                 typeof(Items.Filter),
