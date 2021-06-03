@@ -52,10 +52,13 @@ namespace Assistant.Filters
 
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
         {
-            if (Client.Instance.AllowBit(FeatureBit.WeatherFilter))
+            if (World.Player != null)
             {
-                args.Block = true;
-                Client.Instance.ForceSendToClient(new SeasonChange(World.Player.ForcedSeason, true));
+                if (Client.Instance.AllowBit(FeatureBit.WeatherFilter))
+                {
+                    args.Block = true;
+                    Client.Instance.ForceSendToClient(new SeasonChange(World.Player.ForcedSeason, true));
+                }
             }
         }
     }
