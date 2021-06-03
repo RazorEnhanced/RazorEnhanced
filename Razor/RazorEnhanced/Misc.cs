@@ -973,7 +973,7 @@ namespace RazorEnhanced
         /// Enable or disable the Seasons filter forcing a specific season
         /// Season filter state will be saved on logout but not the season flag that will be recovered.
         /// </summary>
-        /// <param name="enable">Enable or disable the Seasons filter</param>
+        /// <param name="enable">True: enable seasons filter</param>
         /// <param name="seasonFlag">
         ///     0: Spring (default fallback)
         ///     1: Summer
