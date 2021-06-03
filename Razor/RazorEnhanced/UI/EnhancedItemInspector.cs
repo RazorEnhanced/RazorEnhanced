@@ -134,23 +134,10 @@ namespace RazorEnhanced.UI
 				}
 			}
 
-			// Su OSI il valore amount viene usato per altro se un item è dichiarato non stackabile nei files.
 			if (m_itemTarg.Amount == 0)
 				lAmount.Text = "1";
 			else
-			{
-				try // avoid crash if some bad happen in Ultima.dll
-				{
-					if ((Ultima.TileData.ItemTable[m_itemTarg.ItemID].Flags & Ultima.TileFlag.Generic) != 0)
-						lAmount.Text = m_itemTarg.Amount.ToString();
-					else
-						lAmount.Text = "1";
-				}
-				catch
-				{
-					lAmount.Text = "1";
-				}
-			}
+  				lAmount.Text = m_itemTarg.Amount.ToString();
 
 			lLayer.Text = m_itemTarg.Layer.ToString();
 

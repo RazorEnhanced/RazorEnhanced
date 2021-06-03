@@ -144,7 +144,19 @@ namespace Assistant
 
 		internal ushort Amount
 		{
-			get { return m_Amount; }
+			get {
+                // On OSI the amount value is used for other purposes if an item is declared not stackable in files.
+                try // avoid crash if some bad happen in Ultima.dll
+                {
+                    if ((Ultima.TileData.ItemTable[ItemID].Flags & Ultima.TileFlag.Generic) != 0)
+                        return m_Amount;
+                }
+                catch
+                {
+                }
+
+                return 1;
+            }
 			set { m_Amount = value; }
 		}
 
@@ -230,22 +242,6 @@ namespace Assistant
 				}
 			}
 			return null;
-		}
-
-		internal int GetCount(ushort iid)
-		{
-			int count = 0;
-			foreach (Item item in m_Items)
-			{
-				if (item.ItemID == iid)
-					count += item.Amount;
-				// fucking osi blank scrolls
-				else if ((item.ItemID == 0x0E34 && iid == 0x0EF3) || (item.ItemID == 0x0EF3 && iid == 0x0E34))
-					count += item.Amount;
-				count += item.GetCount(iid);
-			}
-
-			return count;
 		}
 
 		internal object Container
