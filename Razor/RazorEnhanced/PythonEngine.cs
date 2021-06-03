@@ -27,18 +27,22 @@ namespace RazorEnhanced
             var paths = new List<string>();
             var basepath = Assistant.Engine.RootPath;
             // IronPython 3.4 add some default absolute paths: ./, ./Lib, ./DLLs
-            // When run via CUO the paths are messed up, so we ditch the default ones and put the correct ones
-            paths.Add(basepath);
+            // When run via CUO the paths are messed up, so we ditch the default ones and put the correct ones.
+            // Order matters:
+            // 1- ./Script/
             paths.Add(Misc.CurrentScriptDirectory());
+            // 2- ./Lib/
             paths.Add(Path.Combine(basepath, "Lib"));
-            paths.Add(Path.Combine(basepath, "DLLs"));
+            // 3- ./
+            paths.Add(basepath);
+
             engine.SetSearchPaths(paths);
 
             // Add also defult IronPython 3.4 installlation folder, if present
             if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 3.4"))
             {
                 paths.Add(@"C:\Program Files\IronPython 3.4");
-                paths.Add(@"C:\Program Files\IronPython 3.4\Lib");
+                paths.Add(@"C:\Program Files\IronPython 3.4\Lib"); 
             	paths.Add(@"C:\Program Files\IronPython 3.4\DLLs");
                 paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
             }

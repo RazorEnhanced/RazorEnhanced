@@ -319,7 +319,10 @@ namespace RazorEnhanced
             public List<int> Hues = new List<int>();
             public double RangeMin = -1;
             public double RangeMax = -1;
-            public bool CheckLineOfSite = false;
+
+            /// <summary>@nodoc</summary>
+            public bool CheckLineOfSite = false; //Dalamar: typo corrected, removed old version from documentation, but still functional.
+            public bool CheckLineOfSight = false;
             public int Poisoned = -1;
             public int Blessed = -1;
             public int IsHuman = -1;
@@ -349,7 +352,7 @@ namespace RazorEnhanced
             return CheckCoords(mobile, coords);
         }
 
-        internal static List<Assistant.Mobile> CheckLineOfSite(List<Assistant.Mobile> inAssistantMobiles)
+        internal static List<Assistant.Mobile> CheckLineOfSight(List<Assistant.Mobile> inAssistantMobiles)
         {
             List<Assistant.Mobile> outAssistantMobile = new List<Assistant.Mobile>();
             foreach (Assistant.Mobile mobile in inAssistantMobiles)
@@ -636,9 +639,9 @@ namespace RazorEnhanced
                     assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
                 }
                 // check line of site last because its expensive
-                if (filter.CheckLineOfSite)
+                if (filter.CheckLineOfSight || filter.CheckLineOfSite)
                 {
-                    assistantMobiles = CheckLineOfSite(assistantMobiles);
+                    assistantMobiles = CheckLineOfSight(assistantMobiles);
                 }
 
             }
