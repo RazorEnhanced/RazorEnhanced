@@ -1454,6 +1454,18 @@ namespace Assistant
         }
     }
 
+    internal sealed class MegaCliloc : Packet
+    {
+        internal MegaCliloc(List<Serial> entity)
+            : base(0xD6)
+        {
+            EnsureCapacity(1 + 2 + (4 * entity.Count));
+            foreach (var i in entity)
+                Write((uint)i);
+        }
+    }
+
+
     internal sealed class ContextMenuResponse : Packet
     {
         internal ContextMenuResponse(Serial entity, ushort idx)
