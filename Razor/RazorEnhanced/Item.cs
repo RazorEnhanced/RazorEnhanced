@@ -310,8 +310,8 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// Experimental function to color items
-        /// @nodoc
+        /// function to color items only in client view.
+        /// Will be lost RE termination
         /// </summary>
         /// <param name="serial"></param>
         /// <param name="color"></param>
