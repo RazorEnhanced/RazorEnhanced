@@ -11,6 +11,7 @@ using System.Windows.Forms;
 namespace RazorEnhanced
 {
     /// <summary>
+    /// @nodoc
     /// @experimental
     /// The Vendor class allow you to read the list items purchased last.
     /// </summary>
