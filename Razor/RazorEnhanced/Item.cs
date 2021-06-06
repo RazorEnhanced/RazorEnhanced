@@ -27,7 +27,7 @@ namespace RazorEnhanced
 		public bool Updated { get { return m_AssistantItem.Updated; } }
 
         /// <summary>
-        /// Represents the "type of object", directly connected to it's grapical apparence. 
+        /// Sometime called ID or Graphics ID, represents the "type of object". Usually unique for the Item image. 
         /// </summary>
 		public int ItemID {
 			get {
@@ -278,6 +278,9 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get the weight of a item. (0: no weight)
+        /// </summary>
 		public int Weight
 		{
 			get
@@ -306,6 +309,9 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get the current durability of an Item. (0: no durability)
+        /// </summary>
 		public int Durability
 		{
 			get
@@ -352,6 +358,9 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get the maximum durability of an Item. (0: no durability)
+        /// </summary>
 		public int MaxDurability
 		{
 			get
@@ -401,6 +410,10 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get the in-game image on an Item as Bitmap object.
+        /// See MSDN: https://docs.microsoft.com/dotnet/api/system.drawing.bitmap
+        /// </summary>
 		public System.Drawing.Bitmap Image
 		{
 			get
@@ -410,11 +423,41 @@ namespace RazorEnhanced
 		}
 	}
 
+    /// <summary>
+    /// The Items class provides a wide range of functions to search and interact with Items.
+    /// </summary>
 	public class Items
 	{
-		public static void WaitForContents(int serialbag, int delay) // Delay in MS
+        
+        /// <summary>
+        /// Open a container an wait for the Items to load, for a maximum amount of time.
+        /// </summary>
+        /// <param name="bag">Container as Item object.</param>
+        /// <param name="delay">Maximum wait, in milliseconds.</param>
+        public static void WaitForContents(Item bag, int delay) // Delay in MS
+        {
+            if (!bag.IsCorpse && !bag.IsContainer)
+                return;
+
+            RazorEnhanced.Items.UseItem(bag);
+
+            if (bag.Updated)
+                return;
+
+            int subdelay = delay;
+            while (!bag.Updated)
+            {
+                Thread.Sleep(2);
+                subdelay -= 2;
+                if (subdelay <= 0)
+                    break;
+            }
+        }
+        
+        /// <param name="bag_serial">Container as Item serial.</param>
+        public static void WaitForContents(int bag_serial, int delay) // Delay in MS
 		{
-			Item bag = FindBySerial(serialbag);
+			Item bag = FindBySerial(bag_serial);
 			if (bag != null)
 				WaitForContents(bag, delay);
 		}
@@ -430,11 +473,10 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// function to color items only in client view.
-        /// Will be lost RE termination
+        /// Override the Color of an Item, the change affects only Player client. The change is not persistent.
         /// </summary>
-        /// <param name="serial"></param>
-        /// <param name="color"></param>
+        /// <param name="serial">Serial of the Item.</param>
+        /// <param name="color">Color as number.</param>
         ///
         public static void Color(uint serial, ushort color)
         {
@@ -454,42 +496,98 @@ namespace RazorEnhanced
         }
 
 
-
-        public static void WaitForContents(Item bag, int delay) // Delay in MS
-		{
-			if (!bag.IsCorpse && !bag.IsContainer)
-				return;
-
-			RazorEnhanced.Items.UseItem(bag);
-
-			if (bag.Updated)
-				return;
-
-			int subdelay = delay;
-			while (!bag.Updated)
-			{
-				Thread.Sleep(2);
-				subdelay -= 2;
-				if (subdelay <= 0)
-					break;
-			}
-		}
-
+        /// <summary>
+        /// The Items.Filter class is used to store options to filter the global Items list.
+        /// Often used in combination with Items.ApplyFilter.
+        /// </summary>
 		public class Filter
 		{
+            /// <summary>
+            /// True: The filter is used - False: The filter is inactive. ( default: True, active )
+            /// </summary>
 			public bool Enabled = true;
+
+            /// <summary>
+            /// Limit the search to a list of Serials of Items to find. (ex: 0x0406EFCA )
+            /// Supports .Add() and .AddRange()
+            /// </summary>
 			public List<int> Serials = new List<int>();
+
+            /// <summary>
+            /// Limit the search to a list of Grapichs ID (see: Item.ItemID ) 
+            /// Supports .Add() and .AddRange()
+            /// </summary>
 			public List<int> Graphics = new List<int>();
+
+            /// <summary>
+            /// Limit the search by name of the Item.
+            /// </summary>
 			public string Name = String.Empty;
+
+            /// <summary>
+            /// Limit the search to a list of Colors.
+            /// Supports .Add() and .AddRange()
+            /// </summary>
 			public List<int> Hues = new List<int>();
+
+            /// <summary>
+            /// Limit the search by distance, to Items on the ground which are at least RangeMin tiles away from the Player. ( default: -1, any Item )
+            /// </summary>
 			public double RangeMin = -1;
+            /// <summary>
+            /// Limit the search by distance, to Items on the ground which are at most RangeMax tiles away from the Player. ( default: -1, any Item )
+            /// </summary>
 			public double RangeMax = -1;
+            /// <summary>
+            /// Limit the search to only Movable Items. ( default: -1, any Item )
+            /// </summary>
 			public int Movable = -1;
+            /// <summary>
+            /// Exclude from the search Items which are currently on the global Ignore List. ( default: False, any Item )
+            /// </summary>
 			public bool CheckIgnoreObject = false;
+            /// <summary>
+            /// Limit the search to the wearable Items by Layer.
+            /// Supports .Add() and .AddRange()
+            /// 
+            /// Layers:
+            ///     RightHand
+            ///     LeftHand
+            ///     Shoes
+            ///     Pants
+            ///     Shirt
+            ///     Head
+            ///     Gloves
+            ///     Ring
+            ///     Neck
+            ///     Waist
+            ///     InnerTorso
+            ///     Bracelet
+            ///     MiddleTorso
+            ///     Earrings
+            ///     Arms
+            ///     Cloak
+            ///     OuterTorso
+            ///     OuterLegs
+            ///     InnerLegs
+            ///     Talisman
+            /// </summary>
 			public List<string> Layers = new List<string>();
+            /// <summary>
+            /// Limit the search to the Items on the ground. (default: -1, any Item)
+            /// </summary>
 			public int OnGround = -1;
+            /// <summary>
+            /// Limit the search to the corpses on the ground. (default: -1, any Item)
+            /// </summary>
 			public int IsCorpse = -1;
+            /// <summary>
+            /// Limit the search to the Items which are also containers. (default: -1: any Item)
+            /// </summary>
 			public int IsContainer = -1;
+            /// <summary>
+            /// Limit the search to the doors. (default: -1: any Item)
+            /// </summary>
             public int IsDoor = -1;
 
 			public Filter()
@@ -497,6 +595,11 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Filter the global list of Items according to the options specified by the filter ( see: Items.Filter ).
+        /// </summary>
+        /// <param name="filter">A filter object.</param>
+        /// <returns>the list of Items respectinf the filter criteria.</returns>
 		public static List<Item> ApplyFilter(Filter filter)
 		{
 			List<Item> result = new List<Item>();
@@ -610,6 +713,20 @@ namespace RazorEnhanced
 			return result;
 		}
 
+        /// <summary>
+        /// Select a single Item from a list by some criteria: Distance, Amount, Durability or Randomly
+        /// </summary>
+        /// <param name="items">List of Item.</param>
+        /// <param name="selector">
+        ///     Nearest 
+        ///     Farthest 
+        ///     Less 
+        ///     Most 
+        ///     Weakest 
+        ///     Strongest
+        ///     Random
+        /// </param>
+        /// <returns>The selected item.</returns>
         public static Item Select(List<Item> items, string selector)
 		{
 			Item result = null;
@@ -756,6 +873,11 @@ namespace RazorEnhanced
 			return result;
 		}
 
+        /// <summary>
+        /// Search for a specific Item by using it Serial
+        /// </summary>
+        /// <param name="serial">Serial of the Item.</param>
+        /// <returns>Item object if found, or null if not found.</returns>
 		public static Item FindBySerial(int serial)
 		{
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
@@ -768,6 +890,11 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Lift an Item and hold it in-hand. ( see: Items.DropFromHand )
+        /// </summary>
+        /// <param name="item">Item object to Lift.</param>
+        /// <param name="amount">Amount to lift. (0: the whole stack)</param>
 		public static void Lift(Item item, int amount)
 		{
 			if (item == null)
@@ -789,27 +916,155 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void DropFromHand(Item item, Item bag)
+        /// <summary>
+        /// Drop into a bag an Item currently held in-hand. ( see: Items.Lift )
+        /// </summary>
+        /// <param name="item">Item object to drop.</param>
+        /// <param name="container">Target container.</param>
+		public static void DropFromHand(Item item, Item container)
 		{
 			if (item == null)
 			{
 				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
 				return;
 			}
-			if (bag == null)
+			if (container == null)
 			{
 				Scripts.SendMessageScriptError("Script Error: Move: Destination Item not found");
 				return;
 			}
-			if (!bag.IsContainer)
+			if (!container.IsContainer)
 			{
 				Scripts.SendMessageScriptError("Script Error: Move: Destination Item is not a container");
 				return;
 			}
-			Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+			Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, container.Serial));
 		}
 
-		public static void Move(Item source, Mobile destination, int amount)
+        /// <summary>
+        /// Move an Item to a destination, which can be an Item or a Mobile.
+        /// </summary>
+        /// <param name="source">Serial or Item of the Item to move.</param>
+        /// <param name="destination">Serial, Mobile or Item as destination.</param>
+        /// <param name="amount">Amount to move (-1: the whole stack)</param>
+        /// <param name="x">Optional: X coordinate inside the container.</param>
+        /// <param name="y">Optional: Y coordinate inside the container.</param>
+        public static void Move(int source, int destination, int amount, int x, int y)
+        {
+            Assistant.Item bag = Assistant.World.FindItem(destination);
+            Assistant.Item item = Assistant.World.FindItem(source);
+            Assistant.Mobile mbag = null;
+
+            int serialdestination = 0;
+            bool isMobile = false;
+            bool onLocation = false;
+            int newamount = 0;
+
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
+                return;
+            }
+
+            if (bag != null)
+            {
+                serialdestination = bag.Serial;
+            }
+            else
+            {
+                mbag = Assistant.World.FindMobile(destination);
+                if (mbag != null)
+                {
+                    isMobile = true;
+                    serialdestination = mbag.Serial;
+                }
+            }
+
+            if (serialdestination == 0)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
+                return;
+            }
+
+            Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+            if (x != -1 && y != -1)
+            {
+                onLocation = true;
+                loc = new Assistant.Point3D(x, y, 0);
+            }
+
+            // calcolo amount
+            if (amount == 0)
+            {
+                newamount = item.Amount;
+            }
+            else
+            {
+                if (item.Amount < amount)
+                    newamount = item.Amount;
+                else
+                    newamount = amount;
+            }
+
+            if (isMobile)
+                Assistant.DragDropManager.DragDrop(item, newamount, mbag.Serial);
+            else if (onLocation)
+                Assistant.DragDropManager.DragDrop(item, newamount, bag, loc);
+            else
+                Assistant.DragDropManager.DragDrop(item, newamount, bag);
+        }
+
+        /*public static void Move(int source, int destination, int amount, int x, int y)
+		{
+			Assistant.Item bag = Assistant.World.FindItem(destination);
+			Assistant.Item item = Assistant.World.FindItem(source);
+			int serialdestination = 0;
+
+			if (item == null)
+			{
+				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
+				return;
+			}
+
+			if (bag != null)
+			{
+				serialdestination = bag.Serial;
+			}
+			else
+			{
+				Assistant.Mobile mbag = Assistant.World.FindMobile(destination);
+				if (mbag != null)
+				{
+					serialdestination = mbag.Serial;
+				}
+				else
+				{
+					Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
+					return;
+				}
+			}
+
+			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+			if (x != -1 && y != -1)
+				loc = new Assistant.Point3D(x, y, 0);
+
+			if (amount == 0)
+			{
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+			}
+			else
+			{
+				if (item.Amount < amount)
+				{
+					amount = item.Amount;
+				}
+				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
+				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+			}
+		}*/
+        
+        public static void Move(Item source, Mobile destination, int amount)
 		{
 			Move(source.Serial, destination.Serial, amount, -1, -1);
 		}
@@ -864,147 +1119,50 @@ namespace RazorEnhanced
 			Move(source.Serial, destination.Serial, amount, x, y);
 		}
 
-		/*public static void Move(int source, int destination, int amount, int x, int y)
-		{
-			Assistant.Item bag = Assistant.World.FindItem(destination);
-			Assistant.Item item = Assistant.World.FindItem(source);
-			int serialdestination = 0;
 
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-				return;
-			}
 
-			if (bag != null)
-			{
-				serialdestination = bag.Serial;
-			}
-			else
-			{
-				Assistant.Mobile mbag = Assistant.World.FindMobile(destination);
-				if (mbag != null)
-				{
-					serialdestination = mbag.Serial;
-				}
-				else
-				{
-					Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
-					return;
-				}
-			}
 
-			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-			if (x != -1 && y != -1)
-				loc = new Assistant.Point3D(x, y, 0);
+        /// <summary>
+        /// Move an Item on the ground to a specific location.
+        /// </summary>
+        /// <param name="source">Serial or Item to move.</param>
+        /// <param name="amount">Amount of Items to move (0: the whole stack )</param>
+        /// <param name="x">X world coordinates.</param>
+        /// <param name="y">Y world coordinates.</param>
+        /// <param name="z">Z world coordinates.</param>
+        public static void MoveOnGround(int source, int amount, int x, int y, int z)
+        {
+            Assistant.Item item = Assistant.World.FindItem(source);
 
-			if (amount == 0)
-			{
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-			}
-			else
-			{
-				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-			}
-		}*/
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: MoveOnGround: Source Item  not found");
+                return;
+            }
 
-		public static void Move(int source, int destination, int amount, int x, int y)
-		{
-			Assistant.Item bag = Assistant.World.FindItem(destination);
-			Assistant.Item item = Assistant.World.FindItem(source);
-			Assistant.Mobile mbag = null;
+            Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
 
-			int serialdestination = 0;
-			bool isMobile = false;
-			bool onLocation = false;
-			int newamount = 0;
+            int amounttodrop = amount;
+            if ((item.Amount < amount) || (amount == 0))
+                amounttodrop = item.Amount;
 
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-				return;
-			}
+            Assistant.DragDropManager.DragDrop(item, loc, amounttodrop);
+            //Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
+            //Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
+        }
 
-			if (bag != null)
-			{
-				serialdestination = bag.Serial;
-			}
-			else
-			{
-				mbag = Assistant.World.FindMobile(destination);
-				if (mbag != null)
-				{
-					isMobile = true;
-					serialdestination = mbag.Serial;
-				}
-			}
 
-			if (serialdestination == 0)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
-				return;
-			}
-
-			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-			if (x != -1 && y != -1)
-			{
-				onLocation = true;
-				loc = new Assistant.Point3D(x, y, 0);
-			}
-
-			// calcolo amount
-			if (amount == 0)
-			{
-				newamount = item.Amount;
-			}
-			else
-			{
-				if (item.Amount < amount)
-					newamount = item.Amount;
-				else
-					newamount = amount;
-			}
-
-			if (isMobile)
-				Assistant.DragDropManager.DragDrop(item, newamount, mbag.Serial);
-			else if (onLocation)
-				Assistant.DragDropManager.DragDrop(item, newamount, bag, loc);
-			else
-				Assistant.DragDropManager.DragDrop(item, newamount, bag);
-		}
-
-		public static void MoveOnGround(Item source, int amount, int x, int y, int z)
+        public static void MoveOnGround(Item source, int amount, int x, int y, int z)
 		{
 			MoveOnGround(source.Serial, amount, x, y, z);
         }
 
-        public static void MoveOnGround(int source, int amount, int x, int y, int z)
-		{
-			Assistant.Item item = Assistant.World.FindItem(source);
-
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: MoveOnGround: Source Item  not found");
-				return;
-			}
-
-			Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
-
-			int amounttodrop = amount;
-			if ((item.Amount < amount) || (amount == 0))
-                amounttodrop = item.Amount;
-
-			Assistant.DragDropManager.DragDrop(item, loc, amounttodrop);
-			//Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
-			//Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
-		}
-
+        /// <summary>
+        /// Drop an Item on the ground, at the current Player position.
+        /// NOTE: On some server is not allowed to drop Items on tiles occupied by Mobiles and the Player.
+        /// </summary>
+        /// <param name="item">Item object to drop.</param>
+        /// <param name="amount">Amount to move. (default: 0, the whole stack)</param>
 		public static void DropItemGroundSelf(Item item, int amount = 0)
 		{
 			if (item == null)
@@ -1026,42 +1184,14 @@ namespace RazorEnhanced
 			DropItemGroundSelf(i, amount);
         }
 
-		// Use item
-
-		public static void UseItem(Item item)
-		{
-			if (item != null)
-				UseItem(item.Serial);
-		}
-
-        public static void UseItem(Item item, EnhancedEntity target)
-        {
-            if (item == null || target == null)
-                return;
-
-            UseItem(item.Serial, target.Serial, true);
-        }
-        public static void UseItem(int item, EnhancedEntity target)
-        {
-            if (target == null)
-                return;
-
-            UseItem(item, target.Serial, true);
-        }
-        public static void UseItem(Item item, int target)
-        {
-            if (item == null)
-                return;
-
-            UseItem(item.Serial, target, true);
-        }
-
-        public static void UseItem(int itemSerial, int targetSerial)
-        {
-            UseItem(itemSerial, targetSerial, true);
-        }
-
-            public static void UseItem(int itemSerial, int targetSerial, bool wait)
+        /// <summary>
+        /// Use an Item, optionally is possible to specify a Item or Mobile target.
+        /// NOTE: The optional target may not work on some free shards. Use Target.Execute instead.
+        /// </summary>
+        /// <param name="itemSerial">Serial or Item to use.</param>
+        /// <param name="targetSerial">Optional: Serial of the Item or Mobile target.</param>
+        /// <param name="wait">Optional: Wait for confirmation by the server. (default: True)</param>
+        public static void UseItem(int itemSerial, int targetSerial, bool wait)
         {
             Assistant.Item item = Assistant.World.FindItem(itemSerial);
             if (item == null)
@@ -1101,25 +1231,65 @@ namespace RazorEnhanced
         }
 
         public static void UseItem(int itemserial)
-		{
-			Assistant.Item item = Assistant.World.FindItem(itemserial);
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Serial");
-				return;
-			}
+        {
+            Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItem: Invalid Serial");
+                return;
+            }
 
-			if (item.Serial.IsItem)
-			{
-				Assistant.Client.Instance.SendToServerWait(new DoubleClick(item.Serial));
-			}
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
-			}
+            if (item.Serial.IsItem)
+            {
+                Assistant.Client.Instance.SendToServerWait(new DoubleClick(item.Serial));
+            }
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+            }
+        }
+
+        public static void UseItem(Item item)
+		{
+			if (item != null)
+				UseItem(item.Serial);
 		}
 
-		public static bool UseItemByID(int itemid, int color = -1)
+        public static void UseItem(Item item, EnhancedEntity target)
+        {
+            if (item == null || target == null)
+                return;
+
+            UseItem(item.Serial, target.Serial, true);
+        }
+        public static void UseItem(int item, EnhancedEntity target)
+        {
+            if (target == null)
+                return;
+
+            UseItem(item, target.Serial, true);
+        }
+        public static void UseItem(Item item, int target)
+        {
+            if (item == null)
+                return;
+
+            UseItem(item.Serial, target, true);
+        }
+
+        public static void UseItem(int itemSerial, int targetSerial)
+        {
+            UseItem(itemSerial, targetSerial, true);
+        }
+
+
+        /// <summary>
+        /// Use any item of a specific type, matching Item.ItemID. Optionally also of a specific color, matching Item.Hue.
+        /// </summary>
+        /// <param name="itemid">ItemID to be used.</param>
+        /// <param name="color">Color to be used. (default: -1, any)</param>
+        /// <returns></returns>
+        public static bool UseItemByID(int itemid, int color = -1)
 		{
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter
@@ -1145,8 +1315,24 @@ namespace RazorEnhanced
 			return false;
 		}
 
-		// Find item by id
-		public static Item FindByID(int itemid, int color, int container, bool recursive=false, bool considerIgnoreList=true)
+        // Find item by id
+        /// <summary>
+        /// Find a single Item matching specific ItemID, Color and Container. 
+        /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
+        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
+        /// </summary>
+        /// <param name="itemid">ItemID filter.</param>
+        /// <param name="color">Color filter. (-1: any, 0: natural )</param>
+        /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="recursive">
+        /// Search subcontainers. 
+        ///     True: all subcontainers
+        ///     False: only main
+        ///     1,2,n: Maximum subcontainer depth
+        /// </param>
+        /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
+        /// <returns>The Item matching the criteria.</returns>
+        public static Item FindByID(int itemid, int color, int container, bool recursive=false, bool considerIgnoreList=true)
 		{
 			if (container != -1)  // search in specific container
 			{
@@ -1263,6 +1449,10 @@ namespace RazorEnhanced
         }
 
         // Single Click
+        /// <summary>
+        /// Send a single click network event to the server.
+        /// </summary>
+        /// <param name="item">Serial or Item to click</param>
         public static void SingleClick(Item item)
 		{
 	 		Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
@@ -1279,38 +1469,51 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
 		}
 
-		// Props
-		public static void WaitForProps(Item i, int delay)
+        // Props
+
+        /// <summary>
+        /// If not updated, request to the Properties of an Item, and wait for a maximum amount of time. 
+        /// </summary>
+        /// <param name="itemserial">Serial or Item read.</param>
+        /// <param name="delay">Maximum waiting time, in milliseconds.</param>
+        public static void WaitForProps(int itemserial, int delay) // Delay in MS
+        {
+            if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
+                return;
+
+            Assistant.Item i = Assistant.World.FindItem(itemserial);
+
+            if (i == null)
+                return;
+
+            if (i.PropsUpdated)
+                return;
+
+            Assistant.Client.Instance.SendToServerWait(new QueryProperties(i.Serial));
+            int subdelay = delay;
+
+            while (!i.PropsUpdated)
+            {
+                Thread.Sleep(2);
+                subdelay -= 2;
+                if (subdelay <= 0)
+                    break;
+            }
+        }
+
+        public static void WaitForProps(Item i, int delay)
 		{
 			WaitForProps(i.Serial, delay);
 		}
 
-		public static void WaitForProps(int itemserial, int delay) // Delay in MS
-		{
-			if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
-				return;
 
-			Assistant.Item i = Assistant.World.FindItem(itemserial);
 
-			if (i == null)
-				return;
-
-			if (i.PropsUpdated)
-				return;
-
-	 		Assistant.Client.Instance.SendToServerWait(new QueryProperties(i.Serial));
-			int subdelay = delay;
-
-			while (!i.PropsUpdated)
-			{
-				Thread.Sleep(2);
-				subdelay -= 2;
-				if (subdelay <= 0)
-					break;
-			}
-		}
-
-		public static List<string> GetPropStringList(int serial)
+        /// <summary>
+        /// Get string list of all Properties of an item, if item no props list is empty.
+        /// </summary>
+        /// <param name="serial">Serial or Item to read.</param>
+        /// <returns>List of strings.</returns>
+        public static List<string> GetPropStringList(int serial)
 		{
 			List<string> propstringlist = new List<string>();
 			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
@@ -1331,6 +1534,14 @@ namespace RazorEnhanced
 			return GetPropStringList(item.Serial);
         }
 
+
+
+        /// <summary>
+        /// Get a Property line, by index. if not found returns and empty string.
+        /// </summary>
+        /// <param name="serial">Serial or Item to read.</param>
+        /// <param name="index">Number of the Property line.</param>
+        /// <returns>A property line as a string.</returns>
 		public static string GetPropStringByIndex(int serial, int index)
 		{
 			string propstring = String.Empty;
@@ -1351,46 +1562,12 @@ namespace RazorEnhanced
 		}
 
 
-		// Special case "Total Resist" so that items can be collected based on total resist
-			public static float GetTotalResistProp(int serial)
-		{
-			Assistant.Item assistantItem = World.FindItem((uint)serial);
-
-			float totalResist = 0;
-            if (assistantItem != null)
-            {
-                try
-                {
-                    if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
-                    {
-                        for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
-                        {
-                            if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
-                            {
-                                if (assistantItem.ObjPropList.Content[i].Args != null)
-                                {
-                                    float addIt = 0;
-                                    try
-                                    {
-                                        addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
-                                    }
-                                    catch
-                                    {
-                                        addIt = 1;  // Conversion error
-                                    }
-                                    totalResist += addIt;
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (System.ArgumentOutOfRangeException ex)
-                {
-                    // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
-                }
-            }
-			return totalResist;
-		}
+		/// <summary>
+        /// Read the value of a Property.
+        /// </summary>
+        /// <param name="serial">Serial or Item to read.</param>
+        /// <param name="name">Name of the Propery.</param>
+        /// <returns></returns>
 
         public static float GetPropValue(int serial, string name)
         {
@@ -1442,9 +1619,66 @@ namespace RazorEnhanced
 			return GetPropValue(item.Serial, name);
 		}
 
-		// Message
+        // GetPropValue: Special case "Total Resist" so that items can be collected based on total resist
+        /// <summary>
+        /// Get the total resistence of an Item by reading the Propery.
+        /// </summary>
+        /// <param name="serial">Serial or Item to read.</param>
+        /// <returns>The value of the property as float a number.</returns>
+        static float GetTotalResistProp(int serial)
+        {
+            Assistant.Item assistantItem = World.FindItem((uint)serial);
 
-		public static void Message(Item item, int hue, string message)
+            float totalResist = 0;
+            if (assistantItem != null)
+            {
+                try
+                {
+                    if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+                    {
+                        for (int i = 0; i < assistantItem.ObjPropList.Content.Count; i++)
+                        {
+                            if (assistantItem.ObjPropList.Content[i].ToString().ToLower().Contains("resist"))
+                            {
+                                if (assistantItem.ObjPropList.Content[i].Args != null)
+                                {
+                                    float addIt = 0;
+                                    try
+                                    {
+                                        addIt = Convert.ToSingle(Language.ParsePropsCliloc(assistantItem.ObjPropList.Content[i].Args), CultureInfo.InvariantCulture);
+                                    }
+                                    catch
+                                    {
+                                        addIt = 1;  // Conversion error
+                                    }
+                                    totalResist += addIt;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (System.ArgumentOutOfRangeException ex)
+                {
+                    // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
+                }
+            }
+            return totalResist;
+        }
+
+        static float GetTotalResistProp(Item item) {
+            return GetTotalResistProp(item.Serial);
+        }
+
+
+        // Message
+
+        /// <summary>
+        /// Display an in-game message on top of an Item, visibile only for the Player.
+        /// </summary>
+        /// <param name="item">Serial or Item to display text on.</param>
+        /// <param name="hue">Color of the message.</param>
+        /// <param name="message">Message as </param>
+        public static void Message(Item item, int hue, string message)
 		{
 			// Prevent spamm message on left bottom screen
 			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
@@ -1467,8 +1701,54 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 
-		// Count
-		public static int ContainerCount(int serial, int itemid, int color = -1, bool recursive=false)
+        // Count
+
+        /// <summary>
+        /// Count items inside a container, summing also the amount in stacks.
+        /// </summary>
+        /// <param name="container">Serial or Item to search into.</param>
+        /// <param name="itemid">ItemID of the item to search.</param>
+        /// <param name="color">Color to match. (default: -1, any color)</param>
+        /// <param name="recursive">Search also in already open subcontainers.</param>
+        /// <returns></returns>
+        public static int ContainerCount(Item container, int itemid, int color = -1, bool recursive = false)
+        {
+            int count = 0;
+            if (container != null && container.IsContainer)
+            {
+                foreach (RazorEnhanced.Item itemToCount in container.Contains)
+                {
+                    if (color == -1)
+                    {
+                        if (itemToCount.ItemID == itemid)
+                            count = count + itemToCount.Amount;
+                        if (recursive && itemToCount.IsContainer)
+                        {
+                            int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
+                            count = count + recurseCount;
+                        }
+                    }
+                    else
+                    {
+                        if (itemToCount.ItemID == itemid && itemToCount.Hue == color)
+                            count = count + itemToCount.Amount;
+                        if (recursive && itemToCount.IsContainer)
+                        {
+                            int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
+                            count = count + recurseCount;
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: ContainerCount: Invalid container");
+            }
+            return count;
+        }
+
+        public static int ContainerCount(int serial, int itemid, int color = -1, bool recursive=false)
 		{
 			Item container = FindBySerial(serial);
 			if (container != null)
@@ -1480,58 +1760,34 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static int ContainerCount(Item container, int itemid, int color = -1, bool recursive = false)
-		{
-			int count = 0;
-			if (container != null && container.IsContainer)
-			{
-				foreach (RazorEnhanced.Item itemToCount in container.Contains)
-				{
-					if (color == -1)
-					{
-						if (itemToCount.ItemID == itemid)
-							count = count + itemToCount.Amount;
-                        if (recursive && itemToCount.IsContainer)
-                        {
-                            int recurseCount = ContainerCount(itemToCount, itemid, color ); // recall for sub container
-                            count = count + recurseCount;
-                        }
-                    }
-					else
-					{
-						if (itemToCount.ItemID == itemid && itemToCount.Hue == color)
-							count = count + itemToCount.Amount;
-                        if (recursive &&  itemToCount.IsContainer)
-                        {
-                            int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
-                            count = count + recurseCount;
-                        }
 
-                    }
-                }
-			}
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: ContainerCount: Invalid container");
-			}
-			return count;
-		}
-
-		public static void Hide(Item item)
+        /// <summary>
+        /// Hied an Item, affects only the player.
+        /// </summary>
+        /// <param name="serial">Serial or Item to hide.</param>
+        /// 
+        public static void Hide(int serial)
+        {
+            Assistant.Item item = World.FindItem(serial);
+            if (item != null)
+            {
+                item.Visible = false;
+                Assistant.Client.Instance.SendToClientWait(new RemoveObject(serial));
+            }
+        }
+        public static void Hide(Item item)
 		{
 			Hide(item.Serial);
 		}
 
-		public static void Hide(int serial)
-		{
-			Assistant.Item item = World.FindItem(serial);
-			if (item != null)
-			{
-				item.Visible = false;
-		 		Assistant.Client.Instance.SendToClientWait(new RemoveObject(serial));
-			}
-		}
+		
 
+        /// <summary>
+        /// Count items in Player Backpack.
+        /// </summary>
+        /// <param name="itemid">ItemID to search.</param>
+        /// <param name="color">Color to search. (default -1: any color)</param>
+        /// <returns></returns>
         public static int BackpackCount(int itemid, int color = -1)
 		{
 			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
@@ -1549,12 +1805,13 @@ namespace RazorEnhanced
 
 		// Context
 
-		public static int ContextExist(Item i, string name)
-		{
-			return ContextExist(i.Serial, name);
-		}
-
-		public static int ContextExist(int serial, string name)
+        /// <summary>
+        /// Check if Context Menu entry exists for an Item.
+        /// </summary>
+        /// <param name="serial">Serial or Item to check.</param>
+        /// <param name="name">Name of the Context Manu entry</param>
+        /// <returns></returns>
+        public static int ContextExist(int serial, string name)
 		{
 			Assistant.Item item = World.FindItem(serial);
 			if (item == null) // Se item non valido
@@ -1575,6 +1832,19 @@ namespace RazorEnhanced
 			return -1; // Se non trovata
 		}
 
+		public static int ContextExist(Item i, string name)
+		{
+			return ContextExist(i.Serial, name);
+		}
+
+		
+
+        /// <summary>
+        /// Get the Image on an Item by specifing the ItemID. Optinally is possible to apply a color.
+        /// </summary>
+        /// <param name="itemID">ItemID to use.</param>
+        /// <param name="hue">Optional: Color to apply. (Default 0, natural)</param>
+        /// <returns></returns>
 		public static System.Drawing.Bitmap GetImage(int itemID, int hue = 0)
 		{
 			System.Drawing.Bitmap bitmapImage = null;
