@@ -8,6 +8,9 @@ using System.Globalization;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// The Itemn class represent a single in-game Item object.
+    /// </summary>
 	public class Item : EnhancedEntity
 	{
 		private Assistant.Item m_AssistantItem;
@@ -18,8 +21,14 @@ namespace RazorEnhanced
 			m_AssistantItem = item;
 		}
 
+        /// <summary>
+        /// Check if the Item already have been updated with all the properties. (need better documentation) 
+        /// </summary>
 		public bool Updated { get { return m_AssistantItem.Updated; } }
 
+        /// <summary>
+        /// Represents the "type of object", directly connected to it's grapical apparence. 
+        /// </summary>
 		public int ItemID {
 			get {
 				if (m_AssistantItem != null)
@@ -29,18 +38,39 @@ namespace RazorEnhanced
 				}
 		}
 
-		public int Amount { get { return m_AssistantItem.Amount; } }
+        /// <summary>
+        /// Read amount from item type object.
+        /// </summary>
+        public int Amount { get { return m_AssistantItem.Amount; } }
 
+        /// <summary>
+        /// Item direction. 
+        /// </summary>
 		public string Direction { get { return m_AssistantItem.Direction.ToString(); } }
 
+        /// <summary>
+        /// Item is Visible
+        /// </summary>
 		public bool Visible { get { return m_AssistantItem.Visible; } }
 
+        /// <summary>
+        /// Item is movable
+        /// </summary>
 		public bool Movable { get { return m_AssistantItem.Movable; } }
 
+        /// <summary>
+        /// Item name
+        /// </summary>
 		public string Name { get { return m_AssistantItem.Name; } }
 
+        /// <summary>
+        /// Gets the Layer, for werable items only. (need better documentation) 
+        /// </summary>
 		public string Layer { get { return m_AssistantItem.Layer.ToString(); } }
 
+        /// <summary>
+        /// Serial of the container which contains the object.
+        /// </summary>
 		public int Container
 		{
 			get
@@ -54,6 +84,9 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get serial of root container of item.
+        /// </summary>
 		public int RootContainer
 		{
 			get
@@ -67,21 +100,46 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// True: if Properties are updated - False: otherwise.
+        /// </summary>
 		public bool PropsUpdated { get { return m_AssistantItem.PropsUpdated; } }
 
-		public bool ContainerUpdated { get { return m_AssistantItem.Updated; } }
+        /// <summary>
+        /// Check if an Item is contained in a container. Can be a Item or a Mobile (wear by).
+        /// </summary>
+        /// <param name="container">Item as container.</param>
+        /// <returns>True: if is contained - False: otherwise.</returns>
+		public bool IsChildOf(Item container)
+        {
+            return m_AssistantItem.IsChildOf(container);
+        }
 
-		public bool IsChildOf(object parent)
-		{
-			return m_AssistantItem.IsChildOf(parent);
-		}
+        /// <param name="container">Mobile as container.</param>
+		public bool IsChildOf(Mobile container)
+        {
+            return m_AssistantItem.IsChildOf(container);
+        }
 
-		public int DistanceTo(Mobile m)
-		{
-			return Utility.Distance(Position.X, Position.Y, m.Position.X, m.Position.Y);
-		}
+        /// <summary>
+        /// Return the distance in number of tiles, from Item to Mobile.
+        /// </summary>
+        /// <param name="mob">Target as Mobile</param>
+        /// <returns>Distance in number of tiles.</returns>
+        public int DistanceTo(Mobile mob)
+        {
+            return Utility.Distance(Position.X, Position.Y, mob.Position.X, mob.Position.Y);
+        }
+        /// <param name="itm">Target as Item</param>
+        public int DistanceTo(Item itm)
+        {
+            return Utility.Distance(Position.X, Position.Y, itm.Position.X, itm.Position.Y);
+        }
 
-		public List<Item> Contains
+        /// <summary>
+        /// Contains the list of Item inside a container.
+        /// </summary>
+        public List<Item> Contains
 		{
 			get
 			{
@@ -96,34 +154,83 @@ namespace RazorEnhanced
 		}
 
 		// possibly 4 bit x/y - 16x16?
+        /// <summary>
+        /// Returns the GridNum of the item. (need better documentation) 
+        /// </summary>
 		public byte GridNum { get { return m_AssistantItem.GridNum; } }
 
+        /// <summary>
+        /// True: if the item is on the ground - False: otherwise.
+        /// </summary>
 		public bool OnGround { get { return m_AssistantItem.OnGround; } }
+
+        /// <summary>
+        /// True: if the item is a container - False: otherwise.
+        /// </summary>
 		public bool IsContainer { get { return m_AssistantItem.IsContainer; } }
 
+        /// <summary>
+        /// True: if the item is a bag of sending - False: otherwise.
+        /// </summary>
 		public bool IsBagOfSending { get { return m_AssistantItem.IsBagOfSending; } }
 
+        /// <summary>
+        /// True: if the item is in the Player's backpack - False: otherwise.
+        /// </summary>
         internal bool IsInBackpack
         { get { return m_AssistantItem.IsInBackpack; } }
 
+        /// <summary>
+        /// True: if the item is lootable - False: otherwise.
+        /// </summary>
         internal bool IsLootableTarget
         { get { return m_AssistantItem.IsLootableTarget; } }
 
+        /// <summary>
+        /// True: if the item is in the Player's bank - False: otherwise.
+        /// </summary>
         public bool IsInBank { get { return m_AssistantItem.IsInBank; } }
 
-		public bool IsPouch { get { return m_AssistantItem.IsPouch; } }
+        /// <summary>
+        /// True: if the item is a pouch - False: otherwise.
+        /// </summary>
 
+        public bool IsPouch { get { return m_AssistantItem.IsPouch; } }
+
+        /// <summary>
+        /// True: if the item is a corpse - False: otherwise.
+        /// </summary>
 		public bool IsCorpse { get { return m_AssistantItem.IsCorpse; } }
 
-		public bool IsDoor { get { return m_AssistantItem.IsDoor; } }
+        /// <summary>
+        /// True: if the item is a door - False: otherwise.
+        /// </summary>
+        public bool IsDoor { get { return m_AssistantItem.IsDoor; } }
+
+        /// <summary>
+        /// True: For regualar items - False: for hair, beards, etc.
+        /// </summary>
         public bool IsLootable { get { return m_AssistantItem.IsLootable; } }
 
+        /// <summary>
+        /// True: if the item is a resource (ore, sand, wood, stone, fish) - False: otherwise
+        /// </summary>
         public bool IsResource { get { return m_AssistantItem.IsResource; } }
 
+        /// <summary>
+        /// True: if the item is a potion - False: otherwise.
+        /// </summary>
 		public bool IsPotion { get { return m_AssistantItem.IsPotion; } }
 
+
+        /// <summary>
+        /// True: if the item is a virtue shield - False: otherwise.
+        /// </summary>
 		public bool IsVirtueShield { get { return m_AssistantItem.IsVirtueShield; } }
 
+        /// <summary>
+        /// True: if the item is a 2-handed weapon - False: otherwise.
+        /// </summary>
 		public bool IsTwoHanded { get { return m_AssistantItem.IsTwoHanded; } }
 
 		public override string ToString()
@@ -131,8 +238,18 @@ namespace RazorEnhanced
 			return m_AssistantItem.ToString();
 		}
 
+        /// <summary>
+        /// @nodoc
+        /// @experimental
+        /// Price of a recently purchased item. (see Vendor class )
+        /// </summary>
 		public int Price { get { return m_AssistantItem.Price; } }
 
+        /// <summary>
+        /// @nodoc
+        /// @experimental
+        /// Descrition of a recently purchased item. (see Vendor class )
+        /// </summary>
 		public string BuyDesc { get { return m_AssistantItem.BuyDesc; } }
 
 		public Point3D GetWorldPosition()
@@ -144,6 +261,9 @@ namespace RazorEnhanced
 
 		internal Assistant.Layer AssistantLayer { get { return m_AssistantItem.Layer; } }
 
+        /// <summary>
+        /// Get the list of Properties of an Item.
+        /// </summary>
 		public List<Property> Properties
 		{
 			get
