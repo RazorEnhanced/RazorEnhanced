@@ -17,7 +17,9 @@ namespace Assistant
 		internal RazorAgentNumHexTextBox BandageHealcustomIDTextBox { get { return bandagehealcustomIDTextBox; } }
 		internal RazorAgentNumHexTextBox BandageHealcustomcolorTextBox { get { return bandagehealcustomcolorTextBox; } }
 		internal RazorCheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
-		internal RazorAgentNumOnlyTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
+        internal CheckBox BandageHealTimeWithBuf { get { return bandagehealTimeWithBufCheckBox; } }
+
+        internal RazorAgentNumOnlyTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
 		internal RazorAgentNumOnlyTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
         internal RazorAgentNumOnlyTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
         internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
@@ -174,16 +176,42 @@ namespace Assistant
 
 		private void bandagehealdexformulaCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (bandagehealdexformulaCheckBox.Checked)
-				bandagehealdelayTextBox.Enabled = false;
-			else
-				bandagehealdelayTextBox.Enabled = true;
+            if (bandagehealdexformulaCheckBox.Checked)
+            {
+                bandagehealdelayTextBox.Enabled = false;
+                bandagehealTimeWithBufCheckBox.Enabled = false;
+                bandagehealTimeWithBufCheckBox.Checked = false;
+            }
+            else
+            {
+                bandagehealdelayTextBox.Enabled = true;
+                bandagehealTimeWithBufCheckBox.Enabled = true;
+            }
 
-			if (bandagehealdexformulaCheckBox.Focused)
+            if (bandagehealdexformulaCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("BandageHealdexformulaCheckBox", bandagehealdexformulaCheckBox.Checked);
 		}
 
-		private void bandagehealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void bandagehealBufControlled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bandagehealTimeWithBufCheckBox.Checked)
+            {
+                bandagehealdelayTextBox.Enabled = false;
+                bandagehealdexformulaCheckBox.Enabled = false;
+            }
+            else
+            {
+                bandagehealdelayTextBox.Enabled = true;
+                bandagehealTimeWithBufCheckBox.Enabled = true;
+                bandagehealdexformulaCheckBox.Enabled = true;
+            }
+
+            if (bandagehealTimeWithBufCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("BandageHealTimeWithBuf", bandagehealTimeWithBufCheckBox.Checked);
+        }
+
+
+        private void bandagehealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bandagehealpoisonCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("BandageHealpoisonCheckBox", bandagehealpoisonCheckBox.Checked);

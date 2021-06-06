@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 9;
+		private static int SettingVersion = 10;
 
 		private static string m_profileName = null;
 
@@ -2285,7 +2285,7 @@ namespace RazorEnhanced
 			general.Columns.Add("BandageHealcustomIDTextBox", typeof(int));
 			general.Columns.Add("BandageHealcustomcolorTextBox", typeof(int));
 			general.Columns.Add("BandageHealdexformulaCheckBox", typeof(bool));
-			general.Columns.Add("BandageHealdelayTextBox", typeof(int));
+            general.Columns.Add("BandageHealdelayTextBox", typeof(int));
 			general.Columns.Add("BandageHealhpTextBox", typeof(int));
 			general.Columns.Add("BandageHealpoisonCheckBox", typeof(bool));
 			general.Columns.Add("BandageHealmortalCheckBox", typeof(bool));
@@ -2295,7 +2295,7 @@ namespace RazorEnhanced
             general.Columns.Add("BandageHealUseText", typeof(bool));
             general.Columns.Add("BandageHealUseTextContent", typeof(string));
             general.Columns.Add("BandageHealUseTextSelfContent", typeof(string));
-
+            general.Columns.Add("BandageHealTimeWithBuf", typeof(bool));
 
             // Parametri Tab (Enhanced Filters)
             general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
@@ -2516,7 +2516,7 @@ namespace RazorEnhanced
 			// Composizione Parematri base primo avvio
 			object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
-                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself",
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself", false,
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
@@ -5081,7 +5081,14 @@ namespace RazorEnhanced
                 realVersion = 9;
                 General.WriteInt("SettingVersion", realVersion);
             }
-
+            if (realVersion == 9)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                general.Columns.Add("BandageHealTimedWithBufCheckBox", typeof(bool));
+                Settings.General.WriteBool("BandageHealTimedWithBufCheckBox", false);
+                realVersion = 10;
+                General.WriteInt("SettingVersion", realVersion);
+            }
 
             Save(true);
 		}

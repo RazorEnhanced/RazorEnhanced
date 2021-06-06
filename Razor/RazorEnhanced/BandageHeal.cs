@@ -225,6 +225,7 @@ namespace RazorEnhanced
             CustomID = Settings.General.ReadInt("BandageHealcustomIDTextBox");
             CustomColor = Settings.General.ReadInt("BandageHealcustomcolorTextBox");
             Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+            Engine.MainWindow.BandageHealTimeWithBuf.Checked = Settings.General.ReadBool("BandageHealTimedWithBufCheckBox");
             CustomDelay = Settings.General.ReadInt("BandageHealdelayTextBox");
             HpLimit = Settings.General.ReadInt("BandageHealhpTextBox");
             MaxRange = Settings.General.ReadInt("BandageHealMaxRangeTextBox");
@@ -235,7 +236,6 @@ namespace RazorEnhanced
             SelfHealUseText = Settings.General.ReadBool("BandageHealUseText");
             SelfHealUseTextSelfContent = Settings.General.ReadString("BandageHealUseTextSelfContent");
             SelfHealUseTextContent = Settings.General.ReadString("BandageHealUseTextContent");
-
 
             Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
@@ -361,6 +361,35 @@ namespace RazorEnhanced
                         else
                         {
                             Thread.Sleep((Int32)delay + 300);
+                        }
+                    }
+                    else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
+                    {
+                        // First wait for buf to start, but no more than 2 seconds
+                        int delay = 100;
+                        int countdown = 2000;
+                        while (!Player.BuffsExist("Healing"))
+                        {
+                            Thread.Sleep(delay);
+                            countdown -= delay;
+                            if (countdown <= 0)
+                                break;
+                        }
+                        countdown = 10000;
+                        delay = 1000;
+                        int seconds = 0;
+                        while (Player.BuffsExist("Healing"))
+                        {
+                            Thread.Sleep(delay);
+                            countdown -= delay;
+                            if (countdown <= 0)
+                                break;
+
+                            if (ShowCountdown)          // Se deve mostrare il cooldown
+                            {
+                                seconds++;
+                                Player.HeadMessage(10, seconds.ToString());
+                            }
                         }
                     }
                     else                // Se ho un delay custom
