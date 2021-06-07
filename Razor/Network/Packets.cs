@@ -1162,7 +1162,8 @@ namespace Assistant
             else
                 serial &= 0x7FFFFFFF;
             Write((uint)serial);
-            Write((ushort)(itemID & 0x7FFF));
+            ushort maskedItemID = (ushort)(itemID & 0x7FFF);
+            Write(maskedItemID);
             if (amount != 0)
                 Write((ushort)amount);
 
@@ -1185,6 +1186,81 @@ namespace Assistant
                 Write((ushort)hue);
             if (flags != 0)
                 Write((byte)flags);
+        }
+    }
+    internal sealed class SAWorldItem : Packet
+    {
+        internal SAWorldItem(Item item)
+            : base(0xF3)
+        {
+            this.EnsureCapacity(26);
+
+            // Post-7.0.9.0
+            /*
+			New World Item Packet
+			PacketID: 0xF3
+			PacketLen: 26
+			Format:
+
+				BYTE - 0xF3 packetId
+				WORD - 0x01
+				BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
+				DWORD - item Serial
+				WORD - item ID
+				BYTE - item direction (same as old)
+				WORD - amount
+				WORD - amount
+				WORD - X
+				WORD - Y
+				SBYTE - Z
+				BYTE - item light
+				WORD - item Hue
+				BYTE - item flags (same as old packet)
+				WORD ???
+			*/
+
+            uint serial = (uint)item.Serial;
+            ushort itemID = item.ItemID;
+            ushort amount = item.Amount;
+            int x = item.Position.X;
+            int y = item.Position.Y;
+            ushort hue = item.Hue;
+            byte flags = item.GetPacketFlags();
+            byte direction = item.Direction;
+
+            //if (amount != 0)
+            //    serial |= 0x80000000;
+            //else
+            serial &= 0x7FFFFFFF;
+            //Write((ushort)0x00); // ??
+            //Write((ushort)0x01);
+
+
+            byte artDataId = item.ArtID;
+            //if ((0x4000 & itemID) == 0x4000)
+            //    artDataId = 2;
+            Write((byte)artDataId);
+
+            Write((uint)serial);
+            Write((ushort)(itemID & 0x7FFF));
+            Write((byte)0); // graph inc ?
+
+            Write((ushort)amount);
+            Write((ushort)0); // unknown
+
+            x &= 0x7FFF;
+            Write((ushort)x);
+
+            y &= 0x3FFF;
+            Write((ushort)y);
+
+            Write((sbyte)item.Position.Z);
+
+            Write((byte)direction);
+
+            Write((ushort)hue);
+            Write((byte)flags);
+            Write((ushort)0);
         }
     }
 

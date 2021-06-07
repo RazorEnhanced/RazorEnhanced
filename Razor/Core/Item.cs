@@ -136,7 +136,9 @@ namespace Assistant
 			set { m_ItemID = value; }
 		}
 
-		internal bool PropsUpdated
+        internal byte ArtID { get; set; }
+
+        internal bool PropsUpdated
 		{
 			get { return m_PropsUpdated; }
 			set { m_PropsUpdated = value; }

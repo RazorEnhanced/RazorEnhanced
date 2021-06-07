@@ -320,17 +320,39 @@ namespace RazorEnhanced
         {
             // store the setting even if item is not exist yet
             m_HuedItems[serial] = (int)color;
-
-            // Apply color for valid flag
             RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial((int)serial);
             Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
             if (assistantItem == null)
                 return;
+
+            if (i.Container == World.Player.Serial)
+            {
+                        Assistant.Client.Instance.SendToClient(new EquipmentItem(assistantItem, (ushort)color, World.Player.Serial));
+                        return;
+            }
+
+            // if not worn Apply color for valid flag
             assistantItem.Hue = (ushort)color;
             if (i.Container == 0)
-                Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));
+            {
+                if ((assistantItem.ItemID & 0x4000) == 0x4000)
+                    Assistant.Client.Instance.SendToClient(new SAWorldItem(assistantItem));
+                else
+                    Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));
+            }
             else
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
+
+        }
+        public static void ColorRemoveSerial(uint serial)
+        {
+            // store the setting even if item is not exist yet
+            try
+            {
+                m_HuedItems.Remove(serial);
+            }
+            catch (Exception)
+            { }
         }
 
 
