@@ -152,6 +152,8 @@ namespace Assistant
                 {
                     if ((Ultima.TileData.ItemTable[ItemID].Flags & Ultima.TileFlag.Generic) != 0)
                         return m_Amount;
+                    if (ItemID == 0x2006)
+                        return m_Amount;
                 }
                 catch
                 {
