@@ -1994,12 +1994,7 @@ namespace Assistant
                 World.AddItem(item = Item.Factory(serial, itemID));
                 isNew = true;
 			}
-            /*else
-			{
-				item.CancelRemove();
-			}*/
-
-
+            item.ArtID = _artDataID;
             if (!DragDropManager.EndHolding(serial))
 				return;
 
@@ -2059,7 +2054,7 @@ namespace Assistant
             {
                 item.Hue = (ushort)color;
                 args.Block = true;
-                Assistant.Client.Instance.SendToClient(new WorldItem(item));
+                Assistant.Client.Instance.SendToClient(new SAWorldItem(item));
             }
             //
             if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)

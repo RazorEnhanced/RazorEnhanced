@@ -136,7 +136,9 @@ namespace Assistant
 			set { m_ItemID = value; }
 		}
 
-		internal bool PropsUpdated
+        internal byte ArtID { get; set; }
+
+        internal bool PropsUpdated
 		{
 			get { return m_PropsUpdated; }
 			set { m_PropsUpdated = value; }
@@ -149,6 +151,8 @@ namespace Assistant
                 try // avoid crash if some bad happen in Ultima.dll
                 {
                     if ((Ultima.TileData.ItemTable[ItemID].Flags & Ultima.TileFlag.Generic) != 0)
+                        return m_Amount;
+                    if (ItemID == 0x2006)
                         return m_Amount;
                 }
                 catch
