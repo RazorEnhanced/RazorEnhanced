@@ -12,14 +12,14 @@ namespace RazorEnhanced
     /// The Itemn class represent a single in-game Item object.
     /// </summary>
 	public class Item : EnhancedEntity
-	{
-		private Assistant.Item m_AssistantItem;
+    {
+        private Assistant.Item m_AssistantItem;
 
-		internal Item(Assistant.Item item)
-			: base(item)
-		{
-			m_AssistantItem = item;
-		}
+        internal Item(Assistant.Item item)
+            : base(item)
+        {
+            m_AssistantItem = item;
+        }
 
         /// <summary>
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
@@ -29,14 +29,16 @@ namespace RazorEnhanced
         /// <summary>
         /// Sometime called ID or Graphics ID, represents the "type of object". Usually unique for the Item image. 
         /// </summary>
-		public int ItemID {
-			get {
-				if (m_AssistantItem != null)
-					return m_AssistantItem.ItemID.Value;
-				else
-					return 0;
-				}
-		}
+		public int ItemID
+        {
+            get
+            {
+                if (m_AssistantItem != null)
+                    return m_AssistantItem.ItemID.Value;
+                else
+                    return 0;
+            }
+        }
 
         /// <summary>
         /// Read amount from item type object.
@@ -72,33 +74,33 @@ namespace RazorEnhanced
         /// Serial of the container which contains the object.
         /// </summary>
 		public int Container
-		{
-			get
-			{
-				if (m_AssistantItem.Container is Assistant.Item)
-					return (m_AssistantItem.Container as Assistant.Item).Serial;
-				else if (m_AssistantItem.Container is Assistant.Mobile)
-					return (m_AssistantItem.Container as Assistant.Mobile).Serial;
-				else
-					return 0;
-			}
-		}
+        {
+            get
+            {
+                if (m_AssistantItem.Container is Assistant.Item)
+                    return (m_AssistantItem.Container as Assistant.Item).Serial;
+                else if (m_AssistantItem.Container is Assistant.Mobile)
+                    return (m_AssistantItem.Container as Assistant.Mobile).Serial;
+                else
+                    return 0;
+            }
+        }
 
         /// <summary>
         /// Get serial of root container of item.
         /// </summary>
 		public int RootContainer
-		{
-			get
-			{
-				if (m_AssistantItem.RootContainer is Assistant.Item)
-					return (m_AssistantItem.RootContainer as Assistant.Item).Serial;
-				else if (m_AssistantItem.RootContainer is Assistant.Mobile)
-					return (m_AssistantItem.RootContainer as Assistant.Mobile).Serial;
-				else
-					return 0;
-			}
-		}
+        {
+            get
+            {
+                if (m_AssistantItem.RootContainer is Assistant.Item)
+                    return (m_AssistantItem.RootContainer as Assistant.Item).Serial;
+                else if (m_AssistantItem.RootContainer is Assistant.Mobile)
+                    return (m_AssistantItem.RootContainer as Assistant.Mobile).Serial;
+                else
+                    return 0;
+            }
+        }
 
         /// <summary>
         /// True: if Properties are updated - False: otherwise.
@@ -140,24 +142,24 @@ namespace RazorEnhanced
         /// Contains the list of Item inside a container.
         /// </summary>
         public List<Item> Contains
-		{
-			get
-			{
-				List<Item> items = new List<Item>();
-				for (int i = 0; i < m_AssistantItem.Contains.Count; i++)
-				{
-					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(m_AssistantItem.Contains[i]);
-					items.Add(enhancedItem);
-				}
-				return items;
-			}
-		}
+        {
+            get
+            {
+                List<Item> items = new List<Item>();
+                for (int i = 0; i < m_AssistantItem.Contains.Count; i++)
+                {
+                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(m_AssistantItem.Contains[i]);
+                    items.Add(enhancedItem);
+                }
+                return items;
+            }
+        }
 
-		// possibly 4 bit x/y - 16x16?
+        // possibly 4 bit x/y - 16x16?
         /// <summary>
         /// Returns the GridNum of the item. (need better documentation) 
         /// </summary>
-		public byte GridNum { get { return m_AssistantItem.GridNum; } }
+        public byte GridNum { get { return m_AssistantItem.GridNum; } }
 
         /// <summary>
         /// True: if the item is on the ground - False: otherwise.
@@ -233,10 +235,10 @@ namespace RazorEnhanced
         /// </summary>
 		public bool IsTwoHanded { get { return m_AssistantItem.IsTwoHanded; } }
 
-		public override string ToString()
-		{
-			return m_AssistantItem.ToString();
-		}
+        public override string ToString()
+        {
+            return m_AssistantItem.ToString();
+        }
 
         /// <summary>
         /// @nodoc
@@ -252,183 +254,183 @@ namespace RazorEnhanced
         /// </summary>
 		public string BuyDesc { get { return m_AssistantItem.BuyDesc; } }
 
-		public Point3D GetWorldPosition()
-		{
-			Assistant.Point3D assistantPoint = m_AssistantItem.GetWorldPosition();
-			RazorEnhanced.Point3D enhancedPoint = new RazorEnhanced.Point3D(assistantPoint);
-			return enhancedPoint;
-		}
+        public Point3D GetWorldPosition()
+        {
+            Assistant.Point3D assistantPoint = m_AssistantItem.GetWorldPosition();
+            RazorEnhanced.Point3D enhancedPoint = new RazorEnhanced.Point3D(assistantPoint);
+            return enhancedPoint;
+        }
 
-		internal Assistant.Layer AssistantLayer { get { return m_AssistantItem.Layer; } }
+        internal Assistant.Layer AssistantLayer { get { return m_AssistantItem.Layer; } }
 
         /// <summary>
         /// Get the list of Properties of an Item.
         /// </summary>
 		public List<Property> Properties
-		{
-			get
-			{
-				List<Property> properties = new List<Property>();
-				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantItem.ObjPropList.Content)
-				{
-					Property property = new Property(entry);
-					properties.Add(property);
-				}
-				return properties;
-			}
-		}
+        {
+            get
+            {
+                List<Property> properties = new List<Property>();
+                foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantItem.ObjPropList.Content)
+                {
+                    Property property = new Property(entry);
+                    properties.Add(property);
+                }
+                return properties;
+            }
+        }
 
         /// <summary>
         /// Get the weight of a item. (0: no weight)
         /// </summary>
 		public int Weight
-		{
-			get
-			{
-				List<Property> properties = Properties;
-				foreach (Property property in properties)
-				{
-					int number = property.Number;
-					string args = property.Args;
-					switch (number)
-					{
-						case 1072788:
-							return 1;       // Peso 1 se cliloc è 1072788
-						case 1072789:
-							try
-							{
-								return Convert.ToInt32(args);  // Ritorna valore peso
-							}
-							catch
-							{
-								return 1;  // errore di conversione torna peso  1
-							}
-					}
-				}
-				return 0;  // item senza peso
-			}
-		}
+        {
+            get
+            {
+                List<Property> properties = Properties;
+                foreach (Property property in properties)
+                {
+                    int number = property.Number;
+                    string args = property.Args;
+                    switch (number)
+                    {
+                        case 1072788:
+                            return 1;       // Peso 1 se cliloc è 1072788
+                        case 1072789:
+                            try
+                            {
+                                return Convert.ToInt32(args);  // Ritorna valore peso
+                            }
+                            catch
+                            {
+                                return 1;  // errore di conversione torna peso  1
+                            }
+                    }
+                }
+                return 0;  // item senza peso
+            }
+        }
 
         /// <summary>
         /// Get the current durability of an Item. (0: no durability)
         /// </summary>
 		public int Durability
-		{
-			get
-			{
-				List<Property> properties = Properties;
-				foreach (Property property in properties)
-				{
-					int number = property.Number;
-					if (number != 1060639)
-						continue;
+        {
+            get
+            {
+                List<Property> properties = Properties;
+                foreach (Property property in properties)
+                {
+                    int number = property.Number;
+                    if (number != 1060639)
+                        continue;
 
-					string Text = property.Args;
-					int step = 0;
-					string Durability = String.Empty;
+                    string Text = property.Args;
+                    int step = 0;
+                    string Durability = String.Empty;
 
-					for (int i = 0; i <= Text.Length - 1; i++)
-					{
-						if (step == 0)
-							if (Char.IsNumber(Text[i]))
-							{
-								Durability = Durability + Text[i];
-								step = 1;
-								i++;
-							}
-						if (step == 1)
-							if (Char.IsNumber(Text[i]))
-							{
-								Durability = Durability + Text[i];
-							}
-							else
-								step = 2;
-					}
+                    for (int i = 0; i <= Text.Length - 1; i++)
+                    {
+                        if (step == 0)
+                            if (Char.IsNumber(Text[i]))
+                            {
+                                Durability = Durability + Text[i];
+                                step = 1;
+                                i++;
+                            }
+                        if (step == 1)
+                            if (Char.IsNumber(Text[i]))
+                            {
+                                Durability = Durability + Text[i];
+                            }
+                            else
+                                step = 2;
+                    }
 
-					try
-					{
-						return Convert.ToInt32(Durability);  // Ritorna valore Dur
-					}
-					catch
-					{
-						return 0;  // errore di conversione torna 0
-					}
-				}
-				return 0; // item senza Dur
-			}
-		}
+                    try
+                    {
+                        return Convert.ToInt32(Durability);  // Ritorna valore Dur
+                    }
+                    catch
+                    {
+                        return 0;  // errore di conversione torna 0
+                    }
+                }
+                return 0; // item senza Dur
+            }
+        }
 
         /// <summary>
         /// Get the maximum durability of an Item. (0: no durability)
         /// </summary>
 		public int MaxDurability
-		{
-			get
-			{
-				List<Property> properties = Properties;
-				foreach (Property property in properties)
-				{
-					int number = property.Number;
-					if (number != 1060639)
-						continue;
+        {
+            get
+            {
+                List<Property> properties = Properties;
+                foreach (Property property in properties)
+                {
+                    int number = property.Number;
+                    if (number != 1060639)
+                        continue;
 
-					string Text = property.Args;
-					string TempMaxDurability = String.Empty;
-					int step = 0;
-					string MaxDurability = String.Empty;
-					for (int y = Text.Length - 1; y != 0; y--)
-					{
-						if (step == 0)
-							if (Char.IsNumber(Text[y]))
-							{
-								TempMaxDurability = TempMaxDurability + Text[y];
-								step = 1;
-								y--;
-							}
-						if (step == 1)
-							if (Char.IsNumber(Text[y]))
-							{
-								TempMaxDurability = TempMaxDurability + Text[y];
-							}
-							else
-								step = 2;
-					}
-					for (int i = TempMaxDurability.Length - 1; i > -1; i--)
-					{
-						MaxDurability += TempMaxDurability[i];
-					}
-					try
-					{
-						return Convert.ToInt32(MaxDurability);  // Ritorna valore maxdur
-					}
-					catch
-					{
-						return 0;  // errore di conversione torna 0
-					}
-				}
-				return 0; // item senza maxdur
-			}
-		}
+                    string Text = property.Args;
+                    string TempMaxDurability = String.Empty;
+                    int step = 0;
+                    string MaxDurability = String.Empty;
+                    for (int y = Text.Length - 1; y != 0; y--)
+                    {
+                        if (step == 0)
+                            if (Char.IsNumber(Text[y]))
+                            {
+                                TempMaxDurability = TempMaxDurability + Text[y];
+                                step = 1;
+                                y--;
+                            }
+                        if (step == 1)
+                            if (Char.IsNumber(Text[y]))
+                            {
+                                TempMaxDurability = TempMaxDurability + Text[y];
+                            }
+                            else
+                                step = 2;
+                    }
+                    for (int i = TempMaxDurability.Length - 1; i > -1; i--)
+                    {
+                        MaxDurability += TempMaxDurability[i];
+                    }
+                    try
+                    {
+                        return Convert.ToInt32(MaxDurability);  // Ritorna valore maxdur
+                    }
+                    catch
+                    {
+                        return 0;  // errore di conversione torna 0
+                    }
+                }
+                return 0; // item senza maxdur
+            }
+        }
 
         /// <summary>
         /// Get the in-game image on an Item as Bitmap object.
         /// See MSDN: https://docs.microsoft.com/dotnet/api/system.drawing.bitmap
         /// </summary>
 		public System.Drawing.Bitmap Image
-		{
-			get
-			{
-				return Items.GetImage(m_AssistantItem.ItemID, m_AssistantItem.Hue);
-			}
-		}
-	}
+        {
+            get
+            {
+                return Items.GetImage(m_AssistantItem.ItemID, m_AssistantItem.Hue);
+            }
+        }
+    }
 
     /// <summary>
     /// The Items class provides a wide range of functions to search and interact with Items.
     /// </summary>
 	public class Items
-	{
-        
+    {
+
         /// <summary>
         /// Open a container an wait for the Items to load, for a maximum amount of time.
         /// </summary>
@@ -453,14 +455,14 @@ namespace RazorEnhanced
                     break;
             }
         }
-        
+
         /// <param name="bag_serial">Container as Item serial.</param>
         public static void WaitForContents(int bag_serial, int delay) // Delay in MS
-		{
-			Item bag = FindBySerial(bag_serial);
-			if (bag != null)
-				WaitForContents(bag, delay);
-		}
+        {
+            Item bag = FindBySerial(bag_serial);
+            if (bag != null)
+                WaitForContents(bag, delay);
+        }
 
         private static Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
 
@@ -473,13 +475,21 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// Override the Color of an Item, the change affects only Player client. The change is not persistent.
+        /// Change/override the Color of an Item, the change affects only Player client. The change is not persistent.
+        /// If the color is -1 or unspecified, the color of the item is restored.
         /// </summary>
         /// <param name="serial">Serial of the Item.</param>
-        /// <param name="color">Color as number.</param>
+        /// <param name="color">Color as number. (default: -1, reset original color)</param>
         ///
-        public static void Color(uint serial, ushort color)
+        public static void Color(uint serial, int color = -1)
         {
+            //Reset original color
+            if (color == -1)
+            {
+                ColorRemoveSerial(serial);
+                return;
+            }
+
             // store the setting even if item is not exist yet
             m_HuedItems[serial] = (int)color;
             RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial((int)serial);
@@ -489,8 +499,8 @@ namespace RazorEnhanced
 
             if (i.Container == World.Player.Serial)
             {
-                        Assistant.Client.Instance.SendToClient(new EquipmentItem(assistantItem, (ushort)color, World.Player.Serial));
-                        return;
+                Assistant.Client.Instance.SendToClient(new EquipmentItem(assistantItem, (ushort)color, World.Player.Serial));
+                return;
             }
 
             // if not worn Apply color for valid flag
@@ -506,6 +516,10 @@ namespace RazorEnhanced
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
 
         }
+
+        /// <summary>
+        /// @nodoc: This newly added method can now be accessed via Items.Color(serial,-1), consider to merge the 2.
+        /// </summary>
         public static void ColorRemoveSerial(uint serial)
         {
             // store the setting even if item is not exist yet
@@ -522,8 +536,8 @@ namespace RazorEnhanced
         /// The Items.Filter class is used to store options to filter the global Items list.
         /// Often used in combination with Items.ApplyFilter.
         /// </summary>
-		public class Filter
-		{
+        public class Filter
+        {
             /// <summary>
             /// True: The filter is used - False: The filter is inactive. ( default: True, active )
             /// </summary>
@@ -612,10 +626,10 @@ namespace RazorEnhanced
             /// </summary>
             public int IsDoor = -1;
 
-			public Filter()
-			{
-			}
-		}
+            public Filter()
+            {
+            }
+        }
 
         /// <summary>
         /// Filter the global list of Items according to the options specified by the filter ( see: Items.Filter ).
@@ -623,117 +637,117 @@ namespace RazorEnhanced
         /// <param name="filter">A filter object.</param>
         /// <returns>the list of Items respectinf the filter criteria.</returns>
 		public static List<Item> ApplyFilter(Filter filter)
-		{
-			List<Item> result = new List<Item>();
-			List<Assistant.Item> assistantItems = new List<Assistant.Item>(World.Items.Values.ToList());
+        {
+            List<Item> result = new List<Item>();
+            List<Assistant.Item> assistantItems = new List<Assistant.Item>(World.Items.Values.ToList());
 
-			try
-			{
-				if (filter.Enabled)
-				{
-					if (filter.Serials.Count > 0)
-					{
-						assistantItems = assistantItems.Where((i) => filter.Serials.Contains((int)i.Serial.Value)).ToList();
-					}
-					else
-					{
-						if (filter.Name != String.Empty)
-						{
-							Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-							List<Assistant.Item> list = new List<Assistant.Item>();
-							foreach (Assistant.Item i in assistantItems)
-							{
-								if (rgx.IsMatch(i.Name))
-								{
-									list.Add(i);
-								}
-							}
-							assistantItems = list;
-						}
+            try
+            {
+                if (filter.Enabled)
+                {
+                    if (filter.Serials.Count > 0)
+                    {
+                        assistantItems = assistantItems.Where((i) => filter.Serials.Contains((int)i.Serial.Value)).ToList();
+                    }
+                    else
+                    {
+                        if (filter.Name != String.Empty)
+                        {
+                            Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
+                            List<Assistant.Item> list = new List<Assistant.Item>();
+                            foreach (Assistant.Item i in assistantItems)
+                            {
+                                if (rgx.IsMatch(i.Name))
+                                {
+                                    list.Add(i);
+                                }
+                            }
+                            assistantItems = list;
+                        }
 
-						if (filter.Graphics.Count > 0)
-						{
-							assistantItems = assistantItems.Where((i) => filter.Graphics.Contains(i.ItemID.Value)).ToList();
-						}
+                        if (filter.Graphics.Count > 0)
+                        {
+                            assistantItems = assistantItems.Where((i) => filter.Graphics.Contains(i.ItemID.Value)).ToList();
+                        }
 
-						if (filter.Hues.Count > 0)
-						{
-							assistantItems = assistantItems.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
-						}
+                        if (filter.Hues.Count > 0)
+                        {
+                            assistantItems = assistantItems.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
+                        }
 
-						if (filter.RangeMin != -1)
-						{
-							assistantItems = assistantItems.Where((i) =>
-								Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) >= filter.RangeMin
-							).ToList();
-						}
+                        if (filter.RangeMin != -1)
+                        {
+                            assistantItems = assistantItems.Where((i) =>
+                                Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) >= filter.RangeMin
+                            ).ToList();
+                        }
 
-						if (filter.RangeMax != -1)
-						{
-							assistantItems = assistantItems.Where((i) =>
-								Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= filter.RangeMax
-							).ToList();
-						}
+                        if (filter.RangeMax != -1)
+                        {
+                            assistantItems = assistantItems.Where((i) =>
+                                Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= filter.RangeMax
+                            ).ToList();
+                        }
 
                         if (filter.Movable >= 0)
                         {
-                            assistantItems = assistantItems.Where((i) => i.Movable == (filter.Movable>0)).ToList();
+                            assistantItems = assistantItems.Where((i) => i.Movable == (filter.Movable > 0)).ToList();
                         }
 
-						if (filter.Layers.Count > 0)
-						{
-							List<Assistant.Layer> list = new List<Assistant.Layer>();
+                        if (filter.Layers.Count > 0)
+                        {
+                            List<Assistant.Layer> list = new List<Assistant.Layer>();
 
-							foreach (string text in filter.Layers)
-							{
-								Enum.TryParse<Layer>(text, out Layer l);
-								if (l != Assistant.Layer.Invalid)
-								{
-									list.Add(l);
-								}
-							}
+                            foreach (string text in filter.Layers)
+                            {
+                                Enum.TryParse<Layer>(text, out Layer l);
+                                if (l != Assistant.Layer.Invalid)
+                                {
+                                    list.Add(l);
+                                }
+                            }
 
-							assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
-						}
+                            assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
+                        }
 
-						if (filter.OnGround != -1)
-						{
-							assistantItems = assistantItems.Where((i) => i.OnGround == Convert.ToBoolean(filter.OnGround)).ToList();
-						}
+                        if (filter.OnGround != -1)
+                        {
+                            assistantItems = assistantItems.Where((i) => i.OnGround == Convert.ToBoolean(filter.OnGround)).ToList();
+                        }
 
-						if (filter.IsContainer != -1)
-						{
-							assistantItems = assistantItems.Where((i) => i.IsContainer == Convert.ToBoolean(filter.IsContainer)).ToList();
-						}
+                        if (filter.IsContainer != -1)
+                        {
+                            assistantItems = assistantItems.Where((i) => i.IsContainer == Convert.ToBoolean(filter.IsContainer)).ToList();
+                        }
 
-						if (filter.IsCorpse != -1)
-						{
-							assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
-						}
+                        if (filter.IsCorpse != -1)
+                        {
+                            assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
+                        }
 
-						if (filter.IsDoor != -1)
+                        if (filter.IsDoor != -1)
                         {
                             assistantItems = assistantItems.Where((i) => i.IsDoor == Convert.ToBoolean(filter.IsDoor)).ToList();
                         }
 
                         if (filter.CheckIgnoreObject)
-						{
-							assistantItems = assistantItems.Where((i) => Misc.CheckIgnoreObject(i.Serial) != true).ToList();
-						}
-					}
-				}
+                        {
+                            assistantItems = assistantItems.Where((i) => Misc.CheckIgnoreObject(i.Serial) != true).ToList();
+                        }
+                    }
+                }
 
-			}
-			catch { }
+            }
+            catch { }
 
-			foreach (Assistant.Item assistantItem in assistantItems)
-			{
-				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-				result.Add(enhancedItem);
-			}
+            foreach (Assistant.Item assistantItem in assistantItems)
+            {
+                RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                result.Add(enhancedItem);
+            }
 
-			return result;
-		}
+            return result;
+        }
 
         /// <summary>
         /// Select a single Item from a list by some criteria: Distance, Amount, Durability or Randomly
@@ -750,150 +764,150 @@ namespace RazorEnhanced
         /// </param>
         /// <returns>The selected item.</returns>
         public static Item Select(List<Item> items, string selector)
-		{
-			Item result = null;
+        {
+            Item result = null;
 
-			if (items.Count <= 0)
-				return null;
+            if (items.Count <= 0)
+                return null;
 
-			switch (selector)
-			{
-				case "Random":
-					result = items[Utility.Random(items.Count)] as Item;
-					break;
+            switch (selector)
+            {
+                case "Random":
+                    result = items[Utility.Random(items.Count)] as Item;
+                    break;
 
-				case "Nearest":
-					Item nearest = items[0] as Item;
-					if (nearest != null)
-					{
-						double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
-						foreach (Item t in items)
-						{
-							if (t == null)
-								continue;
+                case "Nearest":
+                    Item nearest = items[0] as Item;
+                    if (nearest != null)
+                    {
+                        double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
+                        foreach (Item t in items)
+                        {
+                            if (t == null)
+                                continue;
 
-							double dist = Misc.DistanceSqrt(Player.Position, t.Position);
+                            double dist = Misc.DistanceSqrt(Player.Position, t.Position);
 
-							if (!(dist < minDist))
-								continue;
+                            if (!(dist < minDist))
+                                continue;
 
-							nearest = t;
-							minDist = dist;
-						}
-						result = nearest;
-					}
-					break;
+                            nearest = t;
+                            minDist = dist;
+                        }
+                        result = nearest;
+                    }
+                    break;
 
-				case "Farthest":
-					Item farthest = items[0] as Item;
-					if (farthest != null)
-					{
-						double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
-						foreach (Item t in items)
-						{
-							if (t == null)
-								continue;
+                case "Farthest":
+                    Item farthest = items[0] as Item;
+                    if (farthest != null)
+                    {
+                        double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
+                        foreach (Item t in items)
+                        {
+                            if (t == null)
+                                continue;
 
-							double dist = Misc.DistanceSqrt(Player.Position, t.Position);
-							if (dist > maxDist)
-							{
-								farthest = t;
-								maxDist = dist;
-							}
-						}
-						result = farthest;
-					}
-					break;
+                            double dist = Misc.DistanceSqrt(Player.Position, t.Position);
+                            if (dist > maxDist)
+                            {
+                                farthest = t;
+                                maxDist = dist;
+                            }
+                        }
+                        result = farthest;
+                    }
+                    break;
 
-				case "Less":
-					Item least = items[0] as Item;
-					if (least != null)
-					{
-						int minAmount = least.Amount;
-						foreach (Item t in items)
-						{
-							if (t == null)
-								continue;
+                case "Less":
+                    Item least = items[0] as Item;
+                    if (least != null)
+                    {
+                        int minAmount = least.Amount;
+                        foreach (Item t in items)
+                        {
+                            if (t == null)
+                                continue;
 
-							int amount = t.Amount;
-							if (amount < minAmount)
-							{
-								least = t;
-								minAmount = amount;
-							}
-						}
-						result = least;
-					}
-					break;
+                            int amount = t.Amount;
+                            if (amount < minAmount)
+                            {
+                                least = t;
+                                minAmount = amount;
+                            }
+                        }
+                        result = least;
+                    }
+                    break;
 
-				case "Most":
-					Item most = items[0] as Item;
-					if (most != null)
-					{
-						int maxAmount = most.Amount;
-						foreach (Item t in items)
-						{
-							if (t == null)
-								continue;
+                case "Most":
+                    Item most = items[0] as Item;
+                    if (most != null)
+                    {
+                        int maxAmount = most.Amount;
+                        foreach (Item t in items)
+                        {
+                            if (t == null)
+                                continue;
 
-							int amount = t.Amount;
+                            int amount = t.Amount;
 
-							if (amount <= maxAmount)
-								continue;
+                            if (amount <= maxAmount)
+                                continue;
 
-							most = t;
-							maxAmount = amount;
-						}
-						result = most;
-					}
-					break;
+                            most = t;
+                            maxAmount = amount;
+                        }
+                        result = most;
+                    }
+                    break;
 
-				case "Weakest":
-					Item weakest = items[0] as Item;
-					if (weakest != null)
-					{
-						int minDur = weakest.Durability;
-						foreach (Item t in items)
-						{
-							if (t == null)
-								continue;
+                case "Weakest":
+                    Item weakest = items[0] as Item;
+                    if (weakest != null)
+                    {
+                        int minDur = weakest.Durability;
+                        foreach (Item t in items)
+                        {
+                            if (t == null)
+                                continue;
 
-							int dur = t.Durability;
+                            int dur = t.Durability;
 
-							if (dur >= minDur)
-								continue;
+                            if (dur >= minDur)
+                                continue;
 
-							weakest = t;
-							minDur = dur;
-						}
-						result = weakest;
-					}
-					break;
+                            weakest = t;
+                            minDur = dur;
+                        }
+                        result = weakest;
+                    }
+                    break;
 
-				case "Strongest":
-					Item strongest = items[0] as Item;
-					if (strongest != null)
-					{
-						int maxDur = strongest.Durability;
-						foreach (Item t in items)
-						{
-							if (t == null)
-								continue;
+                case "Strongest":
+                    Item strongest = items[0] as Item;
+                    if (strongest != null)
+                    {
+                        int maxDur = strongest.Durability;
+                        foreach (Item t in items)
+                        {
+                            if (t == null)
+                                continue;
 
-							int dur = t.Durability;
+                            int dur = t.Durability;
 
-							if (dur <= maxDur)
-								continue;
-							strongest = t;
-							maxDur = dur;
-						}
-						result = strongest;
-					}
-					break;
-			}
+                            if (dur <= maxDur)
+                                continue;
+                            strongest = t;
+                            maxDur = dur;
+                        }
+                        result = strongest;
+                    }
+                    break;
+            }
 
-			return result;
-		}
+            return result;
+        }
 
         /// <summary>
         /// Search for a specific Item by using it Serial
@@ -901,16 +915,16 @@ namespace RazorEnhanced
         /// <param name="serial">Serial of the Item.</param>
         /// <returns>Item object if found, or null if not found.</returns>
 		public static Item FindBySerial(int serial)
-		{
-			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
-			if (assistantItem == null)
-				return null;
-			else
-			{
-				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-				return enhancedItem;
-			}
-		}
+        {
+            Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+            if (assistantItem == null)
+                return null;
+            else
+            {
+                RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                return enhancedItem;
+            }
+        }
 
         /// <summary>
         /// Lift an Item and hold it in-hand. ( see: Items.DropFromHand )
@@ -918,25 +932,25 @@ namespace RazorEnhanced
         /// <param name="item">Item object to Lift.</param>
         /// <param name="amount">Amount to lift. (0: the whole stack)</param>
 		public static void Lift(Item item, int amount)
-		{
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-				return;
-			}
-			if (amount == 0)
-			{
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-			}
-			else
-			{
-				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
-			}
-		}
+        {
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
+                return;
+            }
+            if (amount == 0)
+            {
+                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+            }
+            else
+            {
+                if (item.Amount < amount)
+                {
+                    amount = item.Amount;
+                }
+                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
+            }
+        }
 
         /// <summary>
         /// Drop into a bag an Item currently held in-hand. ( see: Items.Lift )
@@ -944,24 +958,24 @@ namespace RazorEnhanced
         /// <param name="item">Item object to drop.</param>
         /// <param name="container">Target container.</param>
 		public static void DropFromHand(Item item, Item container)
-		{
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-				return;
-			}
-			if (container == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination Item not found");
-				return;
-			}
-			if (!container.IsContainer)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination Item is not a container");
-				return;
-			}
-			Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, container.Serial));
-		}
+        {
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
+                return;
+            }
+            if (container == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Destination Item not found");
+                return;
+            }
+            if (!container.IsContainer)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Destination Item is not a container");
+                return;
+            }
+            Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, container.Serial));
+        }
 
         /// <summary>
         /// Move an Item to a destination, which can be an Item or a Mobile.
@@ -1085,61 +1099,61 @@ namespace RazorEnhanced
 				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
 			}
 		}*/
-        
+
         public static void Move(Item source, Mobile destination, int amount)
-		{
-			Move(source.Serial, destination.Serial, amount, -1, -1);
-		}
-
-		public static void Move(int source, Mobile destination, int amount)
-		{
-			Move(source, destination.Serial, amount, -1, -1);
-		}
-
-		public static void Move(Item source, int destination, int amount)
-		{
-			Move(source.Serial, destination, amount, -1, -1);
-		}
-
-		public static void Move(int source, Item destination, int amount)
-		{
-			Move(source, destination.Serial, amount, -1, -1);
-		}
-
-		public static void Move(Item source, Item destination, int amount)
-		{
-			Move(source.Serial, destination.Serial, amount, -1, -1);
+        {
+            Move(source.Serial, destination.Serial, amount, -1, -1);
         }
 
-		public static void Move(int source, int destination, int amount)
-		{
-			Move(source, destination, amount, -1, -1);
-		}
+        public static void Move(int source, Mobile destination, int amount)
+        {
+            Move(source, destination.Serial, amount, -1, -1);
+        }
 
-		public static void Move(Item source, Mobile destination, int amount, int x, int y)
-		{
-			Move(source.Serial, destination.Serial, amount, x, y);
-		}
+        public static void Move(Item source, int destination, int amount)
+        {
+            Move(source.Serial, destination, amount, -1, -1);
+        }
 
-		public static void Move(int source, Mobile destination, int amount, int x, int y)
-		{
-			Move(source, destination.Serial, amount, x, y);
-		}
+        public static void Move(int source, Item destination, int amount)
+        {
+            Move(source, destination.Serial, amount, -1, -1);
+        }
 
-		public static void Move(Item source, int destination, int amount, int x, int y)
-		{
-			Move(source.Serial, destination, amount, x, y);
-		}
+        public static void Move(Item source, Item destination, int amount)
+        {
+            Move(source.Serial, destination.Serial, amount, -1, -1);
+        }
 
-		public static void Move(int source, Item destination, int amount, int x, int y)
-		{
-			Move(source, destination.Serial, amount, x, y);
-		}
+        public static void Move(int source, int destination, int amount)
+        {
+            Move(source, destination, amount, -1, -1);
+        }
 
-		public static void Move(Item source, Item destination, int amount, int x, int y)
-		{
-			Move(source.Serial, destination.Serial, amount, x, y);
-		}
+        public static void Move(Item source, Mobile destination, int amount, int x, int y)
+        {
+            Move(source.Serial, destination.Serial, amount, x, y);
+        }
+
+        public static void Move(int source, Mobile destination, int amount, int x, int y)
+        {
+            Move(source, destination.Serial, amount, x, y);
+        }
+
+        public static void Move(Item source, int destination, int amount, int x, int y)
+        {
+            Move(source.Serial, destination, amount, x, y);
+        }
+
+        public static void Move(int source, Item destination, int amount, int x, int y)
+        {
+            Move(source, destination.Serial, amount, x, y);
+        }
+
+        public static void Move(Item source, Item destination, int amount, int x, int y)
+        {
+            Move(source.Serial, destination.Serial, amount, x, y);
+        }
 
 
 
@@ -1175,8 +1189,8 @@ namespace RazorEnhanced
 
 
         public static void MoveOnGround(Item source, int amount, int x, int y, int z)
-		{
-			MoveOnGround(source.Serial, amount, x, y, z);
+        {
+            MoveOnGround(source.Serial, amount, x, y, z);
         }
 
         /// <summary>
@@ -1186,24 +1200,24 @@ namespace RazorEnhanced
         /// <param name="item">Item object to drop.</param>
         /// <param name="amount">Amount to move. (default: 0, the whole stack)</param>
 		public static void DropItemGroundSelf(Item item, int amount = 0)
-		{
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: DropItemGroundSelf: Item not found");
-				return;
-			}
+        {
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: DropItemGroundSelf: Item not found");
+                return;
+            }
 
-			int amounttodrop = amount;
-			if ((item.Amount < amount) || (amount == 0))
+            int amounttodrop = amount;
+            if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-			MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
-		}
+            MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
+        }
 
-		public static void DropItemGroundSelf(int serialitem, int amount = 0)
-		{
-			Item i = FindBySerial(serialitem);
-			DropItemGroundSelf(i, amount);
+        public static void DropItemGroundSelf(int serialitem, int amount = 0)
+        {
+            Item i = FindBySerial(serialitem);
+            DropItemGroundSelf(i, amount);
         }
 
         /// <summary>
@@ -1272,10 +1286,10 @@ namespace RazorEnhanced
         }
 
         public static void UseItem(Item item)
-		{
-			if (item != null)
-				UseItem(item.Serial);
-		}
+        {
+            if (item != null)
+                UseItem(item.Serial);
+        }
 
         public static void UseItem(Item item, EnhancedEntity target)
         {
@@ -1312,30 +1326,30 @@ namespace RazorEnhanced
         /// <param name="color">Color to be used. (default: -1, any)</param>
         /// <returns></returns>
         public static bool UseItemByID(int itemid, int color = -1)
-		{
-			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter
-			{
-				Enabled = true
-			};
-			itemFilter.Graphics.Add(itemid);
+        {
+            // Genero filtro item
+            Items.Filter itemFilter = new Items.Filter
+            {
+                Enabled = true
+            };
+            itemFilter.Graphics.Add(itemid);
 
-			if (color != -1)
-				itemFilter.Hues.Add(color);
+            if (color != -1)
+                itemFilter.Hues.Add(color);
 
-			List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
-			foreach (Item found in containeritem)
-			{
-				if (found.IsInBackpack)
-				{
-					RazorEnhanced.Items.UseItem(found);
-					return true;
-				}
-			}
+            foreach (Item found in containeritem)
+            {
+                if (found.IsInBackpack)
+                {
+                    RazorEnhanced.Items.UseItem(found);
+                    return true;
+                }
+            }
 
-			return false;
-		}
+            return false;
+        }
 
         // Find item by id
         /// <summary>
@@ -1354,62 +1368,62 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
         /// <returns>The Item matching the criteria.</returns>
-        public static Item FindByID(int itemid, int color, int container, bool recursive=false, bool considerIgnoreList=true)
-		{
-			if (container != -1)  // search in specific container
-			{
-				Item cont = FindBySerial(container);
-				if (cont == null) // not valid serial or container not found
-				{
-					Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
-					return null;
-				}
-				foreach (Item i in cont.Contains)
-				{
+        public static Item FindByID(int itemid, int color, int container, bool recursive = false, bool considerIgnoreList = true)
+        {
+            if (container != -1)  // search in specific container
+            {
+                Item cont = FindBySerial(container);
+                if (cont == null) // not valid serial or container not found
+                {
+                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    return null;
+                }
+                foreach (Item i in cont.Contains)
+                {
                     if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
                         continue;
 
-					if (i.ItemID == itemid) // check item id
-					{
-						if (color != -1) // color -1 ALL
-						{
-							if (i.Hue == color)
-								return i;
-						}
-						else
-						{
-							return i;
-						}
-					}
-					else if (recursive && i.IsContainer)
-					{
+                    if (i.ItemID == itemid) // check item id
+                    {
+                        if (color != -1) // color -1 ALL
+                        {
+                            if (i.Hue == color)
+                                return i;
+                        }
+                        else
+                        {
+                            return i;
+                        }
+                    }
+                    else if (recursive && i.IsContainer)
+                    {
                         Item recursItem = FindByID(itemid, color, i.Serial, recursive, considerIgnoreList); // recall for sub container
                         if (recursItem != null)
                             return recursItem;
                     }
-				}
-				return null; // Return null if no item found
-			}
-			else  // Search in world
-			{
-				Items.Filter itemFilter = new Items.Filter
-				{
-					Enabled = true
-				};
-				itemFilter.Graphics.Add(itemid);
-				itemFilter.CheckIgnoreObject = considerIgnoreList;
+                }
+                return null; // Return null if no item found
+            }
+            else  // Search in world
+            {
+                Items.Filter itemFilter = new Items.Filter
+                {
+                    Enabled = true
+                };
+                itemFilter.Graphics.Add(itemid);
+                itemFilter.CheckIgnoreObject = considerIgnoreList;
 
-				if (color != -1)
-					itemFilter.Hues.Add(color);
+                if (color != -1)
+                    itemFilter.Hues.Add(color);
 
-				List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+                List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
-				foreach (Item found in containeritem)  // Return frist one found
-					return found;
+                foreach (Item found in containeritem)  // Return frist one found
+                    return found;
 
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
         public static Item FindByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
         {
@@ -1441,7 +1455,7 @@ namespace RazorEnhanced
                     }
                     else if (i.IsContainer && range != 0)
                     {
-                        Item recursItem = FindByID(itemid, color, i.Serial, range-1, considerIgnoreList); // recall for sub container
+                        Item recursItem = FindByID(itemid, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
                         if (recursItem != null)
                             return recursItem;
                     }
@@ -1476,20 +1490,20 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="item">Serial or Item to click</param>
         public static void SingleClick(Item item)
-		{
-	 		Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
-		}
+        {
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
+        }
 
-		public static void SingleClick(int itemserial)
-		{
-			Assistant.Item item = Assistant.World.FindItem(itemserial);
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
-				return;
-			}
-	 		Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
-		}
+        public static void SingleClick(int itemserial)
+        {
+            Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
+                return;
+            }
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
+        }
 
         // Props
 
@@ -1524,9 +1538,9 @@ namespace RazorEnhanced
         }
 
         public static void WaitForProps(Item i, int delay)
-		{
-			WaitForProps(i.Serial, delay);
-		}
+        {
+            WaitForProps(i.Serial, delay);
+        }
 
 
 
@@ -1536,24 +1550,24 @@ namespace RazorEnhanced
         /// <param name="serial">Serial or Item to read.</param>
         /// <returns>List of strings.</returns>
         public static List<string> GetPropStringList(int serial)
-		{
-			List<string> propstringlist = new List<string>();
-			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+        {
+            List<string> propstringlist = new List<string>();
+            Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
-			if (assistantItem == null)
-				return propstringlist;
+            if (assistantItem == null)
+                return propstringlist;
 
-			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
-			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-			{
-				propstringlist.Add(prop.ToString());
-			}
-			return propstringlist;
-		}
+            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+            foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+            {
+                propstringlist.Add(prop.ToString());
+            }
+            return propstringlist;
+        }
 
-		public static List<string> GetPropStringList(Item item)
-		{
-			return GetPropStringList(item.Serial);
+        public static List<string> GetPropStringList(Item item)
+        {
+            return GetPropStringList(item.Serial);
         }
 
 
@@ -1565,26 +1579,26 @@ namespace RazorEnhanced
         /// <param name="index">Number of the Property line.</param>
         /// <returns>A property line as a string.</returns>
 		public static string GetPropStringByIndex(int serial, int index)
-		{
-			string propstring = String.Empty;
-			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+        {
+            string propstring = String.Empty;
+            Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
-			if (assistantItem == null)
-				return propstring;
+            if (assistantItem == null)
+                return propstring;
 
-			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
-			if (props.Count > index)
-				propstring = props[index].ToString();
-			return propstring;
-		}
+            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+            if (props.Count > index)
+                propstring = props[index].ToString();
+            return propstring;
+        }
 
-		public static string GetPropStringByIndex(Item item, int index)
-		{
-			return GetPropStringByIndex(item.Serial, index);
-		}
+        public static string GetPropStringByIndex(Item item, int index)
+        {
+            return GetPropStringByIndex(item.Serial, index);
+        }
 
 
-		/// <summary>
+        /// <summary>
         /// Read the value of a Property.
         /// </summary>
         /// <param name="serial">Serial or Item to read.</param>
@@ -1633,13 +1647,13 @@ namespace RazorEnhanced
             return 0;  // Item not exist or props not exist
         }
 
-		public static float GetPropValue(Item item, string name)
-		{
-			if (item == null)
-				return 0;
+        public static float GetPropValue(Item item, string name)
+        {
+            if (item == null)
+                return 0;
 
-			return GetPropValue(item.Serial, name);
-		}
+            return GetPropValue(item.Serial, name);
+        }
 
         // GetPropValue: Special case "Total Resist" so that items can be collected based on total resist
         /// <summary>
@@ -1687,7 +1701,8 @@ namespace RazorEnhanced
             return totalResist;
         }
 
-        static float GetTotalResistProp(Item item) {
+        static float GetTotalResistProp(Item item)
+        {
             return GetTotalResistProp(item.Serial);
         }
 
@@ -1701,27 +1716,27 @@ namespace RazorEnhanced
         /// <param name="hue">Color of the message.</param>
         /// <param name="message">Message as </param>
         public static void Message(Item item, int hue, string message)
-		{
-			// Prevent spamm message on left bottom screen
-			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
-				return;
+        {
+            // Prevent spamm message on left bottom screen
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
+                return;
 
-	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
-		}
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+        }
 
-		public static void Message(int serial, int hue, string message)
-		{
-			Item item = FindBySerial(serial);
+        public static void Message(int serial, int hue, string message)
+        {
+            Item item = FindBySerial(serial);
 
-			if (item == null) //Intem
-				return;
+            if (item == null) //Intem
+                return;
 
-			// Prevent spamm message on left bottom screen
-			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
-				return;
+            // Prevent spamm message on left bottom screen
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
+                return;
 
-	 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
-		}
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+        }
 
         // Count
 
@@ -1770,17 +1785,17 @@ namespace RazorEnhanced
             return count;
         }
 
-        public static int ContainerCount(int serial, int itemid, int color = -1, bool recursive=false)
-		{
-			Item container = FindBySerial(serial);
-			if (container != null)
-				return ContainerCount(container, itemid, color, recursive);
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: ContainerCount: Invalid container");
-				return 0;
-			}
-		}
+        public static int ContainerCount(int serial, int itemid, int color = -1, bool recursive = false)
+        {
+            Item container = FindBySerial(serial);
+            if (container != null)
+                return ContainerCount(container, itemid, color, recursive);
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: ContainerCount: Invalid container");
+                return 0;
+            }
+        }
 
 
         /// <summary>
@@ -1798,11 +1813,11 @@ namespace RazorEnhanced
             }
         }
         public static void Hide(Item item)
-		{
-			Hide(item.Serial);
-		}
+        {
+            Hide(item.Serial);
+        }
 
-		
+
 
         /// <summary>
         /// Count items in Player Backpack.
@@ -1811,21 +1826,21 @@ namespace RazorEnhanced
         /// <param name="color">Color to search. (default -1: any color)</param>
         /// <returns></returns>
         public static int BackpackCount(int itemid, int color = -1)
-		{
-			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
-			if (color == -1)
-				items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid ).ToList();
-			else
-				items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid && i.Hue == color).ToList();
+        {
+            List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
+            if (color == -1)
+                items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid).ToList();
+            else
+                items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid && i.Hue == color).ToList();
 
-			int amount = 0;
-			foreach (Assistant.Item i in items)
-					amount = amount + i.Amount;
+            int amount = 0;
+            foreach (Assistant.Item i in items)
+                amount = amount + i.Amount;
 
-			return amount;
-		}
+            return amount;
+        }
 
-		// Context
+        // Context
 
         /// <summary>
         /// Check if Context Menu entry exists for an Item.
@@ -1834,32 +1849,32 @@ namespace RazorEnhanced
         /// <param name="name">Name of the Context Manu entry</param>
         /// <returns></returns>
         public static int ContextExist(int serial, string name)
-		{
-			Assistant.Item item = World.FindItem(serial);
-			if (item == null) // Se item non valido
-				return -1;
+        {
+            Assistant.Item item = World.FindItem(serial);
+            if (item == null) // Se item non valido
+                return -1;
 
-			Misc.WaitForContext(serial, 1500);
+            Misc.WaitForContext(serial, 1500);
 
-			foreach (KeyValuePair<ushort, int> entry in item.ContextMenu)
-			{
-				string menuname = string.Empty;
-				menuname = Language.GetCliloc(entry.Value);
-				if (menuname.ToLower() == name.ToLower())
-				{
-					return entry.Key;
-				}
-			}
+            foreach (KeyValuePair<ushort, int> entry in item.ContextMenu)
+            {
+                string menuname = string.Empty;
+                menuname = Language.GetCliloc(entry.Value);
+                if (menuname.ToLower() == name.ToLower())
+                {
+                    return entry.Key;
+                }
+            }
 
-			return -1; // Se non trovata
-		}
+            return -1; // Se non trovata
+        }
 
-		public static int ContextExist(Item i, string name)
-		{
-			return ContextExist(i.Serial, name);
-		}
+        public static int ContextExist(Item i, string name)
+        {
+            return ContextExist(i.Serial, name);
+        }
 
-		
+
 
         /// <summary>
         /// Get the Image on an Item by specifing the ItemID. Optinally is possible to apply a color.
@@ -1867,37 +1882,37 @@ namespace RazorEnhanced
         /// <param name="itemID">ItemID to use.</param>
         /// <param name="hue">Optional: Color to apply. (Default 0, natural)</param>
         /// <returns></returns>
-		public static System.Drawing.Bitmap GetImage(int itemID, int hue = 0)
-		{
-			System.Drawing.Bitmap bitmapImage = null;
+        public static System.Drawing.Bitmap GetImage(int itemID, int hue = 0)
+        {
+            System.Drawing.Bitmap bitmapImage = null;
 
-			try
-			{
-				// Get original cached Bitmap Static
-				System.Drawing.Bitmap bitmapOriginal = Ultima.Art.GetStatic(itemID);
-				{
-					if (bitmapOriginal != null)
-					{
-						bitmapImage = bitmapOriginal;
+            try
+            {
+                // Get original cached Bitmap Static
+                System.Drawing.Bitmap bitmapOriginal = Ultima.Art.GetStatic(itemID);
+                {
+                    if (bitmapOriginal != null)
+                    {
+                        bitmapImage = bitmapOriginal;
 
-						if (hue > 0)
-						{
-							// Create clone to preserve original cached bitmap!
-							System.Drawing.Bitmap bitmapDeepCopy = new System.Drawing.Bitmap(bitmapOriginal);
+                        if (hue > 0)
+                        {
+                            // Create clone to preserve original cached bitmap!
+                            System.Drawing.Bitmap bitmapDeepCopy = new System.Drawing.Bitmap(bitmapOriginal);
 
-							bool onlyHueGrayPixels = (hue & 0x8000) != 0;
-							hue = (hue & 0x3FFF) - 1;
-							Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
-							m_hue.ApplyTo(bitmapDeepCopy, onlyHueGrayPixels);
+                            bool onlyHueGrayPixels = (hue & 0x8000) != 0;
+                            hue = (hue & 0x3FFF) - 1;
+                            Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
+                            m_hue.ApplyTo(bitmapDeepCopy, onlyHueGrayPixels);
 
-							bitmapImage = bitmapDeepCopy;
-						}
-					}
-				}
-			}
-			catch { Misc.SendMessage("Items.GetBitmapImage() exception => itemID: " + itemID +", hue: " + hue); }
+                            bitmapImage = bitmapDeepCopy;
+                        }
+                    }
+                }
+            }
+            catch { Misc.SendMessage("Items.GetBitmapImage() exception => itemID: " + itemID + ", hue: " + hue); }
 
-			return bitmapImage;
-		}
-	}
+            return bitmapImage;
+        }
+    }
 }
