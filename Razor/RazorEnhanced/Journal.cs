@@ -12,6 +12,11 @@ namespace RazorEnhanced
     /// </summary>
 	public class Journal
 	{
+
+        internal static HashSet<string> _TextFilters = new HashSet<string>();
+        internal static HashSet<string> TextFilters { get { return _TextFilters; } }
+
+
         /// <summary>
         /// The JournalEntry class rapresents a line in the Journal.
         /// </summary>
@@ -66,7 +71,7 @@ namespace RazorEnhanced
             public double Timestamp { get { return m_Timestamp; } }
 
             private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
-            
+
             public JournalEntry Copy() {
                 return new JournalEntry(this);
             }
@@ -143,6 +148,29 @@ namespace RazorEnhanced
 				return false;
 			}
 		}
+
+        /// <summary>
+        /// @nodoc
+        /// Store a string that if matched, will block journal message ( case insensitive )
+        /// </summary>
+        /// <param name="text">Text to block. case insensitive, and will match if the incoming message contains the text</param>
+        /// <returns>void</returns>
+        public static void FilterText(string text)
+        {
+            TextFilters.Add(text.ToLower());
+        }
+
+        /// <summary>
+        /// @nodoc
+        /// Remove a stored a string that if matched, would block journal message ( case insensitive )
+        /// </summary>
+        /// <param name="text">Text to no longer block. case insensitive</param>
+        /// <returns>void</returns>
+        public static void RemoveFilterText(string text)
+        {
+            TextFilters.Remove(text.ToLower());
+        }
+
 
         /// <summary>
         /// Search in the Journal for the occurrence of text, for a given soruce. (case sensitive)
@@ -463,7 +491,7 @@ namespace RazorEnhanced
             return false;
         }
 
-        
+
     }
 
 
