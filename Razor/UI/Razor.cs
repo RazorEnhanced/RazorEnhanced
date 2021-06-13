@@ -687,6 +687,8 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private DataGridView journalfilterdatagrid;
+        private DataGridViewTextBoxColumn journalFilterText;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -734,7 +736,7 @@ namespace Assistant
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Assistant.Properties.Settings settings1 = new Assistant.Properties.Settings();
+            Assistant.Properties.Settings settings2 = new Assistant.Properties.Settings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
@@ -861,6 +863,11 @@ namespace Assistant
             this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
             this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mobfilterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.autocarverbladeLabel = new System.Windows.Forms.Label();
@@ -873,6 +880,8 @@ namespace Assistant
             this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
             this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.JournalFilterPage = new System.Windows.Forms.TabPage();
+            this.journalfilterdatagrid = new System.Windows.Forms.DataGridView();
+            this.journalFilterText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.scriptingTab = new System.Windows.Forms.TabPage();
             this.scriptshowStartStopCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox42 = new System.Windows.Forms.GroupBox();
@@ -1388,11 +1397,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1410,6 +1414,8 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.graphfilterdatagrid)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.JournalFilterPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.journalfilterdatagrid)).BeginInit();
             this.scriptingTab.SuspendLayout();
             this.groupBox42.SuspendLayout();
             this.groupBox31.SuspendLayout();
@@ -1726,11 +1732,11 @@ namespace Assistant
             //
             // rememberPwds
             //
-            settings1.ccc = "";
-            settings1.SettingsKey = "";
-            settings1.stretch = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            settings2.ccc = "";
+            settings2.SettingsKey = "";
+            settings2.stretch = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.rememberPwds.Anchor = settings1.appSetting;
+            this.rememberPwds.Anchor = settings2.appSetting;
             this.rememberPwds.Location = new System.Drawing.Point(405, 108);
             this.rememberPwds.Name = "rememberPwds";
             this.rememberPwds.Size = new System.Drawing.Size(304, 32);
@@ -1827,9 +1833,9 @@ namespace Assistant
             //
             // filters
             //
-            this.filters.Anchor = settings1.stretch;
+            //this.filters.Anchor = settings1.stretch;
             this.filters.CheckOnClick = true;
-            this.filters.DataBindings.Add(new System.Windows.Forms.Binding("Anchor", settings1, "stretch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            //this.filters.DataBindings.Add(new System.Windows.Forms.Binding("Anchor", settings1, "stretch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.filters.IntegralHeight = false;
             this.filters.Location = new System.Drawing.Point(10, 23);
             this.filters.Name = "filters";
@@ -2815,6 +2821,54 @@ namespace Assistant
             this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 304);
             this.graphfilterdatagrid.TabIndex = 69;
             //
+            // dataGridViewCheckBoxColumn4
+            //
+            this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewCheckBoxColumn4.FalseValue = "False";
+            this.dataGridViewCheckBoxColumn4.HeaderText = "X";
+            this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
+            this.dataGridViewCheckBoxColumn4.MinimumWidth = 30;
+            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+            this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewCheckBoxColumn4.TrueValue = "True";
+            this.dataGridViewCheckBoxColumn4.Width = 30;
+            //
+            // dataGridViewTextBoxColumn16
+            //
+            this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn16.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
+            this.dataGridViewTextBoxColumn16.MinimumWidth = 133;
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            //
+            // dataGridViewTextBoxColumn17
+            //
+            this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn17.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
+            this.dataGridViewTextBoxColumn17.MinimumWidth = 133;
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            //
+            // dataGridViewTextBoxColumn18
+            //
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn18.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
+            this.dataGridViewTextBoxColumn18.MinimumWidth = 133;
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            //
+            // dataGridViewTextBoxColumn19
+            //
+            this.dataGridViewTextBoxColumn19.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn19.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn19.HeaderText = "Props";
+            this.dataGridViewTextBoxColumn19.MinimumWidth = 150;
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.Visible = false;
+            //
             // mobfilterCheckBox
             //
             this.mobfilterCheckBox.Location = new System.Drawing.Point(10, 28);
@@ -2923,6 +2977,7 @@ namespace Assistant
             //
             // JournalFilterPage
             //
+            this.JournalFilterPage.Controls.Add(this.journalfilterdatagrid);
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 29);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
@@ -2930,6 +2985,28 @@ namespace Assistant
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
+            //
+            // journalfilterdatagrid
+            //
+            this.journalfilterdatagrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.journalfilterdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.journalfilterdatagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.journalFilterText});
+            this.journalfilterdatagrid.Location = new System.Drawing.Point(-13, 0);
+            this.journalfilterdatagrid.Name = "journalfilterdatagrid";
+            this.journalfilterdatagrid.RowHeadersWidth = 62;
+            this.journalfilterdatagrid.RowTemplate.Height = 28;
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1073, 471);
+            this.journalfilterdatagrid.TabIndex = 0;
+            //
+            // journalFilterText
+            //
+            this.journalFilterText.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.journalFilterText.HeaderText = "Journal Filter Text";
+            this.journalFilterText.MinimumWidth = 8;
+            this.journalFilterText.Name = "journalFilterText";
             //
             // scriptingTab
             //
@@ -8495,54 +8572,6 @@ namespace Assistant
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
             //
-            // dataGridViewCheckBoxColumn4
-            //
-            this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewCheckBoxColumn4.FalseValue = "False";
-            this.dataGridViewCheckBoxColumn4.HeaderText = "X";
-            this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
-            this.dataGridViewCheckBoxColumn4.MinimumWidth = 30;
-            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-            this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.dataGridViewCheckBoxColumn4.TrueValue = "True";
-            this.dataGridViewCheckBoxColumn4.Width = 30;
-            //
-            // dataGridViewTextBoxColumn16
-            //
-            this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn16.FillWeight = 25F;
-            this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
-            this.dataGridViewTextBoxColumn16.MinimumWidth = 133;
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            //
-            // dataGridViewTextBoxColumn17
-            //
-            this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn17.FillWeight = 25F;
-            this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
-            this.dataGridViewTextBoxColumn17.MinimumWidth = 133;
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            //
-            // dataGridViewTextBoxColumn18
-            //
-            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn18.FillWeight = 25F;
-            this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
-            this.dataGridViewTextBoxColumn18.MinimumWidth = 133;
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            //
-            // dataGridViewTextBoxColumn19
-            //
-            this.dataGridViewTextBoxColumn19.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn19.FillWeight = 25F;
-            this.dataGridViewTextBoxColumn19.HeaderText = "Props";
-            this.dataGridViewTextBoxColumn19.MinimumWidth = 150;
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.Visible = false;
-            //
             // MainForm
             //
             this.AutoScaleBaseSize = new System.Drawing.Size(8, 19);
@@ -8584,6 +8613,8 @@ namespace Assistant
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            this.JournalFilterPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.journalfilterdatagrid)).EndInit();
             this.scriptingTab.ResumeLayout(false);
             this.groupBox42.ResumeLayout(false);
             this.groupBox42.PerformLayout();
