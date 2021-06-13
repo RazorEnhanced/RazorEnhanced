@@ -484,18 +484,23 @@ namespace RazorEnhanced
         /// <param name="serial">Serial of the Item.</param>
         /// <param name="color">Color as number. (default: -1, reset original color)</param>
         ///
-        public static void Color(uint serial, int color = -1)
+        public static void SetColor(int serial, int color = -1)
         {
             //Reset original color
             if (color == -1)
             {
-                ColorRemoveSerial(serial);
+                try
+                {
+                    m_HuedItems.Remove((uint)serial);
+                }
+                catch (Exception) { }
+
                 return;
             }
 
             // store the setting even if item is not exist yet
-            m_HuedItems[serial] = (int)color;
-            RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial((int)serial);
+            m_HuedItems[(uint)serial] = color;
+            RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial(serial);
             Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
             if (assistantItem == null)
                 return;
@@ -517,22 +522,15 @@ namespace RazorEnhanced
             }
             else
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
-
         }
 
         /// <summary>
-        /// @nodoc: This newly added method can now be accessed via Items.Color(serial,-1), consider to merge the 2.
+        /// @nodoc: Method ranamed to SetColor, to be removed.
         /// </summary>
-        public static void ColorRemoveSerial(uint serial)
-        {
-            // store the setting even if item is not exist yet
-            try
-            {
-                m_HuedItems.Remove(serial);
-            }
-            catch (Exception)
-            { }
+        public static void Color(int serial, int color = -1) {
+            SetColor(serial, color);
         }
+
 
 
         /// <summary>
