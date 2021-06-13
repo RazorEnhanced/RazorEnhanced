@@ -41,7 +41,7 @@ namespace RazorEnhanced
             parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
             parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
             //parameters.CompilerOptions = "/optimize"; // Set compiler argument to optimize output.
-            //parameters.CompilerOptions = "-langversion:7.3";
+            parameters.CompilerOptions = "-langversion:9.0";
             //parameters.CompilerOptions = "-parallel";
             parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
             return parameters;
