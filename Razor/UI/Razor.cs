@@ -279,24 +279,6 @@ namespace Assistant
         private RazorTextBox healthFmt;
         private Label label10;
         private RazorCheckBox chkPartyOverhead;
-        private GroupBox groupBox23;
-        private RazorCheckBox mobfilterCheckBox;
-        private GroupBox groupBox10;
-        private Label autocarverbladeLabel;
-        private Label label34;
-        private RazorButton autocarverrazorButton;
-        private RazorCheckBox autocarverCheckBox;
-        private GroupBox groupBox9;
-        private Label bonebladeLabel;
-        private Label label16;
-        private RazorButton boneCutterrazorButton;
-        private RazorCheckBox bonecutterCheckBox;
-        private RazorCheckBox showstaticfieldCheckBox;
-        private RazorCheckBox flagsHighlightCheckBox;
-        private RazorCheckBox highlighttargetCheckBox;
-        private GroupBox groupBox24;
-        private RazorCheckBox blockpartyinviteCheckBox;
-        private RazorCheckBox blocktraderequestCheckBox;
         private RazorButton openToolBarButton;
         private GroupBox groupBox25;
         private RazorCheckBox lockToolBarCheckBox;
@@ -346,21 +328,10 @@ namespace Assistant
         private Label profilelinklabel;
 
         private bool m_CanClose = true;
-        private GroupBox groupBox32;
-        private RazorAgentNumOnlyTextBox remountedelay;
-        private RazorAgentNumOnlyTextBox remountdelay;
-        private Label label48;
-        private Label label40;
-        private Label remountseriallabel;
-        private Label label47;
-        private RazorButton remountsetbutton;
-        private RazorCheckBox remountcheckbox;
         private Button buttonScriptPlay;
         private Button buttonScriptStop;
         private TextBox textBoxDelay;
-        private RazorCheckBox showheadtargetCheckBox;
         private RazorCheckBox notshowlauncher;
-        private RazorCheckBox blockhealpoisonCheckBox;
         private GroupBox groupBox4;
         private Label label43;
         private RazorComboBox toolboxsizeComboBox;
@@ -373,10 +344,6 @@ namespace Assistant
         private RazorComboBox toolboxstyleComboBox;
         private Label label2;
         private Label toolbarslot_label;
-        private RazorCheckBox colorflagsHighlightCheckBox;
-        private RazorCheckBox blockchivalryhealCheckBox;
-        private RazorCheckBox blockbighealCheckBox;
-        private RazorCheckBox blockminihealCheckBox;
         private ScriptListView scriptlistView;
         private ColumnHeader filename;
         private ColumnHeader status;
@@ -390,8 +357,6 @@ namespace Assistant
         private RazorCheckBox scriptloopmodecheckbox;
         private Label scriptfilelabel;
         private GroupBox groupBox31;
-        private RazorCheckBox showagentmessageCheckBox;
-        private RazorCheckBox showmessagefieldCheckBox;
         private RazorCheckBox showscriptmessageCheckBox;
         private Button buttonScriptRefresh;
         private RazorButton FriendGuildRemoveButton;
@@ -441,10 +406,6 @@ namespace Assistant
         private TrackBar spellgrid_trackBar;
         private Label spellgrid_opacity_label;
         private TabControl toolbarstab;
-        private GroupBox uomodgroupbox;
-        private RazorCheckBox uomodFPSCheckBox;
-        private RazorCheckBox uomodpaperdollCheckBox;
-        private RazorCheckBox uomodglobalsoundCheckBox;
         private Label labelHotride;
         private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
         private Label label46;
@@ -525,8 +486,6 @@ namespace Assistant
 
         // GumpInspector Flag
         internal bool GumpInspectorEnable = false;
-
-        private RazorCheckBox colorflagsselfHighlightCheckBox;
         private ContextMenuStrip scriptgridMenuStrip;
         private ToolStripMenuItem modifyToolStripMenuItem;
         private ToolStripMenuItem addToolStripMenuItem;
@@ -552,7 +511,6 @@ namespace Assistant
         private RazorCheckBox autolootautostartCheckBox;
         private RazorCheckBox scavengerautostartCheckBox;
         private RazorCheckBox filterNPC;
-        private DataGridView graphfilterdatagrid;
         private RazorCheckBox scripterrorlogCheckBox;
         private RazorButton autoLootButtonListClone;
         private RazorButton scavengerButtonClone;
@@ -646,11 +604,6 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
-        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
         private RazorComboBox videoCodecComboBox;
         private RazorTextBox videoFPSTextBox;
         private DataGridViewCheckBoxColumn AutolootColumnX;
@@ -685,6 +638,55 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private CheckBox bandagehealTimeWithBufCheckBox;
+        private TabControl FilterPages;
+        private TabPage MiscFilterPage;
+        private GroupBox uomodgroupbox;
+        private RazorCheckBox uomodpaperdollCheckBox;
+        private RazorCheckBox uomodglobalsoundCheckBox;
+        private RazorCheckBox uomodFPSCheckBox;
+        private GroupBox groupBox32;
+        private RazorAgentNumOnlyTextBox remountedelay;
+        private RazorAgentNumOnlyTextBox remountdelay;
+        private Label label48;
+        private Label label40;
+        private Label remountseriallabel;
+        private Label label47;
+        private RazorButton remountsetbutton;
+        private RazorCheckBox remountcheckbox;
+        private GroupBox groupBox24;
+        private RazorCheckBox colorflagsselfHighlightCheckBox;
+        private RazorCheckBox showagentmessageCheckBox;
+        private RazorCheckBox showmessagefieldCheckBox;
+        private RazorCheckBox colorflagsHighlightCheckBox;
+        private RazorCheckBox blockchivalryhealCheckBox;
+        private RazorCheckBox blockbighealCheckBox;
+        private RazorCheckBox blockminihealCheckBox;
+        private RazorCheckBox blockhealpoisonCheckBox;
+        private RazorCheckBox showheadtargetCheckBox;
+        private RazorCheckBox blockpartyinviteCheckBox;
+        private RazorCheckBox blocktraderequestCheckBox;
+        private RazorCheckBox highlighttargetCheckBox;
+        private RazorCheckBox flagsHighlightCheckBox;
+        private RazorCheckBox showstaticfieldCheckBox;
+        private GroupBox groupBox23;
+        private DataGridView graphfilterdatagrid;
+        private RazorCheckBox mobfilterCheckBox;
+        private GroupBox groupBox10;
+        private Label autocarverbladeLabel;
+        private Label label34;
+        private RazorButton autocarverrazorButton;
+        private RazorCheckBox autocarverCheckBox;
+        private GroupBox groupBox9;
+        private Label bonebladeLabel;
+        private Label label16;
+        private RazorButton boneCutterrazorButton;
+        private RazorCheckBox bonecutterCheckBox;
+        private TabPage JournalFilterPage;
+        private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -827,6 +829,8 @@ namespace Assistant
             this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
             this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
             this.enhancedFilterTab = new System.Windows.Forms.TabPage();
+            this.FilterPages = new System.Windows.Forms.TabControl();
+            this.MiscFilterPage = new System.Windows.Forms.TabPage();
             this.uomodgroupbox = new System.Windows.Forms.GroupBox();
             this.uomodpaperdollCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.uomodglobalsoundCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -857,11 +861,6 @@ namespace Assistant
             this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
             this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
-            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mobfilterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.autocarverbladeLabel = new System.Windows.Forms.Label();
@@ -873,6 +872,7 @@ namespace Assistant
             this.label16 = new System.Windows.Forms.Label();
             this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
             this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.JournalFilterPage = new System.Windows.Forms.TabPage();
             this.scriptingTab = new System.Windows.Forms.TabPage();
             this.scriptshowStartStopCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox42 = new System.Windows.Forms.GroupBox();
@@ -1107,6 +1107,7 @@ namespace Assistant
             this.bandageheal = new System.Windows.Forms.TabPage();
             this.bandagehealAutostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.bandagehealTimeWithBufCheckBox = new System.Windows.Forms.CheckBox();
             this.label78 = new System.Windows.Forms.Label();
             this.label77 = new System.Windows.Forms.Label();
             this.bandagehealusetextContent = new RazorEnhanced.UI.RazorTextBox();
@@ -1387,7 +1388,11 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.bandagehealTimeWithBufCheckBox = new System.Windows.Forms.CheckBox();
+            this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1396,6 +1401,8 @@ namespace Assistant
             this.moreOptTab.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.enhancedFilterTab.SuspendLayout();
+            this.FilterPages.SuspendLayout();
+            this.MiscFilterPage.SuspendLayout();
             this.uomodgroupbox.SuspendLayout();
             this.groupBox32.SuspendLayout();
             this.groupBox24.SuspendLayout();
@@ -2470,17 +2477,41 @@ namespace Assistant
             //
             // enhancedFilterTab
             //
-            this.enhancedFilterTab.Controls.Add(this.uomodgroupbox);
-            this.enhancedFilterTab.Controls.Add(this.groupBox32);
-            this.enhancedFilterTab.Controls.Add(this.groupBox24);
-            this.enhancedFilterTab.Controls.Add(this.groupBox23);
-            this.enhancedFilterTab.Controls.Add(this.groupBox10);
-            this.enhancedFilterTab.Controls.Add(this.groupBox9);
+            this.enhancedFilterTab.Controls.Add(this.FilterPages);
             this.enhancedFilterTab.Location = new System.Drawing.Point(4, 54);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
             this.enhancedFilterTab.Size = new System.Drawing.Size(1068, 536);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
+            //
+            // FilterPages
+            //
+            this.FilterPages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FilterPages.Controls.Add(this.MiscFilterPage);
+            this.FilterPages.Controls.Add(this.JournalFilterPage);
+            this.FilterPages.Location = new System.Drawing.Point(-4, 3);
+            this.FilterPages.Name = "FilterPages";
+            this.FilterPages.SelectedIndex = 0;
+            this.FilterPages.Size = new System.Drawing.Size(1076, 525);
+            this.FilterPages.TabIndex = 0;
+            //
+            // MiscFilterPage
+            //
+            this.MiscFilterPage.Controls.Add(this.uomodgroupbox);
+            this.MiscFilterPage.Controls.Add(this.groupBox32);
+            this.MiscFilterPage.Controls.Add(this.groupBox24);
+            this.MiscFilterPage.Controls.Add(this.groupBox23);
+            this.MiscFilterPage.Controls.Add(this.groupBox10);
+            this.MiscFilterPage.Controls.Add(this.groupBox9);
+            this.MiscFilterPage.Location = new System.Drawing.Point(4, 29);
+            this.MiscFilterPage.Name = "MiscFilterPage";
+            this.MiscFilterPage.Padding = new System.Windows.Forms.Padding(3);
+            this.MiscFilterPage.Size = new System.Drawing.Size(1068, 492);
+            this.MiscFilterPage.TabIndex = 0;
+            this.MiscFilterPage.Text = "Misc";
+            this.MiscFilterPage.UseVisualStyleBackColor = true;
             //
             // uomodgroupbox
             //
@@ -2488,10 +2519,10 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(307, 417);
+            this.uomodgroupbox.Location = new System.Drawing.Point(310, 397);
             this.uomodgroupbox.Name = "uomodgroupbox";
             this.uomodgroupbox.Size = new System.Drawing.Size(453, 95);
-            this.uomodgroupbox.TabIndex = 69;
+            this.uomodgroupbox.TabIndex = 75;
             this.uomodgroupbox.TabStop = false;
             this.uomodgroupbox.Text = "UoMod (Client > 7.0.0.0)";
             //
@@ -2502,7 +2533,6 @@ namespace Assistant
             this.uomodpaperdollCheckBox.Size = new System.Drawing.Size(253, 32);
             this.uomodpaperdollCheckBox.TabIndex = 61;
             this.uomodpaperdollCheckBox.Text = "Show Paperdoll Slot";
-            this.uomodpaperdollCheckBox.CheckedChanged += new System.EventHandler(this.uomodpaperdollCheckBox_CheckedChanged);
             //
             // uomodglobalsoundCheckBox
             //
@@ -2511,7 +2541,6 @@ namespace Assistant
             this.uomodglobalsoundCheckBox.Size = new System.Drawing.Size(158, 32);
             this.uomodglobalsoundCheckBox.TabIndex = 60;
             this.uomodglobalsoundCheckBox.Text = "Global Sound";
-            this.uomodglobalsoundCheckBox.CheckedChanged += new System.EventHandler(this.uomodglobalsoundCheckBox_CheckedChanged);
             //
             // uomodFPSCheckBox
             //
@@ -2520,10 +2549,10 @@ namespace Assistant
             this.uomodFPSCheckBox.Size = new System.Drawing.Size(158, 32);
             this.uomodFPSCheckBox.TabIndex = 59;
             this.uomodFPSCheckBox.Text = "Increase FPS";
-            this.uomodFPSCheckBox.CheckedChanged += new System.EventHandler(this.uomodFPSCheckBox_CheckedChanged);
             //
             // groupBox32
             //
+            this.groupBox32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox32.Controls.Add(this.remountedelay);
             this.groupBox32.Controls.Add(this.remountdelay);
             this.groupBox32.Controls.Add(this.label48);
@@ -2532,10 +2561,10 @@ namespace Assistant
             this.groupBox32.Controls.Add(this.label47);
             this.groupBox32.Controls.Add(this.remountsetbutton);
             this.groupBox32.Controls.Add(this.remountcheckbox);
-            this.groupBox32.Location = new System.Drawing.Point(786, 272);
+            this.groupBox32.Location = new System.Drawing.Point(789, 252);
             this.groupBox32.Name = "groupBox32";
             this.groupBox32.Size = new System.Drawing.Size(264, 172);
-            this.groupBox32.TabIndex = 68;
+            this.groupBox32.TabIndex = 74;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "Auto Remount";
             //
@@ -2550,7 +2579,6 @@ namespace Assistant
             this.remountedelay.Name = "remountedelay";
             this.remountedelay.Size = new System.Drawing.Size(93, 26);
             this.remountedelay.TabIndex = 68;
-            this.remountedelay.Leave += new System.EventHandler(this.remountedelay_Leave);
             //
             // remountdelay
             //
@@ -2563,7 +2591,6 @@ namespace Assistant
             this.remountdelay.Name = "remountdelay";
             this.remountdelay.Size = new System.Drawing.Size(93, 26);
             this.remountdelay.TabIndex = 67;
-            this.remountdelay.Leave += new System.EventHandler(this.remountdelay_Leave);
             //
             // label48
             //
@@ -2609,7 +2636,6 @@ namespace Assistant
             this.remountsetbutton.TabIndex = 62;
             this.remountsetbutton.Text = "Set Mount";
             this.remountsetbutton.UseVisualStyleBackColor = true;
-            this.remountsetbutton.Click += new System.EventHandler(this.remountsetbutton_Click);
             //
             // remountcheckbox
             //
@@ -2618,7 +2644,6 @@ namespace Assistant
             this.remountcheckbox.Size = new System.Drawing.Size(99, 32);
             this.remountcheckbox.TabIndex = 61;
             this.remountcheckbox.Text = "Enable";
-            this.remountcheckbox.CheckedChanged += new System.EventHandler(this.remountcheckbox_CheckedChanged);
             //
             // groupBox24
             //
@@ -2636,10 +2661,10 @@ namespace Assistant
             this.groupBox24.Controls.Add(this.highlighttargetCheckBox);
             this.groupBox24.Controls.Add(this.flagsHighlightCheckBox);
             this.groupBox24.Controls.Add(this.showstaticfieldCheckBox);
-            this.groupBox24.Location = new System.Drawing.Point(13, 20);
+            this.groupBox24.Location = new System.Drawing.Point(16, 0);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(285, 492);
-            this.groupBox24.TabIndex = 67;
+            this.groupBox24.TabIndex = 73;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Misc";
             //
@@ -2650,7 +2675,6 @@ namespace Assistant
             this.colorflagsselfHighlightCheckBox.Size = new System.Drawing.Size(232, 32);
             this.colorflagsselfHighlightCheckBox.TabIndex = 71;
             this.colorflagsselfHighlightCheckBox.Text = "Color Flag Self Highlight";
-            this.colorflagsselfHighlightCheckBox.CheckedChanged += new System.EventHandler(this.colorflagsselfHighlightCheckBox_CheckedChanged);
             //
             // showagentmessageCheckBox
             //
@@ -2659,7 +2683,6 @@ namespace Assistant
             this.showagentmessageCheckBox.Size = new System.Drawing.Size(265, 33);
             this.showagentmessageCheckBox.TabIndex = 70;
             this.showagentmessageCheckBox.Text = "Show Agent Message";
-            this.showagentmessageCheckBox.CheckedChanged += new System.EventHandler(this.showagentmessageCheckBox_CheckedChanged);
             //
             // showmessagefieldCheckBox
             //
@@ -2668,7 +2691,6 @@ namespace Assistant
             this.showmessagefieldCheckBox.Size = new System.Drawing.Size(251, 33);
             this.showmessagefieldCheckBox.TabIndex = 69;
             this.showmessagefieldCheckBox.Text = "Show Filed Message";
-            this.showmessagefieldCheckBox.CheckedChanged += new System.EventHandler(this.showmessagefieldCheckBox_CheckedChanged);
             //
             // colorflagsHighlightCheckBox
             //
@@ -2677,7 +2699,6 @@ namespace Assistant
             this.colorflagsHighlightCheckBox.Size = new System.Drawing.Size(232, 32);
             this.colorflagsHighlightCheckBox.TabIndex = 68;
             this.colorflagsHighlightCheckBox.Text = "Color Flag Highlight";
-            this.colorflagsHighlightCheckBox.CheckedChanged += new System.EventHandler(this.colorflagsHighlightCheckBox_CheckedChanged);
             //
             // blockchivalryhealCheckBox
             //
@@ -2686,7 +2707,6 @@ namespace Assistant
             this.blockchivalryhealCheckBox.Size = new System.Drawing.Size(265, 32);
             this.blockchivalryhealCheckBox.TabIndex = 67;
             this.blockchivalryhealCheckBox.Text = "Block ChivaHeal if no need";
-            this.blockchivalryhealCheckBox.CheckedChanged += new System.EventHandler(this.blockchivalryhealCheckBox_CheckedChanged);
             //
             // blockbighealCheckBox
             //
@@ -2695,7 +2715,6 @@ namespace Assistant
             this.blockbighealCheckBox.Size = new System.Drawing.Size(251, 32);
             this.blockbighealCheckBox.TabIndex = 66;
             this.blockbighealCheckBox.Text = "Block BigHeal if no need";
-            this.blockbighealCheckBox.CheckedChanged += new System.EventHandler(this.blockbighealCheckBox_CheckedChanged);
             //
             // blockminihealCheckBox
             //
@@ -2704,7 +2723,6 @@ namespace Assistant
             this.blockminihealCheckBox.Size = new System.Drawing.Size(251, 32);
             this.blockminihealCheckBox.TabIndex = 65;
             this.blockminihealCheckBox.Text = "Block MiniHeal if no need";
-            this.blockminihealCheckBox.CheckedChanged += new System.EventHandler(this.blockminihealCheckBox_CheckedChanged);
             //
             // blockhealpoisonCheckBox
             //
@@ -2713,7 +2731,6 @@ namespace Assistant
             this.blockhealpoisonCheckBox.Size = new System.Drawing.Size(265, 32);
             this.blockhealpoisonCheckBox.TabIndex = 64;
             this.blockhealpoisonCheckBox.Text = "Block Heal if Poison/Mortal";
-            this.blockhealpoisonCheckBox.CheckedChanged += new System.EventHandler(this.blockhealpoisonCheckBox_CheckedChanged);
             //
             // showheadtargetCheckBox
             //
@@ -2722,7 +2739,6 @@ namespace Assistant
             this.showheadtargetCheckBox.Size = new System.Drawing.Size(225, 33);
             this.showheadtargetCheckBox.TabIndex = 63;
             this.showheadtargetCheckBox.Text = "Show Target on Head";
-            this.showheadtargetCheckBox.CheckedChanged += new System.EventHandler(this.showheadtargetCheckBox_CheckedChanged);
             //
             // blockpartyinviteCheckBox
             //
@@ -2731,7 +2747,6 @@ namespace Assistant
             this.blockpartyinviteCheckBox.Size = new System.Drawing.Size(225, 32);
             this.blockpartyinviteCheckBox.TabIndex = 62;
             this.blockpartyinviteCheckBox.Text = "Block Party Invite";
-            this.blockpartyinviteCheckBox.CheckedChanged += new System.EventHandler(this.blockpartyinviteCheckBox_CheckedChanged);
             //
             // blocktraderequestCheckBox
             //
@@ -2740,7 +2755,6 @@ namespace Assistant
             this.blocktraderequestCheckBox.Size = new System.Drawing.Size(225, 32);
             this.blocktraderequestCheckBox.TabIndex = 61;
             this.blocktraderequestCheckBox.Text = "Block Trade Request";
-            this.blocktraderequestCheckBox.CheckedChanged += new System.EventHandler(this.blocktraderequestCheckBox_CheckedChanged);
             //
             // highlighttargetCheckBox
             //
@@ -2749,7 +2763,6 @@ namespace Assistant
             this.highlighttargetCheckBox.Size = new System.Drawing.Size(232, 32);
             this.highlighttargetCheckBox.TabIndex = 58;
             this.highlighttargetCheckBox.Text = "Text Current Target";
-            this.highlighttargetCheckBox.CheckedChanged += new System.EventHandler(this.highlighttargetCheckBox_CheckedChanged);
             //
             // flagsHighlightCheckBox
             //
@@ -2758,7 +2771,6 @@ namespace Assistant
             this.flagsHighlightCheckBox.Size = new System.Drawing.Size(211, 32);
             this.flagsHighlightCheckBox.TabIndex = 59;
             this.flagsHighlightCheckBox.Text = "Text Flags Highlight";
-            this.flagsHighlightCheckBox.CheckedChanged += new System.EventHandler(this.flagsHighlightCheckBox_CheckedChanged);
             //
             // showstaticfieldCheckBox
             //
@@ -2767,18 +2779,18 @@ namespace Assistant
             this.showstaticfieldCheckBox.Size = new System.Drawing.Size(188, 32);
             this.showstaticfieldCheckBox.TabIndex = 60;
             this.showstaticfieldCheckBox.Text = "Show Static Field";
-            this.showstaticfieldCheckBox.CheckedChanged += new System.EventHandler(this.showstaticfieldCheckBox_CheckedChanged);
             //
             // groupBox23
             //
-            this.groupBox23.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox23.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox23.Controls.Add(this.graphfilterdatagrid);
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
-            this.groupBox23.Location = new System.Drawing.Point(307, 20);
+            this.groupBox23.Location = new System.Drawing.Point(310, 0);
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.Size = new System.Drawing.Size(453, 388);
-            this.groupBox23.TabIndex = 66;
+            this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
             //
@@ -2786,8 +2798,9 @@ namespace Assistant
             //
             this.graphfilterdatagrid.AllowDrop = true;
             this.graphfilterdatagrid.AllowUserToResizeRows = false;
-            this.graphfilterdatagrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.graphfilterdatagrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.graphfilterdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.graphfilterdatagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewCheckBoxColumn4,
@@ -2801,63 +2814,6 @@ namespace Assistant
             this.graphfilterdatagrid.RowHeadersWidth = 62;
             this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 304);
             this.graphfilterdatagrid.TabIndex = 69;
-            this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
-            this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
-            this.graphfilterdatagrid.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
-            this.graphfilterdatagrid.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
-            this.graphfilterdatagrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
-            this.graphfilterdatagrid.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.graphfilterdatagrid_DefaultValuesNeeded);
-            this.graphfilterdatagrid.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
-            this.graphfilterdatagrid.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
-            this.graphfilterdatagrid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
-            this.graphfilterdatagrid.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
-            //
-            // dataGridViewCheckBoxColumn4
-            //
-            this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewCheckBoxColumn4.FalseValue = "False";
-            this.dataGridViewCheckBoxColumn4.HeaderText = "X";
-            this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
-            this.dataGridViewCheckBoxColumn4.MinimumWidth = 8;
-            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
-            this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.dataGridViewCheckBoxColumn4.TrueValue = "True";
-            this.dataGridViewCheckBoxColumn4.Width = 30;
-            //
-            // dataGridViewTextBoxColumn16
-            //
-            this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
-            this.dataGridViewTextBoxColumn16.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.Width = 133;
-            //
-            // dataGridViewTextBoxColumn17
-            //
-            this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
-            this.dataGridViewTextBoxColumn17.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn17.Width = 133;
-            //
-            // dataGridViewTextBoxColumn18
-            //
-            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
-            this.dataGridViewTextBoxColumn18.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn18.Width = 133;
-            //
-            // dataGridViewTextBoxColumn19
-            //
-            this.dataGridViewTextBoxColumn19.HeaderText = "Props";
-            this.dataGridViewTextBoxColumn19.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.Visible = false;
-            this.dataGridViewTextBoxColumn19.Width = 150;
             //
             // mobfilterCheckBox
             //
@@ -2866,18 +2822,18 @@ namespace Assistant
             this.mobfilterCheckBox.Size = new System.Drawing.Size(126, 32);
             this.mobfilterCheckBox.TabIndex = 61;
             this.mobfilterCheckBox.Text = "Enable";
-            this.mobfilterCheckBox.CheckedChanged += new System.EventHandler(this.mobfilterCheckBox_CheckedChanged);
             //
             // groupBox10
             //
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox10.Controls.Add(this.autocarverbladeLabel);
             this.groupBox10.Controls.Add(this.label34);
             this.groupBox10.Controls.Add(this.autocarverrazorButton);
             this.groupBox10.Controls.Add(this.autocarverCheckBox);
-            this.groupBox10.Location = new System.Drawing.Point(784, 20);
+            this.groupBox10.Location = new System.Drawing.Point(787, 0);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(266, 117);
-            this.groupBox10.TabIndex = 65;
+            this.groupBox10.TabIndex = 71;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Auto Carver";
             //
@@ -2907,7 +2863,6 @@ namespace Assistant
             this.autocarverrazorButton.TabIndex = 62;
             this.autocarverrazorButton.Text = "Set Blade";
             this.autocarverrazorButton.UseVisualStyleBackColor = true;
-            this.autocarverrazorButton.Click += new System.EventHandler(this.autocarverrazorButton_Click);
             //
             // autocarverCheckBox
             //
@@ -2916,18 +2871,18 @@ namespace Assistant
             this.autocarverCheckBox.Size = new System.Drawing.Size(126, 32);
             this.autocarverCheckBox.TabIndex = 61;
             this.autocarverCheckBox.Text = "Enable";
-            this.autocarverCheckBox.CheckedChanged += new System.EventHandler(this.autocarverCheckBox_CheckedChanged);
             //
             // groupBox9
             //
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox9.Controls.Add(this.bonebladeLabel);
             this.groupBox9.Controls.Add(this.label16);
             this.groupBox9.Controls.Add(this.boneCutterrazorButton);
             this.groupBox9.Controls.Add(this.bonecutterCheckBox);
-            this.groupBox9.Location = new System.Drawing.Point(784, 146);
+            this.groupBox9.Location = new System.Drawing.Point(787, 126);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(266, 117);
-            this.groupBox9.TabIndex = 62;
+            this.groupBox9.TabIndex = 70;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Bone Cutter";
             //
@@ -2957,7 +2912,6 @@ namespace Assistant
             this.boneCutterrazorButton.TabIndex = 62;
             this.boneCutterrazorButton.Text = "Set Blade";
             this.boneCutterrazorButton.UseVisualStyleBackColor = true;
-            this.boneCutterrazorButton.Click += new System.EventHandler(this.boneCutterrazorButton_Click);
             //
             // bonecutterCheckBox
             //
@@ -2966,7 +2920,16 @@ namespace Assistant
             this.bonecutterCheckBox.Size = new System.Drawing.Size(126, 32);
             this.bonecutterCheckBox.TabIndex = 61;
             this.bonecutterCheckBox.Text = "Enable";
-            this.bonecutterCheckBox.CheckedChanged += new System.EventHandler(this.bonecutterCheckBox_CheckedChanged);
+            //
+            // JournalFilterPage
+            //
+            this.JournalFilterPage.Location = new System.Drawing.Point(4, 29);
+            this.JournalFilterPage.Name = "JournalFilterPage";
+            this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 492);
+            this.JournalFilterPage.TabIndex = 1;
+            this.JournalFilterPage.Text = "Journal";
+            this.JournalFilterPage.UseVisualStyleBackColor = true;
             //
             // scriptingTab
             //
@@ -5598,6 +5561,17 @@ namespace Assistant
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Settings";
             //
+            // bandagehealTimeWithBufCheckBox
+            //
+            this.bandagehealTimeWithBufCheckBox.AutoSize = true;
+            this.bandagehealTimeWithBufCheckBox.Location = new System.Drawing.Point(288, 153);
+            this.bandagehealTimeWithBufCheckBox.Name = "bandagehealTimeWithBufCheckBox";
+            this.bandagehealTimeWithBufCheckBox.Size = new System.Drawing.Size(135, 24);
+            this.bandagehealTimeWithBufCheckBox.TabIndex = 97;
+            this.bandagehealTimeWithBufCheckBox.Text = "Time with Buff";
+            this.bandagehealTimeWithBufCheckBox.UseVisualStyleBackColor = true;
+            this.bandagehealTimeWithBufCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealBufControlled_CheckedChanged);
+            //
             // label78
             //
             this.label78.AutoSize = true;
@@ -5781,18 +5755,6 @@ namespace Assistant
             this.bandagehealdexformulaCheckBox.TabIndex = 80;
             this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
             this.bandagehealdexformulaCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealdexformulaCheckBox_CheckedChanged);
-            //
-            // timeWithBuf
-            //
-            this.bandagehealTimeWithBufCheckBox.AutoSize = true;
-            this.bandagehealTimeWithBufCheckBox.Location = new System.Drawing.Point(288, 153);
-            this.bandagehealTimeWithBufCheckBox.Name = "timeWithBuf";
-            this.bandagehealTimeWithBufCheckBox.Size = new System.Drawing.Size(135, 24);
-            this.bandagehealTimeWithBufCheckBox.TabIndex = 97;
-            this.bandagehealTimeWithBufCheckBox.Text = "Time with Buff";
-            this.bandagehealTimeWithBufCheckBox.UseVisualStyleBackColor = true;
-            this.bandagehealTimeWithBufCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealBufControlled_CheckedChanged);
-
             //
             // bandagehealcustomcolorTextBox
             //
@@ -8533,6 +8495,54 @@ namespace Assistant
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
             //
+            // dataGridViewCheckBoxColumn4
+            //
+            this.dataGridViewCheckBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewCheckBoxColumn4.FalseValue = "False";
+            this.dataGridViewCheckBoxColumn4.HeaderText = "X";
+            this.dataGridViewCheckBoxColumn4.IndeterminateValue = "False";
+            this.dataGridViewCheckBoxColumn4.MinimumWidth = 30;
+            this.dataGridViewCheckBoxColumn4.Name = "dataGridViewCheckBoxColumn4";
+            this.dataGridViewCheckBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewCheckBoxColumn4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridViewCheckBoxColumn4.TrueValue = "True";
+            this.dataGridViewCheckBoxColumn4.Width = 30;
+            //
+            // dataGridViewTextBoxColumn16
+            //
+            this.dataGridViewTextBoxColumn16.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn16.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn16.HeaderText = "Old Graphic";
+            this.dataGridViewTextBoxColumn16.MinimumWidth = 133;
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            //
+            // dataGridViewTextBoxColumn17
+            //
+            this.dataGridViewTextBoxColumn17.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn17.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn17.HeaderText = "New Graphic";
+            this.dataGridViewTextBoxColumn17.MinimumWidth = 133;
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            //
+            // dataGridViewTextBoxColumn18
+            //
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn18.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn18.HeaderText = "New Color";
+            this.dataGridViewTextBoxColumn18.MinimumWidth = 133;
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            //
+            // dataGridViewTextBoxColumn19
+            //
+            this.dataGridViewTextBoxColumn19.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn19.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn19.HeaderText = "Props";
+            this.dataGridViewTextBoxColumn19.MinimumWidth = 150;
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.Visible = false;
+            //
             // MainForm
             //
             this.AutoScaleBaseSize = new System.Drawing.Size(8, 19);
@@ -8562,6 +8572,8 @@ namespace Assistant
             this.groupBox17.ResumeLayout(false);
             this.groupBox17.PerformLayout();
             this.enhancedFilterTab.ResumeLayout(false);
+            this.FilterPages.ResumeLayout(false);
+            this.MiscFilterPage.ResumeLayout(false);
             this.uomodgroupbox.ResumeLayout(false);
             this.groupBox32.ResumeLayout(false);
             this.groupBox32.PerformLayout();
