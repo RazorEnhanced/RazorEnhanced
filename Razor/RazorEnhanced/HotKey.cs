@@ -1503,7 +1503,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Last Spell":
-					Spells.CastLastSpellInternal(false);
+					Spells.CastLastSpell(false);
 					break;
 
                 case "Last Spell Last Target":

@@ -9,7 +9,10 @@ using System.Globalization;
 namespace RazorEnhanced
 {
     /// <summary>
-    /// The Itemn class represent a single in-game Item object.
+    /// The Item class represent a single in-game Item object. Examples of Item are: Swords, bags, bandages, reagents, clothing.
+    /// While the Item.Serial is unique for each Item, Item.ItemID is the unique for the Item apparence, or image. Sometimes is also called ID or Graphics ID.
+    /// Item can also be house foriture as well as decorative items on the ground, like lamp post and banches.
+    /// However, for Item on the ground that cannot be picked up, they might be part of the world map, see Statics class.
     /// </summary>
 	public class Item : EnhancedEntity
     {
@@ -27,7 +30,7 @@ namespace RazorEnhanced
 		public bool Updated { get { return m_AssistantItem.Updated; } }
 
         /// <summary>
-        /// Sometime called ID or Graphics ID, represents the "type of object". Usually unique for the Item image. 
+        /// Represents the type of Item, usually unique for the Item image.  Sometime called ID or Graphics ID.
         /// </summary>
 		public int ItemID
         {
@@ -481,18 +484,23 @@ namespace RazorEnhanced
         /// <param name="serial">Serial of the Item.</param>
         /// <param name="color">Color as number. (default: -1, reset original color)</param>
         ///
-        public static void Color(uint serial, int color = -1)
+        public static void SetColor(int serial, int color = -1)
         {
             //Reset original color
             if (color == -1)
             {
-                ColorRemoveSerial(serial);
+                try
+                {
+                    m_HuedItems.Remove((uint)serial);
+                }
+                catch (Exception) { }
+
                 return;
             }
 
             // store the setting even if item is not exist yet
-            m_HuedItems[serial] = (int)color;
-            RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial((int)serial);
+            m_HuedItems[(uint)serial] = color;
+            RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial(serial);
             Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
             if (assistantItem == null)
                 return;
@@ -514,37 +522,30 @@ namespace RazorEnhanced
             }
             else
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
-
         }
 
         /// <summary>
-        /// @nodoc: This newly added method can now be accessed via Items.Color(serial,-1), consider to merge the 2.
+        /// @nodoc: Method ranamed to SetColor, to be removed.
         /// </summary>
-        public static void ColorRemoveSerial(uint serial)
-        {
-            // store the setting even if item is not exist yet
-            try
-            {
-                m_HuedItems.Remove(serial);
-            }
-            catch (Exception)
-            { }
+        public static void Color(int serial, int color = -1) {
+            SetColor(serial, color);
         }
 
 
+
         /// <summary>
-        /// The Items.Filter class is used to store options to filter the global Items list.
+        /// The Items.Filter class is used to store options to filter the global Item list.
         /// Often used in combination with Items.ApplyFilter.
         /// </summary>
         public class Filter
         {
             /// <summary>
-            /// True: The filter is used - False: The filter is inactive. ( default: True, active )
+            /// True: The filter is used - False: Return all Item. ( default: True, active )
             /// </summary>
 			public bool Enabled = true;
 
             /// <summary>
-            /// Limit the search to a list of Serials of Items to find. (ex: 0x0406EFCA )
+            /// Limit the search to a list of Serials of Item to find. (ex: 0x0406EFCA )
             /// Supports .Add() and .AddRange()
             /// </summary>
 			public List<int> Serials = new List<int>();

@@ -859,6 +859,7 @@ namespace RazorEnhanced
                 typeof(Items.Filter),
                 typeof(Mobile),
                 typeof(Mobiles),
+                typeof(Mobiles.TrackingInfo),
                 typeof(Mobiles.Filter),
                 typeof(Player),
                 typeof(Spells),
