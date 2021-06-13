@@ -160,7 +160,11 @@ namespace RazorEnhanced
 			Settings.Save(); // Salvo dati
 		}
 
-		internal static void InitGraphGrid()
+        internal static void InitJournalFilterGrid()
+        {
+            Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows.Clear();
+        }
+        internal static void InitGraphGrid()
 		{
 			ReloadGraphFilterData();
 			Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Clear();
@@ -671,6 +675,7 @@ namespace RazorEnhanced
 			AutoRemountSerial = Settings.General.ReadInt("MountSerial");
 
 			InitGraphGrid();
+            InitJournalFilterGrid();
 		}
 	}
 }

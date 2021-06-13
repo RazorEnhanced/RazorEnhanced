@@ -4,6 +4,7 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
+using Assistant.UI;
 
 namespace RazorEnhanced
 {
@@ -157,6 +158,7 @@ namespace RazorEnhanced
         public static void FilterText(string text)
         {
             TextFilters.Add(text.ToLower());
+            Engine.MainWindow.SafeAction(s => { s.JournalFilterDataGrid.Rows.Add(new object[] { text.ToLower() }); });
         }
 
         /// <summary>
@@ -167,6 +169,8 @@ namespace RazorEnhanced
         public static void RemoveFilterText(string text)
         {
             TextFilters.Remove(text.ToLower());
+            //Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows.Remove(new object[] { "you" });
+
         }
 
 
