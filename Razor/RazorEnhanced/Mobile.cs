@@ -203,7 +203,7 @@ namespace RazorEnhanced
         /// Returns the distance between the current Mobile and another one.
         /// </summary>
         /// <param name="other_mobile">The other mobile.</param>
-        /// <returns></returns>
+        /// <returns>Distance in tiles</returns>
 		public int DistanceTo(Mobile other_mobile)
 		{
 			return Utility.Distance(Position.X, Position.Y, other_mobile.Position.X, other_mobile.Position.Y);
@@ -311,7 +311,7 @@ namespace RazorEnhanced
         /// Returns the Item associated with a Mobile Layer.
         /// </summary>
         /// <param name="layer">
-        /// Layer name:
+        /// Layers:
         ///    Layername
         ///    RightHand
         ///    LeftHand
