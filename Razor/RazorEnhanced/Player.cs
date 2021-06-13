@@ -2116,12 +2116,60 @@ namespace RazorEnhanced
 
 
         // Moving
+        /// <summary>
+        /// Walk one step in the specified direction and wait for the confirmation of the new position by the server.
+        /// If the character is not facing the direction, the first step only "turn" the Player in the required direction.
+        /// 
+        /// Optional:
+        /// When checkPosition is True allow for slower but safe walking, the new position confirmed at each step via return value.
+        /// When checkPosition is Flase allow for faster walking/running, but requires custom delay and position checking.
+        /// 
+        /// Info:
+        /// Walking:  5 tiles/sec (~200ms between each step)
+        /// Running: 10 tiles/sec (~100ms between each step)
+        /// </summary>
+        /// <param name="direction">
+        ///    North
+        ///    South
+        ///    East
+        ///    West
+        ///    Up
+        ///    Down
+        ///    Left
+        ///    Right 
+        /// </param>
+        /// <param name="checkPosition">True: Wait until the server confirm the new Player.Position - False: Don't wait.</param>
+        /// <returns>True: Destination reached - False: Coudn't reach the destination.</returns>
         public static bool Walk(string direction, bool checkPosition = true)  // Return true se walk ok false se rifiutato da server
         {
             return Run(direction, checkPosition);
         }
 
-        private static DateTime m_LastWalk = DateTime.MinValue;
+
+        /// <summary>
+        /// Run one step in the specified direction and wait for the confirmation of the new position by the server.
+        /// If the character is not facing the direction, the first step only "turn" the Player in the required direction.
+        /// 
+        /// Optional:
+        /// When checkPosition is True allow for slower but safe walking, the new position confirmed at each step via return value.
+        /// When checkPosition is Flase allow for faster walking/running, but requires custom delay and position checking.
+        /// 
+        /// Info:
+        /// Walking:  5 tiles/sec (~200ms between each step)
+        /// Running: 10 tiles/sec (~100ms between each step)
+        /// </summary>
+        /// <param name="direction">
+        ///    North
+        ///    South
+        ///    East
+        ///    West
+        ///    Up
+        ///    Down
+        ///    Left
+        ///    Right 
+        /// </param>
+        /// <param name="checkPosition">True: Wait until the server confirm the new Player.Position - False: Don't wait.</param>
+        /// <returns>True: Destination reached - False: Coudn't reach the destination.</returns>
         public static bool Run(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
         {
             if (!Enum.TryParse<Direction>(direction.ToLower(), out Direction dir))
@@ -2175,18 +2223,24 @@ namespace RazorEnhanced
 
             return true;
         }
+        private static DateTime m_LastWalk = DateTime.MinValue;
 
-        public static void PathFindTo(Assistant.Point3D Location)
-        {
-            PathFindTo(Location.X, Location.Y, Location.Z);
-        }
-
+        /// <summary>
+        /// Go to the given coordinates using Client-provided pathfinding.
+        /// </summary>
+        /// <param name="x">X map coordinates or Point3D</param>
+        /// <param name="y">Y map coordinates</param>
+        /// <param name="z">Z map coordinates</param>
         public static void PathFindTo(int x, int y, int z)
         {
             PathFindToPacket(x, y, z);
         }
 
-
+        public static void PathFindTo(Assistant.Point3D Location)
+        {
+            PathFindTo(Location.X, Location.Y, Location.Z);
+        }
+        
         internal static void PathFindToPacket(Assistant.Point3D location)
         {
             Assistant.Client.Instance.PathFindTo(location);
@@ -2199,9 +2253,13 @@ namespace RazorEnhanced
         }
 
         // Fly
-        public static void Fly(bool on)
+        /// <summary>
+        /// Enable or disable Gargoyle Flying.
+        /// </summary>
+        /// <param name="status">True: Gargoyle Fly ON - False: Gargoyle fly OFF</param>
+        public static void Fly(bool status)
         {
-            if (on)
+            if (status)
             {
                 if (!World.Player.Flying)
                     Assistant.Client.Instance.SendToServerWait(new ToggleFly());
@@ -2214,39 +2272,50 @@ namespace RazorEnhanced
         }
 
         // Message
-        public static void HeadMessage(int hue, int num)
+        /// <summary>
+        /// Display a message above the Player. Visible only by the Player.
+        /// </summary>
+        /// <param name="color">Color of the Text.</param>
+        /// <param name="msg">Text of the message.</param>
+        public static void HeadMessage(int color, string msg)
         {
-            HeadMessage(hue, num.ToString());
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, color, 3, Language.CliLocName, World.Player.Name, msg));
+        } 
+
+        public static void HeadMessage(int color, int msg)
+        {
+            HeadMessage(color, msg.ToString());
         }
 
-        public static void HeadMessage(int hue, string message)
-        {
-            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
-        }
 
+
+        /// <summary>
+        /// Press the Quest menu button in the paperdoll.
+        /// </summary>
         // Paperdoll button click
         public static void QuestButton()
         {
             Assistant.Client.Instance.SendToServerWait(new QuestButton(World.Player.Serial));
         }
 
+        /// <summary>
+        /// Press the Guild menu button in the paperdoll.
+        /// </summary>
         public static void GuildButton()
         {
             Assistant.Client.Instance.SendToServerWait(new GuildButton(World.Player.Serial));
         }
 
         // Range
-        public static bool InRangeMobile(Mobile mob, int range)
+        /// <summary>
+        /// Check if the Mobile is within a certain range (<=).
+        /// </summary>
+        /// <param name="mobile">Serial or Mobile object.</param>
+        /// <param name="range">Maximum distance in tiles.</param>
+        /// <returns>True: Mobile is in range - False: otherwise.</returns>
+        public static bool InRangeMobile(int mobile, int range)
         {
-            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
-                return true;
-            else
-                return false;
-        }
-
-        public static bool InRangeMobile(int mobserial, int range)
-        {
-            Assistant.Mobile mob = World.FindMobile(mobserial);
+            Assistant.Mobile mob = World.FindMobile(mobile);
             if (mob != null)
             {
                 if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
@@ -2258,20 +2327,26 @@ namespace RazorEnhanced
                 return false;
         }
 
-        public static bool InRangeItem(Item i, int range)
+        public static bool InRangeMobile(Mobile mobile, int range)
         {
-            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= range)
+            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) <= range)
                 return true;
             else
                 return false;
         }
 
-        public static bool InRangeItem(int itemserial, int range)
+        /// <summary>
+        /// Check if the Item is within a certain range (<=).
+        /// </summary>
+        /// <param name="item">Serial or Item object.</param>
+        /// <param name="range">Maximum distance in tiles.</param>
+        /// <returns>True: Item is in range - False: otherwise.</returns>
+        public static bool InRangeItem(int item, int range)
         {
-            Assistant.Item item = World.FindItem(itemserial);
-            if (item != null)
+            Assistant.Item itm = World.FindItem(item);
+            if (itm != null)
             {
-                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
+                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, itm.Position.X, itm.Position.Y) <= range)
                     return true;
                 else
                     return false;
@@ -2280,27 +2355,51 @@ namespace RazorEnhanced
                 return false;
         }
 
+        public static bool InRangeItem(Item item, int range)
+        {
+            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
+                return true;
+            else
+                return false;
+        }
+
+        
+
         // Weapon SA
+        /// <summary>
+        /// Toggle on/off the primary Special Ability of the weapon. 
+        /// </summary>
         public static void WeaponPrimarySA()
         {
             SpecialMoves.SetPrimaryAbility(true);
         }
-
+        /// <summary>
+        /// Toggle on/off the secondary Special Ability of the weapon. 
+        /// </summary>
         public static void WeaponSecondarySA()
         {
             SpecialMoves.SetSecondaryAbility(true);
         }
 
+        /// <summary>
+        /// Disable any active Special Ability of the weapon.
+        /// </summary>
         public static void WeaponClearSA()
         {
             SpecialMoves.ClearAbilities(true);
         }
 
+        /// <summary>
+        /// Toggle Disarm Ability.
+        /// </summary>
         public static void WeaponDisarmSA()
         {
             SpecialMoves.OnDisarm(true);
         }
 
+        /// <summary>
+        /// Toggle Stun Ability.
+        /// </summary>
         public static void WeaponStunSA()
         {
             SpecialMoves.OnStun(true);
@@ -2335,6 +2434,12 @@ namespace RazorEnhanced
             Layer.InnerLegs
         };
 
+        /// <summary>
+        /// Scan all the equipped Item, returns the total value of a specific property. (ex: Lower Reagent Cost )
+        /// NOTE: This function is slow.
+        /// </summary>
+        /// <param name="attributename">Name of the property.</param>
+        /// <returns>The total value as number.</returns>
         public static float SumAttribute(string attributename)
         {
             if (World.Player == null)
@@ -2356,6 +2461,11 @@ namespace RazorEnhanced
             return attributevalue;
         }
 
+
+        /// <summary>
+        /// Get the list of Properties of the Player, as list of lines of the tooltip.
+        /// </summary>
+        /// <returns>List of text lines.</returns>
         public static List<string> GetPropStringList()
         {
             List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
@@ -2363,6 +2473,12 @@ namespace RazorEnhanced
             return props.Select(prop => prop.ToString()).ToList();
         }
 
+
+        /// <summary>
+        /// Get a single line of Properties of the Player, from the tooltip, as text. 
+        /// </summary>
+        /// <param name="index">Line number, start from 0.</param>
+        /// <returns>Single line of text.</returns>
         public static string GetPropStringByIndex(int index)
         {
             string propstring = String.Empty;
@@ -2374,6 +2490,16 @@ namespace RazorEnhanced
             return propstring;
         }
 
+
+        /// <summary>
+        /// Get the numeric value of a specific Player property, from the tooltip.
+        /// </summary>
+        /// <param name="name">Name of the property.</param>
+        /// <returns>
+        ///     n: value of the propery 
+        ///     0: property not found.
+        ///     1: property found, but not numeric.
+        /// </returns>
         public static int GetPropValue(string name)
         {
             List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
