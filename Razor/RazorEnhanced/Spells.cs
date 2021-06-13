@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// The Spells class allow you to cast any spell and use abilities, via scripting.
+    /// </summary>
     public class Spells
     {
+
+        // functions used internally
         internal static string GuessSpellName(string originalName)
         {
             int distance = 99;
@@ -26,11 +31,7 @@ namespace RazorEnhanced
 
         }
 
-        // spell
-        public static void Cast(string SpellName)
-        {
-            CastOnly(SpellName, true);
-        }
+        
         internal static void CastOnly(string SpellName, bool wait)
         {
             //
@@ -43,211 +44,7 @@ namespace RazorEnhanced
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: Cast: Invalid spell name: " + SpellName);
         }
-        public static void Cast(string SpellName, uint target, bool wait = true)
-        {
-            //
-            bool success = false;
-            string guessedSpellName = GuessSpellName(SpellName);
-            if (m_AllSpells.ContainsKey(guessedSpellName))
-            {
-                success = CastTargetedGeneric(m_AllSpells, guessedSpellName, target, wait);
-            }
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: Cast: Invalid spell name: " + SpellName);
-        }
-        public static void Cast(string SpellName, Mobile m, bool wait = true)
-        {
-            Cast(SpellName, (uint)m.Serial, wait);
-        }
-
-
-        public static void CastMagery(string SpellName)
-        {
-            CastOnlyMagery(SpellName, true);
-        }
-        public static void CastMagery(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_MagerySpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlyMagery(string SpellName, bool wait)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_MagerySpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
-        }
-        public static void CastMagery(string SpellName, Mobile m, bool wait = true)
-        {
-            CastMagery(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastNecro(string SpellName)
-        {
-            CastOnlyNecro(SpellName);
-        }
-        public static void CastNecro(string SpellName, Mobile m, bool wait = true)
-        {
-            CastNecro(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastNecro(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_NecroSpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlyNecro(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_NecroSpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
-        }
-
-
-        public static void CastChivalry(string SpellName)
-        {
-            CastOnlyChivalry(SpellName);
-        }
-        public static void CastChivalry(string SpellName, Mobile m, bool wait = true)
-        {
-            CastChivalry(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastChivalry(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_ChivalrySpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlyChivalry(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_ChivalrySpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
-        }
-
-        public static void CastBushido(string SpellName)
-        {
-            CastOnlyBushido(SpellName);
-        }
-
-        internal static void CastOnlyBushido(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_BushidoSpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
-        }
-
-        public static void CastNinjitsu(string SpellName)
-        {
-            CastOnlyNinjitsu(SpellName);
-        }
-        public static void CastNinjitsu(string SpellName, Mobile m, bool wait = true)
-        {
-            CastNinjitsu(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastNinjitsu(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_NinjitsuSpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlyNinjitsu(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_NinjitsuSpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
-        }
-
-        public static void CastSpellweaving(string SpellName)
-        {
-            CastOnlySpellweaving(SpellName);
-        }
-        public static void CastSpellweaving(string SpellName, Mobile m, bool wait = true)
-        {
-            CastSpellweaving(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastSpellweaving(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_SpellweavingSpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlySpellweaving(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_SpellweavingSpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
-        }
-
-        public static void CastMysticism(string SpellName)
-        {
-            CastOnlyMysticism(SpellName);
-        }
-        public static void CastMysticism(string SpellName, Mobile m, bool wait = true)
-        {
-            CastMysticism(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastMysticism(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_MysticismSpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlyMysticism(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_MysticismSpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
-        }
-
-        public static void CastMastery(string SpellName)
-        {
-            CastOnlyMastery(SpellName);
-        }
-        public static void CastMastery(string SpellName, Mobile m, bool wait = true)
-        {
-            CastMastery(SpellName, (uint)m.Serial, wait);
-        }
-
-        public static void CastMastery(string SpellName, uint target, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastTargetedGeneric(m_MasterySpellName, guessedSpellName, target, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
-        }
-
-        internal static void CastOnlyMastery(string SpellName, bool wait = true)
-        {
-            string guessedSpellName = GuessSpellName(SpellName);
-            bool success = CastOnlyGeneric(m_MasterySpellName, guessedSpellName, wait);
-            if (!success)
-                Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
-        }
+        
         internal static bool CastOnlyGeneric(Dictionary<string, int> conversion, string SpellName, bool wait)
         {
             if (World.Player == null)
@@ -289,15 +86,534 @@ namespace RazorEnhanced
             return true;
         }
 
-        public static void CastCleric(string SpellName)
+
+
+        /// <summary>
+        /// Cast spell using the spell name. See the skill-specific functions to get the full list of spell names.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
+        /// </summary>
+        /// <param name="SpellName">Name of the spell to cast.</param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void Cast(string SpellName, uint target, bool wait = true)
         {
-            CastOnlyCleric(SpellName);
-        }
-        public static void CastCleric(string SpellName, Mobile m, bool wait = true)
-        {
-            CastCleric(SpellName, (uint)m.Serial, wait);
+            //
+            bool success = false;
+            string guessedSpellName = GuessSpellName(SpellName);
+            if (m_AllSpells.ContainsKey(guessedSpellName))
+            {
+                success = CastTargetedGeneric(m_AllSpells, guessedSpellName, target, wait);
+            }
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: Cast: Invalid spell name: " + SpellName);
         }
 
+        public static void Cast(string SpellName, Mobile mobile, bool wait = true)
+        {
+            Cast(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void Cast(string SpellName)
+        {
+            CastOnly(SpellName, true);
+        }
+
+        
+
+
+        /// <summary>
+        /// Cast a Magery spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Clumsy
+        ///    Create Food
+        ///    Feeblemind
+        ///    Heal
+        ///    Magic Arrow
+        ///    Night Sight
+        ///    Reactive Armor
+        ///    Weaken
+        ///    Agility
+        ///    Cunning
+        ///    Cure
+        ///    Harm
+        ///    Magic Trap
+        ///    Magic Untrap
+        ///    Protection
+        ///    Strength
+        ///    Bless
+        ///    Fireball
+        ///    Magic Lock
+        ///    Poison
+        ///    Telekinesis
+        ///    Teleport
+        ///    Unlock
+        ///    Wall of Stone
+        ///    Arch Cure
+        ///    Arch Protection
+        ///    Curse
+        ///    Fire Field
+        ///    Greater Heal
+        ///    Lightning
+        ///    Mana Drain
+        ///    Recall
+        ///    Blade Spirits
+        ///    Dispel Field
+        ///    Incognito
+        ///    Magic Reflection
+        ///    Mind Blast
+        ///    Paralyze
+        ///    Poison Field
+        ///    Summon Creature
+        ///    Dispel
+        ///    Energy Bolt
+        ///    Explosion
+        ///    Invisibility
+        ///    Mark
+        ///    Mass Curse
+        ///    Paralyze Field
+        ///    Reveal
+        ///    Chain Lightning
+        ///    Energy Field
+        ///    Flamestrike
+        ///    Gate Travel
+        ///    Mana Vampire
+        ///    Mass Dispel
+        ///    Meteor Swarm
+        ///    Polymorph
+        ///    Earthquake
+        ///    Energy Vortex
+        ///    Resurrection
+        ///    Summon Air Elemental
+        ///    Summon Daemon
+        ///    Summon Earth Elemental
+        ///    Summon Fire Elemental
+        ///    Summon Water Elemental
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void CastMagery(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_MagerySpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastMagery(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastMagery(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void CastMagery(string SpellName)
+        {
+            CastOnlyMagery(SpellName, true);
+        }
+        
+
+        internal static void CastOnlyMagery(string SpellName, bool wait)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_MagerySpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMagery: Invalid spell name: " + SpellName);
+        }
+
+
+        /// <summary>
+        /// Cast a Necromany spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Curse Weapon
+        ///    Pain Spike
+        ///    Corpse Skin
+        ///    Evil Omen
+        ///    Blood Oath
+        ///    Wraith Form
+        ///    Mind Rot
+        ///    Summon Familiar
+        ///    Horrific Beast
+        ///    Animate Dead
+        ///    Poison Strike
+        ///    Wither
+        ///    Strangle
+        ///    Lich Form
+        ///    Exorcism
+        ///    Vengeful Spirit
+        ///    Vampiric Embrace
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void CastNecro(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_NecroSpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastNecro(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastNecro(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void CastNecro(string SpellName)
+        {
+            CastOnlyNecro(SpellName);
+        }
+
+
+        internal static void CastOnlyNecro(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_NecroSpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNecro: Invalid spell name: " + SpellName);
+        }
+
+
+        /// <summary>
+        /// Cast a Chivalry spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Curse Weapon
+        ///    Pain Spike
+        ///    Corpse Skin
+        ///    Evil Omen
+        ///    Blood Oath
+        ///    Wraith Form
+        ///    Mind Rot
+        ///    Summon Familiar
+        ///    Horrific Beast
+        ///    Animate Dead
+        ///    Poison Strike
+        ///    Wither
+        ///    Strangle
+        ///    Lich Form
+        ///    Exorcism
+        ///    Vengeful Spirit
+        ///    Vampiric Embrace
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void CastChivalry(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_ChivalrySpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastChivalry(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastChivalry(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void CastChivalry(string SpellName)
+        {
+            CastOnlyChivalry(SpellName);
+        }
+        
+        internal static void CastOnlyChivalry(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_ChivalrySpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastChivalry: Invalid spell name: " + SpellName);
+        }
+
+        /// <summary>
+        /// Cast a Bushido spell using the spell name.
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Honorable Execution
+        ///    Confidence
+        ///    Counter Attack
+        ///    Lightning Strike
+        ///    Evasion
+        ///    Momentum Strike
+        /// </param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        /// 
+        public static void CastBushido(string SpellName, bool wait = true)
+        {
+            CastOnlyBushido(SpellName, wait);
+        }
+
+        internal static void CastOnlyBushido(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_BushidoSpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastBushido: Invalid spell name: " + SpellName);
+        }
+
+        /// <summary>
+        /// Cast a Ninjitsu spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Animal Form
+        ///    Backstab
+        ///    Surprise Attack
+        ///    Mirror Image
+        ///    Shadow jump
+        ///    Focus Attack
+        ///    Ki Attack
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+
+        public static void CastNinjitsu(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_NinjitsuSpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastNinjitsu(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastNinjitsu(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void CastNinjitsu(string SpellName)
+        {
+            CastOnlyNinjitsu(SpellName);
+        }
+
+        internal static void CastOnlyNinjitsu(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_NinjitsuSpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastNinjitsu: Invalid spell name: " + SpellName);
+        }
+
+        /// <summary>
+        /// Cast a Spellweaving spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Arcane Circle
+        ///    Gift Of Renewal
+        ///    Immolating Weapon
+        ///    Attune Weapon
+        ///    Thunderstorm
+        ///    Natures Fury
+        ///    Summon Fey
+        ///    Summoniend
+        ///    Reaper Form
+        ///    Wildfire
+        ///    Essence Of Wind
+        ///    Dryad Allure
+        ///    Ethereal Voyage
+        ///    Word Of Death
+        ///    Gift Of Life
+        ///    Arcane Empowerment
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void CastSpellweaving(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_SpellweavingSpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastSpellweaving(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastSpellweaving(SpellName, (uint)mobile.Serial, wait);
+        }
+
+
+
+        public static void CastSpellweaving(string SpellName)
+        {
+            CastOnlySpellweaving(SpellName);
+        }
+
+        internal static void CastOnlySpellweaving(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_SpellweavingSpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastSpellweaving: Invalid spell name: " + SpellName);
+        }
+
+
+
+        /// <summary>
+        /// Cast a Mysticism spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually. 
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Animated Weapon
+        ///    Healing Stone
+        ///    Purge
+        ///    Enchant
+        ///    Sleep
+        ///    Eagle Strike
+        ///    Stone Form
+        ///    SpellTrigger
+        ///    Mass Sleep
+        ///    Cleansing Winds
+        ///    Bombard
+        ///    Spell Plague
+        ///    Hail Storm
+        ///    Nether Cyclone
+        ///    Rising Colossus
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void CastMysticism(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_MysticismSpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastMysticism(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastMysticism(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void CastMysticism(string SpellName)
+        {
+            CastOnlyMysticism(SpellName);
+        }
+        
+        internal static void CastOnlyMysticism(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_MysticismSpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMysticism: Invalid spell name: " + SpellName);
+        }
+
+        /// <summary>
+        /// Cast a Mastery spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually. 
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Inspire
+        ///    Invigorate
+        ///    Resilience
+        ///    Perseverance
+        ///    Tribulation
+        ///    Despair
+        ///    Death Ray
+        ///    Ethereal Blast
+        ///    Nether Blast
+        ///    Mystic Weapon
+        ///    Command Undead
+        ///    Conduit
+        ///    Mana Shield
+        ///    Summon Reaper
+        ///    Enchanted Summoning
+        ///    Anticipate Hit
+        ///    Warcry
+        ///    Intuition
+        ///    Rejuvenate
+        ///    Holy Fist
+        ///    Shadow
+        ///    White Tiger Form
+        ///    Flaming Shot
+        ///    Playing The Odds
+        ///    Thrust
+        ///    Pierce
+        ///    Stagger
+        ///    Toughness
+        ///    Onslaught
+        ///    Focused Eye
+        ///    Elemental Fury
+        ///    Called Shot
+        ///    Saving Throw
+        ///    Shield Bash
+        ///    Bodyguard
+        ///    Heighten Senses
+        ///    Tolerance
+        ///    Injected Strike
+        ///    Potency
+        ///    Rampage
+        ///    Fists Of Fury
+        ///    Knockout
+        ///    Whispering
+        ///    Combat Training
+        ///    Boarding
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+
+        public static void CastMastery(string SpellName, uint target, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastTargetedGeneric(m_MasterySpellName, guessedSpellName, target, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
+        }
+
+        public static void CastMastery(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastMastery(SpellName, (uint)mobile.Serial, wait);
+        }
+
+        public static void CastMastery(string SpellName)
+        {
+            CastOnlyMastery(SpellName);
+        }
+        
+        internal static void CastOnlyMastery(string SpellName, bool wait = true)
+        {
+            string guessedSpellName = GuessSpellName(SpellName);
+            bool success = CastOnlyGeneric(m_MasterySpellName, guessedSpellName, wait);
+            if (!success)
+                Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
+        }
+
+
+        /// <summary>
+        /// Cast a Cleric spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually. 
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Bark Skin : Turns the druid's skin to bark, increasing physical, poison and energy resistence while reducing fire resistence.
+        ///    Circle Of Thorns : Creates a ring of thorns preventing an enemy from moving.
+        ///    Deadly Spores : The enemy is afflicted by poisonous spores.
+        ///    Enchanted Grove : Causes a grove of magical trees to grow, hiding the player for a short time.
+        ///    Firefly : Summons a tiny firefly to light the Druid's path. The Firefly is a weak creature with little or no combat skills.
+        ///    Forest Kin : Summons from a list of woodland spirits that will fight for the druid and assist him in different ways.
+        ///    Grasping Roots : Summons roots from the ground to entangle a single target.
+        ///    Hibernate : Causes the target to go to sleep.
+        ///    Hollow Reed : Increases both the strength and the intelligence of the Druid.
+        ///    Hurricane : Calls forth a violent hurricane that damages any enemies within range.
+        ///    Lure Stone : Creates a magical stone that calls all nearby animals to it.
+        ///    Mana Spring : Creates a magical spring that restores mana to the druid and any party members within range.
+        ///    Mushroom Gateway : A magical circle of mushrooms opens, allowing the Druid to step through it to another location.
+        ///    Pack Of Beasts : Summons a pack of beasts to fight for the Druid. Spell length increases with skill.
+        ///    Restorative Soil : Saturates a patch of land with power, causing healing mud to seep through . The mud can restore the dead to life.
+        ///    Shield Of Earth : A quick-growing wall of foliage springs up at the bidding of the Druid.
+        ///    Spring Of Life : Creates a magical spring that heals the Druid and their party.
+        ///    Swarm Of Insects : Summons a swarm of insects that bite and sting the Druid's enemies.
+        ///    Treefellow : Summons a powerful woodland spirit to fight for the Druid.
+        ///    Volcanic Eruption : A blast of molten lava bursts from the ground, hitting every enemy nearby.
+        /// </param>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
         public static void CastCleric(string SpellName, uint target, bool wait = true)
         {
             if (RazorEnhanced.Settings.General.ReadBool("DruidClericPackets"))
@@ -313,6 +629,18 @@ namespace RazorEnhanced
             }
         }
 
+        public static void CastCleric(string SpellName)
+        {
+            CastOnlyCleric(SpellName);
+        }
+        public static void CastCleric(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastCleric(SpellName, (uint)mobile.Serial, wait);
+        }
+
+
+
+        //TODO: why is this function much different from the other implementations ?  (ex: CastOnlyMastery )
         internal static void CastOnlyCleric(string SpellName, bool wait = true)
         {
             if (World.Player == null)
@@ -334,18 +662,31 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    Player.ChatSay(5, spell);
+                    Player.ChatSay(5, spell); //Dalamar: what is this ? ^_^'
                 }
             }
         }
-        public static void CastDruid(string SpellName)
-        {
-            CastOnlyDruid(SpellName);
-        }
-        public static void CastDruid(string SpellName, Mobile m, bool wait = true)
-        {
-            CastDruid(SpellName, (uint)m.Serial, wait);
-        }
+
+
+        /// <summary>
+        /// Cast a Druid spell using the spell name.
+        /// Optionally is possible to specify the Mobile or a Serial as target of the spell. Upon successful casting, the target will be executed automatiaclly by the server.
+        /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually. 
+        /// </summary>
+        /// <param name="SpellName">
+        ///    Angelic Faith : Turns you into an angel, boosting your stats. At 100 Spirit Speak you get +20 Str/Dex/Int. Every 5 points of SS = +1 point to each stat, at a max of +24. Will also boost your Anatomy, Mace Fighting and Healing, following the same formula.
+        ///    Banish Evil : Banishes Undead targets. Auto kills rotting corpses, lich lords, etc. Works well at Doom Champ. Does not produce a corpse however
+        ///    Dampen Spirit : Drains the stamina of your target, according to the description
+        ///    Divine Focus : Heal for more, but may be broken.
+        ///    Hammer of Faith : Summons a War Hammer with Undead Slayer on it for you
+        ///    Purge : Cleanses Poison. Better than Cure
+        ///    Restoration : Resurrection. Brings the target back with 100% HP/Mana
+        ///    Sacred Boon : A HoT, heal over time spell, that heals 10-15 every few seconds
+        ///    Sacrifice : Heals your party members when you take damage. Sort of like thorns, but it heals instead of hurts
+        ///    Smite : Causes energy damage
+        ///    Touch of Life : Heals even if Mortal Strike or poison are active on the target
+        ///    Trial by Fire : Attackers receive damage when they strike you, sort of like a temporary RPD buff
+        ///</param>
 
         public static void CastDruid(string SpellName, uint target, bool wait = true)
         {
@@ -361,6 +702,19 @@ namespace RazorEnhanced
                 CastOnlyDruid(guessedSpellName, wait);
             }
         }
+
+        public static void CastDruid(string SpellName, Mobile mobile, bool wait = true)
+        {
+            CastDruid(SpellName, (uint)mobile.Serial, wait);
+        }
+
+
+        public static void CastDruid(string SpellName)
+        {
+            CastOnlyDruid(SpellName);
+        }
+
+        //TODO: why is this function much different from the other implementations ?  (ex: CastOnlyMastery )
         internal static void CastOnlyDruid(string SpellName, bool wait = true)
         {
             if (World.Player == null)
@@ -382,27 +736,47 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    Player.ChatSay(8, spell);
+                    Player.ChatSay(8, spell); //Dalamar: what is this ? ^_^'
                 }
             }
         }
 
+        /// <summary>
+        /// Interrupt the casting of a spell by performing an equip/unequip.
+        /// </summary>
         public static void Interrupt()
         {
             Assistant.Item item = FindUsedLayer();
             if (item != null)
             {
-                Assistant.Point3D loc = Assistant.Point3D.MinusOne;
                 Assistant.Client.Instance.SendToServerWait(new LiftRequest(item, 1));
                 Assistant.Client.Instance.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
             }
         }
 
-        public static void CastLastSpell()
+
+        /// <summary>
+        /// Cast again the last casted spell, on last target.
+        /// </summary>
+        /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
+        /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
+        public static void CastLastSpell(uint target, bool wait = true)
         {
-            CastLastSpellInternal(true);
+            if (World.Player.LastSpell != 0)
+            {
+                Spell s = Spell.Get(World.Player.LastSpell);
+
+                if (s != null)
+                    s.OnCast(new CastTargetedSpell((ushort)s.GetID(), target), wait);
+            }
         }
-        public static void CastLastSpellInternal(bool wait)
+
+        public static void CastLastSpell(Mobile m, bool wait = true)
+        {
+            CastLastSpell((uint)m.Serial, wait);
+        }
+
+        public static void CastLastSpell(bool wait=true)
         {
             if (World.Player.LastSpell != 0)
             {
@@ -413,11 +787,10 @@ namespace RazorEnhanced
             }
         }
 
-        public static void CastLastSpell(Mobile m, bool wait = true)
-        {
-            CastLastSpell((uint)m.Serial, wait);
-        }
 
+        /// <summary>
+        /// Cast again the last casted spell, on last target.
+        /// </summary>
         public static void CastLastSpellLastTarget()
         {
             int lastTarget = Target.GetLast();
@@ -433,16 +806,7 @@ namespace RazorEnhanced
         }
 
 
-        public static void CastLastSpell(uint target, bool wait = true)
-        {
-            if (World.Player.LastSpell != 0)
-            {
-                Spell s = Spell.Get(World.Player.LastSpell);
-
-                if (s != null)
-                    s.OnCast(new CastTargetedSpell((ushort)s.GetID(), target), wait);
-            }
-        }
+        
 
         internal static Assistant.Item FindUsedLayer()
         {

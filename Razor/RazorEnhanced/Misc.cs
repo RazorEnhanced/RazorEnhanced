@@ -170,7 +170,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="msg">The object to print.</param>
         /// <param name="color">Color of the message.</param>
-        /// <param name="wait">Wait for confimation.</param>
+        /// <param name="wait">True: Wait for confimation. - False: Returns instatnly.</param>
         public static void SendMessage(string msg, int color, bool wait) //Main function of sendmessage
         {
             if (Assistant.World.Player != null)

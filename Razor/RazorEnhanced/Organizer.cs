@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace RazorEnhanced
 {
     /// <summary>
-    /// The Scavenger class allow you to interect with the Scavenger Agent, via scripting.
+    /// The Organizer class allow you to interect with the Scavenger Agent, via scripting.
     /// </summary>
     public class Organizer
 	{
@@ -280,7 +280,7 @@ namespace RazorEnhanced
 			Item destinationBag = Items.FindBySerial(destinationBagserial);
 
             // Check if container is updated
-            if (sourceBag.ContainerUpdated == false)
+            if (sourceBag.Updated == false)
             {
                 RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
                 Items.WaitForContents(sourceBag, 1000);

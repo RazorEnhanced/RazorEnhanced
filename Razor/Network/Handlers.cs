@@ -2103,7 +2103,8 @@ namespace Assistant
 
 		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
-			if (World.Player == null)
+
+            if (World.Player == null)
 				return;
 
             if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
@@ -2253,8 +2254,23 @@ namespace Assistant
 						return;
 					}
 				}
-			}
-		}
+
+
+                // Filter based on api selected blocks
+                if (Journal.TextFilters != null)
+                {
+                    foreach (string filter in Journal.TextFilters)
+                    {
+                        if (trimmed_text.ToLower().Contains(filter))
+                        {
+                            args.Block = true;
+                            return;
+                        }
+                    }
+                }
+
+            }
+        }
 
 		internal static void AsciiSpeech(Packet p, PacketHandlerEventArgs args)
 		{
