@@ -41,7 +41,7 @@ namespace RazorEnhanced
             parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
             parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
             //parameters.CompilerOptions = "/optimize"; // Set compiler argument to optimize output.
-            parameters.CompilerOptions = "-langversion:9.0";
+            //parameters.CompilerOptions = "-langversion:9.0";
             //parameters.CompilerOptions = "-parallel";
             parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
             return parameters;
@@ -99,29 +99,28 @@ namespace RazorEnhanced
             return has_error;
         }
 
-        class options : IProviderOptions
+        class CompilerOptions : IProviderOptions
         {
-            string _compilerVersion = "7.3";
+            string _compilerVersion = "8.0";
             IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
-
             public string CompilerVersion { get => _compilerVersion; set { _compilerVersion = value; } }
             public bool WarnAsError => false;
             public bool UseAspNetSettings => true;
             public string CompilerFullPath => Path.Combine(Assistant.Engine.RootPath, "roslyn", "csc.exe");
             public int CompilerServerTimeToLive => 0;
-            //IDictionary<string, string> IProviderOptions.AllOptions => new Dictionary<string, string>() { }; //{ { "CompilerVersion", "v7.3" } };
             IDictionary<string, string> IProviderOptions.AllOptions { get => _compilerOptions; }
             IDictionary<string, string> Options { set { _compilerOptions = value; } } // For Debug
-
         }
 
         public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
         {
-            options opt = new options();
+            CompilerOptions opt = new CompilerOptions();
             CSharpCodeProvider provider = new CSharpCodeProvider(opt);
-            
+
+            Misc.SendMessage("Compiling C# Script");
             CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
             CompilerResults results = provider.CompileAssemblyFromSource(compileParameters, source); // Compiling
+            Misc.SendMessage("Compile Done");
 
             assembly = null;
             bool has_error = ManageCompileResult(results, out errorwarnings);
@@ -145,7 +144,7 @@ namespace RazorEnhanced
         // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
         public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
         {
-            options opt = new options();
+            CompilerOptions opt = new CompilerOptions();
             CSharpCodeProvider provider = new CSharpCodeProvider(opt);
 
             Misc.SendMessage("Compiling C# Script");
