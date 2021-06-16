@@ -150,7 +150,6 @@ namespace RazorEnhanced
 		}
 
         /// <summary>
-        /// @nodoc
         /// Store a string that if matched, will block journal message ( case insensitive )
         /// </summary>
         /// <param name="text">Text to block. case insensitive, and will match if the incoming message contains the text</param>
@@ -161,7 +160,6 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// @nodoc
         /// Remove a stored a string that if matched, would block journal message ( case insensitive )
         /// </summary>
         /// <param name="text">Text to no longer block. case insensitive</param>
