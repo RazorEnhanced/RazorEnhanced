@@ -2644,7 +2644,9 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(initDict["FRIEND_GUILDS"]("FRIEND_GUILDS"));
 				m_Dataset.Tables.Add(initDict["FRIEND_LISTS"]("FRIEND_LISTS"));
 
-				m_Dataset.Tables.Add(initDict["RESTOCK_ITEMS"]("RESTOCK_ITEMS"));
+                m_Dataset.Tables.Add(initDict["JOURNAL_FILTER"]("JOURNAL_FILTER"));               
+
+                m_Dataset.Tables.Add(initDict["RESTOCK_ITEMS"]("RESTOCK_ITEMS"));
 				m_Dataset.Tables.Add(initDict["RESTOCK_LISTS"]("RESTOCK_LISTS"));
 
 				m_Dataset.Tables.Add(initDict["TARGETS"]("TARGETS"));
@@ -4168,6 +4170,7 @@ namespace RazorEnhanced
             internal static List<string> ReadAll()
             {
                 List<string> retList = new List<string>();
+
                 foreach (DataRow row in m_Dataset.Tables["JOURNAL_FILTER"].Rows)
                 {
                     string filterText = (string)row["FilterString"];
