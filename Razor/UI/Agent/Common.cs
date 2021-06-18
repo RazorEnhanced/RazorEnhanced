@@ -68,8 +68,9 @@ namespace Assistant
                 case "journalfilterdatagrid":
                     if (!journalfilterdatagrid.Rows[agentrowindex].IsNewRow)
                     {
+                        //System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[agentrowindex].Cells[0];
                         journalfilterdatagrid.Rows.RemoveAt(agentrowindex);
-                        //RazorEnhanced.Filters.CopyGraphTable();
+                        RazorEnhanced.Filters.CopyJournalFilterTable();
                     }
                     break;
                 case "targetbodydataGridView":
@@ -178,7 +179,7 @@ namespace Assistant
 						RazorEnhanced.Filters.CopyGraphTable();
 						break;
                     case "journalfilterdatagrid":
-                        //RazorEnhanced.Filters.CopyGraphTable();
+                        RazorEnhanced.Filters.CopyJournalFilterTable();
                         break;
 
                 }
@@ -266,7 +267,7 @@ namespace Assistant
 						break;
 
                     case "journalfilterdatagrid":
-                        //RazorEnhanced.Filters.CopyGraphTable();
+                        RazorEnhanced.Filters.CopyJournalFilterTable();
                         break;
                 }
 			}

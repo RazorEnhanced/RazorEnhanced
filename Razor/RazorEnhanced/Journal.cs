@@ -6,6 +6,25 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Assistant.UI;
 
+
+namespace Assistant
+{
+    public partial class MainForm : System.Windows.Forms.Form
+    {
+        private void journalfilterdatagrid_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            cell.Value = cell.Value.ToString().ToLower();
+            RazorEnhanced.Filters.CopyJournalFilterTable();
+        }
+
+        private void journalfilterdatagrid_DefaultValuesNeeded(object sender, System.Windows.Forms.DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells[0].Value = "";
+        }
+    }
+}
+
 namespace RazorEnhanced
 {
     /// <summary>
@@ -13,10 +32,6 @@ namespace RazorEnhanced
     /// </summary>
 	public class Journal
 	{
-
-        internal static HashSet<string> _TextFilters = new HashSet<string>();
-        internal static HashSet<string> TextFilters { get { return _TextFilters; } }
-
 
         /// <summary>
         /// The JournalEntry class rapresents a line in the Journal.
@@ -156,9 +171,9 @@ namespace RazorEnhanced
         /// <param name="text">Text to block. case insensitive, and will match if the incoming message contains the text</param>
         /// <returns>void</returns>
         public static void FilterText(string text)
-        {
-            TextFilters.Add(text.ToLower());
+        {            
             Engine.MainWindow.SafeAction(s => { s.JournalFilterDataGrid.Rows.Add(new object[] { text.ToLower() }); });
+            Filters.CopyJournalFilterTable();
         }
 
         /// <summary>
@@ -168,9 +183,21 @@ namespace RazorEnhanced
         /// <returns>void</returns>
         public static void RemoveFilterText(string text)
         {
-            TextFilters.Remove(text.ToLower());
-            //Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows.Remove(new object[] { "you" });
+            text = text.ToLower();
+            //System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            for (int i = 0; i < Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows.Count; i++)
+            {
+                System.Windows.Forms.DataGridViewRow gridRow = Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows[i];
+                if (gridRow.IsNewRow)
+                    continue;
 
+                if (text == gridRow.Cells[0].Value.ToString())
+                {
+                    Engine.MainWindow.SafeAction(s => { s.JournalFilterDataGrid.Rows.RemoveAt(i); });
+                    break;
+                }
+            }
+            Filters.CopyJournalFilterTable();
         }
 
 

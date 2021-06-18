@@ -2139,15 +2139,12 @@ namespace Assistant
             }
 
             // Filter based on api selected blocks
-            if (Journal.TextFilters != null)
+            foreach (string filter in Settings.JournalFilter.ReadAll())
             {
-                foreach (string filter in Journal.TextFilters)
+                if (trimmed_text.ToLower().Contains(filter))
                 {
-                    if (trimmed_text.ToLower().Contains(filter))
-                    {
-                        args.Block = true;
-                        return;
-                    }
+                    args.Block = true;
+                    return;
                 }
             }
 
