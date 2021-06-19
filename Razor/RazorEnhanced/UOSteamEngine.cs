@@ -2913,16 +2913,36 @@ namespace RazorEnhanced
 
         private bool WaitForContext(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            // docs say something about options, I have no idea what that means
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("Usage is waitforcontents serial contextSelection timeout");
+                WrongParameterCount(command, 2, args.Length, "waitforcontents serial contextSelection timeout");
+            }
             int timeout = 5000;
+            if (args.Length > 2)
+            {
+                timeout = args[2].AsInt();
+            }
             if (args.Length > 1)
             {
-                timeout = args[1].AsInt();
-            }
-            if (args.Length > 0)
-            {
                 uint serial = args[0].AsSerial();
+
+                try
+                {
+                    int intOption = args[1].AsInt();                    
+                    Misc.WaitForContext((int)serial, timeout);
+                    Misc.ContextReply((int)serial, intOption);
+                    return true;
+                }
+                catch (RazorEnhanced.UOScript.RunTimeError)
+                {
+                     // try string
+                }
+
+                string option = args[1].AsString();
                 Misc.WaitForContext((int)serial, timeout);
+                Misc.ContextReply((int)serial, option);
+                return true;
             }
 
             return true;

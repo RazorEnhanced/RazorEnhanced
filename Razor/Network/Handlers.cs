@@ -2138,6 +2138,16 @@ namespace Assistant
                 }
             }
 
+            // Filter based on api selected blocks
+            foreach (string filter in Settings.JournalFilter.ReadAll())
+            {
+                if (trimmed_text.ToLower().Contains(filter))
+                {
+                    args.Block = true;
+                    return;
+                }
+            }
+
             if (type == MessageType.Spell)
 			{
                 Spell s = Spell.Get(trimmed_text);
@@ -2235,15 +2245,6 @@ namespace Assistant
 					}
 				}
 
-				if (Engine.MainWindow.FilterSpam.Checked && (ser == Serial.MinusOne || ser == Serial.Zero))
-				{
-					if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
-					{
-						args.Block = true;
-						return;
-					}
-				}
-
 				// Filtro talk orc lizart rat
 				if (Engine.MainWindow.FilterNPC.Checked && ser.IsMobile)
 				{
@@ -2255,20 +2256,14 @@ namespace Assistant
 					}
 				}
 
-
-                // Filter based on api selected blocks
-                if (Journal.TextFilters != null)
+                if (Engine.MainWindow.FilterSpam.Checked && (ser == Serial.MinusOne || ser == Serial.Zero))
                 {
-                    foreach (string filter in Journal.TextFilters)
+                    if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
                     {
-                        if (trimmed_text.ToLower().Contains(filter))
-                        {
-                            args.Block = true;
-                            return;
-                        }
+                        args.Block = true;
+                        return;
                     }
                 }
-
             }
         }
 
