@@ -59,9 +59,10 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(RazorEnhanced.Vendor.StoreBuyList));
             PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
-			//PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
-			//PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
-			PacketHandler.RegisterServerToClientViewer(0x2C, new PacketViewerCallback(MyDeath));
+            PacketHandler.RegisterServerToClientViewer(0x95, new PacketViewerCallback(HueResponse));
+            //PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
+            //PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
+            PacketHandler.RegisterServerToClientViewer(0x2C, new PacketViewerCallback(MyDeath));
 			PacketHandler.RegisterServerToClientViewer(0x2D, new PacketViewerCallback(MobileStatInfo));
 			PacketHandler.RegisterServerToClientFilter(0x2E, new PacketFilterCallback(EquipmentUpdate));
             PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
@@ -3025,12 +3026,16 @@ namespace Assistant
 			ushort iid = p.ReadUInt16();
 			ushort hue = p.ReadUInt16();
 
-			if (serial == Serial.MinusOne)
-			{
-				if (HueEntry.Callback != null)
-					HueEntry.Callback(hue);
-				args.Block = true;
-			}
+            if (serial == Serial.MinusOne || HueEntry.Callback != null)
+            {
+                args.Block = true;
+            }
+
+            if (HueEntry.Callback != null)
+            {
+                HueEntry.Callback(serial, iid, hue);
+            }
+            
 		}
 
 		private static void ClientAsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)

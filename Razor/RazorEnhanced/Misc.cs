@@ -967,6 +967,26 @@ namespace RazorEnhanced
         {
             return HotKeyEvent.LastEvent;
         }
+        
+        /// <summary>
+        /// Use the Dye Tube via packets. Need to specify the dyes, the dye tube and the color to use.
+        /// </summary>
+        /// <param name="dyes">Dyes as Item object.</param>
+        /// <param name="dyeTube">DyeTube as Item object.</param>
+        /// <param name="color">Color to choose.</param>
+        public void UseDyeTube(Item dyes, Item dyeTube, int color) {
+            Items.UseItem(dyes);
+            if (Target.WaitForTarget(1000))
+            {
+                HueEntry.Callback = (serial, iid, hue) =>
+                {
+                    HueEntry.Callback = null;
+                    Assistant.Client.Instance.SendToServer(new HuePicker(serial, iid, (ushort)color));
+                };
+                Target.TargetExecute(dyeTube);
+            }
+        }
+
 
 
         /// <summary>
