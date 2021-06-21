@@ -3066,12 +3066,18 @@ namespace Assistant
 		private static void TrackingArrow(PacketReader p, PacketHandlerEventArgs args)
 		{
             byte active = p.ReadByte();
+            Mobiles.lastTrackingInfo = new Mobiles.TrackingInfo();   // Don't change the old, create a new immutable object.
             Mobiles.lastTrackingInfo.x  = p.ReadUInt16();
             Mobiles.lastTrackingInfo.y = p.ReadUInt16();
             Mobiles.lastTrackingInfo.serial = p.ReadUInt32();
             Mobiles.lastTrackingInfo.lastUpdate = DateTime.Now;
-            System.Diagnostics.Debug.WriteLine("Serial: 0x{0:X} at x:{1} y:{2}",
-                Mobiles.lastTrackingInfo.serial, Mobiles.lastTrackingInfo.x, Mobiles.lastTrackingInfo.y);
+
+            System.Diagnostics.Debug.WriteLine(
+                "Serial: 0x{0:X} at x:{1} y:{2}",
+                Mobiles.lastTrackingInfo.serial, 
+                Mobiles.lastTrackingInfo.x, 
+                Mobiles.lastTrackingInfo.y
+            );
         }
 
         private static void PersonalLight(PacketReader p, PacketHandlerEventArgs args)
