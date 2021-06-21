@@ -2013,16 +2013,33 @@ namespace RazorEnhanced
 
         private bool PushList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            if (args.Length == 2)
+            if (args.Length < 2)
             {
-                Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
-                UOScript.Interpreter.PushList(args[0].AsString(), args[1], false, false);
+                Misc.SendMessage("Usage: pushlist ('list name') ('element name') ('front'/'back']");
+                throw new UOScript.RunTimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
+                return true;
             }
+
+            string listName = args[0].AsString();
+            string frontBack = "back";
             if (args.Length == 3)
             {
-                string frontBack = args[2].AsString().ToLower();
-                Console.WriteLine("Pushing {0} to list {1}", args[1].AsString(), args[0].AsString());
-                UOScript.Interpreter.PushList(args[0].AsString(), args[1], (frontBack == "front"), false);
+                frontBack = args[2].AsString().ToLower();
+            }
+
+            uint resolvedAlias = UOScript.Interpreter.GetAlias(args[1].AsString());
+            UOScript.Argument insertItem = args[1];
+            if (resolvedAlias == uint.MaxValue)
+            {
+                Console.WriteLine("Pushing {0} to list {1}", insertItem.AsString(), listName);
+                UOScript.Interpreter.PushList(listName, insertItem, (frontBack == "front"), false);
+            }
+            else 
+            {
+                ASTNode node = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem._node, insertItem._node.LineNumber);
+                UOScript.Argument newArg = new UOScript.Argument(insertItem._script, node);
+                Console.WriteLine("Pushing {0} to list {1}", newArg.AsString(), listName);
+                UOScript.Interpreter.PushList(listName, newArg, (frontBack == "front"), false);
             }
             return true;
         }
@@ -2913,16 +2930,36 @@ namespace RazorEnhanced
 
         private bool WaitForContext(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            // docs say something about options, I have no idea what that means
+            if (args.Length < 2)
+            {
+                Misc.SendMessage("Usage is waitforcontents serial contextSelection timeout");
+                WrongParameterCount(command, 2, args.Length, "waitforcontents serial contextSelection timeout");
+            }
             int timeout = 5000;
+            if (args.Length > 2)
+            {
+                timeout = args[2].AsInt();
+            }
             if (args.Length > 1)
             {
-                timeout = args[1].AsInt();
-            }
-            if (args.Length > 0)
-            {
                 uint serial = args[0].AsSerial();
+
+                try
+                {
+                    int intOption = args[1].AsInt();                    
+                    Misc.WaitForContext((int)serial, timeout);
+                    Misc.ContextReply((int)serial, intOption);
+                    return true;
+                }
+                catch (RazorEnhanced.UOScript.RunTimeError)
+                {
+                     // try string
+                }
+
+                string option = args[1].AsString();
                 Misc.WaitForContext((int)serial, timeout);
+                Misc.ContextReply((int)serial, option);
+                return true;
             }
 
             return true;
@@ -3646,7 +3683,7 @@ namespace RazorEnhanced
 
             public static String BuildErrorMessage(ASTNode node, string error) {
                 String msg = "\n";
-                msg  = String.Format("Error:\t{0}\n", error);
+                msg = String.Format("Error:\t{0}\n", error);
                 if (node != null)
                 {
                     msg += String.Format("Type:\t{0}\n", node.Type);
@@ -3657,7 +3694,7 @@ namespace RazorEnhanced
                 return msg;
             }
 
-            public RunTimeError(ASTNode node, string error) : base( BuildErrorMessage(node,error) )
+            public RunTimeError(ASTNode node, string error) : base(BuildErrorMessage(node, error))
             {
                 Node = node;
             }
@@ -3776,17 +3813,24 @@ namespace RazorEnhanced
 
         public class Argument
         {
-            private ASTNode _node;
-            private Script _script;
+            internal ASTNode _node
+            {
+                get; set;
+            }
+        
+            internal Script _script
+            {
+                get; set;
+            }
 
             public Argument(Script script, ASTNode node)
             {
                 _node = node;
                 _script = script;
             }
-
-            // Treat the argument as an integer
-            public int AsInt()
+    
+    // Treat the argument as an integer
+    public int AsInt()
             {
                 if (_node.Lexeme == null)
                     throw new RunTimeError(_node, $"Cannot convert argument to int: {_node.LineNumber}");
