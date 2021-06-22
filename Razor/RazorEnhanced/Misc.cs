@@ -968,7 +968,7 @@ namespace RazorEnhanced
             return HotKeyEvent.LastEvent;
         }
 
-
+        
         /// <summary>
         /// Enable or disable the Seasons filter forcing a specific season
         /// Season filter state will be saved on logout but not the season flag that will be recovered.

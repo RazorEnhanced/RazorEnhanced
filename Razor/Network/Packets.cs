@@ -1063,13 +1063,28 @@ namespace Assistant
         {
         }
 
-        internal HuePicker(Serial serial, ItemID itemid)
+        internal HuePicker(Serial target, ItemID itemid)
             : base(0x95, 9)
         {
-            Write((uint)serial);
+            //BYTE[4] itemID of dye target
+            //BYTE[2] ignored on send, model on return
+            //BYTE[2] model on send, color on return from client (default on server send is 0x0FAB)
+            Write((uint)target);
             Write((ushort)0);
             Write((ushort)itemid);
         }
+
+        internal HuePicker(Serial target, ItemID model, ushort color )
+            : base(0x95, 9)
+        {
+            //BYTE[4] itemID of dye target
+            //BYTE[2] ignored on send, model on return
+            //BYTE[2] model on send, color on return from client (default on server send is 0x0FAB)
+            Write((uint)target);
+            Write((ushort)model);
+            Write((ushort)color);
+        }
+
     }
 
     internal sealed class WalkRequest : Packet
