@@ -531,7 +531,26 @@ namespace RazorEnhanced
             SetColor(serial, color);
         }
 
-
+        /// <summary>
+        /// Use the Dyes on a Dyeing Tub and select the color via color picker, using dedicated packets. 
+        /// Need to specify the dyes, the dye tube and the color to use.
+        /// </summary>
+        /// <param name="dyes">Dyes as Item object.</param>
+        /// <param name="dyeingTub">Dyeing Tub as Item object.</param>
+        /// <param name="color">Color to choose.</param>
+        public void ChangeDyeingTubColor(Item dyes, Item dyeingTub, int color)
+        {
+            Items.UseItem(dyes);
+            if (Target.WaitForTarget(1000))
+            {
+                HueEntry.Callback = (serial, iid, hue) =>
+                {
+                    HueEntry.Callback = null;
+                    Assistant.Client.Instance.SendToServer(new HuePicker(serial, iid, (ushort)color));
+                };
+                Target.TargetExecute(dyeingTub);
+            }
+        }
 
         /// <summary>
         /// The Items.Filter class is used to store options to filter the global Item list.
