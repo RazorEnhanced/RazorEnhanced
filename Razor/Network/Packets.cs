@@ -20,6 +20,16 @@ namespace Assistant
         Special = 0x20,
     }
 
+    internal sealed class EmoteAction : Packet
+    {
+        public EmoteAction(string action) : base(0x12)
+        {
+            EnsureCapacity(1 + action.Length);
+            Write((byte)0xC7);
+            WriteAsciiNull(action);
+        }
+    }
+
     internal sealed class QueryPartyLocs : Packet
     {
         internal QueryPartyLocs()
