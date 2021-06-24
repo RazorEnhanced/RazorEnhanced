@@ -23,7 +23,7 @@ namespace Assistant
 
 		private int m_Hue;
 
-		internal delegate void HueEntryCallback(int hue);
+		internal delegate void HueEntryCallback(uint serial, ushort iid, ushort hue);
 
 		internal static HueEntryCallback Callback = null;
 
@@ -175,7 +175,7 @@ namespace Assistant
 			preview.ForeColor = (preview.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
 		}
 
-		private void HueResp(int hue)
+		private void HueResp(uint serial, ushort iid, ushort hue)
 		{
 			hue &= 0x3FFF;
 			SetPreview(hue);
