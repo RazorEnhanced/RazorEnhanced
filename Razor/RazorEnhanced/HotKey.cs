@@ -1021,27 +1021,62 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static void ProcessAttack(string function)
-		{
-			switch (function)
-			{
-				case "Attack Last Target":
-					if (World.FindMobile(Targeting.GetLastTarger) != null)
-					{
-						Targeting.LastAttack = Targeting.GetLastTarger;
-						Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.GetLastTarger));
-					}
-					break;
-				case "Attack Last":
-					if (Targeting.LastAttack != 0)
-						Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.LastAttack));
-					break;
-				case "WarMode ON/OFF":
-					SpecialMoves.ToggleWarPeace();
-					break;
-				default:
-					break;
-			}
+        private static void ProcessAttack(string function)
+        {
+            switch (function)
+            {
+                case "Attack Last Target":
+                    if (World.FindMobile(Targeting.GetLastTarger) != null)
+                    {
+                        Targeting.LastAttack = Targeting.GetLastTarger;
+                        Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.GetLastTarger));
+                    }
+                    break;
+                case "Attack Nearest Enemy":
+                    RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+                    filter.Notorieties.Add(6);
+                    filter.Notorieties.Add(5);
+                    filter.Notorieties.Add(4);
+                    filter.Notorieties.Add(3);
+                    filter.CheckIgnoreObject = true;
+                    filter.RangeMax = -1;
+                    filter.CheckLineOfSight = true;
+                    filter.Enabled = true;
+                    filter.Warmode = -1;
+                    var list = Mobiles.ApplyFilter(filter);
+                    if (list.Count > 0)
+                    {
+                        var anEnemy = Mobiles.Select(list, "Nearest");
+                        int color = 20;
+                        switch (anEnemy.Notoriety)
+                        {
+                            case 1: color = 190; break; //Blue
+                            case 2: color = 168; break; //Green
+                            case 3:
+                            case 4: color = 1000; break; //Gray
+                            case 5: color = 140; break; //Orange
+                            case 6: color = 138; break; //Red
+                            case 7: color = 153; break; //Yellow
+                        }
+                        Mobiles.Message(anEnemy, color, "[Enemy] " + anEnemy.Name);
+                        Player.Attack(anEnemy);
+                    }
+                    else
+                    {
+                        Player.HeadMessage(190, "No enemy found");
+                    }
+                    break;
+
+                case "Attack Last":
+                    if (Targeting.LastAttack != 0)
+                        Assistant.Client.Instance.SendToServer(new AttackReq(Targeting.LastAttack));
+                    break;
+                case "WarMode ON/OFF":
+                    SpecialMoves.ToggleWarPeace();
+                    break;
+                default:
+                    break;
+            }
 		}
 
 		private static void ProcessBandage(string function)
