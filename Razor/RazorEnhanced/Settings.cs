@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 10;
+		private static int SettingVersion = 11;
 
 		private static string m_profileName = null;
 
@@ -5131,6 +5131,15 @@ namespace RazorEnhanced
                 general.Columns.Add("BandageHealTimedWithBufCheckBox", typeof(bool));
                 Settings.General.WriteBool("BandageHealTimedWithBufCheckBox", false);
                 realVersion = 10;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+            if (realVersion == 10)
+            {
+                DataTable hotkey = m_Dataset.Tables["HOTKEYS"];
+                DataRow hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Attack", "Attack Nearest Enemy", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+                realVersion = 11;
                 General.WriteInt("SettingVersion", realVersion);
             }
 

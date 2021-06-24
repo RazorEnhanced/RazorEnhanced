@@ -174,7 +174,7 @@ namespace RazorEnhanced
         /// Player is a Ghost
         /// </summary>
         public static bool IsGhost { get { return World.Player.IsGhost; } }
-        
+
         /// <summary>
         /// Player is Poisoned
         /// </summary>
@@ -1792,7 +1792,7 @@ namespace RazorEnhanced
             UseSkillOnly(skillname, wait);
         }
 
-        
+
 
         public static void UseSkillOnly(string skillname, bool wait)
         {
@@ -1905,6 +1905,11 @@ namespace RazorEnhanced
             Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, color, 1, msg));
         }
 
+        public static void EmoteAction(string action)
+        {
+            Assistant.Client.Instance.SendToServer(new EmoteAction(action));
+        }
+
         public static void ChatEmote(int color, int msg)
         {
             ChatEmote(color, msg.ToString());
@@ -1988,10 +1993,10 @@ namespace RazorEnhanced
         /// <param name="from_serial">Optional: Serial to accept party from.( in case of multiple offers )</param>
         /// <param name="force">True: Accept the party invite even you are already in a party.</param>
         /// <returns>True: if you are now in a party - False: otherwise.</returns>
-        public static bool PartyAccept(int from_serial = 0, bool force=false)
+        public static bool PartyAccept(int from_serial = 0, bool force = false)
         {
             //Dalamar: about "force" option. On some shard "dobule party" is considered a feature as double the change of dropping artys
-            if (!force && World.Player.InParty )
+            if (!force && World.Player.InParty)
             {
                 Misc.SendMessage("Player.PartyAccept: You are already in a party.");
                 return true;
@@ -2004,7 +2009,7 @@ namespace RazorEnhanced
         /// Leaves a party.
         /// </summary>
         /// <param name="force">True: Leave the party invite even you notin any party.</param>
-        public static void LeaveParty(bool force=false)
+        public static void LeaveParty(bool force = false)
         {
             if (!force && !World.Player.InParty)
             {
@@ -2240,7 +2245,7 @@ namespace RazorEnhanced
         {
             PathFindTo(Location.X, Location.Y, Location.Z);
         }
-        
+
         internal static void PathFindToPacket(Assistant.Point3D location)
         {
             Assistant.Client.Instance.PathFindTo(location);
@@ -2280,7 +2285,7 @@ namespace RazorEnhanced
         public static void HeadMessage(int color, string msg)
         {
             Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, color, 3, Language.CliLocName, World.Player.Name, msg));
-        } 
+        }
 
         public static void HeadMessage(int color, int msg)
         {
@@ -2288,6 +2293,24 @@ namespace RazorEnhanced
         }
 
 
+        /// <summary>
+        /// Press the Open PaperDoll.
+        /// </summary>
+        // Open Paperdoll
+        public static void OpenPaperDoll(int serial = -1)
+        {
+            Assistant.Mobile assistantMobile = null;
+            if (serial == -1)
+                assistantMobile = Assistant.World.FindMobile(World.Player.Serial);
+            else
+                assistantMobile = Assistant.World.FindMobile(serial);
+            if (assistantMobile != null)
+                Assistant.Client.Instance.SendToClient(new DisplayPaperdoll(assistantMobile, assistantMobile.Name));
+            else 
+            {
+                Misc.SendMessage(String.Format("Unable to find serial: {0}", serial));
+            }
+        } 
 
         /// <summary>
         /// Press the Quest menu button in the paperdoll.
