@@ -59,9 +59,10 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(RazorEnhanced.Vendor.StoreBuyList));
             PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
-			//PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
-			//PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
-			PacketHandler.RegisterServerToClientViewer(0x2C, new PacketViewerCallback(MyDeath));
+            PacketHandler.RegisterServerToClientViewer(0x95, new PacketViewerCallback(HueResponse));
+            //PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
+            //PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
+            PacketHandler.RegisterServerToClientViewer(0x2C, new PacketViewerCallback(MyDeath));
 			PacketHandler.RegisterServerToClientViewer(0x2D, new PacketViewerCallback(MobileStatInfo));
 			PacketHandler.RegisterServerToClientFilter(0x2E, new PacketFilterCallback(EquipmentUpdate));
             PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
@@ -2138,6 +2139,16 @@ namespace Assistant
                 }
             }
 
+            // Filter based on api selected blocks
+            foreach (string filter in Settings.JournalFilter.ReadAll())
+            {
+                if (trimmed_text.ToLower().Contains(filter))
+                {
+                    args.Block = true;
+                    return;
+                }
+            }
+
             if (type == MessageType.Spell)
 			{
                 Spell s = Spell.Get(trimmed_text);
@@ -2235,15 +2246,6 @@ namespace Assistant
 					}
 				}
 
-				if (Engine.MainWindow.FilterSpam.Checked && (ser == Serial.MinusOne || ser == Serial.Zero))
-				{
-					if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
-					{
-						args.Block = true;
-						return;
-					}
-				}
-
 				// Filtro talk orc lizart rat
 				if (Engine.MainWindow.FilterNPC.Checked && ser.IsMobile)
 				{
@@ -2255,20 +2257,14 @@ namespace Assistant
 					}
 				}
 
-
-                // Filter based on api selected blocks
-                if (Journal.TextFilters != null)
+                if (Engine.MainWindow.FilterSpam.Checked && (ser == Serial.MinusOne || ser == Serial.Zero))
                 {
-                    foreach (string filter in Journal.TextFilters)
+                    if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
                     {
-                        if (trimmed_text.ToLower().Contains(filter))
-                        {
-                            args.Block = true;
-                            return;
-                        }
+                        args.Block = true;
+                        return;
                     }
                 }
-
             }
         }
 
@@ -3030,12 +3026,16 @@ namespace Assistant
 			ushort iid = p.ReadUInt16();
 			ushort hue = p.ReadUInt16();
 
-			if (serial == Serial.MinusOne)
-			{
-				if (HueEntry.Callback != null)
-					HueEntry.Callback(hue);
-				args.Block = true;
-			}
+            if (serial == Serial.MinusOne || HueEntry.Callback != null)
+            {
+                args.Block = true;
+            }
+
+            if (HueEntry.Callback != null)
+            {
+                HueEntry.Callback(serial, iid, hue);
+            }
+            
 		}
 
 		private static void ClientAsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
@@ -3066,12 +3066,18 @@ namespace Assistant
 		private static void TrackingArrow(PacketReader p, PacketHandlerEventArgs args)
 		{
             byte active = p.ReadByte();
+            Mobiles.lastTrackingInfo = new Mobiles.TrackingInfo();   // Don't change the old, create a new immutable object.
             Mobiles.lastTrackingInfo.x  = p.ReadUInt16();
             Mobiles.lastTrackingInfo.y = p.ReadUInt16();
             Mobiles.lastTrackingInfo.serial = p.ReadUInt32();
             Mobiles.lastTrackingInfo.lastUpdate = DateTime.Now;
-            System.Diagnostics.Debug.WriteLine("Serial: 0x{0:X} at x:{1} y:{2}",
-                Mobiles.lastTrackingInfo.serial, Mobiles.lastTrackingInfo.x, Mobiles.lastTrackingInfo.y);
+
+            System.Diagnostics.Debug.WriteLine(
+                "Serial: 0x{0:X} at x:{1} y:{2}",
+                Mobiles.lastTrackingInfo.serial, 
+                Mobiles.lastTrackingInfo.x, 
+                Mobiles.lastTrackingInfo.y
+            );
         }
 
         private static void PersonalLight(PacketReader p, PacketHandlerEventArgs args)

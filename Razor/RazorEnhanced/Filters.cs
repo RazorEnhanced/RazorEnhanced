@@ -135,7 +135,21 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void CopyGraphTable()
+        internal static void CopyJournalFilterTable()
+        {
+            Settings.JournalFilter.ClearList();
+
+            foreach (DataGridViewRow gridRow in Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows)
+            {
+                if (gridRow.IsNewRow)
+                    continue;                
+                Settings.JournalFilter.Insert(gridRow.Cells[0].Value.ToString());
+            }
+            Settings.Save();
+
+        }
+
+        internal static void CopyGraphTable()
 		{
 			Settings.GraphFilter.ClearList(); // Rimuove vecchi dati dal save
 
@@ -160,7 +174,16 @@ namespace RazorEnhanced
 			Settings.Save(); // Salvo dati
 		}
 
-		internal static void InitGraphGrid()
+        internal static void InitJournalFilterGrid()
+        {
+            Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows.Clear();
+            foreach (string text in RazorEnhanced.Settings.JournalFilter.ReadAll())
+            {
+                Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows.Add(new object[] { text });
+            }
+        }
+
+        internal static void InitGraphGrid()
 		{
 			ReloadGraphFilterData();
 			Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Clear();
@@ -671,6 +694,7 @@ namespace RazorEnhanced
 			AutoRemountSerial = Settings.General.ReadInt("MountSerial");
 
 			InitGraphGrid();
+            InitJournalFilterGrid();
 		}
 	}
 }

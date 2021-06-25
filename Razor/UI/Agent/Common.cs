@@ -65,7 +65,15 @@ namespace Assistant
 						RazorEnhanced.Filters.CopyGraphTable();
 					}
 					break;
-				case "targetbodydataGridView":
+                case "journalfilterdatagrid":
+                    if (!journalfilterdatagrid.Rows[agentrowindex].IsNewRow)
+                    {
+                        //System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[agentrowindex].Cells[0];
+                        journalfilterdatagrid.Rows.RemoveAt(agentrowindex);
+                        RazorEnhanced.Filters.CopyJournalFilterTable();
+                    }
+                    break;
+                case "targetbodydataGridView":
 					if (!targetbodydataGridView.Rows[agentrowindex].IsNewRow)
 						targetbodydataGridView.Rows.RemoveAt(agentrowindex);
 					break;
@@ -170,8 +178,12 @@ namespace Assistant
 					case "graphfilterdatagrid":
 						RazorEnhanced.Filters.CopyGraphTable();
 						break;
-				}
-			}
+                    case "journalfilterdatagrid":
+                        RazorEnhanced.Filters.CopyJournalFilterTable();
+                        break;
+
+                }
+            }
 
 		}
 		// ----------------- END AGENT GESTIONE DRAG DROP -------------------
@@ -253,7 +265,11 @@ namespace Assistant
 					case "graphfilterdatagrid":
 						RazorEnhanced.Filters.CopyGraphTable();
 						break;
-				}
+
+                    case "journalfilterdatagrid":
+                        RazorEnhanced.Filters.CopyJournalFilterTable();
+                        break;
+                }
 			}
 		}
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------

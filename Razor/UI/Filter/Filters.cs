@@ -20,7 +20,8 @@ namespace Assistant
 		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
 		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
 		internal DataGridView GraphFilterDataGrid { get { return graphfilterdatagrid; } }
-		internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
+        internal DataGridView JournalFilterDataGrid { get { return journalfilterdatagrid; } }
+        internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
 		internal RazorCheckBox LastTargTextFlags { get { return showtargtext; } }
 		internal RazorCheckBox SmartLastTarget { get { return smartLT; } }
 

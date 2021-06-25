@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Globalization;
 
 namespace RazorEnhanced
@@ -531,7 +532,41 @@ namespace RazorEnhanced
             SetColor(serial, color);
         }
 
+        /// <summary>
+        /// Use the Dyes on a Dyeing Tub and select the color via color picker, using dedicated packets. 
+        /// Need to specify the dyes, the dye tube and the color to use.
+        /// </summary>
+        /// <param name="dyes">Dyes as Item object.</param>
+        /// <param name="dyeingTub">Dyeing Tub as Item object.</param>
+        /// <param name="color">Color to choose.</param>
+        public void ChangeDyeingTubColor(Item dyes, Item dyeingTub, int color)
+        {
+            Items.UseItem(dyes);
+            if (Target.WaitForTarget(1000))
+            {
+                var cb = new HueEntry.HueEntryCallback(
+                    (serial, iid, hue) =>
+                    {
+                        HueEntry.Callback = null;
+                        Assistant.Client.Instance.SendToServer(new HuePicker(serial, iid, (ushort)color));
+                    }
+                );
+                HueEntry.Callback = cb;
+                Target.TargetExecute(dyeingTub);
 
+                // Dalamar: Callback AutoCleanup
+                // If the selected object doesn't prompt for a Color Picker (any other object, including some cusom dyeing tub) the callback would remain pending, waiting for a packet which will never arrive.
+                // Eventually, the first time a player try to dye something, the callback finally fire and apply the last color tried.
+                // As the packet response usually arrives very fast, we will safely assume the following:
+                //    if after X seconds the original callback is still waiting for a packet, probably something went wrong and the callback gets removed ( probably the packet will never arrive )
+                var cleanup = new Thread( () => {
+                    Thread.Sleep(2000);
+                    if (HueEntry.Callback == cb) { HueEntry.Callback = null; } 
+                });
+                cleanup.Start();
+
+            }
+        }
 
         /// <summary>
         /// The Items.Filter class is used to store options to filter the global Item list.

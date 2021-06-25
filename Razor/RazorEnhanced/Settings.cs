@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 10;
+		private static int SettingVersion = 11;
 
 		private static string m_profileName = null;
 
@@ -35,34 +35,35 @@ namespace RazorEnhanced
 		internal delegate void saveFN(string filename, string tableName, DataTable targets);
 
 
-		internal static Dictionary<string, initFN> initDict = new Dictionary<string, initFN>()
-				{
-					{ "AUTOLOOT_ITEMS", InitItems<RazorEnhanced.AutoLoot.AutoLootItem>},
-					{ "AUTOLOOT_LISTS", InitAutoLootLists},
-					{ "BUY_ITEMS", InitItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
-					{ "BUY_LISTS", InitBuyAgentLists },
-					{ "DRESS_ITEMS", InitItems<RazorEnhanced.Dress.DressItemNew> },
-					{ "DRESS_LISTS", InitDressingAgentLists },
-					{ "FILTER_GRAPH", InitGraphChanges },
-					{ "FRIEND_GUILDS", InitItems<RazorEnhanced.Friend.FriendGuild> },
-					{ "FRIEND_LISTS", InitFriendsList },
-					{ "FRIEND_PLAYERS", InitItems<RazorEnhanced.Friend.FriendPlayer> },
-					{ "GENERAL", InitGeneralSettings },
-					{ "HOTKEYS", InitHotKeys },
-					{ "ORGANIZER_ITEMS", InitItems<RazorEnhanced.Organizer.OrganizerItem> },
-					{ "ORGANIZER_LISTS", InitOrganizerLists },
-					{ "PASSWORD", InitPasswords },
-					{ "RESTOCK_ITEMS", InitItems<RazorEnhanced.Restock.RestockItem> },
-					{ "RESTOCK_LISTS", InitRestockLists },
-					{ "SCAVENGER_ITEMS", InitItems<RazorEnhanced.Scavenger.ScavengerItem> },
-					{ "SCAVENGER_LISTS", InitScavengerLists },
-					{ "SCRIPTING", InitScripting },
-					{ "SELL_ITEMS", InitItems<RazorEnhanced.SellAgent.SellAgentItem> },
-					{ "SELL_LISTS", InitSellAgentLists },
-					{ "SPELLGRID_ITEMS", InitSpellGrid },
-					{ "TARGETS", InitItems<TargetGUI> },
-					{ "TOOLBAR_ITEMS", InitToolbarItems }
-				};
+        internal static Dictionary<string, initFN> initDict = new Dictionary<string, initFN>()
+                {
+                    { "AUTOLOOT_ITEMS", InitItems<RazorEnhanced.AutoLoot.AutoLootItem>},
+                    { "AUTOLOOT_LISTS", InitAutoLootLists},
+                    { "BUY_ITEMS", InitItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
+                    { "BUY_LISTS", InitBuyAgentLists },
+                    { "DRESS_ITEMS", InitItems<RazorEnhanced.Dress.DressItemNew> },
+                    { "DRESS_LISTS", InitDressingAgentLists },
+                    { "FILTER_GRAPH", InitGraphChanges },
+                    { "FRIEND_GUILDS", InitItems<RazorEnhanced.Friend.FriendGuild> },
+                    { "FRIEND_LISTS", InitFriendsList },
+                    { "FRIEND_PLAYERS", InitItems<RazorEnhanced.Friend.FriendPlayer> },
+                    { "GENERAL", InitGeneralSettings },
+                    { "HOTKEYS", InitHotKeys },
+                    { "JOURNAL_FILTER", InitJournalFilter },
+                    { "ORGANIZER_ITEMS", InitItems<RazorEnhanced.Organizer.OrganizerItem> },
+                    { "ORGANIZER_LISTS", InitOrganizerLists },
+                    { "PASSWORD", InitPasswords },
+                    { "RESTOCK_ITEMS", InitItems<RazorEnhanced.Restock.RestockItem> },
+                    { "RESTOCK_LISTS", InitRestockLists },
+                    { "SCAVENGER_ITEMS", InitItems<RazorEnhanced.Scavenger.ScavengerItem> },
+                    { "SCAVENGER_LISTS", InitScavengerLists },
+                    { "SCRIPTING", InitScripting },
+                    { "SELL_ITEMS", InitItems<RazorEnhanced.SellAgent.SellAgentItem> },
+                    { "SELL_LISTS", InitSellAgentLists },
+                    { "SPELLGRID_ITEMS", InitSpellGrid },
+                    { "TARGETS", InitItems<TargetGUI> },
+                    { "TOOLBAR_ITEMS", InitToolbarItems }
+                };
 		internal static Dictionary<string, loadFN> loadDict = new Dictionary<string, loadFN>()
 				{
 					{ "AUTOLOOT_ITEMS", LoadItems<RazorEnhanced.AutoLoot.AutoLootItem> },
@@ -580,7 +581,8 @@ namespace RazorEnhanced
 			scavenger_lists.Columns.Add("Selected", typeof(bool));
 			return scavenger_lists;
 		}
-		internal static DataTable InitOrganizerLists(string tableName)
+
+        internal static DataTable InitOrganizerLists(string tableName)
 		{
 			// ----------- ORGANIZER ----------
 			DataTable organizer_lists = new DataTable(tableName);
@@ -689,7 +691,16 @@ namespace RazorEnhanced
 			return filter_graph;
 
 		}
-		internal static DataTable InitToolbarItems(string tableName)
+        
+        internal static DataTable InitJournalFilter(string tableName)
+        {
+            // ----------- FILTER GRAPH CHANGE ----------
+            DataTable filter_journal = new DataTable(tableName);
+            filter_journal.Columns.Add("FilterString", typeof(string));
+            return filter_journal;
+
+        }
+        internal static DataTable InitToolbarItems(string tableName)
 		{
 			// ----------- TOOLBAR ITEM ----------
 			DataTable toolbar_items = new DataTable(tableName);
@@ -2633,7 +2644,9 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(initDict["FRIEND_GUILDS"]("FRIEND_GUILDS"));
 				m_Dataset.Tables.Add(initDict["FRIEND_LISTS"]("FRIEND_LISTS"));
 
-				m_Dataset.Tables.Add(initDict["RESTOCK_ITEMS"]("RESTOCK_ITEMS"));
+                m_Dataset.Tables.Add(initDict["JOURNAL_FILTER"]("JOURNAL_FILTER"));               
+
+                m_Dataset.Tables.Add(initDict["RESTOCK_ITEMS"]("RESTOCK_ITEMS"));
 				m_Dataset.Tables.Add(initDict["RESTOCK_LISTS"]("RESTOCK_LISTS"));
 
 				m_Dataset.Tables.Add(initDict["TARGETS"]("TARGETS"));
@@ -4133,11 +4146,42 @@ namespace RazorEnhanced
 			}
 		}
 
-		// ------------- RESTOCK END-----------------
+        // ------------- RESTOCK END-----------------
 
-		// ------------- GRAPH FILTER  -----------------
+        // ------------- GRAPH FILTER  -----------------
+        internal class JournalFilter
+        {
+            internal static void ClearList()
+            {
+                for (int i = m_Dataset.Tables["JOURNAL_FILTER"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["JOURNAL_FILTER"].Rows[i];
+                    row.Delete();
+                }
+            }
+            internal static void Insert(string filterString)
+            {
+                DataRow row = m_Dataset.Tables["JOURNAL_FILTER"].NewRow();
+                row["FilterString"] = filterString.ToLower();
+                m_Dataset.Tables["JOURNAL_FILTER"].Rows.Add(row);
+                m_Dataset.AcceptChanges();
+            }
 
-		internal class GraphFilter
+            internal static List<string> ReadAll()
+            {
+                List<string> retList = new List<string>();
+
+                foreach (DataRow row in m_Dataset.Tables["JOURNAL_FILTER"].Rows)
+                {
+                    string filterText = (string)row["FilterString"];
+                    retList.Add(filterText);
+                }
+                return retList;
+            }
+
+        }
+
+        internal class GraphFilter
 		{
 			internal static void ClearList()
 			{
@@ -4148,7 +4192,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
+            internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
 			{
 				List<RazorEnhanced.Filters.GraphChangeData> retList = new List<RazorEnhanced.Filters.GraphChangeData>();
 				foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
@@ -5087,6 +5131,15 @@ namespace RazorEnhanced
                 general.Columns.Add("BandageHealTimedWithBufCheckBox", typeof(bool));
                 Settings.General.WriteBool("BandageHealTimedWithBufCheckBox", false);
                 realVersion = 10;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+            if (realVersion == 10)
+            {
+                DataTable hotkey = m_Dataset.Tables["HOTKEYS"];
+                DataRow hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Attack", "Attack Nearest Enemy", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+                realVersion = 11;
                 General.WriteInt("SettingVersion", realVersion);
             }
 
