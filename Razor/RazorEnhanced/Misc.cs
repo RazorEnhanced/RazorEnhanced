@@ -266,7 +266,18 @@ namespace RazorEnhanced
         /// </summary>
         public static void Disconnect()
         {
-            Assistant.Client.Instance.SendToClient(new Disconnect());
+            Assistant.Client.Instance.SendToServerWait(new Disconnect());
+
+            // Dalamar:
+            // Notify the server for disconnection, mimiking manual logout operations.
+            // CUO doesn't support Logout via packet ( their method for handling the disconnect packet is empty )
+            // So we handshake directly with the server
+            if (!Assistant.Client.IsOSI) { 
+                Assistant.Client.Instance.SendToServerWait(new LogoffNotification()); // Unnecessary, but mimic the normal packet flow of a client.
+                Assistant.Client.Instance.SendToServerWait(new ClosedStatusGump());
+
+                Misc.SendToClient("{ENTER}");
+            }
         }
 
 
@@ -283,14 +294,42 @@ namespace RazorEnhanced
             { get; set; }
         }
 
+
         /// <summary>
-        /// Wait for Context Menu to appear, for a maximum amount of time. Usable on an Item or Mobile.
+        /// Open and click the option of Context menu, given the serial of Mobile or Item, via packets.
+        /// </summary>
+        /// <param name="serial">Serial of the Item or Mobile.</param>
+        /// <param name="choice">Option as Text or integer.</param>
+        /// <param name="delay">Maximum wait for the action to complete.</param>
+        /// <returns>True: Optiona selected succesfully - False: otherwise.</returns>
+        public static bool UseContextMenu(int serial, string choice, int delay)
+        {     // Delay in MS
+            choice = choice.Trim().ToLower();
+            var menuList = WaitForContext(serial,delay,false);
+            var menuOption = menuList.Where(context => context.Entry.Trim().ToLower() == choice);
+            if (menuOption.Count() == 0) {
+                return false;
+            }
+            ContextReply(serial, menuOption.First().Response);
+            return true;
+        }
+
+
+        /// <summary>
+        /// Return the List entry of a Context menu, of Mobile or Item objects.
+        /// The function will ask the server for the List and wait for a maximum amount of time.
         /// </summary>
         /// <param name="serial">Serial of the entity.</param>
         /// <param name="delay">Maximum wait.</param>
-        /// <returns></returns>
-        public static List<Context> WaitForContext(int serial, int delay) // Delay in MS
+        /// <param name="showContext">Show context menu in-game. (default: True)</param>
+        /// <returns>A List of Context objects.</returns>
+        public static List<Context> WaitForContext(int serial, int delay, bool showContext=true) // Delay in MS
         {
+            if (!showContext)
+            {
+                var HideUntilMax = Math.Max(1000, delay);
+                Assistant.PacketHandlers.HideContextUntil = DateTime.Now.AddMilliseconds(HideUntilMax);
+            }
             List<Context> retList = new List<Context>();
             Assistant.Client.Instance.SendToServerWait(new ContextMenuRequest(serial));
             int subdelay = delay;
@@ -392,7 +431,6 @@ namespace RazorEnhanced
         {
             ContextReply(itm.Serial, menu_name);
         }
-
 
         // Prompt Message Stuff
         /// <summary>
@@ -1003,6 +1041,117 @@ namespace RazorEnhanced
                 cnt++;
             }
         }
+
+
+
+        /*
+         Dalamar: it is theoretically possible to click the window without moving the Cursor.
+         should be done via SendMessage
+         see more: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessage
+
+
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+
+
+        var coords = ((ypos << 16) | xpos);
+        SendMessage(window, WM_LBUTTONDOWN, 0, coords);
+        SendMessage(window, WM_LBUTTONUP, 0, coords);
+
+        internal const int WM_LBUTTONDOWN = 0x0201;
+        internal const int WM_LBUTTONUP = 0x0202;
+       */
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        internal static extern bool GetWindowRect(IntPtr hWnd, ref Rectangle lpRect);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        internal static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool SetCursorPos(int x, int y);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        internal static extern bool GetCursorPos(ref Point lpPoint);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        internal static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+
+        
+        internal const int MOUSEEVENTF_ABSOLUTE = 0x8000;
+        internal const int MOUSEEVENTF_LEFTDOWN = 0x0002;
+        internal const int MOUSEEVENTF_LEFTUP = 0x0004;
+        internal const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
+        internal const int MOUSEEVENTF_RIGHTUP = 0x0010;
+
+        //This simulates a left mouse click
+        /// <summary>
+        /// Perform a phisical left click on the window using Windows API.
+        /// Is possible to use abolute Screen Coordinates by setting clientCoords=False.
+        /// </summary>
+        /// <param name="xpos">X click coordinate.</param>
+        /// <param name="ypos">Y click coordinate.</param>
+        /// <param name="clientCoords">True: Client coordinates.- False:Screen coordinates (default: True, client).</param>
+        public static void LeftMouseClick(int xpos, int ypos, bool clientCoords = true)
+        {
+            var window = Assistant.Client.Instance.GetWindowHandle();
+            Point old_point = new Point();
+            GetCursorPos(ref old_point);
+            
+            if (clientCoords) { 
+                Point pnt = new Point { X = xpos, Y = ypos };
+                ClientToScreen(window, ref pnt);
+                xpos = pnt.X;
+                ypos = pnt.Y;
+            }
+
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_LEFTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
+            SetCursorPos(old_point.X, old_point.Y);
+
+
+        }
+
+        /// <summary>
+        /// Perform a phisical Right click on the window.
+        /// </summary>
+        /// <param name="xpos">X click coordinate.</param>
+        /// <param name="ypos">Y click coordinate.</param>
+        /// <param name="clientCoords">True: Client coordinates - False: Screen coordinates (default: True, client).</param>
+        public static void RightMouseClick(int xpos, int ypos, bool clientCoords = true)
+        {
+            Point old_point = new Point();
+            GetCursorPos(ref old_point);
+
+            if (clientCoords)
+            {
+                Point pnt = new Point { X = xpos, Y = ypos };
+                var window = Assistant.Client.Instance.GetWindowHandle();
+                ClientToScreen(window, ref pnt);
+                xpos = pnt.X;
+                ypos = pnt.Y;      
+            }
+            SetCursorPos(xpos, ypos);
+            mouse_event(MOUSEEVENTF_RIGHTDOWN, xpos, ypos, 0, 0);
+            mouse_event(MOUSEEVENTF_RIGHTUP, xpos, ypos, 0, 0);
+            SetCursorPos(old_point.X, old_point.Y);
+        }
+
+        /// <summary>
+        /// Get a Rectangle representing the window size.
+        /// See also: https://docs.microsoft.com/dotnet/api/system.drawing.rectangle
+        /// </summary>
+        /// <returns>Rectangle object. Properties: X, Y, Width, Height.</returns>
+        public static Rectangle GetWindowSize() {
+            return Client.Instance.GetUoWindowPos();
+        }
+
+
+
+
     }
 
 }
+                                                              

@@ -7,7 +7,7 @@ using RazorEnhanced;
 
 namespace Assistant
 {
-	internal class PacketHandlers
+	public class PacketHandlers
 	{
 		private static List<Item> m_IgnoreGumps = new List<Item>();
 		internal static List<Item> IgnoreGumps { get { return m_IgnoreGumps; } }
@@ -107,7 +107,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(SAWorldItem));
             PacketHandler.RegisterServerToClientViewer(0xF5, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0xF6, new PacketViewerCallback(MoveBoatHS));
-		}
+        }
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -2440,6 +2440,15 @@ namespace Assistant
 				World.Player.Season = p.ReadByte();
 		}
 
+
+        //Dalamar:
+        // Is needed a way to "toggle" the display of context menu for the client, by blocking the packet or not.
+        //  public static bool ShowContextMenu = true;
+        //
+        // While srgith-forward might end-up causing issue to the client ( if the toggle remains off ).
+        // So instead, we block them for the next X seconds, so if none is done, the normal behaviour will be anyway restored.
+        // At the time of writing this value is used only inside Misc.WaitForContext()
+        public static DateTime HideContextUntil = DateTime.Now;
 		private static void ExtendedPacket(PacketReader p, PacketHandlerEventArgs args)
 		{
 			ushort type = p.ReadUInt16();
@@ -2581,6 +2590,11 @@ namespace Assistant
 						}
 						World.Player.HasContext = true;
 						World.Player.ContextID = ser;
+                        if (DateTime.Now.CompareTo(HideContextUntil) < 0) {
+                            HideContextUntil = DateTime.Now;
+                            args.Block = true;
+                        }
+                         
                         break;
 					}
 				case 0x18: // map patches
