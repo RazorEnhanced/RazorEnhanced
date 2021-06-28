@@ -1779,12 +1779,34 @@ namespace Assistant
 
     internal sealed class Disconnect : Packet
     {
-        internal Disconnect()
+        internal Disconnect(bool toServer = false)
             : base(0xD1, 2)
         {
-            Write((byte)0x01);
+            var payload = toServer ? 0x00 : 0x01;
+            Write((byte)payload);
         }
     }
+
+    internal sealed class LogoffNotification : Packet
+    {
+        internal LogoffNotification()
+            : base(0x01, 2)
+        {
+            Write(0xFFFFFFFF);
+        }
+    }
+
+    internal sealed class ClosedStatusGump : Packet
+    {
+        internal ClosedStatusGump()
+            : base(0xBF, 2)
+        {
+            Write(0x0009); //Packet Length
+            Write(0x000c); //Subcommand 0x0c: Closed Status Gump
+            Write(World.Player.Serial);
+        }
+    }
+
 
     internal sealed class PromptResponse : Packet
     {
