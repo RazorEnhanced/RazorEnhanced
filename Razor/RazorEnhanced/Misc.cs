@@ -323,11 +323,11 @@ namespace RazorEnhanced
         /// <param name="delay">Maximum wait.</param>
         /// <param name="showContext">Show context menu in-game. (default: True)</param>
         /// <returns>A List of Context objects.</returns>
-        public static List<Context> WaitForContext(int serial, int delay, bool showContext=true) // Delay in MS
+        public static List<Context> WaitForContext(int serial, int delay, bool showContext=false) // Delay in MS
         {
             if (!showContext)
             {
-                var HideUntilMax = Math.Max(1000, delay);
+                var HideUntilMax = Math.Min(3000, Math.Max(1000, delay)); // at least 1 sec, but nmo more than 3 seconds
                 Assistant.PacketHandlers.HideContextUntil = DateTime.Now.AddMilliseconds(HideUntilMax);
             }
             List<Context> retList = new List<Context>();
@@ -358,15 +358,15 @@ namespace RazorEnhanced
         }
 
         /// <param name="mob">Entity as Item object.</param>
-        public static List<Context> WaitForContext(Mobile mob, int delay) // Delay in MS
+        public static List<Context> WaitForContext(Mobile mob, int delay, bool showContext= false) // Delay in MS
         {
-            return WaitForContext(mob.Serial, delay);
+            return WaitForContext(mob.Serial, delay, showContext);
         }
 
         /// <param name="itm">Entity as Item object.</param>
-        public static List<Context> WaitForContext(Item itm, int delay) // Delay in MS
+        public static List<Context> WaitForContext(Item itm, int delay, bool showContext = false) // Delay in MS
         {
-            return WaitForContext(itm.Serial, delay);
+            return WaitForContext(itm.Serial, delay, showContext);
         }
 
         /// <summary>
