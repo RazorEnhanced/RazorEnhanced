@@ -2947,7 +2947,7 @@ namespace RazorEnhanced
                 try
                 {
                     int intOption = args[1].AsInt();                    
-                    Misc.WaitForContext((int)serial, timeout);
+                    Misc.WaitForContext((int)serial, timeout, false);
                     Misc.ContextReply((int)serial, intOption);
                     return true;
                 }
@@ -2957,7 +2957,7 @@ namespace RazorEnhanced
                 }
 
                 string option = args[1].AsString();
-                Misc.WaitForContext((int)serial, timeout);
+                Misc.WaitForContext((int)serial, timeout, false);
                 Misc.ContextReply((int)serial, option);
                 return true;
             }
