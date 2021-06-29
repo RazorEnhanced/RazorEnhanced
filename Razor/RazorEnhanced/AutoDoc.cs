@@ -1102,7 +1102,8 @@ namespace RazorEnhanced
         }
 
         public static string GetAssemblyVersion() {
-            return Assistant.Engine.Version;
+            Version v = Assembly.GetCallingAssembly().GetName().Version;
+            return string.Format("{0}.{1}.{2}.{3}", v.Major, v.Minor, v.Build, v.Revision);
         }
 
         public static bool MatchAssemblyVersion(DocContainer docs)

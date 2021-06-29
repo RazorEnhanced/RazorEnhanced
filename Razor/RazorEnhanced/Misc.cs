@@ -9,6 +9,7 @@ using System.Linq;
 using System.Drawing;
 using static RazorEnhanced.HotKey;
 using System.Windows.Forms;
+using System.IO;
 
 namespace RazorEnhanced
 {
@@ -242,15 +243,57 @@ namespace RazorEnhanced
             SendMessage(msg, 945, wait);
         }
 
+
         /// <summary>
-        /// Get the path to the Scripts directory.
+        /// Get the full path to the main Razor Enhanced folder.
+        /// This path maybe be different from the Python starting folder when RE is loaded as plugin (ex: ClassicUO)
         /// </summary>
         /// <returns>Path as text</returns>
+        public static string RazorDirectory()
+        {
+            return Assistant.Engine.RootPath;
+        }
+
+        /// <summary>
+        /// @nodoc
+        /// @rename: Misc.ScriptDirectory() 
+        /// </summary>
         public static string CurrentScriptDirectory()
         {
-            string razorPath = System.IO.Path.Combine(Assistant.Engine.RootPath, "Scripts");
-            return razorPath;
+            return ScriptDirectory();
         }
+
+        /// <summary>
+        /// Get the full path to the Scripts Directory.
+        /// </summary>
+        /// <returns>Full path to the Scripts Directory.</returns>
+        /// 
+        public static string ScriptDirectory()
+        {
+            return Path.Combine( RazorDirectory(), "Scripts");
+        }
+
+        /// <summary>
+        /// Get the full path to the Config Directory. 
+        /// </summary>
+        /// <returns>Full path to the Scripts Directory.</returns>
+        /// 
+        public static string ConfigDirectory()
+        {
+            return Path.Combine( RazorDirectory(), "Config");
+        }
+
+        /// <summary>
+        /// Get the full path to the Config Directory. 
+        /// </summary>
+        /// <returns>Full path to the Config Directory.</returns>
+        /// 
+        public static string DataDirectory()
+        {
+            return Path.Combine( RazorDirectory(), "Data");
+        }
+        
+
 
         /// <summary>
         /// Play Beep system sound.
@@ -315,7 +358,7 @@ namespace RazorEnhanced
         }
 
 
-        /// <summary>
+	    /// <summary>
         /// Return the List entry of a Context menu, of Mobile or Item objects.
         /// The function will ask the server for the List and wait for a maximum amount of time.
         /// </summary>
