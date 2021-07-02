@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Assistant
 {
@@ -49,46 +50,100 @@ namespace Assistant
 		LastValid = 0x1D
 	}
 
-	public class Item : UOEntity
-	{
-		private ItemID m_ItemID;
-		private ushort m_Amount;
-		private byte m_Direction;
+    public class Item : UOEntity
+    {
+        private ItemID m_ItemID;
+        private ushort m_Amount;
+        private byte m_Direction;
 
-		private bool m_Visible;
-		private bool m_Movable;
+        private bool m_Visible;
+        private bool m_Movable;
 
-		private bool m_PropsUpdated;
+        private bool m_PropsUpdated;
 
-		private Layer m_Layer;
-		private string m_Name;
-		private object m_Parent;
-		private int m_Price;
-		private string m_BuyDesc;
-		private List<Item> m_Items;
+        private Layer m_Layer;
+        private string m_Name;
+        private object m_Parent;
+        private int m_Price;
+        private string m_BuyDesc;
+        private List<Item> m_Items;
 
-		private bool m_IsNew;
-		private bool m_AutoStack;
+        private bool m_IsNew;
+        private bool m_AutoStack;
 
-		private byte[] m_HousePacket;
-		private int m_HouseRev;
+        private byte[] m_HousePacket;
+        private int m_HouseRev;
 
-		private byte m_GridNum;
+        private byte m_GridNum;
 
-		private bool m_Updated;
+        private bool m_Updated;
 
         private static readonly object LockingVar = new object();
-		internal bool Updated
-		{
-			get { return m_Updated; }
-			set
-			{
-				if (this.IsContainer || this.IsCorpse)
-				{
-					m_Updated = value;
-				}
-			}
-		}
+        internal bool Updated
+        {
+            get { return m_Updated; }
+            set
+            {
+                if (this.IsContainer || this.IsCorpse)
+                {
+                    m_Updated = value;
+                }
+            }
+        }
+        public class Weapon
+        {
+            [JsonProperty("name")]
+            public string Name { get; set; }
+
+            [JsonProperty("graphic")]
+            public int Graphic { get; set; }
+
+            [JsonProperty("primary")]
+            public string Primary { get; set; }
+
+            [JsonProperty("secondary")]
+            public string Secondary { get; set; }
+
+            [JsonProperty("twohanded")]
+            public bool Twohanded { get; set; }
+
+        }
+        static private ConcurrentDictionary<int, Weapon> g_weapons = LoadWeapons();
+        internal static ConcurrentDictionary<int, Weapon> Weapons { get { return g_weapons; } }
+
+        internal static ConcurrentDictionary<int, Weapon> LoadWeapons()
+        {
+            ConcurrentDictionary<int, Weapon> retSet = new ConcurrentDictionary<int, Weapon>();
+            try
+            {
+                lock (LockingVar)
+                {
+                    string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "weapons.json");
+                    if (File.Exists(pathName))
+                    {
+                        List<Weapon> weaponList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText(pathName));
+                        foreach (Weapon w in weaponList)
+                        {
+                            retSet[w.Graphic] = w;
+                        }
+                    }
+                    pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "weapons.json");
+                    if (File.Exists(pathName))
+                    {
+                        List<Weapon> weaponList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText(pathName));
+                        foreach (Weapon w in weaponList)
+                        {
+                            retSet[w.Graphic] =  w;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Error loading Config/weapons.json");
+            }
+            return retSet;
+        }
 
         public static Item Factory(Serial serial, UInt32 itemID)
         {
@@ -216,7 +271,21 @@ namespace Assistant
 				{
 					m_Layer = (Layer)this.ItemID.ItemData.Quality;
 				}
-				return m_Layer;
+
+                if ((this.ItemID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0) 
+                {
+                    Weapon w = null;
+                    bool found = Weapons.TryGetValue(this.m_ItemID, out w);
+                    if (found)
+                    {
+                        if (w.Twohanded == true && IsTwoHanded == false)
+                        {
+                            m_Layer = Layer.RightHand; // artificially 2 hand is a 1 hand (some servers allow this)
+                        }
+                    }
+                }
+
+                return m_Layer;
 			}
 			set
 			{
@@ -792,12 +861,28 @@ namespace Assistant
 			get
 			{
 				ushort iid = m_ItemID.Value;
-				return (
+                if (World.Player != null) // non loggato
+                {
+                    if (m_PropsUpdated)
+                    { 
+                        foreach (var prop in m_ObjPropList.Content)
+                        {
+                            string propString = prop.ToString();
+                            if (propString.ToLower().Contains("one-handed"))
+                                return false;
+                        }
+                    }
+                }
+                Weapon w = null;
+                bool found = Weapons.TryGetValue(iid, out w);
+                if (found)
+                    return w.Twohanded;
+
+                return (
 						// everything in layer 2 except shields is 2handed
 						Layer == Layer.LeftHand &&
 						!((iid >= 0x1b72 && iid <= 0x1b7b) || IsVirtueShield) // shields
 					) ||
-
 					// and all of these layer 1 weapons:
 					(iid == 0x13fc || iid == 0x13fd) || // hxbow
 					(iid == 0x13AF || iid == 0x13b2) || // war axe & bow
