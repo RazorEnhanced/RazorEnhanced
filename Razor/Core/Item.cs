@@ -382,7 +382,7 @@ namespace Assistant
 
                     if (RazorEnhanced.Settings.General.ReadBool("AutoSearch")
                         && IsContainer
-                        && !(IsPouch && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
+                        && !(IsSearchable && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
                         && !this.IsBagOfSending
                         )
                     {
@@ -394,7 +394,7 @@ namespace Assistant
                             Item icheck = (Item)Contains[c];
                             if (icheck.IsContainer)
                             {
-                                if (icheck.IsPouch && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
+                                if (icheck.IsSearchable && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
                                     continue;
                                 if (icheck.IsBagOfSending)
                                     continue;
@@ -629,28 +629,45 @@ namespace Assistant
 
 		internal bool OnGround { get { return Container == null; } }
 
-
-        internal static ConcurrentHashSet<int> LoadContainersData()
+        public class ContainerData
         {
-            lock (LockingVar)
-            {
-                string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "ContainersData.json");
-                if (File.Exists(pathName))
-                {
-                    string containersData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(containersData);
-                }
-                pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
-                if (File.Exists(pathName))
-                {
-                    string containersData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(containersData);
-                }
-            }
-                return new ConcurrentHashSet<int>();
+                [JsonProperty("ItemID")]
+                public int ItemID { get; set; }
+
+                [JsonProperty("Searchable")]
+                public bool Searchable { get; set; }
         }
 
-        internal static ConcurrentHashSet<int> m_containerID = LoadContainersData();
+        internal static ConcurrentDictionary<int, ContainerData> LoadContainersData()
+        {
+            ConcurrentDictionary<int, ContainerData> retContData = new ConcurrentDictionary<int, ContainerData>();
+            lock (LockingVar)
+            {
+                string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
+                if (File.Exists(pathName))
+                {
+                    string containersData = File.ReadAllText(pathName);
+                    List<ContainerData> contData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ContainerData>>(containersData);
+                    foreach (var cont in contData)
+                    {
+                        retContData[cont.ItemID] = cont;
+                    }
+                }
+                pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "ContainersData.json");
+                if (File.Exists(pathName))
+                {
+                    string containersData = File.ReadAllText(pathName);
+                    List<ContainerData> contData = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ContainerData>>(containersData);
+                    foreach (var cont in contData)
+                    {
+                        retContData[cont.ItemID] = cont;
+                    }
+                }
+            }
+            return retContData;
+        }
+
+        internal static ConcurrentDictionary<int, ContainerData> m_containerID = LoadContainersData();
 
 		internal bool IsContainer
 		{
@@ -662,7 +679,7 @@ namespace Assistant
 				if (m_Items.Count > 0)
 					return true;
 
-				if (m_containerID.Contains(m_ItemID.Value))
+				if (m_containerID.ContainsKey(m_ItemID.Value))
 					return true;
 				else
 					return false;
@@ -745,9 +762,21 @@ namespace Assistant
 			get { return m_ItemID.Value >= 0x4000; }
 		}
 
-		internal bool IsPouch
+		internal bool IsSearchable
 		{
-			get { return m_ItemID.Value == 0x0E79; }
+            get
+            {
+                if (IsCorpse)
+                    return false;
+
+                if (m_Items.Count > 0)
+                    return true;
+
+                if (m_containerID.ContainsKey(m_ItemID.Value))
+                    return m_containerID[m_ItemID.Value].Searchable;
+                else
+                    return m_ItemID.Value == 0x0E79; 
+            }
 		}
 
 		internal bool IsCorpse
