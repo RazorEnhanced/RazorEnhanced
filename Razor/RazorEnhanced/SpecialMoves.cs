@@ -194,7 +194,7 @@ namespace Assistant
 		private static int[] NunchakuID = new int[] { 0x27AE, 0x27F9 };
 		private static int[] SerpentstoneStaffID = new int[] { 0x0906, 0x406F };
 		private static int[] TessenID = new int[] { 0x27A3, 0x27EE };
-		private static int[] TetsuboID = new int[] { 0x27A3, 0x27EE };
+		private static int[] TetsuboID = new int[] { 0x27A6 };
 		private static int[] ElvenCompositeLongbowID = new int[] { 0x2D1E, 0x2D2A };
 		private static int[] MagicalShortbowID = new int[] { 0x2D1F, 0x2D2B };
 		private static int[] YumiID = new int[] { 0x27A5, 0x27F0 };
@@ -242,7 +242,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID, GargishButcherKnifeID, AssassinSpikeID ),
 			new AbilityInfo( AOSAbility.LightningArrow, MagicalShortbowID ),
 			new AbilityInfo( AOSAbility.Feint, BokutoID, DaishoID, GargishDaishoID, GargishTessenID, TessenID, LeafbladeID ),
-			new AbilityInfo( AOSAbility.FrenziedWhirlwind, WakizashiID ),
+			new AbilityInfo( AOSAbility.FrenziedWhirlwind, WakizashiID, TetsuboID ),
 			new AbilityInfo( AOSAbility.ForceArrow, ElvenCompositeLongbowID ),
 			//new AbilityInfo( AOSAbility.MortalStrike ), // not primary for anything
 			new AbilityInfo( AOSAbility.MovingShot, HeavyCrossbowID, CycloneID ),
@@ -261,7 +261,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
 			new AbilityInfo( AOSAbility.BleedAttack, LargeBattleAxeID, WarAxeID, ElvenSpellbladeID, BoomerangID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID),
-			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
+			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID, TetsuboID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
 			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID, GargishButcherKnifeID, DiscMaceID, DualPointedSpearID, GargishWarForkID, UOPSword ),
 			new AbilityInfo( AOSAbility.Dismount, BardicheID, AxeID, BladedStaffID, ClubID, PitchforkID, HeavyCrossbowID, GargishAxeID, GargishBardicheID, GargishTalwarID, SerpentstoneStaffID ),
