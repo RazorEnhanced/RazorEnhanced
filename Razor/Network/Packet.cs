@@ -875,7 +875,7 @@ namespace Assistant
 			if (fullLen >= 4)
 			{
 				int packLen = ReadInt32(); // Decompressed Gump data length (DLen or DTxtLen)
-				destLen = packLen;
+				destLen = packLen + 1000;
 
 				if (destLen < 0)
 					destLen = 0;
@@ -884,7 +884,8 @@ namespace Assistant
 
 				if (fullLen > 4 && destLen > 0)
 				{
-					if (DLLImport.ZLib.uncompress(buff, ref destLen, CopyBytes(this.Position, fullLen - 4), fullLen - 4) != ZLibError.Z_OK)
+                    var result = DLLImport.ZLib.uncompress(buff, ref destLen, CopyBytes(this.Position, fullLen - 4), fullLen - 4);
+                    if (result != ZLibError.Z_OK)
 					{
 						destLen = 0;
 						buff = new byte[1];

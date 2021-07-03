@@ -16,11 +16,63 @@ namespace RazorEnhanced
     
 	public class Gumps
 	{
+
+        public class GumpData
+        {
+            // vars used to build it
+            public uint gumpId;
+            public uint serial;
+            public uint x;
+            public uint y;
+            public string gumpDefinition;
+            public List<string> gumpStrings;
+            //  data returned
+            public bool hasResponse;
+            public int buttonid;
+            public List<int> switches;
+            public List<string> text;
+            public List<int> textID;
+        }
+
+        internal static Dictionary<uint, GumpData> m_gumpData = new Dictionary<uint, GumpData>();
+
         /// <summary>
-        /// Close a specific Gump.
+        /// Hack some gump test stuff
         /// </summary>
-        /// <param name="gumpid">ID of the gump</param>
-		public static void CloseGump(uint gumpid)
+        ///
+		public static void SendGump(uint gumpid, uint serial, uint x, uint y, 
+            string gumpDefinition, List<string> gumpStrings)
+        {
+            GumpData gd = new GumpData();
+            gd.gumpId = gumpid;
+            gd.serial = serial;
+            gd.x = x;
+            gd.y = y;
+            gd.hasResponse = false;
+            gd.gumpDefinition = gumpDefinition;
+            gd.gumpStrings = new List<string>();
+            gd.gumpStrings.AddRange(gumpStrings);
+            //
+            m_gumpData[gumpid] = gd;
+            GenericGump gg = new GenericGump(gumpid, serial, x, y, gumpDefinition, gumpStrings);
+            Assistant.Client.Instance.SendToClientWait(gg);
+        }
+        public static GumpData GetGumpData(uint gumpid)
+        {
+            GumpData gd = null;
+            if (Gumps.m_gumpData.ContainsKey(gumpid))
+            {
+                gd = Gumps.m_gumpData[gumpid];
+
+            }
+            return gd;
+        }
+
+            /// <summary>
+            /// Close a specific Gump.
+            /// </summary>
+            /// <param name="gumpid">ID of the gump</param>
+            public static void CloseGump(uint gumpid)
 		{
 			if (gumpid == 0)
 		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
@@ -69,27 +121,38 @@ namespace RazorEnhanced
         /// <param name="gumpid">ID of the gump. (0: any)</param>
         /// <param name="delay">Maximum wait, in milliseconds.</param>
 		public static void WaitForGump(uint gumpid, int delay) // Delay in MS
-		{
-			int subdelay = delay;
-			if (gumpid == 0)
-			{
-				while (World.Player.HasGump != true && subdelay > 0)
-				{
-					Thread.Sleep(2);
-					subdelay -= 2;
-				}
-			}
-			else
-			{
-				while (World.Player.HasGump != true && World.Player.CurrentGumpI != gumpid && subdelay > 0)
-				{
-					Thread.Sleep(2);
-					subdelay -= 2;
-				}
-			}
-
-
-		}
+        {
+            int subdelay = delay;
+            if (gumpid == 0)
+            {
+                while (World.Player.HasGump != true && subdelay > 0)
+                {
+                    Thread.Sleep(2);
+                    subdelay -= 2;
+                }
+            }
+            else
+            {
+                Gumps.GumpData gd = null;
+                if (Gumps.m_gumpData.ContainsKey(gumpid))
+                {
+                    gd = Gumps.m_gumpData[gumpid];
+                    while (gd.hasResponse != true && subdelay > 0)
+                    {
+                        Thread.Sleep(2);
+                        subdelay -= 2;
+                    }
+                }
+                else
+                {
+                    while (World.Player.HasGump != true && World.Player.CurrentGumpI != gumpid && subdelay > 0)
+                    {
+                        Thread.Sleep(2);
+                        subdelay -= 2;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Send a Gump response by gumpid and buttonid.
