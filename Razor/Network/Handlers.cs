@@ -2392,8 +2392,21 @@ namespace Assistant
 
 			Serial ser = p.ReadUInt32();
 			uint tid = p.ReadUInt32();
-			int bid = p.ReadInt32();
-			List<int> switchesid = new List<int>();
+            Gumps.GumpData gd = null;
+            if (Gumps.m_gumpData.ContainsKey(tid))
+            {
+                args.Block = true;
+                gd = Gumps.m_gumpData[tid];
+                gd.switches = new List<int>();
+                gd.text = new List<string>();
+                gd.textID = new List<int>();
+            }
+
+            int bid = p.ReadInt32();
+            if (gd != null)
+                gd.buttonid = bid;
+
+            List<int> switchesid = new List<int>();
 
 			RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, tid, bid);
 
@@ -2410,8 +2423,12 @@ namespace Assistant
 			{
 				switches[i] = p.ReadInt32();
 				switchesid.Add(switches[i]);
-			}
-			RazorEnhanced.GumpInspector.GumpResponseAddLogSwitchID(switchesid);
+                if (gd != null)
+                {
+                    gd.switches.Add(switches[i]);
+                }
+            }
+            RazorEnhanced.GumpInspector.GumpResponseAddLogSwitchID(switchesid);
 			int ec = p.ReadInt32();
 			if (ec < 0 || ec > 2000)
 				return;
@@ -2424,15 +2441,26 @@ namespace Assistant
 				if (len >= 240)
 					return;
 				string text = p.ReadUnicodeStringSafe(len);
+                if (gd != null)
+                {
+                    gd.text.Add(text);
+                    gd.textID.Add(id);
+                }
 
-				RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(id, text);
+                RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(id, text);
 			}
 
 			RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_GumpsResponse(tid, bid);
-		}
+
+            if (gd != null)
+            {
+                args.Block = true;
+                gd.hasResponse = true;
+            }
+        }
 
 		private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -3119,7 +3147,7 @@ namespace Assistant
 			World.Player.Warmode = p.ReadBoolean();
 		}
 
-		private static void CustomHouseInfo(PacketReader p, PacketHandlerEventArgs args)
+		internal static void CustomHouseInfo(PacketReader p, PacketHandlerEventArgs args)
 		{
 			p.ReadByte(); // compression
 			p.ReadByte(); // Unknown
@@ -3132,7 +3160,7 @@ namespace Assistant
 			}
 		}
 
-		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
+		internal static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
 			// Packet Build
 			// BYTE[1] Cmd

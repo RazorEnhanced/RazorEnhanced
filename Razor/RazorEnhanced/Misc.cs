@@ -370,7 +370,7 @@ namespace RazorEnhanced
         {
             if (!showContext)
             {
-                var HideUntilMax = Math.Min(3000, Math.Max(1000, delay)); // at least 1 sec, but nmo more than 3 seconds
+                var HideUntilMax = Math.Min(10000, Math.Max(1000, delay)); // at least 1 sec, but nmo more than 10 seconds
                 Assistant.PacketHandlers.HideContextUntil = DateTime.Now.AddMilliseconds(HideUntilMax);
             }
             List<Context> retList = new List<Context>();
