@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 
 namespace Assistant
 {
@@ -871,6 +872,85 @@ namespace Assistant
 
         }
     }
+
+    // Doesn't seem to work right, puts up a fixed gump, ignores text 
+    internal sealed class DisplaySignGump : Packet
+    {
+        internal DisplaySignGump()
+            : base(0x8B)
+        {
+            string text = "Text Test";
+            string caption = "Caption Test";
+            int gumpid = 990099;
+            EnsureCapacity(3 + 4 + 2 + 2 + text.Length + 2 + caption.Length);            
+            Write((int)World.Player.Serial);
+            Write((ushort)gumpid);
+            Write((ushort)text.Length);
+            WriteAsciiNull(text);
+            Write((ushort)caption.Length);
+            WriteAsciiNull(caption);
+        }
+    }
+
+    // Doesn't seem to work right, puts up a fixed gump, ignores text 
+    internal sealed class GenericGump : Packet
+    {
+        internal GenericGump(uint gumpid, uint serial, uint x, uint y,
+            string gumpDefinition, List<string> gumpStrings)
+            : base(0xDD)
+        {
+            string compGumpEntries = "";
+            string compGumpStrings = "";
+            uint gumpId = gumpid;
+            uint gumpSerial = serial;
+            uint gumpX = x;
+            uint gumpY = y;
+            //uint packedLength = 182;
+            //uint linesCount = 0;
+            //uint uncompGumpStringsLength = 543;
+            EnsureCapacity(4 + 4 + 4 + 4 + 4 + 4 + compGumpEntries.Length + 4 + 4 + 4 + 4 + compGumpStrings.Length);
+            Write((uint) gumpSerial);
+            Write((uint) gumpId);
+            Write((uint) gumpX);
+            Write((uint)gumpY);
+
+            byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
+            int destLen = dest.Length;
+            bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+            Write((uint)destLen + 4);
+            Write((uint) gumpDefinition.Length);
+            Write((byte[])dest, 0, destLen);
+            Write((uint)gumpStrings.Count);
+
+            int uncompressedSize = 0;
+            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            {
+                foreach (string s in gumpStrings)
+                {
+                    short len = (short)s.Length;
+                    byte[] lenBytes = BitConverter.GetBytes(len);
+                    ms.WriteByte(lenBytes[1]);
+                    ms.WriteByte(lenBytes[0]);
+                    uncompressedSize += 2;
+                    char[] charArray = new char[len];
+                    s.CopyTo(0, charArray, 0, len);
+                    byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(s);
+                    uncompressedSize += bytes.Length;
+                    ms.Write(bytes, 0, bytes.Length);
+                }                
+                //ms.Flush();
+                byte[] textBuffer = ms.ToArray();
+                int compressedSize = uncompressedSize;
+                byte[] compressedData = new byte[uncompressedSize]; // compressed SHOULD be smalled than uncompressed
+                bool worked2 = (DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length) == ZLibError.Z_OK);
+
+                Write((uint)compressedSize + 4);
+                Write((uint)textBuffer.Length);
+                Write((byte[])compressedData, 0, compressedSize);
+            }
+        }
+    }
+
 
     internal sealed class CloseGump : Packet
     {

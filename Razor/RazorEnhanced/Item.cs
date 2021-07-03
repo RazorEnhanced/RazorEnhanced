@@ -201,7 +201,7 @@ namespace RazorEnhanced
         /// True: if the item is a pouch - False: otherwise.
         /// </summary>
 
-        public bool IsPouch { get { return m_AssistantItem.IsPouch; } }
+        public bool IsSearchable { get { return m_AssistantItem.IsSearchable; } }
 
         /// <summary>
         /// True: if the item is a corpse - False: otherwise.
