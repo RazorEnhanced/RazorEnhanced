@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Scripting;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
+using System.Linq;
 
 namespace RazorEnhanced
 {
@@ -56,15 +57,13 @@ namespace RazorEnhanced
 
             if (File.Exists(path))
             {
-                using (StreamReader ip = new StreamReader(path))
-                {
-                    string line;
+                using StreamReader ip = new StreamReader(path);
+                string line;
 
-                    while ((line = ip.ReadLine()) != null)
-                    {
-                        if (line.Length > 0 && !line.StartsWith("#"))
-                            list.Add(line);
-                    }
+                while ((line = ip.ReadLine()) != null)
+                {
+                    if (line.Length > 0 && !line.StartsWith("#"))
+                        list.Add(line);
                 }
             }
 
@@ -72,9 +71,8 @@ namespace RazorEnhanced
             return list;
         }
 
-        private bool ManageCompileResult(CompilerResults results, out List<string> errorwarnings)
+        private bool ManageCompileResult(CompilerResults results, ref List<string> errorwarnings)
         {
-            errorwarnings = new List<string>();
             bool has_error = true;
 
             if (results.Errors.HasErrors)
@@ -114,8 +112,11 @@ namespace RazorEnhanced
 
         public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
         {
-            CompilerOptions opt = new CompilerOptions();
-            CSharpCodeProvider provider = new CSharpCodeProvider(opt);
+            CompilerOptions opt = new();
+            CSharpCodeProvider provider = new(opt);
+
+
+            string myTempFile = Path.Combine(Path.GetTempPath(), "re_script.cs");
 
             Misc.SendMessage("Compiling C# Script");
             CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
@@ -123,7 +124,8 @@ namespace RazorEnhanced
             Misc.SendMessage("Compile Done");
 
             assembly = null;
-            bool has_error = ManageCompileResult(results, out errorwarnings);
+            errorwarnings = new();
+            bool has_error = ManageCompileResult(results, ref errorwarnings);
             if (has_error)
             {
                 var error = results.Errors[0];
@@ -144,21 +146,102 @@ namespace RazorEnhanced
         // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
         public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
         {
-            CompilerOptions opt = new CompilerOptions();
-            CSharpCodeProvider provider = new CSharpCodeProvider(opt);
+            assembly = null;
+            errorwarnings = new();
+
+            List<string> filesList = new() { }; // List of files.
+            FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
+            if (errorwarnings.Count > 0)
+            {
+                return false;
+            }
+
+            CompilerOptions opt = new();
+            CSharpCodeProvider provider = new(opt);
 
             Misc.SendMessage("Compiling C# Script");
             CompilerParameters compileParameters = CompilerSettings(debug);
-            CompilerResults results = provider.CompileAssemblyFromFile(compileParameters, path); // Compiling
+            CompilerResults results = provider.CompileAssemblyFromFile(compileParameters, filesList.ToArray()); // Compiling
             Misc.SendMessage("Compile Done");
 
-            assembly = null;
-            bool has_error = ManageCompileResult(results, out errorwarnings);
+            bool has_error = ManageCompileResult(results, ref errorwarnings);
             if (!has_error)
             {
                 assembly = results.CompiledAssembly;
             }
             return has_error;
+        }
+
+        /// <summary>
+        /// This function search for our custom directive //#import that allows import classes from other C# files
+        /// The directive must be added anywhere before the namespace and can be used in C stile with <> or ""
+        /// Using relative path with <> the base directory will the Scripts folder
+        /// 
+        /// </summary>
+        /// <param name="sourceFile">Full path of the source file</param>
+        /// <param name="filesList">List of all files that must be compiled (it's a recursive list)</param>
+        /// <param name="errorwarnings">List of error and warnings</param>
+        void FindAllIncludedCSharpScript(string sourceFile, ref List<string>filesList, ref List<string> errorwarnings)
+        {
+            const string directive = "//#import";
+
+            if (!File.Exists(sourceFile))
+            {
+                errorwarnings.Add(string.Format("Error on directive {0}. Unable to find {1}",directive, sourceFile));
+                return;
+            }
+
+            string basepath = Path.GetDirectoryName(sourceFile); // BasePath of the imported file
+            filesList.Add(sourceFile);
+
+            // Searching first all the lines with the directive
+            List<string> imports = new();
+            foreach (string line in File.ReadAllLines(sourceFile))
+            {
+                if (line.Contains(directive))
+                {
+                    string file = line.Replace(directive, "").Trim();
+                    imports.Add(file);
+                }
+
+                // If namespace directive is found stop searching
+                if (line.Contains("namespace")) { break; }
+            }
+
+            // If nothing is found return only the main file
+            if (imports.Count == 0) { return; }
+
+            // Parsing each line
+            int lineCnt = 0;
+            foreach (string line in imports)
+            {
+                string file = "";
+                lineCnt++; // Count lines from 1
+                if (line.StartsWith("<") && line.EndsWith(">"))
+                {
+                    // Relative path. Adding base folder
+                    file = line.Substring(1, line.Length - 2); // Removes < >
+                    file = Path.GetFullPath(Path.Combine(Assistant.Engine.RootPath, "Scripts", file)); // Basepath is Scripts folder
+                }
+                else if(line.StartsWith("\"") && line.EndsWith("\""))
+                {
+                    // Absolute path. Adding as is
+                    file = line.Substring(1, line.Length - 2); // Removes " "
+                    file = Path.GetFullPath(file); // This should resolve the relative ../ path
+                }
+                else
+                {
+                    errorwarnings.Add(string.Format("Error on RE Directive {0} at line {1}", directive, lineCnt));
+                    break;
+                }
+
+                // I search if already exists in the filesList
+                var match = filesList.FirstOrDefault(stringToCheck => stringToCheck.Contains(file));
+                if (match == null)
+                {
+                    FindAllIncludedCSharpScript(file, ref filesList, ref errorwarnings);
+                }
+            }
         }
 
         public void Execute(Assembly assembly)
