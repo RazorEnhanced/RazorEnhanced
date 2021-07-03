@@ -8863,7 +8863,7 @@ namespace Assistant
             AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater8.xml");
         }
 
-            private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {
             if (Client.IsOSI)
             {

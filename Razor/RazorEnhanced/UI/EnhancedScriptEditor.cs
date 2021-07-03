@@ -1704,16 +1704,42 @@ namespace RazorEnhanced.UI
                 string text = GetFastTextBoxText();
                 if (text.Length >= 4 && text.Substring(0, 4).ToUpper() == "//C#")
 				{
+					if (m_Filepath == "")
+                    {
+						SetErrorBox("Due to a limitation, C# scripts must be saved before run it");
+						throw new Exception();
+					} 
+					else
+                    {
+						Save();
+						SetErrorBox(m_Filename + " saved");
+					}
+
 					CSharpEngine csharpEngine = CSharpEngine.Instance;
 
+					// Changed the logic: Now scripts are not executed as a text tring. Text will be saved and executed as a file.
+					// This change simplify alot the management of the #import directive. This behaviour should change in future maybe with a new editor
+					// 
 					// If compile error occurs a SyntaxErrorException is thrown
-					bool compileErrors = csharpEngine.CompileFromText(text, out StringBuilder compileMessages, out Assembly assembly);
-					if (compileMessages.Length > 0)
+					//bool compileErrors = csharpEngine.CompileFromText(text, out List<string> compileMessages, out Assembly assembly);
+					bool compileErrors = csharpEngine.CompileFromFile(m_Filepath, true, out List<string> compileMessages, out Assembly assembly);
+
+					if (compileMessages.Count > 0)
 					{
 						SetErrorBox("C# compile warning:");
-						SetErrorBox(compileMessages.ToString());
+						foreach (string str in compileMessages)
+						{
+							SetErrorBox(str);
+						}
 					}
-					csharpEngine.Execute(assembly);
+					if (assembly != null)
+					{
+						csharpEngine.Execute(assembly);
+					}
+					else
+                    {
+						throw new Exception();
+					}
 
 					SetErrorBox("Script " + m_Filename + " run completed!");
 					SetStatusLabel("IDLE", Color.DarkTurquoise);
