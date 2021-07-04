@@ -53,39 +53,21 @@ namespace Assistant
 
 		public int CompareTo(object o)
 		{
-			if (o == null)
-            {
-                return 1;
-            }
-            else if (!(o is Serial))
-            {
-                throw new ArgumentException();
-            }
+			if (o == null) return 1;
+			else if (!(o is Serial)) throw new ArgumentException();
 
-            uint ser = ((Serial)o).m_Serial;
+			uint ser = ((Serial)o).m_Serial;
 
-			if (m_Serial > ser)
-            {
-                return 1;
-            }
-            else if (m_Serial < ser)
-            {
-                return -1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+			if (m_Serial > ser) return 1;
+			else if (m_Serial < ser) return -1;
+			else return 0;
+		}
 
 		public override bool Equals(object o)
 		{
-			if (o == null || !(o is Serial))
-            {
-                return false;
-            }
+			if (o == null || !(o is Serial)) return false;
 
-            return ((Serial)o).m_Serial == m_Serial;
+			return ((Serial)o).m_Serial == m_Serial;
 		}
 
 		public static bool operator ==(Serial l, Serial r)
@@ -126,14 +108,10 @@ namespace Assistant
 		public static Serial Parse(string s)
 		{
 			if (s.StartsWith("0x"))
-            {
-                return Convert.ToUInt32(s.Substring(2), 16);
-            }
-            else
-            {
-                return Convert.ToUInt32(s);
-            }
-        }
+				return (Serial)Convert.ToUInt32(s.Substring(2), 16);
+			else
+				return (Serial)Convert.ToUInt32(s);
+		}
 
 		public static implicit operator uint(Serial a)
 		{

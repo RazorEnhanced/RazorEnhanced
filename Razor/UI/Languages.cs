@@ -591,30 +591,23 @@ namespace Assistant
         {
             name = String.Format("{0}::Text", name);
             if (m_Controls.ContainsKey(name))
-            {
                 return m_Controls[name] as string;
-            }
             else
-            {
                 return null;
-            }
         }
 
         static Language()
         {
             m_Controls = new Hashtable(32, 1.0f, StringComparer.OrdinalIgnoreCase);
-            m_Strings = new Hashtable(LocString.__End - LocString.__Start + 1, 1.0f);
+            m_Strings = new Hashtable((int) (LocString.__End - LocString.__Start) + 1, 1.0f);
         }
 
         public static string GetString(LocString key)
         {
             string value = m_Strings[key] as string;
             if (value == null)
-            {
                 value = String.Format("LanguageString \"{0}\" not found!",
                     key); //throw new MissingFieldException( String.Format( "Razor requested Language Pack string '{0}', but it does not exist in the current language pack.", key ) );
-            }
-
             return value;
         }
 
@@ -622,19 +615,12 @@ namespace Assistant
         {
             string value = null;
             if (key > (uint) LocString.__Start && key < (uint) LocString.__End)
-            {
                 value = m_Strings[(LocString) key] as string;
-            }
             else if (m_CliLoc != null)
-            {
                 value = m_CliLoc.GetString(key);
-            }
 
             if (value == null)
-            {
                 value = String.Format("LanguageString \"{0}\" not found!", key);
-            }
-
             return value;
         }
 
@@ -657,15 +643,9 @@ namespace Assistant
         {
             string value = null;
             if (m_CliLoc != null)
-            {
                 value = m_CliLoc.GetString(1044060 + skill);
-            }
-
             if (value == null)
-            {
                 value = String.Format("LanguageString \"{0}\" not found!", 1044060 + skill);
-            }
-
             return value;
         }
 
@@ -673,19 +653,14 @@ namespace Assistant
         {
             lang = lang.ToUpper();
             if (m_Current != null && m_Current == lang)
-            {
                 return true;
-            }
 
             m_CliLocName = "enu";
             string filename = Path.Combine(Assistant.Engine.RootPath,
                 "Language", String.Format("Razor_lang.{0}", lang));
 
             if (!File.Exists(filename))
-            {
                 return false;
-            }
-
             m_Current = lang;
             ArrayList errors = new ArrayList();
             Encoding encoding = Encoding.ASCII;
@@ -700,13 +675,9 @@ namespace Assistant
 
                     if (line == "" || line[0] == '#' || line[0] == ';' ||
                         (line.Length >= 2 && line[0] == '/' && line[1] == '/'))
-                    {
                         continue;
-                    }
                     else if (lower == "[controls]" || lower == "[strings]")
-                    {
                         break;
-                    }
 
                     if (lower.StartsWith("::encoding"))
                     {
@@ -714,9 +685,7 @@ namespace Assistant
                         {
                             int idx = lower.IndexOf('=') + 1;
                             if (idx > 0 && idx < lower.Length)
-                            {
                                 encoding = Encoding.GetEncoding(line.Substring(idx).Trim());
-                            }
                         }
                         catch
                         {
@@ -752,10 +721,7 @@ namespace Assistant
                         lineNum++;
                         if (line == "" || line[0] == '#' || line[0] == ';' ||
                             (line.Length >= 2 && line[0] == '/' && line[1] == '/'))
-                        {
                             continue;
-                        }
-
                         string lower = line.ToLower();
                         if (lower == "[controls]")
                         {
@@ -771,10 +737,7 @@ namespace Assistant
                         {
                             idx = lower.IndexOf('=') + 1;
                             if (idx > 0 && idx < lower.Length)
-                            {
                                 m_CliLocName = lower.Substring(idx).Trim().ToUpper();
-                            }
-
                             continue;
                         }
                         else if (lower.StartsWith("::encoding"))
@@ -793,13 +756,9 @@ namespace Assistant
                         string value = line.Substring(idx + 1).Trim().Replace("\\n", "\n");
 
                         if (controls)
-                        {
                             m_Controls[key] = value;
-                        }
                         else
-                        {
                             m_Strings[(LocString) Convert.ToInt32(key)] = value;
-                        }
                     }
                     catch
                     {
@@ -815,9 +774,7 @@ namespace Assistant
                 sb.AppendFormat("Razor enountered errors on the following lines while loading the file '{0}'\r\n",
                     filename);
                 for (int i = 0; i < errors.Count; i++)
-                {
                     sb.AppendFormat("Line {0}\r\n", errors[i]);
-                }
 
                 MessageBox.Show("Language Pack Load Errors \r\n" + sb.ToString(), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -831,9 +788,7 @@ namespace Assistant
         public static void LoadCliLoc()
         {
             if (m_CliLocName == null || m_CliLocName.Length <= 0)
-            {
                 m_CliLocName = "enu";
-            }
 
             try
             {
@@ -873,75 +828,53 @@ namespace Assistant
         public static string GetCliloc(int num)
         {
             if (m_CliLoc == null)
-            {
                 return String.Empty;
-            }
 
             StringEntry se = m_CliLoc.GetEntry(num);
 
             if (se != null)
-            {
                 return se.Format();
-            }
             else
-            {
                 return string.Empty;
-            }
         }
 
         public static string ClilocFormat(int num, string argstr)
         {
             if (m_CliLoc == null)
-            {
                 return String.Empty;
-            }
 
             StringEntry se = m_CliLoc.GetEntry(num);
 
             if (se != null)
-            {
                 return se.SplitFormat(argstr);
-            }
             else
-            {
                 return string.Empty;
-            }
         }
 
         public static string ClilocFormat(int num, params object[] args)
         {
             if (m_CliLoc == null)
-            {
                 return String.Empty;
-            }
 
             StringEntry se = m_CliLoc.GetEntry(num);
 
             if (se != null)
-            {
                 return se.Format(args);
-            }
             else
-            {
                 return string.Empty;
-            }
         }
 
         private static void LoadControls(string name, System.Windows.Forms.Control.ControlCollection controls)
         {
             if (controls == null)
-            {
                 return;
-            }
 
             for (int i = 0; i < controls.Count; i++)
             {
                 string find = String.Format("{0}::{1}", name, controls[i].Name);
                 string str = m_Controls[find] as string;
                 if (str != null)
-                {
                     controls[i].Text = str;
-                }
 
                 if (controls[i] is ListView)
                 {
@@ -950,9 +883,7 @@ namespace Assistant
                         find = String.Format("{0}::{1}::{2}", name, controls[i].Name, ch.Index);
                         str = m_Controls[find] as string;
                         if (str != null)
-                        {
                             ch.Text = str;
-                        }
                     }
                 }
 
@@ -969,24 +900,17 @@ namespace Assistant
             LoadControls(form.Name, form.Controls);
             string text = m_Controls[String.Format("{0}::Text", form.Name)] as string;
             if (text != null)
-            {
                 form.Text = text;
-            }
 
             if (form is MainForm)
-            {
                 ((MainForm) form).UpdateTitle();
-            }
         }
         internal static string ParsePropsCliloc(string instring)
         {
             // Some of the free servers are putting html attributes in, so just rip them out for our purposes
             // for non-html I tested and it does nothing
             if (instring.Length == 0)
-            {
                 return "";
-            }
-
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
             doc.LoadHtml(instring);
             StringBuilder sb = new StringBuilder();
@@ -1000,9 +924,7 @@ namespace Assistant
             int i = 0;
 
             if (propString.Length > 7)
-            {
                 subprops = true;
-            }
 
             string number = string.Empty;
 
@@ -1011,12 +933,8 @@ namespace Assistant
                 if (subprops)
                 {
                     if (i > 7)
-                    {
                         if (char.IsDigit(str) || str == '-' || str == '.')
-                        {
                             number += str.ToString();
-                        }
-                    }
                 }
                 else
                 {
@@ -1025,9 +943,7 @@ namespace Assistant
                         number += str.ToString();
                     }
                     else
-                    {
                         break;
-                    }
                 }
 
                 i++;
@@ -1037,9 +953,7 @@ namespace Assistant
         internal static string ParseSubCliloc(string arg)
         {
             if (arg == null)
-            {
                 return null;
-            }
 
             string result = "";
 
@@ -1054,23 +968,15 @@ namespace Assistant
                     {
                         Ultima.StringEntry se = m_CliLoc.GetEntry(value);
                         if (se != null && se.Text != null)
-                        {
                             result += se.Text + '\t';
-                        }
                         else
-                        {
                             result += element + '\t';
-                        }
                     }
                     else
-                    {
                         result += element + '\t';
-                    }
                 }
                 else
-                {
                     result += element + '\t';
-                }
             }
 
             return result[result.Length - 1] == '\t' ? result.Substring(0, result.Length - 1) : result;

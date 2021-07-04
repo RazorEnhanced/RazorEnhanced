@@ -273,9 +273,7 @@ namespace Assistant
             short len = _packetsTable[buff[0]];
 
             if (len >= 0)
-            {
                 return len;
-            }
 
             if (length >= 3)
             {
@@ -307,13 +305,9 @@ namespace Assistant
             }
 
             if (version >= new Version(5, 0, 9, 0))
-            {
                 _packetsTable[0xE1] = -1;
-            }
             else
-            {
                 _packetsTable[0xE1] = 0x09;
-            }
 
             if (version >= new Version(6, 0, 13, 0))
             {
@@ -359,13 +353,9 @@ namespace Assistant
             }
 
             if (version >= new Version(6, 0, 14, 2))
-            {
                 _packetsTable[0xB9] = 0x05;
-            }
             else
-            {
                 _packetsTable[0xB9] = 0x03;
-            }
 
             if (version >= new Version(7, 0, 0, 0))
             {
@@ -398,13 +388,9 @@ namespace Assistant
             }
 
             if (version >= new Version(7, 0, 18, 0))
-            {
                 _packetsTable[0x00] = 0x6A;
-            }
             else
-            {
                 _packetsTable[0x00] = 0x68;
-            }
         }
     }
 }

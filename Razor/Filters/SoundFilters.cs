@@ -38,16 +38,11 @@ namespace Assistant.Filters
         public static ushort[] GetRange(ushort min, ushort max)
         {
             if (max < min)
-            {
                 return new ushort[0];
-            }
 
             ushort[] range = new ushort[max - min + 1];
             for (ushort i = min; i <= max; i++)
-            {
                 range[i - min] = i;
-            }
-
             return range;
         }
 

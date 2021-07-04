@@ -34,11 +34,8 @@ namespace RazorEnhanced
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			if (!ToolBar.Lock)
-            {
-                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Red, ButtonBorderStyle.Solid);
-            }
-
-            base.OnPaint(e);
+				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Red, ButtonBorderStyle.Solid);
+			base.OnPaint(e);
 		}
 	}
 
@@ -128,13 +125,11 @@ namespace RazorEnhanced
 		internal static void UpdateHits(int maxhits, int hits)
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
-				int percent = hits * 100 / (maxhits == 0 ? 1 : maxhits);
+				int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
 
 				m_labelTextHitsBHV.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
 				m_labelBarHitsBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
@@ -157,13 +152,11 @@ namespace RazorEnhanced
 		internal static void UpdateStam(int maxstam, int stam)
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
-				int percent = stam * 100 / (maxstam == 0 ? 1 : maxstam);
+				int percent = (int)(stam * 100 / (maxstam == 0 ? (ushort)1 : maxstam));
 
 				m_labelTextStaminaBHV.Text = "Stam: " + stam.ToString() + " / " + maxstam.ToString();
 				m_labelBarStaminaBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
@@ -186,13 +179,11 @@ namespace RazorEnhanced
 		internal static void UpdateMana(int maxmana, int mana)
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
-				int percent = mana * 100 / (maxmana == 0 ? 1 : maxmana);
+				int percent = (int)(mana * 100 / (maxmana == 0 ? (ushort)1 : maxmana));
 
 				m_labelTextManaBHV.Text = "Mana: " + mana.ToString() + " / " + maxmana.ToString();
 				m_labelBarManaBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
@@ -215,9 +206,7 @@ namespace RazorEnhanced
         internal static void UpdateTithe(int tithe)
         {
             if (m_form == null)
-            {
                 return;
-            }
 
             if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
             {
@@ -239,11 +228,9 @@ namespace RazorEnhanced
         internal static void UpdateWeight(int maxweight, int weight)
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				m_labelTextWeightBHV.Text = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
 			}
@@ -264,11 +251,9 @@ namespace RazorEnhanced
 		internal static void UpdateFollower()
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				m_labelTextFollowerBHV.Text = "Follower: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
 			}
@@ -289,39 +274,25 @@ namespace RazorEnhanced
 		private static Color GetColor(int percent)
 		{
 			if (percent <= 10)
-            {
-                return Color.DarkViolet;
-            }
-            else if (percent > 10 && percent <= 30)
-            {
-                return Color.DarkRed;
-            }
-            else if (percent > 30 && percent <= 50)
-            {
-                return Color.DarkOrange;
-            }
-            else if (percent > 50 && percent <= 70)
-            {
-                return Color.Goldenrod;
-            }
-            else if (percent > 70 && percent <= 90)
-            {
-                return Color.Gold;
-            }
-            else
-            {
-                return Color.ForestGreen;
-            }
-        }
+				return Color.DarkViolet;
+			else if (percent > 10 && percent <= 30)
+				return Color.DarkRed;
+			else if (percent > 30 && percent <= 50)
+				return Color.DarkOrange;
+			else if (percent > 50 && percent <= 70)
+				return Color.Goldenrod;
+			else if (percent > 70 && percent <= 90)
+				return Color.Gold;
+			else
+				return Color.ForestGreen;
+		}
 
 		internal static void Close()
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            Assistant.Engine.ToolBarX = m_form.Location.X;
+			Assistant.Engine.ToolBarX = m_form.Location.X;
 			Assistant.Engine.ToolBarY = m_form.Location.Y;
 
 			m_form.Close();
@@ -332,11 +303,9 @@ namespace RazorEnhanced
 		internal static void LockUnlock()
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            m_lock = !m_lock;
+			m_lock = !m_lock;
 			m_form.ContextMenu = GeneraMenu();
 			m_form.Refresh();
 			Settings.General.WriteInt("PosXToolBar", m_form.Location.X);
@@ -346,37 +315,31 @@ namespace RazorEnhanced
 		internal static void Open()
 		{
 			if (Assistant.World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+			if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
 			{
 				TitleBar.UpdateTitleBar();
 				return;
 			}
 
 			if (m_form == null)
-            {
-                DrawToolBar();
-            }
+				DrawToolBar();
 
-            UpdateAll();
+			UpdateAll();
 			UpdatePanelImage();
 			UpdateCount();
 			DLLImport.Win.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-			m_form.Opacity = Settings.General.ReadInt("ToolBarOpacity") / 100.0; ;
+			m_form.Opacity = ((double)Settings.General.ReadInt("ToolBarOpacity")) / 100.0; ;
 		}
 
 		internal static void UptateToolBarComboBox(int index, int slotlimit = 0)
 		{
 			if (slotlimit != 0)
-            {
-                m_slot = slotlimit;
-            }
+				m_slot = slotlimit;
 
-            List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 			Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
 			int i = 0;
 			foreach (RazorEnhanced.ToolBar.ToolBarItem item in items)
@@ -384,53 +347,39 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Add("Slot " + i + ": " + item.Name);
 				i++;
 				if (i >= m_slot)
-                {
-                    break;
-                }
-            }
+					break;
+			}
 			if (index > slotlimit && slotlimit != 0)
-            {
-                Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit - 1;
-            }
-            else
+				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit - 1;
+			else
 			{
 				if (Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Count > index)
-                {
-                    Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
-                }
-                else
-                {
-                    Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = -1;
-                }
-            }
+					Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
+				else
+					Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = -1;
+			}
 		}
 
 		internal static void UpdatePanelImage()
 		{
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 
 			for (int x = 0; x < m_slot; x++)
 			{
 				if (x > (m_panellist.Count - 1) || x > (items.Count - 1))
-                {
-                    return;
-                }
+					return;
 
-                if (items[x].Graphics != 0)
+				if (items[x].Graphics != 0)
 				{
 					Bitmap m_itemimage = Ultima.Art.GetStatic(items[x].Graphics);
 
 					if (m_itemimage == null) // Graph not exist
-                    {
-                        continue;
-                    }
+						continue;
 
-                    if (items[x].Color > 0)
+					if (items[x].Color > 0)
 					{
 						int hue = items[x].Color;
 						bool onlyHueGrayPixels = (hue & 0x8000) != 0;
@@ -442,11 +391,9 @@ namespace RazorEnhanced
 					m_panellist[x].BackgroundImage = m_itemimage;
 
 					if (Settings.General.ReadString("ToolBoxSizeComboBox") != "Big")
-                    {
-                        m_panellist[x].BackgroundImageLayout = ImageLayout.None;
-                    }
+						m_panellist[x].BackgroundImageLayout = ImageLayout.None;
 
-                    m_panellist[x].Enabled = true;
+					m_panellist[x].Enabled = true;
 					m_panelcount[x].Text = "0";
 					m_panellist[x].BackColor = SystemColors.Control;
 				}
@@ -478,40 +425,32 @@ namespace RazorEnhanced
 		internal static void UpdateCount()
 		{
 			if (Assistant.World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            if (Engine.MainWindow.ToolBoxStyleComboBox.Text == "TitleBar")
+			if (Engine.MainWindow.ToolBoxStyleComboBox.Text == "TitleBar")
 			{
 				TitleBar.UpdateTitleBar();
 				return;
 			}
 
 			if (m_form == null)
-            {
-                return;
-            }
+				return;
 
-            List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 
 			for (int x = 0; x < m_slot; x++)
 			{
 				if (items[x].Graphics == 0)
-                {
-                    continue;
-                }
+					continue;
 
-                int amount = Items.BackpackCount(items[x].Graphics, items[x].Color);
+				int amount = Items.BackpackCount(items[x].Graphics, items[x].Color);
 				Int32.TryParse(m_panelcount[x].Text, out int oldamount);
 				m_panelcount[x].Text = amount.ToString();
 
 				if (!items[x].Warning)
-                {
-                    continue;
-                }
+					continue;
 
-                if (amount <= items[x].WarningLimit)
+				if (amount <= items[x].WarningLimit)
 				{
 					m_panellist[x].BackColor = Color.Orange;
 					if (amount < oldamount)
@@ -656,27 +595,21 @@ namespace RazorEnhanced
 		internal static void ToolbarForm_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (m_lock)
-            {
-                return;
-            }
+				return;
 
-            m_mouseDown = true;
+			m_mouseDown = true;
 			m_lastLocation = e.Location;
 		}
 
 		internal static void ToolbarForm_MouseMove(object sender, MouseEventArgs e)
 		{
 			if (m_lock)
-            {
-                return;
-            }
+				return;
 
-            if (!m_mouseDown)
-            {
-                return;
-            }
+			if (!m_mouseDown)
+				return;
 
-            ToolBarForm.Location = new Point(
+			ToolBarForm.Location = new Point(
 				(ToolBarForm.Location.X - m_lastLocation.X) + e.X, (ToolBarForm.Location.Y - m_lastLocation.Y) + e.Y);
 
 			ToolBarForm.Update();
@@ -685,10 +618,8 @@ namespace RazorEnhanced
 		internal static void ToolbarForm_MouseUp(object sender, MouseEventArgs e)
 		{
 			if (!m_lock)
-            {
-                m_mouseDown = false;
-            }
-        }
+				m_mouseDown = false;
+		}
 
 		internal static void ToolbarForm_MouseClick(object sender, MouseEventArgs e)
 		{
@@ -734,7 +665,7 @@ namespace RazorEnhanced
 			{
 				m_labelBarHitsBHV = new Label
 				{
-					BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
 					Location = new Point(12, offsetstat + 16),
 					Name = "labelBarHits",
 					Size = new Size(100, 10),
@@ -767,7 +698,7 @@ namespace RazorEnhanced
 			{
 				m_labelBarManaBHV = new Label
 				{
-					BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
 					Location = new Point(12, offsetstat + 16),
 					Name = "labelBarMana",
 					Size = new Size(100, 10),
@@ -800,7 +731,7 @@ namespace RazorEnhanced
 			{
 				m_labelBarStaminaBHV = new Label
 				{
-					BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
 					Location = new Point(12, offsetstat + 16),
 					Name = "labelBarStamina",
 					Size = new Size(100, 10),
@@ -909,7 +840,7 @@ namespace RazorEnhanced
 					Location = new Point(0, 29),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
-							System.Drawing.GraphicsUnit.Point, 0),
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
 					Size = new Size(25, 13),
 					TabIndex = 1,
@@ -931,7 +862,7 @@ namespace RazorEnhanced
 				{
 					AutoSize = true,
 					Location = new Point(0, 29),
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Name = "panel" + i + "count",
 					Size = new Size(25, 13),
 					TabIndex = 1,
@@ -998,7 +929,7 @@ namespace RazorEnhanced
 			{
 				m_labelBarHitsBHV = new Label
 				{
-					BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
 					Location = new Point(12, offsetstat + 16),
 					Name = "labelBarHits",
 					Size = new Size(100, 5),
@@ -1027,7 +958,7 @@ namespace RazorEnhanced
 			{
 				m_labelBarManaBHV = new Label
 				{
-					BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
 					Location = new Point(12, offsetstat + 16),
 					Name = "labelBarMana",
 					Size = new Size(100, 5),
@@ -1056,7 +987,7 @@ namespace RazorEnhanced
 			{
 				m_labelBarStaminaBHV = new Label
 				{
-					BackColor = System.Drawing.Color.FromArgb(0, 192, 0),
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
 					Location = new Point(12, offsetstat + 16),
 					Name = "labelBarStamina",
 					Size = new Size(100, 5),
@@ -1154,7 +1085,7 @@ namespace RazorEnhanced
 					Location = new Point(0, 29),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
-							System.Drawing.GraphicsUnit.Point, 0),
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
 					Size = new Size(25, 13),
 					TabIndex = 1,
@@ -1179,7 +1110,7 @@ namespace RazorEnhanced
 					Location = new Point(0, 29),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
-							System.Drawing.GraphicsUnit.Point, 0),
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
 					Size = new Size(25, 13),
 					TabIndex = 1,
@@ -1234,7 +1165,7 @@ namespace RazorEnhanced
 				m_strlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1246,7 +1177,7 @@ namespace RazorEnhanced
 				m_hitlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat + 13),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1267,7 +1198,7 @@ namespace RazorEnhanced
 				m_intlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1279,7 +1210,7 @@ namespace RazorEnhanced
 				m_manalabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat + 13),
 					Name = "label1",
 					Size = new Size(48, 12),
@@ -1300,7 +1231,7 @@ namespace RazorEnhanced
 				m_dexlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1312,7 +1243,7 @@ namespace RazorEnhanced
 				m_stamlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat + 13),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1333,7 +1264,7 @@ namespace RazorEnhanced
 				m_weightlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1345,7 +1276,7 @@ namespace RazorEnhanced
 				m_weightmaxlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat + 13),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1367,7 +1298,7 @@ namespace RazorEnhanced
                 m_tithelabelSV = new Label
                 {
                     AutoSize = true,
-                    Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+                    Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Location = new Point(5, offsetstat),
                     Name = "label1",
                     Size = new Size(50, 12),
@@ -1388,7 +1319,7 @@ namespace RazorEnhanced
 				m_followerlabelSV = new Label
 				{
 					AutoSize = true,
-					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(5, offsetstat + 7),
 					Name = "label1",
 					Size = new Size(50, 12),
@@ -1417,7 +1348,7 @@ namespace RazorEnhanced
 					Location = new Point(0, 18),
 					Font =
 						new Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
-							GraphicsUnit.Point, 0),
+							GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
 					Size = new Size(10, 20),
 					TabIndex = 1,
@@ -1472,7 +1403,7 @@ namespace RazorEnhanced
 					AutoSize = false,
 					Width = 5,
 					Height = 5,
-					Font = new Font("Microsoft Sans Serif", 6.75F, FontStyle.Regular, GraphicsUnit.Point, 0),
+					Font = new Font("Microsoft Sans Serif", 6.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat + 16, 3),
 					Name = "h",
 					Size = new Size(20, 12),
@@ -1485,7 +1416,7 @@ namespace RazorEnhanced
 				m_hitslabelSH = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat, 14),
 					Name = "hitslabel",
 					Size = new Size(50, 12),
@@ -1508,7 +1439,7 @@ namespace RazorEnhanced
 					AutoSize = false,
 					Width = 5,
 					Height = 5,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat + 16, 3),
 					Name = "m",
 					Size = new Size(20, 12),
@@ -1521,7 +1452,7 @@ namespace RazorEnhanced
 				m_manalabelSH = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat, 14),
 					Name = "manalabel",
 					Size = new Size(52, 12),
@@ -1544,7 +1475,7 @@ namespace RazorEnhanced
 					AutoSize = false,
 					Width = 5,
 					Height = 5,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat + 16, 3),
 					Name = "s",
 					Size = new Size(20, 12),
@@ -1557,7 +1488,7 @@ namespace RazorEnhanced
 				m_staminalabelSH = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat, 14),
 					Name = "stamlabel",
 					Size = new Size(49, 12),
@@ -1582,7 +1513,7 @@ namespace RazorEnhanced
 					AutoSize = false,
 					Width = 5,
 					Height = 5,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat + 12, 3),
 					Name = "w",
 					Size = new Size(20, 12),
@@ -1595,7 +1526,7 @@ namespace RazorEnhanced
 				m_weightlabelSH = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat - 5, 14),
 					Name = "weightlabel",
 					Size = new Size(49, 12),
@@ -1617,7 +1548,7 @@ namespace RazorEnhanced
                     AutoSize = false,
                     Width = 5,
                     Height = 5,
-                    Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+                    Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Location = new Point(offsetstat + 12, 3),
                     Name = "t",
                     Size = new Size(20, 12),
@@ -1630,7 +1561,7 @@ namespace RazorEnhanced
                 m_tithelabelSH = new Label
                 {
                     AutoSize = true,
-                    Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+                    Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Location = new Point(offsetstat - 5, 14),
                     Name = "tithelabel",
                     Size = new Size(49, 12),
@@ -1655,7 +1586,7 @@ namespace RazorEnhanced
 					AutoSize = false,
 					Width = 5,
 					Height = 5,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat + 7, 3),
 					Name = "f",
 					Size = new Size(20, 12),
@@ -1668,7 +1599,7 @@ namespace RazorEnhanced
 				m_followerlabelSH = new Label
 				{
 					AutoSize = true,
-					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
 					Location = new Point(offsetstat, 14),
 					Name = "followerlabel",
 					Size = new Size(49, 12),
@@ -1701,7 +1632,7 @@ namespace RazorEnhanced
 					Location = new Point(0, 18),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
-							System.Drawing.GraphicsUnit.Point, 0),
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
 					Size = new Size(10, 20),
 					TabIndex = 1,
@@ -1794,7 +1725,7 @@ namespace RazorEnhanced
 			Bitmap resizedImage = new System.Drawing.Bitmap(newWidth, newHeight);
 			using (Graphics graphics = Graphics.FromImage(resizedImage))
 			{
-				System.Drawing.Graphics.FromImage(resizedImage).DrawImage(value, 0, 0, newWidth, newHeight);
+				System.Drawing.Graphics.FromImage((System.Drawing.Image)resizedImage).DrawImage(value, 0, 0, newWidth, newHeight);
 			}
 
 			return (resizedImage);
@@ -1822,16 +1753,9 @@ namespace RazorEnhanced
 							min.Y = y;
 					}
 
-					if (x > max.X)
-                        {
-                            max.X = x;
-                        }
-
-                        if (y > max.Y)
-                        {
-                            max.Y = y;
-                        }
-                    }
+					if (x > max.X) max.X = x;
+						if (y > max.Y) max.Y = y;
+					}
 				}
 			}
 			max.X += 2;

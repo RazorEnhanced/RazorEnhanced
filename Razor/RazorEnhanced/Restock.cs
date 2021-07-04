@@ -118,18 +118,14 @@ namespace RazorEnhanced
 		internal static void AddLog(string addlog)
 		{
 			if (!Client.Running)
-            {
-                return;
-            }
+				return;
 
-            Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.Items.Add(addlog));
+			Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.Items.Add(addlog));
 
 			Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.SelectedIndex = s.RestockLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.RestockLogBox.Items.Count > 300)
-            {
-                Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.Items.Clear());
-            }
-        }
+				Assistant.Engine.MainWindow.SafeAction(s => s.RestockLogBox.Items.Clear());
+		}
 
 		internal static void RefreshLists()
 		{
@@ -137,11 +133,9 @@ namespace RazorEnhanced
 
 			RestockList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.RestockListSelect.Text)
-            {
-                return;
-            }
+				return;
 
-            Assistant.Engine.MainWindow.RestockListSelect.Items.Clear();
+			Assistant.Engine.MainWindow.RestockListSelect.Items.Clear();
 			foreach (RestockList l in lists)
 			{
 				Assistant.Engine.MainWindow.RestockListSelect.Items.Add(l.Description);
@@ -164,21 +158,15 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.RestockDataGridView.Rows)
 			{
 				if (row.IsNewRow)
-                {
-                    continue;
-                }
+					continue;
 
-                int color = 0;
+				int color = 0;
 				if ((string)row.Cells[3].Value == "All")
-                {
-                    color = -1;
-                }
-                else
-                {
-                    color = Convert.ToInt32((string)row.Cells[3].Value, 16);
-                }
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.Restock.ItemInsert(Assistant.Engine.MainWindow.RestockListSelect.Text, new RestockItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, Convert.ToInt32((string)row.Cells[4].Value), check));
 			}
@@ -202,11 +190,9 @@ namespace RazorEnhanced
 					{
 						string color = "All";
 						if (item.Color != -1)
-                        {
-                            color = "0x" + item.Color.ToString("X4");
-                        }
+							color = "0x" + item.Color.ToString("X4");
 
-                        Assistant.Engine.MainWindow.RestockDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.AmountLimit.ToString() });
+						Assistant.Engine.MainWindow.RestockDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.AmountLimit.ToString() });
 					}
 
 					break;
@@ -221,21 +207,15 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.RestockDataGridView.Rows)
 			{
 				if (row.IsNewRow)
-                {
-                    continue;
-                }
+					continue;
 
-                int color = 0;
+				int color = 0;
 				if ((string)row.Cells[3].Value == "All")
-                {
-                    color = -1;
-                }
-                else
-                {
-                    color = Convert.ToInt32((string)row.Cells[3].Value, 16);
-                }
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.Restock.ItemInsert(newList, new RestockItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, Convert.ToInt32((string)row.Cells[4].Value), check));
 			}
@@ -274,20 +254,14 @@ namespace RazorEnhanced
 		private static bool ColorCheck(int colorDaLista, int colorDaItem)
 		{
 			if (colorDaLista == -1) // Wildcard colore
-            {
-                return true;
-            }
-            else
+				return true;
+			else
 			{
 				if (colorDaLista == colorDaItem) // Match OK
-                {
-                    return true;
-                }
-                else // Match fallito
-                {
-                    return false;
-                }
-            }
+					return true;
+				else // Match fallito
+					return false;
+			}
 		}
 
 		internal static int Engine(List<RestockItem> restockItemList, int mseconds, int sourceBagserial, int destinationBagserial)
@@ -305,16 +279,12 @@ namespace RazorEnhanced
 				foreach (RestockItem oggettoDaLista in restockItemList)
 				{
 					if (!oggettoDaLista.Selected)
-                    {
-                        continue;
-                    }
+						continue;
 
-                    if (oggettoContenuto.ItemID != oggettoDaLista.Graphics || !ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))
-                    {
-                        continue;
-                    }
+					if (oggettoContenuto.ItemID != oggettoDaLista.Graphics || !ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))
+						continue;
 
-                    int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
+					int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
 					AddLog("Detected:" + amountpresente + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " on destination bag.");
 					int left = oggettoDaLista.AmountLimit - amountpresente;
 					if (left > 0)
@@ -342,11 +312,8 @@ namespace RazorEnhanced
 
 			RazorEnhanced.Restock.AddLog("Finish!");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-            {
-                RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!", 945, true);
-            }
-
-            Assistant.Engine.MainWindow.RestockFinishWork();
+				RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!", 945, true);
+			Assistant.Engine.MainWindow.RestockFinishWork();
 			return 0;
 		}
 
@@ -357,11 +324,8 @@ namespace RazorEnhanced
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                {
-                    Misc.SendMessage("Restock: Invalid Source Bag", 945, true);
-                }
-
-                AddLog("Invalid Source Bag");
+					Misc.SendMessage("Restock: Invalid Source Bag", 945, true);
+				AddLog("Invalid Source Bag");
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;
 			}
@@ -369,11 +333,8 @@ namespace RazorEnhanced
 			if (dbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                {
-                    Misc.SendMessage("Restock: Invalid Destination Bag", 945, true);
-                }
-
-                AddLog("Invalid Destination Bag");
+					Misc.SendMessage("Restock: Invalid Destination Bag", 945, true);
+				AddLog("Invalid Destination Bag");
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;
 			}
@@ -420,10 +381,8 @@ namespace RazorEnhanced
         public static void FStart()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
-            {
-                Assistant.Engine.MainWindow.RestockStartExec();
-            }
-            else
+				Assistant.Engine.MainWindow.RestockStartExec();
+			else
 			{
 				Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock already running");
 			}
@@ -436,10 +395,8 @@ namespace RazorEnhanced
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
-            {
-                Assistant.Engine.MainWindow.RestockStopExec();
-            }
-            else
+				Assistant.Engine.MainWindow.RestockStopExec();
+			else
 			{
 				Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock not running");
 			}
@@ -452,14 +409,10 @@ namespace RazorEnhanced
 		public static bool Status()
 		{
 			if (m_RestockThread != null && ((m_RestockThread.ThreadState & ThreadState.Running) != 0 || (m_RestockThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_RestockThread.ThreadState & ThreadState.AbortRequested) != 0) )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+				return true;
+			else
+				return false;
+		}
 
 
         /// <summary>

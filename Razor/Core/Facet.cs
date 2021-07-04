@@ -26,11 +26,9 @@ namespace Assistant
 		internal static int Parse(string name)
 		{
 			if (string.IsNullOrEmpty(name))
-            {
-                return 0;
-            }
+				return 0;
 
-            name = name.ToLower();
+			name = name.ToLower();
 
 			switch (name)
 			{
@@ -64,10 +62,8 @@ namespace Assistant
 					foreach (HuedTile tile in tiles)
 					{
 						if (tile.Z >= z - 5 && tile.Z <= z + 5)
-                        {
-                            return tile;
-                        }
-                    }
+							return tile;
+					}
 				}
 			}
 			catch
@@ -88,45 +84,25 @@ namespace Assistant
 
 				z = zTop;
 				if (zLeft < z)
-                {
-                    z = zLeft;
-                }
+					z = zLeft;
+				if (zRight < z)
+					z = zRight;
+				if (zBottom < z)
+					z = zBottom;
 
-                if (zRight < z)
-                {
-                    z = zRight;
-                }
-
-                if (zBottom < z)
-                {
-                    z = zBottom;
-                }
-
-                top = zTop;
+				top = zTop;
 				if (zLeft > top)
-                {
-                    top = zLeft;
-                }
+					top = zLeft;
+				if (zRight > top)
+					top = zRight;
+				if (zBottom > top)
+					top = zBottom;
 
-                if (zRight > top)
-                {
-                    top = zRight;
-                }
-
-                if (zBottom > top)
-                {
-                    top = zBottom;
-                }
-
-                if (Math.Abs(zTop - zBottom) > Math.Abs(zLeft - zRight))
-                {
-                    avg = (int)Math.Floor((zLeft + zRight) / 2.0);
-                }
-                else
-                {
-                    avg = (int)Math.Floor((zTop + zBottom) / 2.0);
-                }
-            }
+				if (Math.Abs(zTop - zBottom) > Math.Abs(zLeft - zRight))
+					avg = (int)Math.Floor((zLeft + zRight) / 2.0);
+				else
+					avg = (int)Math.Floor((zTop + zBottom) / 2.0);
+			}
 			catch
 			{
 			}
@@ -144,11 +120,9 @@ namespace Assistant
 				GetAverageZ(map, xCheck, yCheck, ref landZ, ref landCenter, ref zTop);
 
 				if (zTop > oldZ)
-                {
-                    oldZ = zTop;
-                }
+					oldZ = zTop;
 
-                bool isSet = false;
+				bool isSet = false;
 				HuedTile[] staticTiles = map.Tiles.GetStaticTiles(xCheck, yCheck);
 
 				foreach (HuedTile tile in staticTiles)

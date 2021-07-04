@@ -19,11 +19,9 @@ namespace Assistant
 			if (m_Hidden && Engine.MainWindow.ChkStealth.Checked && World.Player != null)
 			{
 				if (m_Count == 0)
-                {
-                    RazorEnhanced.Misc.SendMessage(Language.Format(LocString.StealthStart), 33, false);
-                }
+					RazorEnhanced.Misc.SendMessage(Language.Format(LocString.StealthStart), 33, false);
 
-                m_Count++;
+				m_Count++;
 				RazorEnhanced.Misc.SendMessage(Language.Format(LocString.StealthSteps, m_Count), 33, false);
 			}
 		}

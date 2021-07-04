@@ -200,16 +200,12 @@ namespace RazorEnhanced
         internal static void AddLog(string addlog)
         {
             if (!Client.Running)
-            {
                 return;
-            }
 
             Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootLogBox.Items.Add(addlog));
             Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootLogBox.SelectedIndex = s.AutoLootLogBox.Items.Count - 1);
             if (Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count > 300)
-            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootLogBox.Items.Clear());
-            }
         }
 
         internal static void RefreshLists()
@@ -218,9 +214,7 @@ namespace RazorEnhanced
 
             AutoLootList selectedList = lists.FirstOrDefault(l => l.Selected);
             if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
-            {
                 return;
-            }
 
             Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
             foreach (AutoLootList l in lists)
@@ -256,15 +250,11 @@ namespace RazorEnhanced
                         {
                             string color = "All";
                             if (item.Color != -1)
-                            {
                                 color = "0x" + item.Color.ToString("X4");
-                            }
 
                             string itemid = "All";
                             if (item.Graphics != -1)
-                            {
                                 itemid = "0x" + item.Graphics.ToString("X4");
-                            }
 
                             string lootBag = "0x0";
                             lootBag = "0x" + item.LootBagOverride.ToString("X4");
@@ -286,44 +276,30 @@ namespace RazorEnhanced
             foreach (DataGridViewRow row in Assistant.Engine.MainWindow.AutoLootDataGridView.Rows)
             {
                 if (row.IsNewRow)
-                {
                     continue;
-                }
 
                 int color = 0;
                 if ((string)row.Cells[3].Value == "All")
-                {
                     color = -1;
-                }
                 else
-                {
                     color = Convert.ToInt32((string)row.Cells[3].Value, 16);
-                }
 
                 bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
                 int itemID = 0;
                 if ((string)row.Cells[2].Value == "All")
-                {
                     itemID = -1;
-                }
                 else
-                {
                     itemID = Convert.ToInt32((string)row.Cells[2].Value, 16);
-                }
 
                 int lootbagOverride = 0;
                 lootbagOverride = Convert.ToInt32((string)row.Cells[4].Value, 16);
 
 
                 if (row.Cells[5].Value != null)
-                {
                     Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, lootbagOverride, (List<AutoLootItem.Property>)row.Cells[5].Value));
-                }
                 else
-                {
                     Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, lootbagOverride, new List<AutoLootItem.Property>()));
-                }
             }
 
             Settings.Save(); // Salvo dati
@@ -333,7 +309,7 @@ namespace RazorEnhanced
 
         internal static void AddList(string newList)
         {
-            RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, 0, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
+            RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
 
             RazorEnhanced.AutoLoot.RefreshLists();
             RazorEnhanced.AutoLoot.InitGrid();
@@ -346,30 +322,20 @@ namespace RazorEnhanced
             foreach (DataGridViewRow row in Assistant.Engine.MainWindow.AutoLootDataGridView.Rows)
             {
                 if (row.IsNewRow)
-                {
                     continue;
-                }
 
                 int color = 0;
                 if ((string)row.Cells[3].Value == "All")
-                {
                     color = -1;
-                }
                 else
-                {
                     color = Convert.ToInt32((string)row.Cells[3].Value, 16);
-                }
 
                 bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
                 if (row.Cells[4].Value != null)
-                {
                     Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, Convert.ToInt32((string)row.Cells[4].Value, 16), (List<AutoLootItem.Property>)row.Cells[5].Value));
-                }
                 else
-                {
                     Settings.AutoLoot.ItemInsert(newList, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, Convert.ToInt32((string)row.Cells[4].Value, 16), new List<AutoLootItem.Property>()));
-                }
             }
 
             Settings.Save(); // Salvo dati
@@ -406,9 +372,7 @@ namespace RazorEnhanced
                 }
 
                 if (m_IgnoreCorpseList.Count > 200)
-                {
                     m_IgnoreCorpseList.Dequeue();
-                }
             }
 
         }
@@ -452,17 +416,11 @@ namespace RazorEnhanced
                 RazorEnhanced.Item m_cont = null;
 
                 if (m_sharedcont != null)
-                {
                     m_cont = m_sharedcont;
-                }
                 else if (m_OSIcont != null)
-                {
                     m_cont = m_OSIcont;
-                }
                 else
-                {
                     m_cont = corpse;
-                }
 
                 // If container is empty move on
                 if (m_cont.Contains.Count() == 0)
@@ -516,17 +474,11 @@ namespace RazorEnhanced
         internal static void GrabItem(AutoLootItem autoLoootItem, Item grabItem, int corpseserial)
         {
             foreach (SerialToGrab item in SerialToGrabList)
-            {
                 if (item.ItemSerial == grabItem.Serial)
-                {
                     return;
-                }
-            }
 
             if (!grabItem.Movable || !grabItem.Visible)
-            {
                 return;
-            }
 
             SerialToGrab data = new SerialToGrab(grabItem.Serial, corpseserial, autoLoootItem.LootBagOverride);
 
@@ -550,14 +502,10 @@ namespace RazorEnhanced
                 }
 
                 if (propsOk) // Tutte le props match OK
-                {
                     SerialToGrabList.Enqueue(data);
-                }
             }
             else // Item Senza props
-            {
                 SerialToGrabList.Enqueue(data);
-            }
         }
 
         private static Items.Filter m_corpsefilter = new Items.Filter
@@ -572,15 +520,10 @@ namespace RazorEnhanced
         internal static void AutoRun()
         {
             if (!Client.Running)
-            {
                 return;
-            }
 
             if (World.Player == null)
-            {
                 return;
-            }
-
             try
             {
                 m_corpsefilter.RangeMax = m_maxrange;
@@ -728,9 +671,7 @@ namespace RazorEnhanced
         public static void Start()
         {
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-            {
                 Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
-            }
             else
             {
                 Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = true);
@@ -743,13 +684,9 @@ namespace RazorEnhanced
         public static void Stop()
         {
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
-            {
                 Scripts.SendMessageScriptError("Script Error: Autoloot.Stop: Autoloot already sleeping");
-            }
             else
-            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = false);
-            }
         }
 
         /// <summary>

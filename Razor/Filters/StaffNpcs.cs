@@ -20,19 +20,15 @@ namespace Assistant.Filters
 			if (p.PacketID == 0x20) // Mobile update
 			{
 				if (World.Player == null)
-                {
-                    return;
-                }
+					return;
 
                 bool visible = true;
 				uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
-                {
-                    return;
-                }
+					return;
 
-                p.ReadUInt16();
+				p.ReadUInt16();
 				p.ReadSByte();  // Body
 
 				p.ReadUInt16(); // Hue
@@ -41,26 +37,20 @@ namespace Assistant.Filters
 				visible = (flags & 0x80) == 0;
 
 				if (!visible)
-                {
-                    args.Block = true;
-                }
-            }
+					args.Block = true;
+			}
 			else if (p.PacketID == 0x78)  // Mobile Incoming
 			{
 				if (World.Player == null)
-                {
-                    return;
-                }
+					return;
 
-                bool visible = true;
+				bool visible = true;
 				uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
-                {
-                    return;
-                }
+					return;
 
-                p.ReadUInt16(); // Body
+				p.ReadUInt16(); // Body
 
 				p.ReadUInt16(); //x
 				p.ReadUInt16(); //y
@@ -74,27 +64,21 @@ namespace Assistant.Filters
 				visible = (flags & 0x80) == 0;
 
 				if (!visible)
-                {
-                    args.Block = true;
-                }
-            }
+					args.Block = true;
+			}
 			else if (p.PacketID == 0x77)  // Mobile Moving
 			{
 				if (World.Player == null)
-                {
-                    return;
-                }
+					return;
 
-                bool visible = true;
+				bool visible = true;
 
 				uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
-                {
-                    return;
-                }
+					return;
 
-                p.ReadUInt16(); // Body
+				p.ReadUInt16(); // Body
 
 				p.ReadUInt16(); //x
 				p.ReadUInt16(); //y
@@ -108,32 +92,24 @@ namespace Assistant.Filters
 				visible = (flags & 0x80) == 0;
 
 				if (!visible)
-                {
-                    args.Block = true;
-                }
-            }
+					args.Block = true;
+			}
 		}
 
 		public override void OnEnable()
 		{
 			base.OnEnable();
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            foreach (Mobile m in World.Mobiles.Values)
+			foreach (Mobile m in World.Mobiles.Values)
 			{
 				if (m.Serial == World.Player.Serial)
-                {
-                    continue;
-                }
+					continue;
 
-                if (!m.Visible)
-                {
-                    Assistant.Client.Instance.SendToClient(new RemoveObject(m));
-                }
-            }
+				if (!m.Visible)
+			 		Assistant.Client.Instance.SendToClient(new RemoveObject(m));
+			}
 		}
 
 		public override void OnDisable()
@@ -141,22 +117,16 @@ namespace Assistant.Filters
 			base.OnDisable();
 
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            foreach (Mobile m in World.Mobiles.Values)
+			foreach (Mobile m in World.Mobiles.Values)
 			{
 				if (m.Serial == World.Player.Serial)
-                {
-                    continue;
-                }
+					continue;
 
-                if (!m.Visible)
-                {
-                    Assistant.Client.Instance.SendToClient(new MobileUpdate(m));
-                }
-            }
+				if (!m.Visible)
+			 		Assistant.Client.Instance.SendToClient(new MobileUpdate(m));
+			}
 		}
 	}
 }

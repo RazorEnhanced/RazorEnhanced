@@ -189,9 +189,7 @@ namespace RazorEnhanced
             {
                 System.Windows.Forms.DataGridViewRow gridRow = Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows[i];
                 if (gridRow.IsNewRow)
-                {
                     continue;
-                }
 
                 if (text == gridRow.Cells[0].Value.ToString())
                 {
@@ -295,14 +293,10 @@ namespace RazorEnhanced
 					if (entrys.Text.Contains(text))
 					{
 						if (addname)
-                        {
-                            result = entrys.Name + ": " + entrys.Text;
-                        }
-                        else
-                        {
-                            result = entrys.Text;
-                        }
-                    }
+							result = entrys.Name + ": " + entrys.Text;
+						else
+							result = entrys.Text;
+					}
 				}
 				return result;
 			}
@@ -328,13 +322,9 @@ namespace RazorEnhanced
 					if (entrys.Serial == serial)
 					{
                         if (addname)
-                        {
                             result.Add(entrys.Name + ": " + entrys.Text);
-                        }
                         else
-                        {
                             result.Add(entrys.Text);
-                        }
                     }
 				}
 				return result;
@@ -361,14 +351,10 @@ namespace RazorEnhanced
 					if (entrys.Color == color)
 					{
 						if (addname)
-                        {
-                            result.Add(entrys.Name + ": " + entrys.Text);
-                        }
-                        else
-                        {
-                            result.Add(entrys.Text);
-                        }
-                    }
+							result.Add(entrys.Name + ": " + entrys.Text);
+						else
+							result.Add(entrys.Text);
+					}
 				}
 				return result;
 			}
@@ -394,13 +380,9 @@ namespace RazorEnhanced
 					if (entrys.Name == name)
 					{
                         if (addname)
-                        {
                             result.Add(entrys.Name + ": " + entrys.Text);
-                        }
                         else
-                        {
                             result.Add(entrys.Text);
-                        }
                     }
 				}
 				return result;
@@ -441,14 +423,10 @@ namespace RazorEnhanced
 					if (entrys.Type == type)
 					{
 						if (addname)
-                        {
-                            result.Add(entrys.Name + ": " + entrys.Text);
-                        }
-                        else
-                        {
-                            result.Add(entrys.Text);
-                        }
-                    }
+							result.Add(entrys.Name + ": " + entrys.Text);
+						else
+							result.Add(entrys.Text);
+					}
 				}
 				return result;
 			}
@@ -508,10 +486,8 @@ namespace RazorEnhanced
 				foreach(string s in msgs)
 				{
 					if (Search(s))
-                    {
-                        return s; // found one of msgs list
-                    }
-                }
+						return s; // found one of msgs list
+				}
 
 				Thread.Sleep(10);
 				subdelay -= 10;

@@ -75,18 +75,12 @@ namespace Assistant
                     break;
                 case "targetbodydataGridView":
 					if (!targetbodydataGridView.Rows[agentrowindex].IsNewRow)
-                    {
-                        targetbodydataGridView.Rows.RemoveAt(agentrowindex);
-                    }
-
-                    break;
+						targetbodydataGridView.Rows.RemoveAt(agentrowindex);
+					break;
 				case "targethueGridView":
 					if (!targethueGridView.Rows[agentrowindex].IsNewRow)
-                    {
-                        targethueGridView.Rows.RemoveAt(agentrowindex);
-                    }
-
-                    break;
+						targethueGridView.Rows.RemoveAt(agentrowindex);
+					break;
 			}
 
 		}
@@ -125,10 +119,8 @@ namespace Assistant
 									dragSize);
 			}
 			else
-            {
-                dragBoxFromMouseDown = Rectangle.Empty;
-            }
-        }
+				dragBoxFromMouseDown = Rectangle.Empty;
+		}
 
 		private void GridView_DragOver(object sender, DragEventArgs e)
 		{
@@ -143,25 +135,19 @@ namespace Assistant
 			rowIndexOfItemUnderMouseToDrop = grid.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
 
 			if (rowIndexOfItemUnderMouseToDrop == -1)
-            {
-                return;
-            }
+				return;
 
-            if (e.Effect == DragDropEffects.Move)
+			if (e.Effect == DragDropEffects.Move)
 			{
 				DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
 
 				if (rowIndexOfItemUnderMouseToDrop >= (grid.RowCount - 1)) // Blocca il drag fuori dalle celle salvate
-                {
-                    return;
-                }
+					return;
 
-                if (rowIndexFromMouseDown >= (grid.RowCount - 1)) // Blocca il drag di una cella non salvata
-                {
-                    return;
-                }
+				if (rowIndexFromMouseDown >= (grid.RowCount - 1)) // Blocca il drag di una cella non salvata
+					return;
 
-                grid.Rows.RemoveAt(rowIndexFromMouseDown);
+				grid.Rows.RemoveAt(rowIndexFromMouseDown);
 				grid.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
 				switch (grid.Name)
 				{
@@ -209,15 +195,11 @@ namespace Assistant
 			DataGridView grid = (DataGridView)sender;
 
 			if (!grid.Focused)
-            {
-                return;
-            }
+				return;
 
-            if (grid.IsCurrentCellDirty)
-            {
-                grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            }
-        }
+			if (grid.IsCurrentCellDirty)
+				grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+		}
 
 		private void GridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
 		{
@@ -237,15 +219,10 @@ namespace Assistant
 					agentrowindex = e.RowIndex;
 					agenttype = grid.Name;
 					if (grid.Rows[e.RowIndex].Cells.Count > 1)
-                    {
-                        grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
-                    }
-                    else
-                    {
-                        grid.CurrentCell = grid.Rows[e.RowIndex].Cells[0];
-                    }
-
-                    datagridMenuStrip.Show(Cursor.Position);
+						grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
+					else
+						grid.CurrentCell = grid.Rows[e.RowIndex].Cells[0];
+					datagridMenuStrip.Show(Cursor.Position);
 				}
 			}
 
@@ -255,11 +232,9 @@ namespace Assistant
 		{
 			DataGridView grid = (DataGridView)sender;
 			if (!grid.Focused)
-            {
-                return;
-            }
+				return;
 
-            if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
 			{
 				switch (grid.Name)
 				{

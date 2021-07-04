@@ -90,22 +90,13 @@ namespace RazorEnhanced.UI
 		private void EnhancedItemInspector_Load(object sender, EventArgs e)
 		{
 			if (m_itemTarg == null)
-            {
-                this.Close();
-            }
+				this.Close();
 
-            // general
-            ToolTip toolTip = new();
-            toolTip.AutoPopDelay = 10000;
-            toolTip.InitialDelay = 1000;
-            toolTip.ReshowDelay = 1000;
-            toolTip.ShowAlways = true;
-            lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
+			// general
+			lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
 			lItemID.Text = "0x" + m_itemTarg.ItemID.Value.ToString("X4");
-            toolTip.SetToolTip(lItemID, m_itemTarg.ItemID.Value.ToString());
-            lColor.Text =  "0x" + m_itemTarg.Hue.ToString("x4");
-            toolTip.SetToolTip(lColor, m_itemTarg.Hue.ToString());
-            lPosition.Text = m_itemTarg.Position.ToString();
+			lColor.Text =  "0x" + m_itemTarg.Hue.ToString("x4");
+			lPosition.Text = m_itemTarg.Position.ToString();
 			// Details
 			Assistant.PlayerData tempdata;
 			Assistant.Item tempdata2;
@@ -132,31 +123,23 @@ namespace RazorEnhanced.UI
 					tempdata = (Assistant.PlayerData)m_itemTarg.RootContainer;
 					lRootContainer.Text = tempdata.Serial.ToString();
 					if (tempdata.Serial == Assistant.World.Player.Serial)
-                    {
-                        lOwned.Text = "Yes";
-                    }
-                }
+						lOwned.Text = "Yes";
+				}
 				if (m_itemTarg.RootContainer is Assistant.Item)
 				{
 					tempdata2 = (Assistant.Item)m_itemTarg.RootContainer;
 					lRootContainer.Text = tempdata2.Serial.ToString();
 					if (tempdata2.Serial == Assistant.World.Player.Backpack.Serial)
-                    {
-                        lOwned.Text = "Yes";
-                    }
-                }
+						lOwned.Text = "Yes";
+				}
 			}
 
 			if (m_itemTarg.Amount == 0)
-            {
-                lAmount.Text = "1";
-            }
-            else
-            {
-                lAmount.Text = m_itemTarg.Amount.ToString();
-            }
+				lAmount.Text = "1";
+			else
+  				lAmount.Text = m_itemTarg.Amount.ToString();
 
-            lLayer.Text = m_itemTarg.Layer.ToString();
+			lLayer.Text = m_itemTarg.Layer.ToString();
 
 			// Flag
 			containerflaglabel.Text = (m_itemTarg.IsContainer) ? "Yes" : "No";
@@ -216,18 +199,11 @@ namespace RazorEnhanced.UI
 					{
 						Assistant.ObjectPropertyList.OPLEntry ent = m_itemTarg.ObjPropList.Content[i];
 						if (i == 0)
-                        {
-                            if (ent.ToString() == null)
-                            {
-                                lName.Invoke(new Action(() => lName.Text = m_itemTarg.Name.ToString()));
-                            }
-                            else
-                            {
-                                lName.Invoke(new Action(() => lName.Text = ent.ToString()));
-                            }
-                        }
-
-                        string content = ent.ToString();
+							if (ent.ToString() == null)
+								lName.Invoke(new Action(() => lName.Text = m_itemTarg.Name.ToString()));
+							else
+								lName.Invoke(new Action(() => lName.Text = ent.ToString()));
+						string content = ent.ToString();
 						listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(Assistant.Utility.CapitalizeAllWords(content))));
 					}
 				}

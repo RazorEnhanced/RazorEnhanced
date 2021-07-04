@@ -59,7 +59,6 @@ namespace RazorEnhanced
         /// <param name="x">X coordinate of same map</param>
         /// <param name="y">Y coordinate of same map</param>
         /// <param name="scanMaxRange">Max range to scan a path (x, y) should be included in this max range</param>
-        /// <param name="ignoremob"></param>
         /// <returns></returns>
         public static List<Tile> GetPath(int x, int y, int scanMaxRange, bool ignoremob)
         {
@@ -83,9 +82,7 @@ namespace RazorEnhanced
             else
             {
                 if (result.Count == 0)
-                {
                     result.Add(new Tile(x, y));
-                }
 
                 /*Logging.Log($"Path found from {playerPosition.X};{playerPosition.Y} to {x};{y}");
                 foreach (var tile in result)
@@ -102,7 +99,6 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="x">X coordinate of same map</param>
         /// <param name="y">Y coordinate of same map</param>
-        /// <param name="ignoremob"></param>
         /// <returns></returns>
         public static List<Tile> GetPath(int x, int y, bool ignoremob)
         {
@@ -179,50 +175,30 @@ namespace RazorEnhanced
             if (b.X > loc.X && b.Y > loc.Y) //Down
             {
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, ignoremob, out newZ);
-                }
-
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, ignoremob, out newZ);
-                }
             }
             else if (b.X < loc.X && b.Y < loc.Y) //UP
             {
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y  == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
-                }
-
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward + 1 && x.Position.Y == yForward), xForward +1, yForward, startTop, startZ, ignoremob, out newZ);
-                }
             }
             else if (b.X > loc.X && b.Y < loc.Y) //Right
             {
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
-                }
-
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward- 1, yForward, startTop, startZ, ignoremob, out newZ);
-                }
             }
             else if (b.X < loc.X && b.Y > loc.Y) //Left
             {
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, ignoremob, out newZ);
-                }
-
                 if (moveIsOk)
-                {
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
-                }
             }
 
             if (moveIsOk)
@@ -257,9 +233,7 @@ namespace RazorEnhanced
             var ignoreDoors = false;
 
             if (Player.IsGhost || Engine.MainWindow.AutoOpenDoors.Checked)
-            {
                 ignoreDoors = true;
-            }
 
             const bool ignoreSpellFields = true;
 
@@ -275,16 +249,12 @@ namespace RazorEnhanced
                 foreach (Assistant.Mobile m in mobs)
                 {
                     if (m.Position.X == x && m.Position.Y == y && m.Serial != Player.Serial)
-                    {
                         result.Add(m);
-                    }
                 }
                 if (result.Count > 0) // mob present at this spot.
                 {
                     if (World.Player.Stam < World.Player.StamMax) // no max stam, avoid this location
-                    {
                         return false;
-                    }
                 }
             }
             // Check for deed player house
@@ -621,44 +591,24 @@ namespace RazorEnhanced
 
             z = zTop;
             if (zLeft < z)
-            {
                 z = zLeft;
-            }
-
             if (zRight < z)
-            {
                 z = zRight;
-            }
-
             if (zBottom < z)
-            {
                 z = zBottom;
-            }
 
             top = zTop;
             if (zLeft > top)
-            {
                 top = zLeft;
-            }
-
             if (zRight > top)
-            {
                 top = zRight;
-            }
-
             if (zBottom > top)
-            {
                 top = zBottom;
-            }
 
             if (Math.Abs(zTop - zBottom) > Math.Abs(zLeft - zRight))
-            {
                 avg = FloorAverage(zLeft, zRight);
-            }
             else
-            {
                 avg = FloorAverage(zTop, zBottom);
-            }
         }
 
         private static int FloorAverage(int a, int b)
@@ -666,9 +616,7 @@ namespace RazorEnhanced
             var v = a + b;
 
             if (v < 0)
-            {
                 --v;
-            }
 
             return (v / 2);
         }
@@ -997,25 +945,18 @@ namespace RazorEnhanced
                     walkok = Run(Direction.left, debugMessage);
                 }
                 else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
-                {
                     walkok = true;
-                }
 
                 if (timeout >= 0 && DateTime.Now.CompareTo(timeEnd) > 0) {
                     if (debugMessage)
-                    {
                         Misc.SendMessage("PathFind: RunPath run TIMEOUT", 33);
-                    }
-
                     return false;
                 }
 
                 if (!walkok)
                 {
                     if (debugMessage)
-                    {
                         Misc.SendMessage("PathFind: Move action FAIL", 33);
-                    }
 
                     if (useResync)
                     {
@@ -1028,9 +969,7 @@ namespace RazorEnhanced
                 else
                 {
                     if (debugMessage)
-                    {
                         Misc.SendMessage("PathFind: Move action OK", 66);
-                    }
                 }
             }
 
@@ -1052,18 +991,14 @@ namespace RazorEnhanced
                 Player.Run(d.ToString());
 
                 if (debug)
-                {
                     Misc.SendMessage("PathFind: Rotate in direction: " + d.ToString(), 55);
-                }
             }
         }
 
         private static bool Run(Direction d, bool debug)
         {
             if (debug)
-            {
                 Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
-            }
 
             return Player.Run(d.ToString());
         }

@@ -327,21 +327,13 @@ namespace Assistant
         private void OnMouseHandler(int button, int wheel)
         {
             if (button > 4)
-            {
                 button = 3;
-            }
             else if (button > 3)
-            {
                 button = 2;
-            }
             else if (button > 2)
-            {
                 button = 2;
-            }
             else if (button > 1)
-            {
                 button = 1;
-            }
 
             RazorEnhanced.HotKey.OnMouse(button, wheel);
         }
@@ -388,9 +380,7 @@ namespace Assistant
             foreach (var oemKey in oemKeys)
             {
                 if ((Platform.GetAsyncKeyState((int)oemKey) & 0xFF00) != 0)
-                {
                     return (int)oemKey;
-                }
             }
             return key;
         }
@@ -403,20 +393,11 @@ namespace Assistant
                 RazorEnhanced.ModKeys cur = RazorEnhanced.ModKeys.None;
                 SDL_Keymod keymod = (SDL_Keymod)mod;
                 if (keymod.HasFlag(SDL_Keymod.KMOD_LCTRL) || keymod.HasFlag(SDL_Keymod.KMOD_RCTRL))
-                {
                     cur |= RazorEnhanced.ModKeys.Control;
-                }
-
                 if (keymod.HasFlag(SDL_Keymod.KMOD_LALT) || keymod.HasFlag(SDL_Keymod.KMOD_RALT))
-                {
                     cur |= RazorEnhanced.ModKeys.Alt;
-                }
-
                 if (keymod.HasFlag(SDL_Keymod.KMOD_LSHIFT) || keymod.HasFlag(SDL_Keymod.KMOD_RSHIFT))
-                {
                     cur |= RazorEnhanced.ModKeys.Shift;
-                }
-
                 return RazorEnhanced.HotKey.OnKeyDown(Win32Platform.MapKey(key), cur);
             }
 

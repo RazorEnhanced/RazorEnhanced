@@ -55,19 +55,13 @@ namespace RazorEnhanced.UI
 				if (World.Player != null)
 				{
 					if (m_Filename != String.Empty)
-                    {
-                        return String.Format("Enhanced Script Editor - ({0}) - {1} ({2})", m_Filename, World.Player.Name, World.ShardName);
-                    }
-                    else
-                    {
-                        return String.Format("Enhanced Script Editor - {0} ({1})", World.Player.Name, World.ShardName);
-                    }
-                }
+						return String.Format("Enhanced Script Editor - ({0}) - {1} ({2})", m_Filename, World.Player.Name, World.ShardName);
+					else
+						return String.Format("Enhanced Script Editor - {0} ({1})", World.Player.Name, World.ShardName);
+				}
 				else
-                {
-                    return "Enhanced Script Editor";
-                }
-            }
+					return "Enhanced Script Editor";
+			}
 		}
 
 		private string m_Filename = String.Empty;
@@ -102,11 +96,9 @@ namespace RazorEnhanced.UI
 			if (m_EnhancedScriptEditor != null)
 			{
 				if (ScriptRecorder.OnRecord)
-                {
-                    ScriptRecorder.OnRecord = false;
-                }
+					ScriptRecorder.OnRecord = false;
 
-                m_EnhancedScriptEditor.Stop();
+				m_EnhancedScriptEditor.Stop();
 			}
 		}
 
@@ -1326,7 +1318,7 @@ namespace RazorEnhanced.UI
 
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
             foreach (var docitem in AutoDoc.GetPythonAPI().methods ) {
-                var method = docitem;
+                var method = (DocMethod)docitem;
                 var methodName = method.itemClass + "." + method.itemName;
                 var prms_name = new List<String>();
                 var prms_type = new List<String>();
@@ -1418,18 +1410,14 @@ namespace RazorEnhanced.UI
             //Permette la creazione del menu con la singola keyword
             Array.Sort(keywords);
 			foreach (var item in keywords)
-            {
-                items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
-            }
-            //Permette la creazione del menu con la singola classe
-            Array.Sort(classes);
+				items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
+			//Permette la creazione del menu con la singola classe
+			Array.Sort(classes);
 			foreach (var item in classes)
-            {
-                items.Add(new AutocompleteItem(item) { ImageIndex = 1 });
-            }
+				items.Add(new AutocompleteItem(item) { ImageIndex = 1 });
 
-            //Permette di creare il menu solo per i metodi della classe digitata
-            Array.Sort(methods);
+			//Permette di creare il menu solo per i metodi della classe digitata
+			Array.Sort(methods);
 			foreach (var item in methods)
 			{
 				descriptionMethods.TryGetValue(item, out ToolTipDescriptions element);
@@ -1479,21 +1467,17 @@ namespace RazorEnhanced.UI
 			//Permette di creare il menu per le props solo sulla classe Player
 			Array.Sort(propsWithCheck);
 			foreach (var item in propsWithCheck)
-            {
-                items.Add(new SubPropertiesAutocompleteItem(item) { ImageIndex = 4 });
-            }
+				items.Add(new SubPropertiesAutocompleteItem(item) { ImageIndex = 4 });
 
-            //Props generiche divise tra quelle Mobiles e Items, che possono
-            //Appartenere a variabili istanziate di una certa classe
-            //Qui sta alla cura dell'utente capire se una props va bene o no
-            //Per quella istanza
-            Array.Sort(props);
+			//Props generiche divise tra quelle Mobiles e Items, che possono
+			//Appartenere a variabili istanziate di una certa classe
+			//Qui sta alla cura dell'utente capire se una props va bene o no
+			//Per quella istanza
+			Array.Sort(props);
 			foreach (var item in props)
-            {
-                items.Add(new MethodAutocompleteItem(item) { ImageIndex = 5 });
-            }
+				items.Add(new MethodAutocompleteItem(item) { ImageIndex = 5 });
 
-            m_popupMenu.Items.SetAutocompleteItems(items);
+			m_popupMenu.Items.SetAutocompleteItems(items);
 
 			//Aumenta la larghezza per i singoli item, in modo che l'intero nome sia visibile
 			m_popupMenu.Items.MaximumSize = new Size(m_popupMenu.Items.Width + 20, m_popupMenu.Items.Height);
@@ -1574,64 +1558,42 @@ namespace RazorEnhanced.UI
 						case Command.Breakpoint:
 
 							if (m_Breakpoints.Contains(line))
-                            {
-                                TracebackBreakpoint();
-                            }
-                            else
-                            {
-                                EnqueueCommand(Command.Breakpoint);
-                            }
-
-                            break;
+								TracebackBreakpoint();
+							else
+								EnqueueCommand(Command.Breakpoint);
+							break;
 
 						case Command.Call:
 
 							if (result == "call")
-                            {
-                                TracebackCall();
-                            }
-                            else
-                            {
-                                EnqueueCommand(Command.Call);
-                            }
-
-                            break;
+								TracebackCall();
+							else
+								EnqueueCommand(Command.Call);
+							break;
 
 						case Command.Line:
 
 							if (result == "line")
-                            {
-                                TracebackLine();
-                            }
-                            else
-                            {
-                                EnqueueCommand(Command.Line);
-                            }
-
-                            break;
+								TracebackLine();
+							else
+								EnqueueCommand(Command.Line);
+							break;
 
 						case Command.Return:
 
 							if (result == "return")
-                            {
-                                TracebackReturn();
-                            }
-                            else
-                            {
-                                EnqueueCommand(Command.Return);
-                            }
-
-                            break;
+								TracebackReturn();
+							else
+								EnqueueCommand(Command.Return);
+							break;
 					}
 				}
 
 				return OnTraceback;
 			}
 			else
-            {
-                return null;
-            }
-        }
+				return null;
+		}
 
 		private void TracebackCall()
 		{
@@ -1704,10 +1666,8 @@ namespace RazorEnhanced.UI
 				m_ThreadID = Scripts.ScriptEditorThread.ManagedThreadId;
 			}
 			else
-            {
-                SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
-            }
-        }
+				SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
+		}
 
         private void AsyncStart(bool debug)
         {
@@ -1828,7 +1788,7 @@ namespace RazorEnhanced.UI
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
                 }
             }
-            catch (IronPython.Runtime.Exceptions.SystemExitException)
+            catch (IronPython.Runtime.Exceptions.SystemExitException ex)
             {
                 Stop();
                 // sys.exit - terminate the thread
@@ -1859,19 +1819,15 @@ namespace RazorEnhanced.UI
             }
 
             if (Scripts.ScriptEditorThread != null)
-            {
                 Scripts.ScriptEditorThread.Abort();
-            }
         }
 
 		private void Stop()
 		{
 			if (ScriptRecorder.OnRecord)
-            {
-                return;
-            }
+				return;
 
-            m_Breaktrace = false;
+			m_Breaktrace = false;
 			m_Queue = new ConcurrentQueue<Command>();
 			m_Breakpoints.Clear();
 
@@ -1899,11 +1855,9 @@ namespace RazorEnhanced.UI
 		private void SetHighlightLine(int iline, Color background)
 		{
 			if (this.m_onclosing)
-            {
-                return;
-            }
+				return;
 
-            if (this.fastColoredTextBoxEditor.InvokeRequired)
+			if (this.fastColoredTextBoxEditor.InvokeRequired)
 			{
 				SetHighlightLineDelegate d = new SetHighlightLineDelegate(SetHighlightLine);
 				this.Invoke(d, new object[] { iline, background });
@@ -1913,14 +1867,10 @@ namespace RazorEnhanced.UI
 				for (int i = 0; i < fastColoredTextBoxEditor.LinesCount; i++)
 				{
 					if (m_Breakpoints.Contains(i))
-                    {
-                        fastColoredTextBoxEditor[i].BackgroundBrush = new SolidBrush(Color.Red);
-                    }
-                    else
-                    {
-                        fastColoredTextBoxEditor[i].BackgroundBrush = new SolidBrush(Color.White);
-                    }
-                }
+						fastColoredTextBoxEditor[i].BackgroundBrush = new SolidBrush(Color.Red);
+					else
+						fastColoredTextBoxEditor[i].BackgroundBrush = new SolidBrush(Color.White);
+				}
 
 				this.fastColoredTextBoxEditor[iline].BackgroundBrush = new SolidBrush(background);
 				this.fastColoredTextBoxEditor.Invalidate();
@@ -1930,11 +1880,8 @@ namespace RazorEnhanced.UI
 		private void SetStatusLabel(string text, Color color)
 		{
 			if (this.m_onclosing || this.Disposing)
-            {
-                return;
-            }
-
-            try
+				return;
+			try
 			{
 				if (this.InvokeRequired)
 				{
@@ -1954,11 +1901,9 @@ namespace RazorEnhanced.UI
 		private void SetRecordButton(string text)
 		{
 			if (this.m_onclosing || this.Disposing)
-            {
-                return;
-            }
+				return;
 
-            if (this.InvokeRequired)
+			if (this.InvokeRequired)
 			{
 				SetRecordButtonDelegate d = new SetRecordButtonDelegate(SetRecordButton);
 				this.Invoke(d, new object[] { text });
@@ -2005,11 +1950,9 @@ namespace RazorEnhanced.UI
 		private void SetTraceback(string text)
 		{
 			if (this.m_onclosing)
-            {
-                return;
-            }
+				return;
 
-            if (this.textBoxDebug.InvokeRequired)
+			if (this.textBoxDebug.InvokeRequired)
 			{
 				SetTracebackDelegate d = new SetTracebackDelegate(SetTraceback);
 				this.Invoke(d, new object[] { text });
@@ -2023,11 +1966,9 @@ namespace RazorEnhanced.UI
 		private void SetErrorBox(string text)
 		{
 			if (this.m_onclosing)
-            {
-                return;
-            }
+				return;
 
-            try
+			try
 			{
 				if (this.messagelistBox.InvokeRequired)
 				{
@@ -2050,11 +1991,8 @@ namespace RazorEnhanced.UI
 			Stop();
 			End();
 			if (!CloseAndSave())
-            {
-                e.Cancel = true;
-            }
-
-            m_EnhancedScriptEditor.m_onclosing = false;
+				e.Cancel = true;
+			m_EnhancedScriptEditor.m_onclosing = false;
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
@@ -2184,19 +2122,15 @@ namespace RazorEnhanced.UI
 					bool isRunning = script.IsRunning;
 
 					if (isRunning)
-                    {
-                        script.Stop();
-                    }
+						script.Stop();
 
                     //Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename, text, wait, loop, run, autostart);
                     //reloaded.Create(null);
                     Scripts.EnhancedScripts[m_Filename].FileChangeDate = DateTime.MinValue;
 
 					if (isRunning)
-                    {
-                        script.Start();
-                    }
-                }
+						script.Start();
+				}
 			}
 		}
 
@@ -2256,11 +2190,9 @@ namespace RazorEnhanced.UI
 			}
 
 			if (fastColoredTextBoxEditor.Text == String.Empty) // Not ask to save empty text
-            {
-                return true;
-            }
+				return true;
 
-            DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (res == System.Windows.Forms.DialogResult.Yes)
 			{
 				if (m_Filename != null && m_Filename != String.Empty)
@@ -2286,10 +2218,8 @@ namespace RazorEnhanced.UI
 						}
 					}
 					else
-                    {
-                        return false;
-                    }
-                }
+						return false;
+				}
 
 				fastColoredTextBoxEditor.Text = String.Empty;
 				m_Filename = String.Empty;
@@ -2502,51 +2432,41 @@ namespace RazorEnhanced.UI
 		private void commentSelectLineToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (string.IsNullOrWhiteSpace(fastColoredTextBoxEditor.SelectedText)) // No selection
-            {
-                return;
-            }
+				return;
 
-            string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None );
+			string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None );
 
 			fastColoredTextBoxEditor.SelectedText = "";
 			for (int i = 0; i < lines.Count(); i++)
 			{
 				fastColoredTextBoxEditor.SelectedText += "#" + lines[i];
 				if (i < lines.Count() -1)
-                {
-                    fastColoredTextBoxEditor.SelectedText += "\r\n";
-                }
-            }
+					fastColoredTextBoxEditor.SelectedText += "\r\n";
+			}
 		}
 
 		private void unCommentLineToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (string.IsNullOrWhiteSpace(fastColoredTextBoxEditor.SelectedText)) // No selection
-            {
-                return;
-            }
+				return;
 
-            string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+			string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
 			fastColoredTextBoxEditor.SelectedText = "";
 			for (int i = 0; i < lines.Count(); i++)
 			{
 				fastColoredTextBoxEditor.SelectedText += lines[i].TrimStart('#');
 				if (i < lines.Count() - 1)
-                {
-                    fastColoredTextBoxEditor.SelectedText += "\r\n";
-                }
-            }
+					fastColoredTextBoxEditor.SelectedText += "\r\n";
+			}
 		}
 
 		private void messagelistBox_KeyUp(object sender, KeyEventArgs e)
 		{
 			if (messagelistBox.SelectedItems == null) // Nothing selected
-            {
-                return;
-            }
+				return;
 
-            if (e.Control && e.KeyCode == Keys.C)
+			if (e.Control && e.KeyCode == Keys.C)
 			{
 				Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
 			}
@@ -2560,11 +2480,9 @@ namespace RazorEnhanced.UI
 		private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			if (messagelistBox.SelectedItems == null) // Nothing selected
-            {
-                return;
-            }
+				return;
 
-            Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
+			Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
 		}
 
 		private void toolStripInspectAlias_Click(object sender, EventArgs e)
@@ -2646,10 +2564,8 @@ namespace RazorEnhanced.UI
 		{
 			var i = text.LastIndexOf('.');
 			if (i < 0)
-            {
-                firstPart = text;
-            }
-            else
+				firstPart = text;
+			else
 			{
 				firstPart = text.Substring(0, i);
 				lastPart = text.Substring(i + 1);
@@ -2663,12 +2579,10 @@ namespace RazorEnhanced.UI
 			if (i < 0)
 			{
 				if (firstPart.StartsWith(fragmentText) && string.IsNullOrEmpty(lastPart))
-                {
-                    return CompareResult.VisibleAndSelected;
-                }
-                //if (firstPart.ToLower().Contains(fragmentText.ToLower()))
-                //  return CompareResult.Visible;
-            }
+					return CompareResult.VisibleAndSelected;
+				//if (firstPart.ToLower().Contains(fragmentText.ToLower()))
+				//  return CompareResult.Visible;
+			}
 			else
 			{
 				var fragmentFirstPart = fragmentText.Substring(0, i);
@@ -2676,20 +2590,15 @@ namespace RazorEnhanced.UI
 
 
 				if (firstPart != fragmentFirstPart)
-                {
-                    return CompareResult.Hidden;
-                }
+					return CompareResult.Hidden;
 
-                if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
-                {
-                    return CompareResult.VisibleAndSelected;
-                }
+				if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
+					return CompareResult.VisibleAndSelected;
 
-                if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
-                {
-                    return CompareResult.Visible;
-                }
-            }
+				if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
+					return CompareResult.Visible;
+
+			}
 
 			return CompareResult.Hidden;
 		}
@@ -2697,21 +2606,17 @@ namespace RazorEnhanced.UI
 		public override string GetTextForReplace()
 		{
 			if (lastPart == null)
-            {
-                return firstPart;
-            }
+				return firstPart;
 
-            return firstPart + "." + lastPart;
+			return firstPart + "." + lastPart;
 		}
 
 		public override string ToString()
 		{
 			if (lastPart == null)
-            {
-                return firstPart;
-            }
+				return firstPart;
 
-            return lastPart;
+			return lastPart;
 		}
 	}
 
@@ -2728,10 +2633,8 @@ namespace RazorEnhanced.UI
 		{
 			var i = text.LastIndexOf('.');
 			if (i < 0)
-            {
-                firstPart = text;
-            }
-            else
+				firstPart = text;
+			else
 			{
 				var keywords = text.Split('.');
 				if (keywords.Length >= 2)
@@ -2754,12 +2657,10 @@ namespace RazorEnhanced.UI
 			if (i < 0)
 			{
 				if (firstPart.StartsWith(fragmentText) && string.IsNullOrEmpty(lastPart))
-                {
-                    return CompareResult.VisibleAndSelected;
-                }
-                //if (firstPart.ToLower().Contains(fragmentText.ToLower()))
-                //  return CompareResult.Visible;
-            }
+					return CompareResult.VisibleAndSelected;
+				//if (firstPart.ToLower().Contains(fragmentText.ToLower()))
+				//  return CompareResult.Visible;
+			}
 			else
 			{
 				var keywords = fragmentText.Split('.');
@@ -2770,20 +2671,14 @@ namespace RazorEnhanced.UI
 
 
 					if (firstPart != fragmentFirstPart)
-                    {
-                        return CompareResult.Hidden;
-                    }
+						return CompareResult.Hidden;
 
-                    if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
-                    {
-                        return CompareResult.VisibleAndSelected;
-                    }
+					if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
+						return CompareResult.VisibleAndSelected;
 
-                    if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
-                    {
-                        return CompareResult.Visible;
-                    }
-                }
+					if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
+						return CompareResult.Visible;
+				}
 				else
 				{
 					var fragmentFirstPart = fragmentText.Substring(0, i);
@@ -2791,20 +2686,14 @@ namespace RazorEnhanced.UI
 
 
 					if (firstPart != fragmentFirstPart)
-                    {
-                        return CompareResult.Hidden;
-                    }
+						return CompareResult.Hidden;
 
-                    if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
-                    {
-                        return CompareResult.VisibleAndSelected;
-                    }
+					if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
+						return CompareResult.VisibleAndSelected;
 
-                    if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
-                    {
-                        return CompareResult.Visible;
-                    }
-                }
+					if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
+						return CompareResult.Visible;
+				}
 
 			}
 
@@ -2814,21 +2703,17 @@ namespace RazorEnhanced.UI
 		public override string GetTextForReplace()
 		{
 			if (lastPart == null)
-            {
-                return firstPart;
-            }
+				return firstPart;
 
-            return firstPart + "." + lastPart;
+			return firstPart + "." + lastPart;
 		}
 
 		public override string ToString()
 		{
 			if (lastPart == null)
-            {
-                return firstPart;
-            }
+				return firstPart;
 
-            return lastPart;
+			return lastPart;
 		}
 	}
 

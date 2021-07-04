@@ -37,10 +37,8 @@ namespace RazorEnhanced
 				Thread.Sleep(2);
 				subdelay -= 2;
                 if (subdelay <= 0)
-                {
                     break;
-                }
-            }
+			}
 			Assistant.Targeting.NoShowTarget = false;
             return HasTarget();
         }
@@ -137,14 +135,11 @@ namespace RazorEnhanced
 			Assistant.Targeting.Target(location, true);
 		}
         /// <param name="serial">Serial of the mobile</param>
-        /// <param name="offset"></param>
         public static void TargetExecuteRelative(int serial, int offset)
         {
             Mobile m = Mobiles.FindBySerial(serial);
             if (m != null)
-            {
                 TargetExecuteRelative(m, offset);
-            }
         }
 
         /// <summary>
@@ -202,17 +197,12 @@ namespace RazorEnhanced
                     break;
             }
             if (number >= 0)
-            {
                 TargetResource(item_serial, number);
-            }
             else
-            {
                 Misc.SendMessage("Valid resource types are ore, sand, wood, graves, red mushroom, or a number");
-            }
         }
 
         /// <param name="item">Item object to use.</param>
-        /// <param name="resouce_name"></param>
         public static void TargetResource(Item item, string resouce_name)
         {
             TargetResource(item.Serial, resouce_name);
@@ -239,10 +229,8 @@ namespace RazorEnhanced
 		public static void Self()
 		{
 			if (World.Player != null)
-            {
-                TargetExecute(World.Player.Serial);
-            }
-        }
+				TargetExecute(World.Player.Serial);
+		}
 
         /// <summary>
         /// Enqueue the next target on the Player.
@@ -258,10 +246,8 @@ namespace RazorEnhanced
 		public static void Last()
 		{
 			if (!CheckHealPoisonTarg(GetLast()))
-            {
-                Assistant.Targeting.LastTarget();
-            }
-        }
+				Assistant.Targeting.LastTarget();
+		}
 
         /// <summary>
         /// Enqueue the next target on the last Item or Mobile targeted.
@@ -293,10 +279,8 @@ namespace RazorEnhanced
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);
 			if (mobile != null)
-            {
-                SetLast(mob.Serial);
-            }
-        }
+				SetLast(mob.Serial);
+		}
 
         /// <summary>
         /// Set the last target to specific mobile, using the serial.
@@ -347,23 +331,17 @@ namespace RazorEnhanced
 			Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
-            {
-                Thread.Sleep(30);
-            }
+				Thread.Sleep(30);
 
-            while (m_ptarget == -1 && Targeting.HasTarget)
-            {
-                Thread.Sleep(30);
-            }
+			while (m_ptarget == -1 && Targeting.HasTarget)
+				Thread.Sleep(30);
 
-            Thread.Sleep(100);
+			Thread.Sleep(100);
 
 			if (m_ptarget == -1)
-            {
-                Misc.SendMessage("Prompt Target Cancelled", color, true);
-            }
+				Misc.SendMessage("Prompt Target Cancelled", color, true);
 
-            return m_ptarget;
+			return m_ptarget;
 		}
 
 		private void PromptTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -384,23 +362,17 @@ namespace RazorEnhanced
 			Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(PromptGroundTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
-            {
-                Thread.Sleep(30);
-            }
+				Thread.Sleep(30);
 
-            while (m_pgtarget.X == -1 && Targeting.HasTarget)
-            {
-                Thread.Sleep(30);
-            }
+			while (m_pgtarget.X == -1 && Targeting.HasTarget)
+				Thread.Sleep(30);
 
-            Thread.Sleep(100);
+			Thread.Sleep(100);
 
 			if (m_pgtarget.X == -1)
-            {
-                Misc.SendMessage("Prompt Gorund Target Cancelled", color, true);
-            }
+				Misc.SendMessage("Prompt Gorund Target Cancelled", color, true);
 
-            return m_pgtarget;
+			return m_pgtarget;
 		}
 
         private void PromptGroundTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -417,25 +389,19 @@ namespace RazorEnhanced
                 }
             }
             else
-            {
                 m_pgtarget = new Point3D(pt.X, pt.Y, pt.Z);
-            }
-        }
+		}
 
 		// Check Poison
 		private static bool CheckHealPoisonTarg(Assistant.Serial ser)
 		{
 			if (World.Player == null)
-            {
-                return false;
-            }
+				return false;
 
-            if (!RazorEnhanced.Settings.General.ReadBool("BlockHealPoison"))
-            {
-                return false;
-            }
+			if (!RazorEnhanced.Settings.General.ReadBool("BlockHealPoison"))
+				return false;
 
-            if (ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
+			if (ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
 			{
 				Assistant.Mobile m = World.FindMobile(ser);
 
@@ -452,10 +418,8 @@ namespace RazorEnhanced
 				return false;
 			}
 			else
-            {
-                return false;
-            }
-        }
+				return false;
+		}
 
 		// Funzioni target per richiamare i target della gui
 
@@ -480,11 +444,9 @@ namespace RazorEnhanced
 		private static int GetPlayerColor(Mobile mob)
 		{
 			if (mob == null)
-            {
-                return 0;
-            }
+				return 0;
 
-            return m_NotoHues[mob.Notoriety];
+			return m_NotoHues[mob.Notoriety];
 		}
 
         /// <summary>
@@ -504,11 +466,9 @@ namespace RazorEnhanced
 
 				Mobile mobtarget = Mobiles.Select(filterresult, selector);
 				if (mobtarget == null)
-                {
-                    return;
-                }
+					return;
 
-                RazorEnhanced.Target.SetLast(mobtarget);
+				RazorEnhanced.Target.SetLast(mobtarget);
 			}
 		}
 
@@ -522,11 +482,10 @@ namespace RazorEnhanced
 		{
 			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 			if (targetdata == null)
-            {
-                return null;
-            }
+				return null;
 
-            Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
 			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
@@ -534,11 +493,9 @@ namespace RazorEnhanced
 
 			Mobile mobtarget = Mobiles.Select(filterresult, selector);
 			if (mobtarget == null)
-            {
-                return null;
-            }
+				return null;
 
-            return mobtarget;
+			return mobtarget;
 		}
 
 		internal static void SetLastTargetFromListHotKey(string targetid)
@@ -546,11 +503,9 @@ namespace RazorEnhanced
 			TargetGUI targetdata = Settings.Target.TargetRead(targetid);
 
 			if (targetdata == null)
-            {
-                return;
-            }
+				return;
 
-            Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
 			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
@@ -559,18 +514,14 @@ namespace RazorEnhanced
 			Mobile mobtarget = Mobiles.Select(filterresult, selector);
 
 			if (mobtarget == null)
-            {
-                return;
-            }
+				return;
 
-            TargetMessage(mobtarget.Serial, false); // Process message for highlight
+			TargetMessage(mobtarget.Serial, false); // Process message for highlight
 
 			Assistant.Mobile mobile = World.FindMobile(mobtarget.Serial);
 			if (mobile != null)
-            {
-                Targeting.SetLastTarget(mobile.Serial, 0, false);
-            }
-        }
+				Targeting.SetLastTarget(mobile.Serial, 0, false);
+		}
 
 
         /// <summary>
@@ -582,11 +533,9 @@ namespace RazorEnhanced
 			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 
 			if (targetdata == null)
-            {
-                return;
-            }
+				return;
 
-            Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
 			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
@@ -595,11 +544,9 @@ namespace RazorEnhanced
 			Mobile mobtarget = Mobiles.Select(filterresult, selector);
 
 			if (mobtarget == null)
-            {
-                return;
-            }
+				return;
 
-            TargetExecute(mobtarget.Serial);
+			TargetExecute(mobtarget.Serial);
 			SetLast(mobtarget);
 		}
 
@@ -612,11 +559,9 @@ namespace RazorEnhanced
 			TargetGUI targetdata = Settings.Target.TargetRead(target_name);
 
 			if (targetdata == null)
-            {
-                return;
-            }
+				return;
 
-            Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+			Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
 			string selector = targetdata.TargetGuiObject.Selector;
 
 			List<Mobile> filterresult;
@@ -625,11 +570,9 @@ namespace RazorEnhanced
 			Mobile mobtarget = Mobiles.Select(filterresult, selector);
 
 			if (mobtarget == null)
-            {
-                return;
-            }
+				return;
 
-            AttackMessage(mobtarget.Serial, true); // Process message for highlight
+			AttackMessage(mobtarget.Serial, true); // Process message for highlight
 			if (Targeting.LastAttack != mobtarget.Serial)
 			{
 		 		Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(mobtarget.Serial));
@@ -643,40 +586,28 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
 			{
 				if (Friend.IsFriend(serial))
-                {
-                    Mobiles.Message(World.Player.Serial, 63, "Target: [" + GetPlayerName(serial) + "]", wait);
-                }
-                else
-                {
-                    Mobiles.Message(World.Player.Serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Target: [" + GetPlayerName(serial) + "]", wait);
-                }
-            }
+					Mobiles.Message(World.Player.Serial, 63, "Target: [" + GetPlayerName(serial) + "]", wait);
+				else
+					Mobiles.Message(World.Player.Serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Target: [" + GetPlayerName(serial) + "]", wait);
+			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
-            {
-                Mobiles.Message(serial, 10, "* Target *", wait);
-            }
-        }
+				Mobiles.Message(serial, 10, "* Target *", wait);
+		}
 
 		internal static void AttackMessage(int serial, bool wait)
 		{
 			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
 			{
 				if (Friend.IsFriend(serial))
-                {
-                    Mobiles.Message(World.Player.Serial, 63, "Attack: [" + GetPlayerName(serial) + "]", wait);
-                }
-                else
-                {
-                    Mobiles.Message(World.Player.Serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Attack: [" + GetPlayerName(serial) + "]", wait);
-                }
-            }
+					Mobiles.Message(World.Player.Serial, 63, "Attack: [" + GetPlayerName(serial) + "]", wait);
+				else
+					Mobiles.Message(World.Player.Serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Attack: [" + GetPlayerName(serial) + "]", wait);
+			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
-            {
-                Mobiles.Message(serial, 10, "* Target *", wait);
-            }
-        }
+				Mobiles.Message(serial, 10, "* Target *", wait);
+		}
 
 	}
 }

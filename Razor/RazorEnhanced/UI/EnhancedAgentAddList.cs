@@ -97,88 +97,57 @@ namespace RazorEnhanced.UI
 			string newList = String.Empty;
 
 			if (AgentListToAdd.Text == String.Empty)
-            {
-                fail = true;
-            }
+				fail = true;
 
-            if (!Regex.IsMatch(AgentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
-            {
-                fail = true;
-            }
+			if (!Regex.IsMatch(AgentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
+				fail = true;
 
-            newList = AgentListToAdd.Text.ToLower();
+			newList = AgentListToAdd.Text.ToLower();
 
 			switch (m_agentid)
 			{
 				case 1:
 				case 10:
 					if (Settings.AutoLoot.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 2:
 				case 11:
 					if (Settings.Scavenger.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 3:
 				case 12:
 					if (Settings.Organizer.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 4:
 				case 13:
 					if (Settings.BuyAgent.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 5:
 				case 14:
 					if (Settings.SellAgent.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 6:
 					if (Settings.Dress.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 7:
 					if (Settings.Friend.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 8:
 				case 17:
 					if (Settings.Restock.ListExists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 				case 9:
 					if (RazorEnhanced.Shard.Exists(newList))
-                    {
-                        fail = true;
-                    }
-
-                    break;
+						fail = true;
+					break;
 			}
 
 

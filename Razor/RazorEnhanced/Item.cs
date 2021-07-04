@@ -38,13 +38,9 @@ namespace RazorEnhanced
             get
             {
                 if (m_AssistantItem != null)
-                {
                     return m_AssistantItem.ItemID.Value;
-                }
                 else
-                {
                     return 0;
-                }
             }
         }
 
@@ -86,17 +82,11 @@ namespace RazorEnhanced
             get
             {
                 if (m_AssistantItem.Container is Assistant.Item)
-                {
                     return (m_AssistantItem.Container as Assistant.Item).Serial;
-                }
                 else if (m_AssistantItem.Container is Assistant.Mobile)
-                {
                     return (m_AssistantItem.Container as Assistant.Mobile).Serial;
-                }
                 else
-                {
                     return 0;
-                }
             }
         }
 
@@ -108,17 +98,11 @@ namespace RazorEnhanced
             get
             {
                 if (m_AssistantItem.RootContainer is Assistant.Item)
-                {
                     return (m_AssistantItem.RootContainer as Assistant.Item).Serial;
-                }
                 else if (m_AssistantItem.RootContainer is Assistant.Mobile)
-                {
                     return (m_AssistantItem.RootContainer as Assistant.Mobile).Serial;
-                }
                 else
-                {
                     return 0;
-                }
             }
         }
 
@@ -343,9 +327,7 @@ namespace RazorEnhanced
                 {
                     int number = property.Number;
                     if (number != 1060639)
-                    {
                         continue;
-                    }
 
                     string Text = property.Args;
                     int step = 0;
@@ -354,26 +336,19 @@ namespace RazorEnhanced
                     for (int i = 0; i <= Text.Length - 1; i++)
                     {
                         if (step == 0)
-                        {
                             if (Char.IsNumber(Text[i]))
                             {
                                 Durability = Durability + Text[i];
                                 step = 1;
                                 i++;
                             }
-                        }
-
                         if (step == 1)
-                        {
                             if (Char.IsNumber(Text[i]))
                             {
                                 Durability = Durability + Text[i];
                             }
                             else
-                            {
                                 step = 2;
-                            }
-                        }
                     }
 
                     try
@@ -401,9 +376,7 @@ namespace RazorEnhanced
                 {
                     int number = property.Number;
                     if (number != 1060639)
-                    {
                         continue;
-                    }
 
                     string Text = property.Args;
                     string TempMaxDurability = String.Empty;
@@ -412,26 +385,19 @@ namespace RazorEnhanced
                     for (int y = Text.Length - 1; y != 0; y--)
                     {
                         if (step == 0)
-                        {
                             if (Char.IsNumber(Text[y]))
                             {
                                 TempMaxDurability = TempMaxDurability + Text[y];
                                 step = 1;
                                 y--;
                             }
-                        }
-
                         if (step == 1)
-                        {
                             if (Char.IsNumber(Text[y]))
                             {
                                 TempMaxDurability = TempMaxDurability + Text[y];
                             }
                             else
-                            {
                                 step = 2;
-                            }
-                        }
                     }
                     for (int i = TempMaxDurability.Length - 1; i > -1; i--)
                     {
@@ -477,16 +443,12 @@ namespace RazorEnhanced
         public static void WaitForContents(Item bag, int delay) // Delay in MS
         {
             if (!bag.IsCorpse && !bag.IsContainer)
-            {
                 return;
-            }
 
             RazorEnhanced.Items.UseItem(bag);
 
             if (bag.Updated)
-            {
                 return;
-            }
 
             int subdelay = delay;
             while (!bag.Updated)
@@ -494,21 +456,16 @@ namespace RazorEnhanced
                 Thread.Sleep(2);
                 subdelay -= 2;
                 if (subdelay <= 0)
-                {
                     break;
-                }
             }
         }
 
         /// <param name="bag_serial">Container as Item serial.</param>
-        /// <param name="delay">Time to wait for contents</param>
         public static void WaitForContents(int bag_serial, int delay) // Delay in MS
         {
             Item bag = FindBySerial(bag_serial);
             if (bag != null)
-            {
                 WaitForContents(bag, delay);
-            }
         }
 
         private static Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
@@ -516,10 +473,7 @@ namespace RazorEnhanced
         internal static int Hued(uint serial)
         {
             if (m_HuedItems.ContainsKey(serial))
-            {
                 return m_HuedItems[serial];
-            }
-
             return -1;
         }
 
@@ -548,11 +502,9 @@ namespace RazorEnhanced
             // store the setting even if item is not exist yet
             m_HuedItems[(uint)serial] = color;
             RazorEnhanced.Item i = RazorEnhanced.Items.FindBySerial(serial);
-            Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+            Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
             if (assistantItem == null)
-            {
                 return;
-            }
 
             if (i.Container == World.Player.Serial)
             {
@@ -565,18 +517,12 @@ namespace RazorEnhanced
             if (i.Container == 0)
             {
                 if ((assistantItem.ItemID & 0x4000) == 0x4000)
-                {
                     Assistant.Client.Instance.SendToClient(new SAWorldItem(assistantItem));
-                }
                 else
-                {
                     Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));
-                }
             }
             else
-            {
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
-            }
         }
 
         /// <summary>
@@ -858,34 +804,28 @@ namespace RazorEnhanced
             Item result = null;
 
             if (items.Count <= 0)
-            {
                 return null;
-            }
 
             switch (selector)
             {
                 case "Random":
-                    result = items[Utility.Random(items.Count)];
+                    result = items[Utility.Random(items.Count)] as Item;
                     break;
 
                 case "Nearest":
-                    Item nearest = items[0];
+                    Item nearest = items[0] as Item;
                     if (nearest != null)
                     {
                         double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
                         foreach (Item t in items)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             double dist = Misc.DistanceSqrt(Player.Position, t.Position);
 
                             if (!(dist < minDist))
-                            {
                                 continue;
-                            }
 
                             nearest = t;
                             minDist = dist;
@@ -895,16 +835,14 @@ namespace RazorEnhanced
                     break;
 
                 case "Farthest":
-                    Item farthest = items[0];
+                    Item farthest = items[0] as Item;
                     if (farthest != null)
                     {
                         double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
                         foreach (Item t in items)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             double dist = Misc.DistanceSqrt(Player.Position, t.Position);
                             if (dist > maxDist)
@@ -918,16 +856,14 @@ namespace RazorEnhanced
                     break;
 
                 case "Less":
-                    Item least = items[0];
+                    Item least = items[0] as Item;
                     if (least != null)
                     {
                         int minAmount = least.Amount;
                         foreach (Item t in items)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             int amount = t.Amount;
                             if (amount < minAmount)
@@ -941,23 +877,19 @@ namespace RazorEnhanced
                     break;
 
                 case "Most":
-                    Item most = items[0];
+                    Item most = items[0] as Item;
                     if (most != null)
                     {
                         int maxAmount = most.Amount;
                         foreach (Item t in items)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             int amount = t.Amount;
 
                             if (amount <= maxAmount)
-                            {
                                 continue;
-                            }
 
                             most = t;
                             maxAmount = amount;
@@ -967,23 +899,19 @@ namespace RazorEnhanced
                     break;
 
                 case "Weakest":
-                    Item weakest = items[0];
+                    Item weakest = items[0] as Item;
                     if (weakest != null)
                     {
                         int minDur = weakest.Durability;
                         foreach (Item t in items)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             int dur = t.Durability;
 
                             if (dur >= minDur)
-                            {
                                 continue;
-                            }
 
                             weakest = t;
                             minDur = dur;
@@ -993,24 +921,19 @@ namespace RazorEnhanced
                     break;
 
                 case "Strongest":
-                    Item strongest = items[0];
+                    Item strongest = items[0] as Item;
                     if (strongest != null)
                     {
                         int maxDur = strongest.Durability;
                         foreach (Item t in items)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             int dur = t.Durability;
 
                             if (dur <= maxDur)
-                            {
                                 continue;
-                            }
-
                             strongest = t;
                             maxDur = dur;
                         }
@@ -1029,11 +952,9 @@ namespace RazorEnhanced
         /// <returns>Item object if found, or null if not found.</returns>
 		public static Item FindBySerial(int serial)
         {
-            Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+            Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
             if (assistantItem == null)
-            {
                 return null;
-            }
             else
             {
                 RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
@@ -1152,27 +1073,17 @@ namespace RazorEnhanced
             else
             {
                 if (item.Amount < amount)
-                {
                     newamount = item.Amount;
-                }
                 else
-                {
                     newamount = amount;
-                }
             }
 
             if (isMobile)
-            {
                 Assistant.DragDropManager.DragDrop(item, newamount, mbag.Serial);
-            }
             else if (onLocation)
-            {
                 Assistant.DragDropManager.DragDrop(item, newamount, bag, loc);
-            }
             else
-            {
                 Assistant.DragDropManager.DragDrop(item, newamount, bag);
-            }
         }
 
         /*public static void Move(int source, int destination, int amount, int x, int y)
@@ -1305,9 +1216,7 @@ namespace RazorEnhanced
 
             int amounttodrop = amount;
             if ((item.Amount < amount) || (amount == 0))
-            {
                 amounttodrop = item.Amount;
-            }
 
             Assistant.DragDropManager.DragDrop(item, loc, amounttodrop);
             //Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
@@ -1336,9 +1245,7 @@ namespace RazorEnhanced
 
             int amounttodrop = amount;
             if ((item.Amount < amount) || (amount == 0))
-            {
                 amounttodrop = item.Amount;
-            }
 
             MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
         }
@@ -1390,13 +1297,9 @@ namespace RazorEnhanced
             }
 
             if (wait)
-            {
                 Assistant.Client.Instance.SendToServerWait(new UseTargetedItem((uint)itemSerial, (uint)targetSerial));
-            }
             else
-            {
                 Assistant.Client.Instance.SendToServer(new UseTargetedItem((uint)itemSerial, (uint)targetSerial));
-            }
         }
 
         public static void UseItem(int itemserial)
@@ -1421,35 +1324,27 @@ namespace RazorEnhanced
         public static void UseItem(Item item)
         {
             if (item != null)
-            {
                 UseItem(item.Serial);
-            }
         }
 
         public static void UseItem(Item item, EnhancedEntity target)
         {
             if (item == null || target == null)
-            {
                 return;
-            }
 
             UseItem(item.Serial, target.Serial, true);
         }
         public static void UseItem(int item, EnhancedEntity target)
         {
             if (target == null)
-            {
                 return;
-            }
 
             UseItem(item, target.Serial, true);
         }
         public static void UseItem(Item item, int target)
         {
             if (item == null)
-            {
                 return;
-            }
 
             UseItem(item.Serial, target, true);
         }
@@ -1476,9 +1371,7 @@ namespace RazorEnhanced
             itemFilter.Graphics.Add(itemid);
 
             if (color != -1)
-            {
                 itemFilter.Hues.Add(color);
-            }
 
             List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
@@ -1524,18 +1417,14 @@ namespace RazorEnhanced
                 foreach (Item i in cont.Contains)
                 {
                     if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
-                    {
                         continue;
-                    }
 
                     if (i.ItemID == itemid) // check item id
                     {
                         if (color != -1) // color -1 ALL
                         {
                             if (i.Hue == color)
-                            {
                                 return i;
-                            }
                         }
                         else
                         {
@@ -1546,9 +1435,7 @@ namespace RazorEnhanced
                     {
                         Item recursItem = FindByID(itemid, color, i.Serial, recursive, considerIgnoreList); // recall for sub container
                         if (recursItem != null)
-                        {
                             return recursItem;
-                        }
                     }
                 }
                 return null; // Return null if no item found
@@ -1563,16 +1450,12 @@ namespace RazorEnhanced
                 itemFilter.CheckIgnoreObject = considerIgnoreList;
 
                 if (color != -1)
-                {
                     itemFilter.Hues.Add(color);
-                }
 
                 List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
                 foreach (Item found in containeritem)  // Return frist one found
-                {
                     return found;
-                }
 
                 return null;
             }
@@ -1592,18 +1475,14 @@ namespace RazorEnhanced
                 foreach (Item i in cont.Contains)
                 {
                     if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
-                    {
                         continue;
-                    }
 
                     if (i.ItemID == itemid) // check item id
                     {
                         if (color != -1) // color -1 ALL
                         {
                             if (i.Hue == color)
-                            {
                                 return i;
-                            }
                         }
                         else
                         {
@@ -1614,9 +1493,7 @@ namespace RazorEnhanced
                     {
                         Item recursItem = FindByID(itemid, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
                         if (recursItem != null)
-                        {
                             return recursItem;
-                        }
                     }
                 }
                 return null; // Return null if no item found
@@ -1632,16 +1509,12 @@ namespace RazorEnhanced
                 itemFilter.CheckIgnoreObject = considerIgnoreList;
 
                 if (color != -1)
-                {
                     itemFilter.Hues.Add(color);
-                }
 
                 List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
                 foreach (Item found in containeritem)  // Return frist one found
-                {
                     return found;
-                }
 
                 return null;
             }
@@ -1678,21 +1551,15 @@ namespace RazorEnhanced
         public static void WaitForProps(int itemserial, int delay) // Delay in MS
         {
             if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
-            {
                 return;
-            }
 
             Assistant.Item i = Assistant.World.FindItem(itemserial);
 
             if (i == null)
-            {
                 return;
-            }
 
             if (i.PropsUpdated)
-            {
                 return;
-            }
 
             Assistant.Client.Instance.SendToServerWait(new QueryProperties(i.Serial));
             int subdelay = delay;
@@ -1702,9 +1569,7 @@ namespace RazorEnhanced
                 Thread.Sleep(2);
                 subdelay -= 2;
                 if (subdelay <= 0)
-                {
                     break;
-                }
             }
         }
 
@@ -1726,9 +1591,7 @@ namespace RazorEnhanced
             Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
             if (assistantItem == null)
-            {
                 return propstringlist;
-            }
 
             List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
             foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
@@ -1757,16 +1620,11 @@ namespace RazorEnhanced
             Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
             if (assistantItem == null)
-            {
                 return propstring;
-            }
 
             List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
             if (props.Count > index)
-            {
                 propstring = props[index].ToString();
-            }
-
             return propstring;
         }
 
@@ -1786,9 +1644,7 @@ namespace RazorEnhanced
         public static float GetPropValue(int serial, string name)
         {
             if (name.ToLower().Contains("total") && name.ToLower().Contains("resist"))
-            {
                 return GetTotalResistProp(serial);
-            }
 
             Assistant.Item assistantItem = World.FindItem((uint)serial);
             try
@@ -1801,14 +1657,10 @@ namespace RazorEnhanced
                         for (int i = 0; i < content.Count; i++)
                         {
                             if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
-                            {
                                 continue;
-                            }
 
                             if (content[i].Args == null)  // Props exist but not have value
-                            {
                                 return 1;
-                            }
 
                             try
                             {
@@ -1834,9 +1686,7 @@ namespace RazorEnhanced
         public static float GetPropValue(Item item, string name)
         {
             if (item == null)
-            {
                 return 0;
-            }
 
             return GetPropValue(item.Serial, name);
         }
@@ -1905,9 +1755,7 @@ namespace RazorEnhanced
         {
             // Prevent spamm message on left bottom screen
             if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
-            {
                 return;
-            }
 
             Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
         }
@@ -1917,15 +1765,11 @@ namespace RazorEnhanced
             Item item = FindBySerial(serial);
 
             if (item == null) //Intem
-            {
                 return;
-            }
 
             // Prevent spamm message on left bottom screen
             if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
-            {
                 return;
-            }
 
             Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
         }
@@ -1950,10 +1794,7 @@ namespace RazorEnhanced
                     if (color == -1)
                     {
                         if (itemToCount.ItemID == itemid)
-                        {
                             count = count + itemToCount.Amount;
-                        }
-
                         if (recursive && itemToCount.IsContainer)
                         {
                             int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
@@ -1963,10 +1804,7 @@ namespace RazorEnhanced
                     else
                     {
                         if (itemToCount.ItemID == itemid && itemToCount.Hue == color)
-                        {
                             count = count + itemToCount.Amount;
-                        }
-
                         if (recursive && itemToCount.IsContainer)
                         {
                             int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
@@ -1987,9 +1825,7 @@ namespace RazorEnhanced
         {
             Item container = FindBySerial(serial);
             if (container != null)
-            {
                 return ContainerCount(container, itemid, color, recursive);
-            }
             else
             {
                 Scripts.SendMessageScriptError("Script Error: ContainerCount: Invalid container");
@@ -2029,19 +1865,13 @@ namespace RazorEnhanced
         {
             List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
             if (color == -1)
-            {
                 items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid).ToList();
-            }
             else
-            {
                 items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid && i.Hue == color).ToList();
-            }
 
             int amount = 0;
             foreach (Assistant.Item i in items)
-            {
                 amount = amount + i.Amount;
-            }
 
             return amount;
         }
@@ -2058,9 +1888,7 @@ namespace RazorEnhanced
         {
             Assistant.Item item = World.FindItem(serial);
             if (item == null) // Se item non valido
-            {
                 return -1;
-            }
 
             Misc.WaitForContext(serial, 1500);
 

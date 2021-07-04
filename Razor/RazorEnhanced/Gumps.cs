@@ -61,30 +61,18 @@ namespace RazorEnhanced
         /// <param name="movable"> allow the gump to be moved</param>
         /// <param name="closable"> allow the gump to be right clicked to close</param>
         /// <param name="disposable"> allow the gump to be disposed (beats me what it does)</param>
-        /// <param name="resizeable"> allow the gump to be resized</param>
+        /// <param name="resizable"> allow the gump to be resized</param>
         public static GumpData CreateGump(bool movable=true, bool closable=true, bool disposable = true, bool resizeable=true) 
         {
             GumpData gd = new GumpData();
             if (!movable)
-            {
                 gd.gumpDefinition += "{ nomove}";
-            }
-
             if (!closable)
-            {
                 gd.gumpDefinition += "{ noclose}";
-            }
-
             if (!disposable)
-            {
-                gd.gumpDefinition += "{ nodispose}";
-            }
-
+                gd.gumpDefinition += "{ nodispose}"; 
             if (!resizeable)
-            {
                 gd.gumpDefinition += "{ noresize}";
-            }
-
             return gd;
         }
 
@@ -139,7 +127,7 @@ namespace RazorEnhanced
         /// <param name="param"> button can have a param of any integer (I have no idea what param does)</param>
         public static void AddButton(ref GumpData gd, int x, int y, int normalID, int pressedID, int buttonID, int type, int param)
         {
-            string textEntry = String.Format("{{ button {0} {1} {2} {3} {4} {5} {6} }}", x, y, normalID, pressedID, type, param, buttonID);
+            string textEntry = String.Format("{{ button {0} {1} {2} {3} {4} {5} {6} }}", x, y, normalID, pressedID, (int)type, param, buttonID);
             gd.gumpDefinition += textEntry;
         }
         /// <summary>
@@ -151,7 +139,7 @@ namespace RazorEnhanced
         /// <param name="inactiveID"> id of the checkmark to used when unclicked</param>
         /// <param name="activeID"> id of the checkmark to use when clicked</param>
         /// <param name="initialState"> active or inactive initially</param>
-        /// <param name="switchID"> switch id to return if this is changed</param>
+        /// <param name="switchid"> switch id to return if this is changed</param>
         public static void AddCheck(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
         {
             string textEntry = String.Format("{{ checkbox {0} {1} {2} {3} {4} {5} }}", x, y, inactiveID, activeID, initialState ? 1 : 0, switchID);
@@ -221,9 +209,7 @@ namespace RazorEnhanced
         {
             string textEntry = String.Format("{{ htmlgump {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, textID, background ? 1 : 0, scrollbar ? 1 : 0);
             if (gd.gumpStrings.Count > textID)
-            {
                 gd.gumpDefinition += textEntry;
-            }
             else
             {
                 // I think this is not a good thing
@@ -249,7 +235,7 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// No idea at all why this is different than the OTHER html, but SERVEUO had it
+        /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
         public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, string args, int color, bool background, bool scrollbar)
         {            
@@ -263,7 +249,7 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpID"> id used to reference gumps.mul</param>
+        /// <param name="gumpid"> id used to reference gumps.mul</param>
         public void AddImage(ref GumpData gd, int x, int y, int gumpID)
         {            
             string textEntry = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpID);
@@ -276,7 +262,7 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpID"> id used to reference gumps.mul</param>
+        /// <param name="gumpid"> id used to reference gumps.mul</param>
         /// <param name="width"> width of the html block</param>
         /// <param name="height"> height of the html block</param>
         /// <param name="sx"> maybe stretch X?</param>
@@ -293,7 +279,7 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpID"> id used to reference gumps.mul</param>
+        /// <param name="gumpid"> id used to reference gumps.mul</param>
         /// <param name="hue"> to re-color the image</param>
         public void AddImage(ref GumpData gd, int x, int y, int gumpID, int hue)
         {
@@ -309,7 +295,7 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>
-        /// <param name="gumpID"></param>
+        /// <param name="hue"> color to apply to image</param>
         public void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpID)
         {
             string textEntry = String.Format("{{ gumppictiled {0} {1} {2} {3} {4} }}", x, y, width, height, gumpID);
@@ -388,7 +374,7 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="itemID"> id used to reference statics.mul</param>
+        /// <param name="itemid"> id used to reference statics.mul</param>
         public void AddItem(ref GumpData gd, int x, int y, int itemID)
         {
             string textEntry = String.Format("{{ tilepic {0} {1} {2} }}", x, y, itemID);
@@ -400,7 +386,7 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="itemID"> id used to reference statics.mul</param>
+        /// <param name="itemid"> id used to reference statics.mul</param>
         /// <param name="hue"> to re-color the image</param>
         public void AddItem(ref GumpData gd, int x, int y, int itemID, int hue)
         {
@@ -434,9 +420,7 @@ namespace RazorEnhanced
         {
             string textEntry = String.Format("{{ text {0} {1} {2} {3} }}", x, y, hue, textID);
             if (gd.gumpStrings.Count > textID)
-            {
                 gd.gumpDefinition += textEntry;
-            }
             else
             {
                 // I think this is not a good thing
@@ -472,9 +456,7 @@ namespace RazorEnhanced
         {
             string textEntry = String.Format("{{ croppedtext {0} {1} {2} {3} {4} {5} }}", x, y, width, height, hue, textID);
             if (gd.gumpStrings.Count > textID)
-            {
                 gd.gumpDefinition += textEntry;
-            }
             else
             {
                 // I think this is not a good thing
@@ -489,7 +471,7 @@ namespace RazorEnhanced
         /// <param name="inactiveID"> id of the checkmark to used when unclicked</param>
         /// <param name="activeID"> id of the checkmark to use when clicked</param>
         /// <param name="initialState"> active or inactive initially</param>
-        /// <param name="switchID"> switch id to return if this is changed</param>
+        /// <param name="switchid"> switch id to return if this is changed</param>
         public void AddRadio(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
         {
             string textEntry = String.Format("{{ radio {0} {1} {2} {3} {4} {5} }}", x, y, inactiveID, activeID, initialState ? 1 : 0, switchID);
@@ -506,7 +488,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="entryID"> id to be returned with text to identify the input field</param>
-        /// <param name="initialText"> text string to be displayed</param>
+        /// <param name="text"> text string to be displayed</param>
         public static void AddTextEntry(ref GumpData gd, int x, int y, int width, int height, int hue, int entryID, string initialText)
         {
             gd.gumpStrings.Add(initialText);
@@ -524,14 +506,12 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="entryID"> id to be returned with text to identify the input field</param>
-        /// <param name="initialTextID"> index into the list of strings passed to the gump</param>
+        /// <param name="textID"> index into the list of strings passed to the gump</param>
         public static void AddTextEntry(ref GumpData gd, int x, int y, int width, int height, int hue, int entryID, int initialTextID)
         {           
             string textEntry = String.Format("{{ textentry {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, hue, entryID, initialTextID);
             if (gd.gumpStrings.Count > initialTextID)
-            {
                 gd.gumpDefinition += textEntry;
-            }
             else
             {
                 // I think this is not a good thing
@@ -580,15 +560,11 @@ namespace RazorEnhanced
             public static void CloseGump(uint gumpid)
 		{
 			if (gumpid == 0)
-            {
-                Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
-            }
-            else
-            {
-                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-            }
+		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
+			else
+		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
 
-            World.Player.HasGump = false;
+			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
 			World.Player.CurrentGumpTile.Clear();
 			World.Player.CurrentGumpI = 0;

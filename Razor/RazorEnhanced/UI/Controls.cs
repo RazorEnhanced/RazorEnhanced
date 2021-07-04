@@ -57,11 +57,8 @@ namespace RazorEnhanced.UI
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
 			if (LastKey != keyData)
-            {
-                RazorEnhanced.HotKey.KeyDown(keyData);
-            }
-
-            LastKey = keyData;
+				RazorEnhanced.HotKey.KeyDown(keyData);
+			LastKey = keyData;
 			return true;
 		}
 	}
@@ -80,18 +77,14 @@ namespace RazorEnhanced.UI
 			}
 
 			// copy/paste
-			if (((e.KeyChar == 22) || (e.KeyChar == 3))
+			if ((((int)e.KeyChar == 22) || ((int)e.KeyChar == 3))
 				&& ((ModifierKeys & Keys.Control) == Keys.Control))
-            {
-                return;
-            }
+				return;
 
-            if (e.KeyChar == '\b')
-            {
-                return;
-            }
+			if (e.KeyChar == '\b')
+				return;
 
-            e.Handled = true;
+			e.Handled = true;
 		}
 		public RazorAgentNumOnlyTextBox()
 		{ }
@@ -165,18 +158,14 @@ namespace RazorEnhanced.UI
 			}
 		
 			// copy/paste
-			if (((e.KeyChar == 22) || (e.KeyChar == 3))
+			if ((((int)e.KeyChar == 22) || ((int)e.KeyChar == 3))
 				&& ((ModifierKeys & Keys.Control) == Keys.Control))
-            {
-                return;
-            }
+				return;
 
-            if (e.KeyChar == '\b')
-            {
-                return;
-            }
+			if (e.KeyChar == '\b')
+				return;
 
-            e.Handled = true;
+			e.Handled = true;
 		}
 
 		public RazorAgentNumHexTextBox()

@@ -16,9 +16,7 @@ namespace RazorEnhanced
         internal static void AutoRun()
         {
             if (World.Player == null || !Client.Running)
-            {
                 return;
-            }
 
             if (World.Player.IsGhost)
             {
@@ -50,9 +48,7 @@ namespace RazorEnhanced
                             AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
                             Thread.Sleep(AutoLoot.AutoLootDelay);
                             if (item.Updated)
-                            {
                                 AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
-                            }
                         }
                         else
                         {
@@ -155,9 +151,7 @@ namespace RazorEnhanced
         private static System.Object autolootLock = new System.Object();
         internal static void ProcessLootList(uint lootbag)
         {
-            if (Monitor.TryEnter(autolootLock))
-            {
-                try
+            if (Monitor.TryEnter(autolootLock)) try
                 {
                     bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
 
@@ -228,7 +222,6 @@ namespace RazorEnhanced
                 {
                     Monitor.Exit(autolootLock);
                 }
-            }
         }
 
 		private static bool CheckZLevel(int x, int y)
@@ -236,13 +229,9 @@ namespace RazorEnhanced
 			int diff = x - y;
 
 			if (diff < -8 || diff > 8)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+				return false;
+			else
+				return true;
+		}
 	}
 }

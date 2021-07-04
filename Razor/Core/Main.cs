@@ -31,11 +31,9 @@ namespace Assistant
 		internal static void LogCrash(object exception)
 		{
 			if (exception == null || (exception is ThreadAbortException))
-            {
-                return;
-            }
+				return;
 
-            ReportCrash((Exception)exception);
+			ReportCrash((Exception)exception);
 
 			using (StreamWriter txt = new StreamWriter("Crash.log", true))
 			{
@@ -58,28 +56,22 @@ namespace Assistant
 					string str = Client.Instance.GetClientVersion();
 					string[] split = str.Split('.');
 					if (split.Length < 3)
-                    {
-                        return new Version(4, 0, 0, 0);
-                    }
+						return new Version(4, 0, 0, 0);
 
-                    int rev = 0;
+					int rev = 0;
 
 					if (split.Length > 3)
-                    {
-                        rev = Utility.ToInt32(split[3], 0);
-                    }
+						rev = Utility.ToInt32(split[3], 0);
 
-                    m_ClientVersion = new Version(
+					m_ClientVersion = new Version(
 						Utility.ToInt32(split[0], 0),
 						Utility.ToInt32(split[1], 0),
 						Utility.ToInt32(split[2], 0),
 						rev);
 
 					if (m_ClientVersion.Major == 0) // sanity check if the client returns 0.0.0.0
-                    {
-                        m_ClientVersion = new Version(4, 0, 0, 0);
-                    }
-                }
+						m_ClientVersion = new Version(4, 0, 0, 0);
+				}
 
 				return m_ClientVersion;
 			}
@@ -137,10 +129,8 @@ namespace Assistant
 						if (ClientVersion.Build == 1)
 						{
 							if (ClientVersion.Revision >= 7)
-                            {
-                                return true;
-                            }
-                        }
+								return true;
+						}
 						else if (ClientVersion.Build > 1)
 						{
 							return true;
@@ -227,11 +217,9 @@ namespace Assistant
 			IPAddress ipAddr = IPAddress.None;
 
 			if (string.IsNullOrEmpty(addr))
-            {
-                return ipAddr;
-            }
+				return ipAddr;
 
-            try
+			try
 			{
 				ipAddr = IPAddress.Parse(addr);
 			}
@@ -242,10 +230,8 @@ namespace Assistant
 					IPHostEntry iphe = Dns.GetHostEntry(addr);
 
 					if (iphe.AddressList.Length > 0)
-                    {
-                        ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
-                    }
-                }
+						ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
+				}
 				catch
 				{
 				}
@@ -270,14 +256,10 @@ namespace Assistant
 		private static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			if (e.Exception is FileNotFoundException || e.Exception is FileLoadException || e.Exception is BadImageFormatException) // Mancanza dipendenze c++
-            {
-                Assistant.Engine.MainWindow.DisableRecorder();
-            }
-            else
-            {
-                ReportCrash(e.Exception);
-            }
-        }
+				Assistant.Engine.MainWindow.DisableRecorder();
+			else
+				ReportCrash(e.Exception);
+		}
 
 		internal static void ReportCrash(Exception exception)
 		{

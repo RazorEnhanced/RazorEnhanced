@@ -32,56 +32,42 @@ namespace Assistant
 		internal static void AddFiles(ListBox list, string path, string ext)
 		{
 			if (list.Items.Count >= 500)
-            {
-                return;
-            }
+				return;
 
-            string[] files = Directory.GetFiles(path, String.Format("*.{0}", ext));
+			string[] files = Directory.GetFiles(path, String.Format("*.{0}", ext));
 			for (int i = 0; i < files.Length && list.Items.Count < 500; i++)
-            {
-                list.Items.Add(Path.GetFileName(files[i]));
-            }
-        }
+				list.Items.Add(Path.GetFileName(files[i]));
+		}
 
 		internal static bool Record(int fps, int codec)
 		{
 			if (!Assistant.Engine.CDepPresent)
-            {
-                return false;
-            }
+				return false;
 
-            IntPtr uowindow = Client.Instance.GetWindowHandle();
+			IntPtr uowindow = Client.Instance.GetWindowHandle();
 
 			if (uowindow == IntPtr.Zero)
-            {
-                return false;
-            }
+				return false;
 
-            System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromHandle(uowindow);
+			System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromHandle(uowindow);
 
 			Rectangle screenBound = screen.Bounds;
 			if (!DLLImport.Win.GetWindowRect(uowindow, out DLLImport.Win.RECT handleRect))
-            {
-                return false;
-            }
+				return false;
 
-            //Getting the intersection between the two rectangles
-            Rectangle handleBound = new Rectangle(handleRect.Left + 6, handleRect.Top, handleRect.Right - handleRect.Left - 6 , handleRect.Bottom - handleRect.Top);
+			//Getting the intersection between the two rectangles
+			Rectangle handleBound = new Rectangle(handleRect.Left + 6, handleRect.Top, handleRect.Right - handleRect.Left - 6 , handleRect.Bottom - handleRect.Top);
 
 			m_ResX = (handleBound.Right - handleBound.Left)-5;
 			m_ResY = (handleBound.Bottom - handleBound.Top)-5;
 
 			if (m_ResX % 2 != 0)
-            {
-                m_ResX--;
-            }
+				m_ResX--;
 
-            if (m_ResY % 2 != 0)
-            {
-                m_ResY--;
-            }
+			if (m_ResY % 2 != 0)
+				m_ResY--;
 
-            string filename;
+			string filename;
 			string name = "Unknown";
 			string path = RazorEnhanced.Settings.General.ReadString("VideoPath");
 
@@ -93,16 +79,11 @@ namespace Assistant
 			}
 
 			if (World.Player != null)
-            {
-                name = World.Player.Name;
-            }
+				name = World.Player.Name;
+			if (name == null || name.Trim() == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1)
+				name = "Unknown";
 
-            if (name == null || name.Trim() == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1)
-            {
-                name = "Unknown";
-            }
-
-            name = String.Format("{0}_{1}", name, DateTime.Now.ToString("M-d_HH.mm"));
+			name = String.Format("{0}_{1}", name, DateTime.Now.ToString("M-d_HH.mm"));
 
 			int count = 0;
 			do
@@ -141,11 +122,9 @@ namespace Assistant
 		public static void Stop()
 		{
 			if (!Assistant.Engine.CDepPresent)
-            {
-                return;
-            }
+				return;
 
-            try
+			try
 			{
 				if (m_videostream != null)
 				{

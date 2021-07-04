@@ -27,22 +27,16 @@ namespace RazorEnhanced.UI
 			string newprofileName = String.Empty;
 
 			if (profilename.Text == String.Empty)
-            {
-                fail = true;
-            }
+				fail = true;
 
-            if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
-            {
-                fail = true;
-            }
+			if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
+				fail = true;
 
-            newprofileName = profilename.Text.ToLower();
+			newprofileName = profilename.Text.ToLower();
 			if (RazorEnhanced.Profiles.Exist(newprofileName))
-            {
-                fail = true;
-            }
+				fail = true;
 
-            if (fail)
+			if (fail)
 			{
 				MessageBox.Show("Invalid profile name!",
 				"Enhanced Profiles",

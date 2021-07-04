@@ -20,10 +20,8 @@ namespace Assistant
 		private void autolootautostartCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (autolootautostartCheckBox.Focused)
-            {
-                Settings.General.WriteBool("AutolootAutostartCheckBox", autolootautostartCheckBox.Checked);
-            }
-        }
+				Settings.General.WriteBool("AutolootAutostartCheckBox", autolootautostartCheckBox.Checked);
+		}
 
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
@@ -33,54 +31,38 @@ namespace Assistant
 		internal void AutolootSetBag()
 		{
 			if (showagentmessageCheckBox.Checked)
-            {
-                RazorEnhanced.Misc.SendMessage("Autoloot Select Loot Bag", false);
-            }
+				RazorEnhanced.Misc.SendMessage("Autoloot Select Loot Bag", false);
 
-            if (autolootListSelect.Text != String.Empty)
-            {
-                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
-            }
-            else
-            {
-                AutoLoot.AddLog("Item list not selected!");
-            }
-        }
+			if (autolootListSelect.Text != String.Empty)
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
+			else
+				AutoLoot.AddLog("Item list not selected!");
+		}
 
 		private void autoLootSetContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item autoLootBag = Assistant.World.FindItem(serial);
 
 			if (autoLootBag == null)
-            {
-                return;
-            }
+				return;
 
             bool bagOfSending = false;
             string prop = Items.GetPropStringByIndex(serial, 0);
             if (prop.IndexOf("bag of sending", 0, StringComparison.CurrentCultureIgnoreCase) != -1)
-            {
                 bagOfSending = true;
-            }
 
             if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsLootableTarget && (!bagOfSending))
 			{
                 if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString(), false);
-                }
-
-                RazorEnhanced.AutoLoot.AddLog("Autoloot Container set to: " + autoLootBag.ToString());
+					RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString(), false);
+				RazorEnhanced.AutoLoot.AddLog("Autoloot Container set to: " + autoLootBag.ToString());
 				AutoLoot.AutoLootBag = (int)autoLootBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Invalid Autoloot Container, set backpack", false);
-                }
-
-                RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Autoloot Container, set backpack", false);
+				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
 				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
 			BeginInvoke((MethodInvoker)delegate {
@@ -97,19 +79,13 @@ namespace Assistant
 		internal void AutolootAddItem()
 		{
 			if (showagentmessageCheckBox.Checked)
-            {
-                RazorEnhanced.Misc.SendMessage("Select item to add in Autoloot list", false);
-            }
+				RazorEnhanced.Misc.SendMessage("Select item to add in Autoloot list", false);
 
-            if (autolootListSelect.Text != String.Empty)
-            {
-                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
-            }
-            else
-            {
-                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-            }
-        }
+			if (autolootListSelect.Text != String.Empty)
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
+			else
+				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+		}
 
 		private void autoLootItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
@@ -117,21 +93,15 @@ namespace Assistant
 			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString(), false);
-                }
-
-                RazorEnhanced.AutoLoot.AddLog("Autoloot item added: " + autoLootItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString(), false);
+				RazorEnhanced.AutoLoot.AddLog("Autoloot item added: " + autoLootItem.ToString());
 				this.Invoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Invalid target", false);
-                }
-
-                RazorEnhanced.AutoLoot.AddLog("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
+				RazorEnhanced.AutoLoot.AddLog("Invalid target");
 			}
 		}
 
@@ -140,11 +110,9 @@ namespace Assistant
 			if (autolootListSelect.Text != String.Empty)
 			{
 				if (autolootdataGridView.CurrentCell == null)
-                {
-                    return;
-                }
+					return;
 
-                DataGridViewRow row = autolootdataGridView.Rows[autolootdataGridView.CurrentCell.RowIndex];
+				DataGridViewRow row = autolootdataGridView.Rows[autolootdataGridView.CurrentCell.RowIndex];
 				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row)
 				{
 					TopMost = true
@@ -152,10 +120,8 @@ namespace Assistant
 				editProp.Show();
 			}
 			else
-            {
-                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-            }
-        }
+				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+		}
 
 		private void autoLootEnable_CheckedChanged(object sender, EventArgs e)
 		{
@@ -192,10 +158,8 @@ namespace Assistant
 				AutoLoot.AutoMode = true;
 				AutoLoot.AddLog("Autoloot Engine Start...");
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("AUTOLOOT: Engine Start...", false);
-                }
-            }
+					Misc.SendMessage("AUTOLOOT: Engine Start...", false);
+			}
 			else
 			{
 				autolootListSelect.Enabled = true;
@@ -208,11 +172,8 @@ namespace Assistant
 				// Stop autoloot
 				AutoLoot.AutoMode = false;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("AUTOLOOT: Engine Stop...", false);
-                }
-
-                AutoLoot.AddLog("Autoloot Engine Stop...");
+					Misc.SendMessage("AUTOLOOT: Engine Stop...", false);
+				AutoLoot.AddLog("Autoloot Engine Stop...");
 			}
 		}
 
@@ -289,11 +250,9 @@ namespace Assistant
 		{
 
 			if (autoLootTextBoxDelay.Text == String.Empty)
-            {
-                autoLootTextBoxDelay.Text = "100";
-            }
+				autoLootTextBoxDelay.Text = "100";
 
-            AutoLoot.AutoLootDelay = Convert.ToInt32(autoLootTextBoxDelay.Text);
+			AutoLoot.AutoLootDelay = Convert.ToInt32(autoLootTextBoxDelay.Text);
 
 			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
 			RazorEnhanced.AutoLoot.RefreshLists();
@@ -302,11 +261,9 @@ namespace Assistant
 		private void autoLootTextBoxMaxRange_Leave(object sender, EventArgs e)
 		{
 			if (autoLootTextBoxMaxRange.Text == String.Empty)
-            {
-                autoLootTextBoxMaxRange.Text = "0";
-            }
+				autoLootTextBoxMaxRange.Text = "0";
 
-            AutoLoot.MaxRange = Convert.ToInt32(autoLootTextBoxMaxRange.Text);
+			AutoLoot.MaxRange = Convert.ToInt32(autoLootTextBoxMaxRange.Text);
 
 			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
 			RazorEnhanced.AutoLoot.RefreshLists();

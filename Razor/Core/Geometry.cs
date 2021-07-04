@@ -63,12 +63,9 @@ namespace Assistant
 
 		public override bool Equals(object o)
 		{
-			if (o == null || !(o is IPoint2D))
-            {
-                return false;
-            }
+			if (o == null || !(o is IPoint2D)) return false;
 
-            IPoint2D p = (IPoint2D)o;
+			IPoint2D p = (IPoint2D)o;
 
 			return m_X == p.X && m_Y == p.Y;
 		}
@@ -228,12 +225,9 @@ namespace Assistant
 
 		public override bool Equals(object o)
 		{
-			if (o == null || !(o is IPoint3D))
-            {
-                return false;
-            }
+			if (o == null || !(o is IPoint3D)) return false;
 
-            IPoint3D p = (IPoint3D)o;
+			IPoint3D p = (IPoint3D)o;
 
 			return m_X == p.X && m_Y == p.Y && m_Z == p.Z;
 		}
@@ -359,12 +353,9 @@ namespace Assistant
 
 		public override bool Equals(object o)
 		{
-			if (o == null || !(o is Line2D))
-            {
-                return false;
-            }
+			if (o == null || !(o is Line2D)) return false;
 
-            Line2D ln = (Line2D)o;
+			Line2D ln = (Line2D)o;
 
 			return m_Start == ln.m_Start && m_End == ln.m_End;
 		}
@@ -528,25 +519,17 @@ namespace Assistant
 		internal void MakeHold(Rectangle2D r)
 		{
 			if (r.m_Start.m_X < m_Start.m_X)
-            {
-                m_Start.m_X = r.m_Start.m_X;
-            }
+				m_Start.m_X = r.m_Start.m_X;
 
-            if (r.m_Start.m_Y < m_Start.m_Y)
-            {
-                m_Start.m_Y = r.m_Start.m_Y;
-            }
+			if (r.m_Start.m_Y < m_Start.m_Y)
+				m_Start.m_Y = r.m_Start.m_Y;
 
-            if (r.m_End.m_X > m_End.m_X)
-            {
-                m_End.m_X = r.m_End.m_X;
-            }
+			if (r.m_End.m_X > m_End.m_X)
+				m_End.m_X = r.m_End.m_X;
 
-            if (r.m_End.m_Y > m_End.m_Y)
-            {
-                m_End.m_Y = r.m_End.m_Y;
-            }
-        }
+			if (r.m_End.m_Y > m_End.m_Y)
+				m_End.m_Y = r.m_End.m_Y;
+		}
 
 		// "test" must be smaller than this rectangle!
 		internal bool Insersects(Rectangle2D test)

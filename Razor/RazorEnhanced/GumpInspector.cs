@@ -10,11 +10,9 @@ namespace RazorEnhanced
 		internal static void GumpResponseAddLogMain(uint ser, uint tid, int bid)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
+				return;
 
-            AddLog("----------- Response Recevied START -----------");
+			AddLog("----------- Response Recevied START -----------");
 			AddLog("Gump Operation: " + ser.ToString());
 			AddLog("Gump ID: " + tid.ToString());
 			AddLog("Gump Button: " + bid.ToString());
@@ -23,11 +21,8 @@ namespace RazorEnhanced
 		internal static void GumpResponseAddLogSwitchID(List<int> switchid)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
-
-            int i = 0;
+				return;
+			int i = 0;
 			foreach (int sid in switchid)
 			{
 				AddLog("Switch ID: " + i + " Value: " + sid.ToString());
@@ -38,31 +33,22 @@ namespace RazorEnhanced
 		internal static void GumpResponseAddLogTextID(int id, string text)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
-
-            AddLog("Text ID: " + id + " String: " + text);
+				return;
+			AddLog("Text ID: " + id + " String: " + text);
 		}
 
 		internal static void GumpResponseAddLogEnd()
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
-
-            AddLog("----------- Response Recevied END -----------");
+				return;
+			AddLog("----------- Response Recevied END -----------");
 		}
 
 		internal static void GumpCloseAddLog(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
-
-            AddLog("----------- Close Recevied START -----------");
+				return;
+			AddLog("----------- Close Recevied START -----------");
 			ushort ext = p.ReadUInt16(); // Scarto primo uint
 			uint gid = p.ReadUInt32();
 			AddLog("Gump ID: " + gid.ToString());
@@ -74,11 +60,9 @@ namespace RazorEnhanced
 		internal static void NewGumpStandardAddLog(uint GumpS, uint GumpI)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
+				return;
 
-            AddLog("----------- New Recevied START -----------");
+			AddLog("----------- New Recevied START -----------");
 
 			AddLog("Gump Operation: " + GumpS.ToString());
 			AddLog("Gump ID: " + GumpI.ToString());
@@ -89,22 +73,18 @@ namespace RazorEnhanced
 		internal static void NewGumpCompressedAddLog(uint GumpS, uint GumpI)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
-            {
-                return;
-            }
+				return;
 
-            RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginUpdate();
+			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginUpdate();
 			AddLog("----------- New Recevied START -----------");
 
 			AddLog("Gump Operation: " + GumpS.ToString());
 			AddLog("Gump ID: " + GumpI.ToString());
 
 			foreach (string text in World.Player.CurrentGumpStrings)
-            {
-                AddLog("Gump Text Data: " + text);
-            }
+				AddLog("Gump Text Data: " + text);
 
-            AddLog("----------- New Recevied END -----------");
+			AddLog("----------- New Recevied END -----------");
 			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.EndUpdate();
 		}
 

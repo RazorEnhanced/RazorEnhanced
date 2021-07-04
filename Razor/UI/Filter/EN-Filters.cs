@@ -39,11 +39,9 @@ namespace Assistant
 		internal void AutoCarverSetBlade()
 		{
 			if (showagentmessageCheckBox.Checked)
-            {
-                Misc.SendMessage("Select Auto Carver Blade", false);
-            }
+				Misc.SendMessage("Select Auto Carver Blade", false);
 
-            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autocarverbladeTarget_Callback));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autocarverbladeTarget_Callback));
 		}
 
 		private void autocarverbladeTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -51,27 +49,19 @@ namespace Assistant
 			Assistant.Item blade = Assistant.World.FindItem(serial);
 
 			if (blade == null)
-            {
-                return;
-            }
+				return;
 
-            if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player.Backpack)
+			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString(), false);
-                }
-
-                RazorEnhanced.Filters.AutoCarverBlade = (int)blade.Serial.Value;
+					RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString(), false);
+				RazorEnhanced.Filters.AutoCarverBlade = (int)blade.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade", false);
-                }
-
-                RazorEnhanced.Filters.AutoCarverBlade = 0;
+					RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade", false);
+				RazorEnhanced.Filters.AutoCarverBlade = 0;
 			}
 
 			RazorEnhanced.Settings.General.WriteInt("AutoCarverBladeLabel", RazorEnhanced.Filters.AutoCarverBlade);
@@ -84,11 +74,9 @@ namespace Assistant
 		internal void BoneCutterSetBlade()
 		{
 			if (showagentmessageCheckBox.Checked)
-            {
-                Misc.SendMessage("Select Bone Cutter Blade", false);
-            }
+				Misc.SendMessage("Select Bone Cutter Blade", false);
 
-            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(bonecutterbladeTarget_Callback));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(bonecutterbladeTarget_Callback));
 		}
 
 		private void bonecutterbladeTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -96,27 +84,19 @@ namespace Assistant
 			Assistant.Item blade = Assistant.World.FindItem(serial);
 
 			if (blade == null)
-            {
-                return;
-            }
+				return;
 
-            if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player.Backpack)
+			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player.Backpack)
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString(), false);
-                }
-
-                RazorEnhanced.Filters.BoneCutterBlade = (int)blade.Serial.Value;
+					Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString(), false);
+				RazorEnhanced.Filters.BoneCutterBlade = (int)blade.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Invalid BoneCutter Blade", false);
-                }
-
-                RazorEnhanced.Filters.BoneCutterBlade = 0;
+					Misc.SendMessage("Invalid BoneCutter Blade", false);
+				RazorEnhanced.Filters.BoneCutterBlade = 0;
 			}
 
 			Settings.General.WriteInt("BoneBladeLabel", RazorEnhanced.Filters.BoneCutterBlade);
@@ -128,24 +108,18 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.AutoCarver = true;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("AutoCarver Engine Start...", false);
-                }
-            }
+					Misc.SendMessage("AutoCarver Engine Start...", false);
+			}
 			else
 			{
 				RazorEnhanced.Filters.AutoCarver = false;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("AutoCarver Engine Stop...", false);
-                }
-            }
+					Misc.SendMessage("AutoCarver Engine Stop...", false);
+			}
 
 			if (autocarverCheckBox.Focused)
-            {
-                Settings.General.WriteBool("AutoCarverCheckBox", autocarverCheckBox.Checked);
-            }
-        }
+				Settings.General.WriteBool("AutoCarverCheckBox", autocarverCheckBox.Checked);
+		}
 
 		private void bonecutterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -153,88 +127,66 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.BoneCutter = true;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("BoneCutter Engine Start...", false);
-                }
-            }
+					Misc.SendMessage("BoneCutter Engine Start...", false);
+			}
 			else
 			{
 				RazorEnhanced.Filters.BoneCutter = false;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("BoneCutter Engine Stop...", false);
-                }
-            }
+					Misc.SendMessage("BoneCutter Engine Stop...", false);
+			}
 
 			if (bonecutterCheckBox.Focused)
-            {
-                Settings.General.WriteBool("BoneCutterCheckBox", bonecutterCheckBox.Checked);
-            }
-        }
+				Settings.General.WriteBool("BoneCutterCheckBox", bonecutterCheckBox.Checked);
+		}
 
 		private void highlighttargetCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (highlighttargetCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("HighlightTargetCheckBox", highlighttargetCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("HighlightTargetCheckBox", highlighttargetCheckBox.Checked);
+		}
 
 		private void flagsHighlightCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (flagsHighlightCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("FlagsHighlightCheckBox", flagsHighlightCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("FlagsHighlightCheckBox", flagsHighlightCheckBox.Checked);
+		}
 
 		private void showstaticfieldCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showstaticfieldCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("ShowStaticFieldCheckBox", showstaticfieldCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("ShowStaticFieldCheckBox", showstaticfieldCheckBox.Checked);
+		}
 
 		private void blocktraderequestCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (blocktraderequestCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("BlockTradeRequestCheckBox", blocktraderequestCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("BlockTradeRequestCheckBox", blocktraderequestCheckBox.Checked);
+		}
 
 		private void blockpartyinviteCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (blockpartyinviteCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("BlockPartyInviteCheckBox", blockpartyinviteCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("BlockPartyInviteCheckBox", blockpartyinviteCheckBox.Checked);
+		}
 
 		private void showheadtargetCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showheadtargetCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("ShowHeadTargetCheckBox", showheadtargetCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("ShowHeadTargetCheckBox", showheadtargetCheckBox.Checked);
+		}
 
 		private void blockhealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (blockhealpoisonCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("BlockHealPoison", blockhealpoisonCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("BlockHealPoison", blockhealpoisonCheckBox.Checked);
+		}
 
 		private void colorflagsHighlightCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (colorflagsHighlightCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("ColorFlagsHighlightCheckBox", colorflagsHighlightCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("ColorFlagsHighlightCheckBox", colorflagsHighlightCheckBox.Checked);
+		}
 
 		private void colorflagsselfHighlightCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -243,14 +195,11 @@ namespace Assistant
 				if (World.Player != null)
 				{
 					if (colorflagsselfHighlightCheckBox.Checked)
-                    {
-                        RazorEnhanced.Filters.ApplyColor(World.Player);
-                    }
-                    else
-                    {
-                        RazorEnhanced.Filters.Decolorize(World.Player);
-                    }
-                }
+
+						RazorEnhanced.Filters.ApplyColor(World.Player);
+					else
+						RazorEnhanced.Filters.Decolorize(World.Player);
+				}
 				RazorEnhanced.Settings.General.WriteBool("ColorFlagsSelfHighlightCheckBox", colorflagsselfHighlightCheckBox.Checked);
 			}
 		}
@@ -258,42 +207,32 @@ namespace Assistant
 		private void blockminihealCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (blockminihealCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("BlockMiniHealCheckBox", blockminihealCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("BlockMiniHealCheckBox", blockminihealCheckBox.Checked);
+		}
 
 		private void blockbighealCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (blockbighealCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("BlockBigHealCheckBox", blockbighealCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("BlockBigHealCheckBox", blockbighealCheckBox.Checked);
+		}
 
 		private void blockchivalryhealCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (blockchivalryhealCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("BlockChivalryHealCheckBox", blockchivalryhealCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("BlockChivalryHealCheckBox", blockchivalryhealCheckBox.Checked);
+		}
 
 		private void showmessagefieldCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showmessagefieldCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("ShowMessageFieldCheckBox", showmessagefieldCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("ShowMessageFieldCheckBox", showmessagefieldCheckBox.Checked);
+		}
 
 		private void showagentmessageCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showagentmessageCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("ShowAgentMessageCheckBox", showagentmessageCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("ShowAgentMessageCheckBox", showagentmessageCheckBox.Checked);
+		}
 
 		private void mobfilterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -302,20 +241,14 @@ namespace Assistant
 			if (showagentmessageCheckBox.Checked)
 			{
 				if (mobfilterCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!", false);
-                }
-                else
-                {
-                    RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!", false);
-                }
-            }
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!", false);
+				else
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!", false);
+			}
 
 			if (mobfilterCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
+		}
 
 		private void graphfilterdatagrid_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
@@ -343,22 +276,18 @@ namespace Assistant
 		private void remountdelay_Leave(object sender, EventArgs e)
 		{
 			if (remountdelay.Text == String.Empty)
-            {
-                remountdelay.Text = "100";
-            }
+				remountdelay.Text = "100";
 
-            RazorEnhanced.Filters.AutoRemountDelay = Convert.ToInt32(remountdelay.Text);
+			RazorEnhanced.Filters.AutoRemountDelay = Convert.ToInt32(remountdelay.Text);
 			Settings.General.WriteInt("MountDelay", RazorEnhanced.Filters.AutoRemountDelay);
 		}
 
 		private void remountedelay_Leave(object sender, EventArgs e)
 		{
 			if (remountedelay.Text == String.Empty)
-            {
-                remountedelay.Text = "100";
-            }
+				remountedelay.Text = "100";
 
-            RazorEnhanced.Filters.AutoRemountEDelay = Convert.ToInt32(remountedelay.Text);
+			RazorEnhanced.Filters.AutoRemountEDelay = Convert.ToInt32(remountedelay.Text);
 			Settings.General.WriteInt("EMountDelay", RazorEnhanced.Filters.AutoRemountEDelay);
 		}
 
@@ -368,24 +297,18 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.AutoModeRemount = true;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...", false);
-                }
-            }
+					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...", false);
+			}
 			else
 			{
 				RazorEnhanced.Filters.AutoModeRemount = false;
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...", false);
-                }
-            }
+					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...", false);
+			}
 
 			if (remountcheckbox.Focused)
-            {
-                RazorEnhanced.Settings.General.WriteBool("RemountCheckbox", remountcheckbox.Checked);
-            }
-        }
+				RazorEnhanced.Settings.General.WriteBool("RemountCheckbox", remountcheckbox.Checked);
+		}
 
 		private void remountsetbutton_Click(object sender, EventArgs e)
 		{
@@ -395,11 +318,9 @@ namespace Assistant
 		internal void AutoRemountSetMount()
 		{
 			if (showagentmessageCheckBox.Checked)
-            {
-                Misc.SendMessage("Select mount or item.", false);
-            }
+				Misc.SendMessage("Select mount or item.", false);
 
-            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(remountSetMountTarget_Callback));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(remountSetMountTarget_Callback));
 		}
 
 		private void remountSetMountTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)

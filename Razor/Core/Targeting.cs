@@ -69,14 +69,10 @@ namespace Assistant
 			get
 			{
 				if (m_LastTarget != null)
-                {
-                    return m_LastTarget.Serial;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
+					return m_LastTarget.Serial;
+				else
+					return 0;
+			}
 		}
 
 		internal static uint LastAttack
@@ -104,10 +100,8 @@ namespace Assistant
 		{
 			Serial ser = p.ReadUInt32();
 			if (ser.IsMobile && ser != World.Player.Serial && ser != Serial.Zero && ser != Serial.MinusOne)
-            {
-                m_LastCombatant = ser;
-            }
-        }
+				m_LastCombatant = ser;
+		}
 
 		internal static void OneTimeTarget(TargetResponseCallback onTarget)
 		{
@@ -156,15 +150,10 @@ namespace Assistant
 			m_NoShowTarget = m_ClientTarget = m_HasTarget = false;
 
 			if (wait)
-            {
-                Assistant.Client.Instance.SendToClientWait(new CancelTarget(LocalTargID));
-            }
-            else
-            {
-                Assistant.Client.Instance.SendToClient(new CancelTarget(LocalTargID));
-            }
-
-            EndIntercept();
+		 		Assistant.Client.Instance.SendToClientWait(new CancelTarget(LocalTargID));
+			else
+		 		Assistant.Client.Instance.SendToClient(new CancelTarget(LocalTargID));
+			EndIntercept();
 		}
 
 		private static Serial m_OldLT = Serial.Zero;
@@ -172,74 +161,64 @@ namespace Assistant
 		private static void LastTargetChanged()
 		{
 			if (m_LastTarget == null)
-            {
-                return;
-            }
+				return;
 
-            /*	bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
+		/*	bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
 
-                if (m_OldLT.IsItem)
-                {
-                    RemoveTextFlags(World.FindItem(m_OldLT));
-                }
-                else
-                {
-                    Mobile m = World.FindMobile(m_OldLT);
-                    if (m != null)
-                    {
-                        if (lth)
-                            Assistant.Client.Instance.SendToClient(new MobileIncoming(m));
+			if (m_OldLT.IsItem)
+			{
+				RemoveTextFlags(World.FindItem(m_OldLT));
+			}
+			else
+			{
+				Mobile m = World.FindMobile(m_OldLT);
+				if (m != null)
+				{
+					if (lth)
+				 		Assistant.Client.Instance.SendToClient(new MobileIncoming(m));
 
-                        RemoveTextFlags(m);
-                    }
-                }
+					RemoveTextFlags(m);
+				}
+			}
 
-                if (m_LastTarget.Serial.IsItem)
-                {
-                    AddTextFlags(World.FindItem(m_LastTarget.Serial));
-                }
-                else
-                {
-                    Mobile m = World.FindMobile(m_LastTarget.Serial);
-                    if (m != null)
-                    {
-                        if (IsLastTarget(m) && lth)
-                            Assistant.Client.Instance.SendToClient(new MobileIncoming(m));
+			if (m_LastTarget.Serial.IsItem)
+			{
+				AddTextFlags(World.FindItem(m_LastTarget.Serial));
+			}
+			else
+			{
+				Mobile m = World.FindMobile(m_LastTarget.Serial);
+				if (m != null)
+				{
+					if (IsLastTarget(m) && lth)
+				 		Assistant.Client.Instance.SendToClient(new MobileIncoming(m));
 
-                        CheckLastTargetRange(m);
+					CheckLastTargetRange(m);
 
-                        AddTextFlags(m);
-                    }
-                }*/
+					AddTextFlags(m);
+				}
+			}*/
 
-            m_OldLT = m_LastTarget.Serial;
+			m_OldLT = m_LastTarget.Serial;
 		}
 
 
 		internal static void SetLastTarget(Serial s, byte flagType, bool wait)
 		{
 			if (m_LastTarget != null && s == Serial.Zero && m_LastTarget.Serial == s) // Non settare last se già il serial corrente
-            {
-                return;
-            }
+				return;
 
-            TargetInfo targ = new TargetInfo();
+			TargetInfo targ = new TargetInfo();
 			m_LastGroundTarg = m_LastTarget = targ;
 
 			if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
-            {
-                m_LastHarmTarg = targ;
-            }
-            else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
-            {
-                m_LastBeneTarg = targ;
-            }
-            else if (flagType == 0)
-            {
-                m_LastHarmTarg = m_LastBeneTarg = targ;
-            }
+				m_LastHarmTarg = targ;
+			else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
+				m_LastBeneTarg = targ;
+			else if (flagType == 0)
+				m_LastHarmTarg = m_LastBeneTarg = targ;
 
-            targ.Type = 0;
+			targ.Type = 0;
 			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
 
 
@@ -262,15 +241,10 @@ namespace Assistant
 				{
 					targ.Gfx = m.Body;
 					if (wait)
-                    {
-                        Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(m));
-                    }
-                    else
-                    {
-                        Assistant.Client.Instance.SendToClient(new ChangeCombatant(m));
-                    }
-
-                    m_LastCombatant = s;
+				 		Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(m));
+					else
+				 		Assistant.Client.Instance.SendToClient(new ChangeCombatant(m));
+					m_LastCombatant = s;
 				}
 			}
 
@@ -292,41 +266,30 @@ namespace Assistant
 		internal static void TargetSelf(bool forceQ)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            if (m_HasTarget)
+			if (m_HasTarget)
 			{
 				if (!DoTargetSelf())
-                {
-                    ResendTarget();
-                }
-            }
+					ResendTarget();
+			}
 			else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 			{
 				if (!forceQ)
-                {
-                    World.Player.OverheadMessage(LocString.QueuedTS);
-                }
-
-                m_QueueTarget = TargetSelfAction;
+					World.Player.OverheadMessage(LocString.QueuedTS);
+				m_QueueTarget = TargetSelfAction;
 			}
 		}
 
 		internal static bool DoTargetSelf()
 		{
 			if (World.Player == null)
-            {
-                return false;
-            }
+				return false;
 
-            if (CheckHealPoisonTarg(m_CurrentID, World.Player.Serial))
-            {
-                return false;
-            }
+			if (CheckHealPoisonTarg(m_CurrentID, World.Player.Serial))
+				return false;
 
-            CancelClientTarget(false);
+			CancelClientTarget(false);
 			m_HasTarget = false;
 
 			if (m_Intercept)
@@ -361,18 +324,13 @@ namespace Assistant
 			if (m_HasTarget)
 			{
 				if (!DoLastTarget())
-                {
-                    ResendTarget();
-                }
-            }
+					ResendTarget();
+			}
 			else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 			{
 				if (!forceQ)
-                {
-                    World.Player.OverheadMessage(LocString.QueuedLT);
-                }
-
-                m_QueueTarget = LastTargetAction;
+					World.Player.OverheadMessage(LocString.QueuedLT);
+				m_QueueTarget = LastTargetAction;
 			}
 		}
         internal static void SetAutoTarget(uint serial)
@@ -383,9 +341,7 @@ namespace Assistant
             if (m_HasTarget)
             {
                 if (!DoAutoTarget())
-                {
                     ResendTarget();
-                }
             }
         }
         internal static void CancelAutoTarget()
@@ -400,43 +356,27 @@ namespace Assistant
             if (Engine.MainWindow.SmartLastTarget.Checked)
             {
                 if (m_AllowGround && m_LastGroundTarg != null)
-                {
                     targ = m_LastGroundTarg;
-                }
                 else if (m_CurFlags == 1)
-                {
                     targ = m_LastHarmTarg;
-                }
                 else if (m_CurFlags == 2)
-                {
                     targ = m_LastBeneTarg;
-                }
                 else
-                {
                     targ = m_LastTarget;
-                }
 
                 if (targ == null)
-                {
                     targ = m_LastTarget;
-                }
             }
             else
             {
                 if (m_AllowGround && m_LastGroundTarg != null)
-                {
                     targ = m_LastGroundTarg;
-                }
                 else
-                {
                     targ = m_LastTarget;
-                }
             }
 
             if (targ == null)
-            {
                 return false;
-            }
 
             Point3D pos = Point3D.Zero;
             if (targ.Serial.IsMobile)
@@ -488,18 +428,13 @@ namespace Assistant
             if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
             {
                 if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
-                {
                     m_QueueTarget = LastTargetAction;
-                }
-
                 World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
                 return false;
             }
 
             if (CheckHealPoisonTarg(m_CurrentID, targ.Serial))
-            {
                 return false;
-            }
 
             CancelClientTarget(false);
             m_HasTarget = false;
@@ -507,14 +442,9 @@ namespace Assistant
             targ.TargID = m_CurrentID;
 
             if (m_Intercept)
-            {
                 OneTimeResponse(targ);
-            }
             else
-            {
                 Assistant.Client.Instance.SendToServer(new TargetResponse(targ));
-            }
-
             return true;
         }
 
@@ -524,11 +454,9 @@ namespace Assistant
             targ = m_AutoTarget;
 
 			if (targ == null)
-            {
-                return false;
-            }
+				return false;
 
-            Point3D pos = Point3D.Zero;
+			Point3D pos = Point3D.Zero;
 			if (targ.Serial.IsMobile)
 			{
 				Mobile m = World.FindMobile(targ.Serial);
@@ -578,34 +506,24 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
-                {
-                    m_QueueTarget = AutoTargetAction;
-                }
-
-                World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
+					m_QueueTarget = AutoTargetAction;
+				World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
 				return false;
 			}
 
 			if (CheckHealPoisonTarg(m_CurrentID, targ.Serial))
-            {
-                return false;
-            }
+				return false;
 
-            CancelClientTarget(false);
+			CancelClientTarget(false);
 			m_HasTarget = false;
 
 			targ.TargID = m_CurrentID;
 
 			if (m_Intercept)
-            {
-                OneTimeResponse(targ);
-            }
-            else
-            {
-                Assistant.Client.Instance.SendToServer(new TargetResponse(targ));
-            }
-
-            return true;
+				OneTimeResponse(targ);
+			else
+		 		Assistant.Client.Instance.SendToServer(new TargetResponse(targ));
+			return true;
 		}
 
 		internal static void ClearQueue()
@@ -629,17 +547,13 @@ namespace Assistant
 				if ((info.X == 0xFFFF && info.X == 0xFFFF) && (info.Serial == 0 || info.Serial >= 0x80000000))
 				{
 					if (m_OnCancel != null)
-                    {
-                        m_OnCancel();
-                    }
-                }
+						m_OnCancel();
+				}
 				else
 				{
 					if (m_OnTarget != null)
-                    {
-                        m_OnTarget(info.Type == 1 ? true : false, info.Serial, new Point3D(info.X, info.Y, info.Z), info.Gfx);
-                    }
-                }
+						m_OnTarget(info.Type == 1 ? true : false, info.Serial, new Point3D(info.X, info.Y, info.Z), info.Gfx);
+				}
 			}
 
 			EndIntercept();
@@ -648,21 +562,14 @@ namespace Assistant
 		internal static void CancelClientTarget(bool wait)
 		{
 			if (!m_ClientTarget)
-            {
-                return;
-            }
+				return;
 
-            m_FilterCancel.Add(m_CurrentID);
+			m_FilterCancel.Add((uint)m_CurrentID);
 			if (wait)
-            {
-                Assistant.Client.Instance.SendToClientWait(new CancelTarget(m_CurrentID));
-            }
-            else
-            {
-                Assistant.Client.Instance.SendToClient(new CancelTarget(m_CurrentID));
-            }
-
-            m_ClientTarget = false;
+		 		Assistant.Client.Instance.SendToClientWait(new CancelTarget(m_CurrentID));
+			else
+		 		Assistant.Client.Instance.SendToClient(new CancelTarget(m_CurrentID));
+			m_ClientTarget = false;
 		}
 
 		internal static void Target(TargetInfo info, bool wait)
@@ -676,14 +583,10 @@ namespace Assistant
 				info.TargID = m_CurrentID;
 				m_LastGroundTarg = m_LastTarget = info;
 				if (wait)
-                {
-                    Assistant.Client.Instance.SendToServerWait(new TargetResponse(info));
-                }
-                else
-                {
-                    Assistant.Client.Instance.SendToServer(new TargetResponse(info));
-                }
-            }
+			 		Assistant.Client.Instance.SendToServerWait(new TargetResponse(info));
+				else
+			 		Assistant.Client.Instance.SendToServer(new TargetResponse(info));
+			}
 
 			CancelClientTarget(wait);
 			m_HasTarget = false;
@@ -802,43 +705,30 @@ namespace Assistant
 				bool harm = m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial;
 				bool bene = m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial;
 				if (harm)
-                {
-                    m.OverheadMessage(0x90, String.Format("[{0}]", Language.GetString(LocString.HarmfulTarget)));
-                }
-
-                if (bene)
-                {
-                    m.OverheadMessage(0x3F, String.Format("[{0}]", Language.GetString(LocString.BeneficialTarget)));
-                }
-            }
+					m.OverheadMessage(0x90, String.Format("[{0}]", Language.GetString(LocString.HarmfulTarget)));
+				if (bene)
+					m.OverheadMessage(0x3F, String.Format("[{0}]", Language.GetString(LocString.BeneficialTarget)));
+			}
 
 			if (m_LastTarget != null && m_LastTarget.Serial == m.Serial)
-            {
-                m.OverheadMessage(0x3B2, String.Format("[{0}]", Language.GetString(LocString.LastTarget)));
-            }
-        }
+				m.OverheadMessage(0x3B2, String.Format("[{0}]", Language.GetString(LocString.LastTarget)));
+		}
 
 		internal static bool IsLastTarget(Mobile m)
 		{
 			if (m == null)
-            {
-                return false;
-            }
+				return false;
 
-            if (Engine.MainWindow.SmartLastTarget.Checked)
+			if (Engine.MainWindow.SmartLastTarget.Checked)
 			{
 				if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
-                {
-                    return true;
-                }
-            }
+					return true;
+			}
 			else
 			{
 				if (m_LastTarget != null && m_LastTarget.Serial == m.Serial)
-                {
-                    return true;
-                }
-            }
+					return true;
+			}
 
 			return false;
 		}
@@ -846,21 +736,17 @@ namespace Assistant
 		internal static void CheckLastTargetRange(Mobile m)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            if (m_HasTarget && m != null && m_LastTarget != null && m.Serial == m_LastTarget.Serial && m_QueueTarget == LastTargetAction)
+			if (m_HasTarget && m != null && m_LastTarget != null && m.Serial == m_LastTarget.Serial && m_QueueTarget == LastTargetAction)
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT"))
 				{
 					if (Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 					{
 						if (m_QueueTarget())
-                        {
-                            ClearQueue();
-                        }
-                    }
+							ClearQueue();
+					}
 				}
 			}
 		}
@@ -868,16 +754,12 @@ namespace Assistant
 		private static bool CheckHealPoisonTarg(uint targID, Serial ser)
 		{
 			if (World.Player == null)
-            {
-                return false;
-            }
+				return false;
 
-            if (!RazorEnhanced.Settings.General.ReadBool("BlockHealPoison"))
-            {
-                return false;
-            }
+			if (!RazorEnhanced.Settings.General.ReadBool("BlockHealPoison"))
+				return false;
 
-            if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
+			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
 			{
 				Mobile m = World.FindMobile(ser);
 
@@ -914,17 +796,13 @@ namespace Assistant
 			m_ClientTarget = false;
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_Target(info);
-            }
+				RazorEnhanced.ScriptRecorder.Record_Target(info);
 
-            if (info.Serial != 0 && info.Serial.IsMobile)
-            {
-                RazorEnhanced.Target.TargetMessage(info.Serial, false);
-            }
+			if (info.Serial != 0 && info.Serial.IsMobile)
+				RazorEnhanced.Target.TargetMessage(info.Serial, false);
 
-            // check for cancel
-            if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
+			// check for cancel
+			if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
 			{
 				m_HasTarget = false;
 
@@ -945,7 +823,7 @@ namespace Assistant
 						ResendTarget();
 					}
 				}
-				else if (m_FilterCancel.Contains(info.TargID) || info.TargID == LocalTargID)
+				else if (m_FilterCancel.Contains((uint)info.TargID) || info.TargID == LocalTargID)
 				{
 					args.Block = true;
 				}
@@ -1002,15 +880,11 @@ namespace Assistant
 
 					m_LastTarget = info;
 					if (info.Flags == 1)
-                    {
-                        m_LastHarmTarg = info;
-                    }
-                    else if (info.Flags == 2)
-                    {
-                        m_LastBeneTarg = info;
-                    }
+						m_LastHarmTarg = info;
+					else if (info.Flags == 2)
+						m_LastBeneTarg = info;
 
-                    LastTargetChanged();
+					LastTargetChanged();
 				}
 
 				m_LastGroundTarg = info; // ground target is the true last target
@@ -1045,11 +919,9 @@ namespace Assistant
 			}
 
 			if (Spell.LastCastTime + TimeSpan.FromSeconds(3.0) > DateTime.Now && Spell.LastCastTime + TimeSpan.FromSeconds(0.5) <= DateTime.Now && m_SpellTargID == 0)
-            {
-                m_SpellTargID = m_CurrentID;
-            }
+				m_SpellTargID = m_CurrentID;
 
-            m_HasTarget = true;
+			m_HasTarget = true;
 			m_ClientTarget = false;
 
 			if (m_QueueTarget != null && m_QueueTarget())
@@ -1060,10 +932,8 @@ namespace Assistant
 			else
 			{
 				if (m_NoShowTarget)
-                {
-                    args.Block = true;
-                }
-            }
+					args.Block = true;
+			}
 
 			if (args.Block)
 			{
@@ -1076,10 +946,8 @@ namespace Assistant
 					m_ClientTarget = true;
 
 					if (!m_Intercept)
-                    {
-                        CancelClientTarget(false);
-                    }
-                }
+						CancelClientTarget(false);
+				}
 			}
 			else
 			{
@@ -1088,14 +956,11 @@ namespace Assistant
 				if (m_Intercept)
 				{
 					if (m_OnCancel != null)
-                    {
-                        m_OnCancel();
-                    }
-
-                    EndIntercept();
+						m_OnCancel();
+					EndIntercept();
 					World.Player.SendMessage(MsgLevel.Error, LocString.OTTCancel);
 
-					m_FilterCancel.Add(prevID);
+					m_FilterCancel.Add((uint)prevID);
 				}
 			}
 		}

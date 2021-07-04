@@ -30,10 +30,8 @@ namespace Assistant
 				{
 					m_Logging = value;
 					if (m_Logging)
-                    {
-                        BeginLog();
-                    }
-                }
+						BeginLog();
+				}
 			}
 		}
 
@@ -100,12 +98,10 @@ namespace Assistant
 		internal void EnsureCapacity(int capacity)
 		{
 			m_Stream = new MemoryStream(capacity);
-			Write(m_PacketID);
+			Write((byte)m_PacketID);
 			if (m_DynSize)
-            {
-                Write((short)0);
-            }
-        }
+				Write((short)0);
+		}
 
 		internal byte[] Compile()
 		{
@@ -161,11 +157,9 @@ namespace Assistant
 		internal static void Log(string line)
 		{
 			if (!m_Logging)
-            {
-                return;
-            }
+				return;
 
-            try
+			try
 			{
 				using (StreamWriter sw = new StreamWriter(PacketsLogFile, true))
 				{
@@ -187,11 +181,9 @@ namespace Assistant
 		internal static unsafe void Log(PacketPath path, byte* buff, int len, bool blocked)
 		{
 			if (!m_Logging)
-            {
-                return;
-            }
+				return;
 
-            try
+			try
 			{
 				using (StreamWriter sw = new StreamWriter(PacketsLogFile, true))
 				{
@@ -248,11 +240,9 @@ namespace Assistant
 		internal int ReadInt32()
 		{
 			if (m_Stream.Position + 4 > m_Stream.Length)
-            {
-                return 0;
-            }
+				return 0;
 
-            return (ReadByte() << 24)
+			return (ReadByte() << 24)
 				| (ReadByte() << 16)
 				| (ReadByte() << 8)
 				| ReadByte();
@@ -261,31 +251,22 @@ namespace Assistant
 		internal short ReadInt16()
 		{
 			if (m_Stream.Position + 2 > m_Stream.Length)
-            {
-                return 0;
-            }
-
-            return (short)((ReadByte() << 8) | ReadByte());
+				return 0;
+			return (short)((ReadByte() << 8) | ReadByte());
 		}
 
 		internal byte ReadByte()
 		{
 			if (m_Stream.Position + 1 > m_Stream.Length)
-            {
-                return 0;
-            }
-
-            return (byte)m_Stream.ReadByte();
+				return 0;
+			return (byte)m_Stream.ReadByte();
 		}
 
 		internal uint ReadUInt32()
 		{
 			if (m_Stream.Position + 4 > m_Stream.Length)
-            {
-                return 0;
-            }
-
-            return (uint)((ReadByte() << 24)
+				return 0;
+			return (uint)((ReadByte() << 24)
 				| (ReadByte() << 16)
 				| (ReadByte() << 8)
 				| ReadByte());
@@ -294,31 +275,22 @@ namespace Assistant
 		internal ushort ReadUInt16()
 		{
 			if (m_Stream.Position + 2 > m_Stream.Length)
-            {
-                return 0;
-            }
-
-            return (ushort)((ReadByte() << 8) | ReadByte());
+				return 0;
+			return (ushort)((ReadByte() << 8) | ReadByte());
 		}
 
 		internal sbyte ReadSByte()
 		{
 			if (m_Stream.Position + 1 > m_Stream.Length)
-            {
-                return 0;
-            }
-
-            return (sbyte)m_Stream.ReadByte();
+				return 0;
+			return (sbyte)m_Stream.ReadByte();
 		}
 
 		internal bool ReadBoolean()
 		{
 			if (m_Stream.Position + 1 > m_Stream.Length)
-            {
-                return false;
-            }
-
-            return (m_Stream.ReadByte() != 0);
+				return false;
+			return (m_Stream.ReadByte() != 0);
 		}
 
 		internal string ReadUnicodeStringLE()
@@ -328,11 +300,9 @@ namespace Assistant
 			int c;
 
 			while (m_Stream.Position + 1 < m_Stream.Length && (c = ReadByte() | (ReadByte() << 8)) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            return sb.ToString();
+			return sb.ToString();
 		}
 
 		internal string ReadUnicodeStringLESafe()
@@ -344,10 +314,8 @@ namespace Assistant
 			while (m_Stream.Position + 1 < m_Stream.Length && (c = ReadByte() | (ReadByte() << 8)) != 0)
 			{
 				if (IsSafeChar(c))
-                {
-                    sb.Append((char)c);
-                }
-            }
+					sb.Append((char)c);
+			}
 
 			return sb.ToString();
 		}
@@ -361,10 +329,8 @@ namespace Assistant
 			while (m_Stream.Position + 1 < m_Stream.Length && (c = ReadUInt16()) != 0)
 			{
 				if (IsSafeChar(c))
-                {
-                    sb.Append((char)c);
-                }
-            }
+					sb.Append((char)c);
+			}
 
 			return sb.ToString();
 		}
@@ -376,11 +342,9 @@ namespace Assistant
 			int c;
 
 			while (m_Stream.Position + 1 < m_Stream.Length && (c = ReadUInt16()) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            return sb.ToString();
+			return sb.ToString();
 		}
 
 		internal bool IsSafeChar(int c)
@@ -391,28 +355,22 @@ namespace Assistant
 		internal string ReadUTF8StringSafe(int fixedLength)
 		{
 			if (m_Stream.Position >= m_Stream.Length)
-            {
-                return String.Empty;
-            }
+				return String.Empty;
 
-            long bound = m_Stream.Position + fixedLength;
+			long bound = m_Stream.Position + fixedLength;
 			long end = bound;
 
 			if (bound > m_Stream.Length)
-            {
-                bound = m_Stream.Length;
-            }
+				bound = m_Stream.Length;
 
-            int count = 0;
+			int count = 0;
 			long index = m_Stream.Position;
 			long start = m_Stream.Position;
 
 			while (index < bound && ReadByte() != 0)
-            {
-                ++count;
-            }
+				++count;
 
-            m_Stream.Seek(start, SeekOrigin.Begin);
+			m_Stream.Seek(start, SeekOrigin.Begin);
 
 			index = 0;
 
@@ -420,35 +378,27 @@ namespace Assistant
 			int value = 0;
 
 			while (m_Stream.Position < bound && (value = ReadByte()) != 0)
-            {
-                buffer[index++] = (byte)value;
-            }
+				buffer[index++] = (byte)value;
 
-            string s = Encoding.UTF8.GetString(buffer);
+			string s = Encoding.UTF8.GetString(buffer);
 
 			bool isSafe = true;
 
 			for (int i = 0; isSafe && i < s.Length; ++i)
-            {
-                isSafe = IsSafeChar(s[i]);
-            }
+				isSafe = IsSafeChar((int)s[i]);
 
-            m_Stream.Seek(start + fixedLength, SeekOrigin.Begin);
+			m_Stream.Seek(start + fixedLength, SeekOrigin.Begin);
 
 			if (isSafe)
-            {
-                return s;
-            }
+				return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+			StringBuilder sb = new StringBuilder(s.Length);
 
 			foreach (char t in s)
 			{
 				if (IsSafeChar(t))
-                {
-                    sb.Append(t);
-                }
-            }
+					sb.Append(t);
+			}
 
 			return sb.ToString();
 		}
@@ -456,20 +406,16 @@ namespace Assistant
 		internal string ReadUTF8StringSafe()
 		{
 			if (m_Stream.Position >= m_Stream.Length)
-            {
-                return String.Empty;
-            }
+				return String.Empty;
 
-            int count = 0;
+			int count = 0;
 			long index = m_Stream.Position;
 			long start = index;
 
 			while (index < m_Stream.Length && ReadByte() != 0)
-            {
-                ++count;
-            }
+				++count;
 
-            m_Stream.Seek(start, SeekOrigin.Begin);
+			m_Stream.Seek(start, SeekOrigin.Begin);
 
 			index = 0;
 
@@ -477,33 +423,25 @@ namespace Assistant
 			int value = 0;
 
 			while (m_Stream.Position < m_Stream.Length && (value = ReadByte()) != 0)
-            {
-                buffer[index++] = (byte)value;
-            }
+				buffer[index++] = (byte)value;
 
-            string s = Encoding.UTF8.GetString(buffer);
+			string s = Encoding.UTF8.GetString(buffer);
 
 			bool isSafe = true;
 
 			for (int i = 0; isSafe && i < s.Length; ++i)
-            {
-                isSafe = IsSafeChar(s[i]);
-            }
+				isSafe = IsSafeChar((int)s[i]);
 
-            if (isSafe)
-            {
-                return s;
-            }
+			if (isSafe)
+				return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+			StringBuilder sb = new StringBuilder(s.Length);
 
 			foreach (char t in s)
 			{
 				if (IsSafeChar(t))
-                {
-                    sb.Append(t);
-                }
-            }
+					sb.Append(t);
+			}
 
 			return sb.ToString();
 		}
@@ -511,20 +449,16 @@ namespace Assistant
 		internal string ReadUTF8String()
 		{
 			if (m_Stream.Position >= m_Stream.Length)
-            {
-                return String.Empty;
-            }
+				return String.Empty;
 
-            int count = 0;
+			int count = 0;
 			long index = m_Stream.Position;
 			long start = index;
 
 			while (index < m_Stream.Length && ReadByte() != 0)
-            {
-                ++count;
-            }
+				++count;
 
-            m_Stream.Seek(start, SeekOrigin.Begin);
+			m_Stream.Seek(start, SeekOrigin.Begin);
 
 			index = 0;
 
@@ -532,11 +466,9 @@ namespace Assistant
 			int value = 0;
 
 			while (m_Stream.Position < m_Stream.Length && (value = ReadByte()) != 0)
-            {
-                buffer[index++] = (byte)value;
-            }
+				buffer[index++] = (byte)value;
 
-            return Encoding.UTF8.GetString(buffer);
+			return Encoding.UTF8.GetString(buffer);
 		}
 
 		internal string ReadString()
@@ -551,11 +483,9 @@ namespace Assistant
 			int c;
 
 			while (m_Stream.Position < m_Stream.Length && (c = ReadByte()) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            return sb.ToString();
+			return sb.ToString();
 		}
 
 		internal string ReadUnicodeStringSafe(int fixedLength)
@@ -569,23 +499,17 @@ namespace Assistant
 			long end = bound;
 
 			if (bound > m_Stream.Length)
-            {
-                bound = m_Stream.Length;
-            }
+				bound = m_Stream.Length;
 
-            StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			int c;
 
 			while ((m_Stream.Position + 1) < bound && (c = ReadUInt16()) != 0)
-            {
-                if (IsSafeChar(c))
-                {
-                    sb.Append((char)c);
-                }
-            }
+				if (IsSafeChar(c))
+					sb.Append((char)c);
 
-            m_Stream.Seek(end, SeekOrigin.Begin);
+			m_Stream.Seek(end, SeekOrigin.Begin);
 
 			return sb.ToString();
 		}
@@ -600,22 +524,18 @@ namespace Assistant
 			long bound = m_Stream.Position + fixedLength;
 
 			if (bound > m_Stream.Length)
-            {
-                bound = m_Stream.Length;
-            }
+				bound = m_Stream.Length;
 
-            long end = bound;
+			long end = bound;
 
 			StringBuilder sb = new StringBuilder();
 
 			int c;
 
 			while (m_Stream.Position < bound && (c = ReadByte()) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            m_Stream.Seek(end, SeekOrigin.Begin);
+			m_Stream.Seek(end, SeekOrigin.Begin);
 
 			return sb.ToString();
 		}
@@ -682,11 +602,9 @@ namespace Assistant
 		internal void WriteAsciiFixed(string value, int size)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            byte[] buffer = Encoding.ASCII.GetBytes(value);
+			byte[] buffer = Encoding.ASCII.GetBytes(value);
 
 			if (buffer.Length >= size)
 			{
@@ -705,11 +623,9 @@ namespace Assistant
 		internal void WriteAsciiNull(string value)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            byte[] buffer = Encoding.ASCII.GetBytes(value);
+			byte[] buffer = Encoding.ASCII.GetBytes(value);
 
 			m_Stream.Write(buffer, 0, buffer.Length);
 			m_Stream.WriteByte(0);
@@ -718,11 +634,9 @@ namespace Assistant
 		internal void WriteLittleUniNull(string value)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            byte[] buffer = Encoding.Unicode.GetBytes(value);
+			byte[] buffer = Encoding.Unicode.GetBytes(value);
 
 			m_Stream.Write(buffer, 0, buffer.Length);
 
@@ -734,11 +648,9 @@ namespace Assistant
 		internal void WriteLittleUniFixed(string value, int size)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            size *= 2;
+			size *= 2;
 
 			byte[] buffer = Encoding.Unicode.GetBytes(value);
 
@@ -759,11 +671,9 @@ namespace Assistant
 		internal void WriteBigUniNull(string value)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            byte[] buffer = Encoding.BigEndianUnicode.GetBytes(value);
+			byte[] buffer = Encoding.BigEndianUnicode.GetBytes(value);
 
 			m_Stream.Write(buffer, 0, buffer.Length);
 
@@ -775,11 +685,9 @@ namespace Assistant
 		internal void WriteBigUniFixed(string value, int size)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            size *= 2;
+			size *= 2;
 
 			byte[] buffer = Encoding.BigEndianUnicode.GetBytes(value);
 
@@ -800,11 +708,9 @@ namespace Assistant
 		internal void WriteUTF8Fixed(string value, int size)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            size *= 2;
+			size *= 2;
 
 			byte[] buffer = Encoding.UTF8.GetBytes(value);
 
@@ -825,11 +731,9 @@ namespace Assistant
 		internal void WriteUTF8Null(string value)
 		{
 			if (value == null)
-            {
-                value = String.Empty;
-            }
+				value = String.Empty;
 
-            byte[] buffer = Encoding.UTF8.GetBytes(value);
+			byte[] buffer = Encoding.UTF8.GetBytes(value);
 
 			m_Stream.Write(buffer, 0, buffer.Length);
 			m_Buffer[0] = 0;
@@ -944,15 +848,10 @@ namespace Assistant
 					break;
 			}
 			if (m_Pos < 0)
-            {
-                m_Pos = 0;
-            }
-            else if (m_Pos > m_Length)
-            {
-                m_Pos = m_Length;
-            }
-
-            return m_Pos;
+				m_Pos = 0;
+			else if (m_Pos > m_Length)
+				m_Pos = m_Length;
+			return m_Pos;
 		}
 
 		internal int Length { get { return m_Length; } }
@@ -963,11 +862,8 @@ namespace Assistant
 		{
 			byte[] read = new byte[count];
 			for (m_Pos = offset; m_Pos < offset + count && m_Pos < m_Length; m_Pos++)
-            {
-                read[m_Pos - offset] = m_Data[m_Pos];
-            }
-
-            return read;
+				read[m_Pos - offset] = m_Data[m_Pos];
+			return read;
 		}
 
 		internal PacketReader GetCompressedReader()
@@ -982,11 +878,9 @@ namespace Assistant
 				destLen = packLen + 1000;
 
 				if (destLen < 0)
-                {
-                    destLen = 0;
-                }
+					destLen = 0;
 
-                buff = new byte[destLen];
+				buff = new byte[destLen];
 
 				if (fullLen > 4 && destLen > 0)
 				{
@@ -1019,11 +913,9 @@ namespace Assistant
 			try
 			{
 				if (m_Pos + 1 > m_Length || m_Data == null)
-                {
-                    return 0;
-                }
+					return 0;
 
-                return m_Data[m_Pos++];
+				return m_Data[m_Pos++];
 			}
 			catch
 			{
@@ -1056,15 +948,15 @@ namespace Assistant
 
 		internal ulong ReadRawUInt64()
 		{
-			return
-                ((ulong)ReadByte() << 0)
-                | ((ulong)ReadByte() << 8)
-                | ((ulong)ReadByte() << 16)
-                | ((ulong)ReadByte() << 24)
-                | ((ulong)ReadByte() << 32)
-                | ((ulong)ReadByte() << 40)
-                | ((ulong)ReadByte() << 48)
-                | ((ulong)ReadByte() << 56);
+			return (ulong)
+				(((ulong)ReadByte() << 0)
+				| ((ulong)ReadByte() << 8)
+				| ((ulong)ReadByte() << 16)
+				| ((ulong)ReadByte() << 24)
+				| ((ulong)ReadByte() << 32)
+				| ((ulong)ReadByte() << 40)
+				| ((ulong)ReadByte() << 48)
+				| ((ulong)ReadByte() << 56));
 		}
 
 		internal ushort ReadUInt16()
@@ -1075,11 +967,8 @@ namespace Assistant
 		internal unsafe sbyte ReadSByte()
 		{
 			if (m_Pos + 1 > m_Length)
-            {
-                return 0;
-            }
-
-            return (sbyte)m_Data[m_Pos++];
+				return 0;
+			return (sbyte)m_Data[m_Pos++];
 		}
 
 		internal bool ReadBoolean()
@@ -1106,10 +995,8 @@ namespace Assistant
 			while ((c = ReadUInt16()) != 0)
 			{
 				if (IsSafeChar(c))
-                {
-                    sb.Append((char)c);
-                }
-            }
+					sb.Append((char)c);
+			}
 
 			return sb.ToString();
 		}
@@ -1121,11 +1008,9 @@ namespace Assistant
 			int c;
 
 			while ((c = ReadUInt16()) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            return sb.ToString();
+			return sb.ToString();
 		}
 
 		internal bool IsSafeChar(int c)
@@ -1136,28 +1021,22 @@ namespace Assistant
 		internal string ReadUTF8StringSafe(int fixedLength)
 		{
 			if (m_Pos >= m_Length)
-            {
-                return String.Empty;
-            }
+				return String.Empty;
 
-            int bound = m_Pos + fixedLength;
+			int bound = m_Pos + fixedLength;
 			int end = bound;
 
 			if (bound > m_Length)
-            {
-                bound = m_Length;
-            }
+				bound = m_Length;
 
-            int count = 0;
+			int count = 0;
 			int index = m_Pos;
 			int start = m_Pos;
 
 			while (index < bound && ReadByte() != 0)
-            {
-                ++count;
-            }
+				++count;
 
-            Seek(start, SeekOrigin.Begin);
+			Seek(start, SeekOrigin.Begin);
 
 			index = 0;
 
@@ -1165,35 +1044,27 @@ namespace Assistant
 			int value = 0;
 
 			while (m_Pos < bound && (value = ReadByte()) != 0)
-            {
-                buffer[index++] = (byte)value;
-            }
+				buffer[index++] = (byte)value;
 
-            string s = Encoding.UTF8.GetString(buffer);
+			string s = Encoding.UTF8.GetString(buffer);
 
 			bool isSafe = true;
 
 			for (int i = 0; isSafe && i < s.Length; ++i)
-            {
-                isSafe = IsSafeChar(s[i]);
-            }
+				isSafe = IsSafeChar((int)s[i]);
 
-            Seek(start + fixedLength, SeekOrigin.Begin);
+			Seek(start + fixedLength, SeekOrigin.Begin);
 
 			if (isSafe)
-            {
-                return s;
-            }
+				return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+			StringBuilder sb = new StringBuilder(s.Length);
 
 			foreach (char t in s)
 			{
 				if (IsSafeChar(t))
-                {
-                    sb.Append(t);
-                }
-            }
+					sb.Append(t);
+			}
 
 			return sb.ToString();
 		}
@@ -1201,20 +1072,16 @@ namespace Assistant
 		internal string ReadUTF8StringSafe()
 		{
 			if (m_Pos >= m_Length)
-            {
-                return String.Empty;
-            }
+				return String.Empty;
 
-            int count = 0;
+			int count = 0;
 			int index = m_Pos;
 			int start = index;
 
 			while (index < m_Length && ReadByte() != 0)
-            {
-                ++count;
-            }
+				++count;
 
-            Seek(start, SeekOrigin.Begin);
+			Seek(start, SeekOrigin.Begin);
 
 			index = 0;
 
@@ -1222,33 +1089,25 @@ namespace Assistant
 			int value = 0;
 
 			while (m_Pos < m_Length && (value = ReadByte()) != 0)
-            {
-                buffer[index++] = (byte)value;
-            }
+				buffer[index++] = (byte)value;
 
-            string s = Encoding.UTF8.GetString(buffer);
+			string s = Encoding.UTF8.GetString(buffer);
 
 			bool isSafe = true;
 
 			for (int i = 0; isSafe && i < s.Length; ++i)
-            {
-                isSafe = IsSafeChar(s[i]);
-            }
+				isSafe = IsSafeChar((int)s[i]);
 
-            if (isSafe)
-            {
-                return s;
-            }
+			if (isSafe)
+				return s;
 
-            StringBuilder sb = new StringBuilder(s.Length);
+			StringBuilder sb = new StringBuilder(s.Length);
 
 			foreach (char t in s)
 			{
 				if (IsSafeChar(t))
-                {
-                    sb.Append(t);
-                }
-            }
+					sb.Append(t);
+			}
 
 			return sb.ToString();
 		}
@@ -1256,20 +1115,16 @@ namespace Assistant
 		internal string ReadUTF8String()
 		{
 			if (m_Pos >= m_Length)
-            {
-                return String.Empty;
-            }
+				return String.Empty;
 
-            int count = 0;
+			int count = 0;
 			int index = m_Pos;
 			int start = index;
 
 			while (index < m_Length && ReadByte() != 0)
-            {
-                ++count;
-            }
+				++count;
 
-            Seek(start, SeekOrigin.Begin);
+			Seek(start, SeekOrigin.Begin);
 
 			index = 0;
 
@@ -1277,11 +1132,9 @@ namespace Assistant
 			int value = 0;
 
 			while (m_Pos < m_Length && (value = ReadByte()) != 0)
-            {
-                buffer[index++] = (byte)value;
-            }
+				buffer[index++] = (byte)value;
 
-            return Encoding.UTF8.GetString(buffer);
+			return Encoding.UTF8.GetString(buffer);
 		}
 
 		internal string ReadString()
@@ -1296,11 +1149,9 @@ namespace Assistant
 			int c;
 
 			while (m_Pos < m_Length && (c = ReadByte()) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            return sb.ToString();
+			return sb.ToString();
 		}
 
 		internal string ReadUnicodeStringSafe(int fixedLength)
@@ -1314,22 +1165,16 @@ namespace Assistant
 			int end = bound;
 
 			if (bound > m_Length)
-            {
-                bound = m_Length;
-            }
+				bound = m_Length;
 
-            StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			int c;
 			while ((m_Pos + 1) < bound && (c = ReadUInt16()) != 0)
-            {
-                if (IsSafeChar(c))
-                {
-                    sb.Append((char)c);
-                }
-            }
+				if (IsSafeChar(c))
+					sb.Append((char)c);
 
-            Seek(end, SeekOrigin.Begin);
+			Seek(end, SeekOrigin.Begin);
 
 			return sb.ToString();
 		}
@@ -1340,11 +1185,9 @@ namespace Assistant
 			int end = bound;
 
 			if (bound > m_Length)
-            {
-                bound = m_Length;
-            }
+				bound = m_Length;
 
-            StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			int c;
 
@@ -1370,20 +1213,16 @@ namespace Assistant
 			int end = bound;
 
 			if (bound > m_Length)
-            {
-                bound = m_Length;
-            }
+				bound = m_Length;
 
-            StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 
 			int c;
 
 			while (m_Pos < bound && (c = ReadByte()) != 0)
-            {
-                sb.Append((char)c);
-            }
+				sb.Append((char)c);
 
-            Seek(end, SeekOrigin.Begin);
+			Seek(end, SeekOrigin.Begin);
 
 			return sb.ToString();
 		}

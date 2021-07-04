@@ -116,16 +116,14 @@ namespace Assistant
 			World.Player.QueryStringIndex = p.ReadByte();
 
 			if (RazorEnhanced.Misc.BlockGump)
-            {
-                args.Block = true;
-            }
+				args.Block = true;
 
-            World.Player.HasQueryString = true;
+			World.Player.HasQueryString = true;
 		}
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
 		{
-			World.Player.VisRange = p.ReadByte();
+			World.Player.VisRange = (int)p.ReadByte();
 		}
 
 		private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)
@@ -142,22 +140,18 @@ namespace Assistant
 						{
 							Item item = World.FindItem(s);
 							if (item == null)
-                            {
-                                return;
-                            }
+								return;
 
-                            item.ReadPropertyList(p);
+							item.ReadPropertyList(p);
 							item.PropsUpdated = true;
 						}
 						else if (s.IsMobile)
 						{
 							Mobile m = World.FindMobile(s);
 							if (m == null)
-                            {
-                                return;
-                            }
+								return;
 
-                            m.ReadPropertyList(p);
+							m.ReadPropertyList(p);
 							m.PropsUpdated = true;
 						}
 						break;
@@ -204,10 +198,8 @@ namespace Assistant
 			{
 				Mobile m = World.FindMobile(ser);
 				if (m != null)
-                {
-                    Targeting.CheckTextFlags(m);
-                }
-            }
+					Targeting.CheckTextFlags(m);
+			}
 		}
 
 		private static void ClientDoubleClick(PacketReader p, PacketHandlerEventArgs args)
@@ -215,11 +207,9 @@ namespace Assistant
 			Serial ser = p.ReadUInt32();
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_ClientDoubleClick(ser);
-            }
+				RazorEnhanced.ScriptRecorder.Record_ClientDoubleClick(ser);
 
-            if (ser.IsItem)
+			if (ser.IsItem)
 			{
 				Item item = World.FindItem(ser);
 				if (item != null)
@@ -237,18 +227,13 @@ namespace Assistant
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-            {
-                args.Block = !PlayerData.DoubleClick(ser, false);
-            }
-        }
+				args.Block = !PlayerData.DoubleClick(ser, false);
+		}
 		private static void MyDeath(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (!RazorEnhanced.Settings.General.ReadBool("AutoCap"))
-            {
-                return;
-            }
-
-            byte deathType = p.ReadByte();
+				return;
+			byte deathType = p.ReadByte();
 			// 0x00 - Notify client of his death.
 			// 0x01 - Client has chosen to resurrect with penalties.
 			// 0x02 - Client has chosen to play as ghost.
@@ -264,11 +249,9 @@ namespace Assistant
 			Mobile m = World.FindMobile(killed);
 
 			if (!RazorEnhanced.Settings.General.ReadBool("AutoCap"))
-            {
-                return;
-            }
+				return;
 
-            if (m != null && (
+			if (m != null && (
 					(m.Body >= 0x0190 && m.Body <= 0x0193) ||   // Humans
 					(m.Body >= 0x025D && m.Body <= 0x0260) ||   // Elves
 					(m.Body >= 0x029A && m.Body <= 0x029B)) &&  // Gargoyles
@@ -286,20 +269,14 @@ namespace Assistant
 				case 0x09: // Sa disarm
 					{
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
-                        {
-                            RazorEnhanced.ScriptRecorder.Record_SADisarm();
-                        }
-
-                        break;
+							RazorEnhanced.ScriptRecorder.Record_SADisarm();
+						break;
 					}
 				case 0x0A: // Sa Stun
 					{
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
-                        {
-                            RazorEnhanced.ScriptRecorder.Record_SAStun();
-                        }
-
-                        break;
+							RazorEnhanced.ScriptRecorder.Record_SAStun();
+						break;
 					}
 			/*	case 0x10: // query object properties
 					{
@@ -317,11 +294,9 @@ namespace Assistant
 						//	ent = World.FindItem(ser);
 
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
-                        {
-                            RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
-                        }
+							RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
 
-                        World.Player.HasContext = false;
+						World.Player.HasContext = false;
 						World.Player.ContextID = 0;
 
 						break;
@@ -330,18 +305,13 @@ namespace Assistant
 					{
 						Serial ser = Serial.MinusOne;
 						if (p.ReadUInt16() == 1)
-                        {
-                            ser = p.ReadUInt32();
-                        }
-
-                        ushort sid = p.ReadUInt16();
+							ser = p.ReadUInt32();
+						ushort sid = p.ReadUInt16();
 
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
-                        {
-                            RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, sid);
-                        }
+							RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, sid);
 
-                        Spell s = Spell.Get(sid);
+						Spell s = Spell.Get(sid);
 						if (s != null)
 						{
 							s.OnCast(p, false);
@@ -380,21 +350,14 @@ namespace Assistant
 						catch { break; }
 
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
-                        {
-                            RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(1, skillIndex);
-                        }
+							RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(1, skillIndex);
 
-                        if (World.Player != null)
-                        {
-                            World.Player.LastSkill = skillIndex;
-                        }
+						if (World.Player != null)
+							World.Player.LastSkill = skillIndex;
 
-                        if ((skillIndex == (int)SkillName.Stealth && !World.Player.Visible) || skillIndex == (int)SkillName.Hiding)
-                        {
-                            StealthSteps.Hide();
-                        }
-
-                        break;
+						if ((skillIndex == (int)SkillName.Stealth && !World.Player.Visible) || skillIndex == (int)SkillName.Hiding)
+							StealthSteps.Hide();
+						break;
 					}
 				case 0x27: // Cast spell from book
 					{
@@ -408,11 +371,9 @@ namespace Assistant
 								Serial serial = Convert.ToUInt32(split.Length > 1 ? Utility.ToInt32(split[1], -1) : -1);
 
 								if (RazorEnhanced.ScriptRecorder.OnRecord)
-                                {
-                                    RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
-                                }
+									RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
 
-                                Spell s = Spell.Get(spellID);
+								Spell s = Spell.Get(spellID);
 								if (s != null)
 								{
 									s.OnCast(p);
@@ -432,11 +393,9 @@ namespace Assistant
 							ushort spellID = Convert.ToUInt16(command);
 
 							if (RazorEnhanced.ScriptRecorder.OnRecord)
-                            {
-                                RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
-                            }
+								RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
 
-                            Spell s = Spell.Get(spellID);
+							Spell s = Spell.Get(spellID);
 							if (s != null)
 							{
 								s.OnCast(p);
@@ -474,11 +433,9 @@ namespace Assistant
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
 			if (Engine.MainWindow != null)
-            {
-                Engine.MainWindow.UpdateControlLocks();
-            }
+				Engine.MainWindow.UpdateControlLocks();
 
-            PlayCharTime = DateTime.Now;
+			PlayCharTime = DateTime.Now;
 		}
 
 		private static void PlayCharacter(PacketReader p, PacketHandlerEventArgs args)
@@ -487,11 +444,9 @@ namespace Assistant
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
 			if (Engine.MainWindow != null)
-            {
-                Engine.MainWindow.UpdateControlLocks();
-            }
+				Engine.MainWindow.UpdateControlLocks();
 
-            PlayCharTime = DateTime.Now;
+			PlayCharTime = DateTime.Now;
 		}
 
 		private static void RenameMobile(PacketReader p, PacketHandlerEventArgs args)
@@ -500,7 +455,7 @@ namespace Assistant
 			{
 				Serial ser = p.ReadUInt32();
 				string name = p.ReadStringSafe(30);
-				RazorEnhanced.ScriptRecorder.Record_RenameMobile(ser, name);
+				RazorEnhanced.ScriptRecorder.Record_RenameMobile((int)ser, name);
 			}
 		}
 
@@ -524,25 +479,19 @@ namespace Assistant
 			ushort index = p.ReadUInt16();
 
 			if (World.Servers.TryGetValue(index, out string shardname))
-            {
-                World.ShardName = shardname;
-            }
-            else
-            {
-                World.ShardName = "[Unknown]";
-            }
-        }
+				World.ShardName = shardname;
+			else
+				World.ShardName = "[Unknown]";
+		}
 
 		private static void ResponseStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
 			World.Player.HasQueryString = false;
 
 			if (!RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                return;
-            }
+				return;
 
-            p.ReadUInt32(); //  Serial
+			p.ReadUInt32(); //  Serial
 			p.ReadByte(); // Parent ID
 			p.ReadByte(); // Button
 			byte yesno = p.ReadByte();
@@ -560,11 +509,9 @@ namespace Assistant
 			ushort iid = 0;
 
 			if (item != null)
-            {
-                iid = item.ItemID.Value;
-            }
+				iid = item.ItemID.Value;
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 			{
 				if (item == null)
 				{
@@ -612,26 +559,18 @@ namespace Assistant
 
 			Mobile m = World.FindMobile(mser);
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
-            }
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
 
-            // Aggiornamento icone spellgrid
-            if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
-            {
-                RazorEnhanced.SpellGrid.UpdateSAIcon();
-            }
+			// Aggiornamento icone spellgrid
+			if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
+				RazorEnhanced.SpellGrid.UpdateSAIcon();
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-            {
-                args.Block = DragDropManager.Drop(item, m, layer);
-            }
-        }
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+				args.Block = DragDropManager.Drop(item, m, layer);
+		}
 
 		private static void DropRequest(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -640,12 +579,9 @@ namespace Assistant
 			int y = p.ReadInt16();
 			int z = p.ReadSByte();
 			if (Engine.UsePostKRPackets)
-            {
-                /* grid num */
-                p.ReadByte();
-            }
-
-            Point3D newPos = new Point3D(x, y, z);
+				/* grid num */
+				p.ReadByte();
+			Point3D newPos = new Point3D(x, y, z);
 			Serial dser = p.ReadUInt32();
 
 			Item i = World.FindItem(iser);
@@ -663,50 +599,40 @@ namespace Assistant
             }
             i.Container = dest;
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
-            }
+				RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
+
+
 
             if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
-            {
-                i.IsNew = true;
-            }
+				i.IsNew = true;
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
-            {
-                args.Block = DragDropManager.Drop(i, dser, newPos);
-            }
-        }
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+				args.Block = DragDropManager.Drop(i, dser, newPos);
+		}
 
 		private static void MovementRej(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            byte seq = p.ReadByte();
+			byte seq = p.ReadByte();
 			int x = p.ReadUInt16();
 			int y = p.ReadUInt16();
 			Direction dir = (Direction)p.ReadByte();
 			sbyte z = p.ReadSByte();
 
 			if (World.Player.WalkScriptRequest == 1)
-            {
-                World.Player.WalkScriptRequest = 3;
-            }
+				World.Player.WalkScriptRequest = 3;
 
-            World.Player.MoveRej(seq, dir, new Point3D(x, y, z));
+			World.Player.MoveRej(seq, dir, new Point3D(x, y, z));
 		}
 
 		private static void MovementAck(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            byte oldNoto = World.Player.Notoriety;
+			byte oldNoto = World.Player.Notoriety;
 
 			byte seq = p.ReadByte();
 			World.Player.Notoriety = p.ReadByte();
@@ -716,24 +642,18 @@ namespace Assistant
 			if (World.Player.WalkScriptRequest == 1)
 			{
 				if (args.Block)
-                {
-                    World.Player.WalkScriptRequest = 3;
-                }
-                else
-                {
-                    World.Player.WalkScriptRequest = 2;
-                }
-            }
+					World.Player.WalkScriptRequest = 3;
+				else
+					World.Player.WalkScriptRequest = 2;
+			}
 		}
 
 		private static void MovementRequest(Packet p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            Direction dir = (Direction)p.ReadByte();
+			Direction dir = (Direction)p.ReadByte();
 			if (!World.Player.Visible && Engine.MainWindow.ChkNoRunStealth.Checked)
 			{
 				if ((dir & Direction.running) == Direction.running)
@@ -749,10 +669,8 @@ namespace Assistant
 			//Client.Instance.RequestMove(dir);
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_Movement(dir);
-            }
-        }
+				RazorEnhanced.ScriptRecorder.Record_Movement(dir);
+		}
 
 		private static void ContainerContentUpdate(Packet p, PacketHandlerEventArgs args)
 		{
@@ -764,27 +682,19 @@ namespace Assistant
 			itemid = (ushort)(itemid + p.ReadSByte()); // signed, itemID offset
 			ushort amount = p.ReadUInt16();
 			if (amount == 0)
-            {
-                amount = 1;
-            }
-
-            Point3D pos = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
+				amount = 1;
+			Point3D pos = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
 			byte gridPos = 0;
 			if (Engine.UsePostKRPackets)
-            {
-                gridPos = p.ReadByte();
-            }
-
-            Serial cser = p.ReadUInt32();
+				gridPos = p.ReadByte();
+			Serial cser = p.ReadUInt32();
 
 			if (cser.IsItem)
 			{
 				Item container = World.FindItem(cser);
 				if (container != null)
-                {
-                    container.Updated = true;
-                }
-            }
+					container.Updated = true;
+			}
 
 			ushort hue = p.ReadUInt16();
 
@@ -792,10 +702,7 @@ namespace Assistant
 			if (i == null)
 			{
 				if (!serial.IsItem)
-                {
-                    return;
-                }
-
+					return;
                 i = Item.Factory(serial, itemid);
                 World.AddItem(i);
 				i.IsNew = i.AutoStack = true;
@@ -808,10 +715,8 @@ namespace Assistant
 			if (serial != DragDropManager.Pending)
 			{
 				if (!DragDropManager.EndHolding(serial))
-                {
-                    return;
-                }
-            }
+					return;
+			}
 
 			i.ItemID = itemid;
 			i.Amount = amount;
@@ -821,20 +726,15 @@ namespace Assistant
 
 			i.Container = cser;
 			if (i.IsNew)
-            {
-                Item.UpdateContainers();
-            }
-        }
+				Item.UpdateContainers();
+		}
 
 		private static void BeginContainerContent(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial ser = p.ReadUInt32();
 			if (!ser.IsItem)
-            {
-                return;
-            }
-
-            Item item = World.FindItem(ser);
+				return;
+			Item item = World.FindItem(ser);
 			if (item != null)
 			{
 				// Simone:
@@ -875,10 +775,8 @@ namespace Assistant
 			}
 			item = World.FindItem(ser);
 			if (item != null)
-            {
-                item.Updated = true;
-            }
-        }
+				item.Updated = true;
+		}
 
 		internal static byte[] HandleRPVContainerContent(Packet p)
 		{
@@ -911,11 +809,8 @@ namespace Assistant
                 item.ItemID = itemID;
 				item.Amount = p.ReadUInt16();
 				if (item.Amount == 0)
-                {
-                    item.Amount = 1;
-                }
-
-                item.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
+					item.Amount = 1;
+				item.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
 
 				if (!decided)
 				{
@@ -925,19 +820,15 @@ namespace Assistant
 					decided = true;
 
 					if (isPostKR == Engine.UsePostKRPackets)
-                    {
-                        return p.Compile(); // not need to change anything
-                    }
+						return p.Compile(); // not need to change anything
 
-                    p.Seek(-1, SeekOrigin.Current);
+					p.Seek(-1, SeekOrigin.Current);
 				}
 
 				if (isPostKR)
-                {
-                    item.GridNum = p.ReadByte();
-                }
+					item.GridNum = p.ReadByte();
 
-                Serial cont = p.ReadUInt32();
+				Serial cont = p.ReadUInt32();
 				item.Hue = p.ReadUInt16();
 
 				item.Container = cont; // must be done after hue is set (for counters)
@@ -977,33 +868,23 @@ namespace Assistant
 				}*/
 
 				if (!DragDropManager.EndHolding(serial))
-                {
-                    continue;
-                }
+					continue;
 
-                item.ItemID = itemID;
+				item.ItemID = itemID;
 				item.Amount = p.ReadUInt16();
 				if (item.Amount == 0)
-                {
-                    item.Amount = 1;
-                }
-
-                item.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
+					item.Amount = 1;
+				item.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
 				if (Engine.UsePostKRPackets)
-                {
-                    item.GridNum = p.ReadByte();
-                }
-
-                Serial cont = p.ReadUInt32();
+					item.GridNum = p.ReadByte();
+				Serial cont = p.ReadUInt32();
 
 				if (cont.IsItem)
 				{
 					Item container = World.FindItem(cont);
 					if (container != null && !updated.Contains(container))
-                    {
-                        updated.Add(container);
-                    }
-                }
+						updated.Add(container);
+				}
 
 				item.Hue = p.ReadUInt16();
 
@@ -1011,11 +892,9 @@ namespace Assistant
 			}
 
 			foreach (Item container in updated)
-            {
-                container.Updated = true;
-            }
+				container.Updated = true;
 
-            Item.UpdateContainers();
+			Item.UpdateContainers();
 		}
 
 		private static void EquipmentUpdate(Packet p, PacketHandlerEventArgs args)
@@ -1037,9 +916,7 @@ namespace Assistant
 			}*/
 
 			if (!DragDropManager.EndHolding(serial))
-            {
-                return;
-            }
+				return;
 
             i.ItemID = iid;
 			i.Layer = (Layer)p.ReadByte();
@@ -1049,10 +926,8 @@ namespace Assistant
 			{
 				Item container = World.FindItem(ser);
 				if (container != null)
-                {
-                    container.Updated = true;
-                }
-            }
+					container.Updated = true;
+			}
 
 			i.Hue = p.ReadUInt16();
 
@@ -1063,38 +938,28 @@ namespace Assistant
 
 			// Set last weapon in equip
 			if (World.Player != null && (i.Layer == Layer.RightHand || i.Layer == Layer.FirstValid))
-            {
-                World.Player.LastWeaponRight = i.Serial;
-            }
-            else if (World.Player != null && i.Layer == Layer.LeftHand)
-            {
-                World.Player.LastWeaponLeft = i.Serial;
-            }
+				World.Player.LastWeaponRight = i.Serial;
+			else if (World.Player != null && i.Layer == Layer.LeftHand)
+				World.Player.LastWeaponLeft = i.Serial;
 
-            if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
-            {
-                return;
-            }
+			if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
+				return;
 
-            m_IgnoreGumps.Add(i);
+			m_IgnoreGumps.Add(i);
 			PlayerData.DoubleClick(i);
 		}
 
 		private static void SetSkillLock(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            int i = p.ReadUInt16();
+			int i = p.ReadUInt16();
 
 			if (i < 0 || i >= Skill.Count)
-            {
-                return;
-            }
+				return;
 
-            Skill skill = World.Player.Skills[i];
+			Skill skill = World.Player.Skills[i];
 
 			skill.Lock = (LockType)p.ReadByte();
 			Engine.MainWindow.UpdateSkill(skill);
@@ -1103,11 +968,9 @@ namespace Assistant
 		private static void Skills(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null || World.Player.Skills == null || Engine.MainWindow == null)
-            {
-                return;
-            }
+				return;
 
-            byte type = p.ReadByte();
+			byte type = p.ReadByte();
 
 			switch (type)
 			{
@@ -1121,20 +984,15 @@ namespace Assistant
 								Skill skill = World.Player.Skills[i - 1];
 
 								if (skill == null)
-                                {
-                                    continue;
-                                }
+									continue;
 
-                                skill.FixedValue = p.ReadUInt16();
+								skill.FixedValue = p.ReadUInt16();
 								skill.FixedBase = p.ReadUInt16();
 								skill.Lock = (LockType)p.ReadByte();
 								skill.FixedCap = p.ReadUInt16();
 								if (!World.Player.SkillsSent)
-                                {
-                                    skill.Delta = 0;
-                                }
-
-                                Assistant.UOAssist.PostSkillUpdate(i - 1, skill.FixedBase);
+									skill.Delta = 0;
+						 		Assistant.UOAssist.PostSkillUpdate(i - 1, skill.FixedBase);
 							}
 							else
 							{
@@ -1157,20 +1015,16 @@ namespace Assistant
 								Skill skill = World.Player.Skills[i - 1];
 
 								if (skill == null)
-                                {
-                                    continue;
-                                }
+									continue;
 
-                                skill.FixedValue = p.ReadUInt16();
+								skill.FixedValue = p.ReadUInt16();
 								skill.FixedBase = p.ReadUInt16();
 								skill.Lock = (LockType)p.ReadByte();
 								skill.FixedCap = 100;//p.ReadUInt16();
 								if (!World.Player.SkillsSent)
-                                {
-                                    skill.Delta = 0;
-                                }
+									skill.Delta = 0;
 
-                                Assistant.UOAssist.PostSkillUpdate(i - 1, skill.FixedBase);
+						 		Assistant.UOAssist.PostSkillUpdate(i - 1, skill.FixedBase);
 							}
 							else
 							{
@@ -1192,11 +1046,9 @@ namespace Assistant
 							Skill skill = World.Player.Skills[i];
 
 							if (skill == null)
-                            {
-                                break;
-                            }
+								break;
 
-                            ushort old = skill.FixedBase;
+							ushort old = skill.FixedBase;
 							skill.FixedValue = p.ReadUInt16();
 							skill.FixedBase = p.ReadUInt16();
 							skill.Lock = (LockType)p.ReadByte();
@@ -1204,11 +1056,8 @@ namespace Assistant
 							Engine.MainWindow.SafeAction(s => s.UpdateSkill(skill));
 
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-                            {
-                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", (skill.FixedBase - old) / 10.0);
-                            }
-
-                            Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
+								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
+					 		Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
 					}
@@ -1222,22 +1071,17 @@ namespace Assistant
 							Skill skill = World.Player.Skills[i];
 
 							if (skill == null)
-                            {
-                                break;
-                            }
+								break;
 
-                            ushort old = skill.FixedBase;
+							ushort old = skill.FixedBase;
 							skill.FixedValue = p.ReadUInt16();
 							skill.FixedBase = p.ReadUInt16();
 							skill.Lock = (LockType)p.ReadByte();
 							skill.FixedCap = 100;
 							Engine.MainWindow.UpdateSkill(skill);
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-                            {
-                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, (skill.FixedBase - old) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
-                            }
-
-                            Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
+								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
+					 		Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
 					}
@@ -1250,26 +1094,20 @@ namespace Assistant
 			World.Mobiles.Clear();
 
 			if (Engine.ClientMajor >= 7)
-            {
-                UseNewStatus = true;
-            }
-            else
-            {
-                UseNewStatus = false;
-            }
+				UseNewStatus = true;
+			else
+				UseNewStatus = false;
 
-            Serial serial = p.ReadUInt32();
+			Serial serial = p.ReadUInt32();
 
 			PlayerData m = new PlayerData(serial);
 			m.Name = World.OrigPlayerName;
 
 			Mobile test = World.FindMobile(serial);
 			if (test != null)
-            {
-                test.Remove();
-            }
+				test.Remove();
 
-            World.AddMobile(World.Player = m);
+			World.AddMobile(World.Player = m);
 
 			PlayerData.ExternalZ = false;
 
@@ -1297,35 +1135,24 @@ namespace Assistant
 
 			// Apertura automatica toolbar se abilitata
 			if (Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
-            {
-                RazorEnhanced.ToolBar.Open();
-            }
+				RazorEnhanced.ToolBar.Open();
 
-            // Apertura automatica spellgrit se abilitata
-            if (Engine.MainWindow.GridOpenLoginCheckBox.Checked && RazorEnhanced.SpellGrid.SpellGridForm == null)
-            {
-                RazorEnhanced.SpellGrid.Open();
-            }
+			// Apertura automatica spellgrit se abilitata
+			if (Engine.MainWindow.GridOpenLoginCheckBox.Checked && RazorEnhanced.SpellGrid.SpellGridForm == null)
+				RazorEnhanced.SpellGrid.Open();
 
-            // Avvio automatico script selezionati come autostart
-            RazorEnhanced.Scripts.AutoStart();
+			// Avvio automatico script selezionati come autostart
+			RazorEnhanced.Scripts.AutoStart();
 
 			// Avvio agent selezioanti come autostart
 			if (Engine.MainWindow.AutolootAutostartCheckBox.Checked)
-            {
-                RazorEnhanced.AutoLoot.LoginAutostart();
-            }
+				RazorEnhanced.AutoLoot.LoginAutostart();
+			if (Engine.MainWindow.ScavengerAutostartCheckBox.Checked)
+				RazorEnhanced.Scavenger.LoginAutostart();
+			if (Engine.MainWindow.BandageHealAutostartCheckBox.Checked)
+				RazorEnhanced.BandageHeal.LoginAutostart();
 
-            if (Engine.MainWindow.ScavengerAutostartCheckBox.Checked)
-            {
-                RazorEnhanced.Scavenger.LoginAutostart();
-            }
-
-            if (Engine.MainWindow.BandageHealAutostartCheckBox.Checked)
-            {
-                RazorEnhanced.BandageHeal.LoginAutostart();
-            }
-        }
+		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
 		{
@@ -1336,10 +1163,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (!Assistant.Client.Instance.ServerEncrypted)
-                {
-                    Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
-                }
-            }
+			 		Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
+			}
 
 			m.Body = p.ReadUInt16();
 
@@ -1396,19 +1221,15 @@ namespace Assistant
 			//string message = p.ReadString();
 
 			if (World.Player != null)
-            {
-                World.Player.HasPrompt = false;
-            }
-        }
+				World.Player.HasPrompt = false;
+		}
 
 		private static void UnicodePromptSend(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            uint serial = p.ReadUInt32();
+			uint serial = p.ReadUInt32();
 			uint id = p.ReadUInt32();
 			uint type = p.ReadUInt32();
 
@@ -1424,11 +1245,9 @@ namespace Assistant
 		private static void UnicodePromptRecevied(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            uint serial = p.ReadUInt32();
+			uint serial = p.ReadUInt32();
 			uint id = p.ReadUInt32();
 			uint type = p.ReadUInt32();
 
@@ -1448,11 +1267,9 @@ namespace Assistant
 			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            int oldPercent = m.Hits * 100 / (m.HitsMax == 0 ? 1 : m.HitsMax);
+			int oldPercent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
 			m.HitsMax = p.ReadUInt16();
 			m.Hits = p.ReadUInt16();
@@ -1466,11 +1283,9 @@ namespace Assistant
 			}
 
 			if (!Engine.MainWindow.ShowHealthOH.Checked)
-            {
-                return;
-            }
+				return;
 
-            int percent = m.Hits * 100 / (m.HitsMax == 0 ? 1 : m.HitsMax);
+			int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
 			// Limit to people who are on screen and check the previous value so we dont get spammed.
 			if (oldPercent != percent && World.Player != null && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -1493,11 +1308,9 @@ namespace Assistant
 			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            int oldPercent = m.Stam * 100 / (m.StamMax == 0 ? 1 : m.StamMax);
+			int oldPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 
 			m.StamMax = p.ReadUInt16();
 			m.Stam = p.ReadUInt16();
@@ -1511,12 +1324,10 @@ namespace Assistant
 			}
 
 			if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
-            {
-                return;
-            }
+				return;
 
-            int stamPercent = m.Stam * 100 / (m.StamMax == 0 ? 1 : m.StamMax);
-			int manaPercent = m.Mana * 100 / (m.ManaMax == 0 ? 1 : m.ManaMax);
+			int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
+			int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
 
 			// Limit to people who are on screen and check the previous value so we dont get spammed.
 			if (oldPercent != stamPercent && World.Player != null && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -1538,11 +1349,9 @@ namespace Assistant
 			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            int oldPercent = m.Mana * 100 / (m.ManaMax == 0 ? 1 : m.ManaMax);
+			int oldPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
 
 			m.ManaMax = p.ReadUInt16();
 			m.Mana = p.ReadUInt16();
@@ -1556,12 +1365,10 @@ namespace Assistant
 			}
 
 			if (m == World.Player || !RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
-            {
-                return;
-            }
+				return;
 
-            int stamPercent = m.Stam * 100 / (m.StamMax == 0 ? 1 : m.StamMax);
-			int manaPercent = m.Mana * 100 / (m.ManaMax == 0 ? 1 : m.ManaMax);
+			int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
+			int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
 
 			// Limit to people who are on screen and check the previous value so we dont get spammed.
 			if (oldPercent != manaPercent && World.Player != null && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -1582,12 +1389,10 @@ namespace Assistant
 		{
 			Mobile m = World.FindMobile(pvSrc.ReadUInt32());
 			if (m == null)
-            {
-                return;
-            }
-            //PlayerData p = World.Player;
+				return;
+			//PlayerData p = World.Player;
 
-            m.HitsMax = pvSrc.ReadUInt16();
+			m.HitsMax = pvSrc.ReadUInt16();
 			m.Hits = pvSrc.ReadUInt16();
 
 			m.ManaMax = pvSrc.ReadUInt16();
@@ -1612,20 +1417,16 @@ namespace Assistant
             Mobile m = World.FindMobile(serial);
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            UseNewStatus = true;
+			UseNewStatus = true;
 
 			if (p.ReadUInt16() == 0) // 0 packet end
-            {
-                return;
-            }
+				return;
 
-            // 00 01 Poison
-            // 00 02 Yellow Health Bar
-            ushort id = p.ReadUInt16();
+			// 00 01 Poison
+			// 00 02 Yellow Health Bar
+			ushort id = p.ReadUInt16();
 
 			// 00 Off
 			// 01 On
@@ -1637,41 +1438,29 @@ namespace Assistant
 			{
 				case 1:
 					if (m.Poisoned != (flag != 0))
-                    {
-                        needrefresh = true;
-                    }
-
-                    m.Poisoned = (flag != 0);
+						needrefresh = true;
+					m.Poisoned = (flag != 0);
 					break;
 				case 2:
 					if (m.Blessed != (flag != 0))
-                    {
-                        needrefresh = true;
-                    }
-
-                    m.Blessed = (flag != 0);
+						needrefresh = true;
+					m.Blessed = (flag != 0);
 					break;
 			}
 
 			if (!needrefresh) // Non richiede aggiornamento colori in quanto flag non cambiati
-            {
-                return;
-            }
+				return;
 
-            if (m == World.Player)
+			if (m == World.Player)
 			{
 				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
-                {
-                    RazorEnhanced.Filters.ApplyColor(m);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(m);
+			}
 			else
 			{
 				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
-                {
-                    RazorEnhanced.Filters.ApplyColor(m);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(m);
+			}
 		}
 
 		private static void NewMobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1680,11 +1469,9 @@ namespace Assistant
             Mobile m = World.FindMobile(serial);
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            UseNewStatus = true;
+			UseNewStatus = true;
 
 			// 00 01
 			p.ReadUInt16(); // i
@@ -1703,50 +1490,36 @@ namespace Assistant
 			{
 				case 1:
 					if (m.Poisoned != (flag != 0))
-                    {
-                        needrefresh = true;
-                    }
-
-                    m.Poisoned = (flag != 0);
+						needrefresh = true;
+					m.Poisoned = (flag != 0);
 					break;
 				case 2:
 					if (m.Blessed != (flag != 0))
-                    {
-                        needrefresh = true;
-                    }
-
-                    m.Blessed = (flag != 0);
+						needrefresh = true;
+					m.Blessed = (flag != 0);
 					break;
 			}
 
 			if (!needrefresh) // Non richiede aggiornamento colori in quanto flag non cambiati
-            {
-                return;
-            }
+				return;
 
-            if (m == World.Player)
+			if (m == World.Player)
 			{
 				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
-                {
-                    RazorEnhanced.Filters.ApplyColor(m);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(m);
+			}
 			else
 			{
 				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
-                {
-                    RazorEnhanced.Filters.ApplyColor(m);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(m);
+			}
 		}
 
 		private static void Damage(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (RazorEnhanced.DPSMeter.Enabled)
-            {
-                RazorEnhanced.DPSMeter.AddDamage(p.ReadUInt32(), p.ReadUInt16());
-            }
-        }
+				RazorEnhanced.DPSMeter.AddDamage(p.ReadUInt32(), p.ReadUInt16());
+		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -1767,11 +1540,9 @@ namespace Assistant
 			byte type = p.ReadByte();
 
 			if (m != World.Player || type == 0x00)
-            {
-                return;
-            }
+				return;
 
-            PlayerData player = (PlayerData)m;
+			PlayerData player = (PlayerData)m;
 
 			player.Female = p.ReadBoolean();
 			player.Expansion = type;
@@ -1783,21 +1554,15 @@ namespace Assistant
 			player.Int = p.ReadUInt16();
 
 			if (player.Str != oStr && oStr != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-            {
-                World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
-            }
+				World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
 
-            if (player.Dex != oDex && oDex != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-            {
-                World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
-            }
+			if (player.Dex != oDex && oDex != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
+				World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
 
-            if (player.Int != oInt && oInt != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-            {
-                World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
-            }
+			if (player.Int != oInt && oInt != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
+				World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
 
-            player.Stam = p.ReadUInt16();
+			player.Stam = p.ReadUInt16();
 			player.StamMax = p.ReadUInt16();
 			player.Mana = p.ReadUInt16();
 			player.ManaMax = p.ReadUInt16();
@@ -1874,21 +1639,17 @@ namespace Assistant
 		private static void MobileUpdate(Packet p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            Serial serial = p.ReadUInt32();
+			Serial serial = p.ReadUInt32();
 			Mobile m = World.FindMobile(serial);
 
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (!Assistant.Client.Instance.ServerEncrypted)
-                {
-                    Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
-                }
-            }
+			 		Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
+			}
 
 			bool wasHidden = !m.Visible;
 
@@ -1909,10 +1670,8 @@ namespace Assistant
 				if (!wasHidden && !m.Visible)
 				{
 					if (Engine.MainWindow.ChkStealth.Checked)
-                    {
-                        StealthSteps.Hide();
-                    }
-                }
+						StealthSteps.Hide();
+				}
 				else if (wasHidden && m.Visible)
 				{
 					StealthSteps.Unhide();
@@ -1930,11 +1689,9 @@ namespace Assistant
 		private static void MobileIncoming(Packet p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            Serial serial = p.ReadUInt32();
+			Serial serial = p.ReadUInt32();
 			ushort body = p.ReadUInt16();
 
 			bool newcolor = false;
@@ -1954,43 +1711,31 @@ namespace Assistant
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
 			if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, position, World.Player.VisRange))
-            {
-                return;
-            }
+				return;
 
-            Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(serial);
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (!Assistant.Client.Instance.ServerEncrypted)
-                {
-                    Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
-                }
-            }
+			 		Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
+			}
 
 			bool wasHidden = !m.Visible;
 
 			if (m != World.Player && Engine.MainWindow.ShowMobNames.Checked)
-            {
-                Assistant.Client.Instance.SendToServer(new SingleClick(m));
-            }
+		 		Assistant.Client.Instance.SendToServer(new SingleClick(m));
+			if (Engine.MainWindow.LastTargTextFlags.Checked)
+				Targeting.CheckTextFlags(m);
 
-            if (Engine.MainWindow.LastTargTextFlags.Checked)
-            {
-                Targeting.CheckTextFlags(m);
-            }
-
-            int ltHue = Engine.MainWindow.LTHilight;
+			int ltHue = Engine.MainWindow.LTHilight;
 
 
 			m.Body = body;
 
 			if (m != World.Player || World.Player.OutstandingMoveReqs == 0)
-            {
-                m.Position = position;
-            }
-
-            m.Direction = (Direction)p.ReadByte();
+				m.Position = position;
+			m.Direction = (Direction)p.ReadByte();
 
 			m.Hue = p.ReadUInt16();
 			if (newcolor) // Apply color change from filter
@@ -2013,10 +1758,8 @@ namespace Assistant
 				if (!wasHidden && !m.Visible)
 				{
 					if (Engine.MainWindow.ChkStealth.Checked)
-                    {
-                        StealthSteps.Hide();
-                    }
-                }
+						StealthSteps.Hide();
+				}
 				else if (wasHidden && m.Visible)
 				{
 					StealthSteps.Unhide();
@@ -2082,10 +1825,8 @@ namespace Assistant
 			{
 				Mobile m = World.FindMobile(serial);
 				if (m != null && m != World.Player)
-                {
-                    m.Remove();
-                }
-            }
+					m.Remove();
+			}
 			else if (serial.IsItem)
 			{
 				Item i = World.FindItem(serial);
@@ -2107,18 +1848,14 @@ namespace Assistant
 		private static void ServerChange(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null)
-            {
-                World.Player.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
-            }
-        }
+				World.Player.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
+		}
 
 		private static void WorldItem(PacketReader p, PacketHandlerEventArgs args)
 		{
 			uint serial = p.ReadUInt32();
             if (!DragDropManager.EndHolding(serial))
-            {
                 return;
-            }
 
             ushort itemID = p.ReadUInt16();
             itemID = (ushort)(itemID & 0x7FFF);
@@ -2136,60 +1873,42 @@ namespace Assistant
 			item.Container = null;
 
             if ((serial & 0x80000000) != 0)
-            {
-                item.Amount = p.ReadUInt16();
-            }
-            else
-            {
-                item.Amount = 1;
-            }
+				item.Amount = p.ReadUInt16();
+			else
+				item.Amount = 1;
 
-            if ((itemID & 0x8000) != 0)
-            {
-                item.ItemID = (ushort)(item.ItemID + p.ReadSByte());
-            }
+			if ((itemID & 0x8000) != 0)
+				item.ItemID = (ushort)(item.ItemID + p.ReadSByte());
 
-            ushort x = p.ReadUInt16();
+			ushort x = p.ReadUInt16();
 			ushort y = p.ReadUInt16();
 
 			if ((x & 0x8000) != 0)
-            {
-                item.Direction = p.ReadByte();
-            }
-            else
-            {
-                item.Direction = 0;
-            }
+				item.Direction = p.ReadByte();
+			else
+				item.Direction = 0;
 
-            short z = p.ReadSByte();
+			short z = p.ReadSByte();
 
 			item.Position = new Point3D(x & 0x7FFF, y & 0x3FFF, z);
 
 			if ((y & 0x8000) != 0)
-            {
-                item.Hue = p.ReadUInt16();
-            }
-            else
-            {
-                item.Hue = 0;
-            }
+				item.Hue = p.ReadUInt16();
+			else
+				item.Hue = 0;
 
-            byte flags = 0;
+			byte flags = 0;
 			if ((y & 0x4000) != 0)
-            {
-                flags = p.ReadByte();
-            }
+				flags = p.ReadByte();
 
-            item.ProcessPacketFlags(flags);
+			item.ProcessPacketFlags(flags);
 
 			if (isNew && World.Player != null)
 			{
 				if (item.ItemID == 0x2006) // corpse itemid = 0x2006
 				{
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
-                    {
-                        Assistant.Client.Instance.SendToServer(new SingleClick(item));
-                    }
+				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
 
                     bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
                     if (World.Player != null
@@ -2197,10 +1916,8 @@ namespace Assistant
                         && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses")
                         && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange"))
                         && (World.Player.Visible || lootHidden))
-                    {
-                        Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
-                    }
-                }
+				 		Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
+				}
 				else if (item.IsMulti)
 				{
 					World.AddMulti(item);
@@ -2211,10 +1928,8 @@ namespace Assistant
 
 			// Filtro muri
 			if (Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
-            {
-                args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
-            }
-        }
+				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
+		}
 
 		private static void SAWorldItem(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -2282,11 +1997,9 @@ namespace Assistant
 			}
             item.ArtID = _artDataID;
             if (!DragDropManager.EndHolding(serial))
-            {
-                return;
-            }
+				return;
 
-            item.Container = null;
+			item.Container = null;
             item.ItemID = itemID;
 
 			item.Direction = p.ReadByte();
@@ -2318,9 +2031,7 @@ namespace Assistant
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
-                    {
-                        Assistant.Client.Instance.SendToServer(new SingleClick(item));
-                    }
+				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
 
                     bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
                     if (World.Player != null
@@ -2328,10 +2039,8 @@ namespace Assistant
                         && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses")
                         && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange"))
                         && (World.Player.Visible || lootHidden))
-                    {
-                        Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
-                    }
-                }
+				 		Assistant.Client.Instance.SendToServer(new DoubleClick(item.Serial));
+				}
 				else if (item.IsMulti)
 				{
 					World.AddMulti(item);
@@ -2350,10 +2059,8 @@ namespace Assistant
             }
             //
             if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
-            {
-                args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
-            }
-        }
+				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
+		}
 
 		private static void MoveBoatHS(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -2361,18 +2068,18 @@ namespace Assistant
 			p.ReadByte();
 			p.ReadByte();
 			p.ReadByte();
-			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
+			Point3D position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadInt16());
 			UOEntity uOEntity = World.FindItem(serial);
 			if (uOEntity != null)
 			{
 				uOEntity.Position = position;
 			}
-			int num = p.ReadInt16();
+			int num = (int)p.ReadInt16();
 			int i = 0;
 			while (i < num)
 			{
 				serial = p.ReadUInt32();
-				position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
+				position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadInt16());
 				if (serial.IsMobile)
 				{
 					uOEntity = World.FindMobile(serial);
@@ -2399,18 +2106,13 @@ namespace Assistant
 		{
 
             if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
             if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
             {
                 SysMessages.Add(text.ToLower());
                 if (SysMessages.Count >= 25)
-                {
                     SysMessages.RemoveRange(0, 10);
-                }
-
                 type = MessageType.System;
             }
 
@@ -2473,23 +2175,17 @@ namespace Assistant
 				{
 					p.Seek(10, SeekOrigin.Begin);
 					if (s != null)
-                    {
-                        p.Write((ushort)s.GetHue(hue));
-                    }
-                    else
-                    {
-                        p.Write((ushort)Engine.MainWindow.NeutralSpellHue);
-                    }
-                }
+						p.Write((ushort)s.GetHue(hue));
+					else
+						p.Write((ushort)Engine.MainWindow.NeutralSpellHue);
+				}
 			}
 			else if (ser.IsMobile && type == MessageType.Label)
 			{
 				Mobile m = World.FindMobile(ser);
 				if (m != null && m.Name.IndexOf(text) != 5 && m != World.Player && !(text.StartsWith("(") && text.EndsWith(")")))
-                {
-                    m.Name = text;
-                }
-            }
+					m.Name = text;
+			}
 			else if (ser != World.Player.Serial && type == MessageType.Focus) // Filter poison message OSI
 			{
 				if (Engine.MainWindow.FilterPoison.Checked)
@@ -2628,11 +2324,9 @@ namespace Assistant
 			string ext_str = p.ReadUnicodeStringLE();
 
 			if (IsSpellMessage(num))
-            {
-                type = MessageType.Spell;
-            }
+				type = MessageType.Spell;
 
-            try
+			try
 			{
 				string text = Language.ClilocFormat(num, ext_str);
 				HandleSpeech(p, args, serial, body, type, hue, font, Language.CliLocName.ToUpper(), name, text);
@@ -2655,21 +2349,14 @@ namespace Assistant
 			string args = p.ReadUnicodeStringSafe();
 
 			if (IsSpellMessage(num))
-            {
-                type = MessageType.Spell;
-            }
+				type = MessageType.Spell;
 
-            string text;
+			string text;
 			if ((affixType & 1) != 0) // prepend
-            {
-                text = String.Format("{0}{1}", affix, Language.ClilocFormat(num, args));
-            }
-            else // 0 == append, 2 = system
-            {
-                text = String.Format("{0}{1}", Language.ClilocFormat(num, args), affix);
-            }
-
-            HandleSpeech(p, phea, serial, body, type, hue, font, Language.CliLocName.ToUpper(), name, text);
+				text = String.Format("{0}{1}", affix, Language.ClilocFormat(num, args));
+			else // 0 == append, 2 = system
+				text = String.Format("{0}{1}", Language.ClilocFormat(num, args), affix);
+			HandleSpeech(p, phea, serial, body, type, hue, font, Language.CliLocName.ToUpper(), name, text);
 		}
 
 		private static bool IsSpellMessage(int num)
@@ -2690,11 +2377,9 @@ namespace Assistant
 		private static void SendGump(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            World.Player.CurrentGumpS = p.ReadUInt32();
+			World.Player.CurrentGumpS = p.ReadUInt32();
 			World.Player.CurrentGumpI = p.ReadUInt32();
 			World.Player.HasGump = true;
 			RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
@@ -2703,11 +2388,9 @@ namespace Assistant
 		private static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            Serial ser = p.ReadUInt32();
+			Serial ser = p.ReadUInt32();
 			uint tid = p.ReadUInt32();
             Gumps.GumpData gd = null;
             if (Gumps.m_gumpData.ContainsKey(tid))
@@ -2721,9 +2404,7 @@ namespace Assistant
 
             int bid = p.ReadInt32();
             if (gd != null)
-            {
                 gd.buttonid = bid;
-            }
 
             List<int> switchesid = new List<int>();
 
@@ -2736,11 +2417,8 @@ namespace Assistant
 
 			int sc = p.ReadInt32();
 			if (sc < 0 || sc > 2000)
-            {
-                return;
-            }
-
-            int[] switches = new int[sc];
+				return;
+			int[] switches = new int[sc];
 			for (int i = 0; i < sc; i++)
 			{
 				switches[i] = p.ReadInt32();
@@ -2753,21 +2431,16 @@ namespace Assistant
             RazorEnhanced.GumpInspector.GumpResponseAddLogSwitchID(switchesid);
 			int ec = p.ReadInt32();
 			if (ec < 0 || ec > 2000)
-            {
-                return;
-            }
+				return;
 
-            for (int i = 0; i < ec; i++)
+			for (int i = 0; i < ec; i++)
 			{
 				ushort id = p.ReadUInt16();
 				ushort len = p.ReadUInt16();
 
 				if (len >= 240)
-                {
-                    return;
-                }
-
-                string text = p.ReadUnicodeStringSafe(len);
+					return;
+				string text = p.ReadUnicodeStringSafe(len);
                 if (gd != null)
                 {
                     gd.text.Add(text);
@@ -2780,9 +2453,7 @@ namespace Assistant
 			RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_GumpsResponse(tid, bid);
-            }
+				RazorEnhanced.ScriptRecorder.Record_GumpsResponse(tid, bid);
 
             if (gd != null)
             {
@@ -2794,10 +2465,8 @@ namespace Assistant
 		private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null)
-            {
-                World.Player.Season = p.ReadByte();
-            }
-        }
+				World.Player.Season = p.ReadByte();
+		}
 
 
         //Dalamar:
@@ -2862,11 +2531,9 @@ namespace Assistant
 								attrib = p.ReadUInt32();
 							}
 							else
-                            {
-                                attrib = owner;
-                            }
+								attrib = owner;
 
-                            if (attrib != 0xFFFFFFFC)
+							if (attrib != 0xFFFFFFFC)
 							{
 								while (attrib != 0xFFFFFFFF)
 								{
@@ -2910,15 +2577,11 @@ namespace Assistant
 						UOEntity ent = null;
 						Serial ser = p.ReadUInt32();
 						if (ser.IsMobile)
-                        {
-                            ent = World.FindMobile(ser);
-                        }
-                        else if (ser.IsItem)
-                        {
-                            ent = World.FindItem(ser);
-                        }
+							ent = World.FindMobile(ser);
+						else if (ser.IsItem)
+							ent = World.FindItem(ser);
 
-                        if (ent != null)
+						if (ent != null)
 						{
 							byte count = p.ReadByte();
 
@@ -2943,11 +2606,9 @@ namespace Assistant
 										ushort color = 0;
 
 										if ((flags & 0x02) != 0)
-                                        {
-                                            color = p.ReadUInt16();
-                                        }
+											color = p.ReadUInt16();
 
-                                        ent.ContextMenu.Add(idx, num);
+										ent.ContextMenu.Add(idx, num);
 									}
 								}
 							}
@@ -2973,10 +2634,8 @@ namespace Assistant
 							{
 								World.Player.MapPatches = new int[count];
 								for (int i = 0; i < count; i++)
-                                {
-                                    World.Player.MapPatches[i] = p.ReadInt32();
-                                }
-                            }
+									World.Player.MapPatches[i] = p.ReadInt32();
+							}
 							catch
 							{
 							}
@@ -3005,11 +2664,8 @@ namespace Assistant
 					{
 						Item i = World.FindItem(p.ReadUInt32());
 						if (i != null)
-                        {
-                            i.HouseRevision = p.ReadInt32();
-                        }
-
-                        break;
+							i.HouseRevision = p.ReadInt32();
+						break;
 					}
 				case 0x21: // Special ability execute
 					{
@@ -3081,24 +2737,17 @@ namespace Assistant
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)
-                            {
-                                mobile.Name = "(Not Seen)";
-                            }
+								mobile.Name = "(Not Seen)";
 
-                            if (!m_Party.Contains(serial))
-                            {
-                                m_Party.Add(serial);
-                            }
+							if (!m_Party.Contains(serial))
+								m_Party.Add(serial);
 
-                            if (map == World.Player.Map)
-                            {
-                                mobile.Position = new Point3D(x, y, mobile.Position.Z);
-                            }
-                            else
-                            {
-                                mobile.Position = Point3D.Zero;
-                            }
-                        }
+							if (map == World.Player.Map)
+								mobile.Position = new Point3D(x, y, mobile.Position.Z);
+							else
+								mobile.Position = Point3D.Zero;
+
+						}
 						//if (Engine.MainWindow.MapWindow != null)
 						//	Engine.MainWindow.SafeAction(s => s.MapWindow.UpdateMap());
 
@@ -3107,7 +2756,7 @@ namespace Assistant
 				case 0xFE: // Begin Handshake/Features Negotiation
 					{
 
-						ulong features = ((ulong)p.ReadUInt32() << 32) | p.ReadUInt32();
+						ulong features = ((ulong)p.ReadUInt32() << 32) | (ulong)p.ReadUInt32();
 
 						Client.Instance.SetFeatures(features);
 						Client.Instance.SendToServer(new RazorNegotiateResponse());
@@ -3135,10 +2784,8 @@ namespace Assistant
 						{
 							Serial s = p.ReadUInt32();
 							if (World.Player == null || s != World.Player.Serial)
-                            {
-                                m_Party.Add(s);
-                            }
-                        }
+								m_Party.Add(s);
+						}
 
 						break;
 					}
@@ -3152,19 +2799,15 @@ namespace Assistant
 						{
 							Mobile rem = World.FindMobile(remSerial);
 							if (rem != null && !Utility.InRange(World.Player.Position, rem.Position, World.Player.VisRange))
-                            {
-                                rem.Remove();
-                            }
-                        }
+								rem.Remove();
+						}
 
 						for (int i = 0; i < count; i++)
 						{
 							Serial s = p.ReadUInt32();
 							if (World.Player == null || s != World.Player.Serial)
-                            {
-                                m_Party.Add(s);
-                            }
-                        }
+								m_Party.Add(s);
+						}
 
 						break;
 					}
@@ -3199,18 +2842,14 @@ namespace Assistant
 								{
 									RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                                    {
-                                        RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")", false);
-                                    }
-                                }
+										RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")", false);
+								}
 								else
 								{
                                     RazorEnhanced.Friend.AddLog("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")");
 									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                                    {
-                                        RazorEnhanced.Misc.SendMessage("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")", false);
-                                    }
-                                }
+										RazorEnhanced.Misc.SendMessage("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")", false);
+								}
 						 		Assistant.Client.Instance.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
 							}
@@ -3218,11 +2857,8 @@ namespace Assistant
 						else
 						{
 							if (m_PartyDeclineTimer == null)
-                            {
-                                m_PartyDeclineTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(10.0), new TimerCallback(PartyAutoDecline));
-                            }
-
-                            m_PartyDeclineTimer.Start();
+								m_PartyDeclineTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(10.0), new TimerCallback(PartyAutoDecline));
+							m_PartyDeclineTimer.Start();
 						}
 						break;
 					}
@@ -3236,19 +2872,15 @@ namespace Assistant
         private static void PingResponse(PacketReader p, PacketHandlerEventArgs args)
         {
             if (Ping.Response(p.ReadByte()))
-            {
                 args.Block = true;
-            }
         }
 
         private static void ClientEncodedPacket(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (p == null)
-            {
-                return;
-            }
+				return;
 
-            Serial serial = p.ReadUInt32();
+			Serial serial = p.ReadUInt32();
 			ushort packetID = p.ReadUInt16();
 			switch (packetID)
 			{
@@ -3272,11 +2904,9 @@ namespace Assistant
 		{
 			m_LastPW = "";
 			if (!RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
-            {
-                return;
-            }
+				return;
 
-            World.AccountName = p.ReadStringSafe(30);
+			World.AccountName = p.ReadStringSafe(30);
 			string pass = p.ReadStringSafe(30);
 
 			if (string.IsNullOrEmpty(pass))
@@ -3315,32 +2945,26 @@ namespace Assistant
 		private static void MenuResponse(PacketReader pvSrc, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            uint serial = pvSrc.ReadUInt32();
+			uint serial = pvSrc.ReadUInt32();
 			pvSrc.ReadUInt16(); //menuID
 			ushort index = pvSrc.ReadUInt16();
 			pvSrc.ReadUInt16(); //itemID
 			ushort hue = pvSrc.ReadUInt16();
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_MenuResponse(index);
-            }
+				RazorEnhanced.ScriptRecorder.Record_MenuResponse(index);
 
-            World.Player.HasMenu = false;
+			World.Player.HasMenu = false;
 		}
 
 		private static void SendMenu(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            World.Player.CurrentMenuS = p.ReadUInt32();
+			World.Player.CurrentMenuS = p.ReadUInt32();
 			World.Player.CurrentMenuI = p.ReadUInt16();
 
 			byte m_questionlenght = p.ReadByte();
@@ -3361,11 +2985,9 @@ namespace Assistant
 			}
 
 			if (RazorEnhanced.Misc.BlockMenu)
-            {
-                args.Block = true;
-            }
+				args.Block = true;
 
-            World.Player.HasMenu = true;
+			World.Player.HasMenu = true;
 		}
 
         enum MapMessageType
@@ -3461,11 +3083,9 @@ namespace Assistant
 		private static void ClientAsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (!RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                return;
-            }
+				return;
 
-            p.ReadUInt32(); // sender serial
+			p.ReadUInt32(); // sender serial
 			p.ReadUInt32(); // Prompt ID
 			uint type = p.ReadUInt32(); // type
 			string text = p.ReadUnicodeStringSafe();
@@ -3475,18 +3095,14 @@ namespace Assistant
 		private static void ResyncRequest(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null)
-            {
-                World.Player.Resync();
-            }
-        }
+				World.Player.Resync();
+		}
 
 		private static void Features(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null)
-            {
-                World.Player.Features = p.ReadUInt16();
-            }
-        }
+				World.Player.Features = p.ReadUInt16();
+		}
 
 
 		private static void TrackingArrow(PacketReader p, PacketHandlerEventArgs args)
@@ -3509,21 +3125,17 @@ namespace Assistant
         private static void PersonalLight(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null || args.Block)
-            {
-                return;
-            }
+				return;
 
-            p.ReadUInt32(); // serial
+			p.ReadUInt32(); // serial
 			World.Player.LocalLightLevel = p.ReadSByte();
 		}
 
 		private static void GlobalLight(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null && !args.Block)
-            {
-                World.Player.GlobalLightLevel = p.ReadByte();
-            }
-        }
+				World.Player.GlobalLightLevel = p.ReadByte();
+		}
 
 		private static void MovementDemand(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -3573,11 +3185,9 @@ namespace Assistant
 			// endloop
 
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            uint currentgumps = p.ReadUInt32(); // Player Serial
+			uint currentgumps = p.ReadUInt32(); // Player Serial
 			uint currentgumpi = p.ReadUInt32(); // Gump ID
 			try
 			{
@@ -3589,12 +3199,10 @@ namespace Assistant
 
 				int numStrings = p.ReadInt32(); // Number of text lines
 				if (numStrings < 0 || numStrings > 256)
-                {
-                    numStrings = 0;
-                }
+					numStrings = 0;
 
-                // Split on one or more non-digit characters.
-                World.Player.CurrentGumpStrings.Clear();
+				// Split on one or more non-digit characters.
+				World.Player.CurrentGumpStrings.Clear();
 				World.Player.CurrentGumpTile.Clear();
 
 				// Parsing the uncompressed Gump Layout section
@@ -3607,10 +3215,8 @@ namespace Assistant
 						int i = int.Parse(value);
 						// If this is a valid id of a cliloc string
 						if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
-                        {
-                            World.Player.CurrentGumpStrings.Add(Language.GetString(i));
-                        }
-                    }
+							World.Player.CurrentGumpStrings.Add(Language.GetString(i));
+					}
 				}
 
 				// Decompressing text data
@@ -3762,10 +3368,8 @@ namespace Assistant
 
 				// Highlight for bloodOath
 				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked && buff == BuffIcon.BloodOathCurse)
-                {
-                    RazorEnhanced.Filters.ApplyColor(World.Player);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(World.Player);
+			}
 		}
 
 		private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
@@ -3773,11 +3377,9 @@ namespace Assistant
 			uint serialbersaglio = p.ReadUInt32();
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.Record_AttackRequest(serialbersaglio);
-            }
+				RazorEnhanced.ScriptRecorder.Record_AttackRequest(serialbersaglio);
 
-            if (RazorEnhanced.Friend.PreventAttack)
+			if (RazorEnhanced.Friend.PreventAttack)
 			{
 				if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))
 				{

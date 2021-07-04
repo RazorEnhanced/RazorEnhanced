@@ -181,12 +181,10 @@ namespace Assistant
 		public override void SetSmartCPU(bool enabled)
 		{
 			if (enabled)
-            {
-                try { 	Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
+				try { 	Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
 				catch { }
-            }
 
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
@@ -222,10 +220,8 @@ namespace Assistant
 				{
 					ClientProc = Process.GetProcessById((int)pid);
 					if (ClientProc != null && !RazorEnhanced.Settings.General.ReadBool("SmartCPU"))
-                    {
-                        ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
-                    }
-                }
+						ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
+				}
 				catch
 				{
 				}
@@ -246,22 +242,16 @@ namespace Assistant
 			int flags = 0;
 
 			if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
-            {
-                flags |= 0x04;
-            }
+				flags |= 0x04;
 
-            if (ClientEncrypted)
-            {
-                flags |= 0x08;
-            }
+			if (ClientEncrypted)
+				flags |= 0x08;
 
-            if (Assistant.Client.Instance.ServerEncrypted)
-            {
-                flags |= 0x10;
-            }
+			if (Assistant.Client.Instance.ServerEncrypted)
+				flags |= 0x10;
 
-            //ClientProc.WaitForInputIdle();
-            DLLImport.Razor.WaitForWindow(ClientProc.Id);
+			//ClientProc.WaitForInputIdle();
+			DLLImport.Razor.WaitForWindow(ClientProc.Id);
 
 			error = (InitError)DLLImport.Razor.InstallLibrary(mainWindow, ClientProc.Id, flags);
 
@@ -295,25 +285,19 @@ namespace Assistant
 			{
 				string path = Ultima.Files.GetFilePath("art.mul");
 				if (!string.IsNullOrEmpty(path))
-                {
-                    DLLImport.Razor.SetDataPath(Path.GetDirectoryName(path));
-                }
-                else
-                {
-                    DLLImport.Razor.SetDataPath(Path.GetDirectoryName(Ultima.Files.Directory));
-                }
-            }
+					DLLImport.Razor.SetDataPath(Path.GetDirectoryName(path));
+				else
+					DLLImport.Razor.SetDataPath(Path.GetDirectoryName(Ultima.Files.Directory));
+			}
 			catch
 			{
 				DLLImport.Razor.SetDataPath("");
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
-            {
-                Assistant.Client.Instance.RequestStatbarPatch(true);
-            }
+			 	Assistant.Client.Instance.RequestStatbarPatch(true);
 
-            return true;
+			return true;
 		}
 
 		private static uint m_ServerIP;
@@ -325,7 +309,7 @@ namespace Assistant
 			uint ip = (uint)ipBytes[3] << 24;
 			ip += (uint)ipBytes[2] << 16;
 			ip += (uint)ipBytes[1] << 8;
-			ip += ipBytes[0];
+			ip += (uint)ipBytes[0];
 			m_ServerIP = ip;
 
 			m_ServerPort = (ushort)port;
@@ -348,11 +332,8 @@ namespace Assistant
 			base.Close();
 			DLLImport.Razor.Shutdown(true);
 			if (ClientProc != null && !ClientProc.HasExited)
-            {
-                ClientProc.CloseMainWindow();
-            }
-
-            ClientProc = null;
+				ClientProc.CloseMainWindow();
+			ClientProc = null;
 		}
 
 
@@ -362,11 +343,9 @@ namespace Assistant
 			m_CalTimer = null;
 
 			if (World.Player == null)
-            {
-                return;
-            }
+				return;
 
-            PlayerData.ExternalZ = false;
+			PlayerData.ExternalZ = false;
 
 			Point3D pos = World.Player.Position;
 
@@ -388,16 +367,12 @@ namespace Assistant
 		public override void BeginCalibratePosition()
 		{
 			if (World.Player == null || DLLImport.Razor.IsCalibrated())
-            {
-                return;
-            }
+				return;
 
-            if (m_CalTimer != null)
-            {
-                m_CalTimer.Stop();
-            }
+			if (m_CalTimer != null)
+				m_CalTimer.Stop();
 
-            m_CalPos = new Point2D(World.Player.Position);
+			m_CalPos = new Point2D(World.Player.Position);
 
 			m_CalTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(0.5), m_CalibrateNow);
 			m_CalTimer.Start();
@@ -441,62 +416,40 @@ namespace Assistant
 				RazorEnhanced.BandageHeal.AutoMode = false;
 
 				if (RazorEnhanced.Scripts.Timer != null)
-                {
-                    RazorEnhanced.Scripts.Timer.Close();
-                }
+					RazorEnhanced.Scripts.Timer.Close();
 
-                if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-                {
-                    Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
-                }
+				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+					Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
 
-                if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-                {
-                    Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
-                }
+				if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+					Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
 
-                if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                {
-                    Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
-                }
+				if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+					Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
 
-                if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                {
-                    Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
-                }
+				if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+					Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
 
-                if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                {
-                    Assistant.Engine.MainWindow.DressStopButton.PerformClick();
-                }
+				if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+					Assistant.Engine.MainWindow.DressStopButton.PerformClick();
 
-                if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-                {
-                    Assistant.Engine.MainWindow.RestockStop.PerformClick();
-                }
+				if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+					Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
-                if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-                {
-                    Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
-                }
+				if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+					Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
 
-                if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
-                {
-                    Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
-                }
+				if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+					Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
 
-                if (RazorEnhanced.ToolBar.ToolBarForm != null)
-                {
-                    RazorEnhanced.ToolBar.ToolBarForm.Close();
-                }
+				if (RazorEnhanced.ToolBar.ToolBarForm != null)
+					RazorEnhanced.ToolBar.ToolBarForm.Close();
 
-                if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-                {
-                    RazorEnhanced.SpellGrid.SpellGridForm.Close();
-                }
+				if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+					RazorEnhanced.SpellGrid.SpellGridForm.Close();
 
-                //Stop video recorder
-                Assistant.MainForm.StopVideoRecorder();
+				//Stop video recorder
+				Assistant.MainForm.StopVideoRecorder();
 			}
 
 			PlayerData.ExternalZ = false;
@@ -530,11 +483,9 @@ namespace Assistant
 						{
 							StringBuilder sb = new StringBuilder(256);
 							if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
-                            {
-                                return false;
-                            }
+								return false;
 
-                            BringToFront(Assistant.Client.Instance.GetWindowHandle());
+							BringToFront(Assistant.Client.Instance.GetWindowHandle());
 							Engine.MainWindow.ShowMe();
 						}
 						break;
@@ -618,15 +569,11 @@ namespace Assistant
 					if ((lParam & 0x0000FFFF) == 0 && (lParam & 0xFFFF0000) != 0)
 					{
 						if (RazorEnhanced.ToolBar.ToolBarForm != null)
-                        {
-                            RazorEnhanced.ToolBar.ToolBarForm.Hide();
-                        }
+							RazorEnhanced.ToolBar.ToolBarForm.Hide();
 
-                        if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-                        {
-                            RazorEnhanced.SpellGrid.SpellGridForm.Hide();
-                        }
-                    }
+						if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+							RazorEnhanced.SpellGrid.SpellGridForm.Hide();
+					}
 					else
 					{
 						if (lParam == 0 || lParam == 2097153) //2097153 riduzione a icona da win10 non perde il focus ma riduce
@@ -634,45 +581,30 @@ namespace Assistant
 							if (RazorEnhanced.ToolBar.ToolBarForm != null)
 							{
 								if (Cursor.Position.X >= RazorEnhanced.ToolBar.ToolBarForm.Location.X && Cursor.Position.X <= (RazorEnhanced.ToolBar.ToolBarForm.Location.X + RazorEnhanced.ToolBar.ToolBarForm.Width) && Cursor.Position.Y >= RazorEnhanced.ToolBar.ToolBarForm.Location.Y && Cursor.Position.Y <= (RazorEnhanced.ToolBar.ToolBarForm.Location.Y + RazorEnhanced.ToolBar.ToolBarForm.Height))
-                                {
-                                    break;
-                                }
-
-                                m_hidetoolbar = true;
+									break;
+								m_hidetoolbar = true;
 							}
 							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
 							{
 								if (Cursor.Position.X >= RazorEnhanced.SpellGrid.SpellGridForm.Location.X && Cursor.Position.X <= (RazorEnhanced.SpellGrid.SpellGridForm.Location.X + RazorEnhanced.SpellGrid.SpellGridForm.Width) && Cursor.Position.Y >= RazorEnhanced.SpellGrid.SpellGridForm.Location.Y && Cursor.Position.Y <= (RazorEnhanced.SpellGrid.SpellGridForm.Location.Y + RazorEnhanced.SpellGrid.SpellGridForm.Height))
-                                {
-                                    break;
-                                }
-
-                                m_hidespellgrid = true;
+									break;
+								m_hidespellgrid = true;
 							}
 
 							if (m_hidetoolbar)
-                            {
-                                RazorEnhanced.ToolBar.ToolBarForm.Hide();
-                            }
-
-                            if (m_hidespellgrid)
-                            {
-                                RazorEnhanced.SpellGrid.SpellGridForm.Hide();
-                            }
-                        }
+								RazorEnhanced.ToolBar.ToolBarForm.Hide();
+							if (m_hidespellgrid)
+								RazorEnhanced.SpellGrid.SpellGridForm.Hide();
+						}
 						else
 						{
 							if (RazorEnhanced.ToolBar.ToolBarForm != null)
-                            {
-                                DLLImport.Win.ShowWindow(RazorEnhanced.ToolBar.ToolBarForm.Handle, 8);
-                            }
+								DLLImport.Win.ShowWindow(RazorEnhanced.ToolBar.ToolBarForm.Handle, 8);
 
-                            if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-                            {
-                                DLLImport.Win.ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
-                            }
+							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+								DLLImport.Win.ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
 
-                            DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
+							DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
 						}
 					}
 
@@ -793,9 +725,8 @@ namespace Assistant
 		public override unsafe void SendToServer(Packet p)
 		{
 			if (!m_Ready)
-            {
-                return;
-            }
+				return;
+
 
             if (m_QueueSend || m_ScriptWaitSend)
 			{
@@ -812,11 +743,9 @@ namespace Assistant
 		public override unsafe void SendToServerWait(Packet p)
 		{
 			if (!m_Ready)
-            {
-                return;
-            }
+				return;
 
-            DateTime exittime = DateTime.Now + TimeSpan.FromSeconds(2);
+			DateTime exittime = DateTime.Now + TimeSpan.FromSeconds(2);
 			while (m_ScriptWaitSend || m_QueueSend)
 			{
 				if (DateTime.Now > exittime)
@@ -840,21 +769,17 @@ namespace Assistant
 		public override unsafe void SendToServer(PacketReader pr)
 		{
 			if (!m_Ready)
-            {
-                return;
-            }
+				return;
 
-            SendToServer(MakePacketFrom(pr));
+			SendToServer(MakePacketFrom(pr));
 		}
 
 		public override unsafe void SendToClientWait(Packet p)
 		{
 			if (!m_Ready || p.Length <= 0)
-            {
-                return;
-            }
+				return;
 
-            DateTime exittime = DateTime.Now + TimeSpan.FromSeconds(2);
+			DateTime exittime = DateTime.Now + TimeSpan.FromSeconds(2);
 			while (m_ScriptWaitRecv || m_QueueRecv)
 			{
 				if (DateTime.Now > exittime)
@@ -879,9 +804,7 @@ namespace Assistant
 		public override void SendToClient(Packet p)
 		{
 			if (!m_Ready || p.Length <= 0)
-            {
-                return;
-            }
+				return;
 
             if (m_QueueRecv || m_ScriptWaitRecv)
 			{
@@ -917,11 +840,9 @@ namespace Assistant
 		public override void ForceSendToServer(Packet p)
 		{
 			if (p == null || p.Length <= 0)
-            {
-                return;
-            }
+				return;
 
-            byte[] data = p.Compile();
+			byte[] data = p.Compile();
 
 			try  // AbandonedMutexException
 			{
@@ -940,10 +861,8 @@ namespace Assistant
 		public override void InitSendFlush()
 		{
 			if (m_OutSend->Length == 0)
-            {
-                DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
-            }
-        }
+				DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
+		}
 
 		private void CopyToBuffer(Buffer* buffer, byte* data, int len)
 		{
@@ -969,11 +888,9 @@ namespace Assistant
 
 				int len = DLLImport.Razor.GetPacketLength(buff, inBuff->Length);
 				if (len > inBuff->Length || len <= 0)
-                {
-                    break;
-                }
+					break;
 
-                inBuff->Start += len;
+				inBuff->Start += len;
 				inBuff->Length -= len;
 
 				bool viewer = false;
@@ -998,19 +915,14 @@ namespace Assistant
 				{
 					pr = new PacketReader(buff, len, DLLImport.Razor.IsDynLength(buff[0]));
 					if (filter)
-                    {
-                        p = MakePacketFrom(pr);
-                    }
-                }
+						p = MakePacketFrom(pr);
+				}
 				else if (filter)
 				{
 					byte[] temp = new byte[len];
 					fixed (byte* ptr = temp)
-                    {
-                        DLLImport.Win.memcpy(ptr, buff, len);
-                    }
-
-                    p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
+						DLLImport.Win.memcpy(ptr, buff, len);
+					p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
 
 					/*byte[] temp = new byte[len];
 					fixed (byte* ptr = temp)
@@ -1057,28 +969,22 @@ namespace Assistant
 					{
 						Packet.Log(path, ptr, data.Length, blocked);
 						if (!blocked)
-                        {
-                            CopyToBuffer(outBuff, ptr, data.Length);
-                        }
-                    }
+							CopyToBuffer(outBuff, ptr, data.Length);
+					}
 				}
 				else
 				{
 					//Packet.Log(path, buff, len, blocked);
 					if (!blocked)
-                    {
-                        CopyToBuffer(outBuff, buff, len);
-                    }
-                }
+						CopyToBuffer(outBuff, buff, len);
+				}
 
 				while (queue.Count > 0)
 				{
 					if (!queue.TryDequeue(out p))
-                    {
-                        continue;
-                    }
+						continue;
 
-                    byte[] data = p.Compile();
+					byte[] data = p.Compile();
 					fixed (byte* ptr = data)
 					{
 						CopyToBuffer(outBuff, ptr, data.Length);
@@ -1231,26 +1137,20 @@ namespace Assistant
 		public override void SetTitleStr(string str)
 		{
 			if (m_LastStr == str)
-            {
-                return;
-            }
+				return;
 
-            m_LastStr = str;
+			m_LastStr = str;
 			byte[] copy = System.Text.Encoding.ASCII.GetBytes(str);
 			int clen = copy.Length;
 			if (clen >= 512)
-            {
-                clen = 511;
-            }
+				clen = 511;
 
-            CommMutex.WaitOne();
+			CommMutex.WaitOne();
 			if (clen > 0)
 			{
 				fixed (byte* array = copy)
-                {
-                    DLLImport.Win.memcpy(m_TitleStr, array, clen);
-                }
-            }
+					DLLImport.Win.memcpy(m_TitleStr, array, clen);
+			}
 			*(m_TitleStr + clen) = 0;
 			CommMutex.ReleaseMutex();
 

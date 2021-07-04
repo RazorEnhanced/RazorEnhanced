@@ -43,29 +43,21 @@ namespace Assistant.Filters
             ushort itemID = p.ReadUInt16();
 
             if ((serial & 0x80000000) != 0)
-            {
                 p.ReadUInt16(); // amount
-            }
 
             if ((itemID & 0x8000) != 0)
-            {
                 itemID = (ushort) ((itemID & 0x7FFF) + p.ReadSByte()); // itemID offset
-            }
 
             ushort x = p.ReadUInt16();
             ushort y = p.ReadUInt16();
 
             if ((x & 0x8000) != 0)
-            {
                 p.ReadByte(); // direction
-            }
 
             short z = p.ReadSByte();
 
             if ((y & 0x8000) != 0)
-            {
                 p.ReadUInt16(); // hue
-            }
 
             bool visable = true;
             if ((y & 0x4000) != 0)
@@ -76,9 +68,7 @@ namespace Assistant.Filters
             }
 
             if (IsStaffItem(itemID) || !visable)
-            {
                 args.Block = true;
-            }
         }
 
         public override void OnEnable()
@@ -90,9 +80,7 @@ namespace Assistant.Filters
                 foreach (Item i in World.Items.Values)
                 {
                     if (IsStaffItem(i))
-                    {
                         Client.Instance.SendToClient(new RemoveObject(i));
-                    }
                 }
             }
         }
@@ -106,9 +94,7 @@ namespace Assistant.Filters
                 foreach (Item i in World.Items.Values)
                 {
                     if (IsStaffItem(i))
-                    {
                         Client.Instance.SendToClient(new WorldItem(i));
-                    }
                 }
             }
         }

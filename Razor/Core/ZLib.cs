@@ -72,10 +72,8 @@ namespace Assistant
 			{
 				m_Buffer.Write(buffer, offset, count);
 				if (m_Buffer.Position >= m_BlockSize)
-                {
-                    FlushBuffer();
-                }
-            }
+					FlushBuffer();
+			}
 			else
 			{
 				RawStream.Write(buffer, offset, count);
@@ -88,10 +86,8 @@ namespace Assistant
 			{
 				m_Buffer.WriteByte(value);
 				if (m_Buffer.Position >= m_BlockSize)
-                {
-                    FlushBuffer();
-                }
-            }
+					FlushBuffer();
+			}
 			else
 			{
 				RawStream.WriteByte(value);
@@ -103,27 +99,19 @@ namespace Assistant
 		internal void FlushBuffer()
 		{
 			if (!m_IsCompressed || m_BufferAll || m_Buffer.Position <= 0)
-            {
-                return;
-            }
+				return;
 
-            int outLen = (int)(m_Buffer.Position * 1.1);
+			int outLen = (int)(m_Buffer.Position * 1.1);
 			if (m_CompBuff == null || m_CompBuff.Length < outLen)
-            {
-                m_CompBuff = new byte[outLen];
-            }
-            else
-            {
-                outLen = m_CompBuff.Length;
-            }
+				m_CompBuff = new byte[outLen];
+			else
+				outLen = m_CompBuff.Length;
 
-            ZLibError error = DLLImport.ZLib.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
+			ZLibError error = DLLImport.ZLib.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
 			if (error != ZLibError.Z_OK)
-            {
-                throw new Exception("ZLib error during copression: " + error.ToString());
-            }
+				throw new Exception("ZLib error during copression: " + error.ToString());
 
-            Raw.Write(outLen);
+			Raw.Write((int)outLen);
 			Raw.Write((int)m_Buffer.Position);
 			Raw.Write(m_CompBuff, 0, outLen);
 
@@ -147,14 +135,10 @@ namespace Assistant
 		public override long Seek(long offset, SeekOrigin origin)
 		{
 			if (m_IsCompressed)
-            {
-                return m_Buffer.Seek(offset, origin);
-            }
-            else
-            {
-                return RawStream.Seek(offset, origin);
-            }
-        }
+				return m_Buffer.Seek(offset, origin);
+			else
+				return RawStream.Seek(offset, origin);
+		}
 
 		public override void SetLength(long value)
 		{
@@ -203,11 +187,7 @@ namespace Assistant
 		public override bool CanRead { get { return true; } }
 		public override bool CanWrite { get { return false; } }
 		public override long Length { get { return m_Compressed ? (RawStream.Position < RawStream.Length ? int.MaxValue : m_Uncomp.Length) : RawStream.Length; } }
-		public override long Position { get { return m_Compressed ? m_Uncomp.Position : RawStream.Position; } set { if (m_Compressed) { m_Uncomp.Position = value;
-                }
-                else
-                {
-                    RawStream.Position = value; } } }
+		public override long Position { get { return m_Compressed ? m_Uncomp.Position : RawStream.Position; } set { if (m_Compressed) m_Uncomp.Position = value; else RawStream.Position = value; } }
 
 		internal GZBlockIn(string filename)
 		{
@@ -237,16 +217,12 @@ namespace Assistant
 			{
 				long absPos = offset;
 				if (origin == SeekOrigin.Current)
-                {
-                    absPos += m_Uncomp.Position;
-                }
+					absPos += m_Uncomp.Position;
 
-                if (absPos < 0)
-                {
-                    throw new Exception("Cannot seek past the begining of the stream.");
-                }
+				if (absPos < 0)
+					throw new Exception("Cannot seek past the begining of the stream.");
 
-                long pos = m_Uncomp.Position;
+				long pos = m_Uncomp.Position;
 				m_Uncomp.Seek(0, SeekOrigin.End);
 
 				while ((origin == SeekOrigin.End || absPos >= m_Uncomp.Length) && RawStream.Position < RawStream.Length)
@@ -254,28 +230,20 @@ namespace Assistant
 					int block = Raw.ReadInt32();
 					int ucLen = Raw.ReadInt32();
 					if (m_ReadBuff == null || m_ReadBuff.Length < block)
-                    {
-                        m_ReadBuff = new byte[block];
-                    }
+						m_ReadBuff = new byte[block];
 
-                    if (m_CompBuff == null || m_CompBuff.Length < ucLen)
-                    {
-                        m_CompBuff = new byte[ucLen];
-                    }
-                    else
-                    {
-                        ucLen = m_CompBuff.Length;
-                    }
+					if (m_CompBuff == null || m_CompBuff.Length < ucLen)
+						m_CompBuff = new byte[ucLen];
+					else
+						ucLen = m_CompBuff.Length;
 
-                    Raw.Read(m_ReadBuff, 0, block);
+					Raw.Read(m_ReadBuff, 0, block);
 
 					ZLibError error = DLLImport.ZLib.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
 					if (error != ZLibError.Z_OK)
-                    {
-                        throw new Exception("ZLib error uncompressing: " + error.ToString());
-                    }
+						throw new Exception("ZLib error uncompressing: " + error.ToString());
 
-                    m_Uncomp.Write(m_CompBuff, 0, ucLen);
+					m_Uncomp.Write(m_CompBuff, 0, ucLen);
 				}
 
 				m_Uncomp.Position = pos;
@@ -304,38 +272,26 @@ namespace Assistant
 					int ucLen = Raw.ReadInt32();
 
 					if (block > 0x10000000 || block <= 0 || ucLen > 0x10000000 || ucLen <= 0)
-                    {
-                        break;
-                    }
+						break;
 
-                    if (RawStream.Position + block > RawStream.Length)
-                    {
-                        break;
-                    }
+					if (RawStream.Position + block > RawStream.Length)
+						break;
 
-                    if (m_ReadBuff == null || m_ReadBuff.Length < block)
-                    {
-                        m_ReadBuff = new byte[block];
-                    }
+					if (m_ReadBuff == null || m_ReadBuff.Length < block)
+						m_ReadBuff = new byte[block];
 
-                    if (m_CompBuff == null || m_CompBuff.Length < ucLen)
-                    {
-                        m_CompBuff = new byte[ucLen];
-                    }
-                    else
-                    {
-                        ucLen = m_CompBuff.Length;
-                    }
+					if (m_CompBuff == null || m_CompBuff.Length < ucLen)
+						m_CompBuff = new byte[ucLen];
+					else
+						ucLen = m_CompBuff.Length;
 
-                    Raw.Read(m_ReadBuff, 0, block);
+					Raw.Read(m_ReadBuff, 0, block);
 
 					ZLibError error = DLLImport.ZLib.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
 					if (error != ZLibError.Z_OK)
-                    {
-                        throw new Exception("ZLib error uncompressing: " + error.ToString());
-                    }
+						throw new Exception("ZLib error uncompressing: " + error.ToString());
 
-                    m_Uncomp.Write(m_CompBuff, 0, ucLen);
+					m_Uncomp.Write(m_CompBuff, 0, ucLen);
 				}
 
 				m_Uncomp.Position = pos;

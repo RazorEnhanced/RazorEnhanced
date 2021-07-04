@@ -21,16 +21,12 @@ namespace RazorEnhanced
         internal static void AddLog(string addlog)
         {
             if (!Client.Running)
-            {
                 return;
-            }
 
             Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Add(addlog));
             Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.SelectedIndex = s.BandageHealLogBox.Items.Count - 1);
             if (Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
-            {
                 Engine.MainWindow.SafeAction(s => s.BandageHealLogBox.Items.Clear());
-            }
         }
 
         internal static int TargetSerial
@@ -266,30 +262,24 @@ namespace RazorEnhanced
 
         internal static void EngineRun(Assistant.Mobile target)
         {
-            if (target.Hits * 100 / (target.HitsMax == 0 ? 1 : target.HitsMax) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
+            if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
             {
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
                 {
                     if (!World.Player.Visible)  // Esce se attivo blocco hidded
-                    {
                         return;
-                    }
                 }
 
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox"))
                 {
                     if (target.Poisoned) // Esce se attivo blocco poison
-                    {
                         return;
-                    }
                 }
 
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
                 {
                     if (Player.BuffsExist("Mortal Strike") && (target.Serial == Player.Serial))
-                    {
                         return;
-                    }
                 }
 
                 // Id base bende
@@ -349,9 +339,7 @@ namespace RazorEnhanced
                     {
                         double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
                         if (delay < 1) // Limite per evitare che si vada in negativo
-                        {
                             delay = 100;
-                        }
 
                         if (ShowCountdown)          // Se deve mostrare il cooldown
                         {
@@ -360,9 +348,7 @@ namespace RazorEnhanced
                             var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
                             int first = int.Parse(delays[0]);
                             if (delays.Count() > 1)
-                            {
                                 second = int.Parse(delays[1]);
-                            }
 
                             while (first > 0)
                             {
@@ -387,9 +373,7 @@ namespace RazorEnhanced
                             Thread.Sleep(delay);
                             countdown -= delay;
                             if (countdown <= 0)
-                            {
                                 break;
-                            }
                         }
                         countdown = 10000;
                         delay = 1000;
@@ -399,9 +383,7 @@ namespace RazorEnhanced
                             Thread.Sleep(delay);
                             countdown -= delay;
                             if (countdown <= 0)
-                            {
                                 break;
-                            }
 
                             if (ShowCountdown)          // Se deve mostrare il cooldown
                             {
@@ -422,9 +404,7 @@ namespace RazorEnhanced
                             var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
                             int first = int.Parse(delays[0]);
                             if (delays.Count() > 1)
-                            {
                                 second = int.Parse(delays[1]);
-                            }
 
                             while (first > 0)
                             {
@@ -505,9 +485,7 @@ namespace RazorEnhanced
                 {
                     double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
                     if (delay < 1) // Limite per evitare che si vada in negativo
-                    {
                         delay = 100;
-                    }
 
                     if (ShowCountdown)          // Se deve mostrare il cooldown
                     {
@@ -516,9 +494,7 @@ namespace RazorEnhanced
                         var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
                         int first = int.Parse(delays[0]);
                         if (delays.Count() > 1)
-                        {
                             second = int.Parse(delays[1]);
-                        }
 
                         while (first > 0)
                         {
@@ -545,9 +521,7 @@ namespace RazorEnhanced
                         var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
                         int first = int.Parse(delays[0]);
                         if (delays.Count() > 1)
-                        {
                             second = int.Parse(delays[1]);
-                        }
 
                         while (first > 0)
                         {
@@ -568,19 +542,13 @@ namespace RazorEnhanced
         internal static void AutoRun()
         {
             if (!Client.Running)
-            {
                 return;
-            }
 
             if (World.Player == null)
-            {
                 return;
-            }
 
             if (World.Player.IsGhost)
-            {
                 return;
-            }
 
             Assistant.Mobile target = null;
 
@@ -602,9 +570,7 @@ namespace RazorEnhanced
                         };
                         Mobile targ = RazorEnhanced.Mobiles.Select(RazorEnhanced.Mobiles.ApplyFilter(targfilter), "Weakest");
                         if (targ != null)
-                        {
                             target = Assistant.World.FindMobile(targ.Serial);
-                        }
                     }
                     break;
                 case "Friend Or Self":
@@ -647,14 +613,9 @@ namespace RazorEnhanced
             }
 
             if (target == null)         // Verifica se il target è valido
-            {
                 return;
-            }
-
             if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), m_maxrange)) // Verifica distanza
-            {
                 return;
-            }
 
             EngineRun(target);
         }
@@ -671,9 +632,7 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: BandageHeal.Start: Bandage Heal already running");
             }
             else
-            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = true);
-            }
         }
 
         /// <summary>
@@ -686,9 +645,7 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
             }
             else
-            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealenableCheckBox.Checked = false);
-            }
         }
 
         /// <summary>
@@ -710,9 +667,7 @@ namespace RazorEnhanced
             itemFilter.Graphics.Add(itemid);
 
             if (color != -1)
-            {
                 itemFilter.Hues.Add(color);
-            }
 
             List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 

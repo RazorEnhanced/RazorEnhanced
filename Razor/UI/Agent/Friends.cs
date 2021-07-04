@@ -53,26 +53,20 @@ namespace Assistant
 		private void friendPartyCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (friendPartyCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void friendAttackCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (friendAttackCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void friendIncludePartyCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (friendIncludePartyCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void friendListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -91,16 +85,14 @@ namespace Assistant
 			RazorEnhanced.Friend.RefreshGuilds();
 
 			if (friendListSelect.Text != String.Empty)
-            {
-                RazorEnhanced.Friend.AddLog("Friends list changed to: " + friendListSelect.Text);
-            }
-        }
+				RazorEnhanced.Friend.AddLog("Friends list changed to: " + friendListSelect.Text);
+		}
 
 		private void friendGuildListView_Checked(object sender, ItemCheckedEventArgs e)
 		{
 			if (friendguildListView.FocusedItem != null)
 			{
-				ListViewItem item = e.Item;
+				ListViewItem item = e.Item as ListViewItem;
 				RazorEnhanced.Friend.UpdateSelectedGuild(item.Index);
 			}
 		}
@@ -109,7 +101,7 @@ namespace Assistant
 		{
 			if (friendlistView.FocusedItem != null)
 			{
-				ListViewItem item = e.Item;
+				ListViewItem item = e.Item as ListViewItem;
 				RazorEnhanced.Friend.UpdateSelectedPlayer(item.Index);
 			}
 		}
@@ -140,10 +132,8 @@ namespace Assistant
 				}
 			}
 			else
-            {
-                RazorEnhanced.Friend.AddLog("Friends list not selected!");
-            }
-        }
+				RazorEnhanced.Friend.AddLog("Friends list not selected!");
+		}
 
 		private void friendAddButton_Click(object sender, EventArgs e)
 		{
@@ -156,10 +146,8 @@ namespace Assistant
 				ManualAddPlayer.Show();
 			}
 			else
-            {
-                RazorEnhanced.Friend.AddLog("Friends list not selected!");
-            }
-        }
+				RazorEnhanced.Friend.AddLog("Friends list not selected!");
+		}
 
 		private void FriendGuildAddButton_Click(object sender, EventArgs e)
 		{
@@ -172,42 +160,32 @@ namespace Assistant
 				ManualAddGuild.Show();
 			}
 			else
-            {
-                RazorEnhanced.Friend.AddLog("Friends list not selected!");
-            }
-        }
+				RazorEnhanced.Friend.AddLog("Friends list not selected!");
+		}
 
 		private void SLfriendCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (SLfriendCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void COMfriendCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (COMfriendCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void TBfriendCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (TBfriendCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void MINfriendCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (MINfriendCheckBox.Focused)
-            {
-                RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
-            }
-        }
+				RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, Friend.SLFriend, Friend.TBFriend, Friend.COMFriend, Friend.MINFriend, true);
+		}
 
 		private void FriendGuildRemoveButton_Click(object sender, EventArgs e)
 		{
@@ -230,9 +208,7 @@ namespace Assistant
 				}
 			}
 			else
-            {
-                RazorEnhanced.Friend.AddLog("Friends list not selected!");
-            }
-        }
+				RazorEnhanced.Friend.AddLog("Friends list not selected!");
+		}
 	}
 }

@@ -57,12 +57,9 @@ namespace Assistant
 
 		public override bool Equals(object o)
 		{
-			if (o == null || !(o is ItemID))
-            {
-                return false;
-            }
+			if (o == null || !(o is ItemID)) return false;
 
-            return ((ItemID)o).m_ID == m_ID;
+			return ((ItemID)o).m_ID == m_ID;
 		}
 
 		public static bool operator ==(ItemID l, ItemID r)

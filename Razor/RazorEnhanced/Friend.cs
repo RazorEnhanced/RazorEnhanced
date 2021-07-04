@@ -97,16 +97,12 @@ namespace RazorEnhanced
         internal static void AddLog(string addlog)
         {
             if (!Client.Running)
-            {
                 return;
-            }
 
             Engine.MainWindow.SafeAction(s => s.FriendLogBox.Items.Add(addlog));
             Engine.MainWindow.SafeAction(s => s.FriendLogBox.SelectedIndex = s.FriendLogBox.Items.Count - 1);
             if (Engine.MainWindow.FriendLogBox.Items.Count > 300)
-            {
                 Engine.MainWindow.SafeAction(s => s.FriendLogBox.Items.Clear());
-            }
         }
 
         internal static bool IncludeParty
@@ -198,13 +194,9 @@ namespace RazorEnhanced
             get
             {
                 if (Engine.MainWindow.FriendListSelect.InvokeRequired)
-                {
                     return (string)Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Engine.MainWindow.FriendListSelect.Text));
-                }
                 else
-                {
                     return Engine.MainWindow.FriendListSelect.Text;
-                }
             }
 
             set
@@ -233,9 +225,7 @@ namespace RazorEnhanced
 
             FriendList selectedList = lists.FirstOrDefault(l => l.Selected);
             if (selectedList != null && selectedList.Description == Engine.MainWindow.FriendListSelect.Text)
-            {
                 return;
-            }
 
             Engine.MainWindow.FriendListSelect.Items.Clear();
             foreach (FriendList l in lists)
@@ -243,9 +233,7 @@ namespace RazorEnhanced
                 Engine.MainWindow.FriendListSelect.Items.Add(l.Description);
 
                 if (!l.Selected)
-                {
                     continue;
-                }
 
                 Engine.MainWindow.FriendListSelect.SelectedIndex = Engine.MainWindow.FriendListSelect.Items.IndexOf(l.Description);
                 IncludeParty = l.IncludeParty;
@@ -267,9 +255,7 @@ namespace RazorEnhanced
             foreach (FriendList l in lists)
             {
                 if (!l.Selected)
-                {
                     continue;
-                }
 
                 RazorEnhanced.Settings.Friend.PlayersRead(l.Description, out List<FriendPlayer> players);
 
@@ -296,9 +282,7 @@ namespace RazorEnhanced
             foreach (FriendList l in lists)
             {
                 if (!l.Selected)
-                {
                     continue;
-                }
 
                 RazorEnhanced.Settings.Friend.GuildRead(l.Description, out List<FriendGuild> guilds);
 
@@ -345,10 +329,7 @@ namespace RazorEnhanced
                 if (!RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
                 {
                     if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                    {
                         RazorEnhanced.Misc.SendMessage("Friend added: " + name, false);
-                    }
-
                     RazorEnhanced.Friend.AddLog("Friend added: " + name);
                     RazorEnhanced.Settings.Friend.PlayerInsert(selection, player);
                     RazorEnhanced.Friend.RefreshPlayers();
@@ -356,10 +337,7 @@ namespace RazorEnhanced
                 else
                 {
                     if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                    {
                         RazorEnhanced.Misc.SendMessage(name + " is already in friend list", false);
-                    }
-
                     RazorEnhanced.Friend.AddLog(name + " is already in friend list");
                 }
             }
@@ -373,9 +351,7 @@ namespace RazorEnhanced
             if (RazorEnhanced.Settings.Friend.ListExists(selection))
             {
                 if (!RazorEnhanced.Settings.Friend.GuildExists(selection, name))
-                {
                     RazorEnhanced.Settings.Friend.GuildInsert(selection, guild);
-                }
             }
             RazorEnhanced.Friend.RefreshGuilds();
         }
@@ -427,51 +403,38 @@ namespace RazorEnhanced
             foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
             {
                 if (!player.Selected)
-                {
                     continue;
-                }
 
                 if (player.Serial == serial)
-                {
                     return true;
-                }
             }
 
             if (Friend.IncludeParty && PacketHandlers.Party.Contains(serial))            // Ricerco nel party se attiva l'opzione
-            {
                 return true;
-            }
+
 
             if (Engine.MainWindow.FriendSLCheckBox.Checked)
             {
                 if (GetFaction("SL", serial))
-                {
                     return true;
-                }
             }
 
             if (Engine.MainWindow.FriendTBCheckBox.Checked)
             {
                 if (GetFaction("TB", serial))
-                {
                     return true;
-                }
             }
 
             if (Engine.MainWindow.FriendCOMCheckBox.Checked)
             {
                 if (GetFaction("CoM", serial))
-                {
                     return true;
-                }
             }
 
             if (Engine.MainWindow.FriendMINCheckBox.Checked)
             {
                 if (GetFaction("MiN", serial))
-                {
                     return true;
-                }
             }
 
             List<Friend.FriendGuild> guilds = new List<FriendGuild>();
@@ -479,14 +442,10 @@ namespace RazorEnhanced
             foreach (FriendGuild guild in guilds)
             {
                 if (!guild.Selected)
-                {
                     continue;
-                }
 
                 if (GetGuild(guild.Name, serial))
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -506,10 +465,7 @@ namespace RazorEnhanced
                 if (!RazorEnhanced.Settings.Friend.PlayerExists(friendlist, player))
                 {
                     if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                    {
                         RazorEnhanced.Misc.SendMessage("Friend added: " + name, false);
-                    }
-
                     RazorEnhanced.Friend.AddLog("Friend added: " + name);
                     RazorEnhanced.Settings.Friend.PlayerInsert(friendlist, player);
                     RazorEnhanced.Friend.RefreshPlayers();
@@ -517,10 +473,7 @@ namespace RazorEnhanced
                 else
                 {
                     if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-                    {
                         RazorEnhanced.Misc.SendMessage(name + " is already in friend list", false);
-                    }
-
                     RazorEnhanced.Friend.AddLog(name + " is already in friend list");
                 }
             }
@@ -533,21 +486,14 @@ namespace RazorEnhanced
             Assistant.Mobile target = Assistant.World.FindMobile(serial);
 
             if (target == null)
-            {
                 return false;
-            }
 
             if (target.ObjPropList.Content.Count <= 0)
-            {
                 return false;
-            }
 
             string firstProp = target.ObjPropList.Content[0].ToString();
             if (firstProp.Contains(string.Format("[{0}]", name)))
-            {
                 return true;
-            }
-
             return false;
         }
 
@@ -557,17 +503,13 @@ namespace RazorEnhanced
             Assistant.Mobile target = Assistant.World.FindMobile(serial);
 
             if (target == null)
-            {
                 return false;
-            }
 
             if (target.ObjPropList.Content.Count > 0)
             {
                 string firstProp = target.ObjPropList.Content[0].ToString();
                 if (firstProp.Contains(string.Format("[{0}]", name)))
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -606,9 +548,7 @@ namespace RazorEnhanced
             {
                 RazorEnhanced.Settings.Friend.PlayersRead(friendlist, out List<FriendPlayer> players);
                 foreach (FriendPlayer player in players)
-                {
                     friendserials.Add(player.Serial);
-                }
             }
             return friendserials;
         }
@@ -637,10 +577,7 @@ namespace RazorEnhanced
             else
             {
                 if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-                {
                     Misc.SendMessage("Invalid target", false);
-                }
-
                 Friend.AddLog("Invalid target");
             }
         }

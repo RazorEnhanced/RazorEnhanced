@@ -41,10 +41,8 @@ namespace Assistant
 		private void gridopenlogin_CheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (gridopenlogin_CheckBox.Focused)
-            {
-                Settings.General.WriteBool("GridOpenLoginCheckBox", gridopenlogin_CheckBox.Checked);
-            }
-        }
+				Settings.General.WriteBool("GridOpenLoginCheckBox", gridopenlogin_CheckBox.Checked);
+		}
 
 		private void gridslot_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -81,10 +79,8 @@ namespace Assistant
 			}
 
 			if (gridslot_ComboBox.Focused)
-            {
-                SpellGrid.Open();
-            }
-        }
+				SpellGrid.Open();
+		}
 
 		private void gridgroup_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -97,11 +93,8 @@ namespace Assistant
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = -1;
 						gridscript_ComboBox.Enabled = false;
 						if (gridgroup_ComboBox.Focused)
-                        {
-                            SpellGrid.Close();
-                        }
-
-                        break;
+							SpellGrid.Close();
+						break;
 					}
 				case "Magery":
 					{
@@ -223,19 +216,13 @@ namespace Assistant
 		{
 			Color c = Color.Transparent;
 			if (gridborder_ComboBox.SelectedItem != null)
-            {
-                c = Color.FromName(gridborder_ComboBox.SelectedItem.ToString());
-            }
+				c = Color.FromName(gridborder_ComboBox.SelectedItem.ToString());
 
-            if (gridgroup_ComboBox.Text != "Script")
-            {
-                Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, c);
-            }
-            else
-            {
-                Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridscript_ComboBox.Text, c);
-            }
-        }
+			if (gridgroup_ComboBox.Text != "Script")
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, c);
+			else
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridscript_ComboBox.Text, c);
+		}
 
 		private void gridscript_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -249,11 +236,9 @@ namespace Assistant
 		private void gridvslotadd_button_Click(object sender, EventArgs e)
 		{
 			if (SpellGrid.VSlot + SpellGrid.HSlot == 99)
-            {
-                return;
-            }
+				return;
 
-            int slot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
+			int slot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
 			slot += 1;
 
 			RazorEnhanced.Settings.General.WriteInt("GridVSlot", slot);
@@ -282,11 +267,9 @@ namespace Assistant
 		private void gridhslotadd_button_Click(object sender, EventArgs e)
 		{
 			if (SpellGrid.VSlot + SpellGrid.HSlot == 99)
-            {
-                return;
-            }
+				return;
 
-            int slot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
+			int slot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
 			slot += 1;
 
 			RazorEnhanced.Settings.General.WriteInt("GridHSlot", slot);
@@ -321,7 +304,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("GridOpacity", o);
 				if (RazorEnhanced.SpellGrid.SpellGridForm != null)
 				{
-					RazorEnhanced.SpellGrid.SpellGridForm.Opacity = o / 100.0;
+					RazorEnhanced.SpellGrid.SpellGridForm.Opacity = ((double)o) / 100.0;
 					RazorEnhanced.SpellGrid.SpellGridForm.Show();
 				}
 			}

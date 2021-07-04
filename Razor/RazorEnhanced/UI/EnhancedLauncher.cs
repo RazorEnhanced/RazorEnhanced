@@ -39,9 +39,7 @@ namespace RazorEnhanced.UI
             }
 
             if (shardlistCombobox.SelectedIndex == -1)
-            {
                 groupBox2.Enabled = false;
-            }
 
             if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
             {
@@ -148,13 +146,9 @@ namespace RazorEnhanced.UI
             }
 
             if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
-            {
                 okay.Enabled = true;
-            }
             else
-            {
                 okay.Enabled = false;
-            }
 
             if (File.Exists(cuoClientLabel.Text))
             {
@@ -254,7 +248,7 @@ namespace RazorEnhanced.UI
             UpdateGUI();
 
             // Need to fix up settuings.json
-            //StreamWriter login;
+            StreamWriter login;
             string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
             string logincfgpath = cuoClientLabel.Text.Substring(0, cuoClientLabel.Text.LastIndexOf("\\") + 1);
         }

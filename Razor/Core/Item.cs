@@ -206,14 +206,9 @@ namespace Assistant
                 try // avoid crash if some bad happen in Ultima.dll
                 {
                     if ((Ultima.TileData.ItemTable[ItemID].Flags & Ultima.TileFlag.Generic) != 0)
-                    {
                         return m_Amount;
-                    }
-
                     if (ItemID == 0x2006)
-                    {
                         return m_Amount;
-                    }
                 }
                 catch
                 {
@@ -258,14 +253,10 @@ namespace Assistant
 			set
 			{
 				if (value != null)
-                {
-                    m_Name = value.Trim();
-                }
-                else
-                {
-                    m_Name = null;
-                }
-            }
+					m_Name = value.Trim();
+				else
+					m_Name = null;
+			}
 		}
 
 		internal Layer Layer
@@ -320,10 +311,8 @@ namespace Assistant
 				{
 					item = item.FindItemByID(id, true);
 					if (item != null)
-                    {
-                        return item;
-                    }
-                }
+						return item;
+				}
 			}
 			return null;
 		}
@@ -333,11 +322,8 @@ namespace Assistant
 			get
 			{
 				if (m_Parent is Serial && UpdateContainer())
-                {
-                    m_NeedContUpdate.Remove(this);
-                }
-
-                return m_Parent;
+					m_NeedContUpdate.Remove(this);
+				return m_Parent;
 			}
 			set
 			{
@@ -349,76 +335,50 @@ namespace Assistant
 				}
 
 				if (m_Parent is Mobile)
-                {
-                    ((Mobile)m_Parent).RemoveItem(this);
-                }
-                else if (m_Parent is Item)
-                {
-                    ((Item)m_Parent).RemoveItem(this);
-                }
+					((Mobile)m_Parent).RemoveItem(this);
+				else if (m_Parent is Item)
+					((Item)m_Parent).RemoveItem(this);
 
-                if (value is Mobile)
-                {
-                    m_Parent = ((Mobile)value).Serial;
-                }
-                else if (value is Item)
-                {
-                    m_Parent = ((Item)value).Serial;
-                }
-                else
-                {
-                    m_Parent = value;
-                }
+				if (value is Mobile)
+					m_Parent = ((Mobile)value).Serial;
+				else if (value is Item)
+					m_Parent = ((Item)value).Serial;
+				else
+					m_Parent = value;
 
-                if (!UpdateContainer() && m_NeedContUpdate != null)
-                {
-                    m_NeedContUpdate.Add(this);
-                }
-            }
+				if (!UpdateContainer() && m_NeedContUpdate != null)
+					m_NeedContUpdate.Add(this);
+			}
 		}
 
 		internal bool UpdateContainer()
 		{
 			if (!(m_Parent is Serial) || Deleted)
-            {
-                return true;
-            }
+				return true;
 
-            object o = null;
+			object o = null;
 			Serial contSer = (Serial)m_Parent;
 			if (contSer.IsItem)
-            {
-                o = World.FindItem(contSer);
-            }
-            else if (contSer.IsMobile)
-            {
-                o = World.FindMobile(contSer);
-            }
+				o = World.FindItem(contSer);
+			else if (contSer.IsMobile)
+				o = World.FindMobile(contSer);
 
-            if (o == null)
-            {
-                return false;
-            }
+			if (o == null)
+				return false;
 
-            m_Parent = o;
+			m_Parent = o;
 
 			if (m_Parent is Item)
-            {
-                ((Item)m_Parent).AddItem(this);
-            }
-            else if (m_Parent is Mobile)
-            {
-                ((Mobile)m_Parent).AddItem(this);
-            }
+				((Item)m_Parent).AddItem(this);
+			else if (m_Parent is Mobile)
+				((Mobile)m_Parent).AddItem(this);
 
-            if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
+			if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
 			{
 				if (m_IsNew)
 				{
 					if (m_AutoStack)
-                    {
-                        AutoStackResource();
-                    }
+						AutoStackResource();
 
                     if (RazorEnhanced.Settings.General.ReadBool("AutoSearch")
                         && IsContainer
@@ -431,20 +391,14 @@ namespace Assistant
 
                         for (int c = 0; c < Contains.Count; c++)
                         {
-                            Item icheck = Contains[c];
+                            Item icheck = (Item)Contains[c];
                             if (icheck.IsContainer)
                             {
                                 if (icheck.IsSearchable && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
-                                {
                                     continue;
-                                }
-
                                 if (icheck.IsBagOfSending)
-                                {
                                     continue;
-                                }
-
-                                PacketHandlers.IgnoreGumps.Add(icheck);
+								PacketHandlers.IgnoreGumps.Add(icheck);
 								PlayerData.DoubleClick(icheck);
 							}
 						}
@@ -464,14 +418,10 @@ namespace Assistant
 			while (i < m_NeedContUpdate.Count)
 			{
 				if ((m_NeedContUpdate[i]).UpdateContainer())
-                {
-                    m_NeedContUpdate.RemoveAt(i);
-                }
-                else
-                {
-                    i++;
-                }
-            }
+					m_NeedContUpdate.RemoveAt(i);
+				else
+					i++;
+			}
 		}
 
 		private static List<Serial> m_AutoStackCache = new List<Serial>();
@@ -479,11 +429,9 @@ namespace Assistant
 		internal void AutoStackResource()
 		{
 			if (!IsResource || !RazorEnhanced.Settings.General.ReadBool("AutoStack") || m_AutoStackCache.Contains(Serial))
-            {
-                return;
-            }
+				return;
 
-            foreach (Item check in World.Items.Values)
+			foreach (Item check in World.Items.Values)
 			{
 				if (check.Container == null && check.ItemID == ItemID && check.Hue == Hue && Utility.InRange(World.Player.Position, check.Position, 2))
 				{
@@ -503,14 +451,10 @@ namespace Assistant
             {
                 // if container is null or not an item just return it
                 if (this.Container == null)
-                {
                     return this.Container;
-                }
 
                 if (! (this.Container is Item) )
-                {
                     return this.Container;
-                }
 
                 // try to search parent containers until parent is null or not an item
                 // example of ! an Item is Player -> Backpack -> Items
@@ -523,9 +467,7 @@ namespace Assistant
                 {
                     cont = (Item)cont.Container;
                     if (maxTry-- < 1)
-                    {
                         return this.Container;
-                    }
                 }
 
                 return cont;
@@ -536,31 +478,21 @@ namespace Assistant
 		{
 			Serial parentSerial = 0;
 			if (parent is Mobile)
-            {
-                return parent == RootContainer;
-            }
-            else if (parent is Item)
-            {
-                parentSerial = ((Item)parent).Serial;
-            }
-            else
-            {
-                return false;
-            }
+				return parent == RootContainer;
+			else if (parent is Item)
+				parentSerial = ((Item)parent).Serial;
+			else
+				return false;
 
-            object check = this;
+			object check = this;
 			int die = 100;
 			while (check != null && check is Item && die-- > 0)
 			{
 				if (((Item)check).Serial == parentSerial)
-                {
-                    return true;
-                }
-                else
-                {
-                    check = ((Item)check).Container;
-                }
-            }
+					return true;
+				else
+					check = ((Item)check).Container;
+			}
 
 			return false;
 		}
@@ -570,33 +502,23 @@ namespace Assistant
 			int die = 100;
 			object root = this.Container;
 			while (root != null && root is Item && ((Item)root).Container != null && die-- > 0)
-            {
-                root = ((Item)root).Container;
-            }
+				root = ((Item)root).Container;
 
-            if (root is Item)
-            {
-                return ((Item)root).Position;
-            }
-            else if (root is Mobile)
-            {
-                return ((Mobile)root).Position;
-            }
-            else
-            {
-                return this.Position;
-            }
-        }
+			if (root is Item)
+				return ((Item)root).Position;
+			else if (root is Mobile)
+				return ((Mobile)root).Position;
+			else
+				return this.Position;
+		}
 
 		private void AddItem(Item item)
 		{
 			for (int i = 0; i < m_Items.Count; i++)
 			{
 				if (m_Items[i] == item)
-                {
-                    return;
-                }
-            }
+					return;
+			}
 
 			m_Items.Add(item);
 		}
@@ -669,28 +591,20 @@ namespace Assistant
 		internal override void Remove()
 		{
 			if (IsMulti)
-            {
-                Assistant.UOAssist.PostRemoveMulti(this);
-            }
+			 	Assistant.UOAssist.PostRemoveMulti(this);
 
-            List<Item> rem = new List<Item>(m_Items);
+			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
 
 			foreach (Item r in rem)
-            {
-                r.Remove();
-            }
+				r.Remove();
 
-            if (m_Parent is Mobile)
-            {
-                ((Mobile)m_Parent).RemoveItem(this);
-            }
-            else if (m_Parent is Item)
-            {
-                ((Item)m_Parent).RemoveItem(this);
-            }
+			if (m_Parent is Mobile)
+				((Mobile)m_Parent).RemoveItem(this);
+			else if (m_Parent is Item)
+				((Item)m_Parent).RemoveItem(this);
 
-            World.RemoveItem(this);
+			World.RemoveItem(this);
 			base.Remove();
 		}
 
@@ -760,24 +674,16 @@ namespace Assistant
 			get
 			{
 				if (IsCorpse)
-                {
-                    return false;
-                }
+					return false;
 
-                if (m_Items.Count > 0)
-                {
-                    return true;
-                }
+				if (m_Items.Count > 0)
+					return true;
 
-                if (m_containerID.ContainsKey(m_ItemID.Value))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+				if (m_containerID.ContainsKey(m_ItemID.Value))
+					return true;
+				else
+					return false;
+			}
 		}
 
 
@@ -786,14 +692,9 @@ namespace Assistant
             get
             {
                 if (RootContainer == World.Player.Backpack)
-                {
                     return true;
-                }
-
                 if (this == World.Player.Backpack)
-                {
                     return true;
-                }
 
                 return false;
             }
@@ -808,24 +709,15 @@ namespace Assistant
                 // Should be false but checking for it is difficult
 
                 if (!IsContainer)
-                {
                     return false;
-                }
 
                 if (IsInBank)
-                {
                     return false;
-                }
 
                 if (RootContainer == World.Player.Backpack)
-                {
                     return true;
-                }
-
                 if (this == World.Player.Backpack)
-                {
                     return true;
-                }
 
                 return false;
 
@@ -845,18 +737,12 @@ namespace Assistant
 			get
 			{
 				if (m_Parent is Item)
-                {
-                    return ((Item)m_Parent).IsInBank;
-                }
-                else if (m_Parent is Mobile)
-                {
-                    return this.Layer == Layer.Bank;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+					return ((Item)m_Parent).IsInBank;
+				else if (m_Parent is Mobile)
+					return this.Layer == Layer.Bank;
+				else
+					return false;
+			}
 		}
 
 		internal bool IsNew
@@ -881,23 +767,15 @@ namespace Assistant
             get
             {
                 if (IsCorpse)
-                {
                     return false;
-                }
 
                 if (m_Items.Count > 0)
-                {
                     return true;
-                }
 
                 if (m_containerID.ContainsKey(m_ItemID.Value))
-                {
                     return m_containerID[m_ItemID.Value].Searchable;
-                }
                 else
-                {
-                    return m_ItemID.Value == 0x0E79;
-                }
+                    return m_ItemID.Value == 0x0E79; 
             }
 		}
 
@@ -1020,18 +898,14 @@ namespace Assistant
                         {
                             string propString = prop.ToString();
                             if (propString.ToLower().Contains("one-handed"))
-                            {
                                 return false;
-                            }
                         }
                     }
                 }
                 Weapon w = null;
                 bool found = Weapons.TryGetValue(iid, out w);
                 if (found)
-                {
                     return w.Twohanded;
-                }
 
                 return (
 						// everything in layer 2 except shields is 2handed

@@ -9,9 +9,7 @@ namespace RazorEnhanced
 		private static void AddLog(string code)
 		{
 			if (UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea != null)
-            {
-                UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text = UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text +"\n" + code;
-            }
+				UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text = UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text +"\n" + code;
         }
 
 		internal static void Record_AttackRequest(uint serial)
@@ -22,26 +20,18 @@ namespace RazorEnhanced
 		internal static void Record_ClientDoubleClick(Assistant.Serial ser)
 		{
 			if (ser.IsItem)
-            {
-                AddLog("Items.UseItem(0x" + ser.Value.ToString("X8") + ")");
-            }
-            else
-            {
-                AddLog("Mobiles.UseMobile(0x" + ser.Value.ToString("X8") + ")");
-            }
-        }
+				AddLog("Items.UseItem(0x" + ser.Value.ToString("X8") + ")");
+			else
+				AddLog("Mobiles.UseMobile(0x" + ser.Value.ToString("X8") + ")");
+		}
 
 		internal static void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
 		{
 			if (dest != 0xFFFFFFFF)
-            {
-                AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
-            }
-            else
-            {
-                AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");
-            }
-        }
+				AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
+			else
+				AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");
+		}
 
 		/*internal static void Record_ClientSingleClick(Assistant.Serial ser)
 		{
@@ -159,53 +149,31 @@ namespace RazorEnhanced
 			{
 				Spell s = Spell.Get(id);
 				if (id >= 1 && id <= 64)
-                {
-                    AddLog("Spells.CastMagery(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 101 && id <= 117)
-                {
-                    AddLog("Spells.CastNecro(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 201 && id <= 210)
-                {
-                    AddLog("Spells.CastChivalry(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 401 && id <= 406)
-                {
-                    AddLog("Spells.CastBushido(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 501 && id <= 508)
-                {
-                    AddLog("Spells.CastNinjitsu(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 601 && id <= 616)
-                {
-                    AddLog("Spells.CastSpellweaving(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 678 && id <= 693)
-                {
-                    AddLog("Spells.CastMysticism(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                }
-                else if (id >= 701 && id <= 745)
+					AddLog("Spells.CastMagery(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 101 && id <= 117)
+					AddLog("Spells.CastNecro(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 201 && id <= 210)
+					AddLog("Spells.CastChivalry(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 401 && id <= 406)
+					AddLog("Spells.CastBushido(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 501 && id <= 508)
+					AddLog("Spells.CastNinjitsu(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 601 && id <= 616)
+					AddLog("Spells.CastSpellweaving(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 678 && id <= 693)
+					AddLog("Spells.CastMysticism(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				else if (id >= 701 && id <= 745)
 				{
 					if (id == 732)
-                    {
-                        AddLog("Spells.CastMastery(\"Called Shot\")");
-                    }
-                    else if (id == 715)
-                    {
-                        AddLog("Spells.CastMastery(\"Enchanted Summoning\")");
-                    }
-                    else
-                    {
-                        AddLog("Spells.CastMastery(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
-                    }
-                }
+						AddLog("Spells.CastMastery(\"Called Shot\")");
+					else if (id == 715)
+						AddLog("Spells.CastMastery(\"Enchanted Summoning\")");
+					else
+						AddLog("Spells.CastMastery(\"" + Utility.CapitalizeAllWords(Language.GetString(s.Name)) + "\")");
+				}
 				else
-                {
-                    AddLog("ERROR Spell not listed " + id);
-                }
-            }
+					AddLog("ERROR Spell not listed " + id);
+			}
 			else // InvokeVirtue
 			{
 				switch (id)
@@ -241,14 +209,10 @@ namespace RazorEnhanced
 		internal static void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
 		{
 			if (m == World.Player)
-            {
-                AddLog("Player.EquipItem(0x"+ item.Serial.Value.ToString("X8") + ")");
-            }
-            else
-            {
-                AddLog("Player.UnEquipItemByLayer("+ l.ToString() + ")");
-            }
-        }
+				AddLog("Player.EquipItem(0x"+ item.Serial.Value.ToString("X8") + ")");
+			else
+				AddLog("Player.UnEquipItemByLayer("+ l.ToString() + ")");
+		}
 
 		internal static void Record_RenameMobile(int serial, string name)
 		{
@@ -259,14 +223,10 @@ namespace RazorEnhanced
 		{
 			AddLog("Misc.WaitForPrompt(10000)");
 			if (type == 0)
-            {
-                AddLog("Misc.WaitForPrompt(10000)");
-            }
-            else
-            {
-                AddLog("Misc.ResponsePrompt(\"" + text + "\")");
-            }
-        }
+				AddLog("Misc.WaitForPrompt(10000)");
+			else
+				AddLog("Misc.ResponsePrompt(\"" + text + "\")");
+		}
 
 		internal static void Record_UnicodeSpeech(MessageType type, string text, int hue)
 		{
@@ -319,14 +279,10 @@ namespace RazorEnhanced
 		{
 			AddLog("Misc.WaitForQueryString(10000)");
 			if (yesno != 0)
-            {
-                AddLog("Misc.QueryStringResponse(True, " + text + ")");
-            }
-            else
-            {
-                AddLog("Misc.QueryStringResponse(False, " + text + ")");
-            }
-        }
+				AddLog("Misc.QueryStringResponse(True, " + text + ")");
+			else
+				AddLog("Misc.QueryStringResponse(False, " + text + ")");
+		}
 
 		internal static void Record_MenuResponse(int index)
 		{
@@ -387,18 +343,13 @@ namespace RazorEnhanced
 			if (info.Serial == 0)
 			{
 				if (info.Gfx == 0)
-                {
-                    AddLog("Target.TargetExecute(" + info.X + ", " + info.Y + " ," + info.Z + ")");
-                }
-                else
-                {
-                    AddLog("Target.TargetExecute(" + info.X + ", " + info.Y + " ," + info.Z + " ," + info.Gfx + ")");
-                }
-            }
+					AddLog("Target.TargetExecute(" + info.X + ", " + info.Y + " ," + info.Z + ")");
+				else
+					AddLog("Target.TargetExecute(" + info.X + ", " + info.Y + " ," + info.Z + " ," + info.Gfx + ")");
+			}
 			else
-            {
-                AddLog("Target.TargetExecute(" + info.Serial + ")");
-            }
-        }
+				AddLog("Target.TargetExecute(" + info.Serial + ")");
+
+		}
 	}
 }

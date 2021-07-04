@@ -18,16 +18,16 @@ using System.IO;
 namespace RazorEnhanced
 {
     //
-    public class UOSteamEngine
+    class UOSteamEngine
     {
         private int m_lastMount;
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
 
         // useOnceIgnoreList
-        private readonly List<int> m_serialUseOnceIgnoreList;
+        private List<int> m_serialUseOnceIgnoreList;
 
-        private readonly string DEFAULT_FRIEND_LIST = "UOS";
+        private string DEFAULT_FRIEND_LIST = "UOS";
 
 
         private static UOSteamEngine instance = null;
@@ -74,7 +74,7 @@ namespace RazorEnhanced
             string configFile = System.IO.Path.Combine(Assistant.Engine.RootPath, "Config", "UOS.config.json");
         }
 
-        private uint AliasHandler(string alias)
+        uint AliasHandler(string alias)
         {
             int everywhere = -1;
             switch (alias.ToLower())
@@ -100,14 +100,14 @@ namespace RazorEnhanced
         public void Execute(string filename)
         {
             var root = Lexer.Lex(filename);
-            UOScript.Script script = new(root);
+            UOScript.Script script = new UOScript.Script(root);
             Execute(script);
 
         }
         public void Execute(string[] textLines)
         {
             var root = Lexer.Lex(textLines);
-            UOScript.Script script = new(root);
+            UOScript.Script script = new UOScript.Script(root);
             Execute(script);
         }
 
@@ -130,7 +130,7 @@ namespace RazorEnhanced
         }
 
         public void WrongParameterCount(string commands, int expected, int given, string message="") {
-            var msg = String.Format("{0} expect {1} parameters, {2} given. {3}", commands, expected, given, message);
+            var msg = String.Format("{0} expect {1} parameters, {2} given. {message}");
             throw new IllegalArgumentException(msg);
         }
 
@@ -372,10 +372,7 @@ namespace RazorEnhanced
                 if (container != null)
                 {
                     if (!container.IsContainer)
-                    {
                         return 0;
-                    }
-
                     List<Item> list = container.Contains;
                     return list.Count;
                 }
@@ -440,7 +437,8 @@ namespace RazorEnhanced
             return true;
         }
 
-        private IComparable FindAlias(string expression, UOScript.Argument[] args, bool quiet)
+
+        IComparable FindAlias(string expression, UOScript.Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -452,7 +450,7 @@ namespace RazorEnhanced
             return false;
         }
 
-        private IComparable LocationX(string expression, UOScript.Argument[] args, bool quiet)
+        IComparable LocationX(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
@@ -461,7 +459,7 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new(serial);
+            Assistant.Serial thing = new Assistant.Serial(serial);
             
             if (thing.IsItem)
             {
@@ -484,8 +482,7 @@ namespace RazorEnhanced
             throw new UOScript.RunTimeError(null, "X location serial not found");
             // return 0;
         }
-
-        private IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
+        IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
@@ -494,7 +491,7 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new(serial);
+            Assistant.Serial thing = new Assistant.Serial(serial);
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -516,8 +513,7 @@ namespace RazorEnhanced
             throw new UOScript.RunTimeError(null, "Y location serial not found");
             // return 0;
         }
-
-        private IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
+        IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
@@ -526,7 +522,7 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new(serial);
+            Assistant.Serial thing = new Assistant.Serial(serial);
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -549,7 +545,7 @@ namespace RazorEnhanced
             // return 0;
         }
 
-        private IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
+        IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
         {
             return RazorEnhanced.Organizer.Status();
         }
@@ -561,9 +557,9 @@ namespace RazorEnhanced
         /// </summary>
         internal static List<int> FindByType_ground(int graphic, int color, int amount, int range)
         {
-            List<int> retList = new();
+            List<int> retList = new List<int>();
             // Search for items first
-            Items.Filter itemFilter = new()
+            Items.Filter itemFilter = new Items.Filter
             {
                 Enabled = true
             };
@@ -571,10 +567,7 @@ namespace RazorEnhanced
             itemFilter.RangeMax = range;
             itemFilter.OnGround = 1;
             if (color != -1)
-            {
                 itemFilter.Hues.Add(color);
-            }
-
             List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
             if (items.Count > 0)
@@ -582,24 +575,19 @@ namespace RazorEnhanced
                 foreach (var i in items)
                 {
                     if ((amount <= 0) || (i.Amount >= amount))
-                    {
                         retList.Add(i.Serial);
-                    }
                 }
                 //return retList;
             }
 
-            Mobiles.Filter mobileFilter = new()
+            Mobiles.Filter mobileFilter = new Mobiles.Filter
             {
                 Enabled = true
             };
             mobileFilter.Bodies.Add(graphic);
             mobileFilter.RangeMax = range;
             if (color != -1)
-            {
                 mobileFilter.Hues.Add(color);
-            }
-
             List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
 
             if (mobiles.Count > 0)
@@ -619,7 +607,7 @@ namespace RazorEnhanced
             int retCount = 0;
 
             // Search for items first
-            Items.Filter itemFilter = new()
+            Items.Filter itemFilter = new Items.Filter
             {
                 Enabled = true
             };
@@ -627,10 +615,7 @@ namespace RazorEnhanced
             itemFilter.RangeMax = range;
             itemFilter.OnGround = 1;
             if (color != -1)
-            {
                 itemFilter.Hues.Add(color);
-            }
-
             List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
             if (items.Count > 0)
@@ -641,17 +626,14 @@ namespace RazorEnhanced
                 }
             }
 
-            Mobiles.Filter mobileFilter = new()
+            Mobiles.Filter mobileFilter = new Mobiles.Filter
             {
                 Enabled = true
             };
             mobileFilter.Bodies.Add(graphic);
             mobileFilter.RangeMax = range;
             if (color != -1)
-            {
                 mobileFilter.Hues.Add(color);
-            }
-
             List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
 
             if (mobiles.Count > 0)
@@ -680,9 +662,7 @@ namespace RazorEnhanced
             {
                 int color = -1;
                 if (args.Length == 2)
-                {
                     color = args[1].AsInt();
-                }
 
                 List<int> results = FindByType_ground(type, color, -1, -1);
                 if (results.Count > 0)
@@ -706,16 +686,10 @@ namespace RazorEnhanced
                 uint source = args[2].AsSerial();
                 int amount = -1;
                 if (args.Length >= 4)
-                {
                     args[3].AsInt();
-                }
-
                 int range = -1;
                 if (args.Length == 5)
-                {
                     range = args[4].AsInt();
-                }
-
                 if (groundCheck == "ground")
                 {
                     List<int> results = FindByType_ground(type, color, amount, range);
@@ -761,7 +735,7 @@ namespace RazorEnhanced
 
             string findProp = args[0].AsString();
             uint serial = args[1].AsSerial();
-            Assistant.Serial thing = new(serial);
+            Assistant.Serial thing = new Assistant.Serial(serial);
 
             if (thing.IsItem)
             {
@@ -908,8 +882,7 @@ namespace RazorEnhanced
         private IComparable Direction(string expression, UOScript.Argument[] args, bool quiet)
         {
             //UOS Direction -  Start in top-right-corner: 0 | North. Inclements: clockwise
-            Dictionary<string, int> dir_num = new()
-            {
+            Dictionary<string, int> dir_num = new Dictionary<string, int>() {
                 {"North",0}, {"Right",1}, {"East",2}, {"Down",3},
                 {"South",4}, {"Left",5},  {"West",6}, {"Up",7},
 
@@ -1085,12 +1058,9 @@ namespace RazorEnhanced
 
         private IComparable Bandage(string expression, UOScript.Argument[] args, bool quiet)
         {
-            int count = Items.ContainerCount(Player.Backpack.Serial, 0x0E21, -1, true);
+            int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
             if (count > 0 &&  (Player.Hits < Player.HitsMax || Player.Poisoned) )
-            {
                 BandageHeal.Heal(Assistant.World.Player);
-            }
-
             return count;
         }
 
@@ -1171,31 +1141,21 @@ namespace RazorEnhanced
                 uint serial = args[1].AsSerial();
                 Mobile mobile = Mobiles.FindBySerial((int)serial);
                 if (mobile == null)
-                {
                     return false;
-                }
-
                 int range = args[2].AsInt();
                 ConfigFiles.RegionByArea.Area area = Player.Area(Player.Map, mobile.Position.X, mobile.Position.Y);
                 if (area == null)
-                {
                     return false;
-                }
-
                 if (desiredRegion.ToLower() != area.zoneName.ToLower())
-                {
                     return false;
-                }
 
                 foreach (System.Drawing.Rectangle rect in area.rect)
                 {
                     if (rect.Contains(mobile.Position.X, mobile.Position.Y))
                     {
-                        System.Drawing.Rectangle desiredRect = new(rect.X - range, rect.Y - range, rect.Width - range, rect.Height - range);
+                        System.Drawing.Rectangle desiredRect = new System.Drawing.Rectangle(rect.X - range, rect.Y - range, rect.Width - range, rect.Height - range);
                         if (desiredRect.Contains(mobile.Position.X, mobile.Position.Y))
-                        {
                             return true;
-                        }
                     }
                 }
                 return false;
@@ -1241,8 +1201,7 @@ namespace RazorEnhanced
             int range = -1;
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial serial1 = new(serial);
-            Assistant.Serial thing = serial1;
+            Assistant.Serial thing = new Assistant.Serial(serial);
 
             if (args.Length >= 2)
             {
@@ -1278,43 +1237,24 @@ namespace RazorEnhanced
             // must be an item
             Item item = Items.FindBySerial((int)serial);
             if (item == null)
-            {
                 return false;
-            }
 
             // written this way because I hate if ! && !
             if (color != -1)
-            {
                 if (item.Hue != color)
-                {
                     return false;
-                }
-            }
 
             if (container != -1)
-            {
                 if (item.Container != container)
-                {
                     return false;
-                }
-            }
 
             if (amount != -1)
-            {
                 if (item.Amount < amount)
-                {
                     return false;
-                }
-            }
 
             if (range != -1)
-            {
                 if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, item.Position.X, item.Position.Y) > range)
-                {
                     return false;
-                }
-            }
-
             UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
             return true;
         }
@@ -1327,7 +1267,7 @@ namespace RazorEnhanced
             }
 
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new(serial);
+            Assistant.Serial thing = new Assistant.Serial(serial);
 
             int x = -1;
             int y = -1;
@@ -1335,10 +1275,7 @@ namespace RazorEnhanced
             {
                 Item item = Items.FindBySerial((int)serial);
                 if (item == null)
-                {
                     return Int32.MaxValue;
-                }
-
                 x = item.Position.X;
                 y = item.Position.Y;
             }
@@ -1346,18 +1283,13 @@ namespace RazorEnhanced
             {
                 Mobile item = Mobiles.FindBySerial((int)serial);
                 if (item == null)
-                {
                     return Int32.MaxValue;
-                }
-
                 x = item.Position.X;
                 y = item.Position.Y;
             }
 
             if (x == -1 || y == -1)
-            {
                 return Int32.MaxValue;
-            }
 
             return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
         }
@@ -1370,7 +1302,7 @@ namespace RazorEnhanced
                 // return false;
             }
             uint serial = args[0].AsSerial();
-            Assistant.Serial thing = new(serial: serial);
+            Assistant.Serial thing = new Assistant.Serial(serial);
 
             int range = args[1].AsInt();
             int x = -1;
@@ -1396,9 +1328,7 @@ namespace RazorEnhanced
             }
 
             if (x == -1 || y == -1)
-            {
                 return false;
-            }
 
             int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
             return (distance <= range);
@@ -1422,17 +1352,15 @@ namespace RazorEnhanced
                 // return false;
             }
             uint serial = args[0].AsSerial();
-            Assistant.Mobile mobile = Assistant.World.FindMobile(serial);
+            Assistant.Mobile mobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
             if (mobile == null)
-            {
                 return false;
-            }
 
             Assistant.Layer layer = (Assistant.Layer)args[1].AsInt();
             Assistant.Item item = mobile.GetItemOnLayer(layer);
             if (item != null)
             {
-                UOScript.Interpreter.SetAlias("found", item.Serial);
+                UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
                 return true;
             }
             return false;
@@ -1469,14 +1397,12 @@ namespace RazorEnhanced
             if (args.Length > 0)
             {
                 uint serial = args[0].AsSerial();
-                Friend.FriendPlayer player = new("FAKE", (int)serial, true);
+                Friend.FriendPlayer player = new Friend.FriendPlayer("FAKE", (int)serial, true);
                 string selection = Friend.FriendListName;
                 if (RazorEnhanced.Settings.Friend.ListExists(selection))
                 {
                     if (RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
-                    {
                         return true;
-                    }
                 }
             }
             return false;
@@ -1690,9 +1616,7 @@ namespace RazorEnhanced
                 uint serial = args[0].AsSerial();
                 Mobile mobile = Mobiles.FindBySerial((int)serial);
                 if (mobile != null)
-                {
                     Player.Attack(mobile);
-                }
             }
 
             return true;
@@ -1701,9 +1625,7 @@ namespace RazorEnhanced
         private bool Walk(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
-            {
                 Player.Walk(Player.Direction);
-            }
 
             if (args.Length == 1)
             {
@@ -1720,9 +1642,7 @@ namespace RazorEnhanced
             {
                 string direction = args[0].AsString();
                 if (Player.Direction != direction)
-                {
                     Player.Walk(direction);
-                }
             }
 
             return true;
@@ -1739,14 +1659,9 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 if (args[0].AsString().ToLower() == "right")
-                {
                     Player.UnEquipItemByLayer("RightHand", false);
-                }
-
                 if (args[0].AsString().ToLower() == "left")
-                {
                     Player.UnEquipItemByLayer("LeftHand", false);
-                }
             }
 
 
@@ -1833,9 +1748,7 @@ namespace RazorEnhanced
             foreach (Item item in items)
             {
                 if (item.ItemID == itemID && (!m_serialUseOnceIgnoreList.Contains(item.Serial)))
-                {
                     selectedItem = item;
-                }
             }
 
             if (selectedItem != null)
@@ -1923,13 +1836,9 @@ namespace RazorEnhanced
             if (food != null)
             {
                 if (target == Player.Serial)
-                {
                     Items.UseItem(food.Serial);
-                }
                 else
-                {
                     Items.Move(food, target, amount);
-                }
             }
             return true;
         }
@@ -2023,7 +1932,7 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 string alias = args[0].AsString();
-                Target target = new();
+                RazorEnhanced.Target target = new RazorEnhanced.Target();
                 int value = target.PromptTarget("Target Alias for "+alias);
                 UOScript.Interpreter.SetAlias(alias, (uint)value);
             }
@@ -2040,13 +1949,9 @@ namespace RazorEnhanced
             {
                 int value = (int)args[1].AsSerial();
                 if (value < 10240)
-                {
                     color = value;
-                }
                 else
-                {
                     mobile = value;
-                }
             }
             if (args.Length == 3)
             {
@@ -2131,8 +2036,8 @@ namespace RazorEnhanced
             }
             else 
             {
-                ASTNode node = new(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem._node, insertItem._node.LineNumber);
-                UOScript.Argument newArg = new(script: insertItem._script, node);
+                ASTNode node = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem._node, insertItem._node.LineNumber);
+                UOScript.Argument newArg = new UOScript.Argument(insertItem._script, node);
                 Console.WriteLine("Pushing {0} to list {1}", newArg.AsString(), listName);
                 UOScript.Interpreter.PushList(listName, newArg, (frontBack == "front"), false);
             }
@@ -2377,7 +2282,7 @@ namespace RazorEnhanced
                     m_lastMount = (int)UOScript.Interpreter.GetAlias("mount");
                     if (m_lastMount == 0)
                     {
-                        RazorEnhanced.Target target = new();
+                        RazorEnhanced.Target target = new RazorEnhanced.Target();
                         m_lastMount = target.PromptTarget("Select a new mount");
                     }
                 }
@@ -2669,7 +2574,7 @@ namespace RazorEnhanced
             {
                 string filename = args[0].AsString();
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, filename);
-                System.Media.SoundPlayer player = new(fullpath);
+                System.Media.SoundPlayer player = new System.Media.SoundPlayer(fullpath);
                 player.Play();
             }
             return true;
@@ -2721,7 +2626,7 @@ namespace RazorEnhanced
 
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool SetCursorPos(int x, int y);
+        static extern bool SetCursorPos(int x, int y);
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
@@ -2758,14 +2663,9 @@ namespace RazorEnhanced
             string leftRight = "left";
 
             if (args.Length > 2)
-            {
                 singleDouble = args[2].AsString().ToLower();
-            }
-
             if (args.Length > 3)
-            {
                 leftRight = args[3].AsString().ToLower();
-            }
 
             if (leftRight == "left")
             {
@@ -3305,7 +3205,7 @@ namespace RazorEnhanced
         {
             if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
 
-            RazorEnhanced.Mobiles.Filter filter = new();
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
             bool nearest = false;
             foreach (var arg in args)
             {
@@ -3379,7 +3279,7 @@ namespace RazorEnhanced
         {
             if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
 
-            RazorEnhanced.Mobiles.Filter filter = new();
+            RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
             bool nearest = false;
             foreach (var arg in args)
             {
@@ -3469,10 +3369,7 @@ namespace RazorEnhanced
                 var options = new Items.Filter();
                 options.Graphics.Add( graphic );
                 if (color != -1)
-                {
                     options.Hues.Add( color );
-                }
-
                 options.RangeMin = -1;
                 options.RangeMax = range;
                 options.OnGround = 1;
@@ -3508,10 +3405,7 @@ namespace RazorEnhanced
             var options = new Items.Filter();
             options.Graphics.Add(graphic);
             if (color != -1)
-            {
                 options.Hues.Add(color);
-            }
-
             options.RangeMin = -1;
             options.RangeMax = range;
             options.OnGround = 1;
@@ -3545,15 +3439,9 @@ namespace RazorEnhanced
             {
                 int graphic = 0;
                 if (args.Length == 2)
-                {
                     graphic = args[1].AsInt();
-                }
-
                 if (args.Length == 4)
-                {
                     graphic = args[3].AsInt();
-                }
-
                 var options = new Items.Filter();
                 options.Graphics.Add(graphic);
                 options.OnGround = 1;
@@ -3617,10 +3505,7 @@ namespace RazorEnhanced
             {
                 int graphic = 0;
                 if (args.Length == 4)
-                {
                     graphic = args[3].AsInt();
-                }
-
                 var options = new Items.Filter();
                 options.Graphics.Add(graphic);
                 options.OnGround = 1;
@@ -3719,10 +3604,7 @@ namespace RazorEnhanced
             }
 
             if (reverse)
-            {
                 range = 0 - range;
-            }
-
             RazorEnhanced.Target.TargetExecuteRelative((int)serial, range);
 
             return true;
@@ -3830,14 +3712,10 @@ namespace RazorEnhanced
                 if (token.StartsWith("0x"))
                 {
                     if (int.TryParse(token.Substring(2), System.Globalization.NumberStyles.HexNumber, UOScript.Interpreter.Culture, out val))
-                    {
                         return val;
-                    }
                 }
                 else if (int.TryParse(token, out val))
-                {
                     return val;
-                }
 
                 throw new RunTimeError(null, "Cannot convert argument to int");
             }
@@ -3849,14 +3727,10 @@ namespace RazorEnhanced
                 if (token.StartsWith("0x"))
                 {
                     if (uint.TryParse(token.Substring(2), System.Globalization.NumberStyles.HexNumber, UOScript.Interpreter.Culture, out val))
-                    {
                         return val;
-                    }
                 }
                 else if (uint.TryParse(token, out val))
-                {
                     return val;
-                }
 
                 throw new RunTimeError(null, "Cannot convert " + token + " argument to uint");
             }
@@ -3868,14 +3742,10 @@ namespace RazorEnhanced
                 if (token.StartsWith("0x"))
                 {
                     if (ushort.TryParse(token.Substring(2), System.Globalization.NumberStyles.HexNumber, UOScript.Interpreter.Culture, out val))
-                    {
                         return val;
-                    }
                 }
                 else if (ushort.TryParse(token, out val))
-                {
                     return val;
-                }
 
                 throw new RunTimeError(null, "Cannot convert argument to ushort");
             }
@@ -3885,9 +3755,7 @@ namespace RazorEnhanced
                 double val;
 
                 if (double.TryParse(token, out val))
-                {
                     return val;
-                }
 
                 throw new RunTimeError(null, "Cannot convert argument to double");
             }
@@ -3905,9 +3773,7 @@ namespace RazorEnhanced
                         break;
                 }
                 if (bool.TryParse(token, out val))
-                {
                     return val;
-                }
 
                 throw new RunTimeError(null, "Cannot convert argument to bool");
             }
@@ -3915,7 +3781,7 @@ namespace RazorEnhanced
 
         internal class Scope
         {
-            private readonly Dictionary<string, Argument> _namespace = new();
+            private Dictionary<string, Argument> _namespace = new Dictionary<string, Argument>();
 
             public readonly ASTNode StartNode;
             public readonly Scope Parent;
@@ -3931,9 +3797,7 @@ namespace RazorEnhanced
                 Argument arg;
 
                 if (_namespace.TryGetValue(name, out arg))
-                {
                     return arg;
-                }
 
                 return null;
             }
@@ -3966,21 +3830,17 @@ namespace RazorEnhanced
                 _node = node;
                 _script = script;
             }
-
-            // Treat the argument as an integer
-            public int AsInt()
+    
+    // Treat the argument as an integer
+    public int AsInt()
             {
                 if (_node.Lexeme == null)
-                {
                     throw new RunTimeError(_node, $"Cannot convert argument to int: {_node.LineNumber}");
-                }
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsInt();
-                }
 
                 if (UOScript.Interpreter.FindAlias(_node.Lexeme))
                 {
@@ -3989,10 +3849,7 @@ namespace RazorEnhanced
                 }
                 arg = CheckIsListElement(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsInt();
-                }
-
                 return TypeConverter.ToInt(_node.Lexeme);
             }
 
@@ -4000,16 +3857,12 @@ namespace RazorEnhanced
             public uint AsUInt()
             {
                 if (_node.Lexeme == null)
-                {
                     throw new RunTimeError(_node, $"Cannot convert argument to uint: {_node.LineNumber}");
-                }
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsUInt();
-                }
 
                 if (UOScript.Interpreter.FindAlias(_node.Lexeme))
                 {
@@ -4019,32 +3872,23 @@ namespace RazorEnhanced
 
                 arg = CheckIsListElement(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsUInt();
-                }
-
                 return TypeConverter.ToUInt(_node.Lexeme);
             }
 
             public ushort AsUShort()
             {
                 if (_node.Lexeme == null)
-                {
                     throw new RunTimeError(_node, $"Cannot convert argument to ushort {_node.LineNumber}");
-                }
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsUShort();
-                }
 
                 arg = CheckIsListElement(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsUShort();
-                }
 
                 return TypeConverter.ToUShort(_node.Lexeme);
             }
@@ -4054,16 +3898,12 @@ namespace RazorEnhanced
             public uint AsSerial()
             {
                 if (_node.Lexeme == null)
-                {
                     throw new RunTimeError(_node, $"Cannot convert argument to serial {_node.LineNumber}");
-                }
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsSerial();
-                }
 
                 // Resolve it as a global alias next
                 if (UOScript.Interpreter.FindAlias(_node.Lexeme))
@@ -4076,10 +3916,7 @@ namespace RazorEnhanced
                 {
                     arg = CheckIsListElement(_node.Lexeme);
                     if (arg != null)
-                    {
                         return arg.AsUInt();
-                    }
-
                     return AsUInt();
                 }
                 catch (RunTimeError)
@@ -4095,29 +3932,23 @@ namespace RazorEnhanced
             public string AsString()
             {
                 if (_node.Lexeme == null)
-                {
                     throw new RunTimeError(_node, $"Cannot convert argument to string {_node.LineNumber}");
-                }
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsString();
-                }
 
                 arg = CheckIsListElement(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsString();
-                }
 
                 return _node.Lexeme;
             }
 
             internal Argument CheckIsListElement(string token)
             {
-                Regex rx = new(@"(\S+)\[(\d+)\]");
+                Regex rx = new Regex(@"(\S+)\[(\d+)\]");
                 Match match = rx.Match(token);
                 if (match.Success)
                 {
@@ -4134,22 +3965,17 @@ namespace RazorEnhanced
             public bool AsBool()
             {
                 if (_node.Lexeme == null)
-                {
                     throw new RunTimeError(_node, $"Cannot convert argument to bool {_node.LineNumber}");
-                }
 
                 // Try to resolve it as a scoped variable first
                 var arg = _script.Lookup(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsBool();
-                }
 
                 arg = CheckIsListElement(_node.Lexeme);
                 if (arg != null)
-                {
                     return arg.AsBool();
-                }
+
 
                 return TypeConverter.ToBool(_node.Lexeme);
             }
@@ -4157,16 +3983,12 @@ namespace RazorEnhanced
             public override bool Equals(object obj)
             {
                 if (obj == null)
-                {
                     return false;
-                }
 
                 Argument arg = obj as Argument;
 
                 if (arg == null)
-                {
                     return false;
-                }
 
                 return Equals(arg);
             }
@@ -4174,28 +3996,15 @@ namespace RazorEnhanced
             public bool Equals(Argument other)
             {
                 if (other == null)
-                {
                     return false;
-                }
 
                 return (other._node.Lexeme == _node.Lexeme);
-            }
-
-            public override string ToString()
-            {
-                return _node.ToString()  + " " + _script.ToString();
-
-            }
-
-            public override int GetHashCode()
-            {
-                return base.GetHashCode();
             }
         }
 
         public class Script
         {
-            private bool Debug { get; set; }
+            bool Debug { get; set; }
 
             public Script()
             {
@@ -4215,9 +4024,7 @@ namespace RazorEnhanced
                 {
                     result = scope.GetVar(name);
                     if (result != null)
-                    {
                         return result;
-                    }
 
                     scope = scope.Parent;
                 }
@@ -4242,7 +4049,7 @@ namespace RazorEnhanced
 
             private Argument[] ConstructArguments(ref ASTNode node)
             {
-                List<Argument> args = new();
+                List<Argument> args = new List<Argument>();
 
                 node = node.Next();
 
@@ -4262,14 +4069,10 @@ namespace RazorEnhanced
                             return args.ToArray();
                     }
                     if (node.Lexeme == "//")
-                    {
                         comment = true;
-                    }
 
-                    if (!comment)
-                    {
+                    if (! comment)
                         args.Add(new Argument(this, node));
-                    }
 
                     node = node.Next();
                 }
@@ -4295,21 +4098,15 @@ namespace RazorEnhanced
             public bool ExecuteNext()
             {
                 if (_statement == null)
-                {
                     return false;
-                }
 
                 if (_statement.Type != ASTNodeType.STATEMENT)
-                {
                     throw new RunTimeError(_statement, "Invalid script");
-                }
 
                 var node = _statement.FirstChild();
 
                 if (node == null)
-                {
                     throw new RunTimeError(_statement, "Invalid statement");
-                }
 
                 int depth = 0;
 
@@ -4327,9 +4124,7 @@ namespace RazorEnhanced
 
                             // Evaluated true. Jump right into execution.
                             if (result)
-                            {
                                 break;
-                            }
 
                             // The expression evaluated false, so keep advancing until
                             // we hit an elseif, else, or endif statement that matches
@@ -4371,9 +4166,7 @@ namespace RazorEnhanced
                                 else if (node.Type == ASTNodeType.ENDIF)
                                 {
                                     if (depth == 0)
-                                    {
                                         break;
-                                    }
 
                                     depth--;
                                 }
@@ -4382,9 +4175,7 @@ namespace RazorEnhanced
                             }
 
                             if (_statement == null)
-                            {
                                 throw new RunTimeError(node, "If with no matching endif");
-                            }
 
                             break;
                         }
@@ -4404,9 +4195,7 @@ namespace RazorEnhanced
                             else if (node.Type == ASTNodeType.ENDIF)
                             {
                                 if (depth == 0)
-                                {
                                     break;
-                                }
 
                                 depth--;
                             }
@@ -4415,9 +4204,7 @@ namespace RazorEnhanced
                         }
 
                         if (_statement == null)
-                        {
                             throw new RunTimeError(node, "If with no matching endif");
-                        }
 
                         break;
                     case ASTNodeType.ENDIF:
@@ -4440,9 +4227,7 @@ namespace RazorEnhanced
                             else if (node.Type == ASTNodeType.ENDIF)
                             {
                                 if (depth == 0)
-                                {
                                     break;
-                                }
 
                                 depth--;
                             }
@@ -4451,9 +4236,7 @@ namespace RazorEnhanced
                         }
 
                         if (_statement == null)
-                        {
                             throw new RunTimeError(node, "If with no matching endif");
-                        }
 
                         break;
                     case ASTNodeType.WHILE:
@@ -4522,9 +4305,7 @@ namespace RazorEnhanced
                             else if (node.Type == ASTNodeType.WHILE)
                             {
                                 if (depth == 0)
-                                {
                                     break;
-                                }
 
                                 depth--;
                             }
@@ -4533,9 +4314,7 @@ namespace RazorEnhanced
                         }
                         Debug = curDebug;
                         if (_statement == null)
-                        {
                             throw new RunTimeError(node, "Unexpected endwhile");
-                        }
 
                         break;
                     case ASTNodeType.FOR:
@@ -4552,9 +4331,7 @@ namespace RazorEnhanced
                                 var max = node.FirstChild();
 
                                 if (max.Type != ASTNodeType.INTEGER)
-                                {
                                     throw new RunTimeError(max, "Invalid for loop syntax");
-                                }
 
                                 // Create a dummy argument that acts as our loop variable
                                 var iter = new ASTNode(ASTNodeType.INTEGER, "0", node, 0);
@@ -4636,8 +4413,8 @@ namespace RazorEnhanced
                             PS: feels like writing intentionally broken code, but it's 100% UOSteam behaviour
                             */
 
-                            // The iterator's name is the hash code of the for loop's ASTNode.
-                            var children = node.Children();
+        // The iterator's name is the hash code of the for loop's ASTNode.
+        var children = node.Children();
                             ASTNode startParam = children[0];
                             ASTNode endParam = null;
                             ASTNode listParam = null;
@@ -4645,8 +4422,7 @@ namespace RazorEnhanced
                             {
                                 listParam = children[1];
                             }
-                            else
-                            {
+                            else {
                                 endParam = children[1];
                                 listParam = children[2];
                             }
@@ -4669,7 +4445,7 @@ namespace RazorEnhanced
                                 int end = int.Parse(endParam.Lexeme) + 1; // +1 is important
                                 if (end > listSize)
                                 {
-                                    throw new RunTimeError(node, "Invalid for loop: END parameter must be smaller then the list size (" + listSize + "), " + (end - 1) + " given ");
+                                    throw new RunTimeError(node, "Invalid for loop: END parameter must be smaller then the list size ("+ listSize + "), " + (end-1) + " given ");
                                 }
                                 num_iter = end - start;
                             }
@@ -4692,13 +4468,9 @@ namespace RazorEnhanced
                                     var arg = UOScript.Interpreter.GetListValue(listName, 0);
 
                                     if (arg == null || 0 >= num_iter)
-                                    {
                                         _scope.ClearVar(varName);
-                                    }
                                     else
-                                    {
                                         _scope.SetVar(varName, arg);
-                                    }
                                 }
                                 else
                                 {
@@ -4802,10 +4574,7 @@ namespace RazorEnhanced
                         Debug = curDebug;
 
                         if (_statement == null)
-                        {
                             throw new RunTimeError(node, "Unexpected endfor");
-                        }
-
                         break;
                     case ASTNodeType.BREAK:
                         // Walk until the end of the loop
@@ -4869,9 +4638,7 @@ namespace RazorEnhanced
                                      node.Type == ASTNodeType.FOREACH)
                             {
                                 if (depth == 0)
-                                {
                                     break;
-                                }
 
                                 depth--;
                             }
@@ -4880,10 +4647,7 @@ namespace RazorEnhanced
                         }
                         Debug = curDebug;
                         if (_statement == null)
-                        {
                             throw new RunTimeError(node, "Unexpected continue");
-                        }
-
                         break;
                     case ASTNodeType.STOP:
                         _statement = null;
@@ -4895,14 +4659,12 @@ namespace RazorEnhanced
                     case ASTNodeType.FORCE:
                     case ASTNodeType.COMMAND:
                         if (ExecuteCommand(node))
-                        {
                             Advance();
-                        }
 
                         break;
                 }
 
-                return (_statement != null);
+                return (_statement != null) ? true : false;
             }
 
             public void Advance()
@@ -4912,9 +4674,7 @@ namespace RazorEnhanced
                 if (Debug)
                 {
                     if (_statement != null)
-                    {
-                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber + 1), 32);
-                    }
+                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber+1), 32);
                 }
             }
 
@@ -4957,10 +4717,7 @@ namespace RazorEnhanced
                     {
                         bool debugSetting = false;
                         if (args[0].AsString().ToLower() == "on")
-                        {
                             debugSetting = true;
-                        }
-
                         Debug = debugSetting;
                     }
                     cont = true;
@@ -4970,16 +4727,12 @@ namespace RazorEnhanced
                     var handler = UOScript.Interpreter.GetCommandHandler(node.Lexeme);
 
                     if (handler == null)
-                    {
                         throw new RunTimeError(node, "Unknown command");
-                    }
 
                     cont = handler(node.Lexeme, ConstructArguments(ref node), quiet, force);
 
                     if (node != null)
-                    {
                         throw new RunTimeError(node, "Command did not consume all available arguments");
-                    }
                 }
                 return cont;
             }
@@ -4987,16 +4740,12 @@ namespace RazorEnhanced
             private bool EvaluateExpression(ref ASTNode expr)
             {
                 if (expr == null || (expr.Type != ASTNodeType.UNARY_EXPRESSION && expr.Type != ASTNodeType.BINARY_EXPRESSION && expr.Type != ASTNodeType.LOGICAL_EXPRESSION))
-                {
                     throw new RunTimeError(expr, "No expression following control statement");
-                }
 
                 var node = expr.FirstChild();
 
                 if (node == null)
-                {
                     throw new RunTimeError(expr, "Empty expression following control statement");
-                }
 
                 switch (expr.Type)
                 {
@@ -5017,9 +4766,7 @@ namespace RazorEnhanced
                     node = node.Next();
 
                     if (node == null)
-                    {
                         throw new RunTimeError(node, "Invalid logical expression");
-                    }
 
                     bool rhs;
 
@@ -5114,20 +4861,14 @@ namespace RazorEnhanced
                 var handler = UOScript.Interpreter.GetExpressionHandler(node.Lexeme);
 
                 if (handler == null)
-                {
                     throw new RunTimeError(node, "Unknown expression");
-                }
 
                 var result = handler(node.Lexeme, ConstructArguments(ref node), quiet);
 
                 if (ifnot)
-                {
                     return CompareOperands(ASTNodeType.EQUAL, result, false);
-                }
                 else
-                {
                     return CompareOperands(ASTNodeType.EQUAL, result, true);
-                }
             }
 
             private bool EvaluateBinaryExpression(ref ASTNode node)
@@ -5186,30 +4927,29 @@ namespace RazorEnhanced
 
                 return val;
             }
-
         }
 
         public static class Interpreter
         {
             // Lists
-            private static readonly Dictionary<string, List<Argument>> _lists = new();
+            private static Dictionary<string, List<Argument>> _lists = new Dictionary<string, List<Argument>>();
 
             // Timers
-            private static readonly Dictionary<string, DateTime> _timers = new();
+            private static Dictionary<string, DateTime> _timers = new Dictionary<string, DateTime>();
 
             // Expressions
             public delegate IComparable ExpressionHandler(string expression, Argument[] args, bool quiet);
             public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
 
-            private static readonly Dictionary<string, ExpressionHandler> _exprHandlers = new();
+            private static Dictionary<string, ExpressionHandler> _exprHandlers = new Dictionary<string, ExpressionHandler>();
 
             public delegate bool CommandHandler(string command, Argument[] args, bool quiet, bool force);
 
-            private static readonly Dictionary<string, CommandHandler> _commandHandlers = new();
+            private static Dictionary<string, CommandHandler> _commandHandlers = new Dictionary<string, CommandHandler>();
 
             public delegate uint AliasHandler(string alias);
 
-            private static readonly Dictionary<string, AliasHandler> _aliasHandlers = new();
+            private static Dictionary<string, AliasHandler> _aliasHandlers = new Dictionary<string, AliasHandler>();
 
             private static Script _activeScript = null;
 
@@ -5273,9 +5013,7 @@ namespace RazorEnhanced
             {
                 // If a handler is explicitly registered, call that.
                 if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
-                {
                     return handler(alias);
-                }
 
                 // uint value;
                 if (Misc.CheckSharedValue(alias))
@@ -5289,9 +5027,7 @@ namespace RazorEnhanced
             {
                 // If a handler is explicitly registered, call that.
                 if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
-                {
                     return true;
-                }
 
                 return Misc.CheckSharedValue(alias);
             }
@@ -5308,9 +5044,7 @@ namespace RazorEnhanced
             public static void CreateList(string name)
             {
                 if (_lists.ContainsKey(name))
-                {
                     return;
-                }
 
                 _lists[name] = new List<Argument>();
             }
@@ -5323,9 +5057,7 @@ namespace RazorEnhanced
             public static void ClearList(string name)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     return;
-                }
 
                 _lists[name].Clear();
             }
@@ -5338,9 +5070,7 @@ namespace RazorEnhanced
             public static bool ListContains(string name, Argument arg)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     throw new RunTimeError(null, "List does not exist");
-                }
 
                 return _lists[name].Contains(arg);
             }
@@ -5348,9 +5078,7 @@ namespace RazorEnhanced
             public static int ListLength(string name)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     throw new RunTimeError(null, "List does not exist");
-                }
 
                 return _lists[name].Count;
             }
@@ -5358,31 +5086,21 @@ namespace RazorEnhanced
             public static void PushList(string name, Argument arg, bool front, bool unique)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     throw new RunTimeError(null, "List does not exist");
-                }
 
                 if (unique && _lists[name].Contains(arg))
-                {
                     return;
-                }
 
                 if (front)
-                {
                     _lists[name].Insert(0, arg);
-                }
                 else
-                {
                     _lists[name].Add(arg);
-                }
             }
 
             public static bool PopList(string name, Argument arg)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     throw new RunTimeError(null, "List does not exist");
-                }
 
                 return _lists[name].Remove(arg);
             }
@@ -5390,9 +5108,7 @@ namespace RazorEnhanced
             public static bool PopList(string name, bool front)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     throw new RunTimeError(null, "List does not exist");
-                }
 
                 var idx = front ? 0 : _lists[name].Count - 1;
                 _lists[name].RemoveAt(idx);
@@ -5403,16 +5119,12 @@ namespace RazorEnhanced
             public static Argument GetListValue(string name, int idx)
             {
                 if (!_lists.ContainsKey(name))
-                {
                     throw new RunTimeError(null, "List does not exist");
-                }
 
                 var list = _lists[name];
 
                 if (idx < list.Count)
-                {
                     return list[idx];
-                }
 
                 return null;
             }
@@ -5425,9 +5137,7 @@ namespace RazorEnhanced
             public static TimeSpan GetTimer(string name)
             {
                 if (!_timers.TryGetValue(name, out DateTime timestamp))
-                {
                     throw new RunTimeError(null, "Timer does not exist");
-                }
 
                 TimeSpan elapsed = DateTime.UtcNow - timestamp;
 
@@ -5455,9 +5165,7 @@ namespace RazorEnhanced
             {
 
                 if (_activeScript != null)
-                {
                     return false;
-                }
 
                 _activeScript = script;
                 _executionState = ExecutionState.RUNNING;
@@ -5476,20 +5184,14 @@ namespace RazorEnhanced
             public static bool ExecuteScript()
             {
                 if (_activeScript == null)
-                {
                     return false;
-                }
 
                 if (_executionState == ExecutionState.PAUSED)
                 {
                     if (_pauseTimeout < DateTime.UtcNow.Ticks)
-                    {
                         _executionState = ExecutionState.RUNNING;
-                    }
                     else
-                    {
                         return true;
-                    }
                 }
                 else if (_executionState == ExecutionState.TIMING_OUT)
                 {
@@ -5531,9 +5233,7 @@ namespace RazorEnhanced
             {
                 // Already paused or timing out
                 if (_executionState != ExecutionState.RUNNING)
-                {
                     return;
-                }
 
                 _pauseTimeout = DateTime.UtcNow.Ticks + (duration * 10000);
                 _executionState = ExecutionState.PAUSED;
@@ -5543,9 +5243,7 @@ namespace RazorEnhanced
             public static void Unpause()
             {
                 if (_executionState != ExecutionState.PAUSED)
-                {
                     return;
-                }
 
                 _pauseTimeout = 0;
                 _executionState = ExecutionState.RUNNING;
@@ -5557,9 +5255,7 @@ namespace RazorEnhanced
             {
                 // Don't change an existing timeout
                 if (_executionState != ExecutionState.RUNNING)
-                {
                     return;
-                }
 
                 _pauseTimeout = DateTime.UtcNow.Ticks + (duration * 10000);
                 _executionState = ExecutionState.TIMING_OUT;
@@ -5571,9 +5267,7 @@ namespace RazorEnhanced
             public static void ClearTimeout()
             {
                 if (_executionState != ExecutionState.TIMING_OUT)
-                {
                     return;
-                }
 
                 _pauseTimeout = 0;
                 _executionState = ExecutionState.RUNNING;
@@ -5668,14 +5362,9 @@ namespace RazorEnhanced
         {
             Type = type;
             if (lexeme != null)
-            {
                 Lexeme = lexeme;
-            }
             else
-            {
                 Lexeme = "";
-            }
-
             Parent = parent;
             LineNumber = lineNumber;
         }
@@ -5685,9 +5374,7 @@ namespace RazorEnhanced
             var node = new ASTNode(type, lexeme, this, lineNumber);
 
             if (_children == null)
-            {
                 _children = new LinkedList<ASTNode>();
-            }
 
             node._node = _children.AddLast(node);
 
@@ -5697,9 +5384,7 @@ namespace RazorEnhanced
         public ASTNode FirstChild()
         {
             if (_children == null || _children.First == null)
-            {
                 return null;
-            }
 
             return _children.First.Value;
         }
@@ -5707,9 +5392,7 @@ namespace RazorEnhanced
         public ASTNode[] Children()
         {
             if (_children == null || _children.First == null)
-            {
                 return null;
-            }
 
             return _children.ToArray();
         }
@@ -5717,9 +5400,7 @@ namespace RazorEnhanced
         public ASTNode Next()
         {
             if (_node == null || _node.Next == null)
-            {
                 return null;
-            }
 
             return _node.Next.Value;
         }
@@ -5727,18 +5408,10 @@ namespace RazorEnhanced
         public ASTNode Prev()
         {
             if (_node == null || _node.Previous == null)
-            {
                 return null;
-            }
 
             return _node.Previous.Value;
         }
-
-        public override string ToString()
-        {
-            return String.Format("ASTNode line: {0} lexme: {1}", LineNumber, Lexeme);
-        }
-
     }
 
 
@@ -5756,9 +5429,7 @@ namespace RazorEnhanced
         public static T[] Slice<T>(this T[] src, int start, int end)
         {
             if (end < start)
-            {
                 return new T[0];
-            }
 
             int len = end - start + 1;
 
@@ -5774,7 +5445,7 @@ namespace RazorEnhanced
         public static ASTNode Lex(string[] lines)
         {
             _lines = lines;
-            ASTNode node = new(ASTNodeType.SCRIPT, null, null, 0);
+            ASTNode node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0);
 
             try
             {
@@ -5845,23 +5516,19 @@ namespace RazorEnhanced
             */
         }
 
-        private static readonly TextParser _tfp = new("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
+        private static TextParser _tfp = new TextParser("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
         private static void ParseLine(ASTNode node, string line)
         {
             line = line.Trim();
 
             if (line.StartsWith("//") || line.StartsWith("#"))
-            {
                 return;
-            }
 
             // Split the line by spaces (unless the space is in quotes)
             var lexemes = _tfp.GetTokens(line, false);
 
             if (lexemes.Length == 0)
-            {
                 return;
-            }
 
             ParseStatement(node, lexemes);
         }
@@ -5869,21 +5536,13 @@ namespace RazorEnhanced
         private static void ParseValue(ASTNode node, string lexeme, ASTNodeType typeDefault)
         {
             if (lexeme.StartsWith("0x"))
-            {
                 node.Push(ASTNodeType.SERIAL, lexeme, _curLine);
-            }
             else if (int.TryParse(lexeme, out _))
-            {
                 node.Push(ASTNodeType.INTEGER, lexeme, _curLine);
-            }
             else if (double.TryParse(lexeme, out _))
-            {
                 node.Push(ASTNodeType.DOUBLE, lexeme, _curLine);
-            }
             else
-            {
                 node.Push(typeDefault, lexeme, _curLine);
-            }
         }
 
         private static void ParseCommand(ASTNode node, string lexeme)
@@ -5930,13 +5589,9 @@ namespace RazorEnhanced
             }
 
             if (!modifier)
-            {
                 ParseValue(node, lexeme, ASTNodeType.OPERAND);
-            }
             else
-            {
                 node.Push(ASTNodeType.OPERAND, lexeme, _curLine);
-            }
         }
 
         private static void ParseOperator(ASTNode node, string lexeme)
@@ -5983,9 +5638,7 @@ namespace RazorEnhanced
                 case "if":
                     {
                         if (lexemes.Length <= 1)
-                        {
                             throw new SyntaxError(node, "Script compilation error");
-                        }
 
                         var t = statement.Push(ASTNodeType.IF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -5994,9 +5647,7 @@ namespace RazorEnhanced
                 case "elseif":
                     {
                         if (lexemes.Length <= 1)
-                        {
                             throw new SyntaxError(node, "Script compilation error");
-                        }
 
                         var t = statement.Push(ASTNodeType.ELSEIF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -6004,26 +5655,20 @@ namespace RazorEnhanced
                     }
                 case "else":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.ELSE, null, _curLine);
                     break;
                 case "endif":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.ENDIF, null, _curLine);
                     break;
                 case "while":
                     {
                         if (lexemes.Length <= 1)
-                        {
                             throw new SyntaxError(node, "Script compilation error");
-                        }
 
                         var t = statement.Push(ASTNodeType.WHILE, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -6031,60 +5676,46 @@ namespace RazorEnhanced
                     }
                 case "endwhile":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.ENDWHILE, null, _curLine);
                     break;
                 case "for":
                     {
                         if (lexemes.Length <= 1)
-                        {
                             throw new SyntaxError(node, "Script compilation error");
-                        }
 
                         ParseForLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "endfor":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.ENDFOR, null, _curLine);
                     break;
                 case "break":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.BREAK, null, _curLine);
                     break;
                 case "continue":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.CONTINUE, null, _curLine);
                     break;
                 case "stop":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.STOP, null, _curLine);
                     break;
                 case "replay":
                 case "loop":
                     if (lexemes.Length > 1)
-                    {
                         throw new SyntaxError(node, "Script compilation error");
-                    }
 
                     statement.Push(ASTNodeType.REPLAY, null, _curLine);
                     break;
@@ -6174,23 +5805,15 @@ namespace RazorEnhanced
 
             // If no operators appeared, it's a unary expression
             if (!unary && !binary)
-            {
                 unary = true;
-            }
 
             if (unary && binary)
-            {
                 throw new SyntaxError(node, String.Format("Invalid expression at line {0}", node.LineNumber));
-            }
 
             if (unary)
-            {
                 ParseUnaryExpression(node, lexemes);
-            }
             else
-            {
                 ParseBinaryExpression(node, lexemes);
-            }
         }
 
         private static void ParseUnaryExpression(ASTNode node, string[] lexemes)
@@ -6226,9 +5849,7 @@ namespace RazorEnhanced
             for (; i < lexemes.Length; i++)
             {
                 if (IsOperator(lexemes[i]))
-                {
                     break;
-                }
 
                 ParseValue(expr, lexemes[i], ASTNodeType.STRING);
             }
@@ -6240,9 +5861,7 @@ namespace RazorEnhanced
             for (; i < lexemes.Length; i++)
             {
                 if (IsOperator(lexemes[i]))
-                {
                     break;
-                }
 
                 ParseValue(expr, lexemes[i], ASTNodeType.STRING);
             }
@@ -6380,9 +5999,7 @@ namespace RazorEnhanced
             bool result = false;
 
             for (int i = 0; i < _delimiters.Length && !result; i++)
-            {
                 result = _string[_pos] == _delimiters[i];
-            }
 
             return result;
         }
@@ -6390,9 +6007,7 @@ namespace RazorEnhanced
         private void SkipToData()
         {
             while (_pos < _eol && IsDelimiter())
-            {
                 _pos++;
-            }
         }
 
         private bool IsComment()
@@ -6421,14 +6036,12 @@ namespace RazorEnhanced
 
         private string ObtainData()
         {
-            StringBuilder result = new();
+            StringBuilder result = new StringBuilder();
 
             while (_pos < _Size && _string[_pos] != '\n')
             {
                 if (IsDelimiter())
-                {
                     break;
-                }
 
                 if (IsComment())
                 {
@@ -6438,9 +6051,7 @@ namespace RazorEnhanced
                 }
 
                 if (_string[_pos] != '\r' && (!_trim || _string[_pos] != ' ' && _string[_pos] != '\t'))
-                {
                     result.Append(_string[_pos]);
-                }
 
                 _pos++;
             }
@@ -6484,9 +6095,7 @@ namespace RazorEnhanced
                         _pos = pos;
 
                         if (_pos < _eol && _string[_pos] == endQuote)
-                        {
                             _pos++;
-                        }
                     }
 
                     break;
@@ -6494,9 +6103,7 @@ namespace RazorEnhanced
             }
 
             if (!exit)
-            {
                 result = ObtainData();
-            }
 
             return result;
         }
@@ -6504,7 +6111,7 @@ namespace RazorEnhanced
         internal string[] GetTokens(string str, bool trim = true)
         {
             _trim = trim;
-            List<string> result = new();
+            List<string> result = new List<string>();
 
             _pos = 0;
             _string = str;
@@ -6516,16 +6123,12 @@ namespace RazorEnhanced
                 SkipToData();
 
                 if (IsComment())
-                {
                     break;
-                }
 
                 string buf = ObtainQuotedData();
 
                 if (buf.Length > 0)
-                {
                     result.Add(buf);
-                }
             }
 
             return result.ToArray();

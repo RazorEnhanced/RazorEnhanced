@@ -24,21 +24,16 @@ namespace Assistant
 			: this(c.Count)
 		{
 			foreach (IComparable o in c)
-            {
-                m_List.Add(o);
-            }
-
-            m_Size = c.Count;
+				m_List.Add(o);
+			m_Size = c.Count;
 			Heapify();
 		}
 
 		internal void Heapify()
 		{
 			for (int i = m_Size / 2; i > 0; i--)
-            {
-                PercolateDown(i);
-            }
-        }
+				PercolateDown(i);
+		}
 
 		private void PercolateDown(int hole)
 		{
@@ -49,26 +44,20 @@ namespace Assistant
 			{
 				child = hole * 2;
 				if (child != m_Size && (m_List[child + 1]).CompareTo(m_List[child]) < 0)
-                {
-                    child++;
-                }
+					child++;
 
-                if (tmp.CompareTo(m_List[child]) >= 0)
-                {
-                    m_List[hole] = m_List[child];
-                }
-                else
-                {
-                    break;
-                }
-            }
+				if (tmp.CompareTo(m_List[child]) >= 0)
+					m_List[hole] = m_List[child];
+				else
+					break;
+			}
 
 			m_List[hole] = tmp;
 		}
 
 		internal IComparable Peek()
 		{
-			return m_List[1];
+			return m_List[1] as IComparable;
 		}
 
 		internal IComparable Pop()
@@ -99,11 +88,8 @@ namespace Assistant
 		{
 			int capacity = m_List.Count / 2;
 			if (capacity < 2)
-            {
-                capacity = 2;
-            }
-
-            m_Size = 0;
+				capacity = 2;
+			m_Size = 0;
 			m_List = new List<IComparable>(capacity) {null};
 		}
 
@@ -114,36 +100,27 @@ namespace Assistant
 
 			// Grow the list if needed
 			while (m_List.Count <= m_Size)
-            {
-                m_List.Add(null);
-            }
+				m_List.Add(null);
 
-            for (; hole > 1 && o.CompareTo(m_List[hole / 2]) < 0; hole /= 2)
-            {
-                m_List[hole] = m_List[hole / 2];
-            }
-
-            m_List[hole] = o;
+			for (; hole > 1 && o.CompareTo(m_List[hole / 2]) < 0; hole /= 2)
+				m_List[hole] = m_List[hole / 2];
+			m_List[hole] = o;
 		}
 
 		internal void AddMultiple(ICollection<IComparable> col)
 		{
 			if (col == null || col.Count <= 0)
-            {
-                return;
-            }
+				return;
 
-            foreach (IComparable o in col)
+			foreach (IComparable o in col)
 			{
 				int hole = ++m_Size;
 
 				// Grow the list as needed
 				while (m_List.Count <= m_Size)
-                {
-                    m_List.Add(null);
-                }
+					m_List.Add(null);
 
-                m_List[hole] = o;
+				m_List[hole] = o;
 			}
 
 			Heapify();
@@ -157,11 +134,8 @@ namespace Assistant
 		{
 			List<IComparable> copy = new List<IComparable>(m_Size);
 			for (int i = 1; i <= m_Size; i++)
-            {
-                copy.Add(m_List[i]);
-            }
-
-            return copy;
+				copy.Add(m_List[i]);
+			return copy;
 		}
 	}
 
@@ -216,11 +190,9 @@ namespace Assistant
 		internal void Stop()
 		{
 			if (!m_Running)
-            {
-                return;
-            }
+				return;
 
-            m_Running = false;
+			m_Running = false;
 			m_Heap.Remove(this);
 			//ChangedNextTick();
 		}
@@ -228,14 +200,10 @@ namespace Assistant
 		public int CompareTo(object obj)
 		{
 			if (obj is Timer)
-            {
-                return this.TimeUntilTick.CompareTo(((Timer)obj).TimeUntilTick);
-            }
-            else
-            {
-                return -1;
-            }
-        }
+				return this.TimeUntilTick.CompareTo(((Timer)obj).TimeUntilTick);
+			else
+				return -1;
+		}
 
 		internal TimeSpan TimeUntilTick
 		{
@@ -267,11 +235,8 @@ namespace Assistant
 				if (m_SystemTimer != value)
 				{
 					if (m_SystemTimer != null)
-                    {
-                        m_SystemTimer.Stop();
-                    }
-
-                    m_SystemTimer = value;
+						m_SystemTimer.Stop();
+					m_SystemTimer = value;
 					ChangedNextTick();
 				}
 			}
@@ -285,11 +250,9 @@ namespace Assistant
 		private static void ChangedNextTick(bool allowImmediate)
 		{
 			if (m_SystemTimer == null)
-            {
-                return;
-            }
+				return;
 
-            m_SystemTimer.Stop();
+			m_SystemTimer.Stop();
 
 			if (!m_Heap.IsEmpty)
 			{
@@ -301,11 +264,9 @@ namespace Assistant
 				else
 				{
 					if (interval <= 0)
-                    {
-                        interval = 1;
-                    }
+						interval = 1;
 
-                    m_SystemTimer.Interval = interval;
+					m_SystemTimer.Interval = interval;
 					m_SystemTimer.Start();
 				}
 			}
@@ -319,11 +280,9 @@ namespace Assistant
 			while (!m_Heap.IsEmpty && ((Timer)m_Heap.Peek()).TimeUntilTick < TimeSpan.Zero)
 			{
 				if (breakCount-- <= 0)
-                {
-                    break;
-                }
+					break;
 
-                Timer t = (Timer)m_Heap.Pop();
+				Timer t = (Timer)m_Heap.Pop();
 
 				if (t != null && t.Running)
 				{

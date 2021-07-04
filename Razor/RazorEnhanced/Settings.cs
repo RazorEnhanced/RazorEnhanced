@@ -123,8 +123,7 @@ namespace RazorEnhanced
 							temp = Newtonsoft.Json.JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(profileFilename + "." + tableName));
 						}
 						if (temp.Columns.Count == 0)
-                        {
-                            if (initDict.ContainsKey(tableName))
+							if (initDict.ContainsKey(tableName))
 							{
 								temp = initDict[tableName](tableName);
 							}
@@ -133,9 +132,7 @@ namespace RazorEnhanced
 								// Something BAD
 								throw new Exception("Table name to init function mismatched");
 							}
-                        }
-
-                        temp.TableName = tableName;
+						temp.TableName = tableName;
 						m_Dataset.Tables.Add(temp);
 					}
 					else
@@ -440,11 +437,8 @@ namespace RazorEnhanced
 		public static string Protect(string text)
 		{
 			if (string.IsNullOrEmpty(text))
-            {
-                return "";
-            }
-
-            try
+				return "";
+			try
 			{
 				return StringCipher.Encrypt(text, key);
 			}
@@ -457,11 +451,8 @@ namespace RazorEnhanced
 		public static string Unprotect(string text)
 		{
 			if (string.IsNullOrEmpty(text))
-            {
-                return "";
-            }
-
-            try
+				return "";
+			try
 			{
 				return StringCipher.Decrypt(text, key);
 			}
@@ -2570,7 +2561,7 @@ namespace RazorEnhanced
 					false, false, false, @"{power} [{spell}]", 0, false, false, false, false, string.Empty, false,
 
                     // Parametri primo avvio tab Options -> Hues
-                    0, 0x03B1, 0x0025, 0x0005, 0x03B1, 0x0480, 0x0025, 0x03B1,
+                    (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
 
                     // Parametri primo avvio tab HotKey
                     true, Keys.None,
@@ -2622,11 +2613,9 @@ namespace RazorEnhanced
 				//RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
 
 			if (m_Dataset != null)
-            {
-                m_Dataset.Clear();
-            }
+				m_Dataset.Clear();
 
-            m_profileName = profileName;
+			m_profileName = profileName;
 			m_Dataset = new DataSet();
 
 			if (! LoadExistingData(profileName, try_recover))
@@ -2737,10 +2726,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
                     if (row.RowState != DataRowState.Deleted && (string)row["List"] == list)
-                    {
-                        row.Delete();
-                    }
-                }
+						    row.Delete();
+				}
 			}
 
 			internal static void ListDelete(string description)
@@ -2806,11 +2793,9 @@ namespace RazorEnhanced
                 Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
 
                 if (RazorEnhanced.AutoLoot.LockTable)
-                {
-                    return lootList;
-                }
+					return lootList;
 
-                if (ListExists(list))
+				if (ListExists(list))
 				{
 					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 					{
@@ -2929,10 +2914,8 @@ namespace RazorEnhanced
 					if (row.RowState != DataRowState.Deleted)
 					{
 						if ((string)row["List"] == list)
-                        {
-                            row.Delete();
-                        }
-                    }
+							row.Delete();
+					}
 				}
 			}
 
@@ -2998,19 +2981,15 @@ namespace RazorEnhanced
 				List<RazorEnhanced.Scavenger.ScavengerItem> items = new List<RazorEnhanced.Scavenger.ScavengerItem>();
 
 				if (RazorEnhanced.Scavenger.LockTable)
-                {
-                    return items;
-                }
+					return items;
 
-                if (ListExists(list))
+				if (ListExists(list))
 				{
 					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
 					{
 						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
-                        {
-                            items.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
-                        }
-                    }
+							items.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
+					}
 				}
 
 				return items;
@@ -3098,10 +3077,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[i];
 					if ((string)row["List"] == list)
-                    {
-                        row.Delete();
-                    }
-                }
+						row.Delete();
+				}
 			}
 
 			internal static void ListDelete(string description)
@@ -3311,10 +3288,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["SELL_ITEMS"].Rows[i];
 					if ((string)row["List"] == list)
-                    {
-                        row.Delete();
-                    }
-                }
+						row.Delete();
+				}
 			}
 
 			internal static List<RazorEnhanced.SellAgent.SellAgentItem> ItemsRead(string list)
@@ -3401,10 +3376,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["BUY_ITEMS"].Rows[i];
 					if ((string)row["List"] == list)
-                    {
-                        row.Delete();
-                    }
-                }
+						row.Delete();
+				}
 			}
 
 			internal static void ListDelete(string description)
@@ -3530,11 +3503,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["DRESS_ITEMS"].Rows[i];
 					if ((string)row["List"] == list)
-                    {
-                        row.Delete();
-                    }
-
-                    m_Dataset.Tables["DRESS_ITEMS"].AcceptChanges();
+						row.Delete();
+					m_Dataset.Tables["DRESS_ITEMS"].AcceptChanges();
 				}
 			}
 
@@ -3610,10 +3580,8 @@ namespace RazorEnhanced
 					foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
 					{
 						if ((string)row["List"] == list)
-                        {
-                            row.Delete();
-                        }
-                    }
+							row.Delete();
+					}
 				}
 				Save();
 			}
@@ -4006,11 +3974,9 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
 					if ((string) row["Description"] != listname)
-                    {
-                        continue;
-                    }
+						continue;
 
-                    includeparty = (bool)row["IncludeParty"];
+					includeparty = (bool)row["IncludeParty"];
 					preventattack = (bool)row["PreventAttack"];
 					autoacceptparty = (bool)row["AutoacceptParty"];
 					slfriend = (bool)row["SLFrinedCheckBox"];
@@ -4086,10 +4052,8 @@ namespace RazorEnhanced
 				{
 					DataRow row = m_Dataset.Tables["RESTOCK_ITEMS"].Rows[i];
 					if ((string)row["List"] == list)
-                    {
-                        row.Delete();
-                    }
-                }
+						row.Delete();
+				}
 			}
 
 			internal static void ListDelete(string description)
@@ -4318,11 +4282,8 @@ namespace RazorEnhanced
 				target.HotKey = k;
 				target.HotKeyPass = pass;
 				if (TargetExist(targetid))
-                {
-                    TargetDelete(targetid);
-                }
-
-                DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
+					TargetDelete(targetid);
+				DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
 				row["Item"] = target;
 				m_Dataset.Tables["TARGETS"].Rows.Add(row);
 				Save();
@@ -4431,11 +4392,9 @@ namespace RazorEnhanced
 				//RazorEnhanced.ToolBar.ToolBarItem item = new RazorEnhanced.ToolBar.ToolBarItem(name, convgraphics, convcolor, warning, convwarninglimit);
 
 				if (index >= m_Dataset.Tables["TOOLBAR_ITEMS"].Rows.Count || index == -1) //out of range
-                {
-                    return;
-                }
+					return;
 
-                DataRow row = m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index];
+				DataRow row = m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index];
 				row["Name"] = name;
 				row["Graphics"] = convgraphics;
 				row["Color"] = convcolor;
@@ -4735,10 +4694,8 @@ namespace RazorEnhanced
 				{
 					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.HotKey == key)
-                    {
-                        return true;
-                    }
-                }
+						return true;
+				}
 
 
 				if (m_Dataset.Tables["SCRIPTING"].Rows.Cast<DataRow>().Any(row => (Keys)Convert.ToInt32(row["HotKey"]) == key))
@@ -4752,11 +4709,9 @@ namespace RazorEnhanced
 				}
 
 				if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
-                {
-                    return true;
-                }
+					return true;
 
-                return false;
+				return false;
 			}
 
 			internal static void FindKeyGui(string name, out Keys outkey, out bool outpasskey)
@@ -4777,8 +4732,7 @@ namespace RazorEnhanced
 				}
 
 				if (!found)
-                {
-                    foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
 						TargetGUI target = (TargetGUI)row["Item"];
 						if (target.Name == name)
@@ -4789,11 +4743,9 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-                }
 
-                if (!found)
-                {
-                    foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 					{
 						if ((string)row["Filename"] == name)
 						{
@@ -4803,11 +4755,9 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-                }
 
-                if (!found)
-                {
-                    foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 					{
 						if ((string)row["Description"] == name)
 						{
@@ -4817,9 +4767,8 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-                }
 
-                outkey = key;
+				outkey = key;
 				outpasskey = passkey;
 			}
 
@@ -4835,10 +4784,8 @@ namespace RazorEnhanced
 				{
 					TargetGUI theTarget = (TargetGUI)row["Item"];
 					if (theTarget.HotKey == key)
-                    {
-                        return theTarget.Name;
-                    }
-                }
+						return theTarget.Name;
+				}
 				return "";
 			}
 
@@ -4886,8 +4833,7 @@ namespace RazorEnhanced
 				}
 
 				if (!found)
-                {
-                    foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+					foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 					{
 						TargetGUI theTarget = (TargetGUI)row["Item"];
 						if (theTarget.HotKey == key)
@@ -4898,11 +4844,9 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-                }
 
-                if (!found)
-                {
-                    foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 					{
 						if ((Keys)Convert.ToInt32(row["HotKey"]) == key)
 						{
@@ -4912,11 +4856,9 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-                }
 
-                if (!found)
-                {
-                    foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 					{
 						if ((Keys)Convert.ToInt32(row["HotKey"]) == key)
 						{
@@ -4926,9 +4868,8 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-                }
 
-                outgroup = group;
+				outgroup = group;
 				outpass = pass;
 			}
 		}
@@ -5047,35 +4988,23 @@ namespace RazorEnhanced
 			internal static void SaveExitData()
 			{
 				if (Assistant.Engine.GridX > 0)
-                {
-                    WriteInt("PosXGrid", Assistant.Engine.GridX);
-                }
+					WriteInt("PosXGrid", Assistant.Engine.GridX);
 
-                if (Assistant.Engine.GridY > 0)
-                {
-                    WriteInt("PosYGrid", Assistant.Engine.GridY);
-                }
+				if (Assistant.Engine.GridY > 0)
+					WriteInt("PosYGrid", Assistant.Engine.GridY);
 
-                if (Assistant.Engine.ToolBarX > 0)
-                {
-                    WriteInt("PosXToolBar", Assistant.Engine.ToolBarX);
-                }
+				if (Assistant.Engine.ToolBarX > 0)
+					WriteInt("PosXToolBar", Assistant.Engine.ToolBarX);
 
-                if (Assistant.Engine.ToolBarY > 0)
-                {
-                    WriteInt("PosYToolBar", Assistant.Engine.ToolBarY);
-                }
+				if (Assistant.Engine.ToolBarY > 0)
+					WriteInt("PosYToolBar", Assistant.Engine.ToolBarY);
 
-                if (Assistant.Engine.MainWindowX > 0)
-                {
-                    WriteInt("WindowX", Assistant.Engine.MainWindowX);
-                }
+				if (Assistant.Engine.MainWindowX > 0)
+					WriteInt("WindowX", Assistant.Engine.MainWindowX);
 
-                if (Assistant.Engine.MainWindowY > 0)
-                {
-                    WriteInt("WindowY", Assistant.Engine.MainWindowY);
-                }
-            }
+				if (Assistant.Engine.MainWindowY > 0)
+					WriteInt("WindowY", Assistant.Engine.MainWindowY);
+			}
 		}
 
 		// ------------- GENERAL SETTINGS END -----------------
@@ -5083,17 +5012,13 @@ namespace RazorEnhanced
 		internal static void Save(bool force=false)
 		{
 			if (!force)
-            {
-                if (Engine.MainWindow != null)
+				if (Engine.MainWindow != null)
 				{
 					if (Assistant.Engine.MainWindow.Initializing)
-                    {
-                        return;
-                    }
-                }
-            }
+						return;
+				}
 
-            try
+			try
 			{
 				string dir = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_profileName);
 				System.IO.Directory.CreateDirectory(dir);

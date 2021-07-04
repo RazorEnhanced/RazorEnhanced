@@ -78,10 +78,8 @@ namespace Assistant
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
 			}
 			else
-            {
-                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
-            }
-        }
+				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
+		}
 
 		private void BuyAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
@@ -89,21 +87,15 @@ namespace Assistant
 			if (buyItem != null && buyItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Buy Agent item added: " + buyItem.ToString(), false);
-                }
-
-                BuyAgent.AddLog("Buy Agent item added: " + buyItem.ToString());
+					Misc.SendMessage("Buy Agent item added: " + buyItem.ToString(), false);
+				BuyAgent.AddLog("Buy Agent item added: " + buyItem.ToString());
 				this.Invoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Invalid target", false);
-                }
-
-                BuyAgent.AddLog("Invalid target");
+					Misc.SendMessage("Invalid target", false);
+				BuyAgent.AddLog("Invalid target");
 			}
 		}
 
@@ -131,11 +123,8 @@ namespace Assistant
 				buyCloneButton.Enabled = false;
 				BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
-                }
-
-                BuyAgent.EnableBuyFilter();
+					Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
+				BuyAgent.EnableBuyFilter();
 			}
 			else
 			{
@@ -145,10 +134,8 @@ namespace Assistant
 				buyCloneButton.Enabled = true;
 				BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
-                }
-            }
+					Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
+			}
 		}
 
 		private void vendorbuydataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)

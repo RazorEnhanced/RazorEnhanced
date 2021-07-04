@@ -27,33 +27,24 @@ namespace Assistant
 		private static void OnTick(object state)
 		{
 			if (m_Table.Count <= 0)
-            {
-                return;
-            }
+				return;
 
-            ConcurrentBag<KeyValuePair<string, MsgInfo>> list = new ConcurrentBag<KeyValuePair<string, MsgInfo>>(m_Table);
+			ConcurrentBag<KeyValuePair<string, MsgInfo>> list = new ConcurrentBag<KeyValuePair<string, MsgInfo>>(m_Table);
 			foreach (KeyValuePair<string, MsgInfo> pair in list)
 			{
 				string txt = pair.Key.ToString();
-				MsgInfo msg = pair.Value;
+				MsgInfo msg = (MsgInfo)pair.Value;
 
 				if (msg.NextSend > DateTime.Now)
-                {
-                    continue;
-                }
+					continue;
 
-                if (msg.Count > 0)
+				if (msg.Count > 0)
 				{
 					if (msg.Lang == "A")
-                    {
-                        Assistant.Client.Instance.SendToClientWait(new AsciiMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
-                    }
-                    else
-                    {
-                        Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Lang, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
-                    }
-
-                    msg.Count = 0;
+				 		Assistant.Client.Instance.SendToClientWait(new AsciiMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
+					else
+				 		Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Lang, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
+					msg.Count = 0;
 					msg.NextSend = DateTime.Now + msg.Delay;
 				}
 				else
@@ -71,17 +62,15 @@ namespace Assistant
 		{
 			MsgInfo m = null;
 			if (m_Table.ContainsKey(text))
-            {
-                m = m_Table[text];
-            }
+				m = m_Table[text] as MsgInfo;
 
-            if (m == null)
+			if (m == null)
 			{
 				m_Table[text] = m = new MsgInfo(ser, body, type, hue, font, lang, name);
 
 				m.Count = 0;
 
-				m.Delay = TimeSpan.FromSeconds((text.Length / 50 + 1) * 3.5);
+				m.Delay = TimeSpan.FromSeconds((((int)(text.Length / 50)) + 1) * 3.5);
 
 				m.NextSend = DateTime.Now + m.Delay;
 

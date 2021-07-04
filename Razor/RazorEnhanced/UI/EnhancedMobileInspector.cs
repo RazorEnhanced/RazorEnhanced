@@ -29,10 +29,8 @@ namespace RazorEnhanced.UI
 
 				attrib = Player.SumAttribute(prop);
 				if (attrib > 0)
-                {
-                    AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": "+ attrib);
-                }
-            }
+					AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": "+ attrib);
+			}
 		}
 
 		private void UpdateStats()
@@ -45,14 +43,14 @@ namespace RazorEnhanced.UI
 
 					// Details
 					lHits.Invoke(new Action(() => lHits.Text = m_mobile.Hits + " / " + m_mobile.HitsMax));
-					pHits.Invoke(new Action(() => pHits.Value = m_mobile.Hits * 100 / (m_mobile.HitsMax == 0 ? 1 : m_mobile.HitsMax)));
+					pHits.Invoke(new Action(() => pHits.Value = (int)(m_mobile.Hits * 100 / (m_mobile.HitsMax == 0 ? (ushort)1 : m_mobile.HitsMax))));
 
 					lMana.Invoke(new Action(() => lMana.Text = m_mobile.Mana + " / " + m_mobile.ManaMax));
-					pMana.Invoke(new Action(() => pMana.Value = m_mobile.Mana * 100 / (m_mobile.ManaMax == 0 ? 1 : m_mobile.ManaMax)));
+					pMana.Invoke(new Action(() => pMana.Value = (int)(m_mobile.Mana * 100 / (m_mobile.ManaMax == 0 ? (ushort)1 : m_mobile.ManaMax))));
 
 					lStam.Invoke(new Action(() => lStam.Text = m_mobile.Stam + " / " + m_mobile.StamMax));
 					lStam.Text = m_mobile.Stam + " / " + m_mobile.StamMax;
-					pStam.Invoke(new Action(() => pStam.Value = m_mobile.Stam * 100 / (m_mobile.StamMax == 0 ? 1 : m_mobile.StamMax)));
+					pStam.Invoke(new Action(() => pStam.Value = (int)(m_mobile.Stam * 100 / (m_mobile.StamMax == 0 ? (ushort)1 : m_mobile.StamMax))));
 				}
 			}
 			catch { }
@@ -198,26 +196,14 @@ namespace RazorEnhanced.UI
 		private void EnhancedMobileInspector_Load(object sender, EventArgs e)
 		{
 			if (m_mobile == null)
-            {
-                Close();
-            }
+				Close();
 
-            // general
-            ToolTip toolTip = new();
-            toolTip.AutoPopDelay = 10000;
-            toolTip.InitialDelay = 1000;
-            toolTip.ReshowDelay = 1000;
-            toolTip.ShowAlways = true;
-            //
-            lName.Text = m_mobile.Name.ToString();
+			// general
+			lName.Text = m_mobile.Name.ToString();
 			lSerial.Text = "0x" + m_mobile.Serial.Value.ToString("X8");
 			lMobileID.Text = "0x" + m_mobile.Body.ToString("X4");
-            toolTip.SetToolTip(lMobileID, m_mobile.Body.ToString());
-
-            lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
-            toolTip.SetToolTip(lColor, m_mobile.Hue.ToString());
-
-            lPosition.Text = m_mobile.Position.ToString();
+			lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
+			lPosition.Text = m_mobile.Position.ToString();
 
 			lNotoriety.Text = m_mobile.Notoriety.ToString();
 
@@ -270,10 +256,8 @@ namespace RazorEnhanced.UI
 			{
 				Assistant.ObjectPropertyList.OPLEntry ent = m_mobile.ObjPropList.Content[i];
 				if (i == 0)
-                {
-                    lName.Text = ent.ToString();
-                }
-                else
+					lName.Text = ent.ToString();
+				else
 				{
 					string content = ent.ToString();
 					listBoxAttributes.Items.Add(content);

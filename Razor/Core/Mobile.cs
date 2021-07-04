@@ -66,24 +66,18 @@ namespace Assistant
 			get
 			{
 				if (m_Name == null)
-                {
-                    return "";
-                }
-                else
-                {
-                    return m_Name;
-                }
-            }
+					return "";
+				else
+					return m_Name;
+			}
 			set
 			{
 				if (value != null)
 				{
 					string trim = value.Trim();
 					if (trim.Length > 0)
-                    {
-                        m_Name = trim;
-                    }
-                }
+						m_Name = trim;
+				}
 			}
 		}
 
@@ -134,14 +128,10 @@ namespace Assistant
 			get
 			{
 				if (m_HumanBodies.Contains(this.Body))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+					return true;
+				else
+					return false;
+			}
 		}
 
 		internal bool IsGhost
@@ -149,11 +139,9 @@ namespace Assistant
 			get
 			{
 				if (StatsUpdated && m_Hits == 0)
-                {
-                    return true;
-                }
+					return true;
 
-                return m_Body == 402
+				return m_Body == 402
 					|| m_Body == 403
 					|| m_Body == 607
 					|| m_Body == 608
@@ -221,26 +209,18 @@ namespace Assistant
 		internal uint GetNotorietyColor()
 		{
 			if (m_Notoriety < 0 || m_Notoriety >= m_NotoHues.Length)
-            {
-                return m_NotoHues[0];
-            }
-            else
-            {
-                return m_NotoHues[m_Notoriety];
-            }
-        }
+				return m_NotoHues[0];
+			else
+				return m_NotoHues[m_Notoriety];
+		}
 
 		internal byte GetStatusCode()
 		{
 			if (m_Poisoned)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
+				return 1;
+			else
+				return 0;
+		}
 
 		internal ushort HitsMax
 		{
@@ -311,11 +291,9 @@ namespace Assistant
 			m_Items.Clear();
 
 			foreach (Item r in rem)
-            {
-                r.Remove();
-            }
+				r.Remove();
 
-            if (!InParty)
+			if (!InParty)
 			{
 				base.Remove();
 				World.RemoveMobile(this);
@@ -338,12 +316,10 @@ namespace Assistant
 		{
 			for (int i = 0; i < m_Items.Count; i++)
 			{
-				Item item = m_Items[i];
+				Item item = (Item)m_Items[i];
 				if (item.Layer == layer)
-                {
-                    return item;
-                }
-            }
+					return item;
+			}
 			return null;
 		}
 
@@ -362,14 +338,10 @@ namespace Assistant
 				Item item = GetItemOnLayer(Layer.Cloak);
 
 				if (item != null && item.IsContainer)
-                {
-                    return item;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+					return item;
+				else
+					return null;
+			}
 		}
 
 		internal Item FindItemByID(ItemID id)
@@ -382,36 +354,24 @@ namespace Assistant
 			int flags = 0x0;
 
 			if (m_Paralized)
-            {
-                flags |= 0x01;
-            }
+				flags |= 0x01;
 
-            if (m_Female)
-            {
-                flags |= 0x02;
-            }
+			if (m_Female)
+				flags |= 0x02;
 
-            if (m_Poisoned)
-            {
-                flags |= 0x04;
-            }
+			if (m_Poisoned)
+				flags |= 0x04;
 
-            if (m_Blessed)
-            {
-                flags |= 0x08;
-            }
+			if (m_Blessed)
+				flags |= 0x08;
 
-            if (m_Warmode)
-            {
-                flags |= 0x40;
-            }
+			if (m_Warmode)
+				flags |= 0x40;
 
-            if (!m_Visible)
-            {
-                flags |= 0x80;
-            }
+			if (!m_Visible)
+				flags |= 0x80;
 
-            return flags;
+			return flags;
 		}
 
 		internal void ProcessPacketFlags(byte flags)
@@ -420,54 +380,38 @@ namespace Assistant
 			if (!PacketHandlers.UseNewStatus)
 			{
 				if (Poisoned != ((flags & 0x04) != 0))
-                {
-                    needrefresh = true;
-                }
-
-                m_Poisoned = (flags & 0x04) != 0;
+					needrefresh = true;
+				m_Poisoned = (flags & 0x04) != 0;
 			}
 			else
-            {
-                m_Flying = (flags & 0x04) != 0;
-            }
+				m_Flying = (flags & 0x04) != 0;
 
-            if (Blessed != ((flags & 0x08) != 0))
-            {
-                needrefresh = true;
-            }
-
-            m_Blessed = (flags & 0x08) != 0;
+			if (Blessed != ((flags & 0x08) != 0))
+				needrefresh = true;
+			m_Blessed = (flags & 0x08) != 0;
 
 			m_Female = (flags & 0x02) != 0;
 			m_Warmode = (flags & 0x40) != 0;
 			m_Visible = (flags & 0x80) == 0;
 
 			if (Paralized != ((flags & 0x01) != 0))
-            {
-                needrefresh = true;
-            }
+				needrefresh = true;
 
-            m_Paralized = (flags & 0x01) != 0;
+			m_Paralized = (flags & 0x01) != 0;
 
 			if (!needrefresh) // Non richiede aggiornamento colori in quanto flag non cambiati
-            {
-                return;
-            }
+				return;
 
-            if (this == World.Player)
+			if (this == World.Player)
 			{
 				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
-                {
-                    RazorEnhanced.Filters.ApplyColor(this);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(this);
+			}
 			else
 			{
 				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
-                {
-                    RazorEnhanced.Filters.ApplyColor(this);
-                }
-            }
+					RazorEnhanced.Filters.ApplyColor(this);
+			}
 		}
 
 		internal List<Item> Contains { get { return m_Items; } }

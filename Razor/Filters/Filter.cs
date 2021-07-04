@@ -26,18 +26,14 @@ namespace Assistant.Filters
             foreach (Filter f in m_Filters)
             {
                 if (RazorEnhanced.Settings.General.ReadBool(((int)f.Name).ToString()))
-                {
                     f.OnEnable();
-                }
             }
         }
 
         public static void DisableAll()
         {
             for (int i = 0; i < m_Filters.Count; i++)
-            {
                 ((Filter) m_Filters[i]).OnDisable();
-            }
         }
 
         public static void Save(XmlTextWriter xml)
@@ -97,18 +93,14 @@ namespace Assistant.Filters
         {
             m_Enabled = true;
             for (int i = 0; i < PacketIDs.Length; i++)
-            {
                 PacketHandler.RegisterServerToClientViewer(PacketIDs[i], m_Callback);
-            }
         }
 
         public virtual void OnDisable()
         {
             m_Enabled = false;
             for (int i = 0; i < PacketIDs.Length; i++)
-            {
                 PacketHandler.RemoveServerToClientViewer(PacketIDs[i], m_Callback);
-            }
         }
 
         public void OnCheckChanged(CheckState newValue)

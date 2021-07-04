@@ -20,11 +20,9 @@ namespace Assistant
 		private static void Log(string str, params object[] args)
 		{
 			if (!Debug)
-            {
-                return;
-            }
+				return;
 
-            try
+			try
 			{
 				using (StreamWriter w = new StreamWriter("DragDrop.log", true))
 				{
@@ -110,11 +108,8 @@ namespace Assistant
 
 			m_DropReqs.Clear();
 			for (int i = 0; i < 256; i++)
-            {
-                m_LiftReqs[i] = null;
-            }
-
-            m_Front = m_Back = 0;
+				m_LiftReqs[i] = null;
+			m_Front = m_Back = 0;
 			m_Holding = m_Pending = Serial.Zero;
 			m_HoldingItem = null;
 			m_Lifted = DateTime.MinValue;
@@ -201,44 +196,31 @@ namespace Assistant
                 Log("Queue FULL {0}", lr);
                 World.Player.SendMessage(MsgLevel.Error, LocString.DragDropQueueFull);
 				if (fromClient)
-                {
-                    Assistant.Client.Instance.SendToClient(new LiftRej());
-                }
-
-                return 0;
+					Assistant.Client.Instance.SendToClient(new LiftRej());
+				return 0;
 			}
 
 			Log("Queuing Drag request {0}", lr);
 
 			if (m_Back >= m_LiftReqs.Length)
-            {
-                m_Back = 0;
-            }
+				m_Back = 0;
 
-            if (m_Back <= 0)
-            {
-                prev = m_LiftReqs[m_LiftReqs.Length - 1];
-            }
-            else if (m_Back <= m_LiftReqs.Length)
-            {
-                prev = m_LiftReqs[m_Back - 1];
-            }
+			if (m_Back <= 0)
+				prev = m_LiftReqs[m_LiftReqs.Length - 1];
+			else if (m_Back <= m_LiftReqs.Length)
+				prev = m_LiftReqs[m_Back - 1];
 
-            // if the current last req must stay last, then insert this one in its place
-            if (prev != null && prev.DoLast)
+			// if the current last req must stay last, then insert this one in its place
+			if (prev != null && prev.DoLast)
 			{
 				Log("Back-Queuing {0}", prev);
 				if (m_Back <= 0)
-                {
-                    m_LiftReqs[m_LiftReqs.Length - 1] = lr;
-                }
-                else if (m_Back <= m_LiftReqs.Length)
-                {
-                    m_LiftReqs[m_Back - 1] = lr;
-                }
+					m_LiftReqs[m_LiftReqs.Length - 1] = lr;
+				else if (m_Back <= m_LiftReqs.Length)
+					m_LiftReqs[m_Back - 1] = lr;
 
-                // and then re-insert it at the end
-                lr = prev;
+				// and then re-insert it at the end
+				lr = prev;
 			}
 
 			m_LiftReqs[m_Back++] = lr;
@@ -275,11 +257,9 @@ namespace Assistant
 					Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
 
 					if (!m_DropReqs.ContainsKey(i.Serial))
-                    {
-                        m_DropReqs.Add(i.Serial, new Queue<DropReq>());
-                    }
+						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
 
-                    Queue<DropReq> q = m_DropReqs[i.Serial];
+					Queue<DropReq> q = m_DropReqs[i.Serial];
 					q.Enqueue(new DropReq(to == null ? Serial.Zero : to.Serial, layer));
 					return true;
 				}
@@ -320,11 +300,9 @@ namespace Assistant
 					Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
 
 					if (!m_DropReqs.ContainsKey(i.Serial))
-                    {
-                        m_DropReqs.Add(i.Serial, new Queue<DropReq>());
-                    }
+						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
 
-                    Queue<DropReq> q = m_DropReqs[i.Serial];
+					Queue<DropReq> q = m_DropReqs[i.Serial];
 					q.Enqueue(new DropReq(dest, pt));
 					return true;
 				}
@@ -350,11 +328,9 @@ namespace Assistant
 		{
 			Log("Server rejected lift for item {0}", m_Holding);
 			if (m_Holding == Serial.Zero)
-            {
-                return true;
-            }
+				return true;
 
-            m_Holding = m_Pending = Serial.Zero;
+			m_Holding = m_Pending = Serial.Zero;
 			m_HoldingItem = null;
 			m_Lifted = DateTime.MinValue;
 
@@ -366,10 +342,8 @@ namespace Assistant
 			for (byte j = m_Front; j != m_Back; j++)
 			{
 				if (m_LiftReqs[j] != null && m_LiftReqs[j].Serial == s)
-                {
-                    return true;
-                }
-            }
+					return true;
+			}
 
 			return false;
 		}
@@ -388,23 +362,15 @@ namespace Assistant
 		private static DropReq DequeueDropFor(Serial s)
 		{
 			if (!m_DropReqs.ContainsKey(s))
-            {
-                return null;
-            }
+				return null;
 
-            DropReq dr = null;
+			DropReq dr = null;
 			Queue<DropReq> q = m_DropReqs[s];
 			if (q.Count > 0)
-            {
-                dr = q.Dequeue();
-            }
-
-            if (q.Count <= 0)
-            {
-                m_DropReqs.Remove(s);
-            }
-
-            return dr;
+				dr = q.Dequeue();
+			if (q.Count <= 0)
+				m_DropReqs.Remove(s);
+			return dr;
 		}
 
 		internal static ProcStatus ProcessNext(int numPending)
@@ -422,14 +388,10 @@ namespace Assistant
 						World.Player.SendMessage(MsgLevel.Force, LocString.ForceEndHolding);
 
 						if (World.Player.Backpack != null)
-                        {
-                            Assistant.Client.Instance.SendToServer(new DropRequest(m_Pending, Point3D.MinusOne, World.Player.Backpack.Serial));
-                        }
-                        else
-                        {
-                            Assistant.Client.Instance.SendToServer(new DropRequest(m_Pending, World.Player.Position, Serial.Zero));
-                        }
-                    }
+						 	Assistant.Client.Instance.SendToServer(new DropRequest(m_Pending, Point3D.MinusOne, World.Player.Backpack.Serial));
+						else
+						 	Assistant.Client.Instance.SendToServer(new DropRequest(m_Pending, World.Player.Position, Serial.Zero));
+					}
 
 					m_Holding = m_Pending = Serial.Zero;
 					m_HoldingItem = null;
@@ -450,11 +412,9 @@ namespace Assistant
 			LiftReq lr = m_LiftReqs[m_Front];
 
 			if (numPending > 0 && lr != null && lr.DoLast)
-            {
-                return ProcStatus.ReQueue;
-            }
+				return ProcStatus.ReQueue;
 
-            m_LiftReqs[m_Front] = null;
+			m_LiftReqs[m_Front] = null;
 			m_Front++;
 
             if (lr != null)
@@ -487,14 +447,10 @@ namespace Assistant
 					Log("Dropping {0} to {1}", lr, dr.Serial);
 
 					if (dr.Serial.IsMobile && dr.Layer > Layer.Invalid && dr.Layer <= Layer.LastUserValid)
-                    {
-                        Assistant.Client.Instance.SendToServer(new EquipRequest(lr.Serial, dr.Serial, dr.Layer));
-                    }
-                    else
-                    {
-                        Assistant.Client.Instance.SendToServer(new DropRequest(lr.Serial, dr.Point, dr.Serial));
-                    }
-                }
+					 	Assistant.Client.Instance.SendToServer(new EquipRequest(lr.Serial, dr.Serial, dr.Layer));
+					else
+					 	Assistant.Client.Instance.SendToServer(new DropRequest(lr.Serial, dr.Point, dr.Serial));
+				}
 				else
 				{
 					m_Pending = lr.Serial;
@@ -521,24 +477,18 @@ namespace Assistant
 		internal static void DoubleClick(bool silent, Serial s)
 		{
 			if (s == Serial.Zero)
-            {
-                return;
-            }
+				return;
 
-            if (m_Last != s)
+			if (m_Last != s)
 			{
 				m_Queue.Enqueue(s);
 				m_Last = s;
 				m_Total++;
 				if (m_Queue.Count == 1 && !m_Timer.Running)
-                {
-                    m_Timer.StartMe();
-                }
-                else if (!silent && m_Total > 1)
-                {
-                    World.Player.SendMessage(LocString.ActQueued, m_Queue.Count, TimeLeft);
-                }
-            }
+					m_Timer.StartMe();
+				else if (!silent && m_Total > 1)
+					World.Player.SendMessage(LocString.ActQueued, m_Queue.Count, TimeLeft);
+			}
 			else if (!silent)
 			{
 				World.Player.SendMessage(LocString.QueueIgnore);
@@ -550,14 +500,10 @@ namespace Assistant
 			m_Queue.Enqueue(Serial.Zero);
 			m_Total++;
 			if ( /*m_Queue.Count == 1 &&*/ !m_Timer.Running)
-            {
-                m_Timer.StartMe();
-            }
-            else if (!silent && m_Total > 1)
-            {
-                World.Player.SendMessage(LocString.LiftQueued, m_Queue.Count, TimeLeft);
-            }
-        }
+				m_Timer.StartMe();
+			else if (!silent && m_Total > 1)
+				World.Player.SendMessage(LocString.LiftQueued, m_Queue.Count, TimeLeft);
+		}
 
 		internal static void Stop()
 		{
@@ -578,17 +524,11 @@ namespace Assistant
 					double time = RazorEnhanced.Settings.General.ReadInt("ObjectDelay") / 1000.0;
 					double init = 0;
 					if (m_Timer.LastTick != DateTime.MinValue)
-                    {
-                        init = time - (DateTime.Now - m_Timer.LastTick).TotalSeconds;
-                    }
-
-                    time = init + time * m_Queue.Count;
+						init = time - (DateTime.Now - m_Timer.LastTick).TotalSeconds;
+					time = init + time * m_Queue.Count;
 					if (time < 0)
-                    {
-                        time = 0;
-                    }
-
-                    return String.Format("{0:F1} seconds", time);
+						time = 0;
+					return String.Format("{0:F1} seconds", time);
 				}
 				else
 				{
@@ -666,16 +606,12 @@ namespace Assistant
 								m_Queue.Dequeue(); // if not waiting then dequeue it
 
 								if (status == DragDropManager.ProcStatus.ReQueue)
-                                {
-                                    m_Queue.Enqueue(s);
-                                }
-                            }
+									m_Queue.Enqueue(s);
+							}
 
 							if (status == DragDropManager.ProcStatus.KeepWaiting || status == DragDropManager.ProcStatus.Success)
-                            {
-                                break; // don't process more if we're waiting or we just processed something
-                            }
-                        }
+								break; // don't process more if we're waiting or we just processed something
+						}
 						else
 						{
 							m_Queue.Dequeue();
@@ -687,10 +623,8 @@ namespace Assistant
 					if (requeue != null)
 					{
 						for (int i = 0; i < requeue.Count; i++)
-                        {
-                            m_Queue.Enqueue(requeue[i]);
-                        }
-                    }
+							m_Queue.Enqueue(requeue[i]);
+					}
 				}
 				else
 				{

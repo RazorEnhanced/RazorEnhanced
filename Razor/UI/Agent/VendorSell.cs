@@ -70,14 +70,10 @@ namespace Assistant
 		private void sellAddTarget_Click(object sender, EventArgs e)
 		{
 			if (sellListSelect.Text != String.Empty)
-            {
-                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
-            }
-            else
-            {
-                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
-            }
-        }
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
+			else
+				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
+		}
 
 		private void SellAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
@@ -85,21 +81,15 @@ namespace Assistant
 			if (sellItem != null && sellItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString(), false);
-                }
-
-                RazorEnhanced.SellAgent.AddLog("Sell Agent item added: " + sellItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString(), false);
+				RazorEnhanced.SellAgent.AddLog("Sell Agent item added: " + sellItem.ToString());
 				this.Invoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Invalid target", false);
-                }
-
-                RazorEnhanced.SellAgent.AddLog("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
+				RazorEnhanced.SellAgent.AddLog("Invalid target");
 			}
 		}
 
@@ -133,11 +123,8 @@ namespace Assistant
 				{
 					SellAgent.AddLog("Invalid or not accessible Container!");
 					if (showagentmessageCheckBox.Checked)
-                    {
-                        Misc.SendMessage("Invalid or not accessible Container!", false);
-                    }
-
-                    sellEnableCheckBox.Checked = false;
+						Misc.SendMessage("Invalid or not accessible Container!", false);
+					sellEnableCheckBox.Checked = false;
 				}
 				else
 				{
@@ -147,11 +134,8 @@ namespace Assistant
 					sellCloneListButton.Enabled = false;
 					SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					if (showagentmessageCheckBox.Checked)
-                    {
-                        Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
-                    }
-
-                    SellAgent.EnableSellFilter();
+						Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
+					SellAgent.EnableSellFilter();
 				}
 			}
 			else
@@ -164,10 +148,8 @@ namespace Assistant
 				{
 					RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					if (showagentmessageCheckBox.Checked)
-                    {
-                        RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
-                    }
-                }
+						RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
+				}
 			}
 		}
 
@@ -180,47 +162,33 @@ namespace Assistant
 		internal void SellAgentSetBag()
 		{
 			if (showagentmessageCheckBox.Checked)
-            {
-                Misc.SendMessage("Select Sell bag.", false);
-            }
+				Misc.SendMessage("Select Sell bag.", false);
 
-            if (sellListSelect.Text != String.Empty)
-            {
-                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
-            }
-            else
-            {
-                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
-            }
-        }
+			if (sellListSelect.Text != String.Empty)
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
+			else
+				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
+		}
 
 		private void sellBagTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item sellBag = Assistant.World.FindItem(serial);
 
 			if (sellBag == null)
-            {
-                return;
-            }
+				return;
 
-            if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsLootableTarget)
+			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsLootableTarget)
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Container set to: " + sellBag.ToString(), false);
-                }
-
-                SellAgent.AddLog("Container set to: " + sellBag.ToString());
+					Misc.SendMessage("Container set to: " + sellBag.ToString(), false);
+				SellAgent.AddLog("Container set to: " + sellBag.ToString());
 				SellAgent.SellBag = (int)sellBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-                {
-                    Misc.SendMessage("Invalid container, set backpack", false);
-                }
-
-                SellAgent.AddLog("Invalid container, set backpack");
+					Misc.SendMessage("Invalid container, set backpack", false);
+				SellAgent.AddLog("Invalid container, set backpack");
 				SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
 			}
 

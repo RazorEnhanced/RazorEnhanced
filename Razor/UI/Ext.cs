@@ -16,9 +16,7 @@ namespace Assistant.UI
                 control.Invoke(action, control);
             }
             else
-            {
                 action(control);
-            }
         }
     }
 }

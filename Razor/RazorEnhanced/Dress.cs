@@ -67,17 +67,13 @@ namespace RazorEnhanced
 		internal static void AddLog(string addlog)
 		{
 			if (!Client.Running)
-            {
-                return;
-            }
+				return;
 
-            Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Add(addlog));
+			Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Add(addlog));
 			Engine.MainWindow.SafeAction(s => s.DressLogBox.SelectedIndex = s.DressLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.DressLogBox.Items.Count > 300)
-            {
-                Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Clear());
-            }
-        }
+				Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Clear());
+		}
 
 		private static int
 			m_dressdelay;
@@ -129,17 +125,13 @@ namespace RazorEnhanced
 			List<DressList> lists = Settings.Dress.ListsRead();
 
 			if (lists.Count == 0)
-            {
-                Assistant.Engine.MainWindow.DressListView.Items.Clear();
-            }
+				Assistant.Engine.MainWindow.DressListView.Items.Clear();
 
-            DressList selectedList = lists.FirstOrDefault(l => l.Selected);
+			DressList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.DressListSelect.Text)
-            {
-                return;
-            }
+				return;
 
-            Assistant.Engine.MainWindow.DressListSelect.Items.Clear();
+			Assistant.Engine.MainWindow.DressListSelect.Items.Clear();
 			foreach (DressList l in lists)
 			{
 				Assistant.Engine.MainWindow.DressListSelect.Items.Add(l.Description);
@@ -156,7 +148,7 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, 0, false);
+			RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false);
 			RazorEnhanced.Dress.RefreshLists();
 			RazorEnhanced.Dress.RefreshItems();
 		}
@@ -198,11 +190,9 @@ namespace RazorEnhanced
 			foreach (DressList l in lists)
 			{
 				if (!l.Selected)
-                {
-                    continue;
-                }
+					continue;
 
-                List<Dress.DressItemNew> items = RazorEnhanced.Settings.Dress.ItemsRead(l.Description);
+				List<Dress.DressItemNew> items = RazorEnhanced.Settings.Dress.ItemsRead(l.Description);
 
 				foreach (DressItemNew item in items)
 				{
@@ -240,11 +230,9 @@ namespace RazorEnhanced
 			{
 				Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(l);
 				if (layeritem == null) // slot vuoto
-                {
-                    continue;
-                }
+					continue;
 
-                RazorEnhanced.Dress.DressItemNew itemtoinsert = new DressItemNew(layeritem.Name, l, layeritem.Serial, true);
+				RazorEnhanced.Dress.DressItemNew itemtoinsert = new DressItemNew(layeritem.Name, l, layeritem.Serial, true);
 				RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
 			}
 
@@ -260,10 +248,8 @@ namespace RazorEnhanced
 				RazorEnhanced.Dress.RefreshItems();
 			}
 			else
-            {
-                Misc.SendMessage("This item not have valid layer", false);
-            }
-        }
+				Misc.SendMessage("This item not have valid layer", false);
+		}
 
 		// Undress
 
@@ -287,32 +273,22 @@ namespace RazorEnhanced
 					foreach (DressItemNew item in items)
 					{
 						if (!item.Selected)
-                        {
-                            continue;
-                        }
+							continue;
 
-                        if (World.FindItem(item.Serial) == null)
-                        {
-                            continue;
-                        }
+						if (World.FindItem(item.Serial) == null)
+							continue;
 
-                        Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
+						Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
 						if (itemonlayer != null && itemonlayer.Serial == item.Serial)
-                        {
-                            RazorEnhanced.Items.Move(item.Serial, undressbagserial, 0);
-                        }
-
-                        RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " on layer: " + item.Layer.ToString() + " undressed!");
+							RazorEnhanced.Items.Move(item.Serial, undressbagserial, 0);
+						RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " on layer: " + item.Layer.ToString() + " undressed!");
 						Thread.Sleep(mseconds);
 					}
 				}
 				RazorEnhanced.Dress.AddLog("Finish!");
 				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
-                }
-
-                Assistant.Engine.MainWindow.UndressFinishWork();
+					RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+				Assistant.Engine.MainWindow.UndressFinishWork();
 
 			}
 			catch { }
@@ -355,11 +331,8 @@ namespace RazorEnhanced
 				if (bag == null)
 				{
 					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-                    {
-                        Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
-                    }
-
-                    AddLog("Invalid Bag, Switch to backpack");
+						Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+					AddLog("Invalid Bag, Switch to backpack");
 					DressBag = (int)World.Player.Backpack.Serial.Value;
 				}
 
@@ -501,47 +474,35 @@ namespace RazorEnhanced
 					foreach (DressItemNew item in items)
 					{
 						if (!item.Selected)
-                        {
-                            continue;
-                        }
+							continue;
 
-                        if (item.Name == "UNDRESS")          // Caso undress slot
+						if (item.Name == "UNDRESS")          // Caso undress slot
 						{
 							Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
 
 							if (itemtomove == null)
-                            {
-                                continue;
-                            }
+								continue;
 
-                            if (!itemtomove.Movable)
-                            {
-                                continue;
-                            }
+							if (!itemtomove.Movable)
+								continue;
 
-                            RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
+							RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
 							RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
 							Thread.Sleep(mseconds);
 						}
 						else
 						{
 							if (World.FindItem(item.Serial) == null)
-                            {
-                                continue;
-                            }
+								continue;
 
-                            if (conflict)       // Caso abilitato controllo conflitto
+							if (conflict)       // Caso abilitato controllo conflitto
 							{
 								Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
 								if (itemonlayer != null)
-                                {
-                                    if (itemonlayer.Serial == item.Serial)
-                                    {
-                                        continue;
-                                    }
-                                }
+									if (itemonlayer.Serial == item.Serial)
+										continue;
 
-                                if (World.FindItem(item.Serial).Layer == Layer.RightHand || World.FindItem(item.Serial).Layer == Layer.LeftHand)        // Check armi per controlli twohand
+								if (World.FindItem(item.Serial).Layer == Layer.RightHand || World.FindItem(item.Serial).Layer == Layer.LeftHand)        // Check armi per controlli twohand
 								{
 									Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
 									Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
@@ -582,16 +543,12 @@ namespace RazorEnhanced
 								if (itemtomove != null)
 								{
 									if (itemtomove.Serial == item.Serial)
-                                    {
-                                        continue;
-                                    }
+										continue;
 
-                                    if (!itemtomove.Movable)
-                                    {
-                                        continue;
-                                    }
+									if (!itemtomove.Movable)
+										continue;
 
-                                    RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
+									RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
 									RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
 									Thread.Sleep(mseconds);
 									RazorEnhanced.Player.EquipItem(item.Serial);
@@ -609,11 +566,9 @@ namespace RazorEnhanced
 							{
 								Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
 								if (itemtomove != null)
-                                {
-                                    continue;
-                                }
+									continue;
 
-                                RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
+								RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
 								RazorEnhanced.Player.EquipItem(item.Serial);
 								Thread.Sleep(mseconds);
 							}
@@ -622,11 +577,8 @@ namespace RazorEnhanced
 				}
 				RazorEnhanced.Dress.AddLog("Finish!");
 				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-                {
-                    RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
-                }
-
-                Assistant.Engine.MainWindow.UndressFinishWork();
+					RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+				Assistant.Engine.MainWindow.UndressFinishWork();
 			}
 
 			catch { }
@@ -643,11 +595,8 @@ namespace RazorEnhanced
 				if (bag == null)
 				{
 					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-                    {
-                        Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
-                    }
-
-                    AddLog("Invalid Bag, Switch to backpack");
+						Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+					AddLog("Invalid Bag, Switch to backpack");
 					DressBag = (int)World.Player.Backpack.Serial.Value;
 				}
 
@@ -720,14 +669,10 @@ namespace RazorEnhanced
         public static bool DressStatus()
 		{
 			if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+				return true;
+			else
+				return false;
+		}
 
         /// <summary>
         /// Check UnDress Agent status, returns a bool value.
@@ -736,14 +681,10 @@ namespace RazorEnhanced
 		public static bool UnDressStatus()
 		{
 			if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+				return true;
+			else
+				return false;
+		}
 
         /// <summary>
         /// Start Dress engine.
@@ -751,10 +692,8 @@ namespace RazorEnhanced
 		public static void DressFStart()
 		{
 			if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
-            {
-                Assistant.Engine.MainWindow.DressStart();
-            }
-            else
+				Assistant.Engine.MainWindow.DressStart();
+			else
 			{
 				Scripts.SendMessageScriptError("Script Error: Dress.DressFStart: Dress already running");
 			}
@@ -766,10 +705,8 @@ namespace RazorEnhanced
 		public static void UnDressFStart()
 		{
 			if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
-            {
-                Assistant.Engine.MainWindow.UndressStart();
-            }
-            else
+				Assistant.Engine.MainWindow.UndressStart();
+			else
 			{
 				Scripts.SendMessageScriptError("Script Error: Dress.UnDressFStart: Undress already running");
 			}
@@ -781,10 +718,8 @@ namespace RazorEnhanced
         public static void DressFStop()
 		{
 			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-            {
-                Assistant.Engine.MainWindow.DressStop();
-            }
-            else
+				Assistant.Engine.MainWindow.DressStop();
+			else
 			{
 				Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: Dress not running");
 			}
@@ -796,10 +731,8 @@ namespace RazorEnhanced
 		public static void UnDressFStop()
 		{
 			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-            {
-                Assistant.Engine.MainWindow.DressStop();
-            }
-            else
+				Assistant.Engine.MainWindow.DressStop();
+			else
 			{
 				Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: UnDress not running");
 			}

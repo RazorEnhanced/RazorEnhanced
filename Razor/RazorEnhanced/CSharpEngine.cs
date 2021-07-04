@@ -63,9 +63,7 @@ namespace RazorEnhanced
                 while ((line = ip.ReadLine()) != null)
                 {
                     if (line.Length > 0 && !line.StartsWith("#"))
-                    {
                         list.Add(line);
-                    }
                 }
             }
 
@@ -176,8 +174,8 @@ namespace RazorEnhanced
 
         /// <summary>
         /// This function search for our custom directive //#import that allows import classes from other C# files
-        /// The directive must be added anywhere before the namespace and can be used in C style with &lt;&gt; or ""
-        /// Using relative path with &lt;&gt; the base directory will the Scripts folder
+        /// The directive must be added anywhere before the namespace and can be used in C stile with <> or ""
+        /// Using relative path with <> the base directory will the Scripts folder
         /// 
         /// </summary>
         /// <param name="sourceFile">Full path of the source file</param>

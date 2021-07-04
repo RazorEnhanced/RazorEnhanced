@@ -168,10 +168,8 @@ namespace RazorEnhanced
 			{
 				Assistant.Item assistantMount = m_AssistantMobile.GetItemOnLayer(Assistant.Layer.Mount);
 				if (assistantMount == null)
-                {
-                    return null;
-                }
-                else
+					return null;
+				else
 				{
 					RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
 					return enhancedMount;
@@ -345,20 +343,16 @@ namespace RazorEnhanced
 			{
 				assistantItem = m_AssistantMobile.GetItemOnLayer(assistantLayer);
 				if (assistantItem == null)
-                {
-                    return null;
-                }
-                else
+					return null;
+				else
 				{
 					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
 					return enhancedItem;
 				}
 			}
 			else
-            {
-                return null;
-            }
-        }
+				return null;
+		}
 
         /// <summary>
         /// Get the Item representing the backpack of a Mobile. Return null if it doesn't have one.
@@ -369,10 +363,8 @@ namespace RazorEnhanced
 			{
 				Assistant.Item assistantBackpack = m_AssistantMobile.Backpack;
 				if (assistantBackpack == null)
-                {
-                    return null;
-                }
-                else
+					return null;
+				else
 				{
 					RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBackpack);
 					return enhancedBackpack;
@@ -389,10 +381,8 @@ namespace RazorEnhanced
 			{
 				Assistant.Item assistantQuiver = m_AssistantMobile.Quiver;
 				if (assistantQuiver == null)
-                {
-                    return null;
-                }
-                else
+					return null;
+				else
 				{
 					RazorEnhanced.Item enhancedQuiver = new RazorEnhanced.Item(assistantQuiver);
 					return enhancedQuiver;
@@ -687,9 +677,7 @@ namespace RazorEnhanced
             // Remove ourself
             List<Mobile> mobiles_reduced = mobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
             if (mobiles_reduced.Count == 0)
-            {
                 return null;
-            }
 
             Mobile result = mobiles_reduced[0]; // default to first entry
             switch (selector)
@@ -697,14 +685,14 @@ namespace RazorEnhanced
                 case "Random":
                     try
                     {
-                        result = mobiles_reduced[Utility.Random(mobiles_reduced.Count)];
+                        result = mobiles_reduced[Utility.Random(mobiles_reduced.Count)] as Mobile;
                     }
                     catch { }
 
                     break;
 
                 case "Nearest":
-                    Mobile closest = mobiles_reduced[0];
+                    Mobile closest = mobiles_reduced[0] as Mobile;
                     double closestDist = double.MaxValue;
                     if (closest != null) {
                         foreach (Mobile m in mobiles_reduced)
@@ -721,7 +709,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Farthest":
-                    Mobile farthest = mobiles_reduced[0];
+                    Mobile farthest = mobiles_reduced[0] as Mobile;
                     double farthestDist = double.MinValue;
                     if (farthest != null)
                     {
@@ -739,16 +727,14 @@ namespace RazorEnhanced
                     break;
 
                 case "Weakest":
-                    Mobile weakest = mobiles_reduced[0];
+                    Mobile weakest = mobiles_reduced[0] as Mobile;
                     if (weakest != null)
                     {
                         int minHits = weakest.Hits;
                         foreach (Mobile t in mobiles_reduced)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             int wounds = t.Hits;
                             if (wounds < minHits)
@@ -762,22 +748,18 @@ namespace RazorEnhanced
                     break;
 
                 case "Strongest":
-                    Mobile strongest = mobiles_reduced[0];
+                    Mobile strongest = mobiles_reduced[0] as Mobile;
                     if (strongest != null)
                     {
                         int maxHits = strongest.Hits;
                         foreach (Mobile t in mobiles_reduced)
                         {
                             if (t == null)
-                            {
                                 continue;
-                            }
 
                             int wounds = t.Hits;
                             if (wounds <= maxHits)
-                            {
                                 continue;
-                            }
 
                             strongest = t;
                             maxHits = wounds;
@@ -859,11 +841,9 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static Mobile FindBySerial(int serial)
         {
-            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
             if (assistantMobile == null)
-            {
                 return null;
-            }
             else
             {
                 RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
@@ -921,44 +901,30 @@ namespace RazorEnhanced
 		{
 			// Prevent spamm message on left bottom screen
 			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
-            {
-                return;
-            }
+				return;
 
-            if (wait)
-            {
-                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-            }
-            else
-            {
-                Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-            }
-        }
+			if (wait)
+				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			else
+				Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+		}
 
 		public static void Message(int serial, int hue, string message, bool wait = true)
 		{
 			Mobile mobile = FindBySerial(serial);
 
 			if (mobile == null) // Mob not exist
-            {
-                return;
-            }
+				return;
 
-            // Prevent spamm message on left bottom screen
-            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
-            {
-                return;
-            }
+			// Prevent spamm message on left bottom screen
+			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+				return;
 
-            if (wait)
-            {
-                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-            }
-            else
-            {
-                Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-            }
-        }
+			if (wait)
+				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			else
+				Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+		}
 
 		// Props
 
@@ -970,23 +936,17 @@ namespace RazorEnhanced
 		public static void WaitForProps(int mobileserial, int delay) // Delay in MS
 		{
 			if (World.Player.Expansion <= 3) // Non esistono le props
-            {
-                return;
-            }
+				return;
 
-            Assistant.Mobile m = Assistant.World.FindMobile((uint)mobileserial);
+			Assistant.Mobile m = Assistant.World.FindMobile((Assistant.Serial)((uint)mobileserial));
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            if (m.PropsUpdated)
-            {
-                return;
-            }
+			if (m.PropsUpdated)
+				return;
 
-            Assistant.Client.Instance.SendToServerWait(new QueryProperties(m.Serial));
+		 	Assistant.Client.Instance.SendToServerWait(new QueryProperties(m.Serial));
 			int subdelay = delay;
 
 			while (!m.PropsUpdated)
@@ -994,10 +954,8 @@ namespace RazorEnhanced
 				Thread.Sleep(2);
 				subdelay -= 2;
 				if (subdelay <= 0)
-                {
-                    break;
-                }
-            }
+					break;
+			}
 		}
 
 		// wait for stats
@@ -1011,16 +969,12 @@ namespace RazorEnhanced
 			Assistant.Mobile m = World.FindMobile(mobileserial);
 
 			if (m == null)
-            {
-                return;
-            }
+				return;
 
-            if (m.StatsUpdated)
-            {
-                return;
-            }
+			if (m.StatsUpdated)
+				return;
 
-            Assistant.Client.Instance.SendToServerWait(new StatusQuery(m.Serial));
+		 	Assistant.Client.Instance.SendToServerWait(new StatusQuery(m.Serial));
 
 			int subdelay = delay;
 
@@ -1029,10 +983,8 @@ namespace RazorEnhanced
 				Thread.Sleep(2);
 				subdelay -= 2;
 				if (subdelay <= 0)
-                {
-                    break;
-                }
-            }
+					break;
+			}
 		}
 
 		public static List<string> GetPropStringList(int serial)
@@ -1041,11 +993,9 @@ namespace RazorEnhanced
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
 			if (assistantMobile == null)
-            {
-                return propstringlist;
-            }
+				return propstringlist;
 
-            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
 			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 			{
 				propstringlist.Add(prop.ToString());
@@ -1064,17 +1014,12 @@ namespace RazorEnhanced
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
 			if (assistantMobile == null)
-            {
-                return propstring;
-            }
+				return propstring;
 
-            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
 			if (props.Count > index)
-            {
-                propstring = props[index].ToString();
-            }
-
-            return propstring;
+				propstring = props[index].ToString();
+			return propstring;
 		}
 
 		public static string GetPropStringByIndex(Mobile mob, int index)
@@ -1093,16 +1038,12 @@ namespace RazorEnhanced
 				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 				{
 					if (!prop.ToString().ToLower().Contains(name.ToLower()))
-                    {
-                        continue;
-                    }
+						continue;
 
-                    if (prop.Args == null)  // Props esiste ma non ha valore
-                    {
-                        return 1;
-                    }
+					if (prop.Args == null)  // Props esiste ma non ha valore
+						return 1;
 
-                    try
+					try
 					{
 						return Convert.ToSingle(Language.ParsePropsCliloc(prop.Args), CultureInfo.InvariantCulture);
 					}
@@ -1131,11 +1072,9 @@ namespace RazorEnhanced
 		{
 			Assistant.Mobile mobile = World.FindMobile(serial);
 			if (mobile == null) // Se item non valido
-            {
-                return -1;
-            }
+				return -1;
 
-            Misc.WaitForContext(serial, 1500);
+			Misc.WaitForContext(serial, 1500);
 
 			foreach (KeyValuePair<ushort, int> entry in mobile.ContextMenu)
 			{

@@ -45,14 +45,13 @@ namespace RazorEnhanced
 		private static unsafe int NativeRead(FileStream fs, void* pBuffer, int bytes)
 		{
 			return DLLImport.Win.lread(fs.Handle, pBuffer, bytes);
-
 		}
 
 		private static unsafe int NativeRead(FileStream fs, byte[] buffer, int offset, int length)
 		{
 			fixed (byte* numRef = buffer)
 			{
-				return NativeRead(fs, numRef + offset, length);
+				return NativeRead(fs, (void*)(numRef + offset), length);
 			}
 		}
 
@@ -72,13 +71,13 @@ namespace RazorEnhanced
 					List<SpeechEntry> list = new List<SpeechEntry>();
 					FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 					int num = 0;
-					while ((num = NativeRead(fs, numRef, 4)) > 0)
+					while ((num = NativeRead(fs, (void*)numRef, 4)) > 0)
 					{
 						int idKeyword = numRef[1] | (numRef[0] << 8);
 						int bytes = numRef[3] | (numRef[2] << 8);
 						if (bytes > 0)
 						{
-							NativeRead(fs, numRef, bytes);
+							NativeRead(fs, (void*)numRef, bytes);
 							list.Add(new SpeechEntry(idKeyword, new string((sbyte*)numRef, 0, bytes)));
 						}
 					}
