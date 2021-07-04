@@ -922,7 +922,6 @@ namespace Assistant
             Write((byte[])dest, 0, destLen);
             Write((uint)gumpStrings.Count);
 
-            int uncompressedSize = 0;
             using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
                 foreach (string s in gumpStrings)
@@ -931,18 +930,17 @@ namespace Assistant
                     byte[] lenBytes = BitConverter.GetBytes(len);
                     ms.WriteByte(lenBytes[1]);
                     ms.WriteByte(lenBytes[0]);
-                    uncompressedSize += 2;
                     char[] charArray = new char[len];
                     s.CopyTo(0, charArray, 0, len);
                     byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(s);
-                    uncompressedSize += bytes.Length;
                     ms.Write(bytes, 0, bytes.Length);
                 }                
                 //ms.Flush();
                 byte[] textBuffer = ms.ToArray();
-                int compressedSize = uncompressedSize;
-                byte[] compressedData = new byte[uncompressedSize]; // compressed SHOULD be smalled than uncompressed
-                bool worked2 = (DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length) == ZLibError.Z_OK);
+                int compressedSize = textBuffer.Length + 10;
+                byte[] compressedData = new byte[compressedSize+10]; // compressed SHOULD be smalled than uncompressed
+                ZLibError compResult2 = DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+                bool worked2 = ( compResult2 == ZLibError.Z_OK);
 
                 Write((uint)compressedSize + 4);
                 Write((uint)textBuffer.Length);
