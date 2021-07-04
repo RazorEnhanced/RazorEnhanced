@@ -44,7 +44,7 @@ namespace RazorEnhanced
 
                     File.Copy(filename, backup, true);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					if (tryBackup)
 					{

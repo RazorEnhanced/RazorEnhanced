@@ -125,7 +125,7 @@ namespace RazorEnhanced
             {
                 return TileData.LandTable[StaticID].Name;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Scripts.SendMessageScriptError("Script Error: GetLandName invalid landID " + StaticID);
                 return "";
@@ -142,7 +142,7 @@ namespace RazorEnhanced
 			try{
 				return TileData.ItemTable[StaticID].Name;
 			}
-			catch (Exception e){
+			catch (Exception){
 				Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+StaticID);
 				return "";
 			}

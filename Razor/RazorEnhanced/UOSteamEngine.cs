@@ -118,7 +118,7 @@ namespace RazorEnhanced
             {
                 while (UOScript.Interpreter.ExecuteScript()) { };
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 UOScript.Interpreter.StopScript();
                 throw;
@@ -455,12 +455,12 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "X location requires a serial");
-                return 0;
+                // return 0;
             }
 
             uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
-            ///
+            
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -480,14 +480,14 @@ namespace RazorEnhanced
             }
 
             throw new UOScript.RunTimeError(null, "X location serial not found");
-            return 0;
+            // return 0;
         }
         IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Y location requires a serial");
-                return 0;
+                // return 0;
             }
 
             uint serial = args[0].AsSerial();
@@ -511,14 +511,14 @@ namespace RazorEnhanced
             }
 
             throw new UOScript.RunTimeError(null, "Y location serial not found");
-            return 0;
+            // return 0;
         }
         IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Z location requires a serial");
-                return 0;
+                // return 0;
             }
 
             uint serial = args[0].AsSerial();
@@ -542,7 +542,7 @@ namespace RazorEnhanced
             }
 
             throw new UOScript.RunTimeError(null, "Z location serial not found");
-            return 0;
+            // return 0;
         }
 
         IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
@@ -653,7 +653,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "FindType requires parameters");
-                return false;
+                // return false;
             }
 
             int type = args[0].AsInt();
@@ -730,7 +730,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 throw new UOScript.RunTimeError(null, "Property requires 2 parameters");
-                return false;
+                // return false;
             }
 
             string findProp = args[0].AsString();
@@ -1006,7 +1006,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "enemy requires parameters");
-                return false;
+                // return false;
             }
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
             if (theMobile != null)
@@ -1127,7 +1127,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "inregion requires parameters");
-                return false;
+                // return false;
             }
 
             string desiredRegion = args[0].AsString();
@@ -1178,7 +1178,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Skill requires parameters");
-                return false;
+                // return false;
             }
 
             string skillname = args[0].AsString();
@@ -1192,7 +1192,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                // return false;
             }
             UOScript.Interpreter.UnSetAlias("found");
             int color = -1;
@@ -1263,7 +1263,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Distance Object requires parameters");
-                return Int32.MaxValue;
+                // return Int32.MaxValue;
             }
 
             uint serial = args[0].AsSerial();
@@ -1299,7 +1299,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                // return false;
             }
             uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
@@ -1349,7 +1349,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                // return false;
             }
             uint serial = args[0].AsSerial();
             Assistant.Mobile mobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
@@ -1371,7 +1371,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "CountTypeGround requires parameters");
-                return 0;
+                // return 0;
             }
 
             int graphic = args[0].AsInt();
@@ -1453,7 +1453,7 @@ namespace RazorEnhanced
 
             return false;
 
-            return Player.Hits;
+            // return Player.Hits;
         }
         private IComparable DiffHits(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -2017,7 +2017,7 @@ namespace RazorEnhanced
             {
                 Misc.SendMessage("Usage: pushlist ('list name') ('element name') ('front'/'back']");
                 throw new UOScript.RunTimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
-                return true;
+                // return true;
             }
 
             string listName = args[0].AsString();
@@ -3181,12 +3181,14 @@ namespace RazorEnhanced
 
             return true;
 
+            /*
             if (args.Length == 1)
             {
                 uint serial = args[0].AsSerial();
                 RazorEnhanced.Target.TargetExecute((int)serial);
             }
             return true;
+            */
         }
 
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -3562,7 +3564,7 @@ namespace RazorEnhanced
                 {
                     reverse = args[2].AsBool();
                 }
-                catch (UOScript.RunTimeError e)
+                catch (UOScript.RunTimeError)
                 {
                     // Maybe it was a graphic
                     graphic = args[2].AsInt();
@@ -3917,7 +3919,7 @@ namespace RazorEnhanced
                         return arg.AsUInt();
                     return AsUInt();
                 }
-                catch (RunTimeError e)
+                catch (RunTimeError)
                 {
                     // invalid numeric
                 }
@@ -5013,7 +5015,7 @@ namespace RazorEnhanced
                 if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
                     return handler(alias);
 
-                uint value;
+                // uint value;
                 if (Misc.CheckSharedValue(alias))
                 {
                     return (uint)Misc.ReadSharedValue(alias);

@@ -1625,7 +1625,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Set lock status for a specific skill. 
         /// </summary>
-        /// <param name="skillname">
+        /// <param name="statname">
         ///     Strength
         ///     Dexterity
         ///     Intelligence
@@ -2331,7 +2331,7 @@ namespace RazorEnhanced
 
         // Range
         /// <summary>
-        /// Check if the Mobile is within a certain range (<=).
+        /// Check if the Mobile is within a certain range (&lt;=).
         /// </summary>
         /// <param name="mobile">Serial or Mobile object.</param>
         /// <param name="range">Maximum distance in tiles.</param>
@@ -2359,7 +2359,7 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Check if the Item is within a certain range (<=).
+        /// Check if the Item is within a certain range (&lt;=).
         /// </summary>
         /// <param name="item">Serial or Item object.</param>
         /// <param name="range">Maximum distance in tiles.</param>
