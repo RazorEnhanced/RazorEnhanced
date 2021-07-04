@@ -154,7 +154,7 @@ namespace RazorEnhanced
 
 				MakeBackup(profileName);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				if (try_recover == true)
 				{
@@ -442,7 +442,7 @@ namespace RazorEnhanced
 			{
 				return StringCipher.Encrypt(text, key);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return "";
 			}
@@ -456,7 +456,7 @@ namespace RazorEnhanced
 			{
 				return StringCipher.Decrypt(text, key);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				return "";
 			}
@@ -2852,7 +2852,7 @@ namespace RazorEnhanced
                 {
                     return m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => ((string)row["Description"]).ToLower() == description.ToLower());
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }

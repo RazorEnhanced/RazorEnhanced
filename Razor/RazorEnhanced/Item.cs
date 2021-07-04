@@ -1675,7 +1675,7 @@ namespace RazorEnhanced
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // do nothing because sometimes the content[i] no longer existed so fall through
                 // and return 0
@@ -1729,7 +1729,7 @@ namespace RazorEnhanced
                         }
                     }
                 }
-                catch (System.ArgumentOutOfRangeException ex)
+                catch (System.ArgumentOutOfRangeException)
                 {
                     // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
                 }

@@ -529,7 +529,7 @@ namespace RazorEnhanced
                 m_corpsefilter.RangeMax = m_maxrange;
                 Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //  If anything goes wrong just continue on
             }
