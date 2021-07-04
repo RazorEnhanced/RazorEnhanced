@@ -559,8 +559,8 @@ namespace Assistant
 
     public class Language
     {
-        private static Hashtable m_Controls;
-        private static Hashtable m_Strings;
+        private static readonly Hashtable m_Controls;
+        private static readonly Hashtable m_Strings;
         private static Ultima.StringList m_CliLoc = null;
         private static bool m_Loaded = false;
         private static string m_Current;

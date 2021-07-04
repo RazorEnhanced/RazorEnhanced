@@ -6,7 +6,7 @@ namespace Assistant.Filters
     public class VetRewardGumpFilter : Filter
     {
         // 1006046 = You have reward items available.  Click 'ok' below to get the selection menu or 'cancel' to be prompted upon your next login.
-        private static string m_VetRewardStr = "{ xmfhtmlgump 52 35 420 55 1006046 1 1 }";
+        private static readonly string m_VetRewardStr = "{ xmfhtmlgump 52 35 420 55 1006046 1 1 }";
 
         public static void Initialize()
         {

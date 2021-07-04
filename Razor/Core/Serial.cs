@@ -4,7 +4,7 @@ namespace Assistant
 {
 	public struct Serial : IComparable
 	{
-		private uint m_Serial;
+		private readonly uint m_Serial;
 
 		internal static readonly Serial MinusOne = new Serial(0xFFFFFFFF);
 		internal static readonly Serial Zero = new Serial(0);

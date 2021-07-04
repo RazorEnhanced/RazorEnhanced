@@ -21,9 +21,7 @@ namespace Assistant.Filters
 			{
 				if (World.Player == null)
 					return;
-
-                bool visible = true;
-				uint serial = p.ReadUInt32(); // Serial
+                uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
 					return;
@@ -34,18 +32,16 @@ namespace Assistant.Filters
 				p.ReadUInt16(); // Hue
 
 				byte flags = p.ReadByte();
-				visible = (flags & 0x80) == 0;
+                bool visible = (flags & 0x80) == 0;
 
-				if (!visible)
+                if (!visible)
 					args.Block = true;
 			}
 			else if (p.PacketID == 0x78)  // Mobile Incoming
 			{
 				if (World.Player == null)
 					return;
-
-				bool visible = true;
-				uint serial = p.ReadUInt32(); // Serial
+                uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
 					return;
@@ -61,19 +57,16 @@ namespace Assistant.Filters
 				p.ReadUInt16(); // Hue
 
 				byte flags = p.ReadByte();
-				visible = (flags & 0x80) == 0;
+                bool visible = (flags & 0x80) == 0;
 
-				if (!visible)
+                if (!visible)
 					args.Block = true;
 			}
 			else if (p.PacketID == 0x77)  // Mobile Moving
 			{
 				if (World.Player == null)
 					return;
-
-				bool visible = true;
-
-				uint serial = p.ReadUInt32(); // Serial
+                uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
 					return;
@@ -89,9 +82,9 @@ namespace Assistant.Filters
 				p.ReadUInt16(); // Hue
 
 				byte flags = p.ReadByte();
-				visible = (flags & 0x80) == 0;
+                bool visible = (flags & 0x80) == 0;
 
-				if (!visible)
+                if (!visible)
 					args.Block = true;
 			}
 		}

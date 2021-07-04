@@ -2,23 +2,24 @@ namespace RazorEnhanced.UI
 {
 	partial class EnhancedStaticInspector
 	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+        #pragma warning disable CS1587 // XML comment is not placed on a valid language element
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
 
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedStaticInspector));
             this.groupBox1 = new System.Windows.Forms.GroupBox();

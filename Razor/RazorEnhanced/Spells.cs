@@ -49,12 +49,11 @@ namespace RazorEnhanced
         {
             if (World.Player == null)
                 return true;
-
-            Spell s = null;
-
-            int id = 0;
+            int id;
             conversion.TryGetValue(SpellName, out id);
 
+
+            Spell s;
             if (id > 0)
                 s = Spell.Get(id);
             else
@@ -70,12 +69,11 @@ namespace RazorEnhanced
         {
             if (World.Player == null)
                 return true;
-
-            Spell s = null;
-
-            int id = 0;
+            int id;
             conversion.TryGetValue(SpellName, out id);
 
+
+            Spell s;
             if (id > 0)
                 s = Spell.Get(id);
             else
@@ -645,9 +643,9 @@ namespace RazorEnhanced
         {
             if (World.Player == null)
                 return;
-
-            string spell = null;
             string guessedSpellName = GuessSpellName(SpellName);
+
+            string spell;
             m_ClericSpellNameText.TryGetValue(guessedSpellName, out spell);
 
             if (spell == null)
@@ -687,6 +685,8 @@ namespace RazorEnhanced
         ///    Touch of Life : Heals even if Mortal Strike or poison are active on the target
         ///    Trial by Fire : Attackers receive damage when they strike you, sort of like a temporary RPD buff
         ///</param>
+        /// <param name="target">target to use the druid spell on</param>
+        /// <param name="wait"></param>
 
         public static void CastDruid(string SpellName, uint target, bool wait = true)
         {
@@ -721,7 +721,7 @@ namespace RazorEnhanced
                 return;
 
             string guessedSpellName = GuessSpellName(SpellName);
-            string spell = null;
+            string spell;
             m_DruidSpellNameText.TryGetValue(guessedSpellName, out spell);
 
             if (spell == null)
@@ -893,7 +893,7 @@ namespace RazorEnhanced
         // Spell Dictionaries
         //////////////////////////////////////////////////////////////
 
-        private static Dictionary<string, int> m_MagerySpellName = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> m_MagerySpellName = new Dictionary<string, int>
         {
 			// circle 1 magery
 			{ "Clumsy", 1 },
@@ -990,7 +990,7 @@ namespace RazorEnhanced
             { "Noxious Fumes", 74},
         };
 
-		private static Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
 		{
 			{ "Animate Dead", 101 },
 			{ "Blood Oath", 102 },
@@ -1011,7 +1011,7 @@ namespace RazorEnhanced
 			{ "Exorcism", 117 }
 		};
 
-		private static Dictionary<string, int> m_ChivalrySpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_ChivalrySpellName = new Dictionary<string, int>
 		{
 			{ "Cleanse By Fire", 201 },
 			{ "Close Wounds", 202 },
@@ -1025,7 +1025,7 @@ namespace RazorEnhanced
 			{ "Sacred Journey", 210 }
 		};
 
-		private static Dictionary<string, int> m_BushidoSpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_BushidoSpellName = new Dictionary<string, int>
 		{
 			{ "Honorable Execution", 401 },
 			{ "Confidence", 402 },
@@ -1035,7 +1035,7 @@ namespace RazorEnhanced
 			{ "Momentum Strike", 406 }
 		};
 
-		private static Dictionary<string, int> m_NinjitsuSpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_NinjitsuSpellName = new Dictionary<string, int>
 		{
 			{ "Focus Attack", 501 },
 			{ "Death Strike", 502 },
@@ -1048,7 +1048,7 @@ namespace RazorEnhanced
 			{ "Mirror Image", 508 },
 		};
 
-		private static Dictionary<string, int> m_SpellweavingSpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_SpellweavingSpellName = new Dictionary<string, int>
 		{
 			{ "Arcane Circle", 601 },
 			{ "Gift Of Renewal", 602 },
@@ -1069,7 +1069,7 @@ namespace RazorEnhanced
 			{ "Arcane Empowerment", 616 }
 		};
 
-		private static Dictionary<string, int> m_MysticismSpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_MysticismSpellName = new Dictionary<string, int>
 		{
 			{ "Nether Bolt", 678 },
 			{ "Healing Stone", 679 },
@@ -1089,7 +1089,7 @@ namespace RazorEnhanced
 			{ "Rising Colossus", 693 },
 		};
 
-		private static Dictionary<string, int> m_MasterySpellName = new Dictionary<string, int>
+		private static readonly Dictionary<string, int> m_MasterySpellName = new Dictionary<string, int>
 		{
 			{ "Inspire", 701 },
 			{ "Invigorate", 702 },
@@ -1138,7 +1138,7 @@ namespace RazorEnhanced
 			{ "Boarding", 745 },
 		};
 
-        private static Dictionary<string, int> m_ClericSpellName = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> m_ClericSpellName = new Dictionary<string, int>
         {
             { "Angelic Faith", 342 },
             {"Banish Evil", 343 },
@@ -1153,7 +1153,7 @@ namespace RazorEnhanced
             { "Touch of Life", 352 },
             { "Trial by Fire", 353 },
         };
-        private static Dictionary<string, string> m_ClericSpellNameText = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> m_ClericSpellNameText = new Dictionary<string, string>
         {
             { "Angelic Faith", "[cs AngelicFaith" },
             {"Banish Evil", "[cs BanishEvil" },
@@ -1169,7 +1169,7 @@ namespace RazorEnhanced
             { "Trial by Fire", "[cs TrialbyFire" },
         };
 
-        private static Dictionary<string, int> m_DruidSpellName = new Dictionary<string, int>
+        private static readonly Dictionary<string, int> m_DruidSpellName = new Dictionary<string, int>
         {
             { "Shield of Earth", 302 },
             { "Hollow Reed", 303 },
@@ -1193,7 +1193,7 @@ namespace RazorEnhanced
             { "Hibernate", 321 },
         };
 
-        private static Dictionary<string, string> m_DruidSpellNameText = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> m_DruidSpellNameText = new Dictionary<string, string>
         {
             { "Shield of Earth", "[cs ShieldofEarth" },
             { "Hollow Reed", "[cs HollowReed" },
@@ -1216,7 +1216,7 @@ namespace RazorEnhanced
             { "ManaSpring", "[cs manaspring" },
             { "Hibernate", "[cs hibernate" },
         };
-        private static Dictionary<string, int> m_AllSpells = AllSpells();
+        private static readonly Dictionary<string, int> m_AllSpells = AllSpells();
 
         private static Dictionary<string, int> AllSpells()
         {

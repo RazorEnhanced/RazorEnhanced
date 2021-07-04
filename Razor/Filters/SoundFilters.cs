@@ -46,8 +46,8 @@ namespace Assistant.Filters
             return range;
         }
 
-        private LocString m_Name;
-        private ushort[] m_Sounds;
+        private readonly LocString m_Name;
+        private readonly ushort[] m_Sounds;
 
         private SoundFilter(LocString name, params ushort[] blockSounds)
         {

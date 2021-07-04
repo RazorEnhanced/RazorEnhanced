@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 11;
+		private static readonly int SettingVersion = 11;
 
 		private static string m_profileName = null;
 
@@ -170,9 +170,8 @@ namespace RazorEnhanced
 
 			// Version check, Permette update delle tabelle anche se gia esistenti
 			DataRow versionrow = m_Dataset.Tables["GENERAL"].Rows[0];
-			int currentVersion = 0;
-
-			try
+            int currentVersion;
+            try
 			{
 				currentVersion = Convert.ToInt32(versionrow["SettingVersion"]);
 			}
@@ -2187,9 +2186,7 @@ namespace RazorEnhanced
 		}
         internal static void initCleric(DataTable hotkey)
         {
-            DataRow hotkeyrow = null;
-
-            hotkeyrow = hotkey.NewRow();
+            DataRow hotkeyrow = hotkey.NewRow();
             hotkeyrow.ItemArray = new object[] { "SpellsCleric", "Angelic Faith", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
             hotkeyrow = hotkey.NewRow();
@@ -2228,9 +2225,7 @@ namespace RazorEnhanced
         }
         internal static void initDruid(DataTable hotkey)
         {
-            DataRow hotkeyrow = null;
-
-            hotkeyrow = hotkey.NewRow();
+            DataRow hotkeyrow = hotkey.NewRow();
             hotkeyrow.ItemArray = new object[] { "SpellsDruid", "Leaf whirlwind", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
             hotkeyrow = hotkey.NewRow();
@@ -2802,7 +2797,7 @@ namespace RazorEnhanced
                         if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
                         {
                             RazorEnhanced.AutoLoot.AutoLootItem autoLootItem = ((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
-                            List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItems = null;
+                            List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItems;
                             if (lootList.TryGetValue(autoLootItem.Graphics, out autoLootItems))
                             {
                                 autoLootItems.Add(autoLootItem);

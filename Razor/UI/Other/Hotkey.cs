@@ -55,8 +55,8 @@ namespace Assistant
 		{
 			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
 			{
-				Keys k = Keys.None;
-				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out bool passkey);
+                Keys k;
+                RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out bool passkey);
 				hotkeytextbox.Text = HotKey.KeyString(k);
 				hotkeypassCheckBox.Checked = passkey;
 				hotkeytextbox.LastKey = Keys.None;

@@ -55,8 +55,8 @@ namespace Assistant
 			}
 		}
 
-		private static System.Threading.Timer m_Timer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1));
-		private static ConcurrentDictionary<string, MsgInfo> m_Table = new ConcurrentDictionary<string, MsgInfo>();
+		private static readonly System.Threading.Timer m_Timer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1));
+		private static readonly ConcurrentDictionary<string, MsgInfo> m_Table = new ConcurrentDictionary<string, MsgInfo>();
 
 		internal static bool Enqueue(Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{

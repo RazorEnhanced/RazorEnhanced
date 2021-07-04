@@ -125,7 +125,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonOpen.Size = new System.Drawing.Size(56, 22);
 			this.toolStripButtonOpen.Text = "Open";
 			this.toolStripButtonOpen.ToolTipText = "Open ( CTRL + O )";
-			this.toolStripButtonOpen.Click += new System.EventHandler(this.toolStripButtonOpen_Click);
+			this.toolStripButtonOpen.Click += new System.EventHandler(this.ToolStripButtonOpen_Click);
 			// 
 			// toolStripButtonSave
 			// 
@@ -135,7 +135,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonSave.Size = new System.Drawing.Size(51, 22);
 			this.toolStripButtonSave.Text = "Save";
 			this.toolStripButtonSave.ToolTipText = "Save ( CTRL + S )";
-			this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+			this.toolStripButtonSave.Click += new System.EventHandler(this.ToolStripButtonSave_Click);
 			// 
 			// toolStripButtonSaveAs
 			// 
@@ -145,7 +145,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonSaveAs.Size = new System.Drawing.Size(67, 22);
 			this.toolStripButtonSaveAs.Text = "Save As";
 			this.toolStripButtonSaveAs.ToolTipText = "Save As ( CTRL + SHIFT + S )";
-			this.toolStripButtonSaveAs.Click += new System.EventHandler(this.toolStripButtonSaveAs_Click);
+			this.toolStripButtonSaveAs.Click += new System.EventHandler(this.ToolStripButtonSaveAs_Click);
 			// 
 			// toolStripButtonClose
 			// 
@@ -155,7 +155,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonClose.Size = new System.Drawing.Size(51, 22);
 			this.toolStripButtonClose.Text = "New";
 			this.toolStripButtonClose.ToolTipText = "Close ( CTRL + E )";
-			this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
+			this.toolStripButtonClose.Click += new System.EventHandler(this.ToolStripButtonClose_Click);
 			// 
 			// toolStripButtonSearch
 			// 
@@ -165,7 +165,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonSearch.Size = new System.Drawing.Size(62, 22);
 			this.toolStripButtonSearch.Text = "Search";
 			this.toolStripButtonSearch.ToolTipText = "Search ( CTRL + F )";
-			this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
+			this.toolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -180,7 +180,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonPlay.Size = new System.Drawing.Size(49, 22);
 			this.toolStripButtonPlay.Text = "Play";
 			this.toolStripButtonPlay.ToolTipText = "Play ( F6 )";
-			this.toolStripButtonPlay.Click += new System.EventHandler(this.toolStripButtonPlay_Click);
+			this.toolStripButtonPlay.Click += new System.EventHandler(this.ToolStripButtonPlay_Click);
 			// 
 			// toolStripButtonStop
 			// 
@@ -190,7 +190,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonStop.Size = new System.Drawing.Size(51, 22);
 			this.toolStripButtonStop.Text = "Stop";
 			this.toolStripButtonStop.ToolTipText = "Stop ( F4 )";
-			this.toolStripButtonStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
+			this.toolStripButtonStop.Click += new System.EventHandler(this.ToolStripButtonStop_Click);
 			// 
 			// toolStripSeparator4
 			// 
@@ -205,7 +205,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonDebug.Size = new System.Drawing.Size(99, 22);
 			this.toolStripButtonDebug.Text = "Debug Mode!";
 			this.toolStripButtonDebug.ToolTipText = "Debug ( F5 )";
-			this.toolStripButtonDebug.Click += new System.EventHandler(this.toolStripButtonDebug_Click);
+			this.toolStripButtonDebug.Click += new System.EventHandler(this.ToolStripButtonDebug_Click);
 			// 
 			// toolStripNextCall
 			// 
@@ -215,7 +215,7 @@ namespace RazorEnhanced.UI
 			this.toolStripNextCall.Size = new System.Drawing.Size(74, 22);
 			this.toolStripNextCall.Text = "Next Call";
 			this.toolStripNextCall.ToolTipText = "Next Call ( F12 )";
-			this.toolStripNextCall.Click += new System.EventHandler(this.toolStripNextCall_Click);
+			this.toolStripNextCall.Click += new System.EventHandler(this.ToolStripNextCall_Click);
 			// 
 			// toolStripButtonNextLine
 			// 
@@ -225,7 +225,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonNextLine.Size = new System.Drawing.Size(76, 22);
 			this.toolStripButtonNextLine.Text = "Next Line";
 			this.toolStripButtonNextLine.ToolTipText = "Next Line ( F10 )";
-			this.toolStripButtonNextLine.Click += new System.EventHandler(this.toolStripButtonNextLine_Click);
+			this.toolStripButtonNextLine.Click += new System.EventHandler(this.ToolStripButtonNextLine_Click);
 			// 
 			// toolStripButtonNextReturn
 			// 
@@ -235,7 +235,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonNextReturn.Size = new System.Drawing.Size(89, 22);
 			this.toolStripButtonNextReturn.Text = "Next Return";
 			this.toolStripButtonNextReturn.ToolTipText = "Next Return ( F11 )";
-			this.toolStripButtonNextReturn.Click += new System.EventHandler(this.toolStripButtonNextReturn_Click);
+			this.toolStripButtonNextReturn.Click += new System.EventHandler(this.ToolStripButtonNextReturn_Click);
 			// 
 			// toolStripButtonNextBreakpoint
 			// 
@@ -245,7 +245,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonNextBreakpoint.Size = new System.Drawing.Size(111, 22);
 			this.toolStripButtonNextBreakpoint.Text = "Next Breakpoint";
 			this.toolStripButtonNextBreakpoint.ToolTipText = "Next Breakpoint ( F9 )";
-			this.toolStripButtonNextBreakpoint.Click += new System.EventHandler(this.toolStripButtonNextBreakpoint_Click);
+			this.toolStripButtonNextBreakpoint.Click += new System.EventHandler(this.ToolStripButtonNextBreakpoint_Click);
 			// 
 			// toolStripButtonAddBreakpoint
 			// 
@@ -255,7 +255,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonAddBreakpoint.Size = new System.Drawing.Size(49, 22);
 			this.toolStripButtonAddBreakpoint.Text = "Add";
 			this.toolStripButtonAddBreakpoint.ToolTipText = "Breakpoint ( F7 )";
-			this.toolStripButtonAddBreakpoint.Click += new System.EventHandler(this.toolStripButtonAddBreakpoint_Click);
+			this.toolStripButtonAddBreakpoint.Click += new System.EventHandler(this.ToolStripButtonAddBreakpoint_Click);
 			// 
 			// toolStripButtonRemoveBreakpoints
 			// 
@@ -265,7 +265,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonRemoveBreakpoints.Size = new System.Drawing.Size(70, 22);
 			this.toolStripButtonRemoveBreakpoints.Text = "Remove";
 			this.toolStripButtonRemoveBreakpoints.ToolTipText = "Remove ( F8 )";
-			this.toolStripButtonRemoveBreakpoints.Click += new System.EventHandler(this.toolStripButtonRemoveBreakpoints_Click);
+			this.toolStripButtonRemoveBreakpoints.Click += new System.EventHandler(this.ToolStripButtonRemoveBreakpoints_Click);
 			// 
 			// toolStripSeparator3
 			// 
@@ -280,7 +280,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonGumps.Size = new System.Drawing.Size(64, 22);
 			this.toolStripButtonGumps.Text = "Record";
 			this.toolStripButtonGumps.ToolTipText = "Record ( CTRL + R )";
-			this.toolStripButtonGumps.Click += new System.EventHandler(this.toolStripRecord_Click);
+			this.toolStripButtonGumps.Click += new System.EventHandler(this.ToolStripRecord_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -295,7 +295,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButtonInspect.Size = new System.Drawing.Size(106, 22);
 			this.toolStripButtonInspect.Text = "Inspect Entities";
 			this.toolStripButtonInspect.ToolTipText = "Inspect Entities ( CTRL + I )";
-			this.toolStripButtonInspect.Click += new System.EventHandler(this.toolStripButtonInspect_Click);
+			this.toolStripButtonInspect.Click += new System.EventHandler(this.ToolStripButtonInspect_Click);
 			// 
 			// toolStripButton2
 			// 
@@ -305,7 +305,7 @@ namespace RazorEnhanced.UI
 			this.toolStripButton2.Size = new System.Drawing.Size(106, 22);
 			this.toolStripButton2.Text = "Inspect Gumps";
 			this.toolStripButton2.ToolTipText = "Inspect Gumps ( CTRL + G )";
-			this.toolStripButton2.Click += new System.EventHandler(this.toolStripInspectGump_Click);
+			this.toolStripButton2.Click += new System.EventHandler(this.ToolStripInspectGump_Click);
 			// 
 			// inspectaliasbutton
 			// 
@@ -315,7 +315,7 @@ namespace RazorEnhanced.UI
 			this.inspectaliasbutton.Size = new System.Drawing.Size(93, 22);
 			this.inspectaliasbutton.Text = "Inspect Alias";
 			this.inspectaliasbutton.ToolTipText = "Inspect Alias";
-			this.inspectaliasbutton.Click += new System.EventHandler(this.toolStripInspectAlias_Click);
+			this.inspectaliasbutton.Click += new System.EventHandler(this.ToolStripInspectAlias_Click);
 			// 
 			// statusStrip1
 			// 
@@ -411,7 +411,7 @@ namespace RazorEnhanced.UI
 			this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
 			this.copyToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
 			this.copyToolStripMenuItem.Text = "Copy";
-			this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+			this.copyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
 			// 
 			// pasteToolStripMenuItem
 			// 
@@ -419,7 +419,7 @@ namespace RazorEnhanced.UI
 			this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
 			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
 			this.pasteToolStripMenuItem.Text = "Paste";
-			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+			this.pasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
 			// 
 			// cutToolStripMenuItem
 			// 
@@ -427,7 +427,7 @@ namespace RazorEnhanced.UI
 			this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
 			this.cutToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
 			this.cutToolStripMenuItem.Text = "Cut";
-			this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+			this.cutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItem1
 			// 
@@ -440,7 +440,7 @@ namespace RazorEnhanced.UI
 			this.commentSelectLineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
 			this.commentSelectLineToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
 			this.commentSelectLineToolStripMenuItem.Text = "Comment Line";
-			this.commentSelectLineToolStripMenuItem.Click += new System.EventHandler(this.commentSelectLineToolStripMenuItem_Click);
+			this.commentSelectLineToolStripMenuItem.Click += new System.EventHandler(this.CommentSelectLineToolStripMenuItem_Click);
 			// 
 			// unCommentLineToolStripMenuItem
 			// 
@@ -448,7 +448,7 @@ namespace RazorEnhanced.UI
 			this.unCommentLineToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
 			this.unCommentLineToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
 			this.unCommentLineToolStripMenuItem.Text = "UnComment Line";
-			this.unCommentLineToolStripMenuItem.Click += new System.EventHandler(this.unCommentLineToolStripMenuItem_Click);
+			this.unCommentLineToolStripMenuItem.Click += new System.EventHandler(this.UnCommentLineToolStripMenuItem_Click);
 			// 
 			// messagelistBox
 			// 
@@ -461,7 +461,7 @@ namespace RazorEnhanced.UI
 			this.messagelistBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.messagelistBox.Size = new System.Drawing.Size(1043, 121);
 			this.messagelistBox.TabIndex = 1;
-			this.messagelistBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.messagelistBox_KeyUp);
+			this.messagelistBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MessagelistBox_KeyUp);
 			// 
 			// logboxMenuStrip
 			// 
@@ -476,7 +476,7 @@ namespace RazorEnhanced.UI
 			this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
 			this.clearToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
 			this.clearToolStripMenuItem.Text = "Clear";
-			this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+			this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
 			// 
 			// copyToolStripMenuItem1
 			// 
@@ -484,7 +484,7 @@ namespace RazorEnhanced.UI
 			this.copyToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
 			this.copyToolStripMenuItem1.Size = new System.Drawing.Size(153, 22);
 			this.copyToolStripMenuItem1.Text = "Copy";
-			this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
+			this.copyToolStripMenuItem1.Click += new System.EventHandler(this.CopyToolStripMenuItem1_Click);
 			// 
 			// splitContainer2
 			// 

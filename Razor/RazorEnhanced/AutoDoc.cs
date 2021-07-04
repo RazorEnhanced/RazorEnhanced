@@ -218,7 +218,8 @@ namespace RazorEnhanced
 
         public static DocContainer ImportPythonAPI(string path = null)
         {
-            if (path == null) { path = DEFAULT_JSON_PATH; }
+            if (path == null) {
+            }
 
             var json_txt = ReadAllText(DEFAULT_JSON_PATH);
             return JsonConvert.DeserializeObject<DocContainer>(json_txt);
@@ -226,8 +227,8 @@ namespace RazorEnhanced
 
 
         private static String IDT(int num) { return new String('\t', num); }
-        private static string Q3 = "\"\"\"";
-        private static Regex NL = new Regex("\n[ \t]*", RegexOptions.Multiline | RegexOptions.Compiled);
+        private static readonly string Q3 = "\"\"\"";
+        private static readonly Regex NL = new Regex("\n[ \t]*", RegexOptions.Multiline | RegexOptions.Compiled);
         private static string IndentText(string IDT, string text) { return NL.Replace(text, "\n" + IDT); }
 
         private static string ReplacePythonTypes(string typeName, bool addQuotes=false) {
@@ -485,7 +486,7 @@ namespace RazorEnhanced
 
 
 
-        private static string html_main = @"
+        private static readonly string html_main = @"
             <html>
                 <header>
                     <link rel=stylesheet href='style.css' type='text/css'/>
@@ -1376,7 +1377,7 @@ namespace RazorEnhanced
             return "";
         }
 
-        private static Regex baseIndent = new Regex(@"\A\n?(\s+)\S", RegexOptions.Compiled);
+        private static readonly Regex baseIndent = new Regex(@"\A\n?(\s+)\S", RegexOptions.Compiled);
         public static String RemoveBaseIndentation(string text)
         {
             var match = baseIndent.Match(text);

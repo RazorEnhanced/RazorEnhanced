@@ -16,7 +16,7 @@ namespace RazorEnhanced
 
 	public class EnhancedEntity
 	{
-		private UOEntity m_UOEntity;
+		private readonly UOEntity m_UOEntity;
 		private Serial m_Serial;
 
 		internal EnhancedEntity(UOEntity entity)

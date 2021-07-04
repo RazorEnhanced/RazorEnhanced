@@ -1140,10 +1140,9 @@ namespace RazorEnhanced
                 return null;
             }
 
-            Assistant.Item assistantItem = null;
             if (l != Assistant.Layer.Invalid)
             {
-                assistantItem = World.Player.GetItemOnLayer(l);
+                Assistant.Item assistantItem = World.Player.GetItemOnLayer(l);
                 if (assistantItem == null)
                     return null;
                 else
@@ -2299,7 +2298,7 @@ namespace RazorEnhanced
         // Open Paperdoll
         public static void OpenPaperDoll(int serial = -1)
         {
-            Assistant.Mobile assistantMobile = null;
+            Assistant.Mobile assistantMobile;
             if (serial == -1)
                 assistantMobile = Assistant.World.FindMobile(World.Player.Serial);
             else
@@ -2431,7 +2430,7 @@ namespace RazorEnhanced
         // Props
 
         // Layer to scan
-        private static List<Assistant.Layer> m_layer_props = new List<Layer>
+        private static readonly List<Assistant.Layer> m_layer_props = new List<Layer>
         {
             Layer.RightHand,
             Layer.LeftHand,
@@ -2479,7 +2478,7 @@ namespace RazorEnhanced
                 if (!itemtocheck.PropsUpdated)
                     RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
 
-                attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+                attributevalue += RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
             }
             return attributevalue;
         }

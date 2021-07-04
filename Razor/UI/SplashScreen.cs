@@ -51,7 +51,7 @@ namespace Assistant
 			}
 		}
 
-		private System.ComponentModel.Container components = null;
+		private readonly System.ComponentModel.Container components = null;
 
 		internal SplashScreen()
 		{

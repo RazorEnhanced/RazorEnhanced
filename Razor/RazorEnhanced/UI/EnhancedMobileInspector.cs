@@ -10,7 +10,7 @@ namespace RazorEnhanced.UI
 	internal partial class EnhancedMobileInspector : Form
 	{
 		private Thread m_ProcessInfo;
-		private Assistant.Mobile m_mobile;
+		private readonly Assistant.Mobile m_mobile;
 
 		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{
@@ -25,10 +25,8 @@ namespace RazorEnhanced.UI
 
 			foreach (string prop in m_props)
 			{
-				float attrib = 0;
-
-				attrib = Player.SumAttribute(prop);
-				if (attrib > 0)
+                float attrib = Player.SumAttribute(prop);
+                if (attrib > 0)
 					AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": "+ attrib);
 			}
 		}
@@ -69,7 +67,7 @@ namespace RazorEnhanced.UI
 		}
 
 		// Props to show
-		private List<string> m_props = new List<string>
+		private readonly List<string> m_props = new List<string>
 		{
 			"Fire Resist",
 			"Cold Resist",
@@ -121,7 +119,7 @@ namespace RazorEnhanced.UI
 		};
 
 
-		private void razorButton1_Click(object sender, EventArgs e)
+		private void RazorButton1_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -132,52 +130,52 @@ namespace RazorEnhanced.UI
 			this.Close();
 		}
 
-		private void bNameCopy_Click(object sender, EventArgs e)
+		private void BNameCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lName.Text);
 		}
 
-		private void bSerialCopy_Click(object sender, EventArgs e)
+		private void BSerialCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lSerial.Text);
 		}
 
-		private void bItemIdCopy_Click(object sender, EventArgs e)
+		private void BItemIdCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lMobileID.Text);
 		}
 
-		private void bColorCopy_Click(object sender, EventArgs e)
+		private void BColorCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lColor.Text);
 		}
 
-		private void bPositionCopy_Click(object sender, EventArgs e)
+		private void BPositionCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lPosition.Text);
 		}
 
-		private void bContainerCopy_Click(object sender, EventArgs e)
+		private void BContainerCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lHits.Text);
 		}
 
-		private void bRContainerCopy_Click(object sender, EventArgs e)
+		private void BRContainerCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lMana.Text);
 		}
 
-		private void bAmountCopy_Click(object sender, EventArgs e)
+		private void BAmountCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lStam.Text);
 		}
 
-		private void bLayerCopy_Click(object sender, EventArgs e)
+		private void BLayerCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lNotoriety.Text);
 		}
 
-		private void bOwnedCopy_Click(object sender, EventArgs e)
+		private void BOwnedCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lDirection.Text);
 		}
@@ -198,12 +196,27 @@ namespace RazorEnhanced.UI
 			if (m_mobile == null)
 				Close();
 
-			// general
-			lName.Text = m_mobile.Name.ToString();
+            // general
+            ToolTip toolTip = new ToolTip
+            {
+                // Set up the delays for the ToolTip.
+                AutoPopDelay = 10000,
+                InitialDelay = 1000,
+                ReshowDelay = 500,
+                // Force the ToolTip text to be displayed whether or not the form is active.
+                ShowAlways = true
+            };
+
+            lName.Text = m_mobile.Name.ToString();
 			lSerial.Text = "0x" + m_mobile.Serial.Value.ToString("X8");
+
 			lMobileID.Text = "0x" + m_mobile.Body.ToString("X4");
-			lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
-			lPosition.Text = m_mobile.Position.ToString();
+            toolTip.SetToolTip(lMobileID, m_mobile.Body.ToString());
+
+            lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
+            toolTip.SetToolTip(lColor, m_mobile.Hue.ToString());
+
+            lPosition.Text = m_mobile.Position.ToString();
 
 			lNotoriety.Text = m_mobile.Notoriety.ToString();
 

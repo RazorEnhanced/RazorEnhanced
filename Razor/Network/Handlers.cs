@@ -9,7 +9,7 @@ namespace Assistant
 {
 	public class PacketHandlers
 	{
-		private static List<Item> m_IgnoreGumps = new List<Item>();
+		private static readonly List<Item> m_IgnoreGumps = new List<Item>();
 		internal static List<Item> IgnoreGumps { get { return m_IgnoreGumps; } }
 
 		public static void Initialize()
@@ -303,8 +303,8 @@ namespace Assistant
 					}
 				case 0x1C:// cast spell
 					{
-						Serial ser = Serial.MinusOne;
-						if (p.ReadUInt16() == 1)
+                        Serial ser;
+                        if (p.ReadUInt16() == 1)
 							ser = p.ReadUInt32();
 						ushort sid = p.ReadUInt16();
 
@@ -411,11 +411,10 @@ namespace Assistant
 					{
 						if (RazorEnhanced.ScriptRecorder.OnRecord)
 						{
-							int virtueid = 0;
-							try
-							{
-								virtueid = Convert.ToInt32(command.Split(' ')[0]);
-								RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(3, virtueid);
+                            try
+                            {
+                                int virtueid = Convert.ToInt32(command.Split(' ')[0]);
+                                RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(3, virtueid);
 							}
 							catch { break; }
 						}
@@ -2511,64 +2510,64 @@ namespace Assistant
 					}
 				case 0x10: // Equip Info
 					{
-						uint attrib = 0;
-						if (World.Player != null)
-						{
-							uint serial = p.ReadUInt32();
-							uint info = p.ReadUInt32();
-							uint owner = p.ReadUInt32();
-							if (owner == 0xFFFFFFFD)
-							{
-								ushort nameLengh = p.ReadUInt16();
-								string ownername = p.ReadString(nameLengh);
-								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-								if (World.Player.Journal.Count > 100)
-								{
-									RazorEnhanced.Journal.JournalEntry ra;
-									World.Player.Journal.TryDequeue(out ra);
-								}
+                        if (World.Player != null)
+                        {
+                            uint serial = p.ReadUInt32();
+                            uint info = p.ReadUInt32();
+                            uint owner = p.ReadUInt32();
+                            uint attrib;
+                            if (owner == 0xFFFFFFFD)
+                            {
+                                ushort nameLengh = p.ReadUInt16();
+                                string ownername = p.ReadString(nameLengh);
+                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
+                                if (World.Player.Journal.Count > 100)
+                                {
+                                    RazorEnhanced.Journal.JournalEntry ra;
+                                    World.Player.Journal.TryDequeue(out ra);
+                                }
 
-								attrib = p.ReadUInt32();
-							}
-							else
-								attrib = owner;
+                                attrib = p.ReadUInt32();
+                            }
+                            else
+                                attrib = owner;
 
-							if (attrib != 0xFFFFFFFC)
-							{
-								while (attrib != 0xFFFFFFFF)
-								{
-									try
-									{
-										ushort charge = p.ReadUInt16();
-										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-										if (World.Player.Journal.Count > 100)
-										{
-											RazorEnhanced.Journal.JournalEntry ra;
-											World.Player.Journal.TryDequeue(out ra);
-										}
+                            if (attrib != 0xFFFFFFFC)
+                            {
+                                while (attrib != 0xFFFFFFFF)
+                                {
+                                    try
+                                    {
+                                        ushort charge = p.ReadUInt16();
+                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
+                                        if (World.Player.Journal.Count > 100)
+                                        {
+                                            RazorEnhanced.Journal.JournalEntry ra;
+                                            World.Player.Journal.TryDequeue(out ra);
+                                        }
 
-										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-										if (World.Player.Journal.Count > 100)
-										{
-											RazorEnhanced.Journal.JournalEntry ra;
-											World.Player.Journal.TryDequeue(out ra);
-										}
-										attrib = p.ReadUInt32();
-									}
-									catch { }
-								}
-							}
-							else
-							{
-								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-								if (World.Player.Journal.Count > 100)
-								{
-									RazorEnhanced.Journal.JournalEntry ra;
-									World.Player.Journal.TryDequeue(out ra);
-								}
-							}
-						}
-						break;
+                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
+                                        if (World.Player.Journal.Count > 100)
+                                        {
+                                            RazorEnhanced.Journal.JournalEntry ra;
+                                            World.Player.Journal.TryDequeue(out ra);
+                                        }
+                                        attrib = p.ReadUInt32();
+                                    }
+                                    catch { }
+                                }
+                            }
+                            else
+                            {
+                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
+                                if (World.Player.Journal.Count > 100)
+                                {
+                                    RazorEnhanced.Journal.JournalEntry ra;
+                                    World.Player.Journal.TryDequeue(out ra);
+                                }
+                            }
+                        }
+                        break;
 					}
 				case 0x14: // context menu
 					{
@@ -2766,7 +2765,7 @@ namespace Assistant
 			}
 		}
 
-		private static List<Serial> m_Party = new List<Serial>();
+		private static readonly List<Serial> m_Party = new List<Serial>();
 		internal static List<Serial> Party { get { return m_Party; } }
 		private static Timer m_PartyDeclineTimer = null;
 		internal static Serial PartyLeader = Serial.Zero;
@@ -2886,11 +2885,10 @@ namespace Assistant
 			{
 				case 0x19: // set ability
 					{
-						int ability = 0;
-						if (p.ReadByte() == 0)
+                        if (p.ReadByte() == 0)
 						{
-							ability = p.ReadInt32();
-							RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);
+                            int ability = p.ReadInt32();
+                            RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);
 							World.Player.HasSpecial = true;
 						}
 						break;
