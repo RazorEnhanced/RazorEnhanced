@@ -195,7 +195,7 @@ namespace Assistant
                 {
                     num_packets = int.Parse(param[0]);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     num_packets = 5;
                 }

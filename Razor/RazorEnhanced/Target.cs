@@ -208,6 +208,7 @@ namespace RazorEnhanced
             TargetResource(item.Serial, resouce_name);
         }
         
+
         public static void TargetResource(Item item, int resoruce_number)
         {
             TargetResource(item.Serial, resoruce_number);

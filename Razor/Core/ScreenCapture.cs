@@ -22,7 +22,6 @@ namespace Assistant
 				Timer.DelayedCallback(TimeSpan.FromSeconds(delay), m_DoCaptureCall).Start();
 		}
 
-		/// <summary>
 		public static Image CaptureWindow(IntPtr handle)
 		{
 			// get te hDC of the target window
@@ -52,10 +51,6 @@ namespace Assistant
 			GDI32.DeleteObject(hBitmap);
 			return img;
 		}
-
-		/// </summary>
-
-
 
 		internal static void CaptureNow()
 		{

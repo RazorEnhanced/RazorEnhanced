@@ -164,7 +164,7 @@ namespace RazorEnhanced
                         /*Dalamar: END*/
                     }
                 }
-                catch (IronPython.Runtime.Exceptions.SystemExitException ex)
+                catch (IronPython.Runtime.Exceptions.SystemExitException)
                 {
                     Stop();
                     // sys.exit - terminate the thread

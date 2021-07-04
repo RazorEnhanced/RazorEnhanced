@@ -797,7 +797,7 @@ namespace RazorEnhanced
 				
 				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{
-					int x = 0;
+					// int x = 0;
 					if (!buyItem.Selected)
 						continue;
 

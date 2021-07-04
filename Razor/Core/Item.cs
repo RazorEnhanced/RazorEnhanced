@@ -138,7 +138,7 @@ namespace Assistant
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 System.Windows.Forms.MessageBox.Show("Error loading Config/weapons.json");
             }
@@ -1044,7 +1044,7 @@ namespace Assistant
                 // The m_FakePropIndex at this point was beyond the end of the array
                 m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // shold do something, but ...
             }
