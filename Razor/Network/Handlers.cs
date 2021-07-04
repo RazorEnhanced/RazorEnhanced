@@ -3221,26 +3221,26 @@ namespace Assistant
 				PacketReader pComp = p.GetCompressedReader();
 				int len = 0;
 				int x1 = 0;
-				string[] stringlistparse = new string[numStrings];
+				string[] stringlistparse = new string[numStrings+10]; // + 10 is just a little extra room
 
 				// This reads all the text data
 				// The separator for each section seems to be 4 words all 0s
 				// Each string starts with a word containing the length of the number of chars (unicode) to read
 
 				//while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0) // This seems not valid on OSI server that sometimes sends zeros
-				while (!pComp.AtEnd)
+				while ((!pComp.AtEnd) && (x1 < stringlistparse.Length))
 				{
 					len = pComp.ReadInt16();
 					if (len > 0)
 					{
 						string tempstring = pComp.ReadUnicodeString(len);
 						stringlistparse[x1] = tempstring;
-					}
+                        x1++;
+                    }
 					else
                     {
 						stringlistparse[x1] = "";
 					}
-					x1++;
 				}
 
 				if (TryParseGump(layout, out string[] gumpPieces))
