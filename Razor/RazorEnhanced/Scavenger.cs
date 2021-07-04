@@ -145,12 +145,16 @@ namespace RazorEnhanced
         internal static void AddLog(string addlog)
         {
             if (!Client.Running)
+            {
                 return;
+            }
 
             Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerLogBox.Items.Add(addlog));
             Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerLogBox.SelectedIndex = s.ScavengerLogBox.Items.Count - 1);
             if (Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count > 300)
+            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerLogBox.Items.Clear());
+            }
         }
 
         internal static void RefreshLists()
@@ -159,7 +163,9 @@ namespace RazorEnhanced
 
             ScavengerList selectedList = lists.FirstOrDefault(l => l.Selected);
             if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
+            {
                 return;
+            }
 
             Assistant.Engine.MainWindow.ScavengerListSelect.Items.Clear();
             foreach (ScavengerList l in lists)
@@ -193,7 +199,9 @@ namespace RazorEnhanced
                     {
                         string color = "All";
                         if (item.Color != -1)
+                        {
                             color = "0x" + item.Color.ToString("X4");
+                        }
 
                         Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
                     }
@@ -212,20 +220,30 @@ namespace RazorEnhanced
             foreach (DataGridViewRow row in Assistant.Engine.MainWindow.ScavengerDataGridView.Rows)
             {
                 if (row.IsNewRow)
+                {
                     continue;
+                }
 
                 int color = 0;
                 if ((string)row.Cells[3].Value == "All")
+                {
                     color = -1;
+                }
                 else
+                {
                     color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                }
 
                 bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
                 if (row.Cells[4].Value != null)
+                {
                     Settings.Scavenger.ItemInsert(Assistant.Engine.MainWindow.ScavengerListSelect.Text, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<ScavengerItem.Property>)row.Cells[4].Value));
+                }
                 else
+                {
                     Settings.Scavenger.ItemInsert(Assistant.Engine.MainWindow.ScavengerListSelect.Text, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<ScavengerItem.Property>()));
+                }
             }
 
             Settings.Save(); // Salvo dati
@@ -239,20 +257,30 @@ namespace RazorEnhanced
             foreach (DataGridViewRow row in Assistant.Engine.MainWindow.ScavengerDataGridView.Rows)
             {
                 if (row.IsNewRow)
+                {
                     continue;
+                }
 
                 int color = 0;
                 if ((string)row.Cells[3].Value == "All")
+                {
                     color = -1;
+                }
                 else
+                {
                     color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                }
 
                 bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
                 if (row.Cells[4].Value != null)
+                {
                     Settings.Scavenger.ItemInsert(newList, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<ScavengerItem.Property>)row.Cells[4].Value));
+                }
                 else
+                {
                     Settings.Scavenger.ItemInsert(newList, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<ScavengerItem.Property>()));
+                }
             }
 
             Settings.Save(); // Salvo dati
@@ -306,7 +334,9 @@ namespace RazorEnhanced
                 }
 
                 if (!scavengerItem.Selected)
+                {
                     continue;
+                }
 
                 foreach (RazorEnhanced.Item itemGround in itemsOnGround)
                 {
@@ -331,14 +361,21 @@ namespace RazorEnhanced
         internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround)
         {
             if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
+            {
                 return;
+            }
 
             if (Assistant.Client.Instance.ServerEncrypted) // Check For Osi Locked item
             {
                 if (Items.GetPropValue(itemGround, "Locked Down") > 0)
+                {
                     return;
+                }
+
                 if (Items.GetPropValue(itemGround, "Locked Down & Secure") > 0)
+                {
                     return;
+                }
             }
 
             if (scavengerItem.Properties.Count > 0) // Item con props
@@ -361,7 +398,9 @@ namespace RazorEnhanced
                 }
 
                 if (propsOk) // Tutte le props match OK
+                {
                     DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
+                }
             }
             else // Item Senza props
             {
@@ -391,10 +430,14 @@ namespace RazorEnhanced
         internal static void AutoRun()
         {
             if (!Client.Running)
+            {
                 return;
+            }
 
             if (World.Player == null)
+            {
                 return;
+            }
 
             // Genero filtro item
             m_itemfilter.RangeMax = m_maxrange;
@@ -480,7 +523,9 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: Scavenger.Start: Scavenger already running");
             }
             else
+            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = true);
+            }
         }
 
         /// <summary>
@@ -493,7 +538,9 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: Scavenger.Stop: Scavenger already sleeping");
             }
             else
+            {
                 Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = false);
+            }
         }
 
         /// <summary>

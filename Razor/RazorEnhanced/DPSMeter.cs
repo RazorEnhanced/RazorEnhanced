@@ -33,9 +33,11 @@ namespace RazorEnhanced
 		internal static void AddDamage(uint serial, ushort damage)
 		{
 			if (World.Player.Serial == serial)
-				return;
+            {
+                return;
+            }
 
-			if (m_damagedata.ContainsKey(serial))
+            if (m_damagedata.ContainsKey(serial))
 			{
 				m_damagedata[serial].Damage += damage;
 			}
@@ -62,18 +64,26 @@ namespace RazorEnhanced
 			foreach (KeyValuePair<uint, DPSMeter.DamageData> data in m_damagedata)
 			{
 				if (serial != -1 && data.Key != serial) // filtro serial attivo
-					continue;
+                {
+                    continue;
+                }
 
-				if (max != -1 && data.Value.Damage >= max) // filtro max attivo
-					continue;
+                if (max != -1 && data.Value.Damage >= max) // filtro max attivo
+                {
+                    continue;
+                }
 
-				if (min != -1 && data.Value.Damage <= min) // filtro min attivo
-					continue;
+                if (min != -1 && data.Value.Damage <= min) // filtro min attivo
+                {
+                    continue;
+                }
 
-				if (name != null && !data.Value.Name.Contains(name)) // filtro nome attivo
-					continue;
+                if (name != null && !data.Value.Name.Contains(name)) // filtro nome attivo
+                {
+                    continue;
+                }
 
-				DataGridViewRow row = DpsMeterGridView.Rows[DpsMeterGridView.Rows.Add()];
+                DataGridViewRow row = DpsMeterGridView.Rows[DpsMeterGridView.Rows.Add()];
 				// Add data
 				row.Cells[0].Value = "0x" + data.Key.ToString("X8");
 				row.Cells[1].Value = data.Value.Name;
@@ -103,24 +113,30 @@ namespace RazorEnhanced
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterStartB.Enabled)
-				Engine.MainWindow.SafeAction(s => s.DPSMeterStartB.PerformClick());
-		}
+            {
+                Engine.MainWindow.SafeAction(s => s.DPSMeterStartB.PerformClick());
+            }
+        }
         /// <summary>
         /// Stop DPSMeter engine.
         /// </summary>
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterStopB.Enabled)
-				Engine.MainWindow.SafeAction(s => s.DPSMeterStopB.PerformClick());
-		}
+            {
+                Engine.MainWindow.SafeAction(s => s.DPSMeterStopB.PerformClick());
+            }
+        }
         /// <summary>
         /// Pause DPSMeter data recording.
         /// </summary>
 		public static void Pause()
 		{
 			if (Assistant.Engine.MainWindow.DPSMeterPauseB.Enabled)
-				Engine.MainWindow.SafeAction(s => s.DPSMeterPauseB.PerformClick());
-		}
+            {
+                Engine.MainWindow.SafeAction(s => s.DPSMeterPauseB.PerformClick());
+            }
+        }
 
         /// <summary>
         /// Get total damage per Mobile.
@@ -130,9 +146,11 @@ namespace RazorEnhanced
 		public static int GetDamage(int serial)
 		{
 			if (m_damagedata.ContainsKey((uint)serial))
-				return m_damagedata[(uint)serial].Damage;
+            {
+                return m_damagedata[(uint)serial].Damage;
+            }
 
-			return 0;
+            return 0;
 		}
 	}
 }

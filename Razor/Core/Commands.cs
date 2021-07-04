@@ -119,8 +119,11 @@ namespace Assistant
 		{
 			StringBuilder sb = new StringBuilder("Note To Self: ");
 			foreach (string t in param)
-				sb.Append(t);
-		 	Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
+            {
+                sb.Append(t);
+            }
+
+            Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
 		}
 
 		private static void ReNice(string[] param)
@@ -129,11 +132,15 @@ namespace Assistant
 			{
 				System.Diagnostics.ProcessPriorityClass prio;
 				if (param.Length < 1)
-					prio = System.Diagnostics.ProcessPriorityClass.BelowNormal;
-				else
-					prio = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), param[0], true);
+                {
+                    prio = System.Diagnostics.ProcessPriorityClass.BelowNormal;
+                }
+                else
+                {
+                    prio = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), param[0], true);
+                }
 
-			 	Assistant.Client.Instance.ClientProcess.PriorityClass = prio;
+                Assistant.Client.Instance.ClientProcess.PriorityClass = prio;
 				World.Player.SendMessage(MsgLevel.Force, LocString.PrioSet, prio);
 			}
 			catch (Exception e)
@@ -230,10 +237,15 @@ namespace Assistant
 						total += (int)reply.RoundtripTime;
                         RazorEnhanced.Misc.SendMessage("- RoundTrip time: " + reply.RoundtripTime +"ms", 33, false);
 						if (reply.RoundtripTime > max)
-							max = (int)reply.RoundtripTime;
-						if (reply.RoundtripTime < min)
-							min = (int)reply.RoundtripTime;
-					}
+                        {
+                            max = (int)reply.RoundtripTime;
+                        }
+
+                        if (reply.RoundtripTime < min)
+                        {
+                            min = (int)reply.RoundtripTime;
+                        }
+                    }
 					else
 					if (reply.Status == IPStatus.Success)
 					{
@@ -241,20 +253,24 @@ namespace Assistant
 					}
 				}
 				if (max == int.MinValue)
-					RazorEnhanced.Misc.SendMessage("Network Server not respond to ping request", 33, false);
-				else
-					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / NumPings).ToString() + "ms - Min: " + min + "ms", 33, false);
-
-
-			}).Start();
+                {
+                    RazorEnhanced.Misc.SendMessage("Network Server not respond to ping request", 33, false);
+                }
+                else
+                {
+                    RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / NumPings).ToString() + "ms - Min: " + min + "ms", 33, false);
+                }
+            }).Start();
 		}
 
 		private static void PlayScript(string[] param)
 		{
 			if (param == null || param.Length == 0)
-				return;
+            {
+                return;
+            }
 
-			string scriptname = String.Empty;
+            string scriptname = String.Empty;
 			scriptname = param[0];
 
 			if (param.Length > 1)
@@ -269,13 +285,19 @@ namespace Assistant
 			if (script != null)
 			{
 				if (script.Run)
-					script.Stop();
-				else
-					script.Run = true;
-			}
+                {
+                    script.Stop();
+                }
+                else
+                {
+                    script.Run = true;
+                }
+            }
 			else
-				RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist",33, false);
-		}
+            {
+                RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist",33, false);
+            }
+        }
 	}
 
 	internal delegate void CommandCallback(string[] param);
@@ -295,9 +317,11 @@ namespace Assistant
 			RazorEnhanced.Misc.SendMessage("Command List:", 33, false);
 			string suffix = "<";
 			if (Client.IsOSI)
-				suffix = "-";
+            {
+                suffix = "-";
+            }
 
-			foreach (string cmd in m_List.Keys)
+            foreach (string cmd in m_List.Keys)
 			{
 				RazorEnhanced.Misc.SendMessage(suffix + cmd, 33, false);
 			}
@@ -306,8 +330,10 @@ namespace Assistant
 		internal static void Register(string cmd, CommandCallback callback)
 		{
 			if (!m_List.ContainsKey(cmd))
-				m_List.Add(cmd, callback);
-		}
+            {
+                m_List.Add(cmd, callback);
+            }
+        }
 
 		internal static CommandCallback FindCommand(string cmd)
 		{
@@ -372,9 +398,11 @@ namespace Assistant
 			text = text.Trim();
 
 			if (text.Length <= 1)
-				return;
+            {
+                return;
+            }
 
-			if (Client.IsOSI)
+            if (Client.IsOSI)
 			{
 				if (text[0] == '-' && text[1] != '-')
 				{
@@ -401,13 +429,16 @@ namespace Assistant
 			string[] split = text.Split(' ', '\t');
 			if (m_List.ContainsKey(split[0]))
 			{
-				CommandCallback call = (CommandCallback)m_List[split[0]];
+				CommandCallback call = m_List[split[0]];
 				if (call != null)
 				{
 					string[] param = new String[split.Length - 1];
 					for (int i = 0; i < param.Length; i++)
-						param[i] = split[i + 1];
-					call(param);
+                    {
+                        param[i] = split[i + 1];
+                    }
+
+                    call(param);
 
 					return true;
 				}

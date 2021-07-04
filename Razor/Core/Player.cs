@@ -245,8 +245,10 @@ namespace Assistant
 			m_MoveInfo = new ConcurrentDictionary<byte, MoveEntry>();
 			m_Skills = new Skill[Skill.Count];
 			for (int i = 0; i < m_Skills.Length; i++)
-				m_Skills[i] = new Skill(i);
-		}
+            {
+                m_Skills[i] = new Skill(i);
+            }
+        }
 
 		internal ushort Str
 		{
@@ -283,10 +285,14 @@ namespace Assistant
 			get
 			{
 				if (m_MaxWeight == -1)
-					return (ushort)((m_Str * 3.5) + 40);
-				else
-					return (ushort)m_MaxWeight;
-			}
+                {
+                    return (ushort)((m_Str * 3.5) + 40);
+                }
+                else
+                {
+                    return (ushort)m_MaxWeight;
+                }
+            }
 			set
 			{
 				m_MaxWeight = value;
@@ -553,8 +559,11 @@ namespace Assistant
 					if (sec > 300)
 					{
 						if (m_CriminalTime != null)
-							m_CriminalTime.Stop();
-						m_CriminalStart = DateTime.MinValue;
+                        {
+                            m_CriminalTime.Stop();
+                        }
+
+                        m_CriminalStart = DateTime.MinValue;
 						return 0;
 					}
 					else
@@ -589,8 +598,10 @@ namespace Assistant
 		private static void OpenDoor()
 		{
 			if (World.Player != null)
-				Assistant.Client.Instance.SendToServer(new OpenDoorMacro());
-		}
+            {
+                Assistant.Client.Instance.SendToServer(new OpenDoorMacro());
+            }
+        }
 
 		private Serial m_LastDoor = Serial.Zero;
 		private DateTime m_LastDoorTime = DateTime.MinValue;
@@ -603,11 +614,15 @@ namespace Assistant
 			MoveEntry e = new MoveEntry();
 
 			if (!m_MoveInfo.ContainsKey(seq))
-				m_MoveInfo.TryAdd(seq, e);
-			else
-				m_MoveInfo[seq] = e;
+            {
+                m_MoveInfo.TryAdd(seq, e);
+            }
+            else
+            {
+                m_MoveInfo[seq] = e;
+            }
 
-			e.IsStep = (dir & Direction.mask) == (Direction & Direction.mask);
+            e.IsStep = (dir & Direction.mask) == (Direction & Direction.mask);
 			e.Dir = dir;
 
 			ProcessMove(dir);
@@ -624,16 +639,22 @@ namespace Assistant
 				foreach (Item i in World.Items.Values)
 				{
 					if (i.Position.X == x && i.Position.Y == y)
-						if (i.IsDoor)
-							if (i.Position.Z - 15 <= z && i.Position.Z + 15 >= z)
-								if (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now)
+                    {
+                        if (i.IsDoor)
+                        {
+                            if (i.Position.Z - 15 <= z && i.Position.Z + 15 >= z)
+                            {
+                                if (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now)
 								{
 									m_LastDoor = i.Serial;
 									m_LastDoorTime = DateTime.Now;
 									m_OpenDoorReq.Start();
 									break;
 								}
-				}
+                            }
+                        }
+                    }
+                }
 			}
 
 			e.FilterAck = false;
@@ -644,14 +665,20 @@ namespace Assistant
 		internal bool CheckHiddedOpenDoor()
 		{
 			if (Visible)
-				return true;
-			else
+            {
+                return true;
+            }
+            else
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors"))
-					return false;
-				else
-					return true;
-			}
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
 		}
 
 		internal void ProcessMove(Direction dir)
@@ -733,13 +760,17 @@ namespace Assistant
 			if (e != null)
 			{
 				if (e.IsStep && !IsGhost)
-					StealthSteps.OnMove();
+                {
+                    StealthSteps.OnMove();
+                }
 
-				return !e.FilterAck;
+                return !e.FilterAck;
 			}
 			else
-				return true;
-		}
+            {
+                return true;
+            }
+        }
 
 		private static bool m_ExternZ = false;
 		internal static bool ExternalZ { get { return m_ExternZ; } set { m_ExternZ = value; } }
@@ -750,10 +781,14 @@ namespace Assistant
 			get
 			{
 				if (!m_ExternZ || !DLLImport.Razor.IsCalibrated())
-					return Assistant.Facet.ZTop(Map, Position.X, Position.Y, Position.Z);
-				else
-					return Position.Z;
-			}
+                {
+                    return Assistant.Facet.ZTop(Map, Position.X, Position.Y, Position.Z);
+                }
+                else
+                {
+                    return Position.Z;
+                }
+            }
 		}
 
 
@@ -766,22 +801,30 @@ namespace Assistant
 				if (m != this)
 				{
 					if (!Utility.InRange(m.Position, newPos, VisRange))
-						m.Remove();
-					else
-						Targeting.CheckLastTargetRange(m);
-				}
+                    {
+                        m.Remove();
+                    }
+                    else
+                    {
+                        Targeting.CheckLastTargetRange(m);
+                    }
+                }
 			}
 
 			List<Item> items = new List<Item>(World.Items.Values);
 			foreach (Item item in items)
 			{
 				if (item.Deleted || item.Container != null)
-					continue;
+                {
+                    continue;
+                }
 
-				int dist = Utility.Distance(item.GetWorldPosition(), newPos);
+                int dist = Utility.Distance(item.GetWorldPosition(), newPos);
 				if (item != DragDropManager.Holding && (dist > MultiVisRange || (!item.IsMulti && dist > VisRange)))
-					item.Remove();
-			}
+                {
+                    item.Remove();
+                }
+            }
 
 			base.OnPositionChanging(newPos);
 		}
@@ -792,16 +835,20 @@ namespace Assistant
 			foreach (Mobile t in list)
 			{
 				if (t != this && t.Map != cur)
-					t.Remove();
-			}
+                {
+                    t.Remove();
+                }
+            }
 
 			List<Item> itemlist = new List<Item>(World.Items.Values);
 
 			foreach (Item i in itemlist)
 			{
 				if (i != World.Player.Backpack && i.RootContainer != World.Player.Backpack)
-					i.Remove();
-			}
+                {
+                    i.Remove();
+                }
+            }
 
 		/*	World.Items.Clear();
 			for (int i = 0; i < Contains.Count; i++)
@@ -813,9 +860,11 @@ namespace Assistant
 
 
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
-				PlayerData.DoubleClick(Backpack);
+            {
+                PlayerData.DoubleClick(Backpack);
+            }
 
-	 		Assistant.UOAssist.PostMapChange(cur);
+            Assistant.UOAssist.PostMapChange(cur);
 			m_HandCheck.Start();
 		}
 
@@ -826,8 +875,11 @@ namespace Assistant
 				// grey is turning off
 				// SendMessage( "You are no longer a criminal." );
 				if (m_CriminalTime != null)
-					m_CriminalTime.Stop();
-				m_CriminalStart = DateTime.MinValue;
+                {
+                    m_CriminalTime.Stop();
+                }
+
+                m_CriminalStart = DateTime.MinValue;
 			}
 			else if ((cur == 3 || cur == 4) && (old != 3 && old != 4 && old != 0))
 			{
@@ -842,8 +894,11 @@ namespace Assistant
 			{
 				m_CriminalStart = DateTime.Now;
 				if (m_CriminalTime == null)
-					m_CriminalTime = new CriminalTimer(this);
-				m_CriminalTime.Start();
+                {
+                    m_CriminalTime = new CriminalTimer(this);
+                }
+
+                m_CriminalTime.Start();
 			}
 		}
 
@@ -905,9 +960,11 @@ namespace Assistant
 		internal void SendMessage(MsgLevel lvl, string text)
 		{
 			if (lvl < (MsgLevel) RazorEnhanced.Settings.General.ReadInt("MessageLevel") || text.Length <= 0)
-				return;
+            {
+                return;
+            }
 
-			int hue;
+            int hue;
 			switch (lvl)
 			{
 				case MsgLevel.Error:
@@ -924,8 +981,10 @@ namespace Assistant
 			PacketHandlers.SysMessages.Add(text.ToLower());
 
 			if (PacketHandlers.SysMessages.Count >= 25)
-				PacketHandlers.SysMessages.RemoveRange(0, 10);
-		}
+            {
+                PacketHandlers.SysMessages.RemoveRange(0, 10);
+            }
+        }
 
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
@@ -1010,18 +1069,28 @@ namespace Assistant
 		{
 			Serial s;
 			if (clicked is Mobile)
-				s = ((Mobile)clicked).Serial.Value;
-			else if (clicked is Item)
-				s = ((Item)clicked).Serial.Value;
-			else if (clicked is Serial)
-				s = ((Serial)clicked).Value;
-			else
-				s = Serial.Zero;
+            {
+                s = ((Mobile)clicked).Serial.Value;
+            }
+            else if (clicked is Item)
+            {
+                s = ((Item)clicked).Serial.Value;
+            }
+            else if (clicked is Serial)
+            {
+                s = ((Serial)clicked).Value;
+            }
+            else
+            {
+                s = Serial.Zero;
+            }
 
-			if (s == Serial.Zero)
-				return false;
+            if (s == Serial.Zero)
+            {
+                return false;
+            }
 
-			Item free = null, pack = World.Player.Backpack;
+            Item free = null, pack = World.Player.Backpack;
 			if (s.IsItem && pack != null && RazorEnhanced.Settings.General.ReadBool("PotionEquip"))
 			{
 				Item i = World.FindItem(s);
@@ -1032,29 +1101,41 @@ namespace Assistant
 					Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 
 					if (left != null && (right != null || left.IsTwoHanded))
-						free = left;
-					else if (right != null && right.IsTwoHanded)
-						free = right;
+                    {
+                        free = left;
+                    }
+                    else if (right != null && right.IsTwoHanded)
+                    {
+                        free = right;
+                    }
 
-					if (free != null)
+                    if (free != null)
 					{
 						if (DragDropManager.HasDragFor(free.Serial))
-							free = null;
-						else
-							DragDropManager.DragDrop(free, pack);
-					}
+                        {
+                            free = null;
+                        }
+                        else
+                        {
+                            DragDropManager.DragDrop(free, pack);
+                        }
+                    }
 				}
 			}
 
 			ActionQueue.DoubleClick(silent, s);
 
 			if (free != null)
-				DragDropManager.DragDrop(free, World.Player, free.Layer, true);
+            {
+                DragDropManager.DragDrop(free, World.Player, free.Layer, true);
+            }
 
-			if (s.IsItem)
-				World.Player.m_LastObj = s;
+            if (s.IsItem)
+            {
+                World.Player.m_LastObj = s;
+            }
 
-			return false;
+            return false;
 		}
 
 		// Set last weapon on login
@@ -1063,16 +1144,22 @@ namespace Assistant
 		private static void HandCheck()
 		{
 			if (World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			Item righthand = World.Player.GetItemOnLayer(Layer.RightHand);
+            Item righthand = World.Player.GetItemOnLayer(Layer.RightHand);
 			if (righthand != null)
-				World.Player.LastWeaponRight = righthand.Serial;
+            {
+                World.Player.LastWeaponRight = righthand.Serial;
+            }
 
-			Item lefthand = World.Player.GetItemOnLayer(Layer.LeftHand);
+            Item lefthand = World.Player.GetItemOnLayer(Layer.LeftHand);
 			if (lefthand != null)
-				World.Player.LastWeaponRight = lefthand.Serial;
-		}
+            {
+                World.Player.LastWeaponRight = lefthand.Serial;
+            }
+        }
 
 
 	}

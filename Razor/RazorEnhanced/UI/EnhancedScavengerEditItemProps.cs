@@ -134,16 +134,20 @@ namespace RazorEnhanced.UI
 			int color = 0;
             int itemid = Convert.ToInt32(m_graphics, 16);
             if (m_color != "All")
-				color = Convert.ToInt32(m_color, 16);
+            {
+                color = Convert.ToInt32(m_color, 16);
+            }
 
-			if (m_proplist != null)
-				foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
+            if (m_proplist != null)
+            {
+                foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
 				{
 					scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString()});
 				}
+            }
 
-			// Immagine
-			Bitmap m_itemimage = Ultima.Art.GetStatic(itemid);
+            // Immagine
+            Bitmap m_itemimage = Ultima.Art.GetStatic(itemid);
 			{
 				if (m_itemimage != null && color > 0)
 				{
@@ -165,12 +169,16 @@ namespace RazorEnhanced.UI
 			{
 				int propvalue = 0;
 				if (cell.Value != null)
-					Int32.TryParse(cell.Value.ToString(), out propvalue);
+                {
+                    Int32.TryParse(cell.Value.ToString(), out propvalue);
+                }
 
-				if (propvalue < 0 || propvalue > 999)
-					propvalue =0;
+                if (propvalue < 0 || propvalue > 999)
+                {
+                    propvalue =0;
+                }
 
-				cell.Value = propvalue.ToString();
+                cell.Value = propvalue.ToString();
 			}
 
 			SaveData();
@@ -210,14 +218,19 @@ namespace RazorEnhanced.UI
 			foreach (DataGridViewRow row in scavengerpropGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
-				int min = Convert.ToInt32((string)row.Cells[1].Value);
+                {
+                    continue;
+                }
+
+                int min = Convert.ToInt32((string)row.Cells[1].Value);
 				int max = Convert.ToInt32((string)row.Cells[2].Value);
 				string propname = string.Empty;
 				if (row.Cells[0].Value != null)
-					propname = row.Cells[0].Value.ToString();
+                {
+                    propname = row.Cells[0].Value.ToString();
+                }
 
-				propslist.Add(new Scavenger.ScavengerItem.Property(propname, min ,max));
+                propslist.Add(new Scavenger.ScavengerItem.Property(propname, min ,max));
             }
 			m_row.Cells[4].Value = propslist;
 			Scavenger.CopyTable();

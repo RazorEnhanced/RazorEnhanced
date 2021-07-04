@@ -85,7 +85,7 @@ namespace Assistant
 
 			internal AbilityInfo(AOSAbility ab, params int[][] items)
 			{
-				m_Ability = (AOSAbility)ab;
+				m_Ability = ab;
 				m_Items = items;
 			}
 
@@ -98,8 +98,10 @@ namespace Assistant
 					for (int b = 0; b < m_Items[a].Length; b++)
 					{
 						if (m_Items[a][b] == item)
-							return true;
-					}
+                        {
+                            return true;
+                        }
+                    }
 				}
 
 				return false;
@@ -296,10 +298,14 @@ namespace Assistant
 			{
 				m_LastToggle = DateTime.Now;
 				if (wait)
-			 		Assistant.Client.Instance.SendToServerWait(new StunRequest());
-				else
-			 		Assistant.Client.Instance.SendToServer(new StunRequest());
-			}
+                {
+                    Assistant.Client.Instance.SendToServerWait(new StunRequest());
+                }
+                else
+                {
+                    Assistant.Client.Instance.SendToServer(new StunRequest());
+                }
+            }
 		}
 
 		internal static void OnDisarm(bool wait)
@@ -308,10 +314,14 @@ namespace Assistant
 			{
 				m_LastToggle = DateTime.Now;
 				if (wait)
-			 		Assistant.Client.Instance.SendToServerWait(new DisarmRequest());
-				else
-			 		Assistant.Client.Instance.SendToServer(new DisarmRequest());
-			}
+                {
+                    Assistant.Client.Instance.SendToServerWait(new DisarmRequest());
+                }
+                else
+                {
+                    Assistant.Client.Instance.SendToServer(new DisarmRequest());
+                }
+            }
 		}
 
 		private static AOSAbility GetAbility(int item, AbilityInfo[] list)
@@ -319,8 +329,10 @@ namespace Assistant
 			for (int a = 0; a < list.Length; a++)
 			{
 				if (list[a].HasItem(item))
-					return list[a].Ability;
-			}
+                {
+                    return list[a].Ability;
+                }
+            }
 
 			return AOSAbility.Invalid;
 		}
@@ -332,15 +344,21 @@ namespace Assistant
 
 			AOSAbility a = AOSAbility.Invalid;
 			if (right != null)
-				a = GetAbility(right.ItemID.Value, m_Primary);
+            {
+                a = GetAbility(right.ItemID.Value, m_Primary);
+            }
 
-			if (a == AOSAbility.Invalid && left != null)
-				a = GetAbility(left.ItemID.Value, m_Primary);
+            if (a == AOSAbility.Invalid && left != null)
+            {
+                a = GetAbility(left.ItemID.Value, m_Primary);
+            }
 
-			if (a == AOSAbility.Invalid)
-				a = GetAbility(FistsID[0], m_Primary);
+            if (a == AOSAbility.Invalid)
+            {
+                a = GetAbility(FistsID[0], m_Primary);
+            }
 
-			if (a != AOSAbility.Invalid)
+            if (a != AOSAbility.Invalid)
 			{
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 				World.Player.HasSpecial = HasPrimary = true;
@@ -366,15 +384,21 @@ namespace Assistant
 
 			AOSAbility a = AOSAbility.Invalid;
 			if (right != null)
-				a = GetAbility(right.ItemID.Value, m_Secondary);
+            {
+                a = GetAbility(right.ItemID.Value, m_Secondary);
+            }
 
-			if (a == AOSAbility.Invalid && left != null)
-				a = GetAbility(left.ItemID.Value, m_Secondary);
+            if (a == AOSAbility.Invalid && left != null)
+            {
+                a = GetAbility(left.ItemID.Value, m_Secondary);
+            }
 
-			if (a == AOSAbility.Invalid)
-				a = GetAbility(FistsID[0], m_Secondary);
+            if (a == AOSAbility.Invalid)
+            {
+                a = GetAbility(FistsID[0], m_Secondary);
+            }
 
-			if (a != AOSAbility.Invalid)
+            if (a != AOSAbility.Invalid)
 			{
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 				World.Player.HasSpecial = HasSecondary = true;
@@ -395,33 +419,49 @@ namespace Assistant
 		internal static int GetPrimaryAbility(Assistant.Item wep)
 		{
 			if (wep != null)
-				return (int)GetAbility(wep.ItemID.Value, m_Primary);
-			else
-				return 0;
-		}
+            {
+                return (int)GetAbility(wep.ItemID.Value, m_Primary);
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
 		internal static int GetSecondaryAbility(Assistant.Item wep)
 		{
 			if (wep != null)
-				return (int)GetAbility(wep.ItemID.Value, m_Secondary);
-			else
-				return 0;
-		}
+            {
+                return (int)GetAbility(wep.ItemID.Value, m_Secondary);
+            }
+            else
+            {
+                return 0;
+            }
+        }
 		internal static int GetPrimaryIcon(int id)
 		{
 			if (id == 0 || id > 31)
-				return 0x5204;
-			else
-				return Icon[id];
-		}
+            {
+                return 0x5204;
+            }
+            else
+            {
+                return Icon[id];
+            }
+        }
 
 		internal static int GetSecondaryIcon(int id)
 		{
 			if (id == 0 || id > 31)
-				return 0x520A;
-			else
-				return Icon[id];
-		}
+            {
+                return 0x520A;
+            }
+            else
+            {
+                return Icon[id];
+            }
+        }
 
 		internal static void ClearAbilities(bool wait)
 		{

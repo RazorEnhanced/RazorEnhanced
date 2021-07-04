@@ -40,22 +40,28 @@ namespace Assistant
 				RazorEnhanced.ToolBar.LockUnlock();
 				RazorEnhanced.Settings.General.WriteBool("LockToolBarCheckBox", lockToolBarCheckBox.Checked);
 				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.ToolBarForm.Show();
-			}
+                {
+                    RazorEnhanced.ToolBar.ToolBarForm.Show();
+                }
+            }
 		}
 
 		private void autoopenToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (autoopenToolBarCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("AutoopenToolBarCheckBox", autoopenToolBarCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("AutoopenToolBarCheckBox", autoopenToolBarCheckBox.Checked);
+            }
+        }
 
 		private void toolboxcountComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (toolboxcomboupdate)
-				return;
+            {
+                return;
+            }
 
-			int index = toolboxcountComboBox.SelectedIndex;
+            int index = toolboxcountComboBox.SelectedIndex;
 			RazorEnhanced.ToolBar.ToolBarItem item = RazorEnhanced.Settings.Toolbar.ReadSelectedItem(index);
 
 			toolboxcountNameTextBox.Text = item.Name;
@@ -65,8 +71,10 @@ namespace Assistant
 			toolboxcountWarningTextBox.Text = item.WarningLimit.ToString();
 
 			if (toolboxcountComboBox.Focused)
-				RazorEnhanced.ToolBar.Open();
-		}
+            {
+                RazorEnhanced.ToolBar.Open();
+            }
+        }
 
 		private bool toolboxcomboupdate = false;
 		private void toolboxcountNameTextBox_TextChanged(object sender, EventArgs e)
@@ -75,8 +83,11 @@ namespace Assistant
 			{
 				toolboxcomboupdate = true;
 				if (toolboxcountComboBox.SelectedIndex != -1)
-					toolboxcountComboBox.Items[toolboxcountComboBox.SelectedIndex] = "Slot " + toolboxcountComboBox.SelectedIndex + ": " + toolboxcountNameTextBox.Text;
-				toolboxcomboupdate = false;
+                {
+                    toolboxcountComboBox.Items[toolboxcountComboBox.SelectedIndex] = "Slot " + toolboxcountComboBox.SelectedIndex + ": " + toolboxcountNameTextBox.Text;
+                }
+
+                toolboxcomboupdate = false;
 			}
 		}
 		private void toolboxcountNameTextBox_Leave(object sender, EventArgs e)
@@ -109,14 +120,18 @@ namespace Assistant
 		private void toolboxcountHueWarningCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (toolboxcountHueWarningCheckBox.Focused)
-				RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
-		}
+            {
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+            }
+        }
 
 		private void toolboxcountWarningTextBox_TextChanged(object sender, EventArgs e)
 		{
 			if (toolboxcountWarningTextBox.Focused)
-				RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
-		}
+            {
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+            }
+        }
 
 		private void toolboxcountClearButton_Click(object sender, EventArgs e)
 		{
@@ -145,9 +160,11 @@ namespace Assistant
 				Assistant.Item item = Assistant.World.FindItem(serial);
 
 				if (item == null)
-					return;
+                {
+                    return;
+                }
 
-				if (item.Serial.IsItem)
+                if (item.Serial.IsItem)
 				{
 					toolboxcountNameTextBox.Text = item.Name;
 					int itemgraph = item.ItemID;
@@ -169,9 +186,11 @@ namespace Assistant
 		 		Assistant.Client.Instance.SetTitleStr(""); // Restore titlebar standard
 			}
 			else
-				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = false;
+            {
+                toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = false;
+            }
 
-			if (toolboxstyleComboBox.Focused)
+            if (toolboxstyleComboBox.Focused)
 			{
 				RazorEnhanced.Settings.General.WriteString("ToolBoxStyleComboBox", toolboxstyleComboBox.Text);
 
@@ -189,9 +208,11 @@ namespace Assistant
 				{
 					Int32.TryParse(toolbarslot_label.Text, out int slot);
 					if (slot == 0)
-						slot = 2;
+                    {
+                        slot = 2;
+                    }
 
-					if (slot % 2 != 0)
+                    if (slot % 2 != 0)
 					{
 						slot++;
 						toolbarslot_label.Text = slot.ToString();
@@ -211,9 +232,11 @@ namespace Assistant
 				slot += 2;
 			}
 			else
-				slot += 1;
+            {
+                slot += 1;
+            }
 
-			toolbarslot_label.Text = slot.ToString();
+            toolbarslot_label.Text = slot.ToString();
 			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
 			RazorEnhanced.ToolBar.UptateToolBarComboBox(toolboxcountComboBox.SelectedIndex, slot);
 			RazorEnhanced.ToolBar.Close();
@@ -224,17 +247,27 @@ namespace Assistant
 		{
 			int slot = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox");
 			if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
-				if (slot - 2 < 2)
-					slot = 2;
-				else
-					slot -= 2;
-			else
+            {
+                if (slot - 2 < 2)
+                {
+                    slot = 2;
+                }
+                else
+                {
+                    slot -= 2;
+                }
+            }
+            else
 				if (slot - 1 < 1)
-				slot = 1;
-			else
-				slot -= 1;
+            {
+                slot = 1;
+            }
+            else
+            {
+                slot -= 1;
+            }
 
-			toolbarslot_label.Text = slot.ToString();
+            toolbarslot_label.Text = slot.ToString();
 			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
 			RazorEnhanced.ToolBar.UptateToolBarComboBox(toolboxcountComboBox.SelectedIndex, slot);
 			RazorEnhanced.ToolBar.Close();
@@ -311,7 +344,7 @@ namespace Assistant
 				if (RazorEnhanced.ToolBar.ToolBarForm != null)
 				{
 					RazorEnhanced.ToolBar.ToolBarForm.Show();
-					RazorEnhanced.ToolBar.ToolBarForm.Opacity = ((double)o) / 100.0;
+					RazorEnhanced.ToolBar.ToolBarForm.Opacity = o / 100.0;
 				}
 			}
 
@@ -323,20 +356,29 @@ namespace Assistant
 			UpdateRazorStatus();
 			UpdateScriptGrid();
 			if (toolboxstyleComboBox.Text != "TitleBar")
-				RazorEnhanced.ToolBar.UpdateCount();
-			SpellGrid.UpdateSAIcon();
+            {
+                RazorEnhanced.ToolBar.UpdateCount();
+            }
+
+            SpellGrid.UpdateSAIcon();
 		}
 
 		private void timertitlestatusbar_Tick(object sender, EventArgs e)
 		{
 			if (Initializing || !Client.Running)
-				return;
+            {
+                return;
+            }
 
-			if (!Assistant.Client.Instance.Ready || World.Player == null)
-				return;
+            if (!Assistant.Client.Instance.Ready || World.Player == null)
+            {
+                return;
+            }
 
-			if (toolboxstyleComboBox.Text == "TitleBar")
-				TitleBar.UpdateTitleBar();
-		}
+            if (toolboxstyleComboBox.Text == "TitleBar")
+            {
+                TitleBar.UpdateTitleBar();
+            }
+        }
 	}
 }

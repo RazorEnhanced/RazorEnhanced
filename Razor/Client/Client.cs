@@ -172,14 +172,20 @@ namespace Assistant
                 Assistant.Client.Loader_Error result = Assistant.Client.Loader_Error.UNKNOWN_ERROR;
 
                 if (clientPath != null && File.Exists(clientPath))
+                {
                     result = Assistant.Client.Instance.LaunchClient(clientPath);
+                }
 
                 if (result != Assistant.Client.Loader_Error.SUCCESS)
                 {
                     if (clientPath == null && File.Exists(clientPath))
+                    {
                         MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     else
+                    {
                         MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     //SplashScreen.End();
                     RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
                     return;
@@ -270,7 +276,9 @@ namespace Assistant
                 MethodInfo init = t.GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
 
                 if (init != null)
+                {
                     init.Invoke(null, null);
+                }
             }
         }
 
@@ -279,7 +287,9 @@ namespace Assistant
             IPAddress ipAddr = IPAddress.None;
 
             if (string.IsNullOrEmpty(addr))
+            {
                 return ipAddr;
+            }
 
             if (!IPAddress.TryParse(addr, out ipAddr))
             {
@@ -288,7 +298,9 @@ namespace Assistant
                     IPHostEntry iphe = Dns.GetHostEntry(addr);
 
                     if (iphe.AddressList.Length > 0)
+                    {
                         ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
+                    }
                 }
                 catch
                 {
@@ -334,7 +346,10 @@ namespace Assistant
         {
             // ENABLE IT ONLY FOR DEBUG
             if (File.Exists(Path.Combine(Assistant.Engine.RootPath, "bypassnegotiate")))
+            {
                 return true;
+            }
+
             return (m_Features & (1U << bit)) == 0;
         }
 
@@ -353,9 +368,13 @@ namespace Assistant
         public IPAddress LastConnection {
             get {
                 if (m_LastConnection == null)
+                {
                     return Engine.IP;     // CUO was not calling OnConnect soon enough
+                }
                 else
+                {
                     return m_LastConnection;
+                }
             }
         }
 
@@ -414,31 +433,43 @@ namespace Assistant
 
 			// Chiuto toolbar
 			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.ToolBarForm.Close();
+            {
+                RazorEnhanced.ToolBar.ToolBarForm.Close();
+            }
 
-			// Chiuto Spellgrid
-			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-				RazorEnhanced.SpellGrid.SpellGridForm.Close();
+            // Chiuto Spellgrid
+            if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+            {
+                RazorEnhanced.SpellGrid.SpellGridForm.Close();
+            }
 
-			// Stoppo tick timer agent
-			if (RazorEnhanced.Scripts.Timer != null)
-				RazorEnhanced.Scripts.Timer.Close();
+            // Stoppo tick timer agent
+            if (RazorEnhanced.Scripts.Timer != null)
+            {
+                RazorEnhanced.Scripts.Timer.Close();
+            }
 
-			// Stop forzato di tutti i thread agent
-			RazorEnhanced.AutoLoot.AutoMode = false;
+            // Stop forzato di tutti i thread agent
+            RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
 
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+            {
+                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+            }
 
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            }
 
-			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-				Assistant.Engine.MainWindow.RestockStop.PerformClick();
+            if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.RestockStop.PerformClick();
+            }
 
-			RazorEnhanced.UI.EnhancedScriptEditor.End();
+            RazorEnhanced.UI.EnhancedScriptEditor.End();
 		}
 
 		public abstract void SetTitleStr(string str);
@@ -469,10 +500,14 @@ namespace Assistant
         {
             // throttle updates, since things like counters might request 1000000 million updates/sec
             if (m_TBTimer == null)
+            {
                 m_TBTimer = new TitleBarThrottle();
+            }
 
             if (!m_TBTimer.Running)
+            {
                 m_TBTimer.Start();
+            }
         }
 
         private class TitleBarThrottle : Timer
@@ -501,7 +536,9 @@ namespace Assistant
         public virtual void UpdateTitleBar()
         {
             if (!ClientRunning)
+            {
                 return;
+            }
 
             StringBuilder sb = TitleBarBuilder;
 

@@ -35,9 +35,11 @@ namespace RazorEnhanced
 		internal static void Load(bool try_backup=true)
 		{
 			if (m_Dataset != null)
-				return;
+            {
+                return;
+            }
 
-			m_Dataset = new DataSet();
+            m_Dataset = new DataSet();
 			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles" ,m_Save);
 			string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
 
@@ -109,8 +111,10 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
 				{
 					if ((bool)row["Last"])
-						return (string)row["Name"];
-				}
+                    {
+                        return (string)row["Name"];
+                    }
+                }
 			}
 
 			return "default";
@@ -125,8 +129,10 @@ namespace RazorEnhanced
 					row["Last"] = true;
 				}
 				else
-					row["Last"] = false;
-			}
+                {
+                    row["Last"] = false;
+                }
+            }
 
 			Save();
 		}
@@ -134,10 +140,10 @@ namespace RazorEnhanced
 		internal static void Add(string name)
 		{
 			DataRow row = m_Dataset.Tables["PROFILES"].NewRow();
-			row["Name"] = (String)name;
-			row["Last"] = (bool)true;
-			row["PlayerName"] = (String)"None";
-			row["PlayerSerial"] = (int)0;
+			row["Name"] = name;
+			row["Last"] = true;
+			row["PlayerName"] = "None";
+			row["PlayerSerial"] = 0;
 			m_Dataset.Tables["PROFILES"].Rows.Add(row);
 
 			Save();
@@ -148,9 +154,11 @@ namespace RazorEnhanced
 			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
 			{
 				if ((string) row["Name"] != name)
-					continue;
+                {
+                    continue;
+                }
 
-				row.Delete();
+                row.Delete();
 				break;
 			}
 
@@ -250,42 +258,64 @@ namespace RazorEnhanced
 
 			// Stop timer script
 			if (RazorEnhanced.Scripts.Timer != null)
-				RazorEnhanced.Scripts.Timer.Close();
+            {
+                RazorEnhanced.Scripts.Timer.Close();
+            }
 
-			// Stop forzato di tutti i thread agent
-			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+            // Stop forzato di tutti i thread agent
+            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+            {
+                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+            }
 
-			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+            {
+                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+            }
 
-			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+            }
 
-			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
+            if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+            {
+                Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
+            }
 
-			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
+            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+            {
+                Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
+            }
 
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            }
 
-			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+            {
+                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+            }
 
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            }
 
-			// Stop filtri
-			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+            // Stop filtri
+            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+            }
 
-			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
-				Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
+            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
+            {
+                Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
+            }
 
-			// Stop video recorder
-			Assistant.MainForm.StopVideoRecorder();
+            // Stop video recorder
+            Assistant.MainForm.StopVideoRecorder();
 
 			// Svuoto logbox e reset select index
 		//	Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
@@ -326,14 +356,18 @@ namespace RazorEnhanced
 
 			// Chiuto toolbar
 			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.ToolBarForm.Close();
+            {
+                RazorEnhanced.ToolBar.ToolBarForm.Close();
+            }
 
-			// Chiuto toolbar
-			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-				RazorEnhanced.SpellGrid.SpellGridForm.Close();
+            // Chiuto toolbar
+            if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+            {
+                RazorEnhanced.SpellGrid.SpellGridForm.Close();
+            }
 
-			// Carico save profilo
-			RazorEnhanced.Settings.Load(name);
+            // Carico save profilo
+            RazorEnhanced.Settings.Load(name);
 
 			// Abilito patch UOMod
 			UoMod.ProfileChange();
@@ -354,20 +388,26 @@ namespace RazorEnhanced
 
 			// Riapro toollbar se le condizioni lo permettono
 			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox"))
-				RazorEnhanced.ToolBar.Open();
+            {
+                RazorEnhanced.ToolBar.Open();
+            }
 
-			// Riapro la spellgrid se le condizioni lo permettono
-			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox"))
-				RazorEnhanced.SpellGrid.Open();
+            // Riapro la spellgrid se le condizioni lo permettono
+            if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox"))
+            {
+                RazorEnhanced.SpellGrid.Open();
+            }
 
-			Assistant.Engine.MainWindow.Initializing = false;
+            Assistant.Engine.MainWindow.Initializing = false;
 			SetLast(name);
 
 			PasswordMemory.ProfileChangeEnd();
 
 			if (World.Player != null) // Reinit script timer se cambio profilo avvene da loggati
-				RazorEnhanced.Scripts.Init();
-		}
+            {
+                RazorEnhanced.Scripts.Init();
+            }
+        }
 
 		internal static void Save()
 		{

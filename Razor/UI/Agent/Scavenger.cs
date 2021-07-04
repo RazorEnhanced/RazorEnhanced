@@ -19,17 +19,21 @@ namespace Assistant
 		private void scavengerautostartCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (scavengerautostartCheckBox.Focused)
-				Settings.General.WriteBool("ScavengerAutostartCheckBox", scavengerautostartCheckBox.Checked);
-		}
+            {
+                Settings.General.WriteBool("ScavengerAutostartCheckBox", scavengerautostartCheckBox.Checked);
+            }
+        }
 
 		private void scavengerEditProps_Click(object sender, EventArgs e)
 		{
 			if (scavengerListSelect.Text != String.Empty)
 			{
 				if (scavengerdataGridView.CurrentCell == null)
-					return;
+                {
+                    return;
+                }
 
-				DataGridViewRow row = scavengerdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
+                DataGridViewRow row = scavengerdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
 				EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row)
 				{
 					TopMost = true
@@ -37,8 +41,10 @@ namespace Assistant
 				editProp.Show();
 			}
 			else
-				Scavenger.AddLog("Item list not selected!");
-		}
+            {
+                Scavenger.AddLog("Item list not selected!");
+            }
+        }
 
 		private void scavengerAddItemTarget_Click(object sender, EventArgs e)
 		{
@@ -48,13 +54,19 @@ namespace Assistant
 		internal void ScavengerAddItem()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select item to add in Scavenger list", false);
+            {
+                Misc.SendMessage("Select item to add in Scavenger list", false);
+            }
 
-			if (scavengerListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemTarget_Callback));
-			else
-				Scavenger.AddLog("Item list not selected!");
-		}
+            if (scavengerListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemTarget_Callback));
+            }
+            else
+            {
+                Scavenger.AddLog("Item list not selected!");
+            }
+        }
 
 		private void ScavengerItemTarget_Callback(bool loc, Serial serial, Point3D pt, ushort itemid)
 		{
@@ -62,15 +74,21 @@ namespace Assistant
 			if (scavengerItem != null && scavengerItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
-				Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
+                {
+                    Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
+                }
+
+                Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
 				this.Invoke((MethodInvoker)delegate { Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Invalid target", false);
-				Scavenger.AddLog("Invalid target");
+                {
+                    Misc.SendMessage("Invalid target", false);
+                }
+
+                Scavenger.AddLog("Invalid target");
 			}
 		}
 
@@ -82,38 +100,54 @@ namespace Assistant
 		internal void ScavengerSetBag()
 		{
 			if (showagentmessageCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("Select Scavenger Bag", false);
+            {
+                RazorEnhanced.Misc.SendMessage("Select Scavenger Bag", false);
+            }
 
-			if (scavengerListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
-		}
+            if (scavengerListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+            }
+        }
 
 		private void ScavengerItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item scavengerBag = Assistant.World.FindItem(serial);
 
 			if (scavengerBag == null)
-				return;
+            {
+                return;
+            }
 
             bool bagOfSending = false;
             string prop = Items.GetPropStringByIndex(serial, 0);
             if (prop.IndexOf("bag of sending", 0, StringComparison.CurrentCultureIgnoreCase) != -1)
+            {
                 bagOfSending = true;
+            }
 
             if (scavengerBag != null && scavengerBag.Serial.IsItem && scavengerBag.IsLootableTarget && (!bagOfSending))
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString(), false);
-				RazorEnhanced.Scavenger.AddLog("Scavenger Container set to: " + scavengerBag.ToString());
+                {
+                    RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString(), false);
+                }
+
+                RazorEnhanced.Scavenger.AddLog("Scavenger Container set to: " + scavengerBag.ToString());
 				Scavenger.ScavengerBag = (int)scavengerBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Scavenger Container, set backpack", false);
-				RazorEnhanced.Scavenger.AddLog("Invalid Scavenger Container, set backpack");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Scavenger Container, set backpack", false);
+                }
+
+                RazorEnhanced.Scavenger.AddLog("Invalid Scavenger Container, set backpack");
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -214,8 +248,10 @@ namespace Assistant
 				Scavenger.AutoMode = true;
 				Scavenger.AddLog("Scavenger Engine Start...");
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("SCAVENGER: Engine Start...", false);
-			}
+                {
+                    Misc.SendMessage("SCAVENGER: Engine Start...", false);
+                }
+            }
 			else
 			{
 				ScavengerListSelect.Enabled = true;
@@ -228,16 +264,20 @@ namespace Assistant
 				Scavenger.AutoMode = false;
 				Scavenger.AddLog("Scavenger Engine Stop...");
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("SCAVENGER: Engine Stop...", false);
-			}
+                {
+                    Misc.SendMessage("SCAVENGER: Engine Stop...", false);
+                }
+            }
 		}
 
 		private void scavengerDragDelay_Leave(object sender, EventArgs e)
 		{
 			if (scavengerDragDelay.Text == String.Empty)
-				scavengerDragDelay.Text = "100";
+            {
+                scavengerDragDelay.Text = "100";
+            }
 
-			Scavenger.ScavengerDelay = Convert.ToInt32(scavengerDragDelay.Text);
+            Scavenger.ScavengerDelay = Convert.ToInt32(scavengerDragDelay.Text);
 
 			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 			RazorEnhanced.Scavenger.RefreshLists();
@@ -246,9 +286,11 @@ namespace Assistant
 		private void scavengerRange_Leave(object sender, EventArgs e)
 		{
 			if (scavengerRange.Text == String.Empty)
-				scavengerRange.Text = "0";
+            {
+                scavengerRange.Text = "0";
+            }
 
-			Scavenger.MaxRange = Convert.ToInt32(scavengerRange.Text);
+            Scavenger.MaxRange = Convert.ToInt32(scavengerRange.Text);
 
 			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 			RazorEnhanced.Scavenger.RefreshLists();

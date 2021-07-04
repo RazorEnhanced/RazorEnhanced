@@ -36,17 +36,23 @@ namespace RazorEnhanced
 					wall.Hue = (ushort)WallColor.Stone;
 			 		Assistant.Client.Instance.SendToClient(new WorldItem(wall));
 					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Stone, 3,
+                    {
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Stone, 3,
                             Language.CliLocName, wall.Name, "[Wall Of Stone]"));
-					return true;
+                    }
+
+                    return true;
 				case 0x3996:
 				case 0x398C:
 					wall.ItemID = WallStaticID;
 					wall.Hue = (ushort)WallColor.Fire;
 			 		Assistant.Client.Instance.SendToClient(new WorldItem(wall));
 					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Fire, 3, Language.CliLocName, wall.Name, "[Fire Field]"));
-					return true;
+                    {
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Fire, 3, Language.CliLocName, wall.Name, "[Fire Field]"));
+                    }
+
+                    return true;
 				case 0x3915:
 				case 0x3920:
 				case 0x3922:
@@ -54,24 +60,33 @@ namespace RazorEnhanced
 					wall.Hue = (ushort)WallColor.Poison;
 			 		Assistant.Client.Instance.SendToClient(new WorldItem(wall));
 					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Poison, 3, Language.CliLocName, wall.Name, "[Poison Field]"));
-					return true;
+                    {
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Poison, 3, Language.CliLocName, wall.Name, "[Poison Field]"));
+                    }
+
+                    return true;
 				case 0x3967:
 				case 0x3979:
 					wall.ItemID = WallStaticID;
 					wall.Hue = (ushort)WallColor.Paralyze;
 			 		Assistant.Client.Instance.SendToClient(new WorldItem(wall));
 					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Paralyze, 3, Language.CliLocName, wall.Name, "[Paralyze Field]"));
-					return true;
+                    {
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Paralyze, 3, Language.CliLocName, wall.Name, "[Paralyze Field]"));
+                    }
+
+                    return true;
 				case 0x3946:
 				case 0x3956:
 					wall.ItemID = WallStaticID;
 					wall.Hue = (ushort)WallColor.Energy;
 			 		Assistant.Client.Instance.SendToClient(new WorldItem(wall));
 					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-				 		Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Energy, 3, Language.CliLocName, wall.Name, "[Energy Field]"));
-					return true;
+                    {
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Energy, 3, Language.CliLocName, wall.Name, "[Energy Field]"));
+                    }
+
+                    return true;
 				default:
 					return false;
 			}
@@ -83,22 +98,34 @@ namespace RazorEnhanced
 		internal static void ProcessMessage(Assistant.Mobile m)
 		{
 			if (m.Serial == World.Player.Serial)      // Skip Self
-				return;
+            {
+                return;
+            }
 
-			if (Engine.MainWindow.FlagsHighlightCheckBox.Checked)
+            if (Engine.MainWindow.FlagsHighlightCheckBox.Checked)
 			{
 				if (m.Poisoned)
-					Mobiles.Message(m.Serial, 10, "[Poisoned]", false);
-				if (m.IsGhost)
+                {
+                    Mobiles.Message(m.Serial, 10, "[Poisoned]", false);
+                }
+
+                if (m.IsGhost)
 				{
 					if (m.PropsUpdated)
-						Mobiles.Message(m.Serial, 10, "[Dead]", false);
-				}
+                    {
+                        Mobiles.Message(m.Serial, 10, "[Dead]", false);
+                    }
+                }
 				if (m.Paralized)
-					Mobiles.Message(m.Serial, 10, "[Paralized]", false);
-				if (m.Blessed)
-					Mobiles.Message(m.Serial, 10, "[Mortalled]", false);
-			}
+                {
+                    Mobiles.Message(m.Serial, 10, "[Paralized]", false);
+                }
+
+                if (m.Blessed)
+                {
+                    Mobiles.Message(m.Serial, 10, "[Mortalled]", false);
+                }
+            }
 
 		/*	if (Engine.MainWindow.HighlightTargetCheckBox.Checked)
 			{
@@ -142,7 +169,10 @@ namespace RazorEnhanced
             foreach (DataGridViewRow gridRow in Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows)
             {
                 if (gridRow.IsNewRow)
-                    continue;                
+                {
+                    continue;
+                }
+
                 Settings.JournalFilter.Insert(gridRow.Cells[0].Value.ToString());
             }
             Settings.Save();
@@ -156,19 +186,24 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 
 				int color = 0;
 				if ((string)row.Cells[3].Value == "No Change")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                }
 
-
-				Settings.GraphFilter.Insert(check, Convert.ToInt32((string)row.Cells[1].Value, 16), Convert.ToInt32((string)row.Cells[2].Value, 16), color);
+                Settings.GraphFilter.Insert(check, Convert.ToInt32((string)row.Cells[1].Value, 16), Convert.ToInt32((string)row.Cells[2].Value, 16), color);
 			}
 
 			Settings.Save(); // Salvo dati
@@ -191,9 +226,11 @@ namespace RazorEnhanced
 			{
 				string color = "No Change";
 				if (item.ColorNew != -1)
-					color = "0x" + item.ColorNew.ToString("X4");
+                {
+                    color = "0x" + item.ColorNew.ToString("X4");
+                }
 
-				Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Add(new object[] { item.Selected.ToString(), "0x" + item.GraphReal.ToString("X4"), "0x" + item.GraphNew.ToString("X4"), color });
+                Assistant.Engine.MainWindow.GraphFilterDataGrid.Rows.Add(new object[] { item.Selected.ToString(), "0x" + item.GraphReal.ToString("X4"), "0x" + item.GraphNew.ToString("X4"), color });
 			}
 		}
 
@@ -210,9 +247,11 @@ namespace RazorEnhanced
 			foreach (GraphChangeData graphdata in m_graphfilterdata)
 			{
 				if (body != graphdata.GraphReal)
-					continue;
+                {
+                    continue;
+                }
 
-				if (graphdata.GraphNew == 0)
+                if (graphdata.GraphNew == 0)
 				{
 					block = true;
 					break;
@@ -258,15 +297,21 @@ namespace RazorEnhanced
 		internal static void AutoCarverEngine(Items.Filter filter)
 		{
 			if (!Client.Running)
-				return;
+            {
+                return;
+            }
 
-			if (World.Player == null)       // Esce se non loggato
-				return;
+            if (World.Player == null)       // Esce se non loggato
+            {
+                return;
+            }
 
-			if (m_carverblade == 0)       // Esce in caso di errore lettura blade
-				return;
+            if (m_carverblade == 0)       // Esce in caso di errore lettura blade
+            {
+                return;
+            }
 
-			List<Item> corpi = Items.ApplyFilter(filter);
+            List<Item> corpi = Items.ApplyFilter(filter);
 
 			foreach (Item corpo in corpi)
 			{
@@ -319,15 +364,21 @@ namespace RazorEnhanced
 		internal static void BoneCutterEngine(Items.Filter filter)
 		{
 			if (!Client.Running)
-				return;
+            {
+                return;
+            }
 
-			if (World.Player == null)       // Esce se non loggato
-				return;
+            if (World.Player == null)       // Esce se non loggato
+            {
+                return;
+            }
 
-			if (m_bonecutterblade == 0)       // Esce in caso di errore lettura blade
-				return;
+            if (m_bonecutterblade == 0)       // Esce in caso di errore lettura blade
+            {
+                return;
+            }
 
-			List<Item> bones = Items.ApplyFilter(filter);
+            List<Item> bones = Items.ApplyFilter(filter);
 
 			foreach (Item bone in bones)
 			{
@@ -356,9 +407,11 @@ namespace RazorEnhanced
 		internal static void BoneCutterRun()
 		{
 			if (Assistant.Client.Instance.ServerEncrypted)
-				m_bonefilter.Movable = -1;
+            {
+                m_bonefilter.Movable = -1;
+            }
 
-			BoneCutterEngine(m_bonefilter);
+            BoneCutterEngine(m_bonefilter);
 		}
 		/////////////////////// END - BONE CUTTER //////////////////////
 
@@ -411,21 +464,31 @@ namespace RazorEnhanced
 		internal static void RemountAutoRun()
 		{
 			if (World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			if (m_autoremountserial == 0)
-				return;
+            if (m_autoremountserial == 0)
+            {
+                return;
+            }
 
-			if (World.Player.IsGhost)
-				return;
+            if (World.Player.IsGhost)
+            {
+                return;
+            }
 
-			if (!World.Player.IsHuman) // Not mount if not human form
-				return;
+            if (!World.Player.IsHuman) // Not mount if not human form
+            {
+                return;
+            }
 
-			if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
-				return;
+            if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
+            {
+                return;
+            }
 
-			Assistant.Item etheralMount = Assistant.World.FindItem(m_autoremountserial);
+            Assistant.Item etheralMount = Assistant.World.FindItem(m_autoremountserial);
 			if (etheralMount != null && etheralMount.Serial.IsItem)
 			{
 				Items.UseItem(m_autoremountserial);
@@ -482,35 +545,51 @@ namespace RazorEnhanced
 		internal static void Decolorize(Assistant.Mobile m)
 		{
 			if (m.IsGhost) // Non eseguire azione se fantasma
-				return;
+            {
+                return;
+            }
 
-			foreach (Layer l in m_colorized_layer)
+            foreach (Layer l in m_colorized_layer)
 			{
 				Assistant.Item i = m.GetItemOnLayer(l);
 				if (i == null)
-					continue;
+                {
+                    continue;
+                }
 
-				if (i.ItemID == 0x204E && i.Hue == 0x08FD) // Death Shround
-					i.ItemID = 0x1F03;
+                if (i.ItemID == 0x204E && i.Hue == 0x08FD) // Death Shround
+                {
+                    i.ItemID = 0x1F03;
+                }
 
-		 		Assistant.Client.Instance.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
+                Assistant.Client.Instance.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
 			}
 		}
 		internal static void ApplyColor(Assistant.Mobile m)
 		{
 			if (m.IsGhost) // Non eseguire azione se fantasma
-				return;
+            {
+                return;
+            }
 
-			int color = 0;
+            int color = 0;
 			if (m.Poisoned)
-				color = (int)HighLightColor.Poison;
-			else if (m.Paralized)
-				color = (int)HighLightColor.Paralized;
-			else if (m.Blessed) // Mortal
-				color = (int)HighLightColor.Mortal;
-			else if (m == World.Player && Player.BuffsExist("Bload Oath (curse)"))
-				color = (int)HighLightColor.BloodOath;
-			else
+            {
+                color = (int)HighLightColor.Poison;
+            }
+            else if (m.Paralized)
+            {
+                color = (int)HighLightColor.Paralized;
+            }
+            else if (m.Blessed) // Mortal
+            {
+                color = (int)HighLightColor.Mortal;
+            }
+            else if (m == World.Player && Player.BuffsExist("Bload Oath (curse)"))
+            {
+                color = (int)HighLightColor.BloodOath;
+            }
+            else
 			{
 				Decolorize(m);
 				return;
@@ -521,35 +600,44 @@ namespace RazorEnhanced
 			{
 				Assistant.Item i = m.GetItemOnLayer(l);
 				if (i == null)
-					continue;
+                {
+                    continue;
+                }
 
-		 		Assistant.Client.Instance.SendToClient(new EquipmentItem(i, (ushort)color, m.Serial));
+                Assistant.Client.Instance.SendToClient(new EquipmentItem(i, (ushort)color, m.Serial));
 			}
 		}
 
 		internal static Packet MobileColorize(Packet p, Assistant.Mobile m)
 		{
 			if (m.IsGhost) // Non eseguire azione se fantasma
-				return p;
+            {
+                return p;
+            }
 
-			int ltHue = Engine.MainWindow.LTHilight;
+            int ltHue = Engine.MainWindow.LTHilight;
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
-				p = RewriteColorAndFlag(p, (ushort)ltHue);
-
-			else
+            {
+                p = RewriteColorAndFlag(p, (ushort)ltHue);
+            }
+            else
 			{
 				// Blocco Color Highlight flag
 				if ((m != World.Player && Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked) || (m == World.Player && Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked))
 				{
 					if (m.Poisoned)
-						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Poison);
-
-					else if (m.Paralized)
-						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Paralized);
-
-					else if (m.Blessed) // Mortal
-						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Mortal);
-				}
+                    {
+                        p = RewriteColorAndFlag(p, (ushort)HighLightColor.Poison);
+                    }
+                    else if (m.Paralized)
+                    {
+                        p = RewriteColorAndFlag(p, (ushort)HighLightColor.Paralized);
+                    }
+                    else if (m.Blessed) // Mortal
+                    {
+                        p = RewriteColorAndFlag(p, (ushort)HighLightColor.Mortal);
+                    }
+                }
 			}
 			return p;
 		}
@@ -560,29 +648,37 @@ namespace RazorEnhanced
 			if (newmobincoming)
 			{
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
-					p = RewriteColor(p, (ushort)ltHue);
-				else
+                {
+                    p = RewriteColor(p, (ushort)ltHue);
+                }
+                else
 				{
 					// Blocco Color Highlight flag
 					if ((m != World.Player && Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked) || (m == World.Player && Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked))
 					{
 						if (m.Poisoned)
-							p = RewriteColor(p, (ushort)HighLightColor.Poison);
-
-						else if (m.Paralized)
-							p = RewriteColor(p, (ushort)HighLightColor.Paralized);
-
-						else if (m.Blessed) // Mortal
-							p = RewriteColor(p, (ushort)HighLightColor.Mortal);
-					}
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.Poison);
+                        }
+                        else if (m.Paralized)
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.Paralized);
+                        }
+                        else if (m.Blessed) // Mortal
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+                        }
+                    }
 				}
 			}
 			else
 			{
 				if (m.IsGhost) // Non eseguire azione se fantasma
-					return p;
+                {
+                    return p;
+                }
 
-				if (ltHue != 0 && Targeting.IsLastTarget(m))
+                if (ltHue != 0 && Targeting.IsLastTarget(m))
 				{
 			 		Assistant.Client.Instance.SendToClient(new EquipmentItem(item, (ushort)(ltHue & 16383), m.Serial));
 				}
@@ -590,15 +686,23 @@ namespace RazorEnhanced
 				{
 					int color = 0;
 					if (m.Poisoned)
-						color = (int)HighLightColor.Poison;
-					else if (m.Paralized)
-						color = (int)HighLightColor.Paralized;
-					else if (m.Blessed) // Mortal
-						color = (int)HighLightColor.Mortal;
+                    {
+                        color = (int)HighLightColor.Poison;
+                    }
+                    else if (m.Paralized)
+                    {
+                        color = (int)HighLightColor.Paralized;
+                    }
+                    else if (m.Blessed) // Mortal
+                    {
+                        color = (int)HighLightColor.Mortal;
+                    }
 
-					if (color != 0)
-				 		Assistant.Client.Instance.SendToClient(new EquipmentItem(item, (ushort)color, m.Serial));
-				}
+                    if (color != 0)
+                    {
+                        Assistant.Client.Instance.SendToClient(new EquipmentItem(item, (ushort)color, m.Serial));
+                    }
+                }
 			}
 			return p;
 		}
@@ -607,8 +711,10 @@ namespace RazorEnhanced
 		{
 			int ltHue = Engine.MainWindow.LTHilight;
 			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Assistant.Mobile))
-				p = RewriteColor(p, (ushort)ltHue);
-			else
+            {
+                p = RewriteColor(p, (ushort)ltHue);
+            }
+            else
 			{
 				Assistant.Mobile m = (i.Container as Assistant.Mobile);
 				if (m != null && !m.IsGhost)
@@ -617,17 +723,22 @@ namespace RazorEnhanced
 					if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked || Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
 					{
 						if (m.Poisoned)
-							p = RewriteColor(p, (ushort)HighLightColor.Poison);
-
-						else if (m.Paralized)
-							p = RewriteColor(p, (ushort)HighLightColor.Paralized);
-
-						else if (m.Blessed) // Mortal
-							p = RewriteColor(p, (ushort)HighLightColor.Mortal);
-
-						else if (m == World.Player && Player.BuffsExist("Bload Oath (curse)"))
-							p = RewriteColor(p, (ushort)HighLightColor.BloodOath);
-					}
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.Poison);
+                        }
+                        else if (m.Paralized)
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.Paralized);
+                        }
+                        else if (m.Blessed) // Mortal
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+                        }
+                        else if (m == World.Player && Player.BuffsExist("Bload Oath (curse)"))
+                        {
+                            p = RewriteColor(p, (ushort)HighLightColor.BloodOath);
+                        }
+                    }
 				}
 			}
 			return p;
@@ -652,15 +763,21 @@ namespace RazorEnhanced
 		internal static bool IsOrcLizardRat(int body)
 		{
 			if (body >= 0x0021 && body <= 0x0024) // lizard
-				return true;
+            {
+                return true;
+            }
 
-			if (body == 0x0007 || body == 0x0029 || body == 0x0011 || (body >= 0x008a && body <= 0x008c)) // orc
-				return true;
+            if (body == 0x0007 || body == 0x0029 || body == 0x0011 || (body >= 0x008a && body <= 0x008c)) // orc
+            {
+                return true;
+            }
 
-			if (body >= 0x02a && body <= 0x02f) // ratmen
-				return true;
+            if (body >= 0x02a && body <= 0x02f) // ratmen
+            {
+                return true;
+            }
 
-			return false;
+            return false;
 		}
 
 		///////////////////// END - NPC ORC-LIZARD-RAT Talk filter //////////////////////////

@@ -217,7 +217,9 @@ namespace JsonData
                 t.Items.Add(shortcut);
             }
             if (t.Items.Count > 0)
+            {
                 t.SelectedIndex = 0;
+            }
         }
     }
 }

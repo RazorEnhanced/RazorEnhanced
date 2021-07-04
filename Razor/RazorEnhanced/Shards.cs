@@ -197,8 +197,10 @@ namespace RazorEnhanced
 					row["Selected"] = true;
 				}
 				else
-					row["Selected"] = false;
-			}
+                {
+                    row["Selected"] = false;
+                }
+            }
 			Save();
 		}
 
@@ -220,8 +222,10 @@ namespace RazorEnhanced
 						last = false;
 					}
 					else
-						row["Selected"] = false;
-				}
+                    {
+                        row["Selected"] = false;
+                    }
+                }
 			}
 
 			Save();

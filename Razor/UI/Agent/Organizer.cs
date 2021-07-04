@@ -68,29 +68,40 @@ namespace Assistant
 		internal void OrganizerSetSource()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select Source container", false);
+            {
+                Misc.SendMessage("Select Source container", false);
+            }
 
-			if (organizerListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
+            if (organizerListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
+            }
+        }
         private bool AcceptibleOrganizerTarget(Assistant.Item organizerBag)
         {
             if (organizerBag.ItemID == 0x2259)
+            {
                 return true;
+            }
 
             return organizerBag.Serial.IsItem && organizerBag.IsContainer;
         }
 
         private void OrganizerSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item organizerBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+			Assistant.Item organizerBag = Assistant.World.FindItem((uint)serial);
 			if (organizerBag == null)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack", false);
-				RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack", false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 				return;
 			}
@@ -98,15 +109,21 @@ namespace Assistant
 			if (organizerBag != null && AcceptibleOrganizerTarget(organizerBag))
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString(), false);
-				RazorEnhanced.Organizer.AddLog("Source Container set to: " + organizerBag.ToString());
+                {
+                    RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString(), false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Source Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.OrganizerSource = (int)organizerBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack", false);
-				RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack", false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -124,23 +141,32 @@ namespace Assistant
 		internal void OrganizerSetDestination()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select destination container", false);
+            {
+                Misc.SendMessage("Select destination container", false);
+            }
 
-			if (organizerListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
+            if (organizerListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
+            }
+        }
 
 		private void OrganizerDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item organizerBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+			Assistant.Item organizerBag = Assistant.World.FindItem((uint)serial);
 
 			if (organizerBag == null)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack", false);
-				RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack", false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 				return;
 			}
@@ -148,15 +174,21 @@ namespace Assistant
 			if (organizerBag != null && AcceptibleOrganizerTarget(organizerBag))
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString(), false);
-				RazorEnhanced.Organizer.AddLog("Destination Container set to: " + organizerBag.ToString());
+                {
+                    RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString(), false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Destination Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.OrganizerDestination = (int)organizerBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack", false);
-				RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack", false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -187,13 +219,19 @@ namespace Assistant
 		internal void OrganizerAddItem()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select item to add in Organizer list", false);
+            {
+                Misc.SendMessage("Select item to add in Organizer list", false);
+            }
 
-			if (organizerListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
+            if (organizerListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
+            }
+        }
 
 		private void OrganizerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
@@ -201,23 +239,31 @@ namespace Assistant
 			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString(), false);
-				RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
+                {
+                    RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString(), false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
 				this.Invoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid target", false);
-				RazorEnhanced.Organizer.AddLog("Invalid target");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid target", false);
+                }
+
+                RazorEnhanced.Organizer.AddLog("Invalid target");
 			}
 		}
 		private void organizerDragDelay_Leave(object sender, EventArgs e)
 		{
 			if (organizerDragDelay.Text == String.Empty)
-				organizerDragDelay.Text = "100";
+            {
+                organizerDragDelay.Text = "100";
+            }
 
-			Organizer.OrganizerDelay = Convert.ToInt32(organizerDragDelay.Text);
+            Organizer.OrganizerDelay = Convert.ToInt32(organizerDragDelay.Text);
 
 			Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 			Organizer.RefreshLists();
@@ -245,9 +291,11 @@ namespace Assistant
 			Organizer.Start();
 			Organizer.AddLog("Organizer Engine Start...");
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("ORGANIZER: Engine Start...", false);
+            {
+                Misc.SendMessage("ORGANIZER: Engine Start...", false);
+            }
 
-			OrganizerStartWork();
+            OrganizerStartWork();
 		}
 
 		private void organizerStop_Click(object sender, EventArgs e)
@@ -261,8 +309,11 @@ namespace Assistant
 
 			Organizer.AddLog("Organizer Engine force stop...");
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("ORGANIZER: Organizer Engine force stop...", false);
-			OrganizerFinishWork();
+            {
+                Misc.SendMessage("ORGANIZER: Organizer Engine force stop...", false);
+            }
+
+            OrganizerFinishWork();
 		}
 
 		private delegate void OrganizerStartWorkCallback();

@@ -31,7 +31,9 @@ namespace Assistant.Filters
         {
             // completely skip this filter if we've been connected for more thn 1 minute
             if (Client.Instance.ConnectionStart + TimeSpan.FromMinutes(1.0) < DateTime.UtcNow)
+            {
                 return;
+            }
 
             try
             {
@@ -57,7 +59,9 @@ namespace Assistant.Filters
                 }
 
                 if (layout != null && layout.IndexOf(m_VetRewardStr) != -1)
+                {
                     args.Block = true;
+                }
             }
             catch
             {

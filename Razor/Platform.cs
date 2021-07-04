@@ -201,7 +201,10 @@ namespace Assistant
             get
             {
                 if (m_Display == IntPtr.Zero)
+                {
                     m_Display = XOpenDisplay(IntPtr.Zero);
+                }
+
                 return m_Display;
             }
         }
@@ -219,7 +222,7 @@ namespace Assistant
                 int res = XQueryKeymap(Display, szKey);
                 //foreach(var xx in szKey)
                 //Console.WriteLine(xx + "-");
-                int code = XKeysymToKeycode(Display, (int) key);
+                int code = XKeysymToKeycode(Display, key);
                 bool pressed = (szKey[code >> 3] & (1 << (code & 7))) == 0;
                 var r = szKey[code / 8];
                 var s = (1 << (code % 8));
@@ -244,19 +247,29 @@ namespace Assistant
         internal static ushort GetAsyncKeyState(int key)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
                 return Win32Platform.GetAsyncKeyState(key);
+            }
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
                 return LinuxPlatform.GetAsyncKeyState(key);
+            }
             else
+            {
                 return 0;
+            }
         }
 
         internal static IntPtr CaptureScreen(IntPtr handle, bool isFullScreen, string msgStr)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
                 return Win32Platform.CaptureScreen(handle, isFullScreen, msgStr);
+            }
             else
+            {
                 return IntPtr.Zero;
+            }
         }
 
         internal static void BringToFront(IntPtr window)
@@ -264,9 +277,13 @@ namespace Assistant
             try
             {
                 if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
                     Win32Platform.BringToFront(window);
+                }
                 else
+                {
                     LinuxPlatform.BringToFront(window);
+                }
             }
             catch
             {
@@ -276,11 +293,17 @@ namespace Assistant
         internal static bool SetForegroundWindow(IntPtr hWnd)
         {
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
                 return Win32Platform.SetForegroundWindow(hWnd);
+            }
             else if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
                 return LinuxPlatform.SetForegroundWindow(hWnd);
+            }
             else
+            {
                 return false;
+            }
         }
 
         [DllImport("User32.dll")]
@@ -312,9 +335,13 @@ namespace Assistant
             int len = 1024;
             StringBuilder sb = new StringBuilder(len);
             if (GetUserNameA(sb, &len) != 0)
+            {
                 return sb.ToString();
+            }
             else
+            {
                 return "";
+            }
         }
 
         internal static void DisableCloseButton(IntPtr handle)

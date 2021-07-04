@@ -169,10 +169,15 @@ namespace Assistant
 		private void SetPreview(int hue)
 		{
 			if (hue > 0 && hue < 3000)
-				preview.BackColor = Ultima.Hues.GetHue(hue - 1).GetColor(TextHueIDX);
-			else
-				preview.BackColor = Color.Black;
-			preview.ForeColor = (preview.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
+            {
+                preview.BackColor = Ultima.Hues.GetHue(hue - 1).GetColor(TextHueIDX);
+            }
+            else
+            {
+                preview.BackColor = Color.Black;
+            }
+
+            preview.ForeColor = (preview.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
 		}
 
 		private void HueResp(uint serial, ushort iid, ushort hue)
@@ -193,9 +198,11 @@ namespace Assistant
 		private void inGame_Click(object sender, System.EventArgs e)
 		{
 			if (World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			Callback = new HueEntryCallback(HueResp);
+            Callback = new HueEntryCallback(HueResp);
 	 		Assistant.Client.Instance.SendToClient(new HuePicker());
 			World.Player.SendMessage(MsgLevel.Force, LocString.SelHue);
 		}

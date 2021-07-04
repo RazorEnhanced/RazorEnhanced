@@ -232,7 +232,9 @@ namespace RazorEnhanced
         {
             ConfigFiles.RegionByArea.Area area = Area(Player.Map, Player.Position.X, Player.Position.Y);
             if (area == null)
+            {
                 return "Unknown";
+            }
 
             return area.areaName;
         }
@@ -252,7 +254,9 @@ namespace RazorEnhanced
         {
             ConfigFiles.RegionByArea.Area area = Area(Player.Map, Player.Position.X, Player.Position.Y);
             if (area == null)
+            {
                 return "Unknown";
+            }
 
             return area.zoneName;
         }
@@ -266,8 +270,10 @@ namespace RazorEnhanced
                 {
                     foreach (System.Drawing.Rectangle rect in area.rect)
                     {
-                        if (rect.Contains((Int32)x, (Int32)y))
+                        if (rect.Contains(x, y))
+                        {
                             return area;
+                        }
                     }
                 }
             }
@@ -301,7 +307,9 @@ namespace RazorEnhanced
             {
                 Assistant.Item assistantBackpack = World.Player.Backpack;
                 if (assistantBackpack == null)
+                {
                     return null;
+                }
                 else
                 {
                     RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBackpack);
@@ -319,7 +327,9 @@ namespace RazorEnhanced
             {
                 Assistant.Item assistantBank = World.Player.GetItemOnLayer(Layer.Bank);
                 if (assistantBank == null)
+                {
                     return null;
+                }
                 else
                 {
                     RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBank);
@@ -337,7 +347,9 @@ namespace RazorEnhanced
             {
                 Assistant.Item assistantQuiver = World.Player.Quiver;
                 if (assistantQuiver == null)
+                {
                     return null;
+                }
                 else
                 {
                     RazorEnhanced.Item enhancedQuiver = new RazorEnhanced.Item(assistantQuiver);
@@ -356,7 +368,9 @@ namespace RazorEnhanced
             {
                 Assistant.Item assistantMount = World.Player.GetItemOnLayer(Assistant.Layer.Mount);
                 if (assistantMount == null)
+                {
                     return null;
+                }
                 else
                 {
                     RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
@@ -908,13 +922,17 @@ namespace RazorEnhanced
         public static bool BuffsExist(string buffname)
         {
             if (World.Player == null || World.Player.Buffs == null)
+            {
                 return false;
+            }
 
             // if exact match use it
             for (int i = 0; i < World.Player.Buffs.Count; i++)
             {
                 if (GetBuffDescription(World.Player.Buffs[i]) == buffname)
+                {
                     return true;
+                }
             }
 
             // try to guess correct spelling
@@ -922,7 +940,9 @@ namespace RazorEnhanced
             for (int i = 0; i < World.Player.Buffs.Count; i++)
             {
                 if (GetBuffDescription(World.Player.Buffs[i]) == useBuffname)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -937,7 +957,9 @@ namespace RazorEnhanced
         public static bool SpellIsEnabled(string spellname)
         {
             if (World.Player == null || World.Player.SkillEnabled == null)
+            {
                 return false;
+            }
 
             if (!Enum.TryParse<SkillIcon>(spellname.Replace(" ", ""), out SkillIcon l))
             {
@@ -946,7 +968,9 @@ namespace RazorEnhanced
             }
 
             if (World.Player.SkillEnabled.Contains(l))
+            {
                 return true;
+            }
 
             return false;
         }
@@ -1016,7 +1040,7 @@ namespace RazorEnhanced
         /// <param name="serial">Serial or Item to equip.</param>
         public static void EquipItem(int serial)
         {
-            Assistant.Item item = World.FindItem((Assistant.Serial)serial);
+            Assistant.Item item = World.FindItem(serial);
             if (item == null)
             {
                 Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + serial + ") not found");
@@ -1051,7 +1075,9 @@ namespace RazorEnhanced
         {
             List<uint> serialstoequip = new List<uint>();
             foreach (int serial in serials)
+            {
                 serialstoequip.Add((uint)serial);
+            }
 
             Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(serialstoequip));
 
@@ -1098,9 +1124,13 @@ namespace RazorEnhanced
             Assistant.Item item = World.Player.GetItemOnLayer(l);
 
             if (item != null)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -1145,7 +1175,9 @@ namespace RazorEnhanced
             {
                 assistantItem = World.Player.GetItemOnLayer(l);
                 if (assistantItem == null)
+                {
                     return null;
+                }
                 else
                 {
                     RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
@@ -1153,7 +1185,9 @@ namespace RazorEnhanced
                 }
             }
             else
+            {
                 return null;
+            }
         }
 
         internal static string GuessSkillName(string originalName)
@@ -1172,7 +1206,10 @@ namespace RazorEnhanced
             }
 
             if (distance < 99)
+            {
                 return closest;
+            }
+
             return originalName;
 
         }
@@ -1192,7 +1229,10 @@ namespace RazorEnhanced
             }
 
             if (distance < 99)
+            {
                 return closest;
+            }
+
             return originalName;
 
         }
@@ -1618,7 +1658,7 @@ namespace RazorEnhanced
                 return -1;
             }
             Scripts.SendMessageScriptError("Script Error: GetStatStatus: not implemented");
-            return (int)-1;
+            return -1;
         }
 
 
@@ -1756,17 +1796,24 @@ namespace RazorEnhanced
             }
 
             if (wait)
+            {
                 Assistant.Client.Instance.SendToServerWait(new UseTargetedSkill((ushort)skill, (uint)target));
+            }
             else
+            {
                 Assistant.Client.Instance.SendToServer(new UseTargetedSkill((ushort)skill, (uint)target));
+            }
 
             if (skill == SkillName.Hiding)
+            {
                 StealthSteps.Hide();
-
+            }
             else if (skill == SkillName.Stealth)
             {
                 if (!World.Player.Visible) // Trigger stealth step counter
+                {
                     StealthSteps.Hide();
+                }
             }
 
         }
@@ -1804,17 +1851,24 @@ namespace RazorEnhanced
             }
 
             if (wait)
+            {
                 Assistant.Client.Instance.SendToServerWait(new UseSkill((int)skill));
+            }
             else
+            {
                 Assistant.Client.Instance.SendToServer(new UseSkill((int)skill));
+            }
 
             if (skill == SkillName.Hiding)
+            {
                 StealthSteps.Hide();
-
+            }
             else if (skill == SkillName.Stealth)
             {
                 if (!World.Player.Visible) // Trigger stealth step counter
+                {
                     StealthSteps.Hide();
+                }
             }
         }
         // Map Message
@@ -1826,7 +1880,9 @@ namespace RazorEnhanced
         public static void MapSay(string msg)
         {
             if (msg != null && msg != string.Empty)
+            {
                 Assistant.UOAssist.PostTextSend(msg);
+            }
         }
 
         public static void MapSay(int msg)
@@ -1867,9 +1923,13 @@ namespace RazorEnhanced
         public static void ChatGuild(string msg)
         {
             if (Assistant.Client.Instance.ServerEncrypted) // is OSI
+            {
                 Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Guild, 1, 1, "ENU", new List<ushort>(), msg));
+            }
             else
+            {
                 Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+            }
         }
 
         public static void ChatGuild(int msg)
@@ -1884,10 +1944,13 @@ namespace RazorEnhanced
         public static void ChatAlliance(string msg)
         {
             if (Assistant.Client.Instance.ServerEncrypted) // is OSI
+            {
                 Assistant.Client.Instance.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Alliance, 1, 1, "ENU", new List<ushort>(), msg));
+            }
             else
+            {
                 Assistant.Client.Instance.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
-
+            }
         }
 
         public static void ChatAlliance(int msg)
@@ -1971,9 +2034,13 @@ namespace RazorEnhanced
         public static void ChatParty(string msg, int recepient_serial = 0)
         {
             if (recepient_serial != 0)
+            {
                 Assistant.Client.Instance.SendToServerWait(new SendPartyMessagePrivate(recepient_serial, msg));
+            }
             else
+            {
                 Assistant.Client.Instance.SendToServerWait(new SendPartyMessage(msg));
+            }
         }
 
 
@@ -2036,9 +2103,13 @@ namespace RazorEnhanced
         public static void PartyCanLoot(bool CanLoot)
         {
             if (CanLoot)
+            {
                 Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x1));
+            }
             else
+            {
                 Assistant.Client.Instance.SendToServerWait(new PartyCanLoot(0x0));
+            }
         }
 
 
@@ -2061,7 +2132,9 @@ namespace RazorEnhanced
         {
             // make sure its either an item or a mobile, else server will disconnect you
             if ((World.FindMobile(serial) == null) && (World.FindItem(serial) == null))
+            {
                 return;
+            }
 
             Target.AttackMessage(serial, true);
             if (Targeting.LastAttack != serial)
@@ -2085,10 +2158,14 @@ namespace RazorEnhanced
         public static void AttackLast()
         {
             if (Targeting.LastAttack == 0) // Nessun last attack presente
+            {
                 return;
+            }
 
             if ((World.FindMobile(Targeting.LastAttack) == null) && (World.FindItem(Targeting.LastAttack) == null))
+            {
                 return;
+            }
 
             Target.AttackMessage((int)Targeting.LastAttack, true);
 
@@ -2267,12 +2344,16 @@ namespace RazorEnhanced
             if (status)
             {
                 if (!World.Player.Flying)
+                {
                     Assistant.Client.Instance.SendToServerWait(new ToggleFly());
+                }
             }
             else
             {
                 if (World.Player.Flying)
+                {
                     Assistant.Client.Instance.SendToServerWait(new ToggleFly());
+                }
             }
         }
 
@@ -2301,11 +2382,18 @@ namespace RazorEnhanced
         {
             Assistant.Mobile assistantMobile = null;
             if (serial == -1)
+            {
                 assistantMobile = Assistant.World.FindMobile(World.Player.Serial);
+            }
             else
+            {
                 assistantMobile = Assistant.World.FindMobile(serial);
+            }
+
             if (assistantMobile != null)
+            {
                 Assistant.Client.Instance.SendToClient(new DisplayPaperdoll(assistantMobile, assistantMobile.Name));
+            }
             else 
             {
                 Misc.SendMessage(String.Format("Unable to find serial: {0}", serial));
@@ -2342,20 +2430,30 @@ namespace RazorEnhanced
             if (mob != null)
             {
                 if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
+                {
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
             else
+            {
                 return false;
+            }
         }
 
         public static bool InRangeMobile(Mobile mobile, int range)
         {
             if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) <= range)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         /// <summary>
@@ -2370,20 +2468,30 @@ namespace RazorEnhanced
             if (itm != null)
             {
                 if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, itm.Position.X, itm.Position.Y) <= range)
+                {
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
             else
+            {
                 return false;
+            }
         }
 
         public static bool InRangeItem(Item item, int range)
         {
             if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         
@@ -2466,7 +2574,9 @@ namespace RazorEnhanced
         public static float SumAttribute(string attributename)
         {
             if (World.Player == null)
+            {
                 return 0;
+            }
 
             float attributevalue = 0;
 
@@ -2474,10 +2584,14 @@ namespace RazorEnhanced
             {
                 Assistant.Item itemtocheck = World.Player.GetItemOnLayer(l);
                 if (itemtocheck == null) // Slot vuoto
+                {
                     continue;
+                }
 
                 if (!itemtocheck.PropsUpdated)
+                {
                     RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+                }
 
                 attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
             }
@@ -2508,7 +2622,9 @@ namespace RazorEnhanced
 
             List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
             if (props.Count > index)
+            {
                 propstring = props[index].ToString();
+            }
 
             return propstring;
         }
@@ -2530,10 +2646,14 @@ namespace RazorEnhanced
             foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
             {
                 if (!prop.ToString().ToLower().Contains(name.ToLower()))
+                {
                     continue;
+                }
 
                 if (prop.Args == null)  // Props esiste ma non ha valore
+                {
                     return 1;
+                }
 
                 try
                 {

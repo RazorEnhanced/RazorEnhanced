@@ -17,9 +17,14 @@ namespace Assistant
                 double ms = (DateTime.Now - m_Start).TotalMilliseconds;
                 m_Time += ms;
                 if (ms < m_Min)
+                {
                     m_Min = ms;
+                }
+
                 if (ms > m_Max)
+                {
                     m_Max = ms;
+                }
 
                 if (m_Count-- > 0)
                 {
@@ -42,9 +47,13 @@ namespace Assistant
         internal static void StartPing(int count)
         {
             if (count <= 0 || count > 20)
+            {
                 m_Count = 5;
+            }
             else
+            {
                 m_Count = count;
+            }
 
             m_Total = m_Count;
             m_Time = 0;

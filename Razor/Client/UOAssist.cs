@@ -64,7 +64,10 @@ namespace Assistant
             if (string.IsNullOrEmpty(s))
             {
                 if (string.IsNullOrEmpty(t))
+                {
                     return 0;
+                }
+
                 return t.Length;
             }
 
@@ -78,8 +81,15 @@ namespace Assistant
             int[,] d = new int[n + 1, m + 1];
 
             // initialize the top and right of the table to 0, 1, 2, ...
-            for (int i = 0; i <= n; d[i, 0] = i++) ;
-            for (int j = 1; j <= m; d[0, j] = j++) ;
+            for (int i = 0; i <= n; d[i, 0] = i++)
+            {
+                ;
+            }
+
+            for (int j = 1; j <= m; d[0, j] = j++)
+            {
+                ;
+            }
 
             for (int i = 1; i <= n; i++)
             {
@@ -112,14 +122,20 @@ namespace Assistant
                 for (int i = 0; i < args.Length; i++)
                 {
                     if (i != 0)
+                    {
                         sb.Append(' ');
+                    }
+
                     sb.Append(args[i]);
                 }
 
                 string str = sb.ToString();
                 ushort atom = 0;
                 if (str != null && str.Length > 0)
+                {
                     atom = GlobalAddAtom(str);
+                }
+
                 PostMessage(hWnd, Msg, (IntPtr) atom, IntPtr.Zero);
             }
         }
@@ -181,10 +197,12 @@ namespace Assistant
                         foreach (Item item in World.Items.Values)
                         {
                             if (item.ItemID >= 0x4000)
-                                PostMessage((IntPtr) wParam, (uint) UOAMessage.ADD_MULTI,
-                                    (IntPtr) ((int) ((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))),
+                                {
+                                    PostMessage((IntPtr) wParam, (uint) UOAMessage.ADD_MULTI,
+                                    (IntPtr) ((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16)),
                                     (IntPtr) item.ItemID.Value);
-                        }
+                                }
+                            }
                     }
 
                     return 1;
@@ -199,17 +217,22 @@ namespace Assistant
                 case UOAMessage.GET_COORDS:
                 {
                     if (World.Player == null)
-                        return 0;
-                    return (World.Player.Position.X & 0xFFFF) | ((World.Player.Position.Y & 0xFFFF) << 16);
+                        {
+                            return 0;
+                        }
+
+                        return (World.Player.Position.X & 0xFFFF) | ((World.Player.Position.Y & 0xFFFF) << 16);
                 }
 
                 case UOAMessage.GET_SKILL:
                 {
                     if (World.Player == null || lParam > 3 || wParam < 0 || World.Player.Skills == null ||
                         wParam > World.Player.Skills.Length || lParam < 0)
-                        return 0;
+                        {
+                            return 0;
+                        }
 
-                    switch (lParam)
+                        switch (lParam)
                     {
                         case 3:
                         {
@@ -234,9 +257,11 @@ namespace Assistant
                 case UOAMessage.GET_STAT:
                 {
                     if (World.Player == null || wParam < 0 || wParam > 5)
-                        return 0;
+                        {
+                            return 0;
+                        }
 
-                    switch (wParam)
+                        switch (wParam)
                     {
                         case 0: return World.Player.Str;
                         case 1: return World.Player.Int;
@@ -274,19 +299,28 @@ namespace Assistant
                 case UOAMessage.DISPLAY_TEXT:
                 {
                     if (World.Player == null)
-                        return 0;
+                        {
+                            return 0;
+                        }
 
-                    int hue = wParam & 0xFFFF;
+                        int hue = wParam & 0xFFFF;
                     StringBuilder sb = new StringBuilder(256);
                     if (GlobalGetAtomName((ushort) lParam, sb, 256) == 0)
-                        return 0;
+                        {
+                            return 0;
+                        }
 
-                    if ((wParam & 0x00010000) != 0)
-                        Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3,
+                        if ((wParam & 0x00010000) != 0)
+                        {
+                            Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3,
                             Language.CliLocName, "System", sb.ToString()));
-                    else
-                        World.Player.OverheadMessage(hue, sb.ToString());
-                    GlobalDeleteAtom((ushort) lParam);
+                        }
+                        else
+                        {
+                            World.Player.OverheadMessage(hue, sb.ToString());
+                        }
+
+                        GlobalDeleteAtom((ushort) lParam);
                     return 1;
                 }
 
@@ -299,9 +333,11 @@ namespace Assistant
                 {
                     StringBuilder sb = new StringBuilder(256);
                     if (GlobalGetAtomName((ushort) lParam, sb, 256) == 0)
-                        return 0;
+                        {
+                            return 0;
+                        }
 
-                    if (wParam == 0)
+                        if (wParam == 0)
                     {
                         Command.RemoveCommand(sb.ToString());
                         return 0;
@@ -321,10 +357,14 @@ namespace Assistant
                 case UOAMessage.GET_SHARDNAME:
                 {
                     if (World.ShardName != null && World.ShardName.Length > 0)
-                        return GlobalAddAtom(World.ShardName);
-                    else
-                        return 0;
-                }
+                        {
+                            return GlobalAddAtom(World.ShardName);
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
 
                 case UOAMessage.ADD_USER_2_PARTY:
                 {
@@ -345,8 +385,11 @@ namespace Assistant
                 {
                     if (World.Player == null || wParam < 0 || wParam > World.Player.Skills.Length || lParam < 0 ||
                         lParam >= 3)
-                        return 0;
-                    Client.Instance.SendToServer(new SetSkillLock(wParam, (LockType) lParam));
+                        {
+                            return 0;
+                        }
+
+                        Client.Instance.SendToServer(new SetSkillLock(wParam, (LockType) lParam));
                     return 1;
                 }
 
@@ -381,8 +424,10 @@ namespace Assistant
         public static void PostLogout()
         {
             for (int i = 0; i < m_WndReg.Count; i++)
+            {
                 PostMessage((IntPtr) ((WndRegEnt) m_WndReg[i]).Handle, (uint) UOAMessage.LOGOUT, IntPtr.Zero,
                     IntPtr.Zero);
+            }
         }
 
 
@@ -395,58 +440,76 @@ namespace Assistant
         {
             PostToWndReg((uint) UOAMessage.SKILL_LEVEL, (IntPtr) skill, (IntPtr) val);
             if (skill == (int) SkillName.Magery)
-                PostToWndReg((uint) UOAMessage.MAGERY_LEVEL, (IntPtr) ((int) (val / 10)), (IntPtr) (val % 10));
+            {
+                PostToWndReg((uint) UOAMessage.MAGERY_LEVEL, (IntPtr) (val / 10), (IntPtr) (val % 10));
+            }
         }
 
         public static void PostRemoveMulti(Item item)
         {
             if (item == null)
+            {
                 return;
+            }
 
-            IntPtr pos = (IntPtr) ((int) ((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16)));
+            IntPtr pos = (IntPtr) ((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16));
 
             if (pos == IntPtr.Zero)
+            {
                 return;
+            }
 
             for (int i = 0; i < m_WndReg.Count; i++)
             {
                 WndRegEnt wnd = (WndRegEnt) m_WndReg[i];
                 if (wnd.Type == 1)
+                {
                     PostMessage((IntPtr) wnd.Handle, (uint) UOAMessage.REM_MULTI, pos, (IntPtr) item.ItemID.Value);
+                }
             }
         }
 
         public static void PostAddMulti(ItemID iid, Point3D Position)
         {
-            IntPtr pos = (IntPtr) ((int) ((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
+            IntPtr pos = (IntPtr) ((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16));
 
             if (pos == IntPtr.Zero)
+            {
                 return;
+            }
 
             for (int i = 0; i < m_WndReg.Count; i++)
             {
                 WndRegEnt wnd = (WndRegEnt) m_WndReg[i];
                 if (wnd.Type == 1)
+                {
                     PostMessage((IntPtr) wnd.Handle, (uint) UOAMessage.ADD_MULTI, pos, (IntPtr) iid.Value);
+                }
             }
         }
 
         public static void PostHitsUpdate()
         {
             if (World.Player != null)
+            {
                 PostToWndReg((uint) UOAMessage.STR_STATUS, (IntPtr) World.Player.HitsMax, (IntPtr) World.Player.Hits);
+            }
         }
 
         public static void PostManaUpdate()
         {
             if (World.Player != null)
+            {
                 PostToWndReg((uint) UOAMessage.INT_STATUS, (IntPtr) World.Player.ManaMax, (IntPtr) World.Player.Mana);
+            }
         }
 
         public static void PostStamUpdate()
         {
             if (World.Player != null)
+            {
                 PostToWndReg((uint) UOAMessage.DEX_STATUS, (IntPtr) World.Player.StamMax, (IntPtr) World.Player.Stam);
+            }
         }
 
         private static void PostToWndReg(uint Msg, IntPtr wParam, IntPtr lParam)
@@ -457,7 +520,10 @@ namespace Assistant
                 if (PostMessage((IntPtr) ((WndRegEnt) m_WndReg[i]).Handle, Msg, wParam, lParam) == 0)
                 {
                     if (rem == null)
+                    {
                         rem = new ArrayList(1);
+                    }
+
                     rem.Add(m_WndReg[i]);
                 }
             }
@@ -465,7 +531,9 @@ namespace Assistant
             if (rem != null)
             {
                 for (int i = 0; i < rem.Count; i++)
+                {
                     m_WndReg.Remove(rem[i]);
+                }
             }
         }
 

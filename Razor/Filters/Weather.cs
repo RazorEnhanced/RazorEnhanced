@@ -27,7 +27,9 @@ namespace Assistant.Filters
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
         {
             if (Client.Instance.AllowBit(FeatureBit.WeatherFilter))
+            {
                 args.Block = true;
+            }
         }
     }
 }

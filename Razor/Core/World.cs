@@ -45,7 +45,9 @@ namespace Assistant
             List<CorpseItem> list = new List<CorpseItem>();
 
             if (World.Player == null)
+            {
                 return list;
+            }
 
             foreach (Item m in World.Items.Values)
             {
@@ -70,13 +72,17 @@ namespace Assistant
 			List<Mobile> list = new List<Mobile>();
 
 			if (World.Player == null)
-				return list;
+            {
+                return list;
+            }
 
-			foreach (Mobile m in World.Mobiles.Values)
+            foreach (Mobile m in World.Mobiles.Values)
 			{
 				if (Utility.InRange(World.Player.Position, m.Position, World.Player.VisRange))
-					list.Add(m);
-			}
+                {
+                    list.Add(m);
+                }
+            }
 
 			return list;
 		}
@@ -84,10 +90,14 @@ namespace Assistant
 		internal static List<Mobile> MobilesInRange()
 		{
 			if (Player == null)
-				return MobilesInRange(18);
-			else
-				return MobilesInRange(Player.VisRange);
-		}
+            {
+                return MobilesInRange(18);
+            }
+            else
+            {
+                return MobilesInRange(Player.VisRange);
+            }
+        }
 
 		internal static void AddItem(Item item)
 		{
@@ -114,9 +124,11 @@ namespace Assistant
 		internal static void RemoveItem(Item item)
 		{
 			if (item.IsMulti)
-				RemoveMulti(item);
+            {
+                RemoveMulti(item);
+            }
 
-			m_Items.TryRemove(item.Serial, out Item removed);
+            m_Items.TryRemove(item.Serial, out Item removed);
 
 		/*	while (m_Items.ContainsKey(item.Serial))
 			{

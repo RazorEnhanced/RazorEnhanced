@@ -61,16 +61,25 @@ namespace Assistant
 			string type = RazorEnhanced.Settings.General.ReadString("ImageFormat").ToLower();
 
 			if (World.Player != null)
-				name = World.Player.Name;
-			if (name == null || name.Trim() == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1)
-				name = "Unknown";
+            {
+                name = World.Player.Name;
+            }
 
-			if (RazorEnhanced.Settings.General.ReadBool("CapTimeStamp"))
-				timestamp = String.Format("{0} ({1}) - {2}", name, World.ShardName, DateTime.Now.ToString(@"M/dd/yy - HH:mm:ss"));
-			else
-				timestamp = "";
+            if (name == null || name.Trim() == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1)
+            {
+                name = "Unknown";
+            }
 
-			name = String.Format("{0}_{1}", name, DateTime.Now.ToString("M-d_HH.mm"));
+            if (RazorEnhanced.Settings.General.ReadBool("CapTimeStamp"))
+            {
+                timestamp = String.Format("{0} ({1}) - {2}", name, World.ShardName, DateTime.Now.ToString(@"M/dd/yy - HH:mm:ss"));
+            }
+            else
+            {
+                timestamp = "";
+            }
+
+            name = String.Format("{0}_{1}", name, DateTime.Now.ToString("M-d_HH.mm"));
 
 			if (!Directory.Exists(path))
 			{
@@ -107,24 +116,42 @@ namespace Assistant
 		{
 			//string fmt = Config.GetString( "ImageFormat" ).ToLower();
 			if (fmt == "jpeg" || fmt == "jpg")
-				return ImageFormat.Jpeg;
-			else if (fmt == "png")
-				return ImageFormat.Png;
-			else if (fmt == "bmp")
-				return ImageFormat.Bmp;
-			else if (fmt == "gif")
-				return ImageFormat.Gif;
-			else if (fmt == "tiff" || fmt == "tif")
-				return ImageFormat.Tiff;
-			else if (fmt == "wmf")
-				return ImageFormat.Wmf;
-			else if (fmt == "exif")
-				return ImageFormat.Exif;
-			else if (fmt == "emf")
-				return ImageFormat.Emf;
-			else
-				return ImageFormat.Jpeg;
-		}
+            {
+                return ImageFormat.Jpeg;
+            }
+            else if (fmt == "png")
+            {
+                return ImageFormat.Png;
+            }
+            else if (fmt == "bmp")
+            {
+                return ImageFormat.Bmp;
+            }
+            else if (fmt == "gif")
+            {
+                return ImageFormat.Gif;
+            }
+            else if (fmt == "tiff" || fmt == "tif")
+            {
+                return ImageFormat.Tiff;
+            }
+            else if (fmt == "wmf")
+            {
+                return ImageFormat.Wmf;
+            }
+            else if (fmt == "exif")
+            {
+                return ImageFormat.Exif;
+            }
+            else if (fmt == "emf")
+            {
+                return ImageFormat.Emf;
+            }
+            else
+            {
+                return ImageFormat.Jpeg;
+            }
+        }
 
 
 		private static readonly Object m_lock = new Object();
@@ -186,8 +213,10 @@ namespace Assistant
 		{
 			string[] files = Directory.GetFiles(path, String.Format("*.{0}", ext));
 			for (int i = 0; i < files.Length && list.Items.Count < 500; i++)
-				list.Items.Add(Path.GetFileName(files[i]));
-		}
+            {
+                list.Items.Add(Path.GetFileName(files[i]));
+            }
+        }
 
 		private class GDI32
 		{

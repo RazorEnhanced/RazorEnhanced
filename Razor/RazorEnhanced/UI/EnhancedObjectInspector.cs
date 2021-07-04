@@ -31,11 +31,14 @@ namespace RazorEnhanced.UI
 		private void refreshtimer_Tick(object sender, EventArgs e)
 		{
 			if (tabControl1.SelectedTab == objecttabPage)
-				RefreshShared();
-			else
-				RefreshTimers();
-
-		}
+            {
+                RefreshShared();
+            }
+            else
+            {
+                RefreshTimers();
+            }
+        }
 
 		private void RefreshShared()
 		{
@@ -44,17 +47,25 @@ namespace RazorEnhanced.UI
 			foreach (var o in Misc.SharedScriptData)
 			{
 				if (o.Value is Item)
-					sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Item)o.Value).Serial.ToString("X8") });
-				if (o.Value is Mobile)
-					sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Mobile)o.Value).Serial.ToString("X8") });
-				else
+                {
+                    sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Item)o.Value).Serial.ToString("X8") });
+                }
+
+                if (o.Value is Mobile)
+                {
+                    sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Mobile)o.Value).Serial.ToString("X8") });
+                }
+                else
 				{
 					if (int.TryParse(o.Value.ToString(), out int n))
-						sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + n.ToString("X8") });
-					else
-						sharedobjectGridView.Rows.Add(new object[] { o.Key, o.Value.ToString() });
-
-				}
+                    {
+                        sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + n.ToString("X8") });
+                    }
+                    else
+                    {
+                        sharedobjectGridView.Rows.Add(new object[] { o.Key, o.Value.ToString() });
+                    }
+                }
 			}
 		}
 
@@ -65,7 +76,7 @@ namespace RazorEnhanced.UI
 
 			foreach (var t in Timer.Timers)
 			{
-				timerGridView.Rows.Add(new object[] { t.Key, "0x " + ((ScriptTimer)t.Value).Interval.ToString() });
+				timerGridView.Rows.Add(new object[] { t.Key, "0x " + t.Value.Interval.ToString() });
 			}
 		}
 	}

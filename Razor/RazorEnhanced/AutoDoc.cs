@@ -938,7 +938,10 @@ namespace RazorEnhanced
                 documentation = XMLCommentReader.RemoveBaseIndentation(documentation);
                 var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
                 var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
-                if (HasTag(TAG_NODOC, methodSummary)) continue;
+                if (HasTag(TAG_NODOC, methodSummary))
+                {
+                    continue;
+                }
 
                 var prms = method.GetParameters();
                 foreach (var prm in prms)
@@ -956,7 +959,11 @@ namespace RazorEnhanced
                 }
 
                 var mtd = new DocMethod(methodKey, className, methodName, returnType, returnDesc, methodSummary, paramList, methodIsStatic);
-                if (HasTag(TAG_AUTOCOMPLETE, methodSummary)) mtd.flagAutocomplete = true;
+                if (HasTag(TAG_AUTOCOMPLETE, methodSummary))
+                {
+                    mtd.flagAutocomplete = true;
+                }
+
                 result.methods.Add(mtd);
             }
 
@@ -972,7 +979,10 @@ namespace RazorEnhanced
 
                 var documentation = XMLCommentReader.GetDocumentation(prop);
                 var propSummary = XMLCommentReader.ExtractXML(documentation, "summary");
-                if (HasTag(TAG_NODOC, propSummary)) continue;
+                if (HasTag(TAG_NODOC, propSummary))
+                {
+                    continue;
+                }
 
                 var prt = new DocProperty(propKey, className, itemName, propertyType, propSummary, propertyIsStatic);
                 result.properties.Add(prt);
@@ -990,7 +1000,10 @@ namespace RazorEnhanced
 
                 var documentation = XMLCommentReader.GetDocumentation(field);
                 var fieldSummary = XMLCommentReader.ExtractXML(documentation, "summary");
-                if (HasTag(TAG_NODOC, fieldSummary)) continue;
+                if (HasTag(TAG_NODOC, fieldSummary))
+                {
+                    continue;
+                }
 
                 var prt = new DocProperty(fieldKey, className, itemName, fieldType, fieldSummary, fieldIsStatic);
                 result.properties.Add(prt);

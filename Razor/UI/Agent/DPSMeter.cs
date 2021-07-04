@@ -60,17 +60,23 @@ namespace Assistant
 		private void DPSMeterApplyFilterButton_Click(object sender, EventArgs e)
 		{
 			if (DPSMeter.Enabled)
-				return;
+            {
+                return;
+            }
 
-			int max = -1;
+            int max = -1;
 			if (DPSmetermaxdamage.Text != string.Empty)
-				max = Convert.ToInt32(DPSmetermaxdamage.Text);
+            {
+                max = Convert.ToInt32(DPSmetermaxdamage.Text);
+            }
 
-			int min = -1;
+            int min = -1;
 			if (DPSmetermindamage.Text != string.Empty)
-				min = Convert.ToInt32(DPSmetermindamage.Text);
+            {
+                min = Convert.ToInt32(DPSmetermindamage.Text);
+            }
 
-			int serial = -1;
+            int serial = -1;
 			if (DPSmeterserial.Text != string.Empty)
 			{
 				try
@@ -82,9 +88,11 @@ namespace Assistant
 
 			string name = null;
 			if (DPSmetername.Text != string.Empty)
-				name = DPSmetername.Text;
+            {
+                name = DPSmetername.Text;
+            }
 
-			DPSMeter.ShowResult(DpsMeterGridView, max, min, serial, name);
+            DPSMeter.ShowResult(DpsMeterGridView, max, min, serial, name);
 		}
 
 		private void DPSMeterClearFilterButton_Click(object sender, EventArgs e)

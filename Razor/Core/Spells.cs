@@ -44,32 +44,54 @@ namespace Assistant
 			get
 			{
                 if (Circle <= 8) // Mage
+                {
                     return 3002011 + ((Circle - 1) * 8) + Number - 1;
+                }
                 else if (Circle == 9) // Extended Mage Spells
+                {
                     return 2100 + Number - 1;
+                }
                 else if (Circle == 10) // Necr
+                {
                     return 1060509 + Number - 1;
+                }
                 else if (Circle == 20) // Chiv
+                {
                     return 1060585 + Number - 1;
+                }
                 else if (Circle == 40) // Bush
+                {
                     return 1060595 + Number - 1;
+                }
                 else if (Circle == 50) // Ninj
+                {
                     return 1060610 + Number - 1;
+                }
                 else if (Circle == 60)
                 {
                     if (Number < 78) // Spellweaving
+                    {
                         return 1071026 + Number - 1;
+                    }
                     else // Mysticism
+                    {
                         return 1031678 + Number - 78;
+                    }
                 }
                 else if (Circle == 70) // Mastery
                 {
                     if (Number >= 1 && Number <= 6)
+                    {
                         return 1115612 + Number - 1;
+                    }
                     else if (Number >= 7 && Number <= 45)
+                    {
                         return 1155896 + Number - 7;
+                    }
                     else
+                    {
                         return -1;
+                    }
                 }
                 else if (Circle == 80) // Druid
                 {
@@ -80,8 +102,10 @@ namespace Assistant
                     return 2140 + Number - 1;
                 }
                 else
+                {
                     return -1;
-			}
+                }
+            }
 		}
 
 		public override string ToString()
@@ -129,10 +153,14 @@ namespace Assistant
 		{
 			Cast();
 			if (wait)
-		 		Assistant.Client.Instance.SendToServerWait(p);
-			else
-		 		Assistant.Client.Instance.SendToServer(p);
-		}
+            {
+                Assistant.Client.Instance.SendToServerWait(p);
+            }
+            else
+            {
+                Assistant.Client.Instance.SendToServer(p);
+            }
+        }
 
 		private void Cast()
 		{
@@ -202,8 +230,11 @@ namespace Assistant
 				{
 					line = line.Trim();
 					if (line.Length <= 0 || line[0] == '#')
-						continue;
-					string[] split = line.Split('|');
+                    {
+                        continue;
+                    }
+
+                    string[] split = line.Split('|');
 
 					try
 					{
@@ -211,13 +242,18 @@ namespace Assistant
                         {
                             string[] reags = new string[split.Length - 5];
                             for (int i = 5; i < split.Length; i++)
+                            {
                                 reags[i - 5] = split[i].ToLower().Trim();
+                            }
+
                             Spell s = new Spell(split[0].Trim()[0], Convert.ToInt32(split[1].Trim()), Convert.ToInt32(split[2].Trim()), /*split[3].Trim(),*/ split[4].Trim(), reags);
 
                             m_SpellsByID[s.GetID()] = s;
 
                             if (s.WordsOfPower != null && s.WordsOfPower.Trim().Length > 0)
+                            {
                                 m_SpellsByPower[s.WordsOfPower] = s;
+                            }
                         }
                     }
 					catch
@@ -238,17 +274,25 @@ namespace Assistant
 			else if (World.Player.Hits + 2 < World.Player.HitsMax)
 			{
 				if (World.Player.Hits + 30 < World.Player.HitsMax && World.Player.Mana >= 12)
-					s = Get(4, 5); // greater heal
-				else
-					s = Get(1, 4); // mini heal
-			}
+                {
+                    s = Get(4, 5); // greater heal
+                }
+                else
+                {
+                    s = Get(1, 4); // mini heal
+                }
+            }
 			else
 			{
 				if (World.Player.Mana >= 12)
-					s = Get(4, 5); // greater heal
-				else
-					s = Get(1, 4); // mini heal
-			}
+                {
+                    s = Get(4, 5); // greater heal
+                }
+                else
+                {
+                    s = Get(1, 4); // mini heal
+                }
+            }
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockBigHealCheckBox"))
 			{
@@ -257,8 +301,11 @@ namespace Assistant
 					if (s != null)
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-							Targeting.TargetSelf(true);
-				 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                        {
+                            Targeting.TargetSelf(true);
+                        }
+
+                        Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
 				}
@@ -268,8 +315,11 @@ namespace Assistant
 				if (s != null)
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-						Targeting.TargetSelf(true);
-			 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                    {
+                        Targeting.TargetSelf(true);
+                    }
+
+                    Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}
@@ -288,8 +338,11 @@ namespace Assistant
 					if (s != null)
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-							Targeting.TargetSelf(true);
-				 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                        {
+                            Targeting.TargetSelf(true);
+                        }
+
+                        Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
 				}
@@ -299,8 +352,11 @@ namespace Assistant
 				if (s != null)
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-						Targeting.TargetSelf(true);
-			 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                    {
+                        Targeting.TargetSelf(true);
+                    }
+
+                    Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}
@@ -320,8 +376,11 @@ namespace Assistant
 					if (s != null)
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-							Targeting.TargetSelf(true);
-				 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                        {
+                            Targeting.TargetSelf(true);
+                        }
+
+                        Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
 				}
@@ -331,8 +390,11 @@ namespace Assistant
 				if (s != null)
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-						Targeting.TargetSelf(true);
-			 		Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                    {
+                        Targeting.TargetSelf(true);
+                    }
+
+                    Assistant.Client.Instance.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}
@@ -347,11 +409,19 @@ namespace Assistant
         internal static int ToID(int circle, int num)
         {
             if (circle < 10)
+            {
                 return ((circle - 1) * 8) + num;
+            }
+
             if (circle == 80)
+            {
                 return 301 + num;
+            }
+
             if (circle == 90)
+            {
                 return 341 + num;
+            }
 
             return (circle * 10) + num;
         }

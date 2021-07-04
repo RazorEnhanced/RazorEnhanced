@@ -49,8 +49,11 @@ namespace RazorEnhanced
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			if (BorderColor != Color.Transparent)
-				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
-			base.OnPaint(e);
+            {
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
+            }
+
+            base.OnPaint(e);
 		}
 	}
 
@@ -81,8 +84,11 @@ namespace RazorEnhanced
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			if (!SpellGrid.Lock)
-				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Red, ButtonBorderStyle.Solid);
-			base.OnPaint(e);
+            {
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Red, ButtonBorderStyle.Solid);
+            }
+
+            base.OnPaint(e);
 		}
 	}
 
@@ -175,9 +181,11 @@ namespace RazorEnhanced
 		internal static void Close()
 		{
 			if (m_form == null)
-				return;
+            {
+                return;
+            }
 
-			Engine.GridX = m_form.Location.X;
+            Engine.GridX = m_form.Location.X;
 			Engine.GridY = m_form.Location.Y;
 			m_form.Close();
 			m_form = null;
@@ -187,26 +195,32 @@ namespace RazorEnhanced
 		internal static void Open()
 		{
 			if (Assistant.World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
+            m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
 			m_hslot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
 			if (m_form == null)
-				DrawSpellGrid();
+            {
+                DrawSpellGrid();
+            }
 
-			UpdatePanelImage();
+            UpdatePanelImage();
 			DLLImport.Win.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
-			m_form.Opacity =((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;
+			m_form.Opacity = RazorEnhanced.Settings.General.ReadInt("GridOpacity") / 100.0;
 			m_form.Refresh();
         }
 
 		internal static void LockUnlock()
 		{
 			if (m_form == null)
-				return;
+            {
+                return;
+            }
 
-			m_lock = !m_lock;
+            m_lock = !m_lock;
 			m_form.ContextMenu = GeneraMenu();
 			m_form.Refresh();
 			Settings.General.WriteInt("PosXGrid", m_form.Location.X);
@@ -224,11 +238,16 @@ namespace RazorEnhanced
 			{
 				Engine.MainWindow.GridSlotComboBox.Items.Add("Slot: " + i);
 				if (i == (m_hslot * m_vslot) - 1)
-					break;
-				i++;
+                {
+                    break;
+                }
+
+                i++;
 				if (i > 99)
-					break;
-			}
+                {
+                    break;
+                }
+            }
 
 			Engine.MainWindow.GridSlotComboBox.SelectedIndex = oldindex < i ? oldindex : 0;
 
@@ -237,9 +256,11 @@ namespace RazorEnhanced
 		private static Bitmap ColorizeIcon(Bitmap icon)
 		{
 			if (icon == null)
-				return null;
+            {
+                return null;
+            }
 
-			Bitmap mImage = new Bitmap(icon.Width, icon.Height);
+            Bitmap mImage = new Bitmap(icon.Width, icon.Height);
 			float[][] coeff = new float[][] {
 						new float[] { 0, 0, 0, 0, 0 },
 						new float[] { 0, 1, 0, 0, 0 },
@@ -269,10 +290,14 @@ namespace RazorEnhanced
 						if (ID == l)
 						{
 							if (enable)
-								p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
-							else
-								p.BackgroundImage = Ultima.Gumps.GetGump(GetImageID(p.Group, p.Spell));
-						}
+                            {
+                                p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
+                            }
+                            else
+                            {
+                                p.BackgroundImage = Ultima.Gumps.GetGump(GetImageID(p.Group, p.Spell));
+                            }
+                        }
 					}
 				}
 			}
@@ -288,10 +313,14 @@ namespace RazorEnhanced
 					{
 						p.AbilityEnabled = false;
 						if (p.Spell == "Primary")
-							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
-						else
-							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
-					}
+                        {
+                            p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+                        }
+                        else
+                        {
+                            p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+                        }
+                    }
 					else
 					{
 						if (p.AbilityID == ID)
@@ -304,10 +333,14 @@ namespace RazorEnhanced
 							if (p.AbilityEnabled)
 							{
 								if (p.Spell == "Primary")
-									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
-								else
-									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
-							}
+                                {
+                                    p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+                                }
+                                else
+                                {
+                                    p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+                                }
+                            }
 						}
 
 					}
@@ -319,19 +352,25 @@ namespace RazorEnhanced
 		internal static void UpdateSAIcon()
 		{
 			if (Assistant.World.Player == null || m_form == null)
-				return;
+            {
+                return;
+            }
 
-			Assistant.Item wep = null;
+            Assistant.Item wep = null;
 			Assistant.Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 			Assistant.Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
 
 			if (right != null)
-				wep = right;
-			else
+            {
+                wep = right;
+            }
+            else
 			{
 				if (left != null)
-					wep = left;
-			}
+                {
+                    wep = left;
+                }
+            }
 
 			int primaryAbilityID = SpecialMoves.GetPrimaryAbility(wep);
 			int secondaryAbilityID = SpecialMoves.GetSecondaryAbility(wep);
@@ -370,21 +409,27 @@ namespace RazorEnhanced
 		internal static void SpellGrid_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (m_lock)
-				return;
+            {
+                return;
+            }
 
-			m_mouseDown = true;
+            m_mouseDown = true;
 			m_lastLocation = e.Location;
 		}
 
 		internal static void SpellGrid_MouseMove(object sender, MouseEventArgs e)
 		{
 			if (m_lock)
-				return;
+            {
+                return;
+            }
 
-			if (!m_mouseDown)
-				return;
+            if (!m_mouseDown)
+            {
+                return;
+            }
 
-			m_form.Location = new Point(
+            m_form.Location = new Point(
 				(m_form.Location.X - m_lastLocation.X) + e.X, (m_form.Location.Y - m_lastLocation.Y) + e.Y);
 
 			m_form.Update();
@@ -393,8 +438,10 @@ namespace RazorEnhanced
 		internal static void SpellGrid_MouseUp(object sender, MouseEventArgs e)
 		{
 			if (!m_lock)
-				m_mouseDown = false;
-		}
+            {
+                m_mouseDown = false;
+            }
+        }
 
 		internal static void SpellGrid_MouseClick_Control(object sender, MouseEventArgs e)
 		{
@@ -406,10 +453,15 @@ namespace RazorEnhanced
 					break;
 				case GroupType.Abilities:
 					if (pl.Spell == "Primary")
-						SpecialMoves.SetPrimaryAbility(false);
-					else
-						SpecialMoves.SetSecondaryAbility(false);
-					break;
+                    {
+                        SpecialMoves.SetPrimaryAbility(false);
+                    }
+                    else
+                    {
+                        SpecialMoves.SetSecondaryAbility(false);
+                    }
+
+                    break;
 				case GroupType.Bushido:
 					Spells.CastOnlyBushido(pl.Spell, false);
 					break;
@@ -559,23 +611,29 @@ namespace RazorEnhanced
 		internal static void UpdatePanelImage()
 		{
 			if (m_form == null)
-				return;
+            {
+                return;
+            }
 
-			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
+            List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
 
 			for (int x = 0; x < m_vslot * m_hslot; x++)
 			{
 				if (x > (m_panellist.Count -1)|| x > (items.Count -1))
-					return;
+                {
+                    return;
+                }
 
-				int imageid = 0;
+                int imageid = 0;
 
 				GroupType g = GroupType.Empty;
 
 				if (Enum.TryParse<GroupType>(items[x].Group, out g))
-					imageid = GetImageID(g, items[x].Spell);
+                {
+                    imageid = GetImageID(g, items[x].Spell);
+                }
 
-				m_panellist[x].BorderColor = items[x].Color;
+                m_panellist[x].BorderColor = items[x].Color;
 
 				switch (imageid)
 				{
@@ -694,20 +752,27 @@ namespace RazorEnhanced
 			Type colorType = typeof(System.Drawing.Color);
 			PropertyInfo[] propInfoList = colorType.GetProperties(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public);
 			foreach (PropertyInfo c in propInfoList)
-				Engine.MainWindow.GridBorderComboBox.Items.Add(c.Name);
+            {
+                Engine.MainWindow.GridBorderComboBox.Items.Add(c.Name);
+            }
 
-			// Carico Item
-			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
+            // Carico Item
+            List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
 
 			int i = 0;
 			foreach (SpellGridItem item in items)
 			{
 				Engine.MainWindow.GridSlotComboBox.Items.Add("Slot " + i);
 				if (i == (m_hslot * m_vslot) -1 )
-					break;
-				i++;
+                {
+                    break;
+                }
+
+                i++;
 				if (i > 99)
-					break;
+                {
+                    break;
+                }
             }
 			Engine.MainWindow.GridSlotComboBox.SelectedIndex = 0;
 		}

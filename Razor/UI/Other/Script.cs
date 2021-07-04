@@ -73,9 +73,11 @@ namespace Assistant
 
 				bool run = false;
 				if (status == "Running")
-					run = true;
+                {
+                    run = true;
+                }
 
-				string result = LoadFromFile(filename, wait, loop, run, autostart);
+                string result = LoadFromFile(filename, wait, loop, run, autostart);
 
 				if (result == "Loaded")
 				{
@@ -86,29 +88,44 @@ namespace Assistant
 					listitem.SubItems.Add(status);
 
 					if (loop)
-						listitem.SubItems.Add("Yes");
-					else
-						listitem.SubItems.Add("No");
+                    {
+                        listitem.SubItems.Add("Yes");
+                    }
+                    else
+                    {
+                        listitem.SubItems.Add("No");
+                    }
 
-					if (autostart)
-						listitem.SubItems.Add("Yes");
-					else
-						listitem.SubItems.Add("No");
+                    if (autostart)
+                    {
+                        listitem.SubItems.Add("Yes");
+                    }
+                    else
+                    {
+                        listitem.SubItems.Add("No");
+                    }
 
-					if (wait)
-						listitem.SubItems.Add("Yes");
-					else
-						listitem.SubItems.Add("No");
+                    if (wait)
+                    {
+                        listitem.SubItems.Add("Yes");
+                    }
+                    else
+                    {
+                        listitem.SubItems.Add("No");
+                    }
 
-
-					listitem.SubItems.Add(HotKey.KeyString(key));
+                    listitem.SubItems.Add(HotKey.KeyString(key));
 
 					if (passkey)
-						listitem.SubItems.Add("Yes");
-					else
-						listitem.SubItems.Add("No");
+                    {
+                        listitem.SubItems.Add("Yes");
+                    }
+                    else
+                    {
+                        listitem.SubItems.Add("No");
+                    }
 
-					scriptlistView.Items.Add(listitem);
+                    scriptlistView.Items.Add(listitem);
 
 					row["Status"] = "Stopped";
 				}
@@ -144,9 +161,11 @@ namespace Assistant
 		private void ScriptGridMoveDown()
 		{
 			if (sorted) // No move script index if user have place some different ordering
-				return;
+            {
+                return;
+            }
 
-			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
 				int rowCount = scriptlistView.Items.Count;
 				int index = scriptlistView.SelectedItems[0].Index;
@@ -170,9 +189,11 @@ namespace Assistant
 		private void ScriptGridMoveUp()
 		{
 			if (sorted) // No move script index if user have place some different ordering
-				return;
+            {
+                return;
+            }
 
-			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
 				int rowCount = scriptlistView.Items.Count;
 				int index = scriptlistView.SelectedItems[0].Index;
@@ -213,10 +234,15 @@ namespace Assistant
 				Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
 				scriptlistView.Items[i].SubItems[6].Text = HotKey.KeyString(key);
 				if (passkey)
-					scriptlistView.Items[i].SubItems[7].Text = "Yes";
-				else
-					scriptlistView.Items[i].SubItems[7].Text = "No";
-				i++;
+                {
+                    scriptlistView.Items[i].SubItems[7].Text = "Yes";
+                }
+                else
+                {
+                    scriptlistView.Items[i].SubItems[7].Text = "No";
+                }
+
+                i++;
 			}
 			scriptlistView.EndUpdate();
 		}
@@ -225,9 +251,11 @@ namespace Assistant
 		{
 
 			if (tabs.SelectedTab != scriptingTab)
-				return;
+            {
+                return;
+            }
 
-			if (scriptlistView.Items.Count > 0)
+            if (scriptlistView.Items.Count > 0)
 			{
 				scriptlistView.BeginUpdate();
 				try
@@ -356,7 +384,9 @@ namespace Assistant
                         bool isRunning = script.IsRunning;
 
                         if (isRunning)
+                        {
                             script.Stop();
+                        }
 
                         //Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
                         //	loop, run, autostart);
@@ -364,7 +394,9 @@ namespace Assistant
                         Scripts.EnhancedScripts[scriptname].FileChangeDate = DateTime.MinValue;
 
                         if (isRunning)
+                        {
                             script.Start();
+                        }
                     }
 				}
 			}
@@ -399,8 +431,10 @@ namespace Assistant
 		private void scriptlistView_MouseClick(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
-				scriptgridMenuStrip.Show(Cursor.Position);
-		}
+            {
+                scriptgridMenuStrip.Show(Cursor.Position);
+            }
+        }
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -438,8 +472,10 @@ namespace Assistant
 				fullPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", filename);
 			}
 			if (fullPath != null)
-				EnhancedScriptEditor.Init(fullPath);
-		}
+            {
+                EnhancedScriptEditor.Init(fullPath);
+            }
+        }
 
 		private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)
 		{
@@ -487,8 +523,10 @@ namespace Assistant
 		private void showscriptmessageCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showscriptmessageCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("ShowScriptMessageCheckBox", showscriptmessageCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("ShowScriptMessageCheckBox", showscriptmessageCheckBox.Checked);
+            }
+        }
 
 		private void scripterrorlogCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
@@ -514,46 +552,70 @@ namespace Assistant
 				scriptfilelabel.Text = "File: " + scriptlistView.SelectedItems[0].SubItems[1].Text;
 
 				if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
-					scriptloopmodecheckbox.Checked = true;
-				else
-					scriptloopmodecheckbox.Checked = false;
+                {
+                    scriptloopmodecheckbox.Checked = true;
+                }
+                else
+                {
+                    scriptloopmodecheckbox.Checked = false;
+                }
 
-				if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
-					scriptautostartcheckbox.Checked = true;
-				else
-					scriptautostartcheckbox.Checked = false;
+                if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
+                {
+                    scriptautostartcheckbox.Checked = true;
+                }
+                else
+                {
+                    scriptautostartcheckbox.Checked = false;
+                }
 
-				if (scriptlistView.SelectedItems[0].SubItems[5].Text == "Yes")
-					scriptwaitmodecheckbox.Checked = true;
-				else
-					scriptwaitmodecheckbox.Checked = false;
-			}
+                if (scriptlistView.SelectedItems[0].SubItems[5].Text == "Yes")
+                {
+                    scriptwaitmodecheckbox.Checked = true;
+                }
+                else
+                {
+                    scriptwaitmodecheckbox.Checked = false;
+                }
+            }
 		}
 
 		private void ScriptGridAutoStartAtLogin(bool stripmenu)
 		{
 			if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
-				return;
+            {
+                return;
+            }
 
-			if (stripmenu)
-				scriptautostartcheckbox.Checked = !scriptautostartcheckbox.Checked;
+            if (stripmenu)
+            {
+                scriptautostartcheckbox.Checked = !scriptautostartcheckbox.Checked;
+            }
 
-			if (!scriptautostartcheckbox.Focused)
-				return;
+            if (!scriptautostartcheckbox.Focused)
+            {
+                return;
+            }
 
-			foreach (DataRow row in scriptTable.Rows)
+            foreach (DataRow row in scriptTable.Rows)
 			{
 				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
-					row["AutoStart"] = scriptautostartcheckbox.Checked;
-			}
+                {
+                    row["AutoStart"] = scriptautostartcheckbox.Checked;
+                }
+            }
 
 			if (scriptautostartcheckbox.Checked)
-				scriptlistView.SelectedItems[0].SubItems[4].Text = "Yes";
-			else
-				scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
+            {
+                scriptlistView.SelectedItems[0].SubItems[4].Text = "Yes";
+            }
+            else
+            {
+                scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
+            }
 
-			//ReloadScriptTable();
-			Settings.Save();
+            //ReloadScriptTable();
+            Settings.Save();
 		}
 
 		private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
@@ -569,26 +631,38 @@ namespace Assistant
 		private void ScriptGridLoopMode(bool stripmenu)
 		{
 			if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
-				return;
+            {
+                return;
+            }
 
-			if (stripmenu)
-				scriptloopmodecheckbox.Checked = !scriptloopmodecheckbox.Checked;
+            if (stripmenu)
+            {
+                scriptloopmodecheckbox.Checked = !scriptloopmodecheckbox.Checked;
+            }
 
-			if (!scriptloopmodecheckbox.Focused)
-				return;
+            if (!scriptloopmodecheckbox.Focused)
+            {
+                return;
+            }
 
-			foreach (DataRow row in scriptTable.Rows)
+            foreach (DataRow row in scriptTable.Rows)
 			{
 				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
-					row["Loop"] = scriptloopmodecheckbox.Checked;
-			}
+                {
+                    row["Loop"] = scriptloopmodecheckbox.Checked;
+                }
+            }
 
 			if (scriptloopmodecheckbox.Checked)
-				scriptlistView.SelectedItems[0].SubItems[3].Text = "Yes";
-			else
-				scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
+            {
+                scriptlistView.SelectedItems[0].SubItems[3].Text = "Yes";
+            }
+            else
+            {
+                scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
+            }
 
-			ReloadScriptTable();
+            ReloadScriptTable();
 			//Settings.Save();
 		}
 
@@ -605,26 +679,38 @@ namespace Assistant
 		private void ScriptGridWaitBeforeInterrupt(bool stripmenu)
 		{
 			if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
-				return;
+            {
+                return;
+            }
 
-			if (stripmenu)
-				scriptwaitmodecheckbox.Checked = !scriptwaitmodecheckbox.Checked;
+            if (stripmenu)
+            {
+                scriptwaitmodecheckbox.Checked = !scriptwaitmodecheckbox.Checked;
+            }
 
-			if (!scriptwaitmodecheckbox.Focused)
-				return;
+            if (!scriptwaitmodecheckbox.Focused)
+            {
+                return;
+            }
 
-			foreach (DataRow row in scriptTable.Rows)
+            foreach (DataRow row in scriptTable.Rows)
 			{
 				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
-					row["Wait"] = scriptwaitmodecheckbox.Checked;
-			}
+                {
+                    row["Wait"] = scriptwaitmodecheckbox.Checked;
+                }
+            }
 
 			if (scriptwaitmodecheckbox.Checked)
-				scriptlistView.SelectedItems[0].SubItems[5].Text = "Yes";
-			else
-				scriptlistView.SelectedItems[0].SubItems[5].Text = "No";
+            {
+                scriptlistView.SelectedItems[0].SubItems[5].Text = "Yes";
+            }
+            else
+            {
+                scriptlistView.SelectedItems[0].SubItems[5].Text = "No";
+            }
 
-			ReloadScriptTable();
+            ReloadScriptTable();
 			//Settings.Save();
 		}
 

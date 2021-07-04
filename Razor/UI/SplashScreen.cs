@@ -11,14 +11,18 @@ namespace Assistant
 		internal static void Start()
 		{
 			if (m_Screen != null)
-				return;
+            {
+                return;
+            }
 
-			Thread t = new Thread(new ThreadStart(ThreadMain)) {Name = "Razor Splash Screen"};
+            Thread t = new Thread(new ThreadStart(ThreadMain)) {Name = "Razor Splash Screen"};
 			t.Start();
 			while (m_Screen == null)
-				Thread.Sleep(1);
+            {
+                Thread.Sleep(1);
+            }
 
-			m_Screen.CreateControl();
+            m_Screen.CreateControl();
 		}
 
 		private delegate void CloseDelegate();
@@ -26,13 +30,19 @@ namespace Assistant
 		internal static void End()
 		{
 			if (m_Screen == null)
-				return;
+            {
+                return;
+            }
 
-			if (m_Screen.InvokeRequired)
-				m_Screen.Invoke(new CloseDelegate(m_Screen.Close));
-			else
-				m_Screen.Close();
-		}
+            if (m_Screen.InvokeRequired)
+            {
+                m_Screen.Invoke(new CloseDelegate(m_Screen.Close));
+            }
+            else
+            {
+                m_Screen.Close();
+            }
+        }
 
 		private delegate void SetMsgDelegate(SplashScreen screen, string arg);
 

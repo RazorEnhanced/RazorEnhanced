@@ -24,9 +24,11 @@ namespace Assistant
 			{
 
 				if (!Int32.TryParse(videoFPSTextBox.Text, out int fps))
-					videoFPSTextBox.Text = "25";
+                {
+                    videoFPSTextBox.Text = "25";
+                }
 
-				Settings.General.WriteInt("VideoFPS", fps);
+                Settings.General.WriteInt("VideoFPS", fps);
 			}
 		}
 
@@ -60,9 +62,11 @@ namespace Assistant
 				CloseCurrentVideoSource();
 
 				if (videolistBox.SelectedIndex == -1)
-					return;
+                {
+                    return;
+                }
 
-				string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), videolistBox.SelectedItem.ToString());
+                string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), videolistBox.SelectedItem.ToString());
 				if (!File.Exists(file))
 				{
 					MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -81,8 +85,11 @@ namespace Assistant
 				ContextMenu menu = new ContextMenu();
 				menu.MenuItems.Add("Delete", new EventHandler(DeleteVideoFile));
 				if (videolistBox.SelectedIndex == -1)
-					menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
-				menu.MenuItems.Add("Delete ALL", new EventHandler(ClearVideoDirectory));
+                {
+                    menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
+                }
+
+                menu.MenuItems.Add("Delete ALL", new EventHandler(ClearVideoDirectory));
 				menu.Show(videolistBox, new Point(e.X, e.Y));
 			}
 		}
@@ -92,13 +99,17 @@ namespace Assistant
 			CloseCurrentVideoSource();
 			int sel = videolistBox.SelectedIndex;
 			if (sel == -1)
-				return;
+            {
+                return;
+            }
 
-			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), (string)videolistBox.SelectedItem);
+            string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), (string)videolistBox.SelectedItem);
 			if (MessageBox.Show(this, Language.Format(LocString.DelConf, file), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
+            {
+                return;
+            }
 
-			videolistBox.SelectedIndex = -1;
+            videolistBox.SelectedIndex = -1;
 
 			try
 			{
@@ -117,9 +128,11 @@ namespace Assistant
 		{
 			string dir = RazorEnhanced.Settings.General.ReadString("VideoPath");
 			if (MessageBox.Show(this, Language.Format(LocString.Confirm, dir), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
+            {
+                return;
+            }
 
-			string[] files = Directory.GetFiles(dir, "*.avi");
+            string[] files = Directory.GetFiles(dir, "*.avi");
 			StringBuilder sb = new StringBuilder();
 			int failed = 0;
 			for (int i = 0; i < files.Length; i++)
@@ -136,8 +149,11 @@ namespace Assistant
 			}
 
 			if (failed > 0)
-				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			ReloadVideoList();
+            {
+                MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            ReloadVideoList();
 		}
 
 		private void videorecbutton_Click(object sender, EventArgs e)
@@ -153,9 +169,11 @@ namespace Assistant
 		internal static void StartVideoRecorder()
 		{
 			if (!Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
-				return;
+            {
+                return;
+            }
 
-			if (VideoCapture.Recording) // already on record
+            if (VideoCapture.Recording) // already on record
 			{
 				RazorEnhanced.Misc.SendMessage("Already on Record", false);
 				return;
@@ -167,17 +185,21 @@ namespace Assistant
 			Engine.MainWindow.videosettinggroupBox.Enabled = false;
 			int fps = 30;
 			if (Settings.General.ReadInt("VideoFPS") < 30)
-				fps = Settings.General.ReadInt("VideoFPS");
+            {
+                fps = Settings.General.ReadInt("VideoFPS");
+            }
 
-			VideoCapture.Record(fps, Engine.MainWindow.videoCodecComboBox.SelectedIndex);
+            VideoCapture.Record(fps, Engine.MainWindow.videoCodecComboBox.SelectedIndex);
 		}
 
 		internal static void StopVideoRecorder()
 		{
 			if (!Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
-				return;
+            {
+                return;
+            }
 
-			RazorEnhanced.Misc.SendMessage("Stop Video Record", false);
+            RazorEnhanced.Misc.SendMessage("Stop Video Record", false);
 			Engine.MainWindow.videoRecStatuslabel.Text = "Idle";
 			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Green;
 			VideoCapture.Stop();

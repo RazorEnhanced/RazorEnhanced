@@ -103,9 +103,11 @@ namespace RazorEnhanced.UI
 		private void listBoxStatic_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (listBoxStatic.SelectedItem == null)
-				return;
+            {
+                return;
+            }
 
-			int id = FromHex(listBoxStatic.SelectedItem.ToString());
+            int id = FromHex(listBoxStatic.SelectedItem.ToString());
 			foreach (Statics.TileInfo s in m_static)
 			{
 				if (s.StaticID == id)

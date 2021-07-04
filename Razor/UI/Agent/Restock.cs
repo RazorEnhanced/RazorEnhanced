@@ -81,22 +81,31 @@ namespace Assistant
 		internal void RestockSetSource()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select Restock source bag", false);
+            {
+                Misc.SendMessage("Select Restock source bag", false);
+            }
 
-			if (restockListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockSourceContainerTarget_Callback));
-			else
-				Restock.AddLog("Item list not selected!");
-		}
+            if (restockListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockSourceContainerTarget_Callback));
+            }
+            else
+            {
+                Restock.AddLog("Item list not selected!");
+            }
+        }
 
 		private void RestockSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item restockBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+			Assistant.Item restockBag = Assistant.World.FindItem((uint)serial);
 			if (restockBag == null)
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Invalid Source Container, set backpack", false);
-				Restock.AddLog("Invalid Source Container, set backpack");
+                {
+                    Misc.SendMessage("Invalid Source Container, set backpack", false);
+                }
+
+                Restock.AddLog("Invalid Source Container, set backpack");
 				Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 				return;
 			}
@@ -104,15 +113,21 @@ namespace Assistant
 			if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Source Container set to: " + restockBag.ToString(), false);
-				Restock.AddLog("Source Container set to: " + restockBag.ToString());
+                {
+                    Misc.SendMessage("Source Container set to: " + restockBag.ToString(), false);
+                }
+
+                Restock.AddLog("Source Container set to: " + restockBag.ToString());
 				Restock.RestockSource = (int)restockBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Invalid Source Container, set backpack", false);
-				Restock.AddLog("Invalid Source Container, set backpack");
+                {
+                    Misc.SendMessage("Invalid Source Container, set backpack", false);
+                }
+
+                Restock.AddLog("Invalid Source Container, set backpack");
 				Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -131,22 +146,31 @@ namespace Assistant
 		internal void RestockSetDestination()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select Restock destination bag", false);
+            {
+                Misc.SendMessage("Select Restock destination bag", false);
+            }
 
-			if (restockListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockDestinationContainerTarget_Callback));
-			else
-				Restock.AddLog("Item list not selected!");
-		}
+            if (restockListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockDestinationContainerTarget_Callback));
+            }
+            else
+            {
+                Restock.AddLog("Item list not selected!");
+            }
+        }
 
 		private void RestockDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item restockBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+			Assistant.Item restockBag = Assistant.World.FindItem((uint)serial);
 			if (restockBag == null)
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Invalid Destination Container, set backpack", false);
-				Restock.AddLog("Invalid Destination Container, set backpack");
+                {
+                    Misc.SendMessage("Invalid Destination Container, set backpack", false);
+                }
+
+                Restock.AddLog("Invalid Destination Container, set backpack");
 				Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 				return;
 			}
@@ -154,15 +178,21 @@ namespace Assistant
 			if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Destination Container set to: " + restockBag.ToString(), false);
-				Restock.AddLog("Destination Container set to: " + restockBag.ToString());
+                {
+                    Misc.SendMessage("Destination Container set to: " + restockBag.ToString(), false);
+                }
+
+                Restock.AddLog("Destination Container set to: " + restockBag.ToString());
 				Restock.RestockDestination = (int)restockBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					Misc.SendMessage("Invalid Destination Container, set backpack", false);
-				Restock.AddLog("Invalid Destination Container, set backpack");
+                {
+                    Misc.SendMessage("Invalid Destination Container, set backpack", false);
+                }
+
+                Restock.AddLog("Invalid Destination Container, set backpack");
 				Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -176,9 +206,11 @@ namespace Assistant
 		private void restockDragDelay_Leave(object sender, EventArgs e)
 		{
 			if (restockDragDelay.Text == String.Empty)
-				restockDragDelay.Text = "100";
+            {
+                restockDragDelay.Text = "100";
+            }
 
-			Restock.RestockDelay = Convert.ToInt32(restockDragDelay.Text);
+            Restock.RestockDelay = Convert.ToInt32(restockDragDelay.Text);
 
 			Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, Restock.RestockSource, Restock.RestockDestination, true);
 			Restock.RefreshLists();
@@ -206,8 +238,11 @@ namespace Assistant
 			Restock.Start();
 			Restock.AddLog("Restock Engine Start...");
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("RESTOCK: Engine Start...", false);
-			RestockStartWork();
+            {
+                Misc.SendMessage("RESTOCK: Engine Start...", false);
+            }
+
+            RestockStartWork();
 		}
 
 		private void restockStopButton_Click(object sender, EventArgs e)
@@ -221,8 +256,11 @@ namespace Assistant
 
 			RazorEnhanced.Restock.AddLog("Restock Engine force stop...");
 			if (showagentmessageCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...", false);
-			RestockFinishWork();
+            {
+                RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...", false);
+            }
+
+            RestockFinishWork();
 		}
 
 		private delegate void RestockFinishWorkCallback();
@@ -283,13 +321,19 @@ namespace Assistant
 		internal void RestockAddItem()
 		{
 			if (showagentmessageCheckBox.Checked)
-				Misc.SendMessage("Select item to add in Restock list", false);
+            {
+                Misc.SendMessage("Select item to add in Restock list", false);
+            }
 
-			if (restockListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockItemTarget_Callback));
-			else
-				RazorEnhanced.Restock.AddLog("Item list not selected!");
-		}
+            if (restockListSelect.Text != String.Empty)
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockItemTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+            }
+        }
 
 		private void RestockItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
@@ -297,15 +341,21 @@ namespace Assistant
 			if (restockItem != null && restockItem.Serial.IsItem)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString(), false);
-				RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
+                {
+                    RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString(), false);
+                }
+
+                RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
 				this.Invoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, restockItem.Hue); });
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid target", false);
-				RazorEnhanced.Restock.AddLog("Invalid target");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid target", false);
+                }
+
+                RazorEnhanced.Restock.AddLog("Invalid target");
 			}
 		}
 

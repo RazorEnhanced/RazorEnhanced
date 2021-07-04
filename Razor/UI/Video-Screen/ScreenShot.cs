@@ -14,8 +14,10 @@ namespace Assistant
 		private void screenAutoCap_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (screenAutoCap.Focused)
-				RazorEnhanced.Settings.General.WriteBool("AutoCap", screenAutoCap.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("AutoCap", screenAutoCap.Checked);
+            }
+        }
 
 		private void setScnPath_Click(object sender, System.EventArgs e)
 		{
@@ -38,9 +40,11 @@ namespace Assistant
 		internal void ReloadScreenShotsList()
 		{
 			if (tabs.SelectedTab != screenshotTab) // No force screen update in not showing tab
-				return;
+            {
+                return;
+            }
 
-			ScreenCapManager.DisplayTo(screensList);
+            ScreenCapManager.DisplayTo(screensList);
 			if (screenPrev.Image != null)
 			{
 				screenPrev.Image.Dispose();
@@ -69,18 +73,22 @@ namespace Assistant
 		private void screensList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (!screensList.Focused)
-				return;
+            {
+                return;
+            }
 
-			if (screenPrev.Image != null)
+            if (screenPrev.Image != null)
 			{
 				screenPrev.Image.Dispose();
 				screenPrev.Image = null;
 			}
 
 			if (screensList.SelectedIndex == -1)
-				return;
+            {
+                return;
+            }
 
-			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), screensList.SelectedItem.ToString());
+            string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), screensList.SelectedItem.ToString());
 			if (!File.Exists(file))
 			{
 				MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -102,8 +110,11 @@ namespace Assistant
 				ContextMenu menu = new ContextMenu();
 				menu.MenuItems.Add("Delete", new EventHandler(DeleteScreenCap));
 				if (screensList.SelectedIndex == -1)
-					menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
-				menu.MenuItems.Add("Delete ALL", new EventHandler(ClearScreensDirectory));
+                {
+                    menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
+                }
+
+                menu.MenuItems.Add("Delete ALL", new EventHandler(ClearScreensDirectory));
 				menu.Show(screensList, new Point(e.X, e.Y));
 			}
 		}
@@ -112,13 +123,17 @@ namespace Assistant
 		{
 			int sel = screensList.SelectedIndex;
 			if (sel == -1)
-				return;
+            {
+                return;
+            }
 
-			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), (string)screensList.SelectedItem);
+            string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), (string)screensList.SelectedItem);
 			if (MessageBox.Show(this, Language.Format(LocString.DelConf, file), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
+            {
+                return;
+            }
 
-			screensList.SelectedIndex = -1;
+            screensList.SelectedIndex = -1;
 			if (screenPrev.Image != null)
 			{
 				screenPrev.Image.Dispose();
@@ -142,9 +157,11 @@ namespace Assistant
 		{
 			string dir = RazorEnhanced.Settings.General.ReadString("CapPath");
 			if (MessageBox.Show(this, Language.Format(LocString.Confirm, dir), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				return;
+            {
+                return;
+            }
 
-			string[] files = Directory.GetFiles(dir, "*.jpg");
+            string[] files = Directory.GetFiles(dir, "*.jpg");
 			StringBuilder sb = new StringBuilder();
 			int failed = 0;
 			for (int i = 0; i < files.Length; i++)
@@ -161,8 +178,11 @@ namespace Assistant
 			}
 
 			if (failed > 0)
-				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			ReloadScreenShotsList();
+            {
+                MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            ReloadScreenShotsList();
 		}
 
 		private void capNow_Click(object sender, System.EventArgs e)
@@ -173,8 +193,10 @@ namespace Assistant
 		private void dispTime_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (dispTime.Focused)
-				RazorEnhanced.Settings.General.WriteBool("CapTimeStamp", dispTime.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("CapTimeStamp", dispTime.Checked);
+            }
+        }
 		private void screenPath_TextChanged(object sender, System.EventArgs e)
 		{
 			RazorEnhanced.Settings.General.WriteString("CapPath", screenPath.Text);
@@ -183,10 +205,14 @@ namespace Assistant
 		private void imgFmt_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (imgFmt.SelectedIndex != -1)
-				RazorEnhanced.Settings.General.WriteString("ImageFormat", imgFmt.SelectedItem.ToString());
-			else
-				RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
-		}
+            {
+                RazorEnhanced.Settings.General.WriteString("ImageFormat", imgFmt.SelectedItem.ToString());
+            }
+            else
+            {
+                RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
+            }
+        }
 
 		private void screenPrev_Click(object sender, System.EventArgs e)
 		{
@@ -194,9 +220,11 @@ namespace Assistant
 			{
 				string tostart = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file);
 				if (File.Exists(tostart))
-					return;
+                {
+                    return;
+                }
 
-				try
+                try
 				{
 					Process.Start(tostart);
 				}

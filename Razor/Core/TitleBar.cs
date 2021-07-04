@@ -10,23 +10,31 @@ namespace Assistant
 	{
 		private static string EncodeColorStat(int val, int max)
 		{
-			double perc = ((double)val) / ((double)max);
+			double perc = val / ((double)max);
 
 			if (perc <= 0.25)
-				return String.Format(" ~#FF0000{0}~#~", val);
-			else if (perc <= 0.75)
-				return String.Format(" ~#FFFF00{0}~#~", val);
-			else
-				return val.ToString();
-		}
+            {
+                return String.Format(" ~#FF0000{0}~#~", val);
+            }
+            else if (perc <= 0.75)
+            {
+                return String.Format(" ~#FFFF00{0}~#~", val);
+            }
+            else
+            {
+                return val.ToString();
+            }
+        }
 
 		private static StringBuilder m_TBBuilder = new StringBuilder();
 		internal static void UpdateTitleBar()
 		{
 			if (!Assistant.Client.Instance.Ready || World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			m_TBBuilder.Remove(0, m_TBBuilder.Length);
+            m_TBBuilder.Remove(0, m_TBBuilder.Length);
 			StringBuilder sb = m_TBBuilder;
 
 			sb.Append(String.Format("~#{0:X6}{1}~#~ ", World.Player.GetNotorietyColor() & 0x00FFFFFF, World.Player.Name)); // Nome Player
@@ -43,31 +51,45 @@ namespace Assistant
 			if (Engine.MainWindow.ShowHitsToolBarCheckBox.Checked)
 			{
 				if (World.Player.Poisoned)
-					sb.Append(String.Format("H:~#FF8000{0}~#~/{1} ", World.Player.Hits, World.Player.HitsMax));
-				else
-					sb.Append(String.Format("H:{0}/{1} ", EncodeColorStat(World.Player.Hits, World.Player.HitsMax), World.Player.HitsMax));
-			}
+                {
+                    sb.Append(String.Format("H:~#FF8000{0}~#~/{1} ", World.Player.Hits, World.Player.HitsMax));
+                }
+                else
+                {
+                    sb.Append(String.Format("H:{0}/{1} ", EncodeColorStat(World.Player.Hits, World.Player.HitsMax), World.Player.HitsMax));
+                }
+            }
 
 			// Mana
 			if (Engine.MainWindow.ShowManaToolBarCheckBox.Checked)
-				sb.Append(String.Format("M:{0}/{1} ", EncodeColorStat(World.Player.Mana, World.Player.ManaMax), World.Player.ManaMax));
+            {
+                sb.Append(String.Format("M:{0}/{1} ", EncodeColorStat(World.Player.Mana, World.Player.ManaMax), World.Player.ManaMax));
+            }
 
-			// Stam
-			if (Engine.MainWindow.ShowStaminaToolBarCheckBox.Checked)
-				sb.Append(String.Format("S:{0}/{1} ", EncodeColorStat(World.Player.Stam, World.Player.StamMax), World.Player.StamMax));
+            // Stam
+            if (Engine.MainWindow.ShowStaminaToolBarCheckBox.Checked)
+            {
+                sb.Append(String.Format("S:{0}/{1} ", EncodeColorStat(World.Player.Stam, World.Player.StamMax), World.Player.StamMax));
+            }
 
-			// Follower
-			if (Engine.MainWindow.ShowFollowerToolBarCheckBox.Checked)
-				sb.Append(String.Format("F:{0}/{1} ", World.Player.Followers, World.Player.FollowersMax));
+            // Follower
+            if (Engine.MainWindow.ShowFollowerToolBarCheckBox.Checked)
+            {
+                sb.Append(String.Format("F:{0}/{1} ", World.Player.Followers, World.Player.FollowersMax));
+            }
 
-			// Weight
-			if (Engine.MainWindow.ShowWeightToolBarCheckBox.Checked)
+            // Weight
+            if (Engine.MainWindow.ShowWeightToolBarCheckBox.Checked)
 			{
 				if (World.Player.Weight >= World.Player.MaxWeight)
-					sb.Append(String.Format("W:~#FF0000{0}~#~/{1} ", World.Player.Weight, World.Player.MaxWeight));
-				else
-					sb.Append(String.Format("W:{0}/{1} ", World.Player.Weight, World.Player.MaxWeight));
-			}
+                {
+                    sb.Append(String.Format("W:~#FF0000{0}~#~/{1} ", World.Player.Weight, World.Player.MaxWeight));
+                }
+                else
+                {
+                    sb.Append(String.Format("W:{0}/{1} ", World.Player.Weight, World.Player.MaxWeight));
+                }
+            }
 
             // Tithe
             if (Engine.MainWindow.ShowTitheToolBarCheckBox.Checked)
@@ -82,15 +104,22 @@ namespace Assistant
 			foreach (RazorEnhanced.ToolBar.ToolBarItem item in items)
 			{
 				if (item.Graphics == 0)
-					continue;
+                {
+                    continue;
+                }
 
-				StringBuilder sbitem = new StringBuilder();
+                StringBuilder sbitem = new StringBuilder();
 				sbitem.AppendFormat("~I{0:X4}", item.Graphics);
 				if (item.Color > 0 && item.Color < 0xFFFF)
-					sbitem.Append(item.Color.ToString("X4"));
-				else
-					sbitem.Append('~');
-				sbitem.Append(": ");
+                {
+                    sbitem.Append(item.Color.ToString("X4"));
+                }
+                else
+                {
+                    sbitem.Append('~');
+                }
+
+                sbitem.Append(": ");
 
 				int amount = Items.BackpackCount(item.Graphics, item.Color);
 				if (item.Warning && amount <= item.WarningLimit)
@@ -98,9 +127,11 @@ namespace Assistant
 					sbitem.AppendFormat("~#FF0000{0}~#~", amount);
 				}
 				else
-					sbitem.Append(amount.ToString());
+                {
+                    sbitem.Append(amount.ToString());
+                }
 
-				sb.Append(String.Format("{0} ",sbitem.ToString()));
+                sb.Append(String.Format("{0} ",sbitem.ToString()));
 			}
 
 			Assistant.Client.Instance.SetTitleStr(sb.ToString());

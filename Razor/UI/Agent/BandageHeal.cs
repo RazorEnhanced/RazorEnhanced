@@ -43,15 +43,20 @@ namespace Assistant
 					RazorEnhanced.BandageHeal.AutoMode = true;
 					RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Start...");
 					if (showagentmessageCheckBox.Checked)
-						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...", false);
-				}
+                    {
+                        RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...", false);
+                    }
+                }
 				else
 				{
 					// Stop BANDAGEHEAL
 					RazorEnhanced.BandageHeal.AutoMode = false;
 					if (showagentmessageCheckBox.Checked)
-						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...", false);
-					RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
+                    {
+                        RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...", false);
+                    }
+
+                    RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
 				}
 			}
 			else
@@ -61,15 +66,21 @@ namespace Assistant
 			}
 
 			if (bandagehealenableCheckBox.Checked)
-				groupBox6.Enabled = false;
-			else
-				groupBox6.Enabled = true;
-		}
+            {
+                groupBox6.Enabled = false;
+            }
+            else
+            {
+                groupBox6.Enabled = true;
+            }
+        }
 		private void bandagehealAutostartCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bandagehealAutostartCheckBox.Focused)
-				Settings.General.WriteBool("BandageHealAutostartCheckBox", bandagehealAutostartCheckBox.Checked);
-		}
+            {
+                Settings.General.WriteBool("BandageHealAutostartCheckBox", bandagehealAutostartCheckBox.Checked);
+            }
+        }
 		private void bandagehealtargetComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (BandageHealtargetComboBox.Text == "Target")
@@ -98,24 +109,33 @@ namespace Assistant
 			if (mobile == null)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Target!", false);
-				RazorEnhanced.BandageHeal.AddLog("Invalid Target!");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Target!", false);
+                }
+
+                RazorEnhanced.BandageHeal.AddLog("Invalid Target!");
 				return;
 			}
 
 			if (mobile.Serial.IsMobile)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.Name, false);
-				RazorEnhanced.BandageHeal.AddLog("Bandage Heal target set to: " + mobile.Name);
+                {
+                    RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.Name, false);
+                }
+
+                RazorEnhanced.BandageHeal.AddLog("Bandage Heal target set to: " + mobile.Name);
 				BandageHeal.TargetSerial = mobile.Serial;
 				RazorEnhanced.Settings.General.WriteInt("BandageHealtargetLabel", mobile.Serial);
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Target!", false);
-				RazorEnhanced.Scavenger.AddLog("Invalid Target!");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Target!", false);
+                }
+
+                RazorEnhanced.Scavenger.AddLog("Invalid Target!");
 			}
 		}
 
@@ -133,8 +153,10 @@ namespace Assistant
 			}
 
 			if (bandagehealcustomCheckBox.Focused)
-				Settings.General.WriteBool("BandageHealcustomCheckBox", bandagehealcustomCheckBox.Checked);
-		}
+            {
+                Settings.General.WriteBool("BandageHealcustomCheckBox", bandagehealcustomCheckBox.Checked);
+            }
+        }
 
 		private void bandagehealcustomIDTextBox_Leave(object sender, EventArgs e)
 		{
@@ -189,8 +211,10 @@ namespace Assistant
             }
 
             if (bandagehealdexformulaCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("BandageHealdexformulaCheckBox", bandagehealdexformulaCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("BandageHealdexformulaCheckBox", bandagehealdexformulaCheckBox.Checked);
+            }
+        }
 
         private void bandagehealBufControlled_CheckedChanged(object sender, EventArgs e)
         {
@@ -207,49 +231,63 @@ namespace Assistant
             }
 
             if (bandagehealTimeWithBufCheckBox.Focused)
+            {
                 RazorEnhanced.Settings.General.WriteBool("BandageHealTimeWithBuf", bandagehealTimeWithBufCheckBox.Checked);
+            }
         }
 
 
         private void bandagehealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bandagehealpoisonCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("BandageHealpoisonCheckBox", bandagehealpoisonCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("BandageHealpoisonCheckBox", bandagehealpoisonCheckBox.Checked);
+            }
+        }
 
 		private void bandagehealmortalCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bandagehealmortalCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("BandageHealmortalCheckBox", bandagehealmortalCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("BandageHealmortalCheckBox", bandagehealmortalCheckBox.Checked);
+            }
+        }
 
 		private void bandagehealhiddedCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bandagehealhiddedCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("BandageHealhiddedCheckBox", bandagehealhiddedCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("BandageHealhiddedCheckBox", bandagehealhiddedCheckBox.Checked);
+            }
+        }
 
 		private void bandagehealcountdownCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bandagehealcountdownCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("BandageHealcountdownCheckBox", bandagehealcountdownCheckBox.Checked);
-		}
+            {
+                RazorEnhanced.Settings.General.WriteBool("BandageHealcountdownCheckBox", bandagehealcountdownCheckBox.Checked);
+            }
+        }
 
 		private void bandagehealdelayTextBox_Leave(object sender, EventArgs e)
 		{
 			if (bandagehealdelayTextBox.Text == String.Empty)
-				bandagehealdelayTextBox.Text = "1000";
+            {
+                bandagehealdelayTextBox.Text = "1000";
+            }
 
-			BandageHeal.CustomDelay = Convert.ToInt32(bandagehealdelayTextBox.Text);
+            BandageHeal.CustomDelay = Convert.ToInt32(bandagehealdelayTextBox.Text);
 			Settings.General.WriteInt("BandageHealdelayTextBox", BandageHeal.CustomDelay);
 		}
 
 		private void bandagehealhpTextBox_Leave(object sender, EventArgs e)
 		{
 			if (bandagehealhpTextBox.Text == String.Empty)
-				bandagehealhpTextBox.Text = "100";
+            {
+                bandagehealhpTextBox.Text = "100";
+            }
 
-			BandageHeal.HpLimit = Convert.ToInt32(bandagehealhpTextBox.Text);
+            BandageHeal.HpLimit = Convert.ToInt32(bandagehealhpTextBox.Text);
 			Settings.General.WriteInt("BandageHealhpTextBox", BandageHeal.HpLimit);
 		}
 
@@ -266,7 +304,9 @@ namespace Assistant
         private void bandagehealusetext_Content_Leave(object sender, EventArgs e)
         {
             if (bandagehealusetextContent.Text == String.Empty)
+            {
                 bandagehealusetextContent.Text = "[band";
+            }
 
             Settings.General.WriteString("BandageHealUseTextContent", bandagehealusetextContent.Text);
 
@@ -274,7 +314,9 @@ namespace Assistant
         private void bandagehealusetextSelf_Content_Leave(object sender, EventArgs e)
         {
             if (bandagehealusetextSelfContent.Text == String.Empty)
+            {
                 bandagehealusetextSelfContent.Text = "[bandself";
+            }
 
             Settings.General.WriteString("BandageHealUseTextSelfContent", bandagehealusetextSelfContent.Text);
 
@@ -294,9 +336,11 @@ namespace Assistant
 		private void bandagehealmaxrangeTextBox_Leave(object sender, EventArgs e)
 		{
 			if (bandagehealmaxrangeTextBox.Text == String.Empty)
-				bandagehealmaxrangeTextBox.Text = "1";
+            {
+                bandagehealmaxrangeTextBox.Text = "1";
+            }
 
-			BandageHeal.MaxRange = Convert.ToInt32(bandagehealmaxrangeTextBox.Text);
+            BandageHeal.MaxRange = Convert.ToInt32(bandagehealmaxrangeTextBox.Text);
 			Settings.General.WriteInt("BandageHealMaxRangeTextBox", BandageHeal.MaxRange);
 		}
 	}

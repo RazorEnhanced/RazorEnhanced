@@ -48,9 +48,11 @@ namespace Assistant
 		internal static void RegisterClientToServerViewer(int packetID, PacketViewerCallback callback)
 		{
 			if (!m_ClientViewers.ContainsKey(packetID))
-				m_ClientViewers.Add(packetID, new List<PacketViewerCallback>());
+            {
+                m_ClientViewers.Add(packetID, new List<PacketViewerCallback>());
+            }
 
-			if (!m_ClientViewers[packetID].Contains(callback))
+            if (!m_ClientViewers[packetID].Contains(callback))
 			{
 				List<PacketViewerCallback> list = m_ClientViewers[packetID];
 				list.Add(callback);
@@ -61,9 +63,11 @@ namespace Assistant
 		internal static void RegisterServerToClientViewer(int packetID, PacketViewerCallback callback)
 		{
 			if (!m_ServerViewers.ContainsKey(packetID))
-				m_ServerViewers.Add(packetID, new List<PacketViewerCallback>());
+            {
+                m_ServerViewers.Add(packetID, new List<PacketViewerCallback>());
+            }
 
-			if (!m_ServerViewers[packetID].Contains(callback))
+            if (!m_ServerViewers[packetID].Contains(callback))
 			{
 				List<PacketViewerCallback> list = m_ServerViewers[packetID];
 				list.Add(callback);
@@ -74,21 +78,27 @@ namespace Assistant
 		internal static void RemoveClientToServerViewer(int packetID, PacketViewerCallback callback)
 		{
 			if (m_ClientViewers.ContainsKey(packetID))
-				m_ClientViewers[packetID].Remove(callback);
-		}
+            {
+                m_ClientViewers[packetID].Remove(callback);
+            }
+        }
 
 		internal static void RemoveServerToClientViewer(int packetID, PacketViewerCallback callback)
 		{
 			if (m_ServerViewers.ContainsKey(packetID))
-				m_ServerViewers[packetID].Remove(callback);
-		}
+            {
+                m_ServerViewers[packetID].Remove(callback);
+            }
+        }
 
 		internal static void RegisterClientToServerFilter(int packetID, PacketFilterCallback callback)
 		{
 			if (!m_ClientFilters.ContainsKey(packetID))
-				m_ClientFilters.Add(packetID, new List<PacketFilterCallback>());
+            {
+                m_ClientFilters.Add(packetID, new List<PacketFilterCallback>());
+            }
 
-			if (!m_ClientFilters[packetID].Contains(callback))
+            if (!m_ClientFilters[packetID].Contains(callback))
 			{
 				List<PacketFilterCallback> list = m_ClientFilters[packetID];
 				list.Add(callback);
@@ -99,9 +109,11 @@ namespace Assistant
 		internal static void RegisterServerToClientFilter(int packetID, PacketFilterCallback callback)
 		{
 			if (!m_ServerFilters.ContainsKey(packetID))
-				m_ServerFilters.Add(packetID, new List<PacketFilterCallback>());
+            {
+                m_ServerFilters.Add(packetID, new List<PacketFilterCallback>());
+            }
 
-			if (!m_ServerFilters[packetID].Contains(callback))
+            if (!m_ServerFilters[packetID].Contains(callback))
 			{
 				List<PacketFilterCallback> list = m_ServerFilters[packetID];
 				list.Add(callback);
@@ -112,14 +124,18 @@ namespace Assistant
 		internal static void RemoveClientToServerFilter(int packetID, PacketFilterCallback callback)
 		{
 			if (m_ClientFilters.ContainsKey(packetID))
-				m_ClientFilters[packetID].Remove(callback);
-		}
+            {
+                m_ClientFilters[packetID].Remove(callback);
+            }
+        }
 
 		internal static void RemoveServerToClientFilter(int packetID, PacketFilterCallback callback)
 		{
 			if (m_ServerFilters.ContainsKey(packetID))
-				m_ServerFilters[packetID].Remove(callback);
-		}
+            {
+                m_ServerFilters[packetID].Remove(callback);
+            }
+        }
 
 		internal static bool OnServerPacket(int id, PacketReader pr, Packet p)
 		{
@@ -129,16 +145,20 @@ namespace Assistant
 				List<PacketViewerCallback> list;
 				m_ServerViewers.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
-					result = ProcessViewers(list, pr);
-			}
+                {
+                    result = ProcessViewers(list, pr);
+                }
+            }
 
 			if (p != null)
 			{
                 List<PacketFilterCallback> list;
 				m_ServerFilters.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
-					result |= ProcessFilters(list, p);
-			}
+                {
+                    result |= ProcessFilters(list, p);
+                }
+            }
 
 			return result;
 		}
@@ -151,16 +171,20 @@ namespace Assistant
 				List<PacketViewerCallback> list;
 				m_ClientViewers.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
-					result = ProcessViewers(list, pr);
-			}
+                {
+                    result = ProcessViewers(list, pr);
+                }
+            }
 
 			if (p != null)
 			{
 				List<PacketFilterCallback> list;
 				m_ClientFilters.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
-					result |= ProcessFilters(list, p);
-			}
+                {
+                    result |= ProcessFilters(list, p);
+                }
+            }
 
 			return result;
 		}
@@ -200,9 +224,11 @@ namespace Assistant
 			m_Args.Reinit();
 
 			if (list == null)
-				return m_Args.Block;
+            {
+                return m_Args.Block;
+            }
 
-			foreach (PacketViewerCallback t in list)
+            foreach (PacketViewerCallback t in list)
 			{
 				p.MoveToData();
 
@@ -224,9 +250,11 @@ namespace Assistant
 			m_Args.Reinit();
 
 			if (list == null)
-				return m_Args.Block;
+            {
+                return m_Args.Block;
+            }
 
-			foreach (PacketFilterCallback t in list)
+            foreach (PacketFilterCallback t in list)
 			{
 				p.MoveToData();
 

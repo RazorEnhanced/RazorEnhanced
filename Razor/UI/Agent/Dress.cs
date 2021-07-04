@@ -66,9 +66,11 @@ namespace Assistant
 		private void dressDragDelay_Leave(object sender, EventArgs e)
 		{
 			if (dressDragDelay.Text == String.Empty)
-				dressDragDelay.Text = "100";
+            {
+                dressDragDelay.Text = "100";
+            }
 
-			RazorEnhanced.Dress.DressDelay = Convert.ToInt32(dressDragDelay.Text);
+            RazorEnhanced.Dress.DressDelay = Convert.ToInt32(dressDragDelay.Text);
 
 			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
 			RazorEnhanced.Dress.RefreshLists();
@@ -87,38 +89,54 @@ namespace Assistant
 		private void dressReadB_Click(object sender, EventArgs e)
 		{
 			if (dressListSelect.Text != String.Empty)
-				RazorEnhanced.Dress.ReadPlayerDress();
-			else
-				RazorEnhanced.Dress.AddLog("Item list not selected!");
-		}
+            {
+                RazorEnhanced.Dress.ReadPlayerDress();
+            }
+            else
+            {
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+            }
+        }
 
 		private void dressSetBagB_Click(object sender, EventArgs e)
 		{
 			if (dressListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemContainerTarget_Callback));
-			else
-				RazorEnhanced.Dress.AddLog("Item list not selected!");
-		}
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemContainerTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+            }
+        }
 
 		private void DressItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item dressBag = Assistant.World.FindItem(serial);
 
 			if (dressBag == null)
-				return;
+            {
+                return;
+            }
 
-			if (dressBag != null && dressBag.Serial.IsItem && dressBag.IsContainer)
+            if (dressBag != null && dressBag.Serial.IsItem && dressBag.IsContainer)
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString(), false);
-				RazorEnhanced.Dress.AddLog("Undress Container set to: " + dressBag.ToString());
+                {
+                    RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString(), false);
+                }
+
+                RazorEnhanced.Dress.AddLog("Undress Container set to: " + dressBag.ToString());
 				RazorEnhanced.Dress.DressBag = (int)dressBag.Serial.Value;
 			}
 			else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack", false);
-				RazorEnhanced.Dress.AddLog("Invalid Undress Container, set backpack");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack", false);
+                }
+
+                RazorEnhanced.Dress.AddLog("Invalid Undress Container, set backpack");
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -149,8 +167,10 @@ namespace Assistant
 				}
 			}
 			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
+            {
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+            }
+        }
 
 		private void dressClearListB_Click(object sender, EventArgs e)
 		{
@@ -161,14 +181,16 @@ namespace Assistant
 				RazorEnhanced.Dress.RefreshItems();
 			}
 			else
-				RazorEnhanced.Dress.AddLog("Item list not selected!");
-		}
+            {
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+            }
+        }
 
 		private void dresslistView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
 			if (dressListView.FocusedItem != null)
 			{
-				ListViewItem item = e.Item as ListViewItem;
+				ListViewItem item = e.Item;
 				RazorEnhanced.Dress.UpdateSelectedItems(item.Index);
 			}
 		}
@@ -176,21 +198,30 @@ namespace Assistant
 		private void dressAddTargetB_Click(object sender, EventArgs e)
 		{
 			if (dressListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemTarget_Callback));
-			else
-				RazorEnhanced.Dress.AddLog("Item list not selected!");
-		}
+            {
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemTarget_Callback));
+            }
+            else
+            {
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+            }
+        }
 
 		private void DressItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item dressItem = Assistant.World.FindItem(serial);
 			if (dressItem != null && dressItem.Serial.IsItem)
-				this.Invoke((MethodInvoker)delegate { RazorEnhanced.Dress.AddItemByTarger(dressItem); });
-			else
+            {
+                this.Invoke((MethodInvoker)delegate { RazorEnhanced.Dress.AddItemByTarger(dressItem); });
+            }
+            else
 			{
 				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid target", false);
-				RazorEnhanced.Dress.AddLog("Invalid target");
+                {
+                    RazorEnhanced.Misc.SendMessage("Invalid target", false);
+                }
+
+                RazorEnhanced.Dress.AddLog("Invalid target");
 			}
 		}
 
@@ -205,8 +236,10 @@ namespace Assistant
 				ManualAddLayer.Show();
 			}
 			else
-				RazorEnhanced.Dress.AddLog("Item list not selected!");
-		}
+            {
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+            }
+        }
 
 		private void razorButton10_Click(object sender, EventArgs e)
 		{
@@ -234,8 +267,10 @@ namespace Assistant
 			RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
 
 			if (showagentmessageCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...", false);
-		}
+            {
+                RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...", false);
+            }
+        }
 
 		private delegate void UndressFinishWorkCallback();
 
@@ -317,8 +352,10 @@ namespace Assistant
 			RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
 
 			if (showagentmessageCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...", false);
-		}
+            {
+                RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...", false);
+            }
+        }
 
 		private void dressStopButton_Click(object sender, EventArgs e)
 		{
@@ -331,8 +368,11 @@ namespace Assistant
 
 			RazorEnhanced.Dress.AddLog("Dress / Undress Engine force stop...");
 			if (showagentmessageCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...", false);
-			UndressFinishWork();
+            {
+                RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...", false);
+            }
+
+            UndressFinishWork();
 		}
 	}
 }

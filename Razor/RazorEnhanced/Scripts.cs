@@ -35,11 +35,15 @@ namespace RazorEnhanced
 		internal static void SendMessageScriptError(string msg)
 		{
 			if (Assistant.World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
-		}
+            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+            {
+                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
+            }
+        }
         public class ScriptItem : ListAbleItem
         {
             public string Filename { get; set;}
@@ -82,9 +86,11 @@ namespace RazorEnhanced
             internal void Start()
 			{
 				if (IsRunning || !IsUnstarted)
-					return;
+                {
+                    return;
+                }
 
-				try
+                try
 				{
 					m_Thread.Start();
 					while (!m_Thread.IsAlive)
@@ -99,7 +105,9 @@ namespace RazorEnhanced
 			private void AsyncStart()
 			{
 				if (World.Player == null)
-					return;
+                {
+                    return;
+                }
 
                 try
                 {
@@ -173,7 +181,9 @@ namespace RazorEnhanced
                 catch (Exception ex)
                 {
                     if (ex is System.Threading.ThreadAbortException)
+                    {
                         return;
+                    }
 
                     string display_error = ex.Message;
                     if ( m_Engine != null ) {
@@ -232,7 +242,8 @@ namespace RazorEnhanced
             internal void Stop()
 			{
 				if (!IsStopped)
-					try
+                {
+                    try
 					{
 						if (m_Thread.ThreadState != ThreadState.AbortRequested)
 						{
@@ -240,7 +251,8 @@ namespace RazorEnhanced
 						}
 					}
 					catch { }
-			}
+                }
+            }
 
 			internal void Reset()
 			{
@@ -262,9 +274,11 @@ namespace RazorEnhanced
                     hooks.Clear();
 
                     if (traceFunc != null)
-						m_Engine.SetTrace(traceFunc);
+                    {
+                        m_Engine.SetTrace(traceFunc);
+                    }
 
-					result = "Created";
+                    result = "Created";
 				}
 				catch (Exception ex)
 				{
@@ -398,11 +412,15 @@ namespace RazorEnhanced
 					lock (m_Lock)
 					{
 						if ( (m_Thread.ThreadState & (ThreadState.Unstarted | ThreadState.Stopped)) == 0)
-						//if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
-							return true;
-						else
-							return false;
-					}
+                        {
+                            //if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
 				}
 			}
 
@@ -413,11 +431,15 @@ namespace RazorEnhanced
 					lock (m_Lock)
 					{
 						if ( (m_Thread.ThreadState & ThreadState.Stopped) != 0 || (m_Thread.ThreadState & ThreadState.Aborted) != 0 )
-							//if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
-							return true;
-						else
-							return false;
-					}
+                        {
+                            //if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
 				}
 			}
 
@@ -428,11 +450,15 @@ namespace RazorEnhanced
 					lock (m_Lock)
 					{
 						if ((m_Thread.ThreadState & ThreadState.Unstarted) != 0)
-					//	if (m_Thread.ThreadState == ThreadState.Unstarted)
-							return true;
-						else
-							return false;
-					}
+                        {
+                            //	if (m_Thread.ThreadState == ThreadState.Unstarted)
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
 				}
 			}
 
@@ -476,13 +502,19 @@ namespace RazorEnhanced
 			private bool IsRunningThread(Thread thread)
 			{
 				if (thread == null)
-					return false;
+                {
+                    return false;
+                }
 
-				if (thread != null && ( (thread.ThreadState & ThreadState.Running) != 0 || (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (thread.ThreadState & ThreadState.AbortRequested) != 0 ))
-					return true;
-				else
-					return false;
-			}
+                if (thread != null && ( (thread.ThreadState & ThreadState.Running) != 0 || (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (thread.ThreadState & ThreadState.AbortRequested) != 0 ))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
 			internal void Close()
 			{
@@ -542,18 +574,26 @@ namespace RazorEnhanced
 						if (script.Loop)
 						{
 							if (script.IsStopped)
-								script.Reset();
+                            {
+                                script.Reset();
+                            }
 
-							if (script.IsUnstarted)
-								script.Start();
-						}
+                            if (script.IsUnstarted)
+                            {
+                                script.Start();
+                            }
+                        }
 						else
 						{
 							if (script.IsStopped)
-								script.Reset();
-							else if (script.IsUnstarted)
-								script.Start();
-						}
+                            {
+                                script.Reset();
+                            }
+                            else if (script.IsUnstarted)
+                            {
+                                script.Start();
+                            }
+                        }
 					}
 					else
 					{
@@ -565,11 +605,15 @@ namespace RazorEnhanced
 						}
 
 						if (script.IsRunning)
-							script.Stop();
+                        {
+                            script.Stop();
+                        }
 
-						if (script.IsStopped)
-							script.Reset();
-					}
+                        if (script.IsStopped)
+                        {
+                            script.Reset();
+                        }
+                    }
 				}
 
 				if (World.Player != null && Client.Running) // Parte agent
@@ -676,9 +720,11 @@ namespace RazorEnhanced
 		internal static void Init()
 		{
 			if (m_Timer != null)
-				m_Timer.Stop();
+            {
+                m_Timer.Stop();
+            }
 
-			m_Timer = new ScriptTimer();
+            m_Timer = new ScriptTimer();
 			m_Timer.Start();
 		}
 
@@ -718,8 +764,10 @@ namespace RazorEnhanced
 			foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
 			{
 				if (pair.Key.ToLower() == filename.ToLower())
-					return pair.Value;
-			}
+                {
+                    return pair.Value;
+                }
+            }
 
 			return null;
 		}
@@ -730,8 +778,10 @@ namespace RazorEnhanced
 			foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
 			{
 				if (!script.IsRunning && script.AutoStart)
-					script.Start();
-			}
+                {
+                    script.Start();
+                }
+            }
 		}
 	}
 }

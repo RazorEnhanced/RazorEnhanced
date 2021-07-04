@@ -61,12 +61,14 @@ namespace Assistant
 		internal static void InjectUoMod()
 		{
 			if (Engine.ClientMajor < 7)
-				return;
+            {
+                return;
+            }
 
-	//		if (Engine.ClientBuild > 49)
-	//			return;
+            //		if (Engine.ClientBuild > 49)
+            //			return;
 
-			String path = AppDomain.CurrentDomain.BaseDirectory + "\\UOMod.dll";
+            String path = AppDomain.CurrentDomain.BaseDirectory + "\\UOMod.dll";
 
 			IntPtr hp = DLLImport.Win.OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, true, DLLImport.Razor.GetUOProcId());
 
@@ -86,40 +88,56 @@ namespace Assistant
 						false, DLLImport.Razor.GetUOProcId());
 
 					if (hProcess == IntPtr.Zero)
-						return;
+                    {
+                        return;
+                    }
 
-					int cch = 1 + DLLImport.Win.lstrlen(path);
+                    int cch = 1 + DLLImport.Win.lstrlen(path);
 					int cb = cch * sizeof(char);
 
 					pszLibFileRemote = DLLImport.Win.VirtualAllocEx(hProcess, IntPtr.Zero, (uint) cb, MEM_COMMIT, PAGE_READWRITE);
 					if (pszLibFileRemote == IntPtr.Zero)
-						return;
+                    {
+                        return;
+                    }
 
-					UIntPtr bytesWritten;
+                    UIntPtr bytesWritten;
 					if (!DLLImport.Win.WriteProcessMemory(hProcess, pszLibFileRemote, Encoding.Default.GetBytes(path), (uint)((path.Length + 1) * Marshal.SizeOf(typeof(char))), out bytesWritten))
-						return;
+                    {
+                        return;
+                    }
 
-					IntPtr pfnThreadRtn = DLLImport.Win.GetProcAddress(DLLImport.Win.GetModuleHandle("Kernel32"), "LoadLibraryA");
+                    IntPtr pfnThreadRtn = DLLImport.Win.GetProcAddress(DLLImport.Win.GetModuleHandle("Kernel32"), "LoadLibraryA");
 					if (pfnThreadRtn == IntPtr.Zero)
-						return;
+                    {
+                        return;
+                    }
 
-					hThread = DLLImport.Win.CreateRemoteThread(hProcess, IntPtr.Zero, 0, pfnThreadRtn, pszLibFileRemote, 0, IntPtr.Zero);
+                    hThread = DLLImport.Win.CreateRemoteThread(hProcess, IntPtr.Zero, 0, pfnThreadRtn, pszLibFileRemote, 0, IntPtr.Zero);
 					if (hThread == IntPtr.Zero)
-						return;
+                    {
+                        return;
+                    }
 
-					DLLImport.Win.WaitForSingleObject(hThread, int.MaxValue);
+                    DLLImport.Win.WaitForSingleObject(hThread, int.MaxValue);
 				}
 				finally
 				{
 					if (pszLibFileRemote != IntPtr.Zero)
-						DLLImport.Win.VirtualFreeEx(hProcess, pszLibFileRemote, 0, DLLImport.Win.FreeType.MEM_RELEASE);
+                    {
+                        DLLImport.Win.VirtualFreeEx(hProcess, pszLibFileRemote, 0, DLLImport.Win.FreeType.MEM_RELEASE);
+                    }
 
-					if (hThread != IntPtr.Zero)
-						DLLImport.Win.CloseHandle(hThread);
+                    if (hThread != IntPtr.Zero)
+                    {
+                        DLLImport.Win.CloseHandle(hThread);
+                    }
 
-					if (hProcess != IntPtr.Zero)
-						DLLImport.Win.CloseHandle(hProcess);
-				}
+                    if (hProcess != IntPtr.Zero)
+                    {
+                        DLLImport.Win.CloseHandle(hProcess);
+                    }
+                }
 			}
 
 			// Thread attesa che la windowhandle sia disponibile
@@ -145,18 +163,26 @@ namespace Assistant
 		internal static void EnableDisable(bool enable, int patch)
 		{
 			if (Engine.ClientMajor < 7)
-				return;
+            {
+                return;
+            }
 
-			if (m_modhandle == IntPtr.Zero)
-				return;
+            if (m_modhandle == IntPtr.Zero)
+            {
+                return;
+            }
 
-			int m_enable = 0;
+            int m_enable = 0;
 			if (enable)
-				m_enable = (int)PATCH_MESSAGES.PM_ENABLE;
-			else
-				m_enable = (int)PATCH_MESSAGES.PM_DISABLE;
+            {
+                m_enable = (int)PATCH_MESSAGES.PM_ENABLE;
+            }
+            else
+            {
+                m_enable = (int)PATCH_MESSAGES.PM_DISABLE;
+            }
 
-			switch (patch)
+            switch (patch)
 			{
 				case (int)PATCH_TYPE.PT_FPS:
 					DLLImport.Win.SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_FPS);
@@ -178,12 +204,16 @@ namespace Assistant
 		private static void EnableOnStartMod()
 		{
 			if (Engine.ClientMajor < 7)
-				return;
+            {
+                return;
+            }
 
-			if (m_modhandle == IntPtr.Zero)
-				return;
+            if (m_modhandle == IntPtr.Zero)
+            {
+                return;
+            }
 
-			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled") && Engine.ClientBuild < 49 && Assistant.Engine.IP != Engine.Resolve("37.143.10.137"))
+            if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled") && Engine.ClientBuild < 49 && Assistant.Engine.IP != Engine.Resolve("37.143.10.137"))
             {
 				DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 				DLLImport.Win.SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
@@ -213,16 +243,20 @@ namespace Assistant
 		internal static void ProfileChange()
 		{
 			if (Engine.ClientMajor < 7)
-				return;
+            {
+                return;
+            }
 
-			//if (Engine.ClientBuild > 49)
-			//	return;
+            //if (Engine.ClientBuild > 49)
+            //	return;
 
-			if (m_modhandle == IntPtr.Zero)
-				return;
+            if (m_modhandle == IntPtr.Zero)
+            {
+                return;
+            }
 
-			// ViewRange
-			if (Engine.ClientBuild < 49 && Assistant.Engine.IP != Engine.Resolve("37.143.10.137"))
+            // ViewRange
+            if (Engine.ClientBuild < 49 && Assistant.Engine.IP != Engine.Resolve("37.143.10.137"))
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
 				{

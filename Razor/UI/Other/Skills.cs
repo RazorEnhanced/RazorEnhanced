@@ -49,13 +49,17 @@ namespace Assistant
 			{
 				ListView.SelectedListViewItemCollection items = skillList.SelectedItems;
 				if (items.Count <= 0)
-					return;
+                {
+                    return;
+                }
 
-				Skill s = items[0].Tag as Skill;
+                Skill s = items[0].Tag as Skill;
 				if (s == null)
-					return;
+                {
+                    return;
+                }
 
-				if (m_SkillMenu == null)
+                if (m_SkillMenu == null)
 				{
 					m_SkillMenu = new ContextMenu(new MenuItem[]
 					{
@@ -66,9 +70,11 @@ namespace Assistant
 				}
 
 				for (int i = 0; i < 3; i++)
-					m_SkillMenu.MenuItems[i].Checked = ((int)s.Lock) == i;
+                {
+                    m_SkillMenu.MenuItems[i].Checked = ((int)s.Lock) == i;
+                }
 
-				m_SkillMenu.Show(skillList, new Point(e.X, e.Y));
+                m_SkillMenu.Show(skillList, new Point(e.X, e.Y));
 			}
 		}
 
@@ -91,16 +97,20 @@ namespace Assistant
 		{
 			ListView.SelectedListViewItemCollection items = skillList.SelectedItems;
 			if (items.Count <= 0)
-				return;
+            {
+                return;
+            }
 
-			Skill s = null;
+            Skill s = null;
 			for (int i = 0; i < items.Count; i++)
 			{
 				s = items[i].Tag as Skill;
 				if (s == null)
-					continue;
+                {
+                    continue;
+                }
 
-				try
+                try
 				{
 			 		Assistant.Client.Instance.SendToServer(new SetSkillLock(s.Index, lockType));
 
@@ -119,8 +129,11 @@ namespace Assistant
 		{
 			double Total = 0;
 			for (int i = 0; i < Skill.Count; i++)
-				Total += World.Player.Skills[i].Base;
-			baseTotal.Text = String.Format("{0:F1}", Total);
+            {
+                Total += World.Player.Skills[i].Base;
+            }
+
+            baseTotal.Text = String.Format("{0:F1}", Total);
 			for (int i = 0; i < skillList.Items.Count; i++)
 			{
 				ListViewItem cur = skillList.Items[i];
@@ -140,10 +153,15 @@ namespace Assistant
 		private void OnSkillColClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
 		{
 			if (e.Column == RazorEnhanced.Settings.General.ReadInt("SkillListCol"))
-				RazorEnhanced.Settings.General.WriteBool("SkillListAsc", !RazorEnhanced.Settings.General.ReadBool("SkillListAsc"));
-			else
-				RazorEnhanced.Settings.General.WriteInt("SkillListCol", e.Column);
-			SortSkills();
+            {
+                RazorEnhanced.Settings.General.WriteBool("SkillListAsc", !RazorEnhanced.Settings.General.ReadBool("SkillListAsc"));
+            }
+            else
+            {
+                RazorEnhanced.Settings.General.WriteInt("SkillListCol", e.Column);
+            }
+
+            SortSkills();
 		}
 
 		private void SortSkills()
@@ -152,9 +170,11 @@ namespace Assistant
 			bool asc = RazorEnhanced.Settings.General.ReadBool("SkillListAsc");
 
 			if (col < 0 || col > 5)
-				col = 0;
+            {
+                col = 0;
+            }
 
-			skillList.BeginUpdate();
+            skillList.BeginUpdate();
 			if (col == 0 || col == 5)
 			{
 				skillList.ListViewItemSorter = null;
@@ -190,22 +210,32 @@ namespace Assistant
 			public int Compare(object x, object y)
 			{
 				if (x == null || !(x is ListViewItem))
-					return m_Asc ? 1 : -1;
-				else if (y == null || !(y is ListViewItem))
-					return m_Asc ? -1 : 1;
+                {
+                    return m_Asc ? 1 : -1;
+                }
+                else if (y == null || !(y is ListViewItem))
+                {
+                    return m_Asc ? -1 : 1;
+                }
 
-				try
+                try
 				{
 					double dx = Convert.ToDouble(((ListViewItem)x).SubItems[m_Col].Text);
 					double dy = Convert.ToDouble(((ListViewItem)y).SubItems[m_Col].Text);
 
 					if (dx > dy)
-						return m_Asc ? -1 : 1;
-					else if (dx == dy)
-						return 0;
-					else //if ( dx > dy )
-						return m_Asc ? 1 : -1;
-				}
+                    {
+                        return m_Asc ? -1 : 1;
+                    }
+                    else if (dx == dy)
+                    {
+                        return 0;
+                    }
+                    else //if ( dx > dy )
+                    {
+                        return m_Asc ? 1 : -1;
+                    }
+                }
 				catch
 				{
 					return ((ListViewItem)x).Text.CompareTo(((ListViewItem)y).Text) * (m_Asc ? 1 : -1);
@@ -216,20 +246,26 @@ namespace Assistant
 		private void OnResetSkillDelta(object sender, System.EventArgs e)
 		{
 			if (World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			for (int i = 0; i < Skill.Count; i++)
-				World.Player.Skills[i].Delta = 0;
+            for (int i = 0; i < Skill.Count; i++)
+            {
+                World.Player.Skills[i].Delta = 0;
+            }
 
-			RedrawSkills();
+            RedrawSkills();
 		}
 
 		private void OnSetSkillLocks(object sender, System.EventArgs e)
 		{
 			if (locks.SelectedIndex == -1 || World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			LockType type = (LockType)locks.SelectedIndex;
+            LockType type = (LockType)locks.SelectedIndex;
 
 			for (short i = 0; i < Skill.Count; i++)
 			{
@@ -248,9 +284,11 @@ namespace Assistant
 		private void skillCopySel_Click(object sender, System.EventArgs e)
 		{
 			if (skillList.SelectedItems == null || skillList.SelectedItems.Count <= 0)
-				return;
+            {
+                return;
+            }
 
-			StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < skillList.SelectedItems.Count; i++)
 			{
 				ListViewItem vi = skillList.SelectedItems[i];
@@ -258,9 +296,11 @@ namespace Assistant
 				{
 					string name = vi.SubItems[0].Text;
 					if (name != null && name.Length > 20)
-						name = name.Substring(0, 16) + "...";
+                    {
+                        name = name.Substring(0, 16) + "...";
+                    }
 
-					sb.AppendFormat("{0,-20} {1,5:F1} {2,5:F1} {4:F1} {5,5:F1}\n",
+                    sb.AppendFormat("{0,-20} {1,5:F1} {2,5:F1} {4:F1} {5,5:F1}\n",
 						name,
 						vi.SubItems[1].Text,
 						vi.SubItems[2].Text,
@@ -271,15 +311,19 @@ namespace Assistant
 			}
 
 			if (sb.Length > 0)
-				Clipboard.SetDataObject(sb.ToString(), true);
-		}
+            {
+                Clipboard.SetDataObject(sb.ToString(), true);
+            }
+        }
 
 		private void skillCopyAll_Click(object sender, System.EventArgs e)
 		{
 			if (World.Player == null)
-				return;
+            {
+                return;
+            }
 
-			StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < Skill.Count; i++)
 			{
 				Skill sk = World.Player.Skills[i];
@@ -287,7 +331,9 @@ namespace Assistant
 			}
 
 			if (sb.Length > 0)
-				Clipboard.SetDataObject(sb.ToString(), true);
-		}
+            {
+                Clipboard.SetDataObject(sb.ToString(), true);
+            }
+        }
 	}
 }

@@ -31,11 +31,16 @@ namespace RazorEnhanced
 
             Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
             if (vendor == null)
+            {
                 return;
+            }
 
             Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
             if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
+            {
                 return;
+            }
+
             Vendor.LastVendor = vendor;
             Vendor.LastBuyList = pack.Contains;
         }
@@ -47,9 +52,15 @@ namespace RazorEnhanced
         public static void Buy(int vendorSerial, int itemID, int amount)
         {
             if (LastVendor == null)
+            {
                 return;
+            }
+
             if (LastBuyList == null)
+            {
                 return;
+            }
+
             if (LastVendor.Serial == vendorSerial)
             {
                 List<VendorBuyItem> buyList = new List<VendorBuyItem>();
@@ -93,6 +104,7 @@ namespace RazorEnhanced
         {
             List<BuyItem> buyList = new List<BuyItem>();
             if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
+            {
                 foreach (Assistant.Item listItem in LastBuyList)
                 {
                     BuyItem item = new BuyItem();
@@ -104,6 +116,8 @@ namespace RazorEnhanced
                     item.Name = listItem.Name;
                     buyList.Add(item);
                 }
+            }
+
             return buyList;
         }
 
@@ -190,8 +204,10 @@ namespace RazorEnhanced
 				Engine.MainWindow.SafeAction(s => s.SellLogBox.Items.Add(addlog));
 				Engine.MainWindow.SafeAction(s => s.SellLogBox.SelectedIndex = s.SellLogBox.Items.Count - 1);
 				if (Engine.MainWindow.SellLogBox.Items.Count > 300)
-					Engine.MainWindow.SafeAction(s => s.SellLogBox.Items.Clear());
-			}
+                {
+                    Engine.MainWindow.SafeAction(s => s.SellLogBox.Items.Clear());
+                }
+            }
 		}
 
 		internal static void RefreshLists()
@@ -200,9 +216,11 @@ namespace RazorEnhanced
 
 			SellAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Engine.MainWindow.SellListSelect.Text)
-				return;
+            {
+                return;
+            }
 
-			Engine.MainWindow.SellListSelect.Items.Clear();
+            Engine.MainWindow.SellListSelect.Items.Clear();
 			foreach (SellAgentList l in lists)
 			{
 				Engine.MainWindow.SellListSelect.Items.Add(l.Description);
@@ -223,15 +241,21 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				int color = 0;
+                int color = 0;
 				if ((string)row.Cells[4].Value == "All")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.SellAgent.ItemInsert(Engine.MainWindow.SellListSelect.Text, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
@@ -255,9 +279,11 @@ namespace RazorEnhanced
 					{
 						string color = "All";
 						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
+                        {
+                            color = "0x" + item.Color.ToString("X4");
+                        }
 
-						Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
+                        Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
 					}
 
 					break;
@@ -271,15 +297,21 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				int color = 0;
+                int color = 0;
 				if ((string)row.Cells[4].Value == "All")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.SellAgent.ItemInsert(newList, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
@@ -323,18 +355,26 @@ namespace RazorEnhanced
 		private static bool ColorCheck(int colorDaLista, ushort colorDaVendor)
 		{
 			if (colorDaLista == -1)         // Wildcard colore
-				return true;
-			if (colorDaLista == colorDaVendor)      // Match OK
-				return true;
-			return false;
+            {
+                return true;
+            }
+
+            if (colorDaLista == colorDaVendor)      // Match OK
+            {
+                return true;
+            }
+
+            return false;
 		}
 
 		private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
 		{
 			if (!Engine.MainWindow.SellCheckBox.Checked) // Filtro disabilitato
-				return;
+            {
+                return;
+            }
 
-			Assistant.Item bag = Assistant.Item.Factory(SellBag, 0);
+            Assistant.Item bag = Assistant.Item.Factory(SellBag, 0);
 			if (bag == null) // Verifica HotBag
 			{
 				AddLog("Invalid or not accessible Container");
@@ -346,14 +386,18 @@ namespace RazorEnhanced
 
 			Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
 			if (vendor == null)
-				Assistant.World.AddMobile(vendor = new Assistant.Mobile(serial));
+            {
+                Assistant.World.AddMobile(vendor = new Assistant.Mobile(serial));
+            }
 
-			int count = pvSrc.ReadUInt16();
+            int count = pvSrc.ReadUInt16();
 
 			if (count == 0) // Il vendor non compra nulla
-				return;
+            {
+                return;
+            }
 
-			int sold = 0;
+            int sold = 0;
 
 			List<Assistant.SellListItem> list = new List<Assistant.SellListItem>(count); // Lista item checkati per vendita (non so dove sia dichiarata)
 			List<RazorEnhanced.SellAgent.SellAgentItem> templist = new List<RazorEnhanced.SellAgent.SellAgentItem>(); // Lista temporanea per controlli amount
@@ -376,32 +420,42 @@ namespace RazorEnhanced
 				foreach (SellAgentItem sellItem in items) // Scansione item presenti in lista agent item
 				{
 					if (!sellItem.Selected)
-						continue;
+                    {
+                        continue;
+                    }
 
-					if (gfx != sellItem.Graphics || (item == null || item == bag || !item.IsChildOf(bag)) || !RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue))
-						continue;
+                    if (gfx != sellItem.Graphics || (item == null || item == bag || !item.IsChildOf(bag)) || !RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue))
+                    {
+                        continue;
+                    }
 
-					int amountLeft = int.MaxValue;
+                    int amountLeft = int.MaxValue;
 					int index = 0;
 					bool alreadySold = false;
 
 					for (int y = 0; y < templist.Count; y++) // Controllo che non ho gia venduto item simili
 					{
 						if (templist[y].Graphics != gfx || !RazorEnhanced.SellAgent.ColorCheck(templist[y].Color, hue))
-							continue;
+                        {
+                            continue;
+                        }
 
-						alreadySold = true;
+                        alreadySold = true;
 						amountLeft = templist[y].Amount;
 						index = y;
 					}
 
 					if (amountLeft == int.MaxValue) // Valore limite e inizzializzazione
-						amountLeft = sellItem.Amount;
+                    {
+                        amountLeft = sellItem.Amount;
+                    }
 
-					if (amountLeft <= 0)
-						continue;
+                    if (amountLeft <= 0)
+                    {
+                        continue;
+                    }
 
-					if (alreadySold) // Gia venduto oggetto stessa grafica
+                    if (alreadySold) // Gia venduto oggetto stessa grafica
 					{
 						AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
 						if (amount < amountLeft)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
@@ -444,9 +498,11 @@ namespace RazorEnhanced
 			}
 
 			if (list.Count <= 0)
-				return;
+            {
+                return;
+            }
 
-	 		Assistant.Client.Instance.SendToServer(new VendorSellResponse(vendor, list));
+            Assistant.Client.Instance.SendToServer(new VendorSellResponse(vendor, list));
 			AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 			string message = "Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins";
 			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
@@ -462,8 +518,10 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Sell.Enable: Filter alredy enabled");
 			}
 			else
-				Assistant.Engine.MainWindow.SafeAction(s => s.SellCheckBox.Checked = true);
-		}
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.SellCheckBox.Checked = true);
+            }
+        }
 
 		public static void Disable()
 		{
@@ -472,8 +530,10 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Sell.Disable: Filter alredy disabled");
 			}
 			else
-				Assistant.Engine.MainWindow.SafeAction(s => s.SellCheckBox.Checked = false);
-		}
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.SellCheckBox.Checked = false);
+            }
+        }
 
 		public static bool Status()
 		{
@@ -591,8 +651,10 @@ namespace RazorEnhanced
 				Engine.MainWindow.SafeAction(s => s.BuyLogBox.Items.Add(addlog));
 				Engine.MainWindow.SafeAction(s => s.BuyLogBox.SelectedIndex = s.BuyLogBox.Items.Count - 1);
 				if (Engine.MainWindow.BuyLogBox.Items.Count > 300)
-					Engine.MainWindow.SafeAction(s => s.BuyLogBox.Items.Clear());
-			}
+                {
+                    Engine.MainWindow.SafeAction(s => s.BuyLogBox.Items.Clear());
+                }
+            }
 		}
 
 		internal static void RefreshLists()
@@ -601,9 +663,11 @@ namespace RazorEnhanced
 
 			BuyAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Engine.MainWindow.BuyListSelect.Text)
-				return;
+            {
+                return;
+            }
 
-			Engine.MainWindow.BuyListSelect.Items.Clear();
+            Engine.MainWindow.BuyListSelect.Items.Clear();
 			foreach (BuyAgentList l in lists)
 			{
 				Engine.MainWindow.BuyListSelect.Items.Add(l.Description);
@@ -624,15 +688,21 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Engine.MainWindow.VendorBuyDataGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				int color = 0;
+                int color = 0;
 				if ((string)row.Cells[4].Value == "All")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.BuyAgent.ItemInsert(Engine.MainWindow.BuyListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
@@ -656,9 +726,11 @@ namespace RazorEnhanced
 					{
 						string color = "All";
 						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
+                        {
+                            color = "0x" + item.Color.ToString("X4");
+                        }
 
-						Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
+                        Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
 					}
 
 					break;
@@ -673,15 +745,21 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Engine.MainWindow.VendorBuyDataGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				int color = 0;
+                int color = 0;
 				if ((string)row.Cells[4].Value == "All")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.BuyAgent.ItemInsert(newList, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
@@ -726,24 +804,36 @@ namespace RazorEnhanced
 		private static bool ColorCheck(int colorDaLista, ushort colorDaVendor)
 		{
 			if (colorDaLista == -1) // Wildcard colore
-				return true;
-			else
+            {
+                return true;
+            }
+            else
 				if (colorDaLista == colorDaVendor) // Match OK
-				return true;
-			else  // Match fallito
-				return false;
-		}
+            {
+                return true;
+            }
+            else  // Match fallito
+            {
+                return false;
+            }
+        }
 
 		private static bool CheckName(string vendoritemname, string listitemname)
 		{
 			if (!CompareName) // In Compare name not enabled return valid all compare
-				return true;
+            {
+                return true;
+            }
 
-			if (vendoritemname.ToLower() == listitemname.ToLower())
-				return true;
-			else
-				return false;
-		}
+            if (vendoritemname.ToLower() == listitemname.ToLower())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 		internal static List<String> m_shoplist = new List<string>();
 		private static void ShopList(PacketReader p, PacketHandlerEventArgs args)
@@ -752,9 +842,11 @@ namespace RazorEnhanced
 			byte itemcount = p.ReadByte();
 
 			if (itemcount < 1) // No item
-				return;
+            {
+                return;
+            }
 
-			m_shoplist.Clear();
+            m_shoplist.Clear();
 			for (int i = 0; i < itemcount; i++)
 			{
 				p.ReadUInt32(); // Price
@@ -767,20 +859,26 @@ namespace RazorEnhanced
 		private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (!Engine.MainWindow.BuyCheckBox.Checked) // Filtro disabilitato
-				return;
+            {
+                return;
+            }
 
-			Assistant.Serial serial = p.ReadUInt32();
+            Assistant.Serial serial = p.ReadUInt32();
 			ushort gump = p.ReadUInt16();
 			
 			Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
 			if (vendor == null)
-				return;
+            {
+                return;
+            }
 
-			Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
+            Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
 			if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
-				return;
+            {
+                return;
+            }
 
-			int total = 0;
+            int total = 0;
 			int cost = 0;
 			List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // Lista definita altrove (non rimuovere se si fa pulizia in giro)
             Vendor.LastVendor = vendor;
@@ -788,23 +886,31 @@ namespace RazorEnhanced
 			for (int i = 0; i < pack.Contains.Count; i++)
 			{
 				if (pack.Contains[i] == null)
-					continue;
-	
-				if (m_comparename) // if namecheck enabled assign real item name show in vendor list
-					pack.Contains[i].Name = m_shoplist[i];
-				
-				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(m_listname);
+                {
+                    continue;
+                }
+
+                if (m_comparename) // if namecheck enabled assign real item name show in vendor list
+                {
+                    pack.Contains[i].Name = m_shoplist[i];
+                }
+
+                List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(m_listname);
 				
 				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{
 					// int x = 0;
 					if (!buyItem.Selected)
-						continue;
+                    {
+                        continue;
+                    }
 
-					if (buyItem.Graphics != pack.Contains[i].ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue) || !RazorEnhanced.BuyAgent.CheckName(pack.Contains[i].Name, buyItem.Name))
-						continue;
+                    if (buyItem.Graphics != pack.Contains[i].ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue) || !RazorEnhanced.BuyAgent.CheckName(pack.Contains[i].Name, buyItem.Name))
+                    {
+                        continue;
+                    }
 
-					if (pack.Contains[i].Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
+                    if (pack.Contains[i].Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
 					{
 						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].Amount + " - Buyed: " + buyItem.Amount);
 						buyList.Add(new VendorBuyItem(pack.Contains[i].Serial, buyItem.Amount, pack.Contains[i].Price));
@@ -823,9 +929,11 @@ namespace RazorEnhanced
 
 			m_shoplist.Clear(); 
 			if (buyList.Count <= 0)
-				return;
+            {
+                return;
+            }
 
-			args.Block = true;
+            args.Block = true;
 	 		Assistant.Client.Instance.SendToServer(new VendorBuyResponse(serial, buyList));
 
 			string message = "Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins";
@@ -858,8 +966,10 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Buy.Enable: Filter alredy enabled");
 			}
 			else
-				Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = true);
-		}
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = true);
+            }
+        }
 
         /// <summary>
         /// Disable BuyAgent Agent.
@@ -871,8 +981,10 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: Buy.Disable: Filter alredy disabled");
 			}
 			else
-				Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = false);
-		}
+            {
+                Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = false);
+            }
+        }
 
         /// <summary>
         /// Check BuyAgent Agent status

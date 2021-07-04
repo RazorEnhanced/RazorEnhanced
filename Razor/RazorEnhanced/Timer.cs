@@ -29,7 +29,9 @@ namespace RazorEnhanced
         private void ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
         {
             if (this.AutoReset)
+            {
                 this.m_dueTime = DateTime.Now.AddMilliseconds(this.Interval);
+            }
         }
     }
 
@@ -94,13 +96,19 @@ namespace RazorEnhanced
 				if (m_timers.TryGetValue(name, out ScriptTimer t)) // Get timer data
 				{
 					if (t != null)
-						return true;
-					else
-						return false;
-				}
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
 				else
-					return false;
-			}
+                {
+                    return false;
+                }
+            }
 			return false;
 		}
 
@@ -116,12 +124,18 @@ namespace RazorEnhanced
                 if (m_timers.TryGetValue(name, out ScriptTimer t)) // Get timer data
                 {
                     if (t != null)
+                    {
                         return (int)t.TimeLeft;
+                    }
                     else
+                    {
                         return -1;
+                    }
                 }
                 else
+                {
                     return -1;
+                }
             }
             return -1;
         }
@@ -131,9 +145,11 @@ namespace RazorEnhanced
 		{
 			ScriptTimer t = (ScriptTimer)source;
 			if (t.Message != String.Empty) // If timer have a end Message
-				Misc.SendMessage(t.Message);
+            {
+                Misc.SendMessage(t.Message);
+            }
 
-			t.Close();
+            t.Close();
 			m_timers.TryRemove(t.Name, out ScriptTimer tt); // Remove timer
 			t = null;
 		}

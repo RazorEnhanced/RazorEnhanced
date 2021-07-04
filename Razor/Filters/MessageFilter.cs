@@ -30,7 +30,9 @@ namespace Assistant.Filters
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
         {
             if (args.Block)
+            {
                 return;
+            }
 
             // 0, 1, 2
             Serial serial = p.ReadUInt32(); // 3, 4, 5, 6
@@ -38,7 +40,9 @@ namespace Assistant.Filters
             MessageType type = (MessageType) p.ReadByte(); // 9
 
             if (type != m_Type)
+            {
                 return;
+            }
 
             ushort hue = p.ReadUInt16(); // 10, 11
             ushort font = p.ReadUInt16();
@@ -86,7 +90,9 @@ namespace Assistant.Filters
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
         {
             if (args.Block)
+            {
                 return;
+            }
 
             Serial serial = p.ReadUInt32();
             ushort body = p.ReadUInt16();
@@ -97,9 +103,14 @@ namespace Assistant.Filters
 
             // paladin spells
             if (num >= 1060718 && num <= 1060727)
+            {
                 type = MessageType.Spell;
+            }
+
             if (type != m_Type)
+            {
                 return;
+            }
 
             for (int i = 0; i < m_Nums.Length; i++)
             {

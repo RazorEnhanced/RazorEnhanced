@@ -28,11 +28,15 @@ namespace Assistant
 
 				string content;
 				if (args == null)
-					content = Assistant.Language.GetCliloc(number);
-				else
-					content = Assistant.Language.ClilocFormat(this.Number, args);
+                {
+                    content = Assistant.Language.GetCliloc(number);
+                }
+                else
+                {
+                    content = Assistant.Language.ClilocFormat(this.Number, args);
+                }
 
-				return content;
+                return content;
 			}
 		}
 
@@ -69,20 +73,28 @@ namespace Assistant
 			{
 				int num = p.ReadInt32();
 				if (num == 0)
-					break;
+                {
+                    break;
+                }
 
-				m_StringNums.Remove(num);
+                m_StringNums.Remove(num);
 
 				short bytes = p.ReadInt16();
 				string args = string.Empty;
 				if (bytes > 0)
-					args = p.ReadUnicodeStringBE(bytes >> 1);
+                {
+                    args = p.ReadUnicodeStringBE(bytes >> 1);
+                }
 
-				if (m_Content.Any(e => e.Number == num))
-					continue;
-				else
-					m_Content.Add(new OPLEntry(num, args));
-			}
+                if (m_Content.Any(e => e.Number == num))
+                {
+                    continue;
+                }
+                else
+                {
+                    m_Content.Add(new OPLEntry(num, args));
+                }
+            }
 		}
 
 		private static int[] m_DefaultStringNums = new int[]

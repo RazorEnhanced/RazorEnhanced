@@ -117,13 +117,17 @@ namespace RazorEnhanced
 		internal static void AddLog(string addlog)
 		{
 			if (!Client.Running)
-				return;
+            {
+                return;
+            }
 
-			Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.Items.Add(addlog));
+            Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.Items.Add(addlog));
 			Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.SelectedIndex = s.OrganizerLogBox.Items.Count - 1);
 			if (Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.Items.Clear());
-		}
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerLogBox.Items.Clear());
+            }
+        }
 
 		internal static void RefreshLists()
 		{
@@ -131,17 +135,21 @@ namespace RazorEnhanced
 
 			OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
-				return;
+            {
+                return;
+            }
 
-			Assistant.Engine.MainWindow.OrganizerListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.OrganizerListSelect.Items.Clear();
 			foreach (OrganizerList l in lists)
 			{
 				Assistant.Engine.MainWindow.OrganizerListSelect.Items.Add(l.Description);
 
 				if (!l.Selected)
-					continue;
+                {
+                    continue;
+                }
 
-				Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(l.Description);
+                Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(l.Description);
 				OrganizerDelay = l.Delay;
 				OrganizerSource = l.Source;
 				OrganizerDestination = l.Destination;
@@ -156,21 +164,31 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.OrganizerDataGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				int color = 0;
+                int color = 0;
 				if ((string)row.Cells[3].Value == "All")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                }
 
-				int amount = 0;
+                int amount = 0;
 				if ((string)row.Cells[4].Value == "All")
-					amount = -1;
-				else
-					amount = Convert.ToInt32((string)row.Cells[4].Value);
+                {
+                    amount = -1;
+                }
+                else
+                {
+                    amount = Convert.ToInt32((string)row.Cells[4].Value);
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.Organizer.ItemInsert(Assistant.Engine.MainWindow.OrganizerListSelect.Text, new OrganizerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, amount, check));
 			}
@@ -194,13 +212,17 @@ namespace RazorEnhanced
 					{
 						string color = "All";
 						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
+                        {
+                            color = "0x" + item.Color.ToString("X4");
+                        }
 
-						string amount = "All";
+                        string amount = "All";
 						if (item.Amount != -1)
-							amount = item.Amount.ToString();
+                        {
+                            amount = item.Amount.ToString();
+                        }
 
-						Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, amount });
+                        Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, amount });
 					}
 
 					break;
@@ -214,21 +236,31 @@ namespace RazorEnhanced
 			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.OrganizerDataGridView.Rows)
 			{
 				if (row.IsNewRow)
-					continue;
+                {
+                    continue;
+                }
 
-				int color = 0;
+                int color = 0;
 				if ((string)row.Cells[3].Value == "All")
-					color = -1;
-				else
-					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                {
+                    color = -1;
+                }
+                else
+                {
+                    color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+                }
 
-				int amount = 0;
+                int amount = 0;
 				if ((string)row.Cells[4].Value == "All")
-					amount = -1;
-				else
-					amount = Convert.ToInt32((string)row.Cells[4].Value);
+                {
+                    amount = -1;
+                }
+                else
+                {
+                    amount = Convert.ToInt32((string)row.Cells[4].Value);
+                }
 
-				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.Organizer.ItemInsert(newList, new OrganizerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, amount, check));
 			}
@@ -266,13 +298,19 @@ namespace RazorEnhanced
 		private static bool ColorCheck(int colorDaLista, int colorDaItem)
 		{
 			if (colorDaLista == -1) // Wildcard colore
-				return true;
-			else
+            {
+                return true;
+            }
+            else
 				if (colorDaLista == colorDaItem) // Match OK
-				return true;
-			else // Match fallito
-				return false;
-		}
+            {
+                return true;
+            }
+            else // Match fallito
+            {
+                return false;
+            }
+        }
 
 		internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, int sourceBagserail, int destinationBagserial)
 		{
@@ -293,13 +331,17 @@ namespace RazorEnhanced
 				foreach (OrganizerItem oggettoDaLista in organizerItemList)
 				{
 					if (!oggettoDaLista.Selected)
-						continue;
+                    {
+                        continue;
+                    }
 
-					if (oggettoContenuto.ItemID != oggettoDaLista.Graphics || !ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))
-						continue;
+                    if (oggettoContenuto.ItemID != oggettoDaLista.Graphics || !ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))
+                    {
+                        continue;
+                    }
 
-					// Controllo amount e caso -1
-					if (oggettoDaLista.Amount == -1) // Sposta senza contare
+                    // Controllo amount e caso -1
+                    if (oggettoDaLista.Amount == -1) // Sposta senza contare
 					{
 						RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
 						RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move: All ");
@@ -328,8 +370,11 @@ namespace RazorEnhanced
 
 			RazorEnhanced.Organizer.AddLog("Finish!");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!", 945, true);
-			Assistant.Engine.MainWindow.OrganizerFinishWork();
+            {
+                RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!", 945, true);
+            }
+
+            Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
 		}
 
@@ -376,8 +421,11 @@ namespace RazorEnhanced
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Organizer: Invalid Source Bag", 945, true);
-				AddLog("Invalid Source Bag");
+                {
+                    Misc.SendMessage("Organizer: Invalid Source Bag", 945, true);
+                }
+
+                AddLog("Invalid Source Bag");
 				Assistant.Engine.MainWindow.OrganizerFinishWork();
 				return;
 			}
@@ -385,8 +433,11 @@ namespace RazorEnhanced
 			if (dbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Organizer: Invalid Destination Bag", 945, true);
-				AddLog("Invalid Destination Bag");
+                {
+                    Misc.SendMessage("Organizer: Invalid Destination Bag", 945, true);
+                }
+
+                AddLog("Invalid Destination Bag");
 				Assistant.Engine.MainWindow.OrganizerFinishWork();
 				return;
 			}
@@ -425,8 +476,10 @@ namespace RazorEnhanced
         public static void FStart()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerExecute.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStartExec();
-			else
+            {
+                Assistant.Engine.MainWindow.OrganizerStartExec();
+            }
+            else
 			{
 				Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer already running");
 			}
@@ -439,8 +492,10 @@ namespace RazorEnhanced
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStopExec();
-			else
+            {
+                Assistant.Engine.MainWindow.OrganizerStopExec();
+            }
+            else
 			{
 				Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer not running");
 			}
@@ -453,10 +508,14 @@ namespace RazorEnhanced
 		public static bool Status()
 		{
 			if (m_OrganizerThread != null && ((m_OrganizerThread.ThreadState & ThreadState.Running) != 0 || (m_OrganizerThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_OrganizerThread.ThreadState & ThreadState.AbortRequested) != 0))
-				return true;
-			else
-				return false;
-		}
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
 
         /// <summary>

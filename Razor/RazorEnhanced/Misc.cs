@@ -177,9 +177,13 @@ namespace RazorEnhanced
             if (Assistant.World.Player != null)
             {
                 if (wait)
+                {
                     Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+                }
                 else
+                {
                     Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+                }
             }
         }
 
@@ -384,9 +388,14 @@ namespace RazorEnhanced
             UOEntity ent = null;
             Assistant.Serial menuOwner = new Assistant.Serial((uint)serial);
             if (menuOwner.IsMobile)
+            {
                 ent = World.FindMobile(menuOwner);
+            }
             else if (menuOwner.IsItem)
+            {
                 ent = World.FindItem(menuOwner);
+            }
+
             if (ent != null)
             {
                 foreach (var entry in ent.ContextMenu)
@@ -401,12 +410,16 @@ namespace RazorEnhanced
         }
 
         /// <param name="mob">Entity as Item object.</param>
+        /// <param name="delay"></param>
+        /// <param name="showContext"></param>
         public static List<Context> WaitForContext(Mobile mob, int delay, bool showContext= false) // Delay in MS
         {
             return WaitForContext(mob.Serial, delay, showContext);
         }
 
         /// <param name="itm">Entity as Item object.</param>
+        /// <param name="delay"></param>
+        /// <param name="showContext"></param>
         public static List<Context> WaitForContext(Item itm, int delay, bool showContext = false) // Delay in MS
         {
             return WaitForContext(itm.Serial, delay, showContext);
@@ -424,13 +437,16 @@ namespace RazorEnhanced
             World.Player.ContextID = 0;
         }
 
+        /// <param name="serial"></param>
         /// <param name="menu_name">Name of the Entry as wirtten in-game.</param>
         public static void ContextReply(int serial, string menu_name)
         {
             int idx = -1;
             UOEntity e = World.FindItem(serial);
             if (e == null)
+            {
                 e = World.FindMobile(serial);
+            }
 
             if (e != null)
             {
@@ -449,10 +465,14 @@ namespace RazorEnhanced
                     World.Player.ContextID = 0;
                 }
                 else
+                {
                     Scripts.SendMessageScriptError("Script Error: ContextReply: Menu entry " + menu_name + " not exist");
+                }
             }
             else
+            {
                 Scripts.SendMessageScriptError("Script Error: ContextReply: Mobile or item not exit");
+            }
         }
 
         public static void ContextReply(Mobile mob, int menu_num)
@@ -586,7 +606,10 @@ namespace RazorEnhanced
         {
             object data = 0;
             if (m_sharedscriptdata.ContainsKey(name))
+            {
                 m_sharedscriptdata.TryGetValue(name, out data);
+            }
+
             return data;
         }
 
@@ -618,9 +641,13 @@ namespace RazorEnhanced
         public static bool CheckSharedValue(string name)
         {
             if (m_sharedscriptdata.ContainsKey(name))
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         // Ignore list
@@ -633,7 +660,9 @@ namespace RazorEnhanced
         public static void IgnoreObject(int serial)
         {
             if (m_serialignorelist.Contains(serial)) // if already exist ignore
+            {
                 return;
+            }
 
             m_serialignorelist.Add(serial);
         }
@@ -660,7 +689,9 @@ namespace RazorEnhanced
             for (int i = 0; i < m_serialignorelist.Count; i++)
             {
                 if (m_serialignorelist[i] == serial)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -865,7 +896,9 @@ namespace RazorEnhanced
                 script.Run = true;
             }
             else
+            {
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
+            }
         }
 
         /// <summary>
@@ -880,7 +913,9 @@ namespace RazorEnhanced
                 script.Run = false;
             }
             else
+            {
                 Scripts.SendMessageScriptError("ScriptStop: Script not exist");
+            }
         }
 
         /// <summary>
@@ -976,6 +1011,7 @@ namespace RazorEnhanced
         }
 
         /// <param name="mob">Mobile object representing the pet.</param>
+        /// <param name="name"></param>
         public static void PetRename(RazorEnhanced.Mobile mob, string name)
         {
             Assistant.Client.Instance.SendToServerWait(new RenameRequest((uint)mob.Serial, name));

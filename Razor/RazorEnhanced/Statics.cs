@@ -52,9 +52,11 @@ namespace RazorEnhanced
         public static int GetLandID(int x, int y, int map)
 		{
 			if (!m_loaded)
-				LoadMapData();
+            {
+                LoadMapData();
+            }
 
-			switch (map)
+            switch (map)
 			{
 				case 0:
 					return Ultima.Map.Felucca.Tiles.GetLandTile(x, y).ID;
@@ -92,9 +94,11 @@ namespace RazorEnhanced
         public static int GetLandZ(int x, int y, int map)
 		{
 			if (!m_loaded)
-				LoadMapData();
+            {
+                LoadMapData();
+            }
 
-			switch (map)
+            switch (map)
 			{
 				case 0:
 					return Ultima.Map.Felucca.Tiles.GetLandTile(x, y).Z;
@@ -185,89 +189,145 @@ namespace RazorEnhanced
 			{
 				case "None":
 					if (TileData.ItemTable[StaticID].Flags == TileFlag.None)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Translucent": // The tile is rendered with partial alpha-transparency.
+                case "Translucent": // The tile is rendered with partial alpha-transparency.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Translucent) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Wall": // The tile is a wall.
+                case "Wall": // The tile is a wall.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Wall) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Damaging": // The tile can cause damage when moved over.
+                case "Damaging": // The tile can cause damage when moved over.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Damaging) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Impassable": // The tile may not be moved over or through.
+                case "Impassable": // The tile may not be moved over or through.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Impassable) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Surface": // The tile is a surface. It may be moved over, but not through.
+                case "Surface": // The tile is a surface. It may be moved over, but not through.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Surface) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Bridge": // The tile is a stair, ramp, or ladder.
+                case "Bridge": // The tile is a stair, ramp, or ladder.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Bridge) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Window": // The tile is a window.
+                case "Window": // The tile is a window.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Window) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "NoShoot": // The tile blocks line of sight.
+                case "NoShoot": // The tile blocks line of sight.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.NoShoot) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
+                case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Foliage) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "HoverOver": // Gargoyles can fly over
+                case "HoverOver": // Gargoyles can fly over
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.HoverOver) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Roof": // The tile is a slanted roof.
+                case "Roof": // The tile is a slanted roof.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Roof) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
+                case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Door) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Wet":
+                case "Wet":
 					if ((TileData.ItemTable[StaticID].Flags & TileFlag.Wet) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				default:
+                default:
 					Scripts.SendMessageScriptError("GetTileFlag: Invalid Flag to check");
 					return false;
 			}
@@ -276,7 +336,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Land: Check Flag value of a given Land item.
         /// </summary>
-        /// <param name="StaticID">StaticID of a Land item.</param>
+        /// <param name="itemid"></param>
         /// <param name="flagname">
         ///     None
         ///     Translucent
@@ -294,95 +354,151 @@ namespace RazorEnhanced
         ///     Wet
         /// </param>
         /// <returns>True: if the Flag is active - False: otherwise</returns>
-		public static bool GetLandFlag(int itemid, string flagname)
+        public static bool GetLandFlag(int itemid, string flagname)
 		{
 			switch (flagname)
 			{
 				case "None":
 					if (TileData.LandTable[itemid].Flags == TileFlag.None)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Translucent": // The tile is rendered with partial alpha-transparency.
+                case "Translucent": // The tile is rendered with partial alpha-transparency.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Translucent) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Wall": // The tile is a wall.
+                case "Wall": // The tile is a wall.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Wall) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Damaging": // The tile can cause damage when moved over.
+                case "Damaging": // The tile can cause damage when moved over.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Damaging) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Impassable": // The tile may not be moved over or through.
+                case "Impassable": // The tile may not be moved over or through.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Impassable) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Surface": // The tile is a surface. It may be moved over, but not through.
+                case "Surface": // The tile is a surface. It may be moved over, but not through.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Surface) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Bridge": // The tile is a stair, ramp, or ladder.
+                case "Bridge": // The tile is a stair, ramp, or ladder.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Bridge) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Window": // The tile is a window.
+                case "Window": // The tile is a window.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Window) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "NoShoot": // The tile blocks line of sight.
+                case "NoShoot": // The tile blocks line of sight.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.NoShoot) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
+                case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Foliage) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "HoverOver": // Gargoyles can fly over
+                case "HoverOver": // Gargoyles can fly over
 					if ((TileData.LandTable[itemid].Flags & TileFlag.HoverOver) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Roof": // The tile is a slanted roof.
+                case "Roof": // The tile is a slanted roof.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Roof) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
+                case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Door) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				case "Wet":
+                case "Wet":
 					if ((TileData.LandTable[itemid].Flags & TileFlag.Wet) != 0)
-						return true;
-					else
-						return false;
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-				default:
+                default:
 					Scripts.SendMessageScriptError("GetLandFlag: Invalid Flag to check");
 					return false;
 			}
@@ -429,9 +545,11 @@ namespace RazorEnhanced
 		public static TileInfo GetStaticsLandInfo(int x, int y, int map)
 		{
 			if (!m_loaded)
-				LoadMapData();
+            {
+                LoadMapData();
+            }
 
-			Ultima.Tile tile;
+            Ultima.Tile tile;
 			TileInfo tileinfo = null;
 
 			switch (map)
@@ -480,9 +598,11 @@ namespace RazorEnhanced
 		public static List<TileInfo> GetStaticsTileInfo(int x, int y, int map)
 		{
 			if (!m_loaded)
-				LoadMapData();
+            {
+                LoadMapData();
+            }
 
-			Ultima.HuedTile[] tiles;
+            Ultima.HuedTile[] tiles;
 			List<TileInfo> tileinfo = new List<TileInfo>();
 
 			switch (map)
