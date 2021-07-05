@@ -1701,8 +1701,15 @@ namespace RazorEnhanced
                 Misc.SendMessage("Insufficient parameters");
                 return true;
             }
-            int serial = (int)args[0].AsSerial();
-            Items.UseItem(serial);
+            Assistant.Serial serial = (int)args[0].AsSerial();
+            if (serial.IsItem)
+            {
+                Items.UseItem(serial);
+            }
+            else
+            {
+                Mobiles.UseMobile(serial);
+            }
 
             return true;
         }
