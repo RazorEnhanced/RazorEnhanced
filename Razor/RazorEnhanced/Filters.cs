@@ -113,17 +113,17 @@ namespace RazorEnhanced
 		[Serializable]
 		public class GraphChangeData
 		{
-			private bool m_Selected;
+			private readonly bool m_Selected;
 			[JsonProperty("Selected")]
 			public bool Selected { get { return m_Selected; } }
 
-			private int m_GraphReal;
+			private readonly int m_GraphReal;
 			public int GraphReal { get { return m_GraphReal; } }
 
-			private int m_GraphNew;
+			private readonly int m_GraphNew;
 			public int GraphNew { get { return m_GraphNew; } }
 
-			private int m_ColorNew;
+			private readonly int m_ColorNew;
 			public int ColorNew { get { return m_ColorNew; } }
 
 			public GraphChangeData(bool selected, int graphreal, int graphnew, int colornew)
@@ -161,8 +161,8 @@ namespace RazorEnhanced
 				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 
-				int color = 0;
-				if ((string)row.Cells[3].Value == "No Change")
+                int color;
+                if ((string)row.Cells[3].Value == "No Change")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
@@ -234,7 +234,7 @@ namespace RazorEnhanced
 
 
 		///////////////////// START - AUTOCARVER ///////////////////////
-		private static Queue<int> m_IgnoreCutCorpiQueue = new Queue<int>();
+		private static readonly Queue<int> m_IgnoreCutCorpiQueue = new Queue<int>();
 		private static bool m_AutoCarver;
 		private static int m_carverblade;
 
@@ -278,7 +278,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static Items.Filter m_corpsefilter = new Items.Filter
+		private static readonly Items.Filter m_corpsefilter = new Items.Filter
 		{
 			RangeMax = 3,
 			Movable = -1,
@@ -342,7 +342,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static Items.Filter m_bonefilter = new Items.Filter
+		private static readonly Items.Filter m_bonefilter = new Items.Filter
 		{
 			Graphics = new List<int> { 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD, 0x0ECE, 0x0ECF, 0x0ED0, 0x0ED1, 0x0ED2 },
 			RangeMax = 1,
@@ -453,7 +453,7 @@ namespace RazorEnhanced
 			BloodOath = 0x0026
 		}
 
-		private static List<Assistant.Layer> m_colorized_layer = new List<Layer>
+		private static readonly List<Assistant.Layer> m_colorized_layer = new List<Layer>
 		{
 			Layer.Backpack,
 			Layer.Invalid,
@@ -501,8 +501,8 @@ namespace RazorEnhanced
 			if (m.IsGhost) // Non eseguire azione se fantasma
 				return;
 
-			int color = 0;
-			if (m.Poisoned)
+            int color;
+            if (m.Poisoned)
 				color = (int)HighLightColor.Poison;
 			else if (m.Paralized)
 				color = (int)HighLightColor.Paralized;

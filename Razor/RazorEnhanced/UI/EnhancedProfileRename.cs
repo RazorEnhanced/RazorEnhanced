@@ -23,16 +23,14 @@ namespace RazorEnhanced.UI
 		private void profileadd_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newprofile = String.Empty;
-
-			if (profilename.Text == String.Empty)
+            if (profilename.Text == String.Empty)
 				fail = true;
 
 			if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
 				fail = true;
 
-			newprofile = profilename.Text.ToLower();
-			if (RazorEnhanced.Profiles.Exist(newprofile))
+            string newprofile = profilename.Text.ToLower();
+            if (RazorEnhanced.Profiles.Exist(newprofile))
 				fail = true;
 
 			if (fail)

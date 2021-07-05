@@ -11,7 +11,7 @@ namespace RazorEnhanced
 {
 	public class Shard
 	{
-		private static string m_Save = "RazorEnhanced.shards";
+		private static readonly string m_Save = "RazorEnhanced.shards";
 
 		private static DataSet m_Dataset;
 		internal static DataSet Dataset { get { return m_Dataset; } }
@@ -44,7 +44,7 @@ namespace RazorEnhanced
 
                     File.Copy(filename, backup, true);
 				}
-				catch (Exception e)
+				catch (Exception)
 				{
 					if (tryBackup)
 					{
@@ -88,7 +88,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		private string m_Description;
+		private readonly string m_Description;
 		internal string Description { get { return m_Description; } }
 
 
@@ -98,19 +98,19 @@ namespace RazorEnhanced
         //private string m_ClientFolder;
         internal string ClientFolder { get; set; }
 
-		private string m_Host;
+		private readonly string m_Host;
 		internal string Host { get { return m_Host; } }
 
-		private int m_Port;
+		private readonly int m_Port;
 		internal int Port { get { return m_Port; } }
 
-		private bool m_PatchEnc;
+		private readonly bool m_PatchEnc;
 		internal bool PatchEnc { get { return m_PatchEnc; } }
 
-		private bool m_OSIEnc;
+		private readonly bool m_OSIEnc;
 		internal bool OSIEnc { get { return m_OSIEnc; } }
 
-		private bool m_Selected;
+		private readonly bool m_Selected;
 		internal bool Selected { get { return m_Selected; } }
 
 		public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected)

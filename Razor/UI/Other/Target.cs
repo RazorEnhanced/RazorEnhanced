@@ -184,20 +184,18 @@ namespace Assistant
 			List<int> bodylist = new List<int>();
 			List<int> huelist = new List<int>();
 			List<byte> notolist = new List<byte>();
-			int maxrange = -1;
-			int minrange = -1;
 
-			// body list
-			if (targetbodyCheckBox.Checked)
-				foreach (DataGridViewRow row in targetbodydataGridView.Rows)
-				{
-					if (row.IsNewRow)
-						continue;
-					bodylist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
-				}
+            // body list
+            if (targetbodyCheckBox.Checked)
+                foreach (DataGridViewRow row in targetbodydataGridView.Rows)
+                {
+                    if (row.IsNewRow)
+                        continue;
+                    bodylist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
+                }
 
-			// hue list
-			if (targetcoloCheckBox.Checked)
+            // hue list
+            if (targetcoloCheckBox.Checked)
 				foreach (DataGridViewRow row in targethueGridView.Rows)
 				{
 					if (row.IsNewRow)
@@ -205,33 +203,35 @@ namespace Assistant
 					huelist.Add(Convert.ToInt32(row.Cells[0].Value.ToString(), 16));
 				}
 
-			// max range
-			if (Int32.TryParse(targetRangeMaxTextBox.Text, out maxrange))
-			{
-				if (maxrange < -1)
-					maxrange = -1;
-			}
-			else
-			{
-				maxrange = -1;
-				targetRangeMaxTextBox.Text = "-1";
-			}
+            int maxrange;
+            // max range
+            if (Int32.TryParse(targetRangeMaxTextBox.Text, out maxrange))
+            {
+                if (maxrange < -1)
+                    maxrange = -1;
+            }
+            else
+            {
+                maxrange = -1;
+                targetRangeMaxTextBox.Text = "-1";
+            }
 
-			// min range
-			if (Int32.TryParse(targetRangeMinTextBox.Text, out minrange))
-			{
-				if (minrange < -1)
-					minrange = -1;
-			}
-			else
-			{
-				minrange = -1;
-				targetRangeMinTextBox.Text = "-1";
-			}
+            int minrange;
+            // min range
+            if (Int32.TryParse(targetRangeMinTextBox.Text, out minrange))
+            {
+                if (minrange < -1)
+                    minrange = -1;
+            }
+            else
+            {
+                minrange = -1;
+                targetRangeMinTextBox.Text = "-1";
+            }
 
-			// notocolor
+            // notocolor
 
-			if (targetBlueCheckBox.Checked)
+            if (targetBlueCheckBox.Checked)
 				notolist.Add(0x01);
 
 			if (targetGreenCheckBox.Checked)
@@ -332,16 +332,14 @@ namespace Assistant
 		private void targetaddButton_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newtargetid = String.Empty;
-
-			if (targetaddTextBox.Text == String.Empty)
+            if (targetaddTextBox.Text == String.Empty)
 				fail = true;
 
 			if (!System.Text.RegularExpressions.Regex.IsMatch(targetaddTextBox.Text, "^[a-zA-Z0-9_]+$"))
 				fail = true;
 
-			newtargetid = targetaddTextBox.Text.ToLower();
-			if (RazorEnhanced.Settings.Target.TargetExist(newtargetid))
+            string newtargetid = targetaddTextBox.Text.ToLower();
+            if (RazorEnhanced.Settings.Target.TargetExist(newtargetid))
 				fail = true;
 
 			if (fail)

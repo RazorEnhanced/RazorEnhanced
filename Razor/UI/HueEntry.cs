@@ -19,7 +19,7 @@ namespace Assistant
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.Container components = null;
+		private readonly System.ComponentModel.Container components = null;
 
 		private int m_Hue;
 

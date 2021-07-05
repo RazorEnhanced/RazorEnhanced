@@ -30,11 +30,11 @@ namespace Assistant
 
 	internal class PacketHandler
 	{
-		private static Dictionary<int, List<PacketViewerCallback>> m_ClientViewers;
-		private static Dictionary<int, List<PacketViewerCallback>> m_ServerViewers;
+		private static readonly Dictionary<int, List<PacketViewerCallback>> m_ClientViewers;
+		private static readonly Dictionary<int, List<PacketViewerCallback>> m_ServerViewers;
 
-		private static Dictionary<int, List<PacketFilterCallback>> m_ClientFilters;
-		private static Dictionary<int, List<PacketFilterCallback>> m_ServerFilters;
+		private static readonly Dictionary<int, List<PacketFilterCallback>> m_ClientFilters;
+		private static readonly Dictionary<int, List<PacketFilterCallback>> m_ServerFilters;
 
 		static PacketHandler()
 		{
@@ -193,7 +193,7 @@ namespace Assistant
 			return (list != null && list.Count > 0) || false;
 		}
 
-		private static PacketHandlerEventArgs m_Args = new PacketHandlerEventArgs();
+		private static readonly PacketHandlerEventArgs m_Args = new PacketHandlerEventArgs();
 
 		private static bool ProcessViewers(List<PacketViewerCallback> list, PacketReader p)
 		{

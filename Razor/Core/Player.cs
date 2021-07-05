@@ -29,7 +29,7 @@ namespace Assistant
 		private ushort m_Base;
 		private ushort m_Cap;
 		private short m_Delta;
-		private int m_Idx;
+		private readonly int m_Idx;
 
 		internal Skill(int idx)
 		{
@@ -207,7 +207,7 @@ namespace Assistant
 		private LockType m_StrLock, m_DexLock, m_IntLock;
 		private uint m_Gold;
 		private ushort m_Weight;
-		private Skill[] m_Skills;
+		private readonly Skill[] m_Skills;
 		private ushort m_AR;
 		private ushort m_StatCap;
 		private byte m_Followers;
@@ -224,7 +224,7 @@ namespace Assistant
 
 		//private Item m_Holding;
 		//private ushort m_HoldAmt;
-		private ConcurrentDictionary<byte, MoveEntry> m_MoveInfo;
+		private readonly ConcurrentDictionary<byte, MoveEntry> m_MoveInfo;
 
 		private Timer m_CriminalTime;
 		private DateTime m_CriminalStart = DateTime.MinValue;
@@ -232,10 +232,10 @@ namespace Assistant
 
 		internal static int FastWalkKey = 0;
 
-		private List<BuffIcon> m_Buffs = new List<BuffIcon>();
+		private readonly List<BuffIcon> m_Buffs = new List<BuffIcon>();
 		internal List<BuffIcon> Buffs { get { return m_Buffs; } }
 
-		private List<SkillIcon> m_SkillEnabled = new List<SkillIcon>();
+		private readonly List<SkillIcon> m_SkillEnabled = new List<SkillIcon>();
 		internal List<SkillIcon> SkillEnabled { get { return m_SkillEnabled; } }
 
 
@@ -584,7 +584,7 @@ namespace Assistant
 			return m_MoveInfo[seq];
 		}
 
-		private static Timer m_OpenDoorReq = Timer.DelayedCallback(TimeSpan.FromSeconds(0.005), new TimerCallback(OpenDoor));
+		private static readonly Timer m_OpenDoorReq = Timer.DelayedCallback(TimeSpan.FromSeconds(0.005), new TimerCallback(OpenDoor));
 
 		private static void OpenDoor()
 		{
@@ -849,7 +849,7 @@ namespace Assistant
 
 		private class CriminalTimer : Timer
 		{
-			private PlayerData m_Player;
+			private readonly PlayerData m_Player;
 
 			internal CriminalTimer(PlayerData player)
 				: base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
@@ -953,13 +953,13 @@ namespace Assistant
 
 		internal class MenuItem
 		{
-			private ushort m_modelID;
+			private readonly ushort m_modelID;
 			public ushort ModelID { get { return m_modelID; } }
 
-			private ushort m_modelColor;
+			private readonly ushort m_modelColor;
 			public ushort ModelColor { get { return m_modelColor; } }
 
-			private string m_modelText;
+			private readonly string m_modelText;
 			public string ModelText { get { return m_modelText; } }
 
 			public MenuItem(ushort modelid, ushort modelcolor, string modeltext)
@@ -1058,7 +1058,7 @@ namespace Assistant
 		}
 
 		// Set last weapon on login
-		private Timer m_HandCheck = Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new TimerCallback(HandCheck));
+		private readonly Timer m_HandCheck = Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new TimerCallback(HandCheck));
 
 		private static void HandCheck()
 		{

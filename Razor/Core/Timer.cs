@@ -149,9 +149,10 @@ namespace Assistant
 		private TimeSpan m_Delay;
 		private TimeSpan m_Interval;
 		private bool m_Running;
-		private int m_Index, m_Count;
+        private int m_Index;
+        private readonly int m_Count;
 
-		protected abstract void OnTick();
+        protected abstract void OnTick();
 
 		internal Timer(TimeSpan delay)
 			: this(delay, TimeSpan.Zero, 1)
@@ -224,7 +225,7 @@ namespace Assistant
 			set { m_Interval = value; }
 		}
 
-		private static MinHeap m_Heap = new MinHeap();
+		private static readonly MinHeap m_Heap = new MinHeap();
 		private static System.Timers.Timer m_SystemTimer;
 
 		internal static System.Timers.Timer SystemTimer
@@ -307,7 +308,7 @@ namespace Assistant
 
 		private class OneTimeTimer : Timer
 		{
-			private TimerCallback m_Call;
+			private readonly TimerCallback m_Call;
 
 			internal OneTimeTimer(TimeSpan d, TimerCallback call)
 				: base(d)
@@ -328,8 +329,8 @@ namespace Assistant
 
 		private class OneTimeTimerState : Timer
 		{
-			private TimerCallbackState m_Call;
-			private object m_State;
+			private readonly TimerCallbackState m_Call;
+			private readonly object m_State;
 
 			internal OneTimeTimerState(TimeSpan d, TimerCallbackState call, object state)
 				: base(d)

@@ -164,7 +164,7 @@ namespace RazorEnhanced
                         /*Dalamar: END*/
                     }
                 }
-                catch (IronPython.Runtime.Exceptions.SystemExitException ex)
+                catch (IronPython.Runtime.Exceptions.SystemExitException)
                 {
                     Stop();
                     // sys.exit - terminate the thread
@@ -293,7 +293,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			private string m_Filename;
+			private readonly string m_Filename;
 			internal string Filename
 			{
 				get
@@ -319,7 +319,7 @@ namespace RazorEnhanced
 
 			private Thread m_Thread;
 
-			private bool m_Wait;
+			private readonly bool m_Wait;
 			internal bool Wait
 			{
 				get
@@ -388,7 +388,7 @@ namespace RazorEnhanced
 				}
 			}
 
-			private object m_Lock = new object();
+			private readonly object m_Lock = new object();
 
 			internal bool IsRunning
 			{
@@ -664,7 +664,7 @@ namespace RazorEnhanced
 		private static ScriptTimer m_Timer = new ScriptTimer();
 		internal static ScriptTimer Timer { get { return m_Timer; } }
 
-		private static ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
+		private static readonly ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
 		internal static ConcurrentDictionary<string, EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
 
 		public static void Initialize()
@@ -693,7 +693,7 @@ namespace RazorEnhanced
             }
         }
 
-        static System.IO.FileSystemWatcher Watcher = SetupFileWatcher();
+        static readonly System.IO.FileSystemWatcher Watcher = SetupFileWatcher();
 
         static System.IO.FileSystemWatcher SetupFileWatcher()
         {

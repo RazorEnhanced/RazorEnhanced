@@ -36,13 +36,13 @@ namespace Assistant
 			}
 		}
 
-		private List<int> m_StringNums = new List<int>();
+		private readonly List<int> m_StringNums = new List<int>();
 
 		private int m_Hash = 0;
-		private List<OPLEntry> m_Content = new List<OPLEntry>();
+		private readonly List<OPLEntry> m_Content = new List<OPLEntry>();
 		internal List<OPLEntry> Content { get { return m_Content; } }
 
-		private UOEntity m_Owner = null;
+		private readonly UOEntity m_Owner = null;
 
 		internal ObjectPropertyList(UOEntity owner)
 		{
@@ -85,7 +85,7 @@ namespace Assistant
 			}
 		}
 
-		private static int[] m_DefaultStringNums = new int[]
+		private static readonly int[] m_DefaultStringNums = new int[]
 		{
 			1042971, // ~1_NOTHING~
 			1070722, // ~1_NOTHING~

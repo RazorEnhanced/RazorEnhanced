@@ -9,7 +9,7 @@ namespace Assistant
 		private Point3D m_Pos;
 		private ushort m_Hue;
 		private bool m_Deleted;
-		private Dictionary<ushort, int> m_ContextMenu = new Dictionary<ushort, int>();
+		private readonly Dictionary<ushort, int> m_ContextMenu = new Dictionary<ushort, int>();
 		protected ObjectPropertyList m_ObjPropList = null;
 
 		internal ObjectPropertyList ObjPropList { get { return m_ObjPropList; } }

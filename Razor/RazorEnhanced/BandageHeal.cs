@@ -282,8 +282,6 @@ namespace RazorEnhanced
                         return;
                 }
 
-                // Id base bende
-                int bandageamount = 0;
                 int bandageid = 0x0E21;
                 int bandagecolor = -1;
 
@@ -294,8 +292,9 @@ namespace RazorEnhanced
                 }
                 int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
 
+                // Id base bende
                 // Conteggio bende
-                bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
+                int bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
                 if (bandageamount == 0)
                 {
                     Player.HeadMessage(10, "Bandage not found");
@@ -353,7 +352,7 @@ namespace RazorEnhanced
                             while (first > 0)
                             {
                                 Player.HeadMessage(10, (first / 1000).ToString());
-                                first = first - 1000;
+                                first -= 1000;
                                 Thread.Sleep(1000);
                             }
                             Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
@@ -428,8 +427,6 @@ namespace RazorEnhanced
         }
         internal static void Heal(Assistant.Mobile target)
         {
-            // Id base bende
-            int bandageamount = 0;
             int bandageid = 0x0E21;
             int bandagecolor = -1;
 
@@ -440,8 +437,9 @@ namespace RazorEnhanced
             }
             int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
 
+            // Id base bende
             // Conteggio bende
-            bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
+            int bandageamount = Items.BackpackCount(bandageid, bandagecolor);
             if (bandageamount == 0)
             {
                 Player.HeadMessage(10, "Bandage not found");
@@ -499,7 +497,7 @@ namespace RazorEnhanced
                         while (first > 0)
                         {
                             Player.HeadMessage(10, (first / 1000).ToString());
-                            first = first - 1000;
+                            first -= 1000;
                             Thread.Sleep(1000);
                         }
                         Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
@@ -595,7 +593,7 @@ namespace RazorEnhanced
                                 pct_life_friend = 100 * targ.Hits / targ.HitsMax;
                             }
 
-                            int pct_life_me = 100;
+                            int pct_life_me;
                             {
                                 pct_life_me = 100 * World.Player.Hits / World.Player.HitsMax;
                             }
@@ -681,7 +679,7 @@ namespace RazorEnhanced
             return 0;
         }
 
-        private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
+        private static readonly Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
 
         internal static void LoginAutostart()
         {

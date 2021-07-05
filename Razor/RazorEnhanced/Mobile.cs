@@ -15,7 +15,7 @@ namespace RazorEnhanced
     /// </summary>
 	public class Mobile : EnhancedEntity
 	{
-		private Assistant.Mobile m_AssistantMobile;
+		private readonly Assistant.Mobile m_AssistantMobile;
 
 		internal Mobile(Assistant.Mobile mobile)
 			: base(mobile)
@@ -211,9 +211,8 @@ namespace RazorEnhanced
 
 		private static Assistant.Layer GetAssistantLayer(string layer)
 		{
-			Assistant.Layer result = Assistant.Layer.Invalid;
-
-			switch (layer)
+            Layer result;
+            switch (layer)
 			{
 				case "RightHand":
 					result = Assistant.Layer.RightHand;
@@ -337,12 +336,10 @@ namespace RazorEnhanced
         public Item GetItemOnLayer(string layer)
 		{
 			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
-
-			Assistant.Item assistantItem = null;
-			if (assistantLayer != Assistant.Layer.Invalid)
+            if (assistantLayer != Assistant.Layer.Invalid)
 			{
-				assistantItem = m_AssistantMobile.GetItemOnLayer(assistantLayer);
-				if (assistantItem == null)
+                Assistant.Item assistantItem = m_AssistantMobile.GetItemOnLayer(assistantLayer);
+                if (assistantItem == null)
 					return null;
 				else
 				{
@@ -1078,9 +1075,8 @@ namespace RazorEnhanced
 
 			foreach (KeyValuePair<ushort, int> entry in mobile.ContextMenu)
 			{
-				string menuname = string.Empty;
-				menuname = Language.GetCliloc(entry.Value);
-				if (menuname.ToLower() == name.ToLower())
+                string menuname = Language.GetCliloc(entry.Value);
+                if (menuname.ToLower() == name.ToLower())
 				{
 					return entry.Key;
 				}

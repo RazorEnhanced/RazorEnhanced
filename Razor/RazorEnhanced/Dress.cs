@@ -38,19 +38,19 @@ namespace RazorEnhanced
 
 		internal class DressList
 		{
-			private string m_Description;
+			private readonly string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private int m_Delay;
+			private readonly int m_Delay;
 			internal int Delay { get { return m_Delay; } }
 
-			private int m_Bag;
+			private readonly int m_Bag;
 			internal int Bag { get { return m_Bag; } }
 
-			private bool m_Conflict;
+			private readonly bool m_Conflict;
 			internal bool Conflict { get { return m_Conflict; } }
 
-			private bool m_Selected;
+			private readonly bool m_Selected;
 			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 

@@ -107,7 +107,7 @@ namespace Assistant
         public override bool ClientRunning => m_ClientRunning;
         private uint m_In, m_Out;
 
-        private Process m_ClientProcess = null;
+        private readonly Process m_ClientProcess = null;
         private bool m_ClientRunning = false;
         private string m_ClientVersion;
 

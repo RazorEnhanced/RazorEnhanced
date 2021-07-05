@@ -150,8 +150,8 @@ namespace Assistant
 			if (m_modhandle == IntPtr.Zero)
 				return;
 
-			int m_enable = 0;
-			if (enable)
+            int m_enable;
+            if (enable)
 				m_enable = (int)PATCH_MESSAGES.PM_ENABLE;
 			else
 				m_enable = (int)PATCH_MESSAGES.PM_DISABLE;

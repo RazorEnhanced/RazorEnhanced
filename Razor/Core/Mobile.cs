@@ -27,7 +27,7 @@ namespace Assistant
 
 	public class Mobile : UOEntity
 	{
-		private static List<ushort> m_HumanBodies = new List<ushort>() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695};
+		private static readonly List<ushort> m_HumanBodies = new List<ushort>() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695};
 
 		private ushort m_Body;
 		private Direction m_Direction;
@@ -50,7 +50,7 @@ namespace Assistant
 		private ushort m_HitsMax, m_Hits;
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
 
-		private List<Item> m_Items;
+		private readonly List<Item> m_Items;
 		private byte m_Map;
 
 		internal Mobile(Serial serial)
@@ -193,7 +193,7 @@ namespace Assistant
 		}
 
 		// grey, blue, green, 'canbeattacked'
-		private static uint[] m_NotoHues = new uint[8]
+		private static readonly uint[] m_NotoHues = new uint[8]
 		{
 			// hue color #30
 			0x000000, // black		unused 0

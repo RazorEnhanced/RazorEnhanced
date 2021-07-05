@@ -13,16 +13,16 @@ namespace RazorEnhanced
 {
 	internal class Profiles
 	{
-		private static string m_Save = "RazorEnhanced.profiles";
+		private static readonly string m_Save = "RazorEnhanced.profiles";
 		private static DataSet m_Dataset;
 		internal static DataSet Dataset { get { return m_Dataset; } }
 
 		public class ProfilesData
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
-			private bool m_Last;
+			private readonly bool m_Last;
 			internal bool Last { get { return m_Last; } }
 
 			public ProfilesData(string name, bool last)
