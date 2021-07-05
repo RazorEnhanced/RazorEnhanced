@@ -391,9 +391,11 @@ namespace RazorEnhanced
             {
                 foreach (var entry in ent.ContextMenu)
                 {
-                    Context temp = new Context();
-                    temp.Response = entry.Key;
-                    temp.Entry = Language.GetString(entry.Value);
+                    Context temp = new Context
+                    {
+                        Response = entry.Key,
+                        Entry = Language.GetString(entry.Value)
+                    };
                     retList.Add(temp);
                 }
             }
@@ -401,12 +403,16 @@ namespace RazorEnhanced
         }
 
         /// <param name="mob">Entity as Item object.</param>
+        /// <param name="delay">max time to wait for context</param>
+        /// <param name="showContext"></param>
         public static List<Context> WaitForContext(Mobile mob, int delay, bool showContext= false) // Delay in MS
         {
             return WaitForContext(mob.Serial, delay, showContext);
         }
 
         /// <param name="itm">Entity as Item object.</param>
+        /// <param name="delay">max time to wait for context</param>
+        /// <param name="showContext"></param>
         public static List<Context> WaitForContext(Item itm, int delay, bool showContext = false) // Delay in MS
         {
             return WaitForContext(itm.Serial, delay, showContext);
@@ -424,6 +430,7 @@ namespace RazorEnhanced
             World.Player.ContextID = 0;
         }
 
+        /// <param name="serial">serial number of the item to get a context menu from</param>
         /// <param name="menu_name">Name of the Entry as wirtten in-game.</param>
         public static void ContextReply(int serial, string menu_name)
         {
@@ -549,8 +556,8 @@ namespace RazorEnhanced
             {
                 return new Point(-1, -1);
             }
-            p.X = p.X - windowRect.X;
-            p.Y = p.Y - windowRect.Y;
+            p.X -= windowRect.X;
+            p.Y -= windowRect.Y;
             return p;
         }
         /// <summary>
@@ -607,7 +614,7 @@ namespace RazorEnhanced
         /// <param name="name">Name of the value.</param>
         public static void RemoveSharedValue(string name)
         {
-            m_sharedscriptdata.TryRemove(name, out object data);
+            m_sharedscriptdata.TryRemove(name, out _);
         }
 
         /// <summary>
@@ -624,7 +631,7 @@ namespace RazorEnhanced
         }
 
         // Ignore list
-        private static List<int> m_serialignorelist = new List<int>();
+        private static readonly List<int> m_serialignorelist = new List<int>();
 
         /// <summary>
         /// Add an entiry to the ignore list. Can ignore Serial, Items or Mobiles.
@@ -952,12 +959,14 @@ namespace RazorEnhanced
             MapItem mapItem = World.FindItem(serial) as MapItem;
             if (mapItem != null)
             {
-                mapInfo = new MapInfo();
-                mapInfo.Serial = mapItem.Serial;
-                mapInfo.PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(mapItem.PinPosition.X * mapItem.Multiplier, mapItem.PinPosition.Y * mapItem.Multiplier));
-                mapInfo.MapOrigin = mapItem.m_MapOrigin;
-                mapInfo.MapEnd = mapItem.m_MapEnd;
-                mapInfo.Facet = mapItem.m_Facet;
+                mapInfo = new MapInfo
+                {
+                    Serial = mapItem.Serial,
+                    PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(mapItem.PinPosition.X * mapItem.Multiplier, mapItem.PinPosition.Y * mapItem.Multiplier)),
+                    MapOrigin = mapItem.m_MapOrigin,
+                    MapEnd = mapItem.m_MapEnd,
+                    Facet = mapItem.m_Facet
+                };
             }
             return mapInfo;
         }
@@ -976,6 +985,7 @@ namespace RazorEnhanced
         }
 
         /// <param name="mob">Mobile object representing the pet.</param>
+        /// <param name="name">name to assign to the pet</param>
         public static void PetRename(RazorEnhanced.Mobile mob, string name)
         {
             Assistant.Client.Instance.SendToServerWait(new RenameRequest((uint)mob.Serial, name));

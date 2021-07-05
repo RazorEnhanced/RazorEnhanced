@@ -25,9 +25,9 @@ namespace RazorEnhanced
         private int m_toggle_RightSave;
 
         // useOnceIgnoreList
-        private List<int> m_serialUseOnceIgnoreList;
+        private readonly List<int> m_serialUseOnceIgnoreList;
 
-        private string DEFAULT_FRIEND_LIST = "UOS";
+        private readonly string DEFAULT_FRIEND_LIST = "UOS";
 
 
         private static UOSteamEngine instance = null;
@@ -118,7 +118,7 @@ namespace RazorEnhanced
             {
                 while (UOScript.Interpreter.ExecuteScript()) { };
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 UOScript.Interpreter.StopScript();
                 throw;
@@ -130,7 +130,7 @@ namespace RazorEnhanced
         }
 
         public void WrongParameterCount(string commands, int expected, int given, string message="") {
-            var msg = String.Format("{0} expect {1} parameters, {2} given. {message}");
+            var msg = String.Format("{0} expect {1} parameters, {2} given. {3}", commands, expected, given, message);
             throw new IllegalArgumentException(msg);
         }
 
@@ -344,7 +344,7 @@ namespace RazorEnhanced
 
         #region Dummy and Placeholders
 
-        private IComparable ExpressionNotImplemented(string expression, UOScript.Argument[] args, bool quiet)
+        private IComparable ExpressionNotImplemented(string expression, UOScript.Argument[] args, bool _)
         {
             Console.WriteLine("Expression Not Implemented {0} {1}", expression, args);
             return 0;
@@ -455,12 +455,12 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "X location requires a serial");
-                return 0;
+                // return 0;
             }
 
             uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
-            ///
+            
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -480,14 +480,14 @@ namespace RazorEnhanced
             }
 
             throw new UOScript.RunTimeError(null, "X location serial not found");
-            return 0;
+            // return 0;
         }
         IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Y location requires a serial");
-                return 0;
+                // return 0;
             }
 
             uint serial = args[0].AsSerial();
@@ -511,14 +511,14 @@ namespace RazorEnhanced
             }
 
             throw new UOScript.RunTimeError(null, "Y location serial not found");
-            return 0;
+            // return 0;
         }
         IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Z location requires a serial");
-                return 0;
+                // return 0;
             }
 
             uint serial = args[0].AsSerial();
@@ -542,7 +542,7 @@ namespace RazorEnhanced
             }
 
             throw new UOScript.RunTimeError(null, "Z location serial not found");
-            return 0;
+            // return 0;
         }
 
         IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
@@ -653,7 +653,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "FindType requires parameters");
-                return false;
+                // return false;
             }
 
             int type = args[0].AsInt();
@@ -730,7 +730,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 throw new UOScript.RunTimeError(null, "Property requires 2 parameters");
-                return false;
+                // return false;
             }
 
             string findProp = args[0].AsString();
@@ -1006,7 +1006,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "enemy requires parameters");
-                return false;
+                // return false;
             }
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
             if (theMobile != null)
@@ -1127,7 +1127,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "inregion requires parameters");
-                return false;
+                // return false;
             }
 
             string desiredRegion = args[0].AsString();
@@ -1178,7 +1178,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Skill requires parameters");
-                return false;
+                // return false;
             }
 
             string skillname = args[0].AsString();
@@ -1192,7 +1192,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                // return false;
             }
             UOScript.Interpreter.UnSetAlias("found");
             int color = -1;
@@ -1263,7 +1263,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "Distance Object requires parameters");
-                return Int32.MaxValue;
+                // return Int32.MaxValue;
             }
 
             uint serial = args[0].AsSerial();
@@ -1299,7 +1299,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                // return false;
             }
             uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
@@ -1349,7 +1349,7 @@ namespace RazorEnhanced
             if (args.Length < 2)
             {
                 throw new UOScript.RunTimeError(null, "Find Object requires parameters");
-                return false;
+                // return false;
             }
             uint serial = args[0].AsSerial();
             Assistant.Mobile mobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
@@ -1371,7 +1371,7 @@ namespace RazorEnhanced
             if (args.Length < 1)
             {
                 throw new UOScript.RunTimeError(null, "CountTypeGround requires parameters");
-                return 0;
+                // return 0;
             }
 
             int graphic = args[0].AsInt();
@@ -1453,7 +1453,7 @@ namespace RazorEnhanced
 
             return false;
 
-            return Player.Hits;
+            // return Player.Hits;
         }
         private IComparable DiffHits(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -1493,24 +1493,6 @@ namespace RazorEnhanced
             return false;
 
         }
-
-
-
-        // Player Attributes
-        private IComparable Mana(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Mana;
-        }
-        private IComparable MaxMana(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.ManaMax;
-        }
-        private IComparable Z(string expression, UOScript.Argument[] args, bool quiet)
-        {
-            return Player.Position.Z;
-        }
-
-
 
         #endregion
 
@@ -1719,8 +1701,15 @@ namespace RazorEnhanced
                 Misc.SendMessage("Insufficient parameters");
                 return true;
             }
-            int serial = (int)args[0].AsSerial();
-            Items.UseItem(serial);
+            Assistant.Serial serial = (int)args[0].AsSerial();
+            if (serial.IsItem)
+            {
+                Items.UseItem(serial);
+            }
+            else
+            {
+                Mobiles.UseMobile(serial);
+            }
 
             return true;
         }
@@ -1747,7 +1736,7 @@ namespace RazorEnhanced
 
             foreach (Item item in items)
             {
-                if (item.ItemID == itemID && (!m_serialUseOnceIgnoreList.Contains(item.Serial)))
+                if (item.ItemID == itemID && (color == -1 || item.Hue == color) && (!m_serialUseOnceIgnoreList.Contains(item.Serial)))
                     selectedItem = item;
             }
 
@@ -1778,7 +1767,6 @@ namespace RazorEnhanced
             int dest = (int)args[1].AsSerial();
             int x = -1;
             int y = -1;
-            int z = -1;
             int amount = -1;
 
             if (args.Length == 3)
@@ -1790,7 +1778,7 @@ namespace RazorEnhanced
             {
                 x = args[2].AsInt();
                 y = args[3].AsInt();
-                z = args[4].AsInt();
+                //int z = args[4].AsInt();
                 amount = args[5].AsInt();
             }
             Items.Move(source, dest, amount, x, y);
@@ -2017,7 +2005,7 @@ namespace RazorEnhanced
             {
                 Misc.SendMessage("Usage: pushlist ('list name') ('element name') ('front'/'back']");
                 throw new UOScript.RunTimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
-                return true;
+                // return true;
             }
 
             string listName = args[0].AsString();
@@ -2036,7 +2024,7 @@ namespace RazorEnhanced
             }
             else 
             {
-                ASTNode node = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem._node, insertItem._node.LineNumber);
+                ASTNode node = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
                 UOScript.Argument newArg = new UOScript.Argument(insertItem._script, node);
                 Console.WriteLine("Pushing {0} to list {1}", newArg.AsString(), listName);
                 UOScript.Interpreter.PushList(listName, newArg, (frontBack == "front"), false);
@@ -2056,7 +2044,7 @@ namespace RazorEnhanced
             }
             else
             {
-                int amount = -1;
+                int amount;
                 if (args.Length == 3)
                 {
                     amount = args[2].AsInt();
@@ -2125,7 +2113,7 @@ namespace RazorEnhanced
                 uint dest = args[2].AsSerial();
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
-                int z = args[5].AsInt();
+                //int z = args[5].AsInt();
                 Item item = Items.FindByID(id, -1, (int)src, true);
                 if (item != null)
                 {
@@ -2139,7 +2127,7 @@ namespace RazorEnhanced
                 uint dest = args[2].AsSerial();
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
-                int z = args[5].AsInt();
+                //int z = args[5].AsInt();
                 int color = args[6].AsInt();
                 Item item = Items.FindByID(id, color, (int)src, true);
                 if (item != null)
@@ -2154,7 +2142,7 @@ namespace RazorEnhanced
                 uint dest = args[2].AsSerial();
                 int x = args[3].AsInt();
                 int y = args[4].AsInt();
-                int z = args[5].AsInt();
+                //int z = args[5].AsInt();
                 int color = args[6].AsInt();
                 int amount = args[7].AsInt();
                 Item item = Items.FindByID(id, color, (int)src, true);
@@ -2276,7 +2264,6 @@ namespace RazorEnhanced
             }
             else
             {
-                Mobile mount = null;
                 if (m_lastMount == 0)
                 {
                     m_lastMount = (int)UOScript.Interpreter.GetAlias("mount");
@@ -2286,7 +2273,7 @@ namespace RazorEnhanced
                         m_lastMount = target.PromptTarget("Select a new mount");
                     }
                 }
-                mount = Mobiles.FindBySerial(m_lastMount);
+                Mobile mount = Mobiles.FindBySerial(m_lastMount);
                 if (mount != null)
                 {
                     Items.UseItem(mount.Serial);
@@ -2463,16 +2450,6 @@ namespace RazorEnhanced
         private bool Counter(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
-        }
-
-        private bool UnsetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
-        {
-            if (args.Length == 1)
-            {
-                UOScript.Interpreter.UnSetAlias(args[0].AsString());
-                return true;
-            }
-            return true;
         }
 
         private bool WaitForGump(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -3181,12 +3158,14 @@ namespace RazorEnhanced
 
             return true;
 
+            /*
             if (args.Length == 1)
             {
                 uint serial = args[0].AsSerial();
                 RazorEnhanced.Target.TargetExecute((int)serial);
             }
             return true;
+            */
         }
 
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -3562,7 +3541,7 @@ namespace RazorEnhanced
                 {
                     reverse = args[2].AsBool();
                 }
-                catch (UOScript.RunTimeError e)
+                catch (UOScript.RunTimeError)
                 {
                     // Maybe it was a graphic
                     graphic = args[2].AsInt();
@@ -3682,8 +3661,7 @@ namespace RazorEnhanced
             public ASTNode Node;
 
             public static String BuildErrorMessage(ASTNode node, string error) {
-                String msg = "\n";
-                msg = String.Format("Error:\t{0}\n", error);
+                string msg = string.Format("Error:\t{0}\n", error);
                 if (node != null)
                 {
                     msg += String.Format("Type:\t{0}\n", node.Type);
@@ -3779,7 +3757,7 @@ namespace RazorEnhanced
 
         internal class Scope
         {
-            private Dictionary<string, Argument> _namespace = new Dictionary<string, Argument>();
+            private readonly Dictionary<string, Argument> _namespace = new Dictionary<string, Argument>();
 
             public readonly ASTNode StartNode;
             public readonly Scope Parent;
@@ -3813,7 +3791,7 @@ namespace RazorEnhanced
 
         public class Argument
         {
-            internal ASTNode _node
+            internal ASTNode Node
             {
                 get; set;
             }
@@ -3825,99 +3803,99 @@ namespace RazorEnhanced
 
             public Argument(Script script, ASTNode node)
             {
-                _node = node;
+                this.Node = node;
                 _script = script;
             }
     
     // Treat the argument as an integer
     public int AsInt()
             {
-                if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, $"Cannot convert argument to int: {_node.LineNumber}");
+                if (Node.Lexeme == null)
+                    throw new RunTimeError(Node, $"Cannot convert argument to int: {Node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
-                var arg = _script.Lookup(_node.Lexeme);
+                var arg = _script.Lookup(Node.Lexeme);
                 if (arg != null)
                     return arg.AsInt();
 
-                if (UOScript.Interpreter.FindAlias(_node.Lexeme))
+                if (UOScript.Interpreter.FindAlias(Node.Lexeme))
                 {
-                    int value = (int)UOScript.Interpreter.GetAlias(_node.Lexeme);
+                    int value = (int)UOScript.Interpreter.GetAlias(Node.Lexeme);
                     return value;
                 }
-                arg = CheckIsListElement(_node.Lexeme);
+                arg = CheckIsListElement(Node.Lexeme);
                 if (arg != null)
                     return arg.AsInt();
-                return TypeConverter.ToInt(_node.Lexeme);
+                return TypeConverter.ToInt(Node.Lexeme);
             }
 
             // Treat the argument as an unsigned integer
             public uint AsUInt()
             {
-                if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, $"Cannot convert argument to uint: {_node.LineNumber}");
+                if (Node.Lexeme == null)
+                    throw new RunTimeError(Node, $"Cannot convert argument to uint: {Node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
-                var arg = _script.Lookup(_node.Lexeme);
+                var arg = _script.Lookup(Node.Lexeme);
                 if (arg != null)
                     return arg.AsUInt();
 
-                if (UOScript.Interpreter.FindAlias(_node.Lexeme))
+                if (UOScript.Interpreter.FindAlias(Node.Lexeme))
                 {
-                    uint value = UOScript.Interpreter.GetAlias(_node.Lexeme);
+                    uint value = UOScript.Interpreter.GetAlias(Node.Lexeme);
                     return value;
                 }
 
-                arg = CheckIsListElement(_node.Lexeme);
+                arg = CheckIsListElement(Node.Lexeme);
                 if (arg != null)
                     return arg.AsUInt();
-                return TypeConverter.ToUInt(_node.Lexeme);
+                return TypeConverter.ToUInt(Node.Lexeme);
             }
 
             public ushort AsUShort()
             {
-                if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, $"Cannot convert argument to ushort {_node.LineNumber}");
+                if (Node.Lexeme == null)
+                    throw new RunTimeError(Node, $"Cannot convert argument to ushort {Node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
-                var arg = _script.Lookup(_node.Lexeme);
+                var arg = _script.Lookup(Node.Lexeme);
                 if (arg != null)
                     return arg.AsUShort();
 
-                arg = CheckIsListElement(_node.Lexeme);
+                arg = CheckIsListElement(Node.Lexeme);
                 if (arg != null)
                     return arg.AsUShort();
 
-                return TypeConverter.ToUShort(_node.Lexeme);
+                return TypeConverter.ToUShort(Node.Lexeme);
             }
 
             // Treat the argument as a serial or an alias. Aliases will
             // be automatically resolved to serial numbers.
             public uint AsSerial()
             {
-                if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, $"Cannot convert argument to serial {_node.LineNumber}");
+                if (Node.Lexeme == null)
+                    throw new RunTimeError(Node, $"Cannot convert argument to serial {Node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
-                var arg = _script.Lookup(_node.Lexeme);
+                var arg = _script.Lookup(Node.Lexeme);
                 if (arg != null)
                     return arg.AsSerial();
 
                 // Resolve it as a global alias next
-                if (UOScript.Interpreter.FindAlias(_node.Lexeme))
+                if (UOScript.Interpreter.FindAlias(Node.Lexeme))
                 {
-                    uint serial = UOScript.Interpreter.GetAlias(_node.Lexeme);
+                    uint serial = UOScript.Interpreter.GetAlias(Node.Lexeme);
                     return serial;
                 }
 
                 try
                 {
-                    arg = CheckIsListElement(_node.Lexeme);
+                    arg = CheckIsListElement(Node.Lexeme);
                     if (arg != null)
                         return arg.AsUInt();
                     return AsUInt();
                 }
-                catch (RunTimeError e)
+                catch (RunTimeError)
                 {
                     // invalid numeric
                 }
@@ -3929,19 +3907,19 @@ namespace RazorEnhanced
             // Treat the argument as a string
             public string AsString()
             {
-                if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, $"Cannot convert argument to string {_node.LineNumber}");
+                if (Node.Lexeme == null)
+                    throw new RunTimeError(Node, $"Cannot convert argument to string {Node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
-                var arg = _script.Lookup(_node.Lexeme);
+                var arg = _script.Lookup(Node.Lexeme);
                 if (arg != null)
                     return arg.AsString();
 
-                arg = CheckIsListElement(_node.Lexeme);
+                arg = CheckIsListElement(Node.Lexeme);
                 if (arg != null)
                     return arg.AsString();
 
-                return _node.Lexeme;
+                return Node.Lexeme;
             }
 
             internal Argument CheckIsListElement(string token)
@@ -3962,20 +3940,20 @@ namespace RazorEnhanced
 
             public bool AsBool()
             {
-                if (_node.Lexeme == null)
-                    throw new RunTimeError(_node, $"Cannot convert argument to bool {_node.LineNumber}");
+                if (Node.Lexeme == null)
+                    throw new RunTimeError(Node, $"Cannot convert argument to bool {Node.LineNumber}");
 
                 // Try to resolve it as a scoped variable first
-                var arg = _script.Lookup(_node.Lexeme);
+                var arg = _script.Lookup(Node.Lexeme);
                 if (arg != null)
                     return arg.AsBool();
 
-                arg = CheckIsListElement(_node.Lexeme);
+                arg = CheckIsListElement(Node.Lexeme);
                 if (arg != null)
                     return arg.AsBool();
 
 
-                return TypeConverter.ToBool(_node.Lexeme);
+                return TypeConverter.ToBool(Node.Lexeme);
             }
 
             public override bool Equals(object obj)
@@ -3996,7 +3974,12 @@ namespace RazorEnhanced
                 if (other == null)
                     return false;
 
-                return (other._node.Lexeme == _node.Lexeme);
+                return (other.Node.Lexeme == Node.Lexeme);
+            }
+
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
             }
         }
 
@@ -4106,8 +4089,7 @@ namespace RazorEnhanced
                 if (node == null)
                     throw new RunTimeError(_statement, "Invalid statement");
 
-                int depth = 0;
-
+                int depth;
                 switch (node.Type)
                 {
                     case ASTNodeType.IF:
@@ -4415,7 +4397,7 @@ namespace RazorEnhanced
         var children = node.Children();
                             ASTNode startParam = children[0];
                             ASTNode endParam = null;
-                            ASTNode listParam = null;
+                            ASTNode listParam;
                             if (children.Length == 2)
                             {
                                 listParam = children[1];
@@ -4431,19 +4413,20 @@ namespace RazorEnhanced
 
                             string iterName = listParam.GetHashCode().ToString(); //+"_"+ listParam.LineNumber.ToString();
                             string varName = listName + "[]";
-
-
-                            int num_iter = listSize;
                             int start = int.Parse(startParam.Lexeme);
+
+
+                            int num_iter;
                             if (endParam == null)
                             {
                                 num_iter = listSize - start;
                             }
-                            else {
+                            else
+                            {
                                 int end = int.Parse(endParam.Lexeme) + 1; // +1 is important
                                 if (end > listSize)
                                 {
-                                    throw new RunTimeError(node, "Invalid for loop: END parameter must be smaller then the list size ("+ listSize + "), " + (end-1) + " given ");
+                                    throw new RunTimeError(node, "Invalid for loop: END parameter must be smaller then the list size (" + listSize + "), " + (end - 1) + " given ");
                                 }
                                 num_iter = end - start;
                             }
@@ -4662,7 +4645,7 @@ namespace RazorEnhanced
                         break;
                 }
 
-                return (_statement != null) ? true : false;
+                return (_statement != null);
             }
 
             public void Advance()
@@ -4930,24 +4913,24 @@ namespace RazorEnhanced
         public static class Interpreter
         {
             // Lists
-            private static Dictionary<string, List<Argument>> _lists = new Dictionary<string, List<Argument>>();
+            private static readonly Dictionary<string, List<Argument>> _lists = new Dictionary<string, List<Argument>>();
 
             // Timers
-            private static Dictionary<string, DateTime> _timers = new Dictionary<string, DateTime>();
+            private static readonly Dictionary<string, DateTime> _timers = new Dictionary<string, DateTime>();
 
             // Expressions
             public delegate IComparable ExpressionHandler(string expression, Argument[] args, bool quiet);
             public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
 
-            private static Dictionary<string, ExpressionHandler> _exprHandlers = new Dictionary<string, ExpressionHandler>();
+            private static readonly Dictionary<string, ExpressionHandler> _exprHandlers = new Dictionary<string, ExpressionHandler>();
 
             public delegate bool CommandHandler(string command, Argument[] args, bool quiet, bool force);
 
-            private static Dictionary<string, CommandHandler> _commandHandlers = new Dictionary<string, CommandHandler>();
+            private static readonly Dictionary<string, CommandHandler> _commandHandlers = new Dictionary<string, CommandHandler>();
 
             public delegate uint AliasHandler(string alias);
 
-            private static Dictionary<string, AliasHandler> _aliasHandlers = new Dictionary<string, AliasHandler>();
+            private static readonly Dictionary<string, AliasHandler> _aliasHandlers = new Dictionary<string, AliasHandler>();
 
             private static Script _activeScript = null;
 
@@ -5013,7 +4996,7 @@ namespace RazorEnhanced
                 if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
                     return handler(alias);
 
-                uint value;
+                // uint value;
                 if (Misc.CheckSharedValue(alias))
                 {
                     return (uint)Misc.ReadSharedValue(alias);
@@ -5418,7 +5401,7 @@ namespace RazorEnhanced
     {
         private static int _curLine = 0;
         private static string[] _lines;
-        private static string _filename = ""; // can be empty
+        //private static string _filename = ""; // can be empty
 
         public static string GetLine(int lineNum) {
             return _lines[lineNum];
@@ -5469,7 +5452,7 @@ namespace RazorEnhanced
 
         public static ASTNode Lex(string fname)
         {
-            _filename = fname;
+            //_filename = fname;
             var lines = System.IO.File.ReadAllLines(fname);
             return Lexer.Lex(lines);
 
@@ -5514,7 +5497,7 @@ namespace RazorEnhanced
             */
         }
 
-        private static TextParser _tfp = new TextParser("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
+        private static readonly TextParser _tfp = new TextParser("", new char[] { ' ' }, new string[] { "//", "#" }, new char[] { '\'', '\'', '"', '"' });
         private static void ParseLine(ASTNode node, string line)
         {
             line = line.Trim();

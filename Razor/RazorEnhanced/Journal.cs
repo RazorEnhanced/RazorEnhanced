@@ -38,13 +38,13 @@ namespace RazorEnhanced
         /// </summary>
         public class JournalEntry
 		{
-			private string m_Text;
+			private readonly string m_Text;
             /// <summary>
             /// Actual content of the Journal Line.
             /// </summary>
 			public string Text { get { return m_Text; } }
 
-			private string m_Type;
+			private readonly string m_Type;
             /// <summary>
             ///     Regular
             ///     System
@@ -62,25 +62,25 @@ namespace RazorEnhanced
             /// </summary>
             public string Type { get { return m_Type; } }
 
-			private int m_Color;
+			private readonly int m_Color;
             /// <summary>
             /// Color of the text.
             /// </summary>
 			public int Color { get { return m_Color; } }
 
-			private string m_Name;
+			private readonly string m_Name;
             /// <summary>
             /// Name of the source, can be a Mobile or an Item.
             /// </summary>
 			public string Name { get { return m_Name; } }
 
-			private int m_Serial;
+			private readonly int m_Serial;
             /// <summary>
             /// Name of the source, can be a Mobile or an Item.
             /// </summary>
             public int Serial { get { return m_Serial; } }
 
-            private double m_Timestamp;
+            private readonly double m_Timestamp;
             /// <summary>
             /// Timestamp as UnixTime, the number of seconds elapsed since 01-Jan-1970.
             /// </summary>

@@ -26,13 +26,13 @@ namespace RazorEnhanced
         {
             public class Property
             {
-                private string m_Name;
+                private readonly string m_Name;
                 public string Name { get { return m_Name; } }
 
-                private int m_Minimum;
+                private readonly int m_Minimum;
                 public int Minimum { get { return m_Minimum; } }
 
-                private int m_Maximum;
+                private readonly int m_Maximum;
                 public int Maximum { get { return m_Maximum; } }
 
                 public Property(string name, int minimum, int maximum)
@@ -42,19 +42,19 @@ namespace RazorEnhanced
                     m_Maximum = maximum;
                 }
             }
-            private string m_Name;
+            private readonly string m_Name;
             public string Name { get { return m_Name; } }
 
-            private int m_Graphics;
+            private readonly int m_Graphics;
             public int Graphics { get { return m_Graphics; } }
 
-            private int m_Color;
+            private readonly int m_Color;
             public int Color { get { return m_Color; } }
 
             [JsonProperty("Selected")]
             internal bool Selected { get; set; }
 
-            private List<Property> m_Properties;
+            private readonly List<Property> m_Properties;
             public List<Property> Properties { get { return m_Properties; } }
 
             public ScavengerItem(string name, int graphics, int color, bool selected, List<Property> properties)
@@ -69,19 +69,19 @@ namespace RazorEnhanced
 
         internal class ScavengerList
         {
-            private string m_Description;
+            private readonly string m_Description;
             internal string Description { get { return m_Description; } }
 
-            private int m_Delay;
+            private readonly int m_Delay;
             internal int Delay { get { return m_Delay; } }
 
-            private int m_Range;
+            private readonly int m_Range;
             internal int Range { get { return m_Range; } }
 
-            private int m_Bag;
+            private readonly int m_Bag;
             internal int Bag { get { return m_Bag; } }
 
-            private bool m_Selected;
+            private readonly bool m_Selected;
             [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
@@ -214,7 +214,7 @@ namespace RazorEnhanced
                 if (row.IsNewRow)
                     continue;
 
-                int color = 0;
+                int color;
                 if ((string)row.Cells[3].Value == "All")
                     color = -1;
                 else
@@ -241,7 +241,7 @@ namespace RazorEnhanced
                 if (row.IsNewRow)
                     continue;
 
-                int color = 0;
+                int color;
                 if ((string)row.Cells[3].Value == "All")
                     color = -1;
                 else
@@ -374,14 +374,14 @@ namespace RazorEnhanced
             DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
         }
 
-        private static Items.Filter m_itemfilter = new Items.Filter
+        private static readonly Items.Filter m_itemfilter = new Items.Filter
         {
             Movable = -1,
             OnGround = 1,
             Enabled = true
         };
 
-        private static Items.Filter m_itemfilterOsi = new Items.Filter
+        private static readonly Items.Filter m_itemfilterOsi = new Items.Filter
         {
             Movable = -1,
             OnGround = 1,
@@ -546,7 +546,7 @@ namespace RazorEnhanced
         }
 
         // Autostart al login
-        private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
+        private static readonly Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
 
         internal static void LoginAutostart()
         {

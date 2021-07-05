@@ -9,7 +9,7 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedItemInspector : Form
 	{
 		private Thread m_ProcessInfo;
-		private Assistant.Item m_itemTarg;
+		private readonly Assistant.Item m_itemTarg;
 
 		internal EnhancedItemInspector(Assistant.Item itemTarg)
 		{
@@ -17,7 +17,7 @@ namespace RazorEnhanced.UI
 			MaximizeBox = false;
 			m_itemTarg = itemTarg;
 		}
-		private void razorButton1_Click(object sender, EventArgs e)
+		private void RazorButton1_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -28,52 +28,52 @@ namespace RazorEnhanced.UI
 			this.Close();
 		}
 
-		private void bNameCopy_Click(object sender, EventArgs e)
+		private void BNameCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lName.Text);
 		}
 
-		private void bSerialCopy_Click(object sender, EventArgs e)
+		private void BSerialCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lSerial.Text);
 		}
 
-		private void bItemIdCopy_Click(object sender, EventArgs e)
+		private void BItemIdCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lItemID.Text);
 		}
 
-		private void bColorCopy_Click(object sender, EventArgs e)
+		private void BColorCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lColor.Text);
 		}
 
-		private void bPositionCopy_Click(object sender, EventArgs e)
+		private void BPositionCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lPosition.Text);
 		}
 
-		private void bContainerCopy_Click(object sender, EventArgs e)
+		private void BContainerCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lContainer.Text);
 		}
 
-		private void bRContainerCopy_Click(object sender, EventArgs e)
+		private void BRContainerCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lRootContainer.Text);
 		}
 
-		private void bAmountCopy_Click(object sender, EventArgs e)
+		private void BAmountCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lAmount.Text);
 		}
 
-		private void bLayerCopy_Click(object sender, EventArgs e)
+		private void BLayerCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lLayer.Text);
 		}
 
-		private void bOwnedCopy_Click(object sender, EventArgs e)
+		private void BOwnedCopy_Click(object sender, EventArgs e)
 		{
 			Utility.ClipBoardCopy(lOwned.Text);
 		}
@@ -92,10 +92,22 @@ namespace RazorEnhanced.UI
 			if (m_itemTarg == null)
 				this.Close();
 
-			// general
-			lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
+            // general
+            ToolTip toolTip = new ToolTip
+            {
+                // Set up the delays for the ToolTip.
+                AutoPopDelay = 10000,
+                InitialDelay = 1000,
+                ReshowDelay = 500,
+                // Force the ToolTip text to be displayed whether or not the form is active.
+                ShowAlways = true
+            };
+
+            lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
+            toolTip.SetToolTip(lItemID, m_itemTarg.ItemID.Value.ToString());
 			lItemID.Text = "0x" + m_itemTarg.ItemID.Value.ToString("X4");
-			lColor.Text =  "0x" + m_itemTarg.Hue.ToString("x4");
+            toolTip.SetToolTip(lColor, m_itemTarg.Hue.ToString());
+            lColor.Text =  "0x" + m_itemTarg.Hue.ToString("x4");
 			lPosition.Text = m_itemTarg.Position.ToString();
 			// Details
 			Assistant.PlayerData tempdata;
@@ -106,8 +118,8 @@ namespace RazorEnhanced.UI
 				lRootContainer.Text = "None";
 			}
 			else
-			{
-				if (m_itemTarg.Container is Assistant.PlayerData)
+            {
+                if (m_itemTarg.Container is Assistant.PlayerData)
 				{
 					tempdata = (Assistant.PlayerData)m_itemTarg.Container;
 					lContainer.Text = tempdata.Serial.ToString();

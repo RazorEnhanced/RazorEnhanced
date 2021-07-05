@@ -91,16 +91,16 @@ namespace RazorEnhanced
 		[Serializable]
 		public class SpellGridItem
 		{
-			private string m_Group;
+			private readonly string m_Group;
 			public string Group { get { return m_Group; } }
 
-			private string m_Spell;
+			private readonly string m_Spell;
 			public string Spell { get { return m_Spell; } }
 
-			private Color m_Color;
+			private readonly Color m_Color;
 			public Color Color { get { return m_Color; } }
 
-			private Color m_Border;
+			private readonly Color m_Border;
 			internal Color Border { get { return m_Border; } }
 
 			public SpellGridItem(string group, string spell, Color color, Color border)
@@ -511,9 +511,8 @@ namespace RazorEnhanced
 
 		private static int GetImageID(GroupType t, string s)
 		{
-			int imageid = 0;
-
-			switch (t)
+            int imageid;
+            switch (t)
 			{
 				case GroupType.Magery:
 					SpellIconMagery.TryGetValue(s, out imageid);
@@ -570,9 +569,8 @@ namespace RazorEnhanced
 
 				int imageid = 0;
 
-				GroupType g = GroupType.Empty;
-
-				if (Enum.TryParse<GroupType>(items[x].Group, out g))
+                GroupType g;
+                if (Enum.TryParse<GroupType>(items[x].Group, out g))
 					imageid = GetImageID(g, items[x].Spell);
 
 				m_panellist[x].BorderColor = items[x].Color;

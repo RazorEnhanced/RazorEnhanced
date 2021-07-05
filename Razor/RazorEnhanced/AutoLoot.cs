@@ -29,22 +29,22 @@ namespace RazorEnhanced
         private static int m_autolootbag;
         private static bool m_noopencorpse;
         private static string m_autolootlist;
-        private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
+        private static readonly Queue<int> m_IgnoreCorpseList = new Queue<int>();
         internal static volatile bool LockTable = false;
 
         public class AutoLootItem : ListAbleItem
         {
             public class Property
             {
-                private string m_Name;
+                private readonly string m_Name;
                 [JsonProperty("Name")]
                 public string Name { get { return m_Name; } }
 
-                private int m_Minimum;
+                private readonly int m_Minimum;
                 [JsonProperty("Minimum")]
                 public int Minimum { get { return m_Minimum; } }
 
-                private int m_Maximum;
+                private readonly int m_Maximum;
                 [JsonProperty("Maximum")]
                 public int Maximum { get { return m_Maximum; } }
 
@@ -56,13 +56,13 @@ namespace RazorEnhanced
                 }
             }
 
-            private string m_Name;
+            private readonly string m_Name;
             public string Name { get { return m_Name; } }
 
-            private int m_Graphics;
+            private readonly int m_Graphics;
             public int Graphics { get { return m_Graphics; } }
 
-            private int m_Color;
+            private readonly int m_Color;
             public int Color { get { return m_Color; } }
 
             [JsonProperty("LootBagOverride")]
@@ -72,7 +72,7 @@ namespace RazorEnhanced
             [JsonProperty("Selected")]
             public bool Selected { get; set; }
 
-            private List<Property> m_Properties;
+            private readonly List<Property> m_Properties;
             public List<Property> Properties { get { return m_Properties; } }
 
             public AutoLootItem(string name, int graphics, int color, bool selected, int lootBag, List<Property> properties)
@@ -88,10 +88,10 @@ namespace RazorEnhanced
 
         public class SerialToGrab
         {
-            private int m_corpseserial;
+            private readonly int m_corpseserial;
             public int CorpseSerial { get { return m_corpseserial; } }
 
-            private int m_itemserial;
+            private readonly int m_itemserial;
             public int ItemSerial { get { return m_itemserial; } }
 
             public int DestContainerOverride { get; set; }
@@ -108,23 +108,23 @@ namespace RazorEnhanced
 
         internal class AutoLootList
         {
-            private string m_Description;
+            private readonly string m_Description;
             internal string Description { get { return m_Description; } }
 
-            private int m_Delay;
+            private readonly int m_Delay;
             internal int Delay { get { return m_Delay; } }
 
-            private int m_Range;
+            private readonly int m_Range;
             internal int Range { get { return m_Range; } }
 
-            private int m_Bag;
+            private readonly int m_Bag;
             internal int Bag { get { return m_Bag; } }
 
-            private bool m_Selected;
+            private readonly bool m_Selected;
             [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
-            private bool m_Noopencorpse;
+            private readonly bool m_Noopencorpse;
             internal bool NoOpenCorpse { get { return m_Noopencorpse; } }
 
             public AutoLootList(string description, int delay, int bag, bool selected, bool noopencorpse, int range)
@@ -255,9 +255,7 @@ namespace RazorEnhanced
                             string itemid = "All";
                             if (item.Graphics != -1)
                                 itemid = "0x" + item.Graphics.ToString("X4");
-
-                            string lootBag = "0x0";
-                            lootBag = "0x" + item.LootBagOverride.ToString("X4");
+                            string lootBag = "0x" + item.LootBagOverride.ToString("X4");
 
                             Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, lootBag, item.Properties });
                         }
@@ -278,7 +276,7 @@ namespace RazorEnhanced
                 if (row.IsNewRow)
                     continue;
 
-                int color = 0;
+                int color;
                 if ((string)row.Cells[3].Value == "All")
                     color = -1;
                 else
@@ -286,14 +284,12 @@ namespace RazorEnhanced
 
                 bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
-                int itemID = 0;
+                int itemID;
                 if ((string)row.Cells[2].Value == "All")
                     itemID = -1;
                 else
                     itemID = Convert.ToInt32((string)row.Cells[2].Value, 16);
-
-                int lootbagOverride = 0;
-                lootbagOverride = Convert.ToInt32((string)row.Cells[4].Value, 16);
+                int lootbagOverride = Convert.ToInt32((string)row.Cells[4].Value, 16);
 
 
                 if (row.Cells[5].Value != null)
@@ -324,7 +320,7 @@ namespace RazorEnhanced
                 if (row.IsNewRow)
                     continue;
 
-                int color = 0;
+                int color;
                 if ((string)row.Cells[3].Value == "All")
                     color = -1;
                 else
@@ -508,7 +504,7 @@ namespace RazorEnhanced
                 SerialToGrabList.Enqueue(data);
         }
 
-        private static Items.Filter m_corpsefilter = new Items.Filter
+        private static readonly Items.Filter m_corpsefilter = new Items.Filter
         {
             Movable = -1,
             IsCorpse = 1,
@@ -529,7 +525,7 @@ namespace RazorEnhanced
                 m_corpsefilter.RangeMax = m_maxrange;
                 Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //  If anything goes wrong just continue on
             }
@@ -741,7 +737,7 @@ namespace RazorEnhanced
         }
 
         // Autostart al login
-        private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
+        private static readonly Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
 
         internal static void LoginAutostart()
         {

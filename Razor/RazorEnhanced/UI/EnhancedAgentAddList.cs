@@ -94,17 +94,15 @@ namespace RazorEnhanced.UI
 		private void EnhancedAgentAddList_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newList = String.Empty;
-
-			if (AgentListToAdd.Text == String.Empty)
+            if (AgentListToAdd.Text == String.Empty)
 				fail = true;
 
 			if (!Regex.IsMatch(AgentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
 				fail = true;
 
-			newList = AgentListToAdd.Text.ToLower();
+            string newList = AgentListToAdd.Text.ToLower();
 
-			switch (m_agentid)
+            switch (m_agentid)
 			{
 				case 1:
 				case 10:
@@ -158,9 +156,8 @@ namespace RazorEnhanced.UI
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);
-				fail = true;
-			}
-			else
+            }
+            else
 			{
 				switch (m_agentid)
 				{

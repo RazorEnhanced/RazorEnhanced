@@ -286,6 +286,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -427,7 +428,9 @@
     <Compile Include="RazorEnhanced\Filters.cs" />
     <Compile Include="RazorEnhanced\JsonData.cs" />
     <Compile Include="RazorEnhanced\Target.cs" />
-    <Compile Include="RazorEnhanced\Journal.cs" />
+    <Compile Include="RazorEnhanced\Journal.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="RazorEnhanced\AutoLoot.cs" />
     <Compile Include="RazorEnhanced\Dress.cs" />
     <Compile Include="RazorEnhanced\GumpInspector.cs" />

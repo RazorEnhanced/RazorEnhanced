@@ -195,7 +195,7 @@ namespace Assistant
                 {
                     num_packets = int.Parse(param[0]);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     num_packets = 5;
                 }
@@ -253,11 +253,9 @@ namespace Assistant
 		{
 			if (param == null || param.Length == 0)
 				return;
+            string scriptname = param[0];
 
-			string scriptname = String.Empty;
-			scriptname = param[0];
-
-			if (param.Length > 1)
+            if (param.Length > 1)
 			{
 				for (int i = 1; i < param.Length; i++)
 				{
@@ -282,7 +280,7 @@ namespace Assistant
 
 	internal class Command
 	{
-		private static Dictionary<string, CommandCallback> m_List;
+		private static readonly Dictionary<string, CommandCallback> m_List;
 
 		static Command()
 		{
@@ -329,42 +327,40 @@ namespace Assistant
 			ushort hue = pvSrc.ReadUInt16();
 			ushort font = pvSrc.ReadUInt16();
 			string lang = pvSrc.ReadString(4);
-			string text = "";
-			List<ushort> keys = null;
-			long txtOffset = 0;
+            World.Player.SpeechHue = hue;
 
-			World.Player.SpeechHue = hue;
+            string text;
+            long txtOffset;
+            if ((type & MessageType.Encoded) != 0)
+            {
+                int value = pvSrc.ReadInt16();
+                int count = (value & 0xFFF0) >> 4;
+                List<ushort> keys = new List<ushort> { (ushort)value };
 
-			if ((type & MessageType.Encoded) != 0)
-			{
-				int value = pvSrc.ReadInt16();
-				int count = (value & 0xFFF0) >> 4;
-				keys = new List<ushort> { (ushort)value };
+                for (int i = 0; i < count; ++i)
+                {
+                    if ((i & 1) == 0)
+                    {
+                        keys.Add(pvSrc.ReadByte());
+                    }
+                    else
+                    {
+                        keys.Add(pvSrc.ReadByte());
+                        keys.Add(pvSrc.ReadByte());
+                    }
+                }
 
-				for (int i = 0; i < count; ++i)
-				{
-					if ((i & 1) == 0)
-					{
-						keys.Add(pvSrc.ReadByte());
-					}
-					else
-					{
-						keys.Add(pvSrc.ReadByte());
-						keys.Add(pvSrc.ReadByte());
-					}
-				}
+                txtOffset = pvSrc.Position;
+                text = pvSrc.ReadUTF8StringSafe();
+                type &= ~MessageType.Encoded;
+            }
+            else
+            {
+                txtOffset = pvSrc.Position;
+                text = pvSrc.ReadUnicodeStringSafe();
+            }
 
-				txtOffset = pvSrc.Position;
-				text = pvSrc.ReadUTF8StringSafe();
-				type &= ~MessageType.Encoded;
-			}
-			else
-			{
-				txtOffset = pvSrc.Position;
-				text = pvSrc.ReadUnicodeStringSafe();
-			}
-
-			if (RazorEnhanced.ScriptRecorder.OnRecord)
+            if (RazorEnhanced.ScriptRecorder.OnRecord)
 			{
 				RazorEnhanced.ScriptRecorder.Record_UnicodeSpeech(type, text, hue);
 			}

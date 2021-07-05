@@ -88,7 +88,7 @@ namespace Assistant
         private RazorCheckBox blockDis;
         private System.Windows.Forms.Label label12;
         private RazorComboBox imgFmt;
-        private ToolTip m_Tip;
+        private readonly ToolTip m_Tip;
 
         #endregion Class Variables
         private RazorCheckBox preAOSstatbar;
@@ -102,10 +102,10 @@ namespace Assistant
         private RazorButton buttonScriptEditor;
         private Label labelStatus;
         private RazorButton razorButtonWiki;
-        private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
-        private List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
-        private List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
-        private List<RazorEnhanced.Dress.DressItemNew> dressItemList = new List<RazorEnhanced.Dress.DressItemNew>();
+        private readonly List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
+        private readonly List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
+        private readonly List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
+        private readonly List<RazorEnhanced.Dress.DressItemNew> dressItemList = new List<RazorEnhanced.Dress.DressItemNew>();
         private TabPage EnhancedAgent;
         private TabControl tabControl1;
         private TabPage eautoloot;
@@ -9196,7 +9196,7 @@ namespace Assistant
             }
         }
 
-        private Version m_Ver = System.Reflection.Assembly.GetCallingAssembly().GetName().Version;
+        private readonly Version m_Ver = System.Reflection.Assembly.GetCallingAssembly().GetName().Version;
 
         private uint m_OutPrev;
         private uint m_InPrev;

@@ -2,7 +2,7 @@ namespace RazorEnhanced
 {
 	public class Property
 	{
-		private Assistant.ObjectPropertyList.OPLEntry m_OPLEntry;
+		private readonly Assistant.ObjectPropertyList.OPLEntry m_OPLEntry;
 
 		internal Property(Assistant.ObjectPropertyList.OPLEntry entry)
 		{

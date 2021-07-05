@@ -5,12 +5,12 @@ namespace Assistant
 {
 	internal class World
 	{
-		private static ConcurrentDictionary<Serial, Item> m_Items;
-		private static ConcurrentDictionary<Serial, Mobile> m_Mobiles;
-		private static ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData> m_Multis;
+		private static readonly ConcurrentDictionary<Serial, Item> m_Items;
+		private static readonly ConcurrentDictionary<Serial, Mobile> m_Mobiles;
+		private static readonly ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData> m_Multis;
 		private static PlayerData m_Player;
 		private static string m_ShardName, m_PlayerName, m_AccountName;
-		private static ConcurrentDictionary<ushort, string> m_Servers;
+		private static readonly ConcurrentDictionary<ushort, string> m_Servers;
 
 		static World()
 		{
@@ -28,15 +28,15 @@ namespace Assistant
 
 		internal static Item FindItem(Serial serial)
 		{
-			Item item = null;
-			m_Items.TryGetValue(serial, out item);
+            Item item;
+            m_Items.TryGetValue(serial, out item);
 			return item;
 		}
 
 		internal static Mobile FindMobile(Serial serial)
 		{
-			Mobile mobile = null;
-			m_Mobiles.TryGetValue(serial, out mobile);
+            Mobile mobile;
+            m_Mobiles.TryGetValue(serial, out mobile);
 			return mobile;
 		}
 

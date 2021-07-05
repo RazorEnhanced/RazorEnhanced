@@ -20,7 +20,7 @@ namespace Assistant
 				return val.ToString();
 		}
 
-		private static StringBuilder m_TBBuilder = new StringBuilder();
+		private static readonly StringBuilder m_TBBuilder = new StringBuilder();
 		internal static void UpdateTitleBar()
 		{
 			if (!Assistant.Client.Instance.Ready || World.Player == null)

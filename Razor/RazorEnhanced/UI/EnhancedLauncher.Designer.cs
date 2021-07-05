@@ -97,7 +97,7 @@ namespace RazorEnhanced.UI
             this.removeShard.TabIndex = 3;
             this.removeShard.Text = "Remove";
             this.removeShard.UseVisualStyleBackColor = true;
-            this.removeShard.Click += new System.EventHandler(this.razorButton2_Click);
+            this.removeShard.Click += new System.EventHandler(this.RazorButton2_Click);
             //
             // addShard
             //
@@ -107,7 +107,7 @@ namespace RazorEnhanced.UI
             this.addShard.TabIndex = 2;
             this.addShard.Text = "Add";
             this.addShard.UseVisualStyleBackColor = true;
-            this.addShard.Click += new System.EventHandler(this.razorButton1_Click);
+            this.addShard.Click += new System.EventHandler(this.RazorButton1_Click);
             //
             // shardlistCombobox
             //
@@ -117,7 +117,7 @@ namespace RazorEnhanced.UI
             this.shardlistCombobox.Name = "shardlistCombobox";
             this.shardlistCombobox.Size = new System.Drawing.Size(185, 21);
             this.shardlistCombobox.TabIndex = 1;
-            this.shardlistCombobox.SelectedIndexChanged += new System.EventHandler(this.shardlistCombobox_SelectedIndexChanged);
+            this.shardlistCombobox.SelectedIndexChanged += new System.EventHandler(this.ShardlistCombobox_SelectedIndexChanged);
             //
             // groupBox2
             //
@@ -152,7 +152,7 @@ namespace RazorEnhanced.UI
             this.cuoPathClick.Size = new System.Drawing.Size(20, 20);
             this.cuoPathClick.TabIndex = 18;
             this.cuoPathClick.UseVisualStyleBackColor = true;
-            this.cuoPathClick.Click += new System.EventHandler(this.cuoClient_Click);
+            this.cuoPathClick.Click += new System.EventHandler(this.CuoClient_Click);
             //
             // cuoClientLabel
             //
@@ -162,7 +162,7 @@ namespace RazorEnhanced.UI
             this.cuoClientLabel.Size = new System.Drawing.Size(249, 13);
             this.cuoClientLabel.TabIndex = 17;
             this.cuoClientLabel.Text = "Optional";
-            this.cuoClientLabel.Click += new System.EventHandler(this.cuoClient_Click);
+            this.cuoClientLabel.Click += new System.EventHandler(this.CuoClient_Click);
             //
             // label4
             //
@@ -191,7 +191,7 @@ namespace RazorEnhanced.UI
             this.patchEnc.TabIndex = 14;
             this.patchEnc.Text = "Patch client encryption";
             this.patchEnc.UseVisualStyleBackColor = false;
-            this.patchEnc.CheckedChanged += new System.EventHandler(this.patchEncy_CheckedChanged);
+            this.patchEnc.CheckedChanged += new System.EventHandler(this.PatchEncy_CheckedChanged);
             //
             // portLabel
             //
@@ -205,7 +205,7 @@ namespace RazorEnhanced.UI
             this.portLabel.Size = new System.Drawing.Size(35, 20);
             this.portLabel.TabIndex = 13;
             this.portLabel.Text = "2593";
-            this.portLabel.TextChanged += new System.EventHandler(this.serverportT_TextChanged);
+            this.portLabel.TextChanged += new System.EventHandler(this.ServerportT_TextChanged);
             //
             // label7
             //
@@ -227,7 +227,7 @@ namespace RazorEnhanced.UI
             this.hostLabel.Name = "hostLabel";
             this.hostLabel.Size = new System.Drawing.Size(200, 20);
             this.hostLabel.TabIndex = 11;
-            this.hostLabel.TextChanged += new System.EventHandler(this.serveraddressT_TextChanged);
+            this.hostLabel.TextChanged += new System.EventHandler(this.ServeraddressT_TextChanged);
             //
             // label6
             //
@@ -247,7 +247,7 @@ namespace RazorEnhanced.UI
             this.button1.Size = new System.Drawing.Size(20, 20);
             this.button1.TabIndex = 9;
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             //
             // clientFolderLabel
             //
@@ -276,7 +276,7 @@ namespace RazorEnhanced.UI
             this.bNameCopy.Size = new System.Drawing.Size(20, 20);
             this.bNameCopy.TabIndex = 6;
             this.bNameCopy.UseVisualStyleBackColor = true;
-            this.bNameCopy.Click += new System.EventHandler(this.bNameCopy_Click);
+            this.bNameCopy.Click += new System.EventHandler(this.BNameCopy_Click);
             //
             // clientPathLabel
             //
@@ -304,7 +304,7 @@ namespace RazorEnhanced.UI
             this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
             this.checkupdatebutton.TabIndex = 10;
             this.checkupdatebutton.Text = "Check Update";
-            this.checkupdatebutton.Click += new System.EventHandler(this.checkupdatebutton_Click);
+            this.checkupdatebutton.Click += new System.EventHandler(this.Checkupdatebutton_Click);
             //
             // quit
             //
@@ -314,7 +314,7 @@ namespace RazorEnhanced.UI
             this.quit.Size = new System.Drawing.Size(84, 21);
             this.quit.TabIndex = 9;
             this.quit.Text = "Exit";
-            this.quit.Click += new System.EventHandler(this.quit_Click);
+            this.quit.Click += new System.EventHandler(this.Quit_Click);
             //
             // okay
             //
@@ -324,7 +324,7 @@ namespace RazorEnhanced.UI
             this.okay.Size = new System.Drawing.Size(84, 21);
             this.okay.TabIndex = 8;
             this.okay.Text = "Launch";
-            this.okay.Click += new System.EventHandler(this.okay_Click);
+            this.okay.Click += new System.EventHandler(this.Okay_Click);
             //
             // launchCUO
             //
@@ -335,7 +335,7 @@ namespace RazorEnhanced.UI
             this.launchCUO.Size = new System.Drawing.Size(84, 21);
             this.launchCUO.TabIndex = 11;
             this.launchCUO.Text = "Launch CUO";
-            this.launchCUO.Click += new System.EventHandler(this.launchCUO_Click);
+            this.launchCUO.Click += new System.EventHandler(this.LaunchCUO_Click);
             //
             // EnhancedLauncher
             //

@@ -4,7 +4,7 @@ namespace Assistant
 {
 	public struct ItemID
 	{
-		private ushort m_ID;
+		private readonly ushort m_ID;
 
 		internal ItemID(ushort id)
 		{

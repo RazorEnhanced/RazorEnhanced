@@ -17,7 +17,7 @@ namespace RazorEnhanced
     /// </summary>
 	public class Item : EnhancedEntity
     {
-        private Assistant.Item m_AssistantItem;
+        private readonly Assistant.Item m_AssistantItem;
 
         internal Item(Assistant.Item item)
             : base(item)
@@ -338,14 +338,14 @@ namespace RazorEnhanced
                         if (step == 0)
                             if (Char.IsNumber(Text[i]))
                             {
-                                Durability = Durability + Text[i];
+                                Durability += Text[i];
                                 step = 1;
                                 i++;
                             }
                         if (step == 1)
                             if (Char.IsNumber(Text[i]))
                             {
-                                Durability = Durability + Text[i];
+                                Durability += Text[i];
                             }
                             else
                                 step = 2;
@@ -387,14 +387,14 @@ namespace RazorEnhanced
                         if (step == 0)
                             if (Char.IsNumber(Text[y]))
                             {
-                                TempMaxDurability = TempMaxDurability + Text[y];
+                                TempMaxDurability += Text[y];
                                 step = 1;
                                 y--;
                             }
                         if (step == 1)
                             if (Char.IsNumber(Text[y]))
                             {
-                                TempMaxDurability = TempMaxDurability + Text[y];
+                                TempMaxDurability += Text[y];
                             }
                             else
                                 step = 2;
@@ -461,6 +461,7 @@ namespace RazorEnhanced
         }
 
         /// <param name="bag_serial">Container as Item serial.</param>
+        /// <param name="delay">max time to wait for contents</param>
         public static void WaitForContents(int bag_serial, int delay) // Delay in MS
         {
             Item bag = FindBySerial(bag_serial);
@@ -468,7 +469,7 @@ namespace RazorEnhanced
                 WaitForContents(bag, delay);
         }
 
-        private static Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
+        private static readonly Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
 
         internal static int Hued(uint serial)
         {
@@ -813,7 +814,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Nearest":
-                    Item nearest = items[0] as Item;
+                    Item nearest = items[0];
                     if (nearest != null)
                     {
                         double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
@@ -835,7 +836,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Farthest":
-                    Item farthest = items[0] as Item;
+                    Item farthest = items[0];
                     if (farthest != null)
                     {
                         double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
@@ -856,7 +857,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Less":
-                    Item least = items[0] as Item;
+                    Item least = items[0];
                     if (least != null)
                     {
                         int minAmount = least.Amount;
@@ -877,7 +878,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Most":
-                    Item most = items[0] as Item;
+                    Item most = items[0];
                     if (most != null)
                     {
                         int maxAmount = most.Amount;
@@ -899,7 +900,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Weakest":
-                    Item weakest = items[0] as Item;
+                    Item weakest = items[0];
                     if (weakest != null)
                     {
                         int minDur = weakest.Durability;
@@ -921,7 +922,7 @@ namespace RazorEnhanced
                     break;
 
                 case "Strongest":
-                    Item strongest = items[0] as Item;
+                    Item strongest = items[0];
                     if (strongest != null)
                     {
                         int maxDur = strongest.Durability;
@@ -1030,8 +1031,6 @@ namespace RazorEnhanced
             int serialdestination = 0;
             bool isMobile = false;
             bool onLocation = false;
-            int newamount = 0;
-
             if (item == null)
             {
                 Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
@@ -1065,6 +1064,7 @@ namespace RazorEnhanced
                 loc = new Assistant.Point3D(x, y, 0);
             }
 
+            int newamount;
             // calcolo amount
             if (amount == 0)
             {
@@ -1247,7 +1247,7 @@ namespace RazorEnhanced
             if ((item.Amount < amount) || (amount == 0))
                 amounttodrop = item.Amount;
 
-            MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
+            MoveOnGround(item.Serial, amounttodrop, Player.Position.X, Player.Position.Y, Player.Position.Z);
         }
 
         public static void DropItemGroundSelf(int serialitem, int amount = 0)
@@ -1675,7 +1675,7 @@ namespace RazorEnhanced
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // do nothing because sometimes the content[i] no longer existed so fall through
                 // and return 0
@@ -1729,7 +1729,7 @@ namespace RazorEnhanced
                         }
                     }
                 }
-                catch (System.ArgumentOutOfRangeException ex)
+                catch (System.ArgumentOutOfRangeException)
                 {
                     // Do nothing. This occurs when looting or claiming a corpse while processing is still going on
                 }
@@ -1737,14 +1737,7 @@ namespace RazorEnhanced
             return totalResist;
         }
 
-        static float GetTotalResistProp(Item item)
-        {
-            return GetTotalResistProp(item.Serial);
-        }
-
-
         // Message
-
         /// <summary>
         /// Display an in-game message on top of an Item, visibile only for the Player.
         /// </summary>
@@ -1794,21 +1787,21 @@ namespace RazorEnhanced
                     if (color == -1)
                     {
                         if (itemToCount.ItemID == itemid)
-                            count = count + itemToCount.Amount;
+                            count += itemToCount.Amount;
                         if (recursive && itemToCount.IsContainer)
                         {
                             int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
-                            count = count + recurseCount;
+                            count += recurseCount;
                         }
                     }
                     else
                     {
                         if (itemToCount.ItemID == itemid && itemToCount.Hue == color)
-                            count = count + itemToCount.Amount;
+                            count += itemToCount.Amount;
                         if (recursive && itemToCount.IsContainer)
                         {
                             int recurseCount = ContainerCount(itemToCount, itemid, color); // recall for sub container
-                            count = count + recurseCount;
+                            count += recurseCount;
                         }
 
                     }
@@ -1871,7 +1864,7 @@ namespace RazorEnhanced
 
             int amount = 0;
             foreach (Assistant.Item i in items)
-                amount = amount + i.Amount;
+                amount += i.Amount;
 
             return amount;
         }
@@ -1894,8 +1887,7 @@ namespace RazorEnhanced
 
             foreach (KeyValuePair<ushort, int> entry in item.ContextMenu)
             {
-                string menuname = string.Empty;
-                menuname = Language.GetCliloc(entry.Value);
+                string menuname = Language.GetCliloc(entry.Value);
                 if (menuname.ToLower() == name.ToLower())
                 {
                     return entry.Key;

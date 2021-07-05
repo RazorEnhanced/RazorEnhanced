@@ -34,8 +34,8 @@ namespace Assistant
 	// Once the data is flushed, you CANNOT seek back to it!
 	internal class GZBlockOut : Stream
 	{
-		private BinaryWriter m_Out;
-		private MemoryStream m_Buffer;
+		private readonly BinaryWriter m_Out;
+		private readonly MemoryStream m_Buffer;
 		private BinaryWriter m_Self;
 		private int m_BlockSize;
 		private bool m_BufferAll;
@@ -173,8 +173,8 @@ namespace Assistant
 	// of the compressed data.
 	internal class GZBlockIn : Stream
 	{
-		private MemoryStream m_Uncomp;
-		private BinaryReader m_In;
+		private readonly MemoryStream m_Uncomp;
+		private readonly BinaryReader m_In;
 		private BinaryReader m_Self;
 		private bool m_Compressed;
 

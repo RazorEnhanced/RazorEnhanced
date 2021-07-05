@@ -4,24 +4,27 @@ namespace RazorEnhanced.UI
 {
 	partial class EnhancedItemInspector
 	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
 
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedItemInspector));
             this.bNameCopy = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -95,7 +98,7 @@ namespace RazorEnhanced.UI
             this.bNameCopy.Size = new System.Drawing.Size(20, 20);
             this.bNameCopy.TabIndex = 0;
             this.bNameCopy.UseVisualStyleBackColor = true;
-            this.bNameCopy.Click += new System.EventHandler(this.bNameCopy_Click);
+            this.bNameCopy.Click += new System.EventHandler(this.BNameCopy_Click);
             //
             // groupBox1
             //
@@ -210,7 +213,7 @@ namespace RazorEnhanced.UI
             this.bPositionCopy.Size = new System.Drawing.Size(20, 20);
             this.bPositionCopy.TabIndex = 6;
             this.bPositionCopy.UseVisualStyleBackColor = true;
-            this.bPositionCopy.Click += new System.EventHandler(this.bPositionCopy_Click);
+            this.bPositionCopy.Click += new System.EventHandler(this.BPositionCopy_Click);
             //
             // bColorCopy
             //
@@ -223,7 +226,7 @@ namespace RazorEnhanced.UI
             this.bColorCopy.Size = new System.Drawing.Size(20, 20);
             this.bColorCopy.TabIndex = 5;
             this.bColorCopy.UseVisualStyleBackColor = true;
-            this.bColorCopy.Click += new System.EventHandler(this.bColorCopy_Click);
+            this.bColorCopy.Click += new System.EventHandler(this.BColorCopy_Click);
             //
             // label3
             //
@@ -245,7 +248,7 @@ namespace RazorEnhanced.UI
             this.bItemIdCopy.Size = new System.Drawing.Size(20, 20);
             this.bItemIdCopy.TabIndex = 4;
             this.bItemIdCopy.UseVisualStyleBackColor = true;
-            this.bItemIdCopy.Click += new System.EventHandler(this.bItemIdCopy_Click);
+            this.bItemIdCopy.Click += new System.EventHandler(this.BItemIdCopy_Click);
             //
             // label2
             //
@@ -268,7 +271,7 @@ namespace RazorEnhanced.UI
             this.bSerialCopy.Size = new System.Drawing.Size(20, 20);
             this.bSerialCopy.TabIndex = 2;
             this.bSerialCopy.UseVisualStyleBackColor = true;
-            this.bSerialCopy.Click += new System.EventHandler(this.bSerialCopy_Click);
+            this.bSerialCopy.Click += new System.EventHandler(this.BSerialCopy_Click);
             //
             // label1
             //
@@ -382,7 +385,7 @@ namespace RazorEnhanced.UI
             this.bOwnedCopy.Size = new System.Drawing.Size(20, 20);
             this.bOwnedCopy.TabIndex = 6;
             this.bOwnedCopy.UseVisualStyleBackColor = true;
-            this.bOwnedCopy.Click += new System.EventHandler(this.bOwnedCopy_Click);
+            this.bOwnedCopy.Click += new System.EventHandler(this.BOwnedCopy_Click);
             //
             // bLayerCopy
             //
@@ -396,7 +399,7 @@ namespace RazorEnhanced.UI
             this.bLayerCopy.Size = new System.Drawing.Size(20, 20);
             this.bLayerCopy.TabIndex = 5;
             this.bLayerCopy.UseVisualStyleBackColor = false;
-            this.bLayerCopy.Click += new System.EventHandler(this.bLayerCopy_Click);
+            this.bLayerCopy.Click += new System.EventHandler(this.BLayerCopy_Click);
             //
             // label8
             //
@@ -419,7 +422,7 @@ namespace RazorEnhanced.UI
             this.bAmountCopy.Size = new System.Drawing.Size(20, 20);
             this.bAmountCopy.TabIndex = 4;
             this.bAmountCopy.UseVisualStyleBackColor = false;
-            this.bAmountCopy.Click += new System.EventHandler(this.bAmountCopy_Click);
+            this.bAmountCopy.Click += new System.EventHandler(this.BAmountCopy_Click);
             //
             // label9
             //
@@ -441,7 +444,7 @@ namespace RazorEnhanced.UI
             this.bRContainerCopy.Size = new System.Drawing.Size(20, 20);
             this.bRContainerCopy.TabIndex = 2;
             this.bRContainerCopy.UseVisualStyleBackColor = true;
-            this.bRContainerCopy.Click += new System.EventHandler(this.bRContainerCopy_Click);
+            this.bRContainerCopy.Click += new System.EventHandler(this.BRContainerCopy_Click);
             //
             // label10
             //
@@ -463,7 +466,7 @@ namespace RazorEnhanced.UI
             this.bContainerCopy.Size = new System.Drawing.Size(20, 20);
             this.bContainerCopy.TabIndex = 0;
             this.bContainerCopy.UseVisualStyleBackColor = true;
-            this.bContainerCopy.Click += new System.EventHandler(this.bContainerCopy_Click);
+            this.bContainerCopy.Click += new System.EventHandler(this.BContainerCopy_Click);
             //
             // groupBox3
             //
@@ -681,7 +684,7 @@ namespace RazorEnhanced.UI
             this.razorButton1.TabIndex = 10;
             this.razorButton1.Text = "Close";
             this.razorButton1.UseVisualStyleBackColor = true;
-            this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
+            this.razorButton1.Click += new System.EventHandler(this.RazorButton1_Click);
             //
             // EnhancedItemInspector
             //

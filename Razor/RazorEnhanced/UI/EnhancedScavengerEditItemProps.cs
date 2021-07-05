@@ -7,11 +7,11 @@ namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScavengerEditItemProps : Form
 	{
-		private List<Scavenger.ScavengerItem.Property> m_proplist = new List<Scavenger.ScavengerItem.Property>();
-		private string m_name;
-		private string m_graphics;
-		private string m_color;
-		DataGridViewRow m_row;
+		private readonly List<Scavenger.ScavengerItem.Property> m_proplist = new List<Scavenger.ScavengerItem.Property>();
+		private readonly string m_name;
+		private readonly string m_graphics;
+		private readonly string m_color;
+        readonly DataGridViewRow m_row;
 		public EnhancedScavengerEditItemProps(ref DataGridViewRow row)
 		{
 			m_row = row;

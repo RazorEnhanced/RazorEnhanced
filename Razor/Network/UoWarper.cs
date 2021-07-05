@@ -78,8 +78,7 @@ namespace RazorEnhanced
                 DLLImport.Uo.PushStrVal(_UOHandle, "ContPosX");
                 if (DLLImport.Uo.Execute(_UOHandle) == 0)
                 {
-                    int numRetValues = 0;
-                    numRetValues = DLLImport.Uo.GetTop(_UOHandle);
+                    int numRetValues = DLLImport.Uo.GetTop(_UOHandle);
                     if (numRetValues == 1)
                     {
                         x = DLLImport.Uo.GetInteger(_UOHandle, 1);
@@ -92,8 +91,7 @@ namespace RazorEnhanced
                 DLLImport.Uo.PushStrVal(_UOHandle, "ContPosY");
                 if (DLLImport.Uo.Execute(_UOHandle) == 0)
                 {
-                    int numRetValues = 0;
-                    numRetValues = DLLImport.Uo.GetTop(_UOHandle);
+                    int numRetValues = DLLImport.Uo.GetTop(_UOHandle);
                     if (numRetValues == 1)
                     {
                         y = DLLImport.Uo.GetInteger(_UOHandle, 1);
