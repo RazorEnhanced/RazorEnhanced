@@ -676,6 +676,7 @@ namespace RazorEnhanced
 		{
 			Engine.MainWindow.GridSlotComboBox.Items.Clear();
 			Engine.MainWindow.GridLockCheckBox.Checked = m_lock = Settings.General.ReadBool("LockGridCheckBox");
+			Engine.MainWindow.SpellGridStyleComboBox.SelectedIndex = Settings.General.ReadInt("SpellGridStyle");
 			Engine.MainWindow.GridOpenLoginCheckBox.Checked = Settings.General.ReadBool("GridOpenLoginCheckBox");
 			Engine.MainWindow.GridLocationLabel.Text = "X: " + Settings.General.ReadInt("PosXGrid") + " - Y:" + RazorEnhanced.Settings.General.ReadInt("PosYGrid");
 			Engine.GridX = Settings.General.ReadInt("PosXGrid");

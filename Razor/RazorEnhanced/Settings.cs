@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static readonly int SettingVersion = 11;
+		private static readonly int SettingVersion = 12;
 
 		private static string m_profileName = null;
 
@@ -2347,6 +2347,7 @@ namespace RazorEnhanced
 			general.Columns.Add("GridVSlot", typeof(int));
 			general.Columns.Add("GridHSlot", typeof(int));
 			general.Columns.Add("GridOpacity", typeof(int));
+			general.Columns.Add("SpellGridStyle", typeof(int));
 
 			// Parametri Tab (Screenshot)
 			general.Columns.Add("CapPath", typeof(string));
@@ -2531,7 +2532,7 @@ namespace RazorEnhanced
                     false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true, false, 100,
 
                     // Parametri primo avvio per tab Enhanced Grid
-                    false, false, 10, 10, 2, 2, 100,
+                    false, false, 10, 10, 2, 2, 100, 0,
 
                     // Parametri primo avvio per tab screenshot
                     Assistant.Engine.RootPath, "jpg", false, false, false,
@@ -5137,8 +5138,16 @@ namespace RazorEnhanced
                 realVersion = 11;
                 General.WriteInt("SettingVersion", realVersion);
             }
+			if (realVersion == 11)
+			{
+				DataTable general = m_Dataset.Tables["General"];
+				general.Columns.Add("SpellGridStyle", typeof(int));
+				RazorEnhanced.Settings.General.WriteInt("SpellGridStyle", 0);
+				realVersion = 12;
+				General.WriteInt("SettingVersion", realVersion);
+			}
 
-            Save(true);
+			Save(true);
 		}
 
 
