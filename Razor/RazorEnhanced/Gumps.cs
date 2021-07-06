@@ -38,6 +38,7 @@ namespace RazorEnhanced
             public List<int> switches;
             public List<string> text;
             public List<int> textID;
+            internal Action<GumpData> action;
 
             public GumpData()
             {
@@ -52,6 +53,7 @@ namespace RazorEnhanced
                 switches = new List<int>();
                 text = new List<string>();
                 textID = new List<int>();
+                action = null;
             }
         }
 
@@ -94,7 +96,7 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="width"> width of the transparent backround</param>
         /// <param name="height"> height of the transparent backround</param>
-        public void AddAlphaRegion(ref GumpData gd, int x, int y, int width, int height)
+        public static void AddAlphaRegion(ref GumpData gd, int x, int y, int width, int height)
         {
             string textEntry = String.Format("{{ checkertrans {0} {1} {2} {3} }}", x, y, width, height);
             gd.gumpDefinition += textEntry;
@@ -219,7 +221,7 @@ namespace RazorEnhanced
         /// <summary>
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
-        public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, bool background, bool scrollbar)
+        public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, bool background, bool scrollbar)
         {            
             string textEntry = String.Format("{{ xmfhtmlgump {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, number, background ? 1 : 0, scrollbar ? 1 : 0);
             gd.gumpDefinition += textEntry;
@@ -228,7 +230,7 @@ namespace RazorEnhanced
         /// <summary>
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
-        public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, int color, bool background, bool scrollbar)
+        public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, int color, bool background, bool scrollbar)
         {
             string textEntry = String.Format("{{ xmfhtmlgumpcolor {0} {1} {2} {3} {4} {5} {6} {7} }}", x, y, width, height, number, background ? 1 : 0, scrollbar ? 1 : 0, color);
             gd.gumpDefinition += textEntry;
@@ -237,7 +239,7 @@ namespace RazorEnhanced
         /// <summary>
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
-        public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, string args, int color, bool background, bool scrollbar)
+        public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, string args, int color, bool background, bool scrollbar)
         {            
             string textEntry = String.Format("{{ xmfhtmltok {0} {1} {2} {3} {4} {5} {6} {7} @{8}@ }}", x, y, width, height, background ? 1 : 0, scrollbar ? 1 : 0, color, number, args);
             gd.gumpDefinition += textEntry;
@@ -250,7 +252,7 @@ namespace RazorEnhanced
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="gumpID"> id used to reference gumps.mul</param>
-        public void AddImage(ref GumpData gd, int x, int y, int gumpID)
+        public static void AddImage(ref GumpData gd, int x, int y, int gumpID)
         {            
             string textEntry = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpID);
             gd.gumpDefinition += textEntry;
@@ -267,7 +269,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the html block</param>
         /// <param name="sx"> maybe stretch X?</param>
         /// <param name="sy"> maybe stretch Y?</param>
-        public void AddSpriteImage(ref GumpData gd, int x, int y, int gumpID, int width, int height, int sx, int sy)
+        public static void AddSpriteImage(ref GumpData gd, int x, int y, int gumpID, int width, int height, int sx, int sy)
         {
             string textEntry = String.Format("{{ picinpic {0} {1} {2} {3} {4} {5} {6} }}", x, y, gumpID, width, height, sx, sy);
             gd.gumpDefinition += textEntry;
@@ -281,7 +283,7 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="gumpID"> id used to reference gumps.mul</param>
         /// <param name="hue"> to re-color the image</param>
-        public void AddImage(ref GumpData gd, int x, int y, int gumpID, int hue)
+        public static void AddImage(ref GumpData gd, int x, int y, int gumpID, int hue)
         {
             string textEntry = String.Format("{{ gumppic {0} {1} {2} hue={3} }}", x, y, gumpID, hue);
             gd.gumpDefinition += textEntry;
@@ -296,7 +298,7 @@ namespace RazorEnhanced
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>
         /// <param name="gumpID">id of gump to be added</param>
-        public void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpID)
+        public static void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpID)
         {
             string textEntry = String.Format("{{ gumppictiled {0} {1} {2} {3} {4} }}", x, y, width, height, gumpID);
             gd.gumpDefinition += textEntry;
@@ -317,7 +319,7 @@ namespace RazorEnhanced
         /// <param name="hue"> color to apply to image</param>
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>       
-        public void AddImageTiledButton(ref GumpData gd,
+        public static void AddImageTiledButton(ref GumpData gd,
             int x,
             int y,
             int normalID,
@@ -350,7 +352,7 @@ namespace RazorEnhanced
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>       
         /// <param name="localizedTooltip"> cliloc to use as tooltip</param> 
-        public void AddImageTiledButton(ref GumpData gd,
+        public static void AddImageTiledButton(ref GumpData gd,
             int x,
             int y,
             int normalID,
@@ -375,7 +377,7 @@ namespace RazorEnhanced
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="itemID"> id used to reference statics.mul</param>
-        public void AddItem(ref GumpData gd, int x, int y, int itemID)
+        public static void AddItem(ref GumpData gd, int x, int y, int itemID)
         {
             string textEntry = String.Format("{{ tilepic {0} {1} {2} }}", x, y, itemID);
             gd.gumpDefinition += textEntry;
@@ -388,7 +390,7 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="itemID"> id used to reference statics.mul</param>
         /// <param name="hue"> to re-color the image</param>
-        public void AddItem(ref GumpData gd, int x, int y, int itemID, int hue)
+        public static void AddItem(ref GumpData gd, int x, int y, int itemID, int hue)
         {
             string textEntry = String.Format("{{ tilepichue {0} {1} {2} {3} }}", x, y, itemID, hue);
             gd.gumpDefinition += textEntry;
@@ -437,7 +439,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="text"> text string to be displayed</param>
-        public void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, string text)
+        public static void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, string text)
         {
             gd.gumpStrings.Add(text);
             AddLabelCropped(ref gd, x, y, width, height, hue, gd.gumpStrings.Count - 1);
@@ -452,7 +454,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="textID"> index into string list passed to gump</param>
-        public void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, int textID)
+        public static void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, int textID)
         {
             string textEntry = String.Format("{{ croppedtext {0} {1} {2} {3} {4} {5} }}", x, y, width, height, hue, textID);
             if (gd.gumpStrings.Count > textID)
@@ -472,7 +474,7 @@ namespace RazorEnhanced
         /// <param name="activeID"> id of the checkmark to use when clicked</param>
         /// <param name="initialState"> active or inactive initially</param>
         /// <param name="switchID"> switch id to return if this is changed</param>
-        public void AddRadio(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
+        public static void AddRadio(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
         {
             string textEntry = String.Format("{{ radio {0} {1} {2} {3} {4} {5} }}", x, y, inactiveID, activeID, initialState ? 1 : 0, switchID);
             gd.gumpDefinition += textEntry;
@@ -520,6 +522,17 @@ namespace RazorEnhanced
 
 
         internal static Dictionary<uint, GumpData> m_gumpData = new Dictionary<uint, GumpData>();
+
+        /// <summary>
+        /// Sends a gump using an existing GumpData structure
+        /// </summary>
+        ///
+		public static void SendGump(GumpData gd, uint x, uint y)
+        {
+            m_gumpData[gd.gumpId] = gd;
+            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            Assistant.Client.Instance.SendToClientWait(gg);
+        }
 
         /// <summary>
         /// Hack some gump test stuff

@@ -218,20 +218,33 @@ namespace Assistant
 
 		private void spellgridstyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (spellgridstyleComboBox.Text != "Window")
+			if (spellgridstyleComboBox.Text == "Window")
 			{
-				
+				setSpellBarOrigin.Visible = false;
+			}
+			else 
+			{
+				setSpellBarOrigin.Visible = true;
 			}
 
 			if (spellgridstyleComboBox.Focused)
 			{
-				RazorEnhanced.Settings.General.WriteInt("SpellGridStyle", spellgridstyleComboBox.SelectedIndex);
-
 				RazorEnhanced.SpellGrid.Close();
+				RazorEnhanced.Settings.General.WriteInt("SpellGridStyle", spellgridstyleComboBox.SelectedIndex);
 				RazorEnhanced.SpellGrid.Open();
 			}
 
 		}
+
+		internal static void spellGridSetOrigin(object sender, EventArgs e)
+		{
+			RazorEnhanced.SpellGrid.Close();
+			RazorEnhanced.SpellGrid.GetSpellGridOrigin();
+			RazorEnhanced.SpellGrid.Open();
+		}
+
+
+
 
 		private void UpdateGridItem()
 		{
