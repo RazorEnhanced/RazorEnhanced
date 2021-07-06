@@ -152,7 +152,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
         /// <param name="group"> group identifier (I have no idea what this control does)</param>
-        public void AddGroup(ref GumpData gd, int group)
+        public static void AddGroup(ref GumpData gd, int group)
         {
             string textEntry = String.Format("{{ group {0} }}", group);
             gd.gumpDefinition += textEntry;
@@ -162,7 +162,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
         /// <param name="number"> cliloc for tooltip</param>
-        public void AddTooltip(ref GumpData gd, int number)
+        public static void AddTooltip(ref GumpData gd, int number)
         {
             string textEntry = string.Format("{{ tooltip {0} }}", number);
             gd.gumpDefinition += textEntry;
@@ -173,7 +173,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
         /// <param name="text"> string for tooltip</param>
-        public void AddTooltip(ref GumpData gd, string text)
+        public static void AddTooltip(ref GumpData gd, string text)
         {
             string textEntry = string.Format("{{ tooltip {0} @{1}@ }}", 1114778, text);
             gd.gumpDefinition += textEntry;

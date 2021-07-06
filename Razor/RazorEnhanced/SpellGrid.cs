@@ -567,7 +567,27 @@ namespace RazorEnhanced
 					if (g != GroupType.Empty)
 					{
 						imageid = GetImageID(g, item.Spell);
-						Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 1210, index, 1, 0);
+						switch (imageid)
+						{
+							case 0:
+								m_panellist[x].Enabled = false;
+								break;
+
+							case -1:  // Script
+								Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 4502, 2205, index, 1, 0);
+								break;
+
+							case -2:  // Skill
+								Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2105, 2205, index, 1, 0);
+								break;
+
+							default:
+								Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 2205, index, 1, 0);
+								break;
+						}
+						Gumps.AddTooltip(ref spellBar, item.Spell);
+
+
 					}
 				}
 
@@ -593,12 +613,20 @@ namespace RazorEnhanced
 			SpellGridItem item = items[buttonID];
 
 			if (item.Group == "Abilities")
-			{ }
+			{ 
+				if (item.Spell == "Primary")
+					Player.WeaponPrimarySA();
+				if (item.Spell == "Secondary")
+					Player.WeaponSecondarySA();
+			}
 			else if (item.Group == "Script")
 			{
+				Misc.ScriptRun(item.Spell);
 			}
 			else if (item.Group == "Skills")
-			{ }
+			{
+				Player.UseSkill(item.Spell);
+			}
 			else
 			{
 				Spells.Cast(item.Spell);
@@ -722,6 +750,7 @@ namespace RazorEnhanced
 						break;
 
 					case -1:  // Script
+						//2643
 						if (items[x].Spell != string.Empty)
 						{
 							m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell.Substring(0, items[x].Spell.LastIndexOf(".")));
@@ -730,6 +759,7 @@ namespace RazorEnhanced
 						break;
 
 					case -2:  // Skill
+						//2104
 						m_panellist[x].BackgroundImage = SkillsIcon[items[x].Spell];
 						m_panellist[x].Enabled = true;
 						break;
