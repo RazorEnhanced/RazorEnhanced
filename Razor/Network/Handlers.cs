@@ -1137,8 +1137,10 @@ namespace Assistant
 				RazorEnhanced.ToolBar.Open();
 
 			// Apertura automatica spellgrit se abilitata
-			if (Engine.MainWindow.GridOpenLoginCheckBox.Checked && RazorEnhanced.SpellGrid.SpellGridForm == null)
+			if (Engine.MainWindow.GridOpenLoginCheckBox.Checked)
 				RazorEnhanced.SpellGrid.Open();
+
+			new System.Threading.Thread(DelayedTasks).Start();
 
 			// Avvio automatico script selezionati come autostart
 			RazorEnhanced.Scripts.AutoStart();
@@ -1152,6 +1154,21 @@ namespace Assistant
 				RazorEnhanced.BandageHeal.LoginAutostart();
 
 		}
+		internal static void DelayedTasks()
+		{
+
+			// Have to wait before openning the Gump based spellbars
+			int displayMethod = RazorEnhanced.Settings.General.ReadInt("SpellGridStyle");
+			if (displayMethod == 1)
+			{
+				if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox"))
+				{
+					System.Threading.Thread.Sleep(5000); // retry open of spellgrid after 5 seconds
+					RazorEnhanced.SpellGrid.Open();
+				}
+			}
+		}
+
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
 		{
@@ -2458,7 +2475,12 @@ namespace Assistant
             {
                 args.Block = true;
                 gd.hasResponse = true;
-            }
+				if (gd.action != null)
+				{
+					System.Threading.Thread doAction = new System.Threading.Thread(() => gd.action(gd));
+					doAction.Start();
+				}
+			}
         }
 
 		private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
