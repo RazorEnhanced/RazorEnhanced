@@ -2401,7 +2401,7 @@ namespace Assistant
 			RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
 		}
 
-		private static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
+		internal static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
 				return;

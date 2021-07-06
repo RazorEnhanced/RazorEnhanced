@@ -660,7 +660,8 @@ namespace RazorEnhanced
         /// <param name="buttonid">ID of the Button to press.</param>
 		public static void SendAction(uint gumpid, int buttonid)
 		{
-			int[] nullswitch = new int[0];
+
+            int[] nullswitch = new int[0];
 			GumpTextEntry[] nullentries = new GumpTextEntry[0];
 
 			if (gumpid == 0)
@@ -670,8 +671,21 @@ namespace RazorEnhanced
 			}
 			else
 			{
-		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-		 		Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries));
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries);
+                if (m_gumpData.ContainsKey(gumpid))
+                {
+                    PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+
+                    PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                    p.ReadByte(); // through away the packet id
+                    p.ReadInt16(); // throw away the packet length
+                    Assistant.PacketHandlers.ClientGumpResponse(p, args);
+                }
+                else
+                {
+                    Assistant.Client.Instance.SendToServerWait(gumpResp);
+                }
 			}
 
 			World.Player.HasGump = false;
@@ -695,8 +709,20 @@ namespace RazorEnhanced
 			}
 			else
 			{
-		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-		 		Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchs.ToArray(), entries));
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchs.ToArray(), entries);
+                if (m_gumpData.ContainsKey(gumpid))
+                {
+                    PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+                    PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                    p.ReadByte(); // through away the packet id
+                    p.ReadInt16(); // throw away the packet length
+                    Assistant.PacketHandlers.ClientGumpResponse(p, args);
+                }
+                else
+                {
+                    Assistant.Client.Instance.SendToServerWait(gumpResp);
+                }
 			}
 
 			World.Player.HasGump = false;
@@ -748,11 +774,23 @@ namespace RazorEnhanced
 				}
 				else
 				{
-			 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-			 		Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchlist_id.ToArray(), entries));
-				}
+                    Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+                    GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchlist_id.ToArray(), entries);
+                    if (m_gumpData.ContainsKey(gumpid))
+                    {
+                        PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+                        PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                        p.ReadByte(); // through away the packet id
+                        p.ReadInt16(); // throw away the packet length
+                        Assistant.PacketHandlers.ClientGumpResponse(p, args);
+                    }
+                    else
+                    {
+                        Assistant.Client.Instance.SendToServerWait(gumpResp);
+                    }
+                }
 
-				World.Player.HasGump = false;
+                World.Player.HasGump = false;
 				World.Player.CurrentGumpStrings.Clear();
 			}
 			else
