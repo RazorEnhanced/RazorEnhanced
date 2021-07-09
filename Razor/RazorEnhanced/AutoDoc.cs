@@ -917,6 +917,8 @@ namespace RazorEnhanced
             var classKey = XMLKeyComposer.GetKey(type);
             var className = ResolveType(type);
             var classSummary = XMLCommentReader.GetDocumentation(type);
+            classSummary = XMLCommentReader.RemoveBaseIndentation(classSummary);
+            classSummary = XMLCommentReader.ExtractXML(classSummary, "summary");
             result.classes.Add(new DocClass(classKey, className, classSummary));
 
 
