@@ -225,7 +225,7 @@ namespace RazorEnhanced
             CustomID = Settings.General.ReadInt("BandageHealcustomIDTextBox");
             CustomColor = Settings.General.ReadInt("BandageHealcustomcolorTextBox");
             Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = Settings.General.ReadBool("BandageHealdexformulaCheckBox");
-            Engine.MainWindow.BandageHealTimeWithBuf.Checked = Settings.General.ReadBool("BandageHealTimedWithBufCheckBox");
+            Engine.MainWindow.BandageHealTimeWithBuf.Checked = Settings.General.ReadBool("BandageHealTimeWithBuf");
             CustomDelay = Settings.General.ReadInt("BandageHealdelayTextBox");
             HpLimit = Settings.General.ReadInt("BandageHealhpTextBox");
             MaxRange = Settings.General.ReadInt("BandageHealMaxRangeTextBox");
