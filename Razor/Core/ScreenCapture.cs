@@ -11,7 +11,7 @@ namespace Assistant
 {
 	internal class ScreenCapManager
 	{
-		private static TimerCallback m_DoCaptureCall = new TimerCallback(CaptureNow);
+		private static readonly TimerCallback m_DoCaptureCall = new TimerCallback(CaptureNow);
 
 		public static void Initialize()
 		{

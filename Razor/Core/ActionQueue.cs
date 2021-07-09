@@ -92,9 +92,9 @@ namespace Assistant
 		private static bool m_ClientLiftReq = false;
 		private static DateTime m_Lifted = DateTime.MinValue;
 
-		private static Dictionary<Serial, Queue<DropReq>> m_DropReqs = new Dictionary<Serial, Queue<DropReq>>();
+		private static readonly Dictionary<Serial, Queue<DropReq>> m_DropReqs = new Dictionary<Serial, Queue<DropReq>>();
 
-		private static LiftReq[] m_LiftReqs = new LiftReq[500];
+		private static readonly LiftReq[] m_LiftReqs = new LiftReq[500];
 		private static byte m_Front, m_Back;
 
 		internal static Item Holding { get { return m_HoldingItem; } }
@@ -470,8 +470,8 @@ namespace Assistant
 	internal class ActionQueue
 	{
 		private static Serial m_Last = Serial.Zero;
-		private static Queue<Serial> m_Queue = new Queue<Serial>();
-		private static ProcTimer m_Timer = new ProcTimer();
+		private static readonly Queue<Serial> m_Queue = new Queue<Serial>();
+		private static readonly ProcTimer m_Timer = new ProcTimer();
 		private static int m_Total = 0;
 
 		internal static void DoubleClick(bool silent, Serial s)
@@ -543,7 +543,7 @@ namespace Assistant
             private DateTime m_StartTime;
 			private DateTime m_LastTick;
 
-            private ManualResetEvent m_stop = new ManualResetEvent(false);
+            private readonly ManualResetEvent m_stop = new ManualResetEvent(false);
             private RegisteredWaitHandle m_registeredWait = null;
             public bool Running
             {

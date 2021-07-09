@@ -38,6 +38,7 @@ namespace RazorEnhanced
             public List<int> switches;
             public List<string> text;
             public List<int> textID;
+            internal Action<GumpData> action;
 
             public GumpData()
             {
@@ -52,6 +53,7 @@ namespace RazorEnhanced
                 switches = new List<int>();
                 text = new List<string>();
                 textID = new List<int>();
+                action = null;
             }
         }
 
@@ -61,7 +63,7 @@ namespace RazorEnhanced
         /// <param name="movable"> allow the gump to be moved</param>
         /// <param name="closable"> allow the gump to be right clicked to close</param>
         /// <param name="disposable"> allow the gump to be disposed (beats me what it does)</param>
-        /// <param name="resizable"> allow the gump to be resized</param>
+        /// <param name="resizeable"> allow the gump to be resized</param>
         public static GumpData CreateGump(bool movable=true, bool closable=true, bool disposable = true, bool resizeable=true) 
         {
             GumpData gd = new GumpData();
@@ -94,7 +96,7 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="width"> width of the transparent backround</param>
         /// <param name="height"> height of the transparent backround</param>
-        public void AddAlphaRegion(ref GumpData gd, int x, int y, int width, int height)
+        public static void AddAlphaRegion(ref GumpData gd, int x, int y, int width, int height)
         {
             string textEntry = String.Format("{{ checkertrans {0} {1} {2} {3} }}", x, y, width, height);
             gd.gumpDefinition += textEntry;
@@ -139,7 +141,7 @@ namespace RazorEnhanced
         /// <param name="inactiveID"> id of the checkmark to used when unclicked</param>
         /// <param name="activeID"> id of the checkmark to use when clicked</param>
         /// <param name="initialState"> active or inactive initially</param>
-        /// <param name="switchid"> switch id to return if this is changed</param>
+        /// <param name="switchID"> switch id to return if this is changed</param>
         public static void AddCheck(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
         {
             string textEntry = String.Format("{{ checkbox {0} {1} {2} {3} {4} {5} }}", x, y, inactiveID, activeID, initialState ? 1 : 0, switchID);
@@ -150,7 +152,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
         /// <param name="group"> group identifier (I have no idea what this control does)</param>
-        public void AddGroup(ref GumpData gd, int group)
+        public static void AddGroup(ref GumpData gd, int group)
         {
             string textEntry = String.Format("{{ group {0} }}", group);
             gd.gumpDefinition += textEntry;
@@ -160,7 +162,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
         /// <param name="number"> cliloc for tooltip</param>
-        public void AddTooltip(ref GumpData gd, int number)
+        public static void AddTooltip(ref GumpData gd, int number)
         {
             string textEntry = string.Format("{{ tooltip {0} }}", number);
             gd.gumpDefinition += textEntry;
@@ -171,7 +173,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
         /// <param name="text"> string for tooltip</param>
-        public void AddTooltip(ref GumpData gd, string text)
+        public static void AddTooltip(ref GumpData gd, string text)
         {
             string textEntry = string.Format("{{ tooltip {0} @{1}@ }}", 1114778, text);
             gd.gumpDefinition += textEntry;
@@ -219,7 +221,7 @@ namespace RazorEnhanced
         /// <summary>
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
-        public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, bool background, bool scrollbar)
+        public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, bool background, bool scrollbar)
         {            
             string textEntry = String.Format("{{ xmfhtmlgump {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, number, background ? 1 : 0, scrollbar ? 1 : 0);
             gd.gumpDefinition += textEntry;
@@ -228,7 +230,7 @@ namespace RazorEnhanced
         /// <summary>
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
-        public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, int color, bool background, bool scrollbar)
+        public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, int color, bool background, bool scrollbar)
         {
             string textEntry = String.Format("{{ xmfhtmlgumpcolor {0} {1} {2} {3} {4} {5} {6} {7} }}", x, y, width, height, number, background ? 1 : 0, scrollbar ? 1 : 0, color);
             gd.gumpDefinition += textEntry;
@@ -237,7 +239,7 @@ namespace RazorEnhanced
         /// <summary>
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
-        public void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, string args, int color, bool background, bool scrollbar)
+        public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, string args, int color, bool background, bool scrollbar)
         {            
             string textEntry = String.Format("{{ xmfhtmltok {0} {1} {2} {3} {4} {5} {6} {7} @{8}@ }}", x, y, width, height, background ? 1 : 0, scrollbar ? 1 : 0, color, number, args);
             gd.gumpDefinition += textEntry;
@@ -249,8 +251,8 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpid"> id used to reference gumps.mul</param>
-        public void AddImage(ref GumpData gd, int x, int y, int gumpID)
+        /// <param name="gumpID"> id used to reference gumps.mul</param>
+        public static void AddImage(ref GumpData gd, int x, int y, int gumpID)
         {            
             string textEntry = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpID);
             gd.gumpDefinition += textEntry;
@@ -262,12 +264,12 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpid"> id used to reference gumps.mul</param>
+        /// <param name="gumpID"> id used to reference gumps.mul</param>
         /// <param name="width"> width of the html block</param>
         /// <param name="height"> height of the html block</param>
         /// <param name="sx"> maybe stretch X?</param>
         /// <param name="sy"> maybe stretch Y?</param>
-        public void AddSpriteImage(ref GumpData gd, int x, int y, int gumpID, int width, int height, int sx, int sy)
+        public static void AddSpriteImage(ref GumpData gd, int x, int y, int gumpID, int width, int height, int sx, int sy)
         {
             string textEntry = String.Format("{{ picinpic {0} {1} {2} {3} {4} {5} {6} }}", x, y, gumpID, width, height, sx, sy);
             gd.gumpDefinition += textEntry;
@@ -279,9 +281,9 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpid"> id used to reference gumps.mul</param>
+        /// <param name="gumpID"> id used to reference gumps.mul</param>
         /// <param name="hue"> to re-color the image</param>
-        public void AddImage(ref GumpData gd, int x, int y, int gumpID, int hue)
+        public static void AddImage(ref GumpData gd, int x, int y, int gumpID, int hue)
         {
             string textEntry = String.Format("{{ gumppic {0} {1} {2} hue={3} }}", x, y, gumpID, hue);
             gd.gumpDefinition += textEntry;
@@ -295,8 +297,8 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>
-        /// <param name="hue"> color to apply to image</param>
-        public void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpID)
+        /// <param name="gumpID">id of gump to be added</param>
+        public static void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpID)
         {
             string textEntry = String.Format("{{ gumppictiled {0} {1} {2} {3} {4} }}", x, y, width, height, gumpID);
             gd.gumpDefinition += textEntry;
@@ -317,7 +319,7 @@ namespace RazorEnhanced
         /// <param name="hue"> color to apply to image</param>
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>       
-        public void AddImageTiledButton(ref GumpData gd,
+        public static void AddImageTiledButton(ref GumpData gd,
             int x,
             int y,
             int normalID,
@@ -350,7 +352,7 @@ namespace RazorEnhanced
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>       
         /// <param name="localizedTooltip"> cliloc to use as tooltip</param> 
-        public void AddImageTiledButton(ref GumpData gd,
+        public static void AddImageTiledButton(ref GumpData gd,
             int x,
             int y,
             int normalID,
@@ -374,8 +376,8 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="itemid"> id used to reference statics.mul</param>
-        public void AddItem(ref GumpData gd, int x, int y, int itemID)
+        /// <param name="itemID"> id used to reference statics.mul</param>
+        public static void AddItem(ref GumpData gd, int x, int y, int itemID)
         {
             string textEntry = String.Format("{{ tilepic {0} {1} {2} }}", x, y, itemID);
             gd.gumpDefinition += textEntry;
@@ -386,9 +388,9 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="itemid"> id used to reference statics.mul</param>
+        /// <param name="itemID"> id used to reference statics.mul</param>
         /// <param name="hue"> to re-color the image</param>
-        public void AddItem(ref GumpData gd, int x, int y, int itemID, int hue)
+        public static void AddItem(ref GumpData gd, int x, int y, int itemID, int hue)
         {
             string textEntry = String.Format("{{ tilepichue {0} {1} {2} {3} }}", x, y, itemID, hue);
             gd.gumpDefinition += textEntry;
@@ -437,7 +439,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="text"> text string to be displayed</param>
-        public void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, string text)
+        public static void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, string text)
         {
             gd.gumpStrings.Add(text);
             AddLabelCropped(ref gd, x, y, width, height, hue, gd.gumpStrings.Count - 1);
@@ -452,7 +454,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="textID"> index into string list passed to gump</param>
-        public void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, int textID)
+        public static void AddLabelCropped(ref GumpData gd, int x, int y, int width, int height, int hue, int textID)
         {
             string textEntry = String.Format("{{ croppedtext {0} {1} {2} {3} {4} {5} }}", x, y, width, height, hue, textID);
             if (gd.gumpStrings.Count > textID)
@@ -471,8 +473,8 @@ namespace RazorEnhanced
         /// <param name="inactiveID"> id of the checkmark to used when unclicked</param>
         /// <param name="activeID"> id of the checkmark to use when clicked</param>
         /// <param name="initialState"> active or inactive initially</param>
-        /// <param name="switchid"> switch id to return if this is changed</param>
-        public void AddRadio(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
+        /// <param name="switchID"> switch id to return if this is changed</param>
+        public static void AddRadio(ref GumpData gd, int x, int y, int inactiveID, int activeID, bool initialState, int switchID)
         {
             string textEntry = String.Format("{{ radio {0} {1} {2} {3} {4} {5} }}", x, y, inactiveID, activeID, initialState ? 1 : 0, switchID);
             gd.gumpDefinition += textEntry;
@@ -488,7 +490,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="entryID"> id to be returned with text to identify the input field</param>
-        /// <param name="text"> text string to be displayed</param>
+        /// <param name="initialText"> initial text string to be displayed</param>
         public static void AddTextEntry(ref GumpData gd, int x, int y, int width, int height, int hue, int entryID, string initialText)
         {
             gd.gumpStrings.Add(initialText);
@@ -506,7 +508,7 @@ namespace RazorEnhanced
         /// <param name="height"> height of the area</param>       
         /// <param name="hue"> to color the text</param>
         /// <param name="entryID"> id to be returned with text to identify the input field</param>
-        /// <param name="textID"> index into the list of strings passed to the gump</param>
+        /// <param name="initialTextID"> index into the list of strings passed to the gump</param>
         public static void AddTextEntry(ref GumpData gd, int x, int y, int width, int height, int hue, int entryID, int initialTextID)
         {           
             string textEntry = String.Format("{{ textentry {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, hue, entryID, initialTextID);
@@ -522,20 +524,33 @@ namespace RazorEnhanced
         internal static Dictionary<uint, GumpData> m_gumpData = new Dictionary<uint, GumpData>();
 
         /// <summary>
+        /// Sends a gump using an existing GumpData structure
+        /// </summary>
+        ///
+		public static void SendGump(GumpData gd, uint x, uint y)
+        {
+            m_gumpData[gd.gumpId] = gd;
+            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            Assistant.Client.Instance.SendToClientWait(gg);
+        }
+
+        /// <summary>
         /// Hack some gump test stuff
         /// </summary>
         ///
 		public static void SendGump(uint gumpid, uint serial, uint x, uint y, 
             string gumpDefinition, List<string> gumpStrings)
         {
-            GumpData gd = new GumpData();
-            gd.gumpId = gumpid;
-            gd.serial = serial;
-            gd.x = x;
-            gd.y = y;
-            gd.hasResponse = false;
-            gd.gumpDefinition = gumpDefinition;
-            gd.gumpStrings = new List<string>();
+            GumpData gd = new GumpData
+            {
+                gumpId = gumpid,
+                serial = serial,
+                x = x,
+                y = y,
+                hasResponse = false,
+                gumpDefinition = gumpDefinition,
+                gumpStrings = new List<string>()
+            };
             gd.gumpStrings.AddRange(gumpStrings);
             //
             m_gumpData[gumpid] = gd;
@@ -618,10 +633,9 @@ namespace RazorEnhanced
             }
             else
             {
-                Gumps.GumpData gd = null;
                 if (Gumps.m_gumpData.ContainsKey(gumpid))
                 {
-                    gd = Gumps.m_gumpData[gumpid];
+                    GumpData gd = Gumps.m_gumpData[gumpid];
                     while (gd.hasResponse != true && subdelay > 0)
                     {
                         Thread.Sleep(2);
@@ -646,7 +660,8 @@ namespace RazorEnhanced
         /// <param name="buttonid">ID of the Button to press.</param>
 		public static void SendAction(uint gumpid, int buttonid)
 		{
-			int[] nullswitch = new int[0];
+
+            int[] nullswitch = new int[0];
 			GumpTextEntry[] nullentries = new GumpTextEntry[0];
 
 			if (gumpid == 0)
@@ -656,8 +671,21 @@ namespace RazorEnhanced
 			}
 			else
 			{
-		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-		 		Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries));
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries);
+                if (m_gumpData.ContainsKey(gumpid))
+                {
+                    PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+
+                    PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                    p.ReadByte(); // through away the packet id
+                    p.ReadInt16(); // throw away the packet length
+                    Assistant.PacketHandlers.ClientGumpResponse(p, args);
+                }
+                else
+                {
+                    Assistant.Client.Instance.SendToServerWait(gumpResp);
+                }
 			}
 
 			World.Player.HasGump = false;
@@ -681,8 +709,20 @@ namespace RazorEnhanced
 			}
 			else
 			{
-		 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-		 		Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchs.ToArray(), entries));
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchs.ToArray(), entries);
+                if (m_gumpData.ContainsKey(gumpid))
+                {
+                    PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+                    PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                    p.ReadByte(); // through away the packet id
+                    p.ReadInt16(); // throw away the packet length
+                    Assistant.PacketHandlers.ClientGumpResponse(p, args);
+                }
+                else
+                {
+                    Assistant.Client.Instance.SendToServerWait(gumpResp);
+                }
 			}
 
 			World.Player.HasGump = false;
@@ -718,10 +758,12 @@ namespace RazorEnhanced
 
 				foreach (int entry in textlist_id)
 				{
-					GumpTextEntry entrie = new GumpTextEntry(0, string.Empty);
-					entrie.EntryID = (ushort)entry;
-					entrie.Text = textlist_str[i];
-					entries[i] = entrie;
+                    GumpTextEntry entrie = new GumpTextEntry(0, string.Empty)
+                    {
+                        EntryID = (ushort)entry,
+                        Text = textlist_str[i]
+                    };
+                    entries[i] = entrie;
                     i++;
 				}
 
@@ -732,11 +774,23 @@ namespace RazorEnhanced
 				}
 				else
 				{
-			 		Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-			 		Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchlist_id.ToArray(), entries));
-				}
+                    Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+                    GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchlist_id.ToArray(), entries);
+                    if (m_gumpData.ContainsKey(gumpid))
+                    {
+                        PacketReader p = new PacketReader(gumpResp.ToArray(), false);
+                        PacketHandlerEventArgs args = new PacketHandlerEventArgs();
+                        p.ReadByte(); // through away the packet id
+                        p.ReadInt16(); // throw away the packet length
+                        Assistant.PacketHandlers.ClientGumpResponse(p, args);
+                    }
+                    else
+                    {
+                        Assistant.Client.Instance.SendToServerWait(gumpResp);
+                    }
+                }
 
-				World.Player.HasGump = false;
+                World.Player.HasGump = false;
 				World.Player.CurrentGumpStrings.Clear();
 			}
 			else

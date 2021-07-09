@@ -23,16 +23,16 @@ namespace RazorEnhanced
 		[Serializable]
 		public class OrganizerItem : ListAbleItem
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
-			private int m_Graphics;
+			private readonly int m_Graphics;
 			public int Graphics { get { return m_Graphics; } }
 
-			private int m_Color;
+			private readonly int m_Color;
 			public int Color { get { return m_Color; } }
 
-			private int m_amount;
+			private readonly int m_amount;
 			public int Amount { get { return m_amount; } }
 
 			[JsonProperty("Selected")]
@@ -50,19 +50,19 @@ namespace RazorEnhanced
 
 		internal class OrganizerList
 		{
-			private string m_Description;
+			private readonly string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private int m_Delay;
+			private readonly int m_Delay;
 			internal int Delay { get { return m_Delay; } }
 
-			private int m_Source;
+			private readonly int m_Source;
 			internal int Source { get { return m_Source; } }
 
-			private int m_Destination;
+			private readonly int m_Destination;
 			internal int Destination { get { return m_Destination; } }
 
-			private bool m_Selected;
+			private readonly bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
 			public OrganizerList(string description, int delay, int source, int destination, bool selected)
@@ -158,14 +158,14 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[3].Value == "All")
+                int color;
+                if ((string)row.Cells[3].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-				int amount = 0;
-				if ((string)row.Cells[4].Value == "All")
+                int amount;
+                if ((string)row.Cells[4].Value == "All")
 					amount = -1;
 				else
 					amount = Convert.ToInt32((string)row.Cells[4].Value);
@@ -216,14 +216,14 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[3].Value == "All")
+                int color;
+                if ((string)row.Cells[3].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-				int amount = 0;
-				if ((string)row.Cells[4].Value == "All")
+                int amount;
+                if ((string)row.Cells[4].Value == "All")
 					amount = -1;
 				else
 					amount = Convert.ToInt32((string)row.Cells[4].Value);

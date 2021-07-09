@@ -135,6 +135,7 @@ namespace RazorEnhanced
 			Assistant.Targeting.Target(location, true);
 		}
         /// <param name="serial">Serial of the mobile</param>
+        /// <param name="offset">+- distance to offset from the mobile identified with serial</param>
         public static void TargetExecuteRelative(int serial, int offset)
         {
             Mobile m = Mobiles.FindBySerial(serial);
@@ -174,7 +175,7 @@ namespace RazorEnhanced
                 return;
             }
 
-            int number = -1;
+            int number;
             switch (resource_name)
             {
                 case "ore":
@@ -203,6 +204,7 @@ namespace RazorEnhanced
         }
 
         /// <param name="item">Item object to use.</param>
+        /// <param name="resouce_name">name of the resource to be targeted. ore, sand, wood, graves, red mushroom</param>
         public static void TargetResource(Item item, string resouce_name)
         {
             TargetResource(item.Serial, resouce_name);
@@ -429,7 +431,7 @@ namespace RazorEnhanced
 			return mob != null ? mob.Name : string.Empty;
 		}
 
-		private static int[] m_NotoHues = new int[8]
+		private static readonly int[] m_NotoHues = new int[8]
 		{
 			1, // black		unused 0
 			0x059, // blue		0x0059 1

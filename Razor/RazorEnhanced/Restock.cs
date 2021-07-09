@@ -23,16 +23,16 @@ namespace RazorEnhanced
 
 		public class RestockItem : ListAbleItem
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
-			private int m_Graphics;
+			private readonly int m_Graphics;
 			public int Graphics { get { return m_Graphics; } }
 
-			private int m_Color;
+			private readonly int m_Color;
 			public int Color { get { return m_Color; } }
 
-			private int m_amountlimit;
+			private readonly int m_amountlimit;
 			public int AmountLimit { get { return m_amountlimit; } }
 
 			[JsonProperty("Selected")]
@@ -50,19 +50,19 @@ namespace RazorEnhanced
 
 		internal class RestockList
 		{
-			private string m_Description;
+			private readonly string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private int m_Delay;
+			private readonly int m_Delay;
 			internal int Delay { get { return m_Delay; } }
 
-			private int m_Source;
+			private readonly int m_Source;
 			internal int Source { get { return m_Source; } }
 
-			private int m_Destination;
+			private readonly int m_Destination;
 			internal int Destination { get { return m_Destination; } }
 
-			private bool m_Selected;
+			private readonly bool m_Selected;
 			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 
@@ -160,8 +160,8 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[3].Value == "All")
+                int color;
+                if ((string)row.Cells[3].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
@@ -209,8 +209,8 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[3].Value == "All")
+                int color;
+                if ((string)row.Cells[3].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);

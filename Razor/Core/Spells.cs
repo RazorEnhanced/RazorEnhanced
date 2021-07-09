@@ -178,8 +178,8 @@ namespace Assistant
 
 		internal static DateTime LastCastTime = DateTime.MinValue;
 
-		private static Dictionary<string, Spell> m_SpellsByPower;
-		private static Dictionary<int, Spell> m_SpellsByID;
+		private static readonly Dictionary<string, Spell> m_SpellsByPower;
+		private static readonly Dictionary<int, Spell> m_SpellsByID;
 
 		static Spell()
 		{
@@ -229,9 +229,8 @@ namespace Assistant
 
 		internal static void HealOrCureSelf()
 		{
-			Spell s = null;
-
-			if (World.Player.Poisoned)
+            Spell s;
+            if (World.Player.Poisoned)
 			{
 				s = Get(2, 3); // cure
 			}
@@ -277,11 +276,9 @@ namespace Assistant
 
 		internal static void MiniHealOrCureSelf()
 		{
-			Spell s = null;
+            Spell s = World.Player.Poisoned ? Get(2, 3) : Get(1, 4);
 
-			s = World.Player.Poisoned ? Get(2, 3) : Get(1, 4);
-
-			if (RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox"))
+            if (RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox"))
 			{
 				if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
 				{
@@ -309,11 +306,9 @@ namespace Assistant
 
 		internal static void HealOrCureSelfChiva()
 		{
-			Spell s = null;
+            Spell s = Get(20, World.Player.Poisoned ? 1 : 2);
 
-			s = Get(20, World.Player.Poisoned ? 1 : 2);
-
-			if (RazorEnhanced.Settings.General.ReadBool("BlockChivalryHealCheckBox"))
+            if (RazorEnhanced.Settings.General.ReadBool("BlockChivalryHealCheckBox"))
 			{
 				if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
 				{
@@ -358,15 +353,15 @@ namespace Assistant
 
 		internal static Spell Get(string power)
 		{
-			Spell spell = null;
-			m_SpellsByPower.TryGetValue(power, out spell);
+            Spell spell;
+            m_SpellsByPower.TryGetValue(power, out spell);
 			return spell;
 		}
 
 		internal static Spell Get(int num)
 		{
-			Spell spell = null;
-			m_SpellsByID.TryGetValue(num, out spell);
+            Spell spell;
+            m_SpellsByID.TryGetValue(num, out spell);
 			return spell;
 		}
 

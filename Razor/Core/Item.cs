@@ -66,7 +66,7 @@ namespace Assistant
         private object m_Parent;
         private int m_Price;
         private string m_BuyDesc;
-        private List<Item> m_Items;
+        private readonly List<Item> m_Items;
 
         private bool m_IsNew;
         private bool m_AutoStack;
@@ -108,7 +108,7 @@ namespace Assistant
             public bool Twohanded { get; set; }
 
         }
-        static private ConcurrentDictionary<int, Weapon> g_weapons = LoadWeapons();
+        private static readonly ConcurrentDictionary<int, Weapon> g_weapons = LoadWeapons();
         internal static ConcurrentDictionary<int, Weapon> Weapons { get { return g_weapons; } }
 
         internal static ConcurrentDictionary<int, Weapon> LoadWeapons()
@@ -154,7 +154,7 @@ namespace Assistant
                 // Because the itemID of dragged items is not on a drop packet
                 itemID = DragDropManager.Holding.ItemID;
             }
-            Item item = null;
+            Item item;
             switch (itemID)
             {
                 case 0x14EC:
@@ -274,7 +274,7 @@ namespace Assistant
 
                 if ((this.ItemID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0) 
                 {
-                    Weapon w = null;
+                    Weapon w;
                     bool found = Weapons.TryGetValue(this.m_ItemID, out w);
                     if (found)
                     {
@@ -410,7 +410,7 @@ namespace Assistant
 			return true;
 		}
 
-		private static List<Item> m_NeedContUpdate = new List<Item>();
+		private static readonly List<Item> m_NeedContUpdate = new List<Item>();
 
 		internal static void UpdateContainers()
 		{
@@ -424,7 +424,7 @@ namespace Assistant
 			}
 		}
 
-		private static List<Serial> m_AutoStackCache = new List<Serial>();
+		private static readonly List<Serial> m_AutoStackCache = new List<Serial>();
 
 		internal void AutoStackResource()
 		{
@@ -839,7 +839,7 @@ namespace Assistant
         }
 
         //hair beards and horns
-        static ConcurrentHashSet<int> NotLootable = LoadNotLootableData();
+        static readonly ConcurrentHashSet<int> NotLootable = LoadNotLootableData();
         internal  bool IsLootable
         {
             // Eventine owner found looting items was trying to loot hair and beards.
@@ -902,7 +902,7 @@ namespace Assistant
                         }
                     }
                 }
-                Weapon w = null;
+                Weapon w;
                 bool found = Weapons.TryGetValue(iid, out w);
                 if (found)
                     return w.Twohanded;

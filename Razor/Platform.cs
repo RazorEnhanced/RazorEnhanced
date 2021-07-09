@@ -8,7 +8,7 @@ namespace Assistant
 {
     internal static unsafe class Win32Platform
     {
-        static Dictionary<int, int> m_KeyMap = new Dictionary<int, int>()
+        static readonly Dictionary<int, int> m_KeyMap = new Dictionary<int, int>()
         {
             {1073741979, 3},
             {8, 8},
@@ -138,7 +138,7 @@ namespace Assistant
             return keycode;
         }
 
-        static Dictionary<int, int> m_KeyModMap = new Dictionary<int, int>()
+        static readonly Dictionary<int, int> m_KeyModMap = new Dictionary<int, int>()
         {
             {3, 512},
             {192, 1024},

@@ -97,19 +97,19 @@ namespace RazorEnhanced
 		[Serializable]
 		public class ToolBarItem
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
-			private int m_Graphics;
+			private readonly int m_Graphics;
 			public int Graphics { get { return m_Graphics; } }
 
-			private int m_Color;
+			private readonly int m_Color;
 			public int Color { get { return m_Color; } }
 
-			private bool m_Warning;
+			private readonly bool m_Warning;
 			internal bool Warning { get { return m_Warning; } }
 
-			private int m_WarningLimit;
+			private readonly int m_WarningLimit;
 			public int WarningLimit { get { return m_WarningLimit; } }
 
 			public ToolBarItem(string name, int graphics, int color, bool warning, int warninglimit)
@@ -824,8 +824,7 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSpazioStat);
 
 				height += 29;
-				offsetstat += 30;
-				paneloffset += 29;
+                paneloffset += 29;
 			}
 
 			for (int i = 0; i < m_slot; i += 2)
@@ -1066,11 +1065,9 @@ namespace RazorEnhanced
 				};
 
 				m_form.Controls.Add(m_labelTextFollowerBHV);
+            }
 
-				offsetstat += 18;
-			}
-
-			width += (m_slot * 60) / 2; // Aggiungo spazio slot
+            width += (m_slot * 60) / 2; // Aggiungo spazio slot
 
 			m_form.ClientSize = new Size(width, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Height);
 
@@ -1331,8 +1328,7 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
 
 				height += 29;
-				offsetstat += 30;
-				paneloffset += 29;
+                paneloffset += 29;
 			}
 
 			for (int i = 0; i < m_slot; i++)
@@ -1611,8 +1607,7 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackgroundAddHorizontal(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
-				offsetstat += 50;
-				paneloffset += 51;
+                paneloffset += 51;
 			}
 
 			width += (m_slot * 36); // Aggiungo spazio slot

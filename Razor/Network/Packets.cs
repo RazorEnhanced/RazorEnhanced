@@ -1714,8 +1714,8 @@ namespace Assistant
     {
         internal const int MaxItemsPerStairBuffer = 750;
 
-        private static byte[] m_InflatedBuffer = new byte[0x2000];
-        private static byte[] m_DeflatedBuffer = new byte[0x2000];
+        private static readonly byte[] m_InflatedBuffer = new byte[0x2000];
+        private static readonly byte[] m_DeflatedBuffer = new byte[0x2000];
 
         internal static void Clear(byte[] buffer, int size)
         {

@@ -92,12 +92,10 @@ namespace Assistant
 			ListView.SelectedListViewItemCollection items = skillList.SelectedItems;
 			if (items.Count <= 0)
 				return;
-
-			Skill s = null;
-			for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < items.Count; i++)
 			{
-				s = items[i].Tag as Skill;
-				if (s == null)
+                Skill s = items[i].Tag as Skill;
+                if (s == null)
 					continue;
 
 				try

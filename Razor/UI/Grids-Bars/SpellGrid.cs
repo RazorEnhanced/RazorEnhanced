@@ -11,6 +11,8 @@ namespace Assistant
 	{
 		internal Label GridLocationLabel { get { return gridlocation_label; } }
 		internal RazorCheckBox GridLockCheckBox { get { return gridlock_CheckBox; } }
+		internal RazorComboBox SpellGridStyleComboBox { get { return spellgridstyleComboBox; } }
+
 		internal RazorCheckBox GridOpenLoginCheckBox { get { return gridopenlogin_CheckBox; } }
 		internal Label GridVSlotLabel { get { return gridvslot_textbox; } }
 		internal Label GridHSlotLabel { get { return gridhslot_textbox; } }
@@ -193,6 +195,8 @@ namespace Assistant
 			}
 		}
 
+
+
 		private void gridspell_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (gridspell_ComboBox.Focused)
@@ -211,6 +215,36 @@ namespace Assistant
 				SpellGrid.Open();
 			}
 		}
+
+		private void spellgridstyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (spellgridstyleComboBox.Text == "Window")
+			{
+				setSpellBarOrigin.Visible = false;
+			}
+			else 
+			{
+				setSpellBarOrigin.Visible = true;
+			}
+
+			if (spellgridstyleComboBox.Focused)
+			{
+				RazorEnhanced.SpellGrid.Close();
+				RazorEnhanced.Settings.General.WriteInt("SpellGridStyle", spellgridstyleComboBox.SelectedIndex);
+				RazorEnhanced.SpellGrid.Open();
+			}
+
+		}
+
+		internal static void spellGridSetOrigin(object sender, EventArgs e)
+		{
+			RazorEnhanced.SpellGrid.Close();
+			RazorEnhanced.SpellGrid.GetSpellGridOrigin();
+			RazorEnhanced.SpellGrid.Open();
+		}
+
+
+
 
 		private void UpdateGridItem()
 		{

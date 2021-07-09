@@ -85,8 +85,8 @@ namespace Assistant
 			return DLLImport.Win.GetUserNameA(sb, &len) != 0 ? sb.ToString() : "";
 		}
 
-		private static ConcurrentQueue<Packet> m_SendQueue;
-		private static ConcurrentQueue<Packet> m_RecvQueue;
+		private static readonly ConcurrentQueue<Packet> m_SendQueue;
+		private static readonly ConcurrentQueue<Packet> m_RecvQueue;
 
 		private static volatile bool m_QueueRecv;
 		private static volatile bool m_QueueSend;
@@ -137,7 +137,7 @@ namespace Assistant
 			m_DwmTimer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0));
 		}
 
-		private static System.Threading.Timer m_DwmTimer;
+		private static readonly System.Threading.Timer m_DwmTimer;
 
 		private static void OnTick(object state)
 		{
@@ -211,8 +211,8 @@ namespace Assistant
     public override Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Assistant.Engine.RootPath, "Crypt.dll");
-			uint pid = 0;
-			Loader_Error err = (Loader_Error)DLLImport.Razor.Load(client, dll, "OnAttach", null, 0, out pid);
+            uint pid;
+            Loader_Error err = (Loader_Error)DLLImport.Razor.Load(client, dll, "OnAttach", null, 0, out pid);
 
 			if (err == Loader_Error.SUCCESS)
 			{
@@ -361,7 +361,7 @@ namespace Assistant
 		}
 
 		internal static Timer m_CalTimer = null;
-		private static TimerCallback m_CalibrateNow = new TimerCallback(CalibrateNow);
+		private static readonly TimerCallback m_CalibrateNow = new TimerCallback(CalibrateNow);
 		private static Point2D m_CalPos = Point2D.Zero;
 
 		public override void BeginCalibratePosition()

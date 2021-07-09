@@ -6,9 +6,9 @@ namespace Assistant.Filters
 {
     public class AsciiMessageFilter : Filter
     {
-        private LocString m_Name;
-        private string[] m_Strings;
-        private MessageType m_Type;
+        private readonly LocString m_Name;
+        private readonly string[] m_Strings;
+        private readonly MessageType m_Type;
 
         private AsciiMessageFilter(LocString name, MessageType type, string[] msgs)
         {
@@ -62,9 +62,9 @@ namespace Assistant.Filters
         {
         }
 
-        private LocString m_Name;
-        private int[] m_Nums;
-        private MessageType m_Type;
+        private readonly LocString m_Name;
+        private readonly int[] m_Nums;
+        private readonly MessageType m_Type;
 
         private LocMessageFilter(LocString name, MessageType type, int[] msgs)
         {

@@ -9,7 +9,7 @@ namespace Assistant
 {
 	internal class Utility
 	{
-		private static Random m_Random = new Random();
+		private static readonly Random m_Random = new Random();
 
 		internal static int Random(int min, int max)
 		{
@@ -277,7 +277,7 @@ namespace Assistant
 			}
 		}
 
-		private static char[] pathChars = new char[] { '\\', '/' };
+		private static readonly char[] pathChars = new char[] { '\\', '/' };
 
 		internal static string PathDisplayStr(string path, int maxLen)
 		{
@@ -311,7 +311,7 @@ namespace Assistant
 		{
 			int m = sec / 60;
 			int h = m / 60;
-			m = m % 60;
+			m %= 60;
 			return String.Format("{0:#0}:{1:00}:{2:00}", h, m, sec % 60);
 		}
 
@@ -321,9 +321,9 @@ namespace Assistant
 			int m = s / 60;
 			int h = m / 60;
 
-			ms = ms % 1000;
-			s = s % 60;
-			m = m % 60;
+			ms %= 1000;
+			s %= 60;
+			m %= 60;
 
 			if (h > 0 || m > 55)
 				return String.Format("{0:#0}:{1:00}:{2:00}.{3:000}", h, m, s, ms);
@@ -332,7 +332,7 @@ namespace Assistant
 		}
 
 		// Datagrid
-		private static int m_maxvalue = 65535;
+		private static readonly int m_maxvalue = 65535;
 		internal static string FormatDatagridAmountCell(DataGridViewCell cell, bool allowall)
 		{
 			if (cell.Value == null)

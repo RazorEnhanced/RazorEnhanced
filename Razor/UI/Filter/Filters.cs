@@ -262,7 +262,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("CorpseRange", Utility.ToInt32(corpseRange.Text, 2));
 		}
 
-		private static char[] m_InvalidNameChars = new char[] { '/', '\\', ';', '?', ':', '*' };
+		private static readonly char[] m_InvalidNameChars = new char[] { '/', '\\', ';', '?', ':', '*' };
 
 		private void spamFilter_CheckedChanged(object sender, System.EventArgs e)
 		{
@@ -363,7 +363,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("MessageLevel", msglvl.SelectedIndex);
 		}
 
-		private Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
+		private readonly Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
 
 		private static void ForceSize()
 		{

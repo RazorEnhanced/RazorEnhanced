@@ -59,6 +59,7 @@ namespace RazorEnhanced
         /// <param name="x">X coordinate of same map</param>
         /// <param name="y">Y coordinate of same map</param>
         /// <param name="scanMaxRange">Max range to scan a path (x, y) should be included in this max range</param>
+        /// <param name="ignoremob">consider mobs as obsticles or not</param>
         /// <returns></returns>
         public static List<Tile> GetPath(int x, int y, int scanMaxRange, bool ignoremob)
         {
@@ -99,6 +100,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="x">X coordinate of same map</param>
         /// <param name="y">Y coordinate of same map</param>
+        /// <param name="ignoremob">consider mobs as obsticles or not</param>
         /// <returns></returns>
         public static List<Tile> GetPath(int x, int y, bool ignoremob)
         {
@@ -168,7 +170,7 @@ namespace RazorEnhanced
         {
             int xForward = b.X, yForward = b.Y;
             var items = World.Items.Values.Where(x => x.OnGround);
-            var newZ = 0;
+            int newZ = 0;
             GetStartZ(loc, map, items.Where(x => x.Position.X == loc.X && x.Position.Y == loc.Y), out var startZ, out var startTop);
             var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, ignoremob, out newZ);
 

@@ -59,7 +59,7 @@ namespace RazorEnhanced.UI
         internal void UpdateGUI()
         {
             portLabel.Text = portLabel.Text.Replace(" ", "");
-            int port = 2593;
+            int port;
             Int32.TryParse(portLabel.Text, out port);
 
             hostLabel.Text = hostLabel.Text.Replace(" ", "");
@@ -82,18 +82,18 @@ namespace RazorEnhanced.UI
             RefreshGUI();
         }
 
-        private void razorButton1_Click(object sender, EventArgs e)
+        private void RazorButton1_Click(object sender, EventArgs e)
         {
             EnhancedAgentAddList addshard = new EnhancedAgentAddList(9);
-            addshard.FormClosed += new FormClosedEventHandler(addshard_refresh);
+            addshard.FormClosed += new FormClosedEventHandler(Addshard_refresh);
             addshard.TopMost = true;
             addshard.Show();
         }
 
-        private void addshard_refresh(object sender, EventArgs e)
+        private void Addshard_refresh(object sender, EventArgs e)
         {
-            int port = 2593;
-            Int32.TryParse(portLabel.Text, out port);
+            //int port;
+            //Int32.TryParse(portLabel.Text, out port);
 
             RazorEnhanced.Shard.Read(out List<Shard> shards);
 
@@ -107,7 +107,7 @@ namespace RazorEnhanced.UI
             groupBox2.Enabled = true;
         }
 
-        private void shardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ShardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
             RazorEnhanced.Shard.UpdateLast(shardlistCombobox.Text);
             RazorEnhanced.Shard.Read(out List<Shard> shards);
@@ -161,7 +161,7 @@ namespace RazorEnhanced.UI
 
         }
 
-        private void patchEncy_CheckedChanged(object sender, EventArgs e)
+        private void PatchEncy_CheckedChanged(object sender, EventArgs e)
         {
             UpdateGUI();
         }
@@ -171,17 +171,17 @@ namespace RazorEnhanced.UI
             UpdateGUI();
         }
 
-        private void serveraddressT_TextChanged(object sender, EventArgs e)
+        private void ServeraddressT_TextChanged(object sender, EventArgs e)
         {
             UpdateGUI();
         }
 
-        private void serverportT_TextChanged(object sender, EventArgs e)
+        private void ServerportT_TextChanged(object sender, EventArgs e)
         {
             UpdateGUI();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new FolderBrowserDialog
             {
@@ -195,7 +195,7 @@ namespace RazorEnhanced.UI
             }
         }
 
-        private void bNameCopy_Click(object sender, EventArgs e)
+        private void BNameCopy_Click(object sender, EventArgs e)
         {
             openclientlocation.RestoreDirectory = true;
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
@@ -208,7 +208,7 @@ namespace RazorEnhanced.UI
 
 
 
-        private void okay_Click(object sender, EventArgs e)
+        private void Okay_Click(object sender, EventArgs e)
         {
             UpdateGUI();
 
@@ -243,23 +243,23 @@ namespace RazorEnhanced.UI
         }
 
 
-        private void launchCUO_Click(object sender, EventArgs e)
+        private void LaunchCUO_Click(object sender, EventArgs e)
         {
             UpdateGUI();
 
             // Need to fix up settuings.json
-            StreamWriter login;
-            string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
-            string logincfgpath = cuoClientLabel.Text.Substring(0, cuoClientLabel.Text.LastIndexOf("\\") + 1);
+            //StreamWriter login;
+            //string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
+            //string logincfgpath = cuoClientLabel.Text.Substring(0, cuoClientLabel.Text.LastIndexOf("\\") + 1);
         }
 
 
-        private void quit_Click(object sender, EventArgs e)
+        private void Quit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void razorButton2_Click(object sender, EventArgs e)
+        private void RazorButton2_Click(object sender, EventArgs e)
         {
             if (shardlistCombobox.Text != String.Empty)
             {
@@ -268,14 +268,14 @@ namespace RazorEnhanced.UI
             UpdateGUI();
         }
 
-        private void checkupdatebutton_Click(object sender, EventArgs e)
+        private void Checkupdatebutton_Click(object sender, EventArgs e)
         {
             // AutoUpdater
             AutoUpdater.ReportErrors = true;
             AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater8.xml");
         }
 
-        private void cuoClient_Click(object sender, EventArgs e)
+        private void CuoClient_Click(object sender, EventArgs e)
         {
             openclientlocation.RestoreDirectory = true;
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)

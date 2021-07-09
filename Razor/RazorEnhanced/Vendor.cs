@@ -121,16 +121,16 @@ namespace RazorEnhanced
 		[Serializable]
 		public class SellAgentItem : ListAbleItem
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
-			private int m_Graphics;
+			private readonly int m_Graphics;
 			public int Graphics { get { return m_Graphics; } }
 
-			private int m_amount;
+			private readonly int m_amount;
 			public int Amount { get { return m_amount; } }
 
-			private int m_color;
+			private readonly int m_color;
 			public int Color { get { return m_color; } }
 
 
@@ -149,10 +149,10 @@ namespace RazorEnhanced
 
 		internal class SellAgentList
 		{
-			private string m_Description;
+			private readonly string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private int m_Bag;
+			private readonly int m_Bag;
 			internal int Bag { get { return m_Bag; } }
 
 			[JsonProperty("Selected")]
@@ -225,8 +225,8 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[4].Value == "All")
+                int color;
+                if ((string)row.Cells[4].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
@@ -273,8 +273,8 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[4].Value == "All")
+                int color;
+                if ((string)row.Cells[4].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
@@ -523,16 +523,16 @@ namespace RazorEnhanced
 		[Serializable]
 		public class BuyAgentItem  : ListAbleItem
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
-			private int m_Graphics;
+			private readonly int m_Graphics;
 			public int Graphics { get { return m_Graphics; } }
 
-			private int m_Amount;
+			private readonly int m_Amount;
 			public int Amount { get { return m_Amount; } }
 
-			private int m_Color;
+			private readonly int m_Color;
 			public int Color { get { return m_Color; } }
 
 			[JsonProperty("Selected")]
@@ -550,8 +550,8 @@ namespace RazorEnhanced
 
 		internal class BuyAgentList
 		{
-			private string m_Description;
-			private bool m_CompareName;
+			private readonly string m_Description;
+			private readonly bool m_CompareName;
 			internal string Description { get { return m_Description; } }
 
 			[JsonProperty("Selected")]
@@ -626,8 +626,8 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[4].Value == "All")
+                int color;
+                if ((string)row.Cells[4].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
@@ -675,8 +675,8 @@ namespace RazorEnhanced
 				if (row.IsNewRow)
 					continue;
 
-				int color = 0;
-				if ((string)row.Cells[4].Value == "All")
+                int color;
+                if ((string)row.Cells[4].Value == "All")
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[4].Value, 16);

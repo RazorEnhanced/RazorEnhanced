@@ -103,8 +103,8 @@ namespace Assistant
                 Command.Register(cmd, new CommandCallback(MyCallback));
             }
 
-            private uint Msg;
-            private IntPtr hWnd;
+            private readonly uint Msg;
+            private readonly IntPtr hWnd;
 
             private void MyCallback(string[] args)
             {
@@ -126,8 +126,8 @@ namespace Assistant
 
         private class WndRegEnt
         {
-            private int m_Handle;
-            private int m_Type; // 1 = get multi notifcations
+            private readonly int m_Handle;
+            private readonly int m_Type; // 1 = get multi notifcations
 
             public int Handle
             {
@@ -147,7 +147,7 @@ namespace Assistant
         }
 
         private static uint m_NextCmdID = Client.WM_USER + 401;
-        private static ArrayList m_WndReg;
+        private static readonly ArrayList m_WndReg;
 
         public static int NotificationCount
         {

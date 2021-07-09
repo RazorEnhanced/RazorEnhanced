@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	{
 		public class DamageData
 		{
-			private string m_Name;
+			private readonly string m_Name;
 			public string Name { get { return m_Name; } }
 
 			private int m_Damage;
@@ -28,7 +28,7 @@ namespace RazorEnhanced
 		}
 
 		internal static bool Enabled = false;
-		private static ConcurrentDictionary<uint, DamageData> m_damagedata = new ConcurrentDictionary<uint, DamageData>();
+		private static readonly ConcurrentDictionary<uint, DamageData> m_damagedata = new ConcurrentDictionary<uint, DamageData>();
 
 		internal static void AddDamage(uint serial, ushort damage)
 		{

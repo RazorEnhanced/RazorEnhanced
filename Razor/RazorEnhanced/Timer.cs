@@ -135,7 +135,6 @@ namespace RazorEnhanced
 
 			t.Close();
 			m_timers.TryRemove(t.Name, out ScriptTimer tt); // Remove timer
-			t = null;
-		}
-	}
+        }
+    }
 }

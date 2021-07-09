@@ -7,7 +7,7 @@ namespace Assistant.Filters
 {
     public abstract class Filter
     {
-        private static ArrayList m_Filters = new ArrayList();
+        private static readonly ArrayList m_Filters = new ArrayList();
 
         public static ArrayList List
         {
@@ -76,7 +76,7 @@ namespace Assistant.Filters
         }
 
         private bool m_Enabled;
-        private PacketViewerCallback m_Callback;
+        private readonly PacketViewerCallback m_Callback;
 
         protected Filter()
         {

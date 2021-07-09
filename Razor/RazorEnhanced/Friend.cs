@@ -15,13 +15,13 @@ namespace RazorEnhanced
     {
         public class FriendPlayer : ListAbleItem
         {
-            private string m_Name;
+            private readonly string m_Name;
             public string Name { get { return m_Name; } }
 
-            private int m_Serial;
+            private readonly int m_Serial;
             public int Serial { get { return m_Serial; } }
 
-            private bool m_Selected;
+            private readonly bool m_Selected;
             [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
@@ -36,10 +36,10 @@ namespace RazorEnhanced
         [Serializable]
         public class FriendGuild : ListAbleItem
         {
-            private string m_Name;
+            private readonly string m_Name;
             public string Name { get { return m_Name; } }
 
-            private bool m_Selected;
+            private readonly bool m_Selected;
             [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 
@@ -52,31 +52,31 @@ namespace RazorEnhanced
 
         internal class FriendList
         {
-            private string m_Description;
+            private readonly string m_Description;
             internal string Description { get { return m_Description; } }
 
-            private bool m_AutoacceptParty;
+            private readonly bool m_AutoacceptParty;
             internal bool AutoacceptParty { get { return m_AutoacceptParty; } }
 
-            private bool m_PreventAttack;
+            private readonly bool m_PreventAttack;
             internal bool PreventAttack { get { return m_PreventAttack; } }
 
-            private bool m_IncludeParty;
+            private readonly bool m_IncludeParty;
             internal bool IncludeParty { get { return m_IncludeParty; } }
 
-            private bool m_SLFriend;
+            private readonly bool m_SLFriend;
             internal bool SLFriend { get { return m_SLFriend; } }
 
-            private bool m_TBFriend;
+            private readonly bool m_TBFriend;
             internal bool TBFriend { get { return m_TBFriend; } }
 
-            private bool m_COMFriend;
+            private readonly bool m_COMFriend;
             internal bool COMFriend { get { return m_COMFriend; } }
 
-            private bool m_MINFriend;
+            private readonly bool m_MINFriend;
             internal bool MINFRiend { get { return m_MINFriend; } }
 
-            private bool m_Selected;
+            private readonly bool m_Selected;
             [JsonProperty("Selected")]
             internal bool Selected { get { return m_Selected; } }
 

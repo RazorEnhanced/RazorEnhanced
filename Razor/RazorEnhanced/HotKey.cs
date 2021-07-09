@@ -44,10 +44,10 @@ namespace RazorEnhanced
 
         public class HotKeyData
         {
-            private string m_Name;
+            private readonly string m_Name;
             public string Name { get { return m_Name; } }
 
-            private Keys m_Key;
+            private readonly Keys m_Key;
             public Keys Key { get { return m_Key; } }
 
             public HotKeyData(string name, Keys key)
@@ -1531,8 +1531,7 @@ namespace RazorEnhanced
 					Assistant.Item item = Spells.FindUsedLayer();
 					if (item != null)
 					{
-						Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-						Assistant.Client.Instance.SendToServer(new LiftRequest(item, 1));
+                        Assistant.Client.Instance.SendToServer(new LiftRequest(item, 1));
 						Assistant.Client.Instance.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
 					}
 					break;
