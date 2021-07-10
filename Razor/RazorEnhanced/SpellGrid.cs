@@ -89,6 +89,8 @@ namespace RazorEnhanced
 
 	internal class SpellGrid
 	{
+        static bool m_open = false;
+        static bool m_save_state;
 		[Serializable]
 		public class SpellGridItem
 		{
@@ -194,6 +196,7 @@ namespace RazorEnhanced
 				uint gumpId = (uint)999009999;
 				Gumps.CloseGump(gumpId);
 			}
+            m_open = false;
 		}
 
 		internal static void Open()
@@ -221,6 +224,7 @@ namespace RazorEnhanced
 			{
 				GumpSpellGrid();
 			}
+            m_open = true;
         }
 
 		internal static void LockUnlock()
@@ -498,6 +502,9 @@ namespace RazorEnhanced
 		{
 			if (World.Player == null)
 				return;
+            m_save_state = m_open;
+            if (m_open)
+                Close();
 			Gumps.GumpData gd = Gumps.CreateGump(false, true, true, false);
 			gd.gumpId = m_spellGridGID;
 			gd.serial = (uint)Player.Serial;
@@ -506,25 +513,19 @@ namespace RazorEnhanced
 
 
 			Gumps.AddImageTiled(ref gd, 0, 0, 3000, 3000, 2624);
-
 			Gumps.AddAlphaRegion(ref gd, 0, 0, 3000, 3000);
-
-			//AddLabel(124, 35, 1153, @"Select a button to the left where you would like the hotbar to open");
-
 			Gumps.AddHtml(ref gd, 320, 215, 350, 85, @"Select a button where you would like the hotbar to open. This position will also be used if you enable auto-open on login.<br>If you have maually moved the hotbar since logging in you may have to logout and  login again for this to work", (bool)true, (bool)true);
 
 			Gumps.AddButton(ref gd, 700, 230, 241, 242, 0, 1, 0); // cancel
 			Gumps.AddButton(ref gd, 700, 260, 247, 248, 0, 1, 0); // options
 
-			///////////////
-			//Gumps.AddPage(1);
 			int buttonID = 1;
 			int squareSize = 50;
 			for (int y = 0; y <= 1100; y += squareSize)
 			{
 				for (int x = 0; x <= 2000; x += squareSize)
 				{
-					Gumps.AddButton(ref gd, x, y, 1210, 248, buttonID++, 1, 0);
+					Gumps.AddButton(ref gd, x, y, 1210, 1209, buttonID++, 1, 0);
 				}
 			}
 			gd.action = SetSpellGridOrigin;
@@ -537,12 +538,19 @@ namespace RazorEnhanced
 			int buttonID = gd.buttonid;
 			if (buttonID > 0)
 			{
-				Engine.GridX = ((buttonID % 41) - 1) * 50;
-				Settings.General.WriteInt("PosXGrid", Engine.GridX);
-				Engine.GridY = (buttonID / 41) * 50;
-				Settings.General.WriteInt("PosYGrid", Engine.GridY);
-				Engine.MainWindow.SafeAction(s => { s.GridLocationLabel.Text = "X: " + Engine.GridX + " - Y:" + Engine.GridY; });
+                int x = ((buttonID % 41) - 1) * 50;
+                int y = (buttonID / 41) * 50;
+                if ((x != Engine.GridX) || (y != Engine.GridY))
+                {
+                    Engine.GridX = x;
+                    Settings.General.WriteInt("PosXGrid", Engine.GridX);
+                    Engine.GridY = y;
+                    Settings.General.WriteInt("PosYGrid", Engine.GridY);
+                    Engine.MainWindow.SafeAction(s => { s.GridLocationLabel.Text = "X: " + Engine.GridX + " - Y:" + Engine.GridY; });
+                }
 			}
+            if (m_save_state)
+                Open();
 		}
 
 		internal static void GumpSpellGrid()
