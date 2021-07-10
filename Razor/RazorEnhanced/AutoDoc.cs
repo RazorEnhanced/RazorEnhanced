@@ -865,6 +865,7 @@ namespace RazorEnhanced
                 typeof(Player),
                 typeof(Spells),
                 typeof(Gumps),
+                typeof(Gumps.GumpData),
                 typeof(Journal),
                 typeof(Journal.JournalEntry),
                 typeof(Target),
