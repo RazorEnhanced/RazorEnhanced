@@ -847,7 +847,7 @@ namespace RazorEnhanced
             }
 
 
-            Misc.SendMessage("AutoDoc v0.1", 20);
+            Misc.SendMessage($"AutoDoc: Generating API for RE v{AutoDoc.GetAssemblyVersion()}", 70);
             var docSections = new List<Type> {
                 // Test
                 // typeof(AutoDoc),
