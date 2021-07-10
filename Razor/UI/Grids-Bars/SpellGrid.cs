@@ -238,9 +238,7 @@ namespace Assistant
 
 		internal static void spellGridSetOrigin(object sender, EventArgs e)
 		{
-			RazorEnhanced.SpellGrid.Close();
 			RazorEnhanced.SpellGrid.GetSpellGridOrigin();
-			RazorEnhanced.SpellGrid.Open();
 		}
 
 
