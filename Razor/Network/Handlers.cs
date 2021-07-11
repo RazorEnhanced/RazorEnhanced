@@ -2117,7 +2117,7 @@ namespace Assistant
 		}
 
 		internal static List<string> SysMessages = new List<string>(21);
-
+        static int MaxJournalEntries = 100;
 		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
 
@@ -2133,11 +2133,19 @@ namespace Assistant
             }
 
             World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
-			if (World.Player.Journal.Count > 100)
+            if (type != MessageType.Label) 
+            {
+                Engine.MainWindow.SafeAction(s => { s.JournalList.Rows.Add(text); });
+                if (Engine.MainWindow.JournalList.Rows.Count > MaxJournalEntries)
+                {
+                    Engine.MainWindow.JournalList.Rows.RemoveAt(0);
+                }
+            }
+            if (World.Player.Journal.Count > MaxJournalEntries)
 			{
 				RazorEnhanced.Journal.JournalEntry ra;
 				World.Player.Journal.TryDequeue(out ra);
-			}
+            }
 
 
             string trimmed_text = text.Trim();
