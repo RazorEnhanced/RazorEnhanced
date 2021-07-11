@@ -236,7 +236,7 @@ namespace Assistant
 
 		}
 
-		internal static void spellGridSetOrigin(object sender, EventArgs e)
+		internal void spellGridSetOrigin(object sender, EventArgs e)
 		{
 			RazorEnhanced.SpellGrid.GetSpellGridOrigin();
 		}
