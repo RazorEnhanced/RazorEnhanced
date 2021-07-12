@@ -68,6 +68,8 @@ namespace RazorEnhanced
             }
 
             list.Add(Assistant.Engine.RootPath + "\\" + "RazorEnhanced.exe");
+            list.Add(Assistant.Engine.RootPath + "\\" + "Ultima.dll");
+
             return list;
         }
 
