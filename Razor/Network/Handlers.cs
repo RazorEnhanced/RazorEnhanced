@@ -2116,15 +2116,15 @@ namespace Assistant
 			}
 		}
 
-		internal static List<string> SysMessages = new List<string>(21);
-        static int MaxJournalEntries = 100;
+    internal static List<string> SysMessages = new List<string>(21);
+    static int MaxJournalEntries = 100;
 		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
 
             if (World.Player == null)
 				return;
 
-            if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
+            if (!ser.IsValid ) // || ser == World.Player.Serial || ser.IsItem)
             {
                 SysMessages.Add(text.ToLower());
                 if (SysMessages.Count >= 25)
@@ -2133,20 +2133,11 @@ namespace Assistant
             }
 
             World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
-            if (type != MessageType.Label) 
-            {
-                Engine.MainWindow.SafeAction(s => { s.JournalList.Rows.Add(text); });
-                if (Engine.MainWindow.JournalList.Rows.Count > MaxJournalEntries)
-                {
-                    Engine.MainWindow.JournalList.Rows.RemoveAt(0);
-                }
-            }
-            if (World.Player.Journal.Count > MaxJournalEntries)
-			{
-				RazorEnhanced.Journal.JournalEntry ra;
-				World.Player.Journal.TryDequeue(out ra);
-            }
-
+          if (World.Player.Journal.Count > MaxJournalEntries)
+		    	{
+				    RazorEnhanced.Journal.JournalEntry ra;
+				    World.Player.Journal.TryDequeue(out ra);
+           }
 
             string trimmed_text = text.Trim();
             // ugly hack because OSI is not passing new spell words as type MessageType.Spell
@@ -2162,6 +2153,8 @@ namespace Assistant
                     }
                 }
             }
+
+            UpdateJournalList(text, type);
 
             // Filter based on api selected blocks
             foreach (string filter in Settings.JournalFilter.ReadAll())
@@ -2292,7 +2285,61 @@ namespace Assistant
             }
         }
 
-		internal static void AsciiSpeech(Packet p, PacketHandlerEventArgs args)
+        internal static System.Data.DataTable JIList = InitJournalItems();
+        internal static System.Data.DataTable InitJournalItems()
+        {
+            System.Data.DataTable retTable = new System.Data.DataTable("JournalItems");
+            retTable.Columns.Add(new System.Data.DataColumn("type", Type.GetType("System.String")));
+            retTable.Columns.Add(new System.Data.DataColumn("text", Type.GetType("System.String")));
+
+            return retTable;
+        }
+
+        internal static void UpdateJournalList(string text, MessageType type)
+        {
+            string typeStr = type.ToString();
+            if (type == MessageType.Spell)
+            {
+                string trimmed_text = text.Trim();
+                Spell s = Spell.Get(trimmed_text);
+                 if (s != null)
+                 {
+                    string spell = Language.GetString(s.Name);
+                    text = text + " (" + spell + ")";
+                }
+            }
+            if (Engine.MainWindow.JournalTextSelection.CheckedItems.Contains(typeStr))
+            {                
+                if (JIList.Rows.Count == 0 || JIList.Rows[0]["text"].ToString() != text)
+                {
+                    //if (JIList.Rows.Count > 0)
+                    //    string test = JIList.Rows[0]["text"].ToString();
+                    int currentRow = Engine.MainWindow.JournalList.FirstDisplayedScrollingRowIndex;
+                    System.Data.DataRow newRow = JIList.NewRow();
+                    newRow["type"] = typeStr;
+                    newRow["text"] = text;
+                    //JIList.
+                    JIList.Rows.InsertAt(newRow, 0);
+                    if (JIList.Rows.Count > MaxJournalEntries)
+                    {
+                        System.Data.DataRow toBeRemoved = JIList.Rows[JIList.Rows.Count - 1];
+                        toBeRemoved.Delete();
+                    }
+                    JIList.AcceptChanges();
+                    if (currentRow != 0)
+                    {
+                        // Engine.MainWindow.SafeAction(s => { s.JournalList.FirstDisplayedScrollingRowIndex = currentRow+1; });
+                    }
+                    else
+                    {
+                        Engine.MainWindow.SafeAction(s => { s.JournalList.FirstDisplayedScrollingRowIndex = 0; });
+                    }
+
+                }
+            }
+        }
+
+        internal static void AsciiSpeech(Packet p, PacketHandlerEventArgs args)
 		{
 			// 0, 1, 2
 			Serial serial = p.ReadUInt32(); // 3, 4, 5, 6
