@@ -847,7 +847,7 @@ namespace RazorEnhanced
             }
 
 
-            Misc.SendMessage("AutoDoc v0.1", 20);
+            Misc.SendMessage($"AutoDoc: Generating API for RE v{AutoDoc.GetAssemblyVersion()}", 70);
             var docSections = new List<Type> {
                 // Test
                 // typeof(AutoDoc),
@@ -865,6 +865,7 @@ namespace RazorEnhanced
                 typeof(Player),
                 typeof(Spells),
                 typeof(Gumps),
+                typeof(Gumps.GumpData),
                 typeof(Journal),
                 typeof(Journal.JournalEntry),
                 typeof(Target),
@@ -917,6 +918,8 @@ namespace RazorEnhanced
             var classKey = XMLKeyComposer.GetKey(type);
             var className = ResolveType(type);
             var classSummary = XMLCommentReader.GetDocumentation(type);
+            classSummary = XMLCommentReader.RemoveBaseIndentation(classSummary);
+            classSummary = XMLCommentReader.ExtractXML(classSummary, "summary");
             result.classes.Add(new DocClass(classKey, className, classSummary));
 
 
