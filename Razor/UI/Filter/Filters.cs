@@ -20,8 +20,11 @@ namespace Assistant
 		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
 		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
 		internal DataGridView GraphFilterDataGrid { get { return graphfilterdatagrid; } }
-        internal DataGridView JournalFilterDataGrid { get { return journalfilterdatagrid; } }
-        internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
+    internal DataGridView JournalFilterDataGrid { get { return journalfilterdatagrid; } }
+    internal DataGridView JournalList { get { return journalList; } }
+    internal CheckedListBox JournalTextSelection { get { return journalTextSelection; } }
+    internal TextBox JournalFilterString { get { return journalFilterString; } }
+    internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
 		internal RazorCheckBox LastTargTextFlags { get { return showtargtext; } }
 		internal RazorCheckBox SmartLastTarget { get { return smartLT; } }
 
@@ -475,11 +478,26 @@ namespace Assistant
 			healthFmt.Enabled = showHealthOH.Checked;
 		}
 
-		private void healthFmt_TextChanged(object sender, System.EventArgs e)
-		{
-			if (healthFmt.Focused)
-				RazorEnhanced.Settings.General.WriteString("HealthFmt", healthFmt.Text);
-		}
+        private void healthFmt_TextChanged(object sender, System.EventArgs e)
+        {
+            if (healthFmt.Focused)
+                RazorEnhanced.Settings.General.WriteString("HealthFmt", healthFmt.Text);
+        }
+
+        private void journalFilter_TextChanged(object sender, System.EventArgs e)
+        {
+            RazorEnhanced.Settings.General.WriteString("JournalFilterText", journalFilterString.Text);
+
+            System.Data.DataView dv = (System.Data.DataView)JournalList.DataSource;
+            try
+            {
+                dv.RowFilter = JournalFilterString.Text;
+            }
+            catch (Exception)
+            {
+                dv.RowFilter = "";
+            }
+        }
 
 		private void chkPartyOverhead_CheckedChanged(object sender, System.EventArgs e)
 		{
@@ -589,5 +607,11 @@ namespace Assistant
 			((Filters.Filter)filters.Items[e.Index]).OnCheckChanged(e.NewValue);
 		}
 
-	}
+        private void OnJournalFilterCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
+        {
+            string changed = (string)JournalTextSelection.Items[e.Index];
+            RazorEnhanced.Settings.General.WriteBool("Journal" + changed, e.NewValue == CheckState.Checked);
+        }
+
+    }
 }
