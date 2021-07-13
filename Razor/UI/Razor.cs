@@ -688,10 +688,17 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
         private DataGridView journalfilterdatagrid;
-        private DataGridViewTextBoxColumn journalFilterText;
         private RazorComboBox spellgridstyleComboBox;
         private Label label80;
         private RazorButton setSpellBarOrigin;
+        private DataGridViewTextBoxColumn journalFilterText;
+        private TabPage journal;
+        private DataGridView journalList;
+        private CheckedListBox journalTextSelection;
+        private DataGridViewTextBoxColumn Type;
+        private DataGridViewTextBoxColumn journalEntries;
+        private Label viewFilter;
+        private TextBox journalFilterString;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -1019,6 +1026,11 @@ namespace Assistant
             this.groupBox27 = new System.Windows.Forms.GroupBox();
             this.label39 = new System.Windows.Forms.Label();
             this.hotkeytreeView = new System.Windows.Forms.TreeView();
+            this.journal = new System.Windows.Forms.TabPage();
+            this.journalTextSelection = new System.Windows.Forms.CheckedListBox();
+            this.journalList = new System.Windows.Forms.DataGridView();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.journalEntries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.screenshotTab = new System.Windows.Forms.TabPage();
             this.label12 = new System.Windows.Forms.Label();
             this.screensList = new System.Windows.Forms.ListBox();
@@ -1070,6 +1082,8 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+            this.journalFilterString = new System.Windows.Forms.TextBox();
+            this.viewFilter = new System.Windows.Forms.Label();
             this.paypalButton = new RazorEnhanced.UI.RazorButton();
             this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
             this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
@@ -1316,6 +1330,7 @@ namespace Assistant
             this.gridspell_ComboBox = new RazorEnhanced.UI.RazorComboBox();
             this.gridgroup_ComboBox = new RazorEnhanced.UI.RazorComboBox();
             this.gridslot_ComboBox = new RazorEnhanced.UI.RazorComboBox();
+            this.setSpellBarOrigin = new RazorEnhanced.UI.RazorButton();
             this.gridlock_CheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.gridopenlogin_CheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.gridclose_button = new RazorEnhanced.UI.RazorButton();
@@ -1401,7 +1416,6 @@ namespace Assistant
             this.advertisementLink = new RazorEnhanced.UI.RazorButton();
             this.discordrazorButton = new RazorEnhanced.UI.RazorButton();
             this.razorButtonWiki = new RazorEnhanced.UI.RazorButton();
-            this.setSpellBarOrigin = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1499,6 +1513,8 @@ namespace Assistant
             this.groupBox8.SuspendLayout();
             this.groupBox28.SuspendLayout();
             this.groupBox27.SuspendLayout();
+            this.journal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.journalList)).BeginInit();
             this.screenshotTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
             this.videoTab.SuspendLayout();
@@ -1524,6 +1540,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.emptyTab);
             this.tabs.Controls.Add(this.skillsTab);
             this.tabs.Controls.Add(this.enhancedHotKeytabPage);
+            this.tabs.Controls.Add(this.journal);
             this.tabs.Controls.Add(this.screenshotTab);
             this.tabs.Controls.Add(this.videoTab);
             this.tabs.Controls.Add(this.DPStabPage);
@@ -1724,9 +1741,9 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.txtSpellFormat);
             this.moreOptTab.Controls.Add(this.chkForceSpellHue);
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
-            this.moreOptTab.Location = new System.Drawing.Point(4, 29);
+            this.moreOptTab.Location = new System.Drawing.Point(4, 54);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(1068, 561);
+            this.moreOptTab.Size = new System.Drawing.Size(1068, 536);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
@@ -1861,9 +1878,9 @@ namespace Assistant
             // enhancedFilterTab
             // 
             this.enhancedFilterTab.Controls.Add(this.FilterPages);
-            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 29);
+            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 54);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
-            this.enhancedFilterTab.Size = new System.Drawing.Size(1068, 561);
+            this.enhancedFilterTab.Size = new System.Drawing.Size(1068, 536);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
             // 
@@ -1877,7 +1894,7 @@ namespace Assistant
             this.FilterPages.Location = new System.Drawing.Point(-4, 3);
             this.FilterPages.Name = "FilterPages";
             this.FilterPages.SelectedIndex = 0;
-            this.FilterPages.Size = new System.Drawing.Size(1076, 550);
+            this.FilterPages.Size = new System.Drawing.Size(1076, 525);
             this.FilterPages.TabIndex = 0;
             // 
             // MiscFilterPage
@@ -1891,7 +1908,7 @@ namespace Assistant
             this.MiscFilterPage.Location = new System.Drawing.Point(4, 29);
             this.MiscFilterPage.Name = "MiscFilterPage";
             this.MiscFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MiscFilterPage.Size = new System.Drawing.Size(1068, 517);
+            this.MiscFilterPage.Size = new System.Drawing.Size(1068, 492);
             this.MiscFilterPage.TabIndex = 0;
             this.MiscFilterPage.Text = "Misc";
             this.MiscFilterPage.UseVisualStyleBackColor = true;
@@ -1902,7 +1919,7 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(310, 422);
+            this.uomodgroupbox.Location = new System.Drawing.Point(310, 397);
             this.uomodgroupbox.Name = "uomodgroupbox";
             this.uomodgroupbox.Size = new System.Drawing.Size(453, 95);
             this.uomodgroupbox.TabIndex = 75;
@@ -1995,7 +2012,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(310, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(453, 413);
+            this.groupBox23.Size = new System.Drawing.Size(453, 388);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -2018,7 +2035,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 329);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 304);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -2162,11 +2179,12 @@ namespace Assistant
             this.journalfilterdatagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.journalfilterdatagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.journalFilterText});
-            this.journalfilterdatagrid.Location = new System.Drawing.Point(-13, 0);
+            this.journalfilterdatagrid.Location = new System.Drawing.Point(0, 3);
             this.journalfilterdatagrid.Name = "journalfilterdatagrid";
+            this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(1073, 496);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 505);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -2186,6 +2204,8 @@ namespace Assistant
             this.journalFilterText.HeaderText = "Journal Filter Text";
             this.journalFilterText.MinimumWidth = 8;
             this.journalFilterText.Name = "journalFilterText";
+            //this.journalFilterText.TextChanged += new System.EventHandler(this.journalFilter_TextChanged);
+
             // 
             // datagridMenuStrip
             // 
@@ -2212,10 +2232,10 @@ namespace Assistant
             this.scriptingTab.Controls.Add(this.scripterrorlogCheckBox);
             this.scriptingTab.Controls.Add(this.showscriptmessageCheckBox);
             this.scriptingTab.Controls.Add(this.scriptlistView);
-            this.scriptingTab.Location = new System.Drawing.Point(4, 29);
+            this.scriptingTab.Location = new System.Drawing.Point(4, 54);
             this.scriptingTab.Name = "scriptingTab";
             this.scriptingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptingTab.Size = new System.Drawing.Size(1068, 561);
+            this.scriptingTab.Size = new System.Drawing.Size(1068, 536);
             this.scriptingTab.TabIndex = 12;
             this.scriptingTab.Text = "Scripting";
             // 
@@ -2322,10 +2342,10 @@ namespace Assistant
             // EnhancedAgent
             // 
             this.EnhancedAgent.Controls.Add(this.tabControl1);
-            this.EnhancedAgent.Location = new System.Drawing.Point(4, 29);
+            this.EnhancedAgent.Location = new System.Drawing.Point(4, 54);
             this.EnhancedAgent.Name = "EnhancedAgent";
             this.EnhancedAgent.Padding = new System.Windows.Forms.Padding(3);
-            this.EnhancedAgent.Size = new System.Drawing.Size(1068, 561);
+            this.EnhancedAgent.Size = new System.Drawing.Size(1068, 536);
             this.EnhancedAgent.TabIndex = 14;
             this.EnhancedAgent.Text = "Agents";
             this.EnhancedAgent.UseVisualStyleBackColor = true;
@@ -2347,7 +2367,7 @@ namespace Assistant
             this.tabControl1.Location = new System.Drawing.Point(5, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1067, 562);
+            this.tabControl1.Size = new System.Drawing.Size(1067, 537);
             this.tabControl1.TabIndex = 0;
             // 
             // eautoloot
@@ -2372,7 +2392,7 @@ namespace Assistant
             this.eautoloot.Location = new System.Drawing.Point(4, 29);
             this.eautoloot.Name = "eautoloot";
             this.eautoloot.Padding = new System.Windows.Forms.Padding(3);
-            this.eautoloot.Size = new System.Drawing.Size(1059, 529);
+            this.eautoloot.Size = new System.Drawing.Size(1059, 504);
             this.eautoloot.TabIndex = 0;
             this.eautoloot.Text = "Autoloot";
             this.eautoloot.UseVisualStyleBackColor = true;
@@ -2435,7 +2455,7 @@ namespace Assistant
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
             this.autolootdataGridView.RowHeadersWidth = 62;
-            this.autolootdataGridView.Size = new System.Drawing.Size(628, 373);
+            this.autolootdataGridView.Size = new System.Drawing.Size(628, 348);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
@@ -2534,7 +2554,7 @@ namespace Assistant
             this.groupBox13.Controls.Add(this.autolootLogBox);
             this.groupBox13.Location = new System.Drawing.Point(651, 137);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(387, 375);
+            this.groupBox13.Size = new System.Drawing.Size(387, 350);
             this.groupBox13.TabIndex = 53;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Autoloot Log";
@@ -2547,7 +2567,7 @@ namespace Assistant
             this.autolootLogBox.ItemHeight = 20;
             this.autolootLogBox.Location = new System.Drawing.Point(10, 28);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(371, 264);
+            this.autolootLogBox.Size = new System.Drawing.Size(371, 144);
             this.autolootLogBox.TabIndex = 0;
             // 
             // escavenger
@@ -2714,7 +2734,7 @@ namespace Assistant
             this.scavengerLogBox.ItemHeight = 20;
             this.scavengerLogBox.Location = new System.Drawing.Point(11, 26);
             this.scavengerLogBox.Name = "scavengerLogBox";
-            this.scavengerLogBox.Size = new System.Drawing.Size(424, 264);
+            this.scavengerLogBox.Size = new System.Drawing.Size(424, 184);
             this.scavengerLogBox.TabIndex = 0;
             // 
             // label23
@@ -2940,7 +2960,7 @@ namespace Assistant
             this.organizerLogBox.ItemHeight = 20;
             this.organizerLogBox.Location = new System.Drawing.Point(10, 28);
             this.organizerLogBox.Name = "organizerLogBox";
-            this.organizerLogBox.Size = new System.Drawing.Size(424, 284);
+            this.organizerLogBox.Size = new System.Drawing.Size(424, 204);
             this.organizerLogBox.TabIndex = 0;
             // 
             // label27
@@ -3091,7 +3111,7 @@ namespace Assistant
             this.buyLogBox.ItemHeight = 20;
             this.buyLogBox.Location = new System.Drawing.Point(11, 26);
             this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(424, 264);
+            this.buyLogBox.Size = new System.Drawing.Size(424, 184);
             this.buyLogBox.TabIndex = 0;
             // 
             // label25
@@ -3262,7 +3282,7 @@ namespace Assistant
             this.sellLogBox.ItemHeight = 20;
             this.sellLogBox.Location = new System.Drawing.Point(11, 26);
             this.sellLogBox.Name = "sellLogBox";
-            this.sellLogBox.Size = new System.Drawing.Size(424, 284);
+            this.sellLogBox.Size = new System.Drawing.Size(424, 204);
             this.sellLogBox.TabIndex = 0;
             // 
             // label26
@@ -3777,7 +3797,7 @@ namespace Assistant
             this.restockLogBox.ItemHeight = 20;
             this.restockLogBox.Location = new System.Drawing.Point(11, 26);
             this.restockLogBox.Name = "restockLogBox";
-            this.restockLogBox.Size = new System.Drawing.Size(424, 244);
+            this.restockLogBox.Size = new System.Drawing.Size(424, 164);
             this.restockLogBox.TabIndex = 0;
             // 
             // label13
@@ -3984,15 +4004,15 @@ namespace Assistant
             this.bandagehealLogBox.ItemHeight = 20;
             this.bandagehealLogBox.Location = new System.Drawing.Point(11, 26);
             this.bandagehealLogBox.Name = "bandagehealLogBox";
-            this.bandagehealLogBox.Size = new System.Drawing.Size(424, 424);
+            this.bandagehealLogBox.Size = new System.Drawing.Size(424, 344);
             this.bandagehealLogBox.TabIndex = 0;
             // 
             // toolbarTab
             // 
             this.toolbarTab.Controls.Add(this.toolbarstab);
-            this.toolbarTab.Location = new System.Drawing.Point(4, 54);
+            this.toolbarTab.Location = new System.Drawing.Point(4, 29);
             this.toolbarTab.Name = "toolbarTab";
-            this.toolbarTab.Size = new System.Drawing.Size(1068, 536);
+            this.toolbarTab.Size = new System.Drawing.Size(1068, 561);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Toolbars";
             // 
@@ -4911,6 +4931,86 @@ namespace Assistant
             this.hotkeytreeView.TabIndex = 0;
             this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
             // 
+            // journal
+            // 
+            this.journal.Controls.Add(this.viewFilter);
+            this.journal.Controls.Add(this.journalFilterString);
+            this.journal.Controls.Add(this.journalTextSelection);
+            this.journal.Controls.Add(this.journalList);
+            this.journal.Location = new System.Drawing.Point(4, 54);
+            this.journal.Name = "journal";
+            this.journal.Padding = new System.Windows.Forms.Padding(3);
+            this.journal.Size = new System.Drawing.Size(1068, 536);
+            this.journal.TabIndex = 18;
+            this.journal.Text = "Journal";
+            this.journal.UseVisualStyleBackColor = true;
+            // 
+            // journalTextSelection
+            // 
+            this.journalTextSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.journalTextSelection.CheckOnClick = true;
+            this.journalTextSelection.FormattingEnabled = true;
+            this.journalTextSelection.Items.AddRange(new object[] {
+            "Regular",
+            "System",
+            "Emote",
+            "Label",
+            "Focus",
+            "Whisper",
+            "Yell",
+            "Spell",
+            "Guild",
+            "Alliance",
+            "Encoded",
+            "Special"});
+            this.journalTextSelection.Location = new System.Drawing.Point(-4, 0);
+            this.journalTextSelection.Name = "journalTextSelection";
+            this.journalTextSelection.Size = new System.Drawing.Size(111, 533);
+            this.journalTextSelection.TabIndex = 3;
+            this.journalTextSelection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnJournalFilterCheck);
+            // 
+            // journalList
+            // 
+            this.journalList.AllowUserToAddRows = false;
+            this.journalList.AllowUserToDeleteRows = false;
+            this.journalList.AllowUserToResizeColumns = false;
+            this.journalList.AllowUserToResizeRows = false;
+            this.journalList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.journalList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.journalList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Type,
+            this.journalEntries});
+            this.journalList.Location = new System.Drawing.Point(113, 40);
+            this.journalList.Name = "journalList";
+            this.journalList.RowHeadersVisible = false;
+            this.journalList.RowHeadersWidth = 62;
+            this.journalList.RowTemplate.Height = 28;
+            this.journalList.Size = new System.Drawing.Size(955, 496);
+            this.journalList.TabIndex = 2;
+            // 
+            // Type
+            // 
+            this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Type.DataPropertyName = "type";
+            this.Type.HeaderText = "Type";
+            this.Type.MinimumWidth = 8;
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            this.Type.Width = 79;
+            // 
+            // journalEntries
+            // 
+            this.journalEntries.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.journalEntries.DataPropertyName = "text";
+            this.journalEntries.HeaderText = "Journal Entries";
+            this.journalEntries.MinimumWidth = 8;
+            this.journalEntries.Name = "journalEntries";
+            this.journalEntries.ReadOnly = true;
+            this.journalEntries.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // screenshotTab
             // 
             this.screenshotTab.Controls.Add(this.imgFmt);
@@ -5423,6 +5523,26 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            // 
+            // journalFilterString
+            // 
+            this.journalFilterString.AllowDrop = true;
+            this.journalFilterString.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.journalFilterString.Location = new System.Drawing.Point(201, 8);
+            this.journalFilterString.Name = "journalFilterString";
+            this.journalFilterString.Size = new System.Drawing.Size(859, 26);
+            this.journalFilterString.TabIndex = 4;
+            this.journalFilterString.Leave += new System.EventHandler(this.journalFilter_TextChanged);
+            // 
+            // viewFilter
+            // 
+            this.viewFilter.AutoSize = true;
+            this.viewFilter.Location = new System.Drawing.Point(113, 11);
+            this.viewFilter.Name = "viewFilter";
+            this.viewFilter.Size = new System.Drawing.Size(82, 20);
+            this.viewFilter.TabIndex = 5;
+            this.viewFilter.Text = "View Filter";
             // 
             // paypalButton
             // 
@@ -6435,7 +6555,7 @@ namespace Assistant
             this.scriptlistView.Location = new System.Drawing.Point(8, 3);
             this.scriptlistView.MultiSelect = false;
             this.scriptlistView.Name = "scriptlistView";
-            this.scriptlistView.Size = new System.Drawing.Size(749, 544);
+            this.scriptlistView.Size = new System.Drawing.Size(749, 519);
             this.scriptlistView.TabIndex = 48;
             this.scriptlistView.UseCompatibleStateImageBehavior = false;
             this.scriptlistView.View = System.Windows.Forms.View.Details;
@@ -7788,6 +7908,16 @@ namespace Assistant
             this.gridslot_ComboBox.TabIndex = 0;
             this.gridslot_ComboBox.SelectedIndexChanged += new System.EventHandler(this.gridslot_ComboBox_SelectedIndexChanged);
             // 
+            // setSpellBarOrigin
+            // 
+            this.setSpellBarOrigin.Location = new System.Drawing.Point(10, 206);
+            this.setSpellBarOrigin.Name = "setSpellBarOrigin";
+            this.setSpellBarOrigin.Size = new System.Drawing.Size(144, 30);
+            this.setSpellBarOrigin.TabIndex = 64;
+            this.setSpellBarOrigin.Text = "Set Origin";
+            this.setSpellBarOrigin.UseVisualStyleBackColor = true;
+            this.setSpellBarOrigin.Click += new System.EventHandler(this.spellGridSetOrigin);
+            // 
             // gridlock_CheckBox
             // 
             this.gridlock_CheckBox.Location = new System.Drawing.Point(10, 104);
@@ -8642,16 +8772,6 @@ namespace Assistant
             this.razorButtonWiki.UseVisualStyleBackColor = true;
             this.razorButtonWiki.Click += new System.EventHandler(this.razorButtonWiki_Click);
             // 
-            // setSpellBarOrigin
-            // 
-            this.setSpellBarOrigin.Location = new System.Drawing.Point(10, 206);
-            this.setSpellBarOrigin.Name = "setSpellBarOrigin";
-            this.setSpellBarOrigin.Size = new System.Drawing.Size(144, 30);
-            this.setSpellBarOrigin.TabIndex = 64;
-            this.setSpellBarOrigin.Text = "Set Origin";
-            this.setSpellBarOrigin.UseVisualStyleBackColor = true;
-            this.setSpellBarOrigin.Click += new System.EventHandler(spellGridSetOrigin);
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(8, 19);
@@ -8806,6 +8926,9 @@ namespace Assistant
             this.groupBox28.PerformLayout();
             this.groupBox27.ResumeLayout(false);
             this.groupBox27.PerformLayout();
+            this.journal.ResumeLayout(false);
+            this.journal.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.journalList)).EndInit();
             this.screenshotTab.ResumeLayout(false);
             this.screenshotTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
@@ -9150,6 +9273,33 @@ namespace Assistant
             videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
             videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
             videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
+
+            // set up datasource for journal so I can use its filtering
+            //var source = new BindingSource();
+            //source.DataSource = Assistant.PacketHandlers.JIList;
+            System.Data.DataView dv = new System.Data.DataView(Assistant.PacketHandlers.JIList);
+            JournalList.DataSource = dv;
+            JournalList.Columns[0].DataPropertyName = "type";
+            JournalList.Columns[1].DataPropertyName = "text";
+
+            //Journal Filters
+            for (int index=0; index < JournalTextSelection.Items.Count; index++ )
+            {
+                var item = JournalTextSelection.Items[index];
+                string filter = (string)item;
+                //int index = this.journalTextSelection.FindStringExact(filter);
+                bool state = RazorEnhanced.Settings.General.ReadBool("Journal" + filter);
+                JournalTextSelection.SetItemCheckState(index, state? CheckState.Checked : CheckState.Unchecked);
+            }
+            journalFilterString.Text = RazorEnhanced.Settings.General.ReadString("JournalFilterText");
+            try
+            {
+                dv.RowFilter = JournalFilterString.Text; ;
+            }
+            catch (Exception)
+            {
+                
+            }
         }
 
         public void SetBandSelfState()

@@ -19,7 +19,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static readonly int SettingVersion = 12;
+		private static readonly int SettingVersion = 13;
 
 		private static string m_profileName = null;
 
@@ -2520,8 +2520,22 @@ namespace RazorEnhanced
 			general.Columns.Add("AutolootAutostartCheckBox", typeof(bool));
 			general.Columns.Add("BandageHealAutostartCheckBox", typeof(bool));
 
-			// Composizione Parematri base primo avvio
-			object[] generalstartparam = new object[] {
+            general.Columns.Add("JournalRegular", typeof(bool));
+            general.Columns.Add("JournalSystem", typeof(bool));
+            general.Columns.Add("JournalEmote", typeof(bool));
+            general.Columns.Add("JournalLabel", typeof(bool));
+            general.Columns.Add("JournalFocus", typeof(bool));
+            general.Columns.Add("JournalWhisper", typeof(bool));
+            general.Columns.Add("JournalYell", typeof(bool));
+            general.Columns.Add("JournalSpell", typeof(bool));
+            general.Columns.Add("JournalGuild", typeof(bool));
+            general.Columns.Add("JournalAlliance", typeof(bool));
+            general.Columns.Add("JournalEncoded", typeof(bool));
+            general.Columns.Add("JournalSpecial", typeof(bool));
+            general.Columns.Add("JournalFilterText", typeof(string));
+
+            // Composizione Parematri base primo avvio
+            object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself", false,
 
@@ -2587,8 +2601,12 @@ namespace RazorEnhanced
                      true, false, false,
 
 					 // Parametri AgentAutostart
-                     false, false, false
-				};
+                     false, false, false,
+
+                     // Journal Filter Settings
+                     true, true, true, true, true, true, true, true, true, true, true, true,
+                     "text LIKE '*'",
+                };
 
             DataRow generalsettings = general.NewRow();
             generalsettings.ItemArray = generalstartparam;
@@ -5147,7 +5165,42 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", realVersion);
 			}
 
-			Save(true);
+            if (realVersion == 12)
+            {
+                DataTable general = m_Dataset.Tables["General"];
+                general.Columns.Add("JournalRegular", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalRegular", true);
+                general.Columns.Add("JournalSystem", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalSystem", true);
+                general.Columns.Add("JournalEmote", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalEmote", true);
+                general.Columns.Add("JournalLabel", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalLabel", true);
+                general.Columns.Add("JournalFocus", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalFocus", true);
+                general.Columns.Add("JournalWhisper", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalWhisper", true);
+                general.Columns.Add("JournalYell", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalYell", true);
+                general.Columns.Add("JournalSpell", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalSpell", true);
+                general.Columns.Add("JournalGuild", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalGuild", true);
+                general.Columns.Add("JournalAlliance", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalAlliance", true);
+                general.Columns.Add("JournalEncoded", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalEncoded", true);
+                general.Columns.Add("JournalSpecial", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("JournalSpecial", true);
+                //
+                general.Columns.Add("JournalFilterText", typeof(string));
+                RazorEnhanced.Settings.General.WriteString("JournalFilterText", "");
+
+                realVersion = 13;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+
+            Save(true);
 		}
 
 
