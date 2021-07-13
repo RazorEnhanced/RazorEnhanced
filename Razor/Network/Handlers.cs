@@ -2116,9 +2116,8 @@ namespace Assistant
 			}
 		}
 
-        internal static List<string> SysMessages = new List<string>(21);
-
-        static int MaxJournalEntries = 100;
+    internal static List<string> SysMessages = new List<string>(21);
+    static int MaxJournalEntries = 100;
 		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
 
@@ -2134,12 +2133,11 @@ namespace Assistant
             }
 
             World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
-            if (World.Player.Journal.Count > MaxJournalEntries)
-			{
-				RazorEnhanced.Journal.JournalEntry ra;
-				World.Player.Journal.TryDequeue(out ra);
-            }
-
+          if (World.Player.Journal.Count > MaxJournalEntries)
+		    	{
+				    RazorEnhanced.Journal.JournalEntry ra;
+				    World.Player.Journal.TryDequeue(out ra);
+           }
 
             string trimmed_text = text.Trim();
             // ugly hack because OSI is not passing new spell words as type MessageType.Spell
