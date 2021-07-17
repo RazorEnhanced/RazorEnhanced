@@ -2117,7 +2117,7 @@ namespace Assistant
 		}
 
     internal static List<string> SysMessages = new List<string>(21);
-    static int MaxJournalEntries = 100;
+    static int MaxJournalEntries = 200;
 		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
 

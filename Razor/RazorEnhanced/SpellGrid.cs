@@ -1045,7 +1045,7 @@ namespace RazorEnhanced
 			{ "Animate Dead", 0x5000},
 			{ "Blood Oath", 0x5001},
 			{ "Corpse Skin", 0x5002},
-			{ "Curse Weapon", 0x503},
+			{ "Curse Weapon", 0x5003},
 			{ "Evil Omen", 0x5004},
 			{ "Horrific Beast", 0x5005},
 			{ "Lich Form", 0x5006},
