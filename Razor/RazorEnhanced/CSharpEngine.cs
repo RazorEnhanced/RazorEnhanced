@@ -239,12 +239,30 @@ namespace RazorEnhanced
             errorwarnings = new();
             assembly = null;
 
+            List<string> filesList = new() { }; // List of files.
+            FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
+            if (errorwarnings.Count > 0)
+            {
+                return false;
+            }
+
+            // Looking if a DLL exists for this script
             string outputAssemblyPath = m_scriptsConfig.GetScriptInfo(path).DllPath;
 
-            // If Dll already exists I check if is older than the source file. If not, run it else rebuild it
+            // If Dll already exists I check if is older than the source files. If not, run it else rebuild it
             if (File.Exists(outputAssemblyPath))
             {
+                // Looking for the latest modified script file from the list of files to be compiled
                 DateTime csDate = File.GetLastWriteTime(path);
+                foreach (var file in filesList)
+                {
+                    DateTime fileDate = File.GetLastWriteTime(file);
+                    if (fileDate > csDate)
+                    {
+                        csDate = fileDate;
+                    }
+                }
+
                 DateTime dllDate = File.GetLastWriteTime(outputAssemblyPath);
                 if (dllDate > csDate)
                 {
@@ -255,12 +273,6 @@ namespace RazorEnhanced
             }
 
             // Dll does not exists or CS file is older. Build is needed
-            List<string> filesList = new() { }; // List of files.
-            FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
-            if (errorwarnings.Count > 0)
-            {
-                return false;
-            }
 
             CompilerOptions opt = new();
             CSharpCodeProvider provider = new(opt);
