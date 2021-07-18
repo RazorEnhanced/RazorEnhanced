@@ -1749,23 +1749,33 @@ function l111IlI1I1llll1lIIl1111l1()
 
 
 <DIV id="id20_1">
-<P class="p4 ft3">UOS - Scripting Documentation</P>
-<P class="p4 ft4">Last updated on April, 2014.</P>
-<P class="p12 ft9">Agents</P>
-<P class="p62 ft12">Vendors</P>
-<P class="p28 ft23">Execute buy or sell list from vendors agent.</P>
-<P class="p22 ft13">Usage</P>
-<P class="p40 ft14">// Triggers</P>
-<P class="p127 ft14">buy ('list name') sell ('list name')</P>
-<P class="p128 ft14"><SPAN class="ft14">//</SPAN><SPAN class="ft17">Cleaners clearbuy clearsell</SPAN></P>
-<P class="p129 ft12">Organizer</P>
-<P class="p13 ft23">Execute a specific organizer profile.</P>
-<P class="p130 ft24">Go to Agents (Tab) <NOBR>-&gt;</NOBR> Organizer (Tab) <NOBR>-&gt;</NOBR> New (Button). A new profile will be created, double click it in order to rename, for example "Reagents", add reagent types and amounts to your items list. Don't forget to set containers, both source and destination.</P>
-<P class="p26 ft13">Usage</P>
-<P class="p13 ft14">organizer ('profile name') [source] [destination]</P>
-<P class="p73 ft13">Sample</P>
-<P class="p131 ft14"><SPAN class="ft14">//</SPAN><SPAN class="ft17">Check if you are already organizing if not organizing</SPAN></P>
-<P class="p132 ft14">organizer 'Reagents' endif</P>
+    <P class="p4 ft3">UOS - Scripting Documentation</P>
+    <P class="p4 ft4">Last updated on April, 2014.</P>
+    <P class="p12 ft9">Agents</P>
+    <P class="p62 ft12">Vendors</P>
+    <P class="p28 ft23">Execute buy or sell list from vendors agent.</P>
+    <P class="p22 ft13">Usage</P>
+    <P class="p40 ft14">// Triggers</P>
+    <P class="p127 ft14">buy ('list name') sell ('list name')</P>
+    <P class="p128 ft14"><SPAN class="ft14">//</SPAN><SPAN class="ft17">Cleaners clearbuy clearsell</SPAN></P>
+    <P class="p129 ft12">Organizer</P>
+    <P class="p13 ft23">Execute a specific organizer profile.</P>
+    <P class="p130 ft24">Go to Agents (Tab) <NOBR>-&gt;</NOBR> Organizer (Tab) <NOBR>-&gt;</NOBR> Add (Button). A provide a name in the dialog and a new profile will be created, for example "Reagents", use Add Item to add reagent types and amounts to your items list. Don't forget to set containers, both source and destination.</P>
+    <P class="p26 ft13">Usage</P>
+    <P class="p13 ft14">organizer ('profile name') [source] [destination] [dragDelay]</P>
+    <P class="p73 ft13">Sample</P>
+    <P class="p131 ft14"><SPAN class="ft14">//</SPAN><SPAN class="ft17">Check if you are already organizing if not organizing</SPAN></P>
+    <P class="p132 ft14">organizer 'Reagents' endif</P>
+
+    <P class="p129 ft12">Restock</P>
+    <P class="p13 ft23">Execute a specific restocker profile. Basically same as Organizer, except it attempt to keep a specific number of an item in the destination bag.</P>
+    <P class="p130 ft24">Go to Agents (Tab) <NOBR>-&gt;</NOBR> Restock (Tab) <NOBR>-&gt;</NOBR> Add (Button). A provide a name in the dialog and a new profile will be created, for example "Reagents", use Add Item to add reagent types and amounts to your items list. Don't forget to set containers, both source and destination.</P>
+    <P class="p26 ft13">Usage</P>
+    <P class="p13 ft14">restock ('profile name') [source] [destination] [dragDelay]</P>
+    <P class="p73 ft13">Sample</P>
+    <P class="p131 ft14"><SPAN class="ft14">//</SPAN><SPAN class="ft17">Check if you are already restocking if not restock</SPAN></P>
+    <P class="p132 ft14">restock 'Reagents' endif</P>
+
 </DIV>
 <DIV id="id20_2">
 <P class="p4 ft7">20 / 68</P>
