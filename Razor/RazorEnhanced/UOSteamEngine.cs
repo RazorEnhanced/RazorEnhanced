@@ -174,6 +174,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("location", this.Location);
             UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell);
             UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer);
+            UOScript.Interpreter.RegisterCommandHandler("restock", this.Restock);
             UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("autotargetobject", this.AutoTargetObject);
             UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress);
@@ -2342,6 +2343,29 @@ namespace RazorEnhanced
         private bool ClearSell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             SellAgent.Disable();
+            return true;
+        }
+        private bool Restock(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 1)
+            {
+                string restockName = args[0].AsString();
+                RazorEnhanced.Organizer.RunOnce(restockName, -1, -1, -1);
+            }
+            if (args.Length == 2)
+            {
+                string restockName = args[0].AsString();
+                uint source = args[1].AsSerial();
+                RazorEnhanced.Organizer.RunOnce(restockName, (int)source, -1, -1);
+            }
+            if (args.Length == 3)
+            {
+                string restockName = args[0].AsString();
+                uint source = args[1].AsSerial();
+                uint dest = args[2].AsSerial();
+                RazorEnhanced.Restock.RunOnce(restockName, (int)source, (int)dest, -1);
+            }
+
             return true;
         }
 

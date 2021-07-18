@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Assistant
 {
@@ -14,35 +15,19 @@ namespace Assistant
 	{
 		private DataTable scriptTable;
 
-		private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart)
+		private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart, string fullpath)
 		{
 			string status = "Loaded";
 			string classname = Path.GetFileNameWithoutExtension(filename);
-			string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", filename);
 			string text = null;
 
-			if (File.Exists(fullpath))
-			{
-				//text = File.ReadAllText(fullpath);
-			}
-			else
+			if (!File.Exists(fullpath))
 			{
 				return "ERROR: file not found";
 			}
 
 			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
-			//string result = script.Create(null);
-
-			//if (result == "Created")
-            if (true)
-			{
-				Scripts.EnhancedScripts.TryAdd(filename, script);
-			}
-			//else
-			//{
-			//	status = "ERROR: " + result;
-			//}
-
+     		Scripts.EnhancedScripts.TryAdd(filename, script);
 			return status;
 		}
 
@@ -70,19 +55,20 @@ namespace Assistant
 				bool passkey = (bool)row["HotKeyPass"];
 				Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
 				bool autostart = (bool)row["AutoStart"];
+                string fullPath = (string)row["FullPath"];
 
-				bool run = false;
+                bool run = false;
 				if (status == "Running")
 					run = true;
 
-				string result = LoadFromFile(filename, wait, loop, run, autostart);
+				string result = LoadFromFile(filename, wait, loop, run, autostart, fullPath);
 
 				if (result == "Loaded")
 				{
 					ListViewItem listitem = new ListViewItem();
 
 					listitem.SubItems.Add(filename);
-
+                    listitem.ToolTipText = fullPath;
 					listitem.SubItems.Add(status);
 
 					if (loop)
@@ -283,6 +269,9 @@ namespace Assistant
 		}
 
 
+
+
+
 		private void AddScriptInGrid()
 		{
             openFileDialogscript.Filter = "Script Files|*.py;*.uos;*.txt;*.cs";
@@ -292,33 +281,11 @@ namespace Assistant
             {
                 string filename = Path.GetFileName(openFileDialogscript.FileName);
                 string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
-				string razorPath = NormalizePath(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
-
-				// Checking if py script is in Scripts folder
-				if (Path.GetExtension(filename) == ".py" && !scriptPath.Equals(razorPath, StringComparison.OrdinalIgnoreCase))
-				{
-					MessageBox.Show("Error, Python script file must be in Scripts folder!", "Razor Enhanced", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-				
-				// Checkig if script is in a subfolder of Scripts
-				if (!scriptPath.Contains(razorPath))
-				{
-					MessageBox.Show("Error, UOS and C# scripts must be in Scripts or a subfolder", "Razor Enhanced", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-
-				string subfolder = scriptPath.Replace(razorPath, "");
-				if (subfolder.Length > 0)
-				{
-					subfolder = subfolder.Remove(0, 1) + "\\"; // Remove first 2 \\
-				}
-				filename = subfolder + filename;
-				
+                
 				Scripts.EnhancedScript script = Scripts.Search(filename);
                 if (script == null)
                 {
-					scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
+					scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false, Path.Combine(scriptPath.ToLower(), filename));
                     ReloadScriptTable();
                 }
              }
@@ -434,10 +401,9 @@ namespace Assistant
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
 				string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
-				//fullPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\") + filename;
-				fullPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", filename);
-			}
-			if (fullPath != null)
+                fullPath = Settings.GetFullPathForScript(filename);
+            }
+            if (fullPath != null)
 				EnhancedScriptEditor.Init(fullPath);
 		}
 
@@ -511,7 +477,9 @@ namespace Assistant
 		{
 			if (scriptlistView.SelectedItems.Count == 1)
 			{
-				scriptfilelabel.Text = "File: " + scriptlistView.SelectedItems[0].SubItems[1].Text;
+                string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
+                string fullPathName = Settings.GetFullPathForScript(filename);
+                scriptFilePath.Text = fullPathName;
 
 				if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
 					scriptloopmodecheckbox.Checked = true;

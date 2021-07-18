@@ -17,7 +17,7 @@ namespace RazorEnhanced
 	public class Restock
 	{
 		private static int m_dragdelay;
-		private static int m_sorucebag;
+		private static int m_sourceBag;
 		private static int m_destinationbag;
 		private static string m_restocklist;
 
@@ -95,11 +95,11 @@ namespace RazorEnhanced
 
 		internal static int RestockSource
 		{
-			get { return m_sorucebag; }
+			get { return m_sourceBag; }
 
 			set
 			{
-				m_sorucebag = value;
+				m_sourceBag = value;
 				Assistant.Engine.MainWindow.SafeAction(s => s.RestockSourceLabel.Text = "0x" + value.ToString("X8"));
 			}
 		}
@@ -264,7 +264,42 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static int Engine(List<RestockItem> restockItemList, int mseconds, int sourceBagserial, int destinationBagserial)
+        public static void RunOnce(string restockerName, int sourceBag, int destBag, int dragDelay)
+        {
+            // Check Bag
+            if (sourceBag == -1)
+            {
+                sourceBag = m_sourceBag;
+            }
+            Assistant.Item sbag = Assistant.World.FindItem(sourceBag);
+            if (sbag == null)
+            {
+                AddLog("Invalid Source Bag");
+                return;
+            }
+
+            if (destBag == -1)
+            {
+                destBag = m_destinationbag;
+            }
+            Assistant.Item dbag = Assistant.World.FindItem(destBag);
+            if (dbag == null)
+            {
+                AddLog("Invalid Destination Bag");
+                return;
+            }
+
+            if (dragDelay == -1)
+            {
+                dragDelay = m_dragdelay;
+            }
+
+            List<RazorEnhanced.Restock.RestockItem> restockList = Settings.Restock.ItemsRead(restockerName);
+
+            int exit = Engine(restockList, dragDelay, sourceBag, destBag);
+        }
+
+        internal static int Engine(List<RestockItem> restockItemList, int mseconds, int sourceBagserial, int destinationBagserial)
 		{
 			Item sourceBag = Items.FindBySerial(sourceBagserial);
 			Item destinationBag = Items.FindBySerial(destinationBagserial);
@@ -320,7 +355,7 @@ namespace RazorEnhanced
 		internal static void Engine()
 		{
 			// Check Bag
-			Assistant.Item sbag = Assistant.World.FindItem(m_sorucebag);
+			Assistant.Item sbag = Assistant.World.FindItem(m_sourceBag);
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
@@ -339,7 +374,7 @@ namespace RazorEnhanced
 				return;
 			}
 
-			int exit = Engine(Settings.Restock.ItemsRead(m_restocklist), m_dragdelay, m_sorucebag, m_destinationbag);
+			int exit = Engine(Settings.Restock.ItemsRead(m_restocklist), m_dragdelay, m_sourceBag, m_destinationbag);
 		}
 
 		private static Thread m_RestockThread;

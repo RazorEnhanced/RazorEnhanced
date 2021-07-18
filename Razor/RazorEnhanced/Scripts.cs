@@ -50,6 +50,7 @@ namespace RazorEnhanced
             public Keys Hotkey { get; set; }
             public bool HotKeyPass { get; set; }
             public bool AutoStart { get; set; }
+            public string FullPath { get; set; }
         }
 
 
@@ -103,7 +104,7 @@ namespace RazorEnhanced
 
                 try
                 {
-                    string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
+                    string fullpath = Settings.GetFullPathForScript(m_Filename);
                     string ext = Path.GetExtension(fullpath);
 
 					if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))
@@ -139,7 +140,7 @@ namespace RazorEnhanced
                         DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
                         if (FileChangeDate < lastModified)
                         {
-                            ReadText();
+                            ReadText(fullpath);
                             FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
                             Create(null);
                         }
@@ -218,9 +219,9 @@ namespace RazorEnhanced
                 }
 			}
 
-            internal void ReadText()
+            internal void ReadText(string fullpath)
             {
-                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
+                //string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
                 if (File.Exists(fullpath))
                 {
                     m_Text = File.ReadAllText(fullpath);
@@ -683,9 +684,6 @@ namespace RazorEnhanced
 
         static void ScriptChanged(object sender, FileSystemEventArgs e)
         {
-            string fullPath = e.FullPath;
-            string filename = e.Name;
-            string onlyFilename = Path.GetFileName(fullPath);
             foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
             {
                 //if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)

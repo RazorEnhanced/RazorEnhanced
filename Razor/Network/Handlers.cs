@@ -2118,13 +2118,13 @@ namespace Assistant
 
     internal static List<string> SysMessages = new List<string>(21);
     static int MaxJournalEntries = 200;
-		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
-		{
+        internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
+        {
 
             if (World.Player == null)
-				return;
+                return;
 
-            if (!ser.IsValid ) // || ser == World.Player.Serial || ser.IsItem)
+            if (!ser.IsValid) // || ser == World.Player.Serial || ser.IsItem)
             {
                 SysMessages.Add(text.ToLower());
                 if (SysMessages.Count >= 25)
@@ -2133,11 +2133,25 @@ namespace Assistant
             }
 
             World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
-          if (World.Player.Journal.Count > MaxJournalEntries)
-		    	{
-				    RazorEnhanced.Journal.JournalEntry ra;
-				    World.Player.Journal.TryDequeue(out ra);
-           }
+            if (World.Player.Journal.Count > MaxJournalEntries)
+            {
+                RazorEnhanced.Journal.JournalEntry ra;
+                World.Player.Journal.TryDequeue(out ra);
+            }
+
+            // If its a spoken message, and it doesn't have the speakers name in it,
+            //  add the speaker
+            if (type == MessageType.Regular)
+            {
+                RazorEnhanced.Mobile mobile = Mobiles.FindBySerial(ser);
+                if (mobile != null)
+                {
+                    if (!text.Contains(mobile.Name))
+                    {
+                        text = mobile.Name + ": " + text;
+                    }
+                }
+            }
 
             string trimmed_text = text.Trim();
             // ugly hack because OSI is not passing new spell words as type MessageType.Spell
@@ -2167,112 +2181,112 @@ namespace Assistant
             }
 
             if (type == MessageType.Spell)
-			{
+            {
                 Spell s = Spell.Get(trimmed_text);
                 bool replaced = false;
-				if (s != null)
-				{
-					System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
-					sb.Replace(@"{power}", s.WordsOfPower);
-					string spell = Language.GetString(s.Name);
-					sb.Replace(@"{spell}", spell);
-					sb.Replace(@"{name}", spell);
+                if (s != null)
+                {
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
+                    sb.Replace(@"{power}", s.WordsOfPower);
+                    string spell = Language.GetString(s.Name);
+                    sb.Replace(@"{spell}", spell);
+                    sb.Replace(@"{name}", spell);
 
-					string newText = sb.ToString();
+                    string newText = sb.ToString();
 
-					if (!string.IsNullOrEmpty(newText) && newText != text)
-					{
-				 		Assistant.Client.Instance.SendToClient(new AsciiMessage(ser, body, MessageType.Spell, s.GetHue(hue), font, name, newText));
-						replaced = true;
-						args.Block = true;
-					}
-				}
+                    if (!string.IsNullOrEmpty(newText) && newText != text)
+                    {
+                        Assistant.Client.Instance.SendToClient(new AsciiMessage(ser, body, MessageType.Spell, s.GetHue(hue), font, name, newText));
+                        replaced = true;
+                        args.Block = true;
+                    }
+                }
 
-				if (!replaced && RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
-				{
-					p.Seek(10, SeekOrigin.Begin);
-					if (s != null)
-						p.Write((ushort)s.GetHue(hue));
-					else
-						p.Write((ushort)Engine.MainWindow.NeutralSpellHue);
-				}
-			}
-			else if (ser.IsMobile && type == MessageType.Label)
-			{
-				Mobile m = World.FindMobile(ser);
-				if (m != null && m.Name.IndexOf(text) != 5 && m != World.Player && !(text.StartsWith("(") && text.EndsWith(")")))
-					m.Name = text;
-			}
-			else if (ser != World.Player.Serial && type == MessageType.Focus) // Filter poison message OSI
-			{
-				if (Engine.MainWindow.FilterPoison.Checked)
-				{
-					if (text.EndsWith("*"))
-					{
-						args.Block = true;
-						return;
-					}
-				}
-			}
-			else
-			{
-				if (ser == Serial.MinusOne && name == "System")
-				{
-					if (Engine.MainWindow.FilterSnoopMsg.Checked && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
-					{
-						args.Block = true;
-						return;
-					}
-					else if (text.StartsWith("You've committed a criminal act") || text.StartsWith("You are now a criminal"))
-					{
-						World.Player.ResetCriminalTimer();
-					}
-				}
+                if (!replaced && RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
+                {
+                    p.Seek(10, SeekOrigin.Begin);
+                    if (s != null)
+                        p.Write((ushort)s.GetHue(hue));
+                    else
+                        p.Write((ushort)Engine.MainWindow.NeutralSpellHue);
+                }
+            }
+            else if (ser.IsMobile && type == MessageType.Label)
+            {
+                Mobile m = World.FindMobile(ser);
+                if (m != null && m.Name.IndexOf(text) != 5 && m != World.Player && !(text.StartsWith("(") && text.EndsWith(")")))
+                    m.Name = text;
+            }
+            else if (ser != World.Player.Serial && type == MessageType.Focus) // Filter poison message OSI
+            {
+                if (Engine.MainWindow.FilterPoison.Checked)
+                {
+                    if (text.EndsWith("*"))
+                    {
+                        args.Block = true;
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                if (ser == Serial.MinusOne && name == "System")
+                {
+                    if (Engine.MainWindow.FilterSnoopMsg.Checked && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
+                    {
+                        args.Block = true;
+                        return;
+                    }
+                    else if (text.StartsWith("You've committed a criminal act") || text.StartsWith("You are now a criminal"))
+                    {
+                        World.Player.ResetCriminalTimer();
+                    }
+                }
 
-				// Filtro messsaggi poison
-				if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
-				{
-					if (Engine.MainWindow.FilterPoison.Checked)
-					{
-						if (text.EndsWith("*"))
-						{
-							args.Block = true;
-							return;
-						}
-					}
-				}
-				// Filtro messsaggi poison "seems to have no effect"
-				if (type == MessageType.Emote && hue == 946 && ser != World.Player.Serial)
-				{
-					if (Engine.MainWindow.FilterPoison.Checked)
-					{
-						if (text.EndsWith("t. *"))
-						{
-							args.Block = true;
-							return;
-						}
-					}
-				}
+                // Filtro messsaggi poison
+                if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
+                {
+                    if (Engine.MainWindow.FilterPoison.Checked)
+                    {
+                        if (text.EndsWith("*"))
+                        {
+                            args.Block = true;
+                            return;
+                        }
+                    }
+                }
+                // Filtro messsaggi poison "seems to have no effect"
+                if (type == MessageType.Emote && hue == 946 && ser != World.Player.Serial)
+                {
+                    if (Engine.MainWindow.FilterPoison.Checked)
+                    {
+                        if (text.EndsWith("t. *"))
+                        {
+                            args.Block = true;
+                            return;
+                        }
+                    }
+                }
 
-				if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)
-				{
-					if (Engine.MainWindow.ForceSpeechHue.Checked)
-					{
-						p.Seek(10, SeekOrigin.Begin);
-						p.Write((ushort)Engine.MainWindow.SpeechHue);
-					}
-				}
+                if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)
+                {
+                    if (Engine.MainWindow.ForceSpeechHue.Checked)
+                    {
+                        p.Seek(10, SeekOrigin.Begin);
+                        p.Write((ushort)Engine.MainWindow.SpeechHue);
+                    }
+                }
 
-				// Filtro talk orc lizart rat
-				if (Engine.MainWindow.FilterNPC.Checked && ser.IsMobile)
-				{
-					Mobile m = World.FindMobile(ser);
-					if (m != null && RazorEnhanced.Filters.IsOrcLizardRat(m.Body))
-					{
-						args.Block = true;
-						return;
-					}
-				}
+                // Filtro talk orc lizart rat
+                if (Engine.MainWindow.FilterNPC.Checked && ser.IsMobile)
+                {
+                    Mobile m = World.FindMobile(ser);
+                    if (m != null && RazorEnhanced.Filters.IsOrcLizardRat(m.Body))
+                    {
+                        args.Block = true;
+                        return;
+                    }
+                }
 
                 if (Engine.MainWindow.FilterSpam.Checked && (ser == Serial.MinusOne || ser == Serial.Zero))
                 {
