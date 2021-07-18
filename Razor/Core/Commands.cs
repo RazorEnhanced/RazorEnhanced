@@ -249,7 +249,7 @@ namespace Assistant
 			}).Start();
 		}
 
-		private static void PlayScript(string[] param)
+		internal static void PlayScript(string[] param)
 		{
 			if (param == null || param.Length == 0)
 				return;

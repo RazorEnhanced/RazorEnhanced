@@ -260,6 +260,17 @@ namespace RazorEnhanced
 		}
 
         /// <summary>
+        /// Returns the serial of last object used by the player.
+        /// </summary>
+        public static int LastUsedObject()
+        {
+            if (World.Player == null || World.Player.LastObject == 0)
+                return -1;
+            return World.Player.LastObject;
+        }
+
+
+        /// <summary>
         /// Get serial number of last target
         /// </summary>
         /// <returns>Serial as number.</returns>
