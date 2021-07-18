@@ -14,6 +14,9 @@ namespace RazorEnhanced
     {
         private static CSharpEngine m_instance = null;
         private ScriptsConfiguration m_scriptsConfig = null;
+        private CompilerOptions m_opt = null;
+        private CSharpCodeProvider m_provider = null;
+        private CompilerParameters m_compileParameters = null;
 
         public static CSharpEngine Instance
         {
@@ -29,6 +32,9 @@ namespace RazorEnhanced
         private CSharpEngine()
         {
             LoadScriptData();
+            m_opt = new();
+            m_provider = new(m_opt);
+            m_compileParameters = CompilerSettings(true);
         }
 
         private class ScriptDetail
@@ -125,7 +131,7 @@ namespace RazorEnhanced
             }
 
             // parameters.OutputAssembly = assemblyName; // Assembly name is not set to be random in temp
-            parameters.GenerateInMemory = false; // True - memory generation, false - external file generation
+            parameters.GenerateInMemory = true; // True - memory generation, false - external file generation
             parameters.GenerateExecutable = false; // True - exe file generation, false - dll file generation
             parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
             parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
@@ -191,9 +197,9 @@ namespace RazorEnhanced
             IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
             public string CompilerVersion { get => _compilerVersion; set { _compilerVersion = value; } }
             public bool WarnAsError => false;
-            public bool UseAspNetSettings => false;
+            public bool UseAspNetSettings => true;
             public string CompilerFullPath => Path.Combine(Assistant.Engine.RootPath, "roslyn", "csc.exe");
-            public int CompilerServerTimeToLive => 0;
+            public int CompilerServerTimeToLive => 60 * 60; // 1h
             IDictionary<string, string> IProviderOptions.AllOptions { get => _compilerOptions; }
             IDictionary<string, string> Options { set { _compilerOptions = value; } } // For Debug
         }
@@ -266,21 +272,18 @@ namespace RazorEnhanced
                 DateTime dllDate = File.GetLastWriteTime(outputAssemblyPath);
                 if (dllDate > csDate)
                 {
-                    assembly = Assembly.LoadFile(outputAssemblyPath);
-                    Misc.SendMessage("Loaded C# DLL Script");
-                    return false;
+                    //assembly = Assembly.LoadFile(outputAssemblyPath);
+                    //Misc.SendMessage("Loaded C# DLL Script");
+                    //return false;
                 }
             }
 
             // Dll does not exists or CS file is older. Build is needed
 
-            CompilerOptions opt = new();
-            CSharpCodeProvider provider = new(opt);
-
             Misc.SendMessage("Compiling C# Script");
 
-            CompilerParameters compileParameters = CompilerSettings(debug);
-            CompilerResults results = provider.CompileAssemblyFromFile(compileParameters, filesList.ToArray()); // Compiling
+            m_compileParameters.IncludeDebugInformation = debug;
+            CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
 
             Misc.SendMessage("Compile Done");
 
