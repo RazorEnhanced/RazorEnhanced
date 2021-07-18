@@ -12,9 +12,6 @@ namespace RazorEnhanced
     class CSharpEngine
     {
         private static CSharpEngine m_instance = null;
-        private CompilerOptions m_opt = null;
-        private CSharpCodeProvider m_provider = null;
-        private CompilerParameters m_compileParameters = null;
 
         public static CSharpEngine Instance
         {
@@ -29,9 +26,7 @@ namespace RazorEnhanced
         }
         private CSharpEngine()
         {
-            m_opt = new();
-            m_provider = new(m_opt);
-            m_compileParameters = CompilerSettings(true);
+
         }
 
         private CompilerParameters CompilerSettings(bool IncludeDebugInformation)
@@ -176,6 +171,10 @@ namespace RazorEnhanced
 
             Misc.SendMessage("Compiling C# Script " + Path.GetFileName(path));
             DateTime start = DateTime.Now;
+
+            CompilerOptions m_opt = new();
+            CSharpCodeProvider m_provider = new(m_opt);
+            CompilerParameters m_compileParameters = CompilerSettings(true); 
 
             m_compileParameters.IncludeDebugInformation = debug;
             CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
