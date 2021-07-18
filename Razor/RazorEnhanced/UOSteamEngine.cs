@@ -267,6 +267,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
             UOScript.Interpreter.RegisterExpressionHandler("z", this.LocationZ);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
+            UOScript.Interpreter.RegisterExpressionHandler("restocking", this.Restocking);
+
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion);
             UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill);
@@ -554,6 +556,11 @@ namespace RazorEnhanced
         {
             return RazorEnhanced.Organizer.Status();
         }
+        IComparable Restocking(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            return RazorEnhanced.Restock.Status();
+        }
+
 
         /// <summary>
         /// The problem is UOS findbyid will find either mobil or item, but RE seperates them
