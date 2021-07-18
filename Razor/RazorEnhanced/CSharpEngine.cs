@@ -6,14 +6,12 @@ using System.Reflection;
 using Microsoft.Scripting;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace RazorEnhanced
 {
     class CSharpEngine
     {
         private static CSharpEngine m_instance = null;
-        private ScriptsConfiguration m_scriptsConfig = null;
         private CompilerOptions m_opt = null;
         private CSharpCodeProvider m_provider = null;
         private CompilerParameters m_compileParameters = null;
@@ -31,94 +29,9 @@ namespace RazorEnhanced
         }
         private CSharpEngine()
         {
-            LoadScriptData();
             m_opt = new();
             m_provider = new(m_opt);
             m_compileParameters = CompilerSettings(true);
-        }
-
-        private class ScriptDetail
-        {
-            public string SourceFilePath { get; set; }
-            public string DllPath { get; set; }
-        }
-        private class ScriptsConfiguration
-        {
-            public List<ScriptDetail> Scripts { get; set; }
-
-            public ScriptDetail GetScriptInfo (string sourceFilePath)
-            {
-                if (Scripts != null)
-                {
-                    foreach (var item in Scripts)
-                    {
-                        if (item.SourceFilePath == sourceFilePath)
-                        {
-                            return item;
-                        }
-                    }
-                } 
-                return new ScriptDetail();
-            }
-
-            public void SetScriptInfo (string sourceFilePath, string dllPath)
-            {
-                if (Scripts != null)
-                {
-                    foreach (var item in Scripts)
-                    {
-                        if (item.SourceFilePath == sourceFilePath)
-                        {
-                            item.DllPath = dllPath;
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    Scripts = new();
-                }
-
-                // If not found add new item
-                Scripts.Add(new()
-                {
-                    SourceFilePath = sourceFilePath,
-                    DllPath = dllPath
-                });
-            }
-        }
-
-
-
-        private void LoadScriptData()
-        {
-            string dataFolder = Path.GetFullPath(Path.Combine(Assistant.Engine.RootPath, "Data"));
-            string filename = Path.Combine(dataFolder, "ScriptsInfoCS.json");
-
-            if (!File.Exists(filename))
-            {
-                m_scriptsConfig = new();
-            }
-            else
-            {
-                string json = File.ReadAllText(filename);
-                m_scriptsConfig = JsonConvert.DeserializeObject<ScriptsConfiguration>(json);
-            }
-        }
-
-        private void SaveScriptData()
-        {
-            string dataFolder = Path.GetFullPath(Path.Combine(Assistant.Engine.RootPath, "Data"));
-            string filename = Path.Combine(dataFolder, "ScriptsInfoCS.json");
-            if (!Directory.Exists(dataFolder))
-            {
-                Directory.CreateDirectory(dataFolder);
-            }
-
-            var options = new JsonSerializerSettings();
-            options.Formatting = Newtonsoft.Json.Formatting.Indented;
-            string json_txt = JsonConvert.SerializeObject(m_scriptsConfig, options);
-            File.WriteAllText(filename, json_txt);
         }
 
         private CompilerParameters CompilerSettings(bool IncludeDebugInformation)
@@ -130,38 +43,60 @@ namespace RazorEnhanced
                 parameters.ReferencedAssemblies.Add(assembly);
             }
 
-            // parameters.OutputAssembly = assemblyName; // Assembly name is not set to be random in temp
             parameters.GenerateInMemory = true; // True - memory generation, false - external file generation
             parameters.GenerateExecutable = false; // True - exe file generation, false - dll file generation
             parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
             parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
             //parameters.CompilerOptions = "/optimize"; // Set compiler argument to optimize output.
-            //parameters.CompilerOptions = "-langversion:9.0";
+            //parameters.CompilerOptions = "-langversion:8.0";
             parameters.CompilerOptions = "-parallel";
             parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
             return parameters;
         }
+        class CompilerOptions : IProviderOptions
+        {
+            string _compilerVersion = "8.0";
+            IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
+            public string CompilerVersion { get => _compilerVersion; set { _compilerVersion = value; } }
+            public bool WarnAsError => false;
+            public bool UseAspNetSettings => true;
+            public string CompilerFullPath => Path.Combine(Assistant.Engine.RootPath, "roslyn", "csc.exe");
+            public int CompilerServerTimeToLive => 60 * 60; // 1h
+            IDictionary<string, string> IProviderOptions.AllOptions { get => _compilerOptions; }
+            IDictionary<string, string> Options { set { _compilerOptions = value; } } // For Debug
+        }
 
         private List<string> GetReferenceAssemblies()
         {
-            List<string> list = new List<string>();
+            List<string> list = new();
 
-            string path = Path.Combine(Assistant.Engine.RootPath, "Scripts", "Assemblies.cfg");
+            string assemblies_cfg_path = Path.Combine(Assistant.Engine.RootPath, "Scripts", "Assemblies.cfg");
 
-            if (File.Exists(path))
+            if (File.Exists(assemblies_cfg_path))
             {
-                using StreamReader ip = new StreamReader(path);
+                using StreamReader ip = new(assemblies_cfg_path);
                 string line;
 
                 while ((line = ip.ReadLine()) != null)
                 {
-                    if (line.Length > 0 && !line.StartsWith("#"))
+                    if (line.Length > 0 && !line.StartsWith("#"))  // # means comment
                         list.Add(line);
                 }
             }
 
-            list.Add(Assistant.Engine.RootPath + "\\" + "RazorEnhanced.exe");
-            list.Add(Assistant.Engine.RootPath + "\\" + "Ultima.dll");
+            // Replace with full path all assemblis that are in razor path
+            for (int i = 0; i < list.Count; i++)
+            {
+                string assembly_path = Path.Combine(Assistant.Engine.RootPath, list[i]);
+                if (File.Exists(assembly_path))
+                {
+                    list[i] = assembly_path;
+                }
+            }
+
+            // Adding Razor and Ultima.dll as default
+            list.Add(Assistant.Engine.RootPath + Path.DirectorySeparatorChar + "RazorEnhanced.exe");
+            list.Add(Assistant.Engine.RootPath + Path.DirectorySeparatorChar + "Ultima.dll");
             return list;
         }
 
@@ -189,19 +124,6 @@ namespace RazorEnhanced
                 }
             }
             return has_error;
-        }
-
-        class CompilerOptions : IProviderOptions
-        {
-            string _compilerVersion = "8.0";
-            IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
-            public string CompilerVersion { get => _compilerVersion; set { _compilerVersion = value; } }
-            public bool WarnAsError => false;
-            public bool UseAspNetSettings => true;
-            public string CompilerFullPath => Path.Combine(Assistant.Engine.RootPath, "roslyn", "csc.exe");
-            public int CompilerServerTimeToLive => 60 * 60; // 1h
-            IDictionary<string, string> IProviderOptions.AllOptions { get => _compilerOptions; }
-            IDictionary<string, string> Options { set { _compilerOptions = value; } } // For Debug
         }
 
         /*
@@ -249,50 +171,22 @@ namespace RazorEnhanced
             FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
             if (errorwarnings.Count > 0)
             {
-                return false;
+                return true;
             }
 
-            // Looking if a DLL exists for this script
-            string outputAssemblyPath = m_scriptsConfig.GetScriptInfo(path).DllPath;
-
-            // If Dll already exists I check if is older than the source files. If not, run it else rebuild it
-            if (File.Exists(outputAssemblyPath))
-            {
-                // Looking for the latest modified script file from the list of files to be compiled
-                DateTime csDate = File.GetLastWriteTime(path);
-                foreach (var file in filesList)
-                {
-                    DateTime fileDate = File.GetLastWriteTime(file);
-                    if (fileDate > csDate)
-                    {
-                        csDate = fileDate;
-                    }
-                }
-
-                DateTime dllDate = File.GetLastWriteTime(outputAssemblyPath);
-                if (dllDate > csDate)
-                {
-                    //assembly = Assembly.LoadFile(outputAssemblyPath);
-                    //Misc.SendMessage("Loaded C# DLL Script");
-                    //return false;
-                }
-            }
-
-            // Dll does not exists or CS file is older. Build is needed
-
-            Misc.SendMessage("Compiling C# Script");
+            Misc.SendMessage("Compiling C# Script " + Path.GetFileName(path));
+            DateTime start = DateTime.Now;
 
             m_compileParameters.IncludeDebugInformation = debug;
             CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
 
-            Misc.SendMessage("Compile Done");
+            DateTime stop = DateTime.Now;
+            Misc.SendMessage("Script compiled in " + (stop - start).TotalMilliseconds.ToString("F0") + " ms");
 
             bool has_error = ManageCompileResult(results, ref errorwarnings);
             if (!has_error)
             {
                 assembly = results.CompiledAssembly;
-                m_scriptsConfig.SetScriptInfo(path, assembly.Location);
-                SaveScriptData();
             }
             return has_error;
         }
@@ -346,7 +240,7 @@ namespace RazorEnhanced
                 {
                     // Relative path. Adding base folder
                     file = line.Substring(1, line.Length - 2); // Removes < >
-                    file = Path.GetFullPath(Path.Combine(Assistant.Engine.RootPath, "Scripts", file)); // Basepath is Scripts folder
+                    file = Path.GetFullPath(Path.Combine(basepath, file)); // Basepath is Scripts folder
                 }
                 else if(line.StartsWith("\"") && line.EndsWith("\""))
                 {
