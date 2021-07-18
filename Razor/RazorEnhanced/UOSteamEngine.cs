@@ -79,17 +79,17 @@ namespace RazorEnhanced
             int everywhere = -1;
             switch (alias.ToLower())
             {
-                case "ground":       return (uint)everywhere;
-                case "any":          return (uint)everywhere;
-                case "backpack":     return (uint)Player.Backpack.Serial;
-                case "self":         return (uint)Player.Serial;
-                case "bank":         return (uint)Player.Bank.Serial;
-                case "mount":        return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ?
-                case "lefthand":     return (uint)Player.GetItemOnLayer("LeftHand").Serial;
-                case "righthand":    return (uint)Player.GetItemOnLayer("RightHand").Serial;
-                case "lasttarget":   return (uint)RazorEnhanced.Target.GetLast();
-                case "last":         return (uint)RazorEnhanced.Target.GetLast();
-                //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
+                case "ground": return (uint)everywhere;
+                case "any": return (uint)everywhere;
+                case "backpack": return (uint)Player.Backpack.Serial;
+                case "self": return (uint)Player.Serial;
+                case "bank": return (uint)Player.Bank.Serial;
+                case "mount": return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ?
+                case "lefthand": return (uint)Player.GetItemOnLayer("LeftHand").Serial;
+                case "righthand": return (uint)Player.GetItemOnLayer("RightHand").Serial;
+                case "lasttarget": return (uint)RazorEnhanced.Target.GetLast();
+                case "last": return (uint)RazorEnhanced.Target.GetLast();
+                    //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
 
 
             }
@@ -125,11 +125,13 @@ namespace RazorEnhanced
             }
         }
 
-        public class IllegalArgumentException : Exception {
-            public IllegalArgumentException(string msg) : base(msg){}
+        public class IllegalArgumentException : Exception
+        {
+            public IllegalArgumentException(string msg) : base(msg) { }
         }
 
-        public void WrongParameterCount(string commands, int expected, int given, string message="") {
+        public void WrongParameterCount(string commands, int expected, int given, string message = "")
+        {
             var msg = String.Format("{0} expect {1} parameters, {2} given. {3}", commands, expected, given, message);
             throw new IllegalArgumentException(msg);
         }
@@ -179,7 +181,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("dressconfig", this.DressConfig); // I can't tell what this is intended to do in UOS
             UOScript.Interpreter.RegisterCommandHandler("toggleautoloot", this.ToggleAutoloot);
             UOScript.Interpreter.RegisterCommandHandler("togglescavenger", this.ToggleScavenger);
-            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter ); //This has no meaning in RE
+            UOScript.Interpreter.RegisterCommandHandler("counter", this.Counter); //This has no meaning in RE
             UOScript.Interpreter.RegisterCommandHandler("unsetalias", this.UnSetAlias);
             UOScript.Interpreter.RegisterCommandHandler("setalias", this.SetAlias);
             UOScript.Interpreter.RegisterCommandHandler("promptalias", this.PromptAlias);
@@ -212,6 +214,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("logoutbutton", this.LogoutButton);
             UOScript.Interpreter.RegisterCommandHandler("virtue", this.Virtue);
             UOScript.Interpreter.RegisterCommandHandler("msg", this.MsgCommand);
+            UOScript.Interpreter.RegisterCommandHandler("playmacro", this.PlayMacro);
             UOScript.Interpreter.RegisterCommandHandler("headmsg", this.HeadMsg);
             UOScript.Interpreter.RegisterCommandHandler("partymsg", this.PartyMsg);
             UOScript.Interpreter.RegisterCommandHandler("guildmsg", this.GuildMsg);
@@ -312,9 +315,9 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("followers", (string expression, UOScript.Argument[] args, bool quiet) => Player.Followers);
             UOScript.Interpreter.RegisterExpressionHandler("maxfollowers", (string expression, UOScript.Argument[] args, bool quiet) => Player.FollowersMax);
             UOScript.Interpreter.RegisterExpressionHandler("gold", (string expression, UOScript.Argument[] args, bool quiet) => Player.Gold);
-            UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => ! Player.Visible);
+            UOScript.Interpreter.RegisterExpressionHandler("hidden", (string expression, UOScript.Argument[] args, bool quiet) => !Player.Visible);
             UOScript.Interpreter.RegisterExpressionHandler("luck", (string expression, UOScript.Argument[] args, bool quiet) => Player.Luck);
-            UOScript.Interpreter.RegisterExpressionHandler("waitingfortarget", this.WaitingForTarget ); //TODO: loose approximation, see inside
+            UOScript.Interpreter.RegisterExpressionHandler("waitingfortarget", this.WaitingForTarget); //TODO: loose approximation, see inside
 
             UOScript.Interpreter.RegisterExpressionHandler("hits", this.Hits);
             UOScript.Interpreter.RegisterExpressionHandler("diffhits", this.DiffHits);
@@ -407,10 +410,11 @@ namespace RazorEnhanced
                 string text = args[0].AsString();
                 return Journal.Search(text);
             }
-            if ( args.Length == 2 ) {
+            if (args.Length == 2)
+            {
                 string text = args[0].AsString();
                 string texttype = args[1].AsString();
-                texttype = texttype.Substring(0,1).ToUpper() + texttype.Substring(1).ToLower();  // syStEm -> System
+                texttype = texttype.Substring(0, 1).ToUpper() + texttype.Substring(1).ToLower();  // syStEm -> System
                 return Journal.SearchByType(text, texttype);
             }
 
@@ -460,7 +464,7 @@ namespace RazorEnhanced
 
             uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
-            
+
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -904,7 +908,8 @@ namespace RazorEnhanced
                 }
             }
 
-            if ( dir_num.ContainsKey(direction)  ){
+            if (dir_num.ContainsKey(direction))
+            {
                 return dir_num[Player.Direction];
             }
 
@@ -1059,7 +1064,7 @@ namespace RazorEnhanced
         private IComparable Bandage(string expression, UOScript.Argument[] args, bool quiet)
         {
             int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
-            if (count > 0 &&  (Player.Hits < Player.HitsMax || Player.Poisoned) )
+            if (count > 0 && (Player.Hits < Player.HitsMax || Player.Poisoned))
                 BandageHeal.Heal(Assistant.World.Player);
             return count;
         }
@@ -1921,7 +1926,7 @@ namespace RazorEnhanced
             {
                 string alias = args[0].AsString();
                 RazorEnhanced.Target target = new RazorEnhanced.Target();
-                int value = target.PromptTarget("Target Alias for "+alias);
+                int value = target.PromptTarget("Target Alias for " + alias);
                 UOScript.Interpreter.SetAlias(alias, (uint)value);
             }
             return true;
@@ -2022,7 +2027,7 @@ namespace RazorEnhanced
                 Console.WriteLine("Pushing {0} to list {1}", insertItem.AsString(), listName);
                 UOScript.Interpreter.PushList(listName, insertItem, (frontBack == "front"), false);
             }
-            else 
+            else
             {
                 ASTNode node = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
                 UOScript.Argument newArg = new UOScript.Argument(insertItem._script, node);
@@ -2058,9 +2063,10 @@ namespace RazorEnhanced
                     int Z = args[4].AsInt() + ppos.Z;
 
                     amount = (args.Length == 6) ? args[5].AsInt() : -1;
-                    Items.MoveOnGround((int)serial, amount, X,Y,Z );
+                    Items.MoveOnGround((int)serial, amount, X, Y, Z);
                 }
-                else {
+                else
+                {
                     WrongParameterCount(command, 5, args.Length, "Valid args num: 2,3,5,6");
                 }
             }
@@ -2537,14 +2543,19 @@ namespace RazorEnhanced
 
         private bool PlayMacro(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            if (args.Length == 1)
+            if (args.Length > 0)
             {
-                string script = args[0].AsString();
-                Misc.ScriptRun(script);
+                string[] macroAndArgs = new string[args.Length];
+                foreach (var arg in args)
+                {
+                    macroAndArgs.Append(arg.AsString());
+                }
+                Assistant.Commands.PlayScript(macroAndArgs);
             }
+
             return true;
         }
-
+  
         private bool PlaySound(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
