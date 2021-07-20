@@ -1616,29 +1616,43 @@ namespace Assistant
 
 				if (type > 0x05)        // KR Data
 				{
-					player.HitChanceIncrease = p.ReadInt16();
-					player.SwingSpeedIncrease = p.ReadInt16();
-					player.DamageChanceIncrease = p.ReadInt16();
-					player.LowerReagentCost = p.ReadInt16();
-					player.HitPointsRegeneration = p.ReadInt16();
-					player.StaminaRegeneration = p.ReadInt16();
-					player.ManaRegeneration = p.ReadInt16();
-					player.ReflectPhysicalDamage = p.ReadInt16();
-					player.EnhancePotions = p.ReadInt16();
-					player.DefenseChanceIncrease = p.ReadInt16();
-					player.SpellDamageIncrease = p.ReadInt16();
-					player.FasterCastRecovery = p.ReadInt16();
-					player.FasterCasting = p.ReadInt16();
-					player.LowerManaCost = p.ReadInt16();
-					player.StrengthIncrease = p.ReadInt16();
-					player.DexterityIncrease = p.ReadInt16();
-					player.IntelligenceIncrease = p.ReadInt16();
-					player.HitPointsIncrease = p.ReadInt16();
-					player.StaminaIncrease = p.ReadInt16();
-					player.ManaIncrease = p.ReadInt16();
-					player.MaximumHitPointsIncrease = p.ReadInt16();
-					player.MaximumStaminaIncrease = p.ReadInt16();
-					player.MaximumManaIncrease = p.ReadInt16();
+                    player.MaxPhysicResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.MaxFireResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.MaxColdResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.MaxPoisonResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.MaxEnergyResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.DefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.MaxDefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                    player.HitChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.SwingSpeedIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.DamageChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.LowerReagentCost = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.SpellDamageIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.FasterCastRecovery = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.FasterCasting = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.LowerManaCost = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                    // OSI only send this much data in the packet .. all these others are bypassed because the packet is too short (121)
+                    player.HitPointsRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.StaminaRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.ManaRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.ReflectPhysicalDamage = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.EnhancePotions = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.StrengthIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.DexterityIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.IntelligenceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.HitPointsIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.StaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.ManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.MaximumHitPointsIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.MaximumStaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+					player.MaximumManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
 				}
 			}
 
