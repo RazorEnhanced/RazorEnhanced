@@ -58,6 +58,11 @@ namespace Assistant
         public bool Init(bool isOSI)
         // returns false on cancel
         {
+            //Dalamar
+            //TODO: is this a good entry point for generating the docs ? 
+            RazorEnhanced.AutoDocIO.UpdateDocs();
+            RazorEnhanced.Config.LoadAll();
+
 
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
