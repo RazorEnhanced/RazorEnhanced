@@ -182,32 +182,39 @@ namespace RazorEnhanced
 		{
 			List<OrganizerList> lists = Settings.Organizer.ListsRead();
 
-			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Clear();
-
 			foreach (OrganizerList l in lists)
 			{
 				if (l.Selected)
 				{
-					List<Organizer.OrganizerItem> items = Settings.Organizer.ItemsRead(l.Description);
-
-					foreach (OrganizerItem item in items)
-					{
-						string color = "All";
-						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
-
-						string amount = "All";
-						if (item.Amount != -1)
-							amount = item.Amount.ToString();
-
-						Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, amount });
-					}
-
+                    InitGrid(l.Description);
 					break;
 				}
 			}
 		}
-		internal static void CloneList(string newList)
+
+        internal static void InitGrid(string listName)
+        {
+            Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Clear();
+
+            List<Organizer.OrganizerItem> items = Settings.Organizer.ItemsRead(listName);
+
+            foreach (OrganizerItem item in items)
+            {
+                string color = "All";
+                if (item.Color != -1)
+                    color = "0x" + item.Color.ToString("X4");
+
+                string amount = "All";
+                if (item.Amount != -1)
+                    amount = item.Amount.ToString();
+
+                Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, amount });
+            }
+        }
+
+
+
+        internal static void CloneList(string newList)
 		{
 			RazorEnhanced.Settings.Organizer.ListInsert(newList, RazorEnhanced.Organizer.OrganizerDelay, OrganizerSource, OrganizerDestination);
 
@@ -471,17 +478,17 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop change list e restart
-				{
-					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerStop.PerformClick());
-					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(listName));  // change list
-					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerExecute.PerformClick());
+                if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop change list e restart
+                {
+                    Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerStop.PerformClick());
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.OrganizerListSelect.SelectedIndex = s.OrganizerListSelect.Items.IndexOf(listName); Organizer.InitGrid(listName); });  // change list
+                    Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerExecute.PerformClick());
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.SafeAction(s => {s.OrganizerListSelect.SelectedIndex = s.OrganizerListSelect.Items.IndexOf(listName); Organizer.InitGrid(listName); });  // change list
 				}
-				else
-				{
-					Assistant.Engine.MainWindow.SafeAction(s => s.OrganizerListSelect.SelectedIndex = s.OrganizerListSelect.Items.IndexOf(listName));  // change list
-				}
-			}
+            }
 		}
 
 		internal static bool UpdateListParam(string listName)

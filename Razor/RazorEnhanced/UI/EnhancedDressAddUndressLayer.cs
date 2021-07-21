@@ -16,7 +16,7 @@ namespace RazorEnhanced.UI
 
 		private void bClose_Click(object sender, EventArgs e)
 		{
-			RazorEnhanced.Dress.RefreshItems();
+			RazorEnhanced.Dress.InitGrid();
 			Close();
 		}
 
@@ -26,7 +26,7 @@ namespace RazorEnhanced.UI
 			{
 				Dress.DressItemNew toinsert = new RazorEnhanced.Dress.DressItemNew("UNDRESS", (Assistant.Layer)layerlist.SelectedItem, 0, true);
 				Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
-				Dress.RefreshItems();
+				Dress.InitGrid();
 				Close();
 			}
 		}

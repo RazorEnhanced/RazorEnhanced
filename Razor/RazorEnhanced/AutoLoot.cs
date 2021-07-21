@@ -237,13 +237,20 @@ namespace RazorEnhanced
         {
             List<AutoLootList> lists = Settings.AutoLoot.ListsRead();
 
-            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Clear();
-
             foreach (AutoLootList l in lists)
             {
                 if (l.Selected)
                 {
-                    Dictionary<int, List<AutoLoot.AutoLootItem>> items = Settings.AutoLoot.ItemsRead(l.Description);
+                    InitGrid(l.Description);
+                    break;
+                }
+            }
+        }
+
+        internal static void InitGrid(string listName)
+        {
+            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Clear();
+                    Dictionary<int, List<AutoLoot.AutoLootItem>> items = Settings.AutoLoot.ItemsRead(listName);
                     foreach (KeyValuePair<int, List<AutoLoot.AutoLootItem>> entry in items)
                     {
                         foreach (AutoLootItem item in entry.Value)
@@ -260,9 +267,6 @@ namespace RazorEnhanced
                             Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, lootBag, item.Properties });
                         }
                     }
-                    break;
-                }
-            }
         }
 
         internal static void CopyTable()
@@ -711,12 +715,12 @@ namespace RazorEnhanced
                 if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // If it is running force stop list change and restart
                 {
                     Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = false);
-                    Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootListSelect.SelectedIndex = s.AutoLootListSelect.Items.IndexOf(listName)); // Change list
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.AutoLootListSelect.SelectedIndex = s.AutoLootListSelect.Items.IndexOf(listName); InitGrid(listName); }); // Change list
                     Assistant.Engine.MainWindow.SafeAction(s => s.AutolootCheckBox.Checked = true);
                 }
                 else
                 {
-                    Assistant.Engine.MainWindow.SafeAction(s => s.AutoLootListSelect.SelectedIndex = s.AutoLootListSelect.Items.IndexOf(listName));  // Change List
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.AutoLootListSelect.SelectedIndex = s.AutoLootListSelect.Items.IndexOf(listName); InitGrid(listName); });  // Change List
                 }
             }
         }

@@ -178,29 +178,33 @@ namespace RazorEnhanced
 		{
 			List<RestockList> lists = Settings.Restock.ListsRead();
 
-			Assistant.Engine.MainWindow.RestockDataGridView.Rows.Clear();
-
 			foreach (RestockList l in lists)
 			{
 				if (l.Selected)
 				{
-					List<Restock.RestockItem> items = Settings.Restock.ItemsRead(l.Description);
-
-					foreach (RestockItem item in items)
-					{
-						string color = "All";
-						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
-
-						Assistant.Engine.MainWindow.RestockDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.AmountLimit.ToString() });
-					}
-
+					InitGrid(l.Description);
 					break;
 				}
 			}
 		}
+        internal static void InitGrid(string listName)
+        {
+            Assistant.Engine.MainWindow.RestockDataGridView.Rows.Clear();
 
-		internal static void CloneList(string newList)
+            List<Restock.RestockItem> items = Settings.Restock.ItemsRead(listName);
+
+            foreach (RestockItem item in items)
+            {
+                string color = "All";
+                if (item.Color != -1)
+                    color = "0x" + item.Color.ToString("X4");
+
+                Assistant.Engine.MainWindow.RestockDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.AmountLimit.ToString() });
+            }
+        }
+
+
+        internal static void CloneList(string newList)
 		{
 			Settings.Restock.ListInsert(newList, RestockDelay, RestockSource, RestockDestination);
 
@@ -465,12 +469,12 @@ namespace RazorEnhanced
 				if (Assistant.Engine.MainWindow.RestockStop.Enabled == true) // Se è in esecuzione forza stop change list e restart
 				{
 					Assistant.Engine.MainWindow.SafeAction(s => s.RestockStop.PerformClick());
-					Assistant.Engine.MainWindow.SafeAction(s => s.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => { s.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
 					Assistant.Engine.MainWindow.SafeAction(s => s.RestockExecute.PerformClick());
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.SafeAction(s => s.RestockListSelect.SelectedIndex = s.RestockListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => { s.RestockListSelect.SelectedIndex = s.RestockListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
 				}
 			}
 		}
