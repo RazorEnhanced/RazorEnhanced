@@ -343,10 +343,16 @@ namespace RazorEnhanced
 
         public static void RunOnce(string organizerName, int sourceBag, int destBag, int dragDelay)
         {
+
+            int bagsource;
+            int bagdestination;
+            int delay;
+            Settings.Organizer.ListDetailsRead(organizerName, out bagsource, out bagdestination, out delay);
+
             // Check Bag
             if (sourceBag == -1)
             {
-                sourceBag = m_sourcebag;
+                sourceBag = bagsource;
             }
             Assistant.Item sbag = Assistant.World.FindItem(sourceBag);
             if (sbag == null)
@@ -357,7 +363,7 @@ namespace RazorEnhanced
 
             if (destBag == -1)
             {
-                destBag = m_destinationbag;
+                destBag = bagdestination;
             }
             Assistant.Item dbag = Assistant.World.FindItem(destBag);
             if (dbag == null)
@@ -368,7 +374,7 @@ namespace RazorEnhanced
 
             if (dragDelay == -1)
             {
-                dragDelay = m_dragdelay;
+                dragDelay = delay;
             }
 
             List<RazorEnhanced.Organizer.OrganizerItem>  organizerList = Settings.Organizer.ItemsRead(organizerName);
