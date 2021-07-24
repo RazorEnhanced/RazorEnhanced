@@ -2344,8 +2344,8 @@ namespace Assistant
                     //    string test = JIList.Rows[0]["text"].ToString();
                     int currentRow = Engine.MainWindow.JournalList.FirstDisplayedScrollingRowIndex;
                     System.Data.DataRow newRow = JIList.NewRow();
-                    newRow["type"] = typeStr;
-                    newRow["text"] = text;
+                    newRow["type"] = typeStr.ToLower();
+                    newRow["text"] = text.ToLower();
                     //JIList.
                     JIList.Rows.InsertAt(newRow, 0);
                     if (JIList.Rows.Count > MaxJournalEntries)

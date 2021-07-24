@@ -41,11 +41,19 @@ namespace Assistant
 
 			Scripts.EnhancedScripts.Clear();
 
-			scriptlistView.BeginUpdate();
+            int currentSelectionIndex = 0;
+
+            if (scriptlistView.SelectedIndices.Count > 0)
+            {
+                currentSelectionIndex = scriptlistView.SelectedIndices[0];
+            }
+
+            scriptlistView.BeginUpdate();
 			scriptlistView.Items.Clear();
 
 			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
 
+            int index = 0;
 			foreach (DataRow row in scriptTable.Rows)
 			{
 				string filename = (string)row["Filename"];
@@ -67,8 +75,9 @@ namespace Assistant
 				{
 					ListViewItem listitem = new ListViewItem();
 
-					listitem.SubItems.Add(filename);
-                    listitem.ToolTipText = fullPath;
+					listitem.Text = filename;
+                    listitem.ToolTipText = fullPath; // fullPath;
+
 					listitem.SubItems.Add(status);
 
 					if (loop)
@@ -94,7 +103,10 @@ namespace Assistant
 					else
 						listitem.SubItems.Add("No");
 
-					scriptlistView.Items.Add(listitem);
+                    listitem.SubItems.Add(Convert.ToString(index));
+                    index++;
+
+                    scriptlistView.Items.Add(listitem);
 
 					row["Status"] = "Stopped";
 				}
@@ -104,26 +116,89 @@ namespace Assistant
                     // 2/15/2021 added back to avoid hotkey issue,
                     //    removed bad file entries at load in settings so should never happen
                     ListViewItem listitem = new ListViewItem();
-					listitem.SubItems.Add("File Not Found");
+					listitem.Text = "File Not Found";
 					listitem.SubItems.Add("Error");
 					listitem.SubItems.Add("No");
 					listitem.SubItems.Add("No");
 					listitem.SubItems.Add("No");
 					listitem.SubItems.Add(HotKey.KeyString(key));
 					listitem.SubItems.Add("No");
-					scriptlistView.Items.Add(listitem);
+                    listitem.SubItems.Add("0");
+                    scriptlistView.Items.Add(listitem);
 					row["Status"] = "Error";
 				}
 			}
 			scriptlistView.EndUpdate();
-		}
+            if (scriptlistView.Items.Count > 0)
+            {
+                scriptlistView.Items[currentSelectionIndex].Selected = true;
+            }
 
-		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
+        }
+
+        //
+        public static DialogResult InputBox(string title, string promptText, ref string value)
+        {
+            Form form = new Form();
+            Label label = new Label();
+            TextBox textBox = new TextBox();
+            Button buttonMove = new Button();
+            Button buttonCancel = new Button();
+
+            form.Text = title;
+            label.Text = promptText;
+            textBox.Text = value;
+
+            buttonMove.Text = "Move";
+            buttonCancel.Text = "Cancel";
+            buttonMove.DialogResult = DialogResult.OK;
+            buttonCancel.DialogResult = DialogResult.Cancel;
+
+            label.SetBounds(9, 20, 372, 13);
+            textBox.SetBounds(12, 36, 372, 20);
+            buttonMove.SetBounds(228, 72, 75, 23);
+            buttonCancel.SetBounds(309, 72, 75, 23);
+
+            label.AutoSize = true;
+            textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
+            buttonMove.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            form.ClientSize = new Size(396, 107);
+            form.Controls.AddRange(new Control[] { label, textBox, buttonMove, buttonCancel });
+            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+            form.FormBorderStyle = FormBorderStyle.FixedDialog;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.MinimizeBox = false;
+            form.MaximizeBox = false;
+            form.AcceptButton = buttonMove;
+            form.CancelButton = buttonCancel;
+
+            DialogResult dialogResult = form.ShowDialog();
+            value = textBox.Text;
+            return dialogResult;
+        }
+
+        //
+        private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			ScriptGridMoveUp();
+                ScriptGridMoveUp();
 		}
+        private void moveToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string value = "0";
+            if (InputBox("Move to Index", "Index:", ref value) == DialogResult.OK)
+            {
+                try
+                {
+                    ScriptGridMoveTo(Convert.ToInt32(value));
+                }
+                catch (Exception)
+                { }
+            }
+        }
 
-		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
+        private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ScriptGridMoveDown();
 		}
@@ -153,7 +228,33 @@ namespace Assistant
 			}
 		}
 
-		private void ScriptGridMoveUp()
+        private void ScriptGridMoveTo(int location)
+        {
+            if (sorted) // No move script index if user have place some different ordering
+                return;
+
+            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            {
+                int rowCount = scriptlistView.Items.Count;
+                int index = scriptlistView.SelectedItems[0].Index;
+
+                if (location < 0 || location >= rowCount)
+                    return;
+
+                DataRow newRow = scriptTable.NewRow();
+                // We "clone" the row
+                newRow.ItemArray = scriptTable.Rows[index].ItemArray;
+                // We remove the old and insert the new
+                scriptTable.Rows.RemoveAt(index);
+                scriptTable.Rows.InsertAt(newRow, location);
+
+                ReloadScriptTable();
+
+                scriptlistView.Items[location].Selected = true;
+            }
+        }
+
+        private void ScriptGridMoveUp()
 		{
 			if (sorted) // No move script index if user have place some different ordering
 				return;
@@ -220,12 +321,12 @@ namespace Assistant
 				{
 					foreach (ListViewItem litem in scriptlistView.Items)
 					{
-						string filename = litem.SubItems[1].Text;
+						string filename = litem.Text;
 						Scripts.EnhancedScript script = Scripts.Search(filename);
 						{
 							if (script != null)
 							{
-								litem.SubItems[2].Text = script.Status;
+								litem.SubItems[1].Text = script.Status;
 							}
 						}
 					}
@@ -252,7 +353,7 @@ namespace Assistant
 		{
 			if (scriptlistView.SelectedItems.Count == 1)
 			{
-				string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
+				string filename = scriptlistView.SelectedItems[0].Text;
 				Scripts.EnhancedScript script = Scripts.Search(filename);
 				if (script != null)
 				{
@@ -345,7 +446,7 @@ namespace Assistant
 
 				foreach (DataRow row in scriptTable.Rows)
 				{
-					if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+					if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
 					{
 						row.Delete();
 						break;
@@ -400,7 +501,7 @@ namespace Assistant
 
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
-				string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
+				string filename = scriptlistView.SelectedItems[0].Text;
                 fullPath = Settings.GetFullPathForScript(filename);
             }
             if (fullPath != null)
@@ -411,19 +512,22 @@ namespace Assistant
 		{
 			if (scriptSearchTextBox.Focused)
 			{
-
 				for (int i = 0; i < scriptlistView.Items.Count; i++)
 				{
 					scriptlistView.Items[i].ForeColor = SystemColors.WindowText; // Decolor old search
 
 					if (scriptSearchTextBox.Text != String.Empty)
 					{
-						if (scriptlistView.Items[i].SubItems[1].Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
-						{
-							scriptlistView.EnsureVisible(i);
-							scriptlistView.Items[i].ForeColor = Color.Blue; // Set highlight color
-						}
-					}
+                        if (scriptlistView.Items[i].Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+                        {
+                            scriptlistView.EnsureVisible(i);
+                            scriptlistView.Items[i].ForeColor = Color.Blue; // Set highlight color
+                        }
+                        else 
+                        {
+                            scriptlistView.Items[i].ForeColor = Color.LightGray;
+                        }
+                    }
 				}
 			}
 		}
@@ -473,25 +577,25 @@ namespace Assistant
 			}
 		}
 
-		private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
+        private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (scriptlistView.SelectedItems.Count == 1)
 			{
-                string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
+                string filename = scriptlistView.SelectedItems[0].Text;
                 string fullPathName = Settings.GetFullPathForScript(filename);
-                scriptFilePath.Text = fullPathName;
+                scriptFilePath.Text = filename;
 
-				if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
+				if (scriptlistView.SelectedItems[0].SubItems[2].Text == "Yes")
 					scriptloopmodecheckbox.Checked = true;
 				else
 					scriptloopmodecheckbox.Checked = false;
 
-				if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
+				if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
 					scriptautostartcheckbox.Checked = true;
 				else
 					scriptautostartcheckbox.Checked = false;
 
-				if (scriptlistView.SelectedItems[0].SubItems[5].Text == "Yes")
+				if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
 					scriptwaitmodecheckbox.Checked = true;
 				else
 					scriptwaitmodecheckbox.Checked = false;
@@ -511,14 +615,14 @@ namespace Assistant
 
 			foreach (DataRow row in scriptTable.Rows)
 			{
-				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
 					row["AutoStart"] = scriptautostartcheckbox.Checked;
 			}
 
 			if (scriptautostartcheckbox.Checked)
-				scriptlistView.SelectedItems[0].SubItems[4].Text = "Yes";
+				scriptlistView.SelectedItems[0].SubItems[3].Text = "Yes";
 			else
-				scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
+				scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
 
 			//ReloadScriptTable();
 			Settings.Save();
@@ -547,14 +651,14 @@ namespace Assistant
 
 			foreach (DataRow row in scriptTable.Rows)
 			{
-				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
 					row["Loop"] = scriptloopmodecheckbox.Checked;
 			}
 
 			if (scriptloopmodecheckbox.Checked)
-				scriptlistView.SelectedItems[0].SubItems[3].Text = "Yes";
+				scriptlistView.SelectedItems[0].SubItems[2].Text = "Yes";
 			else
-				scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
+				scriptlistView.SelectedItems[0].SubItems[2].Text = "No";
 
 			ReloadScriptTable();
 			//Settings.Save();
@@ -583,14 +687,14 @@ namespace Assistant
 
 			foreach (DataRow row in scriptTable.Rows)
 			{
-				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].SubItems[1].Text)
+				if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
 					row["Wait"] = scriptwaitmodecheckbox.Checked;
 			}
 
 			if (scriptwaitmodecheckbox.Checked)
-				scriptlistView.SelectedItems[0].SubItems[5].Text = "Yes";
+				scriptlistView.SelectedItems[0].SubItems[4].Text = "Yes";
 			else
-				scriptlistView.SelectedItems[0].SubItems[5].Text = "No";
+				scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
 
 			ReloadScriptTable();
 			//Settings.Save();

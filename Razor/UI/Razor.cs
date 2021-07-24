@@ -351,7 +351,6 @@ namespace Assistant
         private ColumnHeader wait;
         private ColumnHeader hotkey;
         private ColumnHeader heypass;
-        private ColumnHeader columnHeader62;
         private GroupBox groupBox30;
         private RazorCheckBox scriptwaitmodecheckbox;
         private RazorCheckBox scriptloopmodecheckbox;
@@ -493,6 +492,7 @@ namespace Assistant
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem moveUpToolStripMenuItem;
         private ToolStripMenuItem moveDownToolStripMenuItem;
+        private ToolStripMenuItem moveToToolStripMenuItem;
         private ToolStripMenuItem flagsToolStripMenuItem;
         private ToolStripMenuItem loopModeToolStripMenuItem;
         private ToolStripMenuItem waitBeforeInterruptToolStripMenuItem;
@@ -701,6 +701,7 @@ namespace Assistant
         private TextBox journalFilterString;
         private ColumnHeader fullFilePath;
         private TextBox scriptFilePath;
+        private ColumnHeader index;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -911,6 +912,7 @@ namespace Assistant
             this.buttonScriptStop = new System.Windows.Forms.Button();
             this.buttonScriptPlay = new System.Windows.Forms.Button();
             this.groupBox30 = new System.Windows.Forms.GroupBox();
+            this.scriptFilePath = new System.Windows.Forms.TextBox();
             this.scriptautostartcheckbox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptwaitmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
@@ -918,7 +920,6 @@ namespace Assistant
             this.scripterrorlogCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.loop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -926,6 +927,7 @@ namespace Assistant
             this.wait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -1411,6 +1413,7 @@ namespace Assistant
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loopModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waitBeforeInterruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1419,7 +1422,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.scriptFilePath = new System.Windows.Forms.TextBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -3276,6 +3278,15 @@ namespace Assistant
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Script Info";
             // 
+            // scriptFilePath
+            // 
+            this.scriptFilePath.Location = new System.Drawing.Point(45, 25);
+            this.scriptFilePath.Name = "scriptFilePath";
+            this.scriptFilePath.ReadOnly = true;
+            this.scriptFilePath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.scriptFilePath.Size = new System.Drawing.Size(221, 26);
+            this.scriptFilePath.TabIndex = 52;
+            // 
             // scriptautostartcheckbox
             // 
             this.scriptautostartcheckbox.Location = new System.Drawing.Point(10, 111);
@@ -3338,7 +3349,6 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.scriptlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader62,
             this.filename,
             this.status,
             this.loop,
@@ -3346,11 +3356,11 @@ namespace Assistant
             this.wait,
             this.hotkey,
             this.heypass,
+            this.index,
             this.fullFilePath});
             this.scriptlistView.FullRowSelect = true;
             this.scriptlistView.GridLines = true;
             this.scriptlistView.HideSelection = false;
-            this.scriptlistView.HoverSelection = true;
             this.scriptlistView.LabelWrap = false;
             this.scriptlistView.Location = new System.Drawing.Point(8, 3);
             this.scriptlistView.MultiSelect = false;
@@ -3365,24 +3375,22 @@ namespace Assistant
             this.scriptlistView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
             this.scriptlistView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
             // 
-            // columnHeader62
-            // 
-            this.columnHeader62.Text = "";
-            this.columnHeader62.Width = 0;
-            // 
             // filename
             // 
+            this.filename.DisplayIndex = 1;
             this.filename.Text = "Filename";
             this.filename.Width = 350;
             // 
             // status
             // 
+            this.status.DisplayIndex = 2;
             this.status.Text = "Status";
             this.status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.status.Width = 80;
             // 
             // loop
             // 
+            this.loop.DisplayIndex = 3;
             this.loop.Text = "Loop";
             this.loop.Width = 50;
             // 
@@ -3394,21 +3402,28 @@ namespace Assistant
             // 
             // wait
             // 
-            this.wait.DisplayIndex = 4;
             this.wait.Text = "Wait";
             this.wait.Width = 40;
             // 
             // hotkey
             // 
+            this.hotkey.DisplayIndex = 6;
             this.hotkey.Text = "HotKey";
             this.hotkey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.hotkey.Width = 80;
             // 
             // heypass
             // 
+            this.heypass.DisplayIndex = 7;
             this.heypass.Text = "KeyPass";
             this.heypass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.heypass.Width = 80;
+            // 
+            // index
+            // 
+            this.index.DisplayIndex = 0;
+            this.index.Text = "#";
+            this.index.Width = 40;
             // 
             // fullFilePath
             // 
@@ -8684,7 +8699,8 @@ namespace Assistant
             this.removeToolStripMenuItem,
             this.openToolStripMenuItem,
             this.moveUpToolStripMenuItem,
-            this.moveDownToolStripMenuItem});
+            this.moveDownToolStripMenuItem,
+            this.moveToToolStripMenuItem});
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
             this.modifyToolStripMenuItem.Size = new System.Drawing.Size(141, 32);
             this.modifyToolStripMenuItem.Text = "Modify";
@@ -8723,6 +8739,13 @@ namespace Assistant
             this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(211, 34);
             this.moveDownToolStripMenuItem.Text = "Move Down";
             this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
+            // 
+            // moveToToolStripMenuItem
+            // 
+            this.moveToToolStripMenuItem.Name = "moveToToolStripMenuItem";
+            this.moveToToolStripMenuItem.Size = new System.Drawing.Size(211, 34);
+            this.moveToToolStripMenuItem.Text = "Move To";
+            this.moveToToolStripMenuItem.Click += new System.EventHandler(this.moveToToolStripMenuItem_Click);
             // 
             // flagsToolStripMenuItem
             // 
@@ -8782,15 +8805,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            // 
-            // scriptFilePath
-            // 
-            this.scriptFilePath.Location = new System.Drawing.Point(45, 25);
-            this.scriptFilePath.Name = "scriptFilePath";
-            this.scriptFilePath.ReadOnly = true;
-            this.scriptFilePath.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.scriptFilePath.Size = new System.Drawing.Size(221, 26);
-            this.scriptFilePath.TabIndex = 52;
             // 
             // MainForm
             // 
@@ -9312,6 +9326,7 @@ namespace Assistant
                 JournalTextSelection.SetItemCheckState(index, state? CheckState.Checked : CheckState.Unchecked);
             }
             journalFilterString.Text = RazorEnhanced.Settings.General.ReadString("JournalFilterText");
+            journalFilter_TextChanged(null, null);
             try
             {
                 dv.RowFilter = JournalFilterString.Text; ;
