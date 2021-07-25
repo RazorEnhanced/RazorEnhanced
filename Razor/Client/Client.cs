@@ -50,6 +50,7 @@ namespace Assistant
     {
         public static Client Instance;
         public static bool IsOSI;
+        internal static FileVersionInfo m_Version = null;
 
         private static bool m_Running;
         internal static bool Running { get { return m_Running; } }
@@ -85,6 +86,7 @@ namespace Assistant
 
             if ((!isOSI) || (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
             {
+                m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
                 Instance.Start(selected);
             }
             else
@@ -102,6 +104,8 @@ namespace Assistant
                     {
                         RazorEnhanced.Shard.Read(out shards);
                         selected = Instance.SelectShard(shards);
+                        m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+
                         if (launcher.ActiveControl.Text == "Launch CUO")
                         {
                             // Spin up CUO
@@ -112,8 +116,7 @@ namespace Assistant
                             {
                                 osiEnc = 5;
                             }
-                            var version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
-                            string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", version.FileMajorPart, version.FileMinorPart, version.FileBuildPart, version.FilePrivatePart);
+                            string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", m_Version.FileMajorPart, m_Version.FileMinorPart, m_Version.FileBuildPart, m_Version.FilePrivatePart);
                             cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
                                                         selected.Host, selected.Port, selected.ClientFolder, osiEnc,
                                                         System.Reflection.Assembly.GetExecutingAssembly().Location,

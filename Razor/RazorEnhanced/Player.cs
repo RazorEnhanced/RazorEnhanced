@@ -200,6 +200,11 @@ namespace RazorEnhanced
         /// Player have a special abilities active.
         /// </summary>
         public static bool HasSpecial { get { return World.Player.HasSpecial; } }
+        public static bool HasPrimarySpecial { get { return SpecialMoves.HasPrimary; } }
+        public static bool HasSecondarySpecial { get { return SpecialMoves.HasSecondary; } }
+        public static uint PrimarySpecial { get { return SpecialMoves.PrimaryGumpId; } }
+        public static uint SecondarySpecial { get { return SpecialMoves.SecondaryGumpId; } }
+
 
         // Self
         /// <summary>

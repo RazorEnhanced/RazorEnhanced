@@ -485,7 +485,12 @@ namespace Assistant
 			ScriptGridMoveUp();
 		}
 
-		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void buttonScriptTo_Click(object sender, EventArgs e)
+        {
+            moveToToolStripMenuItem_Click(sender, e);
+            //ScriptGridMoveTo(0);
+        }
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ScriptGridOpen();
 		}

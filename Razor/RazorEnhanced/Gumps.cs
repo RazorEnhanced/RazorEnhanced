@@ -58,6 +58,15 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Validates if the gumpid provided exists in the gump file
+        /// </summary>
+        /// <param name="gumpId"> The id of the gump to check for in the gumps.mul file</param>
+        public static bool IsValid(int gumpId)
+        {
+            return Ultima.Gumps.IsValidIndex(gumpId);
+        }
+
+        /// <summary>
         /// Creates an initialized GumpData structure
         /// </summary>
         /// <param name="movable"> allow the gump to be moved</param>

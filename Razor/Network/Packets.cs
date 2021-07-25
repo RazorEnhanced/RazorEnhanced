@@ -989,27 +989,24 @@ namespace Assistant
 
     internal sealed class UseAbility : Packet
     {
-        // ints are 'encoded' with a leading bool, if true then the number is 0, if flase then followed by all 4 bytes (lame :-)
-        internal UseAbility(AOSAbility a)
+        // ints are 'encoded' with a leading bool, if true then the number is 0, if false then followed by all 4 bytes (lame :-)
+        internal UseAbility(AOSAbility abilityIndex)
             : base(0xD7)
         {
-            EnsureCapacity(1 + 2 + 4 + 2 + 4);
+            EnsureCapacity(1 + 2 + 4 + 2 + 1 + 4);
 
             Write((uint)World.Player.Serial);
             Write((ushort)0x19);
-            if (a == AOSAbility.Clear)
+            if (abilityIndex == AOSAbility.Clear)
             {
-                Write((byte)0x00);
-                Write((byte)0x00);
-                Write((byte)0x00);
-                Write((byte)0x00);
+                Write(true);
+                // server assumes ability index is 0 (lame)
             }
             else
             {
                 Write(false);
-                Write((int)a);
+                Write((int)abilityIndex);
             }
-            Write((byte)0x0A);
         }
     }
 

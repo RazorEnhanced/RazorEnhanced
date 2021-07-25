@@ -283,9 +283,64 @@ namespace Assistant
             new AbilityInfo( AOSAbility.InfusedThrow, CycloneID )
 		};
 
-		internal static bool HasPrimary, HasSecondary;
+        internal static uint PrimaryGumpId
+        {
+            get
+            {
+                Item right = World.Player.GetItemOnLayer(Layer.RightHand);
+                Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
 
-		internal static void ToggleWarPeace()
+                AOSAbility a = AOSAbility.Invalid;
+                if (right != null)
+                    a = GetAbility(right.ItemID.Value, m_Primary);
+
+                if (a == AOSAbility.Invalid && left != null)
+                    a = GetAbility(left.ItemID.Value, m_Primary);
+
+                if (a == AOSAbility.Invalid)
+                    a = GetAbility(FistsID[0], m_Primary);
+
+                if (a != AOSAbility.Invalid)
+                {
+                    return (uint)GetPrimaryIcon((int)a);
+                }
+
+                return 0x5204;
+            }
+        }
+
+        internal static bool HasPrimary { get; set; }
+
+        internal static uint SecondaryGumpId
+        {
+            get
+            {
+                Item right = World.Player.GetItemOnLayer(Layer.RightHand);
+                Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
+
+                AOSAbility a = AOSAbility.Invalid;
+                if (right != null)
+                    a = GetAbility(right.ItemID.Value, m_Secondary);
+
+                if (a == AOSAbility.Invalid && left != null)
+                    a = GetAbility(left.ItemID.Value, m_Secondary);
+
+                if (a == AOSAbility.Invalid)
+                    a = GetAbility(FistsID[0], m_Secondary);
+
+                if (a != AOSAbility.Invalid)
+                {
+                    return (uint)GetSecondaryIcon((int)a);
+                }
+
+                return 0x5206;
+            }
+        }
+
+        internal static bool HasSecondary { get; set; }
+
+
+        internal static void ToggleWarPeace()
 		{
 	 		Assistant.Client.Instance.SendToServer(new SetWarMode(!World.Player.Warmode));
 		}
@@ -327,7 +382,10 @@ namespace Assistant
 
 		internal static void SetPrimaryAbility(bool wait)
 		{
-			Item right = World.Player.GetItemOnLayer(Layer.RightHand);
+            if (HasPrimary)
+                return;
+
+            Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 			Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
 
 			AOSAbility a = AOSAbility.Invalid;
@@ -342,9 +400,10 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
+                World.Player.HasSpecial = true;
+                HasPrimary = true;
+                HasSecondary = false;
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
-				World.Player.HasSpecial = HasPrimary = true;
-				HasSecondary = false;
 				if (wait)
 				{
 			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
@@ -361,6 +420,8 @@ namespace Assistant
 
 		internal static void SetSecondaryAbility(bool wait)
 		{
+            if (HasSecondary)
+                return;
 			Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 			Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
 
@@ -376,10 +437,11 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
-				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
-				World.Player.HasSpecial = HasSecondary = true;
-				HasPrimary = false;
-				if (wait)
+                World.Player.HasSpecial = true;
+                HasPrimary = false;
+                HasSecondary = true;
+ 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
+               if (wait)
 				{
 			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
 			 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
@@ -392,7 +454,36 @@ namespace Assistant
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
 		}
-		internal static int GetPrimaryAbility(Assistant.Item wep)
+
+        internal static void ClientSentSpecial(int ability)
+        {
+            if (ability == 0)
+            {
+                World.Player.HasSpecial = false;
+                HasSecondary = false;
+                HasPrimary = false; 
+                return;
+            }
+            Item right = World.Player.GetItemOnLayer(Layer.RightHand);
+            Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
+            int leftPrimary = GetPrimaryAbility(left);
+            int rightPrimary = GetPrimaryAbility(right);
+            int leftSecondary = GetSecondaryAbility(left);
+            int rightSecondary = GetSecondaryAbility(right);
+            if (ability == leftPrimary || ability == rightPrimary)
+            {
+                World.Player.HasSpecial = true;
+                HasPrimary = true;
+                HasSecondary = false;
+            }
+            if (ability == leftSecondary || ability == rightSecondary)
+            {
+                World.Player.HasSpecial = true;
+                HasPrimary = false;
+                HasSecondary = true;
+            }
+        }
+        internal static int GetPrimaryAbility(Assistant.Item wep)
 		{
 			if (wep != null)
 				return (int)GetAbility(wep.ItemID.Value, m_Primary);

@@ -702,6 +702,7 @@ namespace Assistant
         private ColumnHeader fullFilePath;
         private TextBox scriptFilePath;
         private ColumnHeader index;
+        private RazorButton buttonScriptTo;
         private RazorCheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -901,6 +902,7 @@ namespace Assistant
             this.groupBox42 = new System.Windows.Forms.GroupBox();
             this.scriptSearchTextBox = new RazorEnhanced.UI.RazorTextBox();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.buttonScriptTo = new RazorEnhanced.UI.RazorButton();
             this.buttonScriptEditorNew = new RazorEnhanced.UI.RazorButton();
             this.buttonScriptRefresh = new System.Windows.Forms.Button();
             this.buttonAddScript = new RazorEnhanced.UI.RazorButton();
@@ -3142,6 +3144,7 @@ namespace Assistant
             // groupBox31
             // 
             this.groupBox31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox31.Controls.Add(this.buttonScriptTo);
             this.groupBox31.Controls.Add(this.buttonScriptEditorNew);
             this.groupBox31.Controls.Add(this.buttonScriptRefresh);
             this.groupBox31.Controls.Add(this.buttonAddScript);
@@ -3158,6 +3161,16 @@ namespace Assistant
             this.groupBox31.TabIndex = 50;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Script Operation";
+            // 
+            // buttonScriptTo
+            // 
+            this.buttonScriptTo.Location = new System.Drawing.Point(106, 66);
+            this.buttonScriptTo.Name = "buttonScriptTo";
+            this.buttonScriptTo.Size = new System.Drawing.Size(75, 30);
+            this.buttonScriptTo.TabIndex = 75;
+            this.buttonScriptTo.Text = "To";
+            this.buttonScriptTo.UseVisualStyleBackColor = true;
+            this.buttonScriptTo.Click += new System.EventHandler(this.buttonScriptTo_Click);
             // 
             // buttonScriptEditorNew
             // 
@@ -3203,9 +3216,9 @@ namespace Assistant
             // 
             this.buttonScriptDown.Location = new System.Drawing.Point(11, 66);
             this.buttonScriptDown.Name = "buttonScriptDown";
-            this.buttonScriptDown.Size = new System.Drawing.Size(120, 30);
+            this.buttonScriptDown.Size = new System.Drawing.Size(75, 30);
             this.buttonScriptDown.TabIndex = 17;
-            this.buttonScriptDown.Text = "Move Down";
+            this.buttonScriptDown.Text = "Down";
             this.buttonScriptDown.UseVisualStyleBackColor = true;
             this.buttonScriptDown.Click += new System.EventHandler(this.buttonScriptDown_Click);
             // 
@@ -3221,11 +3234,11 @@ namespace Assistant
             // 
             // buttonScriptUp
             // 
-            this.buttonScriptUp.Location = new System.Drawing.Point(150, 66);
+            this.buttonScriptUp.Location = new System.Drawing.Point(195, 66);
             this.buttonScriptUp.Name = "buttonScriptUp";
-            this.buttonScriptUp.Size = new System.Drawing.Size(120, 30);
+            this.buttonScriptUp.Size = new System.Drawing.Size(75, 30);
             this.buttonScriptUp.TabIndex = 18;
-            this.buttonScriptUp.Text = "Move Up";
+            this.buttonScriptUp.Text = "Up";
             this.buttonScriptUp.UseVisualStyleBackColor = true;
             this.buttonScriptUp.Click += new System.EventHandler(this.buttonScriptUp_Click);
             // 
@@ -9843,6 +9856,7 @@ namespace Assistant
         {
             ScriptGridOpen();
         }
+
     }
 }
 
