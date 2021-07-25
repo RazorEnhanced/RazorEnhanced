@@ -243,28 +243,31 @@ namespace RazorEnhanced
 		{
 			List<SellAgentList> lists = Settings.SellAgent.ListsRead();
 
-			Engine.MainWindow.VendorSellGridView.Rows.Clear();
-
 			foreach (SellAgentList l in lists)
 			{
 				if (l.Selected)
 				{
-					List<SellAgent.SellAgentItem> items = Settings.SellAgent.ItemsRead(l.Description);
-
-                    foreach (SellAgentItem item in items)
-					{
-						string color = "All";
-						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
-
-						Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
-					}
-
+					InitGrid(l.Description);
 					break;
 				}
 			}
 		}
-		internal static void CloneList(string newList)
+        internal static void InitGrid(string listname)
+        {
+            Engine.MainWindow.VendorSellGridView.Rows.Clear();
+            List<SellAgent.SellAgentItem> items = Settings.SellAgent.ItemsRead(listname);
+
+            foreach (SellAgentItem item in items)
+            {
+                string color = "All";
+                if (item.Color != -1)
+                    color = "0x" + item.Color.ToString("X4");
+
+                Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
+            }
+        }
+
+        internal static void CloneList(string newList)
 		{
 			RazorEnhanced.Settings.SellAgent.ListInsert(newList, SellBag);
 
@@ -491,13 +494,13 @@ namespace RazorEnhanced
 				if (Engine.MainWindow.SellCheckBox.Checked == true) // Se è in esecuzione forza stop change list e restart
 				{
 					Assistant.Engine.MainWindow.SafeAction(s => s.SellCheckBox.Checked = false);
-					Assistant.Engine.MainWindow.SafeAction(s => s.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => { s.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
 					Assistant.Engine.MainWindow.SafeAction(s => s.SellCheckBox.Checked = true);
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.SafeAction(s => s.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(listName));  // change list
-				}
+					Assistant.Engine.MainWindow.SafeAction(s => { s.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
+                }
 			}
 		}
 		internal static bool UpdateListParam(string listName)
@@ -644,29 +647,31 @@ namespace RazorEnhanced
 		{
 			List<BuyAgentList> lists = Settings.BuyAgent.ListsRead();
 
-			Engine.MainWindow.VendorBuyDataGridView.Rows.Clear();
-
 			foreach (BuyAgentList l in lists)
 			{
 				if (l.Selected)
 				{
-					List<BuyAgentItem> items = Settings.BuyAgent.ItemsRead(l.Description);
-					
-					foreach (BuyAgentItem item in items)
-					{
-						string color = "All";
-						if (item.Color != -1)
-							color = "0x" + item.Color.ToString("X4");
-
-						Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
-					}
-
+					InitGrid(l.Description);
 					break;
 				}
 			}
 		}
+        internal static void InitGrid(string listName)
+        {
+            Engine.MainWindow.VendorBuyDataGridView.Rows.Clear();
+            List<BuyAgentItem> items = Settings.BuyAgent.ItemsRead(listName);
 
-		internal static void CloneList(string newList)
+            foreach (BuyAgentItem item in items)
+            {
+                string color = "All";
+                if (item.Color != -1)
+                    color = "0x" + item.Color.ToString("X4");
+
+                Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
+            }
+        }
+
+        internal static void CloneList(string newList)
 		{
 			RazorEnhanced.Settings.BuyAgent.ListInsert(newList);
 
@@ -900,12 +905,12 @@ namespace RazorEnhanced
 				if (Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop change list e restart
 				{
 					Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = false);
-					Assistant.Engine.MainWindow.SafeAction(s => s.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => {s.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
 					Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = true);
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.SafeAction(s => s.BuyListSelect.SelectedIndex = s.BuyListSelect.Items.IndexOf(listName));  // change list
+					Assistant.Engine.MainWindow.SafeAction(s => { s.BuyListSelect.SelectedIndex = s.BuyListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
 				}
 			}
 		}

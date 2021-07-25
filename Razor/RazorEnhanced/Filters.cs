@@ -209,6 +209,8 @@ namespace RazorEnhanced
 			color = 0;
 			foreach (GraphChangeData graphdata in m_graphfilterdata)
 			{
+                if (! graphdata.Selected)
+                    continue; 
 				if (body != graphdata.GraphReal)
 					continue;
 

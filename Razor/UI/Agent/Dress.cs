@@ -29,7 +29,7 @@ namespace Assistant
 				RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
 			}
 
-			RazorEnhanced.Dress.RefreshItems();
+			RazorEnhanced.Dress.InitGrid();
 		}
 
 		private void dressAddListB_Click(object sender, EventArgs e)
@@ -143,7 +143,7 @@ namespace Assistant
 						if (index <= items.Count - 1)
 						{
 							RazorEnhanced.Settings.Dress.ItemDelete(selection, items[index]);
-							RazorEnhanced.Dress.RefreshItems();
+							RazorEnhanced.Dress.InitGrid();
 						}
 					}
 				}
@@ -158,7 +158,7 @@ namespace Assistant
 			{
 				string selection = dressListSelect.Text;
 				RazorEnhanced.Settings.Dress.ClearList(selection);
-				RazorEnhanced.Dress.RefreshItems();
+				RazorEnhanced.Dress.InitGrid();
 			}
 			else
 				RazorEnhanced.Dress.AddLog("Item list not selected!");

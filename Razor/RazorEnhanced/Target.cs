@@ -230,8 +230,8 @@ namespace RazorEnhanced
         /// </summary>
 		public static void Self()
 		{
-			if (World.Player != null)
-				TargetExecute(World.Player.Serial);
+            if (World.Player != null)
+                Assistant.Targeting.TargetSelf(false);
 		}
 
         /// <summary>

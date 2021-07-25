@@ -491,7 +491,29 @@ namespace Assistant
             System.Data.DataView dv = (System.Data.DataView)JournalList.DataSource;
             try
             {
-                dv.RowFilter = JournalFilterString.Text;
+                string[] allWords = JournalFilterString.Text.ToLower().Split(' ');
+                if (allWords.Length > 0)
+                {
+                    string assembleFilter = "";
+                    int lastCount = allWords.Length;
+                    foreach (string word in allWords)
+                    {
+                        lastCount -= 1;
+                        string trimmedWord = word.Trim();
+                        if (trimmedWord.Length > 0)
+                        {
+                            assembleFilter += String.Format("text like '*{0}*'", trimmedWord);
+                            if (lastCount > 0)
+                                assembleFilter += " or ";
+                        }
+                    }
+                    dv.RowFilter = assembleFilter;
+
+                }
+                else
+                {
+                    dv.RowFilter = "";
+                }
             }
             catch (Exception)
             {

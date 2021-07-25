@@ -395,7 +395,15 @@ namespace Assistant
 			set { m_Tithe = value; }
 		}
 
-		internal short HitChanceIncrease
+        internal short MaxPhysicResistence { get; set; }
+        internal short MaxFireResistence { get; set; }
+        internal short MaxColdResistence { get; set; }
+        internal short MaxPoisonResistence { get; set; }
+        internal short MaxEnergyResistence { get; set; }
+        //internal short DefenseChanceIncrease { get; set; }
+        internal short MaxDefenseChanceIncrease { get; set; }
+
+        internal short HitChanceIncrease
 		{
 			get { return m_HitChanceIncrease; }
 			set { m_HitChanceIncrease = value; }

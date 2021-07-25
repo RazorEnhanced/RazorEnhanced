@@ -191,10 +191,6 @@ namespace Assistant
         [STAThread]
         public static void Main(string[] Args)
         {
-            //Dalamar
-            //TODO: is this a good entry point for generating the docs ? 
-            RazorEnhanced.AutoDocIO.UpdateDocs();
-            RazorEnhanced.Config.LoadAll();
 
             Application.ThreadException += ApplicationThreadException;
 

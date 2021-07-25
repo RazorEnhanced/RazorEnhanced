@@ -150,7 +150,7 @@ namespace RazorEnhanced
 		{
 			RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false);
 			RazorEnhanced.Dress.RefreshLists();
-			RazorEnhanced.Dress.RefreshItems();
+			RazorEnhanced.Dress.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -161,7 +161,7 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Dress.RefreshLists();
-			RazorEnhanced.Dress.RefreshItems();
+			RazorEnhanced.Dress.InitGrid();
 		}
 
 		internal static void UpdateSelectedItems(int i)
@@ -183,40 +183,48 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void InitGrid()
 		{
 			List<DressList> lists = Settings.Dress.ListsRead();
-			Assistant.Engine.MainWindow.DressListView.Items.Clear();
 			foreach (DressList l in lists)
 			{
-				if (!l.Selected)
-					continue;
-
-				List<Dress.DressItemNew> items = RazorEnhanced.Settings.Dress.ItemsRead(l.Description);
-
-				foreach (DressItemNew item in items)
-				{
-					ListViewItem listitem = new ListViewItem
-					{
-						Checked = item.Selected
-					};
-					listitem.SubItems.Add(item.Layer.ToString());
-					if (item.Name != "UNDRESS")
-					{
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-					}
-					else
-					{
-						listitem.SubItems.Add("UNDRESS");
-						listitem.SubItems.Add("UNDRESS");
-					}
-					Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-				}
+                if (l.Selected)
+                {
+                    InitGrid(l.Description);
+                    break;
+                }
 			}
 		}
 
-		internal static void ReadPlayerDress()
+        internal static void InitGrid(string listName)
+        {
+            Assistant.Engine.MainWindow.DressListView.Items.Clear();
+            List<Dress.DressItemNew> items = RazorEnhanced.Settings.Dress.ItemsRead(listName);
+
+            foreach (DressItemNew item in items)
+            {
+                ListViewItem listitem = new ListViewItem
+                {
+                    Checked = item.Selected
+                };
+                listitem.SubItems.Add(item.Layer.ToString());
+                if (item.Name != "UNDRESS")
+                {
+                    listitem.SubItems.Add(item.Name);
+                    listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
+                }
+                else
+                {
+                    listitem.SubItems.Add("UNDRESS");
+                    listitem.SubItems.Add("UNDRESS");
+                }
+                Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
+            }
+        }
+
+
+
+        internal static void ReadPlayerDress()
 		{
 			if (World.Player == null) // non loggato
 			{
@@ -236,7 +244,7 @@ namespace RazorEnhanced
 				RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
 			}
 
-			RazorEnhanced.Dress.RefreshItems();
+			RazorEnhanced.Dress.InitGrid();
 		}
 
 		internal static void AddItemByTarger(Assistant.Item dressItem)
@@ -245,7 +253,7 @@ namespace RazorEnhanced
 			{
 				RazorEnhanced.Dress.DressItemNew toinsert = new RazorEnhanced.Dress.DressItemNew(dressItem.Name, dressItem.Layer, dressItem.Serial, true);
 				RazorEnhanced.Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
-				RazorEnhanced.Dress.RefreshItems();
+				RazorEnhanced.Dress.InitGrid();
 			}
 			else
 				Misc.SendMessage("This item not have valid layer", false);
@@ -754,12 +762,12 @@ namespace RazorEnhanced
 				if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop change list e restart
 				{
 					Engine.MainWindow.SafeAction(s => s.DressStopButton.PerformClick());
-					Engine.MainWindow.SafeAction(s => s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist));  // change list
+					Engine.MainWindow.SafeAction(s => { s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist); InitGrid(dresslist); });  // change list
 					Engine.MainWindow.SafeAction(s => s.DressExecuteButton.PerformClick());
 				}
 				else
 				{
-					Engine.MainWindow.SafeAction(s => s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist));  // change list
+					Engine.MainWindow.SafeAction(s => { s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist); InitGrid(dresslist); });  // change list
 				}
 			}
 		}

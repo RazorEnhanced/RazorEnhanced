@@ -181,27 +181,31 @@ namespace RazorEnhanced
         {
             List<ScavengerList> lists = Settings.Scavenger.ListsRead();
 
-            Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Clear();
-
             foreach (ScavengerList l in lists)
             {
                 if (l.Selected)
                 {
-                    List<Scavenger.ScavengerItem> items = Settings.Scavenger.ItemsRead(l.Description);
-
-                    foreach (ScavengerItem item in items)
-                    {
-                        string color = "All";
-                        if (item.Color != -1)
-                            color = "0x" + item.Color.ToString("X4");
-
-                        Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
-                    }
-
+                    InitGrid(l.Description);
                     break;
                 }
             }
         }
+        internal static void InitGrid(string listName)
+        {
+            Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Clear();
+
+            List<Scavenger.ScavengerItem> items = Settings.Scavenger.ItemsRead(listName);
+
+            foreach (ScavengerItem item in items)
+            {
+                string color = "All";
+                if (item.Color != -1)
+                    color = "0x" + item.Color.ToString("X4");
+
+                Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
+            }
+        }
+
 
         internal static void CopyTable()
         {
@@ -521,12 +525,12 @@ namespace RazorEnhanced
                 if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true) // Se è in esecuzione forza stop change list e restart
                 {
                     Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = false);
-                    Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName));  // change list
+                    Assistant.Engine.MainWindow.SafeAction(s => {s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName); InitGrid(listName); }) ;  // change list
                     Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = true);
                 }
                 else
                 {
-                    Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName));  // change list
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
                 }
             }
         }

@@ -174,6 +174,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("location", this.Location);
             UOScript.Interpreter.RegisterCommandHandler("clearsell", this.ClearSell);
             UOScript.Interpreter.RegisterCommandHandler("organizer", this.Organizer);
+            UOScript.Interpreter.RegisterCommandHandler("restock", this.Restock);
             UOScript.Interpreter.RegisterCommandHandler("autoloot", this.Autoloot); //TODO: This method is a stub. Remove after successful testing.
             UOScript.Interpreter.RegisterCommandHandler("autotargetobject", this.AutoTargetObject);
             UOScript.Interpreter.RegisterCommandHandler("dress", this.Dress);
@@ -266,6 +267,8 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
             UOScript.Interpreter.RegisterExpressionHandler("z", this.LocationZ);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
+            UOScript.Interpreter.RegisterExpressionHandler("restocking", this.Restocking);
+
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion);
             UOScript.Interpreter.RegisterExpressionHandler("skill", this.Skill);
@@ -553,6 +556,11 @@ namespace RazorEnhanced
         {
             return RazorEnhanced.Organizer.Status();
         }
+        IComparable Restocking(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            return RazorEnhanced.Restock.Status();
+        }
+
 
         /// <summary>
         /// The problem is UOS findbyid will find either mobil or item, but RE seperates them
@@ -2344,26 +2352,76 @@ namespace RazorEnhanced
             SellAgent.Disable();
             return true;
         }
+        private bool Restock(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+
+            int src = -1;
+            int dst = -1;
+            int delay = -1;
+            string restockName = null;
+
+            if (args.Length >= 1)
+            {
+                restockName = args[0].AsString();
+            }
+            if (args.Length >= 2)
+            {
+                src = (int)args[1].AsSerial();
+            }
+            if (args.Length >= 3)
+            {
+                dst = (int)args[2].AsSerial();
+            }
+            if (args.Length >= 4)
+            {
+                delay = (int)args[3].AsSerial();
+            }
+
+            if (restockName != null)
+            {
+                RazorEnhanced.Restock.RunOnce(restockName, src, dst, delay);
+                int max = 30 * 2; // max 30 seconds @ .5 seconds each loop
+                while (RazorEnhanced.Restock.Status() == true && (max-- > 0))
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
+            }
+
+            return true;
+        }
 
         private bool Organizer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            if (args.Length == 1)
+            int src = -1;
+            int dst = -1;
+            int delay = -1;
+            string organizerName = null;
+
+            if (args.Length >= 1)
             {
-                string organizerName = args[0].AsString();
-                RazorEnhanced.Organizer.RunOnce(organizerName, -1, -1, -1);
+                organizerName = args[0].AsString();
             }
-            if (args.Length == 2)
+            if (args.Length >= 2)
             {
-                string organizerName = args[0].AsString();
-                uint source = args[1].AsSerial();
-                RazorEnhanced.Organizer.RunOnce(organizerName, (int)source, -1, -1);
+                src = (int)args[1].AsSerial();
             }
-            if (args.Length == 3)
+            if (args.Length >= 3)
             {
-                string organizerName = args[0].AsString();
-                uint source = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                RazorEnhanced.Organizer.RunOnce(organizerName, (int)source, (int)dest, -1);
+                dst = (int)args[2].AsSerial();
+            }
+            if (args.Length >= 4)
+            {
+                delay = (int)args[3].AsSerial();
+            }
+
+            if (organizerName != null)
+            {
+                RazorEnhanced.Organizer.RunOnce(organizerName, src, dst, delay);
+                int max = 30 * 2; // max 30 seconds @ .5 seconds each loop
+                while (RazorEnhanced.Organizer.Status() == true && (max-- > 0))
+                {
+                    System.Threading.Thread.Sleep(500);
+                }
             }
 
             return true;
@@ -3910,7 +3968,17 @@ namespace RazorEnhanced
                 {
                     // invalid numeric
                 }
-
+                try
+                {
+                    arg = CheckIsListElement(Node.Lexeme);
+                    if (arg != null)
+                        return (uint)arg.AsInt();
+                    return (uint)AsInt();
+                }
+                catch (RunTimeError)
+                {
+                    // invalid numeric
+                }
                 // This is a bad place to be
                 return 0;
             }

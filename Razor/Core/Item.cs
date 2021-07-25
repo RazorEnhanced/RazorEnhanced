@@ -784,28 +784,34 @@ namespace Assistant
 			get { return m_ItemID.Value == 0x2006 || (m_ItemID.Value >= 0x0ECA && m_ItemID.Value <= 0x0ED2); }
 		}
 
-        internal static ConcurrentHashSet<int> LoadDoorData()
+        internal static ConcurrentHashSet<uint> LoadDoorData()
         {
+            ConcurrentHashSet<uint> ret = new ConcurrentHashSet<uint>();
             lock (LockingVar)
             {
 
-                string pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "DoorData.json");
+                string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "DoorData.json");
                 if (File.Exists(pathName))
                 {
                     string doorData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(doorData);
+                    ret = Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<uint>>(doorData);
                 }
-                pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "DoorData.json");
+                pathName = Path.Combine(Assistant.Engine.RootPath, "Data", "DoorData.json");
                 if (File.Exists(pathName))
                 {
                     string doorData = File.ReadAllText(pathName);
-                    return Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<int>>(doorData);
+                    ConcurrentHashSet<uint> dataDoors = Newtonsoft.Json.JsonConvert.DeserializeObject<ConcurrentHashSet<uint>>(doorData);
+                    foreach (var door in dataDoors)
+                    {
+                        ret.Add(door);
+                    }
                 }
+
             }
-            return new ConcurrentHashSet<int>();
+            return ret;
         }
 
-        internal static ConcurrentHashSet<int> DoorData = LoadDoorData();
+        internal static ConcurrentHashSet<uint> DoorData = LoadDoorData();
 
         internal bool IsDoor
 		{
