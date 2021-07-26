@@ -2773,8 +2773,16 @@ namespace Assistant
 					}
 				case 0x21: // Special ability execute
 					{
-						RazorEnhanced.SpellGrid.UpdateSAHighLight(0);
-						World.Player.HasSpecial = SpecialMoves.HasPrimary = SpecialMoves.HasSecondary = false;
+                        if (World.Player.HasSpecial)
+                        {
+                            World.Player.HasSpecial = false;
+                            SpecialMoves.HasPrimary = false;
+                            SpecialMoves.HasSecondary = false;
+                            System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                            doAction.Start();
+
+                            //RazorEnhanced.SpellGrid.UpdateSAHighLight(0);
+                        }
 						break;
 					}
 				case 0x25: // Toggle Special Moves (skills icon red or white)
@@ -2991,17 +2999,24 @@ namespace Assistant
 				case 0x19: // set ability
 					{
                         if (p.ReadByte() == 0)
-						{
+                        {
                             int ability = p.ReadInt32();
-                            RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);
-							World.Player.HasSpecial = true;
-						}
-						break;
+                            SpecialMoves.ClientSentSpecial(ability);
+                            System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                            doAction.Start();
+
+                            //RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);      
+                        }
+                        else 
+                        {
+                            World.Player.HasSpecial = false;
+                        }
+                        break;
 					}
 			}
 		}
-
-		private static string m_LastPW = "";
+    
+    private static string m_LastPW = "";
 
 		private static void ServerListLogin(Packet p, PacketHandlerEventArgs args)
 		{

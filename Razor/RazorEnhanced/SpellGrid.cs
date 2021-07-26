@@ -304,43 +304,57 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateSAHighLight(int ID)
-		{
-			foreach (PanelGrid p in m_panellist)
-			{
-				if (p.Group == GroupType.Abilities)
-				{
-					if (ID == 0)
-					{
-						p.AbilityEnabled = false;
-						if (p.Spell == "Primary")
-							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
-						else
-							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
-					}
-					else
-					{
-						if (p.AbilityID == ID)
-						{
-							p.AbilityEnabled = true;
-							p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
-						}
-						else
-						{
-							if (p.AbilityEnabled)
-							{
-								if (p.Spell == "Primary")
-									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
-								else
-									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
-							}
-						}
+        internal static void UpdateSAHighLight(int ID)
+        {
+            if (m_open)
+            {
+                int displayMethod = RazorEnhanced.Settings.General.ReadInt("SpellGridStyle");
 
-					}
+                if (displayMethod == 0)
+                {
 
-				}
-			}
-		}
+                    foreach (PanelGrid p in m_panellist)
+                    {
+                        if (p.Group == GroupType.Abilities)
+                        {
+                            if (ID == 0)
+                            {
+                                p.AbilityEnabled = false;
+                                if (p.Spell == "Primary")
+                                    p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+                                else
+                                    p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+                            }
+                            else
+                            {
+                                if (p.AbilityID == ID)
+                                {
+                                    p.AbilityEnabled = true;
+                                    p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
+                                }
+                                else
+                                {
+                                    if (p.AbilityEnabled)
+                                    {
+                                        if (p.Spell == "Primary")
+                                            p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+                                        else
+                                            p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    Close();
+                    Open();
+                }
+            }
+        }
 
 		internal static void UpdateSAIcon()
 		{
@@ -569,12 +583,12 @@ namespace RazorEnhanced
 			{
 				int imageid = 0;
 
-				GroupType g;
+                GroupType g;
 				if (Enum.TryParse<GroupType>(item.Group, out g))
 				{
 					if (g != GroupType.Empty)
 					{
-						imageid = GetImageID(g, item.Spell);
+                        imageid = GetImageID(g, item.Spell);
 						switch (imageid)
 						{
 							case 0:
@@ -590,7 +604,30 @@ namespace RazorEnhanced
 								break;
 
 							default:
-								Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 2205, index, 1, 0);
+                                if (item.Group == "Abilities" && Gumps.IsValid(2353))
+                                {
+                                    int ActiveColor = 32;
+                                    int InactiveColor = 67;
+                                    int offset = 3;
+                                    if (item.Spell == "Primary")
+                                    {
+                                        if (Player.HasPrimarySpecial)
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, ActiveColor);
+                                        else
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50)+ offset, (int)Player.PrimarySpecial, InactiveColor);
+                                    }
+                                    if (item.Spell == "Secondary")
+                                    {
+                                        if (Player.HasSecondarySpecial)
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, ActiveColor);
+                                        else
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50)+ offset, (int)Player.SecondarySpecial, InactiveColor);
+                                    }
+                                    Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
+
+                                }
+                                else
+                                    Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 2205, index, 1, 0);
 								break;
 						}
 						Gumps.AddTooltip(ref spellBar, item.Spell);
@@ -694,7 +731,10 @@ namespace RazorEnhanced
 					SpellIconMagery.TryGetValue(s, out imageid);
 					break;
 				case GroupType.Abilities:
-					SpellIconAbilities.TryGetValue(s, out imageid);
+                    if (s == "Primary")
+                        imageid = (int)SpecialMoves.PrimaryGumpId;
+                    else
+                        imageid = (int)SpecialMoves.SecondaryGumpId;
 					break;
 				case GroupType.Mastery:
 					SpellIconMastery.TryGetValue(s, out imageid);

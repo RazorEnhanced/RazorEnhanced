@@ -627,13 +627,13 @@ namespace Assistant
 				int x = Position.X, y = Position.Y;
 				Utility.Offset(e.Dir, ref x, ref y);
 
-				int z = CalcZ;
+				int z = Position.Z;
 
 				foreach (Item i in World.Items.Values)
 				{
 					if (i.Position.X == x && i.Position.Y == y)
 						if (i.IsDoor)
-							if (i.Position.Z - 15 <= z && i.Position.Z + 15 >= z)
+							if (i.Position.Z - 20 <= z && i.Position.Z + 20 >= z)
 								if (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now)
 								{
 									m_LastDoor = i.Serial;
@@ -670,10 +670,10 @@ namespace Assistant
 
 				Utility.Offset(dir & Direction.mask, ref x, ref y);
 
-				int newZ = Position.Z;
-				try { newZ = Assistant.Facet.ZTop(Map, x, y, newZ); }
-				catch { }
-				Position = new Point3D(x, y, newZ);
+				//int newZ = Position.Z;
+				//try { newZ = Assistant.Facet.ZTop(Map, x, y, newZ); }
+				//catch { }
+				Position = new Point3D(x, y, Position.Z);
 			}
 			Direction = dir;
 		}
