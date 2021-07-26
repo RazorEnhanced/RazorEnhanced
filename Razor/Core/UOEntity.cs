@@ -6,7 +6,7 @@ namespace Assistant
 	public class UOEntity
 	{
 		private Serial m_Serial;
-		private Point3D m_Pos;
+		//private Point3D m_Pos;
 		private ushort m_Hue;
 		private bool m_Deleted;
 		private readonly Dictionary<ushort, int> m_ContextMenu = new Dictionary<ushort, int>();
@@ -25,15 +25,22 @@ namespace Assistant
 
 		internal Serial Serial { get { return m_Serial; } }
 
-		internal virtual Point3D Position
+        private Point3D dont_use_pos;
+
+        internal Point3D Position
 		{
-			get { return m_Pos; }
+            get { return dont_use_pos; }
 			set
 			{
-				if (value != m_Pos)
+                if (m_Serial == 0x2247A && dont_use_pos.Z != 48)
+                {
+                    // stop
+                }
+
+                if (value != dont_use_pos)
 				{
 					OnPositionChanging(value);
-					m_Pos = value;
+                    dont_use_pos = value;
 				}
 			}
 		}
