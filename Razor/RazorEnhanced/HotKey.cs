@@ -1878,7 +1878,7 @@ namespace RazorEnhanced
 			Engine.MainWindow.GridScriptComboBox.Items.Clear();
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.GridScriptComboBox.Items.Add(keydata.Name); // Aggiorna lista script spellgrid
+				Engine.MainWindow.GridScriptComboBox.Items.Add(keydata.Name); // refresh script spellgrid
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add(GenerateNode(keydata));
 			}
 
