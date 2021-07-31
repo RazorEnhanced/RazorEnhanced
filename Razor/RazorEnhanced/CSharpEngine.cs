@@ -270,14 +270,22 @@ namespace RazorEnhanced
             MethodInfo run = null;
 
             // Search trough all methods and finds Run then calls it
+            int runMethodsFound = 0;
             foreach (Type mt in assembly.GetTypes())
             {
                 if (mt != null)
                 {
-                    run = mt.GetMethod("Run", bf);
-                    if (run != null) 
+                    MethodInfo method = mt.GetMethod("Run", bf);
+                    if (method != null) 
                     {
-                        break;
+                        run = method;
+                        runMethodsFound++;
+                        if (runMethodsFound > 1)
+                        {
+                            string error = "Found more than one 'public void Run()' method in script.\nMust be only one Run method.";
+                            Misc.SendMessage(error);
+                            throw new Microsoft.Scripting.SyntaxErrorException(error, null, new SourceSpan(), 0, Severity.FatalError);
+                        }
                     }
                 }
             }
@@ -286,7 +294,7 @@ namespace RazorEnhanced
             // SyntaxErrorException now and log it too
             if (run == null)
             {
-                string error = "Required method 'public void Run() missing from script.";
+                string error = "Required method 'public void Run()' missing from script.";
                 Misc.SendMessage(error);
                 throw new Microsoft.Scripting.SyntaxErrorException(error,null, new SourceSpan(), 0, Severity.FatalError);
             }
