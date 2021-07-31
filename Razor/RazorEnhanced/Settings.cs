@@ -195,7 +195,9 @@ namespace RazorEnhanced
             foreach (RazorEnhanced.Scripts.ScriptItem item in scriptItems)
             {
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
-                if (File.Exists(fullpath))
+                if (item.FullPath != null)
+                    fullpath = item.FullPath;
+                if (File.Exists(fullpath) )
                 {
                     DataRow row = temp.NewRow();
                     row["Filename"] = item.Filename;
@@ -206,10 +208,7 @@ namespace RazorEnhanced
                     row["HotKey"] = item.Hotkey;
                     row["HotKeyPass"] = item.HotKeyPass;
                     row["AutoStart"] = item.AutoStart;
-                    if (item.FullPath == null)
-                        row["FullPath"] = fullpath;
-                    else
-                        row["FullPath"] = item.FullPath;
+                    row["FullPath"] = fullpath;
 
                     temp.Rows.Add(row);
                 }
