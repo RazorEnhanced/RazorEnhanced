@@ -2603,12 +2603,12 @@ namespace RazorEnhanced
         {
             if (args.Length > 0)
             {
-                string[] macroAndArgs = new string[args.Length];
+                var macroAndArgs = new List<string>();
                 foreach (var arg in args)
                 {
-                    macroAndArgs.Append(arg.AsString());
+                    macroAndArgs.Add(arg.AsString());
                 }
-                Assistant.Commands.PlayScript(macroAndArgs);
+                Assistant.Commands.PlayScript( macroAndArgs.ToArray() );
             }
 
             return true;
