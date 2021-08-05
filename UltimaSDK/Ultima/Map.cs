@@ -25,7 +25,7 @@ namespace Ultima
 				case "Felucca":
 					return Felucca = new Map(0, 0, 7168, 4096); // 6144
 				case "Trammel":
-					return Trammel = new Map(0, 1, 7168, 4096);
+					return Trammel = new Map(1, 1, 7168, 4096);
 
 				case "Ilshenar":
 					return Ilshenar = new Map(2, 2, 2304, 1600);
