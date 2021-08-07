@@ -578,6 +578,7 @@ namespace RazorEnhanced
             itemFilter.Graphics.Add(graphic);
             itemFilter.RangeMax = range;
             itemFilter.OnGround = 1;
+            itemFilter.CheckIgnoreObject = true;
             if (color != -1)
                 itemFilter.Hues.Add(color);
             List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
@@ -598,6 +599,7 @@ namespace RazorEnhanced
             };
             mobileFilter.Bodies.Add(graphic);
             mobileFilter.RangeMax = range;
+            mobileFilter.CheckIgnoreObject = true;
             if (color != -1)
                 mobileFilter.Hues.Add(color);
             List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
@@ -668,7 +670,26 @@ namespace RazorEnhanced
                 // return false;
             }
 
-            int type = args[0].AsInt();
+            string listname = args[0].AsString();
+            if (UOScript.Interpreter.ListExists(listname))
+            {
+                foreach (UOScript.Argument arg in UOScript.Interpreter.ListContents(listname))
+                {
+                    int type = arg.AsInt();
+                    if (FindByType(type, args))
+                        return true;
+                }
+            }
+            else
+            {
+                int type = args[0].AsInt();
+                return FindByType(type, args);
+            }
+            return false;
+        }
+
+        internal static bool FindByType(int type, UOScript.Argument[] args)
+        {
             int serial = -1;
             if (args.Length == 1 || args.Length == 2)
             {
@@ -2603,12 +2624,12 @@ namespace RazorEnhanced
         {
             if (args.Length > 0)
             {
-                string[] macroAndArgs = new string[args.Length];
+                var macroAndArgs = new List<string>();
                 foreach (var arg in args)
                 {
-                    macroAndArgs.Append(arg.AsString());
+                    macroAndArgs.Add(arg.AsString());
                 }
-                Assistant.Commands.PlayScript(macroAndArgs);
+                Assistant.Commands.PlayScript( macroAndArgs.ToArray() );
             }
 
             return true;
@@ -5134,6 +5155,15 @@ namespace RazorEnhanced
 
                 return _lists[name].Contains(arg);
             }
+
+            internal static List<Argument> ListContents(string name)
+            {
+                if (!_lists.ContainsKey(name))
+                    throw new RunTimeError(null, "List does not exist");
+
+                return _lists[name];
+            }
+
 
             public static int ListLength(string name)
             {
