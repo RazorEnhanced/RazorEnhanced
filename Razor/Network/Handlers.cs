@@ -264,76 +264,80 @@ namespace Assistant
 		private static void ExtendedClientCommand(Packet p, PacketHandlerEventArgs args)
 		{
 			ushort ext = p.ReadUInt16();
-			switch (ext)
-			{
-				case 0x09: // Sa disarm
-					{
-						if (RazorEnhanced.ScriptRecorder.OnRecord)
-							RazorEnhanced.ScriptRecorder.Record_SADisarm();
-						break;
-					}
-				case 0x0A: // Sa Stun
-					{
-						if (RazorEnhanced.ScriptRecorder.OnRecord)
-							RazorEnhanced.ScriptRecorder.Record_SAStun();
-						break;
-					}
-			/*	case 0x10: // query object properties
-					{
-						break;
-					}*/
-				case 0x15: // context menu response
-					{
-						//UOEntity ent = null;
-						Serial ser = p.ReadUInt32();
-						ushort idx = p.ReadUInt16();
+            switch (ext)
+            {
+                case 0x09: // Sa disarm
+                    {
+                        if (RazorEnhanced.ScriptRecorder.OnRecord)
+                            RazorEnhanced.ScriptRecorder.Record_SADisarm();
+                        break;
+                    }
+                case 0x0A: // Sa Stun
+                    {
+                        if (RazorEnhanced.ScriptRecorder.OnRecord)
+                            RazorEnhanced.ScriptRecorder.Record_SAStun();
+                        break;
+                    }
+                /*	case 0x10: // query object properties
+                        {
+                            break;
+                        }*/
+                case 0x15: // context menu response
+                    {
+                        //UOEntity ent = null;
+                        Serial ser = p.ReadUInt32();
+                        ushort idx = p.ReadUInt16();
 
-						//if (ser.IsMobile)
-						//	ent = World.FindMobile(ser);
-						//else if (ser.IsItem)
-						//	ent = World.FindItem(ser);
+                        //if (ser.IsMobile)
+                        //	ent = World.FindMobile(ser);
+                        //else if (ser.IsItem)
+                        //	ent = World.FindItem(ser);
 
-						if (RazorEnhanced.ScriptRecorder.OnRecord)
-							RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
+                        if (RazorEnhanced.ScriptRecorder.OnRecord)
+                            RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
 
-						World.Player.HasContext = false;
-						World.Player.ContextID = 0;
+                        World.Player.HasContext = false;
+                        World.Player.ContextID = 0;
 
-						break;
-					}
-				case 0x1C:// cast spell
-					{
+                        break;
+                    }
+                case 0x1C:// cast spell
+                    {
                         Serial ser;
                         if (p.ReadUInt16() == 1)
-							ser = p.ReadUInt32();
-						ushort sid = p.ReadUInt16();
+                            ser = p.ReadUInt32();
+                        ushort sid = p.ReadUInt16();
 
-						if (RazorEnhanced.ScriptRecorder.OnRecord)
-							RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, sid);
+                        if (RazorEnhanced.ScriptRecorder.OnRecord)
+                            RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, sid);
 
-						Spell s = Spell.Get(sid);
-						if (s != null)
-						{
-							s.OnCast(p, false);
-							args.Block = true;
-						}
-						break;
-					}
-			/*	case 0x24:
-					{
-						// for the cheatx0r part 2...  anything outside this range indicates some haxing, just hide it with 0x30s
-						byte b = p.ReadByte();
-						if (b < 0x25 || b >= 0x5E + 0x25)
-						{
-							p.Seek(-1, SeekOrigin.Current);
-							p.Write((byte)0x30);
-						}
-						//using ( StreamWriter w = new StreamWriter( "bf24.txt", true ) )
-						//	w.WriteLine( "{0} : 0x{1:X2}", DateTime.Now.ToString( "HH:mm:ss.ffff" ), b );
-						break;
-					}*/
-			}
-		}
+                        Spell s = Spell.Get(sid);
+                        if (s != null)
+                        {
+                            s.OnCast(p, false);
+                            args.Block = true;
+                        }
+                        break;
+                    }
+                case 0x21:
+                    {
+                        break;
+                    }
+                    /*	case 0x24:
+                    {
+                        // for the cheatx0r part 2...  anything outside this range indicates some haxing, just hide it with 0x30s
+                        byte b = p.ReadByte();
+                        if (b < 0x25 || b >= 0x5E + 0x25)
+                        {
+                            p.Seek(-1, SeekOrigin.Current);
+                            p.Write((byte)0x30);
+                        }
+                        //using ( StreamWriter w = new StreamWriter( "bf24.txt", true ) )
+                        //	w.WriteLine( "{0} : 0x{1:X2}", DateTime.Now.ToString( "HH:mm:ss.ffff" ), b );
+                        break;
+                    }*/
+            }
+        }
 
 		private static void ClientTextCommand(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -2778,12 +2782,11 @@ namespace Assistant
                             World.Player.HasSpecial = false;
                             SpecialMoves.HasPrimary = false;
                             SpecialMoves.HasSecondary = false;
+
                             System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                             doAction.Start();
-
-                            //RazorEnhanced.SpellGrid.UpdateSAHighLight(0);
                         }
-						break;
+                        break;
 					}
 				case 0x25: // Toggle Special Moves (skills icon red or white)
 					{
@@ -2799,7 +2802,8 @@ namespace Assistant
 									if (World.Player != null && !World.Player.SkillEnabled.Contains(skill))
 									{
 										World.Player.SkillEnabled.Add(skill);
-										RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, true);
+                                        System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, true));
+                                        doAction.Start();
 									}
 									break;
 
@@ -2807,7 +2811,8 @@ namespace Assistant
 									if (World.Player != null && World.Player.SkillEnabled.Contains(skill))
 									{
 										World.Player.SkillEnabled.Remove(skill);
-										RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, false);
+                                        System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSkillHighLight(skill, false));
+                                        doAction.Start();
 									}
 									break;
 							}

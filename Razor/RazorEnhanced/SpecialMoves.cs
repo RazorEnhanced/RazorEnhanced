@@ -516,8 +516,18 @@ namespace Assistant
 
 		internal static void ClearAbilities(bool wait)
 		{
-			World.Player.HasSpecial = HasPrimary = HasSecondary = false;
-			if (wait)
+            // Seems OSI does not send an execute special on weapon clear, but free servers do
+            // I'd prefer to wait till server tells me its clear, but for OSI
+            // I'll have to force it clear
+            if (Client.Instance.ServerEncrypted && World.Player.HasSpecial) // just a guess it is OSI                                                 
+            {                
+                World.Player.HasSpecial = HasPrimary = HasSecondary = false;
+                System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                doAction.Start();
+            }
+
+            // clear these when server sends back clear packet
+            if (wait)
 			{
 		 		Assistant.Client.Instance.SendToServerWait(new UseAbility(AOSAbility.Clear));
 		 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
