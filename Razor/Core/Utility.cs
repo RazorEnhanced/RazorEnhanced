@@ -50,7 +50,7 @@ namespace Assistant
 			float xDelta = Math.Abs(from.X - to.X);
 			float yDelta = Math.Abs(from.Y - to.Y);
 
-			return Math.Sqrt(xDelta * xDelta + yDelta * yDelta);
+			return Math.Sqrt((xDelta * xDelta) + (yDelta * yDelta));
 		}
 
 		internal static void Offset(Direction d, ref int x, ref int y)

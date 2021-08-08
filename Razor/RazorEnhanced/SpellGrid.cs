@@ -286,22 +286,32 @@ namespace RazorEnhanced
 		}
 		internal static void UpdateSkillHighLight(SkillIcon ID, bool enable)
 		{
-			foreach (PanelGrid p in m_panellist)
-			{
-				if (p.Group == GroupType.Mastery || p.Group == GroupType.Bushido || p.Group == GroupType.Ninjitsu)
-				{
-					if (Enum.TryParse<SkillIcon>(p.Spell.Replace(" ", ""), out SkillIcon l))
-					{
-						if (ID == l)
-						{
-							if (enable)
-								p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
-							else
-								p.BackgroundImage = Ultima.Gumps.GetGump(GetImageID(p.Group, p.Spell));
-						}
-					}
-				}
-			}
+            int displayMethod = RazorEnhanced.Settings.General.ReadInt("SpellGridStyle");
+            if (displayMethod == 0)
+            {
+
+                foreach (PanelGrid p in m_panellist)
+                {
+                    if (p.Group == GroupType.Mastery || p.Group == GroupType.Bushido || p.Group == GroupType.Ninjitsu)
+                    {
+                        if (Enum.TryParse<SkillIcon>(p.Spell.Replace(" ", ""), out SkillIcon l))
+                        {
+                            if (ID == l)
+                            {
+                                if (enable)
+                                    p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
+                                else
+                                    p.BackgroundImage = Ultima.Gumps.GetGump(GetImageID(p.Group, p.Spell));
+                            }
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                Close();
+                Open();
+            }
 		}
 
         internal static void UpdateSAHighLight(int ID)
@@ -570,8 +580,11 @@ namespace RazorEnhanced
 		internal static void GumpSpellGrid()
 		{
 			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
-
-			Gumps.GumpData spellBar = Gumps.CreateGump(false, false, false, false);
+            int ActiveColor = 32;
+            int InactiveColor = 0;
+            int offset = 3;
+            
+            Gumps.GumpData spellBar = Gumps.CreateGump(false, false, false, false);
 			spellBar.gumpId = (uint)999009999;
 			spellBar.serial = (uint)Player.Serial;
 			Gumps.AddPage(ref spellBar, 0);
@@ -604,30 +617,36 @@ namespace RazorEnhanced
 								break;
 
 							default:
-                                if (item.Group == "Abilities" && Gumps.IsValid(2353))
+                                if (Gumps.IsValid(2353))
                                 {
-                                    int ActiveColor = 32;
-                                    int InactiveColor = 67;
-                                    int offset = 3;
                                     if (item.Spell == "Primary")
                                     {
                                         if (Player.HasPrimarySpecial)
                                             Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, ActiveColor);
                                         else
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50)+ offset, (int)Player.PrimarySpecial, InactiveColor);
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.PrimarySpecial, InactiveColor);
                                     }
-                                    if (item.Spell == "Secondary")
+                                    else if (item.Spell == "Secondary")
                                     {
                                         if (Player.HasSecondarySpecial)
                                             Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, ActiveColor);
                                         else
-                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50)+ offset, (int)Player.SecondarySpecial, InactiveColor);
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)Player.SecondarySpecial, InactiveColor);
+                                    }
+                                    else if (Enum.TryParse<SkillIcon>(item.Spell.Replace(" ", ""), out SkillIcon icon))
+                                    {
+                                        if (World.Player.SkillEnabled.Contains(icon))
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, ActiveColor);
+                                        else
+                                            Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, InactiveColor);
+
                                     }
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
-
                                 }
                                 else
+                                {
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), imageid, 2205, index, 1, 0);
+                                }
 								break;
 						}
 						Gumps.AddTooltip(ref spellBar, item.Spell);

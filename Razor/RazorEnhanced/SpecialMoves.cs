@@ -516,7 +516,8 @@ namespace Assistant
 
 		internal static void ClearAbilities(bool wait)
 		{
-			World.Player.HasSpecial = HasPrimary = HasSecondary = false;
+			//World.Player.HasSpecial = HasPrimary = HasSecondary = false;
+            // clear these when server sends back clear packet
 			if (wait)
 			{
 		 		Assistant.Client.Instance.SendToServerWait(new UseAbility(AOSAbility.Clear));
