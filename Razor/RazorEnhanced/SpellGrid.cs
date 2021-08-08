@@ -639,7 +639,10 @@ namespace RazorEnhanced
                                             Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, ActiveColor);
                                         else
                                             Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, InactiveColor);
-
+                                    }
+                                    else 
+                                    {
+                                        Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, 0);
                                     }
                                     Gumps.AddButton(ref spellBar, Engine.GridX + (x * 50), Engine.GridY + (y * 50), 2353, 2205, index, 1, 0);
                                 }
