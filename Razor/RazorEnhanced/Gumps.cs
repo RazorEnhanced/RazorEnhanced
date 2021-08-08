@@ -653,7 +653,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    while (World.Player.HasGump != true && World.Player.CurrentGumpI != gumpid && subdelay > 0)
+                    while ( World.Player.CurrentGumpI != gumpid && subdelay > 0)
                     {
                         Thread.Sleep(2);
                         subdelay -= 2;
