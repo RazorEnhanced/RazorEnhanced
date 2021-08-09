@@ -3372,7 +3372,7 @@ namespace Assistant
 				{
 					ParseGumpString(gumpPieces, stringlistparse);
 				}
-				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
+				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
 				World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
 				World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump

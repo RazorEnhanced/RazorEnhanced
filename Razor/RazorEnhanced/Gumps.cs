@@ -629,15 +629,25 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gumpid">ID of the gump. (0: any)</param>
         /// <param name="delay">Maximum wait, in milliseconds.</param>
-		public static void WaitForGump(uint gumpid, int delay) // Delay in MS
+        /// <returns>True: wait found the gump - False: otherwise.</returns>
+		public static bool WaitForGump(uint gumpid, int delay) // Delay in MS
         {
             int subdelay = delay;
+            bool found = false;
             if (gumpid == 0)
             {
-                while (World.Player.HasGump != true && subdelay > 0)
+                while (subdelay > 0)
                 {
-                    Thread.Sleep(2);
-                    subdelay -= 2;
+                    if (World.Player.HasGump == true)
+                    {
+                        found = true;
+                        break;
+                    }
+                    else
+                    {
+                        Thread.Sleep(2);
+                        subdelay -= 2;
+                    }
                 }
             }
             else
@@ -645,22 +655,40 @@ namespace RazorEnhanced
                 if (Gumps.m_gumpData.ContainsKey(gumpid))
                 {
                     GumpData gd = Gumps.m_gumpData[gumpid];
-                    while (gd.hasResponse != true && subdelay > 0)
+                    while (subdelay > 0)
                     {
-                        Thread.Sleep(2);
-                        subdelay -= 2;
+                        if (gd.hasResponse == true)
+                        {
+                            found = true;
+                            break;
+                        }
+                        else
+                        {
+                            Thread.Sleep(2);
+                            subdelay -= 2;
+                        }
                     }
                 }
                 else
                 {
-                    while (World.Player.HasGump != true && World.Player.CurrentGumpI != gumpid && subdelay > 0)
+                    while (subdelay > 0)
                     {
-                        Thread.Sleep(2);
-                        subdelay -= 2;
+                        if (World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid)
+                        {
+                            found = true;
+                            break;
+                        }
+                        else
+                        {
+                            Thread.Sleep(2);
+                            subdelay -= 2;
+                        }
                     }
                 }
             }
+            return found;
         }
+
 
         /// <summary>
         /// Send a Gump response by gumpid and buttonid.
