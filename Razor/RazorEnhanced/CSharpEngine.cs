@@ -121,6 +121,102 @@ namespace RazorEnhanced
             return has_error;
         }
 
+        /// <summary>
+        /// This function search for our custom directive //#import that allows import classes from other C# files
+        /// The directive must be added anywhere before the namespace and can be used in C stile with &gt; &lt; or ""
+        /// Using relative path with &gt; &lt; the base directory will the Scripts folder
+        /// </summary>
+        /// <param name="sourceFile">Full path of the source file</param>
+        /// <param name="filesList">List of all files that must be compiled (it's a recursive list)</param>
+        /// <param name="errorwarnings">List of error and warnings</param>
+        private void FindAllIncludedCSharpScript(string sourceFile, ref List<string> filesList, ref List<string> errorwarnings)
+        {
+            const string directive = "//#import";
+
+            if (!File.Exists(sourceFile))
+            {
+                errorwarnings.Add(string.Format("Error on directive {0}. Unable to find {1}", directive, sourceFile));
+                return;
+            }
+
+            string basepath = Path.GetDirectoryName(sourceFile); // BasePath of the imported file
+            filesList.Add(sourceFile);
+
+            // Searching first all the lines with the directive
+            List<string> imports = new();
+            foreach (string line in File.ReadAllLines(sourceFile))
+            {
+                if (line.Contains(directive))
+                {
+                    string file = line.Replace(directive, "").Trim();
+                    imports.Add(file);
+                }
+
+                // If namespace directive is found stop searching
+                if (line.Contains("namespace")) { break; }
+            }
+
+            // If nothing is found return only the main file
+            if (imports.Count == 0) { return; }
+
+            // Parsing each line
+            int lineCnt = 0;
+            foreach (string line in imports)
+            {
+                string file = "";
+                lineCnt++; // Count lines from 1
+                if (line.StartsWith("<") && line.EndsWith(">"))
+                {
+                    // Relative path. Adding base folder
+                    file = line.Substring(1, line.Length - 2); // Removes < >
+                    file = Path.GetFullPath(Path.Combine(basepath, file)); // Basepath is Scripts folder
+                }
+                else if (line.StartsWith("\"") && line.EndsWith("\""))
+                {
+                    // Absolute path. Adding as is
+                    file = line.Substring(1, line.Length - 2); // Removes " "
+                    file = Path.GetFullPath(file); // This should resolve the relative ../ path
+                }
+                else
+                {
+                    errorwarnings.Add(string.Format("Error on RE Directive {0} at line {1}", directive, lineCnt));
+                    break;
+                }
+
+                // I search if already exists in the filesList
+                var match = filesList.FirstOrDefault(stringToCheck => stringToCheck.Contains(file));
+                if (match == null)
+                {
+                    FindAllIncludedCSharpScript(file, ref filesList, ref errorwarnings);
+                }
+            }
+        }
+
+        /// <summary>
+        /// This function checks for directive //#forcerelease
+        /// If this directive is present, script will be builded in release instead of debug
+        /// </summary>
+        /// <param name="sourceFile">Filename of the main source file</param>
+        /// <returns></returns>
+        private bool CheckForceReleaseDirective(string sourceFile)
+        {
+            const string directive = "//#forcerelease";
+
+            // Searching the directive in all lines untill "namespace"
+            foreach (string line in File.ReadAllLines(sourceFile))
+            {
+                if (line.Contains(directive))
+                {
+                    return true;
+                }
+
+                // If namespace directive is found stop searching
+                if (line.Contains("namespace")) { break; }
+            }
+            return false;
+        }
+
+
         /*
         public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
         {
@@ -162,6 +258,12 @@ namespace RazorEnhanced
             errorwarnings = new();
             assembly = null;
 
+            // If debug is true I check for the force release directive
+            if (debug == true)
+            {
+                debug = (CheckForceReleaseDirective(path) != true); // If flag is true then debug is false
+            }
+
             List<string> filesList = new() { }; // List of files.
             FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
             if (errorwarnings.Count > 0)
@@ -169,7 +271,15 @@ namespace RazorEnhanced
                 return true;
             }
 
-            Misc.SendMessage("Compiling C# Script " + Path.GetFileName(path));
+            if (debug)
+            {
+                Misc.SendMessage("Compiling C# Script [DEBUG] " + Path.GetFileName(path));
+            }
+            else
+            {
+                Misc.SendMessage("Compiling C# Script [RELEASE] " + Path.GetFileName(path));
+            }
+
             DateTime start = DateTime.Now;
 
             CompilerOptions m_opt = new();
@@ -188,78 +298,6 @@ namespace RazorEnhanced
                 assembly = results.CompiledAssembly;
             }
             return has_error;
-        }
-
-        /// <summary>
-        /// This function search for our custom directive //#import that allows import classes from other C# files
-        /// The directive must be added anywhere before the namespace and can be used in C stile with <> or ""
-        /// Using relative path with <> the base directory will the Scripts folder
-        /// 
-        /// </summary>
-        /// <param name="sourceFile">Full path of the source file</param>
-        /// <param name="filesList">List of all files that must be compiled (it's a recursive list)</param>
-        /// <param name="errorwarnings">List of error and warnings</param>
-        void FindAllIncludedCSharpScript(string sourceFile, ref List<string>filesList, ref List<string> errorwarnings)
-        {
-            const string directive = "//#import";
-
-            if (!File.Exists(sourceFile))
-            {
-                errorwarnings.Add(string.Format("Error on directive {0}. Unable to find {1}",directive, sourceFile));
-                return;
-            }
-
-            string basepath = Path.GetDirectoryName(sourceFile); // BasePath of the imported file
-            filesList.Add(sourceFile);
-
-            // Searching first all the lines with the directive
-            List<string> imports = new();
-            foreach (string line in File.ReadAllLines(sourceFile))
-            {
-                if (line.Contains(directive))
-                {
-                    string file = line.Replace(directive, "").Trim();
-                    imports.Add(file);
-                }
-
-                // If namespace directive is found stop searching
-                if (line.Contains("namespace")) { break; }
-            }
-
-            // If nothing is found return only the main file
-            if (imports.Count == 0) { return; }
-
-            // Parsing each line
-            int lineCnt = 0;
-            foreach (string line in imports)
-            {
-                string file = "";
-                lineCnt++; // Count lines from 1
-                if (line.StartsWith("<") && line.EndsWith(">"))
-                {
-                    // Relative path. Adding base folder
-                    file = line.Substring(1, line.Length - 2); // Removes < >
-                    file = Path.GetFullPath(Path.Combine(basepath, file)); // Basepath is Scripts folder
-                }
-                else if(line.StartsWith("\"") && line.EndsWith("\""))
-                {
-                    // Absolute path. Adding as is
-                    file = line.Substring(1, line.Length - 2); // Removes " "
-                    file = Path.GetFullPath(file); // This should resolve the relative ../ path
-                }
-                else
-                {
-                    errorwarnings.Add(string.Format("Error on RE Directive {0} at line {1}", directive, lineCnt));
-                    break;
-                }
-
-                // I search if already exists in the filesList
-                var match = filesList.FirstOrDefault(stringToCheck => stringToCheck.Contains(file));
-                if (match == null)
-                {
-                    FindAllIncludedCSharpScript(file, ref filesList, ref errorwarnings);
-                }
-            }
         }
 
         public void Execute(Assembly assembly)
