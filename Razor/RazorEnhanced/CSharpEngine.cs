@@ -142,7 +142,7 @@ namespace RazorEnhanced
             string basepath = Path.GetDirectoryName(sourceFile); // BasePath of the imported file
             filesList.Add(sourceFile);
 
-            // Searching first all the lines with the directive
+            // Searching all the lines with the directive
             List<string> imports = new();
             foreach (string line in File.ReadAllLines(sourceFile))
             {
@@ -153,7 +153,7 @@ namespace RazorEnhanced
                 }
 
                 // If namespace directive is found stop searching
-                if (line.Contains("namespace")) { break; }
+                if (line.ToLower().Contains("namespace")) { break; }
             }
 
             // If nothing is found return only the main file
@@ -205,13 +205,13 @@ namespace RazorEnhanced
             // Searching the directive in all lines untill "namespace"
             foreach (string line in File.ReadAllLines(sourceFile))
             {
-                if (line.Contains(directive))
+                if (line.ToLower().Contains(directive))
                 {
                     return true;
                 }
 
                 // If namespace directive is found stop searching
-                if (line.Contains("namespace")) { break; }
+                if (line.ToLower().Contains("namespace")) { break; }
             }
             return false;
         }
