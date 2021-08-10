@@ -47,34 +47,32 @@ namespace RazorEnhanced
                 paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
             }
 
-            engine.Runtime.Globals.SetVariable("Misc", new RazorEnhanced.Misc());
-			engine.Runtime.Globals.SetVariable("Items", new RazorEnhanced.Items());
-			engine.Runtime.Globals.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
-			engine.Runtime.Globals.SetVariable("Player", new RazorEnhanced.Player());
-			engine.Runtime.Globals.SetVariable("Spells", new RazorEnhanced.Spells());
-			engine.Runtime.Globals.SetVariable("Gumps", new RazorEnhanced.Gumps());
-			engine.Runtime.Globals.SetVariable("Journal", new RazorEnhanced.Journal());
-			engine.Runtime.Globals.SetVariable("Target", new RazorEnhanced.Target());
-			engine.Runtime.Globals.SetVariable("Statics", new RazorEnhanced.Statics());
+			engine.GetBuiltinModule().SetVariable("Misc", new RazorEnhanced.Misc());
+			engine.GetBuiltinModule().SetVariable("Items", new RazorEnhanced.Items());
+			engine.GetBuiltinModule().SetVariable("Mobiles", new RazorEnhanced.Mobiles());
+			engine.GetBuiltinModule().SetVariable("Player", new RazorEnhanced.Player());
+			engine.GetBuiltinModule().SetVariable("Spells", new RazorEnhanced.Spells());
+			engine.GetBuiltinModule().SetVariable("Gumps", new RazorEnhanced.Gumps());
+			engine.GetBuiltinModule().SetVariable("Journal", new RazorEnhanced.Journal());
+			engine.GetBuiltinModule().SetVariable("Target", new RazorEnhanced.Target());
+			engine.GetBuiltinModule().SetVariable("Statics", new RazorEnhanced.Statics());
 
-			engine.Runtime.Globals.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
-			engine.Runtime.Globals.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
-			engine.Runtime.Globals.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
-			engine.Runtime.Globals.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
-			engine.Runtime.Globals.SetVariable("Organizer", new RazorEnhanced.Organizer());
-			engine.Runtime.Globals.SetVariable("Dress", new RazorEnhanced.Dress());
-			engine.Runtime.Globals.SetVariable("Friend", new RazorEnhanced.Friend());
-			engine.Runtime.Globals.SetVariable("Restock", new RazorEnhanced.Restock());
-			engine.Runtime.Globals.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
-			engine.Runtime.Globals.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
-			engine.Runtime.Globals.SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
-			engine.Runtime.Globals.SetVariable("Timer", new RazorEnhanced.Timer());
-			engine.Runtime.Globals.SetVariable("Vendor", new RazorEnhanced.Vendor());
-
+			engine.GetBuiltinModule().SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
+			engine.GetBuiltinModule().SetVariable("Scavenger", new RazorEnhanced.Scavenger());
+			engine.GetBuiltinModule().SetVariable("SellAgent", new RazorEnhanced.SellAgent());
+			engine.GetBuiltinModule().SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
+			engine.GetBuiltinModule().SetVariable("Organizer", new RazorEnhanced.Organizer());
+			engine.GetBuiltinModule().SetVariable("Dress", new RazorEnhanced.Dress());
+			engine.GetBuiltinModule().SetVariable("Friend", new RazorEnhanced.Friend());
+			engine.GetBuiltinModule().SetVariable("Restock", new RazorEnhanced.Restock());
+			engine.GetBuiltinModule().SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
+			engine.GetBuiltinModule().SetVariable("PathFinding", new RazorEnhanced.PathFinding());
+			engine.GetBuiltinModule().SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
+			engine.GetBuiltinModule().SetVariable("Timer", new RazorEnhanced.Timer());
+			engine.GetBuiltinModule().SetVariable("Vendor", new RazorEnhanced.Vendor());
 
 			//Setup main script symbols, automatically imported for convenience
-			//scope = GetRazorScope(engine);
-			scope = engine.Runtime.Globals;
+			scope = engine.CreateScope();
 		}
 
 		/*Dalamar: BEGIN*/
