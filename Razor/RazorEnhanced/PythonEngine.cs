@@ -15,12 +15,13 @@ namespace RazorEnhanced
 {
     class PythonEngine
     {
+        public Dictionary<string, object> Modules;
         public ScriptEngine engine { get;  }
-		public ScriptScope scope { get; }
+        public ScriptScope scope { get; }
 
 
         public PythonEngine() {
-			engine = Python.CreateEngine();
+            engine = Python.CreateEngine();
 
 
             //Paths for IronPython 3.4
@@ -47,55 +48,58 @@ namespace RazorEnhanced
                 paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
             }
 
-            engine.Runtime.Globals.SetVariable("Misc", new RazorEnhanced.Misc());
-			engine.Runtime.Globals.SetVariable("Items", new RazorEnhanced.Items());
-			engine.Runtime.Globals.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
-			engine.Runtime.Globals.SetVariable("Player", new RazorEnhanced.Player());
-			engine.Runtime.Globals.SetVariable("Spells", new RazorEnhanced.Spells());
-			engine.Runtime.Globals.SetVariable("Gumps", new RazorEnhanced.Gumps());
-			engine.Runtime.Globals.SetVariable("Journal", new RazorEnhanced.Journal());
-			engine.Runtime.Globals.SetVariable("Target", new RazorEnhanced.Target());
-			engine.Runtime.Globals.SetVariable("Statics", new RazorEnhanced.Statics());
+            //RE Modules list
+            Modules = new Dictionary<string, object>();
+            Modules.Add("Misc", new RazorEnhanced.Misc());
 
-			engine.Runtime.Globals.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
-			engine.Runtime.Globals.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
-			engine.Runtime.Globals.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
-			engine.Runtime.Globals.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
-			engine.Runtime.Globals.SetVariable("Organizer", new RazorEnhanced.Organizer());
-			engine.Runtime.Globals.SetVariable("Dress", new RazorEnhanced.Dress());
-			engine.Runtime.Globals.SetVariable("Friend", new RazorEnhanced.Friend());
-			engine.Runtime.Globals.SetVariable("Restock", new RazorEnhanced.Restock());
-			engine.Runtime.Globals.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
-			engine.Runtime.Globals.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
-			engine.Runtime.Globals.SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
-			engine.Runtime.Globals.SetVariable("Timer", new RazorEnhanced.Timer());
-			engine.Runtime.Globals.SetVariable("Vendor", new RazorEnhanced.Vendor());
+            Modules.Add("Items", new RazorEnhanced.Items());
+            Modules.Add("Mobiles", new RazorEnhanced.Mobiles());
+            Modules.Add("Player", new RazorEnhanced.Player());
+            Modules.Add("Spells", new RazorEnhanced.Spells());
+            Modules.Add("Gumps", new RazorEnhanced.Gumps());
+            Modules.Add("Journal", new RazorEnhanced.Journal());
+            Modules.Add("Target", new RazorEnhanced.Target());
+            Modules.Add("Statics", new RazorEnhanced.Statics());
+
+            Modules.Add("AutoLoot", new RazorEnhanced.AutoLoot());
+            Modules.Add("Scavenger", new RazorEnhanced.Scavenger());
+            Modules.Add("SellAgent", new RazorEnhanced.SellAgent());
+            Modules.Add("BuyAgent", new RazorEnhanced.BuyAgent());
+            Modules.Add("Organizer", new RazorEnhanced.Organizer());
+            Modules.Add("Dress", new RazorEnhanced.Dress());
+            Modules.Add("Friend", new RazorEnhanced.Friend());
+            Modules.Add("Restock", new RazorEnhanced.Restock());
+            Modules.Add("BandageHeal", new RazorEnhanced.BandageHeal());
+            Modules.Add("PathFinding", new RazorEnhanced.PathFinding());
+            Modules.Add("DPSMeter", new RazorEnhanced.DPSMeter());
+            Modules.Add("Timer", new RazorEnhanced.Timer());
+            Modules.Add("Vendor", new RazorEnhanced.Vendor());
+
+            //Setup builtin modules and scope
+            foreach (var module in Modules) {
+                engine.Runtime.Globals.SetVariable(module.Key, module.Value);
+                engine.GetBuiltinModule().SetVariable(module.Key, module.Value);
+            }
+            scope = engine.CreateScope();
+
+        }
+        
+        public void Execute(String text) {
+            if (text == null) return;
+
+            ScriptSource m_Source = this.engine.CreateScriptSourceFromString(text);
+            if (m_Source == null) return;
 
 
-			//Setup main script symbols, automatically imported for convenience
-			//scope = GetRazorScope(engine);
-			scope = engine.Runtime.Globals;
-		}
+            //PythonCompilerOptions in order to initialize Python modules correctly,
+            //without it the Python env is half broken
+            PythonCompilerOptions pco = (PythonCompilerOptions) this.engine.GetCompilerOptions(this.scope);
+            pco.ModuleName = "__main__";
+            pco.Module |= ModuleOptions.Initialize;
 
-		/*Dalamar: BEGIN*/
-		public void Execute(String text) {
-			if (text == null) return;
+            CompiledCode compiled = m_Source.Compile(pco);
+            compiled.Execute(this.scope);
 
-			ScriptSource m_Source = this.engine.CreateScriptSourceFromString(text);
-			if (m_Source == null) return;
-
-			//EXECUTE
-			//USE: PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-			PythonCompilerOptions pco = (PythonCompilerOptions) this.engine.GetCompilerOptions(this.scope);
-			pco.ModuleName = "__main__";
-			pco.Module |= ModuleOptions.Initialize;
-			CompiledCode compiled = m_Source.Compile(pco);
-			compiled.Execute(this.scope);
-
-			//DONT USE: Execute directly, unless you are not planning to import external modules.
-			//m_Source.Execute(m_Scope);
-
-		}
-		/*Dalamar: END*/
-	}
+        }
+    }
 }

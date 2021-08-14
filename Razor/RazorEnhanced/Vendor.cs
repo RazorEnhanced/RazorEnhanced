@@ -63,7 +63,7 @@ namespace RazorEnhanced
                         Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
                         int price = listItem.Price * buyAmount;
                         string message = "Buy Function: bought " + buyAmount.ToString() + " items for " + price.ToString() + " gold coins";
-                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendorSerial));          // Journal buffer
+                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendorSerial));          // Journal buffer
                         World.Player.SendMessage(message);
                         return;
                     }
@@ -452,7 +452,7 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToServer(new VendorSellResponse(vendor, list));
 			AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 			string message = "Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins";
-			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
+			Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
 			World.Player.SendMessage(message);
 			args.Block = true;
 		}
@@ -834,7 +834,7 @@ namespace RazorEnhanced
 	 		Assistant.Client.Instance.SendToServer(new VendorBuyResponse(serial, buyList));
 
 			string message = "Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins";
-			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
+			Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
 			World.Player.SendMessage(message);
 			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}

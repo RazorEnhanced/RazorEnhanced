@@ -294,7 +294,7 @@ namespace Assistant
 			int i = 0;
 			scriptlistView.BeginUpdate();
 			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
-            int index = 0;
+            //int index = 0;
             foreach (DataRow row in scriptTable.Rows)
             {
 				bool passkey = (bool)row["HotKeyPass"];

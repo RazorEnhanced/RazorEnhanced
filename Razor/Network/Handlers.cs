@@ -2150,12 +2150,7 @@ namespace Assistant
                 type = MessageType.System;
             }
 
-            World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
-            if (World.Player.Journal.Count > MaxJournalEntries)
-            {
-                RazorEnhanced.Journal.JournalEntry ra;
-                World.Player.Journal.TryDequeue(out ra);
-            }
+            Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
 
             // If its a spoken message, and it doesn't have the speakers name in it,
             //  add the speaker
@@ -2629,12 +2624,7 @@ namespace Assistant
                             {
                                 ushort nameLengh = p.ReadUInt16();
                                 string ownername = p.ReadString(nameLengh);
-                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-                                if (World.Player.Journal.Count > 100)
-                                {
-                                    RazorEnhanced.Journal.JournalEntry ra;
-                                    World.Player.Journal.TryDequeue(out ra);
-                                }
+                                Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
 
                                 attrib = p.ReadUInt32();
                             }
@@ -2648,19 +2638,9 @@ namespace Assistant
                                     try
                                     {
                                         ushort charge = p.ReadUInt16();
-                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-                                        if (World.Player.Journal.Count > 100)
-                                        {
-                                            RazorEnhanced.Journal.JournalEntry ra;
-                                            World.Player.Journal.TryDequeue(out ra);
-                                        }
+                                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
 
-                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-                                        if (World.Player.Journal.Count > 100)
-                                        {
-                                            RazorEnhanced.Journal.JournalEntry ra;
-                                            World.Player.Journal.TryDequeue(out ra);
-                                        }
+                                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
                                         attrib = p.ReadUInt32();
                                     }
                                     catch { }
@@ -2668,12 +2648,7 @@ namespace Assistant
                             }
                             else
                             {
-                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
-                                if (World.Player.Journal.Count > 100)
-                                {
-                                    RazorEnhanced.Journal.JournalEntry ra;
-                                    World.Player.Journal.TryDequeue(out ra);
-                                }
+                                Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
                             }
                         }
                         break;
@@ -2933,12 +2908,7 @@ namespace Assistant
 					{
 						Serial from = p.ReadUInt32();
 						string text = p.ReadUnicodeStringSafe();
-						World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null", from));          // Journal buffer
-						if (World.Player.Journal.Count > 100)
-						{
-							RazorEnhanced.Journal.JournalEntry ra;
-							World.Player.Journal.TryDequeue(out ra);
-						}
+						Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null", from));          // Journal buffer
 						break;
 					}
 				case 0x07: // party invite

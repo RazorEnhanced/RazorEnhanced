@@ -64,6 +64,8 @@ namespace Assistant
             RazorEnhanced.AutoDocIO.UpdateDocs();
             RazorEnhanced.Config.LoadAll();
 
+            RazorEnhanced.Journal.GlobalJournal.Clear(); // really just force it to be instantiated
+
 
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
