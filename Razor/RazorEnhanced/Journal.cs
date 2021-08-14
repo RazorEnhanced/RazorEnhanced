@@ -33,36 +33,60 @@ namespace RazorEnhanced
     /// </summary>
 	public class Journal
     {
-        internal void Init()
-        {
-            m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>(GlobalJournal.m_journal);
+
+        bool m_Active;
+        internal bool Active { 
+            get { return m_Active; } 
+            set {
+                m_Active = value;
+                if (value)
+                {
+                    if (GlobalJournal != null)
+                        m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>(GlobalJournal.m_journal); // clone global list at activate
+                }
+                else
+                {
+                    Clear();
+                }
+            } 
         }
 
         internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
         {
-            foreach (Journal j in allInstances)
+            bool needsCleanup = false;
+            foreach (WeakReference<Journal> j in allInstances)
             {
-                j.enqueue(entry);
+                Journal journal;
+                j.TryGetTarget(out journal);
+                if (journal != null)
+                {
+                    if (journal.Active)
+                        journal.enqueue(entry);
+                }
+                else
+                    needsCleanup = true;
             }
+            if (needsCleanup)
+
+                allInstances.RemoveAll(wr => wr.TryGetTarget(out var el) && el == null);
         }
 
         internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> m_journal;
         internal int m_MaxJournalEntries;
 
-        internal static List<Journal> allInstances = new List<Journal>();
+        internal static List<WeakReference<Journal>> allInstances = new List<WeakReference<Journal>>();
         internal static Journal GlobalJournal = new Journal(100);
 
         public Journal(int size=100)
         {
             m_MaxJournalEntries = size;
-            m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>();
-            allInstances.Add(this);
+            Active = true;
+            allInstances.Add(new WeakReference<Journal>(this));
 
         }
 
         ~Journal()
         {
-            allInstances.Remove(this);
         }
 
         internal void enqueue(RazorEnhanced.Journal.JournalEntry entry)

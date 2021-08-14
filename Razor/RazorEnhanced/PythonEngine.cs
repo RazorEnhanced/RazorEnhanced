@@ -83,23 +83,5 @@ namespace RazorEnhanced
             scope = engine.CreateScope();
 
         }
-        
-        public void Execute(String text) {
-            if (text == null) return;
-
-            ScriptSource m_Source = this.engine.CreateScriptSourceFromString(text);
-            if (m_Source == null) return;
-
-
-            //PythonCompilerOptions in order to initialize Python modules correctly,
-            //without it the Python env is half broken
-            PythonCompilerOptions pco = (PythonCompilerOptions) this.engine.GetCompilerOptions(this.scope);
-            pco.ModuleName = "__main__";
-            pco.Module |= ModuleOptions.Initialize;
-
-            CompiledCode compiled = m_Source.Compile(pco);
-            compiled.Execute(this.scope);
-
-        }
     }
 }

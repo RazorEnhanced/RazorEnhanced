@@ -158,9 +158,9 @@ namespace RazorEnhanced
                         pco.Module |= ModuleOptions.Initialize;
                         CompiledCode compiled = m_Source.Compile(pco);
 						Journal journal = m_Engine.Runtime.Globals.GetVariable("Journal") as Journal;
-						journal.Init();
+						journal.Active = true;
 						compiled.Execute(m_Scope);
-						journal.Clear();
+						journal.Active = false;
 						// "-": DONT execute directly, unless you are not planning to import external modules.
 						//m_Source.Execute(m_Scope);
 

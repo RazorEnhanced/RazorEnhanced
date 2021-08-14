@@ -100,13 +100,9 @@ namespace RazorEnhanced
 
         public void Execute(string filename)
         {
-            m_journal = new Journal(100);
-            m_journal.Init();
             var root = Lexer.Lex(filename);
             UOScript.Script script = new UOScript.Script(root);
             Execute(script);
-            m_journal.Clear();
-
         }
         public void Execute(string[] textLines)
         {
@@ -117,6 +113,8 @@ namespace RazorEnhanced
 
         public void Execute(UOScript.Script script)
         {
+            m_journal = new Journal(100);
+
             UOScript.Interpreter.StartScript(script);
             try
             {
@@ -126,6 +124,10 @@ namespace RazorEnhanced
             {
                 UOScript.Interpreter.StopScript();
                 throw;
+            }
+            finally
+            {
+                m_journal.Active = false;
             }
         }
 
