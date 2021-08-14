@@ -947,7 +947,6 @@ namespace Assistant
 		internal List<string> CurrentGumpStrings = new List<string>();
 		internal string CurrentGumpRawData;
 		internal string[] CurrentGumpRawText;
-		internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> Journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>();
 		internal uint LastWeaponRight, LastWeaponLeft = 0;
 
 		// Menu Old

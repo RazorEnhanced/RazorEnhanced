@@ -157,14 +157,16 @@ namespace RazorEnhanced
                         pco.ModuleName = "__main__";
                         pco.Module |= ModuleOptions.Initialize;
                         CompiledCode compiled = m_Source.Compile(pco);
-                        compiled.Execute(m_Scope);
+						Journal journal = m_Engine.Runtime.Globals.GetVariable("Journal") as Journal;
+						journal.Init();
+						compiled.Execute(m_Scope);
+						journal.Clear();
+						// "-": DONT execute directly, unless you are not planning to import external modules.
+						//m_Source.Execute(m_Scope);
 
-                        // "-": DONT execute directly, unless you are not planning to import external modules.
-                        //m_Source.Execute(m_Scope);
-
-                        /*Dalamar: END*/
-                    }
-                }
+						/*Dalamar: END*/
+					}
+				}
                 catch (IronPython.Runtime.Exceptions.SystemExitException)
                 {
                     Stop();

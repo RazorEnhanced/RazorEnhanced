@@ -27,16 +27,59 @@ namespace Assistant
 
 namespace RazorEnhanced
 {
+
     /// <summary>
     /// The Journal class provides access to the message Journal.
     /// </summary>
 	public class Journal
-	{
+    {
+        internal void Init()
+        {
+            m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>(GlobalJournal.m_journal);
+        }
 
-        /// <summary>
-        /// The JournalEntry class rapresents a line in the Journal.
-        /// </summary>
-        public class JournalEntry
+        internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
+        {
+            foreach (Journal j in allInstances)
+            {
+                j.enqueue(entry);
+            }
+        }
+
+        internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> m_journal;
+        internal int m_MaxJournalEntries;
+
+        internal static List<Journal> allInstances = new List<Journal>();
+        internal static Journal GlobalJournal = new Journal(100);
+
+        public Journal(int size=100)
+        {
+            m_MaxJournalEntries = size;
+            m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>();
+            allInstances.Add(this);
+
+        }
+
+        ~Journal()
+        {
+            allInstances.Remove(this);
+        }
+
+        internal void enqueue(RazorEnhanced.Journal.JournalEntry entry)
+        {
+            m_journal.Enqueue(entry);
+            if (m_journal.Count > m_MaxJournalEntries)
+            {
+                RazorEnhanced.Journal.JournalEntry ra;
+                m_journal.TryDequeue(out ra);
+            }
+        }
+
+
+    /// <summary>
+    /// The JournalEntry class rapresents a line in the Journal.
+    /// </summary>
+    public class JournalEntry
 		{
 			private readonly string m_Text;
             /// <summary>
@@ -114,17 +157,18 @@ namespace RazorEnhanced
         }
 
 
+
         /// <summary>
         /// Get a copy of all Journal lines as JournalEntry. The list can be filtered to include *only* most recent events.
         /// </summary>
         /// <param name="afterTimestap">Timestap as UnixTime, the number of seconds elapsed since 01-Jan-1970. (default: -1, no filter)</param>
         /// <returns>List of JournalEntry</returns>
-        public static List<JournalEntry> GetJournalEntry(double afterTimestap = -1)
+        public List<JournalEntry> GetJournalEntry(double afterTimestap = -1)
         {
             var journalEntries = new List<JournalEntry>();
-            if (World.Player.Journal == null) { return journalEntries; }
+            if (m_journal == null) { return journalEntries; }
 
-            journalEntries.AddRange(World.Player.Journal.Where(journalEntry => journalEntry.Timestamp > afterTimestap).Select(journalEntry => journalEntry.Copy()));
+            journalEntries.AddRange(m_journal.Where(journalEntry => journalEntry.Timestamp > afterTimestap).Select(journalEntry => journalEntry.Copy()));
             return journalEntries;
         }
 
@@ -133,31 +177,46 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="afterJournalEntry">A JournalEntry object (default: null, no filter)</param>
         /// <returns>List of JournalEntry</returns>
-        public static List<JournalEntry> GetJournalEntry(JournalEntry afterJournalEntry = null)
+        public List<JournalEntry> GetJournalEntry(JournalEntry afterJournalEntry = null)
         {
             var afterTimestap = afterJournalEntry == null ? -1 : afterJournalEntry.Timestamp;
             return GetJournalEntry(afterTimestap);
         }
 
         /// <summary>
-        /// Removes all entry from the Jorunal. This operation is Global for all Razor.
+        /// Removes all entry from the Jorunal. 
         /// </summary>
-		public static void Clear()
+		public void Clear()
 		{
 			ConcurrentQueue<JournalEntry> Journal = new ConcurrentQueue<JournalEntry>();
-			Interlocked.Exchange(ref World.Player.Journal, Journal);
+			Interlocked.Exchange(ref m_journal, Journal);
 		}
+
+        /// <summary>
+        /// Removes all matching entry from the Jorunal. 
+        /// </summary>
+        public void Clear(string toBeRemoved)
+        {
+            ConcurrentQueue<JournalEntry> journal = new ConcurrentQueue<JournalEntry>();
+            foreach (var entry in m_journal)
+            {
+                if (!entry.Text.Contains(toBeRemoved))
+                    journal.Enqueue(entry);
+            }
+            Interlocked.Exchange(ref m_journal, journal);
+        }
+
 
         /// <summary>
         /// Search in the Journal for the occurrence of text. (case sensitive)
         /// </summary>
         /// <param name="text">Text to search.</param>
         /// <returns>True: Text is found - False: otherwise</returns>
-		public static bool Search(string text)
+		public bool Search(string text)
 		{
 			try
 			{
-				return World.Player.Journal.Any(entrys => entrys.Text.Contains(text));
+				return m_journal.Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -170,7 +229,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="text">Text to block. case insensitive, and will match if the incoming message contains the text</param>
         /// <returns>void</returns>
-        public static void FilterText(string text)
+        public void FilterText(string text)
         {            
             Engine.MainWindow.SafeAction(s => { s.JournalFilterDataGrid.Rows.Add(new object[] { text.ToLower() }); });
             Filters.CopyJournalFilterTable();
@@ -181,7 +240,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="text">Text to no longer block. case insensitive</param>
         /// <returns>void</returns>
-        public static void RemoveFilterText(string text)
+        public void RemoveFilterText(string text)
         {
             text = text.ToLower();
             //System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
@@ -207,11 +266,11 @@ namespace RazorEnhanced
         /// <param name="text">Text to search.</param>
         /// <param name="name">Name of the source.</param>
         /// <returns>True: Text is found - False: otherwise</returns>
-		public static bool SearchByName(string text, string name)
+		public bool SearchByName(string text, string name)
 		{
 			try
 			{
-				return World.Player.Journal.Where(entrys => entrys.Name == name).Any(entrys => entrys.Text.Contains(text));
+				return m_journal.Where(entrys => entrys.Name == name).Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -225,11 +284,11 @@ namespace RazorEnhanced
         /// <param name="text">Text to search.</param>
         /// <param name="color">Color of the message.</param>
         /// <returns>True: Text is found - False: otherwise</returns>
-		public static bool SearchByColor(string text, int color)
+		public bool SearchByColor(string text, int color)
 		{
 			try
 			{
-				return World.Player.Journal.Where(entrys => entrys.Color == color).Any(entrys => entrys.Text.Contains(text));
+				return m_journal.Where(entrys => entrys.Color == color).Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -257,18 +316,18 @@ namespace RazorEnhanced
         ///     Special
         /// </param>
         /// <returns>True: Text is found - False: otherwise</returns>
-        public static bool SearchByType(string text, string type)
+        public bool SearchByType(string text, string type)
         {
             try
             {
-                foreach (var entry in World.Player.Journal)
+                foreach (var entry in m_journal)
                 {
                     if (entry.Type.ToString() == type && entry.Text.Contains(text))
                     {
                         return true;
                     }
                 }
-                //return World.Player.Journal.Where(entrys => entrys.Type.ToString() == type).Any(entrys => entrys.Text.Contains(text));
+                //return m_journal.Where(entrys => entrys.Type.ToString() == type).Any(entrys => entrys.Text.Contains(text));
             }
             catch
             {
@@ -283,12 +342,12 @@ namespace RazorEnhanced
         /// <param name="text">Text to search.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>Return the full line - Empty string if not found.</returns>
-		public static string GetLineText(string text, bool addname = false)
+		public string GetLineText(string text, bool addname = false)
 		{
 			string result = string.Empty;
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
+				foreach (JournalEntry entrys in m_journal)
 				{
 					if (entrys.Text.Contains(text))
 					{
@@ -312,12 +371,12 @@ namespace RazorEnhanced
         /// <param name="serial">Serial of the soruce.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
-		public static List<string> GetTextBySerial(int serial, bool addname = false)
+		public List<string> GetTextBySerial(int serial, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
+				foreach (JournalEntry entrys in m_journal)
 				{
 					if (entrys.Serial == serial)
 					{
@@ -341,12 +400,12 @@ namespace RazorEnhanced
         /// <param name="color">Color of the soruce.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
-        public static List<string> GetTextByColor(int color, bool addname = false)
+        public List<string> GetTextByColor(int color, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
+				foreach (JournalEntry entrys in m_journal)
 				{
 					if (entrys.Color == color)
 					{
@@ -370,12 +429,12 @@ namespace RazorEnhanced
         /// <param name="name">Name of the soruce.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
-		public static List<string> GetTextByName(string name, bool addname = false)
+		public List<string> GetTextByName(string name, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
+				foreach (JournalEntry entrys in m_journal)
 				{
 					if (entrys.Name == name)
 					{
@@ -413,12 +472,12 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
-		public static List<string> GetTextByType(string type, bool addname = false)
+		public List<string> GetTextByType(string type, bool addname = false)
 		{
 			List<string> result = new List<string>();
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
+				foreach (JournalEntry entrys in m_journal)
 				{
 					if (entrys.Type == type)
 					{
@@ -440,12 +499,12 @@ namespace RazorEnhanced
         /// Get list of speakers.
         /// </summary>
         /// <returns>List of speakers as text.</returns>
-		public static List<string> GetSpeechName()
+		public List<string> GetSpeechName()
 		{
 			List<string> result = new List<string>();
 			try
 			{
-				result.AddRange(from entrys in World.Player.Journal where !string.IsNullOrEmpty(entrys.Name) select entrys.Name);
+				result.AddRange(from entrys in m_journal where !string.IsNullOrEmpty(entrys.Name) select entrys.Name);
 				return result;
 			}
 			catch
@@ -460,7 +519,7 @@ namespace RazorEnhanced
         /// <param name="text">Text to search.</param>
         /// <param name="delay">Maximum pause in milliseconds.</param>
         /// <returns>True: Text is found - False: otherwise</returns>
-		public static bool WaitJournal(string text, int delay)
+		public bool WaitJournal(string text, int delay)
 		{
 			int subdelay = delay;
 			while (Search(text) == false && subdelay > 0)
@@ -478,7 +537,7 @@ namespace RazorEnhanced
         /// <param name="msgs">List of text to search.</param>
         /// <param name="delay">Maximum pause in milliseconds.</param>
         /// <returns>Return the first line in the journal. Empty string: otherwise</returns>
-		public static string WaitJournal(List<string> msgs, int delay)
+		public string WaitJournal(List<string> msgs, int delay)
 		{
 			int subdelay = delay;
 			while (subdelay > 0)
@@ -502,12 +561,12 @@ namespace RazorEnhanced
         /// <param name="name">Name of the soruce.</param>
         /// <param name="delay">Maximum pause in milliseconds.</param>
         /// <returns></returns>
-        public static bool WaitByName(string name, int delay)
+        public bool WaitByName(string name, int delay)
         {
             int subdelay = delay;
             while (subdelay > 0)
             {
-                foreach (JournalEntry entrys in World.Player.Journal)
+                foreach (JournalEntry entrys in m_journal)
                 {
                     if (entrys.Name == name)
                     {

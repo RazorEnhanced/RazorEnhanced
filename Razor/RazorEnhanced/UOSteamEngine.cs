@@ -23,6 +23,7 @@ namespace RazorEnhanced
         private int m_lastMount;
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
+        private Journal m_journal;
 
         // useOnceIgnoreList
         private readonly List<int> m_serialUseOnceIgnoreList;
@@ -99,9 +100,12 @@ namespace RazorEnhanced
 
         public void Execute(string filename)
         {
+            m_journal = new Journal(100);
+            m_journal.Init();
             var root = Lexer.Lex(filename);
             UOScript.Script script = new UOScript.Script(root);
             Execute(script);
+            m_journal.Clear();
 
         }
         public void Execute(string[] textLines)
@@ -411,14 +415,14 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 string text = args[0].AsString();
-                return Journal.Search(text);
+                return m_journal.Search(text);
             }
             if (args.Length == 2)
             {
                 string text = args[0].AsString();
                 string texttype = args[1].AsString();
                 texttype = texttype.Substring(0, 1).ToUpper() + texttype.Substring(1).ToLower();  // syStEm -> System
-                return Journal.SearchByType(text, texttype);
+                return m_journal.SearchByType(text, texttype);
             }
 
 
@@ -2580,7 +2584,7 @@ namespace RazorEnhanced
 
         private bool ClearJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            Journal.Clear();
+            m_journal.Clear();
             return true;
         }
 
@@ -2590,7 +2594,7 @@ namespace RazorEnhanced
             {
                 string text = args[0].AsString();
                 int delay = args[1].AsInt();
-                Journal.WaitJournal(text, delay);
+                m_journal.WaitJournal(text, delay);
             }
             return true;
         }
