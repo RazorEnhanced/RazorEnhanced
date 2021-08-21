@@ -1543,6 +1543,7 @@ namespace RazorEnhanced
 
 
         // Commands: Stable
+
         private bool LandCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
@@ -5067,16 +5068,31 @@ namespace RazorEnhanced
                 Culture.NumberFormat.NumberDecimalSeparator = ".";
                 Culture.NumberFormat.NumberGroupSeparator = ",";
             }
+            
+            /// <summary>
+            /// An adapter that lets expressions be registered as commands
+            /// </summary>
+            /// <param name="command">name of command</param>
+            /// <param name="args">arguments passed to command</param>
+            /// <param name="quiet">ignored</param>
+            /// <param name="force">ignored</param>
+            /// <returns></returns>
+            private static bool ExpressionCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
+            {
+                var handler = UOScript.Interpreter.GetExpressionHandler(command);
+                handler(command, args, false);
+                return true;
+            }
 
             public static void RegisterExpressionHandler<T>(string keyword, ExpressionHandler<T> handler) where T : IComparable
             {
                 _exprHandlers[keyword] = (expression, args, quiet) => handler(expression, args, quiet);
+                RegisterCommandHandler(keyword, ExpressionCommand); // also register expressions as commands
             }
 
             public static ExpressionHandler GetExpressionHandler(string keyword)
             {
                 _exprHandlers.TryGetValue(keyword, out var expression);
-
                 return expression;
             }
 
