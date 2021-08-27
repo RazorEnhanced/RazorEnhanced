@@ -155,13 +155,11 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("clearhands", this.ClearHands);
             UOScript.Interpreter.RegisterCommandHandler("clickobject", this.ClickObject);
             UOScript.Interpreter.RegisterCommandHandler("bandageself", this.BandageSelf);
-            UOScript.Interpreter.RegisterCommandHandler("usetype", this.UseType);
             UOScript.Interpreter.RegisterCommandHandler("useobject", this.UseObject);
             UOScript.Interpreter.RegisterCommandHandler("useonce", this.UseOnce);
             UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", this.CleanUseQueue);
             UOScript.Interpreter.RegisterCommandHandler("moveitem", this.MoveItem);
             UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", this.MoveItemOffset);
-            UOScript.Interpreter.RegisterCommandHandler("movetype", this.MoveType);
             UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset);
             UOScript.Interpreter.RegisterCommandHandler("walk", this.Walk);
             UOScript.Interpreter.RegisterCommandHandler("turn", this.Turn);
@@ -268,6 +266,9 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("getfriend", this.GetFriend); //TODO: add "transformations" list
 
             // Expressions
+            UOScript.Interpreter.RegisterExpressionHandler("usetype", this.UseType);
+            UOScript.Interpreter.RegisterExpressionHandler("movetype", this.MoveType);
+
             UOScript.Interpreter.RegisterExpressionHandler("findalias", this.FindAlias);
             UOScript.Interpreter.RegisterExpressionHandler("x", this.LocationX);
             UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
@@ -881,6 +882,7 @@ namespace RazorEnhanced
 
             return false;
         }
+        
         private IComparable IsDead(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1128,6 +1130,7 @@ namespace RazorEnhanced
                 return UOScript.Interpreter.ListLength(listName);
             }
 
+            WrongParameterCount("list", 1, args.Length, "list command requires 1 parameter, the list name");
             return 0;
         }
 
@@ -1540,6 +1543,7 @@ namespace RazorEnhanced
 
 
         // Commands: Stable
+
         private bool LandCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
@@ -1706,12 +1710,13 @@ namespace RazorEnhanced
             return true;
         }
 
-        private bool UseType(string command, UOScript.Argument[] args, bool quiet, bool force)
+
+        private IComparable UseType(string command, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
                 Misc.SendMessage("Insufficient parameters");
-                return true;
+                return false;
             }
             int itemID = args[0].AsInt();
             int color = -1;
@@ -1726,11 +1731,10 @@ namespace RazorEnhanced
             }
 
             Item item = Items.FindByID(itemID, color, container, true);
-            if (item != null)
-            {
-                Items.UseItem(item.Serial);
-            }
+            if (item == null)
+                return false;
 
+            Items.UseItem(item.Serial);
             return true;
         }
 
@@ -2109,7 +2113,7 @@ namespace RazorEnhanced
             return true;
         }
 
-        private bool MoveType(string command, UOScript.Argument[] args, bool quiet, bool force)
+        private IComparable MoveType(string command, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 3)
             {
@@ -2120,6 +2124,7 @@ namespace RazorEnhanced
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, item.Amount);
+                    return true;
                 }
             }
             if (args.Length == 4)
@@ -2132,6 +2137,7 @@ namespace RazorEnhanced
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, item.Amount);
+                    return true;
                 }
             }
             if (args.Length == 5)
@@ -2145,6 +2151,7 @@ namespace RazorEnhanced
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, amount);
+                    return true;
                 }
             }
             if (args.Length == 6)
@@ -2159,6 +2166,7 @@ namespace RazorEnhanced
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, 0, x, y);
+                    return true;
                 }
             }
             if (args.Length == 7)
@@ -2174,6 +2182,7 @@ namespace RazorEnhanced
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, -1, x, y);
+                    return true;
                 }
             }
             if (args.Length == 8)
@@ -2190,10 +2199,11 @@ namespace RazorEnhanced
                 if (item != null)
                 {
                     Items.Move(item.Serial, (int)dest, amount, x, y);
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
         private bool MoveTypeOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
@@ -3903,8 +3913,8 @@ namespace RazorEnhanced
                 _script = script;
             }
     
-    // Treat the argument as an integer
-    public int AsInt()
+            // Treat the argument as an integer
+            public int AsInt()
             {
                 if (Node.Lexeme == null)
                     throw new RunTimeError(Node, $"Cannot convert argument to int: {Node.LineNumber}");
@@ -4996,15 +5006,12 @@ namespace RazorEnhanced
                         {
                             // This might be a registered keyword, so do a lookup
                             var handler = UOScript.Interpreter.GetExpressionHandler(node.Lexeme);
-
-                            if (handler == null)
-                            {
-                                // It's just a string
-                                val = node.Lexeme;
-                            }
+                            if (handler != null)
+                                val = handler(node.Lexeme, ConstructArguments(ref node), quiet);
                             else
                             {
-                                val = handler(node.Lexeme, ConstructArguments(ref node), quiet);
+                                Argument temp = new Argument(this, node);
+                                val = temp.AsString();
                             }
                             break;
                         }
@@ -5061,16 +5068,31 @@ namespace RazorEnhanced
                 Culture.NumberFormat.NumberDecimalSeparator = ".";
                 Culture.NumberFormat.NumberGroupSeparator = ",";
             }
+            
+            /// <summary>
+            /// An adapter that lets expressions be registered as commands
+            /// </summary>
+            /// <param name="command">name of command</param>
+            /// <param name="args">arguments passed to command</param>
+            /// <param name="quiet">ignored</param>
+            /// <param name="force">ignored</param>
+            /// <returns></returns>
+            private static bool ExpressionCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
+            {
+                var handler = UOScript.Interpreter.GetExpressionHandler(command);
+                handler(command, args, false);
+                return true;
+            }
 
             public static void RegisterExpressionHandler<T>(string keyword, ExpressionHandler<T> handler) where T : IComparable
             {
                 _exprHandlers[keyword] = (expression, args, quiet) => handler(expression, args, quiet);
+                RegisterCommandHandler(keyword, ExpressionCommand); // also register expressions as commands
             }
 
             public static ExpressionHandler GetExpressionHandler(string keyword)
             {
                 _exprHandlers.TryGetValue(keyword, out var expression);
-
                 return expression;
             }
 

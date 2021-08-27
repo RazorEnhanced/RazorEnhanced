@@ -9068,7 +9068,7 @@ namespace Assistant
             AutoUpdater.ShowSkipButton = false;
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
             AutoUpdater.ReportErrors = true;
-            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater8.xml");
+            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
 
         private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)

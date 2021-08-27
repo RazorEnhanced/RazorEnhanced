@@ -294,7 +294,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				return m_journal.Where(entrys => entrys.Name == name).Any(entrys => entrys.Text.Contains(text));
+				return m_journal.Where(entrys => entrys.Name.ToLower().Contains(name.ToLower())).Any(entrys => entrys.Text.ToLower().Contains(text.ToLower()));
 			}
 			catch
 			{
