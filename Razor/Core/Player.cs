@@ -764,6 +764,40 @@ namespace Assistant
 			}
 		}
 
+		internal static int GetZ(int x, int y, int z)
+		{
+			unsafe  {
+				if (DLLImport.Razor.IsCalibrated())
+				{
+					if (DLLImport.Razor.GetPosition(null, null, &z))
+						return z;
+				}
+			}
+			return Facet.ZTop(World.Player.Map, x, y, z);
+		}
+
+		internal override Point3D Position
+		{
+			// IsCalibrated is always false on CUO and true on OSI client
+			get
+			{
+				if (m_ExternZ && DLLImport.Razor.IsCalibrated())
+				{
+					Point3D p = new Point3D(base.Position);
+					p.Z = GetZ(p.X, p.Y, p.Z);
+					return p;
+				}
+				else
+				{
+					return base.Position;
+				}
+			}
+			set
+			{
+				base.Position = value;
+			}
+		}
+
 
 		internal override void OnPositionChanging(Point3D newPos)
 		{
