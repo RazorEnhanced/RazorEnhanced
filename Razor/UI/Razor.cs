@@ -8608,6 +8608,7 @@ namespace Assistant
             // 
             // advertisementLink
             // 
+            this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.advertisementLink.Location = new System.Drawing.Point(544, 351);
             this.advertisementLink.Name = "advertisementLink";
             this.advertisementLink.Size = new System.Drawing.Size(192, 54);
@@ -8618,17 +8619,22 @@ namespace Assistant
             // 
             // advertisement
             // 
+            this.advertisement.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.advertisement.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.advertisement.Image = ((System.Drawing.Image)(resources.GetObject("advertisement.Image")));
             this.advertisement.InitialImage = ((System.Drawing.Image)(resources.GetObject("advertisement.InitialImage")));
             this.advertisement.Location = new System.Drawing.Point(5, 4);
             this.advertisement.Name = "advertisement";
             this.advertisement.Size = new System.Drawing.Size(758, 338);
-            this.advertisement.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.advertisement.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.advertisement.TabIndex = 11;
             this.advertisement.TabStop = false;
             // 
             // label71
             // 
+            this.label71.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label71.Location = new System.Drawing.Point(13, 472);
             this.label71.Name = "label71";
@@ -8638,6 +8644,7 @@ namespace Assistant
             // 
             // labelHotride
             // 
+            this.labelHotride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelHotride.Location = new System.Drawing.Point(13, 425);
             this.labelHotride.Name = "labelHotride";
@@ -8649,6 +8656,7 @@ namespace Assistant
             // 
             // labelStatus
             // 
+            this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.labelStatus.Location = new System.Drawing.Point(773, 13);
             this.labelStatus.Name = "labelStatus";
@@ -8657,6 +8665,7 @@ namespace Assistant
             // 
             // discordrazorButton
             // 
+            this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.discordrazorButton.Location = new System.Drawing.Point(278, 351);
             this.discordrazorButton.Name = "discordrazorButton";
             this.discordrazorButton.Size = new System.Drawing.Size(216, 54);
@@ -8667,6 +8676,7 @@ namespace Assistant
             // 
             // razorButtonWiki
             // 
+            this.razorButtonWiki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.razorButtonWiki.Location = new System.Drawing.Point(5, 351);
             this.razorButtonWiki.Name = "razorButtonWiki";
             this.razorButtonWiki.Size = new System.Drawing.Size(232, 54);
