@@ -27,7 +27,7 @@ namespace Assistant
 
         private Point3D dont_use_pos;
 
-        internal Point3D Position
+        internal virtual Point3D Position
 		{
             get { return dont_use_pos; }
 			set

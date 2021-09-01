@@ -56,6 +56,8 @@ namespace RazorEnhanced
             bool needsCleanup = false;
             foreach (WeakReference<Journal> j in allInstances)
             {
+                if (j == null)
+                    continue;
                 Journal journal;
                 j.TryGetTarget(out journal);
                 if (journal != null)
