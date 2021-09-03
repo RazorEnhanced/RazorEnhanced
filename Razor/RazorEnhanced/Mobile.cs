@@ -474,7 +474,15 @@ namespace RazorEnhanced
             /// </summary>
             public double RangeMax = -1;
 
-            
+            /// <summary>
+            /// Limit the search by z-level, to Mobiles which are at least z-level specified. ( default: -4096, all z-levels )
+            /// </summary>
+            public double ZLevelMin = -4096;
+            /// <summary>
+            /// Limit the search by z-level, to Mobiles which are at most z-level specified. ( default: 4096, all z-levels )
+            /// </summary>
+            public double ZLevelMax = 4096;
+
             /// <summary>
             /// Limit the search only to the Mobiles which are in line of sight. (default: false, any Mobile)
             /// </summary>
@@ -597,6 +605,20 @@ namespace RazorEnhanced
                             Utility.Distance(World.Player.Position.X, World.Player.Position.Y, m.Position.X, m.Position.Y) <= filter.RangeMax
                         ).ToList();
                     }
+
+                    if (filter.ZLevelMin > -4096)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) =>
+                            m.Position.Z >= filter.ZLevelMin
+                        ).ToList();
+                    }
+                    if (filter.ZLevelMax < 4096)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) =>
+                            m.Position.Z <= filter.ZLevelMax
+                        ).ToList();
+                    }
+
 
                     if (filter.Warmode != -1)
                     {

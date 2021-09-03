@@ -81,6 +81,8 @@ namespace JsonData
             filter.Hues = mobileFilter.Hues;
             filter.RangeMin = mobileFilter.RangeMin;
             filter.RangeMax = mobileFilter.RangeMax;
+            filter.ZLevelMin = mobileFilter.ZLevelMin;
+            filter.ZLevelMax = mobileFilter.ZLevelMax;
             filter.CheckLineOfSite = mobileFilter.CheckLineOfSite;
             filter.Poisoned = mobileFilter.Poisoned;
             filter.Blessed = mobileFilter.Blessed;
@@ -129,6 +131,17 @@ namespace JsonData
 
         [JsonProperty("RangeMax")]
         public double RangeMax { get => rangeMax; set => rangeMax = value; }
+
+        private double zlevelMin = -4096;
+
+        [JsonProperty("ZLevelMin")]
+        public double ZLevelMin { get => zlevelMin; set => zlevelMin = value; }
+
+        private double zlevelMax = 4096;
+
+        [JsonProperty("ZLevelMax")]
+        public double ZLevelMax { get => zlevelMax; set => zlevelMax = value; }
+
 
         [JsonProperty("CheckLineOfSite")]
         public bool CheckLineOfSite { get; set; }
@@ -194,6 +207,8 @@ namespace JsonData
             filter.Hues = Hues;
             filter.RangeMin = RangeMin;
             filter.RangeMax = RangeMax;
+            filter.ZLevelMin = ZLevelMin;
+            filter.ZLevelMax = ZLevelMax;
             filter.Poisoned = Poisoned;
             filter.IsHuman = IsHuman;
             filter.IsGhost = IsGhost;
