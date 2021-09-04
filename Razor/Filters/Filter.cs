@@ -25,7 +25,7 @@ namespace Assistant.Filters
             DisableAll();
             foreach (Filter f in m_Filters)
             {
-                if (RazorEnhanced.Settings.General.ReadBool(((int)f.Name).ToString()))
+                if (RazorEnhanced.Settings.General.ReadBool(f.Name))
                     f.OnEnable();
             }
         }
@@ -44,7 +44,7 @@ namespace Assistant.Filters
                 if (f.Enabled)
                 {
                     xml.WriteStartElement("filter");
-                    xml.WriteAttributeString("name", ((int) f.Name).ToString());
+                    xml.WriteAttributeString("name", f.Name);
                     xml.WriteAttributeString("enable", f.Enabled.ToString());
                     xml.WriteEndElement();
                 }
@@ -68,7 +68,7 @@ namespace Assistant.Filters
 
         public abstract void OnFilter(PacketReader p, PacketHandlerEventArgs args);
         public abstract byte[] PacketIDs { get; }
-        public abstract LocString Name { get; }
+        public abstract string Name { get; }
 
         public bool Enabled
         {
@@ -86,7 +86,7 @@ namespace Assistant.Filters
 
         public override string ToString()
         {
-            return Language.GetString(this.Name);
+            return this.Name;
         }
 
         public virtual void OnEnable()
@@ -108,12 +108,12 @@ namespace Assistant.Filters
             if (Enabled && newValue == CheckState.Unchecked)
             {
                 OnDisable();
-                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), false);
+                RazorEnhanced.Settings.General.WriteBool(this.Name, false);
             }
             else if (!Enabled && newValue == CheckState.Checked)
             {
                 OnEnable();
-                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), true);
+                RazorEnhanced.Settings.General.WriteBool(this.Name, true);
             }
         }
     }

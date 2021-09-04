@@ -13,7 +13,7 @@ namespace Assistant.Filters
 
 		public override byte[] PacketIDs { get { return new byte[] { 0x20, 0x78, 0x77 }; } }
 
-		public override LocString Name { get { return LocString.StaffOnlyNpcs; } }
+		public override string Name { get { return Language.GetString(LocString.StaffOnlyNpcs); } }
 
 		public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
 		{

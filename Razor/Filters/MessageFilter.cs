@@ -6,13 +6,13 @@ namespace Assistant.Filters
 {
     public class AsciiMessageFilter : Filter
     {
-        private readonly LocString m_Name;
+        private readonly string m_Name;
         private readonly string[] m_Strings;
         private readonly MessageType m_Type;
 
         private AsciiMessageFilter(LocString name, MessageType type, string[] msgs)
         {
-            m_Name = name;
+            m_Name = Language.GetString(name);
             m_Strings = msgs;
             m_Type = type;
         }
@@ -22,7 +22,7 @@ namespace Assistant.Filters
             get { return new byte[] {0x1C}; }
         }
 
-        public override LocString Name
+        public override string Name
         {
             get { return m_Name; }
         }
@@ -62,13 +62,13 @@ namespace Assistant.Filters
         {
         }
 
-        private readonly LocString m_Name;
+        private readonly string m_Name;
         private readonly int[] m_Nums;
         private readonly MessageType m_Type;
 
         private LocMessageFilter(LocString name, MessageType type, int[] msgs)
         {
-            m_Name = name;
+            m_Name = Language.GetString(name);
             m_Nums = msgs;
             m_Type = type;
         }
@@ -78,7 +78,7 @@ namespace Assistant.Filters
             get { return new byte[] {0xC1}; }
         }
 
-        public override LocString Name
+        public override string Name
         {
             get { return m_Name; }
         }
