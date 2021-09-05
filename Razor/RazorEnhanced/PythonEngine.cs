@@ -59,6 +59,7 @@ namespace RazorEnhanced
             Modules.Add("Gumps", new RazorEnhanced.Gumps());
             Modules.Add("Journal", new RazorEnhanced.Journal());
             Modules.Add("Target", new RazorEnhanced.Target());
+            Modules.Add("Sound", new RazorEnhanced.Sound());
             Modules.Add("Statics", new RazorEnhanced.Statics());
 
             Modules.Add("AutoLoot", new RazorEnhanced.AutoLoot());

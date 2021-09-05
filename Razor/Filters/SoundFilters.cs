@@ -57,6 +57,10 @@ namespace Assistant.Filters
             p.ReadByte(); // flags
 
             ushort sound = p.ReadUInt16();
+            if (RazorEnhanced.Sound.Logging)
+            {
+                RazorEnhanced.Misc.SendMessage(string.Format("Play Sound 0x{0:x} - {0}", sound), false);
+            }
             for (int i = 0; i < m_Sounds.Length; i++)
             {
                 if (m_Sounds[i] == sound)

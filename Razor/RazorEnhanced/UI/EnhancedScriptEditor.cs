@@ -132,7 +132,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
-				"Statics", "DPSMeter", "PathFinding", "Timer", "Vendor"
+				"Statics", "Sound", "DPSMeter", "PathFinding", "Timer", "Vendor"
 			};
 
             #endregion
@@ -293,6 +293,11 @@ namespace RazorEnhanced.UI
 				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetLandName", "Statics.GetTileName", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
 			};
 
+			string[] methodsSound =
+			{
+				"Sound.Log"
+			};
+
 			string[] methodsGeneric =
 			{
 				"GetItemOnLayer", "GetAssistantLayer", "DistanceTo"
@@ -320,6 +325,7 @@ namespace RazorEnhanced.UI
 					.Union(methodsFriend)
 					.Union(methodsBandageHeal)
 					.Union(methodsStatics)
+					.Union(methodsSound)
 					.Union(methodsDPSMeter)
 					.Union(methodsPathFinding)
 					.Union(methodsTimer)
