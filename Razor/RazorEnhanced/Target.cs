@@ -306,6 +306,14 @@ namespace RazorEnhanced
 			Assistant.Targeting.SetLastTarget(serial, 0, wait);
 		}
 
+		/// <summary>
+		/// Clear the last attacked target
+		/// </summary>
+		public static void ClearLastAttack()
+		{
+			Assistant.Targeting.LastAttack = 0;
+		}
+
         /// <summary>
         /// Clear Queue Target.
         /// </summary>

@@ -1135,6 +1135,7 @@ namespace Assistant
 				Engine.MainWindow.SafeAction(s => RazorEnhanced.Profiles.ProfileChange(profilename));
 				Engine.MainWindow.SafeAction(s => s.ProfilesComboBox.SelectedIndex = s.ProfilesComboBox.FindString(profilename));
 			}
+			Assistant.MainForm.ForceSize();
 
 			// Apertura automatica toolbar se abilitata
 			if (Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
