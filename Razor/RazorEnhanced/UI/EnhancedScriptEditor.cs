@@ -68,9 +68,6 @@ namespace RazorEnhanced.UI
 		private string m_Filepath = String.Empty;
 
 		private readonly PythonEngine m_pe;
-		private readonly ScriptEngine m_Engine;
-		private ScriptSource m_Source;
-		private readonly ScriptScope m_Scope;
 
 		private TraceBackFrame m_CurrentFrame;
 		private FunctionCode m_CurrentCode;
@@ -132,7 +129,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
-				"Statics", "Sound", "DPSMeter", "PathFinding", "Timer", "Vendor"
+				"Statics", "DPSMeter", "PathFinding", "Timer", "Vendor"
 			};
 
             #endregion
@@ -293,11 +290,6 @@ namespace RazorEnhanced.UI
 				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetLandName", "Statics.GetTileName", "Statics.GetTileFlag", "Statics.GetLandFlag", "Statics.GetStaticsLandInfo", "Statics.CheckDeedHouse"
 			};
 
-			string[] methodsSound =
-			{
-				"Sound.Log"
-			};
-
 			string[] methodsGeneric =
 			{
 				"GetItemOnLayer", "GetAssistantLayer", "DistanceTo"
@@ -325,7 +317,6 @@ namespace RazorEnhanced.UI
 					.Union(methodsFriend)
 					.Union(methodsBandageHeal)
 					.Union(methodsStatics)
-					.Union(methodsSound)
 					.Union(methodsDPSMeter)
 					.Union(methodsPathFinding)
 					.Union(methodsTimer)
@@ -1492,9 +1483,7 @@ namespace RazorEnhanced.UI
 			this.Text = Title;
 
 			m_pe = new PythonEngine();
-			m_Engine = m_pe.engine;
-			m_Scope = m_pe.scope;
-			m_Engine.SetTrace(null);
+			m_pe.Engine.SetTrace(null);
 
 
 
@@ -1742,27 +1731,9 @@ namespace RazorEnhanced.UI
                 else
                 {
 
-                    m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
+                    m_pe.Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
+                    m_pe.Execute(text);
 
-                    /*Dalamar: BEGIN "fix python env" */
-                    //EXECUTION OF THE SCRIPT
-                    //Refactoring option, the whole block can be replaced by:
-                    //
-                    //m_pe.Execute(text);
-
-                    m_Source = m_Engine.CreateScriptSourceFromString(text);
-
-                    // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-                    PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-                    pco.ModuleName = "__main__";
-                    pco.Module |= ModuleOptions.Initialize;
-                    CompiledCode compiled = m_Source.Compile(pco);
-                    compiled.Execute(m_Scope);
-
-                    // "-": DONT execute directly, unless you are not planning to import external modules.
-                    //m_Source.Execute(m_Scope);
-
-                    /*Dalamar: END*/
 
                     SetErrorBox("Script " + m_Filename + " run completed!");
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
@@ -1787,7 +1758,7 @@ namespace RazorEnhanced.UI
                 else
                 {
                     SetErrorBox("Generic Error:");
-                    ExceptionOperations eo = m_Engine.GetService<ExceptionOperations>();
+                    ExceptionOperations eo = m_pe.Engine.GetService<ExceptionOperations>();
                     string error = eo.FormatException(ex);
                     error = error.Trim();
                     error = Regex.Replace(error, "\n\n", "\n");     //remove empty lines
