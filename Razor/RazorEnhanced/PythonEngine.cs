@@ -91,11 +91,6 @@ namespace RazorEnhanced
             CompilerOptions.Module |= ModuleOptions.Initialize;
         }
 
-        public void InitScope() {
-            
-
-        }
-
         public void Execute(String text, String path=null)
         {
             if (Engine == null) return;
