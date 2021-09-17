@@ -366,9 +366,9 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("MessageLevel", msglvl.SelectedIndex);
 		}
 
-		private readonly Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(30.0), new TimerCallback(ForceSize));
+		private readonly Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
 
-		internal static void ForceSize()
+		private static void ForceSize()
 		{
 			int x, y;
 
@@ -377,7 +377,7 @@ namespace Assistant
 				x = RazorEnhanced.Settings.General.ReadInt("ForceSizeX");
 				y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
 
-				if (x > 100 && x < 4000 && y > 100 && y < 4000)
+				if (x > 100 && x < 2000 && y > 100 && y < 2000)
 			 		Assistant.Client.Instance.SetGameSize(x, y);
 				else
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -401,6 +401,12 @@ namespace Assistant
 
 				if (x < 100 || y < 100 || x > 2000 || y > 2000)
 					MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+				else
+			 		Assistant.Client.Instance.SetGameSize(x, y);
+			}
+			else
+			{
+		 		Assistant.Client.Instance.SetGameSize(0, 0);
 			}
 
 			if (World.Player != null)
