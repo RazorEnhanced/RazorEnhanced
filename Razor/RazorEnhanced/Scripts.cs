@@ -138,8 +138,10 @@ namespace RazorEnhanced
                         if (FileChangeDate < lastModified)
                         {
                             ReadText(fullpath);
-                            FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
                             Create(null);
+                            
+                            // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
+                            FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
                         }
 
                         m_pe.Execute(m_Text);
