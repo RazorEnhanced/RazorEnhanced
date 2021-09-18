@@ -239,7 +239,7 @@ namespace RazorEnhanced
                     
                     var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_pe.Engine) as PythonContext;
                     var temp = pc.SystemState.Get__dict__()["path_hooks"];
-					PythonList hooks = (PythonList)temp;
+					PythonDictionary hooks = (PythonDictionary)temp;
 					hooks.Clear();
 
                     if (traceFunc != null)
