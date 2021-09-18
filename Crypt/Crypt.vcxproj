@@ -267,12 +267,6 @@
     <None Include="Crypt.def" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Razor\Razor.csproj">
-      <Project>{b24e4fb1-4936-4544-9e88-f3ff9b04fdba}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="App.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -37,7 +37,7 @@ LARGE_INTEGER PerfFreq, Counter;
 DWORD DeathMsgAddr = 0xFFFFFFFF;
 HWND hUOAWnd = NULL;
 
-SIZE DesiredSize = { 0, 0 };
+SIZE DesiredSize = { 640, 480 };
 DWORD ResizeFuncaddr = 0;
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
@@ -462,49 +462,22 @@ DLLFUNCTION BOOL HandleNegotiate(__int64 features)
 	}
 }
 
+
 SIZE *SizePtr = NULL;
 void __stdcall OnSetUOWindowSize(int width)
 {
-    Log("width %d, desired x: %d y: %d", width, DesiredSize.cx, DesiredSize.cy);
-	if (DesiredSize.cx != 0)   // Se diverso da 0 settata risoluzione definita da utente
-	{
-		if (connected) // Forza resize solo se connesso
-			*SizePtr = DesiredSize;
-		else // Dimensione standard finestra di login
-		{
-			SizePtr->cx = 640;
-			SizePtr->cy = 480;
-		}
-	}
-	else // If no resolution set by the user, use the OSI settings
-	{
-		if (width == 800 && connected)
-		{
-			SizePtr->cx = 800;
-			SizePtr->cy = 600;
-		}
-		else if (width == 1024 && connected)
-		{
-			SizePtr->cx = 1024;
-			SizePtr->cy = 768;
-		}
-		else if (width == 1152 && connected)
-		{
-			SizePtr->cx = 1152;
-			SizePtr->cy = 864;
-		}
-		else if (width == 1280 && connected)
-		{
-			SizePtr->cx = 1280;
-			SizePtr->cy = 720;
-		}
-		else
-		{
-			SizePtr->cx = 640;
-			SizePtr->cy = 480;
-		}
-
-	}
+	Log("width %d, desired x: %d y: %d", width, DesiredSize.cx, DesiredSize.cy);
+	// if (width != 800 && width != 600) // in case it actually the height for some reason
+	//if (width == 640)
+    //if (true)
+	//{
+		SizePtr->cx = 640;
+		SizePtr->cy = 480;
+	//}
+	//else
+	//{
+		//*SizePtr = DesiredSize;
+	//}
 }
 
 DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
@@ -1063,8 +1036,10 @@ int RecvData()
 			FirstRecv = false;
 
 			// Chiamata resize appena viene aperta connessione
-			if (ResizeFuncaddr)
-				((void(*)(void))ResizeFuncaddr)();
+			//if (ResizeFuncaddr)
+			//{
+			//	((void(*)(void))ResizeFuncaddr)();
+			//}
 		}
 
 		WaitForSingleObject(CommMutex, INFINITE);
@@ -1836,22 +1811,11 @@ void FindList(DWORD val, unsigned short size)
 		PostMessage(hRazorWnd, WM_UONETEVENT, MAKELONG(FINDDATA, i + 1), addrList[i]);
 }
 
-void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
+void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 {
-	/*if ( SizePtr && ( SizePtr->cx != DesiredSize.cx || SizePtr->cy != DesiredSize.cy ) )// && ( SizePtr->cx != 640 || SizePtr->cy != 480 ) )
-	{
-		SizePtr->cx = DesiredSize.cx;
-		SizePtr->cy = DesiredSize.cy;
-
-		if ( RedrawGameEdge )
-		{
-			RedrawGameEdge();
-			RedrawUOScreen();
-		}
-	}*/
-
 	HWND hFore;
-
+	
+	Log("MessageProc hwnd=0x%x, nMsg=0x%x, wParam=0x%x, lPARAM=0x%x", hWnd, nMsg, wParam, lParam);
 	switch (nMsg)
 	{
 		// Custom messages
@@ -1932,9 +1896,22 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 			break;
 
 		case SETWNDSIZE:
-			DesiredSize.cx = LOWORD(lParam);
-			DesiredSize.cy = HIWORD(lParam);
+		{
+			int x = LOWORD(lParam);
+			DesiredSize.cx = (x / 4) * 4;
+			int y = HIWORD(lParam);
+			DesiredSize.cy = (y / 4) * 4;
+		}
 			break;
+
+
+		//case DOWNDSIZE:
+		//	if (ResizeFuncaddr)
+		//	{
+		//		//*SizePtr = DesiredSize;
+		//		//((void(*)(void))ResizeFuncaddr)();
+		//	}
+		//	break;
 
 		case FINDDATA:
 			FindList((DWORD)lParam, HIWORD(wParam));
@@ -1961,8 +1938,11 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 		}
 		break;
 
-		/*case WM_SIZE:
-		if ( wParam == 2 && pMsg && pMsg->hwnd == hWnd  )
+		case WM_SIZE:
+			Log("WM_SIZE called");
+			*SizePtr = DesiredSize;
+			break;
+		/*if (wParam == 2 && pMsg && pMsg->hwnd == hWnd)
 		pMsg->lParam = lParam = MAKELONG( 800, 600 );
 		break;
 		case WM_GETMINMAXINFO:
@@ -2051,9 +2031,10 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 	case WM_SETTEXT:
 	case WM_CUSTOMTITLE:
 		CheckTitlebarAttr(hWnd);
-		RedrawTitleBar( hWnd, Active );
+		RedrawTitleBar(hWnd, Active);
 		break;
 	}
+	return; 
 }
 
 LRESULT CALLBACK GetMsgHookFunc(int Code, WPARAM Flag, LPARAM pMsg)
