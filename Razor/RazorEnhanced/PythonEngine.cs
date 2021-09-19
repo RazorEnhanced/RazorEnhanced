@@ -64,7 +64,7 @@ namespace RazorEnhanced
             Modules.Add("Journal", new RazorEnhanced.Journal());
             Modules.Add("Target", new RazorEnhanced.Target());
             Modules.Add("Statics", new RazorEnhanced.Statics());
-
+            Modules.Add("Sound", new RazorEnhanced.Sound());
             Modules.Add("AutoLoot", new RazorEnhanced.AutoLoot());
             Modules.Add("Scavenger", new RazorEnhanced.Scavenger());
             Modules.Add("SellAgent", new RazorEnhanced.SellAgent());
