@@ -37,7 +37,7 @@ LARGE_INTEGER PerfFreq, Counter;
 DWORD DeathMsgAddr = 0xFFFFFFFF;
 HWND hUOAWnd = NULL;
 
-SIZE DesiredSize = { 640, 480 };
+SIZE DesiredSize = { 0, 0 };
 DWORD ResizeFuncaddr = 0;
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
@@ -467,16 +467,45 @@ SIZE *SizePtr = NULL;
 void __stdcall OnSetUOWindowSize(int width)
 {
 	Log("width %d, desired x: %d y: %d", width, DesiredSize.cx, DesiredSize.cy);
-	// if (width != 800 && width != 600) // in case it actually the height for some reason
-	//if (width == 640)
-    //if (true)
-	//{
-		SizePtr->cx = 640;
-		SizePtr->cy = 480;
-	//}
-	//else
-	//{
-		//*SizePtr = DesiredSize;
+	if (DesiredSize.cx != 0)   // Se diverso da 0 settata risoluzione definita da utente
+	{
+		if (connected) // Forza resize solo se connesso
+			*SizePtr = DesiredSize;
+		else // Dimensione standard finestra di login
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
+	}
+	else // If no resolution set by the user, use the OSI settings
+	{
+		if (width == 800 && connected)
+		{
+			SizePtr->cx = 800;
+			SizePtr->cy = 600;
+		}
+		else if (width == 1024 && connected)
+		{
+			SizePtr->cx = 1024;
+			SizePtr->cy = 768;
+		}
+		else if (width == 1152 && connected)
+		{
+			SizePtr->cx = 1152;
+			SizePtr->cy = 864;
+		}
+		else if (width == 1280 && connected)
+		{
+			SizePtr->cx = 1280;
+			SizePtr->cy = 720;
+		}
+		else
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
+
+	}
 	//}
 }
 
@@ -1897,10 +1926,10 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 
 		case SETWNDSIZE:
 		{
-			int x = LOWORD(lParam);
-			DesiredSize.cx = (x / 4) * 4;
-			int y = HIWORD(lParam);
-			DesiredSize.cy = (y / 4) * 4;
+			//int x = LOWORD(lParam);
+			//DesiredSize.cx = (x / 4) * 4;
+			//int y = HIWORD(lParam);
+			//DesiredSize.cy = (y / 4) * 4;
 		}
 			break;
 
@@ -1940,7 +1969,10 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 
 		case WM_SIZE:
 			Log("WM_SIZE called");
-			*SizePtr = DesiredSize;
+			if (DesiredSize.cx != 0)
+			{
+				*SizePtr = DesiredSize;
+			}
 			break;
 		/*if (wParam == 2 && pMsg && pMsg->hwnd == hWnd)
 		pMsg->lParam = lParam = MAKELONG( 800, 600 );
