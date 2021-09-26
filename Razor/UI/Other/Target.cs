@@ -260,7 +260,9 @@ namespace Assistant
 				Name = targetNameTextBox.Text,
 				Hues = huelist,
 				RangeMax = maxrange,
-				RangeMin = minrange
+				RangeMin = minrange,
+				ZLevelMax = 4096,
+				ZLevelMin = -4096,
 			};
 
 			if (poisonedBoth.Checked)

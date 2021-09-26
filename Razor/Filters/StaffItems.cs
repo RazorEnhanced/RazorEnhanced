@@ -19,9 +19,9 @@ namespace Assistant.Filters
             get { return new byte[] {0x1A}; }
         }
 
-        public override LocString Name
+        public override string Name
         {
-            get { return LocString.StaffOnlyItems; }
+            get { return Language.GetString(LocString.StaffOnlyItems); }
         }
 
         private static bool IsStaffItem(ItemID itemID)

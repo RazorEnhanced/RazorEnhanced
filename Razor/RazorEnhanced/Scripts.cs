@@ -59,9 +59,6 @@ namespace RazorEnhanced
             internal bool StopMessage { get; set; }
             internal bool StartMessage { get; set; }
             private PythonEngine m_pe;
-            private ScriptEngine m_Engine;
-            private ScriptScope m_Scope;
-            private ScriptSource m_Source;
             internal DateTime FileChangeDate { get; set; }
 
             internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
@@ -142,30 +139,13 @@ namespace RazorEnhanced
                         if (FileChangeDate < lastModified)
                         {
                             ReadText(fullpath);
-                            FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
                             Create(null);
+                            
+                            // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
+                            FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
                         }
 
-                        /*Dalamar: BEGIN "fix python env" */
-                        //EXECUTION OF THE SCRIPT
-                        //Refactoring option, the whole block can be replaced by:
-                        //
-                        //m_pe.Execute(m_Text);
-
-                        m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
-                        // "+": USE PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
-                        PythonCompilerOptions pco = (PythonCompilerOptions)m_Engine.GetCompilerOptions(m_Scope);
-                        pco.ModuleName = "__main__";
-                        pco.Module |= ModuleOptions.Initialize;
-                        CompiledCode compiled = m_Source.Compile(pco);
-						Journal journal = m_Engine.Runtime.Globals.GetVariable("Journal") as Journal;
-						journal.Active = true;
-						compiled.Execute(m_Scope);
-						journal.Active = false;
-						// "-": DONT execute directly, unless you are not planning to import external modules.
-						//m_Source.Execute(m_Scope);
-
-						/*Dalamar: END*/
+                        m_pe.Execute(m_Text);
 					}
 				}
                 catch (IronPython.Runtime.Exceptions.SystemExitException)
@@ -179,8 +159,8 @@ namespace RazorEnhanced
                         return;
 
                     string display_error = ex.Message;
-                    if ( m_Engine != null ) {
-                        display_error = m_Engine.GetService<ExceptionOperations>().FormatException(ex);
+                    if ( m_pe.Engine != null ) {
+                        display_error = m_pe.Engine.GetService<ExceptionOperations>().FormatException(ex);
                     }
                     SendMessageScriptError("ERROR " + m_Filename + ":" + display_error.Replace("\n", " | "));
 
@@ -257,15 +237,14 @@ namespace RazorEnhanced
 				try
 				{
 					m_pe = new PythonEngine();
-					m_Engine = m_pe.engine;
-					m_Scope = m_pe.scope;
-
-                    var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_Engine) as PythonContext;
-                    PythonDictionary hooks = (PythonDictionary)pc.SystemState.Get__dict__()["path_hooks"];
-                    hooks.Clear();
+                    
+                    var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_pe.Engine) as PythonContext;
+                    var temp = pc.SystemState.Get__dict__()["path_hooks"];
+					PythonDictionary hooks = (PythonDictionary)temp;
+					hooks.Clear();
 
                     if (traceFunc != null)
-						m_Engine.SetTrace(traceFunc);
+                        m_pe.Engine.SetTrace(traceFunc);
 
 					result = "Created";
 				}

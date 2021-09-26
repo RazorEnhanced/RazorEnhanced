@@ -310,7 +310,8 @@ namespace RazorEnhanced
             else 
             {
                 Close();
-                Open();
+				if (!m_open)
+					Open();
             }
 		}
 

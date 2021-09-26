@@ -871,6 +871,7 @@ namespace RazorEnhanced
                 typeof(Target),
                 typeof(Statics),
                 typeof(Statics.TileInfo),
+                typeof(Sound),
 
                 // API Agents
                 typeof(AutoLoot),

@@ -5219,6 +5219,28 @@ namespace RazorEnhanced
                 General.WriteInt("SettingVersion", realVersion);
             }
 
+            {
+                // These always run and must be protected to ensure a patch is not applied twice
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {                    
+                    if ((string)row["Group"] == "Attack" && (string)row["Name"] == "Attack Nearest Enemy")
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    // Always check these for mistakes in the past
+                    DataTable hotkey = m_Dataset.Tables["HOTKEYS"];
+                    DataRow hotkeyrow = hotkey.NewRow();
+                    hotkeyrow.ItemArray = new object[] { "Attack", "Attack Nearest Enemy", Keys.None, true };
+                    hotkey.Rows.Add(hotkeyrow);
+                }
+
+            }
+
+
             Save(true);
         }
 

@@ -16,12 +16,16 @@ namespace RazorEnhanced
     class PythonEngine
     {
         public Dictionary<string, object> Modules;
-        public ScriptEngine engine { get;  }
-        public ScriptScope scope { get; }
-
+        public ScriptEngine Engine { get;  }
+        public ScriptScope Scope { get; set; }
+        public String Text { get; set; }
+        public String FilePath { get; set; }
+        public ScriptSource Source { get; set; }
+        public CompiledCode Compiled { get; set; }
+        public PythonCompilerOptions CompilerOptions { get; set; }
 
         public PythonEngine() {
-            engine = Python.CreateEngine();
+            Engine = Python.CreateEngine();
 
 
             //Paths for IronPython 3.4
@@ -37,7 +41,7 @@ namespace RazorEnhanced
             // 3- ./
             paths.Add(basepath);
 
-            engine.SetSearchPaths(paths);
+            Engine.SetSearchPaths(paths);
 
             // Add also defult IronPython 3.4 installlation folder, if present
             if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 3.4"))
@@ -60,7 +64,7 @@ namespace RazorEnhanced
             Modules.Add("Journal", new RazorEnhanced.Journal());
             Modules.Add("Target", new RazorEnhanced.Target());
             Modules.Add("Statics", new RazorEnhanced.Statics());
-
+            Modules.Add("Sound", new RazorEnhanced.Sound());
             Modules.Add("AutoLoot", new RazorEnhanced.AutoLoot());
             Modules.Add("Scavenger", new RazorEnhanced.Scavenger());
             Modules.Add("SellAgent", new RazorEnhanced.SellAgent());
@@ -77,11 +81,43 @@ namespace RazorEnhanced
 
             //Setup builtin modules and scope
             foreach (var module in Modules) {
-                engine.Runtime.Globals.SetVariable(module.Key, module.Value);
-                engine.GetBuiltinModule().SetVariable(module.Key, module.Value);
+                Engine.Runtime.Globals.SetVariable(module.Key, module.Value);
+                Engine.GetBuiltinModule().SetVariable(module.Key, module.Value);
             }
-            scope = engine.CreateScope();
+            Scope = Engine.CreateScope();
 
+            CompilerOptions = (PythonCompilerOptions)Engine.GetCompilerOptions(Scope);
+            CompilerOptions.ModuleName = "__main__";
+            CompilerOptions.Module |= ModuleOptions.Initialize;
+        }
+
+        public void Execute(String text, String path=null)
+        {
+            if (Engine == null) return;
+
+            //CACHE (should we?)
+            Text = text;
+            FilePath = path;
+
+            //LOAD code as text
+            if (text == null) return; // no text
+            Source = Engine.CreateScriptSourceFromString(text, path);
+            if (Source == null) return;
+
+            //COMPILE with OPTIONS
+            //PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+            Compiled = Source.Compile(CompilerOptions);
+
+            //EXECUTE
+            Journal journal = Modules["Journal"] as Journal;
+            journal.Active = true;
+            Scope = Engine.CreateScope();
+            Compiled.Execute(Scope);
+            journal.Active = false;
+
+            //DONT USE
+            //Execute directly, unless you are not planning to import external modules.
+            //Source.Execute(m_Scope);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Assistant.Filters
             get { return new byte[] {0xBC}; }
         }
 
-        public override LocString Name
+        public override string Name
         {
-            get { return LocString.Season; }
+            get { return Language.GetString(LocString.Season); }
         }
 
 

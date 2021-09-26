@@ -8,7 +8,7 @@
 #define DLLVAR DLLFUNCTION
 
 #ifdef _DEBUG
-//#define LOGGING
+  //#define LOGGING
 #endif
 
 enum IError
@@ -59,6 +59,8 @@ enum UONET_MESSAGE
 	SMART_CPU = 21,
 	NEGOTIATE = 22,
 	SET_MAP_HWND = 23,
+
+	DOWNDSIZE = 24
 	// ZIPPY REV 80	SET_FWD_HWND = 24,
 };
 

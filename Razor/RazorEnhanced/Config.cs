@@ -17,6 +17,7 @@ namespace RazorEnhanced
         public static readonly string CONFIG_FOODS = "foods.json";
         public static readonly string CONFIG_REGIONS = "regions.json";
         public static readonly string CONFIG_WANDS = "wands.json";
+        public static readonly string CONFIG_SOUNDFILTERS = "soundfilters.json";
         #endregion
 
         //Dalamar: See if you like it (data/config loading)
@@ -143,6 +144,27 @@ namespace RazorEnhanced
             //
 
             ConfigFiles.Wands.Data = (ConfigFiles.Wands)Load(CONFIG_WANDS, typeof(ConfigFiles.Wands));
+
+            try
+            {
+                string path = Path.Combine(PATH_DATA, CONFIG_SOUNDFILTERS);
+                if (File.Exists(path))
+                {
+                    ConfigFiles.FilterSounds = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ushort[]>>(File.ReadAllText(path));
+                }
+                else
+                {
+                    path = Path.Combine(PATH_CONFIG, CONFIG_SOUNDFILTERS);
+                    if (File.Exists(path))
+                    {
+                        ConfigFiles.FilterSounds = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ushort[]>>(File.ReadAllText(path));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("One of your Sound Filter Config Files is Corrupt");
+            }
         }
 
 
@@ -179,6 +201,7 @@ namespace RazorEnhanced
     //other possible names: Serializables, Models, ConfigFiles, DataStorage
     public class ConfigFiles
     {
+        public static Dictionary<string, ushort[]> FilterSounds = new Dictionary<string, ushort[]>();
 
         public static ConfigData Load(string fullpath, Type configModel)
         {
@@ -279,9 +302,6 @@ namespace RazorEnhanced
             public class DoorID { public int Open, Close; }
 
         }
-
-
-
 
     }
 

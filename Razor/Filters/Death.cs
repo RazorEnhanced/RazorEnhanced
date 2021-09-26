@@ -19,9 +19,9 @@ namespace Assistant.Filters
             get { return new byte[] {0x2C}; }
         }
 
-        public override LocString Name
+        public override string Name
         {
-            get { return LocString.DeathStatus; }
+            get { return Language.GetString(LocString.DeathStatus); }
         }
 
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)

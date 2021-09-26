@@ -341,6 +341,7 @@
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
     <Compile Include="RazorEnhanced\Multi.cs" />
+    <Compile Include="RazorEnhanced\Sound.cs" />
     <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>
     </Compile>

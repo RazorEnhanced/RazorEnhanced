@@ -22,9 +22,9 @@ namespace Assistant.Filters
             get { return new byte[] {0xB0, 0xDD}; }
         }
 
-        public override LocString Name
+        public override string Name
         {
-            get { return LocString.VetRewardGump; }
+            get { return Language.GetString(LocString.VetRewardGump); }
         }
 
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)

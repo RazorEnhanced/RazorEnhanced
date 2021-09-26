@@ -71,8 +71,6 @@ namespace Assistant
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 
-            Initialize(typeof(Assistant.Engine).Assembly);
-
             // Profile
             RazorEnhanced.Profiles.Load();
 
@@ -175,6 +173,8 @@ namespace Assistant
             }
 
             Language.LoadCliLoc();
+
+            Initialize(typeof(Assistant.Engine).Assembly);
 
             Assistant.Client.Instance.SetConnectionInfo(IPAddress.None, -1);
             if (IsOSI)
