@@ -368,7 +368,7 @@ namespace Assistant
 
 		private readonly Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
 
-		private static void ForceSize()
+		internal static void ForceSize()
 		{
 			int x, y;
 
@@ -377,7 +377,7 @@ namespace Assistant
 				x = RazorEnhanced.Settings.General.ReadInt("ForceSizeX");
 				y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
 
-				if (x > 100 && x < 2000 && y > 100 && y < 2000)
+				if (x > 100 && x < 4000 && y > 100 && y < 4000)
 			 		Assistant.Client.Instance.SetGameSize(x, y);
 				else
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -399,7 +399,7 @@ namespace Assistant
 				int x = Utility.ToInt32(forceSizeX.Text, 800);
 				int y = Utility.ToInt32(forceSizeY.Text, 600);
 
-				if (x < 100 || y < 100 || x > 2000 || y > 2000)
+				if (x < 100 || y < 100 || x > 4000 || y > 4000)
 					MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 				else
 			 		Assistant.Client.Instance.SetGameSize(x, y);

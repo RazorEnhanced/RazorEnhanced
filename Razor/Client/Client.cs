@@ -194,6 +194,7 @@ namespace Assistant
                     RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
                     return;
                 }
+                Assistant.MainForm.ForceSize();
             }
 
 
