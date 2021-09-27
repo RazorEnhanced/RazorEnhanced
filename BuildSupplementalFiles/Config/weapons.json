@@ -195,6 +195,13 @@
 	"secondary": "1",
 	"twohanded": false
     },
+    {
+	"name": "shield",
+	"graphic": 0xA649,
+	"primary": "1",
+	"secondary": "1",
+	"twohanded": false
+    },	
   {
     "name": "Axe",
     "graphic": 0xF49,

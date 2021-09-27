@@ -2807,7 +2807,7 @@ namespace RazorEnhanced
         {
             if (args.Length == 1)
             {
-                string virtue = args[0].AsString().ToLower();
+                string virtue = args[0].AsString();
                 Player.InvokeVirtue(virtue);
             }
 

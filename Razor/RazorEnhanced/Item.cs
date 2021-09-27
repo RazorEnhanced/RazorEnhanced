@@ -442,7 +442,7 @@ namespace RazorEnhanced
         /// <param name="delay">Maximum wait, in milliseconds.</param>
         public static void WaitForContents(Item bag, int delay) // Delay in MS
         {
-            if (!bag.IsCorpse && !bag.IsContainer)
+            if (bag == null || (!bag.IsCorpse && !bag.IsContainer))
                 return;
 
             RazorEnhanced.Items.UseItem(bag);

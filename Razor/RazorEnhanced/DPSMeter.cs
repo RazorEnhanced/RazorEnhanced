@@ -10,7 +10,7 @@ namespace RazorEnhanced
     /// <summary>
     /// The DPSMeter class implements a Damage Per Second meter which can be useful to tune meta-builds.(???)
     /// </summary>
-    internal class DPSMeter
+    public class DPSMeter
 	{
 		public class DamageData
 		{
