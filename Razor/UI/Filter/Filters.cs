@@ -20,11 +20,11 @@ namespace Assistant
 		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
 		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
 		internal DataGridView GraphFilterDataGrid { get { return graphfilterdatagrid; } }
-    internal DataGridView JournalFilterDataGrid { get { return journalfilterdatagrid; } }
-    internal DataGridView JournalList { get { return journalList; } }
-    internal CheckedListBox JournalTextSelection { get { return journalTextSelection; } }
-    internal TextBox JournalFilterString { get { return journalFilterString; } }
-    internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
+		internal DataGridView JournalFilterDataGrid { get { return journalfilterdatagrid; } }
+		internal DataGridView JournalList { get { return journalList; } }
+		internal CheckedListBox JournalTextSelection { get { return journalTextSelection; } }
+		internal TextBox JournalFilterString { get { return journalFilterString; } }
+		internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
 		internal RazorCheckBox LastTargTextFlags { get { return showtargtext; } }
 		internal RazorCheckBox SmartLastTarget { get { return smartLT; } }
 
@@ -56,7 +56,7 @@ namespace Assistant
 			{
 				Settings.General.WriteInt("LTHilight", 0);
 				LTHilight = 0;
-		 		Assistant.Client.Instance.SetCustomNotoHue(0);
+				Assistant.Client.Instance.SetCustomNotoHue(0);
 				lthilight.BackColor = SystemColors.Control;
 				lthilight.ForeColor = SystemColors.ControlText;
 			}
@@ -193,7 +193,7 @@ namespace Assistant
 		private void setLTHilight_Click(object sender, System.EventArgs e)
 		{
 			if (SetHue(lthilight, "LTHilight"))
-		 		Assistant.Client.Instance.SetCustomNotoHue(LTHilight);
+				Assistant.Client.Instance.SetCustomNotoHue(LTHilight);
 		}
 
 		private void setBeneHue_Click(object sender, System.EventArgs e)
@@ -229,14 +229,14 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("CountStealthSteps", chkStealth.Checked);
 		}
 
-        private void druidClericPackets_CheckedChanged(object sender, System.EventArgs e)
-        {
-            if (druidClericPackets.Focused)
-                RazorEnhanced.Settings.General.WriteBool("DruidClericPackets", druidClericPackets.Checked);
-        }
+		private void druidClericPackets_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if (druidClericPackets.Focused)
+				RazorEnhanced.Settings.General.WriteBool("DruidClericPackets", druidClericPackets.Checked);
+		}
 
 
-        private void setpathmapbutton_Click(object sender, EventArgs e)
+		private void setpathmapbutton_Click(object sender, EventArgs e)
 		{
 			openmaplocation.RestoreDirectory = true;
 			if (openmaplocation.ShowDialog(this) == DialogResult.OK)
@@ -315,7 +315,7 @@ namespace Assistant
 			if (preAOSstatbar.Focused)
 				RazorEnhanced.Settings.General.WriteBool("OldStatBar", preAOSstatbar.Checked);
 
-	 		Assistant.Client.Instance.RequestStatbarPatch(preAOSstatbar.Checked);
+			Assistant.Client.Instance.RequestStatbarPatch(preAOSstatbar.Checked);
 			if (World.Player != null && !m_Initializing)
 				MessageBox.Show(this, "Close and re-open your status bar for the change to take effect.", "Status Window Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
@@ -336,7 +336,7 @@ namespace Assistant
 		//{
 		//	if (smartCPU.Focused)
 		//		RazorEnhanced.Settings.General.WriteBool("SmartCPU", smartCPU.Checked);
-	 //		Assistant.Client.Instance.SetSmartCPU(smartCPU.Checked);
+		//		Assistant.Client.Instance.SetSmartCPU(smartCPU.Checked);
 		//}
 
 		private void blockDis_CheckedChanged(object sender, System.EventArgs e)
@@ -366,9 +366,9 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("MessageLevel", msglvl.SelectedIndex);
 		}
 
-		private readonly Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
+		private readonly Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new TimerCallback(ForceSize));
 
-		private static void ForceSize()
+		internal static void ForceSize()
 		{
 			int x, y;
 
@@ -377,14 +377,33 @@ namespace Assistant
 				x = RazorEnhanced.Settings.General.ReadInt("ForceSizeX");
 				y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
 
-				if (x > 100 && x < 2000 && y > 100 && y < 2000)
-			 		Assistant.Client.Instance.SetGameSize(x, y);
+				if (x > 100 && x < 4000 && y > 100 && y < 4000)
+					Assistant.Client.Instance.SetGameSize(x, y);
 				else
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 			} else
-            {
-                Assistant.Client.Instance.SetGameSize(0, 0);
-            }
+			{
+				Assistant.Client.Instance.SetGameSize(0, 0);
+			}
+
+			ShowVideoGump();
+		}
+
+		private static void ShowVideoGump()
+		{
+			if (World.Player != null)
+			{
+				Gumps.GumpData gd = Gumps.CreateGump(false, true, true, false);
+				gd.gumpId = 0x9994df;
+				gd.serial = (uint)Player.Serial;
+
+				int x = 100;
+				int y = 150;
+				Gumps.AddImageTiled(ref gd, x, y, 300, 100, 0x4df);
+				Gumps.AddLabel(ref gd, x + 50, y + 30, 0, @"Open Options and click Okay.");
+				Gumps.AddLabel(ref gd, x + 50, y + 60, 0, @"This will clear up any abnormality");
+				Gumps.SendGump(gd, 0, 0);
+			}
 		}
 
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)
@@ -392,25 +411,32 @@ namespace Assistant
 			if (gameSize.Focused)
 				RazorEnhanced.Settings.General.WriteBool("ForceSizeEnabled", gameSize.Checked);
 
-			forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
-
-			if (gameSize.Checked)
+			if (Assistant.Client.IsOSI )
 			{
-				int x = Utility.ToInt32(forceSizeX.Text, 800);
-				int y = Utility.ToInt32(forceSizeY.Text, 600);
+				forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
 
-				if (x < 100 || y < 100 || x > 2000 || y > 2000)
-					MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+				if (gameSize.Checked)
+				{
+					int x = Utility.ToInt32(forceSizeX.Text, 800);
+					int y = Utility.ToInt32(forceSizeY.Text, 600);
+
+					if (x < 100 || y < 100 || x > 4000 || y > 4000)
+						MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+					else
+						Assistant.Client.Instance.SetGameSize(x, y);
+				}
 				else
-			 		Assistant.Client.Instance.SetGameSize(x, y);
+				{
+					Assistant.Client.Instance.SetGameSize(0, 0);
+				}
 			}
-			else
+			else 
 			{
-		 		Assistant.Client.Instance.SetGameSize(0, 0);
+				forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Enabled = gameSize.Checked = false;
 			}
 
-			if (World.Player != null)
-				MessageBox.Show(this, Language.GetString(LocString.ApplyOptionsRequired), "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			ShowVideoGump();
+			//	MessageBox.Show(this, Language.GetString(LocString.ApplyOptionsRequired), "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void forceSizeX_TextChanged(object sender, System.EventArgs e)

@@ -42,6 +42,7 @@ namespace Assistant
 			SmartCPU = 21,
 			Negotiate = 22,
 			SetMapHWnd = 23,
+
 			DwmFree = 25
 		}
 
@@ -192,11 +193,10 @@ namespace Assistant
 
         public override void SetGameSize(int x, int y)
         {
-            //const int HWND_TOP = 0;
-            //const short SWP_NOMOVE = 0x0002;
-            //const short SWP_NOZORDER = 0x0004;
-
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
+			//const int HWND_TOP = 0;
+			//const short SWP_NOMOVE = 0x0002;
+			//const short SWP_NOZORDER = 0x0004;
+			DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
             // resizes the game size, not the internal size, so have to exit and restart unless I find smarter way
             //if (x != 0)
             //{
@@ -208,7 +208,7 @@ namespace Assistant
             //}
         }
 
-    public override Loader_Error LaunchClient(string client)
+			public override Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Assistant.Engine.RootPath, "Crypt.dll");
             uint pid;
@@ -394,7 +394,7 @@ namespace Assistant
 		}
 
 		private void OnLogout(bool fake)
-		{
+		{			
 			if (!fake)
 			{
 				PacketHandlers.Party.Clear();

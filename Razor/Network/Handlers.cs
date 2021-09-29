@@ -450,6 +450,7 @@ namespace Assistant
 				Engine.MainWindow.UpdateControlLocks();
 
 			PlayCharTime = DateTime.Now;
+			Assistant.MainForm.ForceSize();
 		}
 
 		private static void RenameMobile(PacketReader p, PacketHandlerEventArgs args)

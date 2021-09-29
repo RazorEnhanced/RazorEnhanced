@@ -675,6 +675,7 @@ namespace RazorEnhanced
         /// <returns>the list of Items respectinf the filter criteria.</returns>
 		public static List<Item> ApplyFilter(Filter filter)
         {
+
             List<Item> result = new List<Item>();
             List<Assistant.Item> assistantItems = new List<Assistant.Item>(World.Items.Values.ToList());
 
