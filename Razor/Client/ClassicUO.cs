@@ -243,7 +243,8 @@ namespace Assistant
             Engine.MainWnd = new MainForm();
             if (! IsOSI) {
                 Engine.MainWindow.SafeAction(s => { s.DisableRecorder(); });
-                Engine.MainWindow.SafeAction(s => { s.DisableSmartCpu("Not available with CUO"); });
+                Engine.MainWindow.SafeAction(s => { s.DisableSmartCpu(); });
+                Engine.MainWindow.SafeAction(s => { s.DisableGameSize(); });                
             }
             Application.Run(Engine.MainWnd);
         }

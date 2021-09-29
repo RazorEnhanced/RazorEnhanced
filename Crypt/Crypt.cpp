@@ -42,6 +42,8 @@ SIZE OriginalSize = { 640, 480 };
 DWORD ResizeFuncaddr = 0;
 DWORD ABetterEntrypoint = 0;
 
+BYTE SavedInstructions[5];
+
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
 unsigned long RecvAddress, SendAddress, ConnectAddress, CloseSocketAddress, SelectAddress, CreateFileAAddress;
 
@@ -546,7 +548,17 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	}
 
 	if (ABetterEntrypoint == 0)
+	{
+		Log("Unable to determine jump operations for video");
 		ABetterEntrypoint = ResizeFuncaddr;
+	}
+	else
+	{
+		BYTE newOffset = ABetterEntrypoint - jump - 5 /* I am totally confused*/;
+		BYTE patch[5] = { 0xE9, newOffset, 0x0, 0x0, 0x0 };
+		Log("BYPASS Patch Jump at 0x%x with 0x%x 0x%x", jump, patch[0], patch[1], patch[2]);
+		memcpy(&SavedInstructions, (void*)jump, 5);
+	}
 
 	Log("SizePtr = 0x%x", SizePtr);
 	Log("ResizeFuncAddr = 0x%x", ResizeFuncaddr);
@@ -857,14 +869,15 @@ DLLFUNCTION const char *GetUOVersion()
 	}
 }
 
-BYTE SavedInstructions[5];
-
 void BypassResize() {
 	Log("BypassResize");
 	DWORD jump = ResizeFuncaddr + 16;
 	BYTE instruction = *(BYTE*)(jump);
-	// If its already bypassed leave it alone
-	if (instruction == 0x0F)
+	switch (instruction)
+	{
+	case 0x0F:
+	case 0x74:
+	case 0x75:
 	{
 		BYTE newOffset = ABetterEntrypoint - jump - 5 /* I am totally confused*/;
 		BYTE patch[5] = { 0xE9, newOffset, 0x0, 0x0, 0x0 };
@@ -872,16 +885,10 @@ void BypassResize() {
 		memcpy(&SavedInstructions, (void*)jump, 5);
 		MemoryPatch(jump, (const void*)&patch, 5);
 	}
-	if (instruction == 0x75)
-	{
-		//Sleep(5000);
-		BYTE newOffset = ABetterEntrypoint - jump - 5 /* I am totally confused*/;
-		BYTE patch[5] = { 0xE9, newOffset, 0x0, 0x0, 0x0 };
-		Log("BYPASS Patch Jump at 0x%x with 0x%x 0x%x", jump, patch[0], patch[1], patch[2]);
-		memcpy(&SavedInstructions, (void*)jump, 5);
-		MemoryPatch(jump, (const void*)&patch, 5);
+	break;
+	default:
+		break;
 	}
-
 }
 
 void RestoreResize() {
@@ -891,11 +898,7 @@ void RestoreResize() {
 	// If its not bypassed leave it alone
 	if (instruction == 0xE9)
 	{
-		//BYTE originalOffset = ABetterEntrypoint - jump - 6 /* btfom why*/;
-		//originalOffset = 0x8c;
-		//BYTE patch[3] = { 0x0F, 0x84, originalOffset };
 		Log("RESTORE Patch Jump at 0x%x with 0x%x 0x%x", jump, SavedInstructions[0], SavedInstructions[1], SavedInstructions[2]);
-
 		MemoryPatch(jump, (const void*)&SavedInstructions, 5);
 	}
 }
@@ -1959,15 +1962,6 @@ void CALLBACK MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MS
 			}
 		}
 			break;
-
-
-			//case DOWNDSIZE:
-			//	if (ResizeFuncaddr)
-			//	{
-			//		//*SizePtr = DesiredSize;
-			//		//((void(*)(void))ResizeFuncaddr)();
-			//	}
-			//	break;
 
 		case FINDDATA:
 			FindList((DWORD)lParam, HIWORD(wParam));

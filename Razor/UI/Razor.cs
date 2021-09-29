@@ -9218,7 +9218,10 @@ namespace Assistant
             forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
             forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
             gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
-
+            if (! Assistant.Client.IsOSI )
+            {
+                DisableGameSize();
+            }
             notshowlauncher.Checked = RazorEnhanced.Settings.General.ReadBool("NotShowLauncher");
             forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
             taskbar.Checked = !(systray.Checked = RazorEnhanced.Settings.General.ReadBool("Systray"));
@@ -9367,9 +9370,18 @@ namespace Assistant
             BandageHealUseTarget.Enabled = !bandagehealusetext.Checked;
         }
 
-        public void DisableSmartCpu(string newText)
+        internal void DisableGameSize()
         {
-            this.smartCPU.Text = newText;
+            this.gameSize.Text = "Unavailable / CUO";
+            this.gameSize.Checked = false;
+            this.gameSize.Enabled = false;
+            this.forceSizeY.Enabled = false;
+            this.forceSizeX.Enabled = false;
+        }
+
+        public void DisableSmartCpu()
+        {
+            this.smartCPU.Text = "Unavailable / CUO";
             this.smartCPU.Enabled = false;
             this.smartCPU.Checked = false;
         }

@@ -42,6 +42,7 @@ namespace Assistant
 			SmartCPU = 21,
 			Negotiate = 22,
 			SetMapHWnd = 23,
+
 			DwmFree = 25
 		}
 
@@ -207,7 +208,7 @@ namespace Assistant
             //}
         }
 
-    public override Loader_Error LaunchClient(string client)
+			public override Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Assistant.Engine.RootPath, "Crypt.dll");
             uint pid;

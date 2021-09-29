@@ -390,7 +390,8 @@ namespace Assistant
 
 		public abstract void SetGameSize(int x, int y);
 
-		public enum Loader_Error
+
+        public enum Loader_Error
 		{
 			SUCCESS = 0,
 			NO_OPEN_EXE,
