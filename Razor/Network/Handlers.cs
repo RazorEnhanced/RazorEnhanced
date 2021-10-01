@@ -888,6 +888,8 @@ namespace Assistant
 					Item container = World.FindItem(cont);
 					if (container != null && !updated.Contains(container))
 						updated.Add(container);
+					//if (container != null && itemID == 0x2006 && container.RootContainer == null)
+					//	container.RootContainer = serial; //update corpse's root container. Commented out as it is not preferred to change item structure.
 				}
 
 				item.Hue = p.ReadUInt16();
@@ -1941,7 +1943,7 @@ namespace Assistant
 			if (isNew && World.Player != null)
 			{
 				if (item.ItemID == 0x2006) // corpse itemid = 0x2006
-				{
+				{					
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
 				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
 
@@ -2013,7 +2015,7 @@ namespace Assistant
 				BYTE - item flags (same as old packet)
 				WORD ???
 			*/
-
+			
 			ushort _unk1 = p.ReadUInt16();
 
 			byte _artDataID = p.ReadByte();
@@ -2048,7 +2050,7 @@ namespace Assistant
 
 			item.Position = new Point3D(x, y, z);
 
-			byte _light = p.ReadByte();
+			item.Light = p.ReadByte();
 
 			item.Hue = p.ReadUInt16();
 
@@ -2064,7 +2066,7 @@ namespace Assistant
 			if (isNew && World.Player != null)
 			{
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
-				{
+				{					
 					if (Engine.MainWindow.ShowCorpseNames.Checked)
 				 		Assistant.Client.Instance.SendToServer(new SingleClick(item));
 

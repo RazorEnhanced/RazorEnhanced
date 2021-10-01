@@ -55,6 +55,7 @@ namespace Assistant
         private ItemID m_ItemID;
         private ushort m_Amount;
         private byte m_Direction;
+		private byte m_Light;
 
         private bool m_Visible;
         private bool m_Movable;
@@ -223,6 +224,12 @@ namespace Assistant
 		{
 			get { return m_Direction; }
 			set { m_Direction = value; }
+		}
+
+		internal byte Light
+		{
+			get { return m_Light; }
+			set { m_Light = value; }
 		}
 
 		internal bool Visible
@@ -472,6 +479,10 @@ namespace Assistant
 
                 return cont;
             }
+			set 
+			{
+				this.Container = value; 
+			}
 		}
 
 		internal bool IsChildOf(object parent)
