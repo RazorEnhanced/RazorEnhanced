@@ -370,23 +370,27 @@ namespace Assistant
 
 		internal static void ForceSize()
 		{
-			int x, y;
-
-			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
+			if (Client.IsOSI)
 			{
-				x = RazorEnhanced.Settings.General.ReadInt("ForceSizeX");
-				y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
+				int x, y;
 
-				if (x > 100 && x < 4000 && y > 100 && y < 4000)
-					Assistant.Client.Instance.SetGameSize(x, y);
+				if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
+				{
+					x = RazorEnhanced.Settings.General.ReadInt("ForceSizeX");
+					y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
+
+					if (x > 100 && x < 4000 && y > 100 && y < 4000)
+						Assistant.Client.Instance.SetGameSize(x, y);
+					else
+						MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+				}
 				else
-					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-			} else
-			{
-				Assistant.Client.Instance.SetGameSize(0, 0);
-			}
+				{
+					Assistant.Client.Instance.SetGameSize(0, 0);
+				}
 
-			ShowVideoGump();
+				ShowVideoGump();
+			}
 		}
 
 		private static void ShowVideoGump()
@@ -408,35 +412,37 @@ namespace Assistant
 
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (gameSize.Focused)
-				RazorEnhanced.Settings.General.WriteBool("ForceSizeEnabled", gameSize.Checked);
-
-			if (Assistant.Client.IsOSI )
+			if (Client.IsOSI)
 			{
-				forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
+				if (gameSize.Focused)
+					RazorEnhanced.Settings.General.WriteBool("ForceSizeEnabled", gameSize.Checked);
 
-				if (gameSize.Checked)
+				if (Assistant.Client.IsOSI)
 				{
-					int x = Utility.ToInt32(forceSizeX.Text, 800);
-					int y = Utility.ToInt32(forceSizeY.Text, 600);
+					forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
 
-					if (x < 100 || y < 100 || x > 4000 || y > 4000)
-						MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+					if (gameSize.Checked)
+					{
+						int x = Utility.ToInt32(forceSizeX.Text, 800);
+						int y = Utility.ToInt32(forceSizeY.Text, 600);
+
+						if (x < 100 || y < 100 || x > 4000 || y > 4000)
+							MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+						else
+							Assistant.Client.Instance.SetGameSize(x, y);
+					}
 					else
-						Assistant.Client.Instance.SetGameSize(x, y);
+					{
+						Assistant.Client.Instance.SetGameSize(0, 0);
+					}
 				}
 				else
 				{
-					Assistant.Client.Instance.SetGameSize(0, 0);
+					forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Enabled = gameSize.Checked = false;
 				}
-			}
-			else 
-			{
-				forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Enabled = gameSize.Checked = false;
-			}
 
-			ShowVideoGump();
-			//	MessageBox.Show(this, Language.GetString(LocString.ApplyOptionsRequired), "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				ShowVideoGump();
+			}
 		}
 
 		private void forceSizeX_TextChanged(object sender, System.EventArgs e)

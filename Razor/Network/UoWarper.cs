@@ -16,6 +16,8 @@ namespace RazorEnhanced
 		{
 			internal bool Open(int clinr = 1)
 			{
+				if (!Client.IsOSI)
+					return false;
 				_UOHandle = DLLImport.Uo.Open();
 				if (DLLImport.Uo.Version() != 3)
 				{
@@ -30,6 +32,8 @@ namespace RazorEnhanced
 
 			internal void Pathfind(int X, int Y, int Z)
 			{
+				if (!Client.IsOSI)
+					return;
 				this._executeCommand(false, "Pathfind", new object[]
 				{
 				X,
@@ -40,17 +44,23 @@ namespace RazorEnhanced
 
             internal void OpenPaperdoll()
             {
-                this._executeCommand(false, "Macro", new object[] { 8, 1 });
+				if (!Client.IsOSI)
+					return;
+				this._executeCommand(false, "Macro", new object[] { 8, 1 });
             }
 
             internal void CloseBackpack()
             {
-                this._executeCommand(false, "Macro", new object[] { 9, 7 } );
+				if (!Client.IsOSI)
+					return;
+				this._executeCommand(false, "Macro", new object[] { 9, 7 } );
             }
 
                 internal void NextContPos(int X, int Y)
             {
-                DLLImport.Uo.SetTop(_UOHandle, 0);
+				if (!Client.IsOSI)
+					return;
+				DLLImport.Uo.SetTop(_UOHandle, 0);
                 DLLImport.Uo.PushStrVal(_UOHandle, "Set");
                 DLLImport.Uo.PushStrVal(_UOHandle, "NextCPosX");
                 DLLImport.Uo.PushInteger(_UOHandle, X);
@@ -72,7 +82,9 @@ namespace RazorEnhanced
 
             internal Point GetContPos()
             {
-                int x = -1;
+				if (!Client.IsOSI)
+					new Point(-1, -1);
+				int x = -1;
                 DLLImport.Uo.SetTop(_UOHandle, 0);
                 DLLImport.Uo.PushStrVal(_UOHandle, "Get");
                 DLLImport.Uo.PushStrVal(_UOHandle, "ContPosX");
@@ -104,7 +116,9 @@ namespace RazorEnhanced
 
             internal void ToggleAlwaysRun()
             {
-                this._executeCommand(false, "Macro", new object[] { 32, 0 });
+				if (!Client.IsOSI)
+					return;
+				this._executeCommand(false, "Macro", new object[] { 32, 0 });
             }
 
 

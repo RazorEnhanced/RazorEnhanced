@@ -204,6 +204,7 @@ namespace RazorEnhanced
 			if (Assistant.World.Player == null)
 				return;
 
+			m_open = true;
 			m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
 			m_hslot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
 
@@ -224,7 +225,7 @@ namespace RazorEnhanced
 			{
 				GumpSpellGrid();
 			}
-            m_open = true;
+
         }
 
 		internal static void LockUnlock()
@@ -309,9 +310,11 @@ namespace RazorEnhanced
             }
             else 
             {
-                Close();
-				if (!m_open)
+				if (m_open)
+				{
+					Close();
 					Open();
+				}
             }
 		}
 
@@ -321,49 +324,50 @@ namespace RazorEnhanced
             {
                 int displayMethod = RazorEnhanced.Settings.General.ReadInt("SpellGridStyle");
 
-                if (displayMethod == 0)
-                {
+				if (displayMethod == 0)
+				{
 
-                    foreach (PanelGrid p in m_panellist)
-                    {
-                        if (p.Group == GroupType.Abilities)
-                        {
-                            if (ID == 0)
-                            {
-                                p.AbilityEnabled = false;
-                                if (p.Spell == "Primary")
-                                    p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
-                                else
-                                    p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
-                            }
-                            else
-                            {
-                                if (p.AbilityID == ID)
-                                {
-                                    p.AbilityEnabled = true;
-                                    p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
-                                }
-                                else
-                                {
-                                    if (p.AbilityEnabled)
-                                    {
-                                        if (p.Spell == "Primary")
-                                            p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
-                                        else
-                                            p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
-                                    }
-                                }
+					foreach (PanelGrid p in m_panellist)
+					{
+						if (p.Group == GroupType.Abilities)
+						{
+							if (ID == 0)
+							{
+								p.AbilityEnabled = false;
+								if (p.Spell == "Primary")
+									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+								else
+									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+							}
+							else
+							{
+								if (p.AbilityID == ID)
+								{
+									p.AbilityEnabled = true;
+									p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
+								}
+								else
+								{
+									if (p.AbilityEnabled)
+									{
+										if (p.Spell == "Primary")
+											p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+										else
+											p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+									}
+								}
 
-                            }
+							}
 
-                        }
-                    }
-                }
-                else
-                {
-                    Close();
-                    Open();
-                }
+						}
+					}
+				}
+				else
+				{
+					Close();
+					Open();
+
+				}
             }
         }
 
@@ -580,6 +584,8 @@ namespace RazorEnhanced
 
 		internal static void GumpSpellGrid()
 		{
+			if (!m_open)
+				return;
 			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
             int ActiveColor = 32;
             int InactiveColor = 0;
