@@ -30,11 +30,11 @@ namespace RazorEnhanced.UI
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedGumpInspector));
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.close = new RazorEnhanced.UI.RazorButton();
-			this.clear = new RazorEnhanced.UI.RazorButton();
+			this.close = new  System.Windows.Forms.Button ();
+			this.clear = new  System.Windows.Forms.Button ();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+			this.razorButton1 = new  System.Windows.Forms.Button ();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -111,7 +111,7 @@ namespace RazorEnhanced.UI
 
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private RazorButton razorButton1;
+		private System.Windows.Forms.Button razorButton1;
 
 
 

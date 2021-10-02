@@ -10,29 +10,29 @@ namespace Assistant
 	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal ListBox BandageHealLogBox { get { return bandagehealLogBox; } }
-		internal RazorCheckBox BandageHealenableCheckBox { get { return bandagehealenableCheckBox; } }
-		internal RazorComboBox BandageHealtargetComboBox { get { return bandagehealtargetComboBox; } }
+		internal CheckBox BandageHealenableCheckBox { get { return bandagehealenableCheckBox; } }
+		internal ComboBox BandageHealtargetComboBox { get { return bandagehealtargetComboBox; } }
 		internal Label BandageHealtargetLabel { get { return bandagehealtargetLabel; } }
-		internal RazorCheckBox BandageHealcustomCheckBox { get { return bandagehealcustomCheckBox; } }
+		internal CheckBox BandageHealcustomCheckBox { get { return bandagehealcustomCheckBox; } }
 		internal RazorAgentNumHexTextBox BandageHealcustomIDTextBox { get { return bandagehealcustomIDTextBox; } }
 		internal RazorAgentNumHexTextBox BandageHealcustomcolorTextBox { get { return bandagehealcustomcolorTextBox; } }
-		internal RazorCheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
+		internal CheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
         internal CheckBox BandageHealTimeWithBuf { get { return bandagehealTimeWithBufCheckBox; } }
 
         internal RazorAgentNumOnlyTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
 		internal RazorAgentNumOnlyTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
         internal RazorAgentNumOnlyTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
-        internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
-		internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
-		internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
-		internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
-		internal RazorCheckBox BandageHealUseText { get { return bandagehealusetext; } }
-        internal RazorTextBox BandageHealUseTextContent { get { return bandagehealusetextContent; } }
-        internal RazorTextBox BandageHealUseTextSelfContent { get { return bandagehealusetextSelfContent; } }
+		internal CheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
+		internal CheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
+		internal CheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
+		internal CheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
+		internal CheckBox BandageHealUseText { get { return bandagehealusetext; } }
+        internal TextBox BandageHealUseTextContent { get { return bandagehealusetextContent; } }
+        internal TextBox BandageHealUseTextSelfContent { get { return bandagehealusetextSelfContent; } }
 
-        internal RazorCheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
-        internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
-		internal RazorCheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
+		internal CheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
+        internal System.Windows.Forms.Button BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
+		internal CheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
 
 		private void bandagehealenableCheckBox_CheckedChanged(object sender, EventArgs e)
 		{

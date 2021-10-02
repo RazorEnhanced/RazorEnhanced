@@ -8,18 +8,18 @@ namespace Assistant
 	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
-		internal RazorCheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
-		internal RazorCheckBox AutoopenToolBarCheckBox { get { return autoopenToolBarCheckBox; } }
-		internal RazorComboBox ToolBoxCountComboBox { get { return toolboxcountComboBox; } }
-		internal RazorComboBox ToolBoxStyleComboBox { get { return toolboxstyleComboBox; } }
-		internal RazorComboBox ToolBoxSizeComboBox { get { return toolboxsizeComboBox; } }
-		internal RazorCheckBox ShowHitsToolBarCheckBox { get { return showhitsToolBarCheckBox; } }
-        internal RazorCheckBox ShowTitheToolBarCheckBox { get { return showtitheToolBarCheckBox; } }
+		internal CheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
+		internal CheckBox AutoopenToolBarCheckBox { get { return autoopenToolBarCheckBox; } }
+		internal ComboBox ToolBoxCountComboBox { get { return toolboxcountComboBox; } }
+		internal ComboBox ToolBoxStyleComboBox { get { return toolboxstyleComboBox; } }
+		internal ComboBox ToolBoxSizeComboBox { get { return toolboxsizeComboBox; } }
+		internal CheckBox ShowHitsToolBarCheckBox { get { return showhitsToolBarCheckBox; } }
+        internal CheckBox ShowTitheToolBarCheckBox { get { return showtitheToolBarCheckBox; } }
 
-        internal RazorCheckBox ShowStaminaToolBarCheckBox { get { return showstaminaToolBarCheckBox; } }
-		internal RazorCheckBox ShowManaToolBarCheckBox { get { return showmanaToolBarCheckBox; } }
-		internal RazorCheckBox ShowWeightToolBarCheckBox { get { return showweightToolBarCheckBox; } }
-		internal RazorCheckBox ShowFollowerToolBarCheckBox { get { return showfollowerToolBarCheckBox; } }
+        internal CheckBox ShowStaminaToolBarCheckBox { get { return showstaminaToolBarCheckBox; } }
+		internal CheckBox ShowManaToolBarCheckBox { get { return showmanaToolBarCheckBox; } }
+		internal CheckBox ShowWeightToolBarCheckBox { get { return showweightToolBarCheckBox; } }
+		internal CheckBox ShowFollowerToolBarCheckBox { get { return showfollowerToolBarCheckBox; } }
 		internal Label ToolBoxSlotsLabel { get { return toolbarslot_label; } }
 
 		// ---------------- TOOLBAR START ----------------

@@ -219,12 +219,12 @@ namespace Assistant
                 int res = XQueryKeymap(Display, szKey);
                 //foreach(var xx in szKey)
                 //Console.WriteLine(xx + "-");
-                int code = XKeysymToKeycode(Display, (int) key);
+                int code = XKeysymToKeycode(Display, (int)key);
                 bool pressed = (szKey[code >> 3] & (1 << (code & 7))) == 0;
                 var r = szKey[code / 8];
                 var s = (1 << (code % 8));
                 var x = r & s;
-                return r == s ? (ushort) 0xFF00 : (ushort) 0;
+                return r == s ? (ushort)0xFF00 : (ushort)0;
             }
             catch
             {

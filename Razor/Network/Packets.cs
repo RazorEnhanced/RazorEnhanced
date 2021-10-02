@@ -882,7 +882,7 @@ namespace Assistant
             string text = "Text Test";
             string caption = "Caption Test";
             int gumpid = 990099;
-            EnsureCapacity(3 + 4 + 2 + 2 + text.Length + 2 + caption.Length);            
+            EnsureCapacity(3 + 4 + 2 + 2 + text.Length + 2 + caption.Length);
             Write((int)World.Player.Serial);
             Write((ushort)gumpid);
             Write((ushort)text.Length);
@@ -909,16 +909,16 @@ namespace Assistant
             //uint linesCount = 0;
             //uint uncompGumpStringsLength = 543;
             EnsureCapacity(4 + 4 + 4 + 4 + 4 + 4 + compGumpEntries.Length + 4 + 4 + 4 + 4 + compGumpStrings.Length);
-            Write((uint) gumpSerial);
-            Write((uint) gumpId);
-            Write((uint) gumpX);
+            Write((uint)gumpSerial);
+            Write((uint)gumpId);
+            Write((uint)gumpX);
             Write((uint)gumpY);
 
             byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
             int destLen = dest.Length;
             bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
             Write((uint)destLen + 4);
-            Write((uint) gumpDefinition.Length);
+            Write((uint)gumpDefinition.Length);
             Write((byte[])dest, 0, destLen);
             Write((uint)gumpStrings.Count);
 
@@ -934,13 +934,13 @@ namespace Assistant
                     s.CopyTo(0, charArray, 0, len);
                     byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(s);
                     ms.Write(bytes, 0, bytes.Length);
-                }                
+                }
                 //ms.Flush();
                 byte[] textBuffer = ms.ToArray();
                 int compressedSize = textBuffer.Length + 10;
-                byte[] compressedData = new byte[compressedSize+10]; // compressed SHOULD be smalled than uncompressed
+                byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
                 ZLibError compResult2 = DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
-                bool worked2 = ( compResult2 == ZLibError.Z_OK);
+                bool worked2 = (compResult2 == ZLibError.Z_OK);
 
                 Write((uint)compressedSize + 4);
                 Write((uint)textBuffer.Length);
@@ -1000,7 +1000,7 @@ namespace Assistant
             Write(false);
             Write((int)abilityIndex);
             Write((byte)0x0A);
-            }
+        }
     }
 
     internal sealed class ClearAbility : Packet
@@ -1152,7 +1152,7 @@ namespace Assistant
             Write((ushort)itemid);
         }
 
-        internal HuePicker(Serial target, ItemID model, ushort color )
+        internal HuePicker(Serial target, ItemID model, ushort color)
             : base(0x95, 9)
         {
             //BYTE[4] itemID of dye target
@@ -1611,7 +1611,7 @@ namespace Assistant
         }
     }
 
-     internal sealed class ContextMenuRequest : Packet
+    internal sealed class ContextMenuRequest : Packet
     {
         internal ContextMenuRequest(Serial entity)
             : base(0xBF)

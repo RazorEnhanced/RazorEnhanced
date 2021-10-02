@@ -61,11 +61,11 @@ namespace RazorEnhanced.UI
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.bAddProp = new RazorEnhanced.UI.RazorButton();
-			this.comboboxProp = new RazorEnhanced.UI.RazorComboBox();
+			this.bAddProp = new  System.Windows.Forms.Button ();
+			this.comboboxProp = new System.Windows.Forms.ComboBox();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+			this.razorButton1 = new  System.Windows.Forms.Button ();
 			ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -384,9 +384,9 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private RazorButton razorButton1;
-		private RazorButton bAddProp;
-		private RazorComboBox comboboxProp;
+		private System.Windows.Forms.Button razorButton1;
+		private System.Windows.Forms.Button bAddProp;
+		private System.Windows.Forms.ComboBox comboboxProp;
 		private System.Windows.Forms.Label lColor;
 		private System.Windows.Forms.Label lGraphics;
 		private System.Windows.Forms.Label lName;

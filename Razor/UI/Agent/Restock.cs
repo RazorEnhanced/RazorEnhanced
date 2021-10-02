@@ -12,7 +12,7 @@ namespace Assistant
 		internal Label RestockDestinationLabel { get { return restockDestinationLabel; } }
 		internal ListBox RestockLogBox { get { return restockLogBox; } }
 		internal DataGridView RestockDataGridView { get { return restockdataGridView; } }
-		internal RazorComboBox RestockListSelect { get { return restockListSelect; } }
+		internal ComboBox RestockListSelect { get { return restockListSelect; } }
 		internal Button RestockExecute { get { return restockExecuteButton; } }
 		internal Button RestockStop { get { return restockStopButton; } }
 

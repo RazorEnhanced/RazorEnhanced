@@ -11,13 +11,13 @@ namespace Assistant
 		internal ListBox FriendLogBox { get { return friendLogBox; } }
 		internal ListView FriendListView { get { return friendlistView; } }
 		internal ComboBox FriendListSelect { get { return friendListSelect; } }
-		internal RazorCheckBox FriendPartyCheckBox { get { return friendPartyCheckBox; } }
-		internal RazorCheckBox FriendAttackCheckBox { get { return friendAttackCheckBox; } }
-		internal RazorCheckBox FriendIncludePartyCheckBox { get { return friendIncludePartyCheckBox; } }
-		internal RazorCheckBox FriendSLCheckBox { get { return SLfriendCheckBox; } }
-		internal RazorCheckBox FriendTBCheckBox { get { return TBfriendCheckBox; } }
-		internal RazorCheckBox FriendCOMCheckBox { get { return COMfriendCheckBox; } }
-		internal RazorCheckBox FriendMINCheckBox { get { return MINfriendCheckBox; } }
+		internal CheckBox FriendPartyCheckBox { get { return friendPartyCheckBox; } }
+		internal CheckBox FriendAttackCheckBox { get { return friendAttackCheckBox; } }
+		internal CheckBox FriendIncludePartyCheckBox { get { return friendIncludePartyCheckBox; } }
+		internal CheckBox FriendSLCheckBox { get { return SLfriendCheckBox; } }
+		internal CheckBox FriendTBCheckBox { get { return TBfriendCheckBox; } }
+		internal CheckBox FriendCOMCheckBox { get { return COMfriendCheckBox; } }
+		internal CheckBox FriendMINCheckBox { get { return MINfriendCheckBox; } }
 		internal ListView FriendGuildListView { get { return friendguildListView; } }
 
 		private void friendButtonAddList_Click(object sender, EventArgs e)

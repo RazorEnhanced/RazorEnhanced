@@ -32,21 +32,6 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	public class RazorRadioButton : RadioButton
-	{
-		public RazorRadioButton()
-		{
-		}
-	}
-
-	public class RazorTextBox : TextBox
-	{
-		public RazorTextBox()
-		{
-
-		}
-	}
-
 	public class RazorHotKeyTextBox : TextBox
 	{
 		public RazorHotKeyTextBox()
@@ -170,27 +155,5 @@ namespace RazorEnhanced.UI
 
 		public RazorAgentNumHexTextBox()
 		{ }
-	}
-
-	public class RazorComboBox : ComboBox
-	{
-		public RazorComboBox()
-		{
-		}	
-	}
-
-	public class RazorCheckBox : CheckBox
-	{
-		public RazorCheckBox()
-		{
-		}
-	}
-
-	public partial class RazorButton : Button
-	{
-
-		public RazorButton()
-		{
-		}
 	}
 }

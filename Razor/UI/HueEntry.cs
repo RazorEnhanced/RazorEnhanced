@@ -10,11 +10,11 @@ namespace Assistant
 	internal class HueEntry : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Label label1;
-		private RazorTextBox hueNum;
-		private RazorButton inGame;
+		private System.Windows.Forms.TextBox hueNum;
+		private System.Windows.Forms.Button  inGame;
 		private System.Windows.Forms.Label preview;
-		private RazorButton okay;
-		private RazorButton cancel;
+		private System.Windows.Forms.Button  okay;
+		private System.Windows.Forms.Button  cancel;
 
 		/// <summary>
 		/// Required designer variable.
@@ -71,11 +71,11 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.label1 = new System.Windows.Forms.Label();
-			this.hueNum = new RazorTextBox();
-			this.inGame = new RazorButton();
+			this.hueNum = new TextBox();
+			this.inGame = new  System.Windows.Forms.Button ();
 			this.preview = new System.Windows.Forms.Label();
-			this.okay = new RazorButton();
-			this.cancel = new RazorButton();
+			this.okay = new  System.Windows.Forms.Button ();
+			this.cancel = new  System.Windows.Forms.Button ();
 			this.SuspendLayout();
 			//
 			// label1

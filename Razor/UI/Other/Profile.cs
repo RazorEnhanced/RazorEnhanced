@@ -8,7 +8,7 @@ namespace Assistant
 {
 	public partial class MainForm : System.Windows.Forms.Form
 	{
-		internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
+		internal ComboBox ProfilesComboBox { get { return profilesComboBox; } }
 
 		private void profilesAddButton_Click(object sender, EventArgs e)
 		{

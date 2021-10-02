@@ -39,7 +39,7 @@ namespace RazorEnhanced.UI
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.refreshtimer = new System.Windows.Forms.Timer(this.components);
-            this.close = new RazorEnhanced.UI.RazorButton();
+            this.close = new  System.Windows.Forms.Button ();
             this.tabControl1.SuspendLayout();
             this.objecttabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sharedobjectGridView)).BeginInit();
@@ -207,7 +207,7 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.TabPage timerstabPage;
 		private System.Windows.Forms.DataGridView sharedobjectGridView;
 		private System.Windows.Forms.DataGridView timerGridView;
-		private RazorButton close;
+		private System.Windows.Forms.Button close;
 		private System.Windows.Forms.Timer refreshtimer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Alias;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;

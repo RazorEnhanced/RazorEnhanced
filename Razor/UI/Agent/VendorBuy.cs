@@ -7,10 +7,10 @@ namespace Assistant
 {
 	public partial class MainForm : System.Windows.Forms.Form
 	{
-		internal RazorCheckBox BuyCheckBox { get { return buyEnableCheckBox; } }
+        internal CheckBox BuyCheckBox { get { return buyEnableCheckBox; } }
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
-		internal RazorComboBox BuyListSelect { get { return buyListSelect; } }
-		internal RazorCheckBox BuyCompareNameCheckBox { get { return buyCompareNameCheckBox; } }
+		internal ComboBox BuyListSelect { get { return buyListSelect; } }
+        internal CheckBox BuyCompareNameCheckBox { get { return buyCompareNameCheckBox; } }
 		internal DataGridView VendorBuyDataGridView { get { return vendorbuydataGridView; } }
 
 		private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)

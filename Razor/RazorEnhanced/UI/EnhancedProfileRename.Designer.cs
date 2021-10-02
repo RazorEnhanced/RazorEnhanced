@@ -30,9 +30,9 @@ namespace RazorEnhanced.UI
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedProfileRename));
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.profilename = new RazorEnhanced.UI.RazorTextBox();
-			this.close = new RazorEnhanced.UI.RazorButton();
-			this.profileadd = new RazorEnhanced.UI.RazorButton();
+			this.profilename = new System.Windows.Forms.TextBox();
+			this.close = new  System.Windows.Forms.Button ();
+			this.profileadd = new  System.Windows.Forms.Button ();
 			this.label1 = new System.Windows.Forms.Label();
 			this.oldNameLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
@@ -110,9 +110,9 @@ namespace RazorEnhanced.UI
 		#endregion
 
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
-		private RazorTextBox profilename;
-		private RazorButton close;
-		private RazorButton profileadd;
+		private System.Windows.Forms.TextBox profilename;
+		private System.Windows.Forms.Button close;
+		private System.Windows.Forms.Button profileadd;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label oldNameLabel;
 

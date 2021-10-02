@@ -30,11 +30,11 @@ namespace RazorEnhanced.UI
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedProfileImport));
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.profilename = new RazorEnhanced.UI.RazorTextBox();
-			this.close = new RazorEnhanced.UI.RazorButton();
+			this.profilename = new System.Windows.Forms.TextBox();
+			this.close = new  System.Windows.Forms.Button ();
 			this.label1 = new System.Windows.Forms.Label();
 			this.cloneNameLabel = new System.Windows.Forms.Label();
-			this.profilefilepathTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.profilefilepathTextBox = new System.Windows.Forms.TextBox();
 			this.chosefileButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			//
@@ -125,12 +125,12 @@ namespace RazorEnhanced.UI
 		#endregion
 
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
-		private RazorTextBox profilename;
-		private RazorButton close;
+		private System.Windows.Forms.TextBox profilename;
+		private System.Windows.Forms.Button close;
 		//private RazorButton profileimport;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label cloneNameLabel;
-		private RazorTextBox profilefilepathTextBox;
+		private System.Windows.Forms.TextBox profilefilepathTextBox;
 		private System.Windows.Forms.Button chosefileButton;
 
 	}

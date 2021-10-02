@@ -171,26 +171,26 @@ namespace Assistant
         public unsafe bool InitPlugin(PluginHeader* header)
         {
             _sendToClient =
-                (OnPacketSendRecv) Marshal.GetDelegateForFunctionPointer(header->Recv, typeof(OnPacketSendRecv));
+                (OnPacketSendRecv)Marshal.GetDelegateForFunctionPointer(header->Recv, typeof(OnPacketSendRecv));
             _sendToServer =
-                (OnPacketSendRecv) Marshal.GetDelegateForFunctionPointer(header->Send, typeof(OnPacketSendRecv));
+                (OnPacketSendRecv)Marshal.GetDelegateForFunctionPointer(header->Send, typeof(OnPacketSendRecv));
             _getPacketLength =
-                (OnGetPacketLength) Marshal.GetDelegateForFunctionPointer(header->GetPacketLength,
+                (OnGetPacketLength)Marshal.GetDelegateForFunctionPointer(header->GetPacketLength,
                     typeof(OnGetPacketLength));
             _getPlayerPosition =
-                (OnGetPlayerPosition) Marshal.GetDelegateForFunctionPointer(header->GetPlayerPosition,
+                (OnGetPlayerPosition)Marshal.GetDelegateForFunctionPointer(header->GetPlayerPosition,
                     typeof(OnGetPlayerPosition));
-            _castSpell = (OnCastSpell) Marshal.GetDelegateForFunctionPointer(header->CastSpell, typeof(OnCastSpell));
+            _castSpell = (OnCastSpell)Marshal.GetDelegateForFunctionPointer(header->CastSpell, typeof(OnCastSpell));
             _getStaticImage =
-                (OnGetStaticImage) Marshal.GetDelegateForFunctionPointer(header->GetStaticImage,
+                (OnGetStaticImage)Marshal.GetDelegateForFunctionPointer(header->GetStaticImage,
                     typeof(OnGetStaticImage));
             _requestMove =
-                (RequestMove) Marshal.GetDelegateForFunctionPointer(header->RequestMove, typeof(RequestMove));
-            _setTitle = (OnSetTitle) Marshal.GetDelegateForFunctionPointer(header->SetTitle, typeof(OnSetTitle));
+                (RequestMove)Marshal.GetDelegateForFunctionPointer(header->RequestMove, typeof(RequestMove));
+            _setTitle = (OnSetTitle)Marshal.GetDelegateForFunctionPointer(header->SetTitle, typeof(OnSetTitle));
             _uoFilePath =
-                (OnGetUOFilePath) Marshal.GetDelegateForFunctionPointer(header->GetUOFilePath, typeof(OnGetUOFilePath));
-            m_ClientVersion = new Version((byte) (header->ClientVersion >> 24), (byte) (header->ClientVersion >> 16),
-                (byte) (header->ClientVersion >> 8), (byte) header->ClientVersion).ToString();
+                (OnGetUOFilePath)Marshal.GetDelegateForFunctionPointer(header->GetUOFilePath, typeof(OnGetUOFilePath));
+            m_ClientVersion = new Version((byte)(header->ClientVersion >> 24), (byte)(header->ClientVersion >> 16),
+                (byte)(header->ClientVersion >> 8), (byte)header->ClientVersion).ToString();
             m_ClientRunning = true;
             m_ClientWindow = header->HWND;
             _tick = Tick;
@@ -241,10 +241,11 @@ namespace Assistant
         internal static void RunTheUI()
         {
             Engine.MainWnd = new MainForm();
-            if (! IsOSI) {
+            if (!IsOSI)
+            {
                 Engine.MainWindow.SafeAction(s => { s.DisableRecorder(); });
                 Engine.MainWindow.SafeAction(s => { s.DisableSmartCpu(); });
-                Engine.MainWindow.SafeAction(s => { s.DisableGameSize(); });                
+                Engine.MainWindow.SafeAction(s => { s.DisableGameSize(); });
             }
             Application.Run(Engine.MainWnd);
         }
@@ -265,7 +266,7 @@ namespace Assistant
 
         private unsafe bool OnRecv(ref byte[] data, ref int length)
         {
-            m_In += (uint) length;
+            m_In += (uint)length;
             fixed (byte* ptr = data)
             {
                 bool result = true;
@@ -287,7 +288,7 @@ namespace Assistant
                     result = !PacketHandler.OnServerPacket(id, reader, packet);
 
                     data = packet.Compile();
-                    length = (int) packet.Length;
+                    length = (int)packet.Length;
                 }
 
                 return result;
@@ -296,7 +297,7 @@ namespace Assistant
 
         private unsafe bool OnSend(ref byte[] data, ref int length)
         {
-            m_Out += (uint) length;
+            m_Out += (uint)length;
             fixed (byte* ptr = data)
             {
                 bool result = true;
@@ -318,7 +319,7 @@ namespace Assistant
                     result = !PacketHandler.OnClientPacket(id, reader, packet);
 
                     data = packet.Compile();
-                    length = (int) packet.Length;
+                    length = (int)packet.Length;
                 }
 
                 return result;
@@ -404,7 +405,7 @@ namespace Assistant
 
             return true;
         }
-            private void OnDisconnected()
+        private void OnDisconnected()
         {
         }
 
@@ -465,7 +466,7 @@ namespace Assistant
         public override void SendToServer(Packet p)
         {
             byte[] data = p.Compile();
-            int length = (int) p.Length;
+            int length = (int)p.Length;
             _sendToServer(ref data, ref length);
         }
 
@@ -477,7 +478,7 @@ namespace Assistant
         public override void SendToClient(Packet p)
         {
             byte[] data = p.Compile();
-            int length = (int) p.Length;
+            int length = (int)p.Length;
 
             _sendToClient(ref data, ref length);
         }
@@ -485,7 +486,7 @@ namespace Assistant
         public override void ForceSendToClient(Packet p)
         {
             byte[] data = p.Compile();
-            int length = (int) p.Length;
+            int length = (int)p.Length;
 
             _sendToClient(ref data, ref length);
         }
@@ -493,7 +494,7 @@ namespace Assistant
         public override void ForceSendToServer(Packet p)
         {
             byte[] data = p.Compile();
-            int length = (int) p.Length;
+            int length = (int)p.Length;
 
             _sendToServer(ref data, ref length);
         }
@@ -529,7 +530,7 @@ namespace Assistant
 
         internal override void RequestMove(Direction m_Dir)
         {
-            _requestMove((int) m_Dir, true);
+            _requestMove((int)m_Dir, true);
         }
 
         public override void PathFindTo(Assistant.Point3D Location)

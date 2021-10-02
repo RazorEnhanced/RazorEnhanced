@@ -19,7 +19,7 @@ namespace Assistant.Filters
 
         public override byte[] PacketIDs
         {
-            get { return new byte[] {0x1C}; }
+            get { return new byte[] { 0x1C }; }
         }
 
         public override string Name
@@ -35,7 +35,7 @@ namespace Assistant.Filters
             // 0, 1, 2
             Serial serial = p.ReadUInt32(); // 3, 4, 5, 6
             ushort body = p.ReadUInt16(); // 7, 8
-            MessageType type = (MessageType) p.ReadByte(); // 9
+            MessageType type = (MessageType)p.ReadByte(); // 9
 
             if (type != m_Type)
                 return;
@@ -75,7 +75,7 @@ namespace Assistant.Filters
 
         public override byte[] PacketIDs
         {
-            get { return new byte[] {0xC1}; }
+            get { return new byte[] { 0xC1 }; }
         }
 
         public override string Name
@@ -90,7 +90,7 @@ namespace Assistant.Filters
 
             Serial serial = p.ReadUInt32();
             ushort body = p.ReadUInt16();
-            MessageType type = (MessageType) p.ReadByte();
+            MessageType type = (MessageType)p.ReadByte();
             ushort hue = p.ReadUInt16();
             ushort font = p.ReadUInt16();
             int num = p.ReadInt32();

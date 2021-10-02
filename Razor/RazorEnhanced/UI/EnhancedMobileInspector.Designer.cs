@@ -73,7 +73,7 @@ namespace RazorEnhanced.UI
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+            this.razorButton1 = new  System.Windows.Forms.Button ();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.listBoxAttributes = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
@@ -713,7 +713,7 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Button bContainerCopy;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private RazorButton razorButton1;
+		private System.Windows.Forms.Button razorButton1;
 		private System.Windows.Forms.Button bSerialCopy;
 		private System.Windows.Forms.TextBox lName;
 		private System.Windows.Forms.TextBox lSerial;
