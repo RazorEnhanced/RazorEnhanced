@@ -993,21 +993,14 @@ namespace Assistant
         internal UseAbility(AOSAbility abilityIndex)
             : base(0xD7)
         {
-            EnsureCapacity(1 + 2 + 4 + 2 + 1 + 4);
+            EnsureCapacity(15);
 
             Write((uint)World.Player.Serial);
             Write((ushort)0x19);
-            if (abilityIndex == AOSAbility.Clear)
-            {
-                Write(true);
-                // server assumes ability index is 0 (lame)
+            Write(false);
+            Write((int)abilityIndex);
+            Write((byte)0x0A);
             }
-            else
-            {
-                Write(false);
-                Write((int)abilityIndex);
-            }
-        }
     }
 
     internal sealed class ClearAbility : Packet
@@ -1324,6 +1317,7 @@ namespace Assistant
             ushort amount = item.Amount;
             int x = item.Position.X;
             int y = item.Position.Y;
+            byte light = item.Light;
             ushort hue = item.Hue;
             byte flags = item.GetPacketFlags();
             byte direction = item.Direction;
@@ -1343,7 +1337,7 @@ namespace Assistant
 
             Write((uint)serial);
             Write((ushort)(itemID & 0x7FFF));
-            Write((byte)0); // graph inc ?
+            Write((byte)direction); // graph inc ?
 
             Write((ushort)amount);
             Write((ushort)0); // unknown
@@ -1356,7 +1350,7 @@ namespace Assistant
 
             Write((sbyte)item.Position.Z);
 
-            Write((byte)direction);
+            Write((byte)light);
 
             Write((ushort)hue);
             Write((byte)flags);
@@ -1584,12 +1578,10 @@ namespace Assistant
 
     internal sealed class DisplayPaperdoll : Packet
     {
-        internal DisplayPaperdoll(Mobile m, string text)
-            : base(0x88, 66)
+        internal DisplayPaperdoll(int serial)
+            : base(0x06, 5)
         {
-            Write((int)m.Serial);
-            WriteAsciiFixed(text, 60);
-            Write((byte)(m.Warmode ? 1 : 0));
+            Write((uint)serial | 0x80000000);
         }
     }
 
@@ -1607,8 +1599,19 @@ namespace Assistant
             Write((uint)s);
         }
     }
+    internal sealed class CloseContainer : Packet
+    {
+        internal CloseContainer(Serial s)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 4 + 4);
+            Write((ushort)0x16);
+            Write((uint)0x0C);
+            Write((uint)s);
+        }
+    }
 
-    internal sealed class ContextMenuRequest : Packet
+     internal sealed class ContextMenuRequest : Packet
     {
         internal ContextMenuRequest(Serial entity)
             : base(0xBF)

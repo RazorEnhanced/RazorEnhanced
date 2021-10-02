@@ -75,6 +75,11 @@ namespace RazorEnhanced
 		public string Layer { get { return m_AssistantItem.Layer.ToString(); } }
 
         /// <summary>
+        /// Item light's direction (e.g. will affect corpse's facing direction)
+        /// </summary>
+		public byte Light { get { return m_AssistantItem.Light; } }
+
+        /// <summary>
         /// Serial of the container which contains the object.
         /// </summary>
 		public int Container
@@ -96,7 +101,7 @@ namespace RazorEnhanced
 		public int RootContainer
         {
             get
-            {
+            {                
                 if (m_AssistantItem.RootContainer is Assistant.Item)
                     return (m_AssistantItem.RootContainer as Assistant.Item).Serial;
                 else if (m_AssistantItem.RootContainer is Assistant.Mobile)
@@ -517,10 +522,10 @@ namespace RazorEnhanced
             assistantItem.Hue = (ushort)color;
             if (i.Container == 0)
             {
-                if ((assistantItem.ItemID & 0x4000) == 0x4000)
-                    Assistant.Client.Instance.SendToClient(new SAWorldItem(assistantItem));
-                else
-                    Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));
+                if (Engine.UsePostSAChanges)                        
+                    Assistant.Client.Instance.SendToClient(new SAWorldItem(assistantItem));                
+                else                    
+                    Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));                
             }
             else
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
@@ -1847,7 +1852,25 @@ namespace RazorEnhanced
             Hide(item.Serial);
         }
 
-
+        /// <summary>
+        /// Close opened container window. 
+        /// On OSI, to close opened corpse window, you need to close the corpse's root container 
+        /// Currently corpse's root container can be found by using item filter. 
+        /// </summary>
+        /// <param name="serial">Serial or Item to hide.</param>
+        ///
+        public static void Close(int serial)
+        {
+            Assistant.Item item = World.FindItem(serial);            
+            if (item != null)
+            {
+                Assistant.Client.Instance.SendToClientWait(new CloseContainer(serial));
+            }
+        }
+        public static void Close(Item item)
+        {
+            Close(item.Serial);
+        }
 
         /// <summary>
         /// Count items in Player Backpack.

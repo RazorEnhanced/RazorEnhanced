@@ -2298,22 +2298,12 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// Press the Open PaperDoll.
+        /// Open Player's Paperdoll
         /// </summary>
         // Open Paperdoll
-        public static void OpenPaperDoll(int serial = -1)
+        public static void OpenPaperDoll()
         {
-            Assistant.Mobile assistantMobile;
-            if (serial == -1)
-                assistantMobile = Assistant.World.FindMobile(World.Player.Serial);
-            else
-                assistantMobile = Assistant.World.FindMobile(serial);
-            if (assistantMobile != null)
-                Assistant.Client.Instance.SendToClient(new DisplayPaperdoll(assistantMobile, assistantMobile.Name));
-            else 
-            {
-                Misc.SendMessage(String.Format("Unable to find serial: {0}", serial));
-            }
+            Assistant.Client.Instance.SendToServerWait(new DisplayPaperdoll(World.Player.Serial));
         } 
 
         /// <summary>
