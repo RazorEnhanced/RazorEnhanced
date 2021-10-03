@@ -64,8 +64,8 @@ bool ServerEncrypted = false;
 bool DwmAttrState = true;
 bool connected = false;
 
-enum CLIENT_TYPE { TWOD = 1, THREED = 2 };
-CLIENT_TYPE ClientType = TWOD;
+enum class CLIENT_TYPE { TWOD = 1, THREED = 2 };
+CLIENT_TYPE ClientType = CLIENT_TYPE::TWOD;
 
 BYTE CryptChecksum[16] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15, };
 
@@ -554,7 +554,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	}
 	else
 	{
-		BYTE newOffset = ABetterEntrypoint - jump - 5 /* I am totally confused*/;
+		BYTE newOffset = (BYTE)(ABetterEntrypoint - jump - 5) /* I am totally confused*/;
 		BYTE patch[5] = { 0xE9, newOffset, 0x0, 0x0, 0x0 };
 		Log("BYPASS Patch Jump at 0x%x with 0x%x 0x%x", jump, patch[0], patch[1], patch[2]);
 		memcpy(&SavedInstructions, (void*)jump, 5);
@@ -657,7 +657,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 				if (addr)
 				{
 					LoginEncryption::SetKeys((const DWORD*)(addr + CRYPT_KEY_3D_LEN), (const DWORD*)(addr + CRYPT_KEY_3D_LEN + 19));
-					ClientType = THREED;
+					ClientType = CLIENT_TYPE::THREED;
 				}
 				else
 				{
@@ -814,7 +814,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	}
 
 	NativeGetUOVersion = NULL;
-	if (ClientType == TWOD)
+	if (ClientType == CLIENT_TYPE::TWOD)
 	{
 		addr = mf.GetAddress("UO Version %s", 12);
 		if (addr)
@@ -879,7 +879,7 @@ void BypassResize() {
 	case 0x74:
 	case 0x75:
 	{
-		BYTE newOffset = ABetterEntrypoint - jump - 5 /* I am totally confused*/;
+		BYTE newOffset = (BYTE)(ABetterEntrypoint - jump - 5) /* I am totally confused*/;
 		BYTE patch[5] = { 0xE9, newOffset, 0x0, 0x0, 0x0 };
 		Log("BYPASS Patch Jump at 0x%x with 0x%x 0x%x", jump, patch[0], patch[1], patch[2]);
 		memcpy(&SavedInstructions, (void*)jump, 5);
@@ -1008,9 +1008,9 @@ inline void Maintenance(Buffer &buff)
 int RecvData()
 {
 	int len = SHARED_BUFF_SIZE;
-	char buff[SHARED_BUFF_SIZE];
+	std::vector<char> buff(len);
 
-	int ackLen = (*(NetIOFunc)OldRecv)(CurrentConnection, buff, len, 0);
+	int ackLen = (*(NetIOFunc)OldRecv)(CurrentConnection, reinterpret_cast<char*>(buff.data()), buff.size(), 0);
 
 	if (ackLen == SOCKET_ERROR)
 	{
@@ -1043,16 +1043,16 @@ int RecvData()
 		if (LoginServer)
 		{
 			//Log("LoginServer");
-			memcpy(&pShared->InRecv.Buff[pShared->InRecv.Start + pShared->InRecv.Length], buff, ackLen);
+			memcpy(&pShared->InRecv.Buff[pShared->InRecv.Start + pShared->InRecv.Length], reinterpret_cast<char*>(buff.data()), ackLen);
 			pShared->InRecv.Length += ackLen;
 		}
 		else
 		{
 			//Log("Not LoginServer");
 			if (ServerEncrypted)
-				ServerCrypt->DecryptFromServer((BYTE*)buff, (BYTE*)buff, ackLen);
+				ServerCrypt->DecryptFromServer((BYTE*)reinterpret_cast<char*>(buff.data()), (BYTE*)reinterpret_cast<char*>(buff.data()), ackLen);
 
-			int blen = Compression::Decompress((char*)&pShared->InRecv.Buff[pShared->InRecv.Start + pShared->InRecv.Length], buff, ackLen);
+			int blen = Compression::Decompress((char*)&pShared->InRecv.Buff[pShared->InRecv.Start + pShared->InRecv.Length], reinterpret_cast<char*>(buff.data()), ackLen);
 			pShared->InRecv.Length += blen;
 
 			if (!ServerNegotiated && !InGame && pShared && pShared->AllowNegotiate)
