@@ -16,7 +16,7 @@ namespace Assistant.Filters
 
         public override byte[] PacketIDs
         {
-            get { return new byte[] {0x1A}; }
+            get { return new byte[] { 0x1A }; }
         }
 
         public override string Name
@@ -46,7 +46,7 @@ namespace Assistant.Filters
                 p.ReadUInt16(); // amount
 
             if ((itemID & 0x8000) != 0)
-                itemID = (ushort) ((itemID & 0x7FFF) + p.ReadSByte()); // itemID offset
+                itemID = (ushort)((itemID & 0x7FFF) + p.ReadSByte()); // itemID offset
 
             ushort x = p.ReadUInt16();
             ushort y = p.ReadUInt16();

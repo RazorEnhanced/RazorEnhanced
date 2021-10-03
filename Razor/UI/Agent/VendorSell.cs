@@ -8,9 +8,9 @@ namespace Assistant
 	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal Label SellBagLabel { get { return sellBagLabel; } }
-		internal RazorCheckBox SellCheckBox { get { return sellEnableCheckBox; } }
+        internal CheckBox SellCheckBox { get { return sellEnableCheckBox; } }
 		internal ListBox SellLogBox { get { return sellLogBox; } }
-		internal RazorComboBox SellListSelect { get { return sellListSelect; } }
+		internal ComboBox SellListSelect { get { return sellListSelect; } }
 		internal DataGridView VendorSellGridView { get { return vendorsellGridView; } }
 
 		private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)

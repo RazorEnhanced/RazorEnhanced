@@ -882,7 +882,7 @@ namespace Assistant
             string text = "Text Test";
             string caption = "Caption Test";
             int gumpid = 990099;
-            EnsureCapacity(3 + 4 + 2 + 2 + text.Length + 2 + caption.Length);            
+            EnsureCapacity(3 + 4 + 2 + 2 + text.Length + 2 + caption.Length);
             Write((int)World.Player.Serial);
             Write((ushort)gumpid);
             Write((ushort)text.Length);
@@ -909,16 +909,16 @@ namespace Assistant
             //uint linesCount = 0;
             //uint uncompGumpStringsLength = 543;
             EnsureCapacity(4 + 4 + 4 + 4 + 4 + 4 + compGumpEntries.Length + 4 + 4 + 4 + 4 + compGumpStrings.Length);
-            Write((uint) gumpSerial);
-            Write((uint) gumpId);
-            Write((uint) gumpX);
+            Write((uint)gumpSerial);
+            Write((uint)gumpId);
+            Write((uint)gumpX);
             Write((uint)gumpY);
 
             byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
             int destLen = dest.Length;
             bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
             Write((uint)destLen + 4);
-            Write((uint) gumpDefinition.Length);
+            Write((uint)gumpDefinition.Length);
             Write((byte[])dest, 0, destLen);
             Write((uint)gumpStrings.Count);
 
@@ -934,13 +934,13 @@ namespace Assistant
                     s.CopyTo(0, charArray, 0, len);
                     byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(s);
                     ms.Write(bytes, 0, bytes.Length);
-                }                
+                }
                 //ms.Flush();
                 byte[] textBuffer = ms.ToArray();
                 int compressedSize = textBuffer.Length + 10;
-                byte[] compressedData = new byte[compressedSize+10]; // compressed SHOULD be smalled than uncompressed
+                byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
                 ZLibError compResult2 = DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
-                bool worked2 = ( compResult2 == ZLibError.Z_OK);
+                bool worked2 = (compResult2 == ZLibError.Z_OK);
 
                 Write((uint)compressedSize + 4);
                 Write((uint)textBuffer.Length);
@@ -993,20 +993,13 @@ namespace Assistant
         internal UseAbility(AOSAbility abilityIndex)
             : base(0xD7)
         {
-            EnsureCapacity(1 + 2 + 4 + 2 + 1 + 4);
+            EnsureCapacity(15);
 
             Write((uint)World.Player.Serial);
             Write((ushort)0x19);
-            if (abilityIndex == AOSAbility.Clear)
-            {
-                Write(true);
-                // server assumes ability index is 0 (lame)
-            }
-            else
-            {
-                Write(false);
-                Write((int)abilityIndex);
-            }
+            Write(false);
+            Write((int)abilityIndex);
+            Write((byte)0x0A);
         }
     }
 
@@ -1159,7 +1152,7 @@ namespace Assistant
             Write((ushort)itemid);
         }
 
-        internal HuePicker(Serial target, ItemID model, ushort color )
+        internal HuePicker(Serial target, ItemID model, ushort color)
             : base(0x95, 9)
         {
             //BYTE[4] itemID of dye target
@@ -1324,6 +1317,7 @@ namespace Assistant
             ushort amount = item.Amount;
             int x = item.Position.X;
             int y = item.Position.Y;
+            byte light = item.Light;
             ushort hue = item.Hue;
             byte flags = item.GetPacketFlags();
             byte direction = item.Direction;
@@ -1343,7 +1337,7 @@ namespace Assistant
 
             Write((uint)serial);
             Write((ushort)(itemID & 0x7FFF));
-            Write((byte)0); // graph inc ?
+            Write((byte)direction); // graph inc ?
 
             Write((ushort)amount);
             Write((ushort)0); // unknown
@@ -1356,7 +1350,7 @@ namespace Assistant
 
             Write((sbyte)item.Position.Z);
 
-            Write((byte)direction);
+            Write((byte)light);
 
             Write((ushort)hue);
             Write((byte)flags);
@@ -1584,12 +1578,10 @@ namespace Assistant
 
     internal sealed class DisplayPaperdoll : Packet
     {
-        internal DisplayPaperdoll(Mobile m, string text)
-            : base(0x88, 66)
+        internal DisplayPaperdoll(int serial)
+            : base(0x06, 5)
         {
-            Write((int)m.Serial);
-            WriteAsciiFixed(text, 60);
-            Write((byte)(m.Warmode ? 1 : 0));
+            Write((uint)serial | 0x80000000);
         }
     }
 
@@ -1604,6 +1596,17 @@ namespace Assistant
         internal RemoveObject(Serial s)
             : base(0x1D, 5)
         {
+            Write((uint)s);
+        }
+    }
+    internal sealed class CloseContainer : Packet
+    {
+        internal CloseContainer(Serial s)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 4 + 4);
+            Write((ushort)0x16);
+            Write((uint)0x0C);
             Write((uint)s);
         }
     }

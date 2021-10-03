@@ -108,7 +108,7 @@ namespace RazorEnhanced.UI
             this.label47 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
-            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+            this.razorButton1 = new  System.Windows.Forms.Button ();
             this.groupBox1.SuspendLayout();
             this.groupBoxStaticDetails.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -1045,7 +1045,7 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.Button bPositionCopy;
 		private System.Windows.Forms.GroupBox groupBoxStaticDetails;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private RazorButton razorButton1;
+		private System.Windows.Forms.Button razorButton1;
 		private System.Windows.Forms.Label lPosition;
 		private System.Windows.Forms.Label lLandFlagDamaging;
 		private System.Windows.Forms.Label lLandFlagWall;

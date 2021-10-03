@@ -16,7 +16,7 @@ namespace Assistant.Filters
 
         public override byte[] PacketIDs
         {
-            get { return new byte[] {0x4E, 0x4F}; }
+            get { return new byte[] { 0x4E, 0x4F }; }
         }
 
         public override string Name

@@ -31,10 +31,10 @@ namespace RazorEnhanced.UI
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedDressAddUndressLayer));
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.layerlist = new RazorEnhanced.UI.RazorComboBox();
+			this.layerlist = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
-			this.bClose = new RazorEnhanced.UI.RazorButton();
-			this.bAddItem = new RazorEnhanced.UI.RazorButton();
+			this.bClose = new  System.Windows.Forms.Button ();
+			this.bAddItem = new  System.Windows.Forms.Button ();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -114,9 +114,9 @@ namespace RazorEnhanced.UI
 
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private RazorButton bAddItem;
-		private RazorButton bClose;
-		private RazorComboBox layerlist;
+		private System.Windows.Forms.Button bAddItem;
+		private System.Windows.Forms.Button bClose;
+		private System.Windows.Forms.ComboBox layerlist;
 		private System.Windows.Forms.Label label1;
 
 	}

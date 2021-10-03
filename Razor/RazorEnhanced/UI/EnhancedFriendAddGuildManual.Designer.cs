@@ -32,9 +32,9 @@ namespace RazorEnhanced.UI
 			this.label1 = new System.Windows.Forms.Label();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.bClose = new RazorEnhanced.UI.RazorButton();
-			this.bAddPlayer = new RazorEnhanced.UI.RazorButton();
-			this.tName = new RazorEnhanced.UI.RazorTextBox();
+			this.bClose = new  System.Windows.Forms.Button ();
+			this.bAddPlayer = new  System.Windows.Forms.Button ();
+			this.tName = new System.Windows.Forms.TextBox();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -120,9 +120,9 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.Label label1;
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private RazorTextBox tName;
-		private RazorButton bAddPlayer;
-		private RazorButton bClose;
+		private System.Windows.Forms.TextBox tName;
+		private System.Windows.Forms.Button bAddPlayer;
+		private System.Windows.Forms.Button bClose;
 
 	}
 }

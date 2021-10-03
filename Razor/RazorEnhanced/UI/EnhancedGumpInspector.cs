@@ -6,8 +6,8 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedGumpInspector : Form
 	{
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
-		private RazorButton close;
-		private RazorButton clear;
+		private System.Windows.Forms.Button close;
+		private System.Windows.Forms.Button clear;
 		private const string m_Title = "Enhanced Gump Inspector";
 		public static System.Windows.Forms.ListBox EnhancedGumpInspectorListBox;
 

@@ -19,7 +19,7 @@ namespace Assistant.Filters
 
         public override byte[] PacketIDs
         {
-            get { return new byte[] {0xB0, 0xDD}; }
+            get { return new byte[] { 0xB0, 0xDD }; }
         }
 
         public override string Name

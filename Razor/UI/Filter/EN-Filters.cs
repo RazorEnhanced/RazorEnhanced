@@ -7,29 +7,29 @@ namespace Assistant
 {
 	public partial class MainForm : System.Windows.Forms.Form
 	{
-		internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
-		internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
-		internal RazorCheckBox ShowStaticFieldCheckBox { get { return showstaticfieldCheckBox; } }
-		internal RazorCheckBox FlagsHighlightCheckBox { get { return flagsHighlightCheckBox; } }
-		internal RazorCheckBox HighlightTargetCheckBox { get { return highlighttargetCheckBox; } }
-		internal RazorCheckBox AutoCarverCheckBox { get { return autocarverCheckBox; } }
-		internal RazorCheckBox BoneCutterCheckBox { get { return bonecutterCheckBox; } }
-		internal RazorCheckBox MobFilterCheckBox { get { return mobfilterCheckBox; } }
+        internal CheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
+        internal CheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
+        internal CheckBox ShowStaticFieldCheckBox { get { return showstaticfieldCheckBox; } }
+		internal CheckBox FlagsHighlightCheckBox { get { return flagsHighlightCheckBox; } }
+        internal CheckBox HighlightTargetCheckBox { get { return highlighttargetCheckBox; } }
+		internal CheckBox AutoCarverCheckBox { get { return autocarverCheckBox; } }
+		internal CheckBox BoneCutterCheckBox { get { return bonecutterCheckBox; } }
+		internal CheckBox MobFilterCheckBox { get { return mobfilterCheckBox; } }
 		internal Label AutoCarverBladeLabel { get { return autocarverbladeLabel; } }
 		internal Label BoneBladeLabel { get { return bonebladeLabel; } }
 		internal RazorAgentNumOnlyTextBox RemountDelay { get { return remountdelay; } }
 		internal RazorAgentNumOnlyTextBox RemountEDelay { get { return remountedelay; } }
 		internal Label RemountSerialLabel { get { return remountseriallabel; } }
-		internal RazorCheckBox RemountCheckbox { get { return remountcheckbox; } }
-		internal RazorCheckBox ShowHeadTargetCheckBox { get { return showheadtargetCheckBox; } }
-		internal RazorCheckBox BlockHealPoisonCheckBox { get { return blockhealpoisonCheckBox; } }
-		internal RazorCheckBox ColorFlagsHighlightCheckBox { get { return colorflagsHighlightCheckBox; } }
-		internal RazorCheckBox BlockMiniHealCheckBox { get { return blockminihealCheckBox; } }
-		internal RazorCheckBox BlockBigHealCheckBox { get { return blockbighealCheckBox; } }
-		internal RazorCheckBox BlockChivalryHealCheckBox { get { return blockchivalryhealCheckBox; } }
-		internal RazorCheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
-		internal RazorCheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
-		internal RazorCheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
+		internal CheckBox RemountCheckbox { get { return remountcheckbox; } }
+		internal CheckBox ShowHeadTargetCheckBox { get { return showheadtargetCheckBox; } }
+		internal CheckBox BlockHealPoisonCheckBox { get { return blockhealpoisonCheckBox; } }
+		internal CheckBox ColorFlagsHighlightCheckBox { get { return colorflagsHighlightCheckBox; } }
+		internal CheckBox BlockMiniHealCheckBox { get { return blockminihealCheckBox; } }
+		internal CheckBox BlockBigHealCheckBox { get { return blockbighealCheckBox; } }
+		internal CheckBox BlockChivalryHealCheckBox { get { return blockchivalryhealCheckBox; } }
+		internal CheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
+		internal CheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
+		internal CheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
 
 		private void autocarverrazorButton_Click(object sender, EventArgs e)
 		{
