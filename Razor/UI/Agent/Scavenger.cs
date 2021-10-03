@@ -7,14 +7,14 @@ namespace Assistant
 {
 	public partial class MainForm : System.Windows.Forms.Form
 	{
-		internal RazorCheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
+        internal CheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
 		internal RazorAgentNumOnlyTextBox ScavengerDragDelay { get { return scavengerDragDelay; } }
 		internal RazorAgentNumOnlyTextBox ScavengerRange { get { return scavengerRange; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
-		internal RazorComboBox ScavengerListSelect { get { return scavengerListSelect; } }
+		internal ComboBox ScavengerListSelect { get { return scavengerListSelect; } }
 		internal DataGridView ScavengerDataGridView { get { return scavengerdataGridView; } }
-		internal RazorCheckBox ScavengerAutostartCheckBox { get { return scavengerautostartCheckBox; } }
+        internal CheckBox ScavengerAutostartCheckBox { get { return scavengerautostartCheckBox; } }
 
 		private void scavengerautostartCheckBox_CheckedChanged(object sender, EventArgs e)
 		{

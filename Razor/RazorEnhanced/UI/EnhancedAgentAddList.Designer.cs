@@ -30,9 +30,9 @@ namespace RazorEnhanced.UI
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedAgentAddList));
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-			this.AgentListToAdd = new RazorEnhanced.UI.RazorTextBox();
-			this.agentcloseItemList = new RazorEnhanced.UI.RazorButton();
-			this.agentaddItemList = new RazorEnhanced.UI.RazorButton();
+			this.AgentListToAdd = new System.Windows.Forms.TextBox();
+			this.agentcloseItemList = new  System.Windows.Forms.Button ();
+			this.agentaddItemList = new  System.Windows.Forms.Button ();
 			this.SuspendLayout();
 			// 
 			// AgentListToAdd
@@ -87,9 +87,9 @@ namespace RazorEnhanced.UI
 		#endregion
 
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
-		private RazorTextBox AgentListToAdd;
-		private RazorButton agentcloseItemList;
-		private RazorButton agentaddItemList;
+		private System.Windows.Forms.TextBox AgentListToAdd;
+		private System.Windows.Forms.Button agentcloseItemList;
+		private System.Windows.Forms.Button agentaddItemList;
 
 	}
 }

@@ -161,7 +161,7 @@ namespace RazorEnhanced
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("One of your Sound Filter Config Files is Corrupt");
             }

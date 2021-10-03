@@ -120,7 +120,7 @@ namespace Assistant
                 ushort atom = 0;
                 if (str != null && str.Length > 0)
                     atom = GlobalAddAtom(str);
-                PostMessage(hWnd, Msg, (IntPtr) atom, IntPtr.Zero);
+                PostMessage(hWnd, Msg, (IntPtr)atom, IntPtr.Zero);
             }
         }
 
@@ -161,241 +161,241 @@ namespace Assistant
 
         public static int OnUOAMessage(MainForm razor, int Msg, int wParam, int lParam)
         {
-            switch ((UOAMessage) Msg)
+            switch ((UOAMessage)Msg)
             {
                 case UOAMessage.REGISTER:
-                {
-                    for (int i = 0; i < m_WndReg.Count; i++)
                     {
-                        if (((WndRegEnt) m_WndReg[i]).Handle == wParam)
+                        for (int i = 0; i < m_WndReg.Count; i++)
                         {
-                            m_WndReg.RemoveAt(i);
-                            return 2;
+                            if (((WndRegEnt)m_WndReg[i]).Handle == wParam)
+                            {
+                                m_WndReg.RemoveAt(i);
+                                return 2;
+                            }
                         }
-                    }
 
-                    m_WndReg.Add(new WndRegEnt(wParam, lParam == 1 ? 1 : 0));
+                        m_WndReg.Add(new WndRegEnt(wParam, lParam == 1 ? 1 : 0));
 
-                    if (lParam == 1 && World.Items != null)
-                    {
-                        foreach (Item item in World.Items.Values)
+                        if (lParam == 1 && World.Items != null)
                         {
-                            if (item.ItemID >= 0x4000)
-                                PostMessage((IntPtr) wParam, (uint) UOAMessage.ADD_MULTI,
-                                    (IntPtr) ((int) ((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))),
-                                    (IntPtr) item.ItemID.Value);
+                            foreach (Item item in World.Items.Values)
+                            {
+                                if (item.ItemID >= 0x4000)
+                                    PostMessage((IntPtr)wParam, (uint)UOAMessage.ADD_MULTI,
+                                        (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))),
+                                        (IntPtr)item.ItemID.Value);
+                            }
                         }
-                    }
 
-                    return 1;
-                }
+                        return 1;
+                    }
 
                 case UOAMessage.COUNT_RESOURCES:
-                {
-                    //Counter.FullRecount();  // Felix Fix
-                    return 0;
-                }
+                    {
+                        //Counter.FullRecount();  // Felix Fix
+                        return 0;
+                    }
 
                 case UOAMessage.GET_COORDS:
-                {
-                    if (World.Player == null)
-                        return 0;
-                    return (World.Player.Position.X & 0xFFFF) | ((World.Player.Position.Y & 0xFFFF) << 16);
-                }
+                    {
+                        if (World.Player == null)
+                            return 0;
+                        return (World.Player.Position.X & 0xFFFF) | ((World.Player.Position.Y & 0xFFFF) << 16);
+                    }
 
                 case UOAMessage.GET_SKILL:
-                {
-                    if (World.Player == null || lParam > 3 || wParam < 0 || World.Player.Skills == null ||
-                        wParam > World.Player.Skills.Length || lParam < 0)
-                        return 0;
-
-                    switch (lParam)
                     {
-                        case 3:
+                        if (World.Player == null || lParam > 3 || wParam < 0 || World.Player.Skills == null ||
+                            wParam > World.Player.Skills.Length || lParam < 0)
+                            return 0;
+
+                        switch (lParam)
                         {
-                            try
-                            {
-                                return GlobalAddAtom(((SkillName) wParam).ToString());
-                            }
-                            catch
-                            {
-                                return 0;
-                            }
+                            case 3:
+                                {
+                                    try
+                                    {
+                                        return GlobalAddAtom(((SkillName)wParam).ToString());
+                                    }
+                                    catch
+                                    {
+                                        return 0;
+                                    }
+                                }
+
+                            case 2: return (int)(World.Player.Skills[wParam].Lock);
+                            case 1: return World.Player.Skills[wParam].FixedBase;
+                            case 0: return World.Player.Skills[wParam].FixedValue;
                         }
 
-                        case 2: return (int) (World.Player.Skills[wParam].Lock);
-                        case 1: return World.Player.Skills[wParam].FixedBase;
-                        case 0: return World.Player.Skills[wParam].FixedValue;
+                        return 0;
                     }
-
-                    return 0;
-                }
 
                 case UOAMessage.GET_STAT:
-                {
-                    if (World.Player == null || wParam < 0 || wParam > 5)
-                        return 0;
-
-                    switch (wParam)
                     {
-                        case 0: return World.Player.Str;
-                        case 1: return World.Player.Int;
-                        case 2: return World.Player.Dex;
-                        case 3: return World.Player.Weight;
-                        case 4: return World.Player.HitsMax;
-                        case 5: return World.Player.Tithe;
-                    }
+                        if (World.Player == null || wParam < 0 || wParam > 5)
+                            return 0;
 
-                    return 0;
-                }
+                        switch (wParam)
+                        {
+                            case 0: return World.Player.Str;
+                            case 1: return World.Player.Int;
+                            case 2: return World.Player.Dex;
+                            case 3: return World.Player.Weight;
+                            case 4: return World.Player.HitsMax;
+                            case 5: return World.Player.Tithe;
+                        }
+
+                        return 0;
+                    }
 
                 case UOAMessage.SET_MACRO:
-                {
-                    try
                     {
-                        //if ( wParam >= 0 && wParam < Engine.MainWindow.macroList.Items.Count )
-                        //	Engine.MainWindow.macroList.SelectedIndex = wParam;
-                    }
-                    catch
-                    {
-                    }
+                        try
+                        {
+                            //if ( wParam >= 0 && wParam < Engine.MainWindow.macroList.Items.Count )
+                            //	Engine.MainWindow.macroList.SelectedIndex = wParam;
+                        }
+                        catch
+                        {
+                        }
 
-                    return 0;
-                }
+                        return 0;
+                    }
 
                 case UOAMessage.PLAY_MACRO:
-                {
+                    {
                         //if (razor != null)
                         //    razor.playMacro_Click(razor, new EventArgs());
                         //return Macros.MacroManager.Playing ? 1 : 0;
                         return 0; // Felix Fix
-                }
+                    }
 
                 case UOAMessage.DISPLAY_TEXT:
-                {
-                    if (World.Player == null)
-                        return 0;
+                    {
+                        if (World.Player == null)
+                            return 0;
 
-                    int hue = wParam & 0xFFFF;
-                    StringBuilder sb = new StringBuilder(256);
-                    if (GlobalGetAtomName((ushort) lParam, sb, 256) == 0)
-                        return 0;
+                        int hue = wParam & 0xFFFF;
+                        StringBuilder sb = new StringBuilder(256);
+                        if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
+                            return 0;
 
-                    if ((wParam & 0x00010000) != 0)
-                        Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3,
-                            Language.CliLocName, "System", sb.ToString()));
-                    else
-                        World.Player.OverheadMessage(hue, sb.ToString());
-                    GlobalDeleteAtom((ushort) lParam);
-                    return 1;
-                }
+                        if ((wParam & 0x00010000) != 0)
+                            Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3,
+                                Language.CliLocName, "System", sb.ToString()));
+                        else
+                            World.Player.OverheadMessage(hue, sb.ToString());
+                        GlobalDeleteAtom((ushort)lParam);
+                        return 1;
+                    }
 
                 case UOAMessage.REQUEST_MULTIS:
-                {
-                    return World.Player != null ? 1 : 0;
-                }
+                    {
+                        return World.Player != null ? 1 : 0;
+                    }
 
                 case UOAMessage.ADD_CMD:
-                {
-                    StringBuilder sb = new StringBuilder(256);
-                    if (GlobalGetAtomName((ushort) lParam, sb, 256) == 0)
-                        return 0;
+                    {
+                        StringBuilder sb = new StringBuilder(256);
+                        if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
+                            return 0;
 
-                    if (wParam == 0)
-                    {
-                        Command.RemoveCommand(sb.ToString());
-                        return 0;
+                        if (wParam == 0)
+                        {
+                            Command.RemoveCommand(sb.ToString());
+                            return 0;
+                        }
+                        else
+                        {
+                            new WndCmd(m_NextCmdID, (IntPtr)wParam, sb.ToString());
+                            return (int)(m_NextCmdID++);
+                        }
                     }
-                    else
-                    {
-                        new WndCmd(m_NextCmdID, (IntPtr) wParam, sb.ToString());
-                        return (int) (m_NextCmdID++);
-                    }
-                }
 
                 case UOAMessage.GET_UID:
-                {
-                    return World.Player != null ? (int) World.Player.Serial.Value : 0;
-                }
+                    {
+                        return World.Player != null ? (int)World.Player.Serial.Value : 0;
+                    }
 
                 case UOAMessage.GET_SHARDNAME:
-                {
-                    if (World.ShardName != null && World.ShardName.Length > 0)
-                        return GlobalAddAtom(World.ShardName);
-                    else
-                        return 0;
-                }
+                    {
+                        if (World.ShardName != null && World.ShardName.Length > 0)
+                            return GlobalAddAtom(World.ShardName);
+                        else
+                            return 0;
+                    }
 
                 case UOAMessage.ADD_USER_2_PARTY:
-                {
-                    return 1; // not supported, return error
-                }
+                    {
+                        return 1; // not supported, return error
+                    }
 
                 case UOAMessage.GET_UO_HWND:
-                {
-                    return Client.Instance.GetWindowHandle().ToInt32();
-                }
+                    {
+                        return Client.Instance.GetWindowHandle().ToInt32();
+                    }
 
                 case UOAMessage.GET_POISON:
-                {
-                    return World.Player != null && World.Player.Poisoned ? 1 : 0;
-                }
+                    {
+                        return World.Player != null && World.Player.Poisoned ? 1 : 0;
+                    }
 
                 case UOAMessage.SET_SKILL_LOCK:
-                {
-                    if (World.Player == null || wParam < 0 || wParam > World.Player.Skills.Length || lParam < 0 ||
-                        lParam >= 3)
-                        return 0;
-                    Client.Instance.SendToServer(new SetSkillLock(wParam, (LockType) lParam));
-                    return 1;
-                }
+                    {
+                        if (World.Player == null || wParam < 0 || wParam > World.Player.Skills.Length || lParam < 0 ||
+                            lParam >= 3)
+                            return 0;
+                        Client.Instance.SendToServer(new SetSkillLock(wParam, (LockType)lParam));
+                        return 1;
+                    }
 
                 case UOAMessage.GET_ACCT_ID:
-                {
-                    // free shards don't use account ids... so just return the player's serial number
-                    return World.Player == null ? 0 : (int) World.Player.Serial.Value;
-                }
+                    {
+                        // free shards don't use account ids... so just return the player's serial number
+                        return World.Player == null ? 0 : (int)World.Player.Serial.Value;
+                    }
 
                 default:
-                {
-                    return 0;
-                }
+                    {
+                        return 0;
+                    }
             }
         }
 
         public static void PostCounterUpdate(int counter, int count)
         {
-            PostToWndReg((uint) UOAMessage.RES_COUNT_DONE, (IntPtr) counter, (IntPtr) count);
+            PostToWndReg((uint)UOAMessage.RES_COUNT_DONE, (IntPtr)counter, (IntPtr)count);
         }
 
         public static void PostSpellCast(int spell)
         {
-            PostToWndReg((uint) UOAMessage.CAST_SPELL, (IntPtr) spell, IntPtr.Zero);
+            PostToWndReg((uint)UOAMessage.CAST_SPELL, (IntPtr)spell, IntPtr.Zero);
         }
 
         public static void PostLogin(int serial)
         {
-            PostToWndReg((uint) UOAMessage.LOGIN, (IntPtr) serial, IntPtr.Zero);
+            PostToWndReg((uint)UOAMessage.LOGIN, (IntPtr)serial, IntPtr.Zero);
         }
 
         public static void PostLogout()
         {
             for (int i = 0; i < m_WndReg.Count; i++)
-                PostMessage((IntPtr) ((WndRegEnt) m_WndReg[i]).Handle, (uint) UOAMessage.LOGOUT, IntPtr.Zero,
+                PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero,
                     IntPtr.Zero);
         }
 
 
         public static void PostMapChange(int map)
         {
-            PostToWndReg((uint) UOAMessage.MAP_INFO, (IntPtr) map, IntPtr.Zero);
+            PostToWndReg((uint)UOAMessage.MAP_INFO, (IntPtr)map, IntPtr.Zero);
         }
 
         public static void PostSkillUpdate(int skill, int val)
         {
-            PostToWndReg((uint) UOAMessage.SKILL_LEVEL, (IntPtr) skill, (IntPtr) val);
-            if (skill == (int) SkillName.Magery)
-                PostToWndReg((uint) UOAMessage.MAGERY_LEVEL, (IntPtr) ((int) (val / 10)), (IntPtr) (val % 10));
+            PostToWndReg((uint)UOAMessage.SKILL_LEVEL, (IntPtr)skill, (IntPtr)val);
+            if (skill == (int)SkillName.Magery)
+                PostToWndReg((uint)UOAMessage.MAGERY_LEVEL, (IntPtr)((int)(val / 10)), (IntPtr)(val % 10));
         }
 
         public static void PostRemoveMulti(Item item)
@@ -403,50 +403,50 @@ namespace Assistant
             if (item == null)
                 return;
 
-            IntPtr pos = (IntPtr) ((int) ((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16)));
+            IntPtr pos = (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16)));
 
             if (pos == IntPtr.Zero)
                 return;
 
             for (int i = 0; i < m_WndReg.Count; i++)
             {
-                WndRegEnt wnd = (WndRegEnt) m_WndReg[i];
+                WndRegEnt wnd = (WndRegEnt)m_WndReg[i];
                 if (wnd.Type == 1)
-                    PostMessage((IntPtr) wnd.Handle, (uint) UOAMessage.REM_MULTI, pos, (IntPtr) item.ItemID.Value);
+                    PostMessage((IntPtr)wnd.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.ItemID.Value);
             }
         }
 
         public static void PostAddMulti(ItemID iid, Point3D Position)
         {
-            IntPtr pos = (IntPtr) ((int) ((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
+            IntPtr pos = (IntPtr)((int)((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
 
             if (pos == IntPtr.Zero)
                 return;
 
             for (int i = 0; i < m_WndReg.Count; i++)
             {
-                WndRegEnt wnd = (WndRegEnt) m_WndReg[i];
+                WndRegEnt wnd = (WndRegEnt)m_WndReg[i];
                 if (wnd.Type == 1)
-                    PostMessage((IntPtr) wnd.Handle, (uint) UOAMessage.ADD_MULTI, pos, (IntPtr) iid.Value);
+                    PostMessage((IntPtr)wnd.Handle, (uint)UOAMessage.ADD_MULTI, pos, (IntPtr)iid.Value);
             }
         }
 
         public static void PostHitsUpdate()
         {
             if (World.Player != null)
-                PostToWndReg((uint) UOAMessage.STR_STATUS, (IntPtr) World.Player.HitsMax, (IntPtr) World.Player.Hits);
+                PostToWndReg((uint)UOAMessage.STR_STATUS, (IntPtr)World.Player.HitsMax, (IntPtr)World.Player.Hits);
         }
 
         public static void PostManaUpdate()
         {
             if (World.Player != null)
-                PostToWndReg((uint) UOAMessage.INT_STATUS, (IntPtr) World.Player.ManaMax, (IntPtr) World.Player.Mana);
+                PostToWndReg((uint)UOAMessage.INT_STATUS, (IntPtr)World.Player.ManaMax, (IntPtr)World.Player.Mana);
         }
 
         public static void PostStamUpdate()
         {
             if (World.Player != null)
-                PostToWndReg((uint) UOAMessage.DEX_STATUS, (IntPtr) World.Player.StamMax, (IntPtr) World.Player.Stam);
+                PostToWndReg((uint)UOAMessage.DEX_STATUS, (IntPtr)World.Player.StamMax, (IntPtr)World.Player.Stam);
         }
 
         private static void PostToWndReg(uint Msg, IntPtr wParam, IntPtr lParam)
@@ -454,7 +454,7 @@ namespace Assistant
             ArrayList rem = null;
             for (int i = 0; i < m_WndReg.Count; i++)
             {
-                if (PostMessage((IntPtr) ((WndRegEnt) m_WndReg[i]).Handle, Msg, wParam, lParam) == 0)
+                if (PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, Msg, wParam, lParam) == 0)
                 {
                     if (rem == null)
                         rem = new ArrayList(1);

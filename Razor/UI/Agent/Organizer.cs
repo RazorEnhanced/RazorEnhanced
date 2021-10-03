@@ -12,7 +12,7 @@ namespace Assistant
 		internal Label OrganizerDestinationLabel { get { return organizerDestinationLabel; } }
 		internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
 		internal DataGridView OrganizerDataGridView { get { return organizerdataGridView; } }
-		internal RazorComboBox OrganizerListSelect { get { return organizerListSelect; } }
+		internal ComboBox OrganizerListSelect { get { return organizerListSelect; } }
 		internal Button OrganizerExecute { get { return organizerExecuteButton; } }
 		internal Button OrganizerStop { get { return organizerStopButton; } }
 

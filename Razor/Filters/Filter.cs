@@ -33,14 +33,14 @@ namespace Assistant.Filters
         public static void DisableAll()
         {
             for (int i = 0; i < m_Filters.Count; i++)
-                ((Filter) m_Filters[i]).OnDisable();
+                ((Filter)m_Filters[i]).OnDisable();
         }
 
         public static void Save(XmlTextWriter xml)
         {
             for (int i = 0; i < m_Filters.Count; i++)
             {
-                Filter f = (Filter) m_Filters[i];
+                Filter f = (Filter)m_Filters[i];
                 if (f.Enabled)
                 {
                     xml.WriteStartElement("filter");
@@ -58,7 +58,7 @@ namespace Assistant.Filters
 
             for (int i = 0; i < m_Filters.Count; i++)
             {
-                Filter f = (Filter) m_Filters[i];
+                Filter f = (Filter)m_Filters[i];
                 list.Items.Add(f);
                 list.SetItemChecked(i, f.Enabled);
             }

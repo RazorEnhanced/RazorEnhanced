@@ -9,24 +9,24 @@ namespace Assistant
 {
 	public partial class MainForm : System.Windows.Forms.Form
 	{
-		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } }
-		internal RazorCheckBox ChkStealth { get { return chkStealth; } }
-		internal RazorCheckBox FilterPoison { get { return filterPoison; } }
-		internal RazorCheckBox FilterNPC { get { return filterNPC; } }
-		internal RazorCheckBox ShowHealthOH { get { return showHealthOH; } }
-		internal RazorCheckBox AutoOpenDoors { get { return autoOpenDoors; } }
-		internal RazorCheckBox ShowCorpseNames { get { return incomingCorpse; } }
-		internal RazorCheckBox FilterSnoopMsg { get { return filterSnoop; } }
-		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
-		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
+		internal CheckBox ChkNoRunStealth { get { return chknorunStealth; } }
+        internal CheckBox ChkStealth { get { return chkStealth; } }
+		internal CheckBox FilterPoison { get { return filterPoison; } }
+        internal CheckBox FilterNPC { get { return filterNPC; } }
+        internal CheckBox ShowHealthOH { get { return showHealthOH; } }
+		internal CheckBox AutoOpenDoors { get { return autoOpenDoors; } }
+		internal CheckBox ShowCorpseNames { get { return incomingCorpse; } }
+		internal CheckBox FilterSnoopMsg { get { return filterSnoop; } }
+		internal CheckBox FilterSpam { get { return spamFilter; } }
+		internal CheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
 		internal DataGridView GraphFilterDataGrid { get { return graphfilterdatagrid; } }
 		internal DataGridView JournalFilterDataGrid { get { return journalfilterdatagrid; } }
 		internal DataGridView JournalList { get { return journalList; } }
 		internal CheckedListBox JournalTextSelection { get { return journalTextSelection; } }
 		internal TextBox JournalFilterString { get { return journalFilterString; } }
-		internal RazorCheckBox ShowMobNames { get { return incomingMob; } }
-		internal RazorCheckBox LastTargTextFlags { get { return showtargtext; } }
-		internal RazorCheckBox SmartLastTarget { get { return smartLT; } }
+		internal CheckBox ShowMobNames { get { return incomingMob; } }
+		internal CheckBox LastTargTextFlags { get { return showtargtext; } }
+		internal CheckBox SmartLastTarget { get { return smartLT; } }
 
 		// Colori override
 		internal int SysColor = 0;

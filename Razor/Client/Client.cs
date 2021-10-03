@@ -14,38 +14,38 @@ using System.Reflection;
 
 namespace Assistant
 {
-	public class FeatureBit
-	{
-		public static readonly int WeatherFilter = 0;
-		public static readonly int LightFilter = 1;
-		public static readonly int SmartLT = 2;
-		public static readonly int RangeCheckLT = 3;
-		public static readonly int AutoOpenDoors = 4;
-		public static readonly int UnequipBeforeCast = 5;
-		public static readonly int AutoPotionEquip = 6;
-		public static readonly int BlockHealPoisoned = 7;
-		public static readonly int LoopingMacros = 8; // includes fors and macros running macros
-		public static readonly int UseOnceAgent = 9;
-		public static readonly int RestockAgent = 10;
-		public static readonly int SellAgent = 11;
-		public static readonly int BuyAgent = 12;
-		public static readonly int PotionHotkeys = 13;
-		public static readonly int RandomTargets = 14;
-		public static readonly int ClosestTargets = 15;
-		public static readonly int OverheadHealth = 16;
-		public static readonly int AutolootAgent = 17;
-		public static readonly int BoneCutterAgent = 18;
-		public static readonly int AdvancedMacros = 19;
-		public static readonly int AutoRemount = 20;
-		public static readonly int AutoBandage = 21;
-		public static readonly int EnemyTargetShare = 22;
-		public static readonly int FilterSeason = 23;
-		public static readonly int SpellTargetShare = 24;
-		public static readonly int HumanoidHealthChecks = 25;
-		public static readonly int SpeechJournalChecks = 26;
+    public class FeatureBit
+    {
+        public static readonly int WeatherFilter = 0;
+        public static readonly int LightFilter = 1;
+        public static readonly int SmartLT = 2;
+        public static readonly int RangeCheckLT = 3;
+        public static readonly int AutoOpenDoors = 4;
+        public static readonly int UnequipBeforeCast = 5;
+        public static readonly int AutoPotionEquip = 6;
+        public static readonly int BlockHealPoisoned = 7;
+        public static readonly int LoopingMacros = 8; // includes fors and macros running macros
+        public static readonly int UseOnceAgent = 9;
+        public static readonly int RestockAgent = 10;
+        public static readonly int SellAgent = 11;
+        public static readonly int BuyAgent = 12;
+        public static readonly int PotionHotkeys = 13;
+        public static readonly int RandomTargets = 14;
+        public static readonly int ClosestTargets = 15;
+        public static readonly int OverheadHealth = 16;
+        public static readonly int AutolootAgent = 17;
+        public static readonly int BoneCutterAgent = 18;
+        public static readonly int AdvancedMacros = 19;
+        public static readonly int AutoRemount = 20;
+        public static readonly int AutoBandage = 21;
+        public static readonly int EnemyTargetShare = 22;
+        public static readonly int FilterSeason = 23;
+        public static readonly int SpellTargetShare = 24;
+        public static readonly int HumanoidHealthChecks = 25;
+        public static readonly int SpeechJournalChecks = 26;
 
-		public static readonly int MaxBit = 26;
-	}
+        public static readonly int MaxBit = 26;
+    }
     public abstract class Client
     {
         public static Client Instance;
@@ -361,8 +361,10 @@ namespace Assistant
         public DateTime ConnectionStart => m_ConnectionStart;
 
         protected static IPAddress m_LastConnection;
-        public IPAddress LastConnection {
-            get {
+        public IPAddress LastConnection
+        {
+            get
+            {
                 if (m_LastConnection == null)
                     return Engine.IP;     // CUO was not calling OnConnect soon enough
                 else
@@ -370,114 +372,117 @@ namespace Assistant
             }
         }
 
-        public bool SmartCpuChecked { get { return RazorEnhanced.Settings.General.ReadBool("SmartCPU"); }
-                                      set{
-                                        RazorEnhanced.Settings.General.WriteBool("SmartCPU", value);
-                                        this.SetSmartCPU(value);
-                                         }
-                                    }
+        public bool SmartCpuChecked
+        {
+            get { return RazorEnhanced.Settings.General.ReadBool("SmartCPU"); }
+            set
+            {
+                RazorEnhanced.Settings.General.WriteBool("SmartCPU", value);
+                this.SetSmartCPU(value);
+            }
+        }
 
         public abstract Process ClientProcess { get; }
-		public abstract  bool ClientRunning { get; }
+        public abstract bool ClientRunning { get; }
 
-		public abstract void SetMapWndHandle(Form mapWnd);
+        public abstract void SetMapWndHandle(Form mapWnd);
 
-		public abstract void RequestStatbarPatch(bool preAOS);
+        public abstract void RequestStatbarPatch(bool preAOS);
 
-		public abstract void SetCustomNotoHue(int hue);
+        public abstract void SetCustomNotoHue(int hue);
 
-		public abstract void SetSmartCPU(bool enabled);
+        public abstract void SetSmartCPU(bool enabled);
 
-		public abstract void SetGameSize(int x, int y);
+        public abstract void SetGameSize(int x, int y);
 
 
         public enum Loader_Error
-		{
-			SUCCESS = 0,
-			NO_OPEN_EXE,
-			NO_MAP_EXE,
-			NO_READ_EXE_DATA,
+        {
+            SUCCESS = 0,
+            NO_OPEN_EXE,
+            NO_MAP_EXE,
+            NO_READ_EXE_DATA,
 
-			NO_RUN_EXE,
-			NO_ALLOC_MEM,
+            NO_RUN_EXE,
+            NO_ALLOC_MEM,
 
-			NO_WRITE,
-			NO_VPROTECT,
-			NO_READ,
+            NO_WRITE,
+            NO_VPROTECT,
+            NO_READ,
 
-			UNKNOWN_ERROR = 99
-		};
-		public abstract Loader_Error LaunchClient(string client);
+            UNKNOWN_ERROR = 99
+        };
+        public abstract Loader_Error LaunchClient(string client);
 
-		public abstract bool ClientEncrypted { get; set; }
-		public abstract bool ServerEncrypted { get; set; }
+        public abstract bool ClientEncrypted { get; set; }
+        public abstract bool ServerEncrypted { get; set; }
 
-		public abstract bool InstallHooks(IntPtr mainWindow);
+        public abstract bool InstallHooks(IntPtr mainWindow);
 
-		public abstract void SetConnectionInfo(IPAddress addr, int port);
-		public abstract void SetNegotiate(bool negotiate);
-		public abstract bool Attach(int pid);
+        public abstract void SetConnectionInfo(IPAddress addr, int port);
+        public abstract void SetNegotiate(bool negotiate);
+        public abstract bool Attach(int pid);
 
-		public virtual void Close()
-		{
-			Client.m_Running = false;
+        public virtual void Close()
+        {
+            Client.m_Running = false;
 
-			RazorEnhanced.Settings.General.SaveExitData();
+            RazorEnhanced.Settings.General.SaveExitData();
 
-			// Chiuto toolbar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.ToolBarForm.Close();
+            // Chiuto toolbar
+            if (RazorEnhanced.ToolBar.ToolBarForm != null)
+                RazorEnhanced.ToolBar.ToolBarForm.Close();
 
-			// Chiuto Spellgrid
-			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-				RazorEnhanced.SpellGrid.SpellGridForm.Close();
+            // Chiuto Spellgrid
+            if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+                RazorEnhanced.SpellGrid.SpellGridForm.Close();
 
-			// Stoppo tick timer agent
-			if (RazorEnhanced.Scripts.Timer != null)
-				RazorEnhanced.Scripts.Timer.Close();
+            // Stoppo tick timer agent
+            if (RazorEnhanced.Scripts.Timer != null)
+                RazorEnhanced.Scripts.Timer.Close();
 
-			// Stop forzato di tutti i thread agent
-			RazorEnhanced.AutoLoot.AutoMode = false;
-			RazorEnhanced.Scavenger.AutoMode = false;
-			RazorEnhanced.BandageHeal.AutoMode = false;
+            // Stop forzato di tutti i thread agent
+            RazorEnhanced.AutoLoot.AutoMode = false;
+            RazorEnhanced.Scavenger.AutoMode = false;
+            RazorEnhanced.BandageHeal.AutoMode = false;
 
-			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
 
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
 
-			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-				Assistant.Engine.MainWindow.RestockStop.PerformClick();
+            if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+                Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
-			RazorEnhanced.UI.EnhancedScriptEditor.End();
-		}
+            RazorEnhanced.UI.EnhancedScriptEditor.End();
+        }
 
-		public abstract void SetTitleStr(string str);
+        public abstract void SetTitleStr(string str);
 
-		public abstract bool OnMessage(MainForm razor, uint wParam, int lParam);
-		public abstract bool OnCopyData(IntPtr wparam, IntPtr lparam);
-		public abstract void SendToServer(Packet p);
-		public abstract void SendToServer(PacketReader pr);
+        public abstract bool OnMessage(MainForm razor, uint wParam, int lParam);
+        public abstract bool OnCopyData(IntPtr wparam, IntPtr lparam);
+        public abstract void SendToServer(Packet p);
+        public abstract void SendToServer(PacketReader pr);
 
-		public abstract void SendToClient(Packet p);
-		public abstract void ForceSendToClient(Packet p);
-		public abstract void ForceSendToServer(Packet p);
+        public abstract void SendToClient(Packet p);
+        public abstract void ForceSendToClient(Packet p);
+        public abstract void ForceSendToServer(Packet p);
 
-		// ONLY in Razor Client abstraction
-		public abstract void SetPosition(uint x, uint y, uint z, byte dir);
-		public abstract string GetClientVersion();
-		public abstract string GetUoFilePath();
-		public abstract IntPtr GetWindowHandle();
-		public abstract uint TotalDataIn();
+        // ONLY in Razor Client abstraction
+        public abstract void SetPosition(uint x, uint y, uint z, byte dir);
+        public abstract string GetClientVersion();
+        public abstract string GetUoFilePath();
+        public abstract IntPtr GetWindowHandle();
+        public abstract uint TotalDataIn();
 
-		public abstract uint TotalDataOut();
+        public abstract uint TotalDataOut();
 
         internal abstract void RequestMove(Direction m_Dir);
-		public abstract void PathFindTo(Assistant.Point3D location);
+        public abstract void PathFindTo(Assistant.Point3D location);
 
 
-		public void RequestTitlebarUpdate()
+        public void RequestTitlebarUpdate()
         {
             // throttle updates, since things like counters might request 1000000 million updates/sec
             if (m_TBTimer == null)
@@ -574,7 +579,7 @@ namespace Assistant
                     ? Utility.FormatTime((int)((DateTime.UtcNow - ConnectionStart).TotalSeconds))
                     : "-");
 
-           // sb.Replace(@"{dps}", DamageTracker.Running ? $"{DamageTracker.DamagePerSecond:N2}" : "-");
+            // sb.Replace(@"{dps}", DamageTracker.Running ? $"{DamageTracker.DamagePerSecond:N2}" : "-");
             //sb.Replace(@"{maxdps}", DamageTracker.Running ? $"{DamageTracker.MaxDamagePerSecond:N2}" : "-");
             //sb.Replace(@"{maxdamagedealt}", DamageTracker.Running ? $"{DamageTracker.MaxSingleDamageDealt}" : "-");
             //sb.Replace(@"{maxdamagetaken}", DamageTracker.Running ? $"{DamageTracker.MaxSingleDamageTaken}" : "-");
@@ -622,11 +627,11 @@ namespace Assistant
         }
 
 
-    // NOT IN Razor Client abstract definition
-    public abstract bool Ready { get; }
+        // NOT IN Razor Client abstract definition
+        public abstract bool Ready { get; }
 
-		public abstract void InitSendFlush();
-		public abstract void BeginCalibratePosition();
+        public abstract void InitSendFlush();
+        public abstract void BeginCalibratePosition();
         public abstract void SendToClientWait(Packet p);
         public abstract void SendToServerWait(Packet p);
 

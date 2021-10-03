@@ -7,15 +7,15 @@ namespace Assistant
 {
 	public partial class MainForm : System.Windows.Forms.Form
 	{
-		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
+		internal CheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
 		internal RazorAgentNumOnlyTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }
 		internal RazorAgentNumOnlyTextBox AutoLootTextBoxMaxRange { get { return autoLootTextBoxMaxRange; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
-		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
+		internal ComboBox AutoLootListSelect { get { return autolootListSelect; } }
 		internal CheckBox AutoLootNoOpenCheckBox { get { return autoLootnoopenCheckBox; } }
 		internal DataGridView AutoLootDataGridView { get { return autolootdataGridView; } }
-		internal RazorCheckBox AutolootAutostartCheckBox { get { return autolootautostartCheckBox; } }
+		internal CheckBox AutolootAutostartCheckBox { get { return autolootautostartCheckBox; } }
 
 		private void autolootautostartCheckBox_CheckedChanged(object sender, EventArgs e)
 		{

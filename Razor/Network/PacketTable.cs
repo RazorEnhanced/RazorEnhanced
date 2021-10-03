@@ -277,7 +277,7 @@ namespace Assistant
 
             if (length >= 3)
             {
-                return (short) (buff[1] << 8 | buff[2]);
+                return (short)(buff[1] << 8 | buff[2]);
             }
 
             return 0;

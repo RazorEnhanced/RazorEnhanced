@@ -7,7 +7,7 @@ namespace Assistant.Filters
     {
         public static void Initialize()
         {
-            Filter season = new SeasonFilter();;
+            Filter season = new SeasonFilter(); ;
             Filter.Register(season);
         }
 
@@ -17,7 +17,7 @@ namespace Assistant.Filters
 
         public override byte[] PacketIDs
         {
-            get { return new byte[] {0xBC}; }
+            get { return new byte[] { 0xBC }; }
         }
 
         public override string Name

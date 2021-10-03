@@ -10,16 +10,16 @@ namespace Assistant
 	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal Label GridLocationLabel { get { return gridlocation_label; } }
-		internal RazorCheckBox GridLockCheckBox { get { return gridlock_CheckBox; } }
-		internal RazorComboBox SpellGridStyleComboBox { get { return spellgridstyleComboBox; } }
+		internal CheckBox GridLockCheckBox { get { return gridlock_CheckBox; } }
+		internal ComboBox SpellGridStyleComboBox { get { return spellgridstyleComboBox; } }
 
-		internal RazorCheckBox GridOpenLoginCheckBox { get { return gridopenlogin_CheckBox; } }
+		internal CheckBox GridOpenLoginCheckBox { get { return gridopenlogin_CheckBox; } }
 		internal Label GridVSlotLabel { get { return gridvslot_textbox; } }
 		internal Label GridHSlotLabel { get { return gridhslot_textbox; } }
-		internal RazorComboBox GridSlotComboBox { get { return gridslot_ComboBox; } }
-		internal RazorComboBox GridGroupComboBox { get { return gridgroup_ComboBox; } }
-		internal RazorComboBox GridBorderComboBox { get { return gridborder_ComboBox; } }
-		internal RazorComboBox GridScriptComboBox { get { return gridscript_ComboBox; } }
+		internal ComboBox GridSlotComboBox { get { return gridslot_ComboBox; } }
+		internal ComboBox GridGroupComboBox { get { return gridgroup_ComboBox; } }
+		internal ComboBox GridBorderComboBox { get { return gridborder_ComboBox; } }
+		internal ComboBox GridScriptComboBox { get { return gridscript_ComboBox; } }
 
 		private void gridopen_button_Click(object sender, EventArgs e)
 		{
