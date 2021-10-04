@@ -948,6 +948,13 @@ namespace Assistant
             else if (World.Player != null && i.Layer == Layer.LeftHand)
                 World.Player.LastWeaponLeft = i.Serial;
 
+            // Update weapon special ability icons on spellgrid when equipping / changing weapons
+            if (World.Player != null && (i.Layer == Layer.RightHand || i.Layer == Layer.LeftHand || i.Layer == Layer.FirstValid))
+            {
+                System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                doAction.Start();
+            }
+
             if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
                 return;
 
@@ -1226,8 +1233,8 @@ namespace Assistant
             m.ProcessPacketFlags(p.ReadByte());
 
             // Apply color flag on mob if enabled
-            p = RazorEnhanced.Filters.MobileColorize(p, m);
-
+            p = RazorEnhanced.Filters.MobileColorize(p, m); 
+            
             m.Notoriety = p.ReadByte();
 
             if (m == World.Player)
@@ -1869,6 +1876,13 @@ namespace Assistant
                 Item i = World.FindItem(serial);
                 if (i != null)
                 {
+                    // Update weapon special ability icons on spellgrid when removing weapons
+                    if (World.Player != null && i.Layer == Layer.RightHand || i.Layer == Layer.LeftHand || i.Layer == Layer.FirstValid)
+                    {
+                        System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                        doAction.Start();
+                    }
+
                     if (DragDropManager.Holding == i)
                     {
                         i.Container = null;
@@ -3433,11 +3447,11 @@ namespace Assistant
             ushort action = p.ReadUInt16();
 
             if (Enum.IsDefined(typeof(BuffIcon), icon))
-            {
+            {                
                 BuffIcon buff = (BuffIcon)icon;
                 switch (action)
                 {
-                    case 0x01: // show
+                    case 0x01: // show                        
                         if (World.Player != null && !World.Player.Buffs.Contains(buff))
                         {
                             World.Player.Buffs.Add(buff);

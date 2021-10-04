@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Assistant;
 using Assistant.UI;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace Assistant
                 }
 
                 AssemblyName askedassembly = new AssemblyName(e.Name);
-
+                
                 bool isdll = File.Exists(Path.Combine(RootPath, askedassembly.Name + ".dll"));
 
                 return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
@@ -119,7 +120,7 @@ namespace Assistant
         private static OnTick _tick;
         private static RequestMove _requestMove;
         private static OnSetTitle _setTitle;
-        private static OnGetUOFilePath _uoFilePath;
+        private static OnGetUOFilePath _uoFilePath;    
 
 
         private static OnHotkey _onHotkeyPressed;
@@ -167,6 +168,9 @@ namespace Assistant
         public override bool ClientEncrypted { get; set; }
 
         public override bool ServerEncrypted { get; set; }
+
+        public static Assembly CUOAssembly { get; set; }
+        public static Queue<Action> CUOActionQueue { get; set; } = new Queue<Action>();
 
         public unsafe bool InitPlugin(PluginHeader* header)
         {
@@ -217,6 +221,10 @@ namespace Assistant
             header->OnDisconnected = Marshal.GetFunctionPointerForDelegate(_onDisconnected);
             header->OnFocusGained = Marshal.GetFunctionPointerForDelegate(_onFocusGained);
             header->OnFocusLost = Marshal.GetFunctionPointerForDelegate(_onFocusLost);
+
+            CUOAssembly = AppDomain.CurrentDomain.GetAssemblies()
+                .FirstOrDefault(a => a.FullName.StartsWith("ClassicUO,"));
+
             m_Ready = true;
             return true;
         }
@@ -230,6 +238,12 @@ namespace Assistant
         private void Tick()
         {
             Timer.Slice();
+
+            while (CUOActionQueue.Count > 0)
+            {
+                Action action = CUOActionQueue.Dequeue();
+                action?.Invoke();
+            }
         }
 
         private void OnPlayerPositionChanged(int x, int y, int z)
