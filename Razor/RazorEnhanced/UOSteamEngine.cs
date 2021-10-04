@@ -3298,7 +3298,7 @@ namespace RazorEnhanced
                     case "friend":
                         filter.Notorieties.Add(1);
                         break;
-                    case "innoncent":
+                    case "innocent":
                         filter.Notorieties.Add(2);
                         break;
                     case "criminal":
@@ -3372,7 +3372,7 @@ namespace RazorEnhanced
                     case "friend":
                         filter.Notorieties.Add(1);
                         break;
-                    case "innoncent":
+                    case "innocent":
                         filter.Notorieties.Add(2);
                         break;
                     case "criminal":
