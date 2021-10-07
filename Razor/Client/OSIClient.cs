@@ -390,6 +390,7 @@ namespace Assistant
 
         internal void OnLogout()
         {
+            base.OnDisconnected();
             OnLogout(true);
         }
 
