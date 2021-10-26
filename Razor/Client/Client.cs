@@ -270,8 +270,6 @@ namespace Assistant
             return outRect;
         }
 
-
-
         private static void Initialize(System.Reflection.Assembly a)
         {
             Type[] types = a.GetTypes();
@@ -307,6 +305,13 @@ namespace Assistant
             }
 
             return ipAddr;
+        }
+        internal void OnDisconnected()
+        {
+            foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
+            {
+                scriptdata.Run = false;
+            }
         }
 
         internal bool UsePostHSChanges

@@ -407,6 +407,7 @@ namespace Assistant
         }
         private void OnDisconnected()
         {
+            base.OnDisconnected();
         }
 
         private void OnConnected()
