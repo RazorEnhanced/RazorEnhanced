@@ -120,6 +120,15 @@ namespace RazorEnhanced
             return p;
         }
 
+        //Change Profile
+        /// <summary>
+        /// Allow the scripted loading of a profile
+        /// </summary>
+        /// <param name="profileName">Name of profile to load</param>
+        public static void ChangeProfile(string profileName)
+        {
+            Engine.MainWindow.SafeAction(s => s.changeProfile(profileName));
+        }
 
         //General
         /// <summary>
