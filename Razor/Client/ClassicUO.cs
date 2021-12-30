@@ -237,7 +237,7 @@ namespace Assistant
             World.Player.Position = new Point3D(x, y, z);
             World.Player.WalkScriptRequest = 2;
         }
-
+        
         internal static void RunTheUI()
         {
             Engine.MainWnd = new MainForm();
@@ -412,6 +412,11 @@ namespace Assistant
 
         private void OnConnected()
         {
+
+            System.Drawing.Rectangle r = Client.Instance.GetUoWindowPos();
+            int offset = 30;
+            Engine.MainWindow.SafeAction(s => { s.Location = new System.Drawing.Point(offset + r.Right - Engine.MainWindow.Width, offset + r.Bottom - Engine.MainWindow.Height); });
+
             m_ConnectionStart = DateTime.UtcNow;
             m_LastConnection = Engine.IP;
         }
