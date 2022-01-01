@@ -21,16 +21,12 @@ namespace RazorEnhanced
         #endregion
 
         //Dalamar: See if you like it (data/config loading)
-        public static string ConfigPath(string configfile, bool readData = true, bool absolutePath = true)
+        public static string ConfigPath(string configfile, bool readData = true)
         {
-            string path = Path.Combine(PATH_DATA, configfile);
+            string path = Path.Combine(Assistant.Engine.RootPath, PATH_DATA, configfile);
             if (!readData || !File.Exists(path))
             {
-                path = Path.Combine(PATH_CONFIG, configfile);
-            }
-            if (absolutePath)
-            {
-                path = Path.Combine(Assistant.Engine.RootPath, path);
+                path = Path.Combine(Assistant.Engine.RootPath, PATH_CONFIG, configfile);
             }
 
             return path;
