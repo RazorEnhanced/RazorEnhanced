@@ -143,19 +143,8 @@ namespace RazorEnhanced
 
             try
             {
-                string path = Path.Combine(PATH_DATA, CONFIG_SOUNDFILTERS);
-                if (File.Exists(path))
-                {
-                    ConfigFiles.FilterSounds = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ushort[]>>(File.ReadAllText(path));
-                }
-                else
-                {
-                    path = Path.Combine(PATH_CONFIG, CONFIG_SOUNDFILTERS);
-                    if (File.Exists(path))
-                    {
-                        ConfigFiles.FilterSounds = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ushort[]>>(File.ReadAllText(path));
-                    }
-                }
+                string path = ConfigPath(CONFIG_SOUNDFILTERS);
+                ConfigFiles.FilterSounds = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ushort[]>>(File.ReadAllText(path));
             }
             catch (Exception)
             {
