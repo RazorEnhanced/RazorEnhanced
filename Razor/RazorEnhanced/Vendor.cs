@@ -794,12 +794,12 @@ namespace RazorEnhanced
 			{
 				if (pack.Contains[i] == null)
 					continue;
-	
+
 				if (m_comparename) // if namecheck enabled assign real item name show in vendor list
 					pack.Contains[i].Name = m_shoplist[i];
-				
+
 				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(m_listname);
-				
+
 				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{
 					// int x = 0;
@@ -809,19 +809,23 @@ namespace RazorEnhanced
 					if (buyItem.Graphics != pack.Contains[i].ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue) || !RazorEnhanced.BuyAgent.CheckName(pack.Contains[i].Name, buyItem.Name))
 						continue;
 
-					if (pack.Contains[i].Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
+					if (pack.Contains[i].TrueAmount > buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
 					{
-						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].Amount + " - Buyed: " + buyItem.Amount);
+						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].TrueAmount + " - Buyed: " + buyItem.Amount);
 						buyList.Add(new VendorBuyItem(pack.Contains[i].Serial, buyItem.Amount, pack.Contains[i].Price));
 						total += buyItem.Amount;
 						cost += pack.Contains[i].Price * buyItem.Amount;
 					}
 					else // Caso che il vendor ne abbia di meno (Li compro tutti)
 					{
-						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].Amount + " - Buyed: " + pack.Contains[i].Amount);
-						buyList.Add(new VendorBuyItem(pack.Contains[i].Serial, pack.Contains[i].Amount, pack.Contains[i].Price));
-						total += pack.Contains[i].Amount;
-						cost += pack.Contains[i].Price * pack.Contains[i].Amount;
+						if (pack.Contains[i].TrueAmount > 0)
+						{
+							AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + pack.Contains[i].TrueAmount + " - Buyed: " + pack.Contains[i].TrueAmount);
+							buyList.Add(new VendorBuyItem(pack.Contains[i].Serial, pack.Contains[i].TrueAmount, pack.Contains[i].Price));
+							total += pack.Contains[i].TrueAmount;
+							cost += pack.Contains[i].Price * pack.Contains[i].TrueAmount;
+							pack.Contains[i].Amount = 0;
+						}
 					}
 				}
 			}

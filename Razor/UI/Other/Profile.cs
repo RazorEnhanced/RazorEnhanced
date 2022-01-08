@@ -52,6 +52,23 @@ namespace Assistant
 			}
 		}
 
+		// must be run in ui thread
+		internal void changeProfile(string profileName)
+		{
+			int newIndex = Assistant.Engine.MainWindow.ProfilesComboBox.FindStringExact(profileName);
+			if (newIndex == -1)
+			{
+				Misc.SendMessage(String.Format("Unable to find profile {0}", profileName), 54, true);
+				return;
+			}
+
+			if (profileName != Assistant.Engine.MainWindow.ProfilesComboBox.SelectedValue)
+			{
+				RazorEnhanced.Profiles.ProfileChange(profileName);
+				Engine.MainWindow.ProfilesComboBox.SelectedIndex = Engine.MainWindow.ProfilesComboBox.FindString(profileName);
+			}
+		}
+
 		private void profilesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (profilesComboBox.Focused)

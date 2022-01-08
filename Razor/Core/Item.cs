@@ -200,6 +200,16 @@ namespace Assistant
             set { m_PropsUpdated = value; }
         }
 
+        // TrueAmount is a hack because OSI messes with the amount field, but for vendor buy/sell I needs the real value
+        internal ushort TrueAmount
+        {
+            get
+            {
+                return m_Amount;
+            }
+            set { m_Amount = value; }
+        }
+
         internal ushort Amount
         {
             get

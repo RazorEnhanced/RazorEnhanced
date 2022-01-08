@@ -129,7 +129,7 @@ namespace Assistant
 				}
 			}
 			scriptlistView.EndUpdate();
-            if (scriptlistView.Items.Count > 0)
+            if (scriptlistView.Items.Count > currentSelectionIndex)
             {
                 scriptlistView.Items[currentSelectionIndex].Selected = true;
             }
