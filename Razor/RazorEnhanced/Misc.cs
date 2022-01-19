@@ -971,7 +971,7 @@ namespace RazorEnhanced
                 mapInfo = new MapInfo
                 {
                     Serial = mapItem.Serial,
-                    PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(mapItem.PinPosition.X * mapItem.Multiplier, mapItem.PinPosition.Y * mapItem.Multiplier)),
+                    PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(Convert.ToInt32(mapItem.PinPosition.X * mapItem.Multiplier), Convert.ToInt32(mapItem.PinPosition.Y * mapItem.Multiplier))),
                     MapOrigin = mapItem.m_MapOrigin,
                     MapEnd = mapItem.m_MapEnd,
                     Facet = mapItem.m_Facet

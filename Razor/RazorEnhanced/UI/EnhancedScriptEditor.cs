@@ -2041,7 +2041,15 @@ namespace RazorEnhanced.UI
 			fastColoredTextBoxEditor.Focus();
 			SendKeys.SendWait("^f");
 		}
-
+		private void ToolStripButtonWiki_Click(object sender, EventArgs e)
+		{
+			System.Diagnostics.ProcessStartInfo p = new System.Diagnostics.ProcessStartInfo("http://www.razorenhanced.net/dokuwiki");
+			try
+			{
+				System.Diagnostics.Process.Start(p);
+			}
+			catch { }
+		}
 		private void Open()
 		{
 			OpenFileDialog open = new OpenFileDialog

@@ -158,7 +158,7 @@ namespace RazorEnhanced
                         return;
 
                     string display_error = ex.Message;
-                    if ( m_pe.Engine != null ) {
+                    if (m_pe != null && m_pe.Engine != null ) {
                         display_error = m_pe.Engine.GetService<ExceptionOperations>().FormatException(ex);
                     }
                     SendMessageScriptError("ERROR " + m_Filename + ":" + display_error.Replace("\n", " | "));

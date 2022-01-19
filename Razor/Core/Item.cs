@@ -200,6 +200,16 @@ namespace Assistant
             set { m_PropsUpdated = value; }
         }
 
+        // TrueAmount is a hack because OSI messes with the amount field, but for vendor buy/sell I needs the real value
+        internal ushort TrueAmount
+        {
+            get
+            {
+                return m_Amount;
+            }
+            set { m_Amount = value; }
+        }
+
         internal ushort Amount
         {
             get
@@ -1018,14 +1028,7 @@ namespace Assistant
             set { m_MapEnd = value; }
         }
 
-
-        public int m_Multiplier;
-        internal int Multiplier
-        {
-            get { return m_Multiplier; }
-            set { m_Multiplier = value; }
-        }
-
+        internal float Multiplier { get; set; }
 
         public ushort m_Facet;
         internal ushort Facet
@@ -1053,8 +1056,8 @@ namespace Assistant
                 {
                     return;
                 }
-                int xCoord = m_MapOrigin.X + (Multiplier * m_PinPosition.X);
-                int yCoord = m_MapOrigin.Y + (Multiplier * m_PinPosition.Y);
+                int xCoord = m_MapOrigin.X + (int)(Multiplier * m_PinPosition.X);
+                int yCoord = m_MapOrigin.Y + (int)(Multiplier * m_PinPosition.Y);
                 string location = String.Format("Location({0}, {1})",
                     xCoord,
                     yCoord
