@@ -3349,7 +3349,8 @@ namespace RazorEnhanced
                     case 7: color = 153; break; //Yellow
                 }
                 RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
-                Player.HeadMessage(color, "[Enemy] " + anEnemy.Name);
+                if (! quiet)
+                    Player.HeadMessage(color, "[Enemy] " + anEnemy.Name);
                 UOScript.Interpreter.SetAlias("enemy", (uint)anEnemy.Serial);
             }
             else
@@ -3423,7 +3424,8 @@ namespace RazorEnhanced
                     case 7: color = 153; break; //Yellow
                 }
                 RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
-                Player.HeadMessage(color, "[Friend] " + anEnemy.Name);
+                if (!quiet)
+                    Player.HeadMessage(color, "[Friend] " + anEnemy.Name);
                 UOScript.Interpreter.SetAlias("friend", (uint)anEnemy.Serial);
             }
             else

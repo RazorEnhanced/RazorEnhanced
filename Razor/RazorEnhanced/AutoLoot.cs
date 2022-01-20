@@ -376,6 +376,37 @@ namespace RazorEnhanced
             }
 
         }
+
+
+        internal static List<Item> ItemizeAllItems(List<Item> container)
+        {
+            List<Item> items = new List<Item>();
+            if (container == null) // not valid serial or container not found
+            {
+                return items;
+            }
+            if (container.Count == 0)
+            {
+                return items;
+            }
+            foreach (Item i in container)
+            {
+                if (i.IsContainer)
+                {
+                    //Items.UseItem(i);
+                    List<Item> recursItems = ItemizeAllItems(i.Contains);
+                    if (recursItems != null)
+                        items.AddRange(recursItems);
+                }
+                else 
+                {
+                    items.Add(i);
+                }
+            }
+            return items; // Return empty list no items found
+        }
+
+
         internal static void Engine(Dictionary<int, List<AutoLootItem>> autoLootList, int mseconds, Items.Filter filter)
         {
             //TODO: msecond it's unused
@@ -434,8 +465,8 @@ namespace RazorEnhanced
                 {
                     matchAll = new List<AutoLootItem>();
                 }
-
-                foreach (RazorEnhanced.Item item in m_cont.Contains)
+                
+                foreach (RazorEnhanced.Item item in ItemizeAllItems(m_cont.Contains))
                 {
                     if (! item.IsLootable )
                     {
