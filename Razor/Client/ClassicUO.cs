@@ -412,10 +412,22 @@ namespace Assistant
 
         private void OnConnected()
         {
-
-            System.Drawing.Rectangle r = Client.Instance.GetUoWindowPos();
-            int offset = 30;
-            Engine.MainWindow.SafeAction(s => { s.Location = new System.Drawing.Point(offset + r.Right - Engine.MainWindow.Width, offset + r.Bottom - Engine.MainWindow.Height); });
+            bool ReWindowVisible = false;
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                System.Drawing.Rectangle screenArea = new System.Drawing.Rectangle(screen.Bounds.Location, screen.Bounds.Size);
+                screenArea.Width -= (Engine.MainWindow.Width / 2);
+                screenArea.Height -= (Engine.MainWindow.Height / 2);
+                if (screenArea.Contains(Engine.MainWindow.Location))
+                {
+                    ReWindowVisible = true;
+                }
+            }
+            if (!ReWindowVisible)
+            {
+                System.Drawing.Rectangle cuoWindow = Client.Instance.GetUoWindowPos();
+                Engine.MainWindow.SafeAction(s => { s.Location = cuoWindow.Location; });
+            }
 
             m_ConnectionStart = DateTime.UtcNow;
             m_LastConnection = Engine.IP;
