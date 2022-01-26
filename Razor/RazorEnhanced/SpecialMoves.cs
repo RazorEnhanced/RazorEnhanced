@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Threading;
 
 namespace Assistant
 {
@@ -225,8 +227,11 @@ namespace Assistant
         private static readonly int[] WhipFencing = new int[] { 0xA28A, 0xA292 };
         private static readonly int[] WhipSword = new int[] { 0xA28B, 0xA293 };
 
+		private const string TYPE = "ClassicUO.Game.GameActions";		
+		private static MethodInfo _usePrimaryMethod;
+		private static MethodInfo _useSecondaryMethod;
 
-        private static readonly AbilityInfo[] m_Primary = new AbilityInfo[]
+		private static readonly AbilityInfo[] m_Primary = new AbilityInfo[]
 		{
 			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID, SoulGlaiveID ),
 			new AbilityInfo( AOSAbility.ArmorPeirce, YumiID, WhipFencing ),
@@ -404,15 +409,35 @@ namespace Assistant
                 HasPrimary = true;
                 HasSecondary = false;
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
-				if (wait)
+
+				//if (wait)
+				//{
+				//	Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
+				//}
+				//else
+				//{
+				//	Assistant.Client.Instance.SendToServer(new UseAbility(a));					
+				//}
+
+				if (Client.IsOSI)
 				{
-			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
-			 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
+					RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+					if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+					{
+						while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+						{
+							Thread.Sleep(50);
+						}
+					}
+					RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponPrimary();
 				}
-				else
+				else // CUO Client
 				{
-			 		Assistant.Client.Instance.SendToServer(new UseAbility(a));
-			 		Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
+					if (_usePrimaryMethod == null)
+					{
+						_usePrimaryMethod = ClassicUOClient.CUOAssembly?.GetType(TYPE)?.GetMethod("UsePrimaryAbility", BindingFlags.Public | BindingFlags.Static);
+					}					
+					ClassicUOClient.CUOActionQueue.Enqueue(() => { _usePrimaryMethod.Invoke(null, null); });
 				}
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
@@ -441,15 +466,36 @@ namespace Assistant
                 HasPrimary = false;
                 HasSecondary = true;
  				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
-               if (wait)
+
+				//if (wait)
+				//{
+				//	Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
+				//}
+				//else
+				//{
+				//	Assistant.Client.Instance.SendToServer(new UseAbility(a));						
+				//}
+
+				if (Client.IsOSI)
 				{
-			 		Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
-			 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
+					RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+					if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+					{
+						while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+						{
+							Thread.Sleep(50);
+						}
+					}
+					RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponSecondary();
 				}
-				else
+				else // CUO Client
 				{
-			 		Assistant.Client.Instance.SendToServer(new UseAbility(a));
-			 		Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
+					if (_useSecondaryMethod == null)
+					{
+						_useSecondaryMethod = ClassicUOClient.CUOAssembly?.GetType(TYPE)?.GetMethod("UseSecondaryAbility", BindingFlags.Public | BindingFlags.Static);
+					}
+
+					ClassicUOClient.CUOActionQueue.Enqueue(() => { _useSecondaryMethod.Invoke(null, null); });
 				}
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
@@ -519,23 +565,23 @@ namespace Assistant
             // Seems OSI does not send an execute special on weapon clear, but free servers do
             // I'd prefer to wait till server tells me its clear, but for OSI
             // I'll have to force it clear
-            if (Client.Instance.ServerEncrypted && World.Player.HasSpecial) // just a guess it is OSI                                                 
-            {                
-                World.Player.HasSpecial = HasPrimary = HasSecondary = false;
-                System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
-                doAction.Start();
-            }
+            //if (Client.Instance.ServerEncrypted && World.Player.HasSpecial) // just a guess it is OSI                                                 
+            //{                
+            //    World.Player.HasSpecial = HasPrimary = HasSecondary = false;
+            //    System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+            //   doAction.Start();
+            //}
 
             // clear these when server sends back clear packet
             if (wait)
 			{
 		 		Assistant.Client.Instance.SendToServerWait(new UseAbility(AOSAbility.Clear));
-		 		Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
+		 	//	Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
 			}
 			else
 			{
 		 		Assistant.Client.Instance.SendToServer(new UseAbility(AOSAbility.Clear));
-		 		Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
+		 	//	Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
 			}
 			World.Player.SendMessage(LocString.AOSAbCleared);
 		}

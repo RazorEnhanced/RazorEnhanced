@@ -1661,10 +1661,10 @@ namespace RazorEnhanced
                     if (content != null)
                     {
                         for (int i = 0; i < content.Count; i++)
-                        {
-                            if (!content[i].ToString().ToLower().Contains(name.ToLower())) // Props Name not match
+                        {                            
+                            if (!content[i].ToString().ToLower().StartsWith(name.ToLower())) // Props Name not match
                                 continue;
-
+                            
                             if (content[i].Args == null)  // Props exist but not have value
                                 return 1;
 
