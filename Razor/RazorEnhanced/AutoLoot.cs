@@ -393,7 +393,6 @@ namespace RazorEnhanced
             {
                 if (i.IsContainer)
                 {
-                    //Items.UseItem(i);
                     List<Item> recursItems = ItemizeAllItems(i.Contains);
                     if (recursItems != null)
                         items.AddRange(recursItems);

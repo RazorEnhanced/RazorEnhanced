@@ -997,8 +997,8 @@ namespace Assistant
 
             Write((uint)World.Player.Serial);
             Write((ushort)0x19);
-            Write(false);
-            Write((int)abilityIndex);
+            Write((uint)0);
+            Write((byte)abilityIndex);
             Write((byte)0x0A);
         }
     }
