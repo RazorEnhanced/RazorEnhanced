@@ -421,7 +421,7 @@ namespace Assistant
 
 				if (Client.IsOSI)
 				{
-					RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+					RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();					
 					if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
 					{
 						while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
@@ -429,7 +429,8 @@ namespace Assistant
 							Thread.Sleep(50);
 						}
 					}
-					RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponPrimary();
+					System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponPrimary());
+					doAction.Start();					
 				}
 				else // CUO Client
 				{
@@ -486,7 +487,8 @@ namespace Assistant
 							Thread.Sleep(50);
 						}
 					}
-					RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponSecondary();
+					System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponSecondary());
+					doAction.Start();
 				}
 				else // CUO Client
 				{
