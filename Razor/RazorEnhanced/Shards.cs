@@ -41,8 +41,16 @@ namespace RazorEnhanced
                             row["CUOClient"] = string.Empty;
                         }
                     }
+					if (!shards.Columns.Contains("UpdateURL"))
+					{
+						shards.Columns.Add("UpdateURL", typeof(string));
+						foreach (DataRow row in shards.Rows)
+						{
+							row["UpdateURL"] = string.Empty;
+						}
+					}
 
-                    File.Copy(filename, backup, true);
+					File.Copy(filename, backup, true);
 				}
 				catch (Exception)
 				{
@@ -113,7 +121,9 @@ namespace RazorEnhanced
 		private readonly bool m_Selected;
 		internal bool Selected { get { return m_Selected; } }
 
-		public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected)
+		internal string UpdateURL { get; set; }
+
+		public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected, string updateURL)
 		{
 			m_Description = description;
 			ClientPath = clientpath;
@@ -124,6 +134,7 @@ namespace RazorEnhanced
 			m_PatchEnc = patchenc;
 			m_OSIEnc = osienc;
 			m_Selected = selected;
+			UpdateURL = updateURL;
 		}
 
 		internal static bool Exists(string description)
@@ -131,7 +142,7 @@ namespace RazorEnhanced
 			return m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 		}
 
-		internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc)
+		internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc, string updateURL)
 		{
 			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
 			{
@@ -148,12 +159,13 @@ namespace RazorEnhanced
 			newRow["PatchEnc"] = parchenc;
 			newRow["OSIEnc"] = osienc;
 			newRow["Selected"] = true;
+			newRow["UpdateURL"] = updateURL;
 			m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
 
 			Save();
 		}
 
-		internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc, bool selected)
+		internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc, string updateURL, bool selected)
 		{
 			bool found = m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
@@ -179,6 +191,7 @@ namespace RazorEnhanced
 						row["Port"] = port;
 						row["PatchEnc"] = parchenc;
 						row["OSIEnc"] = osienc;
+						row["UpdateURL"] = updateURL;
 						row["Selected"] = selected;
 						break;
 					}
@@ -243,8 +256,9 @@ namespace RazorEnhanced
                 bool patchenc = (bool)row["PatchEnc"];
                 bool osienc = (bool)row["OSIEnc"];
                 bool selected = (bool)row["Selected"];
+				string updateURL = (string)row["UpdateURL"];
 
-                RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected);
+				RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected, updateURL);
                 shardsOut.Add(shard);
             }
 

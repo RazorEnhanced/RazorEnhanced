@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
 using System.Linq;
 using System.Reflection;
+using System.Xml;
 
 namespace Assistant
 {
@@ -68,36 +69,75 @@ namespace Assistant
         static extern bool CreateSymbolicLink(string lpSymlinkFileName, string lpTargetFileName, SYMBOLIC_LINK_FLAG dwFlags);
 
 
-        internal bool MakeFileSymlink(string source, string dest)
+        internal void UpdateFiles(string source, string url)
         {
-            bool result = CreateSymbolicLink(dest, source, SYMBOLIC_LINK_FLAG.File);
-            int error = Marshal.GetLastWin32Error();
-            return result;
-        }
-        internal bool MakeDirSymlink(DirectoryInfo sourceFolder, DirectoryInfo destFolder)
-        {
-            foreach (DirectoryInfo dir in sourceFolder.GetDirectories())
-                MakeDirSymlink(dir, destFolder.CreateSubdirectory(dir.Name));
+            if (url == null || url == "")
+                return;
 
-            foreach (FileInfo file in sourceFolder.GetFiles())
-                MakeFileSymlink(Path.Combine(sourceFolder.FullName, file.Name), Path.Combine(destFolder.FullName, file.Name));
+            DirectoryInfo uoFiles = new DirectoryInfo(source);
+            string hashFileName = Path.Combine(uoFiles.FullName, "UpdateInfo.json");
+            Dictionary<String, UInt32> hashFile = null;
+            if (File.Exists(hashFileName))
+                hashFile = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, UInt32>>(File.ReadAllText(hashFileName));
+            else
+                hashFile = new Dictionary<String, UInt32>();
 
-            return true;
-        }
-
-        internal void SymlinkCopy(string source, string dest)
-        {
+            bool anyHashChanges = false;
+            string lastUrl = "";
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                lastUrl = url + "UpdateInfo.xml";
+                doc.Load(lastUrl);
+                XmlElement root = doc.DocumentElement;
+                XmlNodeList nodes = root.ChildNodes; 
+                foreach (XmlNode node in nodes)
+                {
+                    string name = "";
+                    UInt32 hash = 0;
+                    string filename = "";
+                    foreach (XmlAttribute attrib in node.Attributes)
+                    {
+                        switch (attrib.Name)
+                        {
+                            case "filename":
+                                filename = attrib.Value;
+                                break;
+                            case "hash":
+                                hash = Convert.ToUInt32(attrib.Value, 16);
+                                break;
+                            case "name":
+                                name = attrib.Value;
+                                break;
+                        }
+                    }
+                    if (hashFile.ContainsKey(name) && hashFile[name] == hash)
+                        continue;
+                    anyHashChanges = true;
+                    string replaceFile = Path.Combine(uoFiles.FullName, name);
+                    if (File.Exists(replaceFile))
+                        File.Delete(replaceFile);
+                    WebClient webClient = new WebClient();
+                    string downloadFile = Path.Combine(uoFiles.FullName, filename);
+                    lastUrl = url + filename;
+                    webClient.DownloadFile(lastUrl, downloadFile);
+                    System.IO.Compression.ZipFile.ExtractToDirectory(downloadFile, uoFiles.FullName);
+                    if (File.Exists(downloadFile))
+                        File.Delete(downloadFile);
+                    hashFile[name] = hash;
+                }
+                if (anyHashChanges)
+                {
+                    string hashFileString = Newtonsoft.Json.JsonConvert.SerializeObject(hashFile);
+                    File.WriteAllText(hashFileName, hashFileString);
+                }
+            }
+            catch (System.Net.WebException e)
+            {
+                MessageBox.Show(lastUrl, e.Message);
+            }
             return;
-            string updatedDirectory = Path.Combine(Assistant.Engine.RootPath, dest);
-            System.IO.Directory.CreateDirectory(updatedDirectory);
-            DirectoryInfo from = new DirectoryInfo(source);
-            DirectoryInfo to = new DirectoryInfo(updatedDirectory);
 
-            foreach (DirectoryInfo dir in from.GetDirectories())
-                MakeDirSymlink(dir, to.CreateSubdirectory(dir.Name));
-
-            foreach (FileInfo file in from.GetFiles())
-                MakeFileSymlink(Path.Combine(from.FullName, file.Name), Path.Combine(to.FullName, file.Name));
 
 
         }
@@ -151,7 +191,7 @@ namespace Assistant
                         selected = Instance.SelectShard(shards);
                         m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
 
-                        SymlinkCopy(selected.ClientFolder, selected.Host);
+                        UpdateFiles(selected.ClientFolder, selected.UpdateURL);
 
                         if (launcher.ActiveControl.Text == "Launch CUO")
                         {
