@@ -80,13 +80,14 @@ namespace RazorEnhanced
 				shards.Columns.Add("PatchEnc", typeof(bool));
 				shards.Columns.Add("OSIEnc", typeof(bool));
 				shards.Columns.Add("Selected", typeof(bool));
+				shards.Columns.Add("UpdateURL", typeof(string));
 
 				DataRow uod = shards.NewRow();
-				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
+				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true, "" };
 				shards.Rows.Add(uod);
 
                 DataRow eventine = shards.NewRow();
-                eventine.ItemArray = new object[] { "UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false };
+                eventine.ItemArray = new object[] { "UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false, "" };
                 shards.Rows.Add(eventine);
 
                 m_Dataset.Tables.Add(shards);
@@ -246,11 +247,6 @@ namespace RazorEnhanced
 
 			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
 			{
-				if (!row.Table.Columns.Contains("UpdateURL"))
-				{
-					row.Table.Columns.Add("UpdateURL", typeof(string));
-					row["UpdateURL"] = "";
-				}
 				string description = (string)row["Description"];
 				string clientpath = (string)row["ClientPath"];
 				string clientfolder = (string)row["ClientFolder"];

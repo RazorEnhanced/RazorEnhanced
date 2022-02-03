@@ -36,6 +36,7 @@ namespace RazorEnhanced.UI
             this.addShard = new System.Windows.Forms.Button();
             this.shardlistCombobox = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.updateUrl = new System.Windows.Forms.TextBox();
             this.labelUpdateUrl = new System.Windows.Forms.Label();
             this.cuoPathClick = new System.Windows.Forms.Button();
             this.cuoClientLabel = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@ namespace RazorEnhanced.UI
             this.quit = new System.Windows.Forms.Button();
             this.okay = new System.Windows.Forms.Button();
             this.launchCUO = new System.Windows.Forms.Button();
-            this.updateUrl = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -154,6 +154,14 @@ namespace RazorEnhanced.UI
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Shard Config";
+            // 
+            // updateUrl
+            // 
+            this.updateUrl.Location = new System.Drawing.Point(142, 194);
+            this.updateUrl.Name = "updateUrl";
+            this.updateUrl.Size = new System.Drawing.Size(409, 26);
+            this.updateUrl.TabIndex = 20;
+            this.updateUrl.TextChanged += new System.EventHandler(this.UpdateURL_TextChanged);
             // 
             // labelUpdateUrl
             // 
@@ -376,14 +384,6 @@ namespace RazorEnhanced.UI
             this.launchCUO.TabIndex = 11;
             this.launchCUO.Text = "Launch CUO";
             this.launchCUO.Click += new System.EventHandler(this.LaunchCUO_Click);
-            // 
-            // updateUrl
-            // 
-            this.updateUrl.Location = new System.Drawing.Point(142, 194);
-            this.updateUrl.Name = "updateUrl";
-            this.updateUrl.Size = new System.Drawing.Size(409, 26);
-            this.updateUrl.TabIndex = 20;
-            this.updateUrl.TextChanged += new System.EventHandler(this.UpdateURL_TextChanged);
             // 
             // EnhancedLauncher
             // 

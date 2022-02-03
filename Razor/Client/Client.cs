@@ -73,6 +73,8 @@ namespace Assistant
         {
             if (url == null || url == "")
                 return;
+            //ProgressBar progressBar = new ProgressBar();
+            //progressBar.ShowDialog();
 
             DirectoryInfo uoFiles = new DirectoryInfo(source);
             string hashFileName = Path.Combine(uoFiles.FullName, "UpdateInfo.json");
@@ -81,7 +83,9 @@ namespace Assistant
                 hashFile = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, UInt32>>(File.ReadAllText(hashFileName));
             else
                 hashFile = new Dictionary<String, UInt32>();
-
+            // DEBUG
+            //hashFile = new Dictionary<String, UInt32>();
+            // ENDDEBUG
             bool anyHashChanges = false;
             string lastUrl = "";
             try
