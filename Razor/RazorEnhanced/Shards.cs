@@ -249,7 +249,7 @@ namespace RazorEnhanced
 				if (!row.Table.Columns.Contains("UpdateURL"))
 				{
 					row.Table.Columns.Add("UpdateURL", typeof(string));
-					row["UpdateURL"] = "";
+					row["UpdateURL"] = string.Empty;
 				}
 				string description = (string)row["Description"];
 				string clientpath = (string)row["ClientPath"];
