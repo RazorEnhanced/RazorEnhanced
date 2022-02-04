@@ -35,7 +35,6 @@ namespace RazorEnhanced.UI
                     portLabel.Text = shard.Port.ToString();
                     patchEnc.Checked = shard.PatchEnc;
                     osiEnc.Checked = shard.OSIEnc;
-                    updateUrl.Text = shard.UpdateURL;
                 }
             }
 
@@ -65,7 +64,7 @@ namespace RazorEnhanced.UI
 
             hostLabel.Text = hostLabel.Text.Replace(" ", "");
 
-            Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, cuoClientLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, updateUrl.Text, true);
+            Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, cuoClientLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
             Shard.Read(out List<Shard> shards);
 
@@ -125,7 +124,6 @@ namespace RazorEnhanced.UI
                     portLabel.Text = shard.Port.ToString();
                     patchEnc.Checked = shard.PatchEnc;
                     osiEnc.Checked = shard.OSIEnc;
-                    updateUrl.Text = shard.UpdateURL;
                 }
             }
 
@@ -174,11 +172,6 @@ namespace RazorEnhanced.UI
         }
 
         private void ServeraddressT_TextChanged(object sender, EventArgs e)
-        {
-            UpdateGUI();
-        }
-        
-        private void UpdateURL_TextChanged(object sender, EventArgs e)
         {
             UpdateGUI();
         }
@@ -291,6 +284,5 @@ namespace RazorEnhanced.UI
             }
             UpdateGUI();
         }
-
     }
 }
