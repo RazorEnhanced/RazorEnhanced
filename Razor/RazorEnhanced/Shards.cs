@@ -244,23 +244,18 @@ namespace RazorEnhanced
 		{
 			List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
 
-			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-			{
-				if (!row.Table.Columns.Contains("UpdateURL"))
-				{
-					row.Table.Columns.Add("UpdateURL", typeof(string));
-					row["UpdateURL"] = string.Empty;
-				}
-				string description = (string)row["Description"];
-				string clientpath = (string)row["ClientPath"];
-				string clientfolder = (string)row["ClientFolder"];
-				string cuoClient = (string)row["CUOClient"];
-				string host = (string)row["Host"];
-				long testPort = (long)row["Port"];
-				int port = (int)testPort;
-				bool patchenc = (bool)row["PatchEnc"];
-				bool osienc = (bool)row["OSIEnc"];
-				bool selected = (bool)row["Selected"];
+            foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+            {
+                string description = (string)row["Description"];
+                string clientpath = (string)row["ClientPath"];
+                string clientfolder = (string)row["ClientFolder"];
+                string cuoClient = (string)row["CUOClient"];
+                string host = (string)row["Host"];
+                long testPort = (long)row["Port"];
+                int port = (int)testPort;
+                bool patchenc = (bool)row["PatchEnc"];
+                bool osienc = (bool)row["OSIEnc"];
+                bool selected = (bool)row["Selected"];
 				string updateURL = (string)row["UpdateURL"];
 
 				RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected, updateURL);
