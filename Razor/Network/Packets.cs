@@ -1002,6 +1002,18 @@ namespace Assistant
             Write((byte)0x0A);
         }
     }
+    internal sealed class EquipLastWeapon : Packet
+    {
+        internal EquipLastWeapon()
+            : base(0xD7)
+        {
+            EnsureCapacity(10);
+            Write((uint)World.Player.Serial);
+            Write((ushort)0x1E);
+            Write((byte)0x0A);
+        }
+    }
+
 
     internal sealed class ClearAbility : Packet
     {
@@ -1290,27 +1302,27 @@ namespace Assistant
 
             // Post-7.0.9.0
             /*
-			New World Item Packet
-			PacketID: 0xF3
-			PacketLen: 26
-			Format:
+            New World Item Packet
+            PacketID: 0xF3
+            PacketLen: 26
+            Format:
 
-				BYTE - 0xF3 packetId
-				WORD - 0x01
-				BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
-				DWORD - item Serial
-				WORD - item ID
-				BYTE - item direction (same as old)
-				WORD - amount
-				WORD - amount
-				WORD - X
-				WORD - Y
-				SBYTE - Z
-				BYTE - item light
-				WORD - item Hue
-				BYTE - item flags (same as old packet)
-				WORD ???
-			*/
+                BYTE - 0xF3 packetId
+                WORD - 0x01
+                BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
+                DWORD - item Serial
+                WORD - item ID
+                BYTE - item direction (same as old)
+                WORD - amount
+                WORD - amount
+                WORD - X
+                WORD - Y
+                SBYTE - Z
+                BYTE - item light
+                WORD - item Hue
+                BYTE - item flags (same as old packet)
+                WORD ???
+            */
 
             uint serial = (uint)item.Serial;
             ushort itemID = item.ItemID;

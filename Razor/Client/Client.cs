@@ -56,51 +56,6 @@ namespace Assistant
         internal static bool Running { get { return m_Running; } }
 
 
-        [Flags]
-        enum SYMBOLIC_LINK_FLAG
-        {
-            File = 0,
-            Directory = 1,
-            AllowUnprivilegedCreate = 2
-        }
-        [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        [return: System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.I1)]
-        static extern bool CreateSymbolicLink(string lpSymlinkFileName, string lpTargetFileName, SYMBOLIC_LINK_FLAG dwFlags);
-
-
-        internal bool MakeFileSymlink(string source, string dest)
-        {
-            bool result = CreateSymbolicLink(dest, source, SYMBOLIC_LINK_FLAG.File);
-            int error = Marshal.GetLastWin32Error();
-            return result;
-        }
-        internal bool MakeDirSymlink(DirectoryInfo sourceFolder, DirectoryInfo destFolder)
-        {
-            foreach (DirectoryInfo dir in sourceFolder.GetDirectories())
-                MakeDirSymlink(dir, destFolder.CreateSubdirectory(dir.Name));
-
-            foreach (FileInfo file in sourceFolder.GetFiles())
-                MakeFileSymlink(Path.Combine(sourceFolder.FullName, file.Name), Path.Combine(destFolder.FullName, file.Name));
-
-            return true;
-        }
-
-        internal void SymlinkCopy(string source, string dest)
-        {
-            return;
-            string updatedDirectory = Path.Combine(Assistant.Engine.RootPath, dest);
-            System.IO.Directory.CreateDirectory(updatedDirectory);
-            DirectoryInfo from = new DirectoryInfo(source);
-            DirectoryInfo to = new DirectoryInfo(updatedDirectory);
-
-            foreach (DirectoryInfo dir in from.GetDirectories())
-                MakeDirSymlink(dir, to.CreateSubdirectory(dir.Name));
-
-            foreach (FileInfo file in from.GetFiles())
-                MakeFileSymlink(Path.Combine(from.FullName, file.Name), Path.Combine(to.FullName, file.Name));
-
-
-        }
         public bool Init(bool isOSI)
         // returns false on cancel
         {
@@ -150,8 +105,6 @@ namespace Assistant
                         RazorEnhanced.Shard.Read(out shards);
                         selected = Instance.SelectShard(shards);
                         m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
-
-                        SymlinkCopy(selected.ClientFolder, selected.Host);
 
                         if (launcher.ActiveControl.Text == "Launch CUO")
                         {
