@@ -1,18 +1,20 @@
-using Assistant.UI;
 using CUO_API;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using Assistant;
+using Assistant.UI;
+using System.Linq;
 
 // For CUO Settings
 //using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 
 
 namespace Assistant
@@ -59,7 +61,7 @@ namespace Assistant
                 }
 
                 AssemblyName askedassembly = new AssemblyName(e.Name);
-
+                
                 bool isdll = File.Exists(Path.Combine(RootPath, askedassembly.Name + ".dll"));
 
                 return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
@@ -118,7 +120,7 @@ namespace Assistant
         private static OnTick _tick;
         private static RequestMove _requestMove;
         private static OnSetTitle _setTitle;
-        private static OnGetUOFilePath _uoFilePath;
+        private static OnGetUOFilePath _uoFilePath;    
 
 
         private static OnHotkey _onHotkeyPressed;
@@ -249,7 +251,7 @@ namespace Assistant
             World.Player.Position = new Point3D(x, y, z);
             World.Player.WalkScriptRequest = 2;
         }
-
+        
         internal static void RunTheUI()
         {
             Engine.MainWnd = new MainForm();
