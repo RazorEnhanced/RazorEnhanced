@@ -49,6 +49,20 @@ namespace RazorEnhanced
                 this._executeCommand(false, "Macro", new object[] { 8, 1 });
             }
 
+            internal void EUOWeaponPrimary()
+            {
+                if (!Client.IsOSI)
+                    return;
+                this._executeCommand(false, "Macro", new object[] { 35, 0 });
+            }
+
+            internal void EUOWeaponSecondary()
+            {
+                if (!Client.IsOSI)
+                    return;
+                this._executeCommand(false, "Macro", new object[] { 36, 0 });
+            }
+
             internal void CloseBackpack()
             {
                 if (!Client.IsOSI)

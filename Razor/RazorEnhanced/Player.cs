@@ -2380,7 +2380,15 @@ namespace RazorEnhanced
                 return false;
         }
 
-        
+
+        // Equip Last Weapon
+        /// <summary>
+        /// Equip the last used weapon 
+        /// </summary>
+        public static void EquipLastWeapon()
+        {
+            Assistant.Client.Instance.SendToServer(new EquipLastWeapon());
+        }
 
         // Weapon SA
         /// <summary>
