@@ -193,10 +193,17 @@ namespace RazorEnhanced
         {
             get
             {
-                if (Engine.MainWindow.FriendListSelect.InvokeRequired)
-                    return (string)Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Engine.MainWindow.FriendListSelect.Text));
-                else
-                    return Engine.MainWindow.FriendListSelect.Text;
+                try
+                {
+                    if (Engine.MainWindow.FriendListSelect.InvokeRequired)
+                        return (string)Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Engine.MainWindow.FriendListSelect.Text));
+                    else
+                        return Engine.MainWindow.FriendListSelect.Text;
+                }
+                catch (System.ComponentModel.InvalidAsynchronousStateException ex)
+                {
+                    return "";
+                }
             }
 
             set

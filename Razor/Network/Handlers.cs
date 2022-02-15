@@ -943,16 +943,23 @@ namespace Assistant
             p = RazorEnhanced.Filters.EquipmentUpdateColorize(p, i);
 
             // Set last weapon in equip
-            if (World.Player != null && (i.Layer == Layer.RightHand || i.Layer == Layer.FirstValid))
-                World.Player.LastWeaponRight = i.Serial;
-            else if (World.Player != null && i.Layer == Layer.LeftHand)
-                World.Player.LastWeaponLeft = i.Serial;
-
-            // Update weapon special ability icons on spellgrid when equipping / changing weapons
-            if (World.Player != null && (i.Layer == Layer.RightHand || i.Layer == Layer.LeftHand || i.Layer == Layer.FirstValid))
+            if (World.Player != null && World.Player.Serial == ser && (i.Layer == Layer.RightHand || i.Layer == Layer.FirstValid))
             {
-                System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
-                doAction.Start();
+                if (World.Player.LastWeaponRight != i.Serial)
+                {
+                    World.Player.LastWeaponRight = i.Serial;
+                    System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                    doAction.Start();
+                }
+            }
+            else if (World.Player != null && World.Player.Serial == ser && i.Layer == Layer.LeftHand)
+            {
+                if (World.Player.LastWeaponLeft != i.Serial)
+                {
+                    World.Player.LastWeaponLeft = i.Serial;
+                    System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
+                    doAction.Start();
+                }
             }
 
             if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
@@ -1877,8 +1884,8 @@ namespace Assistant
                 if (i != null)
                 {
                     // Update weapon special ability icons on spellgrid when removing weapons
-                    if (World.Player != null && i.Layer == Layer.RightHand || i.Layer == Layer.LeftHand || i.Layer == Layer.FirstValid)
-                    {
+                    if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
+                    { 
                         System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                         doAction.Start();
                     }

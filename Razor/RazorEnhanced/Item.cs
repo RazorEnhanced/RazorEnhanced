@@ -1059,7 +1059,7 @@ namespace RazorEnhanced
 
             if (serialdestination == 0)
             {
-                Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
+                Scripts.SendMessageScriptError("Script Error: Move: " + item.Name + " to Destination not found 0x" + destination.ToString("X4"));
                 return;
             }
 
