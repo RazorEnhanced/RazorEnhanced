@@ -9,9 +9,9 @@ Curently Requires: **.Net Framework 4.8**
 ## Reference
 
 - **Website:**  http://razorenhanced.net/
-- **Discord:** https://discordapp.com/invite/P3Q7mKT
+- **Discord:** https://discord.gg/BzbG26kaYD
 - **Wiki:** http://razorenhanced.net/dokuwiki/doku.php
-- **Scripting API:** https://razorenhanced.readthedocs.io/
+- **Scripting API:** https://razorenhanced.github.io/doc/api/
 
 ## Project History
 
