@@ -42,7 +42,7 @@ Suggestions are very welcome too.
 
 Contributions are always welcome, feel free to fork the repository and send us a pull request.\
 If you need an how-to for sending pull requests, try this git workflow tutorial from [Aaron Meurer](https://github.com/asmeurer/git-workflow).\
-We suggest you to reach us on [discord](https://discordapp.com/invite/P3Q7mKT) so we can discuss your ideas and adjust it to fit the current codebase in a graceful way.
+We suggest you to reach us on [discord](https://discord.gg/BzbG26kaYD) so we can discuss your ideas and adjust it to fit the current codebase in a graceful way.
 
 
 
