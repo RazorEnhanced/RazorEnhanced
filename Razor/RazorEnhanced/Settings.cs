@@ -3828,9 +3828,20 @@ namespace RazorEnhanced
                     }
                 }
                 return false;
-
-                //return (from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows let dacercare = (RazorEnhanced.Friend.FriendPlayer) row["Item"] where (string) row["List"] == list && dacercare.Serial == player.Serial select row).Any();
             }
+            internal static bool PlayerExists(string list, int playerSerial)
+            {
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                {
+                    RazorEnhanced.Friend.FriendPlayer listPlayer = (RazorEnhanced.Friend.FriendPlayer)row["Item"];
+                    if ((listPlayer.List == list) && (listPlayer.Serial == playerSerial))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
 
             internal static bool GuildExists(string list, string guild)
             {
@@ -3932,18 +3943,29 @@ namespace RazorEnhanced
 
             internal static void PlayerDelete(string list, RazorEnhanced.Friend.FriendPlayer player)
             {
+                PlayerDelete(list, player.Serial);
+            }
+
+            internal static void PlayerDelete(string list, int serial)
+            {
+
+                bool changeMade = false;
                 for (int i = m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].Rows[i];
-                    if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Item"] == player)
+                    RazorEnhanced.Friend.FriendPlayer tablePlayer = (RazorEnhanced.Friend.FriendPlayer)row["Item"];
+                    string tableList = (string)row["List"];
+                    if (tableList == list && tablePlayer.Serial == serial)
                     {
+                        changeMade = true;
                         row.Delete();
-                        break;
                     }
                 }
 
-                Save();
+                if (changeMade)
+                    Save();
             }
+
 
             internal static void GuildDelete(string list, RazorEnhanced.Friend.FriendGuild guild)
             {
