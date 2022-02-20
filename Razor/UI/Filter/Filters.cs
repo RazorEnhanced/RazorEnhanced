@@ -3,6 +3,7 @@ using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -349,6 +350,22 @@ namespace Assistant
 		{
 			if (autoOpenDoors.Focused)
 				RazorEnhanced.Settings.General.WriteBool("AutoOpenDoors", autoOpenDoors.Checked);
+			if (!Client.IsOSI)
+			{
+				PropertyInfo getCurProfile = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.ProfileManager")?.GetProperty("CurrentProfile", BindingFlags.Public | BindingFlags.Static);
+				if (getCurProfile != null)
+				{
+					var profile = getCurProfile.GetValue(null, null);
+					if (profile != null)
+					{
+						PropertyInfo ProfileClass = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Profile")?.GetProperty("AutoOpenDoors", BindingFlags.Public | BindingFlags.Instance);
+						if (ProfileClass != null)
+						{
+							ProfileClass.SetValue(profile, autoOpenDoors.Checked, null);
+						}
+					}
+				}				
+			}
 
 			hiddedAutoOpenDoors.Enabled = autoOpenDoors.Checked;
 		}

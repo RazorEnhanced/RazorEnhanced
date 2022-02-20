@@ -622,27 +622,31 @@ namespace Assistant
 
             e.Position = Position;
 
-            if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
+            if (Client.IsOSI)
             {
-                int x = Position.X, y = Position.Y;
-                Utility.Offset(e.Dir, ref x, ref y);
-
-                int z = Position.Z;
-
-                foreach (Item i in World.Items.Values)
+                if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
                 {
-                    if (i.Position.X == x && i.Position.Y == y)
-                        if (i.IsDoor)
-                            if (i.Position.Z - 20 <= z && i.Position.Z + 20 >= z)
-                                if (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now)
-                                {
-                                    m_LastDoor = i.Serial;
-                                    m_LastDoorTime = DateTime.Now;
-                                    m_OpenDoorReq.Start();
-                                    break;
-                                }
+                    int x = Position.X, y = Position.Y;
+                    Utility.Offset(e.Dir, ref x, ref y);
+
+                    int z = Position.Z;
+
+                    foreach (Item i in World.Items.Values)
+                    {
+                        if (i.Position.X == x && i.Position.Y == y)
+                            if (i.IsDoor)
+                                if (i.Position.Z - 20 <= z && i.Position.Z + 20 >= z)
+                                    if (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now)
+                                    {
+                                        m_LastDoor = i.Serial;
+                                        m_LastDoorTime = DateTime.Now;
+                                        m_OpenDoorReq.Start();
+                                        break;
+                                    }
+                    }
                 }
             }
+            // for CUO, auto open door is done internally to it
 
             e.FilterAck = false;
 
