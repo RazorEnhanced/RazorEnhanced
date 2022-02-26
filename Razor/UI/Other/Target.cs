@@ -337,7 +337,7 @@ namespace Assistant
             if (targetaddTextBox.Text == String.Empty)
 				fail = true;
 
-			if (!System.Text.RegularExpressions.Regex.IsMatch(targetaddTextBox.Text, "^[a-zA-Z0-9_]+$"))
+			if (!System.Text.RegularExpressions.Regex.IsMatch(targetaddTextBox.Text, "^[ a-zA-Z0-9_]+$"))
 				fail = true;
 
             string newtargetid = targetaddTextBox.Text.ToLower();

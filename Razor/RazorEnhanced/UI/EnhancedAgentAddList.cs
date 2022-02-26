@@ -97,7 +97,7 @@ namespace RazorEnhanced.UI
             if (AgentListToAdd.Text == String.Empty)
 				fail = true;
 
-			if (!Regex.IsMatch(AgentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
+			if (!Regex.IsMatch(AgentListToAdd.Text, "^[ a-zA-Z0-9_]+$"))
 				fail = true;
 
             string newList = AgentListToAdd.Text.ToLower();
