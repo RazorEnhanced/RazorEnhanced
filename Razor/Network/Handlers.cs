@@ -2374,7 +2374,9 @@ namespace Assistant
                         toBeRemoved.Delete();
                     }
                     JIList.AcceptChanges();
-                    Engine.MainWindow.SafeAction(s => { s.JournalList.FirstDisplayedScrollingRowIndex = 0; });
+                    // Check this credzba
+                    if (Engine.MainWindow.JournalList.RowCount > 0)
+                        Engine.MainWindow.SafeAction(s => { s.JournalList.FirstDisplayedScrollingRowIndex = 0; });
                 }
             }
         }
