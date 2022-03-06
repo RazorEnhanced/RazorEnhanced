@@ -625,7 +625,10 @@ namespace Assistant
 		private void alwaysTop_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (alwaysTop.Focused)
-				RazorEnhanced.Settings.General.WriteBool("AlwaysOnTop", this.TopMost = alwaysTop.Checked);
+			{
+				RazorEnhanced.Settings.General.WriteBool("AlwaysOnTop", alwaysTop.Checked);
+				this.TopMost = alwaysTop.Checked;
+			}
 		}
 
 		private void opacity_Scroll(object sender, System.EventArgs e)

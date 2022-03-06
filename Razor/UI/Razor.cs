@@ -8842,7 +8842,6 @@ namespace Assistant
             this.Text = "Razor Enhanced {0}";
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
-            this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Move += new System.EventHandler(this.MainForm_Move);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
@@ -9518,12 +9517,6 @@ namespace Assistant
         private void MainForm_Activated(object sender, System.EventArgs e)
         {
             DisableCloseButton();
-        }
-
-        private void MainForm_Deactivate(object sender, System.EventArgs e)
-        {
-            if (this.TopMost)
-                this.TopMost = false;
         }
 
         private void MainForm_Resize(object sender, System.EventArgs e)
