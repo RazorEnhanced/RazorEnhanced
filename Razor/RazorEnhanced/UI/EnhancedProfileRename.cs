@@ -26,7 +26,7 @@ namespace RazorEnhanced.UI
             if (profilename.Text == String.Empty)
 				fail = true;
 
-			if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
+			if (!Regex.IsMatch(profilename.Text, "^[ a-zA-Z0-9_]+$"))
 				fail = true;
 
             string newprofile = profilename.Text.ToLower();

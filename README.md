@@ -9,9 +9,9 @@ Curently Requires: **.Net Framework 4.8**
 ## Reference
 
 - **Website:**  http://razorenhanced.net/
-- **Discord:** https://discordapp.com/invite/P3Q7mKT
+- **Discord:** https://discord.gg/BzbG26kaYD
 - **Wiki:** http://razorenhanced.net/dokuwiki/doku.php
-- **Scripting API:** https://razorenhanced.readthedocs.io/
+- **Scripting API:** https://razorenhanced.github.io/doc/api/
 
 ## Project History
 
@@ -42,7 +42,7 @@ Suggestions are very welcome too.
 
 Contributions are always welcome, feel free to fork the repository and send us a pull request.\
 If you need an how-to for sending pull requests, try this git workflow tutorial from [Aaron Meurer](https://github.com/asmeurer/git-workflow).\
-We suggest you to reach us on [discord](https://discordapp.com/invite/P3Q7mKT) so we can discuss your ideas and adjust it to fit the current codebase in a graceful way.
+We suggest you to reach us on [discord](https://discord.gg/BzbG26kaYD) so we can discuss your ideas and adjust it to fit the current codebase in a graceful way.
 
 
 

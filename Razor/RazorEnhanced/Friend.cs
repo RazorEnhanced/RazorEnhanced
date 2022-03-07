@@ -193,10 +193,17 @@ namespace RazorEnhanced
         {
             get
             {
-                if (Engine.MainWindow.FriendListSelect.InvokeRequired)
-                    return (string)Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Engine.MainWindow.FriendListSelect.Text));
-                else
-                    return Engine.MainWindow.FriendListSelect.Text;
+                try
+                {
+                    if (Engine.MainWindow.FriendListSelect.InvokeRequired)
+                        return (string)Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Engine.MainWindow.FriendListSelect.Text));
+                    else
+                        return Engine.MainWindow.FriendListSelect.Text;
+                }
+                catch (System.ComponentModel.InvalidAsynchronousStateException ex)
+                {
+                    return "";
+                }
             }
 
             set
@@ -479,6 +486,41 @@ namespace RazorEnhanced
             }
             return;
         }
+
+        /// <summary>
+        /// Remove the player specified from the Friend list named in FriendListName parameter
+        /// </summary>
+        /// <param name="friendlist">Name of the the Friend List. (See Agent tab)</param>
+        /// <param name="serial">Serial of the Friend you want to remove.</param>
+        public static bool RemoveFriend(string friendlist, int serial)
+        {
+            bool success = false;
+            if (RazorEnhanced.Settings.Friend.ListExists(friendlist))
+            {
+                Mobile player = Mobiles.FindBySerial(serial);
+                string description = $"0x{serial:X}";
+                if (player != null)
+                    description = player.Name;
+                if (RazorEnhanced.Settings.Friend.PlayerExists(friendlist, serial))
+                {
+                    if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+                        RazorEnhanced.Misc.SendMessage("Friend deleted: " + description, false);
+                    RazorEnhanced.Friend.AddLog("Friend deleted: " + description);
+                    RazorEnhanced.Settings.Friend.PlayerDelete(friendlist, serial);
+                    RazorEnhanced.Friend.RefreshPlayers();
+                    success = true;
+                }
+                else
+                {
+                    if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+                        RazorEnhanced.Misc.SendMessage(description + " is not in friend list", false);
+                    RazorEnhanced.Friend.AddLog(description + " is not in friend list");
+                    success = false;
+                }
+            }
+            return success;
+        }
+
 
 
         private static bool GetFaction(string name, int serial)

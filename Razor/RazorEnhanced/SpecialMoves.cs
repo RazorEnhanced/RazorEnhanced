@@ -412,26 +412,16 @@ namespace Assistant
 
                 if (Client.IsOSI)
                 {
-                    // I think euo dll is causing multi-box issues, just not gonna support book icon highlighting for now
-                    // use the RE toolbar gumps
                     if (wait)
                     {
                         Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
+                        Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
                     }
                     else
                     {
-                        Assistant.Client.Instance.SendToServer(new UseAbility(a));					
+                        Assistant.Client.Instance.SendToServer(new UseAbility(a));
+                        Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
                     }
-                    //RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();					
-                    //if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
-                    //{
-                    //	while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
-                    //	{
-                    //		Thread.Sleep(50);
-                    //	}
-                    //}
-                    //System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponPrimary());
-                    //doAction.Start();					
                 }
                 else // CUO Client
                 {
@@ -469,27 +459,19 @@ namespace Assistant
                 HasSecondary = true;
                 RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 
-                //if (wait)
-                //{
-                //	Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
-                //}
-                //else
-                //{
-                //	Assistant.Client.Instance.SendToServer(new UseAbility(a));						
-                //}
 
                 if (Client.IsOSI)
                 {
-                    RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-                    if (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
+                    if (wait)
                     {
-                        while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open())
-                        {
-                            Thread.Sleep(50);
-                        }
+                        Assistant.Client.Instance.SendToServerWait(new UseAbility(a));
+                        Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
                     }
-                    System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.UoWarper.UODLLHandleClass.EUOWeaponSecondary());
-                    doAction.Start();
+                    else
+                    {
+                        Assistant.Client.Instance.SendToServer(new UseAbility(a));
+                        Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
+                    }
                 }
                 else // CUO Client
                 {
