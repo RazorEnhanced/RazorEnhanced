@@ -19,7 +19,7 @@ namespace RazorEnhanced
     internal class Settings
     {
         // Versione progressiva della struttura dei salvataggi per successive modifiche
-        private static readonly int SettingVersion = 14;
+        private static readonly int SettingVersion = 15;
 
         private static string m_profileName = null;
 
@@ -5272,27 +5272,58 @@ namespace RazorEnhanced
 
             }
 
-            if (realVersion == 13)
+            // I had to burn 2 versions because this messed up 
+            // I never did figure out how "Enabled" existed but version was still 13
+            if (realVersion == 13 || realVersion == 14)
             {
+                bool found = false;
                 DataTable sell_lists = m_Dataset.Tables["SELL_LISTS"];
-                sell_lists.Columns.Add("Enabled", typeof(bool));
-                foreach (DataRow row in sell_lists.Rows)
+                foreach (var column in sell_lists.Columns)
                 {
-                    row["Enabled"] = false;
+                    if (column.ToString() == "Enabled")
+                        found = true;
                 }
 
+                if (!found)
+                {
+                    sell_lists.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in sell_lists.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
+
+                found = false;
                 DataTable buy_lists = m_Dataset.Tables["BUY_LISTS"];
-                buy_lists.Columns.Add("CompleteAmount", typeof(bool));
-                buy_lists.Columns.Add("Enabled", typeof(bool));
-
-                foreach (DataRow row in buy_lists.Rows)
+                foreach (var column in buy_lists.Columns)
                 {
-                    row["CompleteAmount"] = false;
-                    row["Enabled"] = false;
+                    if (column.ToString() == "Enabled")
+                        found = true;
+                }
+                if (!found)
+                {
+                    buy_lists.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in buy_lists.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
                 }
 
-
-                realVersion = 14;
+                found = false;
+                foreach (var column in buy_lists.Columns)
+                {
+                    if (column.ToString() == "Enabled")
+                        found = true;
+                }
+                if (!found)
+                {
+                    buy_lists.Columns.Add("CompleteAmount", typeof(bool));
+                    foreach (DataRow row in buy_lists.Rows)
+                    {
+                        row["CompleteAmount"] = false;
+                    }
+                }
+                realVersion = 15;
                 General.WriteInt("SettingVersion", realVersion);
             }
             {
