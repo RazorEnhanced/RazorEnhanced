@@ -1684,7 +1684,7 @@ namespace Assistant
             Assistant.UOAssist.PostStamUpdate();
             Assistant.UOAssist.PostManaUpdate();
 
-            Engine.MainWindow.UpdateTitle(); // update player name
+            Engine.MainWindow.SafeAction(s => { s.UpdateTitle(); }); // update player name
         }
 
         private static void MobileUpdate(Packet p, PacketHandlerEventArgs args)

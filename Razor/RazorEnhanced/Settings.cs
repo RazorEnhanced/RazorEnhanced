@@ -3274,8 +3274,17 @@ namespace RazorEnhanced
             internal static List<RazorEnhanced.SellAgent.SellAgentList> ListsRead()
             {
                 List<RazorEnhanced.SellAgent.SellAgentList> lists = new List<RazorEnhanced.SellAgent.SellAgentList>();
+                DataTable table = m_Dataset.Tables["SELL_LISTS"];
+                if (!table.Columns.Contains("Enabled"))
+                {
+                    table.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in table.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
 
-                foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+                foreach (DataRow row in table.Rows)
                 {
                     string description = (string)row["Description"];
                     int bag = Convert.ToInt32(row["Bag"]);
@@ -3443,7 +3452,25 @@ namespace RazorEnhanced
             internal static List<RazorEnhanced.BuyAgent.BuyAgentList> ListsRead()
             {
                 List<RazorEnhanced.BuyAgent.BuyAgentList> retList = new List<RazorEnhanced.BuyAgent.BuyAgentList>();
-                for (int i = m_Dataset.Tables["BUY_LISTS"].Rows.Count - 1; i >= 0; i--)
+                DataTable table = m_Dataset.Tables["BUY_LISTS"];
+                if (!table.Columns.Contains("Enabled"))
+                {
+                    table.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in table.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
+                if (!table.Columns.Contains("CompleteAmount"))
+                {
+                    table.Columns.Add("CompleteAmount", typeof(bool));
+                    foreach (DataRow row in table.Rows)
+                    {
+                        row["CompleteAmount"] = false;
+                    }
+                }
+
+                for (int i = table.Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow row = m_Dataset.Tables["BUY_LISTS"].Rows[i];
                     string description = (string)row["Description"];
