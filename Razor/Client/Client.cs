@@ -696,29 +696,30 @@ namespace Assistant
                             string[] argsx = Environment.GetCommandLineArgs();
                             if (AutoUpdater.DownloadUpdate(args))
                             {
-                                if (Client.IsOSI)
-                                    Assistant.Client.Instance.ClientProcess.Kill();
-                                else
-                                {
-                                    var client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
-                                    var game = client.GetProperty("Game", BindingFlags.Public | BindingFlags.Static);
-                                    if (game != null)
+                                if (Client.Instance.ClientRunning)
+                                    if (Client.IsOSI)
+                                        Assistant.Client.Instance.ClientProcess.Kill();
+                                    else
                                     {
-                                        var gameController = game.GetValue(null, null);
-                                        if (gameController != null)
+                                        var client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
+                                        var game = client.GetProperty("Game", BindingFlags.Public | BindingFlags.Static);
+                                        if (game != null)
                                         {
-                                            var GameController = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.GameController");
-                                            if (GameController != null)
+                                            var gameController = game.GetValue(null, null);
+                                            if (gameController != null)
                                             {
-                                                var exitMethod = GameController.GetMethod("Exit", BindingFlags.Instance | BindingFlags.Public);
-                                                if (exitMethod != null)
+                                                var GameController = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.GameController");
+                                                if (GameController != null)
                                                 {
-                                                    exitMethod.Invoke(gameController, new object[] { });
+                                                    var exitMethod = GameController.GetMethod("Exit", BindingFlags.Instance | BindingFlags.Public);
+                                                    if (exitMethod != null)
+                                                    {
+                                                        exitMethod.Invoke(gameController, new object[] { });
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
                                 Application.Exit();
                                 Thread.Sleep(2000); // attesa uscita
                             }
