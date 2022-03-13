@@ -10,6 +10,7 @@ using System.Diagnostics;
 using AutoUpdaterDotNET;
 using System.IO;
 using JsonData;
+using System.Reflection;
 
 namespace Assistant
 {
@@ -704,6 +705,7 @@ namespace Assistant
         private ColumnHeader index;
         private System.Windows.Forms.Button  buttonScriptTo;
         private CheckBox buyToCompleteAmount;
+        private Button ChkForUpdate;
         private System.Windows.Forms.CheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -1015,6 +1017,8 @@ namespace Assistant
             this.organizerAddListB = new System.Windows.Forms.Button();
             this.organizerListSelect = new System.Windows.Forms.ComboBox();
             this.VendorBuy = new System.Windows.Forms.TabPage();
+            this.buyToCompleteAmount = new System.Windows.Forms.CheckBox();
+            this.buyLogBox = new System.Windows.Forms.ListBox();
             this.buyCompareNameCheckBox = new System.Windows.Forms.CheckBox();
             this.buyCloneButton = new System.Windows.Forms.Button();
             this.vendorbuydataGridView = new System.Windows.Forms.DataGridView();
@@ -1024,7 +1028,6 @@ namespace Assistant
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox18 = new System.Windows.Forms.GroupBox();
-            this.buyLogBox = new System.Windows.Forms.ListBox();
             this.label25 = new System.Windows.Forms.Label();
             this.buyAddTargetB = new System.Windows.Forms.Button();
             this.buyEnableCheckBox = new System.Windows.Forms.CheckBox();
@@ -1425,7 +1428,7 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.buyToCompleteAmount = new System.Windows.Forms.CheckBox();
+            this.ChkForUpdate = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -4396,6 +4399,27 @@ namespace Assistant
             this.VendorBuy.Text = "Vendor Buy";
             this.VendorBuy.UseVisualStyleBackColor = true;
             // 
+            // buyToCompleteAmount
+            // 
+            this.buyToCompleteAmount.AutoSize = true;
+            this.buyToCompleteAmount.Location = new System.Drawing.Point(597, 134);
+            this.buyToCompleteAmount.Name = "buyToCompleteAmount";
+            this.buyToCompleteAmount.Size = new System.Drawing.Size(103, 24);
+            this.buyToCompleteAmount.TabIndex = 91;
+            this.buyToCompleteAmount.Text = "Complete";
+            this.buyToCompleteAmount.CheckedChanged += new System.EventHandler(this.buyComplete_CheckedChanged);
+            // 
+            // buyLogBox
+            // 
+            this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyLogBox.FormattingEnabled = true;
+            this.buyLogBox.ItemHeight = 20;
+            this.buyLogBox.Location = new System.Drawing.Point(609, 258);
+            this.buyLogBox.Name = "buyLogBox";
+            this.buyLogBox.Size = new System.Drawing.Size(424, 204);
+            this.buyLogBox.TabIndex = 0;
+            // 
             // buyCompareNameCheckBox
             // 
             this.buyCompareNameCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -4415,16 +4439,6 @@ namespace Assistant
             this.buyCloneButton.TabIndex = 89;
             this.buyCloneButton.Text = "Clone";
             this.buyCloneButton.Click += new System.EventHandler(this.buyCloneButton_Click);
-            // 
-            // buyCompleteAmount
-            // 
-            this.buyToCompleteAmount.AutoSize = true;
-            this.buyToCompleteAmount.Location = new System.Drawing.Point(597, 134);
-            this.buyToCompleteAmount.Name = "buyCompleteAmount";
-            this.buyToCompleteAmount.Size = new System.Drawing.Size(103, 24);
-            this.buyToCompleteAmount.TabIndex = 91;
-            this.buyToCompleteAmount.Text = "Complete";
-            this.buyToCompleteAmount.CheckedChanged += new System.EventHandler(this.buyComplete_CheckedChanged);
             // 
             // vendorbuydataGridView
             // 
@@ -4526,17 +4540,6 @@ namespace Assistant
             this.groupBox18.TabIndex = 73;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Buy Log";
-            // 
-            // buyLogBox
-            // 
-            this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buyLogBox.FormattingEnabled = true;
-            this.buyLogBox.ItemHeight = 20;
-            this.buyLogBox.Location = new System.Drawing.Point(609, 258);
-            this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(424, 204);
-            this.buyLogBox.TabIndex = 0;
             // 
             // label25
             // 
@@ -8605,6 +8608,7 @@ namespace Assistant
             // 
             // statusTab
             // 
+            this.statusTab.Controls.Add(this.ChkForUpdate);
             this.statusTab.Controls.Add(this.advertisementLink);
             this.statusTab.Controls.Add(this.advertisement);
             this.statusTab.Controls.Add(this.label71);
@@ -8621,9 +8625,9 @@ namespace Assistant
             // advertisementLink
             // 
             this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.advertisementLink.Location = new System.Drawing.Point(544, 351);
+            this.advertisementLink.Location = new System.Drawing.Point(412, 351);
             this.advertisementLink.Name = "advertisementLink";
-            this.advertisementLink.Size = new System.Drawing.Size(192, 54);
+            this.advertisementLink.Size = new System.Drawing.Size(150, 54);
             this.advertisementLink.TabIndex = 12;
             this.advertisementLink.Text = "Eventine";
             this.advertisementLink.UseVisualStyleBackColor = true;
@@ -8678,9 +8682,9 @@ namespace Assistant
             // discordrazorButton
             // 
             this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.discordrazorButton.Location = new System.Drawing.Point(278, 351);
+            this.discordrazorButton.Location = new System.Drawing.Point(199, 351);
             this.discordrazorButton.Name = "discordrazorButton";
-            this.discordrazorButton.Size = new System.Drawing.Size(216, 54);
+            this.discordrazorButton.Size = new System.Drawing.Size(150, 54);
             this.discordrazorButton.TabIndex = 9;
             this.discordrazorButton.Text = "Razor Enhanced Discord";
             this.discordrazorButton.UseVisualStyleBackColor = true;
@@ -8691,7 +8695,7 @@ namespace Assistant
             this.razorButtonWiki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.razorButtonWiki.Location = new System.Drawing.Point(5, 351);
             this.razorButtonWiki.Name = "razorButtonWiki";
-            this.razorButtonWiki.Size = new System.Drawing.Size(232, 54);
+            this.razorButtonWiki.Size = new System.Drawing.Size(150, 54);
             this.razorButtonWiki.TabIndex = 6;
             this.razorButtonWiki.Text = "Razor Enhanced wiki";
             this.razorButtonWiki.UseVisualStyleBackColor = true;
@@ -8840,6 +8844,17 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            // 
+            // ChkForUpdate
+            // 
+            this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ChkForUpdate.Location = new System.Drawing.Point(613, 351);
+            this.ChkForUpdate.Name = "ChkForUpdate";
+            this.ChkForUpdate.Size = new System.Drawing.Size(150, 54);
+            this.ChkForUpdate.TabIndex = 13;
+            this.ChkForUpdate.Text = "Check For Update";
+            this.ChkForUpdate.UseVisualStyleBackColor = true;
+            this.ChkForUpdate.Click += new System.EventHandler(this.chkForUpdate_Click);
             // 
             // MainForm
             // 
@@ -9082,62 +9097,10 @@ namespace Assistant
             tabs_IndexChanged(this, null); // load first tab
 
             m_Tip.Active = true;
-            //SplashScreen.End();
 
-            // AutoUpdater
-            AutoUpdater.ShowSkipButton = false;
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            AutoUpdater.ReportErrors = true;
-            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            // Immediatly run update check .. removed AutoUpdater
+            // AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
-
-        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
-        {
-            if (Client.IsOSI)
-            {
-                if (args != null)
-                {
-                    if (args.IsUpdateAvailable)
-                    {
-                        DialogResult dialogResult;
-
-                        dialogResult =
-                            MessageBox.Show(
-                                $@"There is new version {args.CurrentVersion} available. You are using version {
-                                        args.InstalledVersion
-                                    }. Do you want to update the application now?", @"Update Available",
-                                MessageBoxButtons.YesNo,
-                                MessageBoxIcon.Information);
-
-                        if (dialogResult.Equals(DialogResult.Yes))
-                        {
-                            try
-                            {
-                                if (AutoUpdater.DownloadUpdate(args))
-                                {
-                                    Assistant.Client.Instance.ClientProcess.Kill();
-                                    Application.Exit();
-                                    Thread.Sleep(2000); // attesa uscita
-                                }
-                            }
-                            catch (Exception exception)
-                            {
-                                MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(
-                            @"There is a problem reaching update server please check your internet connection and try again later.",
-                            @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-
 
         internal void LoadSettings()
         {
@@ -9644,6 +9607,20 @@ namespace Assistant
             }
             catch { }
         }
+
+        private void chkForUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Leave stuff thats already set up
+                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            }
+            catch 
+            { 
+            }
+        }
+
+        
 
         private void openchangelogButton_Click(object sender, EventArgs e)
         {

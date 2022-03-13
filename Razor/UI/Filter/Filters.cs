@@ -603,7 +603,8 @@ namespace Assistant
 
 			try
 			{
-		 		Assistant.Client.Instance.ClientProcess.PriorityClass = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), str, true);
+				if (Client.IsOSI)
+		 			Assistant.Client.Instance.ClientProcess.PriorityClass = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), str, true);
 			}
 			catch
 			{
