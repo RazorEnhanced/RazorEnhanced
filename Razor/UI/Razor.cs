@@ -1402,6 +1402,7 @@ namespace Assistant
             this.DPSMeterStartButton = new System.Windows.Forms.Button();
             this.DPSMeterClearButton = new System.Windows.Forms.Button();
             this.statusTab = new System.Windows.Forms.TabPage();
+            this.ChkForUpdate = new System.Windows.Forms.Button();
             this.advertisementLink = new System.Windows.Forms.Button();
             this.advertisement = new System.Windows.Forms.PictureBox();
             this.label71 = new System.Windows.Forms.Label();
@@ -1428,7 +1429,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.ChkForUpdate = new System.Windows.Forms.Button();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -2552,9 +2552,9 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(310, 397);
+            this.uomodgroupbox.Location = new System.Drawing.Point(310, 378);
             this.uomodgroupbox.Name = "uomodgroupbox";
-            this.uomodgroupbox.Size = new System.Drawing.Size(453, 95);
+            this.uomodgroupbox.Size = new System.Drawing.Size(453, 99);
             this.uomodgroupbox.TabIndex = 75;
             this.uomodgroupbox.TabStop = false;
             this.uomodgroupbox.Text = "UoMod (Client > 7.0.0.0)";
@@ -2843,7 +2843,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(310, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(453, 388);
+            this.groupBox23.Size = new System.Drawing.Size(453, 372);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -2866,7 +2866,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 304);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 288);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -8622,6 +8622,17 @@ namespace Assistant
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             // 
+            // ChkForUpdate
+            // 
+            this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ChkForUpdate.Location = new System.Drawing.Point(613, 351);
+            this.ChkForUpdate.Name = "ChkForUpdate";
+            this.ChkForUpdate.Size = new System.Drawing.Size(150, 54);
+            this.ChkForUpdate.TabIndex = 13;
+            this.ChkForUpdate.Text = "Check For Update";
+            this.ChkForUpdate.UseVisualStyleBackColor = true;
+            this.ChkForUpdate.Click += new System.EventHandler(this.chkForUpdate_Click);
+            // 
             // advertisementLink
             // 
             this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -8844,17 +8855,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            // 
-            // ChkForUpdate
-            // 
-            this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ChkForUpdate.Location = new System.Drawing.Point(613, 351);
-            this.ChkForUpdate.Name = "ChkForUpdate";
-            this.ChkForUpdate.Size = new System.Drawing.Size(150, 54);
-            this.ChkForUpdate.TabIndex = 13;
-            this.ChkForUpdate.Text = "Check For Update";
-            this.ChkForUpdate.UseVisualStyleBackColor = true;
-            this.ChkForUpdate.Click += new System.EventHandler(this.chkForUpdate_Click);
             // 
             // MainForm
             // 
