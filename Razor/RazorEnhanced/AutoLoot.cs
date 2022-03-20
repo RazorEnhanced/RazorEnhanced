@@ -397,10 +397,7 @@ namespace RazorEnhanced
                     if (recursItems != null)
                         items.AddRange(recursItems);
                 }
-                else 
-                {
-                    items.Add(i);
-                }
+                items.Add(i);
             }
             return items; // Return empty list no items found
         }
