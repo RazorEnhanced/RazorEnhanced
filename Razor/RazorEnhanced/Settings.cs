@@ -5361,16 +5361,24 @@ namespace RazorEnhanced
 
             if (realVersion == 15)
             {
+                bool newUo3D = false;
                 DataTable general = m_Dataset.Tables["General"];
                 int index = general.Columns.IndexOf("UO3DEquipUnEquip");
                 if (index >= 0)
+                {
+                    DataRow row = general.Rows[0];
+                    if (row != null)
+                    {
+                        newUo3D = (bool)row["UO3DEquipUnEquip"];
+                    }
                     general.Columns.RemoveAt(index);
+                }
 
                 DataTable dress_lists = m_Dataset.Tables["DRESS_LISTS"];
                 dress_lists.Columns.Add("UO3dEquipUnEquip", typeof(bool));
                 foreach (DataRow row in dress_lists.Rows)
                 {
-                    row["UO3dEquipUnEquip"] = false;
+                    row["UO3dEquipUnEquip"] = newUo3D;
                 }
                 realVersion = 16;
                 General.WriteInt("SettingVersion", realVersion);
