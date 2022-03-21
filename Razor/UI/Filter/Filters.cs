@@ -496,12 +496,6 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("PotionEquip", potionEquip.Checked);
 		}
 
-		private void uo3dEquipUnEquip_CheckedChanged(object sender, EventArgs e)
-		{
-			if (uo3dEquipUnEquip.Focused)
-				RazorEnhanced.Settings.General.WriteBool("UO3DEquipUnEquip", uo3dEquipUnEquip.Checked);
-		}
-
 		private void chknorunStealth_CheckedChanged(object sender, EventArgs e)
 		{
 			if (chknorunStealth.Focused)

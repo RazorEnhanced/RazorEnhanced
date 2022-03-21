@@ -442,7 +442,6 @@ namespace Assistant
         private Label label61;
         private RazorAgentNumOnlyTextBox scavengerRange;
         private System.Windows.Forms.CheckBox hiddedAutoOpenDoors;
-        private System.Windows.Forms.CheckBox uo3dEquipUnEquip;
         private System.Windows.Forms.CheckBox nosearchpouches;
         private System.Windows.Forms.CheckBox autosearchcontainers;
         private TabPage videoTab;
@@ -706,6 +705,7 @@ namespace Assistant
         private System.Windows.Forms.Button  buttonScriptTo;
         private CheckBox buyToCompleteAmount;
         private Button ChkForUpdate;
+        private CheckBox useUo3D;
         private System.Windows.Forms.CheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -808,7 +808,6 @@ namespace Assistant
             this.chknorunStealth = new System.Windows.Forms.CheckBox();
             this.nosearchpouches = new System.Windows.Forms.CheckBox();
             this.autosearchcontainers = new System.Windows.Forms.CheckBox();
-            this.uo3dEquipUnEquip = new System.Windows.Forms.CheckBox();
             this.hiddedAutoOpenDoors = new System.Windows.Forms.CheckBox();
             this.chkPartyOverhead = new System.Windows.Forms.CheckBox();
             this.healthFmt = new System.Windows.Forms.TextBox();
@@ -982,14 +981,14 @@ namespace Assistant
             this.scavengerLogBox = new System.Windows.Forms.ListBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.scavengerButtonEditProps = new System.Windows.Forms.Button();
             this.scavengerButtonAddTarget = new System.Windows.Forms.Button();
-            this.scavengerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.scavengerCheckBox = new System.Windows.Forms.CheckBox();
             this.scavengerButtonRemoveList = new System.Windows.Forms.Button();
             this.scavengerButtonAddList = new System.Windows.Forms.Button();
             this.scavengerListSelect = new System.Windows.Forms.ComboBox();
+            this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.scavengerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.organizer = new System.Windows.Forms.TabPage();
             this.organizerCloneListB = new System.Windows.Forms.Button();
             this.organizerExecuteButton = new System.Windows.Forms.Button();
@@ -1012,10 +1011,10 @@ namespace Assistant
             this.label27 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.organizerAddTargetB = new System.Windows.Forms.Button();
-            this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.organizerRemoveListB = new System.Windows.Forms.Button();
             this.organizerAddListB = new System.Windows.Forms.Button();
             this.organizerListSelect = new System.Windows.Forms.ComboBox();
+            this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.VendorBuy = new System.Windows.Forms.TabPage();
             this.buyToCompleteAmount = new System.Windows.Forms.CheckBox();
             this.buyLogBox = new System.Windows.Forms.ListBox();
@@ -1055,6 +1054,7 @@ namespace Assistant
             this.sellAddListButton = new System.Windows.Forms.Button();
             this.sellListSelect = new System.Windows.Forms.ComboBox();
             this.Dress = new System.Windows.Forms.TabPage();
+            this.useUo3D = new System.Windows.Forms.CheckBox();
             this.dressStopButton = new System.Windows.Forms.Button();
             this.dressConflictCheckB = new System.Windows.Forms.CheckBox();
             this.dressBagLabel = new System.Windows.Forms.Label();
@@ -1131,10 +1131,10 @@ namespace Assistant
             this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.restockAddTargetButton = new System.Windows.Forms.Button();
-            this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.restockRemoveListB = new System.Windows.Forms.Button();
             this.restockAddListB = new System.Windows.Forms.Button();
             this.restockListSelect = new System.Windows.Forms.ComboBox();
+            this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.bandageheal = new System.Windows.Forms.TabPage();
             this.bandagehealAutostartCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -1908,7 +1908,6 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.chknorunStealth);
             this.moreOptTab.Controls.Add(this.nosearchpouches);
             this.moreOptTab.Controls.Add(this.autosearchcontainers);
-            this.moreOptTab.Controls.Add(this.uo3dEquipUnEquip);
             this.moreOptTab.Controls.Add(this.hiddedAutoOpenDoors);
             this.moreOptTab.Controls.Add(this.chkPartyOverhead);
             this.moreOptTab.Controls.Add(this.healthFmt);
@@ -1955,7 +1954,7 @@ namespace Assistant
             // druidClericPackets
             // 
             this.druidClericPackets.AutoSize = true;
-            this.druidClericPackets.Location = new System.Drawing.Point(698, 481);
+            this.druidClericPackets.Location = new System.Drawing.Point(698, 457);
             this.druidClericPackets.Name = "druidClericPackets";
             this.druidClericPackets.Size = new System.Drawing.Size(276, 24);
             this.druidClericPackets.TabIndex = 83;
@@ -2137,7 +2136,7 @@ namespace Assistant
             // 
             // nosearchpouches
             // 
-            this.nosearchpouches.Location = new System.Drawing.Point(728, 447);
+            this.nosearchpouches.Location = new System.Drawing.Point(728, 423);
             this.nosearchpouches.Name = "nosearchpouches";
             this.nosearchpouches.Size = new System.Drawing.Size(296, 32);
             this.nosearchpouches.TabIndex = 77;
@@ -2146,21 +2145,12 @@ namespace Assistant
             // 
             // autosearchcontainers
             // 
-            this.autosearchcontainers.Location = new System.Drawing.Point(698, 417);
+            this.autosearchcontainers.Location = new System.Drawing.Point(698, 393);
             this.autosearchcontainers.Name = "autosearchcontainers";
             this.autosearchcontainers.Size = new System.Drawing.Size(342, 32);
             this.autosearchcontainers.TabIndex = 76;
             this.autosearchcontainers.Text = "Auto search new containers";
             this.autosearchcontainers.CheckedChanged += new System.EventHandler(this.autosearchcontainers_CheckedChanged);
-            // 
-            // uo3dEquipUnEquip
-            // 
-            this.uo3dEquipUnEquip.Location = new System.Drawing.Point(698, 386);
-            this.uo3dEquipUnEquip.Name = "uo3dEquipUnEquip";
-            this.uo3dEquipUnEquip.Size = new System.Drawing.Size(342, 32);
-            this.uo3dEquipUnEquip.TabIndex = 75;
-            this.uo3dEquipUnEquip.Text = "Use UO3D Equip and UnEquip";
-            this.uo3dEquipUnEquip.CheckedChanged += new System.EventHandler(this.uo3dEquipUnEquip_CheckedChanged);
             // 
             // hiddedAutoOpenDoors
             // 
@@ -3044,7 +3034,7 @@ namespace Assistant
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 29);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 492);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 517);
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
@@ -3062,7 +3052,7 @@ namespace Assistant
             this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 480);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 505);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -3777,7 +3767,7 @@ namespace Assistant
             this.autolootLogBox.ItemHeight = 20;
             this.autolootLogBox.Location = new System.Drawing.Point(10, 28);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(371, 144);
+            this.autolootLogBox.Size = new System.Drawing.Size(371, 124);
             this.autolootLogBox.TabIndex = 0;
             // 
             // autoLootCheckBox
@@ -3799,14 +3789,14 @@ namespace Assistant
             this.escavenger.Controls.Add(this.groupBox12);
             this.escavenger.Controls.Add(this.label23);
             this.escavenger.Controls.Add(this.label22);
-            this.escavenger.Controls.Add(this.scavengerRange);
             this.escavenger.Controls.Add(this.scavengerButtonEditProps);
             this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
-            this.escavenger.Controls.Add(this.scavengerDragDelay);
             this.escavenger.Controls.Add(this.scavengerCheckBox);
             this.escavenger.Controls.Add(this.scavengerButtonRemoveList);
             this.escavenger.Controls.Add(this.scavengerButtonAddList);
             this.escavenger.Controls.Add(this.scavengerListSelect);
+            this.escavenger.Controls.Add(this.scavengerRange);
+            this.escavenger.Controls.Add(this.scavengerDragDelay);
             this.escavenger.Location = new System.Drawing.Point(4, 29);
             this.escavenger.Name = "escavenger";
             this.escavenger.Padding = new System.Windows.Forms.Padding(3);
@@ -3980,7 +3970,7 @@ namespace Assistant
             this.scavengerLogBox.ItemHeight = 20;
             this.scavengerLogBox.Location = new System.Drawing.Point(11, 26);
             this.scavengerLogBox.Name = "scavengerLogBox";
-            this.scavengerLogBox.Size = new System.Drawing.Size(424, 144);
+            this.scavengerLogBox.Size = new System.Drawing.Size(424, 124);
             this.scavengerLogBox.TabIndex = 0;
             // 
             // label23
@@ -4001,16 +3991,6 @@ namespace Assistant
             this.label22.TabIndex = 60;
             this.label22.Text = "Scavenger List:";
             // 
-            // scavengerRange
-            // 
-            this.scavengerRange.BackColor = System.Drawing.Color.White;
-            this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scavengerRange.Location = new System.Drawing.Point(666, 99);
-            this.scavengerRange.Name = "scavengerRange";
-            this.scavengerRange.Size = new System.Drawing.Size(72, 26);
-            this.scavengerRange.TabIndex = 74;
-            this.scavengerRange.Leave += new System.EventHandler(this.scavengerRange_Leave);
-            // 
             // scavengerButtonEditProps
             // 
             this.scavengerButtonEditProps.Location = new System.Drawing.Point(901, 96);
@@ -4028,16 +4008,6 @@ namespace Assistant
             this.scavengerButtonAddTarget.TabIndex = 47;
             this.scavengerButtonAddTarget.Text = "Add Item";
             this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
-            // 
-            // scavengerDragDelay
-            // 
-            this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
-            this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scavengerDragDelay.Location = new System.Drawing.Point(666, 61);
-            this.scavengerDragDelay.Name = "scavengerDragDelay";
-            this.scavengerDragDelay.Size = new System.Drawing.Size(72, 26);
-            this.scavengerDragDelay.TabIndex = 68;
-            this.scavengerDragDelay.Leave += new System.EventHandler(this.scavengerDragDelay_Leave);
             // 
             // scavengerCheckBox
             // 
@@ -4077,6 +4047,26 @@ namespace Assistant
             this.scavengerListSelect.TabIndex = 61;
             this.scavengerListSelect.SelectedIndexChanged += new System.EventHandler(this.scavengertListSelect_SelectedIndexChanged);
             // 
+            // scavengerRange
+            // 
+            this.scavengerRange.BackColor = System.Drawing.Color.White;
+            this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scavengerRange.Location = new System.Drawing.Point(666, 99);
+            this.scavengerRange.Name = "scavengerRange";
+            this.scavengerRange.Size = new System.Drawing.Size(72, 26);
+            this.scavengerRange.TabIndex = 74;
+            this.scavengerRange.Leave += new System.EventHandler(this.scavengerRange_Leave);
+            // 
+            // scavengerDragDelay
+            // 
+            this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
+            this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scavengerDragDelay.Location = new System.Drawing.Point(666, 61);
+            this.scavengerDragDelay.Name = "scavengerDragDelay";
+            this.scavengerDragDelay.Size = new System.Drawing.Size(72, 26);
+            this.scavengerDragDelay.TabIndex = 68;
+            this.scavengerDragDelay.Leave += new System.EventHandler(this.scavengerDragDelay_Leave);
+            // 
             // organizer
             // 
             this.organizer.Controls.Add(this.organizerCloneListB);
@@ -4088,10 +4078,10 @@ namespace Assistant
             this.organizer.Controls.Add(this.label27);
             this.organizer.Controls.Add(this.label24);
             this.organizer.Controls.Add(this.organizerAddTargetB);
-            this.organizer.Controls.Add(this.organizerDragDelay);
             this.organizer.Controls.Add(this.organizerRemoveListB);
             this.organizer.Controls.Add(this.organizerAddListB);
             this.organizer.Controls.Add(this.organizerListSelect);
+            this.organizer.Controls.Add(this.organizerDragDelay);
             this.organizer.Location = new System.Drawing.Point(4, 29);
             this.organizer.Name = "organizer";
             this.organizer.Padding = new System.Windows.Forms.Padding(3);
@@ -4309,7 +4299,7 @@ namespace Assistant
             this.organizerLogBox.ItemHeight = 20;
             this.organizerLogBox.Location = new System.Drawing.Point(10, 28);
             this.organizerLogBox.Name = "organizerLogBox";
-            this.organizerLogBox.Size = new System.Drawing.Size(424, 164);
+            this.organizerLogBox.Size = new System.Drawing.Size(424, 144);
             this.organizerLogBox.TabIndex = 0;
             // 
             // label27
@@ -4339,16 +4329,6 @@ namespace Assistant
             this.organizerAddTargetB.Text = "Add Item";
             this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
             // 
-            // organizerDragDelay
-            // 
-            this.organizerDragDelay.BackColor = System.Drawing.Color.White;
-            this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.organizerDragDelay.Location = new System.Drawing.Point(606, 76);
-            this.organizerDragDelay.Name = "organizerDragDelay";
-            this.organizerDragDelay.Size = new System.Drawing.Size(72, 26);
-            this.organizerDragDelay.TabIndex = 71;
-            this.organizerDragDelay.Leave += new System.EventHandler(this.organizerDragDelay_Leave);
-            // 
             // organizerRemoveListB
             // 
             this.organizerRemoveListB.Location = new System.Drawing.Point(558, 18);
@@ -4376,6 +4356,16 @@ namespace Assistant
             this.organizerListSelect.Size = new System.Drawing.Size(276, 28);
             this.organizerListSelect.TabIndex = 61;
             this.organizerListSelect.SelectedIndexChanged += new System.EventHandler(this.organizerListSelect_SelectedIndexChanged);
+            // 
+            // organizerDragDelay
+            // 
+            this.organizerDragDelay.BackColor = System.Drawing.Color.White;
+            this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.organizerDragDelay.Location = new System.Drawing.Point(606, 76);
+            this.organizerDragDelay.Name = "organizerDragDelay";
+            this.organizerDragDelay.Size = new System.Drawing.Size(72, 26);
+            this.organizerDragDelay.TabIndex = 71;
+            this.organizerDragDelay.Leave += new System.EventHandler(this.organizerDragDelay_Leave);
             // 
             // VendorBuy
             // 
@@ -4417,7 +4407,7 @@ namespace Assistant
             this.buyLogBox.ItemHeight = 20;
             this.buyLogBox.Location = new System.Drawing.Point(609, 258);
             this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(424, 204);
+            this.buyLogBox.Size = new System.Drawing.Size(424, 184);
             this.buyLogBox.TabIndex = 0;
             // 
             // buyCompareNameCheckBox
@@ -4776,7 +4766,7 @@ namespace Assistant
             this.sellLogBox.ItemHeight = 20;
             this.sellLogBox.Location = new System.Drawing.Point(11, 26);
             this.sellLogBox.Name = "sellLogBox";
-            this.sellLogBox.Size = new System.Drawing.Size(424, 164);
+            this.sellLogBox.Size = new System.Drawing.Size(424, 144);
             this.sellLogBox.TabIndex = 0;
             // 
             // label26
@@ -4836,6 +4826,7 @@ namespace Assistant
             // 
             // Dress
             // 
+            this.Dress.Controls.Add(this.useUo3D);
             this.Dress.Controls.Add(this.dressStopButton);
             this.Dress.Controls.Add(this.dressConflictCheckB);
             this.Dress.Controls.Add(this.dressBagLabel);
@@ -4859,6 +4850,15 @@ namespace Assistant
             this.Dress.Text = "Dress / Arm";
             this.Dress.UseVisualStyleBackColor = true;
             // 
+            // useUo3D
+            // 
+            this.useUo3D.Location = new System.Drawing.Point(655, 117);
+            this.useUo3D.Name = "useUo3D";
+            this.useUo3D.Size = new System.Drawing.Size(271, 32);
+            this.useUo3D.TabIndex = 92;
+            this.useUo3D.Text = "Use UO3D Equip and UnEquip";
+            this.useUo3D.CheckedChanged += new System.EventHandler(this.dressUseUO3d_CheckedChanged);
+            // 
             // dressStopButton
             // 
             this.dressStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -4875,7 +4875,7 @@ namespace Assistant
             this.dressConflictCheckB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.dressConflictCheckB.Location = new System.Drawing.Point(461, 120);
             this.dressConflictCheckB.Name = "dressConflictCheckB";
-            this.dressConflictCheckB.Size = new System.Drawing.Size(359, 32);
+            this.dressConflictCheckB.Size = new System.Drawing.Size(204, 32);
             this.dressConflictCheckB.TabIndex = 90;
             this.dressConflictCheckB.Text = "Remove Conflict Item";
             this.dressConflictCheckB.CheckedChanged += new System.EventHandler(this.dressConflictCheckB_CheckedChanged);
@@ -5416,10 +5416,10 @@ namespace Assistant
             this.restock.Controls.Add(this.label13);
             this.restock.Controls.Add(this.label7);
             this.restock.Controls.Add(this.restockAddTargetButton);
-            this.restock.Controls.Add(this.restockDragDelay);
             this.restock.Controls.Add(this.restockRemoveListB);
             this.restock.Controls.Add(this.restockAddListB);
             this.restock.Controls.Add(this.restockListSelect);
+            this.restock.Controls.Add(this.restockDragDelay);
             this.restock.Location = new System.Drawing.Point(4, 29);
             this.restock.Name = "restock";
             this.restock.Padding = new System.Windows.Forms.Padding(3);
@@ -5638,7 +5638,7 @@ namespace Assistant
             this.restockLogBox.ItemHeight = 20;
             this.restockLogBox.Location = new System.Drawing.Point(11, 26);
             this.restockLogBox.Name = "restockLogBox";
-            this.restockLogBox.Size = new System.Drawing.Size(424, 124);
+            this.restockLogBox.Size = new System.Drawing.Size(424, 104);
             this.restockLogBox.TabIndex = 0;
             // 
             // label13
@@ -5670,17 +5670,6 @@ namespace Assistant
             this.restockAddTargetButton.Text = "Add Item";
             this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
             // 
-            // restockDragDelay
-            // 
-            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.restockDragDelay.BackColor = System.Drawing.Color.White;
-            this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.restockDragDelay.Location = new System.Drawing.Point(597, 75);
-            this.restockDragDelay.Name = "restockDragDelay";
-            this.restockDragDelay.Size = new System.Drawing.Size(72, 26);
-            this.restockDragDelay.TabIndex = 81;
-            this.restockDragDelay.Leave += new System.EventHandler(this.restockDragDelay_Leave);
-            // 
             // restockRemoveListB
             // 
             this.restockRemoveListB.Location = new System.Drawing.Point(549, 18);
@@ -5708,6 +5697,17 @@ namespace Assistant
             this.restockListSelect.Size = new System.Drawing.Size(293, 28);
             this.restockListSelect.TabIndex = 67;
             this.restockListSelect.SelectedIndexChanged += new System.EventHandler(this.restockListSelect_SelectedIndexChanged);
+            // 
+            // restockDragDelay
+            // 
+            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockDragDelay.BackColor = System.Drawing.Color.White;
+            this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.restockDragDelay.Location = new System.Drawing.Point(597, 75);
+            this.restockDragDelay.Name = "restockDragDelay";
+            this.restockDragDelay.Size = new System.Drawing.Size(72, 26);
+            this.restockDragDelay.TabIndex = 81;
+            this.restockDragDelay.Leave += new System.EventHandler(this.restockDragDelay_Leave);
             // 
             // bandageheal
             // 
@@ -6092,7 +6092,7 @@ namespace Assistant
             this.bandagehealLogBox.ItemHeight = 20;
             this.bandagehealLogBox.Location = new System.Drawing.Point(11, 26);
             this.bandagehealLogBox.Name = "bandagehealLogBox";
-            this.bandagehealLogBox.Size = new System.Drawing.Size(424, 304);
+            this.bandagehealLogBox.Size = new System.Drawing.Size(424, 284);
             this.bandagehealLogBox.TabIndex = 0;
             // 
             // bandagehealenableCheckBox
@@ -8009,7 +8009,7 @@ namespace Assistant
             "Special"});
             this.journalTextSelection.Location = new System.Drawing.Point(-4, 0);
             this.journalTextSelection.Name = "journalTextSelection";
-            this.journalTextSelection.Size = new System.Drawing.Size(111, 533);
+            this.journalTextSelection.Size = new System.Drawing.Size(111, 510);
             this.journalTextSelection.TabIndex = 3;
             this.journalTextSelection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnJournalFilterCheck);
             // 
@@ -9256,7 +9256,6 @@ namespace Assistant
             hiddedAutoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors");
             spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
             potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
-            uo3dEquipUnEquip.Checked = RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip");
             autosearchcontainers.Checked = RazorEnhanced.Settings.General.ReadBool("AutoSearch");
             nosearchpouches.Checked = RazorEnhanced.Settings.General.ReadBool("NoSearchPouches");
             druidClericPackets.Checked = RazorEnhanced.Settings.General.ReadBool("DruidClericPackets");

@@ -50,16 +50,20 @@ namespace RazorEnhanced
 			private readonly bool m_Conflict;
 			internal bool Conflict { get { return m_Conflict; } }
 
+			private readonly bool m_dressUseUo3D;
+			internal bool UseUo3D { get { return m_dressUseUo3D; } }
+
 			private readonly bool m_Selected;
 			[JsonProperty("Selected")]
 			internal bool Selected { get { return m_Selected; } }
 
-			public DressList(string description, int delay, int bag, bool conflict, bool selected)
+			public DressList(string description, int delay, int bag, bool conflict, bool useUo3D, bool selected)
 			{
 				m_Description = description;
 				m_Delay = delay;
 				m_Bag = bag;
 				m_Conflict = conflict;
+				m_dressUseUo3D = useUo3D;
 				m_Selected = selected;
 			}
 		}
@@ -113,6 +117,18 @@ namespace RazorEnhanced
 			}
 		}
 
+		private static bool m_dressUseUo3D;
+		internal static bool DressUseUO3D
+		{
+			get { return m_dressUseUo3D; }
+
+			set
+			{
+				m_dressUseUo3D = value;
+				Engine.MainWindow.SafeAction(s => s.DressUseUo3D.Checked = value);
+			}
+		}
+
 		private static string m_dresslistname;
 		internal static string DressListName
 		{
@@ -142,13 +158,14 @@ namespace RazorEnhanced
 					DressDelay = l.Delay;
 					DressBag = l.Bag;
 					DressConflict = l.Conflict;
+					DressUseUO3D = l.UseUo3D;
 				}
 			}
 		}
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false);
+			RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false, false);
 			RazorEnhanced.Dress.RefreshLists();
 			RazorEnhanced.Dress.InitGrid();
 		}
@@ -265,7 +282,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
+				if (Dress.DressUseUO3D)
 				{
 					List<ushort> layertoundress = new List<ushort>();
 					foreach (Dress.DressItemNew item in items)
@@ -393,7 +410,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip"))
+				if (Dress.DressUseUO3D)
 				{
                     // Problem with uo3d is the serveuo servers don't swap 1hand/2hand properly
                     // but OSI does, so if delay is 0 let OSI swap fast otherwise handle udress for weapons
@@ -776,11 +793,12 @@ namespace RazorEnhanced
 		{
 			if (Settings.Dress.ListExists(listName))
 			{
-				Settings.Dress.ListDetailsRead(listName, out int bag, out int delay, out bool conflict);
+				Settings.Dress.ListDetailsRead(listName, out int bag, out int delay, out bool conflict, out bool useUo3D);
 				DressListName = listName;
 				DressBag = bag;
 				DressDelay = delay;
 				DressConflict = conflict;
+				DressUseUO3D = useUo3D;
 				return true;
 			}
 			return false;
