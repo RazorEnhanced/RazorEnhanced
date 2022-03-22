@@ -722,6 +722,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Razor.resx">
       <DependentUpon>Razor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
@@ -869,8 +870,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>XCOPY  $(SolutionDir)packages\IronPython.StdLib.3.4.0-alpha1\content\Lib  $(TargetDir)Lib\  /y /s
-XCOPY  $(SolutionDir)BuildSupplementalFiles\*  $(TargetDir)  /y /s</PostBuildEvent>
+    <PostBuildEvent>XCOPY  "$(SolutionDir)packages\IronPython.StdLib.3.4.0-alpha1\content\Lib"  "$(TargetDir)Lib\"  /y /s
+XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

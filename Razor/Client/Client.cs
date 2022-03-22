@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
 using System.Linq;
 using System.Reflection;
+using AutoUpdaterDotNET;
 
 namespace Assistant
 {
@@ -55,6 +56,21 @@ namespace Assistant
         private static bool m_Running;
         internal static bool Running { get { return m_Running; } }
 
+        // Define GetShortPathName API function.
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern uint GetShortPathName(string lpszLongPath, char[] lpszShortPath, int cchBuffer);
+
+        // Return the short file name for a long file name.
+        internal string ShortFileName(string long_name)
+        {
+            char[] name_chars = new char[1024];
+            long length = GetShortPathName(
+                long_name, name_chars,
+                name_chars.Length);
+
+            string short_name = new string(name_chars);
+            return short_name.Substring(0, (int)length);
+        }
 
         public bool Init(bool isOSI)
         // returns false on cancel
@@ -70,6 +86,16 @@ namespace Assistant
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
+
+            // Setup AutoUpdater Parameters
+            // AutoUpdater
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            AutoUpdater.ReportErrors = true;
+            AutoUpdater.InstalledVersion = new Version(fvi.FileVersion);
+            AutoUpdater.InstallationPath = Assistant.Engine.RootPath;
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
 
             // Profile
             RazorEnhanced.Profiles.Load();
@@ -92,7 +118,11 @@ namespace Assistant
             else
             {
                 RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-                DialogResult laucherdialog = launcher.ShowDialog();
+                DialogResult laucherdialog = DialogResult.Retry;
+                while (laucherdialog == DialogResult.Retry)
+                {
+                    laucherdialog = launcher.ShowDialog();
+                }
 
                 if (laucherdialog == DialogResult.OK)                   // Avvia solo se premuto launch e non se exit
                 {
@@ -116,10 +146,11 @@ namespace Assistant
                             {
                                 osiEnc = 5;
                             }
+
                             string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", m_Version.FileMajorPart, m_Version.FileMinorPart, m_Version.FileBuildPart, m_Version.FilePrivatePart);
                             cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
-                                                        selected.Host, selected.Port, selected.ClientFolder, osiEnc,
-                                                        System.Reflection.Assembly.GetExecutingAssembly().Location,
+                                                        selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
+                                                        ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
                                                         verString);
                             cuo.Start();
                             m_Running = false;
@@ -640,6 +671,75 @@ namespace Assistant
         public abstract void SendToClientWait(Packet p);
         public abstract void SendToServerWait(Packet p);
 
+
+        // Used for auto update  prompt
+        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+        {
+            if (args != null)
+            {
+                if (args.IsUpdateAvailable)
+                {
+                    DialogResult dialogResult;
+
+                    dialogResult =
+                        MessageBox.Show(
+                            $@"There is new version {args.CurrentVersion} available. You are using version {
+                                    args.InstalledVersion
+                                }. Do you want to update the application now?", @"Update Available",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
+                    if (dialogResult.Equals(DialogResult.Yes))
+                    {
+                        try
+                        {
+                            string[] argsx = Environment.GetCommandLineArgs();
+                            if (AutoUpdater.DownloadUpdate(args))
+                            {
+                                if (Client.Instance.ClientRunning)
+                                    if (Client.IsOSI)
+                                        Assistant.Client.Instance.ClientProcess.Kill();
+                                    else
+                                    {
+                                        var client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
+                                        var game = client.GetProperty("Game", BindingFlags.Public | BindingFlags.Static);
+                                        if (game != null)
+                                        {
+                                            var gameController = game.GetValue(null, null);
+                                            if (gameController != null)
+                                            {
+                                                var GameController = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.GameController");
+                                                if (GameController != null)
+                                                {
+                                                    var exitMethod = GameController.GetMethod("Exit", BindingFlags.Instance | BindingFlags.Public);
+                                                    if (exitMethod != null)
+                                                    {
+                                                        exitMethod.Invoke(gameController, new object[] { });
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                Application.Exit();
+                                Thread.Sleep(2000); // attesa uscita
+                            }
+                        }
+                        catch (Exception exception)
+                        {
+                            MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                        @"There is a problem reaching update server please check your internet connection and try again later.",
+                        @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
 
     }
 }

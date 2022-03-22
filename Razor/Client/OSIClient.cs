@@ -401,9 +401,6 @@ namespace Assistant
                 PacketHandlers.Party.Clear();
 
                 Engine.MainWindow.UpdateTitle();
-                // Felix Fix
-                //foreach (WndRegEnt t in m_WndReg)
-                //	DLLImport.Win.PostMessage((IntPtr)((WndRegEnt)t).Handle, (uint)Assistant.UOAssist.UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
                 m_ConnectionStart = DateTime.MinValue;
             }
 

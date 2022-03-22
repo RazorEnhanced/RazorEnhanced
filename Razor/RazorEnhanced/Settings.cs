@@ -19,7 +19,7 @@ namespace RazorEnhanced
     internal class Settings
     {
         // Versione progressiva della struttura dei salvataggi per successive modifiche
-        private static readonly int SettingVersion = 13;
+        private static readonly int SettingVersion = 16;
 
         private static string m_profileName = null;
 
@@ -608,6 +608,8 @@ namespace RazorEnhanced
             sell_lists.Columns.Add("Description", typeof(string));
             sell_lists.Columns.Add("Bag", typeof(int));
             sell_lists.Columns.Add("Selected", typeof(bool));
+            sell_lists.Columns.Add("Enabled", typeof(bool));
+
             return sell_lists;
         }
         internal static DataTable InitBuyAgentLists(string tableName)
@@ -616,6 +618,9 @@ namespace RazorEnhanced
             buy_lists.Columns.Add("Description", typeof(string));
             buy_lists.Columns.Add("CompareName", typeof(bool));
             buy_lists.Columns.Add("Selected", typeof(bool));
+            buy_lists.Columns.Add("CompleteAmount", typeof(bool));
+            buy_lists.Columns.Add("Enabled", typeof(bool));
+
             return buy_lists;
         }
         internal static DataTable InitDressingAgentLists(string tableName)
@@ -626,6 +631,7 @@ namespace RazorEnhanced
             dress_lists.Columns.Add("Bag", typeof(int));
             dress_lists.Columns.Add("Delay", typeof(int));
             dress_lists.Columns.Add("Conflict", typeof(bool));
+            dress_lists.Columns.Add("UO3dEquipUnEquip", typeof(bool));
             dress_lists.Columns.Add("Selected", typeof(bool));
             dress_lists.Columns.Add("HotKey", typeof(Keys));
             dress_lists.Columns.Add("HotKeyPass", typeof(bool));
@@ -2438,8 +2444,7 @@ namespace RazorEnhanced
             general.Columns.Add("ForceSpellHue", typeof(bool));
             general.Columns.Add("SpellFormat", typeof(string));
             general.Columns.Add("MessageLevel", typeof(int));
-            general.Columns.Add("HiddedAutoOpenDoors", typeof(bool));
-            general.Columns.Add("UO3DEquipUnEquip", typeof(bool));
+            general.Columns.Add("HiddedAutoOpenDoors", typeof(bool));            
             general.Columns.Add("ChkNoRunStealth", typeof(bool));
             general.Columns.Add("FilterPoison", typeof(bool));
             general.Columns.Add("EnhancedMapPath", typeof(string));
@@ -2564,20 +2569,20 @@ namespace RazorEnhanced
                     false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
                     false, false, false, false, false,
 
-                    // Parametri primo avvio tab general
+                    // First start parameters tab general
                     false, false, false, false, false, 800, 600, "Normal", 100, 400, 400, false,
 
-                    // Parametri primo avvio tab skill
+                    // First start parameters tab skill
                     false, false, -1,
 
-                    // Parametri primo avvio tab Options
+                    // First start parameters Options tab
                     false, false, 600,
                     false, false, 12,
                     false, false, "[{0}%]",
                     false, false, false,
                     false, false, false, false, 2,
                     false, false, false, false, false, false, false, false, false,
-                    false, false, false, @"{power} [{spell}]", 0, false, false, false, false, string.Empty, false,
+                    false, false, false, @"{power} [{spell}]", 0, false, false, false, string.Empty, false,
 
                     // Parametri primo avvio tab Options -> Hues
                     (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
@@ -3212,12 +3217,13 @@ namespace RazorEnhanced
                 newRow["Description"] = description;
                 newRow["Bag"] = bag;
                 newRow["Selected"] = true;
+                newRow["Enabled"] = false;
                 m_Dataset.Tables["SELL_LISTS"].Rows.Add(newRow);
 
                 Save();
             }
 
-            internal static void ListUpdate(string description, int bag, bool selected)
+            internal static void ListUpdate(string description, int bag, bool selected, bool enabled)
             {
                 bool found = m_Dataset.Tables["SELL_LISTS"].Rows.Cast<DataRow>().Any(row => (string)row["Description"] == description);
 
@@ -3237,6 +3243,8 @@ namespace RazorEnhanced
                         {
                             row["Bag"] = bag;
                             row["Selected"] = selected;
+                            row["Enabled"] = enabled;
+
                             break;
                         }
                     }
@@ -3266,14 +3274,24 @@ namespace RazorEnhanced
             internal static List<RazorEnhanced.SellAgent.SellAgentList> ListsRead()
             {
                 List<RazorEnhanced.SellAgent.SellAgentList> lists = new List<RazorEnhanced.SellAgent.SellAgentList>();
+                DataTable table = m_Dataset.Tables["SELL_LISTS"];
+                if (!table.Columns.Contains("Enabled"))
+                {
+                    table.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in table.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
 
-                foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+                foreach (DataRow row in table.Rows)
                 {
                     string description = (string)row["Description"];
                     int bag = Convert.ToInt32(row["Bag"]);
                     bool selected = (bool)row["Selected"];
+                    bool enabled = (bool)row["Enabled"];
 
-                    RazorEnhanced.SellAgent.SellAgentList list = new RazorEnhanced.SellAgent.SellAgentList(description, bag, selected);
+                    RazorEnhanced.SellAgent.SellAgentList list = new RazorEnhanced.SellAgent.SellAgentList(description, bag, selected, enabled);
                     lists.Add(list);
                 }
 
@@ -3355,12 +3373,14 @@ namespace RazorEnhanced
                 newRow["Description"] = description;
                 newRow["CompareName"] = false;
                 newRow["Selected"] = true;
+                newRow["Enabled"] = false;
+                newRow["CompleteAmount"] = false;
                 m_Dataset.Tables["BUY_LISTS"].Rows.Add(newRow);
 
                 Save();
             }
 
-            internal static void ListUpdate(string description, bool comparename, bool selected)
+            internal static void ListUpdate(string description, bool comparename, bool selected, bool completeAmount, bool enabled)
             {
                 bool found = m_Dataset.Tables["BUY_LISTS"].Rows.Cast<DataRow>().Any(row => (string)row["Description"] == description);
 
@@ -3380,6 +3400,8 @@ namespace RazorEnhanced
                         {
                             row["Selected"] = selected;
                             row["CompareName"] = comparename;
+                            row["CompleteAmount"] = completeAmount;
+                            row["Enabled"] = enabled;
                             break;
                         }
                     }
@@ -3392,6 +3414,12 @@ namespace RazorEnhanced
             {
                 return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows where (string)row["Description"] == listname select Convert.ToBoolean(row["CompareName"])).FirstOrDefault();
             }
+
+            internal static bool CompleteAmount(string listname)
+            {
+                return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows where (string)row["Description"] == listname select Convert.ToBoolean(row["CompleteAmount"])).FirstOrDefault();
+            }
+
 
             internal static void ClearList(string list)
             {
@@ -3423,7 +3451,36 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.BuyAgent.BuyAgentList> ListsRead()
             {
-                return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows let description = (string)row["Description"] let comparename = (bool)row["CompareName"] let selected = (bool)row["Selected"] select new RazorEnhanced.BuyAgent.BuyAgentList(description, comparename, selected)).ToList();
+                List<RazorEnhanced.BuyAgent.BuyAgentList> retList = new List<RazorEnhanced.BuyAgent.BuyAgentList>();
+                DataTable table = m_Dataset.Tables["BUY_LISTS"];
+                if (!table.Columns.Contains("Enabled"))
+                {
+                    table.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in table.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
+                if (!table.Columns.Contains("CompleteAmount"))
+                {
+                    table.Columns.Add("CompleteAmount", typeof(bool));
+                    foreach (DataRow row in table.Rows)
+                    {
+                        row["CompleteAmount"] = false;
+                    }
+                }
+
+                for (int i = table.Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["BUY_LISTS"].Rows[i];
+                    string description = (string)row["Description"];
+                    bool comparename = (bool)row["CompareName"];
+                    bool selected = (bool)row["Selected"];
+                    bool enabled = (bool)row["Enabled"];
+                    bool completeAmount = (bool)row["CompleteAmount"];
+                    retList.Add(new RazorEnhanced.BuyAgent.BuyAgentList(description, comparename, selected, enabled, completeAmount));
+                }
+                return retList;
             }
 
             internal static void ItemInsert(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
@@ -3470,7 +3527,7 @@ namespace RazorEnhanced
                 return m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => ((string)row["Description"]).ToLower() == description.ToLower());
             }
 
-            internal static void ListInsert(string description, int delay, int bag, bool conflict)
+            internal static void ListInsert(string description, int delay, int bag, bool conflict, bool useUo3D)
             {
                 foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
                 {
@@ -3482,6 +3539,7 @@ namespace RazorEnhanced
                 newRow["Delay"] = delay;
                 newRow["Bag"] = bag;
                 newRow["Conflict"] = conflict;
+                newRow["UO3dEquipUnEquip"] = useUo3D;
                 newRow["Selected"] = true;
                 newRow["HotKey"] = Keys.None;
                 newRow["HotKeyPass"] = true;
@@ -3490,7 +3548,7 @@ namespace RazorEnhanced
                 Save();
             }
 
-            internal static void ListUpdate(string description, int delay, int bag, bool conflict, bool selected)
+            internal static void ListUpdate(string description, int delay, int bag, bool conflict, bool useUo3D, bool selected)
             {
                 bool found = m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => (string)row["Description"] == description);
 
@@ -3512,6 +3570,7 @@ namespace RazorEnhanced
                             row["Bag"] = bag;
                             row["Conflict"] = conflict;
                             row["Selected"] = selected;
+                            row["UO3dEquipUnEquip"] = useUo3D;
                             break;
                         }
                     }
@@ -3560,8 +3619,9 @@ namespace RazorEnhanced
                     int bag = Convert.ToInt32(row["Bag"]);
                     bool conflict = (bool)row["Conflict"];
                     bool selected = (bool)row["Selected"];
+                    bool useUo3D = (bool)row["UO3dEquipUnEquip"];
 
-                    RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, selected);
+                    RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, useUo3D, selected );
                     lists.Add(list);
                 }
 
@@ -3580,11 +3640,12 @@ namespace RazorEnhanced
                 return items;
             }
 
-            internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool conflict)
+            internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool conflict, out bool useUo3D)
             {
                 bag = 0;
                 delay = 0;
                 conflict = false;
+                useUo3D = false;
                 foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
@@ -3592,6 +3653,7 @@ namespace RazorEnhanced
                         bag = Convert.ToInt32(row["Bag"]);
                         delay = Convert.ToInt32(row["Delay"]);
                         conflict = (bool)row["Conflict"];
+                        useUo3D = (bool)row["UO3dEquipUnEquip"];
                     }
                 }
             }
@@ -5239,13 +5301,95 @@ namespace RazorEnhanced
 
                 realVersion = 13;
                 General.WriteInt("SettingVersion", realVersion);
+
             }
+
+            // I had to burn 2 versions because this messed up 
+            // I never did figure out how "Enabled" existed but version was still 13
+            if (realVersion == 13 || realVersion == 14)
+            {
+                bool found = false;
+                DataTable sell_lists = m_Dataset.Tables["SELL_LISTS"];
+                foreach (var column in sell_lists.Columns)
+                {
+                    if (column.ToString() == "Enabled")
+                        found = true;
+                }
+
+                if (!found)
+                {
+                    sell_lists.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in sell_lists.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
+
+                found = false;
+                DataTable buy_lists = m_Dataset.Tables["BUY_LISTS"];
+                foreach (var column in buy_lists.Columns)
+                {
+                    if (column.ToString() == "Enabled")
+                        found = true;
+                }
+                if (!found)
+                {
+                    buy_lists.Columns.Add("Enabled", typeof(bool));
+                    foreach (DataRow row in buy_lists.Rows)
+                    {
+                        row["Enabled"] = false;
+                    }
+                }
+
+                found = false;
+                foreach (var column in buy_lists.Columns)
+                {
+                    if (column.ToString() == "Enabled")
+                        found = true;
+                }
+                if (!found)
+                {
+                    buy_lists.Columns.Add("CompleteAmount", typeof(bool));
+                    foreach (DataRow row in buy_lists.Rows)
+                    {
+                        row["CompleteAmount"] = false;
+                    }
+                }
+                realVersion = 15;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+
+            if (realVersion == 15)
+            {
+                bool newUo3D = false;
+                DataTable general = m_Dataset.Tables["General"];
+                int index = general.Columns.IndexOf("UO3DEquipUnEquip");
+                if (index >= 0)
+                {
+                    DataRow row = general.Rows[0];
+                    if (row != null)
+                    {
+                        newUo3D = (bool)row["UO3DEquipUnEquip"];
+                    }
+                    general.Columns.RemoveAt(index);
+                }
+
+                DataTable dress_lists = m_Dataset.Tables["DRESS_LISTS"];
+                dress_lists.Columns.Add("UO3dEquipUnEquip", typeof(bool));
+                foreach (DataRow row in dress_lists.Rows)
+                {
+                    row["UO3dEquipUnEquip"] = newUo3D;
+                }
+                realVersion = 16;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+
 
             {
                 // These always run and must be protected to ensure a patch is not applied twice
                 bool found = false;
                 foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
-                {                    
+                {
                     if ((string)row["Group"] == "Attack" && (string)row["Name"] == "Attack Nearest Enemy")
                     {
                         found = true;

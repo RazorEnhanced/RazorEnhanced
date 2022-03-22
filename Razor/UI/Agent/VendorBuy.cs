@@ -11,6 +11,9 @@ namespace Assistant
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
 		internal ComboBox BuyListSelect { get { return buyListSelect; } }
         internal CheckBox BuyCompareNameCheckBox { get { return buyCompareNameCheckBox; } }
+		internal CheckBox BuyCompleteCheckBox { get { return buyToCompleteAmount; } }
+		internal CheckBox BuyEnableCheckBox { get { return buyEnableCheckBox; } }
+
 		internal DataGridView VendorBuyDataGridView { get { return vendorbuydataGridView; } }
 
 		private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -21,7 +24,7 @@ namespace Assistant
 
 				if (buyListSelect.Focused)
 				{
-					Settings.BuyAgent.ListUpdate(buyListSelect.Text, RazorEnhanced.BuyAgent.CompareName, true);
+					Settings.BuyAgent.ListUpdate(buyListSelect.Text, RazorEnhanced.BuyAgent.CompareName, true, buyToCompleteAmount.Checked, buyEnableCheckBox.Checked);
 
 					BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
 				}
@@ -57,7 +60,6 @@ namespace Assistant
 			}
 			new EnhancedAgentAddList(13).Show();
 		}
-
 		private void buyRemoveList_Click(object sender, EventArgs e)
 		{
 			if (buyListSelect.Text != String.Empty)
@@ -170,9 +172,19 @@ namespace Assistant
 		{
 			if (buyCompareNameCheckBox.Focused)
 			{
-				Settings.BuyAgent.ListUpdate(buyListSelect.Text, buyCompareNameCheckBox.Checked, true);
+				Settings.BuyAgent.ListUpdate(buyListSelect.Text, buyCompareNameCheckBox.Checked, true, buyToCompleteAmount.Checked, buyEnableCheckBox.Checked);
 				BuyAgent.CompareName = buyCompareNameCheckBox.Checked;
 			}
 		}
+		private void buyComplete_CheckedChanged(object sender, EventArgs e)
+		{
+			if (BuyCompleteCheckBox.Focused)
+			{
+				Settings.BuyAgent.ListUpdate(buyListSelect.Text, buyCompareNameCheckBox.Checked, true, buyToCompleteAmount.Checked, buyEnableCheckBox.Checked);
+				BuyAgent.CompleteAmount = buyToCompleteAmount.Checked;
+			}
+		}
+
+
 	}
 }

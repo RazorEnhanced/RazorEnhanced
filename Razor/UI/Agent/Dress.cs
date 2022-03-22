@@ -9,6 +9,7 @@ namespace Assistant
 	public partial class MainForm : System.Windows.Forms.Form
 	{
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
+		internal CheckBox DressUseUo3D { get { return useUo3D; } }
 		internal ListView DressListView { get { return dressListView; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
 		internal RazorAgentNumOnlyTextBox DressDragDelay { get { return dressDragDelay; } }
@@ -25,7 +26,7 @@ namespace Assistant
 
 			if (dressListSelect.Focused && dressListSelect.Text != String.Empty)
 			{
-				Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+				Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, RazorEnhanced.Dress.DressUseUO3D, true);
 				RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
 			}
 
@@ -57,6 +58,7 @@ namespace Assistant
 					RazorEnhanced.Dress.DressBag = 0;
 					RazorEnhanced.Dress.DressDelay = 100;
 					RazorEnhanced.Dress.DressConflict = false;
+					RazorEnhanced.Dress.DressUseUO3D = false;
 					RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
 					HotKey.Init();
 				}
@@ -70,7 +72,7 @@ namespace Assistant
 
 			RazorEnhanced.Dress.DressDelay = Convert.ToInt32(dressDragDelay.Text);
 
-			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, RazorEnhanced.Dress.DressUseUO3D, true);
 			RazorEnhanced.Dress.RefreshLists();
 		}
 
@@ -79,7 +81,16 @@ namespace Assistant
 			if (dressConflictCheckB.Focused)
 			{
 				RazorEnhanced.Dress.DressConflict = dressConflictCheckB.Checked;
-				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, RazorEnhanced.Dress.DressUseUO3D, true);
+				RazorEnhanced.Dress.RefreshLists();
+			}
+		}
+		private void dressUseUO3d_CheckedChanged(object sender, EventArgs e)
+		{
+			if (useUo3D.Focused)
+			{
+				RazorEnhanced.Dress.DressUseUO3D = useUo3D.Checked;
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, RazorEnhanced.Dress.DressUseUO3D, true);
 				RazorEnhanced.Dress.RefreshLists();
 			}
 		}
@@ -123,7 +134,7 @@ namespace Assistant
 			}
 
 			this.Invoke((MethodInvoker)delegate {
-				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, RazorEnhanced.Dress.DressUseUO3D, true);
 				RazorEnhanced.Dress.RefreshLists();
 			});
 		}
@@ -242,6 +253,7 @@ namespace Assistant
 		internal void UndressFinishWork()
 		{
 			if (dressConflictCheckB.InvokeRequired ||
+				useUo3D.InvokeRequired ||
 				dressExecuteButton.InvokeRequired ||
 				undressExecuteButton.InvokeRequired ||
 				dressAddListB.InvokeRequired ||
@@ -256,6 +268,7 @@ namespace Assistant
 			{
 				dressStopButton.Enabled = false;
 				dressConflictCheckB.Enabled = true;
+				useUo3D.Enabled = true;
 				dressExecuteButton.Enabled = true;
 				undressExecuteButton.Enabled = true;
 				dressAddListB.Enabled = true;
@@ -269,6 +282,7 @@ namespace Assistant
 		internal void UndressStartWork()
 		{
 			if (dressConflictCheckB.InvokeRequired ||
+				useUo3D.InvokeRequired ||
 				dressExecuteButton.InvokeRequired ||
 				undressExecuteButton.InvokeRequired ||
 				dressAddListB.InvokeRequired ||
@@ -283,6 +297,7 @@ namespace Assistant
 			{
 				dressStopButton.Enabled = true;
 				dressConflictCheckB.Enabled = false;
+				useUo3D.Enabled = false;
 				dressExecuteButton.Enabled = false;
 				undressExecuteButton.Enabled = false;
 				dressAddListB.Enabled = false;

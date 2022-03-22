@@ -10,6 +10,7 @@ using System.Diagnostics;
 using AutoUpdaterDotNET;
 using System.IO;
 using JsonData;
+using System.Reflection;
 
 namespace Assistant
 {
@@ -441,7 +442,6 @@ namespace Assistant
         private Label label61;
         private RazorAgentNumOnlyTextBox scavengerRange;
         private System.Windows.Forms.CheckBox hiddedAutoOpenDoors;
-        private System.Windows.Forms.CheckBox uo3dEquipUnEquip;
         private System.Windows.Forms.CheckBox nosearchpouches;
         private System.Windows.Forms.CheckBox autosearchcontainers;
         private TabPage videoTab;
@@ -703,6 +703,9 @@ namespace Assistant
         private System.Windows.Forms.TextBox scriptFilePath;
         private ColumnHeader index;
         private System.Windows.Forms.Button  buttonScriptTo;
+        private CheckBox buyToCompleteAmount;
+        private Button ChkForUpdate;
+        private CheckBox useUo3D;
         private System.Windows.Forms.CheckBox scriptshowStartStopCheckBox;
 
         internal MainForm()
@@ -754,41 +757,41 @@ namespace Assistant
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.label79 = new System.Windows.Forms.Label();
-            this.paypalButton = new  System.Windows.Forms.Button ();
-            this.openchangelogButton = new  System.Windows.Forms.Button ();
-            this.notshowlauncher = new  System.Windows.Forms.CheckBox();
+            this.paypalButton = new System.Windows.Forms.Button();
+            this.openchangelogButton = new System.Windows.Forms.Button();
+            this.notshowlauncher = new System.Windows.Forms.CheckBox();
             this.groupBox29 = new System.Windows.Forms.GroupBox();
-            this.profilesCloneButton = new  System.Windows.Forms.Button ();
-            this.profilesRenameButton = new  System.Windows.Forms.Button ();
-            this.profilesUnlinkButton = new  System.Windows.Forms.Button ();
-            this.profilesLinkButton = new  System.Windows.Forms.Button ();
+            this.profilesCloneButton = new System.Windows.Forms.Button();
+            this.profilesRenameButton = new System.Windows.Forms.Button();
+            this.profilesUnlinkButton = new System.Windows.Forms.Button();
+            this.profilesLinkButton = new System.Windows.Forms.Button();
             this.profilelinklabel = new System.Windows.Forms.Label();
-            this.profilesDeleteButton = new  System.Windows.Forms.Button ();
-            this.profilesAddButton = new  System.Windows.Forms.Button ();
+            this.profilesDeleteButton = new System.Windows.Forms.Button();
+            this.profilesAddButton = new System.Windows.Forms.Button();
             this.profilesComboBox = new System.Windows.Forms.ComboBox();
-            this.forceSizeY = new TextBox();
-            this.forceSizeX = new TextBox();
-            this.gameSize = new  System.Windows.Forms.CheckBox();
-            this.rememberPwds = new  System.Windows.Forms.CheckBox();
+            this.forceSizeY = new System.Windows.Forms.TextBox();
+            this.forceSizeX = new System.Windows.Forms.TextBox();
+            this.gameSize = new System.Windows.Forms.CheckBox();
+            this.rememberPwds = new System.Windows.Forms.CheckBox();
             this.clientPrio = new System.Windows.Forms.ComboBox();
-            this.systray = new RadioButton();
-            this.taskbar = new RadioButton();
-            this.smartCPU = new  System.Windows.Forms.CheckBox();
+            this.systray = new System.Windows.Forms.RadioButton();
+            this.taskbar = new System.Windows.Forms.RadioButton();
+            this.smartCPU = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.opacity = new System.Windows.Forms.TrackBar();
-            this.alwaysTop = new  System.Windows.Forms.CheckBox();
+            this.alwaysTop = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.filters = new System.Windows.Forms.CheckedListBox();
             this.opacityLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.moreOptTab = new System.Windows.Forms.TabPage();
-            this.druidClericPackets = new  System.Windows.Forms.CheckBox();
-            this.allowHiddenLooting = new  System.Windows.Forms.CheckBox();
-            this.filterNPC = new  System.Windows.Forms.CheckBox();
+            this.druidClericPackets = new System.Windows.Forms.CheckBox();
+            this.allowHiddenLooting = new System.Windows.Forms.CheckBox();
+            this.filterNPC = new System.Windows.Forms.CheckBox();
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.setpathmapbutton = new System.Windows.Forms.Button();
             this.label72 = new System.Windows.Forms.Label();
-            this.enhancedmappathTextBox = new TextBox();
+            this.enhancedmappathTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -801,55 +804,54 @@ namespace Assistant
             this.lblWarnHue = new System.Windows.Forms.Label();
             this.lblMsgHue = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.filterPoison = new  System.Windows.Forms.CheckBox();
-            this.chknorunStealth = new  System.Windows.Forms.CheckBox();
-            this.nosearchpouches = new  System.Windows.Forms.CheckBox();
-            this.autosearchcontainers = new  System.Windows.Forms.CheckBox();
-            this.uo3dEquipUnEquip = new  System.Windows.Forms.CheckBox();
-            this.hiddedAutoOpenDoors = new  System.Windows.Forms.CheckBox();
-            this.chkPartyOverhead = new  System.Windows.Forms.CheckBox();
-            this.healthFmt = new TextBox();
-            this.showHealthOH = new  System.Windows.Forms.CheckBox();
-            this.showtargtext = new  System.Windows.Forms.CheckBox();
-            this.ltRange = new TextBox();
-            this.rangeCheckLT = new  System.Windows.Forms.CheckBox();
-            this.smartLT = new  System.Windows.Forms.CheckBox();
-            this.txtObjDelay = new TextBox();
-            this.QueueActions = new  System.Windows.Forms.CheckBox();
-            this.actionStatusMsg = new  System.Windows.Forms.CheckBox();
+            this.filterPoison = new System.Windows.Forms.CheckBox();
+            this.chknorunStealth = new System.Windows.Forms.CheckBox();
+            this.nosearchpouches = new System.Windows.Forms.CheckBox();
+            this.autosearchcontainers = new System.Windows.Forms.CheckBox();
+            this.hiddedAutoOpenDoors = new System.Windows.Forms.CheckBox();
+            this.chkPartyOverhead = new System.Windows.Forms.CheckBox();
+            this.healthFmt = new System.Windows.Forms.TextBox();
+            this.showHealthOH = new System.Windows.Forms.CheckBox();
+            this.showtargtext = new System.Windows.Forms.CheckBox();
+            this.ltRange = new System.Windows.Forms.TextBox();
+            this.rangeCheckLT = new System.Windows.Forms.CheckBox();
+            this.smartLT = new System.Windows.Forms.CheckBox();
+            this.txtObjDelay = new System.Windows.Forms.TextBox();
+            this.QueueActions = new System.Windows.Forms.CheckBox();
+            this.actionStatusMsg = new System.Windows.Forms.CheckBox();
             this.msglvl = new System.Windows.Forms.ComboBox();
-            this.potionEquip = new  System.Windows.Forms.CheckBox();
-            this.spellUnequip = new  System.Windows.Forms.CheckBox();
-            this.autoOpenDoors = new  System.Windows.Forms.CheckBox();
-            this.chkStealth = new  System.Windows.Forms.CheckBox();
-            this.preAOSstatbar = new  System.Windows.Forms.CheckBox();
-            this.setLTHilight = new  System.Windows.Forms.Button ();
-            this.lthilight = new  System.Windows.Forms.CheckBox();
-            this.filterSnoop = new  System.Windows.Forms.CheckBox();
-            this.corpseRange = new TextBox();
-            this.incomingCorpse = new  System.Windows.Forms.CheckBox();
-            this.incomingMob = new  System.Windows.Forms.CheckBox();
-            this.setHarmHue = new  System.Windows.Forms.Button ();
-            this.setNeuHue = new  System.Windows.Forms.Button ();
-            this.setBeneHue = new  System.Windows.Forms.Button ();
-            this.setSpeechHue = new  System.Windows.Forms.Button ();
-            this.setWarnHue = new  System.Windows.Forms.Button ();
-            this.setMsgHue = new  System.Windows.Forms.Button ();
-            this.autoStackRes = new  System.Windows.Forms.CheckBox();
-            this.queueTargets = new  System.Windows.Forms.CheckBox();
-            this.spamFilter = new  System.Windows.Forms.CheckBox();
-            this.openCorpses = new  System.Windows.Forms.CheckBox();
-            this.blockDis = new  System.Windows.Forms.CheckBox();
-            this.txtSpellFormat = new TextBox();
-            this.chkForceSpellHue = new  System.Windows.Forms.CheckBox();
-            this.chkForceSpeechHue = new  System.Windows.Forms.CheckBox();
+            this.potionEquip = new System.Windows.Forms.CheckBox();
+            this.spellUnequip = new System.Windows.Forms.CheckBox();
+            this.autoOpenDoors = new System.Windows.Forms.CheckBox();
+            this.chkStealth = new System.Windows.Forms.CheckBox();
+            this.preAOSstatbar = new System.Windows.Forms.CheckBox();
+            this.setLTHilight = new System.Windows.Forms.Button();
+            this.lthilight = new System.Windows.Forms.CheckBox();
+            this.filterSnoop = new System.Windows.Forms.CheckBox();
+            this.corpseRange = new System.Windows.Forms.TextBox();
+            this.incomingCorpse = new System.Windows.Forms.CheckBox();
+            this.incomingMob = new System.Windows.Forms.CheckBox();
+            this.setHarmHue = new System.Windows.Forms.Button();
+            this.setNeuHue = new System.Windows.Forms.Button();
+            this.setBeneHue = new System.Windows.Forms.Button();
+            this.setSpeechHue = new System.Windows.Forms.Button();
+            this.setWarnHue = new System.Windows.Forms.Button();
+            this.setMsgHue = new System.Windows.Forms.Button();
+            this.autoStackRes = new System.Windows.Forms.CheckBox();
+            this.queueTargets = new System.Windows.Forms.CheckBox();
+            this.spamFilter = new System.Windows.Forms.CheckBox();
+            this.openCorpses = new System.Windows.Forms.CheckBox();
+            this.blockDis = new System.Windows.Forms.CheckBox();
+            this.txtSpellFormat = new System.Windows.Forms.TextBox();
+            this.chkForceSpellHue = new System.Windows.Forms.CheckBox();
+            this.chkForceSpeechHue = new System.Windows.Forms.CheckBox();
             this.enhancedFilterTab = new System.Windows.Forms.TabPage();
             this.FilterPages = new System.Windows.Forms.TabControl();
             this.MiscFilterPage = new System.Windows.Forms.TabPage();
             this.uomodgroupbox = new System.Windows.Forms.GroupBox();
-            this.uomodpaperdollCheckBox = new  System.Windows.Forms.CheckBox();
-            this.uomodglobalsoundCheckBox = new  System.Windows.Forms.CheckBox();
-            this.uomodFPSCheckBox = new  System.Windows.Forms.CheckBox();
+            this.uomodpaperdollCheckBox = new System.Windows.Forms.CheckBox();
+            this.uomodglobalsoundCheckBox = new System.Windows.Forms.CheckBox();
+            this.uomodFPSCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
             this.remountedelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.remountdelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
@@ -857,23 +859,23 @@ namespace Assistant
             this.label40 = new System.Windows.Forms.Label();
             this.remountseriallabel = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
-            this.remountsetbutton = new  System.Windows.Forms.Button ();
-            this.remountcheckbox = new  System.Windows.Forms.CheckBox();
+            this.remountsetbutton = new System.Windows.Forms.Button();
+            this.remountcheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
-            this.colorflagsselfHighlightCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showagentmessageCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showmessagefieldCheckBox = new  System.Windows.Forms.CheckBox();
-            this.colorflagsHighlightCheckBox = new  System.Windows.Forms.CheckBox();
-            this.blockchivalryhealCheckBox = new  System.Windows.Forms.CheckBox();
-            this.blockbighealCheckBox = new  System.Windows.Forms.CheckBox();
-            this.blockminihealCheckBox = new  System.Windows.Forms.CheckBox();
-            this.blockhealpoisonCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showheadtargetCheckBox = new  System.Windows.Forms.CheckBox();
-            this.blockpartyinviteCheckBox = new  System.Windows.Forms.CheckBox();
-            this.blocktraderequestCheckBox = new  System.Windows.Forms.CheckBox();
-            this.highlighttargetCheckBox = new  System.Windows.Forms.CheckBox();
-            this.flagsHighlightCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showstaticfieldCheckBox = new  System.Windows.Forms.CheckBox();
+            this.colorflagsselfHighlightCheckBox = new System.Windows.Forms.CheckBox();
+            this.showagentmessageCheckBox = new System.Windows.Forms.CheckBox();
+            this.showmessagefieldCheckBox = new System.Windows.Forms.CheckBox();
+            this.colorflagsHighlightCheckBox = new System.Windows.Forms.CheckBox();
+            this.blockchivalryhealCheckBox = new System.Windows.Forms.CheckBox();
+            this.blockbighealCheckBox = new System.Windows.Forms.CheckBox();
+            this.blockminihealCheckBox = new System.Windows.Forms.CheckBox();
+            this.blockhealpoisonCheckBox = new System.Windows.Forms.CheckBox();
+            this.showheadtargetCheckBox = new System.Windows.Forms.CheckBox();
+            this.blockpartyinviteCheckBox = new System.Windows.Forms.CheckBox();
+            this.blocktraderequestCheckBox = new System.Windows.Forms.CheckBox();
+            this.highlighttargetCheckBox = new System.Windows.Forms.CheckBox();
+            this.flagsHighlightCheckBox = new System.Windows.Forms.CheckBox();
+            this.showstaticfieldCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
             this.graphfilterdatagrid = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -881,46 +883,46 @@ namespace Assistant
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.mobfilterCheckBox = new  System.Windows.Forms.CheckBox();
+            this.mobfilterCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.autocarverbladeLabel = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
-            this.autocarverrazorButton = new  System.Windows.Forms.Button ();
-            this.autocarverCheckBox = new  System.Windows.Forms.CheckBox();
+            this.autocarverrazorButton = new System.Windows.Forms.Button();
+            this.autocarverCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.bonebladeLabel = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.boneCutterrazorButton = new  System.Windows.Forms.Button ();
-            this.bonecutterCheckBox = new  System.Windows.Forms.CheckBox();
+            this.boneCutterrazorButton = new System.Windows.Forms.Button();
+            this.bonecutterCheckBox = new System.Windows.Forms.CheckBox();
             this.JournalFilterPage = new System.Windows.Forms.TabPage();
             this.journalfilterdatagrid = new System.Windows.Forms.DataGridView();
             this.journalFilterText = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptingTab = new System.Windows.Forms.TabPage();
-            this.scriptshowStartStopCheckBox = new  System.Windows.Forms.CheckBox();
+            this.scriptshowStartStopCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox42 = new System.Windows.Forms.GroupBox();
-            this.scriptSearchTextBox = new TextBox();
+            this.scriptSearchTextBox = new System.Windows.Forms.TextBox();
             this.groupBox31 = new System.Windows.Forms.GroupBox();
-            this.buttonScriptTo = new  System.Windows.Forms.Button ();
-            this.buttonScriptEditorNew = new  System.Windows.Forms.Button ();
+            this.buttonScriptTo = new System.Windows.Forms.Button();
+            this.buttonScriptEditorNew = new System.Windows.Forms.Button();
             this.buttonScriptRefresh = new System.Windows.Forms.Button();
-            this.buttonAddScript = new  System.Windows.Forms.Button ();
-            this.buttonRemoveScript = new  System.Windows.Forms.Button ();
-            this.buttonScriptDown = new  System.Windows.Forms.Button ();
+            this.buttonAddScript = new System.Windows.Forms.Button();
+            this.buttonRemoveScript = new System.Windows.Forms.Button();
+            this.buttonScriptDown = new System.Windows.Forms.Button();
             this.textBoxDelay = new System.Windows.Forms.TextBox();
-            this.buttonScriptUp = new  System.Windows.Forms.Button ();
-            this.buttonScriptEditor = new  System.Windows.Forms.Button ();
+            this.buttonScriptUp = new System.Windows.Forms.Button();
+            this.buttonScriptEditor = new System.Windows.Forms.Button();
             this.buttonScriptStop = new System.Windows.Forms.Button();
             this.buttonScriptPlay = new System.Windows.Forms.Button();
             this.groupBox30 = new System.Windows.Forms.GroupBox();
             this.scriptFilePath = new System.Windows.Forms.TextBox();
-            this.scriptautostartcheckbox = new  System.Windows.Forms.CheckBox();
-            this.scriptwaitmodecheckbox = new  System.Windows.Forms.CheckBox();
-            this.scriptloopmodecheckbox = new  System.Windows.Forms.CheckBox();
+            this.scriptautostartcheckbox = new System.Windows.Forms.CheckBox();
+            this.scriptwaitmodecheckbox = new System.Windows.Forms.CheckBox();
+            this.scriptloopmodecheckbox = new System.Windows.Forms.CheckBox();
             this.scriptfilelabel = new System.Windows.Forms.Label();
-            this.scripterrorlogCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showscriptmessageCheckBox = new  System.Windows.Forms.CheckBox();
+            this.scripterrorlogCheckBox = new System.Windows.Forms.CheckBox();
+            this.showscriptmessageCheckBox = new System.Windows.Forms.CheckBox();
             this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
             this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -934,16 +936,16 @@ namespace Assistant
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.eautoloot = new System.Windows.Forms.TabPage();
-            this.autoLootButtonListClone = new  System.Windows.Forms.Button ();
-            this.autolootautostartCheckBox = new  System.Windows.Forms.CheckBox();
+            this.autoLootButtonListClone = new System.Windows.Forms.Button();
+            this.autolootautostartCheckBox = new System.Windows.Forms.CheckBox();
             this.label60 = new System.Windows.Forms.Label();
             this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.autolootItemPropsB = new  System.Windows.Forms.Button ();
+            this.autolootItemPropsB = new System.Windows.Forms.Button();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.label55 = new System.Windows.Forms.Label();
             this.autolootContainerLabel = new System.Windows.Forms.Label();
-            this.autolootContainerButton = new  System.Windows.Forms.Button ();
-            this.autolootAddItemBTarget = new  System.Windows.Forms.Button ();
+            this.autolootContainerButton = new System.Windows.Forms.Button();
+            this.autolootAddItemBTarget = new System.Windows.Forms.Button();
             this.autolootdataGridView = new System.Windows.Forms.DataGridView();
             this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -951,24 +953,24 @@ namespace Assistant
             this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LootBagColumnID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.autoLootnoopenCheckBox = new  System.Windows.Forms.CheckBox();
+            this.autoLootnoopenCheckBox = new System.Windows.Forms.CheckBox();
             this.label21 = new System.Windows.Forms.Label();
             this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.autoLootButtonRemoveList = new  System.Windows.Forms.Button ();
-            this.autolootButtonAddList = new  System.Windows.Forms.Button ();
+            this.autoLootButtonRemoveList = new System.Windows.Forms.Button();
+            this.autolootButtonAddList = new System.Windows.Forms.Button();
             this.autolootListSelect = new System.Windows.Forms.ComboBox();
             this.label20 = new System.Windows.Forms.Label();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.autolootLogBox = new System.Windows.Forms.ListBox();
-            this.autoLootCheckBox = new  System.Windows.Forms.CheckBox();
+            this.autoLootCheckBox = new System.Windows.Forms.CheckBox();
             this.escavenger = new System.Windows.Forms.TabPage();
-            this.scavengerButtonClone = new  System.Windows.Forms.Button ();
-            this.scavengerautostartCheckBox = new  System.Windows.Forms.CheckBox();
+            this.scavengerButtonClone = new System.Windows.Forms.Button();
+            this.scavengerautostartCheckBox = new System.Windows.Forms.CheckBox();
             this.label61 = new System.Windows.Forms.Label();
             this.groupBox41 = new System.Windows.Forms.GroupBox();
             this.label54 = new System.Windows.Forms.Label();
             this.scavengerContainerLabel = new System.Windows.Forms.Label();
-            this.scavengerButtonSetContainer = new  System.Windows.Forms.Button ();
+            this.scavengerButtonSetContainer = new System.Windows.Forms.Button();
             this.scavengerdataGridView = new System.Windows.Forms.DataGridView();
             this.ScavengerX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ScavengerItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -979,23 +981,23 @@ namespace Assistant
             this.scavengerLogBox = new System.Windows.Forms.ListBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.scavengerButtonEditProps = new  System.Windows.Forms.Button ();
-            this.scavengerButtonAddTarget = new  System.Windows.Forms.Button ();
-            this.scavengerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.scavengerCheckBox = new  System.Windows.Forms.CheckBox();
-            this.scavengerButtonRemoveList = new  System.Windows.Forms.Button ();
-            this.scavengerButtonAddList = new  System.Windows.Forms.Button ();
+            this.scavengerButtonEditProps = new System.Windows.Forms.Button();
+            this.scavengerButtonAddTarget = new System.Windows.Forms.Button();
+            this.scavengerCheckBox = new System.Windows.Forms.CheckBox();
+            this.scavengerButtonRemoveList = new System.Windows.Forms.Button();
+            this.scavengerButtonAddList = new System.Windows.Forms.Button();
             this.scavengerListSelect = new System.Windows.Forms.ComboBox();
+            this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.scavengerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.organizer = new System.Windows.Forms.TabPage();
-            this.organizerCloneListB = new  System.Windows.Forms.Button ();
+            this.organizerCloneListB = new System.Windows.Forms.Button();
             this.organizerExecuteButton = new System.Windows.Forms.Button();
             this.organizerStopButton = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
-            this.organizerSetSourceB = new  System.Windows.Forms.Button ();
-            this.organizerSetDestinationB = new  System.Windows.Forms.Button ();
+            this.organizerSetSourceB = new System.Windows.Forms.Button();
+            this.organizerSetDestinationB = new System.Windows.Forms.Button();
             this.organizerSourceLabel = new System.Windows.Forms.Label();
             this.organizerDestinationLabel = new System.Windows.Forms.Label();
             this.organizerdataGridView = new System.Windows.Forms.DataGridView();
@@ -1008,14 +1010,16 @@ namespace Assistant
             this.organizerLogBox = new System.Windows.Forms.ListBox();
             this.label27 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.organizerAddTargetB = new  System.Windows.Forms.Button ();
-            this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.organizerRemoveListB = new  System.Windows.Forms.Button ();
-            this.organizerAddListB = new  System.Windows.Forms.Button ();
+            this.organizerAddTargetB = new System.Windows.Forms.Button();
+            this.organizerRemoveListB = new System.Windows.Forms.Button();
+            this.organizerAddListB = new System.Windows.Forms.Button();
             this.organizerListSelect = new System.Windows.Forms.ComboBox();
+            this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.VendorBuy = new System.Windows.Forms.TabPage();
-            this.buyCompareNameCheckBox = new  System.Windows.Forms.CheckBox();
-            this.buyCloneButton = new  System.Windows.Forms.Button ();
+            this.buyToCompleteAmount = new System.Windows.Forms.CheckBox();
+            this.buyLogBox = new System.Windows.Forms.ListBox();
+            this.buyCompareNameCheckBox = new System.Windows.Forms.CheckBox();
+            this.buyCloneButton = new System.Windows.Forms.Button();
             this.vendorbuydataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1023,17 +1027,16 @@ namespace Assistant
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox18 = new System.Windows.Forms.GroupBox();
-            this.buyLogBox = new System.Windows.Forms.ListBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.buyAddTargetB = new  System.Windows.Forms.Button ();
-            this.buyEnableCheckBox = new  System.Windows.Forms.CheckBox();
-            this.buyRemoveListButton = new  System.Windows.Forms.Button ();
-            this.buyAddListButton = new  System.Windows.Forms.Button ();
+            this.buyAddTargetB = new System.Windows.Forms.Button();
+            this.buyEnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.buyRemoveListButton = new System.Windows.Forms.Button();
+            this.buyAddListButton = new System.Windows.Forms.Button();
             this.buyListSelect = new System.Windows.Forms.ComboBox();
             this.VendorSell = new System.Windows.Forms.TabPage();
-            this.sellCloneListButton = new  System.Windows.Forms.Button ();
+            this.sellCloneListButton = new System.Windows.Forms.Button();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
-            this.sellSetBagButton = new  System.Windows.Forms.Button ();
+            this.sellSetBagButton = new System.Windows.Forms.Button();
             this.label50 = new System.Windows.Forms.Label();
             this.sellBagLabel = new System.Windows.Forms.Label();
             this.vendorsellGridView = new System.Windows.Forms.DataGridView();
@@ -1045,27 +1048,28 @@ namespace Assistant
             this.groupBox20 = new System.Windows.Forms.GroupBox();
             this.sellLogBox = new System.Windows.Forms.ListBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.sellAddTargerButton = new  System.Windows.Forms.Button ();
-            this.sellEnableCheckBox = new  System.Windows.Forms.CheckBox();
-            this.sellRemoveListButton = new  System.Windows.Forms.Button ();
-            this.sellAddListButton = new  System.Windows.Forms.Button ();
+            this.sellAddTargerButton = new System.Windows.Forms.Button();
+            this.sellEnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.sellRemoveListButton = new System.Windows.Forms.Button();
+            this.sellAddListButton = new System.Windows.Forms.Button();
             this.sellListSelect = new System.Windows.Forms.ComboBox();
             this.Dress = new System.Windows.Forms.TabPage();
-            this.dressStopButton = new  System.Windows.Forms.Button ();
-            this.dressConflictCheckB = new  System.Windows.Forms.CheckBox();
+            this.useUo3D = new System.Windows.Forms.CheckBox();
+            this.dressStopButton = new System.Windows.Forms.Button();
+            this.dressConflictCheckB = new System.Windows.Forms.CheckBox();
             this.dressBagLabel = new System.Windows.Forms.Label();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
-            this.dressAddTargetB = new  System.Windows.Forms.Button ();
-            this.dressAddManualB = new  System.Windows.Forms.Button ();
-            this.dressRemoveB = new  System.Windows.Forms.Button ();
-            this.dressClearListB = new  System.Windows.Forms.Button ();
-            this.dressReadB = new  System.Windows.Forms.Button ();
+            this.dressAddTargetB = new System.Windows.Forms.Button();
+            this.dressAddManualB = new System.Windows.Forms.Button();
+            this.dressRemoveB = new System.Windows.Forms.Button();
+            this.dressClearListB = new System.Windows.Forms.Button();
+            this.dressReadB = new System.Windows.Forms.Button();
             this.label29 = new System.Windows.Forms.Label();
             this.groupBox21 = new System.Windows.Forms.GroupBox();
             this.dressLogBox = new System.Windows.Forms.ListBox();
-            this.dressSetBagB = new  System.Windows.Forms.Button ();
-            this.undressExecuteButton = new  System.Windows.Forms.Button ();
-            this.dressExecuteButton = new  System.Windows.Forms.Button ();
+            this.dressSetBagB = new System.Windows.Forms.Button();
+            this.undressExecuteButton = new System.Windows.Forms.Button();
+            this.dressExecuteButton = new System.Windows.Forms.Button();
             this.dressDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.dressListView = new System.Windows.Forms.ListView();
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1073,49 +1077,49 @@ namespace Assistant
             this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label28 = new System.Windows.Forms.Label();
-            this.dressRemoveListB = new  System.Windows.Forms.Button ();
-            this.dressAddListB = new  System.Windows.Forms.Button ();
+            this.dressRemoveListB = new System.Windows.Forms.Button();
+            this.dressAddListB = new System.Windows.Forms.Button();
             this.dressListSelect = new System.Windows.Forms.ComboBox();
             this.friends = new System.Windows.Forms.TabPage();
             this.groupBox34 = new System.Windows.Forms.GroupBox();
-            this.FriendGuildAddButton = new  System.Windows.Forms.Button ();
-            this.FriendGuildRemoveButton = new  System.Windows.Forms.Button ();
+            this.FriendGuildAddButton = new System.Windows.Forms.Button();
+            this.FriendGuildRemoveButton = new System.Windows.Forms.Button();
             this.groupBox33 = new System.Windows.Forms.GroupBox();
-            this.MINfriendCheckBox = new  System.Windows.Forms.CheckBox();
-            this.SLfriendCheckBox = new  System.Windows.Forms.CheckBox();
-            this.TBfriendCheckBox = new  System.Windows.Forms.CheckBox();
-            this.COMfriendCheckBox = new  System.Windows.Forms.CheckBox();
+            this.MINfriendCheckBox = new System.Windows.Forms.CheckBox();
+            this.SLfriendCheckBox = new System.Windows.Forms.CheckBox();
+            this.TBfriendCheckBox = new System.Windows.Forms.CheckBox();
+            this.COMfriendCheckBox = new System.Windows.Forms.CheckBox();
             this.friendguildListView = new System.Windows.Forms.ListView();
             this.columnHeader63 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader64 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.friendGroupBox = new System.Windows.Forms.GroupBox();
-            this.friendAddTargetButton = new  System.Windows.Forms.Button ();
-            this.friendRemoveButton = new  System.Windows.Forms.Button ();
-            this.friendAddButton = new  System.Windows.Forms.Button ();
+            this.friendAddTargetButton = new System.Windows.Forms.Button();
+            this.friendRemoveButton = new System.Windows.Forms.Button();
+            this.friendAddButton = new System.Windows.Forms.Button();
             this.friendloggroupBox = new System.Windows.Forms.GroupBox();
             this.friendLogBox = new System.Windows.Forms.ListBox();
-            this.friendIncludePartyCheckBox = new  System.Windows.Forms.CheckBox();
-            this.friendAttackCheckBox = new  System.Windows.Forms.CheckBox();
-            this.friendPartyCheckBox = new  System.Windows.Forms.CheckBox();
+            this.friendIncludePartyCheckBox = new System.Windows.Forms.CheckBox();
+            this.friendAttackCheckBox = new System.Windows.Forms.CheckBox();
+            this.friendPartyCheckBox = new System.Windows.Forms.CheckBox();
             this.friendlistView = new System.Windows.Forms.ListView();
             this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.labelfriend = new System.Windows.Forms.Label();
-            this.friendButtonRemoveList = new  System.Windows.Forms.Button ();
-            this.friendButtonAddList = new  System.Windows.Forms.Button ();
+            this.friendButtonRemoveList = new System.Windows.Forms.Button();
+            this.friendButtonAddList = new System.Windows.Forms.Button();
             this.friendListSelect = new System.Windows.Forms.ComboBox();
             this.restock = new System.Windows.Forms.TabPage();
-            this.restockCloneListB = new  System.Windows.Forms.Button ();
+            this.restockCloneListB = new System.Windows.Forms.Button();
             this.restockExecuteButton = new System.Windows.Forms.Button();
             this.restockStopButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label59 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
-            this.restockSetSourceButton = new  System.Windows.Forms.Button ();
+            this.restockSetSourceButton = new System.Windows.Forms.Button();
             this.restockSourceLabel = new System.Windows.Forms.Label();
             this.restockDestinationLabel = new System.Windows.Forms.Label();
-            this.restockSetDestinationButton = new  System.Windows.Forms.Button ();
+            this.restockSetDestinationButton = new System.Windows.Forms.Button();
             this.restockdataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1126,46 +1130,46 @@ namespace Assistant
             this.restockLogBox = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.restockAddTargetButton = new  System.Windows.Forms.Button ();
-            this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.restockRemoveListB = new  System.Windows.Forms.Button ();
-            this.restockAddListB = new  System.Windows.Forms.Button ();
+            this.restockAddTargetButton = new System.Windows.Forms.Button();
+            this.restockRemoveListB = new System.Windows.Forms.Button();
+            this.restockAddListB = new System.Windows.Forms.Button();
             this.restockListSelect = new System.Windows.Forms.ComboBox();
+            this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.bandageheal = new System.Windows.Forms.TabPage();
-            this.bandagehealAutostartCheckBox = new  System.Windows.Forms.CheckBox();
+            this.bandagehealAutostartCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.bandagehealTimeWithBufCheckBox = new System.Windows.Forms.CheckBox();
             this.label78 = new System.Windows.Forms.Label();
             this.label77 = new System.Windows.Forms.Label();
-            this.bandagehealusetextContent = new TextBox();
-            this.bandagehealusetextSelfContent = new TextBox();
-            this.bandagehealusetext = new  System.Windows.Forms.CheckBox();
-            this.bandagehealusetarget = new  System.Windows.Forms.CheckBox();
+            this.bandagehealusetextContent = new System.Windows.Forms.TextBox();
+            this.bandagehealusetextSelfContent = new System.Windows.Forms.TextBox();
+            this.bandagehealusetext = new System.Windows.Forms.CheckBox();
+            this.bandagehealusetarget = new System.Windows.Forms.CheckBox();
             this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label46 = new System.Windows.Forms.Label();
-            this.bandagehealcountdownCheckBox = new  System.Windows.Forms.CheckBox();
-            this.bandagehealhiddedCheckBox = new  System.Windows.Forms.CheckBox();
-            this.bandagehealmortalCheckBox = new  System.Windows.Forms.CheckBox();
-            this.bandagehealpoisonCheckBox = new  System.Windows.Forms.CheckBox();
+            this.bandagehealcountdownCheckBox = new System.Windows.Forms.CheckBox();
+            this.bandagehealhiddedCheckBox = new System.Windows.Forms.CheckBox();
+            this.bandagehealmortalCheckBox = new System.Windows.Forms.CheckBox();
+            this.bandagehealpoisonCheckBox = new System.Windows.Forms.CheckBox();
             this.label33 = new System.Windows.Forms.Label();
             this.bandagehealhpTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.bandagehealdelayTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.bandagehealdexformulaCheckBox = new  System.Windows.Forms.CheckBox();
+            this.bandagehealdexformulaCheckBox = new System.Windows.Forms.CheckBox();
             this.bandagehealcustomcolorTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.bandagehealcustomIDTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.bandagehealcustomCheckBox = new  System.Windows.Forms.CheckBox();
+            this.bandagehealcustomCheckBox = new System.Windows.Forms.CheckBox();
             this.bandagehealtargetLabel = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.bandagehealsettargetButton = new  System.Windows.Forms.Button ();
+            this.bandagehealsettargetButton = new System.Windows.Forms.Button();
             this.bandagehealtargetComboBox = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.bandagehealLogBox = new System.Windows.Forms.ListBox();
-            this.bandagehealenableCheckBox = new  System.Windows.Forms.CheckBox();
+            this.bandagehealenableCheckBox = new System.Windows.Forms.CheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.toolbarstab = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -1173,36 +1177,36 @@ namespace Assistant
             this.toolbar_trackBar = new System.Windows.Forms.TrackBar();
             this.toolbar_opacity_label = new System.Windows.Forms.Label();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
-            this.lockToolBarCheckBox = new  System.Windows.Forms.CheckBox();
-            this.autoopenToolBarCheckBox = new  System.Windows.Forms.CheckBox();
+            this.lockToolBarCheckBox = new System.Windows.Forms.CheckBox();
+            this.autoopenToolBarCheckBox = new System.Windows.Forms.CheckBox();
             this.locationToolBarLabel = new System.Windows.Forms.Label();
-            this.closeToolBarButton = new  System.Windows.Forms.Button ();
-            this.openToolBarButton = new  System.Windows.Forms.Button ();
+            this.closeToolBarButton = new System.Windows.Forms.Button();
+            this.openToolBarButton = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.showtitheToolBarCheckBox = new  System.Windows.Forms.CheckBox();
-            this.toolbarremoveslotButton = new  System.Windows.Forms.Button ();
-            this.toolbaraddslotButton = new  System.Windows.Forms.Button ();
+            this.showtitheToolBarCheckBox = new System.Windows.Forms.CheckBox();
+            this.toolbarremoveslotButton = new System.Windows.Forms.Button();
+            this.toolbaraddslotButton = new System.Windows.Forms.Button();
             this.toolbarslot_label = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.toolboxsizeComboBox = new System.Windows.Forms.ComboBox();
             this.label41 = new System.Windows.Forms.Label();
-            this.showfollowerToolBarCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showweightToolBarCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showmanaToolBarCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showstaminaToolBarCheckBox = new  System.Windows.Forms.CheckBox();
-            this.showhitsToolBarCheckBox = new  System.Windows.Forms.CheckBox();
+            this.showfollowerToolBarCheckBox = new System.Windows.Forms.CheckBox();
+            this.showweightToolBarCheckBox = new System.Windows.Forms.CheckBox();
+            this.showmanaToolBarCheckBox = new System.Windows.Forms.CheckBox();
+            this.showstaminaToolBarCheckBox = new System.Windows.Forms.CheckBox();
+            this.showhitsToolBarCheckBox = new System.Windows.Forms.CheckBox();
             this.toolboxstyleComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox26 = new System.Windows.Forms.GroupBox();
             this.label38 = new System.Windows.Forms.Label();
-            this.toolboxcountNameTextBox = new TextBox();
+            this.toolboxcountNameTextBox = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
-            this.toolboxcountClearButton = new  System.Windows.Forms.Button ();
-            this.toolboxcountTargetButton = new  System.Windows.Forms.Button ();
+            this.toolboxcountClearButton = new System.Windows.Forms.Button();
+            this.toolboxcountTargetButton = new System.Windows.Forms.Button();
             this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label36 = new System.Windows.Forms.Label();
-            this.toolboxcountHueWarningCheckBox = new  System.Windows.Forms.CheckBox();
-            this.toolboxcountHueTextBox = new TextBox();
+            this.toolboxcountHueWarningCheckBox = new System.Windows.Forms.CheckBox();
+            this.toolboxcountHueTextBox = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
             this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label18 = new System.Windows.Forms.Label();
@@ -1214,12 +1218,12 @@ namespace Assistant
             this.groupBox37 = new System.Windows.Forms.GroupBox();
             this.spellgridstyleComboBox = new System.Windows.Forms.ComboBox();
             this.label80 = new System.Windows.Forms.Label();
-            this.gridhslotremove_button = new  System.Windows.Forms.Button ();
-            this.gridhslotadd_button = new  System.Windows.Forms.Button ();
+            this.gridhslotremove_button = new System.Windows.Forms.Button();
+            this.gridhslotadd_button = new System.Windows.Forms.Button();
             this.gridhslot_textbox = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
-            this.gridvslotremove_button = new  System.Windows.Forms.Button ();
-            this.gridvslotadd_button = new  System.Windows.Forms.Button ();
+            this.gridvslotremove_button = new System.Windows.Forms.Button();
+            this.gridvslotadd_button = new System.Windows.Forms.Button();
             this.gridvslot_textbox = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.groupBox36 = new System.Windows.Forms.GroupBox();
@@ -1234,87 +1238,87 @@ namespace Assistant
             this.label45 = new System.Windows.Forms.Label();
             this.gridslot_ComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox35 = new System.Windows.Forms.GroupBox();
-            this.setSpellBarOrigin = new  System.Windows.Forms.Button ();
-            this.gridlock_CheckBox = new  System.Windows.Forms.CheckBox();
-            this.gridopenlogin_CheckBox = new  System.Windows.Forms.CheckBox();
+            this.setSpellBarOrigin = new System.Windows.Forms.Button();
+            this.gridlock_CheckBox = new System.Windows.Forms.CheckBox();
+            this.gridopenlogin_CheckBox = new System.Windows.Forms.CheckBox();
             this.gridlocation_label = new System.Windows.Forms.Label();
-            this.gridclose_button = new  System.Windows.Forms.Button ();
-            this.gridopen_button = new  System.Windows.Forms.Button ();
+            this.gridclose_button = new System.Windows.Forms.Button();
+            this.gridopen_button = new System.Windows.Forms.Button();
             this.emptyTab = new System.Windows.Forms.TabPage();
-            this.targetTestButton = new  System.Windows.Forms.Button ();
-            this.targetsaveButton = new  System.Windows.Forms.Button ();
+            this.targetTestButton = new System.Windows.Forms.Button();
+            this.targetsaveButton = new System.Windows.Forms.Button();
             this.groupBox57 = new System.Windows.Forms.GroupBox();
-            this.targetYellowCheckBox = new  System.Windows.Forms.CheckBox();
-            this.targetRedCheckBox = new  System.Windows.Forms.CheckBox();
-            this.targetOrangeCheckBox = new  System.Windows.Forms.CheckBox();
-            this.targetCriminalCheckBox = new  System.Windows.Forms.CheckBox();
-            this.targetGreyCheckBox = new  System.Windows.Forms.CheckBox();
-            this.targetGreenCheckBox = new  System.Windows.Forms.CheckBox();
-            this.targetBlueCheckBox = new  System.Windows.Forms.CheckBox();
+            this.targetYellowCheckBox = new System.Windows.Forms.CheckBox();
+            this.targetRedCheckBox = new System.Windows.Forms.CheckBox();
+            this.targetOrangeCheckBox = new System.Windows.Forms.CheckBox();
+            this.targetCriminalCheckBox = new System.Windows.Forms.CheckBox();
+            this.targetGreyCheckBox = new System.Windows.Forms.CheckBox();
+            this.targetGreenCheckBox = new System.Windows.Forms.CheckBox();
+            this.targetBlueCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox56 = new System.Windows.Forms.GroupBox();
             this.targetSelectorComboBox = new System.Windows.Forms.ComboBox();
             this.groupBox55 = new System.Windows.Forms.GroupBox();
-            this.targetNameTextBox = new TextBox();
+            this.targetNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox48 = new System.Windows.Forms.GroupBox();
             this.label73 = new System.Windows.Forms.Label();
             this.label74 = new System.Windows.Forms.Label();
-            this.targetRangeMaxTextBox = new TextBox();
+            this.targetRangeMaxTextBox = new System.Windows.Forms.TextBox();
             this.label75 = new System.Windows.Forms.Label();
-            this.targetRangeMinTextBox = new TextBox();
+            this.targetRangeMinTextBox = new System.Windows.Forms.TextBox();
             this.groupBox46 = new System.Windows.Forms.GroupBox();
             this.groupBox47 = new System.Windows.Forms.GroupBox();
-            this.paralizedBoth = new RadioButton();
-            this.paralizedOff = new RadioButton();
-            this.paralizedOn = new RadioButton();
+            this.paralizedBoth = new System.Windows.Forms.RadioButton();
+            this.paralizedOff = new System.Windows.Forms.RadioButton();
+            this.paralizedOn = new System.Windows.Forms.RadioButton();
             this.groupBox49 = new System.Windows.Forms.GroupBox();
-            this.friendOn = new RadioButton();
-            this.friendBoth = new RadioButton();
-            this.friendOff = new RadioButton();
+            this.friendOn = new System.Windows.Forms.RadioButton();
+            this.friendBoth = new System.Windows.Forms.RadioButton();
+            this.friendOff = new System.Windows.Forms.RadioButton();
             this.groupBox50 = new System.Windows.Forms.GroupBox();
-            this.warmodeOn = new RadioButton();
-            this.warmodeBoth = new RadioButton();
-            this.warmodeOff = new RadioButton();
+            this.warmodeOn = new System.Windows.Forms.RadioButton();
+            this.warmodeBoth = new System.Windows.Forms.RadioButton();
+            this.warmodeOff = new System.Windows.Forms.RadioButton();
             this.groupBox51 = new System.Windows.Forms.GroupBox();
-            this.ghostOn = new RadioButton();
-            this.ghostBoth = new RadioButton();
-            this.ghostOff = new RadioButton();
+            this.ghostOn = new System.Windows.Forms.RadioButton();
+            this.ghostBoth = new System.Windows.Forms.RadioButton();
+            this.ghostOff = new System.Windows.Forms.RadioButton();
             this.groupBox52 = new System.Windows.Forms.GroupBox();
-            this.humanOn = new RadioButton();
-            this.humanOff = new RadioButton();
-            this.humanBoth = new RadioButton();
+            this.humanOn = new System.Windows.Forms.RadioButton();
+            this.humanOff = new System.Windows.Forms.RadioButton();
+            this.humanBoth = new System.Windows.Forms.RadioButton();
             this.groupBox53 = new System.Windows.Forms.GroupBox();
-            this.blessedOn = new RadioButton();
-            this.blessedOff = new RadioButton();
-            this.blessedBoth = new RadioButton();
+            this.blessedOn = new System.Windows.Forms.RadioButton();
+            this.blessedOff = new System.Windows.Forms.RadioButton();
+            this.blessedBoth = new System.Windows.Forms.RadioButton();
             this.groupBox54 = new System.Windows.Forms.GroupBox();
-            this.poisonedOn = new RadioButton();
-            this.poisonedOff = new RadioButton();
-            this.poisonedBoth = new RadioButton();
+            this.poisonedOn = new System.Windows.Forms.RadioButton();
+            this.poisonedOff = new System.Windows.Forms.RadioButton();
+            this.poisonedBoth = new System.Windows.Forms.RadioButton();
             this.groupBox45 = new System.Windows.Forms.GroupBox();
-            this.targetChoseHue = new  System.Windows.Forms.Button ();
+            this.targetChoseHue = new System.Windows.Forms.Button();
             this.targethueGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.targetcoloCheckBox = new  System.Windows.Forms.CheckBox();
+            this.targetcoloCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox44 = new System.Windows.Forms.GroupBox();
-            this.targetChoseBody = new  System.Windows.Forms.Button ();
+            this.targetChoseBody = new System.Windows.Forms.Button();
             this.targetbodydataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.targetbodyCheckBox = new  System.Windows.Forms.CheckBox();
+            this.targetbodyCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox43 = new System.Windows.Forms.GroupBox();
             this.label76 = new System.Windows.Forms.Label();
-            this.targetremoveButton = new  System.Windows.Forms.Button ();
-            this.targetaddButton = new  System.Windows.Forms.Button ();
-            this.targetaddTextBox = new TextBox();
+            this.targetremoveButton = new System.Windows.Forms.Button();
+            this.targetaddButton = new System.Windows.Forms.Button();
+            this.targetaddTextBox = new System.Windows.Forms.TextBox();
             this.targetlistBox = new System.Windows.Forms.ListBox();
             this.skillsTab = new System.Windows.Forms.TabPage();
-            this.dispDelta = new  System.Windows.Forms.CheckBox();
-            this.skillCopyAll = new  System.Windows.Forms.Button ();
-            this.skillCopySel = new  System.Windows.Forms.Button ();
+            this.dispDelta = new System.Windows.Forms.CheckBox();
+            this.skillCopyAll = new System.Windows.Forms.Button();
+            this.skillCopySel = new System.Windows.Forms.Button();
             this.baseTotal = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.locks = new System.Windows.Forms.ComboBox();
-            this.setlocks = new  System.Windows.Forms.Button ();
-            this.resetDelta = new  System.Windows.Forms.Button ();
+            this.setlocks = new System.Windows.Forms.Button();
+            this.resetDelta = new System.Windows.Forms.Button();
             this.skillList = new System.Windows.Forms.ListView();
             this.skillHDRName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.skillHDRvalue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1324,19 +1328,19 @@ namespace Assistant
             this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.enhancedHotKeytabPage = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.hotkeyMasterClearButton = new  System.Windows.Forms.Button ();
+            this.hotkeyMasterClearButton = new System.Windows.Forms.Button();
             this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorHotKeyTextBox();
-            this.hotkeyMasterSetButton = new  System.Windows.Forms.Button ();
+            this.hotkeyMasterSetButton = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
-            this.hotkeyMDisableButton = new  System.Windows.Forms.Button ();
-            this.hotkeyMEnableButton = new  System.Windows.Forms.Button ();
+            this.hotkeyMDisableButton = new System.Windows.Forms.Button();
+            this.hotkeyMEnableButton = new System.Windows.Forms.Button();
             this.hotkeyKeyMasterLabel = new System.Windows.Forms.Label();
             this.hotkeyStatusLabel = new System.Windows.Forms.Label();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
-            this.hotkeypassCheckBox = new  System.Windows.Forms.CheckBox();
-            this.hotkeyClearButton = new  System.Windows.Forms.Button ();
-            this.hotkeySetButton = new  System.Windows.Forms.Button ();
+            this.hotkeypassCheckBox = new System.Windows.Forms.CheckBox();
+            this.hotkeyClearButton = new System.Windows.Forms.Button();
+            this.hotkeySetButton = new System.Windows.Forms.Button();
             this.label39 = new System.Windows.Forms.Label();
             this.hotkeytextbox = new RazorEnhanced.UI.RazorHotKeyTextBox();
             this.hotkeytreeView = new System.Windows.Forms.TreeView();
@@ -1350,15 +1354,15 @@ namespace Assistant
             this.screenshotTab = new System.Windows.Forms.TabPage();
             this.imgFmt = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.capNow = new  System.Windows.Forms.Button ();
-            this.screenPath = new TextBox();
-            this.radioUO = new RadioButton();
-            this.radioFull = new RadioButton();
-            this.screenAutoCap = new  System.Windows.Forms.CheckBox();
-            this.setScnPath = new  System.Windows.Forms.Button ();
+            this.capNow = new System.Windows.Forms.Button();
+            this.screenPath = new System.Windows.Forms.TextBox();
+            this.radioUO = new System.Windows.Forms.RadioButton();
+            this.radioFull = new System.Windows.Forms.RadioButton();
+            this.screenAutoCap = new System.Windows.Forms.CheckBox();
+            this.setScnPath = new System.Windows.Forms.Button();
             this.screensList = new System.Windows.Forms.ListBox();
             this.screenPrev = new System.Windows.Forms.PictureBox();
-            this.dispTime = new  System.Windows.Forms.CheckBox();
+            this.dispTime = new System.Windows.Forms.CheckBox();
             this.videoTab = new System.Windows.Forms.TabPage();
             this.videoRecStatuslabel = new System.Windows.Forms.Label();
             this.label64 = new System.Windows.Forms.Label();
@@ -1368,18 +1372,18 @@ namespace Assistant
             this.videoCodecComboBox = new System.Windows.Forms.ComboBox();
             this.label63 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
-            this.videoFPSTextBox = new TextBox();
+            this.videoFPSTextBox = new System.Windows.Forms.TextBox();
             this.videorecbutton = new System.Windows.Forms.Button();
             this.videostopbutton = new System.Windows.Forms.Button();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
             this.videolistBox = new System.Windows.Forms.ListBox();
-            this.videoPathButton = new  System.Windows.Forms.Button ();
-            this.videoPathTextBox = new TextBox();
+            this.videoPathButton = new System.Windows.Forms.Button();
+            this.videoPathTextBox = new System.Windows.Forms.TextBox();
             this.DPStabPage = new System.Windows.Forms.TabPage();
             this.filtergroup = new System.Windows.Forms.GroupBox();
-            this.DPSMeterClearFilterButton = new  System.Windows.Forms.Button ();
-            this.DPSMeterApplyFilterButton = new  System.Windows.Forms.Button ();
-            this.DPSmetername = new TextBox();
+            this.DPSMeterClearFilterButton = new System.Windows.Forms.Button();
+            this.DPSMeterApplyFilterButton = new System.Windows.Forms.Button();
+            this.DPSmetername = new System.Windows.Forms.TextBox();
             this.label70 = new System.Windows.Forms.Label();
             this.DPSmeterserial = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label69 = new System.Windows.Forms.Label();
@@ -1393,18 +1397,19 @@ namespace Assistant
             this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DPSMeterStatusLabel = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
-            this.DPSMeterPauseButton = new  System.Windows.Forms.Button ();
-            this.DPSMeterStopButton = new  System.Windows.Forms.Button ();
-            this.DPSMeterStartButton = new  System.Windows.Forms.Button ();
-            this.DPSMeterClearButton = new  System.Windows.Forms.Button ();
+            this.DPSMeterPauseButton = new System.Windows.Forms.Button();
+            this.DPSMeterStopButton = new System.Windows.Forms.Button();
+            this.DPSMeterStartButton = new System.Windows.Forms.Button();
+            this.DPSMeterClearButton = new System.Windows.Forms.Button();
             this.statusTab = new System.Windows.Forms.TabPage();
-            this.advertisementLink = new  System.Windows.Forms.Button ();
+            this.ChkForUpdate = new System.Windows.Forms.Button();
+            this.advertisementLink = new System.Windows.Forms.Button();
             this.advertisement = new System.Windows.Forms.PictureBox();
             this.label71 = new System.Windows.Forms.Label();
             this.labelHotride = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
-            this.discordrazorButton = new  System.Windows.Forms.Button ();
-            this.razorButtonWiki = new  System.Windows.Forms.Button ();
+            this.discordrazorButton = new System.Windows.Forms.Button();
+            this.razorButtonWiki = new System.Windows.Forms.Button();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
@@ -1464,7 +1469,6 @@ namespace Assistant
             this.groupBox16.SuspendLayout();
             this.VendorBuy.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vendorbuydataGridView)).BeginInit();
-            this.groupBox18.SuspendLayout();
             this.VendorSell.SuspendLayout();
             this.groupBox19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vendorsellGridView)).BeginInit();
@@ -1904,7 +1908,6 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.chknorunStealth);
             this.moreOptTab.Controls.Add(this.nosearchpouches);
             this.moreOptTab.Controls.Add(this.autosearchcontainers);
-            this.moreOptTab.Controls.Add(this.uo3dEquipUnEquip);
             this.moreOptTab.Controls.Add(this.hiddedAutoOpenDoors);
             this.moreOptTab.Controls.Add(this.chkPartyOverhead);
             this.moreOptTab.Controls.Add(this.healthFmt);
@@ -1951,7 +1954,7 @@ namespace Assistant
             // druidClericPackets
             // 
             this.druidClericPackets.AutoSize = true;
-            this.druidClericPackets.Location = new System.Drawing.Point(698, 481);
+            this.druidClericPackets.Location = new System.Drawing.Point(698, 457);
             this.druidClericPackets.Name = "druidClericPackets";
             this.druidClericPackets.Size = new System.Drawing.Size(276, 24);
             this.druidClericPackets.TabIndex = 83;
@@ -2133,7 +2136,7 @@ namespace Assistant
             // 
             // nosearchpouches
             // 
-            this.nosearchpouches.Location = new System.Drawing.Point(728, 447);
+            this.nosearchpouches.Location = new System.Drawing.Point(728, 423);
             this.nosearchpouches.Name = "nosearchpouches";
             this.nosearchpouches.Size = new System.Drawing.Size(296, 32);
             this.nosearchpouches.TabIndex = 77;
@@ -2142,21 +2145,12 @@ namespace Assistant
             // 
             // autosearchcontainers
             // 
-            this.autosearchcontainers.Location = new System.Drawing.Point(698, 417);
+            this.autosearchcontainers.Location = new System.Drawing.Point(698, 393);
             this.autosearchcontainers.Name = "autosearchcontainers";
             this.autosearchcontainers.Size = new System.Drawing.Size(342, 32);
             this.autosearchcontainers.TabIndex = 76;
             this.autosearchcontainers.Text = "Auto search new containers";
             this.autosearchcontainers.CheckedChanged += new System.EventHandler(this.autosearchcontainers_CheckedChanged);
-            // 
-            // uo3dEquipUnEquip
-            // 
-            this.uo3dEquipUnEquip.Location = new System.Drawing.Point(698, 386);
-            this.uo3dEquipUnEquip.Name = "uo3dEquipUnEquip";
-            this.uo3dEquipUnEquip.Size = new System.Drawing.Size(342, 32);
-            this.uo3dEquipUnEquip.TabIndex = 75;
-            this.uo3dEquipUnEquip.Text = "Use UO3D Equip and UnEquip";
-            this.uo3dEquipUnEquip.CheckedChanged += new System.EventHandler(this.uo3dEquipUnEquip_CheckedChanged);
             // 
             // hiddedAutoOpenDoors
             // 
@@ -2548,9 +2542,9 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(310, 397);
+            this.uomodgroupbox.Location = new System.Drawing.Point(310, 378);
             this.uomodgroupbox.Name = "uomodgroupbox";
-            this.uomodgroupbox.Size = new System.Drawing.Size(453, 95);
+            this.uomodgroupbox.Size = new System.Drawing.Size(453, 99);
             this.uomodgroupbox.TabIndex = 75;
             this.uomodgroupbox.TabStop = false;
             this.uomodgroupbox.Text = "UoMod (Client > 7.0.0.0)";
@@ -2839,7 +2833,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(310, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(453, 388);
+            this.groupBox23.Size = new System.Drawing.Size(453, 372);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -2862,7 +2856,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 304);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(433, 288);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -3040,7 +3034,7 @@ namespace Assistant
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 29);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 492);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 517);
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
@@ -3058,7 +3052,7 @@ namespace Assistant
             this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 480);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 505);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -3773,7 +3767,7 @@ namespace Assistant
             this.autolootLogBox.ItemHeight = 20;
             this.autolootLogBox.Location = new System.Drawing.Point(10, 28);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(371, 144);
+            this.autolootLogBox.Size = new System.Drawing.Size(371, 124);
             this.autolootLogBox.TabIndex = 0;
             // 
             // autoLootCheckBox
@@ -3795,14 +3789,14 @@ namespace Assistant
             this.escavenger.Controls.Add(this.groupBox12);
             this.escavenger.Controls.Add(this.label23);
             this.escavenger.Controls.Add(this.label22);
-            this.escavenger.Controls.Add(this.scavengerRange);
             this.escavenger.Controls.Add(this.scavengerButtonEditProps);
             this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
-            this.escavenger.Controls.Add(this.scavengerDragDelay);
             this.escavenger.Controls.Add(this.scavengerCheckBox);
             this.escavenger.Controls.Add(this.scavengerButtonRemoveList);
             this.escavenger.Controls.Add(this.scavengerButtonAddList);
             this.escavenger.Controls.Add(this.scavengerListSelect);
+            this.escavenger.Controls.Add(this.scavengerRange);
+            this.escavenger.Controls.Add(this.scavengerDragDelay);
             this.escavenger.Location = new System.Drawing.Point(4, 29);
             this.escavenger.Name = "escavenger";
             this.escavenger.Padding = new System.Windows.Forms.Padding(3);
@@ -3976,7 +3970,7 @@ namespace Assistant
             this.scavengerLogBox.ItemHeight = 20;
             this.scavengerLogBox.Location = new System.Drawing.Point(11, 26);
             this.scavengerLogBox.Name = "scavengerLogBox";
-            this.scavengerLogBox.Size = new System.Drawing.Size(424, 144);
+            this.scavengerLogBox.Size = new System.Drawing.Size(424, 124);
             this.scavengerLogBox.TabIndex = 0;
             // 
             // label23
@@ -3997,16 +3991,6 @@ namespace Assistant
             this.label22.TabIndex = 60;
             this.label22.Text = "Scavenger List:";
             // 
-            // scavengerRange
-            // 
-            this.scavengerRange.BackColor = System.Drawing.Color.White;
-            this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scavengerRange.Location = new System.Drawing.Point(666, 99);
-            this.scavengerRange.Name = "scavengerRange";
-            this.scavengerRange.Size = new System.Drawing.Size(72, 26);
-            this.scavengerRange.TabIndex = 74;
-            this.scavengerRange.Leave += new System.EventHandler(this.scavengerRange_Leave);
-            // 
             // scavengerButtonEditProps
             // 
             this.scavengerButtonEditProps.Location = new System.Drawing.Point(901, 96);
@@ -4024,16 +4008,6 @@ namespace Assistant
             this.scavengerButtonAddTarget.TabIndex = 47;
             this.scavengerButtonAddTarget.Text = "Add Item";
             this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
-            // 
-            // scavengerDragDelay
-            // 
-            this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
-            this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scavengerDragDelay.Location = new System.Drawing.Point(666, 61);
-            this.scavengerDragDelay.Name = "scavengerDragDelay";
-            this.scavengerDragDelay.Size = new System.Drawing.Size(72, 26);
-            this.scavengerDragDelay.TabIndex = 68;
-            this.scavengerDragDelay.Leave += new System.EventHandler(this.scavengerDragDelay_Leave);
             // 
             // scavengerCheckBox
             // 
@@ -4073,6 +4047,26 @@ namespace Assistant
             this.scavengerListSelect.TabIndex = 61;
             this.scavengerListSelect.SelectedIndexChanged += new System.EventHandler(this.scavengertListSelect_SelectedIndexChanged);
             // 
+            // scavengerRange
+            // 
+            this.scavengerRange.BackColor = System.Drawing.Color.White;
+            this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scavengerRange.Location = new System.Drawing.Point(666, 99);
+            this.scavengerRange.Name = "scavengerRange";
+            this.scavengerRange.Size = new System.Drawing.Size(72, 26);
+            this.scavengerRange.TabIndex = 74;
+            this.scavengerRange.Leave += new System.EventHandler(this.scavengerRange_Leave);
+            // 
+            // scavengerDragDelay
+            // 
+            this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
+            this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scavengerDragDelay.Location = new System.Drawing.Point(666, 61);
+            this.scavengerDragDelay.Name = "scavengerDragDelay";
+            this.scavengerDragDelay.Size = new System.Drawing.Size(72, 26);
+            this.scavengerDragDelay.TabIndex = 68;
+            this.scavengerDragDelay.Leave += new System.EventHandler(this.scavengerDragDelay_Leave);
+            // 
             // organizer
             // 
             this.organizer.Controls.Add(this.organizerCloneListB);
@@ -4084,10 +4078,10 @@ namespace Assistant
             this.organizer.Controls.Add(this.label27);
             this.organizer.Controls.Add(this.label24);
             this.organizer.Controls.Add(this.organizerAddTargetB);
-            this.organizer.Controls.Add(this.organizerDragDelay);
             this.organizer.Controls.Add(this.organizerRemoveListB);
             this.organizer.Controls.Add(this.organizerAddListB);
             this.organizer.Controls.Add(this.organizerListSelect);
+            this.organizer.Controls.Add(this.organizerDragDelay);
             this.organizer.Location = new System.Drawing.Point(4, 29);
             this.organizer.Name = "organizer";
             this.organizer.Padding = new System.Windows.Forms.Padding(3);
@@ -4305,7 +4299,7 @@ namespace Assistant
             this.organizerLogBox.ItemHeight = 20;
             this.organizerLogBox.Location = new System.Drawing.Point(10, 28);
             this.organizerLogBox.Name = "organizerLogBox";
-            this.organizerLogBox.Size = new System.Drawing.Size(424, 164);
+            this.organizerLogBox.Size = new System.Drawing.Size(424, 144);
             this.organizerLogBox.TabIndex = 0;
             // 
             // label27
@@ -4335,16 +4329,6 @@ namespace Assistant
             this.organizerAddTargetB.Text = "Add Item";
             this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
             // 
-            // organizerDragDelay
-            // 
-            this.organizerDragDelay.BackColor = System.Drawing.Color.White;
-            this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.organizerDragDelay.Location = new System.Drawing.Point(606, 76);
-            this.organizerDragDelay.Name = "organizerDragDelay";
-            this.organizerDragDelay.Size = new System.Drawing.Size(72, 26);
-            this.organizerDragDelay.TabIndex = 71;
-            this.organizerDragDelay.Leave += new System.EventHandler(this.organizerDragDelay_Leave);
-            // 
             // organizerRemoveListB
             // 
             this.organizerRemoveListB.Location = new System.Drawing.Point(558, 18);
@@ -4373,8 +4357,20 @@ namespace Assistant
             this.organizerListSelect.TabIndex = 61;
             this.organizerListSelect.SelectedIndexChanged += new System.EventHandler(this.organizerListSelect_SelectedIndexChanged);
             // 
+            // organizerDragDelay
+            // 
+            this.organizerDragDelay.BackColor = System.Drawing.Color.White;
+            this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.organizerDragDelay.Location = new System.Drawing.Point(606, 76);
+            this.organizerDragDelay.Name = "organizerDragDelay";
+            this.organizerDragDelay.Size = new System.Drawing.Size(72, 26);
+            this.organizerDragDelay.TabIndex = 71;
+            this.organizerDragDelay.Leave += new System.EventHandler(this.organizerDragDelay_Leave);
+            // 
             // VendorBuy
             // 
+            this.VendorBuy.Controls.Add(this.buyToCompleteAmount);
+            this.VendorBuy.Controls.Add(this.buyLogBox);
             this.VendorBuy.Controls.Add(this.buyCompareNameCheckBox);
             this.VendorBuy.Controls.Add(this.buyCloneButton);
             this.VendorBuy.Controls.Add(this.vendorbuydataGridView);
@@ -4392,6 +4388,27 @@ namespace Assistant
             this.VendorBuy.TabIndex = 3;
             this.VendorBuy.Text = "Vendor Buy";
             this.VendorBuy.UseVisualStyleBackColor = true;
+            // 
+            // buyToCompleteAmount
+            // 
+            this.buyToCompleteAmount.AutoSize = true;
+            this.buyToCompleteAmount.Location = new System.Drawing.Point(597, 134);
+            this.buyToCompleteAmount.Name = "buyToCompleteAmount";
+            this.buyToCompleteAmount.Size = new System.Drawing.Size(103, 24);
+            this.buyToCompleteAmount.TabIndex = 91;
+            this.buyToCompleteAmount.Text = "Complete";
+            this.buyToCompleteAmount.CheckedChanged += new System.EventHandler(this.buyComplete_CheckedChanged);
+            // 
+            // buyLogBox
+            // 
+            this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buyLogBox.FormattingEnabled = true;
+            this.buyLogBox.ItemHeight = 20;
+            this.buyLogBox.Location = new System.Drawing.Point(609, 258);
+            this.buyLogBox.Name = "buyLogBox";
+            this.buyLogBox.Size = new System.Drawing.Size(424, 184);
+            this.buyLogBox.TabIndex = 0;
             // 
             // buyCompareNameCheckBox
             // 
@@ -4507,24 +4524,12 @@ namespace Assistant
             // 
             this.groupBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox18.Controls.Add(this.buyLogBox);
-            this.groupBox18.Location = new System.Drawing.Point(597, 136);
+            this.groupBox18.Location = new System.Drawing.Point(597, 238);
             this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(445, 343);
+            this.groupBox18.Size = new System.Drawing.Size(445, 241);
             this.groupBox18.TabIndex = 73;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Buy Log";
-            // 
-            // buyLogBox
-            // 
-            this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buyLogBox.FormattingEnabled = true;
-            this.buyLogBox.ItemHeight = 20;
-            this.buyLogBox.Location = new System.Drawing.Point(11, 26);
-            this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(424, 144);
-            this.buyLogBox.TabIndex = 0;
             // 
             // label25
             // 
@@ -4761,7 +4766,7 @@ namespace Assistant
             this.sellLogBox.ItemHeight = 20;
             this.sellLogBox.Location = new System.Drawing.Point(11, 26);
             this.sellLogBox.Name = "sellLogBox";
-            this.sellLogBox.Size = new System.Drawing.Size(424, 164);
+            this.sellLogBox.Size = new System.Drawing.Size(424, 144);
             this.sellLogBox.TabIndex = 0;
             // 
             // label26
@@ -4821,6 +4826,7 @@ namespace Assistant
             // 
             // Dress
             // 
+            this.Dress.Controls.Add(this.useUo3D);
             this.Dress.Controls.Add(this.dressStopButton);
             this.Dress.Controls.Add(this.dressConflictCheckB);
             this.Dress.Controls.Add(this.dressBagLabel);
@@ -4844,6 +4850,15 @@ namespace Assistant
             this.Dress.Text = "Dress / Arm";
             this.Dress.UseVisualStyleBackColor = true;
             // 
+            // useUo3D
+            // 
+            this.useUo3D.Location = new System.Drawing.Point(655, 117);
+            this.useUo3D.Name = "useUo3D";
+            this.useUo3D.Size = new System.Drawing.Size(271, 32);
+            this.useUo3D.TabIndex = 92;
+            this.useUo3D.Text = "Use UO3D Equip and UnEquip";
+            this.useUo3D.CheckedChanged += new System.EventHandler(this.dressUseUO3d_CheckedChanged);
+            // 
             // dressStopButton
             // 
             this.dressStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -4860,7 +4875,7 @@ namespace Assistant
             this.dressConflictCheckB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.dressConflictCheckB.Location = new System.Drawing.Point(461, 120);
             this.dressConflictCheckB.Name = "dressConflictCheckB";
-            this.dressConflictCheckB.Size = new System.Drawing.Size(359, 32);
+            this.dressConflictCheckB.Size = new System.Drawing.Size(204, 32);
             this.dressConflictCheckB.TabIndex = 90;
             this.dressConflictCheckB.Text = "Remove Conflict Item";
             this.dressConflictCheckB.CheckedChanged += new System.EventHandler(this.dressConflictCheckB_CheckedChanged);
@@ -5401,10 +5416,10 @@ namespace Assistant
             this.restock.Controls.Add(this.label13);
             this.restock.Controls.Add(this.label7);
             this.restock.Controls.Add(this.restockAddTargetButton);
-            this.restock.Controls.Add(this.restockDragDelay);
             this.restock.Controls.Add(this.restockRemoveListB);
             this.restock.Controls.Add(this.restockAddListB);
             this.restock.Controls.Add(this.restockListSelect);
+            this.restock.Controls.Add(this.restockDragDelay);
             this.restock.Location = new System.Drawing.Point(4, 29);
             this.restock.Name = "restock";
             this.restock.Padding = new System.Windows.Forms.Padding(3);
@@ -5623,7 +5638,7 @@ namespace Assistant
             this.restockLogBox.ItemHeight = 20;
             this.restockLogBox.Location = new System.Drawing.Point(11, 26);
             this.restockLogBox.Name = "restockLogBox";
-            this.restockLogBox.Size = new System.Drawing.Size(424, 124);
+            this.restockLogBox.Size = new System.Drawing.Size(424, 104);
             this.restockLogBox.TabIndex = 0;
             // 
             // label13
@@ -5655,17 +5670,6 @@ namespace Assistant
             this.restockAddTargetButton.Text = "Add Item";
             this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
             // 
-            // restockDragDelay
-            // 
-            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.restockDragDelay.BackColor = System.Drawing.Color.White;
-            this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.restockDragDelay.Location = new System.Drawing.Point(597, 75);
-            this.restockDragDelay.Name = "restockDragDelay";
-            this.restockDragDelay.Size = new System.Drawing.Size(72, 26);
-            this.restockDragDelay.TabIndex = 81;
-            this.restockDragDelay.Leave += new System.EventHandler(this.restockDragDelay_Leave);
-            // 
             // restockRemoveListB
             // 
             this.restockRemoveListB.Location = new System.Drawing.Point(549, 18);
@@ -5693,6 +5697,17 @@ namespace Assistant
             this.restockListSelect.Size = new System.Drawing.Size(293, 28);
             this.restockListSelect.TabIndex = 67;
             this.restockListSelect.SelectedIndexChanged += new System.EventHandler(this.restockListSelect_SelectedIndexChanged);
+            // 
+            // restockDragDelay
+            // 
+            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockDragDelay.BackColor = System.Drawing.Color.White;
+            this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.restockDragDelay.Location = new System.Drawing.Point(597, 75);
+            this.restockDragDelay.Name = "restockDragDelay";
+            this.restockDragDelay.Size = new System.Drawing.Size(72, 26);
+            this.restockDragDelay.TabIndex = 81;
+            this.restockDragDelay.Leave += new System.EventHandler(this.restockDragDelay_Leave);
             // 
             // bandageheal
             // 
@@ -6077,7 +6092,7 @@ namespace Assistant
             this.bandagehealLogBox.ItemHeight = 20;
             this.bandagehealLogBox.Location = new System.Drawing.Point(11, 26);
             this.bandagehealLogBox.Name = "bandagehealLogBox";
-            this.bandagehealLogBox.Size = new System.Drawing.Size(424, 304);
+            this.bandagehealLogBox.Size = new System.Drawing.Size(424, 284);
             this.bandagehealLogBox.TabIndex = 0;
             // 
             // bandagehealenableCheckBox
@@ -7994,7 +8009,7 @@ namespace Assistant
             "Special"});
             this.journalTextSelection.Location = new System.Drawing.Point(-4, 0);
             this.journalTextSelection.Name = "journalTextSelection";
-            this.journalTextSelection.Size = new System.Drawing.Size(111, 533);
+            this.journalTextSelection.Size = new System.Drawing.Size(111, 510);
             this.journalTextSelection.TabIndex = 3;
             this.journalTextSelection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnJournalFilterCheck);
             // 
@@ -8593,6 +8608,7 @@ namespace Assistant
             // 
             // statusTab
             // 
+            this.statusTab.Controls.Add(this.ChkForUpdate);
             this.statusTab.Controls.Add(this.advertisementLink);
             this.statusTab.Controls.Add(this.advertisement);
             this.statusTab.Controls.Add(this.label71);
@@ -8606,12 +8622,23 @@ namespace Assistant
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             // 
+            // ChkForUpdate
+            // 
+            this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ChkForUpdate.Location = new System.Drawing.Point(613, 351);
+            this.ChkForUpdate.Name = "ChkForUpdate";
+            this.ChkForUpdate.Size = new System.Drawing.Size(150, 54);
+            this.ChkForUpdate.TabIndex = 13;
+            this.ChkForUpdate.Text = "Check For Update";
+            this.ChkForUpdate.UseVisualStyleBackColor = true;
+            this.ChkForUpdate.Click += new System.EventHandler(this.chkForUpdate_Click);
+            // 
             // advertisementLink
             // 
             this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.advertisementLink.Location = new System.Drawing.Point(544, 351);
+            this.advertisementLink.Location = new System.Drawing.Point(412, 351);
             this.advertisementLink.Name = "advertisementLink";
-            this.advertisementLink.Size = new System.Drawing.Size(192, 54);
+            this.advertisementLink.Size = new System.Drawing.Size(150, 54);
             this.advertisementLink.TabIndex = 12;
             this.advertisementLink.Text = "Eventine";
             this.advertisementLink.UseVisualStyleBackColor = true;
@@ -8666,9 +8693,9 @@ namespace Assistant
             // discordrazorButton
             // 
             this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.discordrazorButton.Location = new System.Drawing.Point(278, 351);
+            this.discordrazorButton.Location = new System.Drawing.Point(199, 351);
             this.discordrazorButton.Name = "discordrazorButton";
-            this.discordrazorButton.Size = new System.Drawing.Size(216, 54);
+            this.discordrazorButton.Size = new System.Drawing.Size(150, 54);
             this.discordrazorButton.TabIndex = 9;
             this.discordrazorButton.Text = "Razor Enhanced Discord";
             this.discordrazorButton.UseVisualStyleBackColor = true;
@@ -8679,7 +8706,7 @@ namespace Assistant
             this.razorButtonWiki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.razorButtonWiki.Location = new System.Drawing.Point(5, 351);
             this.razorButtonWiki.Name = "razorButtonWiki";
-            this.razorButtonWiki.Size = new System.Drawing.Size(232, 54);
+            this.razorButtonWiki.Size = new System.Drawing.Size(150, 54);
             this.razorButtonWiki.TabIndex = 6;
             this.razorButtonWiki.Text = "Razor Enhanced wiki";
             this.razorButtonWiki.UseVisualStyleBackColor = true;
@@ -8902,7 +8929,6 @@ namespace Assistant
             this.VendorBuy.ResumeLayout(false);
             this.VendorBuy.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vendorbuydataGridView)).EndInit();
-            this.groupBox18.ResumeLayout(false);
             this.VendorSell.ResumeLayout(false);
             this.VendorSell.PerformLayout();
             this.groupBox19.ResumeLayout(false);
@@ -9071,62 +9097,10 @@ namespace Assistant
             tabs_IndexChanged(this, null); // load first tab
 
             m_Tip.Active = true;
-            //SplashScreen.End();
 
-            // AutoUpdater
-            AutoUpdater.ShowSkipButton = false;
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            AutoUpdater.ReportErrors = true;
-            AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            // Immediatly run update check .. removed AutoUpdater
+            // AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
-
-        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
-        {
-            if (Client.IsOSI)
-            {
-                if (args != null)
-                {
-                    if (args.IsUpdateAvailable)
-                    {
-                        DialogResult dialogResult;
-
-                        dialogResult =
-                            MessageBox.Show(
-                                $@"There is new version {args.CurrentVersion} available. You are using version {
-                                        args.InstalledVersion
-                                    }. Do you want to update the application now?", @"Update Available",
-                                MessageBoxButtons.YesNo,
-                                MessageBoxIcon.Information);
-
-                        if (dialogResult.Equals(DialogResult.Yes))
-                        {
-                            try
-                            {
-                                if (AutoUpdater.DownloadUpdate(args))
-                                {
-                                    Assistant.Client.Instance.ClientProcess.Kill();
-                                    Application.Exit();
-                                    Thread.Sleep(2000); // attesa uscita
-                                }
-                            }
-                            catch (Exception exception)
-                            {
-                                MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(
-                            @"There is a problem reaching update server please check your internet connection and try again later.",
-                            @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-
 
         internal void LoadSettings()
         {
@@ -9282,7 +9256,6 @@ namespace Assistant
             hiddedAutoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors");
             spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
             potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
-            uo3dEquipUnEquip.Checked = RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip");
             autosearchcontainers.Checked = RazorEnhanced.Settings.General.ReadBool("AutoSearch");
             nosearchpouches.Checked = RazorEnhanced.Settings.General.ReadBool("NoSearchPouches");
             druidClericPackets.Checked = RazorEnhanced.Settings.General.ReadBool("DruidClericPackets");
@@ -9633,6 +9606,20 @@ namespace Assistant
             }
             catch { }
         }
+
+        private void chkForUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Leave stuff thats already set up
+                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            }
+            catch 
+            { 
+            }
+        }
+
+        
 
         private void openchangelogButton_Click(object sender, EventArgs e)
         {

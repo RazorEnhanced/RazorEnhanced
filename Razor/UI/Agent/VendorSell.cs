@@ -19,7 +19,7 @@ namespace Assistant
 
 			if (sellListSelect.Focused && sellListSelect.Text != String.Empty)
 			{
-				Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
+				Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true, sellEnableCheckBox.Checked);
 				SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 			}
 
@@ -193,7 +193,7 @@ namespace Assistant
 			}
 
 			this.Invoke((MethodInvoker)delegate {
-				RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true);
+				RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true, sellEnableCheckBox.Checked);
 				RazorEnhanced.SellAgent.RefreshLists();
 			});
 		}

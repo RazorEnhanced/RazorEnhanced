@@ -265,6 +265,9 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
 
+			if (Assistant.Engine.MainWindow.BuyCompleteCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.BuyCompleteCheckBox.Checked = false;
+
 			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
 
