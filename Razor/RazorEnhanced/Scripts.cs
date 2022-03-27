@@ -199,6 +199,12 @@ namespace RazorEnhanced
                         log.Clear();
                     }
                 }
+				finally
+                {
+					//
+
+					//
+				}
 			}
 
             internal void ReadText(string fullpath)

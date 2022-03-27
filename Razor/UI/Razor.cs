@@ -3034,7 +3034,7 @@ namespace Assistant
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 29);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 517);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1068, 492);
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
@@ -3052,7 +3052,7 @@ namespace Assistant
             this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 505);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1065, 480);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -3132,7 +3132,6 @@ namespace Assistant
             this.scriptSearchTextBox.Name = "scriptSearchTextBox";
             this.scriptSearchTextBox.Size = new System.Drawing.Size(251, 26);
             this.scriptSearchTextBox.TabIndex = 0;
-            this.scriptSearchTextBox.Text = "Name to search..";
             this.scriptSearchTextBox.TextChanged += new System.EventHandler(this.scriptSearchTextBox_TextChanged);
             // 
             // groupBox31

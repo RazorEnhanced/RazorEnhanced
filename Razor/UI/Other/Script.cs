@@ -27,7 +27,7 @@ namespace Assistant
 			}
 
 			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
-     		Scripts.EnhancedScripts.TryAdd(filename, script);
+			Scripts.EnhancedScripts.TryAdd(filename, script);
 			return status;
 		}
 
@@ -41,19 +41,19 @@ namespace Assistant
 
 			Scripts.EnhancedScripts.Clear();
 
-            int currentSelectionIndex = 0;
+			int currentSelectionIndex = 0;
 
-            if (scriptlistView.SelectedIndices.Count > 0)
-            {
-                currentSelectionIndex = scriptlistView.SelectedIndices[0];
-            }
+			if (scriptlistView.SelectedIndices.Count > 0)
+			{
+				currentSelectionIndex = scriptlistView.SelectedIndices[0];
+			}
 
-            scriptlistView.BeginUpdate();
+			scriptlistView.BeginUpdate();
 			scriptlistView.Items.Clear();
 
 			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
 
-            int index = 0;
+			int index = 0;
 			foreach (DataRow row in scriptTable.Rows)
 			{
 				string filename = (string)row["Filename"];
@@ -63,9 +63,9 @@ namespace Assistant
 				bool passkey = (bool)row["HotKeyPass"];
 				Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
 				bool autostart = (bool)row["AutoStart"];
-                string fullPath = (string)row["FullPath"];
+				string fullPath = (string)row["FullPath"];
 
-                bool run = false;
+				bool run = false;
 				if (status == "Running")
 					run = true;
 
@@ -76,7 +76,7 @@ namespace Assistant
 					ListViewItem listitem = new ListViewItem();
 
 					listitem.Text = filename;
-                    listitem.ToolTipText = fullPath; // fullPath;
+					listitem.ToolTipText = fullPath; // fullPath;
 
 					listitem.SubItems.Add(status);
 
@@ -103,19 +103,19 @@ namespace Assistant
 					else
 						listitem.SubItems.Add("No");
 
-                    listitem.SubItems.Add(Convert.ToString(index));
-                    index++;
+					listitem.SubItems.Add(Convert.ToString(index));
+					index++;
 
-                    scriptlistView.Items.Add(listitem);
+					scriptlistView.Items.Add(listitem);
 
 					row["Status"] = "Stopped";
 				}
 				else
 				{
-                    // 17/08/2020 Removed loading not exist script file
-                    // 2/15/2021 added back to avoid hotkey issue,
-                    //    removed bad file entries at load in settings so should never happen
-                    ListViewItem listitem = new ListViewItem();
+					// 17/08/2020 Removed loading not exist script file
+					// 2/15/2021 added back to avoid hotkey issue,
+					//    removed bad file entries at load in settings so should never happen
+					ListViewItem listitem = new ListViewItem();
 					listitem.Text = "File Not Found";
 					listitem.SubItems.Add("Error");
 					listitem.SubItems.Add("No");
@@ -123,82 +123,82 @@ namespace Assistant
 					listitem.SubItems.Add("No");
 					listitem.SubItems.Add(HotKey.KeyString(key));
 					listitem.SubItems.Add("No");
-                    listitem.SubItems.Add("0");
-                    scriptlistView.Items.Add(listitem);
+					listitem.SubItems.Add("0");
+					scriptlistView.Items.Add(listitem);
 					row["Status"] = "Error";
 				}
 			}
 			scriptlistView.EndUpdate();
-            if (scriptlistView.Items.Count > currentSelectionIndex)
-            {
-                scriptlistView.Items[currentSelectionIndex].Selected = true;
-            }
+			if (scriptlistView.Items.Count > currentSelectionIndex)
+			{
+				scriptlistView.Items[currentSelectionIndex].Selected = true;
+			}
 
-        }
-
-        //
-        public static DialogResult InputBox(string title, string promptText, ref string value)
-        {
-            Form form = new Form();
-            Label label = new Label();
-            TextBox textBox = new TextBox();
-            Button buttonMove = new Button();
-            Button buttonCancel = new Button();
-
-            form.Text = title;
-            label.Text = promptText;
-            textBox.Text = value;
-
-            buttonMove.Text = "Move";
-            buttonCancel.Text = "Cancel";
-            buttonMove.DialogResult = DialogResult.OK;
-            buttonCancel.DialogResult = DialogResult.Cancel;
-
-            label.SetBounds(9, 20, 372, 13);
-            textBox.SetBounds(12, 36, 372, 20);
-            buttonMove.SetBounds(228, 72, 75, 23);
-            buttonCancel.SetBounds(309, 72, 75, 23);
-
-            label.AutoSize = true;
-            textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
-            buttonMove.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-            form.ClientSize = new Size(396, 107);
-            form.Controls.AddRange(new Control[] { label, textBox, buttonMove, buttonCancel });
-            form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
-            form.FormBorderStyle = FormBorderStyle.FixedDialog;
-            form.StartPosition = FormStartPosition.CenterScreen;
-            form.MinimizeBox = false;
-            form.MaximizeBox = false;
-            form.AcceptButton = buttonMove;
-            form.CancelButton = buttonCancel;
-
-            DialogResult dialogResult = form.ShowDialog();
-            value = textBox.Text;
-            return dialogResult;
-        }
-
-        //
-        private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-                ScriptGridMoveUp();
 		}
-        private void moveToToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string value = "0";
-            if (InputBox("Move to Index", "Index:", ref value) == DialogResult.OK)
-            {
-                try
-                {
-                    ScriptGridMoveTo(Convert.ToInt32(value));
-                }
-                catch (Exception)
-                { }
-            }
-        }
 
-        private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
+		//
+		public static DialogResult InputBox(string title, string promptText, ref string value)
+		{
+			Form form = new Form();
+			Label label = new Label();
+			TextBox textBox = new TextBox();
+			Button buttonMove = new Button();
+			Button buttonCancel = new Button();
+
+			form.Text = title;
+			label.Text = promptText;
+			textBox.Text = value;
+
+			buttonMove.Text = "Move";
+			buttonCancel.Text = "Cancel";
+			buttonMove.DialogResult = DialogResult.OK;
+			buttonCancel.DialogResult = DialogResult.Cancel;
+
+			label.SetBounds(9, 20, 372, 13);
+			textBox.SetBounds(12, 36, 372, 20);
+			buttonMove.SetBounds(228, 72, 75, 23);
+			buttonCancel.SetBounds(309, 72, 75, 23);
+
+			label.AutoSize = true;
+			textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
+			buttonMove.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+			form.ClientSize = new Size(396, 107);
+			form.Controls.AddRange(new Control[] { label, textBox, buttonMove, buttonCancel });
+			form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+			form.FormBorderStyle = FormBorderStyle.FixedDialog;
+			form.StartPosition = FormStartPosition.CenterScreen;
+			form.MinimizeBox = false;
+			form.MaximizeBox = false;
+			form.AcceptButton = buttonMove;
+			form.CancelButton = buttonCancel;
+
+			DialogResult dialogResult = form.ShowDialog();
+			value = textBox.Text;
+			return dialogResult;
+		}
+
+		//
+		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridMoveUp();
+		}
+		private void moveToToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string value = "0";
+			if (InputBox("Move to Index", "Index:", ref value) == DialogResult.OK)
+			{
+				try
+				{
+					ScriptGridMoveTo(Convert.ToInt32(value));
+				}
+				catch (Exception)
+				{ }
+			}
+		}
+
+		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ScriptGridMoveDown();
 		}
@@ -228,33 +228,33 @@ namespace Assistant
 			}
 		}
 
-        private void ScriptGridMoveTo(int location)
-        {
-            if (sorted) // No move script index if user have place some different ordering
-                return;
+		private void ScriptGridMoveTo(int location)
+		{
+			if (sorted) // No move script index if user have place some different ordering
+				return;
 
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
-            {
-                int rowCount = scriptlistView.Items.Count;
-                int index = scriptlistView.SelectedItems[0].Index;
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+			{
+				int rowCount = scriptlistView.Items.Count;
+				int index = scriptlistView.SelectedItems[0].Index;
 
-                if (location < 0 || location >= rowCount)
-                    return;
+				if (location < 0 || location >= rowCount)
+					return;
 
-                DataRow newRow = scriptTable.NewRow();
-                // We "clone" the row
-                newRow.ItemArray = scriptTable.Rows[index].ItemArray;
-                // We remove the old and insert the new
-                scriptTable.Rows.RemoveAt(index);
-                scriptTable.Rows.InsertAt(newRow, location);
+				DataRow newRow = scriptTable.NewRow();
+				// We "clone" the row
+				newRow.ItemArray = scriptTable.Rows[index].ItemArray;
+				// We remove the old and insert the new
+				scriptTable.Rows.RemoveAt(index);
+				scriptTable.Rows.InsertAt(newRow, location);
 
-                ReloadScriptTable();
+				ReloadScriptTable();
 
-                scriptlistView.Items[location].Selected = true;
-            }
-        }
+				scriptlistView.Items[location].Selected = true;
+			}
+		}
 
-        private void ScriptGridMoveUp()
+		private void ScriptGridMoveUp()
 		{
 			if (sorted) // No move script index if user have place some different ordering
 				return;
@@ -289,14 +289,14 @@ namespace Assistant
 			RazorEnhanced.HotKey.Init();
 		}
 
-    internal void UpdateScriptGridKey()
+		internal void UpdateScriptGridKey()
 		{
 			int i = 0;
 			scriptlistView.BeginUpdate();
 			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
-            //int index = 0;
-            foreach (DataRow row in scriptTable.Rows)
-            {
+			//int index = 0;
+			foreach (DataRow row in scriptTable.Rows)
+			{
 				bool passkey = (bool)row["HotKeyPass"];
 				Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
 				scriptlistView.Items[i].SubItems[5].Text = HotKey.KeyString(key);
@@ -327,7 +327,44 @@ namespace Assistant
 						{
 							if (script != null)
 							{
-								litem.SubItems[1].Text = script.Status;
+								string status = script.Status;
+								if (status == "Stopped")
+								{
+									litem.BackColor = SystemColors.Window;
+									if (scriptSearchTextBox.Text != String.Empty)
+									{
+										if (litem.Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+										{
+											litem.ForeColor = Color.Blue; // Set highlight color
+										} else {
+											litem.ForeColor = Color.LightGray;
+										}
+									} else
+									{
+										litem.ForeColor = SystemColors.WindowText;
+									}
+								} else {
+
+									if (scriptSearchTextBox.Text != String.Empty)
+									{
+										if (litem.Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+										{
+											litem.ForeColor = Color.Blue; // Set highlight color
+											litem.BackColor = Color.DarkGreen;
+										}
+										else
+										{
+											litem.ForeColor = Color.LightGray;
+											litem.BackColor = Color.Green;
+										}
+									}
+									else
+									{
+										litem.ForeColor = Color.White;
+										litem.BackColor = Color.DarkGreen;
+									}
+								}		
+								litem.SubItems[1].Text = status;
 							}
 						}
 					}
@@ -359,7 +396,7 @@ namespace Assistant
 				if (script != null)
 				{
 					script.Run = run;
-				}
+				}			
 			}
 		}
 
@@ -369,9 +406,6 @@ namespace Assistant
 						.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
 						.ToUpperInvariant();
 		}
-
-
-
 
 
 		private void AddScriptInGrid()
@@ -516,26 +550,7 @@ namespace Assistant
 
 		private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)
 		{
-			if (scriptSearchTextBox.Focused)
-			{
-				for (int i = 0; i < scriptlistView.Items.Count; i++)
-				{
-					scriptlistView.Items[i].ForeColor = SystemColors.WindowText; // Decolor old search
 
-					if (scriptSearchTextBox.Text != String.Empty)
-					{
-                        if (scriptlistView.Items[i].Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
-                        {
-                            scriptlistView.EnsureVisible(i);
-                            scriptlistView.Items[i].ForeColor = Color.Blue; // Set highlight color
-                        }
-                        else 
-                        {
-                            scriptlistView.Items[i].ForeColor = Color.LightGray;
-                        }
-                    }
-				}
-			}
 		}
 
 		private void buttonOpenEditor_Click(object sender, EventArgs e)
