@@ -626,17 +626,20 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="lootListName">Name of the AutoLoot list.</param>
         /// <returns></returns>
-        public static List<AutoLootItem> GetList(string lootListName)
+        public static List<AutoLootItem> GetList(string lootListName, bool wantMinusOnes=false)
         {
             if (Settings.AutoLoot.ListExists(lootListName)) {
                 List<AutoLootItem> retList = new List<AutoLootItem>();
                 var lootDict = Settings.AutoLoot.ItemsRead(lootListName);
                 foreach (KeyValuePair<int, List<AutoLootItem>> entry in lootDict)
                 {
-                    foreach (AutoLootItem lootItem in entry.Value.FindAll(item => item.Graphics != -1))
+                    foreach (AutoLootItem lootItem in entry.Value)
                     {
+                        if (!wantMinusOnes && lootItem.Graphics == -1)
+                            continue;
                         retList.Add(lootItem);
                     }
+
                 }
                 return retList;
             }
