@@ -97,6 +97,7 @@ namespace RazorEnhanced
 
         internal static bool LoadExistingData(string profileName, bool try_recover = true)
         {
+            m_Dataset = new DataSet(profileName);
             string profileFilename = Path.Combine(Assistant.Engine.RootPath, "Profiles", profileName, "RazorEnhanced.settings");
             string serverFilename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced");
             if (!File.Exists(profileFilename + ".GENERAL"))
@@ -5375,7 +5376,10 @@ namespace RazorEnhanced
                 }
 
                 DataTable dress_lists = m_Dataset.Tables["DRESS_LISTS"];
-                dress_lists.Columns.Add("UO3dEquipUnEquip", typeof(bool));
+                index = dress_lists.Columns.IndexOf("UO3DEquipUnEquip");
+                //Always have to check because empty lists on input use current init 
+                if (index < 0)
+                    dress_lists.Columns.Add("UO3dEquipUnEquip", typeof(bool));
                 foreach (DataRow row in dress_lists.Rows)
                 {
                     row["UO3dEquipUnEquip"] = newUo3D;

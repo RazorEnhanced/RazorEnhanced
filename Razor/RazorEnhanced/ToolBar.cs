@@ -494,6 +494,7 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.ShowManaToolBarCheckBox.Checked = Settings.General.ReadBool("ShowManaToolBarCheckBox");
 			Assistant.Engine.MainWindow.ShowWeightToolBarCheckBox.Checked = Settings.General.ReadBool("ShowWeightToolBarCheckBox");
 			Assistant.Engine.MainWindow.ShowFollowerToolBarCheckBox.Checked = Settings.General.ReadBool("ShowFollowerToolBarCheckBox");
+			Assistant.Engine.MainWindow.ShowTitheToolBarCheckBox.Checked = Settings.General.ReadBool("ShowTitheToolBarCheckBox");
 			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 
 			UptateToolBarComboBox(0);
