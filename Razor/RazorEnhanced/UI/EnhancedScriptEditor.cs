@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace RazorEnhanced.UI
 {
@@ -1487,7 +1488,7 @@ namespace RazorEnhanced.UI
 
 			this.Text = Title;
 
-			m_pe = new PythonEngine();
+			m_pe = new PythonEngine(this.SetErrorBox);
 			m_pe.Engine.SetTrace(null);
 
 
@@ -1668,8 +1669,7 @@ namespace RazorEnhanced.UI
 			else
 				SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
 		}
-
-        private void AsyncStart(bool debug)
+		private void AsyncStart(bool debug)
         {
             if (ScriptRecorder.OnRecord)
             {
@@ -1737,7 +1737,7 @@ namespace RazorEnhanced.UI
                 {
 
                     m_pe.Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
-                    m_pe.Execute(text);
+					m_pe.Execute(text);
 
 
                     SetErrorBox("Script " + m_Filename + " run completed!");

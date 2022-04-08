@@ -241,7 +241,8 @@ namespace RazorEnhanced
 				string result = String.Empty;
 				try
 				{
-					m_pe = new PythonEngine();
+					Action<string> action = (aString) => { Misc.SendMessage(aString.Trim('\r', '\n'), 55, false); };
+					m_pe = new PythonEngine(action);
                     
                     var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_pe.Engine) as PythonContext;
                     var temp = pc.SystemState.Get__dict__()["path_hooks"];
