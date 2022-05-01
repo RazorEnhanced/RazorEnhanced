@@ -895,8 +895,7 @@ namespace RazorEnhanced
                 // Other classes
                 typeof(Point2D),
                 typeof(Point3D),
-                typeof(Property),
-                typeof(HotKeyEvent)               
+                typeof(Property),              
             };
 
 

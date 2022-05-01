@@ -17,20 +17,26 @@ namespace RazorEnhanced
 		Shift = 0x0004
 	}
 
-    public class HotKeyEvent
+	/// <summary>@nodoc</summary>
+	public class HotKeyEvent
     {
         private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
 
-        public static HotKeyEvent LastEvent;
-        public Keys HotKey;
-        public double Timestamp;
+		/// <summary>@nodoc</summary>
+		public static HotKeyEvent LastEvent;
+		/// <summary>@nodoc</summary>
+		public Keys HotKey;
+		/// <summary>@nodoc</summary>
+		public double Timestamp;
 
-        public static HotKeyEvent AddEvent(Keys k) {
-            LastEvent = new HotKeyEvent(k);
+		/// <summary>@nodoc</summary>
+		public static HotKeyEvent AddEvent(Keys k) {
+		LastEvent = new HotKeyEvent(k);
             return LastEvent;
         }
 
-        public HotKeyEvent(Keys key)
+		/// <summary>@nodoc</summary>
+		public HotKeyEvent(Keys key)
         {
             HotKey = key;
             Timestamp = DateTime.Now.Subtract(UnixTimeBegin).TotalSeconds;
