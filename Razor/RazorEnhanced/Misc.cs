@@ -155,6 +155,30 @@ namespace RazorEnhanced
             return p;
         }
 
+        // IsItem 
+        /// <summary>
+        /// Determine if the serial is an item
+        /// </summary>
+        /// <param name="serial"> Serial number of object to test is Item</param>
+        /// <returns>Return True - is an Item False - is not an item</returns>
+        public static bool IsItem(System.UInt32  serial)
+        {
+            Assistant.Serial anObject = new Assistant.Serial(serial);
+            return anObject.IsItem;
+        }
+
+        // IsMobile
+        /// <summary>
+        /// Determine if the serial is a mobile
+        /// </summary>
+        /// <param name="serial"> Serial number of object to test is Mobile</param>
+        /// <returns>Return True - is a mobile False - is not a mobile</returns>
+        public static bool IsMobile(System.UInt32 serial)
+        {
+            Assistant.Serial anObject = new Assistant.Serial(serial);
+            return anObject.IsMobile;
+        }
+
         //Change Profile
         /// <summary>
         /// Allow the scripted loading of a profile
