@@ -107,10 +107,11 @@ namespace RazorEnhanced
 					if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))
                     {
 						CSharpEngine csharpEngine = CSharpEngine.Instance;
-                        bool compileErrors = csharpEngine.CompileFromFile(fullpath, true, out StringBuilder compileMessages, out Assembly assembly);
-						if (compileMessages.Length > 0)
-                        {
-							Misc.SendMessage(compileMessages.ToString());
+                        bool compileErrors = csharpEngine.CompileFromFile(fullpath, true, out List<string> compileMessages, out Assembly assembly);
+						
+						foreach (string str in compileMessages)
+						{
+							Misc.SendMessage(str);
 						}
 						if (compileErrors == true)
                         {
