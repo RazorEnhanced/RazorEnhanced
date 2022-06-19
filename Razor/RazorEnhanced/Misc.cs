@@ -226,7 +226,7 @@ namespace RazorEnhanced
         /// <param name="Y1">Y co-ordinate of first place.</param>
         /// <param name="X2">X co-ordinate of second place.</param>
         /// <param name="Y2">Y co-ordinate of second place.</param>
-        public int Distance(int X1, int Y1, int X2, int Y2)
+        public static int Distance(int X1, int Y1, int X2, int Y2)
         {
             return Utility.Distance(X1, Y1, X2, Y2);
         }
