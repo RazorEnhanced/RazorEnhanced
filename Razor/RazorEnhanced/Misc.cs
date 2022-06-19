@@ -208,7 +208,7 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Compute the distance between 2 Point3D using pitagora's.
+        /// Compute the distance between 2 Point3D using pythagorian.
         /// </summary>
         /// <param name="point_a">First coordinates.</param>
         /// <param name="point_b">Second coordinates.</param>
@@ -219,6 +219,18 @@ namespace RazorEnhanced
             return distance;
         }
 
+        /// <summary>
+        /// Returns the UO distance between the 2 sets of co-ordinates.
+        /// </summary>
+        /// <param name="X1">X co-ordinate of first place.</param>
+        /// <param name="Y1">Y co-ordinate of first place.</param>
+        /// <param name="X2">X co-ordinate of second place.</param>
+        /// <param name="Y2">Y co-ordinate of second place.</param>
+        public int Distance(int X1, int Y1, int X2, int Y2)
+        {
+            return Utility.Distance(X1, Y1, X2, Y2);
+        }
+        
         /// <summary>
         /// Send to the client a list of keystrokes. Can contain control characters: 
         /// - Send Control+Key: ctrl+u: ^u

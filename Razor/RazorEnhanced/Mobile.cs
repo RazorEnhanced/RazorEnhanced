@@ -200,16 +200,16 @@ namespace RazorEnhanced
 		}
 
         /// <summary>
-        /// Returns the distance between the current Mobile and another one.
+        /// Returns the UO distance between the current Mobile and another one.
         /// </summary>
         /// <param name="other_mobile">The other mobile.</param>
-        /// <returns>Distance in tiles</returns>
 		public int DistanceTo(Mobile other_mobile)
 		{
 			return Utility.Distance(Position.X, Position.Y, other_mobile.Position.X, other_mobile.Position.Y);
 		}
 
-		private static Assistant.Layer GetAssistantLayer(string layer)
+
+        private static Assistant.Layer GetAssistantLayer(string layer)
 		{
             Layer result;
             switch (layer)
@@ -712,11 +712,11 @@ namespace RazorEnhanced
 
                 case "Nearest":
                     Mobile closest = mobiles_reduced[0] as Mobile;
-                    double closestDist = double.MaxValue;
+                    int closestDist = int.MaxValue;
                     if (closest != null) {
                         foreach (Mobile m in mobiles_reduced)
                         {
-                            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
+                            int dist = Utility.Distance(m.Position.X, m.Position.Y, World.Player.Position.X, World.Player.Position.Y);
                             if (dist < closestDist)
                             {
                                 closestDist = dist;
@@ -729,12 +729,12 @@ namespace RazorEnhanced
 
                 case "Farthest":
                     Mobile farthest = mobiles_reduced[0] as Mobile;
-                    double farthestDist = double.MinValue;
+                    int farthestDist = int.MinValue;
                     if (farthest != null)
                     {
                         foreach (Mobile m in mobiles_reduced)
                         {
-                            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
+                            int dist = Utility.Distance(m.Position.X, m.Position.Y, World.Player.Position.X, World.Player.Position.Y);
                             if (dist > farthestDist)
                             {
                                 farthestDist = dist;
