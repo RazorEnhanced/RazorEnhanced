@@ -87,6 +87,8 @@ namespace Assistant
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
             System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
 
+            List<string> locations = ValidFileLocations();
+
             // Setup AutoUpdater Parameters
             // AutoUpdater
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -670,7 +672,8 @@ namespace Assistant
         public abstract void BeginCalibratePosition();
         public abstract void SendToClientWait(Packet p);
         public abstract void SendToServerWait(Packet p);
-
+        
+        public abstract List<string> ValidFileLocations();
 
         // Used for auto update  prompt
         private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)

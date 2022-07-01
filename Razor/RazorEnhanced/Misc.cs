@@ -91,6 +91,92 @@ namespace RazorEnhanced
             }
         }
 
+        internal static bool isSubDirectoryOf(string candidate, string other)
+        {
+            var isChild = false;
+            try
+            {
+                var candidateInfo = new DirectoryInfo(candidate.ToLower());
+                var otherInfo = new DirectoryInfo(other.ToLower());
+
+                while (candidateInfo.Parent != null)
+                {
+                    if (candidateInfo.Parent.FullName == otherInfo.FullName)
+                    {
+                        isChild = true;
+                        break;
+                    }
+                    else candidateInfo = candidateInfo.Parent;
+                }
+            }
+            catch (Exception error)
+            {
+                //var message = String.Format("Unable to check directories {0} and {1}: {2}", candidate, other, error);
+                //Trace.WriteLine(message);
+            }
+
+            return isChild;
+        }
+        internal static bool validateFilename(string fileName)
+        {
+            string dirName = Path.GetDirectoryName(fileName).ToLower();
+            string suffix = Path.GetExtension(fileName).ToLower();
+            switch (suffix)
+            {
+                case ".data":
+                case ".xml":
+                case ".map":
+                    break;
+                default:
+                    return false;
+            }
+            List<string> validPaths = Assistant.Client.Instance.ValidFileLocations();
+            foreach (string path in validPaths)
+            {
+                if (isSubDirectoryOf(dirName, path))
+                    return true;
+            }
+            
+            return false;
+        }
+        /// <summary>
+        /// Allows creation and append of a file within RE ValidLocations.
+        /// For OSI/RE this is only the RE directory / sub-directories
+        /// For CUO/RE this is only CUO or RE directory / sub-directories
+        /// The filename MUST end in .data
+        /// </summary>
+        public static bool AppendToFile(string fileName, string lineOfData)
+        {
+            if (validateFilename(fileName))
+            {
+                TextWriter writer = new StreamWriter(fileName, true);
+                writer.WriteLine(lineOfData);
+                writer.Close();
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Allows deletion of a file within RE ValidLocations.
+        /// For OSI/RE this is only the RE directory / sub-directories
+        /// For CUO/RE this is only CUO or RE directory / sub-directories
+        /// The filename MUST end in .data
+        /// </summary>
+        public static bool DeleteFile(string fileName)
+        {
+            if (validateFilename(fileName))
+            {
+                if (File.Exists(fileName))
+                {
+                    File.Delete(fileName);
+                }
+                return true;
+            }
+            return false;
+        }
+
+
         /// <summary>
         /// Open the backpack. 
         /// (OSI client only, no ClassicUO)
@@ -231,6 +317,12 @@ namespace RazorEnhanced
             return Utility.Distance(X1, Y1, X2, Y2);
         }
         
+        public bool AddLineToFile(string filename, string line)
+        {
+
+            return true;
+        }
+
         /// <summary>
         /// Send to the client a list of keystrokes. Can contain control characters: 
         /// - Send Control+Key: ctrl+u: ^u

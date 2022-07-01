@@ -120,7 +120,7 @@ namespace Assistant
         private static OnTick _tick;
         private static RequestMove _requestMove;
         private static OnSetTitle _setTitle;
-        private static OnGetUOFilePath _uoFilePath;    
+        private static OnGetUOFilePath _uoFilePath;
 
 
         private static OnHotkey _onHotkeyPressed;
@@ -251,7 +251,7 @@ namespace Assistant
             World.Player.Position = new Point3D(x, y, z);
             World.Player.WalkScriptRequest = 2;
         }
-        
+
         internal static void RunTheUI()
         {
             Engine.MainWnd = new MainForm();
@@ -591,6 +591,14 @@ namespace Assistant
         { }
         public override bool Ready { get { return m_Ready; } }
 
+        public override List<string> ValidFileLocations()
+        {
+            List<string> validFileLocations = new List<string>();
+            validFileLocations.Add(Assistant.Engine.RootPath);
+            validFileLocations.Add(Path.GetDirectoryName(CUOAssembly.Location));
+
+            return validFileLocations;
+        }
     }
 }
 

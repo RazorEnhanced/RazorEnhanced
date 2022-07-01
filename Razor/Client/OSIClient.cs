@@ -1155,5 +1155,12 @@ namespace Assistant
             DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
         }
 
+        public override List<string> ValidFileLocations()
+        {
+            List<string> validFileLocations = new List<string>();
+            validFileLocations.Add(Assistant.Engine.RootPath);
+
+            return validFileLocations;
+        }
     }
 }
