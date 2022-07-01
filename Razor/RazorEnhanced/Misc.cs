@@ -126,6 +126,7 @@ namespace RazorEnhanced
                 case ".data":
                 case ".xml":
                 case ".map":
+                case ".csv":
                     break;
                 default:
                     return false;
