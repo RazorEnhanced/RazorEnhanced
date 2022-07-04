@@ -176,8 +176,9 @@ namespace RazorEnhanced
         /// For OSI/RE this is only the RE directory / sub-directories
         /// For CUO/RE this is only CUO or RE directory / sub-directories
         /// The filename MUST end in a limited file suffix list
+        /// Checks to see if an identical line is already in the file, and does not add if it exists
         /// </summary>
-        public static bool AppendNotDupeToFile(string fileName, string lineOfData)
+        public static bool AppendNotDupToFile(string fileName, string lineOfData)
         {
             if (validateFilename(fileName))
             {
