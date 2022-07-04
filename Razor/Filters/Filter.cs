@@ -17,8 +17,26 @@ namespace Assistant.Filters
         public static void Register(Filter filter)
         {
             m_Filters.Add(filter);
+            filter.OnEnable();
         }
 
+        public static void UnRegister(string filterName)
+        {
+            int removeit = -1;
+            for (int i = 0; i < m_Filters.Count; i++)
+            {
+                if (filterName == ((Filter)m_Filters[i]).Name)
+                {
+                    ((Filter)m_Filters[i]).OnDisable();
+                    removeit = i;
+                    break;
+                }
+            }
+            if (removeit > -1)
+            {
+                m_Filters.RemoveAt(removeit);
+            }
+        }
 
         internal static void Load()
         {

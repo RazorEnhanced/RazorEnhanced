@@ -3362,6 +3362,7 @@ namespace Assistant
 
                 World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
+                Gumps.AddResponse(currentgumpi, x, y, layout, stringlistparse);
             }
 
             catch { }

@@ -23,7 +23,25 @@ namespace RazorEnhanced
             Reply = 1
         }
 
-        public class GumpData
+        internal class IncomingGumpData
+        {
+            public uint gumpId;
+            public int x;
+            public int y;
+            public string gumpRawData;
+            public List<string> gumpRawText;
+
+            public IncomingGumpData()
+            {
+                gumpId = 0;
+                x = 0;
+                y = 0;
+                gumpRawData = "";
+                gumpRawText = new List<string>();
+            }
+        }
+
+            public class GumpData
         {
             // vars used to build it
             public uint gumpId;
@@ -39,6 +57,8 @@ namespace RazorEnhanced
             public List<string> text;
             public List<int> textID;
             internal Action<GumpData> action;
+            internal string gumpRawData;
+            internal List<string> gumpRawText;
 
             public GumpData()
             {
@@ -54,6 +74,8 @@ namespace RazorEnhanced
                 text = new List<string>();
                 textID = new List<int>();
                 action = null;
+                gumpRawData = "";
+                gumpRawText = new List<string>();
             }
         }
 
@@ -531,6 +553,7 @@ namespace RazorEnhanced
 
 
         internal static Dictionary<uint, GumpData> m_gumpData = new Dictionary<uint, GumpData>();
+        internal static Dictionary<uint, IncomingGumpData> m_incomingData = new Dictionary<uint, IncomingGumpData>();
 
         /// <summary>
         /// Sends a gump using an existing GumpData structure
@@ -671,6 +694,8 @@ namespace RazorEnhanced
                 }
                 else
                 {
+                   Gumps.m_incomingData[gumpid] = new IncomingGumpData();
+                        
                     while (subdelay > 0)
                     {
                         if (World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid)
@@ -689,6 +714,28 @@ namespace RazorEnhanced
             return found;
         }
 
+        /// <summary>
+        /// </summary>
+        /// WorldResponse
+        internal static void AddResponse(uint gumpid, int x, int y, string layout, string[] parsedStrings)
+        {
+            List<string> temp = new List<string>();
+            foreach (string s in parsedStrings)
+            {
+                temp.Add(s);
+            }
+
+            if (m_gumpData.ContainsKey(gumpid))
+            {
+                m_gumpData[gumpid].gumpRawData = layout;
+                m_gumpData[gumpid].gumpRawText = temp;
+            }
+            else if (m_incomingData.ContainsKey(gumpid))
+            {
+                m_incomingData[gumpid].gumpRawData = layout;
+                m_incomingData[gumpid].gumpRawText = temp;
+            }
+        }
 
         /// <summary>
         /// Send a Gump response by gumpid and buttonid.
@@ -912,7 +959,23 @@ namespace RazorEnhanced
 				return false;
 			}
 		}
-
+        /// <summary>
+        /// Get the Raw Data of a specific gumpid
+        /// </summary>
+        /// <returns>Raw Data of the gump.</returns>
+        public static string GetGumpRawData(uint gumpid)
+        {
+            if (m_gumpData.ContainsKey(gumpid))
+            {
+                return m_gumpData[gumpid].gumpRawData;
+            }
+            else if (m_incomingData.ContainsKey(gumpid))
+            {
+                return m_incomingData[gumpid].gumpRawData;
+            }
+            return string.Empty;
+        }
+        
         /// <summary>
         /// Get the Raw Data of the most recent and still open Gump.
         /// </summary>
@@ -929,6 +992,23 @@ namespace RazorEnhanced
 			}
 		}
 
+        /// <summary>
+        /// Get the Raw Text of a specific Gump.
+        /// </summary>
+        /// <returns>List of Raw Text.</returns>
+        public static List<string> GetGumpRawText(uint gumpid)
+        {
+            if (m_gumpData.ContainsKey(gumpid))
+            {
+                return m_gumpData[gumpid].gumpRawText;
+            }
+            else if (m_incomingData.ContainsKey(gumpid))
+            {
+                return m_incomingData[gumpid].gumpRawText;
+            }
+
+            return new List<string>();
+        }
 
         /// <summary>
         /// Get the Raw Text of the most recent and still open Gump.

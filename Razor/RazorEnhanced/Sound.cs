@@ -17,8 +17,12 @@ namespace RazorEnhanced
 
     public class Sound
     {
+        static internal int m_x;
+        static internal int m_y;
+        static internal int m_z;
         static internal PacketViewerCallback m_Callback = new PacketViewerCallback(Sound.OnFilter);
         static internal bool m_logActive = false;
+        static internal bool m_detailLogActive = false;
 
         static private bool m_registered = false;
         static private bool Register
@@ -37,6 +41,32 @@ namespace RazorEnhanced
                     m_registered = false;
                 }
             }
+        }
+        // Sound.Log(True)
+        // Sound.AddFilter("credzba", [496, 510])
+
+        /// <summary>
+        /// Adds a filter of incoming sound requests
+        /// </summary>
+        /// <param name="name"> The name of the filter to be added</param>
+        /// <param name="sounds"> The sounds to be filtered</param>
+        public static void AddFilter(string name, List<Int32> sounds)
+        {
+            ushort [] sounds2 = new ushort[sounds.Count];
+            for (int i=0; i<sounds.Count; i++)
+                sounds2[i] = (ushort)sounds[i];
+            var snd = new Assistant.Filters.SoundFilter(name, sounds2);
+            Assistant.Filters.Filter.Register(snd);
+
+        }
+
+        /// <summary>
+        /// Removes a filter of incoming sound requests
+        /// </summary>
+        /// <param name="name"> The name of the filter to be removed</param>
+        public static void RemoveFilter(string name)
+        {
+            Assistant.Filters.Filter.UnRegister(name);
         }
 
         static internal bool Logging
@@ -61,16 +91,50 @@ namespace RazorEnhanced
             Logging = activateLogging;
         }
 
+        /// <summary>
+        /// @nodoc
+        /// Enables/Disables detail logging of incoming sound requests
+        /// </summary>
+        /// <param name="activateLogging"> True= activate sound logging/ False Deactivate sound logging</param>
+        public static void LogDetail(bool activateLogging)
+        {
+            Register = true;
+            Logging = activateLogging;
+            m_detailLogActive = activateLogging;
+        }
+
+        /// <summary>
+        /// @nodoc
+        /// Returns the location of the last sound matched with a filter
+        /// </summary>
+        /// <param name="activateLogging"> True= activate sound logging/ False Deactivate sound logging</param>
+        public static Assistant.Point3D LastSoundMatch()
+        {
+            return new Assistant.Point3D(m_x, m_y, m_z);
+        }
 
         public static void OnFilter(PacketReader p, PacketHandlerEventArgs args)
         {
             p.ReadByte(); // flags
 
             ushort sound = p.ReadUInt16();
+            ushort volume = p.ReadUInt16();
+            ushort x = p.ReadUInt16();
+            ushort y = p.ReadUInt16();
+            ushort z = p.ReadUInt16();
+
             if (RazorEnhanced.Sound.Logging)
             {
-                RazorEnhanced.Misc.SendMessage(string.Format("Play Sound 0x{0:x} - {0}", sound), false);
+                if (m_detailLogActive)
+                {
+                    if (sound != 0x447)
+                        args.Block = true;
+                    RazorEnhanced.Misc.SendMessage(string.Format("Play Sound 0x{0:x} - {0} Volume: {1} at {2} {3} {4}", sound, volume, x, y, z), false);
+                }
+                else
+                    RazorEnhanced.Misc.SendMessage(string.Format("Play Sound 0x{0:x} - {0}", sound), false);
             }
+
             waiterMutex.WaitOne();
             bool needsCleanup = false;
             foreach (var entry in waiters)
@@ -91,10 +155,14 @@ namespace RazorEnhanced
                 {
                     if (entry.Item2.Contains(sound))
                     {
+                        m_x = x;
+                        m_y = y;
+                        m_z = z;
                         anEvent.Set();
                     }
                 }
-                else {
+                else
+                {
                     needsCleanup = true;
                 }
             }

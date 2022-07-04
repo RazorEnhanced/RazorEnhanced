@@ -30,12 +30,12 @@ namespace Assistant.Filters
         private readonly string m_Name;
         private readonly ushort[] m_Sounds;
 
-        private SoundFilter(LocString name, params ushort[] blockSounds)
+        internal SoundFilter(LocString name, ushort[] blockSounds)
         {
             m_Name = Language.GetString(name);
             m_Sounds = blockSounds;
         }
-        private SoundFilter(string name, params ushort[] blockSounds)
+        internal SoundFilter(string name, ushort[] blockSounds)
         {
             m_Name = name;
             m_Sounds = blockSounds;
