@@ -63,6 +63,7 @@ namespace RazorEnhanced
         {
             if (!Client.IsOSI)
             {
+                // WorldMapGump worldMap = UIManager.GetGump<WorldMapGump>();
                 var getAllGumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetProperty("Gumps", BindingFlags.Public | BindingFlags.Static);
                 if (getAllGumps != null)
                 {
@@ -74,11 +75,23 @@ namespace RazorEnhanced
                         {
                             if (gump != null)
                             {
-                                var GumpType = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump")?.GetProperty("GumpType", BindingFlags.Public);
-
-                                var something = GumpType.GetValue(gump);
-                                //if (gump.GumpType == 18)
-                                //{ }
+                                var GumpType = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump")?.GetProperty("GumpType", BindingFlags.Public | BindingFlags.Instance);
+                                if (GumpType != null)
+                                {
+                                    int GumpTypeEnum = (int)GumpType.GetValue(gump);
+                                    if (GumpTypeEnum == 18)
+                                    {
+                                        var WorldMapGump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.WorldMapGump");
+                                        if (WorldMapGump != null)
+                                        {
+                                            var LoadMarkers = WorldMapGump?.GetMethod("LoadMarkers", BindingFlags.Instance | BindingFlags.NonPublic);
+                                            if (LoadMarkers != null)
+                                            {
+                                                LoadMarkers.Invoke(gump, null);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                         //PropertyInfo ProfileClass = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Profile")?.GetProperty("AutoOpenDoors", BindingFlags.Public | BindingFlags.Instance);
@@ -144,7 +157,7 @@ namespace RazorEnhanced
         /// Allows creation and append of a file within RE ValidLocations.
         /// For OSI/RE this is only the RE directory / sub-directories
         /// For CUO/RE this is only CUO or RE directory / sub-directories
-        /// The filename MUST end in .data
+        /// The filename MUST end in a limited file suffix list
         /// </summary>
         public static bool AppendToFile(string fileName, string lineOfData)
         {
@@ -159,10 +172,34 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Allows creation and append of a file within RE ValidLocations.
+        /// For OSI/RE this is only the RE directory / sub-directories
+        /// For CUO/RE this is only CUO or RE directory / sub-directories
+        /// The filename MUST end in a limited file suffix list
+        /// </summary>
+        public static bool AppendNotDupeToFile(string fileName, string lineOfData)
+        {
+            if (validateFilename(fileName))
+            {
+                List<string> lines = System.IO.File.ReadLines(fileName).ToList();
+                if (!lines.Contains(lineOfData))
+                {
+                    TextWriter writer = new StreamWriter(fileName, true);
+                    writer.WriteLine(lineOfData);
+                    writer.Close();
+                }
+                return true;
+            }
+            return false;
+        }
+
+
+
+        /// <summary>
         /// Allows deletion of a file within RE ValidLocations.
         /// For OSI/RE this is only the RE directory / sub-directories
         /// For CUO/RE this is only CUO or RE directory / sub-directories
-        /// The filename MUST end in .data
+        /// The filename MUST end in a limited file suffix list
         /// </summary>
         public static bool DeleteFile(string fileName)
         {
@@ -318,12 +355,6 @@ namespace RazorEnhanced
             return Utility.Distance(X1, Y1, X2, Y2);
         }
         
-        public bool AddLineToFile(string filename, string line)
-        {
-
-            return true;
-        }
-
         /// <summary>
         /// Send to the client a list of keystrokes. Can contain control characters: 
         /// - Send Control+Key: ctrl+u: ^u
