@@ -7,7 +7,7 @@ namespace Assistant.Filters
     {
         public static void Initialize()
         {
-            Filter.Register(new StaffItemFilter());
+            //Filter.Register(new StaffItemFilter());
         }
 
         private StaffItemFilter()
