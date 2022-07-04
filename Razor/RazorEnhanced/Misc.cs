@@ -182,18 +182,44 @@ namespace RazorEnhanced
         {
             if (validateFilename(fileName))
             {
-                List<string> lines = System.IO.File.ReadLines(fileName).ToList();
-                if (!lines.Contains(lineOfData))
+                if (File.Exists(fileName))
                 {
-                    TextWriter writer = new StreamWriter(fileName, true);
-                    writer.WriteLine(lineOfData);
-                    writer.Close();
+                    List<string> lines = System.IO.File.ReadLines(fileName).ToList();
+                    if (lines.Contains(lineOfData))
+                        return true;
                 }
+                TextWriter writer = new StreamWriter(fileName, true);
+                writer.WriteLine(lineOfData);
+                writer.Close();
                 return true;
             }
             return false;
         }
 
+        /// <summary>
+        /// Allows removal of a line in a file within RE ValidLocations.
+        /// For OSI/RE this is only the RE directory / sub-directories
+        /// For CUO/RE this is only CUO or RE directory / sub-directories
+        /// The filename MUST end in a limited file suffix list
+        /// Checks to see if an identical line is in the file, and if it exists, it is removed and file written
+        /// </summary>
+        public static bool RemoveLineInFile(string fileName, string lineOfData)
+        {
+            if (validateFilename(fileName))
+            {
+                if (File.Exists(fileName))
+                {
+                    List<string> lines = System.IO.File.ReadLines(fileName).ToList();
+                    if (lines.Contains(lineOfData))
+                    {
+                        lines.RemoveAll(item => item == lineOfData);
+                        System.IO.File.WriteAllLines(fileName, lines);
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
 
 
         /// <summary>
