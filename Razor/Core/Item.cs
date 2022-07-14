@@ -1036,7 +1036,7 @@ namespace Assistant
             get { return m_Facet; }
             set { m_Facet = value; }
         }
-        int m_FakePropIndex;
+
         internal MapItem(Serial serial)
             : base(serial)
         {
@@ -1044,48 +1044,34 @@ namespace Assistant
             m_MapOrigin = new RazorEnhanced.Point2D();
             m_MapEnd = new RazorEnhanced.Point2D();
             m_Facet = 0;
-            m_FakePropIndex = 0;
-
         }
         void FixUpLocation()
         {
-            // This has issues with the fakeIndex do for now quit doing it
             try
             {
                 if (Multiplier == 0)
                 {
+                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Origin Failure"));
                     return;
                 }
                 int xCoord = m_MapOrigin.X + (int)(Multiplier * m_PinPosition.X);
                 int yCoord = m_MapOrigin.Y + (int)(Multiplier * m_PinPosition.Y);
-                string location = String.Format("Location({0}, {1})",
+                string location = String.Format("({0}, {1})",
                     xCoord,
                     yCoord
                     );
-                // The m_FakePropIndex at this point was beyond the end of the array
-                m_ObjPropList.Content[m_FakePropIndex] = new Assistant.ObjectPropertyList.OPLEntry(1042971, location);
+                m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
             }
             catch (Exception)
             {
-                // shold do something, but ...
+                m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Error"));
             }
+            Assistant.Client.Instance.SendToClient(new ObjectProperties(Serial, ObjPropList));
 
         }
         override internal void ReadPropertyList(PacketReader p)
         {
             base.ReadPropertyList(p);
-            string location = String.Format("Location({0}, {1}",
-                m_MapOrigin.X + (2 * m_PinPosition.X),
-                m_MapOrigin.Y + (2 * m_PinPosition.Y)
-                );
-            m_FakePropIndex = m_ObjPropList.Content.Count;
-            // Fake+0 = coordinates
-            m_ObjPropList.Content.Add(new Assistant.ObjectPropertyList.OPLEntry(1042971, ""));
-            // Fake+1 = THB number
-            m_ObjPropList.Content.Add(new Assistant.ObjectPropertyList.OPLEntry(1042971, ""));
-            // Fake+2 = THB Name
-            m_ObjPropList.Content.Add(new Assistant.ObjectPropertyList.OPLEntry(1042971, ""));
-            FixUpLocation();
         }
     }
 }

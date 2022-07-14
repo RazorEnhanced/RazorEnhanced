@@ -51,14 +51,37 @@ namespace Assistant
             m_StringNums.AddRange(m_DefaultStringNums);
         }
 
-        internal void Read(PacketReader p)
+        internal void AddOrReplace(OPLEntry entry)
+        {
+            if (entry == null)
+            {
+                return;
+            }
+            bool found = false;
+            for (int i = 0; i < m_Content.Count; i++)
+            {
+                if (m_Content[i].Number == entry.Number)
+                {
+                    found = true;
+                    m_Content[i] = entry;
+                }
+            }
+
+            if (!found)
+            {
+                m_Content.Add(entry);
+            }
+
+        }
+
+            internal void Read(PacketReader p)
         {
             var property_list = new List<OPLEntry>();
 
 
             p.Seek(5, System.IO.SeekOrigin.Begin); // seek to packet data
 
-            p.ReadUInt32(); // serial
+            var serial = p.ReadUInt32(); // serial
             p.ReadByte(); // 0
             p.ReadByte(); // 0
             m_Hash = p.ReadInt32();

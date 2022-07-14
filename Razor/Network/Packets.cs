@@ -1656,6 +1656,31 @@ namespace Assistant
         }
     }
 
+    internal sealed class ObjectProperties : Packet
+    {
+        internal ObjectProperties(Serial serial, ObjectPropertyList propertyList)
+            : base(0xD6)
+        {
+            int numEntries = propertyList.Content.Count;
+            EnsureCapacity(1 + 2 + 2 + 4 + 2 + 4 + (4 * numEntries));
+            Write((UInt16)1); // packet id
+            Write((UInt32)serial); // serial
+            Write((UInt16)0);
+            Write((Int32)0);
+            foreach (var i in propertyList.Content)
+            {
+                Write((Int32)i.Number); // cliloc
+                ushort len = (ushort)(i.Args.Length * 2);
+                Write(len);
+                if (i.Args.Length > 0)
+                {
+                    WriteLittleUniFixed(i.Args, i.Args.Length);
+                }
+            }
+           Write((uint)0);
+        }
+
+    }
 
     internal sealed class ContextMenuResponse : Packet
     {

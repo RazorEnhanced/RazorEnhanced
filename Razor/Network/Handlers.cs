@@ -144,6 +144,11 @@ namespace Assistant
 
                             item.ReadPropertyList(p);
                             item.PropsUpdated = true;
+                            if (item is MapItem)
+                            {
+                                args.Block = true;
+                                Assistant.Client.Instance.SendToClient(new ObjectProperties(item.Serial, item.ObjPropList));
+                            }
                         }
                         else if (s.IsMobile)
                         {
