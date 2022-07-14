@@ -1028,7 +1028,7 @@ namespace Assistant
             set { m_MapEnd = value; }
         }
 
-        internal float Multiplier { get; set; }
+        static internal float Multiplier { get; set; }
 
         public ushort m_Facet;
         internal ushort Facet
@@ -1051,7 +1051,7 @@ namespace Assistant
             {
                 if (Multiplier == 0)
                 {
-                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Origin Failure"));
+                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Unknown"));
                     return;
                 }
                 int xCoord = m_MapOrigin.X + (int)(Multiplier * m_PinPosition.X);
@@ -1060,7 +1060,14 @@ namespace Assistant
                     xCoord,
                     yCoord
                     );
-                m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
+                if (xCoord == 0 && yCoord == 0)
+                {
+                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "UnKnown"));
+                }
+                else
+                {
+                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
+                }
             }
             catch (Exception)
             {
@@ -1072,6 +1079,7 @@ namespace Assistant
         override internal void ReadPropertyList(PacketReader p)
         {
             base.ReadPropertyList(p);
+            FixUpLocation();
         }
     }
 }
