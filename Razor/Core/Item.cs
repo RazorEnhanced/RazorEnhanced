@@ -999,33 +999,78 @@ namespace Assistant
     internal class MapItem : Item
     {
 
+        internal static Dictionary<Serial, MapItem> MapItemHistory { get; set; } = new Dictionary<Serial, MapItem>();
+
         private RazorEnhanced.Point2D m_PinPosition;
         internal RazorEnhanced.Point2D PinPosition
         {
-            get { return m_PinPosition; }
+            get {
+                if (MapItemHistory.ContainsKey(Serial))
+                {
+                    return MapItemHistory[Serial].m_PinPosition;
+                }
+                return RazorEnhanced.Point2D.Zero; 
+            }
             set
             {
-                m_PinPosition = value;
-                FixUpLocation();
+                if (MapItemHistory.ContainsKey(Serial))
+                {
+                    MapItemHistory[Serial].m_PinPosition = value;
+                }
+                else
+                {
+                    MapItemHistory[Serial] = this;
+                    MapItemHistory[Serial].m_PinPosition = value;
+                }
+                UpdateProperties();
             }
         }
 
         public RazorEnhanced.Point2D m_MapOrigin;
         internal RazorEnhanced.Point2D MapOrigin
         {
-            get { return m_MapOrigin; }
+            get {
+                if (MapItemHistory.ContainsKey(Serial))
+                {
+                    return MapItemHistory[Serial].m_MapOrigin;
+                }
+                return RazorEnhanced.Point2D.Zero; 
+            }
             set
             {
-                m_MapOrigin = value;
-                FixUpLocation();
+                if (MapItemHistory.ContainsKey(Serial))
+                {
+                    MapItemHistory[Serial].m_MapOrigin = value;
+                }
+                else
+                {
+                    MapItemHistory[Serial] = this;
+                    MapItemHistory[Serial].m_MapOrigin = value;
+                }
             }
         }
 
         public RazorEnhanced.Point2D m_MapEnd;
         internal RazorEnhanced.Point2D MapEnd
         {
-            get { return m_MapEnd; }
-            set { m_MapEnd = value; }
+            get {
+                if (MapItemHistory.ContainsKey(Serial))
+                {
+                    return MapItemHistory[Serial].m_MapEnd;
+                }
+                return RazorEnhanced.Point2D.Zero; 
+            }
+            set {
+                if (MapItemHistory.ContainsKey(Serial))
+                {
+                    MapItemHistory[Serial].m_MapEnd = value;
+                }
+                else
+                {
+                    MapItemHistory[Serial] = this;
+                    MapItemHistory[Serial].m_MapEnd = value;
+                }
+            }
         }
 
         static internal float Multiplier { get; set; }
@@ -1040,32 +1085,23 @@ namespace Assistant
         internal MapItem(Serial serial)
             : base(serial)
         {
-            m_PinPosition = new RazorEnhanced.Point2D();
-            m_MapOrigin = new RazorEnhanced.Point2D();
-            m_MapEnd = new RazorEnhanced.Point2D();
+            m_PinPosition = new RazorEnhanced.Point2D(Point2D.Zero);
+            m_MapOrigin = new RazorEnhanced.Point2D(Point2D.Zero);
+            m_MapEnd = new RazorEnhanced.Point2D(Point2D.Zero);
             m_Facet = 0;
         }
-        void FixUpLocation()
+        void UpdateProperties()
         {
             try
             {
-                if (Multiplier == 0)
+                if (MapItemHistory.ContainsKey(Serial))
                 {
-                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "Unknown"));
-                    return;
-                }
-                int xCoord = m_MapOrigin.X + (int)(Multiplier * m_PinPosition.X);
-                int yCoord = m_MapOrigin.Y + (int)(Multiplier * m_PinPosition.Y);
-                string location = String.Format("({0}, {1})",
-                    xCoord,
-                    yCoord
-                    );
-                if (xCoord == 0 && yCoord == 0)
-                {
-                    m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, "UnKnown"));
-                }
-                else
-                {
+                    int xCoord = MapOrigin.X + (int)(Multiplier * PinPosition.X);
+                    int yCoord = MapOrigin.Y + (int)(Multiplier * PinPosition.Y);
+                    string location = String.Format("({0}, {1})",
+                        xCoord,
+                        yCoord
+                        );
                     m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
                 }
             }
@@ -1079,7 +1115,8 @@ namespace Assistant
         override internal void ReadPropertyList(PacketReader p)
         {
             base.ReadPropertyList(p);
-            FixUpLocation();
+            UpdateProperties();
+
         }
     }
 }

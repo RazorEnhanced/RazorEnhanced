@@ -477,6 +477,10 @@ namespace RazorEnhanced
 			{
 				try
 				{
+					UI.EnhancedScriptEditor.End();
+
+					this.Stop();
+
 					if (IsRunningThread(m_AutoLootThread))
 					{
 						m_AutoLootThread.Abort();
@@ -507,9 +511,6 @@ namespace RazorEnhanced
 						m_AutoRemountThread.Abort();
 					}
 
-					UI.EnhancedScriptEditor.End();
-
-					this.Stop();
 				}
 				catch
 				{ }

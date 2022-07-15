@@ -1186,17 +1186,24 @@ namespace RazorEnhanced
         /// <returns>A MapInfo object.</returns>
         public static MapInfo GetMapInfo(uint serial)
         {
-            MapInfo mapInfo = null;
-            MapItem mapItem = World.FindItem(serial) as MapItem;
-            if (mapItem != null)
+            MapInfo mapInfo = new MapInfo
             {
+                Serial = serial,
+                PinPosition = RazorEnhanced.Point2D.Zero,
+                MapOrigin = RazorEnhanced.Point2D.Zero,
+                MapEnd = RazorEnhanced.Point2D.Zero,
+                Facet = 0
+            };
+
+            if (MapItem.MapItemHistory.ContainsKey(serial)) {
+                MapItem theItem = MapItem.MapItemHistory[serial];
                 mapInfo = new MapInfo
                 {
-                    Serial = mapItem.Serial,
-                    PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(Convert.ToInt32(mapItem.PinPosition.X * MapItem.Multiplier), Convert.ToInt32(mapItem.PinPosition.Y * MapItem.Multiplier))),
-                    MapOrigin = mapItem.m_MapOrigin,
-                    MapEnd = mapItem.m_MapEnd,
-                    Facet = mapItem.m_Facet
+                    Serial = serial,
+                    PinPosition = theItem.PinPosition,
+                    MapOrigin = theItem.MapOrigin,
+                    MapEnd = theItem.MapEnd,
+                    Facet = theItem.Facet
                 };
             }
             return mapInfo;

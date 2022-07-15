@@ -3167,7 +3167,6 @@ namespace Assistant
                 {
                     MapItem.Multiplier = ((float)(x2 - x1)) / width;
                 }
-                mapItem.PinPosition = new RazorEnhanced.Point2D(new Assistant.Point2D(0, 0));
                 mapItem.MapOrigin = new RazorEnhanced.Point2D(new Assistant.Point2D(x1, y1));
                 mapItem.MapEnd = new RazorEnhanced.Point2D(new Assistant.Point2D(x2, y2));
                 mapItem.m_Facet = facet;
