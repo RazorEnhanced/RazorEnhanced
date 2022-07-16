@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using Assistant.UI;
 using RazorEnhanced;
+using NLog;
 
 namespace Assistant
 {
     public class PacketHandlers
     {
+        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static readonly List<Item> m_IgnoreGumps = new List<Item>();
         internal static List<Item> IgnoreGumps { get { return m_IgnoreGumps; } }
 
@@ -1698,6 +1701,7 @@ namespace Assistant
                 return;
 
             Serial serial = p.ReadUInt32();
+            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             Mobile m = World.FindMobile(serial);
 
             if (m == null)
@@ -1876,7 +1880,7 @@ namespace Assistant
         private static void RemoveObject(PacketReader p, PacketHandlerEventArgs args)
         {
             Serial serial = p.ReadUInt32();
-
+            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
             if (serial.IsMobile)
             {
                 Mobile m = World.FindMobile(serial);
@@ -2047,6 +2051,8 @@ namespace Assistant
             byte _artDataID = p.ReadByte();
 
             uint serial = p.ReadUInt32();
+            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+
             ushort itemID = p.ReadUInt16();
             itemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
 
@@ -3118,9 +3124,11 @@ namespace Assistant
         private static void PinLocation(PacketReader p, PacketHandlerEventArgs args)
         {
             Serial serial = p.ReadUInt32();
+            Logger.Debug("{0} entered for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             Assistant.Item item = World.FindItem(serial);
             byte action = p.ReadByte();
 
+            Logger.Debug("{0} for {1:X} type {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, (int)action);
             switch ((MapMessageType)action)
             {
                 case MapMessageType.Add:
@@ -3160,16 +3168,24 @@ namespace Assistant
             ushort width = p.ReadUInt16();
             ushort height = p.ReadUInt16();
             ushort facet = p.ReadUInt16();
+            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             MapItem mapItem = World.FindItem(serial) as MapItem;
             if (mapItem != null)
             {
+                Logger.Debug("{0} setting map origin with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
                 if (MapItem.Multiplier == 0)
                 {
                     MapItem.Multiplier = ((float)(x2 - x1)) / width;
+                    Logger.Debug("{0} set with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
                 }
+
                 mapItem.MapOrigin = new RazorEnhanced.Point2D(new Assistant.Point2D(x1, y1));
                 mapItem.MapEnd = new RazorEnhanced.Point2D(new Assistant.Point2D(x2, y2));
                 mapItem.m_Facet = facet;
+            }
+            else 
+            { 
+                Logger.Debug("{0} unable to find map for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             }
 
 

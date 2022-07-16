@@ -52,6 +52,8 @@ namespace Assistant
 
     public class Item : UOEntity
     {
+        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private ItemID m_ItemID;
         private ushort m_Amount;
         private byte m_Direction;
@@ -1007,12 +1009,15 @@ namespace Assistant
             get {
                 if (MapItemHistory.ContainsKey(Serial))
                 {
+                    Logger.Debug("{0} has entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                     return MapItemHistory[Serial].m_PinPosition;
                 }
+                Logger.Debug("{0} NO entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                 return RazorEnhanced.Point2D.Zero; 
             }
             set
             {
+                Logger.Debug("{0} for {1:X} at x: {2} y: {3}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial, value.X, value.Y);
                 if (MapItemHistory.ContainsKey(Serial))
                 {
                     MapItemHistory[Serial].m_PinPosition = value;
@@ -1032,12 +1037,15 @@ namespace Assistant
             get {
                 if (MapItemHistory.ContainsKey(Serial))
                 {
+                    Logger.Debug("{0} has entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                     return MapItemHistory[Serial].m_MapOrigin;
                 }
+                Logger.Debug("{0} NO entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                 return RazorEnhanced.Point2D.Zero; 
             }
             set
             {
+                Logger.Debug("{0} for {1:X} at x: {2} y: {3}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial, value.X, value.Y);
                 if (MapItemHistory.ContainsKey(Serial))
                 {
                     MapItemHistory[Serial].m_MapOrigin = value;
@@ -1061,6 +1069,7 @@ namespace Assistant
                 return RazorEnhanced.Point2D.Zero; 
             }
             set {
+                Logger.Debug("{0} for {1:X} at x: {2} y: {3}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial, value.X, value.Y);
                 if (MapItemHistory.ContainsKey(Serial))
                 {
                     MapItemHistory[Serial].m_MapEnd = value;
@@ -1094,8 +1103,10 @@ namespace Assistant
         {
             try
             {
+                Logger.Debug("{0} for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                 if (MapItemHistory.ContainsKey(Serial))
                 {
+                    Logger.Debug("{0} has MapHistory for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                     int xCoord = MapOrigin.X + (int)(Multiplier * PinPosition.X);
                     int yCoord = MapOrigin.Y + (int)(Multiplier * PinPosition.Y);
                     string location = String.Format("({0}, {1})",
@@ -1103,6 +1114,10 @@ namespace Assistant
                         yCoord
                         );
                     m_ObjPropList.AddOrReplace(new Assistant.ObjectPropertyList.OPLEntry(1061114, location));
+                }
+                else
+                {
+                    Logger.Debug("{0} No has MapHistory for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                 }
             }
             catch (Exception)
