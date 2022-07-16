@@ -1879,8 +1879,18 @@ namespace Assistant
 
         private static void RemoveObject(PacketReader p, PacketHandlerEventArgs args)
         {
+            if (World.Player == null)
+            {
+                return;
+            }
             Serial serial = p.ReadUInt32();
             Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
+
+            if (World.Player.Serial == serial)
+            {
+                return;
+            }
+
             if (serial.IsMobile)
             {
                 Mobile m = World.FindMobile(serial);
@@ -1892,6 +1902,13 @@ namespace Assistant
                 Item i = World.FindItem(serial);
                 if (i != null)
                 {
+                    Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
+                    MapItem m = i as MapItem;
+                    if (m != null)
+                    {
+                        Logger.Debug("{0} NOT removing MapItem with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
+                        return;
+                    }
                     // Update weapon special ability icons on spellgrid when removing weapons
                     if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
                     { 
@@ -2051,7 +2068,7 @@ namespace Assistant
             byte _artDataID = p.ReadByte();
 
             uint serial = p.ReadUInt32();
-            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            //Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
 
             ushort itemID = p.ReadUInt16();
             itemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
@@ -3116,7 +3133,7 @@ namespace Assistant
             Insert,
             Move,
             Remove,
-            Clear,
+            OpenMap,
             Edit,
             EditResponse
         }
@@ -3147,7 +3164,7 @@ namespace Assistant
                     break;
                 case MapMessageType.Remove:
                     break;
-                case MapMessageType.Clear:
+                case MapMessageType.OpenMap:
                     break;
                 case MapMessageType.Edit:
                     break;
