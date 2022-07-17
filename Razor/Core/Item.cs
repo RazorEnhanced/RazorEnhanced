@@ -160,6 +160,7 @@ namespace Assistant
             Item item;
             switch (itemID)
             {
+                case 0x14EB:
                 case 0x14EC:
                     item = new MapItem(serial);
                     break;
