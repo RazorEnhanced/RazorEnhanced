@@ -659,17 +659,22 @@ namespace Assistant
 
     internal sealed class MoveRequest : Packet
     {
-        internal MoveRequest(byte seq, byte dir)
+        internal MoveRequest(byte seq, Direction dir, bool run)
             : base(0x02, 7)
         {
+            if (run)
+            {
+                dir |= Direction.running;
+            }
             Write((byte)dir);
             Write((byte)seq);
             //Write( (uint)Utility.Random( 0x7FFFFFFF ) ); // fastwalk key (unused)
-            if (PlayerData.FastWalkKey < 5)
-                Write((uint)0xBAADF00D);
-            else
-                Write((uint)0);
-            PlayerData.FastWalkKey++;
+            Write((uint)0);
+            //if (PlayerData.FastWalkKey < 5)
+            //    Write((uint)0xBAADF00D);
+            //else
+            //    Write((uint)0);
+            //PlayerData.FastWalkKey++;
         }
     }
 

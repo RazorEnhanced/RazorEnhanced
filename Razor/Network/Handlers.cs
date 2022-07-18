@@ -643,6 +643,9 @@ namespace Assistant
         {
             if (World.Player == null)
                 return;
+            
+            if (World.Player.WalkSemaphore.Count < World.Player.WalkSemaphore.MaxCount)
+                World.Player.WalkSemaphore.Release();
 
             byte oldNoto = World.Player.Notoriety;
 

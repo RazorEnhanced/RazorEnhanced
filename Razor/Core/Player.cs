@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
+
 namespace Assistant
 {
     internal enum LockType : byte
@@ -681,6 +682,7 @@ namespace Assistant
             }
             Direction = dir;
         }
+        internal SyncPrimitives.Semaphore WalkSemaphore = new SyncPrimitives.Semaphore(5);
 
         private int walkScriptRequest = 0;
         internal int WalkScriptRequest

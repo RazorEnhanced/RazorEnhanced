@@ -516,7 +516,8 @@ namespace Assistant
 
         public abstract uint TotalDataOut();
 
-        internal abstract void RequestMove(Direction m_Dir);
+        internal abstract void RequestWalk(Direction m_Dir);
+        internal abstract void RequestRun(Direction m_Dir);
         public abstract void PathFindTo(Assistant.Point3D location);
 
 

@@ -347,6 +347,7 @@
     <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\SyncPrimitives.cs" />
     <Compile Include="RazorEnhanced\Timer.cs">
       <SubType>Component</SubType>
     </Compile>

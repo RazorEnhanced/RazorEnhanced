@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Collections.Concurrent;
@@ -146,22 +147,22 @@ namespace Assistant
             {
                 return;
             }
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.DwmFree, UIntPtr.Zero);
         }
 
         public override void SetMapWndHandle(Form mapWnd)
         {
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.SetMapHWnd, (IntPtr)mapWnd.Handle);
         }
 
         public override void RequestStatbarPatch(bool preAOS)
         {
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.StatBar, preAOS ? (UIntPtr)1 : UIntPtr.Zero);
         }
 
         public override void SetCustomNotoHue(int hue)
         {
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.NotoHue, (UIntPtr)hue);
         }
         public override void RunUI()
         {
@@ -185,7 +186,7 @@ namespace Assistant
                 try { Assistant.Client.Instance.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
                 catch { }
 
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.SmartCPU, (UIntPtr)(enabled ? 1 : 0));
         }
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
@@ -196,7 +197,7 @@ namespace Assistant
             //const int HWND_TOP = 0;
             //const short SWP_NOMOVE = 0x0002;
             //const short SWP_NOZORDER = 0x0004;
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.SetGameSize, (UIntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
             // resizes the game size, not the internal size, so have to exit and restart unless I find smarter way
             //if (x != 0)
             //{
@@ -317,7 +318,7 @@ namespace Assistant
 
         public override void SetNegotiate(bool negotiate)
         {
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.Negotiate, (UIntPtr)(negotiate ? 1 : 0));
         }
 
         public override bool Attach(int pid)
@@ -859,7 +860,7 @@ namespace Assistant
         public override void InitSendFlush()
         {
             if (m_OutSend->Length == 0)
-                DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
+                DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.Send, UIntPtr.Zero);
         }
 
         private void CopyToBuffer(Buffer* buffer, byte* data, int len)
@@ -1019,13 +1020,18 @@ namespace Assistant
             CalibratePosition(x, y, z);
         }
 
-        [DllImport("user32.dll")]
-        internal static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
         public void KeyPress(int keyCode)
         {
-            const uint WM_KEYDOWN = 0x100;
-            //const uint WM_KEYUP = 0x101;
-            SendMessage(FindUOWindow(), WM_KEYDOWN, (IntPtr)keyCode, (IntPtr)1);
+            const int WM_KEYDOWN = 0x100;
+            const int WM_KEYUP = 0x101;
+            DLLImport.Win.PostMessage(FindUOWindow(), WM_KEYDOWN, (UIntPtr)keyCode, (UIntPtr)1);
+            DLLImport.Win.PostMessage(FindUOWindow(), WM_KEYUP, (UIntPtr)keyCode, (UIntPtr)1 ) ;           
+        }
+        public void KeySend(string keys)
+        {
+            DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
+            System.Windows.Forms.SendKeys.SendWait(keys);
         }
 
         [DllImport("Crypt.dll")]
@@ -1072,43 +1078,86 @@ namespace Assistant
             West = 0x24, // home
             Up = 0x26, // up
         }
-
-        internal override void RequestMove(Direction m_Dir)
+        internal override void RequestRun(Direction m_Dir)
         {
-            int direction;
+            RequestMove(m_Dir, true);
+        }
+
+
+        internal override void RequestWalk(Direction m_Dir)
+        {
+            RequestMove(m_Dir, false);
+        }
+
+        static byte Seq;
+        internal void RequestMove(Direction m_Dir, bool run)
+        { 
+            Direction direction;
+            int keyToPress = 0;
+            string keyToSend = "";
+            if (run)
+            {
+                keyToSend += "^";
+            }
 
             switch (m_Dir)
             {
                 case Direction.down:
-                    direction = (int)KeyboardDir.Down;
+                    direction = Direction.down;
+                    keyToPress = (int)KeyboardDir.Down;
+                    keyToSend += "{DOWN}";
                     break;
                 case Direction.east:
-                    direction = (int)KeyboardDir.East;
+                    direction = Direction.east;
+                    keyToPress = (int)KeyboardDir.East;
+                    keyToSend += "{PGDN}";
                     break;
                 case Direction.left:
-                    direction = (int)KeyboardDir.Left;
+                    direction = Direction.left;
+                    keyToPress = (int)KeyboardDir.Left;
+                    keyToSend += "{Left}";
                     break;
                 case Direction.north:
-                    direction = (int)KeyboardDir.North;
+                    direction = Direction.north;
+                    keyToPress = (int)KeyboardDir.North;
+                    keyToSend += "{PGUP}";
                     break;
                 case Direction.right:
-                    direction = (int)KeyboardDir.Right;
+                    direction = Direction.right;
+                    keyToPress = (int)KeyboardDir.Right;
+                    keyToSend += "{RIGHT}";
                     break;
                 case Direction.south:
-                    direction = (int)KeyboardDir.South;
+                    direction = Direction.south;
+                    keyToPress = (int)KeyboardDir.South;
+                    keyToSend += "{END}";
                     break;
                 case Direction.up:
-                    direction = (int)KeyboardDir.Up;
+                    direction = Direction.up;
+                    keyToPress = (int)KeyboardDir.Up;
+                    keyToSend += "{UP}";
                     break;
                 case Direction.west:
-                    direction = (int)KeyboardDir.West;
+                    direction = Direction.west;
+                    keyToPress = (int)KeyboardDir.West;
+                    keyToSend += "{HOME}";
                     break;
                 default:
-                    direction = (int)KeyboardDir.Up;
+                    direction = Direction.up;
+                    keyToPress = (int)KeyboardDir.Up;
+                    keyToSend += "{UP}";
                     break;
             }
 
-            KeyPress(direction);
+            World.Player.WalkScriptRequest = 1;
+            if (run)
+            {
+                KeySend(keyToSend);  // this is only way I can send ctrl- and it forces focus to UO window
+            }
+            else { 
+                KeyPress(keyToPress);  // if they are not running can post keystrokes
+            }
+            World.Player.WalkSemaphore.Acquire(500);
 
         }
         public override void PathFindTo(Assistant.Point3D location)
@@ -1152,7 +1201,7 @@ namespace Assistant
             *(m_TitleStr + clen) = 0;
             CommMutex.ReleaseMutex();
 
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_CUSTOMTITLE, UIntPtr.Zero, UIntPtr.Zero);
         }
 
         public override List<string> ValidFileLocations()

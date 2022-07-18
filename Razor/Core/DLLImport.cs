@@ -10,7 +10,13 @@ namespace Assistant
         {
             [return: MarshalAs(UnmanagedType.Bool)]
             [DllImport("user32.dll", SetLastError = true)]
-            internal static extern bool PostMessage(IntPtr hWnd, int Msg, System.Windows.Forms.Keys wParam, int lParam);
+            internal static extern bool PostMessage(IntPtr hWnd, int Msg, System.Windows.Forms.Keys wParam, uint lParam);
+            
+            [DllImport("user32.dll")]
+            internal static extern uint PostMessage(IntPtr hWnd, uint Msg, UIntPtr wParam, UIntPtr lParam);
+
+            [DllImport("user32.dll")]
+            internal static extern uint PostMessage(IntPtr hWnd, uint Msg, UIntPtr wParam, IntPtr lParam);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -97,9 +103,6 @@ namespace Assistant
 
             [DllImport("msvcrt.dll", CallingConvention = CallingConvention.Cdecl)]
             internal static unsafe extern void memcpy(void* to, void* from, int len);
-
-            [DllImport("user32.dll")]
-            internal static extern uint PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
             [DllImport("user32.dll")]
             internal static extern bool SetForegroundWindow(IntPtr hWnd);

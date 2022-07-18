@@ -831,7 +831,10 @@ namespace RazorEnhanced
             /// <summary>Maximum amount of time to run the path. (default: -1, no limit)</summary>
             public float Timeout = -1;
 
-            
+            /// <summary>Maximum amount of time to run the path. (default: -1, no limit)</summary>
+            public bool Run = true;
+
+
         }
 
         /// <summary>
@@ -863,7 +866,10 @@ namespace RazorEnhanced
             while ( r.MaxRetry == -1 || r.MaxRetry > 0 ) {
                 road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
                 timeLeft = (int) timeEnd.Subtract(DateTime.Now).TotalSeconds;
-                success = RunPath(road, timeLeft, r.DebugMessage, r.UseResync);
+                if (r.Run)
+                    success = RunPath(road, timeLeft, r.DebugMessage, r.UseResync);
+                else
+                    success = WalkPath(road, timeLeft, r.DebugMessage, r.UseResync);
                 if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
                 if (success) { return true; }
                 if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
@@ -890,7 +896,16 @@ namespace RazorEnhanced
         /// <param name="debugMessage">Outputs a debug message.</param>
         /// <param name="useResync">ReSyncs the path calculation.</param>
         /// <returns>True: if it finish the path in time. False: otherwise</returns>
-        public static bool RunPath(List<Tile> path, float timeout=-1, bool debugMessage=false, bool useResync = true)
+        public static bool RunPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
+        {
+            return FollowPath(path, true, timeout, debugMessage, useResync);
+        }
+        public static bool WalkPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
+        {
+            return FollowPath(path, false, timeout, debugMessage, useResync);
+        }
+
+        internal static bool FollowPath(List<Tile> path, bool run, float timeout, bool debugMessage, bool useResync)
         {
             if (path == null) { return false; }
             DateTime timeStart, timeEnd;
@@ -909,42 +924,42 @@ namespace RazorEnhanced
                 if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
                 {
                     Rotate(Direction.east, debugMessage);
-                    walkok = Run(Direction.east, debugMessage);
+                    walkok = Move(Direction.east, run, debugMessage);
                 }
                 else if (step.X < Player.Position.X && step.Y == Player.Position.Y) // West
                 {
                     Rotate(Direction.west, debugMessage);
-                    walkok = Run(Direction.west, debugMessage);
+                    walkok = Move(Direction.west, run, debugMessage);
                 }
                 else if (step.X == Player.Position.X && step.Y < Player.Position.Y) //North
                 {
                     Rotate(Direction.north, debugMessage);
-                    walkok = Run(Direction.north, debugMessage);
+                    walkok = Move(Direction.north, run, debugMessage);
                 }
                 else if (step.X == Player.Position.X && step.Y > Player.Position.Y) //South
                 {
                     Rotate(Direction.south, debugMessage);
-                    walkok = Run(Direction.south, debugMessage);
+                    walkok = Move(Direction.south, run, debugMessage);
                 }
                 else if (step.X > Player.Position.X && step.Y > Player.Position.Y) //Down
                 {
                     Rotate(Direction.down, debugMessage);
-                    walkok = Run(Direction.down, debugMessage);
+                    walkok = Move(Direction.down, run, debugMessage);
                 }
                 else if (step.X < Player.Position.X && step.Y < Player.Position.Y) //UP
                 {
                     Rotate(Direction.up, debugMessage);
-                    walkok = Run(Direction.up, debugMessage);
+                    walkok = Move(Direction.up, run, debugMessage);
                 }
                 else if (step.X > Player.Position.X && step.Y < Player.Position.Y) //Right
                 {
                     Rotate(Direction.right, debugMessage);
-                    walkok = Run(Direction.right, debugMessage);
+                    walkok = Move(Direction.right, run, debugMessage);
                 }
                 else if (step.X < Player.Position.X && step.Y > Player.Position.Y) //Left
                 {
                     Rotate(Direction.left, debugMessage);
-                    walkok = Run(Direction.left, debugMessage);
+                    walkok = Move(Direction.left, run, debugMessage);
                 }
                 else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
                     walkok = true;
@@ -997,12 +1012,15 @@ namespace RazorEnhanced
             }
         }
 
-        private static bool Run(Direction d, bool debug)
+        private static bool Move(Direction d, bool run, bool debug)
         {
             if (debug)
                 Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
 
-            return Player.Run(d.ToString());
+            if (run)            
+                return Player.Run(d.ToString());
+            else
+                return Player.Walk(d.ToString());
         }
     }
 }
