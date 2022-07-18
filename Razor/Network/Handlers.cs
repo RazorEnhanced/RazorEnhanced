@@ -626,6 +626,8 @@ namespace Assistant
         {
             if (World.Player == null)
                 return;
+            if (World.Player.WalkSemaphore.Count < World.Player.WalkSemaphore.MaxCount)
+                World.Player.WalkSemaphore.Release();
 
             byte seq = p.ReadByte();
             int x = p.ReadUInt16();
