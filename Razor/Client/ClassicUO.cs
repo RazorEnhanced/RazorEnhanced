@@ -562,11 +562,31 @@ namespace Assistant
 
         internal override bool RequestWalk(Direction m_Dir)
         {
-            return _requestMove((int)m_Dir, false);
+            bool result = false;
+            int MaxTries = 10;
+            int Delay = 10;
+            while (result == false)
+            {
+                MaxTries += 1;
+                result = _requestMove((int)m_Dir, false);
+                if (result == false)
+                    Thread.Sleep(Delay);
+            }
+            return result;
         }
         internal override bool RequestRun(Direction m_Dir)
         {
-            return _requestMove((int)m_Dir, true);
+            bool result = false;
+            int MaxTries = 10;
+            int Delay = 10;
+            while (result == false)
+            {
+                MaxTries += 1;
+                result = _requestMove((int)m_Dir, true);
+                if (result == false)
+                    Thread.Sleep(Delay);
+            }
+            return result;
         }
         public override void PathFindTo(Assistant.Point3D Location)
         {
