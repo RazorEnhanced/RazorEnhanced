@@ -12,6 +12,8 @@ namespace RazorEnhanced
     /// </summary>
     public class Player
     {
+        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         // Stats
         /// <summary>
         /// Current hit points.
@@ -2128,9 +2130,6 @@ namespace RazorEnhanced
         /// Run one step in the specified direction and wait for the confirmation of the new position by the server.
         /// If the character is not facing the direction, the first step only "turn" the Player in the required direction.
         /// 
-        /// Optional:
-        /// When checkPosition is True allow for slower but safe walking, the new position confirmed at each step via return value.
-        /// When checkPosition is Flase allow for faster walking/running, but requires custom delay and position checking.
         /// 
         /// Info:
         /// Walking:  5 tiles/sec (~200ms between each step)
@@ -2146,24 +2145,20 @@ namespace RazorEnhanced
         ///    Left
         ///    Right 
         /// </param>
-        /// <param name="checkPosition">True: Wait until the server confirm the new Player.Position - False: Don't wait.</param>
         /// <returns>True: Destination reached - False: Coudn't reach the destination.</returns>
-        public static bool Run(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
+        public static bool Run(string direction)    // Return true if walk ok false if server refuse
         {
-            return Move(direction, true, checkPosition);
+            return Move(direction, true);
         }
-        public static bool Walk(string direction, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
+        public static bool Walk(string direction)    // Return true if walk ok false if server refuse
         {
-            return Move(direction, false, checkPosition);
+            return Move(direction, false);
         }
 
         /// <summary>
         /// Run one step in the specified direction and wait for the confirmation of the new position by the server.
         /// If the character is not facing the direction, the first step only "turn" the Player in the required direction.
         /// 
-        /// Optional:
-        /// When checkPosition is True allow for slower but safe walking, the new position confirmed at each step via return value.
-        /// When checkPosition is Flase allow for faster walking/running, but requires custom delay and position checking.
         /// 
         /// Info:
         /// Walking:  5 tiles/sec (~200ms between each step)
@@ -2180,9 +2175,8 @@ namespace RazorEnhanced
         ///    Right 
         /// </param>
         /// <param name="run">True: True - use run api, false use walk api</param>
-        /// <param name="checkPosition">True: Wait until the server confirm the new Player.Position - False: Don't wait.</param>
         /// <returns>True: Destination reached - False: Coudn't reach the destination.</returns>
-        internal static bool Move(string direction, bool run=true, bool checkPosition = true)    // Return true se walk ok false se rifiutato da server
+        internal static bool Move(string direction, bool run=true)    // Return true if walk ok false refused by the server
         {
             if (!Enum.TryParse<Direction>(direction.ToLower(), out Direction dir))
             {
@@ -2190,57 +2184,18 @@ namespace RazorEnhanced
                 return false;
             }
 
-            if (checkPosition && !Client.IsOSI)
-            {
-                TimeSpan t = DateTime.UtcNow - m_LastWalk;
-                const double MaxSpeed = 0.2;
-                if (t < TimeSpan.FromSeconds(MaxSpeed))
-                {
-                    TimeSpan wait = TimeSpan.FromSeconds(MaxSpeed) - t;
-                    Thread.Sleep(wait);
-                }
-            }
             World.Player.WalkScriptRequest = 1;
             int timeout = 0;
+            bool result = false;
             if (run)
-                Client.Instance.RequestRun(dir);
+                result = Client.Instance.RequestRun(dir);
             else
-                Client.Instance.RequestWalk(dir);
-            m_LastWalk = DateTime.UtcNow;
-            // Waits until a move event is seen happenning
-            Console.WriteLine("Move {0} Sent", direction);
-            if (checkPosition && Client.IsOSI)
-            {
-                while (World.Player.WalkScriptRequest < 2)
-                {
-                    Thread.Sleep(10);
-                    timeout += 20;
-                    Console.WriteLine("Move Waiting {0} - {1}", timeout, direction);
-                    if (timeout > 1000) //  Handle slower ping times
-                    {
-                        Console.WriteLine("Move Timeout {0}", direction);
-                        break;
-                    }
-                }
-                Console.WriteLine("Move {0} Complete {1}", direction, World.Player.WalkScriptRequest);
-                if (World.Player.WalkScriptRequest == 2)
-                {
-                    Console.WriteLine("Move Success {0}", direction);
-                    World.Player.WalkScriptRequest = 0;
-                    return true;
-                }
-                else
-                {
-                    World.Player.WalkScriptRequest = 0;
-                    return false;
-                }
-            }
+                result = Client.Instance.RequestWalk(dir);
 
-            return true;
+            Logger.Debug("Move {0} Sent", direction);
+
+            return result;
         }
-
-
-        private static DateTime m_LastWalk = DateTime.MinValue;
 
         /// <summary>
         /// Go to the given coordinates using Client-provided pathfinding.

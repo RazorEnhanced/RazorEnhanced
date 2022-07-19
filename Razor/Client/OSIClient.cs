@@ -1078,19 +1078,19 @@ namespace Assistant
             West = 0x24, // home
             Up = 0x26, // up
         }
-        internal override void RequestRun(Direction m_Dir)
+        internal override bool RequestRun(Direction m_Dir)
         {
-            RequestMove(m_Dir, true);
+            return RequestMove(m_Dir, true);
         }
 
 
-        internal override void RequestWalk(Direction m_Dir)
+        internal override bool RequestWalk(Direction m_Dir)
         {
-            RequestMove(m_Dir, false);
+            return RequestMove(m_Dir, false);
         }
 
         static byte Seq;
-        internal void RequestMove(Direction m_Dir, bool run)
+        internal bool RequestMove(Direction m_Dir, bool run)
         { 
             Direction direction;
             int keyToPress = 0;
@@ -1157,7 +1157,9 @@ namespace Assistant
             else { 
                 KeyPress(keyToPress);  // if they are not running can post keystrokes
             }
-            World.Player.WalkSemaphore.Acquire(500);
+
+            // this isnt 100% accurate as the ser #s are not being checked 
+            return World.Player.WalkSemaphore.Acquire(100);
 
         }
         public override void PathFindTo(Assistant.Point3D location)

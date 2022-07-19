@@ -560,13 +560,13 @@ namespace Assistant
             return m_Out;
         }
 
-        internal override void RequestWalk(Direction m_Dir)
+        internal override bool RequestWalk(Direction m_Dir)
         {
-            _requestMove((int)m_Dir, false);
+            return _requestMove((int)m_Dir, false);
         }
-        internal override void RequestRun(Direction m_Dir)
+        internal override bool RequestRun(Direction m_Dir)
         {
-            _requestMove((int)m_Dir, true);
+            return _requestMove((int)m_Dir, true);
         }
         public override void PathFindTo(Assistant.Point3D Location)
         {
