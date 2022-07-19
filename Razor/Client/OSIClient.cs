@@ -1159,7 +1159,7 @@ namespace Assistant
             }
 
             // this isnt 100% accurate as the ser #s are not being checked 
-            return World.Player.WalkSemaphore.Acquire(100);
+            return World.Player.WalkSemaphore.Acquire(150);
 
         }
         public override void PathFindTo(Assistant.Point3D location)
