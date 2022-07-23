@@ -11,6 +11,7 @@ using static RazorEnhanced.HotKey;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace RazorEnhanced
 {
@@ -59,8 +60,12 @@ namespace RazorEnhanced
         /// <summary>
         /// @nodoc
         /// </summary>
+        [DllImport("Crypt.dll")]
+        internal static unsafe extern IntPtr PostAKey(bool ctrlState, char c);
+
         public static void TestMap()
         {
+            PostAKey(false, 'F');
             if (!Client.IsOSI)
             {
                 // WorldMapGump worldMap = UIManager.GetGump<WorldMapGump>();
