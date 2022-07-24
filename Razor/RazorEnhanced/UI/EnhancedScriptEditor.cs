@@ -1365,49 +1365,6 @@ namespace RazorEnhanced.UI
 
 
 
-
-            //Dalamar
-            //Remove this, it's just debug
-            //REMOVE: begin
-
-            /*
-            //Classes
-            var classes_diff = new List<String>(old_classes);
-            foreach (var cls in classes) {
-                //if found, remove because =. if not add as new methods
-                if (!classes_diff.Remove(cls))
-                {
-                    classes_diff.Add("(new)" + cls);
-                }
-            }
-            File.WriteAllText("classes_diff.csv", String.Join("\n", classes_diff));
-
-            //Methods
-            var methods_diff = new List<String>(old_methods);
-            foreach (var mtd in methods)
-            {
-                //if found, remove because =. if not add as new methods
-                if (!methods_diff.Remove(mtd))
-                {
-                    methods_diff.Add("(new)" + mtd);
-                }
-            }
-            File.WriteAllText("methods_diff.csv", String.Join("\n", methods_diff));
-
-            //Tooltips
-            var desc_diff = new List<String>(old_descriptionMethods.Keys);
-            foreach (var dsc in descriptionMethods.Keys)
-            {
-                //if found, remove because =. if not add as new methods
-                if (!desc_diff.Remove(dsc))
-                {
-                    desc_diff.Add("(new)" + dsc);
-                }
-            }
-            File.WriteAllText("tooltip_diff.csv", String.Join("\n", desc_diff));
-            //REMOVE: end
-            */
-
             List<AutocompleteItem> items = new List<AutocompleteItem>();
 
             //Permette la creazione del menu con la singola keyword

@@ -1634,6 +1634,77 @@ namespace RazorEnhanced
             return propstring;
         }
 
+        /// <summary>
+        /// Get a Property line, by name. if not found returns and empty string.
+        /// </summary>
+        /// <param name="serial">Serial or Item to read.</param>
+        /// <param name="name">Number of the Property line.</param>
+        /// <returns>A property value as a string.</returns>
+        public static string GetPropValueString(int serial, string name)
+        {
+            string propString = String.Empty;
+            Assistant.Item assistantItem = World.FindItem((uint)serial);
+            try
+            {
+                if (assistantItem != null && assistantItem.ObjPropList != null && assistantItem.ObjPropList.Content != null)
+                {
+                    var content = assistantItem.ObjPropList.Content;
+                    if (content != null)
+                    {
+                        for (int i = 0; i < content.Count; i++)
+                        {
+                            if (!content[i].ToString().ToLower().StartsWith(name.ToLower())) // Props Name not match
+                                continue;
+
+                            try
+                            {
+                                //p = Items.GetPropValueString(0x401DD82A, "weight")
+                                //print(p)
+                                propString = content[i].ToString();
+                                string pattern = @"\s*(\b[^:]*)(:)?\s*([^\s].*)?";
+                                Regex rx = new Regex(pattern,
+                                    RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                                Match m = rx.Match(propString);
+                                if (m.Groups.Count > 3)
+                                {
+                                    if (m.Groups[2].Value == ":")
+                                    {
+                                        return m.Groups[3].Value;
+                                    }
+                                    return m.Groups[0].Value;
+                                }
+
+                                return propString;
+                            }
+                            catch
+                            {
+                                // fall thru
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // do nothing because sometimes the content[i] no longer existed so fall through
+                // and return 0
+            }
+            return propString;
+
+
+        }
+        /*
+            string pattern = @"\((\d+)\s*,\s*(\d+)\s*\)";
+            Regex rx = new Regex(pattern,
+                RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //p = Items.GetPropValue(0x401DD82A, "location")
+            //print(p)
+            Match m = rx.Match(propString);
+            if (m.Groups.Count > 2)
+            {
+                return m.Groups[0].Value;
+            }
+        */
         public static string GetPropStringByIndex(Item item, int index)
         {
             return GetPropStringByIndex(item.Serial, index);
