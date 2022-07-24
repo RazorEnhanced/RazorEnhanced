@@ -150,7 +150,7 @@ namespace Assistant
                             }
 
                             string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", m_Version.FileMajorPart, m_Version.FileMinorPart, m_Version.FileBuildPart, m_Version.FilePrivatePart);
-                            cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
+                            cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
                                                         selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
                                                         ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
                                                         verString);
