@@ -1020,14 +1020,15 @@ namespace Assistant
             CalibratePosition(x, y, z);
         }
 
-
+        [DllImport("user32.dll")]
+        internal static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
         public void KeyPress(int keyCode)
         {
-            const int WM_KEYDOWN = 0x100;
-            const int WM_KEYUP = 0x101;
-            DLLImport.Win.PostMessage(FindUOWindow(), WM_KEYDOWN, (UIntPtr)keyCode, (UIntPtr)1);
-            DLLImport.Win.PostMessage(FindUOWindow(), WM_KEYUP, (UIntPtr)keyCode, (UIntPtr)1 ) ;           
+            const uint WM_KEYDOWN = 0x100;
+            //const uint WM_KEYUP = 0x101;
+            SendMessage(FindUOWindow(), WM_KEYDOWN, (IntPtr)keyCode, (IntPtr)1);
         }
+
         public void KeySend(string keys)
         {
             DLLImport.Win.SetForegroundWindow(Assistant.Client.Instance.GetWindowHandle());
