@@ -1005,7 +1005,7 @@ namespace RazorEnhanced
         {
             if ((World.Player.Direction & Direction.mask) != d)
             {
-                Player.Run(d.ToString());
+                Player.Walk(d.ToString());
 
                 if (debug)
                     Misc.SendMessage("PathFind: Rotate in direction: " + d.ToString(), 55);
