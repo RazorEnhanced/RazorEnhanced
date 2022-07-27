@@ -157,7 +157,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("bandageself", this.BandageSelf);
             UOScript.Interpreter.RegisterCommandHandler("useobject", this.UseObject);
             UOScript.Interpreter.RegisterCommandHandler("useonce", this.UseOnce);
-            UOScript.Interpreter.RegisterCommandHandler("cleanusequeue", this.CleanUseQueue);
+            UOScript.Interpreter.RegisterCommandHandler("clearusequeue", this.CleanUseQueue);
             UOScript.Interpreter.RegisterCommandHandler("moveitem", this.MoveItem);
             UOScript.Interpreter.RegisterCommandHandler("moveitemoffset", this.MoveItemOffset);
             UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset);
@@ -1831,15 +1831,21 @@ namespace RazorEnhanced
         }
         private bool UseSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            if (args.Length != 1)
+            if (args.Length == 1)
             {
-                Misc.SendMessage("Insufficient parameters");
-                return true;
+                string skill = args[0].AsString();
+                Player.UseSkill(skill);
             }
-            string skill = args[0].AsString();
-
-            Player.UseSkill(skill);
-
+            else if (args.Length == 2)
+            {
+                string skill = args[0].AsString();
+                int serial = (int)args[1].AsSerial();
+                Player.UseSkill(skill, serial);
+            }
+            else
+            {
+                Misc.SendMessage("Incorrect number of parameters");
+            }
             return true;
         }
 
@@ -3196,6 +3202,18 @@ namespace RazorEnhanced
                 string spell = args[0].AsString();
                 Spells.Cast(spell);
             }
+            else if (args.Length == 2)
+            {
+                string spell = args[0].AsString();
+                uint serial = args[1].AsSerial();
+                Spells.Cast(spell, serial);
+            }
+            else 
+            {
+                Misc.SendMessage("Incorrect number of parameters");
+            }
+
+
 
             return true;
         }
