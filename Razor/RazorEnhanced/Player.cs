@@ -1866,6 +1866,17 @@ namespace RazorEnhanced
         }
 
 
+        // Game Message
+        /// <summary>
+        /// Send message in game using 1153 for color.
+        /// </summary>
+        /// <param name="msg">Message to send.</param>
+        public static void ChatSay(string msg)
+        {
+            ChatSay(1153, msg);
+        }
+
+
         /// <summary>
         /// Send message to the guild chat.
         /// </summary>
