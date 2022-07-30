@@ -37,7 +37,7 @@ namespace RazorEnhanced.UI
                     osiEnc.Checked = shard.OSIEnc;
                 }
             }
-
+            
             if (shardlistCombobox.SelectedIndex == -1)
                 groupBox2.Enabled = false;
 
@@ -53,6 +53,14 @@ namespace RazorEnhanced.UI
             {
                 okay.Enabled = false;
                 launchCUO.Enabled = false;
+            }
+
+            var ip = Assistant.Client.Resolve(hostLabel.Text);
+            if (ip == null || ip == System.Net.IPAddress.None || Convert.ToInt32(portLabel.Text) == 0)
+            {
+                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                launchCUO.Enabled = false;
+                okay.Enabled = false;
             }
         }
 
@@ -210,6 +218,7 @@ namespace RazorEnhanced.UI
 
         private void Okay_Click(object sender, EventArgs e)
         {
+
             UpdateGUI();
 
             // Genero Login.cfg
