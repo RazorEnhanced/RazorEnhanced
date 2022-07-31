@@ -116,13 +116,16 @@ namespace RazorEnhanced.UI
 			{
 				fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
 				fastColoredTextBoxEditor.AutoIndentExistingLines = true;
-				InitUOSSyntaxHighlight();
+				
 			}
 			else
 			{
 				fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
-				InitPythonSyntaxHighlight();
 			}
+			// always do both in case I need to change
+			InitUOSSyntaxHighlight();
+			InitPythonSyntaxHighlight();
+
 			// Always have to make these or Open() wont work from UOS to PY
 			m_pe = new PythonEngine(this.SetErrorBox);
 			m_pe.Engine.SetTrace(null);
@@ -138,7 +141,7 @@ namespace RazorEnhanced.UI
 		}
 
 		
-		private void InitUOSSyntaxHighlight()
+		public void InitUOSSyntaxHighlight()
 		{
 			// keywords
 			List<String> keywords = UOSteamEngine.Instance.AllKeywords();
@@ -170,7 +173,7 @@ namespace RazorEnhanced.UI
 		}
 
 
-		private void InitPythonSyntaxHighlight() {
+		public void InitPythonSyntaxHighlight() {
             //Dalamar: Trying to inject SyntaxHighlight (and Autocomplete) from AutoDoc
             //TODO: make it work
             // # Syntax Highlight

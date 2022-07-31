@@ -62,7 +62,7 @@ namespace RazorEnhanced.UI
             this.toolStripStatusLabelScript = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
+            this.fastColoredTextBoxEditor = new Assistant.RazorFastColoredTextBox();
             this.textareaMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -658,7 +658,7 @@ namespace RazorEnhanced.UI
 		private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
 		private System.Windows.Forms.ToolStripButton toolStripButtonGumps;
 		private System.Windows.Forms.SplitContainer splitContainer2;
-		private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBoxEditor;
+		private Assistant.RazorFastColoredTextBox fastColoredTextBoxEditor;
 		private System.Windows.Forms.ToolStripButton toolStripButtonSave;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.ListBox messagelistBox;
