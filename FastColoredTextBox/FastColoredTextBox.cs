@@ -175,7 +175,7 @@ namespace FastColoredTextBoxNS
             needRecalc = true;
             lastNavigatedDateTime = DateTime.Now;
             AutoIndent = true;
-            AutoIndentExistingLines = true;
+            AutoIndentExistingLines = false;
             CommentPrefix = "//";
             lineNumberStartValue = 1;
             multiline = true;
@@ -4730,7 +4730,9 @@ namespace FastColoredTextBoxNS
                 if (arg.AbsoluteIndentation != 0)
                     indent = arg.AbsoluteIndentation + arg.ShiftNextLines;
                 else
+                {
                     indent += arg.ShiftNextLines;
+                }
             }
             //clalc shift for current line
             var a = new AutoIndentEventArgs(iLine, lines[iLine].Text, iLine > 0 ? lines[iLine - 1].Text : "", TabLength, indent);

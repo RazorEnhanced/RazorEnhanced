@@ -44,6 +44,22 @@ namespace RazorEnhanced
                 return instance;
             }
         }
+        internal List<string> AllAliases()
+        {
+            var list = UOScript.Interpreter._aliasHandlers.Keys.ToList();
+            list.Add("lastobject");
+            list.Add("found");
+            list.Add("enemy");
+            list.Add("friend");
+            return list;
+        }
+
+        internal List<string> AllKeywords()
+        {
+            var list = UOScript.Interpreter._commandHandlers.Keys.ToList();
+            list.AddRange(UOScript.Interpreter._exprHandlers.Keys.ToList());
+            return list;
+        }
 
         private UOSteamEngine()
         {
@@ -5055,15 +5071,15 @@ namespace RazorEnhanced
             public delegate IComparable ExpressionHandler(string expression, Argument[] args, bool quiet);
             public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
 
-            private static readonly Dictionary<string, ExpressionHandler> _exprHandlers = new Dictionary<string, ExpressionHandler>();
+            internal static readonly Dictionary<string, ExpressionHandler> _exprHandlers = new Dictionary<string, ExpressionHandler>();
 
             public delegate bool CommandHandler(string command, Argument[] args, bool quiet, bool force);
 
-            private static readonly Dictionary<string, CommandHandler> _commandHandlers = new Dictionary<string, CommandHandler>();
+            internal static readonly Dictionary<string, CommandHandler> _commandHandlers = new Dictionary<string, CommandHandler>();
 
             public delegate uint AliasHandler(string alias);
 
-            private static readonly Dictionary<string, AliasHandler> _aliasHandlers = new Dictionary<string, AliasHandler>();
+            internal static readonly Dictionary<string, AliasHandler> _aliasHandlers = new Dictionary<string, AliasHandler>();
 
             private static Script _activeScript = null;
 
