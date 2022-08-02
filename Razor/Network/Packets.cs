@@ -759,6 +759,19 @@ namespace Assistant
         }
     }
 
+    internal sealed class TrackingArrow : Packet
+    {
+        internal TrackingArrow(Serial target, bool display, ushort mx, ushort my)
+            : base(0xBA, 12)
+        {
+            EnsureCapacity(12);
+            Write(display ? (byte)1 : (byte)0);
+            Write((ushort)(mx));
+            Write((ushort)(my));
+            Write((uint)target);
+        }
+    }
+
     internal sealed class ExtCastSpell : Packet
     {
         internal ExtCastSpell(Serial book, ushort spell)
