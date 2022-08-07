@@ -873,6 +873,7 @@ namespace RazorEnhanced
                 typeof(Statics.TileInfo),
                 typeof(Sound),
                 typeof(CUO),
+                typeof(HotKeyEvent),
 
                 // API Agents
                 typeof(AutoLoot),
