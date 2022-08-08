@@ -1260,7 +1260,7 @@ namespace RazorEnhanced
 
         private static string ComposeKey(string typeFullNameString, string memberNameString)
         {
-            string key = Regex.Replace(typeFullNameString, @"\[.*\]", string.Empty).Replace('+', '.');
+            string key = Regex.Replace(typeFullNameString, @"\[.*\]", "[]").Replace('+', '.');
             if (memberNameString != null)
             {
                 key += "." + memberNameString;

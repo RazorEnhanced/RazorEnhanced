@@ -56,9 +56,33 @@ namespace RazorEnhanced
 
         internal List<string> AllKeywords()
         {
-            var list = UOScript.Interpreter._commandHandlers.Keys.ToList();
-            list.AddRange(UOScript.Interpreter._exprHandlers.Keys.ToList());
-            return list;
+            List<string> retlist = new List<string>(); 
+            foreach (var cmd in UOScript.Interpreter._commandHandlers)
+            {
+                var handler = cmd.Value;
+                var documentation = XMLCommentReader.GetDocumentation(handler.Method);
+                documentation = XMLCommentReader.RemoveBaseIndentation(documentation);
+                var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
+                var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
+                if (methodSummary == "")
+                    retlist.Add(cmd.Key);
+                else
+                    retlist.Add(methodSummary);
+            }
+
+            foreach (var expr in UOScript.Interpreter._exprHandlers)
+            {
+                var handler = expr.Value;
+                var documentation = XMLCommentReader.GetDocumentation(handler.Method);
+                documentation = XMLCommentReader.RemoveBaseIndentation(documentation);
+                var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
+                var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
+                if (methodSummary == "")
+                    retlist.Add(expr.Key);
+                else
+                    retlist.Add(methodSummary);
+            }
+            return retlist;
         }
 
         private UOSteamEngine()
@@ -460,9 +484,11 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// useobject (serial)
+        /// </summary>
         private IComparable UseObjExp(string expression, UOScript.Argument[] args, bool quiet)
         {
-
             UseObject(expression, args, quiet, false);
             return true;
         }
@@ -585,11 +611,10 @@ namespace RazorEnhanced
         }
 
 
-        /// <summary>
+
         /// The problem is UOS findbyid will find either mobil or item, but RE seperates them
         /// So this function will look for both and return the list
         ///   if it is an item it can't be a mobile and vica-versa
-        /// </summary>
         internal static List<int> FindByType_ground(int graphic, int color, int amount, int range)
         {
             List<int> retList = new List<int>();
@@ -1558,14 +1583,22 @@ namespace RazorEnhanced
         #region Commands
 
 
-        // Commands: Stable
 
+
+
+        /// <summary>
+        /// land
+        /// </summary>
         private bool LandCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
             return true;
         }
 
+        /// UOSteamEngine.FlyCommand
+        /// <summary>
+        /// fly
+        /// </summary>
         private bool FlyCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.Fly(true);
@@ -1585,6 +1618,10 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// UOSteamEngine.SetAbility
+        /// <summary>
+        /// setability ('primary'/'secondary'/'stun'/'disarm') ['on'/'off']
+        /// </summary>
         private bool SetAbility(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
@@ -1647,6 +1684,10 @@ namespace RazorEnhanced
 
             return true;
         }
+
+        /// <summary>
+        /// attack (serial)
+        /// </summary>
         private bool Attack(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 1)
@@ -1691,6 +1732,9 @@ namespace RazorEnhanced
         }
 
 
+        /// <summary>
+        /// clearhands ('left'/'right'/'both')
+        /// </summary>
         private bool ClearHands(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0 || args[0].AsString().ToLower() == "both")
@@ -1709,6 +1753,10 @@ namespace RazorEnhanced
 
             return true;
         }
+
+        /// <summary>
+        /// clickobject (serial)
+        /// </summary>
         private bool ClickObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -1720,6 +1768,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// bandageself
+        /// </summary>
         private bool BandageSelf(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             BandageHeal.Heal(Assistant.World.Player);
@@ -1727,6 +1778,9 @@ namespace RazorEnhanced
         }
 
 
+        /// <summary>
+        /// usetype (graphic) [color] [source] [range or search level]
+        /// </summary>
         private IComparable UseType(string command, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1754,6 +1808,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// useobject (serial)
+        /// </summary>
         private bool UseObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
@@ -1774,6 +1831,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// useonce (graphic) [color]
+        /// </summary>
         private bool UseOnce(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // This is a bit problematic
@@ -5069,7 +5129,7 @@ namespace RazorEnhanced
 
             // Expressions
             public delegate IComparable ExpressionHandler(string expression, Argument[] args, bool quiet);
-            public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
+            //public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
 
             internal static readonly Dictionary<string, ExpressionHandler> _exprHandlers = new Dictionary<string, ExpressionHandler>();
 
@@ -5104,7 +5164,7 @@ namespace RazorEnhanced
                 Culture.NumberFormat.NumberDecimalSeparator = ".";
                 Culture.NumberFormat.NumberGroupSeparator = ",";
             }
-            
+
             /// <summary>
             /// An adapter that lets expressions be registered as commands
             /// </summary>
@@ -5120,9 +5180,10 @@ namespace RazorEnhanced
                 return true;
             }
 
-            public static void RegisterExpressionHandler<T>(string keyword, ExpressionHandler<T> handler) where T : IComparable
+            public static void RegisterExpressionHandler(string keyword, ExpressionHandler handler) 
             {
-                _exprHandlers[keyword] = (expression, args, quiet) => handler(expression, args, quiet);
+                //_exprHandlers[keyword] = (expression, args, quiet) => handler(expression, args, quiet);
+                _exprHandlers[keyword] = handler;
                 RegisterCommandHandler(keyword, ExpressionCommand); // also register expressions as commands
             }
 
@@ -5132,9 +5193,10 @@ namespace RazorEnhanced
                 return expression;
             }
 
-            public static void RegisterCommandHandler(string keyword, CommandHandler handler)
+            public static void RegisterCommandHandler(string keyword, CommandHandler handler, string docString="default")
             {
                 _commandHandlers[keyword] = handler;
+                DocItem di = new DocItem("", "UOSteamEngine", keyword, docString);
             }
 
             public static CommandHandler GetCommandHandler(string keyword)

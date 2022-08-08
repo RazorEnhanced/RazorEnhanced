@@ -378,7 +378,7 @@ namespace FastColoredTextBoxNS
 
         internal void DoAutocomplete(bool forced)
         {
-            if (!Menu.Enabled)
+           if (!Menu.Enabled)
             {
                 Menu.Close();
                 return;

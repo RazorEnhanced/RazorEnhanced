@@ -116,15 +116,13 @@ namespace RazorEnhanced.UI
 			{
 				fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
 				fastColoredTextBoxEditor.AutoIndentExistingLines = true;
-				
+				InitUOSSyntaxHighlight();
 			}
 			else
 			{
 				fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
+				InitPythonSyntaxHighlight();
 			}
-			// always do both in case I need to change
-			InitUOSSyntaxHighlight();
-			InitPythonSyntaxHighlight();
 
 			// Always have to make these or Open() wont work from UOS to PY
 			m_pe = new PythonEngine(this.SetErrorBox);
@@ -161,14 +159,41 @@ namespace RazorEnhanced.UI
 
 			// Fill in autocomplete
 			List<AutocompleteItem> items = new List<AutocompleteItem>();
+			keywords = keywords.Distinct().ToList();
 			keywords.Sort();
 			foreach (var item in keywords)
+			{
 				items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
+			}
 			m_popupMenu.Items.SetAutocompleteItems(items);
 
 			//Increase the width for individual items so that the entire name is visible
-			m_popupMenu.Items.MaximumSize = new Size(m_popupMenu.Items.Width + 20, m_popupMenu.Items.Height);
-			m_popupMenu.Items.Width = m_popupMenu.Items.Width + 20;
+			m_popupMenu.Items.MaximumSize = new Size(m_popupMenu.Items.Width + 400, m_popupMenu.Items.Height);
+			m_popupMenu.Items.Width = m_popupMenu.Items.Width + 400;
+
+			//
+			ToolTipDescriptions tooltip;
+			var methods = UOSteamEngine.Instance.AllKeywords().ToArray();
+			var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
+			foreach (var method in keywords)
+			{
+				var methodName = method;
+				var prms_name = new List<String>();
+				var prms_type = new List<String>();
+				var prms_name_type = new List<String>();
+				var prms_name_type_desc = new List<String>();
+				prms_name_type_desc.Add("Param1");
+				prms_name_type_desc.Add("Param2");
+
+				if (!autodocMethods.ContainsKey((string)method))
+				{
+					//tooltip = new ToolTipDescriptions(method, prms_name_type_desc.ToArray(), method.returnType, method.itemDescription.Trim() + "\n");
+					tooltip = new ToolTipDescriptions((string)method, prms_name_type_desc.ToArray(), "ret", "desc" + "\n");
+					autodocMethods.Add((string)method, tooltip);
+				}
+			}
+
+
 
 		}
 

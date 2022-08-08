@@ -715,6 +715,7 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Adds a response to the gump
         /// </summary>
         /// WorldResponse
         internal static void AddResponse(uint gumpid, int x, int y, string layout, string[] parsedStrings)
