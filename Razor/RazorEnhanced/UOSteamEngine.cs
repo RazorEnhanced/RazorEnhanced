@@ -330,7 +330,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("y", this.LocationY);
             UOScript.Interpreter.RegisterExpressionHandler("z", this.LocationZ);
             UOScript.Interpreter.RegisterExpressionHandler("organizing", this.Organizing);
-            UOScript.Interpreter.RegisterExpressionHandler("restocking", this.Restocking);
+            UOScript.Interpreter.RegisterExpressionHandler("restock", this.Restocking);
 
             UOScript.Interpreter.RegisterExpressionHandler("contents", this.CountContents);
             UOScript.Interpreter.RegisterExpressionHandler("inregion", this.InRegion);
@@ -431,6 +431,9 @@ namespace RazorEnhanced
         #region Expressions
 
 
+        /// <summary>
+        /// if contents (serial) ('operator') ('value')
+        /// </summary>
         private IComparable CountContents(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -451,6 +454,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// counttype (graphic) (color) (source) (operator) (value)
+        /// </summary>
         private IComparable CountType(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -466,8 +472,9 @@ namespace RazorEnhanced
             return false;
         }
 
-
-
+        /// <summary>
+        /// if injournal ('text') ['author'/'system']
+        /// </summary>
         private IComparable InJournal(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -488,6 +495,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// if listexists ('list name')
+        /// </summary>
         private IComparable ListExists(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -524,6 +534,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// x (serial)
+        /// </summary>
         IComparable LocationX(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -556,6 +569,10 @@ namespace RazorEnhanced
             throw new UOScript.RunTimeError(null, "X location serial not found");
             // return 0;
         }
+
+        /// <summary>
+        /// y (serial)
+        /// </summary>
         IComparable LocationY(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -587,6 +604,10 @@ namespace RazorEnhanced
             throw new UOScript.RunTimeError(null, "Y location serial not found");
             // return 0;
         }
+
+        /// <summary>
+        /// z (serial)
+        /// </summary>
         IComparable LocationZ(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -619,10 +640,18 @@ namespace RazorEnhanced
             // return 0;
         }
 
+
+        /// <summary>
+        /// if not organizing
+        /// </summary>
         IComparable Organizing(string expression, UOScript.Argument[] args, bool quiet)
         {
             return RazorEnhanced.Organizer.Status();
         }
+
+        /// <summary>
+        /// if not restock
+        /// </summary>
         IComparable Restocking(string expression, UOScript.Argument[] args, bool quiet)
         {
             return RazorEnhanced.Restock.Status();
@@ -727,7 +756,9 @@ namespace RazorEnhanced
             return retCount;
         }
 
-
+        /// <summary>
+        /// findtype (graphic) [color] [source] [amount] [range or search level]
+        /// </summary>
         private static IComparable FindType(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -824,6 +855,9 @@ namespace RazorEnhanced
 
         }
 
+        /// <summary>
+        /// property ('name') (serial) [operator] [value]
+        /// </summary>
         private static IComparable Property(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 2)
@@ -869,7 +903,9 @@ namespace RazorEnhanced
             return false;
         }
 
-
+        /// <summary>
+        /// ingump (gump id/'any') ('text')
+        /// </summary>
         private IComparable InGump(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 2)
@@ -889,6 +925,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// war (serial)
+        /// </summary>
         private IComparable InWarMode(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -904,6 +943,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// poisoned [serial]
+        /// </summary>
         private IComparable IsPoisoned(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -923,6 +965,10 @@ namespace RazorEnhanced
 
             return false;
         }
+
+        /// <summary>
+        /// name [serial]
+        /// </summary>
         private IComparable Name(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -942,6 +988,9 @@ namespace RazorEnhanced
             return false;
         }
         
+        /// <summary>
+        /// dead [serial]
+        /// </summary>
         private IComparable IsDead(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -960,6 +1009,10 @@ namespace RazorEnhanced
 
             return false;
         }
+
+        /// <summary>
+        /// directionname [serial]
+        /// </summary>
         private IComparable DirectionName(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -979,6 +1032,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// direction [serial]
+        /// </summary>
         private IComparable Direction(string expression, UOScript.Argument[] args, bool quiet)
         {
             //UOS Direction -  Start in top-right-corner: 0 | North. Inclements: clockwise
@@ -1011,6 +1067,10 @@ namespace RazorEnhanced
 
             return false;
         }
+
+        /// <summary>
+        /// flying [serial]
+        /// </summary>
         private IComparable IsFlying(string expression, UOScript.Argument[] args, bool quiet)
         {
             uint serial = (uint)Player.Serial;
@@ -1025,6 +1085,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// paralyzed [serial]
+        /// </summary>
         private IComparable IsParalyzed(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1038,6 +1102,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// mounted [serial]
+        /// </summary>
         private IComparable IsMounted(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1051,6 +1119,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// yellowhits [serial]
+        /// </summary>
         private IComparable YellowHits(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1075,6 +1147,10 @@ namespace RazorEnhanced
             0xb01000, // red		0x0022 6
             0xe0e000, // yellow		0x0035 7
         */
+
+        /// <summary>
+        /// criminal [serial]
+        /// </summary>
         private IComparable IsCriminal(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1088,6 +1164,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// murderer [serial]
+        /// </summary>
         private IComparable IsMurderer(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1102,6 +1182,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// enemy serial
+        /// </summary>
         private IComparable IsEnemy(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1116,6 +1199,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// friend serial
+        /// </summary>
         private IComparable IsFriend(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1130,6 +1217,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// gray serial
+        /// </summary>
         private IComparable IsGray(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1143,6 +1234,10 @@ namespace RazorEnhanced
             }
             return false;
         }
+
+        /// <summary>
+        /// innocent serial
+        /// </summary>
         private IComparable IsInnocent(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1157,6 +1252,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// bandage
+        /// </summary>
         private IComparable Bandage(string expression, UOScript.Argument[] args, bool quiet)
         {
             int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
@@ -1165,7 +1263,9 @@ namespace RazorEnhanced
             return count;
         }
 
-
+        /// <summary>
+        /// gumpexists (gump id/'any')
+        /// </summary>
         private IComparable GumpExists(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1181,6 +1281,9 @@ namespace RazorEnhanced
             return -1;
         }
 
+        /// <summary>
+        /// list ('list name') (operator) (value)
+        /// </summary>
         private IComparable ListCount(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 1)
@@ -1193,6 +1296,9 @@ namespace RazorEnhanced
             return 0;
         }
 
+        /// <summary>
+        /// inlist ('list name') ('element value')
+        /// </summary>
         private IComparable InList(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 1)
@@ -1203,8 +1309,9 @@ namespace RazorEnhanced
             return 0;
         }
 
-
-
+        /// <summary>
+        /// skillstate ('skill name') (operator) ('locked'/'up'/'down')
+        /// </summary>
         private IComparable SkillState(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 1)
@@ -1224,6 +1331,9 @@ namespace RazorEnhanced
             return "unknown";
         }
 
+        /// <summary>
+        /// inregion ('guards'/'town'/'dungeon'/'forest') [serial] [range]
+        /// </summary>
         private IComparable InRegion(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1265,16 +1375,25 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// findwand NOT IMPLEMENTED
+        /// </summary>
         private IComparable FindWand(string expression, UOScript.Argument[] args, bool quiet)
         {
             return ExpressionNotImplemented(expression, args, quiet);
         }
 
+        /// <summary>
+        /// inparty NOT IMPLEMENTED
+        /// </summary>
         private IComparable InParty(string expression, UOScript.Argument[] args, bool quiet)
         {
             return ExpressionNotImplemented(expression, args, quiet);
         }
 
+        /// <summary>
+        /// skill ('name') (operator) (value)
+        /// </summary>
         private IComparable Skill(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1288,7 +1407,9 @@ namespace RazorEnhanced
             return skillvalue;
         }
 
-
+        /// <summary>
+        /// findobject (serial) [color] [source] [amount] [range]
+        /// </summary>
         private IComparable FindObject(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1360,6 +1481,10 @@ namespace RazorEnhanced
             UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
             return true;
         }
+
+        /// <summary>
+        /// distance (serial) (operator) (value)
+        /// </summary>
         private IComparable Distance(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1396,6 +1521,9 @@ namespace RazorEnhanced
             return Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
         }
 
+        /// <summary>
+        /// inrange (serial) (range)
+        /// </summary>
         private IComparable InRange(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 2)
@@ -1435,6 +1563,10 @@ namespace RazorEnhanced
             int distance = Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, x, y);
             return (distance <= range);
         }
+
+        /// <summary>
+        /// buffexists ('buff name')
+        /// </summary>
         private IComparable BuffExists(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length >= 1)
@@ -1446,6 +1578,9 @@ namespace RazorEnhanced
 
         }
 
+        /// <summary>
+        /// findlayer (serial) (layer)
+        /// </summary>
         private IComparable FindLayer(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 2)
@@ -1468,6 +1603,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// counttypeground (graphic) (color) (range) (operator) (value)
+        /// </summary>
         private IComparable CountTypeGround(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1)
@@ -1494,6 +1632,9 @@ namespace RazorEnhanced
             return count;
         }
 
+        /// <summary>
+        /// infriendlist (serial)
+        /// </summary>
         private IComparable InFriendList(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length > 0)
@@ -1510,6 +1651,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        ///  timer ('timer name') (operator) (value)
+        /// </summary>
         private IComparable Timer(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
@@ -1517,12 +1661,19 @@ namespace RazorEnhanced
             return UOScript.Interpreter.GetTimer(args[0].AsString()).TotalMilliseconds;
 
         }
+
+        /// <summary>
+        ///  timerexists ('timer name')
+        /// </summary>
         private IComparable TimerExists(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
             return UOScript.Interpreter.TimerExists(args[0].AsString());
         }
 
+        /// <summary>
+        ///  targetexists ('timer name')
+        /// </summary>
         private IComparable TargetExists(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0) { WrongParameterCount(expression, 1, args.Length); }
@@ -1530,6 +1681,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        ///  waitingfortarget POORLY IMPLEMENTED
+        /// </summary>
         private IComparable WaitingForTarget(string expression, UOScript.Argument[] args, bool quiet)
         {
             //TODO: This is an very loose approximation. Waitingfortarget should know if there is any "pending target" coming from the server.
@@ -1537,6 +1691,9 @@ namespace RazorEnhanced
             return RazorEnhanced.Target.HasTarget();
         }
 
+        /// <summary>
+        /// hits [serial]
+        /// </summary>
         private IComparable Hits(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1557,6 +1714,10 @@ namespace RazorEnhanced
 
             // return Player.Hits;
         }
+
+        /// <summary>
+        /// diffhits [serial]
+        /// </summary>
         private IComparable DiffHits(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -1576,6 +1737,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// maxhits [serial]
+        /// </summary>
         private IComparable MaxHits(string expression, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 0)
@@ -2107,6 +2271,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// promptalias (alias name)
+        /// </summary>
 
         private bool PromptAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -2120,7 +2287,9 @@ namespace RazorEnhanced
             return true;
         }
 
-
+        /// <summary>
+        /// headmsg ('text') [color] [serial]
+        /// </summary>
         private bool HeadMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             string msg = args[0].AsString();
@@ -2146,6 +2315,9 @@ namespace RazorEnhanced
         }
 
         //TODO: Not implemented properly .. I dunno how to do a party only msg
+        /// <summary>
+        /// partymsg ('text') [color] [serial]
+        /// </summary>
         private bool PartyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
 
@@ -2166,6 +2338,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// msg text [color]
+        /// </summary>
         private bool MsgCommand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             string msg = args[0].AsString();
@@ -2182,6 +2357,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// createlist (list name)
+        /// </summary>
         private bool CreateList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length >= 1)
@@ -2192,6 +2370,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// pushlist('list name') ('element value') ['front'/'back']
+        /// </summary>
         private bool PushList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
