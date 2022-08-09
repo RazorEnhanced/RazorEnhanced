@@ -740,7 +740,7 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
+      <Link>RazorEnhanced\.editorconfig</Link>
     </None>
     <None Include="app.manifest" />
     <None Include="packages.config" />

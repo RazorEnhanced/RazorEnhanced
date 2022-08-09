@@ -1526,6 +1526,83 @@ namespace RazorEnhanced
             }
         }
 
+        // Find item by Name
+        /// <summary>
+        /// Find a single Item matching specific Name, Color and Container. 
+        /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
+        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
+        /// </summary>
+        /// <param name="itemName">Item Name filter.</param>
+        /// <param name="color">Color filter. (-1: any, 0: natural )</param>
+        /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="range">
+        /// Search subcontainers. 
+        ///     1,2,n: Maximum subcontainer depth
+        /// </param>
+        /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
+        /// <returns>The Item matching the criteria.</returns>
+
+        public static Item FindByName(string itemName, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            if (container != -1)  // search in specific container
+            {
+                // range should be # of packs deep to search .. but not implemented
+                Item cont = FindBySerial(container);
+                if (cont == null) // not valid serial or container not found
+                {
+                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    return null;
+                }
+                foreach (Item i in cont.Contains)
+                {
+                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+
+                    if (i.Name == itemName) // check item id
+                    {
+                        if (color != -1) // color -1 ALL
+                        {
+                            if (i.Hue == color)
+                                return i;
+                        }
+                        else
+                        {
+                            return i;
+                        }
+                    }
+                    else if (i.IsContainer && range != 0)
+                    {
+                        Item recursItem = FindByName(itemName, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
+                        if (recursItem != null)
+                            return recursItem;
+                    }
+                }
+                return null; // Return null if no item found
+            }
+            else  // Search in world
+            {
+                Items.Filter itemFilter = new Items.Filter
+                {
+                    Enabled = true
+                };
+                itemFilter.Name = itemName;
+                itemFilter.RangeMax = range;
+                itemFilter.CheckIgnoreObject = considerIgnoreList;
+
+                if (color != -1)
+                    itemFilter.Hues.Add(color);
+
+                List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+                foreach (Item found in containeritem)  // Return frist one found
+                    return found;
+
+                return null;
+            }
+        }
+
+
+
         // Single Click
         /// <summary>
         /// Send a single click network event to the server.

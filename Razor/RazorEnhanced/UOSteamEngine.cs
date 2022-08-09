@@ -60,27 +60,43 @@ namespace RazorEnhanced
             foreach (var cmd in UOScript.Interpreter._commandHandlers)
             {
                 var handler = cmd.Value;
+                if (handler.Method.Name == "ExpressionCommand")
+                {
+                    continue;
+                }
                 var documentation = XMLCommentReader.GetDocumentation(handler.Method);
                 documentation = XMLCommentReader.RemoveBaseIndentation(documentation);
                 var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
                 var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
                 if (methodSummary == "")
+                {
                     retlist.Add(cmd.Key);
+                }
                 else
+                {
                     retlist.Add(methodSummary);
+                }
             }
 
             foreach (var expr in UOScript.Interpreter._exprHandlers)
             {
                 var handler = expr.Value;
+                if (handler.Method.Name == "ExpressionCommand")
+                {
+                    continue;
+                }
                 var documentation = XMLCommentReader.GetDocumentation(handler.Method);
                 documentation = XMLCommentReader.RemoveBaseIndentation(documentation);
                 var methodSummary = XMLCommentReader.ExtractXML(documentation, "summary");
                 var returnDesc = XMLCommentReader.ExtractXML(documentation, "returns");
                 if (methodSummary == "")
+                {
                     retlist.Add(expr.Key);
+                }
                 else
+                {
                     retlist.Add(methodSummary);
+                }
             }
             return retlist;
         }
@@ -195,7 +211,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("clearhands", this.ClearHands);
             UOScript.Interpreter.RegisterCommandHandler("clickobject", this.ClickObject);
             UOScript.Interpreter.RegisterCommandHandler("bandageself", this.BandageSelf);
-            UOScript.Interpreter.RegisterCommandHandler("useobject", this.UseObject);
+            //UOScript.Interpreter.RegisterCommandHandler("useobject", this.UseObject);
             UOScript.Interpreter.RegisterCommandHandler("useonce", this.UseOnce);
             UOScript.Interpreter.RegisterCommandHandler("clearusequeue", this.CleanUseQueue);
             UOScript.Interpreter.RegisterCommandHandler("moveitem", this.MoveItem);
@@ -203,7 +219,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset);
             UOScript.Interpreter.RegisterCommandHandler("walk", this.Walk);
             UOScript.Interpreter.RegisterCommandHandler("turn", this.Turn);
-            UOScript.Interpreter.RegisterCommandHandler("run", this.Walk); // I dunno how to make him run
+            UOScript.Interpreter.RegisterCommandHandler("run", this.Run);
             UOScript.Interpreter.RegisterCommandHandler("useskill", this.UseSkill);
             UOScript.Interpreter.RegisterCommandHandler("feed", this.Feed);
             UOScript.Interpreter.RegisterCommandHandler("rename", this.RenamePet);
@@ -493,7 +509,9 @@ namespace RazorEnhanced
             return true;
         }
 
-
+        /// <summary>
+        /// findalias ('alias name')
+        /// </summary>
         IComparable FindAlias(string expression, UOScript.Argument[] args, bool quiet)
         {
 
@@ -1048,14 +1066,14 @@ namespace RazorEnhanced
         }
         /*
          // hue color #30
-			0x000000, // black		unused 0
-			0x30d0e0, // blue		0x0059 1
-			0x60e000, // green		0x003F 2
-			0x9090b2, // greyish	0x03b2 3
-			0x909090, // grey		   "   4
-			0xd88038, // orange		0x0090 5
-			0xb01000, // red		0x0022 6
-			0xe0e000, // yellow		0x0035 7
+            0x000000, // black		unused 0
+            0x30d0e0, // blue		0x0059 1
+            0x60e000, // green		0x003F 2
+            0x9090b2, // greyish	0x03b2 3
+            0x909090, // grey		   "   4
+            0xd88038, // orange		0x0090 5
+            0xb01000, // red		0x0022 6
+            0xe0e000, // yellow		0x0035 7
         */
         private IComparable IsCriminal(string expression, UOScript.Argument[] args, bool quiet)
         {
@@ -1704,7 +1722,9 @@ namespace RazorEnhanced
 
             return true;
         }
-
+        /// <summary>
+        /// walk (direction)
+        /// </summary>
         private bool Walk(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
@@ -1719,6 +1739,26 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// run (direction)
+        /// </summary>
+        private bool Run(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length == 0)
+                Player.Run(Player.Direction);
+
+            if (args.Length == 1)
+            {
+                string direction = args[0].AsString();
+                Player.Run(direction);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// turn (direction)
+        /// </summary>
         private bool Turn(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -1869,6 +1909,10 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// clearusequeue resets the use once list
+        /// </summary>
+        /// 
         private bool CleanUseQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             m_serialUseOnceIgnoreList.Clear();
@@ -1876,6 +1920,9 @@ namespace RazorEnhanced
         }
 
 
+        /// <summary>
+        /// (serial) (destination) [(x, y, z)] [amount]
+        /// </summary>
         private bool MoveItem(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
@@ -1905,6 +1952,10 @@ namespace RazorEnhanced
 
             return true;
         }
+
+        /// <summary>
+        /// useskill ('skill name'/'last')
+        /// </summary>
         private bool UseSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -1925,7 +1976,12 @@ namespace RazorEnhanced
             return true;
         }
 
-        // Feed doesn't support food groups etc unless someone adds it
+
+        /// <summary>
+        /// feed (serial) (graphic) [color] [amount]
+        /// </summary>
+        /// Feed doesn't support food groups etc unless someone adds it
+        /// Config has the data now
         private bool Feed(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
@@ -1957,6 +2013,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// rename (serial) ('name')
+        /// </summary>
         private bool RenamePet(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
@@ -1971,7 +2030,9 @@ namespace RazorEnhanced
 
             return true;
         }
-
+        /// <summary>
+        /// togglehands ('left'/'right')
+        /// </summary>
         private bool ToggleHands(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2013,6 +2074,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// unsetalias (alias name)
+        /// </summary>
         private bool UnSetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2024,6 +2088,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// setalias (alias name) [serial]
+        /// </summary>
         private bool SetAlias(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2159,7 +2226,9 @@ namespace RazorEnhanced
         }
 
 
-        //Dalamar: Create all stubs for methods
+        /// <summary>
+        /// moveitemoffset (serial) 'ground' [(x, y, z)] [amount] 
+        /// </summary>
         private bool MoveItemOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             uint serial = args[0].AsSerial();
@@ -2195,6 +2264,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// movetype (graphic) (source) (destination) [(x, y, z)] [color] [amount] [range or search level]
+        /// </summary>
         private IComparable MoveType(string command, UOScript.Argument[] args, bool quiet)
         {
             if (args.Length == 3)
@@ -2287,7 +2359,9 @@ namespace RazorEnhanced
 
             return false;
         }
-
+        /// <summary>
+        /// movetypeoffset (graphic) (source) 'ground' [(x, y, z)] [color] [amount] [range or search level]
+        /// </summary>
         private bool MoveTypeOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2 || args.Length == 3)
@@ -2374,6 +2448,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// equipitem (serial) (layer)
+        /// </summary>
         private bool EquipItem(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
@@ -2384,7 +2461,9 @@ namespace RazorEnhanced
             }
             return true;
         }
-
+        /// <summary>
+        /// togglemounted
+        /// </summary>
         private bool ToggleMounted(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // uosteam has a crappy implementation
@@ -2416,11 +2495,16 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// NOT IMPLEMENTED
+        /// </summary>
         private bool EquipWand(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
         }
-
+        /// <summary>
+        /// buy ('list name')
+        /// </summary>
         private bool Buy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2440,6 +2524,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// sell ('list name')
+        /// </summary>
         private bool Sell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2459,18 +2546,27 @@ namespace RazorEnhanced
             return true;
 
         }
-
+        /// <summary>
+        /// clearbuy
+        /// </summary>
         private bool ClearBuy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             BuyAgent.Disable();
             return true;
         }
 
+        /// <summary>
+        /// clearsell
+        /// </summary>
         private bool ClearSell(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             SellAgent.Disable();
             return true;
         }
+
+        /// <summary>
+        /// restock ('profile name') [source] [destination] [dragDelay]
+        /// </summary>
         private bool Restock(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
 
@@ -2509,6 +2605,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// organizer ('profile name') [source] [destination] [dragDelay]
+        /// </summary>
         private bool Organizer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             int src = -1;
@@ -2556,11 +2655,17 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// autoloot - NOT IMPLEMENTED
+        /// </summary>
         private bool Autoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// dress ['profile name']
+        /// </summary>
         private bool Dress(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
 
@@ -2580,6 +2685,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// undress ['profile name']
+        /// </summary
         private bool Undress(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
 
@@ -2599,11 +2707,17 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// dressconfig What is this supposed to do ? NOT IMPLEMENTED
+        /// </summary>
         private bool DressConfig(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// toggleautoloot
+        /// </summary>
         private bool ToggleAutoloot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (RazorEnhanced.AutoLoot.Status())
@@ -2617,6 +2731,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// togglescavenger
+        /// </summary>
         private bool ToggleScavenger(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (RazorEnhanced.Scavenger.Status())
@@ -2630,11 +2747,17 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// counter ('format') (operator) (value) NOT IMPLEMENTED
+        /// </summary>
         private bool Counter(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+                return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// waitforgump (gump id/'any') (timeout)
+        /// </summary>
         private bool WaitForGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
@@ -2646,6 +2769,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// replygump gump-id button
+        /// </summary>
         private bool ReplyGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
@@ -2657,6 +2783,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// closegump 'container' 'serial'
+        /// </summary>
         private bool CloseGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
 
@@ -2676,12 +2805,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// clearjournal
+        /// </summary>
         private bool ClearJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             m_journal.Clear();
             return true;
         }
 
+        /// <summary>
+        /// waitforjournal ('text') (timeout) 
+        /// </summary>
         private bool WaitForJournal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
@@ -2693,6 +2828,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// poplist ('list name') ('element value'/'front'/'back')
+        /// </summary>
         private bool PopList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             string frontBack = args[1].AsString().ToLower();
@@ -2700,24 +2838,36 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// removelist ('list name')
+        /// </summary>
         private bool RemoveList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             UOScript.Interpreter.DestroyList(args[0].AsString());
             return true;
         }
 
+        /// <summary>
+        /// clearlist ('list name')
+        /// </summary>
         private bool ClearList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             UOScript.Interpreter.ClearList(args[0].AsString());
             return true;
         }
 
+        /// <summary>
+        /// ping
+        /// </summary>
         private bool Ping(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Commands.Ping(null);
             return true;
         }
 
+        /// <summary>
+        /// playmacro 'name'
+        /// </summary>
         private bool PlayMacro(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length > 0)
@@ -2732,7 +2882,10 @@ namespace RazorEnhanced
 
             return true;
         }
-  
+
+        /// <summary>
+        /// playsound (sound id/'file name') 
+        /// </summary>
         private bool PlaySound(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2745,29 +2898,44 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// resync
+        /// </summary>
         private bool Resync(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Misc.Resync();
             return true;
         }
 
+        /// <summary>
+        /// snapshot 
+        /// </summary>
         private bool Snapshot(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.ScreenCapManager.CaptureNow();
             return true;
         }
 
+        /// <summary>
+        /// hotkeys
+        /// </summary>
         private bool Hotkeys(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// where
+        /// </summary>
         private bool Where(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Commands.Where(null);
             return true;
         }
 
+        /// <summary>
+        /// messagebox ('title') ('body')
+        /// </summary>
         private bool MessageBox(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             string title = "not specified";
@@ -2784,6 +2952,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// mapuo NOT IMPEMENTED
+        /// </summary>
         private bool MapUO(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
@@ -2815,6 +2986,9 @@ namespace RazorEnhanced
             mouse_event(MOUSEEVENTF_LEFTUP, xpos, ypos, 0, 0);
         }
 
+        /// <summary>
+        /// clickscreen (x) (y) ['single'/'double'] ['left'/'right']
+        /// </summary>
         private bool ClickScreen(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
@@ -2854,6 +3028,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// paperdoll
+        /// </summary>
         private bool Paperdoll(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
 
@@ -2862,29 +3039,44 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// helpbutton  NOT IMPLEMENTED
+        /// </summary>
         private bool HelpButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// guildbutton 
+        /// </summary>
         private bool GuildButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.GuildButton();
             return true;
         }
 
+        /// <summary>
+        /// questsbutton 
+        /// </summary>
         private bool QuestsButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Player.QuestButton();
             return true;
         }
 
+        /// <summary>
+        /// logoutbutton 
+        /// </summary>
         private bool LogoutButton(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Misc.Disconnect();
             return true;
         }
 
+        /// <summary>
+        /// virtue('honor'/'sacrifice'/'valor') 
+        /// </summary>
         private bool Virtue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2896,6 +3088,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// guildmsg ('text')
+        /// </summary>
         private bool GuildMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2906,6 +3101,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// allymsg ('text')
+        /// </summary>
         private bool AllyMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2916,6 +3114,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// whispermsg ('text') [color]
+        /// </summary>
         private bool WhisperMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
@@ -2932,6 +3133,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// yellmsg ('text') [color]
+        /// </summary>
         private bool YellMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
@@ -2948,6 +3152,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// location (serial)
+        /// </summary>
         private bool Location(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             uint serial = args[0].AsSerial();
@@ -2957,6 +3164,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// sysmsg (text) [color]
+        /// </summary>
         private bool SysMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -2971,6 +3181,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// chatmsg (text) [color]
+        /// </summary>
         private bool ChatMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
@@ -2987,6 +3200,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// emotemsg (text) [color]
+        /// </summary>
         private bool EmoteMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
@@ -3003,6 +3219,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// promptmsg (text) [color]
+        /// </summary>
         private bool PromptMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -3013,6 +3232,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// timermsg (delay) (text) [color]
+        /// </summary>
         private bool TimerMsg(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             //Verrify/Guessing parameter order.
@@ -3029,6 +3251,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// waitforprompt (timeout)
+        /// </summary>
         private bool WaitForPrompt(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -3039,12 +3264,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// cancelprompt 
+        /// </summary>
         private bool CancelPrompt(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Misc.CancelPrompt();
             return true;
         }
 
+        /// <summary>
+        /// addfriend [serial]
+        /// </summary>
         private bool AddFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // docs say something about options, guessing thats the selection ?
@@ -3074,12 +3305,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// removefriend NOT IMPLEMENTED
+        /// </summary>
         private bool RemoveFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // the Razor API for removing a frend is not pretty ( agent code, midex up with form code a bit, NotImplemented for now )
             return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// contextmenu (serial) (option)
+        /// </summary>
         private bool ContextMenu(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // docs say something about options, guessing thats the selection ?
@@ -3093,6 +3330,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// waitforcontext (serial) (option) (timeout)
+        /// </summary>
         private bool WaitForContext(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
@@ -3130,6 +3370,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// ignoreobject (serial)
+        /// </summary>
         private bool IgnoreObject(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -3140,12 +3383,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// clearignorelist
+        /// </summary>
         private bool ClearIgnoreList(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Misc.ClearIgnore();
             return true;
         }
 
+        /// <summary>
+        /// setskill ('skill name') ('locked'/'up'/'down')
+        /// </summary>
         private bool SetSkill(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
@@ -3170,6 +3419,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// waitforproperties (serial) (timeout)
+        /// </summary>
         private bool WaitForProperties(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
@@ -3185,11 +3437,17 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// autocolorpick (color) NOT IMPLEMENTED
+        /// </summary>
         private bool AutoColorPick(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
         }
 
+        /// <summary>
+        /// waitforcontents (serial) (timeout)
+        /// </summary>
         private bool WaitForContents(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
@@ -3223,6 +3481,9 @@ namespace RazorEnhanced
             return false;
         }
 
+        /// <summary>
+        /// miniheal [serial]
+        /// </summary>
         private bool MiniHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (SelfCure()) { return true;  }
@@ -3247,6 +3508,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// bigheal [serial]
+        /// </summary>
         private bool BigHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (SelfCure()) { return true; }
@@ -3271,6 +3535,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// cast (spell id/'spell name'/'last') [serial]
+        /// </summary>
         private bool Cast(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -3294,6 +3561,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// chivalryheal [serial] 
+        /// </summary>
         private bool ChivalryHeal(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             RazorEnhanced.Target.Cancel();
@@ -3314,6 +3584,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// waitfortarget (timeout)
+        /// </summary>
         private bool WaitForTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             int delay = 1000;
@@ -3331,12 +3604,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// cancelautotarget
+        /// </summary>
         private bool CancelAutoTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             Assistant.Targeting.CancelAutoTarget();
             return true;
         }
 
+        /// <summary>
+        /// canceltarget
+        /// </summary>
         private bool CancelTarget(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             //https://discord.com/channels/292282788311203841/383331237269602325/839987031853105183
@@ -3345,6 +3624,10 @@ namespace RazorEnhanced
             //RazorEnhanced.Target.Cancel();
             return true;
         }
+
+        /// <summary>
+        /// targetresource (serial) ('ore'/'sand'/'wood'/'graves'/'red mushrooms')
+        /// </summary>
         private bool TargetResource(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // targetresource serial (ore/sand/wood/graves/red mushrooms)
@@ -3368,6 +3651,9 @@ namespace RazorEnhanced
             */
         }
 
+        /// <summary>
+        /// target (serial)
+        /// </summary>
         private bool Target(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
@@ -3378,6 +3664,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// getenemy ('notoriety') ['filter']
+        /// </summary>
         private bool GetEnemy(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
@@ -3453,6 +3742,10 @@ namespace RazorEnhanced
             }
             return true;
         }
+
+        /// <summary>
+        /// getfriend ('notoriety') ['filter']
+        /// </summary>
         private bool GetFriend(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
@@ -3529,6 +3822,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// targettype (graphic) [color] [range]
+        /// </summary>
         private bool TargetType(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // targettype (graphic) [color] [range]
@@ -3572,6 +3868,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// targetground (graphic) [color] [range]
+        /// </summary>
         private bool TargetGround(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // targettype (graphic) [color] [range]
@@ -3611,6 +3910,10 @@ namespace RazorEnhanced
         }
 
         internal static int[] LastTileTarget = new int[4] {0, 0, 0, 0};
+
+        /// <summary>
+        ///  targettile ('last'/'current'/(x y z)) [graphic]
+        /// </summary>
         private bool TargetTile(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
@@ -3677,6 +3980,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// targettileoffset (x y z) [graphic]
+        /// </summary>
         private bool TargetTileOffset(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 3) { WrongParameterCount(command, 3, args.Length); }
@@ -3728,7 +4034,9 @@ namespace RazorEnhanced
             RazorEnhanced.Target.TargetExecute(LastTileTarget[0], LastTileTarget[1], LastTileTarget[2], LastTileTarget[3]);
             return true;
         }
-
+        /// <summary>
+        /// targettilerelative (serial) (range) [reverse = 'true' or 'false'] [graphic]
+        /// </summary>
         private bool TargetTileRelative(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // targettilerelative   (serial) (range) [reverse = 'true' or 'false'] [graphic]
@@ -3788,6 +4096,10 @@ namespace RazorEnhanced
 
             return true;
         }
+
+        /// <summary>
+        /// war (on/off)
+        /// </summary>
         private bool WarMode(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             // warmode on/off
@@ -3801,12 +4113,18 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        ///cleartargetqueue
+        /// </summary>
         private bool ClearTargetQueue(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             RazorEnhanced.Target.ClearQueue();
             return true;
         }
 
+        /// <summary>
+        ///  settimer ('timer name') (milliseconds)
+        /// </summary>
         private bool SetTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
@@ -3818,6 +4136,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        ///  removetimer ('timer name')
+        /// </summary>
         private bool RemoveTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 1)
@@ -3829,6 +4150,9 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        ///  createtimer ('timer name')
+        /// </summary>
         private bool CreateTimer(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 1)
@@ -3840,6 +4164,10 @@ namespace RazorEnhanced
             return true;
         }
 
+        /// <summary>
+        /// shownames NOT IMPLEMENTED 
+        /// </summary>
+        /* shownames ['mobiles'/'corpses'] */
         private bool ShowNames(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
             return NotImplemented(command, args, quiet, force);
