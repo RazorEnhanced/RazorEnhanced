@@ -189,6 +189,105 @@ namespace RazorEnhanced
             }
         }
 
+
+
+
+        /// <summary>
+        /// Set a bool Config property in CUO by name
+        /// </summary>
+        public static void ProfilePropertySet(string propertyName, bool enable)
+        {
+            if (!Client.IsOSI)
+            {
+                var currentProfileProperty = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.ProfileManager")?.GetProperty("CurrentProfile", BindingFlags.Public | BindingFlags.Static);
+                if (currentProfileProperty != null)
+                {
+                    var profile = currentProfileProperty.GetValue(null);
+                    if (profile != null)
+                    {
+                        var profileClass = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Profile");
+                        System.Reflection.PropertyInfo property = null;
+                        foreach (var propSearch in profileClass.GetProperties())
+                        {
+                            if (propSearch.Name == propertyName)
+                            {
+                                property = propSearch;
+                                break;
+                            }
+                        }
+                        if (property != null)
+                        {
+                            property.SetValue(profile, enable);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set a int Config property in CUO by name
+        /// </summary>
+        public static void ProfilePropertySet(string propertyName, int value)
+        {
+            if (!Client.IsOSI)
+            {
+                var currentProfileProperty = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.ProfileManager")?.GetProperty("CurrentProfile", BindingFlags.Public | BindingFlags.Static);
+                if (currentProfileProperty != null)
+                {
+                    var profile = currentProfileProperty.GetValue(null);
+                    if (profile != null)
+                    {
+                        var profileClass = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Profile");
+                        System.Reflection.PropertyInfo property = null;
+                        foreach (var propSearch in profileClass.GetProperties())
+                        {
+                            if (propSearch.Name == propertyName)
+                            {
+                                property = propSearch;
+                                break;
+                            }
+                        }
+                        if (property != null)
+                        {
+                            property.SetValue(profile, value);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set a string Config property in CUO by name
+        /// </summary>
+        public static void ProfilePropertySet(string propertyName, string value)
+        {
+            if (!Client.IsOSI)
+            {
+                var currentProfileProperty = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.ProfileManager")?.GetProperty("CurrentProfile", BindingFlags.Public | BindingFlags.Static);
+                if (currentProfileProperty != null)
+                {
+                    var profile = currentProfileProperty.GetValue(null);
+                    if (profile != null)
+                    {
+                        var profileClass = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Profile");
+                        System.Reflection.PropertyInfo property = null;
+                        foreach (var propSearch in profileClass.GetProperties())
+                        {
+                            if (propSearch.Name == propertyName)
+                            {
+                                property = propSearch;
+                                break;
+                            }
+                        }
+                        if (property != null)
+                        {
+                            property.SetValue(profile, value);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
 }
