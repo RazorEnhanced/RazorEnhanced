@@ -618,7 +618,7 @@ namespace RazorEnhanced.UI
                     }
                     string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     UOSteamEngine uosteam = UOSteamEngine.Instance;
-                    uosteam.Execute(lines);
+                    uosteam.Execute(lines, this.SetErrorBox);
                     SetErrorBox("Script " + m_Filename + " run completed!");
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
                 }

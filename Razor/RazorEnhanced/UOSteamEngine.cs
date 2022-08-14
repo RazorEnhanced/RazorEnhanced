@@ -24,6 +24,10 @@ namespace RazorEnhanced
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
         private Journal m_journal;
+        public class StopException : Exception
+        {
+            public StopException() : base("Stop encountered") { }
+        }
 
         // useOnceIgnoreList
         private readonly List<int> m_serialUseOnceIgnoreList;
@@ -156,15 +160,35 @@ namespace RazorEnhanced
 
         public void Execute(string filename)
         {
-            var root = Lexer.Lex(filename);
-            UOScript.Script script = new UOScript.Script(root);
-            Execute(script);
+            try
+            {
+                var root = Lexer.Lex(filename);
+                UOScript.Script script = new UOScript.Script(root, Misc.SendMessage);
+                Execute(script);
+            }
+            catch (UOSteamEngine.StopException)
+            {
+                Misc.ScriptStop(Path.GetFileName(filename));
+            }
+            catch (Exception e)
+            {
+                Misc.ScriptStop(Path.GetFileName(filename));
+                throw;
+            }
+
         }
-        public void Execute(string[] textLines)
+        public void Execute(string[] textLines, Action<string> writer)
         {
-            var root = Lexer.Lex(textLines);
-            UOScript.Script script = new UOScript.Script(root);
-            Execute(script);
+            try
+            {
+                var root = Lexer.Lex(textLines);
+                UOScript.Script script = new UOScript.Script(root, writer);
+                Execute(script);
+            }
+            catch (UOSteamEngine.StopException)
+            {
+                // nothing to do for an edit session
+            }
         }
 
         public void Execute(UOScript.Script script)
@@ -2009,6 +2033,7 @@ namespace RazorEnhanced
                 return false;
 
             Items.UseItem(item.Serial);
+            Misc.Pause(500);
             return true;
         }
 
@@ -2026,6 +2051,7 @@ namespace RazorEnhanced
             if (serial.IsItem)
             {
                 Items.UseItem(serial);
+                Misc.Pause(500);
             }
             else
             {
@@ -2068,6 +2094,7 @@ namespace RazorEnhanced
             {
                 m_serialUseOnceIgnoreList.Add(selectedItem.Serial);
                 Items.UseItem(selectedItem.Serial);
+                Misc.Pause(500);
             }
 
             return true;
@@ -4472,11 +4499,13 @@ namespace RazorEnhanced
 
             public readonly ASTNode StartNode;
             public readonly Scope Parent;
+            public System.Diagnostics.Stopwatch timer;
 
             public Scope(Scope parent, ASTNode start)
             {
                 Parent = parent;
                 StartNode = start;
+                timer = new System.Diagnostics.Stopwatch();
             }
 
             public Argument GetVar(string name)
@@ -4707,6 +4736,7 @@ namespace RazorEnhanced
         public class Script
         {
             bool Debug { get; set; }
+            Action<string> debugWriter;
 
             public Script()
             {
@@ -4788,8 +4818,9 @@ namespace RazorEnhanced
             // scripts to a bytecode. That would allow more errors
             // to be caught with better error messages, as well as
             // make the scripts execute more quickly.
-            public Script(ASTNode root)
+            public Script(ASTNode root, Action<string> writer)
             {
+                debugWriter = writer;
                 // Set current to the first statement
                 _statement = root.FirstChild();
 
@@ -4947,7 +4978,7 @@ namespace RazorEnhanced
                             {
                                 PushScope(node);
                             }
-
+                            _scope.timer.Start();
                             var expr = node.FirstChild();
                             var result = EvaluateExpression(ref expr);
 
@@ -4972,6 +5003,10 @@ namespace RazorEnhanced
                                     {
                                         if (depth == 0)
                                         {
+                                            var duration = _scope.timer.ElapsedMilliseconds;
+                                            if (duration < 500)
+                                                Misc.Pause((int)(500 - duration));
+                                            _scope.timer.Reset();
                                             PopScope();
                                             // Go one past the endwhile so the loop doesn't repeat
                                             Advance();
@@ -4989,6 +5024,7 @@ namespace RazorEnhanced
                     case ASTNodeType.ENDWHILE:
                         // Walk backward to the while statement
                         bool curDebug = Debug;
+                        int whileStmnts = 0;
                         Debug = false; // dont print our internal movement
 
                         _statement = _statement.Prev();
@@ -4997,6 +5033,7 @@ namespace RazorEnhanced
 
                         while (_statement != null)
                         {
+                            whileStmnts++;
                             node = _statement.FirstChild();
 
                             if (node.Type == ASTNodeType.ENDWHILE)
@@ -5013,6 +5050,11 @@ namespace RazorEnhanced
 
                             _statement = _statement.Prev();
                         }
+
+                        var duration2 = _scope.timer.ElapsedMilliseconds;
+                        if (duration2 < 500)
+                            Misc.Pause((int)(500 - duration2));
+                        _scope.timer.Reset();
                         Debug = curDebug;
                         if (_statement == null)
                             throw new RunTimeError(node, "Unexpected endwhile");
@@ -5027,7 +5069,7 @@ namespace RazorEnhanced
                             if (_scope.StartNode != node)
                             {
                                 PushScope(node);
-
+                                _scope.timer.Start();
                                 // Grab the arguments
                                 var max = node.FirstChild();
 
@@ -5114,8 +5156,8 @@ namespace RazorEnhanced
                             PS: feels like writing intentionally broken code, but it's 100% UOSteam behaviour
                             */
 
-        // The iterator's name is the hash code of the for loop's ASTNode.
-        var children = node.Children();
+                            // The iterator's name is the hash code of the for loop's ASTNode.
+                            var children = node.Children();
                             ASTNode startParam = children[0];
                             ASTNode endParam = null;
                             ASTNode listParam;
@@ -5161,7 +5203,6 @@ namespace RazorEnhanced
                                 if (_scope.StartNode != node)
                                 {
                                     PushScope(node);
-
                                     // Create a dummy argument that acts as our iterator object
                                     var iter = new ASTNode(ASTNodeType.INTEGER, idx.ToString(), node, 0);
                                     _scope.SetVar(iterName, new Argument(this, iter));
@@ -5352,7 +5393,9 @@ namespace RazorEnhanced
                             throw new RunTimeError(node, "Unexpected continue");
                         break;
                     case ASTNodeType.STOP:
+                        UOScript.Interpreter.StopScript();
                         _statement = null;
+                        throw(new UOSteamEngine.StopException());
                         break;
                     case ASTNodeType.REPLAY:
                         _statement = _statement.Parent.FirstChild();
@@ -5365,7 +5408,6 @@ namespace RazorEnhanced
 
                         break;
                 }
-
                 return (_statement != null);
             }
 
@@ -5376,7 +5418,7 @@ namespace RazorEnhanced
                 if (Debug)
                 {
                     if (_statement != null)
-                        Misc.SendMessage(String.Format("Line: {0}", _statement.LineNumber+1), 32);
+                        debugWriter(String.Format("Line: {0}", _statement.LineNumber+1));
                 }
             }
 
@@ -5453,6 +5495,7 @@ namespace RazorEnhanced
                 {
                     case ASTNodeType.UNARY_EXPRESSION:
                         return EvaluateUnaryExpression(ref node);
+
                     case ASTNodeType.BINARY_EXPRESSION:
                         return EvaluateBinaryExpression(ref node);
                 }
@@ -5471,9 +5514,7 @@ namespace RazorEnhanced
                         throw new RunTimeError(node, "Invalid logical expression");
 
                     bool rhs;
-
                     var e = node.FirstChild();
-
                     switch (node.Type)
                     {
                         case ASTNodeType.UNARY_EXPRESSION:
@@ -5575,6 +5616,8 @@ namespace RazorEnhanced
 
             private bool EvaluateBinaryExpression(ref ASTNode node)
             {
+                node = EvaluateModifiers(node, out bool quiet, out _, out bool ifnot);
+
                 // Evaluate the left hand side
                 var lhs = EvaluateBinaryOperand(ref node);
 
@@ -5585,7 +5628,11 @@ namespace RazorEnhanced
                 // Evaluate the right hand side
                 var rhs = EvaluateBinaryOperand(ref node);
 
-                return CompareOperands(op, lhs, rhs);
+                var result = CompareOperands(op, lhs, rhs);
+                if (ifnot)
+                    return CompareOperands(ASTNodeType.EQUAL, result, false);
+                else
+                    return CompareOperands(ASTNodeType.EQUAL, result, true);
             }
 
             private IComparable EvaluateBinaryOperand(ref ASTNode node)
@@ -5786,7 +5833,7 @@ namespace RazorEnhanced
             public static bool ListContains(string name, Argument arg)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("ListContains {0} does not exist", name));
 
                 return _lists[name].Contains(arg);
             }
@@ -5794,7 +5841,7 @@ namespace RazorEnhanced
             internal static List<Argument> ListContents(string name)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("ListContents {0} does not exist", name));
 
                 return _lists[name];
             }
@@ -5803,7 +5850,7 @@ namespace RazorEnhanced
             public static int ListLength(string name)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("ListLength {0} does not exist", name));
 
                 return _lists[name].Count;
             }
@@ -5811,7 +5858,7 @@ namespace RazorEnhanced
             public static void PushList(string name, Argument arg, bool front, bool unique)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("PushList {0} does not exist", name));
 
                 if (unique && _lists[name].Contains(arg))
                     return;
@@ -5825,7 +5872,7 @@ namespace RazorEnhanced
             public static bool PopList(string name, Argument arg)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("PopList {0} does not exist", name));
 
                 return _lists[name].Remove(arg);
             }
@@ -5833,7 +5880,7 @@ namespace RazorEnhanced
             public static bool PopList(string name, bool front)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("PopList {0} does not exist", name));
 
                 var idx = front ? 0 : _lists[name].Count - 1;
                 _lists[name].RemoveAt(idx);
@@ -5844,7 +5891,7 @@ namespace RazorEnhanced
             public static Argument GetListValue(string name, int idx)
             {
                 if (!_lists.ContainsKey(name))
-                    throw new RunTimeError(null, "List does not exist");
+                    throw new RunTimeError(null, String.Format("GetListValue {0} does not exist", name));
 
                 var list = _lists[name];
 
@@ -5862,7 +5909,7 @@ namespace RazorEnhanced
             public static TimeSpan GetTimer(string name)
             {
                 if (!_timers.TryGetValue(name, out DateTime timestamp))
-                    throw new RunTimeError(null, "Timer does not exist");
+                    throw new RunTimeError(null, String.Format("GetTimer {0} does not exist", name));
 
                 TimeSpan elapsed = DateTime.UtcNow - timestamp;
 
@@ -6196,7 +6243,6 @@ namespace RazorEnhanced
 
         public static ASTNode Lex(string fname)
         {
-            //_filename = fname;
             var lines = System.IO.File.ReadAllLines(fname);
             return Lexer.Lex(lines);
 
@@ -6515,13 +6561,8 @@ namespace RazorEnhanced
 
             foreach (var lexeme in lexemes)
             {
-                if (lexeme == "not")
-                {
-                    // The not lexeme only appears in unary expressions.
-                    // Binary expressions would use "!=".
-                    unary = true;
-                }
-                else if (IsOperator(lexeme))
+                
+                if (IsOperator(lexeme))
                 {
                     // Operators mean it is a binary expression.
                     binary = true;
@@ -6566,6 +6607,11 @@ namespace RazorEnhanced
             var expr = node.Push(ASTNodeType.BINARY_EXPRESSION, null, _curLine);
 
             int i = 0;
+            if (lexemes[i] == "not")
+            {
+                expr.Push(ASTNodeType.NOT, null, _curLine);
+                i++;
+            }
 
             // The expressions on either side of the operator can be values
             // or operands that need to be evaluated.
