@@ -5038,9 +5038,10 @@ namespace RazorEnhanced
                                     {
                                         if (depth == 0)
                                         {
-                                            var duration = _scope.timer.ElapsedMilliseconds;
-                                            if (duration < 500)
-                                                Misc.Pause((int)(500 - duration));
+                                            int duration = (int)_scope.timer.ElapsedMilliseconds;
+                                            const int minimumLoopDelay = 500;
+                                            if (duration < minimumLoopDelay)
+                                                Misc.Pause(minimumLoopDelay - duration);
                                             _scope.timer.Reset();
                                             PopScope();
                                             // Go one past the endwhile so the loop doesn't repeat
