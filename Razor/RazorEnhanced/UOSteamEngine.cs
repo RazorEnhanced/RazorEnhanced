@@ -362,6 +362,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterExpressionHandler("findobject", this.FindObject);
             UOScript.Interpreter.RegisterExpressionHandler("useobject", this.UseObjExp);
             UOScript.Interpreter.RegisterExpressionHandler("distance", this.Distance);
+            UOScript.Interpreter.RegisterExpressionHandler("graphic", this.Graphic);
             UOScript.Interpreter.RegisterExpressionHandler("inrange", this.InRange);
             UOScript.Interpreter.RegisterExpressionHandler("buffexists", this.BuffExists);
             UOScript.Interpreter.RegisterExpressionHandler("property", Property);
@@ -1505,6 +1506,40 @@ namespace RazorEnhanced
             UOScript.Interpreter.SetAlias("found", (uint)item.Serial);
             return true;
         }
+
+        /// <summary>
+        /// graphic (serial) (operator) (value)
+        /// </summary>
+        private IComparable Graphic(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length > 1)
+            {
+                throw new UOScript.RunTimeError(null, "graphic Object requires 0 or 1 parameters");
+            }
+
+            if (args.Length == 0)
+                return Player.MobileID;
+
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item == null)
+                    return Int32.MaxValue;
+                return item.ItemID;
+            }
+            if (thing.IsMobile)
+            {
+                Mobile item = Mobiles.FindBySerial((int)serial);
+                if (item == null)
+                    return Int32.MaxValue;
+                return item.MobileID;
+            }
+
+            return Int32.MaxValue;
+        }
+
 
         /// <summary>
         /// distance (serial) (operator) (value)
