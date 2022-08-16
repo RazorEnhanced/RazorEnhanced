@@ -27,7 +27,7 @@ namespace Assistant
                 {
                     RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script
                     // Can refresh the script tables, but it causes hotkey tables to collapse. not worth it
-                    //Engine.MainWindow.SafeAction(s => { s.ReloadScriptTable(); });
+                    Scripts.PatchUpHotkeys(hotkeytreeView.SelectedNode.Name);
                 }
                 else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "DList")
                 {

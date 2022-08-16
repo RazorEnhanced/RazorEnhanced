@@ -90,7 +90,7 @@ namespace RazorEnhanced.UI
             string suffix = null;
             if (filename == null)
             {
-                ScriptListView scriptListView =  MainForm.GetAllScriptsTab();
+                ScriptListView scriptListView =  MainForm.GetCurrentAllScriptsTab();
                 if (scriptListView != null)
                 {
                     if (scriptListView.Name == "pyScriptListView")
