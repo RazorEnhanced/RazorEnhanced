@@ -13,7 +13,7 @@ namespace Assistant
 {
     public partial class MainForm : System.Windows.Forms.Form
     {
-        private DataTable scriptTable;
+        //private DataTable scriptTable;
 
         private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart, string fullpath)
         {
@@ -31,84 +31,76 @@ namespace Assistant
             return status;
         }
 
-        private void LoadAndInitializeScripts()
+        internal static bool LoadItem(int index, Scripts.ScriptItem item, ScriptListView view)
         {
-            foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
+            string filename = item.Filename;
+            bool wait = item.Wait;
+            bool loop = item.Loop;
+            string status = item.Status;
+            bool passkey = item.HotKeyPass;
+            Keys key = item.Hotkey;
+            bool autostart = item.AutoStart;
+            string fullPath = item.FullPath;
+
+            bool run = false;
+            if (status == "Running")
+                run = true;
+
+            string result = LoadFromFile(filename, wait, loop, run, autostart, fullPath);
+
+            if (result == "Loaded")
             {
-                script.Stop();
-                script.Reset();
+                ListViewItem listitem = new ListViewItem();
+
+                listitem.Text = filename;
+                string fileSuffix = Path.GetExtension(filename);
+
+                listitem.ToolTipText = fullPath; // fullPath;
+
+                listitem.SubItems.Add(status);
+
+                if (loop)
+                    listitem.SubItems.Add("Yes");
+                else
+                    listitem.SubItems.Add("No");
+
+                if (autostart)
+                    listitem.SubItems.Add("Yes");
+                else
+                    listitem.SubItems.Add("No");
+
+                if (wait)
+                    listitem.SubItems.Add("Yes");
+                else
+                    listitem.SubItems.Add("No");
+
+
+                listitem.SubItems.Add(HotKey.KeyString(key));
+
+                if (passkey)
+                    listitem.SubItems.Add("Yes");
+                else
+                    listitem.SubItems.Add("No");
+
+                listitem.SubItems.Add(Convert.ToString(index));
+
+                view.Items.Add(listitem);
+
+                item.Status = "Stopped";
+                return true;
             }
+            return false;
+        }
 
-            Scripts.EnhancedScripts.Clear();
-
-            int currentSelectionIndex = 0;
-
-            if (scriptlistView.SelectedIndices.Count > 0)
-            {
-                currentSelectionIndex = scriptlistView.SelectedIndices[0];
-            }
-
-            scriptlistView.BeginUpdate();
-            scriptlistView.Items.Clear();
-
-            DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
-
+        internal static void LoadScriptList(System.Collections.Generic.List<Scripts.ScriptItem> scripts, ScriptListView scriptlistView)
+        {
             int index = 0;
-            foreach (DataRow row in scriptTable.Rows)
+            foreach (Scripts.ScriptItem item in scripts)
             {
-                string filename = (string)row["Filename"];
-                bool wait = (bool)row["Wait"];
-                bool loop = (bool)row["Loop"];
-                string status = (string)row["Status"];
-                bool passkey = (bool)row["HotKeyPass"];
-                Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
-                bool autostart = (bool)row["AutoStart"];
-                string fullPath = (string)row["FullPath"];
-
-                bool run = false;
-                if (status == "Running")
-                    run = true;
-
-                string result = LoadFromFile(filename, wait, loop, run, autostart, fullPath);
-
-                if (result == "Loaded")
+                bool success = LoadItem(index, item, scriptlistView);
+                if (success)
                 {
-                    ListViewItem listitem = new ListViewItem();
-
-                    listitem.Text = filename;
-                    listitem.ToolTipText = fullPath; // fullPath;
-
-                    listitem.SubItems.Add(status);
-
-                    if (loop)
-                        listitem.SubItems.Add("Yes");
-                    else
-                        listitem.SubItems.Add("No");
-
-                    if (autostart)
-                        listitem.SubItems.Add("Yes");
-                    else
-                        listitem.SubItems.Add("No");
-
-                    if (wait)
-                        listitem.SubItems.Add("Yes");
-                    else
-                        listitem.SubItems.Add("No");
-
-
-                    listitem.SubItems.Add(HotKey.KeyString(key));
-
-                    if (passkey)
-                        listitem.SubItems.Add("Yes");
-                    else
-                        listitem.SubItems.Add("No");
-
-                    listitem.SubItems.Add(Convert.ToString(index));
                     index++;
-
-                    scriptlistView.Items.Add(listitem);
-
-                    row["Status"] = "Stopped";
                 }
                 else
                 {
@@ -121,17 +113,48 @@ namespace Assistant
                     listitem.SubItems.Add("No");
                     listitem.SubItems.Add("No");
                     listitem.SubItems.Add("No");
-                    listitem.SubItems.Add(HotKey.KeyString(key));
+                    listitem.SubItems.Add(HotKey.KeyString(item.Hotkey));
                     listitem.SubItems.Add("No");
                     listitem.SubItems.Add("0");
                     scriptlistView.Items.Add(listitem);
-                    row["Status"] = "Error";
+                    item.Status = "Error";
                 }
             }
-            scriptlistView.EndUpdate();
-            if (scriptlistView.Items.Count > currentSelectionIndex)
+
+        }
+
+        private void LoadAndInitializeScripts()
+        {
+            foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
             {
-                scriptlistView.Items[currentSelectionIndex].Selected = true;
+                script.Stop();
+                script.Reset();
+            }
+
+            Scripts.EnhancedScripts.Clear();
+
+            int currentSelectionIndex = 0;
+
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+            
+            if (scriptListView.SelectedIndices.Count > 0)
+            {
+                currentSelectionIndex = scriptListView.SelectedIndices[0];
+            }
+
+            scriptListView.BeginUpdate();
+            scriptListView.Items.Clear();
+
+            LoadScriptList(RazorEnhanced.Scripts.PyScripts, pyScriptListView);
+            LoadScriptList(RazorEnhanced.Scripts.UosScripts, uosScriptListView);
+            LoadScriptList(RazorEnhanced.Scripts.CsScripts, csScriptListView);
+
+            scriptListView.EndUpdate();
+            if (scriptListView.Items.Count > currentSelectionIndex)
+            {
+                scriptListView.Items[currentSelectionIndex].Selected = true;
             }
 
         }
@@ -207,24 +230,40 @@ namespace Assistant
             if (sorted) // No move script index if user have place some different ordering
                 return;
 
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
-            {
-                int rowCount = scriptlistView.Items.Count;
-                int index = scriptlistView.SelectedItems[0].Index;
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
 
-                if (index >= rowCount - 1)
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            {
+                int rowCount = scriptListView.Items.Count;
+                int index = scriptListView.SelectedItems[0].Index;
+
+                if (index == 0) // include the header row
                 {
                     return;
                 }
+                int location = index + 1;
 
-                DataRow newRow = scriptTable.NewRow();
-                // We "clone" the row
-                newRow.ItemArray = scriptTable.Rows[index + 1].ItemArray;
-                // We remove the old and insert the new
-                scriptTable.Rows.RemoveAt(index + 1);
-                scriptTable.Rows.InsertAt(newRow, index);
+                if (location < 0 || location >= rowCount)
+                    return;
+
+                var item = list[index];
+                list.RemoveAt(index);
+                list.Insert(location, item);
+
                 ReloadScriptTable();
-                scriptlistView.Items[index + 1].Selected = true;
+                scriptListView.Items[location].Selected = true;
             }
         }
 
@@ -232,25 +271,35 @@ namespace Assistant
         {
             if (sorted) // No move script index if user have place some different ordering
                 return;
+            
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
 
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                int rowCount = scriptlistView.Items.Count;
-                int index = scriptlistView.SelectedItems[0].Index;
+                int rowCount = scriptListView.Items.Count;
+                int index = scriptListView.SelectedItems[0].Index;
 
                 if (location < 0 || location >= rowCount)
                     return;
 
-                DataRow newRow = scriptTable.NewRow();
-                // We "clone" the row
-                newRow.ItemArray = scriptTable.Rows[index].ItemArray;
-                // We remove the old and insert the new
-                scriptTable.Rows.RemoveAt(index);
-                scriptTable.Rows.InsertAt(newRow, location);
+                var item = list[index];
+                list.RemoveAt(index);
+                list.Insert(location, item);
 
                 ReloadScriptTable();
-
-                scriptlistView.Items[location].Selected = true;
+                scriptListView.Items[location].Selected = true;
             }
         }
 
@@ -259,26 +308,40 @@ namespace Assistant
             if (sorted) // No move script index if user have place some different ordering
                 return;
 
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                int rowCount = scriptlistView.Items.Count;
-                int index = scriptlistView.SelectedItems[0].Index;
+                int rowCount = scriptListView.Items.Count;
+                int index = scriptListView.SelectedItems[0].Index;
 
                 if (index == 0) // include the header row
                 {
                     return;
                 }
+                int location = index - 1;
 
-                DataRow newRow = scriptTable.NewRow();
-                // We "clone" the row
-                newRow.ItemArray = scriptTable.Rows[index - 1].ItemArray;
-                // We remove the old and insert the new
-                scriptTable.Rows.RemoveAt(index - 1);
-                scriptTable.Rows.InsertAt(newRow, index);
+                if (location < 0 || location >= rowCount)
+                    return;
+
+                var item = list[index];
+                list.RemoveAt(index);
+                list.Insert(location, item);
 
                 ReloadScriptTable();
-
-                scriptlistView.Items[index - 1].Selected = true;
+                scriptListView.Items[location].Selected = true;
             }
         }
 
@@ -292,35 +355,44 @@ namespace Assistant
         internal void UpdateScriptGridKey()
         {
             int i = 0;
-            scriptlistView.BeginUpdate();
+
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            scriptListView.BeginUpdate();
             DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
             //int index = 0;
             foreach (DataRow row in scriptTable.Rows)
             {
                 bool passkey = (bool)row["HotKeyPass"];
                 Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
-                scriptlistView.Items[i].SubItems[5].Text = HotKey.KeyString(key);
+                scriptListView.Items[i].SubItems[5].Text = HotKey.KeyString(key);
                 if (passkey)
-                    scriptlistView.Items[i].SubItems[6].Text = "Yes";
+                    scriptListView.Items[i].SubItems[6].Text = "Yes";
                 else
-                    scriptlistView.Items[i].SubItems[6].Text = "No";
+                    scriptListView.Items[i].SubItems[6].Text = "No";
                 i++;
             }
-            scriptlistView.EndUpdate();
+            scriptListView.EndUpdate();
         }
 
         internal void UpdateScriptGrid()
         {
 
-            if (tabs.SelectedTab != scriptingTab)
+            if (tabs.SelectedTab != AllScripts)
                 return;
 
-            if (scriptlistView.Items.Count > 0)
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            if (scriptListView.Items.Count > 0)
             {
-                scriptlistView.BeginUpdate();
+                scriptListView.BeginUpdate();
                 try
                 {
-                    foreach (ListViewItem litem in scriptlistView.Items)
+                    foreach (ListViewItem litem in scriptListView.Items)
                     {
                         string filename = litem.Text;
                         Scripts.EnhancedScript script = Scripts.Search(filename);
@@ -371,7 +443,7 @@ namespace Assistant
                 }
                 finally
                 {
-                    scriptlistView.EndUpdate();
+                    scriptListView.EndUpdate();
                 }
             }
 
@@ -389,9 +461,23 @@ namespace Assistant
 
         private void RunCurrentScript(bool run)
         {
-            if (scriptlistView.SelectedItems.Count == 1)
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                string filename = scriptlistView.SelectedItems[0].Text;
+                string filename = scriptListView.SelectedItems[0].Text;
                 Scripts.EnhancedScript script = Scripts.Search(filename);
                 if (script != null)
                 {
@@ -410,7 +496,31 @@ namespace Assistant
 
         private void AddScriptInGrid()
         {
-            openFileDialogscript.Filter = "Script Files|*.py;*.uos;*.txt;*.cs";
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            openFileDialogscript.Filter = "Script Files|";  // *.py;*.uos;*.txt;*.cs";
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;           
+            if (scriptListView.Name == "pyScriptListView")
+            {
+                list = Scripts.PyScripts;
+                openFileDialogscript.Filter += "*.py;";
+            }
+            if (scriptListView.Name == "uosScriptListView")
+            {
+                list = Scripts.UosScripts;
+                openFileDialogscript.Filter += "*.uos;";
+            }
+            if (scriptListView.Name == "csScriptListView")
+            {
+                list = Scripts.CsScripts;
+                openFileDialogscript.Filter += "*.cs;";
+            }
+            if (list == null)
+                return;
+
             DialogResult result = openFileDialogscript.ShowDialog();
 
             if (result == DialogResult.OK) // Test result.
@@ -421,7 +531,16 @@ namespace Assistant
                 Scripts.EnhancedScript script = Scripts.Search(filename);
                 if (script == null)
                 {
-                    scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false, Path.Combine(scriptPath.ToLower(), filename));
+                    var scriptItem = new Scripts.ScriptItem();
+                    scriptItem.Filename = filename;
+                    scriptItem.Status = "Idle";
+                    scriptItem.Loop = false;
+                    scriptItem.Wait = false;
+                    scriptItem.AutoStart = false;
+                    scriptItem.HotKeyPass = false;
+                    scriptItem.Hotkey = Keys.None;
+                    scriptItem.FullPath = Path.Combine(scriptPath.ToLower(), filename);
+                    list.Add(scriptItem);
                     ReloadScriptTable();
                 }
              }
@@ -439,33 +558,35 @@ namespace Assistant
 
         private void buttonScriptRefresh_Click(object sender, EventArgs e)
         {
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                DataRow row = scriptTable.Rows[scriptlistView.SelectedItems[0].Index];
-                string scriptname = row[0].ToString();
+                int index = scriptListView.SelectedItems[0].Index;
+                string scriptname = list[index].Filename;
                 Scripts.EnhancedScript script = Scripts.Search(scriptname);
                 if (script != null)
                 {
-                    string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts",
-                        scriptname);
-
+                    string fullpath = list[index].FullPath;
                     if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
                     {
-                        //string text = File.ReadAllText(fullpath);
-                        //bool loop = script.Loop;
-                        //bool wait = script.Wait;
-                        //bool run = script.Run;
-                        //bool autostart = script.AutoStart;
                         bool isRunning = script.IsRunning;
 
                         if (isRunning)
                             script.Stop();
-
-                        //Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
-                        //	loop, run, autostart);
-                        //reloaded.Create(null);
                         Scripts.EnhancedScripts[scriptname].FileChangeDate = DateTime.MinValue;
-
                         if (isRunning)
                             script.Start();
                     }
@@ -475,22 +596,40 @@ namespace Assistant
 
         private void RemoveScriptInGrid()
         {
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
                 RunCurrentScript(false);
 
-                foreach (DataRow row in scriptTable.Rows)
+                int removeIndex = -1;
+                for (int i=0; i< list.Count; i++)
                 {
-                    if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
+                    Scripts.ScriptItem item = list[i];
+                    if (item.Filename == scriptListView.SelectedItems[0].Text)
                     {
-                        row.Delete();
+                        removeIndex = i;
                         break;
                     }
                 }
+                if (removeIndex >= 0)
+                {
+                    list.RemoveAt(removeIndex);
+                }
 
-                scriptlistView.SelectedItems[0].Remove();
-
-                Settings.Save();
+                ReloadScriptTable();
                 HotKey.Init();
             }
         }
@@ -537,12 +676,26 @@ namespace Assistant
 
         private void ScriptGridOpen()
         {
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> scriptTable = null;
+            if (scriptListView.Name == "pyScriptListView")
+                scriptTable = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                scriptTable = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                scriptTable = Scripts.CsScripts;
+            if (scriptTable == null)
+                return;
+
             string fullPath = null;
 
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+            if (scriptTable.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                string filename = scriptlistView.SelectedItems[0].Text;
-                fullPath = Settings.GetFullPathForScript(filename);
+                int index = scriptListView.SelectedItems[0].Index;
+                fullPath = scriptTable[index].FullPath;
             }
             if (fullPath != null)
                 EnhancedScriptEditor.Init(fullPath);
@@ -550,6 +703,30 @@ namespace Assistant
 
         private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)
         {
+            var scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            if (scriptSearchTextBox.Focused)
+            {
+                for (int i = 0; i < scriptListView.Items.Count; i++)
+                {
+                    scriptListView.Items[i].ForeColor = SystemColors.WindowText; // Decolor old search
+
+                    if (scriptSearchTextBox.Text != String.Empty)
+                    {
+                        if (scriptListView.Items[i].Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+                        {
+                            scriptListView.EnsureVisible(i);
+                            scriptListView.Items[i].ForeColor = Color.Blue; // Set highlight color
+                        }
+                        else
+                        {
+                            scriptListView.Items[i].ForeColor = Color.LightGray;
+                        }
+                    }
+                }
+            }
 
         }
 
@@ -600,23 +777,26 @@ namespace Assistant
 
         private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (scriptlistView.SelectedItems.Count == 1)
+            ScriptListView scriptListView = (ScriptListView)sender;
+            if (scriptListView == null)
+                return;
+            if (scriptListView.SelectedItems.Count == 1)
             {
-                string filename = scriptlistView.SelectedItems[0].Text;
-                string fullPathName = Settings.GetFullPathForScript(filename);
+                string filename = scriptListView.SelectedItems[0].Text;
+                string fullPathName = Scripts.GetFullPathForScript(filename);
                 scriptFilePath.Text = filename;
 
-                if (scriptlistView.SelectedItems[0].SubItems[2].Text == "Yes")
+                if (scriptListView.SelectedItems[0].SubItems[2].Text == "Yes")
                     scriptloopmodecheckbox.Checked = true;
                 else
                     scriptloopmodecheckbox.Checked = false;
 
-                if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
+                if (scriptListView.SelectedItems[0].SubItems[3].Text == "Yes")
                     scriptautostartcheckbox.Checked = true;
                 else
                     scriptautostartcheckbox.Checked = false;
 
-                if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
+                if (scriptListView.SelectedItems[0].SubItems[4].Text == "Yes")
                     scriptwaitmodecheckbox.Checked = true;
                 else
                     scriptwaitmodecheckbox.Checked = false;
@@ -625,7 +805,11 @@ namespace Assistant
 
         private void ScriptGridAutoStartAtLogin(bool stripmenu)
         {
-            if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            if (scriptListView.SelectedItems.Count != 1) // Selezione multipla o mancata
                 return;
 
             if (stripmenu)
@@ -634,19 +818,32 @@ namespace Assistant
             if (!scriptautostartcheckbox.Focused)
                 return;
 
-            foreach (DataRow row in scriptTable.Rows)
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
-                    row["AutoStart"] = scriptautostartcheckbox.Checked;
+                Scripts.ScriptItem item = Scripts.FindScript(scriptListView.SelectedItems[0].Text);
+                if (item != null)
+                {
+                    item.AutoStart = scriptautostartcheckbox.Checked;
+                }
             }
 
             if (scriptautostartcheckbox.Checked)
-                scriptlistView.SelectedItems[0].SubItems[3].Text = "Yes";
+                scriptListView.SelectedItems[0].SubItems[3].Text = "Yes";
             else
-                scriptlistView.SelectedItems[0].SubItems[3].Text = "No";
+                scriptListView.SelectedItems[0].SubItems[3].Text = "No";
 
-            //ReloadScriptTable();
-            Settings.Save();
+            ReloadScriptTable();
         }
 
         private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
@@ -661,7 +858,11 @@ namespace Assistant
 
         private void ScriptGridLoopMode(bool stripmenu)
         {
-            if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            if (scriptListView.SelectedItems.Count != 1) // Selezione multipla o mancata
                 return;
 
             if (stripmenu)
@@ -670,19 +871,31 @@ namespace Assistant
             if (!scriptloopmodecheckbox.Focused)
                 return;
 
-            foreach (DataRow row in scriptTable.Rows)
-            {
-                if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
-                    row["Loop"] = scriptloopmodecheckbox.Checked;
-            }
 
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            {
+                Scripts.ScriptItem item = Scripts.FindScript(scriptListView.SelectedItems[0].Text);
+                if (item != null)
+                {
+                    item.Loop = scriptloopmodecheckbox.Checked;
+                }
+            }
             if (scriptloopmodecheckbox.Checked)
-                scriptlistView.SelectedItems[0].SubItems[2].Text = "Yes";
+                scriptListView.SelectedItems[0].SubItems[2].Text = "Yes";
             else
-                scriptlistView.SelectedItems[0].SubItems[2].Text = "No";
+                scriptListView.SelectedItems[0].SubItems[2].Text = "No";
 
             ReloadScriptTable();
-            //Settings.Save();
         }
 
         private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)
@@ -697,7 +910,11 @@ namespace Assistant
 
         private void ScriptGridWaitBeforeInterrupt(bool stripmenu)
         {
-            if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
+            if (scriptListView.SelectedItems.Count != 1) // Selezione multipla o mancata
                 return;
 
             if (stripmenu)
@@ -706,19 +923,30 @@ namespace Assistant
             if (!scriptwaitmodecheckbox.Focused)
                 return;
 
-            foreach (DataRow row in scriptTable.Rows)
-            {
-                if ((string)row["Filename"] == scriptlistView.SelectedItems[0].Text)
-                    row["Wait"] = scriptwaitmodecheckbox.Checked;
-            }
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
 
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            {
+                Scripts.ScriptItem item = Scripts.FindScript(scriptListView.SelectedItems[0].Text);
+                if (item != null)
+                {
+                    item.Wait = scriptwaitmodecheckbox.Checked;
+                }
+            }
             if (scriptwaitmodecheckbox.Checked)
-                scriptlistView.SelectedItems[0].SubItems[4].Text = "Yes";
+                scriptListView.SelectedItems[0].SubItems[4].Text = "Yes";
             else
-                scriptlistView.SelectedItems[0].SubItems[4].Text = "No";
+                scriptListView.SelectedItems[0].SubItems[4].Text = "No";
 
             ReloadScriptTable();
-            //Settings.Save();
         }
 
         private void scriptwaitmodecheckbox_CheckedChanged(object sender, EventArgs e)
@@ -735,9 +963,14 @@ namespace Assistant
         private bool sorted = false;
         private void scriptlistView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+
+            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            if (scriptListView == null)
+                return;
+
             sorted = true;
             // Get the new sorting column.
-            ColumnHeader new_sorting_column = scriptlistView.Columns[e.Column];
+            ColumnHeader new_sorting_column = scriptListView.Columns[e.Column];
 
             // Figure out the new sorting order.
             System.Windows.Forms.SortOrder sort_order;
@@ -783,11 +1016,11 @@ namespace Assistant
             }
 
             // Create a comparer.
-            scriptlistView.ListViewItemSorter =
+            scriptListView.ListViewItemSorter =
                 new ListViewComparer(e.Column, sort_order);
 
             // Sort.
-            scriptlistView.Sort();
+            scriptListView.Sort();
         }
     }
 

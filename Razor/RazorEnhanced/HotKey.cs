@@ -424,33 +424,37 @@ namespace RazorEnhanced
 						break;
 
 					case "SList":
-						string filename = RazorEnhanced.Settings.HotKey.FindScript(k);
-						Scripts.EnhancedScript script = Scripts.Search(filename);
-						if (script != null)
-						{
-							if (script.Loop)
-							{
-								if (script.IsUnstarted)
-									script.Start();
-								else
-								{
-									script.Stop();
-									script.Reset();
-								}
-							}
-							else
-							{
-								if (!script.Wait && script.IsRunning)
-								{
-									script.Stop();
-									script.Reset();
-								}
-								else if (!script.IsRunning)
-								{
-									script.Start();
-								}
-							}
-						}
+                        Scripts.ScriptItem item = Scripts.FindScript(k);
+                        if (item != null)
+                        {
+                            string filename = item.Filename;
+                            Scripts.EnhancedScript script = Scripts.Search(filename);
+                            if (script != null)
+                            {
+                                if (script.Loop)
+                                {
+                                    if (script.IsUnstarted)
+                                        script.Start();
+                                    else
+                                    {
+                                        script.Stop();
+                                        script.Reset();
+                                    }
+                                }
+                                else
+                                {
+                                    if (!script.Wait && script.IsRunning)
+                                    {
+                                        script.Stop();
+                                        script.Reset();
+                                    }
+                                    else if (!script.IsRunning)
+                                    {
+                                        script.Start();
+                                    }
+                                }
+                            }
+                        }
 						break;
 
 					case "DList":
@@ -1997,7 +2001,7 @@ namespace RazorEnhanced
 			string name = node.Name;
 			if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
 			{
-				RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
+				Scripts.UpdateScriptKey(name, m_key, passkey);
 				node.Text = node.Name + " ( " + KeyString(m_key) + " )";
 				node.ForeColor = System.Drawing.Color.DarkGreen;
 			}
@@ -2007,7 +2011,7 @@ namespace RazorEnhanced
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
-					RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
+                    Scripts.UpdateScriptKey(name, m_key, passkey);
 					UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
 					node.Text = node.Name + " ( " + KeyString(m_key) + " )";
 					node.ForeColor = System.Drawing.Color.DarkGreen;
@@ -2040,7 +2044,7 @@ namespace RazorEnhanced
 			string name = node.Name;
 			if (group == "SList")
 			{
-				RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, Keys.None, true);
+                Scripts.UpdateScriptKey(name, Keys.None, true);
 				Assistant.Engine.MainWindow.UpdateScriptGridKey();
 			}
 			else if (group == "TList")

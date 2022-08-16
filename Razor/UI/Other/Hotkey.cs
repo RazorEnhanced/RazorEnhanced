@@ -1,3 +1,4 @@
+using Assistant.UI;
 using RazorEnhanced;
 using System;
 using System.Windows.Forms;
@@ -25,7 +26,9 @@ namespace Assistant
 				else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList")
 				{
 					RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script
-				}
+                    // Can refresh the script tables, but it causes hotkey tables to collapse. not worth it
+                    //Engine.MainWindow.SafeAction(s => { s.ReloadScriptTable(); });
+                }
 				else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "DList")
 				{
 					RazorEnhanced.HotKey.UpdateDressKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Dress List

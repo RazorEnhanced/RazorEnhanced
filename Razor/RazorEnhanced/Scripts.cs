@@ -25,7 +25,164 @@ namespace RazorEnhanced
 		internal static bool ScriptErrorLog = false;
 		internal static bool ScriptStartStopMessage = false;
 
-		internal enum RunMode
+        internal static List<ScriptItem> PyScripts = new List<ScriptItem>();
+        internal static List<ScriptItem> UosScripts = new List<ScriptItem>();
+        internal static List<ScriptItem> CsScripts = new List<ScriptItem>();
+
+        internal static void ClearScriptKey(Keys key)
+        {
+            foreach (ScriptItem item in PyScripts)
+            {
+                if (item.Hotkey == key)
+                {
+                    item.Hotkey = Keys.None;
+                    item.HotKeyPass = true;
+                    return;
+                }
+            }
+            foreach (ScriptItem item in UosScripts)
+            {
+                if (item.Hotkey == key)
+                {
+                    item.Hotkey = Keys.None;
+                    item.HotKeyPass = true;
+                    return;
+                }
+            }
+            foreach (ScriptItem item in CsScripts)
+            {
+                if (item.Hotkey == key)
+                {
+                    item.Hotkey = Keys.None;
+                    item.HotKeyPass = true;
+                    return;
+                }
+            }
+
+        }
+
+        internal static void UpdateScriptKey(string name, Keys key, bool passkey)
+        {
+            foreach (Scripts.ScriptItem item in Scripts.PyScripts)
+            {
+                if (item.Filename == name)
+                {
+                    item.Hotkey = key;
+                    item.HotKeyPass = passkey;
+                    break;
+                }
+            }
+            foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+            {
+                if (item.Filename == name)
+                {
+                    item.Hotkey = key;
+                    item.HotKeyPass = passkey;
+                    break;
+                }
+            }
+            foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+            {
+                if (item.Filename == name)
+                {
+                    item.Hotkey = key;
+                    item.HotKeyPass = passkey;
+                    break;
+                }
+            }
+            Settings.Save();
+        }
+
+        internal static bool UsingKey(Keys key)
+        {
+            foreach (Scripts.ScriptItem item in Scripts.PyScripts)
+            {
+                if (item.Hotkey == key)
+                    return true;
+            }
+            foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+            {
+                if (item.Hotkey == key)
+                    return true;
+            }
+            foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+            {
+                if (item.Hotkey == key)
+                    return true;
+            }
+            return false;
+        }
+
+        internal static ScriptItem FindScript(Keys key)
+        {
+            foreach (Scripts.ScriptItem item in Scripts.PyScripts)
+            {
+                if (item.Hotkey == key)
+                    return item;
+            }
+            foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+            {
+                if (item.Hotkey == key)
+                    return item;
+            }
+            foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+            {
+                if (item.Hotkey == key)
+                    return item;
+            }
+            return null;
+        }
+
+        internal static ScriptItem FindScript(string name)
+        {
+            foreach (Scripts.ScriptItem item in Scripts.PyScripts)
+            {
+                if (item.Filename == name)
+                    return item;
+            }
+            foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+            {
+                if (item.Filename == name)
+                    return item;
+            }
+            foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+            {
+                if (item.Filename == name)
+                    return item;
+            }
+
+            return null;
+        }
+
+        internal static string GetFullPathForScript(string filename)
+        {
+            foreach (ScriptItem item in PyScripts)
+            {
+                if (item.Filename == filename)
+                {
+                    return item.FullPath;
+                }
+            }
+            foreach (ScriptItem item in UosScripts)
+            {
+                if (item.Filename == filename)
+                {
+                    return item.FullPath;
+                }
+            }
+            foreach (ScriptItem item in CsScripts)
+            {
+                if (item.Filename == filename)
+                {
+                    return item.FullPath;
+                }
+            }
+
+            return null;
+        }
+
+
+        internal enum RunMode
 		{
 			None,
 			RunOnce,
@@ -101,7 +258,7 @@ namespace RazorEnhanced
 
                 try
                 {
-                    string fullpath = Settings.GetFullPathForScript(m_Filename);
+                    string fullpath = Scripts.GetFullPathForScript(m_Filename);
                     string ext = Path.GetExtension(fullpath);
 
 					if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))

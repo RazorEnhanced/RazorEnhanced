@@ -192,33 +192,37 @@ namespace RazorEnhanced
         private static DataTable LoadScripting(string filename, string tableName)
         {
             List<RazorEnhanced.Scripts.ScriptItem> scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
-            DataTable temp = initDict[tableName](tableName);
             foreach (RazorEnhanced.Scripts.ScriptItem item in scriptItems)
             {
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
                 if (item.FullPath != null)
                     fullpath = item.FullPath;
-                if (File.Exists(fullpath) )
+                if (File.Exists(fullpath))
                 {
-                    DataRow row = temp.NewRow();
-                    row["Filename"] = item.Filename;
-                    //row["Flag"]  UNUSED
-                    row["Status"] = item.Status;
-                    row["Loop"] = item.Loop;
-                    row["Wait"] = item.Wait;
-                    row["HotKey"] = item.Hotkey;
-                    row["HotKeyPass"] = item.HotKeyPass;
-                    row["AutoStart"] = item.AutoStart;
-                    row["FullPath"] = fullpath;
-
-                    temp.Rows.Add(row);
+                    string suffix = Path.GetExtension(fullpath).ToLower();
+                    switch (suffix)
+                    {
+                        case ".py":
+                            Scripts.PyScripts.Add(item);
+                            break;
+                        case ".uos":
+                            Scripts.UosScripts.Add(item);
+                            break;
+                        case ".cs":
+                            Scripts.CsScripts.Add(item);
+                            break;
+                        default:
+                            // drop it
+                            break;
+                    }
                 }
                 else
                 {
                     // drop it from scripts as it doesn't exist
                 }
-
             }
+            DataTable temp = initDict[tableName](tableName);
+
             return temp;
         }
         internal static DataTable InitItems<T>(string tableName) where T : ListAbleItem
@@ -246,22 +250,17 @@ namespace RazorEnhanced
         private static void SaveScripting(string filename, string tableName, DataTable targets)
         {
             List<RazorEnhanced.Scripts.ScriptItem> items = new List<RazorEnhanced.Scripts.ScriptItem>();
-            foreach (DataRow row in targets.Rows)
-            {
-                RazorEnhanced.Scripts.ScriptItem item = new RazorEnhanced.Scripts.ScriptItem();
-                item.Filename = Convert.ToString(row["Filename"]);
-                item.Status = Convert.ToString(row["Status"]);
-                item.Loop = Convert.ToBoolean(row["Loop"]);
-                item.Wait = Convert.ToBoolean(row["Wait"]);
-                item.Hotkey = (System.Windows.Forms.Keys)(row["HotKey"]);
-                item.HotKeyPass = Convert.ToBoolean(row["HotKeyPass"]);
-                item.AutoStart = Convert.ToBoolean(row["AutoStart"]);
-                item.FullPath = Convert.ToString(row["FullPath"]);
+            foreach (Scripts.ScriptItem item in Scripts.PyScripts)
                 items.Add(item);
-            }
+            foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+                items.Add(item);
+            foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+                items.Add(item);
+
             string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(filename + "." + tableName, xml);
         }
+
         private static void SaveItems<T>(string filename, string tableName, DataTable targets) where T : ListAbleItem
         {
             List<T> items = new List<T>();
@@ -3751,17 +3750,6 @@ namespace RazorEnhanced
                 Save();
             }
         }
-        internal static string GetFullPathForScript(string filename)
-        {
-            foreach (System.Data.DataRow row in RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"].Rows)
-            {
-                if ((string)row["Filename"] == filename)
-                {
-                    return (string)row["FullPath"];
-                }
-            }
-            return null;
-        }
 
         // ------------- DRESS END-----------------
 
@@ -4683,7 +4671,28 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadScript()
             {
-                return (from DataRow row in m_Dataset.Tables["SCRIPTING"].Rows let name = (string)row["Filename"] let key = (Keys)Convert.ToInt32(row["HotKey"]) select new RazorEnhanced.HotKey.HotKeyData(name, key)).ToList();
+                List < RazorEnhanced.HotKey.HotKeyData > retList = new List<RazorEnhanced.HotKey.HotKeyData>();
+
+                foreach (Scripts.ScriptItem item in Scripts.PyScripts)
+                {
+                    string name = item.Filename;
+                    Keys key = item.Hotkey;
+                    retList.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+                }
+                foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+                {
+                    string name = item.Filename;
+                    Keys key = item.Hotkey;
+                    retList.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+                }
+                foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+                {
+                    string name = item.Filename;
+                    Keys key = item.Hotkey;
+                    retList.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+                }
+                
+                return retList; 
             }
 
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadDress()
@@ -4715,21 +4724,6 @@ namespace RazorEnhanced
                     {
                         theTarget.HotKey = key;
                         theTarget.HotKeyPass = passkey;
-                        break;
-                    }
-                }
-
-                Save();
-            }
-
-            internal static void UpdateScriptKey(string name, Keys key, bool passkey)
-            {
-                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-                {
-                    if ((string)row["Filename"] == name)
-                    {
-                        row["HotKey"] = key;
-                        row["HotKeyPass"] = passkey;
                         break;
                     }
                 }
@@ -4779,14 +4773,7 @@ namespace RazorEnhanced
                     }
                 }
 
-                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-                {
-                    if ((Keys)Convert.ToInt32(row["HotKey"]) == key)
-                    {
-                        row["HotKey"] = Keys.None;
-                        row["HotKeyPass"] = true;
-                    }
-                }
+                Scripts.ClearScriptKey(key);
 
                 foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
                 {
@@ -4815,12 +4802,10 @@ namespace RazorEnhanced
                         return true;
                 }
 
-
-                if (m_Dataset.Tables["SCRIPTING"].Rows.Cast<DataRow>().Any(row => (Keys)Convert.ToInt32(row["HotKey"]) == key))
-                {
+                if (Scripts.UsingKey(key))
+                { 
                     return true;
                 }
-
                 if (m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => (Keys)Convert.ToInt32(row["HotKey"]) == key))
                 {
                     return true;
@@ -4863,16 +4848,15 @@ namespace RazorEnhanced
                     }
 
                 if (!found)
-                    foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+                {
+                    Scripts.ScriptItem item = Scripts.FindScript(name);
+                    if (item != null)
                     {
-                        if ((string)row["Filename"] == name)
-                        {
-                            key = (Keys)Convert.ToInt32(row["HotKey"]);
-                            passkey = (bool)row["HotKeyPass"];
-                            found = true;
-                            break;
-                        }
+                        key = item.Hotkey;
+                        passkey = item.HotKeyPass;
+                        found = true;
                     }
+                }
 
                 if (!found)
                     foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
@@ -4923,11 +4907,6 @@ namespace RazorEnhanced
                 }
             }
 
-            internal static string FindScript(Keys key)
-            {
-                return (from DataRow row in m_Dataset.Tables["SCRIPTING"].Rows where (Keys)Convert.ToInt32(row["HotKey"]) == key select (String)row["Filename"]).FirstOrDefault();
-            }
-
             internal static string FindDress(Keys key)
             {
                 return (from DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows where (Keys)Convert.ToInt32(row["HotKey"]) == key select (String)row["Description"]).FirstOrDefault();
@@ -4964,16 +4943,15 @@ namespace RazorEnhanced
                     }
 
                 if (!found)
-                    foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+                {
+                    Scripts.ScriptItem item = Scripts.FindScript(key);
+                    if (item != null)
                     {
-                        if ((Keys)Convert.ToInt32(row["HotKey"]) == key)
-                        {
-                            group = "SList";
-                            pass = (bool)row["HotKeyPass"];
-                            found = true;
-                            break;
-                        }
+                        group = "SList";
+                        pass = item.HotKeyPass;
+                        found = true;
                     }
+                }
 
                 if (!found)
                     foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
