@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Assistant.UI;
 
 namespace Assistant
 {
@@ -135,7 +136,7 @@ namespace Assistant
 
             int currentSelectionIndex = 0;
 
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
             
@@ -157,6 +158,11 @@ namespace Assistant
                 scriptListView.Items[currentSelectionIndex].Selected = true;
             }
 
+        }
+
+        internal static ScriptListView GetAllScriptsTab()
+        {
+            return (ScriptListView)Engine.MainWindow.AllScriptsTab.SelectedTab.Controls[0];
         }
 
         //
@@ -230,7 +236,7 @@ namespace Assistant
             if (sorted) // No move script index if user have place some different ordering
                 return;
 
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -271,8 +277,8 @@ namespace Assistant
         {
             if (sorted) // No move script index if user have place some different ordering
                 return;
-            
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -308,7 +314,7 @@ namespace Assistant
             if (sorted) // No move script index if user have place some different ordering
                 return;
 
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -356,7 +362,7 @@ namespace Assistant
         {
             int i = 0;
 
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -383,7 +389,7 @@ namespace Assistant
             if (tabs.SelectedTab != AllScripts)
                 return;
 
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -461,7 +467,7 @@ namespace Assistant
 
         private void RunCurrentScript(bool run)
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -496,7 +502,7 @@ namespace Assistant
 
         private void AddScriptInGrid()
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -558,7 +564,7 @@ namespace Assistant
 
         private void buttonScriptRefresh_Click(object sender, EventArgs e)
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -596,7 +602,7 @@ namespace Assistant
 
         private void RemoveScriptInGrid()
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -676,7 +682,7 @@ namespace Assistant
 
         private void ScriptGridOpen()
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -703,7 +709,7 @@ namespace Assistant
 
         private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            var scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -805,7 +811,7 @@ namespace Assistant
 
         private void ScriptGridAutoStartAtLogin(bool stripmenu)
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -858,7 +864,7 @@ namespace Assistant
 
         private void ScriptGridLoopMode(bool stripmenu)
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -910,7 +916,7 @@ namespace Assistant
 
         private void ScriptGridWaitBeforeInterrupt(bool stripmenu)
         {
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 
@@ -963,8 +969,7 @@ namespace Assistant
         private bool sorted = false;
         private void scriptlistView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-
-            ScriptListView scriptListView = (ScriptListView)AllScriptsTab.SelectedTab.Controls[0];
+            ScriptListView scriptListView = MainForm.GetAllScriptsTab();
             if (scriptListView == null)
                 return;
 

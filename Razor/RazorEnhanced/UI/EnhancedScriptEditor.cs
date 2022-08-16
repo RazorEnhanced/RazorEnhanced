@@ -20,6 +20,7 @@ using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Reflection;
 using System.Threading.Tasks;
+using Assistant.UI;
 
 namespace RazorEnhanced.UI
 {
@@ -66,6 +67,7 @@ namespace RazorEnhanced.UI
         }
 
         private string m_Filename = String.Empty;
+        private string m_Filetype = String.Empty;
         private string m_Filepath = String.Empty;
 
         private readonly PythonEngine m_pe;
@@ -85,7 +87,26 @@ namespace RazorEnhanced.UI
 
         internal static void Init(string filename)
         {
-            m_EnhancedScriptEditor = new EnhancedScriptEditor(filename);
+            string suffix = null;
+            if (filename == null)
+            {
+                ScriptListView scriptListView =  MainForm.GetAllScriptsTab();
+                if (scriptListView != null)
+                {
+                    if (scriptListView.Name == "pyScriptListView")
+                        suffix = ".py";
+                    if (scriptListView.Name == "uosScriptListView")
+                        suffix = ".uos";
+                    if (scriptListView.Name == "csScriptListView")
+                        suffix = ".cs";
+                }
+            }
+            else
+            {
+                suffix = Path.GetExtension(filename);
+            }
+
+            m_EnhancedScriptEditor = new EnhancedScriptEditor(filename, suffix);
             m_EnhancedScriptEditor.Show();
         }
 
@@ -100,7 +121,7 @@ namespace RazorEnhanced.UI
             }
         }
 
-        internal EnhancedScriptEditor(string filename)
+        internal EnhancedScriptEditor(string filename, string filetype)
         {
             InitializeComponent();
             //Automenu Section
@@ -112,13 +133,24 @@ namespace RazorEnhanced.UI
             m_popupMenu.AppearInterval = 100;
 
 
-            if (filename != null && Path.GetExtension(filename) == ".uos")
+            if (filetype == null)
+            {
+                filetype = ".py";
+            }
+            m_Filetype = filetype;
+
+            if (m_Filetype == ".uos")
             {
                 fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
                 fastColoredTextBoxEditor.AutoIndentExistingLines = true;
                 InitUOSSyntaxHighlight();
             }
-            else
+            else if (m_Filetype == ".cs")
+            {
+                fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.CSharp;
+                // do we need special init for CS ?                
+            }
+            else 
             {
                 fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
                 InitPythonSyntaxHighlight();
@@ -565,7 +597,8 @@ namespace RazorEnhanced.UI
                 m_Queue = new ConcurrentQueue<Command>();
 
                 string text = GetFastTextBoxText();
-                if (text.Length >= 4 && text.Substring(0, 4).ToUpper() == "//C#")
+                if (m_Filetype == ".cs")
+                //if (text.Length >= 4 && text.Substring(0, 4).ToUpper() == "//C#")
                 {
                     if (m_Filepath == "")
                     {
@@ -606,8 +639,8 @@ namespace RazorEnhanced.UI
 
                     SetErrorBox("Script " + m_Filename + " run completed!");
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
-                } 
-                else if ((text.Length >= 2) && ((text.Substring(0, 2) == "//") || (text.Substring(0, 5).ToUpper() == "//UOS")) )   // you want it to be UOS it better start with UOS style comment
+                }
+                else if (m_Filetype == ".uos")                     
                 {
                     // Deprecation of // 
                     if ((text.Substring(0, 2) == "//") && !(text.Substring(0, 5).ToUpper() == "//UOS"))
@@ -1026,9 +1059,15 @@ namespace RazorEnhanced.UI
 
         private void SaveAs()
         {
+            string filter = "Python Files|*.py|Text Files|*.txt";
+            if (m_Filetype == ".uos")
+                filter = "UOS Files|*.uos|Text Files|*.txt";
+            if (m_Filetype == ".cs")
+                filter = "C# Files|*.cs|Text Files|*.txt";
+
             SaveFileDialog save = new SaveFileDialog
             {
-                Filter = "Python Files|*.py|Script Files|*.txt|UOSteam Files|*.uos|C# Files|*.cs",
+                Filter = filter,
                 RestoreDirectory = true
             };
             save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");

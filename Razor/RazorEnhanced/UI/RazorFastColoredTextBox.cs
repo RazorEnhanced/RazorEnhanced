@@ -29,7 +29,7 @@ namespace Assistant
         {
         }
 
-        public override FastColoredTextBoxNS.Line CreateLine()
+       /* public override FastColoredTextBoxNS.Line CreateLine()
         {
             if (lines.Count > 0)
             {
@@ -50,7 +50,7 @@ namespace Assistant
             int lineID = GenerateUniqueLineId();
             return new FastColoredTextBoxNS.Line(lineID);
         }
-
+       */
     }
     
 }
