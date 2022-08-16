@@ -363,7 +363,7 @@ namespace Assistant
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
             {
-                RazorEnhanced.ScriptRecorder.Record_UnicodeSpeech(type, text, hue);
+                RazorEnhanced.ScriptRecorder.instance().Record_UnicodeSpeech(type, text, hue);
             }
 
             text = text.Trim();

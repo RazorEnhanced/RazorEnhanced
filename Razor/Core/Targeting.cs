@@ -796,7 +796,7 @@ namespace Assistant
             m_ClientTarget = false;
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_Target(info);
+                RazorEnhanced.ScriptRecorder.instance().Record_Target(info);
 
             if (info.Serial != 0 && info.Serial.IsMobile)
                 RazorEnhanced.Target.TargetMessage(info.Serial, false);

@@ -2608,13 +2608,13 @@ namespace RazorEnhanced
                      // Parametri UoMod
                      false, false, false,
 
-					 // Parametri Video Recorder
+                     // Parametri Video Recorder
                      Assistant.Engine.RootPath, 25, "Full Size", 1, 100, false, false, false,
 
-					 // Parametri finestra script
+                     // Parametri finestra script
                      true, false, false,
 
-					 // Parametri AgentAutostart
+                     // Parametri AgentAutostart
                      false, false, false,
 
                      // Journal Filter Settings

@@ -215,7 +215,7 @@ namespace Assistant
             Serial ser = p.ReadUInt32();
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_ClientDoubleClick(ser);
+                RazorEnhanced.ScriptRecorder.instance().Record_ClientDoubleClick(ser);
 
             if (ser.IsItem)
             {
@@ -277,13 +277,13 @@ namespace Assistant
                 case 0x09: // Sa disarm
                     {
                         if (RazorEnhanced.ScriptRecorder.OnRecord)
-                            RazorEnhanced.ScriptRecorder.Record_SADisarm();
+                            RazorEnhanced.ScriptRecorder.instance().Record_SADisarm();
                         break;
                     }
                 case 0x0A: // Sa Stun
                     {
                         if (RazorEnhanced.ScriptRecorder.OnRecord)
-                            RazorEnhanced.ScriptRecorder.Record_SAStun();
+                            RazorEnhanced.ScriptRecorder.instance().Record_SAStun();
                         break;
                     }
                 /*	case 0x10: // query object properties
@@ -302,7 +302,7 @@ namespace Assistant
                         //	ent = World.FindItem(ser);
 
                         if (RazorEnhanced.ScriptRecorder.OnRecord)
-                            RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
+                            RazorEnhanced.ScriptRecorder.instance().Record_ContextMenuResponse(ser, idx);
 
                         World.Player.HasContext = false;
                         World.Player.ContextID = 0;
@@ -317,7 +317,7 @@ namespace Assistant
                         ushort sid = p.ReadUInt16();
 
                         if (RazorEnhanced.ScriptRecorder.OnRecord)
-                            RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, sid);
+                            RazorEnhanced.ScriptRecorder.instance().Record_ClientTextCommand(2, sid);
 
                         Spell s = Spell.Get(sid);
                         if (s != null)
@@ -362,7 +362,7 @@ namespace Assistant
                         catch { break; }
 
                         if (RazorEnhanced.ScriptRecorder.OnRecord)
-                            RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(1, skillIndex);
+                            RazorEnhanced.ScriptRecorder.instance().Record_ClientTextCommand(1, skillIndex);
 
                         if (World.Player != null)
                             World.Player.LastSkill = skillIndex;
@@ -383,7 +383,7 @@ namespace Assistant
                                 Serial serial = Convert.ToUInt32(split.Length > 1 ? Utility.ToInt32(split[1], -1) : -1);
 
                                 if (RazorEnhanced.ScriptRecorder.OnRecord)
-                                    RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
+                                    RazorEnhanced.ScriptRecorder.instance().Record_ClientTextCommand(2, spellID);
 
                                 Spell s = Spell.Get(spellID);
                                 if (s != null)
@@ -405,7 +405,7 @@ namespace Assistant
                             ushort spellID = Convert.ToUInt16(command);
 
                             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                                RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
+                                RazorEnhanced.ScriptRecorder.instance().Record_ClientTextCommand(2, spellID);
 
                             Spell s = Spell.Get(spellID);
                             if (s != null)
@@ -426,7 +426,7 @@ namespace Assistant
                             try
                             {
                                 int virtueid = Convert.ToInt32(command.Split(' ')[0]);
-                                RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(3, virtueid);
+                                RazorEnhanced.ScriptRecorder.instance().Record_ClientTextCommand(3, virtueid);
                             }
                             catch { break; }
                         }
@@ -467,7 +467,7 @@ namespace Assistant
             {
                 Serial ser = p.ReadUInt32();
                 string name = p.ReadStringSafe(30);
-                RazorEnhanced.ScriptRecorder.Record_RenameMobile((int)ser, name);
+                RazorEnhanced.ScriptRecorder.instance().Record_RenameMobile((int)ser, name);
             }
         }
 
@@ -509,7 +509,7 @@ namespace Assistant
             byte yesno = p.ReadByte();
             int textlenght = p.ReadInt16();
             string text = p.ReadStringSafe(textlenght);
-            RazorEnhanced.ScriptRecorder.Record_ResponseStringQuery(yesno, text);
+            RazorEnhanced.ScriptRecorder.instance().Record_ResponseStringQuery(yesno, text);
         }
 
         private static void LiftRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -574,7 +574,7 @@ namespace Assistant
                 return;
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
+                RazorEnhanced.ScriptRecorder.instance().Record_EquipRequest(item, layer, m);
 
             // Aggiornamento icone spellgrid
             if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
@@ -611,7 +611,7 @@ namespace Assistant
             }
             i.Container = dest;
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_DropRequest(i, dser);
+                RazorEnhanced.ScriptRecorder.instance().Record_DropRequest(i, dser);
 
 
 
@@ -686,7 +686,7 @@ namespace Assistant
             //Client.Instance.RequestMove(dir);
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_Movement(dir);
+                RazorEnhanced.ScriptRecorder.instance().Record_Movement(dir);
         }
 
         private static void ContainerContentUpdate(Packet p, PacketHandlerEventArgs args)
@@ -2599,7 +2599,7 @@ namespace Assistant
             RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_GumpsResponse(tid, bid);
+                RazorEnhanced.ScriptRecorder.instance().Record_GumpsResponse(tid, bid);
 
             if (gd != null)
             {
@@ -3096,7 +3096,7 @@ namespace Assistant
             ushort hue = pvSrc.ReadUInt16();
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_MenuResponse(index);
+                RazorEnhanced.ScriptRecorder.instance().Record_MenuResponse(index);
 
             World.Player.HasMenu = false;
         }
@@ -3243,7 +3243,7 @@ namespace Assistant
             p.ReadUInt32(); // Prompt ID
             uint type = p.ReadUInt32(); // type
             string text = p.ReadUnicodeStringSafe();
-            RazorEnhanced.ScriptRecorder.Record_AsciiPromptResponse(type, text);
+            RazorEnhanced.ScriptRecorder.instance().Record_AsciiPromptResponse(type, text);
         }
 
         private static void ResyncRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -3532,7 +3532,7 @@ namespace Assistant
             uint serialbersaglio = p.ReadUInt32();
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.Record_AttackRequest(serialbersaglio);
+                RazorEnhanced.ScriptRecorder.instance().Record_AttackRequest(serialbersaglio);
 
             if (RazorEnhanced.Friend.PreventAttack)
             {

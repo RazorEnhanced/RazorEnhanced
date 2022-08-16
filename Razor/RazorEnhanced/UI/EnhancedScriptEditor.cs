@@ -68,6 +68,8 @@ namespace RazorEnhanced.UI
 
         private string m_Filename = String.Empty;
         private string m_Filetype = String.Empty;
+        public  static string GetFiletype() {  return m_EnhancedScriptEditor.m_Filetype; }
+
         private string m_Filepath = String.Empty;
 
         private readonly PythonEngine m_pe;
