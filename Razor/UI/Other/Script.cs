@@ -132,27 +132,37 @@ namespace Assistant
                 script.Reset();
             }
 
-            Scripts.EnhancedScripts.Clear();
-
+            // Save current selected index
             int currentSelectionIndex = 0;
-
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
             if (scriptListView == null)
                 return;
-            
             if (scriptListView.SelectedIndices.Count > 0)
             {
                 currentSelectionIndex = scriptListView.SelectedIndices[0];
             }
 
-            scriptListView.BeginUpdate();
-            scriptListView.Items.Clear();
+            // Empty all the controls
+            TabControl scriptsTab = MainForm.GetAllScriptsTab();
+            if (scriptsTab == null)
+                return;
+            foreach (TabPage tabPage in scriptsTab.Controls)
+            {
+                ScriptListView listView = (RazorEnhanced.UI.ScriptListView)tabPage.Controls[0];
+                listView.BeginUpdate();
+                listView.Items.Clear();
+            }
 
             LoadScriptList(RazorEnhanced.Scripts.PyScripts, pyScriptListView);
             LoadScriptList(RazorEnhanced.Scripts.UosScripts, uosScriptListView);
             LoadScriptList(RazorEnhanced.Scripts.CsScripts, csScriptListView);
 
-            scriptListView.EndUpdate();
+            foreach (TabPage tabPage in scriptsTab.Controls)
+            {
+                ScriptListView listView = (RazorEnhanced.UI.ScriptListView)tabPage.Controls[0];
+                listView.EndUpdate();
+            }
+
             if (scriptListView.Items.Count > currentSelectionIndex)
             {
                 scriptListView.Items[currentSelectionIndex].Selected = true;
@@ -538,8 +548,8 @@ namespace Assistant
             {
                 string filename = Path.GetFileName(openFileDialogscript.FileName);
                 string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
-                
-                Scripts.EnhancedScript script = Scripts.Search(filename);
+
+                Scripts.ScriptItem script = Scripts.FindScript(filename);
                 if (script == null)
                 {
                     var scriptItem = new Scripts.ScriptItem();
