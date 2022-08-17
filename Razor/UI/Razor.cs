@@ -3650,7 +3650,6 @@ namespace Assistant
             this.columnHeader16,
             this.columnHeader17,
             this.columnHeader18});
-            this.csScriptListView.Enabled = false;
             this.csScriptListView.FullRowSelect = true;
             this.csScriptListView.GridLines = true;
             this.csScriptListView.HideSelection = false;

@@ -2641,7 +2641,10 @@ namespace RazorEnhanced
             //RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
 
             if (m_Dataset != null)
+            {
                 m_Dataset.Clear();
+                Scripts.Clear();
+            }
 
             m_profileName = profileName;
             m_Dataset = new DataSet();

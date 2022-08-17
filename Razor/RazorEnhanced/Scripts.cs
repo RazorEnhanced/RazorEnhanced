@@ -30,6 +30,13 @@ namespace RazorEnhanced
         internal static List<ScriptItem> UosScripts = new List<ScriptItem>();
         internal static List<ScriptItem> CsScripts = new List<ScriptItem>();
 
+        internal static void Clear()
+        {
+            PyScripts = new List<ScriptItem>();
+            UosScripts = new List<ScriptItem>();
+            CsScripts = new List<ScriptItem>();
+        }
+
         internal static void ClearScriptKey(Keys key)
         {
             foreach (ScriptItem item in PyScripts)
