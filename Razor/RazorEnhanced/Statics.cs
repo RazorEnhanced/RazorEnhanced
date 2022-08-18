@@ -404,7 +404,11 @@ namespace RazorEnhanced
 			private readonly int m_StaticZ;
 			public int StaticZ { get { return m_StaticZ; } }
 
-			public TileInfo(int id, int hue, int z)
+            // HuedTile interface 
+            public ushort ID { get { return (ushort)m_StaticID; }  }
+            public int Hue { get { return m_StaticHue; } }
+            public int Z { get { return m_StaticZ; }  }
+            public TileInfo(int id, int hue, int z)
 			{
 				m_StaticID = id;
 				m_StaticHue = hue;
@@ -437,22 +441,22 @@ namespace RazorEnhanced
 			switch (map)
 			{
 				case 0:
-					tile = Ultima.Map.Felucca.Tiles.GetLandTile(x, y);
+					tile = Ultima.Map.Felucca.Tiles.GetLandTile(x, y, true);
 					break;
 				case 1:
-					tile = Ultima.Map.Trammel.Tiles.GetLandTile(x, y);
+					tile = Ultima.Map.Trammel.Tiles.GetLandTile(x, y, true);
 					break;
 				case 2:
-					tile = Ultima.Map.Ilshenar.Tiles.GetLandTile(x, y);
+					tile = Ultima.Map.Ilshenar.Tiles.GetLandTile(x, y, true);
 					break;
 				case 3:
-					tile = Ultima.Map.Malas.Tiles.GetLandTile(x, y);
+					tile = Ultima.Map.Malas.Tiles.GetLandTile(x, y, true);
 					break;
 				case 4:
-					tile = Ultima.Map.Tokuno.Tiles.GetLandTile(x, y);
+					tile = Ultima.Map.Tokuno.Tiles.GetLandTile(x, y, true);
 					break;
 				case 5:
-					tile = Ultima.Map.TerMur.Tiles.GetLandTile(x, y);
+					tile = Ultima.Map.TerMur.Tiles.GetLandTile(x, y, true);
 					break;
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetLandZ Invalid Map!");
@@ -514,7 +518,9 @@ namespace RazorEnhanced
 			{
 				foreach (Ultima.HuedTile tile in tiles)
 				{
-					tileinfo.Add(new TileInfo(tile.ID, tile.Hue, tile.Z));
+                    Season season = (Season)Assistant.World.Player.Season;
+                    int graphic = SeasonManager.GetSeasonGraphic(season, tile.ID);
+                    tileinfo.Add(new TileInfo(graphic, tile.Hue, tile.Z));
 				}
 			}
 

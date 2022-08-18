@@ -337,6 +337,7 @@
     <Compile Include="Network\UoWarper.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="RazorEnhanced\AutoDoc.cs" />
+    <Compile Include="RazorEnhanced\Constants.cs" />
     <Compile Include="RazorEnhanced\CSharpEngine.cs" />
     <Compile Include="RazorEnhanced\CUO.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
@@ -344,6 +345,7 @@
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
     <Compile Include="RazorEnhanced\Multi.cs" />
+    <Compile Include="RazorEnhanced\SeasonManager.cs" />
     <Compile Include="RazorEnhanced\Sound.cs" />
     <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>

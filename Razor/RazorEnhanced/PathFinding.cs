@@ -217,7 +217,8 @@ namespace RazorEnhanced
         {
             newZ = 0;
 
-            var tiles = map.Tiles.GetStaticTiles(x, y, true);
+            //Ultima.HuedTile[] tiles = map.Tiles.GetStaticTiles(x, y, true);
+            List<Statics.TileInfo> tiles = Statics.GetStaticsTileInfo(x, y, Player.Map);
             var landTile = map.Tiles.GetLandTile(x, y);
             var landData = TileData.LandTable[landTile.ID & (TileData.LandTable.Length - 1)];
             var landBlocks = (landData.Flags & TileFlag.Impassable) != 0;
@@ -444,14 +445,14 @@ namespace RazorEnhanced
             return true;
         }
 
-        private static bool IsOk(HuedTile tile, int ourZ, int ourTop)
+        private static bool IsOk(Statics.TileInfo tile, int ourZ, int ourTop)
         {
             var itemData = TileData.ItemTable[tile.ID & (TileData.ItemTable.Length - 1)];
 
             return tile.Z + itemData.CalcHeight <= ourZ || ourTop <= tile.Z || (itemData.Flags & ImpassableSurface) == 0;
         }
 
-        private static bool IsOk(bool ignoreDoors, bool ignoreSpellFields, int ourZ, int ourTop, HuedTile[] tiles, IEnumerable<Assistant.Item> items)
+        private static bool IsOk(bool ignoreDoors, bool ignoreSpellFields, int ourZ, int ourTop, List<Statics.TileInfo> tiles, IEnumerable<Assistant.Item> items)
         {
             return tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
         }

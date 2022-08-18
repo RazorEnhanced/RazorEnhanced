@@ -2615,8 +2615,9 @@ namespace Assistant
 
         private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
         {
+            byte season = p.ReadByte();
             if (World.Player != null)
-                World.Player.Season = p.ReadByte();
+                World.Player.Season = season;
         }
 
 
