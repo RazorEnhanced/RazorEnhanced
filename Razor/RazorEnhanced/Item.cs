@@ -441,6 +441,28 @@ namespace RazorEnhanced
     {
 
         /// <summary>
+        /// Open a container at a specific location on the screen
+        /// </summary>
+        /// <param name="bag">Container as Item object.</param>
+        /// <param name="x">x location to open at</param>
+        /// <param name="y">y location to open at</param>
+        public static void OpenContainerAt(Item bag, int x, int y) 
+        {
+            if (bag == null || (!bag.IsCorpse && !bag.IsContainer))
+                return;
+            if (Client.IsOSI)
+            {
+                Misc.NextContPosition(x, y);
+                RazorEnhanced.Items.UseItem(bag);
+            }
+            else 
+            {
+                CUO.OpenContainerAt(bag, x, y);
+            }
+        }
+
+
+        /// <summary>
         /// Open a container an wait for the Items to load, for a maximum amount of time.
         /// </summary>
         /// <param name="bag">Container as Item object.</param>

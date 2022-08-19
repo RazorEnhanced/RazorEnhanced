@@ -102,7 +102,7 @@ namespace RazorEnhanced
                                             var flags = BindingFlags.Default; //BindingFlags.Instance | BindingFlags.Public;
                                             foreach (var method in WorldMapGump.GetMethods())
                                             {
-                                               if (method.Name == "GoToMarker")
+                                                if (method.Name == "GoToMarker")
                                                 {
                                                     if (method.IsPublic)
                                                         flags |= BindingFlags.Public;
@@ -134,7 +134,7 @@ namespace RazorEnhanced
         /// Invokes the FreeView function inside the CUO code
         /// First value is retrieved, and then only set if its not correct
         /// </summary>
-        public static void FreeView(bool free )
+        public static void FreeView(bool free)
         {
             if (!Client.IsOSI)
             {
@@ -288,7 +288,49 @@ namespace RazorEnhanced
             }
         }
 
-    }
+        public static void OpenContainerAt(Item bag, int x, int y)
+        {
+            if (!Client.IsOSI)
+            {
+                
+                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
+                if (assembly != null)
+                {
+                    Type Point = assembly.GetType("Microsoft.Xna.Framework.Point");
+                    System.Reflection.ConstructorInfo ctor = Point.GetConstructor(new[] { typeof(int), typeof(int) });
+                    var pos = ctor.Invoke(new object[] { x, y });
+                    var SavePosition = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetMethod("SavePosition", BindingFlags.Public | BindingFlags.Static);
+                    if (SavePosition != null)
+                    {
+                        SavePosition.Invoke(assembly, new object[] { (uint)bag.Serial, pos });
+                    }
+                }
+                Items.UseItem(bag.Serial);
+            }
+        }
 
-}
+
+
+        public static void Debug()
+        {
+            foreach (System.Reflection.AssemblyName an in System.Reflection.Assembly.GetExecutingAssembly().GetReferencedAssemblies())
+            {
+                System.Reflection.Assembly asm = System.Reflection.Assembly.Load(an.ToString());
+                foreach (Type type in asm.GetTypes())
+                {
+                    //PROPERTIES
+                    //foreach (System.Reflection.PropertyInfo property in type.GetProperties())
+                    //{
+                    //    if (property.CanRead)
+                    //    {
+                    //        Response.Write("<br>" + an.ToString() + "." + type.ToString() + "." + property.Name);
+                    //    }
+                    //}
+                }
+
+
+            }
+        }
+    }
+    }
 

@@ -28,7 +28,14 @@ namespace Assistant
             }
 
             Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
-            Scripts.EnhancedScripts.TryAdd(filename, script);
+            if (Scripts.EnhancedScripts.ContainsKey(filename))
+            {
+                Scripts.EnhancedScripts[filename] = script;
+            }
+            else
+            {
+                Scripts.EnhancedScripts.TryAdd(filename, script);
+            }
             return status;
         }
 
