@@ -42,8 +42,7 @@ namespace Assistant
                 return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
             };
 
-
-            //ClassicUO.Configuration.Settings settings = ClassicUO.Configuration.Settings.Get();
+            
             Install2(plugin);
         }
 
@@ -169,7 +168,7 @@ namespace Assistant
 
         public override bool ServerEncrypted { get; set; }
 
-        public static Assembly CUOAssembly { get; set; }
+        public static Assembly CUOAssembly { get { return System.Reflection.Assembly.GetEntryAssembly(); } }
         public static Queue<Action> CUOActionQueue { get; set; } = new Queue<Action>();
 
         public unsafe bool InitPlugin(PluginHeader* header)
@@ -222,8 +221,8 @@ namespace Assistant
             header->OnFocusGained = Marshal.GetFunctionPointerForDelegate(_onFocusGained);
             header->OnFocusLost = Marshal.GetFunctionPointerForDelegate(_onFocusLost);
 
-            CUOAssembly = AppDomain.CurrentDomain.GetAssemblies()
-                .FirstOrDefault(a => a.FullName.StartsWith("ClassicUO,"));
+            //CUOAssembly = AppDomain.CurrentDomain.GetAssemblies()
+            //    .FirstOrDefault(a => a.FullName.StartsWith("ClassicUO,"));
 
             m_Ready = true;
             return true;

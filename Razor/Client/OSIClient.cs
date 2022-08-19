@@ -785,6 +785,7 @@ namespace Assistant
                 {
                     break;
                 }
+                System.Threading.Thread.Sleep(10);
             }
 
             m_ScriptWaitRecv = true;
