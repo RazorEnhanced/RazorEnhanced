@@ -2031,16 +2031,54 @@ namespace RazorEnhanced
         ///
         public static void Close(int serial)
         {
-            Assistant.Item item = World.FindItem(serial);            
-            if (item != null)
+            if (Client.IsOSI)
             {
-                Assistant.Client.Instance.SendToClientWait(new CloseContainer(serial));
+                Assistant.Item item = World.FindItem(serial);
+                if (item != null)
+                {
+                    Assistant.Client.Instance.SendToClientWait(new CloseContainer(serial));
+                }
+            } else
+            {
+                CUO.CloseGump((uint)serial);
             }
         }
+
         public static void Close(Item item)
         {
             Close(item.Serial);
         }
+
+        /// <summary>
+        /// Open a container at a specific location
+        /// </summary>
+        /// <param name="serial">Serial or Item to hide.</param>
+        /// <param name="x"> x location to open at
+        /// <param name="y"> y location to open at
+        ///
+        public static void OpenAt(int serial, int x, int y)
+        {
+            if (Client.IsOSI)
+            {
+                Assistant.Item item = World.FindItem(serial);
+                if (item != null)
+                {
+                    Misc.NextContPosition(x, y);
+                    UseItem(serial);
+                }
+            }
+            else
+            {
+                CUO.OpenContainerAt((uint)serial, x, y);
+            }
+        }
+
+        public static void OpenAt(Item item, int x, int y)
+        {
+            OpenAt(item.Serial, x, y);
+        }
+
+
 
         /// <summary>
         /// Count items in Player Backpack.

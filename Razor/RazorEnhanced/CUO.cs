@@ -288,11 +288,22 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Set a location that CUO will open the container at
+        /// </summary>
         public static void OpenContainerAt(Item bag, int x, int y)
+        {
+            OpenContainerAt((uint)bag.Serial, x, y);
+        }
+
+        /// <summary>
+        /// Set a location that CUO will open the container at
+        /// </summary>
+        public static void OpenContainerAt(uint bag, int x, int y)
         {
             if (!Client.IsOSI)
             {
-                
+
                 System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
                 if (assembly != null)
                 {
@@ -302,35 +313,42 @@ namespace RazorEnhanced
                     var SavePosition = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetMethod("SavePosition", BindingFlags.Public | BindingFlags.Static);
                     if (SavePosition != null)
                     {
-                        SavePosition.Invoke(assembly, new object[] { (uint)bag.Serial, pos });
+                        SavePosition.Invoke(assembly, new object[] { (uint)bag, pos });
                     }
                 }
-                Items.UseItem(bag.Serial);
+                Items.UseItem((int)bag);
             }
         }
 
-
-
-        public static void Debug()
+        public static void CloseGump(uint serial)
         {
-            foreach (System.Reflection.AssemblyName an in System.Reflection.Assembly.GetExecutingAssembly().GetReferencedAssemblies())
+            if (!Client.IsOSI)
             {
-                System.Reflection.Assembly asm = System.Reflection.Assembly.Load(an.ToString());
-                foreach (Type type in asm.GetTypes())
+                var UIManager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");
+                if (UIManager != null)
                 {
-                    //PROPERTIES
-                    //foreach (System.Reflection.PropertyInfo property in type.GetProperties())
-                    //{
-                    //    if (property.CanRead)
-                    //    {
-                    //        Response.Write("<br>" + an.ToString() + "." + type.ToString() + "." + property.Name);
-                    //    }
-                    //}
+                    MethodInfo GetGump = UIManager.GetMethods().Where(x => x.Name == "GetGump" && !x.IsGenericMethod).First();
+                    if (GetGump != null)
+                    {
+                        var gump = GetGump.Invoke(ClassicUOClient.CUOAssembly, new object[] { serial });
+                        if (gump != null)
+                        {
+                            var Gumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
+                            if (Gumps != null)
+                            {
+                                MethodInfo Dispose = Gumps.GetMethod("Dispose");
+                                if (Dispose != null)
+                                {
+                                    Dispose.Invoke(gump, new object[] { });
+                                }
+                            }
+                        }
+                    }
                 }
-
-
             }
         }
+
+
     }
-    }
+}
 
