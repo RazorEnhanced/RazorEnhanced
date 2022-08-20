@@ -9,27 +9,27 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-	public class Shard
-	{
-		private static readonly string m_Save = "RazorEnhanced.shards";
+    public class Shard
+    {
+        private static readonly string m_Save = "RazorEnhanced.shards";
 
-		private static DataSet m_Dataset;
-		internal static DataSet Dataset { get { return m_Dataset; } }
+        private static DataSet m_Dataset;
+        internal static DataSet Dataset { get { return m_Dataset; } }
 
-		internal static void Load(bool tryBackup=true)
-		{
-			//if (m_Dataset != null)
-			//	return;
+        internal static void Load(bool tryBackup=true)
+        {
+            //if (m_Dataset != null)
+            //  return;
 
-			m_Dataset = new DataSet();
-			string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
-			string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
+            m_Dataset = new DataSet();
+            string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
+            string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
 
-			if (File.Exists(filename))
-			{
-				try
-				{
-					m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(filename));
+            if (File.Exists(filename))
+            {
+                try
+                {
+                    m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(filename));
                     DataTableCollection tables = m_Dataset.Tables;
 
                     DataTable shards = m_Dataset.Tables["SHARDS"];
@@ -43,39 +43,39 @@ namespace RazorEnhanced
                     }
 
                     File.Copy(filename, backup, true);
-				}
-				catch (Exception)
-				{
-					if (tryBackup)
-					{
-						MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
-						File.Copy(backup, filename, true);
-						Load(false);
-					}
-					else
-					{
-						throw;
-					}
-					return;
-				}
-			}
-			else
-			{
-				// ----------- SHARDS ----------
-				DataTable shards = new DataTable("SHARDS");
-				shards.Columns.Add("Description", typeof(string)); // Key
-				shards.Columns.Add("ClientPath", typeof(string));
-				shards.Columns.Add("ClientFolder", typeof(string));
+                }
+                catch (Exception)
+                {
+                    if (tryBackup)
+                    {
+                        MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+                        File.Copy(backup, filename, true);
+                        Load(false);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                    return;
+                }
+            }
+            else
+            {
+                // ----------- SHARDS ----------
+                DataTable shards = new DataTable("SHARDS");
+                shards.Columns.Add("Description", typeof(string)); // Key
+                shards.Columns.Add("ClientPath", typeof(string));
+                shards.Columns.Add("ClientFolder", typeof(string));
                 shards.Columns.Add("CUOClient", typeof(string));
                 shards.Columns.Add("Host", typeof(string));
-				shards.Columns.Add("Port", typeof(long));
-				shards.Columns.Add("PatchEnc", typeof(bool));
-				shards.Columns.Add("OSIEnc", typeof(bool));
-				shards.Columns.Add("Selected", typeof(bool));
+                shards.Columns.Add("Port", typeof(long));
+                shards.Columns.Add("PatchEnc", typeof(bool));
+                shards.Columns.Add("OSIEnc", typeof(bool));
+                shards.Columns.Add("Selected", typeof(bool));
 
-				DataRow uod = shards.NewRow();
-				uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
-				shards.Rows.Add(uod);
+                DataRow uod = shards.NewRow();
+                uod.ItemArray = new object[] { "OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true };
+                shards.Rows.Add(uod);
 
                 DataRow eventine = shards.NewRow();
                 eventine.ItemArray = new object[] { "UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false };
@@ -85,151 +85,151 @@ namespace RazorEnhanced
 
 
                 m_Dataset.AcceptChanges();
-			}
-		}
+            }
+        }
 
-		private readonly string m_Description;
-		internal string Description { get { return m_Description; } }
+        private readonly string m_Description;
+        internal string Description { get { return m_Description; } }
 
 
-		internal string ClientPath { get; set; }
+        internal string ClientPath { get; set; }
         internal string CUOClient { get; set; }
 
         //private string m_ClientFolder;
         internal string ClientFolder { get; set; }
 
-		private readonly string m_Host;
-		internal string Host { get { return m_Host; } }
+        private readonly string m_Host;
+        internal string Host { get { return m_Host; } }
 
-		private readonly int m_Port;
-		internal int Port { get { return m_Port; } }
+        private readonly int m_Port;
+        internal int Port { get { return m_Port; } }
 
-		private readonly bool m_PatchEnc;
-		internal bool PatchEnc { get { return m_PatchEnc; } }
+        private readonly bool m_PatchEnc;
+        internal bool PatchEnc { get { return m_PatchEnc; } }
 
-		private readonly bool m_OSIEnc;
-		internal bool OSIEnc { get { return m_OSIEnc; } }
+        private readonly bool m_OSIEnc;
+        internal bool OSIEnc { get { return m_OSIEnc; } }
 
-		private readonly bool m_Selected;
-		internal bool Selected { get { return m_Selected; } }
+        private readonly bool m_Selected;
+        internal bool Selected { get { return m_Selected; } }
 
-		public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected)
-		{
-			m_Description = description;
-			ClientPath = clientpath;
-			ClientFolder = clientfolder;
+        public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected)
+        {
+            m_Description = description;
+            ClientPath = clientpath;
+            ClientFolder = clientfolder;
             CUOClient = cuoClient;
-			m_Host = host;
-			m_Port = port;
-			m_PatchEnc = patchenc;
-			m_OSIEnc = osienc;
-			m_Selected = selected;
-		}
+            m_Host = host;
+            m_Port = port;
+            m_PatchEnc = patchenc;
+            m_OSIEnc = osienc;
+            m_Selected = selected;
+        }
 
-		internal static bool Exists(string description)
-		{
-			return m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
-		}
+        internal static bool Exists(string description)
+        {
+            return m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
+        }
 
-		internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc)
-		{
-			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-			{
-				row["Selected"] = false;
-			}
+        internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc)
+        {
+            foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+            {
+                row["Selected"] = false;
+            }
 
-			DataRow newRow = m_Dataset.Tables["SHARDS"].NewRow();
-			newRow["Description"] = description;
-			newRow["ClientPath"] = clientpath;
-			newRow["ClientFolder"] = clientfolder;
+            DataRow newRow = m_Dataset.Tables["SHARDS"].NewRow();
+            newRow["Description"] = description;
+            newRow["ClientPath"] = clientpath;
+            newRow["ClientFolder"] = clientfolder;
             newRow["CUOClient"] = cuoClient;
-			newRow["Host"] = host;
-			newRow["Port"] = port;
-			newRow["PatchEnc"] = parchenc;
-			newRow["OSIEnc"] = osienc;
-			newRow["Selected"] = true;
-			m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
+            newRow["Host"] = host;
+            newRow["Port"] = port;
+            newRow["PatchEnc"] = parchenc;
+            newRow["OSIEnc"] = osienc;
+            newRow["Selected"] = true;
+            m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
 
-			Save();
-		}
+            Save();
+        }
 
-		internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc, bool selected)
-		{
-			bool found = m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
+        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool parchenc, bool osienc, bool selected)
+        {
+            bool found = m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
-			if (found)
-			{
-				if (selected)
-				{
-					foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-					{
-						row["Selected"] = false;
-					}
-				}
+            if (found)
+            {
+                if (selected)
+                {
+                    foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+                    {
+                        row["Selected"] = false;
+                    }
+                }
 
-				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						row["Description"] = description;
-						row["ClientPath"] = clientpath;
-						row["ClientFolder"] = clientfolder;
+                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+                {
+                    if ((string)row["Description"] == description)
+                    {
+                        row["Description"] = description;
+                        row["ClientPath"] = clientpath;
+                        row["ClientFolder"] = clientfolder;
                         row["CUOClient"] = cuoClient;
-						row["Host"] = host;
-						row["Port"] = port;
-						row["PatchEnc"] = parchenc;
-						row["OSIEnc"] = osienc;
-						row["Selected"] = selected;
-						break;
-					}
-				}
+                        row["Host"] = host;
+                        row["Port"] = port;
+                        row["PatchEnc"] = parchenc;
+                        row["OSIEnc"] = osienc;
+                        row["Selected"] = selected;
+                        break;
+                    }
+                }
 
-				Save();
-			}
-		}
+                Save();
+            }
+        }
 
-		internal static void UpdateLast(string description)
-		{
-			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-			{
-				if ((string)row["Description"] == description)
-				{
-					row["Selected"] = true;
-				}
-				else
-					row["Selected"] = false;
-			}
-			Save();
-		}
+        internal static void UpdateLast(string description)
+        {
+            foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+            {
+                if ((string)row["Description"] == description)
+                {
+                    row["Selected"] = true;
+                }
+                else
+                    row["Selected"] = false;
+            }
+            Save();
+        }
 
-		internal static void Delete(string shardname)
-		{
-			bool last = true;
-			for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
-			{
-				DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
-				if ((string)row["Description"] == shardname)
-				{
-					row.Delete();
-				}
-				else
-				{
-					if (last)
-					{
-						row["Selected"] = true;
-						last = false;
-					}
-					else
-						row["Selected"] = false;
-				}
-			}
+        internal static void Delete(string shardname)
+        {
+            bool last = true;
+            for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
+            {
+                DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
+                if ((string)row["Description"] == shardname)
+                {
+                    row.Delete();
+                }
+                else
+                {
+                    if (last)
+                    {
+                        row["Selected"] = true;
+                        last = false;
+                    }
+                    else
+                        row["Selected"] = false;
+                }
+            }
 
-			Save();
-		}
+            Save();
+        }
 
-		internal static void Read(out List<RazorEnhanced.Shard> shards)
-		{
-			List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
+        internal static void Read(out List<RazorEnhanced.Shard> shards)
+        {
+            List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
 
             foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
             {
@@ -248,22 +248,22 @@ namespace RazorEnhanced
                 shardsOut.Add(shard);
             }
 
-			shards = shardsOut;
-		}
+            shards = shardsOut;
+        }
 
-		internal static void Save()
-		{
-			try
-			{
-				m_Dataset.AcceptChanges();
+        internal static void Save()
+        {
+            try
+            {
+                m_Dataset.AcceptChanges();
 
-				string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
-				File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error writing " + m_Save + ": " + ex);
-			}
-		}
-	}
+                string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
+                File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error writing " + m_Save + ": " + ex);
+            }
+        }
+    }
 }

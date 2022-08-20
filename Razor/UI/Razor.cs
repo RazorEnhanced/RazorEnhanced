@@ -9704,10 +9704,10 @@ namespace Assistant
                     //DialogResult dialogResult = MessageBox.Show("Microsoft Visual C++ 2015 Redistributable is not installed, is necessary for prevent crash or missing function, Want open offical download site?", "Missing Dependency", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     //if (dialogResult == DialogResult.Yes)
                     //{
-                    //	if (Environment.Is64BitOperatingSystem)
-                    //		System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe");
-                    //	else
-                    //		System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x86.exe");
+                    //  if (Environment.Is64BitOperatingSystem)
+                    //      System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe");
+                    //  else
+                    //      System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x86.exe");
                     //}
 
                 }
@@ -9950,20 +9950,20 @@ namespace Assistant
             }
 
 
-            /*	if (Client.AllowBit(FeatureBit.AutoOpenDoors))
-				{
-					RazorEnhanced.AutoLoot.AddLog(Client.AllowBit(FeatureBit.LightFilter).ToString());
+            /*  if (Client.AllowBit(FeatureBit.AutoOpenDoors))
+                {
+                    RazorEnhanced.AutoLoot.AddLog(Client.AllowBit(FeatureBit.LightFilter).ToString());
 
-					//RazorEnhanced.AutoLoot.AddLog(Client.AllowBit(FeatureBit.AutoOpenDoors).ToString());
-					autoOpenDoors.Checked = false;
-					autoOpenDoors.Enabled = false;
-					Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
-				}
-				else
-				{
-					if (!autoOpenDoors.Enabled)
-						autoOpenDoors.Enabled = true;
-				}*/
+                    //RazorEnhanced.AutoLoot.AddLog(Client.AllowBit(FeatureBit.AutoOpenDoors).ToString());
+                    autoOpenDoors.Checked = false;
+                    autoOpenDoors.Enabled = false;
+                    Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
+                }
+                else
+                {
+                    if (!autoOpenDoors.Enabled)
+                        autoOpenDoors.Enabled = true;
+                }*/
 
 
             if (!Assistant.Client.Instance.AllowBit(FeatureBit.UnequipBeforeCast))
@@ -10002,28 +10002,28 @@ namespace Assistant
                     blockhealpoisonCheckBox.Enabled = true;
             }
 
-            /*	if (!Client.AllowBit(FeatureBit.SellAgent))
-				{
-					sellEnableCheckBox.Enabled = false;
-					sellEnableCheckBox.Checked = false;
-				}
-				else
-				{
-					if (!sellEnableCheckBox.Enabled)
-						sellEnableCheckBox.Enabled = true;
-				}*/
+            /*  if (!Client.AllowBit(FeatureBit.SellAgent))
+                {
+                    sellEnableCheckBox.Enabled = false;
+                    sellEnableCheckBox.Checked = false;
+                }
+                else
+                {
+                    if (!sellEnableCheckBox.Enabled)
+                        sellEnableCheckBox.Enabled = true;
+                }*/
 
 
             /*if (!Client.AllowBit(FeatureBit.BuyAgent))
-			{
-				buyEnableCheckBox.Enabled = false;
-				buyEnableCheckBox.Checked = false;
-			}
-			else
-			{
-				if (!buyEnableCheckBox.Enabled)
-					buyEnableCheckBox.Enabled = true;
-			}*/
+            {
+                buyEnableCheckBox.Enabled = false;
+                buyEnableCheckBox.Checked = false;
+            }
+            else
+            {
+                if (!buyEnableCheckBox.Enabled)
+                    buyEnableCheckBox.Enabled = true;
+            }*/
 
             if (!Assistant.Client.Instance.AllowBit(FeatureBit.OverheadHealth))
             {

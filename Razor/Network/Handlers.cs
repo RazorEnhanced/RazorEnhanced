@@ -168,38 +168,38 @@ namespace Assistant
         }
 
         /*private static void ServOPLHash(Packet p, PacketHandlerEventArgs args)
-		{
-			Serial s = p.ReadUInt32();
-			int hash = p.ReadInt32();
+        {
+            Serial s = p.ReadUInt32();
+            int hash = p.ReadInt32();
 
-			if (s.IsItem)
-			{
-				Item item = World.FindItem(s);
-				if (item != null && item.OPLHash != hash)
-				{
-					item.OPLHash = hash;
-					p.Seek(-4, SeekOrigin.Current);
-					p.Write((uint)item.OPLHash);
-				}
-			}
-			else if (s.IsMobile)
-			{
-				Mobile m = World.FindMobile(s);
-				if (m != null && m.OPLHash != hash)
-				{
-					m.OPLHash = hash;
-					p.Seek(-4, SeekOrigin.Current);
-					p.Write((uint)m.OPLHash);
-				}
-			}
-		}*/
+            if (s.IsItem)
+            {
+                Item item = World.FindItem(s);
+                if (item != null && item.OPLHash != hash)
+                {
+                    item.OPLHash = hash;
+                    p.Seek(-4, SeekOrigin.Current);
+                    p.Write((uint)item.OPLHash);
+                }
+            }
+            else if (s.IsMobile)
+            {
+                Mobile m = World.FindMobile(s);
+                if (m != null && m.OPLHash != hash)
+                {
+                    m.OPLHash = hash;
+                    p.Seek(-4, SeekOrigin.Current);
+                    p.Write((uint)m.OPLHash);
+                }
+            }
+        }*/
 
         private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)
         {
             Serial ser = p.ReadUInt32();
 
-            /*	if (RazorEnhanced.ScriptRecorder.OnRecord)
-					RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);*/
+            /*  if (RazorEnhanced.ScriptRecorder.OnRecord)
+                    RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);*/
 
             // if you modify this, don't forget to modify the allnames hotkey
             if (Engine.MainWindow.LastTargTextFlags.Checked)
@@ -286,7 +286,7 @@ namespace Assistant
                             RazorEnhanced.ScriptRecorder.instance().Record_SAStun();
                         break;
                     }
-                /*	case 0x10: // query object properties
+                /*  case 0x10: // query object properties
                         {
                             break;
                         }*/
@@ -297,9 +297,9 @@ namespace Assistant
                         ushort idx = p.ReadUInt16();
 
                         //if (ser.IsMobile)
-                        //	ent = World.FindMobile(ser);
+                        //  ent = World.FindMobile(ser);
                         //else if (ser.IsItem)
-                        //	ent = World.FindItem(ser);
+                        //  ent = World.FindItem(ser);
 
                         if (RazorEnhanced.ScriptRecorder.OnRecord)
                             RazorEnhanced.ScriptRecorder.instance().Record_ContextMenuResponse(ser, idx);
@@ -331,7 +331,7 @@ namespace Assistant
                     {
                         break;
                     }
-                    /*	case 0x24:
+                    /*  case 0x24:
                     {
                         // for the cheatx0r part 2...  anything outside this range indicates some haxing, just hide it with 0x30s
                         byte b = p.ReadByte();
@@ -341,7 +341,7 @@ namespace Assistant
                             p.Write((byte)0x30);
                         }
                         //using ( StreamWriter w = new StreamWriter( "bf24.txt", true ) )
-                        //	w.WriteLine( "{0} : 0x{1:X2}", DateTime.Now.ToString( "HH:mm:ss.ffff" ), b );
+                        //  w.WriteLine( "{0} : 0x{1:X2}", DateTime.Now.ToString( "HH:mm:ss.ffff" ), b );
                         break;
                     }*/
             }
@@ -544,12 +544,12 @@ namespace Assistant
             }
         }
 
-        /*	private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
+        /*  private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
             {
                 RazorEnhanced.DragDropManager.HoldingItem = true;
             }*/
 
-        /*	private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
+        /*  private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
             {
                 RazorEnhanced.DragDropManager.HoldingItem = false;
             }*/
@@ -724,7 +724,7 @@ namespace Assistant
                 World.AddItem(i);
                 i.IsNew = i.AutoStack = true;
             }
-            /*	else
+            /*  else
                 {
                     i.CancelRemove();
                 }*/
@@ -815,13 +815,13 @@ namespace Assistant
                     item.IsNew = true;
                     item.AutoStack = false;
                 }
-                /*	else
+                /*  else
                     {
                         item.CancelRemove();
                     }*/
 
                 //if ( !DragDropManager.EndHolding( serial ) )
-                //	continue;
+                //  continue;
 
                 item.ItemID = itemID;
                 item.Amount = p.ReadUInt16();
@@ -879,7 +879,7 @@ namespace Assistant
                     item.IsNew = true;
                     item.AutoStack = false;
                 }
-                /*	else
+                /*  else
                     {
                         item.CancelRemove();
                     }*/
@@ -902,7 +902,7 @@ namespace Assistant
                     if (container != null && !updated.Contains(container))
                         updated.Add(container);
                     //if (container != null && itemID == 0x2006 && container.RootContainer == null)
-                    //	container.RootContainer = serial; //update corpse's root container. Commented out as it is not preferred to change item structure.
+                    //  container.RootContainer = serial; //update corpse's root container. Commented out as it is not preferred to change item structure.
                 }
 
                 item.Hue = p.ReadUInt16();
@@ -930,9 +930,9 @@ namespace Assistant
                 Item.UpdateContainers();
             }
             /*else
-			{
-				i.CancelRemove();
-			}*/
+            {
+                i.CancelRemove();
+            }*/
 
             if (!DragDropManager.EndHolding(serial))
                 return;
@@ -2023,50 +2023,50 @@ namespace Assistant
         private static void SAWorldItem(PacketReader p, PacketHandlerEventArgs args)
         {
             /*
-			New World Item Packet
-			PacketID: 0xF3
-			PacketLen: 24
-			Format:
+            New World Item Packet
+            PacketID: 0xF3
+            PacketLen: 24
+            Format:
 
-				BYTE - 0xF3 packetId
-				WORD - 0x01
-				BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
-				DWORD - item Serial
-				WORD - item ID
-				BYTE - item direction (same as old)
-				WORD - amount
-				WORD - amount
-				WORD - X
-				WORD - Y
-				SBYTE - Z
-				BYTE - item light
-				WORD - item Hue
-				BYTE - item flags (same as old packet)
-			*/
+                BYTE - 0xF3 packetId
+                WORD - 0x01
+                BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
+                DWORD - item Serial
+                WORD - item ID
+                BYTE - item direction (same as old)
+                WORD - amount
+                WORD - amount
+                WORD - X
+                WORD - Y
+                SBYTE - Z
+                BYTE - item light
+                WORD - item Hue
+                BYTE - item flags (same as old packet)
+            */
 
             // Post-7.0.9.0
             /*
-			New World Item Packet
-			PacketID: 0xF3
-			PacketLen: 26
-			Format:
+            New World Item Packet
+            PacketID: 0xF3
+            PacketLen: 26
+            Format:
 
-				BYTE - 0xF3 packetId
-				WORD - 0x01
-				BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
-				DWORD - item Serial
-				WORD - item ID
-				BYTE - item direction (same as old)
-				WORD - amount
-				WORD - amount
-				WORD - X
-				WORD - Y
-				SBYTE - Z
-				BYTE - item light
-				WORD - item Hue
-				BYTE - item flags (same as old packet)
-				WORD ???
-			*/
+                BYTE - 0xF3 packetId
+                WORD - 0x01
+                BYTE - ArtDataID: 0x00 if the item uses art from TileData table, 0x02 if the item uses art from MultiData table)
+                DWORD - item Serial
+                WORD - item ID
+                BYTE - item direction (same as old)
+                WORD - amount
+                WORD - amount
+                WORD - X
+                WORD - Y
+                SBYTE - Z
+                BYTE - item light
+                WORD - item Hue
+                BYTE - item flags (same as old packet)
+                WORD ???
+            */
 
             ushort _unk1 = p.ReadUInt16();
 
@@ -2891,7 +2891,7 @@ namespace Assistant
 
                         }
                         //if (Engine.MainWindow.MapWindow != null)
-                        //	Engine.MainWindow.SafeAction(s => s.MapWindow.UpdateMap());
+                        //  Engine.MainWindow.SafeAction(s => s.MapWindow.UpdateMap());
 
                         break;
                     }
@@ -3335,8 +3335,8 @@ namespace Assistant
             // Notes
             // text lines is in Big - Endian Unicode formate, not NULL terminated
             // loop:
-            // 	BYTE[2] Length
-            // 	BYTE[Length * 2] text
+            //  BYTE[2] Length
+            //  BYTE[Length * 2] text
             // endloop
 
             if (World.Player == null)
@@ -3439,7 +3439,7 @@ namespace Assistant
                         // HtmlGump [x] [y] [width] [height] [text-id] [background] [scrollbar]
                         // Defines a text-area where Html-commands are allowed.
                         // [background] and [scrollbar] can be 0 or 1 and define whether the background is transparent and a scrollbar is displayed.
-                        //	gump.AddControl(new HtmlGumpling(gump, gumpParams, gumpLines), currentGUMPPage);
+                        //  gump.AddControl(new HtmlGumpling(gump, gumpParams, gumpLines), currentGUMPPage);
                         break;
 
                     case "text":

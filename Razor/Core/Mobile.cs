@@ -195,16 +195,16 @@ namespace Assistant
         // grey, blue, green, 'canbeattacked'
         private static readonly uint[] m_NotoHues = new uint[8]
         {
-			// hue color #30
-			0x000000, // black		unused 0
-			0x30d0e0, // blue		0x0059 1
-			0x60e000, // green		0x003F 2
-			0x9090b2, // greyish	0x03b2 3
-			0x909090, // grey		   "   4
-			0xd88038, // orange		0x0090 5
-			0xb01000, // red		0x0022 6
-			0xe0e000, // yellow		0x0035 7
-		};
+            // hue color #30
+            0x000000, // black      unused 0
+            0x30d0e0, // blue       0x0059 1
+            0x60e000, // green      0x003F 2
+            0x9090b2, // greyish    0x03b2 3
+            0x909090, // grey          "   4
+            0xd88038, // orange     0x0090 5
+            0xb01000, // red        0x0022 6
+            0xe0e000, // yellow     0x0035 7
+        };
 
         internal uint GetNotorietyColor()
         {

@@ -1,7 +1,7 @@
 namespace RazorEnhanced.UI
 {
-	partial class EnhancedStaticInspector
-	{
+    partial class EnhancedStaticInspector
+    {
         #pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
         /// Required designer variable.
@@ -20,7 +20,7 @@ namespace RazorEnhanced.UI
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-		{
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedStaticInspector));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lPosition = new System.Windows.Forms.Label();
@@ -1037,95 +1037,95 @@ namespace RazorEnhanced.UI
             this.groupBoxStaticFlag.PerformLayout();
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Button bPositionCopy;
-		private System.Windows.Forms.GroupBox groupBoxStaticDetails;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.Button razorButton1;
-		private System.Windows.Forms.Label lPosition;
-		private System.Windows.Forms.Label lLandFlagDamaging;
-		private System.Windows.Forms.Label lLandFlagWall;
-		private System.Windows.Forms.Label lLandFlagTranslucent;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.Label lLandFlagNone;
-		private System.Windows.Forms.Label lLandFlagImpassable;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.GroupBox groupBoxStaticList;
-		private System.Windows.Forms.ListBox listBoxStatic;
-		private System.Windows.Forms.Label lLandFlagSurface;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Panel ipLandImg;
-		private System.Windows.Forms.Label lLandFlagBridge;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.GroupBox groupBox5;
-		private System.Windows.Forms.Label lLandID;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Button bLandID;
-		private System.Windows.Forms.Label lLandZ;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button bLandZ;
-		private System.Windows.Forms.Label lLandHue;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button bLandHue;
-		private System.Windows.Forms.Label lStaticHue;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Button bStaticHue;
-		private System.Windows.Forms.Label lStaticID;
-		private System.Windows.Forms.Panel ipStaticImg;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Button bStaticID;
-		private System.Windows.Forms.Label lStaticZ;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Button bStaticZ;
-		private System.Windows.Forms.Label lLandFlagWet;
-		private System.Windows.Forms.Label label22;
-		private System.Windows.Forms.Label lLandFlagDoor;
-		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.Label lLandFlagRoof;
-		private System.Windows.Forms.Label label20;
-		private System.Windows.Forms.Label lLandFlagHoverOver;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.Label lLandFlagFoliage;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Label lLandFlagNoShoot;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label lLandFlagWindow;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.GroupBox groupBoxStaticFlag;
-		private System.Windows.Forms.Label lStaticFlagWet;
-		private System.Windows.Forms.Label label23;
-		private System.Windows.Forms.Label lStaticFlagNone;
-		private System.Windows.Forms.Label lStaticFlagDoor;
-		private System.Windows.Forms.Label label26;
-		private System.Windows.Forms.Label lStaticFlagRoof;
-		private System.Windows.Forms.Label label28;
-		private System.Windows.Forms.Label lStaticFlagHoverOver;
-		private System.Windows.Forms.Label label30;
-		private System.Windows.Forms.Label lStaticFlagFoliage;
-		private System.Windows.Forms.Label label32;
-		private System.Windows.Forms.Label lStaticFlagNoShot;
-		private System.Windows.Forms.Label label34;
-		private System.Windows.Forms.Label lStaticFlagWindow;
-		private System.Windows.Forms.Label label36;
-		private System.Windows.Forms.Label lStaticFlagBridge;
-		private System.Windows.Forms.Label label38;
-		private System.Windows.Forms.Label lStaticFlagSurface;
-		private System.Windows.Forms.Label label40;
-		private System.Windows.Forms.Label lStaticFlagImpassable;
-		private System.Windows.Forms.Label label42;
-		private System.Windows.Forms.Label lStaticFlagDamaging;
-		private System.Windows.Forms.Label lStaticFlagWall;
-		private System.Windows.Forms.Label lStaticFlagTranslucent;
-		private System.Windows.Forms.Label label46;
-		private System.Windows.Forms.Label label47;
-		private System.Windows.Forms.Label label48;
-		private System.Windows.Forms.Label label49;
-	}
+        #endregion
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button bPositionCopy;
+        private System.Windows.Forms.GroupBox groupBoxStaticDetails;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button razorButton1;
+        private System.Windows.Forms.Label lPosition;
+        private System.Windows.Forms.Label lLandFlagDamaging;
+        private System.Windows.Forms.Label lLandFlagWall;
+        private System.Windows.Forms.Label lLandFlagTranslucent;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lLandFlagNone;
+        private System.Windows.Forms.Label lLandFlagImpassable;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBoxStaticList;
+        private System.Windows.Forms.ListBox listBoxStatic;
+        private System.Windows.Forms.Label lLandFlagSurface;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Panel ipLandImg;
+        private System.Windows.Forms.Label lLandFlagBridge;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label lLandID;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button bLandID;
+        private System.Windows.Forms.Label lLandZ;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button bLandZ;
+        private System.Windows.Forms.Label lLandHue;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button bLandHue;
+        private System.Windows.Forms.Label lStaticHue;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button bStaticHue;
+        private System.Windows.Forms.Label lStaticID;
+        private System.Windows.Forms.Panel ipStaticImg;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button bStaticID;
+        private System.Windows.Forms.Label lStaticZ;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button bStaticZ;
+        private System.Windows.Forms.Label lLandFlagWet;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label lLandFlagDoor;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label lLandFlagRoof;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label lLandFlagHoverOver;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label lLandFlagFoliage;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lLandFlagNoShoot;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lLandFlagWindow;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox groupBoxStaticFlag;
+        private System.Windows.Forms.Label lStaticFlagWet;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label lStaticFlagNone;
+        private System.Windows.Forms.Label lStaticFlagDoor;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label lStaticFlagRoof;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label lStaticFlagHoverOver;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label lStaticFlagFoliage;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label lStaticFlagNoShot;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label lStaticFlagWindow;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lStaticFlagBridge;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label lStaticFlagSurface;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label lStaticFlagImpassable;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label lStaticFlagDamaging;
+        private System.Windows.Forms.Label lStaticFlagWall;
+        private System.Windows.Forms.Label lStaticFlagTranslucent;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label49;
+    }
 }

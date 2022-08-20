@@ -463,7 +463,7 @@ namespace Assistant
                                         litem.ForeColor = Color.White;
                                         litem.BackColor = Color.DarkGreen;
                                     }
-                                }		
+                                }       
                                 litem.SubItems[1].Text = status;
                             }
                         }
@@ -510,7 +510,7 @@ namespace Assistant
                 if (script != null)
                 {
                     script.Run = run;
-                }			
+                }           
             }
         }
 

@@ -1,7 +1,7 @@
 namespace RazorEnhanced.UI
 {
-	partial class EnhancedMobileInspector
-	{
+    partial class EnhancedMobileInspector
+    {
         #pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
         /// Required designer variable.
@@ -20,7 +20,7 @@ namespace RazorEnhanced.UI
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-		{
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedMobileInspector));
             this.bNameCopy = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -687,63 +687,63 @@ namespace RazorEnhanced.UI
             this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Button bNameCopy;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button bPositionCopy;
-		private System.Windows.Forms.Button bColorCopy;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Button bItemIdCopy;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button bOwnedCopy;
-		private System.Windows.Forms.Button bLayerCopy;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Button bAmountCopy;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Button bRContainerCopy;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Button bContainerCopy;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.Button razorButton1;
-		private System.Windows.Forms.Button bSerialCopy;
-		private System.Windows.Forms.TextBox lName;
-		private System.Windows.Forms.TextBox lSerial;
-		private System.Windows.Forms.TextBox lMobileID;
-		private System.Windows.Forms.TextBox lColor;
-		private System.Windows.Forms.TextBox lPosition;
-		private System.Windows.Forms.TextBox lHits;
-		private System.Windows.Forms.TextBox lDirection;
-		private System.Windows.Forms.TextBox lNotoriety;
-		private System.Windows.Forms.TextBox lStam;
-		private System.Windows.Forms.TextBox lMana;
-		private System.Windows.Forms.Label lFlagHidden;
-		private System.Windows.Forms.Label lFlagWar;
-		private System.Windows.Forms.Label lFlagPoisoned;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.Label lFlagGhost;
-		private System.Windows.Forms.Label lFlagBlessed;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.ListBox listBoxAttributes;
-		private System.Windows.Forms.Label lFlagParalized;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Panel imagepanel;
-		private System.Windows.Forms.Label lFlagFlying;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.ProgressBar pHits;
-		private System.Windows.Forms.ProgressBar pStam;
-		private System.Windows.Forms.ProgressBar pMana;
-	}
+        private System.Windows.Forms.Button bNameCopy;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button bPositionCopy;
+        private System.Windows.Forms.Button bColorCopy;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button bItemIdCopy;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button bOwnedCopy;
+        private System.Windows.Forms.Button bLayerCopy;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button bAmountCopy;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button bRContainerCopy;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button bContainerCopy;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button razorButton1;
+        private System.Windows.Forms.Button bSerialCopy;
+        private System.Windows.Forms.TextBox lName;
+        private System.Windows.Forms.TextBox lSerial;
+        private System.Windows.Forms.TextBox lMobileID;
+        private System.Windows.Forms.TextBox lColor;
+        private System.Windows.Forms.TextBox lPosition;
+        private System.Windows.Forms.TextBox lHits;
+        private System.Windows.Forms.TextBox lDirection;
+        private System.Windows.Forms.TextBox lNotoriety;
+        private System.Windows.Forms.TextBox lStam;
+        private System.Windows.Forms.TextBox lMana;
+        private System.Windows.Forms.Label lFlagHidden;
+        private System.Windows.Forms.Label lFlagWar;
+        private System.Windows.Forms.Label lFlagPoisoned;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lFlagGhost;
+        private System.Windows.Forms.Label lFlagBlessed;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ListBox listBoxAttributes;
+        private System.Windows.Forms.Label lFlagParalized;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Panel imagepanel;
+        private System.Windows.Forms.Label lFlagFlying;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ProgressBar pHits;
+        private System.Windows.Forms.ProgressBar pStam;
+        private System.Windows.Forms.ProgressBar pMana;
+    }
 }

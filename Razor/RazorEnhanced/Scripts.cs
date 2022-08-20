@@ -605,7 +605,7 @@ namespace RazorEnhanced
                     lock (m_Lock)
                     {
                         if ((m_Thread.ThreadState & ThreadState.Unstarted) != 0)
-                    //	if (m_Thread.ThreadState == ThreadState.Unstarted)
+                    //  if (m_Thread.ThreadState == ThreadState.Unstarted)
                             return true;
                         else
                             return false;

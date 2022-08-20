@@ -13,25 +13,25 @@ namespace RazorEnhanced
     /// While the Mobile.Serial is unique for each Mobile, Mobile.MobileID is the unique for the Mobile apparence, or image. Sometimes is also called Body or Body ID.
     /// Mobiles which dies and leave a corpse behind, they stop existing as Mobiles and instead leave a corpse as a Item object appears.
     /// </summary>
-	public class Mobile : EnhancedEntity
-	{
-		private readonly Assistant.Mobile m_AssistantMobile;
+    public class Mobile : EnhancedEntity
+    {
+        private readonly Assistant.Mobile m_AssistantMobile;
 
-		internal Mobile(Assistant.Mobile mobile)
-			: base(mobile)
-		{
-			m_AssistantMobile = mobile;
-		}
+        internal Mobile(Assistant.Mobile mobile)
+            : base(mobile)
+        {
+            m_AssistantMobile = mobile;
+        }
 
         /// <summary>
         /// Name of the Mobile.
         /// </summary>
-		public string Name { get { return m_AssistantMobile.Name; } }
+        public string Name { get { return m_AssistantMobile.Name; } }
 
         /// <summary>
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.MobileID )
         /// </summary>
-		public int Body { get { return m_AssistantMobile.Body; } }
+        public int Body { get { return m_AssistantMobile.Body; } }
 
         /// <summary>
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.Body )
@@ -46,35 +46,35 @@ namespace RazorEnhanced
         /// <summary>
         /// True: Mobile.Propertires are updated - False: otherwise.
         /// </summary>
-		public bool PropsUpdated { get { return m_AssistantMobile.PropsUpdated; } }
+        public bool PropsUpdated { get { return m_AssistantMobile.PropsUpdated; } }
 
         /// <summary>
         /// True: The Mobile is visible - Flase: The mobile is hidden.
         /// </summary>
-		public bool Visible { get { return m_AssistantMobile.Visible; } }
+        public bool Visible { get { return m_AssistantMobile.Visible; } }
 
         /// <summary>
         /// The mobile is Poisoned.
         /// </summary>
 
-		public bool Poisoned { get { return m_AssistantMobile.Poisoned; } }
+        public bool Poisoned { get { return m_AssistantMobile.Poisoned; } }
 
         /// <summary>
         /// The mobile healthbar is not blue, but yellow.
         /// </summary>
 
-		public bool YellowHits { get { return m_AssistantMobile.Blessed; } }
+        public bool YellowHits { get { return m_AssistantMobile.Blessed; } }
 
         /// <summary>
         /// The mobile is Paralized.
         /// </summary>
-		public bool Paralized { get { return m_AssistantMobile.Paralized; } }
+        public bool Paralized { get { return m_AssistantMobile.Paralized; } }
 
         /// <summary>
         /// The mobile is Flying ( Gragoyle )
         /// </summary>
 
-		public bool Flying { get { return m_AssistantMobile.Flying; } }
+        public bool Flying { get { return m_AssistantMobile.Flying; } }
 
         /// <summary>
         /// Check is the Mobile has a human body.
@@ -97,12 +97,12 @@ namespace RazorEnhanced
         /// <summary>
         /// Mobile is in War mode.
         /// </summary>
-		public bool WarMode { get { return m_AssistantMobile.Warmode; } }
+        public bool WarMode { get { return m_AssistantMobile.Warmode; } }
 
         /// <summary>
         /// The Mobile is a female.
         /// </summary>
-		public bool Female { get { return m_AssistantMobile.Female; } }
+        public bool Female { get { return m_AssistantMobile.Female; } }
 
         /// <summary>
         /// Get the notoriety of the Mobile.
@@ -121,17 +121,17 @@ namespace RazorEnhanced
         /// <summary>
         /// Maximum hitpoint of a Mobile. 
         /// </summary>
-		public int HitsMax { get { return m_AssistantMobile.HitsMax; } }
+        public int HitsMax { get { return m_AssistantMobile.HitsMax; } }
 
         /// <summary>
         /// The current hit point of a Mobile. To be read as propotion over Mobile.HitsMax.
         /// </summary>
-		public int Hits { get { return m_AssistantMobile.Hits; } }
+        public int Hits { get { return m_AssistantMobile.Hits; } }
 
         /// <summary>
         /// Maximum stamina of a Mobile.
         /// </summary>
-		public int StamMax { get { return m_AssistantMobile.StamMax; } }
+        public int StamMax { get { return m_AssistantMobile.StamMax; } }
 
         /// <summary>
         /// The current stamina of a Mobile. To be read as propotion over Mobile.StamMax.
@@ -152,159 +152,159 @@ namespace RazorEnhanced
         /// <summary>
         /// Current map or facet.
         /// </summary>
-		public int Map { get { return m_AssistantMobile.Map; } }
+        public int Map { get { return m_AssistantMobile.Map; } }
 
         /// <summary>
         /// True: if the Mobile is in your party. - False: otherwise. 
         /// </summary>
-		public bool InParty { get { return Assistant.PacketHandlers.Party.Contains(m_AssistantMobile.Serial); } }
+        public bool InParty { get { return Assistant.PacketHandlers.Party.Contains(m_AssistantMobile.Serial); } }
 
         /// <summary>
         /// Returns the Item assigned to the "Mount" Layer.
         /// </summary>
-		public Item Mount
-		{
-			get
-			{
-				Assistant.Item assistantMount = m_AssistantMobile.GetItemOnLayer(Assistant.Layer.Mount);
-				if (assistantMount == null)
-					return null;
-				else
-				{
-					RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
-					return enhancedMount;
-				}
-			}
-		}
+        public Item Mount
+        {
+            get
+            {
+                Assistant.Item assistantMount = m_AssistantMobile.GetItemOnLayer(Assistant.Layer.Mount);
+                if (assistantMount == null)
+                    return null;
+                else
+                {
+                    RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
+                    return enhancedMount;
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the direction of the Mobile.
         /// </summary>
-		public string Direction
-		{
-			get
-			{
-				switch (m_AssistantMobile.Direction & Assistant.Direction.mask)
-				{
-					case Assistant.Direction.north: return "North";
-					case Assistant.Direction.south: return "South";
-					case Assistant.Direction.west: return "West";
-					case Assistant.Direction.east: return "East";
-					case Assistant.Direction.right: return "Right";
-					case Assistant.Direction.left: return "Left";
-					case Assistant.Direction.down: return "Down";
-					case Assistant.Direction.up: return "Up";
-					default: return "Undefined";
-				}
-			}
-		}
+        public string Direction
+        {
+            get
+            {
+                switch (m_AssistantMobile.Direction & Assistant.Direction.mask)
+                {
+                    case Assistant.Direction.north: return "North";
+                    case Assistant.Direction.south: return "South";
+                    case Assistant.Direction.west: return "West";
+                    case Assistant.Direction.east: return "East";
+                    case Assistant.Direction.right: return "Right";
+                    case Assistant.Direction.left: return "Left";
+                    case Assistant.Direction.down: return "Down";
+                    case Assistant.Direction.up: return "Up";
+                    default: return "Undefined";
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the UO distance between the current Mobile and another one.
         /// </summary>
         /// <param name="other_mobile">The other mobile.</param>
-		public int DistanceTo(Mobile other_mobile)
-		{
-			return Utility.Distance(Position.X, Position.Y, other_mobile.Position.X, other_mobile.Position.Y);
-		}
+        public int DistanceTo(Mobile other_mobile)
+        {
+            return Utility.Distance(Position.X, Position.Y, other_mobile.Position.X, other_mobile.Position.Y);
+        }
 
 
         private static Assistant.Layer GetAssistantLayer(string layer)
-		{
+        {
             Layer result;
             switch (layer)
-			{
-				case "RightHand":
-					result = Assistant.Layer.RightHand;
-					break;
+            {
+                case "RightHand":
+                    result = Assistant.Layer.RightHand;
+                    break;
 
-				case "LeftHand":
-					result = Assistant.Layer.LeftHand;
-					break;
+                case "LeftHand":
+                    result = Assistant.Layer.LeftHand;
+                    break;
 
-				case "Shoes":
-					result = Assistant.Layer.Shoes;
-					break;
+                case "Shoes":
+                    result = Assistant.Layer.Shoes;
+                    break;
 
-				case "Pants":
-					result = Assistant.Layer.Pants;
-					break;
+                case "Pants":
+                    result = Assistant.Layer.Pants;
+                    break;
 
-				case "Shirt":
-					result = Assistant.Layer.Shirt;
-					break;
+                case "Shirt":
+                    result = Assistant.Layer.Shirt;
+                    break;
 
-				case "Head":
-					result = Assistant.Layer.Head;
-					break;
+                case "Head":
+                    result = Assistant.Layer.Head;
+                    break;
 
-				case "Gloves":
-					result = Assistant.Layer.Gloves;
-					break;
+                case "Gloves":
+                    result = Assistant.Layer.Gloves;
+                    break;
 
-				case "Ring":
-					result = Assistant.Layer.Ring;
-					break;
+                case "Ring":
+                    result = Assistant.Layer.Ring;
+                    break;
 
-				case "Neck":
-					result = Assistant.Layer.Neck;
-					break;
+                case "Neck":
+                    result = Assistant.Layer.Neck;
+                    break;
 
-				case "Hair":
-					result = Assistant.Layer.Hair;
-					break;
+                case "Hair":
+                    result = Assistant.Layer.Hair;
+                    break;
 
-				case "Waist":
-					result = Assistant.Layer.Waist;
-					break;
+                case "Waist":
+                    result = Assistant.Layer.Waist;
+                    break;
 
-				case "InnerTorso":
-					result = Assistant.Layer.InnerTorso;
-					break;
+                case "InnerTorso":
+                    result = Assistant.Layer.InnerTorso;
+                    break;
 
-				case "Bracelet":
-					result = Assistant.Layer.Bracelet;
-					break;
+                case "Bracelet":
+                    result = Assistant.Layer.Bracelet;
+                    break;
 
-				case "FacialHair":
-					result = Assistant.Layer.FacialHair;
-					break;
+                case "FacialHair":
+                    result = Assistant.Layer.FacialHair;
+                    break;
 
-				case "MiddleTorso":
-					result = Assistant.Layer.MiddleTorso;
-					break;
+                case "MiddleTorso":
+                    result = Assistant.Layer.MiddleTorso;
+                    break;
 
-				case "Earrings":
-					result = Assistant.Layer.Earrings;
-					break;
+                case "Earrings":
+                    result = Assistant.Layer.Earrings;
+                    break;
 
-				case "Arms":
-					result = Assistant.Layer.Arms;
-					break;
+                case "Arms":
+                    result = Assistant.Layer.Arms;
+                    break;
 
-				case "Cloak":
-					result = Assistant.Layer.Cloak;
-					break;
+                case "Cloak":
+                    result = Assistant.Layer.Cloak;
+                    break;
 
-				case "OuterTorso":
-					result = Assistant.Layer.OuterTorso;
-					break;
+                case "OuterTorso":
+                    result = Assistant.Layer.OuterTorso;
+                    break;
 
-				case "OuterLegs":
-					result = Assistant.Layer.OuterLegs;
-					break;
+                case "OuterLegs":
+                    result = Assistant.Layer.OuterLegs;
+                    break;
 
-				case "InnerLegs":
-					result = Assistant.Layer.InnerLegs;
-					break;
+                case "InnerLegs":
+                    result = Assistant.Layer.InnerLegs;
+                    break;
 
-				default:
-					result = Assistant.Layer.Invalid;
-					break;
-			}
+                default:
+                    result = Assistant.Layer.Invalid;
+                    break;
+            }
 
-			return result;
-		}
+            return result;
+        }
 
         /// <summary>
         /// Returns the Item associated with a Mobile Layer.
@@ -334,94 +334,94 @@ namespace RazorEnhanced
         /// </param>
         /// <returns>Item for the layer. Return null if not found or Layer invalid.</returns>
         public Item GetItemOnLayer(string layer)
-		{
-			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
+        {
+            Assistant.Layer assistantLayer = GetAssistantLayer(layer);
             if (assistantLayer != Assistant.Layer.Invalid)
-			{
+            {
                 Assistant.Item assistantItem = m_AssistantMobile.GetItemOnLayer(assistantLayer);
                 if (assistantItem == null)
-					return null;
-				else
-				{
-					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-					return enhancedItem;
-				}
-			}
-			else
-				return null;
-		}
+                    return null;
+                else
+                {
+                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                    return enhancedItem;
+                }
+            }
+            else
+                return null;
+        }
 
         /// <summary>
         /// Get the Item representing the backpack of a Mobile. Return null if it doesn't have one.
         /// </summary>
-		public Item Backpack
-		{
-			get
-			{
-				Assistant.Item assistantBackpack = m_AssistantMobile.Backpack;
-				if (assistantBackpack == null)
-					return null;
-				else
-				{
-					RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBackpack);
-					return enhancedBackpack;
-				}
-			}
-		}
+        public Item Backpack
+        {
+            get
+            {
+                Assistant.Item assistantBackpack = m_AssistantMobile.Backpack;
+                if (assistantBackpack == null)
+                    return null;
+                else
+                {
+                    RazorEnhanced.Item enhancedBackpack = new RazorEnhanced.Item(assistantBackpack);
+                    return enhancedBackpack;
+                }
+            }
+        }
 
         /// <summary>
         /// Get the Item representing the quiver of a Mobile. Return null if it doesn't have one.
         /// </summary>
-		public Item Quiver
-		{
-			get
-			{
-				Assistant.Item assistantQuiver = m_AssistantMobile.Quiver;
-				if (assistantQuiver == null)
-					return null;
-				else
-				{
-					RazorEnhanced.Item enhancedQuiver = new RazorEnhanced.Item(assistantQuiver);
-					return enhancedQuiver;
-				}
-			}
-		}
+        public Item Quiver
+        {
+            get
+            {
+                Assistant.Item assistantQuiver = m_AssistantMobile.Quiver;
+                if (assistantQuiver == null)
+                    return null;
+                else
+                {
+                    RazorEnhanced.Item enhancedQuiver = new RazorEnhanced.Item(assistantQuiver);
+                    return enhancedQuiver;
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the list of items present in the Paperdoll (or equivalent) of the Mobile.
         /// Might not match the items found using via Layer.
         /// </summary>
-		public List<Item> Contains
-		{
-			get
-			{
-				List<Item> items = new List<Item>();
-				foreach (Assistant.Item assistantItem in m_AssistantMobile.Contains)
-				{
-					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-					items.Add(enhancedItem);
-				}
-				return items;
-			}
-		}
+        public List<Item> Contains
+        {
+            get
+            {
+                List<Item> items = new List<Item>();
+                foreach (Assistant.Item assistantItem in m_AssistantMobile.Contains)
+                {
+                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                    items.Add(enhancedItem);
+                }
+                return items;
+            }
+        }
 
         /// <summary>
         /// Get all properties of a Mobile as list of lines of the tooltip.
         /// </summary>
-		public List<Property> Properties
-		{
-			get
-			{
-				List<Property> properties = new List<Property>();
-				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantMobile.ObjPropList.Content)
-				{
-					Property property = new Property(entry);
-					properties.Add(property);
-				}
-				return properties;
-			}
-		}
-	}
+        public List<Property> Properties
+        {
+            get
+            {
+                List<Property> properties = new List<Property>();
+                foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantMobile.ObjPropList.Content)
+                {
+                    Property property = new Property(entry);
+                    properties.Add(property);
+                }
+                return properties;
+            }
+        }
+    }
 
     /// <summary>
     /// The Mobiles class provides a wide range of functions to search and interact with Mobile.
@@ -874,238 +874,238 @@ namespace RazorEnhanced
         // USe
 
         public static void UseMobile(Mobile mobile)
-		{
-			Assistant.Client.Instance.SendToServerWait(new DoubleClick(mobile.Serial));
-		}
+        {
+            Assistant.Client.Instance.SendToServerWait(new DoubleClick(mobile.Serial));
+        }
 
-		public static void UseMobile(int mobileserial)
-		{
-			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
-			if (mobile == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: UseMobile: Invalid Serial");
-				return;
-			}
+        public static void UseMobile(int mobileserial)
+        {
+            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
+            if (mobile == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: UseMobile: Invalid Serial");
+                return;
+            }
 
-			if (mobile.Serial.IsMobile)
-			{
-				Assistant.Client.Instance.SendToServerWait(new DoubleClick(mobile.Serial));
-			}
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
-			}
-		}
+            if (mobile.Serial.IsMobile)
+            {
+                Assistant.Client.Instance.SendToServerWait(new DoubleClick(mobile.Serial));
+            }
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
+            }
+        }
 
-		// Single Click
-		public static void SingleClick(Mobile mobile)
-		{
-		 	Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
-		}
+        // Single Click
+        public static void SingleClick(Mobile mobile)
+        {
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
+        }
 
-		public static void SingleClick(int mobileserial)
-		{
-			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
-			if (mobile == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
-				return;
-			}
-		 	Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
-		}
+        public static void SingleClick(int mobileserial)
+        {
+            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
+            if (mobile == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
+                return;
+            }
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
+        }
 
-		// Message
+        // Message
 
-		public static void Message(Mobile mobile, int hue, string message, bool wait = true)
-		{
-			// Prevent spamm message on left bottom screen
-			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
-				return;
+        public static void Message(Mobile mobile, int hue, string message, bool wait = true)
+        {
+            // Prevent spamm message on left bottom screen
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+                return;
 
-			if (wait)
-				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-			else
-				Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-		}
+            if (wait)
+                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+            else
+                Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+        }
 
-		public static void Message(int serial, int hue, string message, bool wait = true)
-		{
-			Mobile mobile = FindBySerial(serial);
+        public static void Message(int serial, int hue, string message, bool wait = true)
+        {
+            Mobile mobile = FindBySerial(serial);
 
-			if (mobile == null) // Mob not exist
-				return;
+            if (mobile == null) // Mob not exist
+                return;
 
-			// Prevent spamm message on left bottom screen
-			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
-				return;
+            // Prevent spamm message on left bottom screen
+            if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+                return;
 
-			if (wait)
-				Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-			else
-				Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-		}
+            if (wait)
+                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+            else
+                Assistant.Client.Instance.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+        }
 
-		// Props
+        // Props
 
-		public static void WaitForProps(Mobile m, int delay) // Delay in MS
-		{
-			WaitForProps(m.Serial, delay);
-		}
+        public static void WaitForProps(Mobile m, int delay) // Delay in MS
+        {
+            WaitForProps(m.Serial, delay);
+        }
 
-		public static void WaitForProps(int mobileserial, int delay) // Delay in MS
-		{
-			if (World.Player.Expansion <= 3) // Non esistono le props
-				return;
+        public static void WaitForProps(int mobileserial, int delay) // Delay in MS
+        {
+            if (World.Player.Expansion <= 3) // Non esistono le props
+                return;
 
-			Assistant.Mobile m = Assistant.World.FindMobile((Assistant.Serial)((uint)mobileserial));
+            Assistant.Mobile m = Assistant.World.FindMobile((Assistant.Serial)((uint)mobileserial));
 
-			if (m == null)
-				return;
+            if (m == null)
+                return;
 
-			if (m.PropsUpdated)
-				return;
+            if (m.PropsUpdated)
+                return;
 
-		 	Assistant.Client.Instance.SendToServerWait(new QueryProperties(m.Serial));
-			int subdelay = delay;
+            Assistant.Client.Instance.SendToServerWait(new QueryProperties(m.Serial));
+            int subdelay = delay;
 
-			while (!m.PropsUpdated)
-			{
-				Thread.Sleep(2);
-				subdelay -= 2;
-				if (subdelay <= 0)
-					break;
-			}
-		}
+            while (!m.PropsUpdated)
+            {
+                Thread.Sleep(2);
+                subdelay -= 2;
+                if (subdelay <= 0)
+                    break;
+            }
+        }
 
-		// wait for stats
-		public static void WaitForStats(Mobile m, int delay) // Delay in MS
-		{
-			WaitForStats(m.Serial, delay);
-		}
+        // wait for stats
+        public static void WaitForStats(Mobile m, int delay) // Delay in MS
+        {
+            WaitForStats(m.Serial, delay);
+        }
 
-		public static void WaitForStats(int mobileserial, int delay) // Delay in MS
-		{
-			Assistant.Mobile m = World.FindMobile(mobileserial);
+        public static void WaitForStats(int mobileserial, int delay) // Delay in MS
+        {
+            Assistant.Mobile m = World.FindMobile(mobileserial);
 
-			if (m == null)
-				return;
+            if (m == null)
+                return;
 
-			if (m.StatsUpdated)
-				return;
+            if (m.StatsUpdated)
+                return;
 
-		 	Assistant.Client.Instance.SendToServerWait(new StatusQuery(m.Serial));
+            Assistant.Client.Instance.SendToServerWait(new StatusQuery(m.Serial));
 
-			int subdelay = delay;
+            int subdelay = delay;
 
-			while (!m.StatsUpdated)
-			{
-				Thread.Sleep(2);
-				subdelay -= 2;
-				if (subdelay <= 0)
-					break;
-			}
-		}
+            while (!m.StatsUpdated)
+            {
+                Thread.Sleep(2);
+                subdelay -= 2;
+                if (subdelay <= 0)
+                    break;
+            }
+        }
 
-		public static List<string> GetPropStringList(int serial)
-		{
-			List<string> propstringlist = new List<string>();
-			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
+        public static List<string> GetPropStringList(int serial)
+        {
+            List<string> propstringlist = new List<string>();
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
-			if (assistantMobile == null)
-				return propstringlist;
+            if (assistantMobile == null)
+                return propstringlist;
 
-			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
-			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-			{
-				propstringlist.Add(prop.ToString());
-			}
-			return propstringlist;
-		}
+            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+            foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+            {
+                propstringlist.Add(prop.ToString());
+            }
+            return propstringlist;
+        }
 
-		public static List<string> GetPropStringList(Mobile mob)
-		{
-			return GetPropStringList(mob.Serial);
-		}
+        public static List<string> GetPropStringList(Mobile mob)
+        {
+            return GetPropStringList(mob.Serial);
+        }
 
-		public static string GetPropStringByIndex(int serial, int index)
-		{
-			string propstring = String.Empty;
-			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
+        public static string GetPropStringByIndex(int serial, int index)
+        {
+            string propstring = String.Empty;
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
-			if (assistantMobile == null)
-				return propstring;
+            if (assistantMobile == null)
+                return propstring;
 
-			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
-			if (props.Count > index)
-				propstring = props[index].ToString();
-			return propstring;
-		}
+            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+            if (props.Count > index)
+                propstring = props[index].ToString();
+            return propstring;
+        }
 
-		public static string GetPropStringByIndex(Mobile mob, int index)
-		{
-			return GetPropStringByIndex(mob.Serial, index);
-		}
+        public static string GetPropStringByIndex(Mobile mob, int index)
+        {
+            return GetPropStringByIndex(mob.Serial, index);
+        }
 
-		public static float GetPropValue(int serial, string name)
-		{
-			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
+        public static float GetPropValue(int serial, string name)
+        {
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
-			if (assistantMobile != null)
-			{
-				List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantMobile.ObjPropList.Content);
+            if (assistantMobile != null)
+            {
+                List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantMobile.ObjPropList.Content);
 
-				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-				{
-					if (!prop.ToString().ToLower().Contains(name.ToLower()))
-						continue;
+                foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+                {
+                    if (!prop.ToString().ToLower().Contains(name.ToLower()))
+                        continue;
 
-					if (prop.Args == null)  // Props esiste ma non ha valore
-						return 1;
+                    if (prop.Args == null)  // Props esiste ma non ha valore
+                        return 1;
 
-					try
-					{
-						return Convert.ToSingle(Language.ParsePropsCliloc(prop.Args), CultureInfo.InvariantCulture);
-					}
-					catch
-					{
-						return 1;  // errore di conversione ma esiste
-					}
-				}
-			}
-			return 0;  // Non esiste
-		}
+                    try
+                    {
+                        return Convert.ToSingle(Language.ParsePropsCliloc(prop.Args), CultureInfo.InvariantCulture);
+                    }
+                    catch
+                    {
+                        return 1;  // errore di conversione ma esiste
+                    }
+                }
+            }
+            return 0;  // Non esiste
+        }
 
-		public static float GetPropValue(Mobile mob, string name)
-		{
-			return GetPropValue(mob.Serial, name);
-		}
+        public static float GetPropValue(Mobile mob, string name)
+        {
+            return GetPropValue(mob.Serial, name);
+        }
 
-		// Context
+        // Context
 
-		public static int ContextExist(Mobile mob, string name)
-		{
-			return ContextExist(mob.Serial, name);
-		}
+        public static int ContextExist(Mobile mob, string name)
+        {
+            return ContextExist(mob.Serial, name);
+        }
 
-		public static int ContextExist(int serial, string name)
-		{
-			Assistant.Mobile mobile = World.FindMobile(serial);
-			if (mobile == null) // Se item non valido
-				return -1;
+        public static int ContextExist(int serial, string name)
+        {
+            Assistant.Mobile mobile = World.FindMobile(serial);
+            if (mobile == null) // Se item non valido
+                return -1;
 
-			Misc.WaitForContext(serial, 1500);
+            Misc.WaitForContext(serial, 1500);
 
-			foreach (KeyValuePair<ushort, int> entry in mobile.ContextMenu)
-			{
+            foreach (KeyValuePair<ushort, int> entry in mobile.ContextMenu)
+            {
                 string menuname = Language.GetCliloc(entry.Value);
                 if (menuname.ToLower() == name.ToLower())
-				{
-					return entry.Key;
-				}
-			}
+                {
+                    return entry.Key;
+                }
+            }
 
-			return -1; // Se non trovata
-		}
+            return -1; // Se non trovata
+        }
 
 
 

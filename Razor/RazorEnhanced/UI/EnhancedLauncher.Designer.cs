@@ -1,33 +1,33 @@
 namespace RazorEnhanced.UI
 {
-	partial class EnhancedLauncher
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class EnhancedLauncher
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedLauncher));
             this.openclientlocation = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
@@ -387,31 +387,31 @@ namespace RazorEnhanced.UI
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Button removeShard;
-		private System.Windows.Forms.Button addShard;
-		private System.Windows.Forms.Label clientPathLabel;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Button bNameCopy;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Label clientFolderLabel;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox portLabel;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.TextBox hostLabel;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.CheckBox osiEnc;
-		private System.Windows.Forms.CheckBox patchEnc;
-		private System.Windows.Forms.Button quit;
-		private System.Windows.Forms.Button okay;
-		private System.Windows.Forms.GroupBox groupBox2;
-		public System.Windows.Forms.ComboBox shardlistCombobox;
-		private System.Windows.Forms.OpenFileDialog openclientlocation;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button removeShard;
+        private System.Windows.Forms.Button addShard;
+        private System.Windows.Forms.Label clientPathLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button bNameCopy;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label clientFolderLabel;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox portLabel;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox hostLabel;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox osiEnc;
+        private System.Windows.Forms.CheckBox patchEnc;
+        private System.Windows.Forms.Button quit;
+        private System.Windows.Forms.Button okay;
+        private System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.ComboBox shardlistCombobox;
+        private System.Windows.Forms.OpenFileDialog openclientlocation;
         private System.Windows.Forms.Button checkupdatebutton;
         private System.Windows.Forms.Button cuoPathClick;
         private System.Windows.Forms.Label cuoClientLabel;

@@ -10,208 +10,208 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-	public class Dress
-	{
+    public class Dress
+    {
 
-		internal class DressItemNew	 : ListAbleItem
-		{
-			[JsonProperty("Layer")]
-			internal Layer Layer { get; set;}
+        internal class DressItemNew  : ListAbleItem
+        {
+            [JsonProperty("Layer")]
+            internal Layer Layer { get; set;}
 
-			[JsonProperty("Name")]
-			internal string Name { get; set;}
+            [JsonProperty("Name")]
+            internal string Name { get; set;}
 
-			[JsonProperty("Serial")]
-			internal int Serial { get; set; }
+            [JsonProperty("Serial")]
+            internal int Serial { get; set; }
 
-			[JsonProperty("Selected")]
-			internal bool Selected { get; set;}
+            [JsonProperty("Selected")]
+            internal bool Selected { get; set;}
 
-			public DressItemNew(string name, Layer layer, int serial, bool selected)
-			{
-				Name = name;
-				Layer = layer;
-				Serial = serial;
-				Selected = selected;
-			}
-		}
+            public DressItemNew(string name, Layer layer, int serial, bool selected)
+            {
+                Name = name;
+                Layer = layer;
+                Serial = serial;
+                Selected = selected;
+            }
+        }
 
-		internal class DressList
-		{
-			private readonly string m_Description;
-			internal string Description { get { return m_Description; } }
+        internal class DressList
+        {
+            private readonly string m_Description;
+            internal string Description { get { return m_Description; } }
 
-			private readonly int m_Delay;
-			internal int Delay { get { return m_Delay; } }
+            private readonly int m_Delay;
+            internal int Delay { get { return m_Delay; } }
 
-			private readonly int m_Bag;
-			internal int Bag { get { return m_Bag; } }
+            private readonly int m_Bag;
+            internal int Bag { get { return m_Bag; } }
 
-			private readonly bool m_Conflict;
-			internal bool Conflict { get { return m_Conflict; } }
+            private readonly bool m_Conflict;
+            internal bool Conflict { get { return m_Conflict; } }
 
-			private readonly bool m_dressUseUo3D;
-			internal bool UseUo3D { get { return m_dressUseUo3D; } }
+            private readonly bool m_dressUseUo3D;
+            internal bool UseUo3D { get { return m_dressUseUo3D; } }
 
-			private readonly bool m_Selected;
-			[JsonProperty("Selected")]
-			internal bool Selected { get { return m_Selected; } }
+            private readonly bool m_Selected;
+            [JsonProperty("Selected")]
+            internal bool Selected { get { return m_Selected; } }
 
-			public DressList(string description, int delay, int bag, bool conflict, bool useUo3D, bool selected)
-			{
-				m_Description = description;
-				m_Delay = delay;
-				m_Bag = bag;
-				m_Conflict = conflict;
-				m_dressUseUo3D = useUo3D;
-				m_Selected = selected;
-			}
-		}
+            public DressList(string description, int delay, int bag, bool conflict, bool useUo3D, bool selected)
+            {
+                m_Description = description;
+                m_Delay = delay;
+                m_Bag = bag;
+                m_Conflict = conflict;
+                m_dressUseUo3D = useUo3D;
+                m_Selected = selected;
+            }
+        }
 
-		internal static void AddLog(string addlog)
-		{
-			if (!Client.Running)
-				return;
+        internal static void AddLog(string addlog)
+        {
+            if (!Client.Running)
+                return;
 
-			Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Add(addlog));
-			Engine.MainWindow.SafeAction(s => s.DressLogBox.SelectedIndex = s.DressLogBox.Items.Count - 1);
-			if (Assistant.Engine.MainWindow.DressLogBox.Items.Count > 300)
-				Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Clear());
-		}
+            Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Add(addlog));
+            Engine.MainWindow.SafeAction(s => s.DressLogBox.SelectedIndex = s.DressLogBox.Items.Count - 1);
+            if (Assistant.Engine.MainWindow.DressLogBox.Items.Count > 300)
+                Engine.MainWindow.SafeAction(s => s.DressLogBox.Items.Clear());
+        }
 
-		private static int
-			m_dressdelay;
-		internal static int DressDelay
-		{
-			get { return m_dressdelay; }
+        private static int
+            m_dressdelay;
+        internal static int DressDelay
+        {
+            get { return m_dressdelay; }
 
-			set
-			{
-				m_dressdelay = value;
-				Engine.MainWindow.SafeAction(s => s.DressDragDelay.Text = value.ToString());
-			}
-		}
+            set
+            {
+                m_dressdelay = value;
+                Engine.MainWindow.SafeAction(s => s.DressDragDelay.Text = value.ToString());
+            }
+        }
 
-		private static int m_dressbag;
-		internal static int DressBag
-		{
-			get { return m_dressbag; }
+        private static int m_dressbag;
+        internal static int DressBag
+        {
+            get { return m_dressbag; }
 
-			set
-			{
-				m_dressbag = value;
-				Engine.MainWindow.SafeAction(s => s.DressBagLabel.Text = "0x" + value.ToString("X8"));
+            set
+            {
+                m_dressbag = value;
+                Engine.MainWindow.SafeAction(s => s.DressBagLabel.Text = "0x" + value.ToString("X8"));
 
-			}
-		}
+            }
+        }
 
-		private static bool m_dressconflict;
-		internal static bool DressConflict
-		{
-			get { return m_dressconflict; }
+        private static bool m_dressconflict;
+        internal static bool DressConflict
+        {
+            get { return m_dressconflict; }
 
-			set
-			{
-				m_dressconflict = value;
-				Engine.MainWindow.SafeAction(s => s.DressCheckBox.Checked = value);
-			}
-		}
+            set
+            {
+                m_dressconflict = value;
+                Engine.MainWindow.SafeAction(s => s.DressCheckBox.Checked = value);
+            }
+        }
 
-		private static bool m_dressUseUo3D;
-		internal static bool DressUseUO3D
-		{
-			get { return m_dressUseUo3D; }
+        private static bool m_dressUseUo3D;
+        internal static bool DressUseUO3D
+        {
+            get { return m_dressUseUo3D; }
 
-			set
-			{
-				m_dressUseUo3D = value;
-				Engine.MainWindow.SafeAction(s => s.DressUseUo3D.Checked = value);
-			}
-		}
+            set
+            {
+                m_dressUseUo3D = value;
+                Engine.MainWindow.SafeAction(s => s.DressUseUo3D.Checked = value);
+            }
+        }
 
-		private static string m_dresslistname;
-		internal static string DressListName
-		{
-			get { return m_dresslistname; }
-			set { m_dresslistname = value; }
-		}
+        private static string m_dresslistname;
+        internal static string DressListName
+        {
+            get { return m_dresslistname; }
+            set { m_dresslistname = value; }
+        }
 
-		internal static void RefreshLists()
-		{
-			List<DressList> lists = Settings.Dress.ListsRead();
+        internal static void RefreshLists()
+        {
+            List<DressList> lists = Settings.Dress.ListsRead();
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.DressListView.Items.Clear();
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.DressListView.Items.Clear();
 
-			DressList selectedList = lists.FirstOrDefault(l => l.Selected);
-			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.DressListSelect.Text)
-				return;
+            DressList selectedList = lists.FirstOrDefault(l => l.Selected);
+            if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.DressListSelect.Text)
+                return;
 
-			Assistant.Engine.MainWindow.DressListSelect.Items.Clear();
-			foreach (DressList l in lists)
-			{
-				Assistant.Engine.MainWindow.DressListSelect.Items.Add(l.Description);
+            Assistant.Engine.MainWindow.DressListSelect.Items.Clear();
+            foreach (DressList l in lists)
+            {
+                Assistant.Engine.MainWindow.DressListSelect.Items.Add(l.Description);
 
-				if (l.Selected)
-				{
-					Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = Assistant.Engine.MainWindow.DressListSelect.Items.IndexOf(l.Description);
-					DressDelay = l.Delay;
-					DressBag = l.Bag;
-					DressConflict = l.Conflict;
-					DressUseUO3D = l.UseUo3D;
-				}
-			}
-		}
+                if (l.Selected)
+                {
+                    Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = Assistant.Engine.MainWindow.DressListSelect.Items.IndexOf(l.Description);
+                    DressDelay = l.Delay;
+                    DressBag = l.Bag;
+                    DressConflict = l.Conflict;
+                    DressUseUO3D = l.UseUo3D;
+                }
+            }
+        }
 
-		internal static void AddList(string newList)
-		{
-			RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false, false);
-			RazorEnhanced.Dress.RefreshLists();
-			RazorEnhanced.Dress.InitGrid();
-		}
+        internal static void AddList(string newList)
+        {
+            RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false, false);
+            RazorEnhanced.Dress.RefreshLists();
+            RazorEnhanced.Dress.InitGrid();
+        }
 
-		internal static void RemoveList(string list)
-		{
-			if (RazorEnhanced.Settings.Dress.ListExists(list))
-			{
-				RazorEnhanced.Settings.Dress.ListDelete(list);
-			}
+        internal static void RemoveList(string list)
+        {
+            if (RazorEnhanced.Settings.Dress.ListExists(list))
+            {
+                RazorEnhanced.Settings.Dress.ListDelete(list);
+            }
 
-			RazorEnhanced.Dress.RefreshLists();
-			RazorEnhanced.Dress.InitGrid();
-		}
+            RazorEnhanced.Dress.RefreshLists();
+            RazorEnhanced.Dress.InitGrid();
+        }
 
-		internal static void UpdateSelectedItems(int i)
-		{
-			List<DressItemNew> items = RazorEnhanced.Settings.Dress.ItemsRead(DressListName);
+        internal static void UpdateSelectedItems(int i)
+        {
+            List<DressItemNew> items = RazorEnhanced.Settings.Dress.ItemsRead(DressListName);
 
-			if (items.Count != Assistant.Engine.MainWindow.DressListView.Items.Count)
-			{
-				return;
-			}
+            if (items.Count != Assistant.Engine.MainWindow.DressListView.Items.Count)
+            {
+                return;
+            }
 
-			ListViewItem lvi = Assistant.Engine.MainWindow.DressListView.Items[i];
-			DressItemNew old = items[i];
+            ListViewItem lvi = Assistant.Engine.MainWindow.DressListView.Items[i];
+            DressItemNew old = items[i];
 
-			if (lvi != null && old != null)
-			{
-				DressItemNew item = new Dress.DressItemNew(old.Name, old.Layer, old.Serial, lvi.Checked);
-				RazorEnhanced.Settings.Dress.ItemReplace(RazorEnhanced.Dress.DressListName, i, item);
-			}
-		}
+            if (lvi != null && old != null)
+            {
+                DressItemNew item = new Dress.DressItemNew(old.Name, old.Layer, old.Serial, lvi.Checked);
+                RazorEnhanced.Settings.Dress.ItemReplace(RazorEnhanced.Dress.DressListName, i, item);
+            }
+        }
 
-		internal static void InitGrid()
-		{
-			List<DressList> lists = Settings.Dress.ListsRead();
-			foreach (DressList l in lists)
-			{
+        internal static void InitGrid()
+        {
+            List<DressList> lists = Settings.Dress.ListsRead();
+            foreach (DressList l in lists)
+            {
                 if (l.Selected)
                 {
                     InitGrid(l.Description);
                     break;
                 }
-			}
-		}
+            }
+        }
 
         internal static void InitGrid(string listName)
         {
@@ -242,176 +242,176 @@ namespace RazorEnhanced
 
 
         internal static void ReadPlayerDress()
-		{
-			if (World.Player == null) // non loggato
-			{
-				AddLog("You are not logged in game!");
-				return;
-			}
+        {
+            if (World.Player == null) // non loggato
+            {
+                AddLog("You are not logged in game!");
+                return;
+            }
 
-			RazorEnhanced.Settings.Dress.ItemClear(Assistant.Engine.MainWindow.DressListSelect.Text);
+            RazorEnhanced.Settings.Dress.ItemClear(Assistant.Engine.MainWindow.DressListSelect.Text);
 
-			foreach (Layer l in LayerList)
-			{
-				Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(l);
-				if (layeritem == null) // slot vuoto
-					continue;
+            foreach (Layer l in LayerList)
+            {
+                Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(l);
+                if (layeritem == null) // slot vuoto
+                    continue;
 
-				RazorEnhanced.Dress.DressItemNew itemtoinsert = new DressItemNew(layeritem.Name, l, layeritem.Serial, true);
-				RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
-			}
+                RazorEnhanced.Dress.DressItemNew itemtoinsert = new DressItemNew(layeritem.Name, l, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
 
-			RazorEnhanced.Dress.InitGrid();
-		}
+            RazorEnhanced.Dress.InitGrid();
+        }
 
-		internal static void AddItemByTarger(Assistant.Item dressItem)
-		{
-			if (dressItem.Layer != Layer.Invalid)
-			{
-				RazorEnhanced.Dress.DressItemNew toinsert = new RazorEnhanced.Dress.DressItemNew(dressItem.Name, dressItem.Layer, dressItem.Serial, true);
-				RazorEnhanced.Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
-				RazorEnhanced.Dress.InitGrid();
-			}
-			else
-				Misc.SendMessage("This item not have valid layer", false);
-		}
+        internal static void AddItemByTarger(Assistant.Item dressItem)
+        {
+            if (dressItem.Layer != Layer.Invalid)
+            {
+                RazorEnhanced.Dress.DressItemNew toinsert = new RazorEnhanced.Dress.DressItemNew(dressItem.Name, dressItem.Layer, dressItem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
+                RazorEnhanced.Dress.InitGrid();
+            }
+            else
+                Misc.SendMessage("This item not have valid layer", false);
+        }
 
-		// Undress
+        // Undress
 
-		internal static int UndressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial)
-		{
-			try
-			{
-				if (Dress.DressUseUO3D)
-				{
-					List<ushort> layertoundress = new List<ushort>();
-					foreach (Dress.DressItemNew item in items)
-					{
-						//Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
-						layertoundress.Add((ushort)item.Layer);
-					}
-					RazorEnhanced.Dress.AddLog("UnDressing...");
-					Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
-				}
-				else
-				{
-					foreach (DressItemNew item in items)
-					{
-						if (!item.Selected)
-							continue;
+        internal static int UndressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial)
+        {
+            try
+            {
+                if (Dress.DressUseUO3D)
+                {
+                    List<ushort> layertoundress = new List<ushort>();
+                    foreach (Dress.DressItemNew item in items)
+                    {
+                        //Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
+                        layertoundress.Add((ushort)item.Layer);
+                    }
+                    RazorEnhanced.Dress.AddLog("UnDressing...");
+                    Assistant.Client.Instance.SendToServerWait(new UnEquipItemMacro(layertoundress));
+                }
+                else
+                {
+                    foreach (DressItemNew item in items)
+                    {
+                        if (!item.Selected)
+                            continue;
 
-						if (World.FindItem(item.Serial) == null)
-							continue;
+                        if (World.FindItem(item.Serial) == null)
+                            continue;
 
-						Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
-						if (itemonlayer != null && itemonlayer.Serial == item.Serial)
-							RazorEnhanced.Items.Move(item.Serial, undressbagserial, 0);
-						RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " on layer: " + item.Layer.ToString() + " undressed!");
-						Thread.Sleep(mseconds);
-					}
-				}
-				RazorEnhanced.Dress.AddLog("Finish!");
-				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
-				Assistant.Engine.MainWindow.UndressFinishWork();
+                        Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
+                        if (itemonlayer != null && itemonlayer.Serial == item.Serial)
+                            RazorEnhanced.Items.Move(item.Serial, undressbagserial, 0);
+                        RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " on layer: " + item.Layer.ToString() + " undressed!");
+                        Thread.Sleep(mseconds);
+                    }
+                }
+                RazorEnhanced.Dress.AddLog("Finish!");
+                if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+                    RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+                Assistant.Engine.MainWindow.UndressFinishWork();
 
-			}
-			catch { }
-			return 0;
-		}
+            }
+            catch { }
+            return 0;
+        }
 
-		// Layer List
-		internal static List<Layer> LayerList = new List<Layer>
-		{
-			Layer.RightHand,
-			Layer.LeftHand,
-			Layer.Shoes,
-			Layer.Pants,
-			Layer.Shirt,
-			Layer.Head,
-			Layer.Gloves,
-			Layer.Ring,
-			Layer.Neck,
-			Layer.Waist,
-			Layer.InnerTorso,
-			Layer.Bracelet,
-			Layer.MiddleTorso,
-			Layer.Earrings,
-			Layer.Arms,
-			Layer.Cloak,
-			Layer.OuterTorso,
-			Layer.OuterLegs,
-			Layer.InnerLegs,
-			Layer.Talisman
-		};
+        // Layer List
+        internal static List<Layer> LayerList = new List<Layer>
+        {
+            Layer.RightHand,
+            Layer.LeftHand,
+            Layer.Shoes,
+            Layer.Pants,
+            Layer.Shirt,
+            Layer.Head,
+            Layer.Gloves,
+            Layer.Ring,
+            Layer.Neck,
+            Layer.Waist,
+            Layer.InnerTorso,
+            Layer.Bracelet,
+            Layer.MiddleTorso,
+            Layer.Earrings,
+            Layer.Arms,
+            Layer.Cloak,
+            Layer.OuterTorso,
+            Layer.OuterLegs,
+            Layer.InnerLegs,
+            Layer.Talisman
+        };
 
-		internal static void UndressEngine()
-		{
-			try
-			{
-				List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
+        internal static void UndressEngine()
+        {
+            try
+            {
+                List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
 
-				// Check bag
-				Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
-				if (bag == null)
-				{
-					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-						Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
-					AddLog("Invalid Bag, Switch to backpack");
-					DressBag = (int)World.Player.Backpack.Serial.Value;
-				}
+                // Check bag
+                Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
+                if (bag == null)
+                {
+                    if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+                        Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+                    AddLog("Invalid Bag, Switch to backpack");
+                    DressBag = (int)World.Player.Backpack.Serial.Value;
+                }
 
-				UndressEngine(items, m_dressdelay, m_dressbag);
-			}
-			catch { }
-		}
+                UndressEngine(items, m_dressdelay, m_dressbag);
+            }
+            catch { }
+        }
 
-		private static Thread m_UndressThread;
+        private static Thread m_UndressThread;
 
-		internal static void UndressStart()
-		{
-			// We have an existing thread that we need to examine and determine disposition
-			// Cannot do delays or WaitSleepJoin because it will lock up UI
-			if (m_UndressThread != null)
-			{
-				// We can only allow 1 thread to run at a time otherwise it will cause conflicts.
-				switch (m_UndressThread.ThreadState)
-				{
-					case ThreadState.Aborted:
-					case ThreadState.Unstarted:
-					case ThreadState.Stopped:
+        internal static void UndressStart()
+        {
+            // We have an existing thread that we need to examine and determine disposition
+            // Cannot do delays or WaitSleepJoin because it will lock up UI
+            if (m_UndressThread != null)
+            {
+                // We can only allow 1 thread to run at a time otherwise it will cause conflicts.
+                switch (m_UndressThread.ThreadState)
+                {
+                    case ThreadState.Aborted:
+                    case ThreadState.Unstarted:
+                    case ThreadState.Stopped:
 
-					// Calculated risk here; usually unsafe and can leak memory, but we will accept risk here
-					case ThreadState.AbortRequested:
-					case ThreadState.StopRequested:
-						m_UndressThread = null;
-						break;
+                    // Calculated risk here; usually unsafe and can leak memory, but we will accept risk here
+                    case ThreadState.AbortRequested:
+                    case ThreadState.StopRequested:
+                        m_UndressThread = null;
+                        break;
 
-					default:
-						// If thread is running or in WaitSleepJoin, make user wait and try again
-						return;
-				}
-			}
+                    default:
+                        // If thread is running or in WaitSleepJoin, make user wait and try again
+                        return;
+                }
+            }
 
-			if (m_UndressThread == null)
-			{
-				try
-				{
-					m_UndressThread = new Thread(Dress.UndressEngine);
-					m_UndressThread.Start();
-				}
-				catch { }
-			}
-		}
+            if (m_UndressThread == null)
+            {
+                try
+                {
+                    m_UndressThread = new Thread(Dress.UndressEngine);
+                    m_UndressThread.Start();
+                }
+                catch { }
+            }
+        }
 
-		// Dress
+        // Dress
 
-		internal static void DressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial, bool conflict)
-		{
-			try
-			{
-				if (Dress.DressUseUO3D)
-				{
+        internal static void DressEngine(List<Dress.DressItemNew> items, int mseconds, int undressbagserial, bool conflict)
+        {
+            try
+            {
+                if (Dress.DressUseUO3D)
+                {
                     // Problem with uo3d is the serveuo servers don't swap 1hand/2hand properly
                     // but OSI does, so if delay is 0 let OSI swap fast otherwise handle udress for weapons
                     if (m_dressdelay == 0)
@@ -493,197 +493,197 @@ namespace RazorEnhanced
                             Assistant.Client.Instance.SendToServerWait(new EquipItemMacro(itemserial));
                         }
                     }
-				}
-				else
-				{
-					foreach (DressItemNew item in items)
-					{
-						if (!item.Selected)
-							continue;
+                }
+                else
+                {
+                    foreach (DressItemNew item in items)
+                    {
+                        if (!item.Selected)
+                            continue;
 
-						if (item.Name == "UNDRESS")          // Caso undress slot
-						{
-							Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
+                        if (item.Name == "UNDRESS")          // Caso undress slot
+                        {
+                            Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
 
-							if (itemtomove == null)
-								continue;
+                            if (itemtomove == null)
+                                continue;
 
-							if (!itemtomove.Movable)
-								continue;
+                            if (!itemtomove.Movable)
+                                continue;
 
-							RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
-							RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
-							Thread.Sleep(mseconds);
-						}
-						else
-						{
-							if (World.FindItem(item.Serial) == null)
-								continue;
+                            RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
+                            RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
+                            Thread.Sleep(mseconds);
+                        }
+                        else
+                        {
+                            if (World.FindItem(item.Serial) == null)
+                                continue;
 
-							if (conflict)       // Caso abilitato controllo conflitto
-							{
-								Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
-								if (itemonlayer != null)
-									if (itemonlayer.Serial == item.Serial)
-										continue;
+                            if (conflict)       // Caso abilitato controllo conflitto
+                            {
+                                Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(item.Serial).Layer);
+                                if (itemonlayer != null)
+                                    if (itemonlayer.Serial == item.Serial)
+                                        continue;
 
-								if (World.FindItem(item.Serial).Layer == Layer.RightHand || World.FindItem(item.Serial).Layer == Layer.LeftHand)        // Check armi per controlli twohand
-								{
-									Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
-									Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+                                if (World.FindItem(item.Serial).Layer == Layer.RightHand || World.FindItem(item.Serial).Layer == Layer.LeftHand)        // Check armi per controlli twohand
+                                {
+                                    Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+                                    Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
-									if (Assistant.World.FindItem(item.Serial).IsTwoHanded)
-									{
-										if (lefth != null && lefth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
-											RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
-										if (righth != null && righth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
-											RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
-									}
-									else if ((lefth != null && lefth.IsTwoHanded) || (righth != null && righth.IsTwoHanded))
-									{
-										if (lefth != null && lefth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
-											RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
-										if (righth != null && righth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
-											RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
-									}
-								}
+                                    if (Assistant.World.FindItem(item.Serial).IsTwoHanded)
+                                    {
+                                        if (lefth != null && lefth.Movable)
+                                        {
+                                            RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
+                                            RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
+                                            Thread.Sleep(mseconds);
+                                        }
+                                        if (righth != null && righth.Movable)
+                                        {
+                                            RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
+                                            RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
+                                            Thread.Sleep(mseconds);
+                                        }
+                                    }
+                                    else if ((lefth != null && lefth.IsTwoHanded) || (righth != null && righth.IsTwoHanded))
+                                    {
+                                        if (lefth != null && lefth.Movable)
+                                        {
+                                            RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: LeftHand undressed!");
+                                            RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
+                                            Thread.Sleep(mseconds);
+                                        }
+                                        if (righth != null && righth.Movable)
+                                        {
+                                            RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: RightHand undressed!");
+                                            RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
+                                            Thread.Sleep(mseconds);
+                                        }
+                                    }
+                                }
 
-								Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
-								if (itemtomove != null)
-								{
-									if (itemtomove.Serial == item.Serial)
-										continue;
+                                Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
+                                if (itemtomove != null)
+                                {
+                                    if (itemtomove.Serial == item.Serial)
+                                        continue;
 
-									if (!itemtomove.Movable)
-										continue;
+                                    if (!itemtomove.Movable)
+                                        continue;
 
-									RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
-									RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
-									Thread.Sleep(mseconds);
-									RazorEnhanced.Player.EquipItem(item.Serial);
-									RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
-									Thread.Sleep(mseconds);
-								}
-								else
-								{
-									RazorEnhanced.Player.EquipItem(item.Serial);
-									RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
-									Thread.Sleep(mseconds);
-								}
-							}
-							else
-							{
-								Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
-								if (itemtomove != null)
-									continue;
+                                    RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + item.Layer.ToString() + " undressed!");
+                                    RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
+                                    Thread.Sleep(mseconds);
+                                    RazorEnhanced.Player.EquipItem(item.Serial);
+                                    RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
+                                    Thread.Sleep(mseconds);
+                                }
+                                else
+                                {
+                                    RazorEnhanced.Player.EquipItem(item.Serial);
+                                    RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
+                                    Thread.Sleep(mseconds);
+                                }
+                            }
+                            else
+                            {
+                                Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(item.Layer);
+                                if (itemtomove != null)
+                                    continue;
 
-								RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
-								RazorEnhanced.Player.EquipItem(item.Serial);
-								Thread.Sleep(mseconds);
-							}
-						}
-					}
-				}
-				RazorEnhanced.Dress.AddLog("Finish!");
-				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
-				Assistant.Engine.MainWindow.UndressFinishWork();
-			}
+                                RazorEnhanced.Dress.AddLog("Item 0x" + item.Serial.ToString("X8") + " Equipped on layer: " + item.Layer.ToString());
+                                RazorEnhanced.Player.EquipItem(item.Serial);
+                                Thread.Sleep(mseconds);
+                            }
+                        }
+                    }
+                }
+                RazorEnhanced.Dress.AddLog("Finish!");
+                if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+                    RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+                Assistant.Engine.MainWindow.UndressFinishWork();
+            }
 
-			catch { }
-		}
+            catch { }
+        }
 
-		internal static void DressEngine()
-		{
-			try
-			{
-				List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
+        internal static void DressEngine()
+        {
+            try
+            {
+                List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(Dress.DressListName);
 
-				// Check bag
-				Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
-				if (bag == null)
-				{
-					if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
-						Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
-					AddLog("Invalid Bag, Switch to backpack");
-					DressBag = (int)World.Player.Backpack.Serial.Value;
-				}
+                // Check bag
+                Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
+                if (bag == null)
+                {
+                    if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+                        Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+                    AddLog("Invalid Bag, Switch to backpack");
+                    DressBag = (int)World.Player.Backpack.Serial.Value;
+                }
 
-				DressEngine(items, m_dressdelay, m_dressbag, m_dressconflict);
-			}
-			catch { }
-		}
+                DressEngine(items, m_dressdelay, m_dressbag, m_dressconflict);
+            }
+            catch { }
+        }
 
-		private static Thread m_DressThread;
+        private static Thread m_DressThread;
 
-		internal static void DressStart()
-		{
-			// We have an existing thread that we need to examine and determine disposition
-			// Cannot do delays or WaitSleepJoin because it will lock up UI
-			if (m_DressThread != null)
-			{
-				// We can only allow 1 thread to run at a time otherwise it will cause conflicts.
-				switch (m_DressThread.ThreadState)
-				{
-					case ThreadState.Aborted:
-					case ThreadState.Unstarted:
-					case ThreadState.Stopped:
+        internal static void DressStart()
+        {
+            // We have an existing thread that we need to examine and determine disposition
+            // Cannot do delays or WaitSleepJoin because it will lock up UI
+            if (m_DressThread != null)
+            {
+                // We can only allow 1 thread to run at a time otherwise it will cause conflicts.
+                switch (m_DressThread.ThreadState)
+                {
+                    case ThreadState.Aborted:
+                    case ThreadState.Unstarted:
+                    case ThreadState.Stopped:
 
-					// Calculated risk here; usually unsafe and can leak memory, but we will accept risk here
-					case ThreadState.AbortRequested:
-					case ThreadState.StopRequested:
-						m_DressThread = null;
-						break;
+                    // Calculated risk here; usually unsafe and can leak memory, but we will accept risk here
+                    case ThreadState.AbortRequested:
+                    case ThreadState.StopRequested:
+                        m_DressThread = null;
+                        break;
 
-					default:
-						// If thread is running or in WaitSleepJoin, make user wait and try again
-						return;
-				}
-			}
-			if (m_DressThread == null)
-			{
-				m_DressThread = new Thread(Dress.DressEngine);
-				m_DressThread.Start();
-			}
-		}
+                    default:
+                        // If thread is running or in WaitSleepJoin, make user wait and try again
+                        return;
+                }
+            }
+            if (m_DressThread == null)
+            {
+                m_DressThread = new Thread(Dress.DressEngine);
+                m_DressThread.Start();
+            }
+        }
 
-		internal static void ForceStop()
-		{
-			if (m_DressThread != null)
-			{
-				try
-				{
-					m_DressThread.Abort();
-				}
-				catch
-				{ }
-			}
-			if (m_UndressThread != null)
-			{
-				try
-				{
-					m_UndressThread.Abort();
-				}
-				catch
-				{ }
-			}
-		}
+        internal static void ForceStop()
+        {
+            if (m_DressThread != null)
+            {
+                try
+                {
+                    m_DressThread.Abort();
+                }
+                catch
+                { }
+            }
+            if (m_UndressThread != null)
+            {
+                try
+                {
+                    m_UndressThread.Abort();
+                }
+                catch
+                { }
+            }
+        }
 
         // Funzioni da script
 
@@ -692,116 +692,116 @@ namespace RazorEnhanced
         /// </summary>
         /// <returns>True: is running - False: otherwise</returns>
         public static bool DressStatus()
-		{
-			if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
-				return true;
-			else
-				return false;
-		}
+        {
+            if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
+                return true;
+            else
+                return false;
+        }
 
         /// <summary>
         /// Check UnDress Agent status, returns a bool value.
         /// </summary>
         /// <returns>True: is running - False: otherwise</returns>
-		public static bool UnDressStatus()
-		{
-			if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
-				return true;
-			else
-				return false;
-		}
+        public static bool UnDressStatus()
+        {
+            if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
+                return true;
+            else
+                return false;
+        }
 
         /// <summary>
         /// Start Dress engine.
         /// </summary>
-		public static void DressFStart()
-		{
-			if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStart();
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: Dress.DressFStart: Dress already running");
-			}
-		}
+        public static void DressFStart()
+        {
+            if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStart();
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: Dress.DressFStart: Dress already running");
+            }
+        }
 
         /// <summary>
         /// Start UnDress engine.
         /// </summary>
-		public static void UnDressFStart()
-		{
-			if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
-				Assistant.Engine.MainWindow.UndressStart();
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: Dress.UnDressFStart: Undress already running");
-			}
-		}
+        public static void UnDressFStart()
+        {
+            if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
+                Assistant.Engine.MainWindow.UndressStart();
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: Dress.UnDressFStart: Undress already running");
+            }
+        }
 
         /// <summary>
         /// Stop Dress engine.
         /// </summary>
         public static void DressFStop()
-		{
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStop();
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: Dress not running");
-			}
-		}
+        {
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStop();
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: Dress not running");
+            }
+        }
 
         /// <summary>
         /// Stop UnDress engine.
         /// </summary>
-		public static void UnDressFStop()
-		{
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStop();
-			else
-			{
-				Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: UnDress not running");
-			}
-		}
+        public static void UnDressFStop()
+        {
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStop();
+            else
+            {
+                Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: UnDress not running");
+            }
+        }
 
 
         /// <summary>
         /// Change dress list, List must be exist in dress/undress Agent tab.
         /// </summary>
         /// <param name="dresslist">Name of the list of friend.</param>
-		public static void ChangeList(string dresslist)
-		{
-			if (!UpdateListParam(dresslist))
-			{
-				Scripts.SendMessageScriptError("Script Error: Dress.ChangeList: Scavenger list: " + dresslist + " not exist");
-			}
-			else
-			{
-				if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop change list e restart
-				{
-					Engine.MainWindow.SafeAction(s => s.DressStopButton.PerformClick());
-					Engine.MainWindow.SafeAction(s => { s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist); InitGrid(dresslist); });  // change list
-					Engine.MainWindow.SafeAction(s => s.DressExecuteButton.PerformClick());
-				}
-				else
-				{
-					Engine.MainWindow.SafeAction(s => { s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist); InitGrid(dresslist); });  // change list
-				}
-			}
-		}
+        public static void ChangeList(string dresslist)
+        {
+            if (!UpdateListParam(dresslist))
+            {
+                Scripts.SendMessageScriptError("Script Error: Dress.ChangeList: Scavenger list: " + dresslist + " not exist");
+            }
+            else
+            {
+                if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop change list e restart
+                {
+                    Engine.MainWindow.SafeAction(s => s.DressStopButton.PerformClick());
+                    Engine.MainWindow.SafeAction(s => { s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist); InitGrid(dresslist); });  // change list
+                    Engine.MainWindow.SafeAction(s => s.DressExecuteButton.PerformClick());
+                }
+                else
+                {
+                    Engine.MainWindow.SafeAction(s => { s.DressListSelect.SelectedIndex = s.DressListSelect.Items.IndexOf(dresslist); InitGrid(dresslist); });  // change list
+                }
+            }
+        }
 
-		internal static bool UpdateListParam(string listName)
-		{
-			if (Settings.Dress.ListExists(listName))
-			{
-				Settings.Dress.ListDetailsRead(listName, out int bag, out int delay, out bool conflict, out bool useUo3D);
-				DressListName = listName;
-				DressBag = bag;
-				DressDelay = delay;
-				DressConflict = conflict;
-				DressUseUO3D = useUo3D;
-				return true;
-			}
-			return false;
-		}
-	}
+        internal static bool UpdateListParam(string listName)
+        {
+            if (Settings.Dress.ListExists(listName))
+            {
+                Settings.Dress.ListDetailsRead(listName, out int bag, out int delay, out bool conflict, out bool useUo3D);
+                DressListName = listName;
+                DressBag = bag;
+                DressDelay = delay;
+                DressConflict = conflict;
+                DressUseUO3D = useUo3D;
+                return true;
+            }
+            return false;
+        }
+    }
 }

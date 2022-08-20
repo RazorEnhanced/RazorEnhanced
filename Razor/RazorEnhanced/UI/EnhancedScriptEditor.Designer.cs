@@ -1,33 +1,33 @@
 namespace RazorEnhanced.UI
 {
-	partial class EnhancedScriptEditor
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class EnhancedScriptEditor
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedScriptEditor));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -635,50 +635,50 @@ namespace RazorEnhanced.UI
 
         }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.ToolStrip toolStrip1;
-		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripButton toolStripButtonOpen;
-		private System.Windows.Forms.ToolStripButton toolStripButtonSaveAs;
-		private System.Windows.Forms.ToolStripButton toolStripButtonClose;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripButton toolStripButtonStop;
-		private System.Windows.Forms.ToolStripButton toolStripButtonAddBreakpoint;
-		private System.Windows.Forms.ToolStripButton toolStripButtonRemoveBreakpoints;
-		private System.Windows.Forms.ToolStripButton toolStripNextCall;
-		private System.Windows.Forms.ToolStripButton toolStripButtonNextReturn;
-		private System.Windows.Forms.ToolStripButton toolStripButtonNextLine;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScript;
-		private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-		private System.Windows.Forms.ToolStripButton toolStripButtonInspect;
-		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.TextBox textBoxDebug;
-		private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
-		private System.Windows.Forms.ToolStripButton toolStripButtonGumps;
-		private System.Windows.Forms.SplitContainer splitContainer2;
-		private Assistant.RazorFastColoredTextBox fastColoredTextBoxEditor;
-		private System.Windows.Forms.ToolStripButton toolStripButtonSave;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.ListBox messagelistBox;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonOpen;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSaveAs;
+        private System.Windows.Forms.ToolStripButton toolStripButtonClose;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonStop;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAddBreakpoint;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRemoveBreakpoints;
+        private System.Windows.Forms.ToolStripButton toolStripNextCall;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNextReturn;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNextLine;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScript;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonInspect;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TextBox textBoxDebug;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGumps;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private Assistant.RazorFastColoredTextBox fastColoredTextBoxEditor;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSave;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ListBox messagelistBox;
         private System.Windows.Forms.ImageList imageList2;
-		private System.Windows.Forms.ToolStripButton inspectaliasbutton;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-		private System.Windows.Forms.ToolStripButton toolStripButtonNextBreakpoint;
-		private System.Windows.Forms.ContextMenuStrip textareaMenuStrip;
-		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem commentSelectLineToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem unCommentLineToolStripMenuItem;
-		private System.Windows.Forms.ContextMenuStrip logboxMenuStrip;
-		private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton inspectaliasbutton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNextBreakpoint;
+        private System.Windows.Forms.ContextMenuStrip textareaMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem commentSelectLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem unCommentLineToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip logboxMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripDropDownButton toolStripFileDropDownButton;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownDebugButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;

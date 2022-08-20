@@ -227,7 +227,7 @@ namespace Assistant
         private static readonly int[] WhipFencing = new int[] { 0xA28A, 0xA292 };
         private static readonly int[] WhipSword = new int[] { 0xA28B, 0xA293 };
 
-        private const string TYPE = "ClassicUO.Game.GameActions";		
+        private const string TYPE = "ClassicUO.Game.GameActions";       
         private static MethodInfo _usePrimaryMethod;
         private static MethodInfo _useSecondaryMethod;
 
@@ -428,7 +428,7 @@ namespace Assistant
                     if (_usePrimaryMethod == null)
                     {
                         _usePrimaryMethod = ClassicUOClient.CUOAssembly?.GetType(TYPE)?.GetMethod("UsePrimaryAbility", BindingFlags.Public | BindingFlags.Static);
-                    }					
+                    }                   
                     ClassicUOClient.CUOActionQueue.Enqueue(() => { _usePrimaryMethod.Invoke(null, null); });
                 }
                 World.Player.SendMessage(LocString.SettingAOSAb, a);
@@ -561,12 +561,12 @@ namespace Assistant
             if (wait)
             {
                 Assistant.Client.Instance.SendToServerWait(new UseAbility(AOSAbility.Clear));
-            //	Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
+            //  Assistant.Client.Instance.SendToClientWait(ClearAbility.Instance);
             }
             else
             {
                 Assistant.Client.Instance.SendToServer(new UseAbility(AOSAbility.Clear));
-            //	Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
+            //  Assistant.Client.Instance.SendToClient(ClearAbility.Instance);
             }
             World.Player.SendMessage(LocString.AOSAbCleared);
         }

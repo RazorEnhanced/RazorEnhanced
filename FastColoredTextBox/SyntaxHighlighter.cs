@@ -10,23 +10,23 @@ namespace FastColoredTextBoxNS
 {
     public class SyntaxHighlighter : IDisposable
     {
-		//styles
-		protected static readonly Platform platformType = PlatformType.GetOperationSystemPlatform();
-		public readonly Style BlueBoldStyle = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
-		public readonly Style BlueStyle = new TextStyle(Brushes.Blue, null, FontStyle.Regular);
-		public readonly Style BoldStyle = new TextStyle(null, null, FontStyle.Bold | FontStyle.Underline);
-		public readonly Style BrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Italic);
-		public readonly Style GrayStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
-		public readonly Style GreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
-		public readonly Style MagentaStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
-		public readonly Style MaroonStyle = new TextStyle(Brushes.Maroon, null, FontStyle.Regular);
-		public readonly Style RedStyle = new TextStyle(Brushes.Red, null, FontStyle.Regular);
-		public readonly Style BlackStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
-		public readonly Style CrimsonStyle = new TextStyle(Brushes.Crimson, null, FontStyle.Regular);
-		public readonly Style DarkOrangeStyle = new TextStyle(Brushes.DarkOrange, null, FontStyle.Regular);
-		public readonly Style DodgerBlueStyle = new TextStyle(Brushes.DodgerBlue, null, FontStyle.Regular);
-		//
-		protected readonly Dictionary<string, SyntaxDescriptor> descByXMLfileNames =
+        //styles
+        protected static readonly Platform platformType = PlatformType.GetOperationSystemPlatform();
+        public readonly Style BlueBoldStyle = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
+        public readonly Style BlueStyle = new TextStyle(Brushes.Blue, null, FontStyle.Regular);
+        public readonly Style BoldStyle = new TextStyle(null, null, FontStyle.Bold | FontStyle.Underline);
+        public readonly Style BrownStyle = new TextStyle(Brushes.Brown, null, FontStyle.Italic);
+        public readonly Style GrayStyle = new TextStyle(Brushes.Gray, null, FontStyle.Regular);
+        public readonly Style GreenStyle = new TextStyle(Brushes.Green, null, FontStyle.Italic);
+        public readonly Style MagentaStyle = new TextStyle(Brushes.Magenta, null, FontStyle.Regular);
+        public readonly Style MaroonStyle = new TextStyle(Brushes.Maroon, null, FontStyle.Regular);
+        public readonly Style RedStyle = new TextStyle(Brushes.Red, null, FontStyle.Regular);
+        public readonly Style BlackStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
+        public readonly Style CrimsonStyle = new TextStyle(Brushes.Crimson, null, FontStyle.Regular);
+        public readonly Style DarkOrangeStyle = new TextStyle(Brushes.DarkOrange, null, FontStyle.Regular);
+        public readonly Style DodgerBlueStyle = new TextStyle(Brushes.DodgerBlue, null, FontStyle.Regular);
+        //
+        protected readonly Dictionary<string, SyntaxDescriptor> descByXMLfileNames =
             new Dictionary<string, SyntaxDescriptor>();
 
         protected readonly List<Style> resilientStyles = new List<Style>(5);
@@ -87,14 +87,14 @@ namespace FastColoredTextBoxNS
         protected Regex LuaStringRegex;
         protected Regex LuaFunctionsRegex;
 
-		protected Regex PythonCommentRegex;
+        protected Regex PythonCommentRegex;
 
-		protected Regex PythonKeywordRegex;
-		protected Regex PythonNumberRegex;
-		protected Regex PythonStringRegex1;
-		protected Regex PythonStringRegex2;
+        protected Regex PythonKeywordRegex;
+        protected Regex PythonNumberRegex;
+        protected Regex PythonStringRegex1;
+        protected Regex PythonStringRegex2;
 
-		public Regex RazorClassKeywordRegex;
+        public Regex RazorClassKeywordRegex;
         public Regex RazorPropsKeywordRegex;
         public Regex RazorFunctionsKeywordRegex;
 
@@ -194,9 +194,9 @@ namespace FastColoredTextBoxNS
                 case Language.Lua:
                     LuaSyntaxHighlight(range);
                     break;
-				case Language.Python:
-					PythonSyntaxHighlight(range);
-					break;
+                case Language.Python:
+                    PythonSyntaxHighlight(range);
+                    break;
                 case Language.Uos:
                     UosSyntaxHighlight(range);
                     break;
@@ -256,9 +256,9 @@ namespace FastColoredTextBoxNS
                 case Language.Lua:
                     LuaAutoIndentNeeded(sender, args);
                     break;
-				case Language.Python:
-					PythonAutoIndentNeeded(sender, args);
-					break;
+                case Language.Python:
+                    PythonAutoIndentNeeded(sender, args);
+                    break;
                 case Language.Uos:
                     UosAutoIndentNeeded(sender, args);
                     break;
@@ -702,17 +702,17 @@ namespace FastColoredTextBoxNS
                     KeywordStyle = BlueBoldStyle;
                     FunctionsStyle = MaroonStyle;
                     break;
-				case Language.Python:
-					StringStyle = MagentaStyle;
-					CommentStyle = GreenStyle;
-					NumberStyle = BrownStyle;
-					KeywordStyle = BlueStyle;
-					FunctionsStyle = RedStyle;
-					RazorClassKeywordStyle = CrimsonStyle;
-					RazorPropsKeywordStyle = DarkOrangeStyle;
-					RazorFunctionsKeywordStyle = DodgerBlueStyle;
-					break;
-				case Language.PHP:
+                case Language.Python:
+                    StringStyle = MagentaStyle;
+                    CommentStyle = GreenStyle;
+                    NumberStyle = BrownStyle;
+                    KeywordStyle = BlueStyle;
+                    FunctionsStyle = RedStyle;
+                    RazorClassKeywordStyle = CrimsonStyle;
+                    RazorPropsKeywordStyle = DarkOrangeStyle;
+                    RazorFunctionsKeywordStyle = DodgerBlueStyle;
+                    break;
+                case Language.PHP:
                     StringStyle = RedStyle;
                     CommentStyle = GreenStyle;
                     NumberStyle = RedStyle;
@@ -1426,212 +1426,212 @@ namespace FastColoredTextBoxNS
         }
 
         protected void InitPythonRegex()
-		{
-			PythonStringRegex1 = new Regex("\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"", RegexCompiledOption);
-			PythonStringRegex2 = new Regex("'[^'\\\\]*(\\\\.[^'\\\\]*)*'", RegexCompiledOption);
+        {
+            PythonStringRegex1 = new Regex("\"[^\"\\\\]*(\\\\.[^\"\\\\]*)*\"", RegexCompiledOption);
+            PythonStringRegex2 = new Regex("'[^'\\\\]*(\\\\.[^'\\\\]*)*'", RegexCompiledOption);
 
-			PythonCommentRegex = LuaCommentRegex1 = new Regex(@"#.*$", RegexOptions.Multiline | RegexCompiledOption);
+            PythonCommentRegex = LuaCommentRegex1 = new Regex(@"#.*$", RegexOptions.Multiline | RegexCompiledOption);
 
-			PythonNumberRegex = new Regex(@"\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b", RegexCompiledOption);
-			PythonKeywordRegex = new Regex(@"\b(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|not|or|pass|print|raise|return|try|while|yield|None|True|False|as)\b", RegexCompiledOption);
+            PythonNumberRegex = new Regex(@"\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b", RegexCompiledOption);
+            PythonKeywordRegex = new Regex(@"\b(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|not|or|pass|print|raise|return|try|while|yield|None|True|False|as)\b", RegexCompiledOption);
            
             RazorFunctionsKeywordRegex = new Regex("");
             RazorPropsKeywordRegex = new Regex("");
             RazorClassKeywordRegex = new Regex("");
         }
 
-		/// <summary>
-		/// Highlights Lua code
-		/// </summary>
-		/// <param name="range"></param>
-		public virtual void PythonSyntaxHighlight(Range range)
-		{
-			range.tb.CommentPrefix = "#";
+        /// <summary>
+        /// Highlights Lua code
+        /// </summary>
+        /// <param name="range"></param>
+        public virtual void PythonSyntaxHighlight(Range range)
+        {
+            range.tb.CommentPrefix = "#";
 
-			range.tb.LeftBracket = '(';
-			range.tb.RightBracket = ')';
-			range.tb.LeftBracket2 = '[';
-			range.tb.RightBracket2 = ']';
-			range.tb.BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy1;
+            range.tb.LeftBracket = '(';
+            range.tb.RightBracket = ')';
+            range.tb.LeftBracket2 = '[';
+            range.tb.RightBracket2 = ']';
+            range.tb.BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy1;
 
-			//range.tb.AutoIndentCharsPatterns = @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>.+)";
+            //range.tb.AutoIndentCharsPatterns = @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>.+)";
 
-			//clear style of changed range
-			range.ClearStyle(StringStyle, CommentStyle, NumberStyle, KeywordStyle, FunctionsStyle);
+            //clear style of changed range
+            range.ClearStyle(StringStyle, CommentStyle, NumberStyle, KeywordStyle, FunctionsStyle);
 
-			if (PythonStringRegex1 == null)
-				InitPythonRegex();
+            if (PythonStringRegex1 == null)
+                InitPythonRegex();
 
-			//string highlighting
-			range.SetStyle(StringStyle, PythonStringRegex1);
-			range.SetStyle(StringStyle, PythonStringRegex2);
+            //string highlighting
+            range.SetStyle(StringStyle, PythonStringRegex1);
+            range.SetStyle(StringStyle, PythonStringRegex2);
 
-			//comment highlighting
-			range.SetStyle(CommentStyle, PythonCommentRegex);
+            //comment highlighting
+            range.SetStyle(CommentStyle, PythonCommentRegex);
 
-			//number highlighting
-			range.SetStyle(NumberStyle, PythonNumberRegex);
+            //number highlighting
+            range.SetStyle(NumberStyle, PythonNumberRegex);
 
-			//keyword highlighting
-			range.SetStyle(KeywordStyle, PythonKeywordRegex);
+            //keyword highlighting
+            range.SetStyle(KeywordStyle, PythonKeywordRegex);
 
-			// Razor highlight
-			range.SetStyle(RazorClassKeywordStyle, RazorClassKeywordRegex);
-			range.SetStyle(RazorPropsKeywordStyle, RazorPropsKeywordRegex);
-			range.SetStyle(RazorFunctionsKeywordStyle, RazorFunctionsKeywordRegex);
+            // Razor highlight
+            range.SetStyle(RazorClassKeywordStyle, RazorClassKeywordRegex);
+            range.SetStyle(RazorPropsKeywordStyle, RazorPropsKeywordRegex);
+            range.SetStyle(RazorFunctionsKeywordStyle, RazorFunctionsKeywordRegex);
 
-			//clear folding markers
-			range.ClearFoldingMarkers();
-		}
+            //clear folding markers
+            range.ClearFoldingMarkers();
+        }
 
-		protected void PythonAutoIndentNeeded(object sender, AutoIndentEventArgs args)
-		{
-			if (Regex.IsMatch(args.LineText, @"\A[^""']*\:\s*\z"))
-			{
-				args.ShiftNextLines = args.TabLength;
-			}
-		}
+        protected void PythonAutoIndentNeeded(object sender, AutoIndentEventArgs args)
+        {
+            if (Regex.IsMatch(args.LineText, @"\A[^""']*\:\s*\z"))
+            {
+                args.ShiftNextLines = args.TabLength;
+            }
+        }
 
-		#region Styles
+        #region Styles
 
-		/// <summary>
-		/// String style
-		/// </summary>
-		public Style StringStyle { get; set; }
+        /// <summary>
+        /// String style
+        /// </summary>
+        public Style StringStyle { get; set; }
 
-		/// <summary>
-		/// Comment style
-		/// </summary>
-		public Style CommentStyle { get; set; }
+        /// <summary>
+        /// Comment style
+        /// </summary>
+        public Style CommentStyle { get; set; }
 
-		/// <summary>
-		/// Number style
-		/// </summary>
-		public Style NumberStyle { get; set; }
+        /// <summary>
+        /// Number style
+        /// </summary>
+        public Style NumberStyle { get; set; }
 
-		/// <summary>
-		/// C# attribute style
-		/// </summary>
-		public Style AttributeStyle { get; set; }
+        /// <summary>
+        /// C# attribute style
+        /// </summary>
+        public Style AttributeStyle { get; set; }
 
-		/// <summary>
-		/// Class name style
-		/// </summary>
-		public Style ClassNameStyle { get; set; }
+        /// <summary>
+        /// Class name style
+        /// </summary>
+        public Style ClassNameStyle { get; set; }
 
-		/// <summary>
-		/// Keyword style
-		/// </summary>
-		public Style KeywordStyle { get; set; }
+        /// <summary>
+        /// Keyword style
+        /// </summary>
+        public Style KeywordStyle { get; set; }
 
-		/// <summary>
-		/// Style of tags in comments of C#
-		/// </summary>
-		public Style CommentTagStyle { get; set; }
+        /// <summary>
+        /// Style of tags in comments of C#
+        /// </summary>
+        public Style CommentTagStyle { get; set; }
 
-		/// <summary>
-		/// HTML attribute value style
-		/// </summary>
-		public Style AttributeValueStyle { get; set; }
+        /// <summary>
+        /// HTML attribute value style
+        /// </summary>
+        public Style AttributeValueStyle { get; set; }
 
-		/// <summary>
-		/// HTML tag brackets style
-		/// </summary>
-		public Style TagBracketStyle { get; set; }
+        /// <summary>
+        /// HTML tag brackets style
+        /// </summary>
+        public Style TagBracketStyle { get; set; }
 
-		/// <summary>
-		/// HTML tag name style
-		/// </summary>
-		public Style TagNameStyle { get; set; }
+        /// <summary>
+        /// HTML tag name style
+        /// </summary>
+        public Style TagNameStyle { get; set; }
 
-		/// <summary>
-		/// HTML Entity style
-		/// </summary>
-		public Style HtmlEntityStyle { get; set; }
+        /// <summary>
+        /// HTML Entity style
+        /// </summary>
+        public Style HtmlEntityStyle { get; set; }
 
-		/// <summary>
-		/// XML attribute style
-		/// </summary>
-		public Style XmlAttributeStyle { get; set; }
+        /// <summary>
+        /// XML attribute style
+        /// </summary>
+        public Style XmlAttributeStyle { get; set; }
 
-		/// <summary>
-		/// XML attribute value style
-		/// </summary>
-		public Style XmlAttributeValueStyle { get; set; }
+        /// <summary>
+        /// XML attribute value style
+        /// </summary>
+        public Style XmlAttributeValueStyle { get; set; }
 
-		/// <summary>
-		/// XML tag brackets style
-		/// </summary>
-		public Style XmlTagBracketStyle { get; set; }
+        /// <summary>
+        /// XML tag brackets style
+        /// </summary>
+        public Style XmlTagBracketStyle { get; set; }
 
-		/// <summary>
-		/// XML tag name style
-		/// </summary>
-		public Style XmlTagNameStyle { get; set; }
+        /// <summary>
+        /// XML tag name style
+        /// </summary>
+        public Style XmlTagNameStyle { get; set; }
 
-		/// <summary>
-		/// XML Entity style
-		/// </summary>
-		public Style XmlEntityStyle { get; set; }
+        /// <summary>
+        /// XML Entity style
+        /// </summary>
+        public Style XmlEntityStyle { get; set; }
 
-		/// <summary>
-		/// XML CData style
-		/// </summary>
-		public Style XmlCDataStyle { get; set; }
+        /// <summary>
+        /// XML CData style
+        /// </summary>
+        public Style XmlCDataStyle { get; set; }
 
-		/// <summary>
-		/// Variable style
-		/// </summary>
-		public Style VariableStyle { get; set; }
+        /// <summary>
+        /// Variable style
+        /// </summary>
+        public Style VariableStyle { get; set; }
 
-		/// <summary>
-		/// Specific PHP keyword style
-		/// </summary>
-		public Style KeywordStyle2 { get; set; }
+        /// <summary>
+        /// Specific PHP keyword style
+        /// </summary>
+        public Style KeywordStyle2 { get; set; }
 
-		/// <summary>
-		/// Specific PHP keyword style
-		/// </summary>
-		public Style KeywordStyle3 { get; set; }
+        /// <summary>
+        /// Specific PHP keyword style
+        /// </summary>
+        public Style KeywordStyle3 { get; set; }
 
-		/// <summary>
-		/// SQL Statements style
-		/// </summary>
-		public Style StatementsStyle { get; set; }
+        /// <summary>
+        /// SQL Statements style
+        /// </summary>
+        public Style StatementsStyle { get; set; }
 
-		/// <summary>
-		/// SQL Functions style
-		/// </summary>
-		public Style FunctionsStyle { get; set; }
+        /// <summary>
+        /// SQL Functions style
+        /// </summary>
+        public Style FunctionsStyle { get; set; }
 
-		/// <summary>
-		/// SQL Types style
-		/// </summary>
-		public Style TypesStyle { get; set; }
+        /// <summary>
+        /// SQL Types style
+        /// </summary>
+        public Style TypesStyle { get; set; }
 
-		// Razor style
-		public Style RazorClassKeywordStyle { get; set; }
-		public Style RazorPropsKeywordStyle { get; set; }
-		public Style RazorFunctionsKeywordStyle { get; set; }
+        // Razor style
+        public Style RazorClassKeywordStyle { get; set; }
+        public Style RazorPropsKeywordStyle { get; set; }
+        public Style RazorFunctionsKeywordStyle { get; set; }
 
-		#endregion
-	}
+        #endregion
+    }
 
-	/// <summary>
-	/// Language
-	/// </summary>
-	public enum Language
-	{
-		Custom,
-		CSharp,
-		VB,
-		HTML,
-		XML,
-		SQL,
-		PHP,
-		JS,
-		Lua,
-		Python,
+    /// <summary>
+    /// Language
+    /// </summary>
+    public enum Language
+    {
+        Custom,
+        CSharp,
+        VB,
+        HTML,
+        XML,
+        SQL,
+        PHP,
+        JS,
+        Lua,
+        Python,
         Uos
-	}
+    }
 }

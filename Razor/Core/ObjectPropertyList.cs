@@ -114,14 +114,14 @@ namespace Assistant
         private static readonly int[] m_DefaultStringNums = new int[]
         {
             1042971, // ~1_NOTHING~
-			1070722, // ~1_NOTHING~
-			1063483, // ~1_MATERIAL~ ~2_ITEMNAME~
-			1076228, // ~1_DUMMY~ ~2_DUMMY~
-			1060847, // ~1_val~ ~2_val~
-			1050039, // ~1_NUMBER~ ~2_ITEMNAME~
-			// these are ugly:
-			//1062613, // "~1_NAME~" (orange)
-			//1049644, // [~1_stuff~]
-		};
+            1070722, // ~1_NOTHING~
+            1063483, // ~1_MATERIAL~ ~2_ITEMNAME~
+            1076228, // ~1_DUMMY~ ~2_DUMMY~
+            1060847, // ~1_val~ ~2_val~
+            1050039, // ~1_NUMBER~ ~2_ITEMNAME~
+            // these are ugly:
+            //1062613, // "~1_NAME~" (orange)
+            //1049644, // [~1_stuff~]
+        };
     }
 }

@@ -15,7 +15,7 @@ namespace RazorEnhanced
     /// Item can also be house foriture as well as decorative items on the ground, like lamp post and banches.
     /// However, for Item on the ground that cannot be picked up, they might be part of the world map, see Statics class.
     /// </summary>
-	public class Item : EnhancedEntity
+    public class Item : EnhancedEntity
     {
         private readonly Assistant.Item m_AssistantItem;
 
@@ -28,12 +28,12 @@ namespace RazorEnhanced
         /// <summary>
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
         /// </summary>
-		public bool Updated { get { return m_AssistantItem.Updated; } }
+        public bool Updated { get { return m_AssistantItem.Updated; } }
 
         /// <summary>
         /// Represents the type of Item, usually unique for the Item image.  Sometime called ID or Graphics ID.
         /// </summary>
-		public int ItemID
+        public int ItemID
         {
             get
             {
@@ -52,37 +52,37 @@ namespace RazorEnhanced
         /// <summary>
         /// Item direction. 
         /// </summary>
-		public string Direction { get { return m_AssistantItem.Direction.ToString(); } }
+        public string Direction { get { return m_AssistantItem.Direction.ToString(); } }
 
         /// <summary>
         /// Item is Visible
         /// </summary>
-		public bool Visible { get { return m_AssistantItem.Visible; } }
+        public bool Visible { get { return m_AssistantItem.Visible; } }
 
         /// <summary>
         /// Item is movable
         /// </summary>
-		public bool Movable { get { return m_AssistantItem.Movable; } }
+        public bool Movable { get { return m_AssistantItem.Movable; } }
 
         /// <summary>
         /// Item name
         /// </summary>
-		public string Name { get { return m_AssistantItem.Name; } }
+        public string Name { get { return m_AssistantItem.Name; } }
 
         /// <summary>
         /// Gets the Layer, for werable items only. (need better documentation) 
         /// </summary>
-		public string Layer { get { return m_AssistantItem.Layer.ToString(); } }
+        public string Layer { get { return m_AssistantItem.Layer.ToString(); } }
 
         /// <summary>
         /// Item light's direction (e.g. will affect corpse's facing direction)
         /// </summary>
-		public byte Light { get { return m_AssistantItem.Light; } }
+        public byte Light { get { return m_AssistantItem.Light; } }
 
         /// <summary>
         /// Serial of the container which contains the object.
         /// </summary>
-		public int Container
+        public int Container
         {
             get
             {
@@ -98,7 +98,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Get serial of root container of item.
         /// </summary>
-		public int RootContainer
+        public int RootContainer
         {
             get
             {                
@@ -114,20 +114,20 @@ namespace RazorEnhanced
         /// <summary>
         /// True: if Properties are updated - False: otherwise.
         /// </summary>
-		public bool PropsUpdated { get { return m_AssistantItem.PropsUpdated; } }
+        public bool PropsUpdated { get { return m_AssistantItem.PropsUpdated; } }
 
         /// <summary>
         /// Check if an Item is contained in a container. Can be a Item or a Mobile (wear by).
         /// </summary>
         /// <param name="container">Item as container.</param>
         /// <returns>True: if is contained - False: otherwise.</returns>
-		public bool IsChildOf(Item container)
+        public bool IsChildOf(Item container)
         {
             return m_AssistantItem.IsChildOf(container);
         }
 
         /// <param name="container">Mobile as container.</param>
-		public bool IsChildOf(Mobile container)
+        public bool IsChildOf(Mobile container)
         {
             return m_AssistantItem.IsChildOf(container);
         }
@@ -173,17 +173,17 @@ namespace RazorEnhanced
         /// <summary>
         /// True: if the item is on the ground - False: otherwise.
         /// </summary>
-		public bool OnGround { get { return m_AssistantItem.OnGround; } }
+        public bool OnGround { get { return m_AssistantItem.OnGround; } }
 
         /// <summary>
         /// True: if the item is a container - False: otherwise.
         /// </summary>
-		public bool IsContainer { get { return m_AssistantItem.IsContainer; } }
+        public bool IsContainer { get { return m_AssistantItem.IsContainer; } }
 
         /// <summary>
         /// True: if the item is a bag of sending - False: otherwise.
         /// </summary>
-		public bool IsBagOfSending { get { return m_AssistantItem.IsBagOfSending; } }
+        public bool IsBagOfSending { get { return m_AssistantItem.IsBagOfSending; } }
 
         /// <summary>
         /// True: if the item is in the Player's backpack - False: otherwise.
@@ -211,7 +211,7 @@ namespace RazorEnhanced
         /// <summary>
         /// True: if the item is a corpse - False: otherwise.
         /// </summary>
-		public bool IsCorpse { get { return m_AssistantItem.IsCorpse; } }
+        public bool IsCorpse { get { return m_AssistantItem.IsCorpse; } }
 
         /// <summary>
         /// True: if the item is a door - False: otherwise.
@@ -231,18 +231,18 @@ namespace RazorEnhanced
         /// <summary>
         /// True: if the item is a potion - False: otherwise.
         /// </summary>
-		public bool IsPotion { get { return m_AssistantItem.IsPotion; } }
+        public bool IsPotion { get { return m_AssistantItem.IsPotion; } }
 
 
         /// <summary>
         /// True: if the item is a virtue shield - False: otherwise.
         /// </summary>
-		public bool IsVirtueShield { get { return m_AssistantItem.IsVirtueShield; } }
+        public bool IsVirtueShield { get { return m_AssistantItem.IsVirtueShield; } }
 
         /// <summary>
         /// True: if the item is a 2-handed weapon - False: otherwise.
         /// </summary>
-		public bool IsTwoHanded { get { return m_AssistantItem.IsTwoHanded; } }
+        public bool IsTwoHanded { get { return m_AssistantItem.IsTwoHanded; } }
 
         public override string ToString()
         {
@@ -254,14 +254,14 @@ namespace RazorEnhanced
         /// @experimental
         /// Price of a recently purchased item. (see Vendor class )
         /// </summary>
-		public int Price { get { return m_AssistantItem.Price; } }
+        public int Price { get { return m_AssistantItem.Price; } }
 
         /// <summary>
         /// @nodoc
         /// @experimental
         /// Descrition of a recently purchased item. (see Vendor class )
         /// </summary>
-		public string BuyDesc { get { return m_AssistantItem.BuyDesc; } }
+        public string BuyDesc { get { return m_AssistantItem.BuyDesc; } }
 
         public Point3D GetWorldPosition()
         {
@@ -275,7 +275,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Get the list of Properties of an Item.
         /// </summary>
-		public List<Property> Properties
+        public List<Property> Properties
         {
             get
             {
@@ -292,7 +292,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Get the weight of a item. (0: no weight)
         /// </summary>
-		public int Weight
+        public int Weight
         {
             get
             {
@@ -323,7 +323,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Get the current durability of an Item. (0: no durability)
         /// </summary>
-		public int Durability
+        public int Durability
         {
             get
             {
@@ -372,7 +372,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Get the maximum durability of an Item. (0: no durability)
         /// </summary>
-		public int MaxDurability
+        public int MaxDurability
         {
             get
             {
@@ -425,7 +425,7 @@ namespace RazorEnhanced
         /// Get the in-game image on an Item as Bitmap object.
         /// See MSDN: https://docs.microsoft.com/dotnet/api/system.drawing.bitmap
         /// </summary>
-		public System.Drawing.Bitmap Image
+        public System.Drawing.Bitmap Image
         {
             get
             {
@@ -437,7 +437,7 @@ namespace RazorEnhanced
     /// <summary>
     /// The Items class provides a wide range of functions to search and interact with Items.
     /// </summary>
-	public class Items
+    public class Items
     {
 
         /// <summary>
@@ -605,47 +605,47 @@ namespace RazorEnhanced
             /// <summary>
             /// True: The filter is used - False: Return all Item. ( default: True, active )
             /// </summary>
-			public bool Enabled = true;
+            public bool Enabled = true;
 
             /// <summary>
             /// Limit the search to a list of Serials of Item to find. (ex: 0x0406EFCA )
             /// Supports .Add() and .AddRange()
             /// </summary>
-			public List<int> Serials = new List<int>();
+            public List<int> Serials = new List<int>();
 
             /// <summary>
             /// Limit the search to a list of Grapichs ID (see: Item.ItemID ) 
             /// Supports .Add() and .AddRange()
             /// </summary>
-			public List<int> Graphics = new List<int>();
+            public List<int> Graphics = new List<int>();
 
             /// <summary>
             /// Limit the search by name of the Item.
             /// </summary>
-			public string Name = String.Empty;
+            public string Name = String.Empty;
 
             /// <summary>
             /// Limit the search to a list of Colors.
             /// Supports .Add() and .AddRange()
             /// </summary>
-			public List<int> Hues = new List<int>();
+            public List<int> Hues = new List<int>();
 
             /// <summary>
             /// Limit the search by distance, to Items on the ground which are at least RangeMin tiles away from the Player. ( default: -1, any Item )
             /// </summary>
-			public double RangeMin = -1;
+            public double RangeMin = -1;
             /// <summary>
             /// Limit the search by distance, to Items on the ground which are at most RangeMax tiles away from the Player. ( default: -1, any Item )
             /// </summary>
-			public double RangeMax = -1;
+            public double RangeMax = -1;
             /// <summary>
             /// Limit the search to only Movable Items. ( default: -1, any Item )
             /// </summary>
-			public int Movable = -1;
+            public int Movable = -1;
             /// <summary>
             /// Exclude from the search Items which are currently on the global Ignore List. ( default: False, any Item )
             /// </summary>
-			public bool CheckIgnoreObject = false;
+            public bool CheckIgnoreObject = false;
             /// <summary>
             /// Limit the search to the wearable Items by Layer.
             /// Supports .Add() and .AddRange()
@@ -672,19 +672,19 @@ namespace RazorEnhanced
             ///     InnerLegs
             ///     Talisman
             /// </summary>
-			public List<string> Layers = new List<string>();
+            public List<string> Layers = new List<string>();
             /// <summary>
             /// Limit the search to the Items on the ground. (default: -1, any Item)
             /// </summary>
-			public int OnGround = -1;
+            public int OnGround = -1;
             /// <summary>
             /// Limit the search to the corpses on the ground. (default: -1, any Item)
             /// </summary>
-			public int IsCorpse = -1;
+            public int IsCorpse = -1;
             /// <summary>
             /// Limit the search to the Items which are also containers. (default: -1: any Item)
             /// </summary>
-			public int IsContainer = -1;
+            public int IsContainer = -1;
             /// <summary>
             /// Limit the search to the doors. (default: -1: any Item)
             /// </summary>
@@ -700,7 +700,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="filter">A filter object.</param>
         /// <returns>the list of Items respectinf the filter criteria.</returns>
-		public static List<Item> ApplyFilter(Filter filter)
+        public static List<Item> ApplyFilter(Filter filter)
         {
 
             List<Item> result = new List<Item>();
@@ -979,7 +979,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="serial">Serial of the Item.</param>
         /// <returns>Item object if found, or null if not found.</returns>
-		public static Item FindBySerial(int serial)
+        public static Item FindBySerial(int serial)
         {
             Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
             if (assistantItem == null)
@@ -996,7 +996,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="item">Item object to Lift.</param>
         /// <param name="amount">Amount to lift. (0: the whole stack)</param>
-		public static void Lift(Item item, int amount)
+        public static void Lift(Item item, int amount)
         {
             if (item == null)
             {
@@ -1022,7 +1022,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="item">Item object to drop.</param>
         /// <param name="container">Target container.</param>
-		public static void DropFromHand(Item item, Item container)
+        public static void DropFromHand(Item item, Item container)
         {
             if (item == null)
             {
@@ -1115,54 +1115,54 @@ namespace RazorEnhanced
         }
 
         /*public static void Move(int source, int destination, int amount, int x, int y)
-		{
-			Assistant.Item bag = Assistant.World.FindItem(destination);
-			Assistant.Item item = Assistant.World.FindItem(source);
-			int serialdestination = 0;
+        {
+            Assistant.Item bag = Assistant.World.FindItem(destination);
+            Assistant.Item item = Assistant.World.FindItem(source);
+            int serialdestination = 0;
 
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-				return;
-			}
+            if (item == null)
+            {
+                Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
+                return;
+            }
 
-			if (bag != null)
-			{
-				serialdestination = bag.Serial;
-			}
-			else
-			{
-				Assistant.Mobile mbag = Assistant.World.FindMobile(destination);
-				if (mbag != null)
-				{
-					serialdestination = mbag.Serial;
-				}
-				else
-				{
-					Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
-					return;
-				}
-			}
+            if (bag != null)
+            {
+                serialdestination = bag.Serial;
+            }
+            else
+            {
+                Assistant.Mobile mbag = Assistant.World.FindMobile(destination);
+                if (mbag != null)
+                {
+                    serialdestination = mbag.Serial;
+                }
+                else
+                {
+                    Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
+                    return;
+                }
+            }
 
-			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-			if (x != -1 && y != -1)
-				loc = new Assistant.Point3D(x, y, 0);
+            Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+            if (x != -1 && y != -1)
+                loc = new Assistant.Point3D(x, y, 0);
 
-			if (amount == 0)
-			{
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-			}
-			else
-			{
-				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-			}
-		}*/
+            if (amount == 0)
+            {
+                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+                Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+            }
+            else
+            {
+                if (item.Amount < amount)
+                {
+                    amount = item.Amount;
+                }
+                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
+                Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+            }
+        }*/
 
         public static void Move(Item source, Mobile destination, int amount)
         {
@@ -1263,7 +1263,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="item">Item object to drop.</param>
         /// <param name="amount">Amount to move. (default: 0, the whole stack)</param>
-		public static void DropItemGroundSelf(Item item, int amount = 0)
+        public static void DropItemGroundSelf(Item item, int amount = 0)
         {
             if (item == null)
             {
@@ -1719,7 +1719,7 @@ namespace RazorEnhanced
         /// <param name="serial">Serial or Item to read.</param>
         /// <param name="index">Number of the Property line.</param>
         /// <returns>A property line as a string.</returns>
-		public static string GetPropStringByIndex(int serial, int index)
+        public static string GetPropStringByIndex(int serial, int index)
         {
             string propstring = String.Empty;
             Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);

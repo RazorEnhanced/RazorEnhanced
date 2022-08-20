@@ -5,16 +5,16 @@ using System.Threading;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedChangeLog : Form
-	{
-		public EnhancedChangeLog()
-		{
-			InitializeComponent();
-		}
+    public partial class EnhancedChangeLog : Form
+    {
+        public EnhancedChangeLog()
+        {
+            InitializeComponent();
+        }
 
-		private void EnhancedChangeLog_Load(object sender, EventArgs e)
-		{
+        private void EnhancedChangeLog_Load(object sender, EventArgs e)
+        {
 
-		}
-	}
+        }
+    }
 }

@@ -266,11 +266,11 @@ namespace Assistant
 
             // ZIPPY REV 80
             /*m_OutFwd = (Buffer*)baseAddr;
-			m_InRecv = (Buffer*)(baseAddr+sizeof(Buffer)*1);
-			m_OutRecv = (Buffer*)(baseAddr+sizeof(Buffer)*2);
-			m_InSend = (Buffer*)(baseAddr+sizeof(Buffer)*3);
-			m_OutSend = (Buffer*)(baseAddr+sizeof(Buffer)*4);
-			m_TitleStr = (byte*)(baseAddr+sizeof(Buffer)*5);*/
+            m_InRecv = (Buffer*)(baseAddr+sizeof(Buffer)*1);
+            m_OutRecv = (Buffer*)(baseAddr+sizeof(Buffer)*2);
+            m_InSend = (Buffer*)(baseAddr+sizeof(Buffer)*3);
+            m_OutSend = (Buffer*)(baseAddr+sizeof(Buffer)*4);
+            m_TitleStr = (byte*)(baseAddr+sizeof(Buffer)*5);*/
 
             m_InRecv = (Buffer*)baseAddr;
             m_OutRecv = (Buffer*)(baseAddr + sizeof(Buffer));
@@ -608,26 +608,26 @@ namespace Assistant
                     }
 
                     /*if ( Config.GetBool( "AlwaysOnTop" ) )
-					{
-						if ( (lParam&0x0000FFFF) == 0 && (lParam&0xFFFF0000) != 0 && razor.WindowState != FormWindowState.Minimized && razor.Visible )
-						{// if uo is deactivating and minimized and we are not minimized
-							if ( !razor.ShowInTaskbar && razor.Visible )
-								razor.Hide();
-							razor.WindowState = FormWindowState.Minimized;
-							m_LastActivate = DateTime.Now;
-						}
-						else if ( (lParam&0x0000FFFF) != 0 && (lParam&0xFFFF0000) != 0 && razor.WindowState != FormWindowState.Normal )
-						{ // is UO is activating and minimized and we are minimized
-							if ( m_LastActivate+TimeSpan.FromSeconds( 0.2 ) < DateTime.Now )
-							{
-								if ( !razor.ShowInTaskbar && !razor.Visible )
-									razor.Show();
-								razor.WindowState = FormWindowState.Normal;
-								//SetForegroundWindow( FindUOWindow() );
-							}
-							m_LastActivate = DateTime.Now;
-						}
-					}*/
+                    {
+                        if ( (lParam&0x0000FFFF) == 0 && (lParam&0xFFFF0000) != 0 && razor.WindowState != FormWindowState.Minimized && razor.Visible )
+                        {// if uo is deactivating and minimized and we are not minimized
+                            if ( !razor.ShowInTaskbar && razor.Visible )
+                                razor.Hide();
+                            razor.WindowState = FormWindowState.Minimized;
+                            m_LastActivate = DateTime.Now;
+                        }
+                        else if ( (lParam&0x0000FFFF) != 0 && (lParam&0xFFFF0000) != 0 && razor.WindowState != FormWindowState.Normal )
+                        { // is UO is activating and minimized and we are minimized
+                            if ( m_LastActivate+TimeSpan.FromSeconds( 0.2 ) < DateTime.Now )
+                            {
+                                if ( !razor.ShowInTaskbar && !razor.Visible )
+                                    razor.Show();
+                                razor.WindowState = FormWindowState.Normal;
+                                //SetForegroundWindow( FindUOWindow() );
+                            }
+                            m_LastActivate = DateTime.Now;
+                        }
+                    }*/
                     break;
 
                 case UONetMessage.Focus:
@@ -662,8 +662,8 @@ namespace Assistant
                     }
 
                 //case UONetMessage.FindData:
-                //	FindData.Message((wParam & 0xFFFF0000) >> 16, lParam);
-                //	break;
+                //  FindData.Message((wParam & 0xFFFF0000) >> 16, lParam);
+                //  break;
 
                 // Unknown
                 default:
@@ -867,12 +867,12 @@ namespace Assistant
         private void CopyToBuffer(Buffer* buffer, byte* data, int len)
         {
             //if ( buffer->Length + buffer->Start + len >= SHARED_BUFF_SIZE )
-            //	throw new NullReferenceException( String.Format( "Buffer OVERFLOW in CopyToBuffer [{0} + {1}] <- {2}", buffer->Start, buffer->Length, len ) );
+            //  throw new NullReferenceException( String.Format( "Buffer OVERFLOW in CopyToBuffer [{0} + {1}] <- {2}", buffer->Start, buffer->Length, len ) );
 
-            /*		IntPtr to = (IntPtr)(&buffer->Buff0 + buffer->Start + buffer->Length);
-					IntPtr from = (IntPtr)data;
-					DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
-					buffer->Length += len;*/
+            /*      IntPtr to = (IntPtr)(&buffer->Buff0 + buffer->Start + buffer->Length);
+                    IntPtr from = (IntPtr)data;
+                    DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
+                    buffer->Length += len;*/
 
             DLLImport.Win.memcpy((&buffer->Buff0) + buffer->Start + buffer->Length, data, len);
             buffer->Length += len;
@@ -925,14 +925,14 @@ namespace Assistant
                     p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
 
                     /*byte[] temp = new byte[len];
-					fixed (byte* ptr = temp)
-					{
-						IntPtr to = (IntPtr)ptr;
-						IntPtr from = (IntPtr)buff;
-						DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
-					}
-					p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
-					*/
+                    fixed (byte* ptr = temp)
+                    {
+                        IntPtr to = (IntPtr)ptr;
+                        IntPtr from = (IntPtr)buff;
+                        DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
+                    }
+                    p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
+                    */
 
                 }
 

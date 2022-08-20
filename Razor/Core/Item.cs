@@ -590,7 +590,7 @@ namespace Assistant
 
         //private Timer m_RemoveTimer = null;
 
-        /*	internal void RemoveRequest()
+        /*  internal void RemoveRequest()
             {
                 if (m_RemoveTimer == null)
                     m_RemoveTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(0.25), new TimerCallback(Remove));
@@ -601,17 +601,17 @@ namespace Assistant
             }*/
 
         /*internal bool CancelRemove()
-		{
-			if (m_RemoveTimer != null && m_RemoveTimer.Running)
-			{
-				m_RemoveTimer.Stop();
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}*/
+        {
+            if (m_RemoveTimer != null && m_RemoveTimer.Running)
+            {
+                m_RemoveTimer.Stop();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }*/
 
         internal override void Remove()
         {

@@ -254,7 +254,7 @@ namespace Assistant
                         try
                         {
                             //if ( wParam >= 0 && wParam < Engine.MainWindow.macroList.Items.Count )
-                            //	Engine.MainWindow.macroList.SelectedIndex = wParam;
+                            //  Engine.MainWindow.macroList.SelectedIndex = wParam;
                         }
                         catch
                         {

@@ -1,4 +1,4 @@
-﻿namespace Assistant
+namespace Assistant
 {
     partial class RazorFastColoredTextBox
     {

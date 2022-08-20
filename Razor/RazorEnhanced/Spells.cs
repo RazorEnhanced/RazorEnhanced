@@ -895,8 +895,8 @@ namespace RazorEnhanced
 
         private static readonly Dictionary<string, int> m_MagerySpellName = new Dictionary<string, int>
         {
-			// circle 1 magery
-			{ "Clumsy", 1 },
+            // circle 1 magery
+            { "Clumsy", 1 },
             { "Create Food", 2 },
             { "Feeblemind", 3 },
             { "Heal", 4 },
@@ -905,8 +905,8 @@ namespace RazorEnhanced
             { "Reactive Armor", 7 },
             { "Weaken", 8 },
 
-			// circle 2 magery
-			{ "Agility", 9 },
+            // circle 2 magery
+            { "Agility", 9 },
             { "Cunning", 10 },
             { "Cure", 11 },
             { "Harm", 12 },
@@ -915,8 +915,8 @@ namespace RazorEnhanced
             { "Protection", 15 },
             { "Strength", 16 },
 
-			// circle 3 magery
-			{ "Bless", 17 },
+            // circle 3 magery
+            { "Bless", 17 },
             { "Fireball", 18 },
             { "Magic Lock", 19 },
             { "Poison", 20 },
@@ -925,8 +925,8 @@ namespace RazorEnhanced
             { "Unlock", 23 },
             { "Wall of Stone", 24 },
 
-			// circle 4 magery
-			{ "Arch Cure", 25 },
+            // circle 4 magery
+            { "Arch Cure", 25 },
             { "Arch Protection", 26 },
             { "Curse", 27 },
             { "Fire Field", 28 },
@@ -935,8 +935,8 @@ namespace RazorEnhanced
             { "Mana Drain", 31 },
             { "Recall", 32 },
 
-			// circle 5 magery
-			{ "Blade Spirits", 33 },
+            // circle 5 magery
+            { "Blade Spirits", 33 },
             { "Dispel Field", 34 },
             { "Incognito", 35 },
             { "Magic Reflection", 36 },
@@ -945,8 +945,8 @@ namespace RazorEnhanced
             { "Poison Field", 39 },
             { "Summon Creature", 40 },
 
-			// circle 6 magery
-			{ "Dispel", 41 },
+            // circle 6 magery
+            { "Dispel", 41 },
             { "Energy Bolt", 42 },
             { "Explosion", 43 },
             { "Invisibility", 44 },
@@ -955,8 +955,8 @@ namespace RazorEnhanced
             { "Paralyze Field", 47 },
             { "Reveal", 48 },
 
-			// circle 7 magery
-			{ "Chain Lightning", 49 },
+            // circle 7 magery
+            { "Chain Lightning", 49 },
             { "Energy Field", 50 },
             { "Flamestrike", 51 },
             { "Gate Travel", 52 },
@@ -965,8 +965,8 @@ namespace RazorEnhanced
             { "Meteor Swarm", 55 },
             { "Polymorph", 56 },
 
-			// circle 8 magery
-			{ "Earthquake", 57 },
+            // circle 8 magery
+            { "Earthquake", 57 },
             { "Energy Vortex", 58 },
             { "Resurrection", 59 },
             { "Summon Air Elemental", 60 },
@@ -990,153 +990,153 @@ namespace RazorEnhanced
             { "Noxious Fumes", 74},
         };
 
-		private static readonly Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
-		{
-			{ "Animate Dead", 101 },
-			{ "Blood Oath", 102 },
-			{ "Corpse Skin", 103 },
-			{ "Curse Weapon", 104 },
-			{ "Evil Omen", 105 },
-			{ "Horrific Beast", 106 },
-			{ "Lich Form", 107 },
-			{ "Mind Rot", 108 },
-			{ "Pain Spike", 109 },
-			{ "Poison Strike", 110 },
-			{ "Strangle", 111 },
-			{ "Summon Familiar", 112 },
-			{ "Vampiric Embrace", 113 },
-			{ "Vengeful Spirit", 114 },
-			{ "Wither", 115 },
-			{ "Wraith Form", 116 },
-			{ "Exorcism", 117 }
-		};
+        private static readonly Dictionary<string, int> m_NecroSpellName = new Dictionary<string, int>
+        {
+            { "Animate Dead", 101 },
+            { "Blood Oath", 102 },
+            { "Corpse Skin", 103 },
+            { "Curse Weapon", 104 },
+            { "Evil Omen", 105 },
+            { "Horrific Beast", 106 },
+            { "Lich Form", 107 },
+            { "Mind Rot", 108 },
+            { "Pain Spike", 109 },
+            { "Poison Strike", 110 },
+            { "Strangle", 111 },
+            { "Summon Familiar", 112 },
+            { "Vampiric Embrace", 113 },
+            { "Vengeful Spirit", 114 },
+            { "Wither", 115 },
+            { "Wraith Form", 116 },
+            { "Exorcism", 117 }
+        };
 
-		private static readonly Dictionary<string, int> m_ChivalrySpellName = new Dictionary<string, int>
-		{
-			{ "Cleanse By Fire", 201 },
-			{ "Close Wounds", 202 },
-			{ "Consecrate Weapon", 203 },
-			{ "Dispel Evil", 204 },
-			{ "Divine Fury", 205 },
-			{ "Enemy Of One", 206 },
-			{ "Holy Light", 207 },
-			{ "Noble Sacrifice", 208 },
-			{ "Remove Curse", 209 },
-			{ "Sacred Journey", 210 }
-		};
+        private static readonly Dictionary<string, int> m_ChivalrySpellName = new Dictionary<string, int>
+        {
+            { "Cleanse By Fire", 201 },
+            { "Close Wounds", 202 },
+            { "Consecrate Weapon", 203 },
+            { "Dispel Evil", 204 },
+            { "Divine Fury", 205 },
+            { "Enemy Of One", 206 },
+            { "Holy Light", 207 },
+            { "Noble Sacrifice", 208 },
+            { "Remove Curse", 209 },
+            { "Sacred Journey", 210 }
+        };
 
-		private static readonly Dictionary<string, int> m_BushidoSpellName = new Dictionary<string, int>
-		{
-			{ "Honorable Execution", 401 },
-			{ "Confidence", 402 },
-			{ "Evasion", 403 },
-			{ "Counter Attack", 404 },
-			{ "Lightning Strike", 405 },
-			{ "Momentum Strike", 406 }
-		};
+        private static readonly Dictionary<string, int> m_BushidoSpellName = new Dictionary<string, int>
+        {
+            { "Honorable Execution", 401 },
+            { "Confidence", 402 },
+            { "Evasion", 403 },
+            { "Counter Attack", 404 },
+            { "Lightning Strike", 405 },
+            { "Momentum Strike", 406 }
+        };
 
-		private static readonly Dictionary<string, int> m_NinjitsuSpellName = new Dictionary<string, int>
-		{
-			{ "Focus Attack", 501 },
-			{ "Death Strike", 502 },
-			{ "Animal Form", 503 },
-			{ "Ki Attack", 504 },
-			{ "Surprise Attack", 505 },
-			{ "Backstab", 506 },
-			{ "Shadow jump", 507 },  // Keep old compaibility whit old script
-			{ "Shadowjump", 507 },
-			{ "Mirror Image", 508 },
-		};
+        private static readonly Dictionary<string, int> m_NinjitsuSpellName = new Dictionary<string, int>
+        {
+            { "Focus Attack", 501 },
+            { "Death Strike", 502 },
+            { "Animal Form", 503 },
+            { "Ki Attack", 504 },
+            { "Surprise Attack", 505 },
+            { "Backstab", 506 },
+            { "Shadow jump", 507 },  // Keep old compaibility whit old script
+            { "Shadowjump", 507 },
+            { "Mirror Image", 508 },
+        };
 
-		private static readonly Dictionary<string, int> m_SpellweavingSpellName = new Dictionary<string, int>
-		{
-			{ "Arcane Circle", 601 },
-			{ "Gift Of Renewal", 602 },
-			{ "Immolating Weapon", 603 },
-			{ "Attunement", 604 },
-			{ "Attune Weapon", 604 }, // Keep old compaibility whit old script
-			{ "Thunderstorm", 605 },
-			{ "Natures Fury", 606 },
-			{ "Summon Fey", 607 },
-			{ "Summon Fiend", 608 },
-			{ "Reaper Form", 609 },
-			{ "Wildfire", 610 },
-			{ "Essence Of Wind", 611 },
-			{ "Dryad Allure", 612 },
-			{ "Ethereal Voyage", 613 },
-			{ "Word Of Death", 614 },
-			{ "Gift Of Life", 615 },
-			{ "Arcane Empowerment", 616 }
-		};
+        private static readonly Dictionary<string, int> m_SpellweavingSpellName = new Dictionary<string, int>
+        {
+            { "Arcane Circle", 601 },
+            { "Gift Of Renewal", 602 },
+            { "Immolating Weapon", 603 },
+            { "Attunement", 604 },
+            { "Attune Weapon", 604 }, // Keep old compaibility whit old script
+            { "Thunderstorm", 605 },
+            { "Natures Fury", 606 },
+            { "Summon Fey", 607 },
+            { "Summon Fiend", 608 },
+            { "Reaper Form", 609 },
+            { "Wildfire", 610 },
+            { "Essence Of Wind", 611 },
+            { "Dryad Allure", 612 },
+            { "Ethereal Voyage", 613 },
+            { "Word Of Death", 614 },
+            { "Gift Of Life", 615 },
+            { "Arcane Empowerment", 616 }
+        };
 
-		private static readonly Dictionary<string, int> m_MysticismSpellName = new Dictionary<string, int>
-		{
-			{ "Nether Bolt", 678 },
-			{ "Healing Stone", 679 },
-			{ "Purge Magic", 680 },
-			{ "Enchant", 681 },
-			{ "Sleep", 682 },
-			{ "Eagle Strike", 683 },
-			{ "Animated Weapon", 684 },
-			{ "Stone Form", 685 },
-			{ "Spell Trigger", 686 },
-			{ "Mass Sleep", 687 },
-			{ "Cleansing Winds", 688 },
-			{ "Bombard", 689 },
-			{ "Spell Plague", 690 },
-			{ "Hail Storm", 691 },
-			{ "Nether Cyclone", 692 },
-			{ "Rising Colossus", 693 },
-		};
+        private static readonly Dictionary<string, int> m_MysticismSpellName = new Dictionary<string, int>
+        {
+            { "Nether Bolt", 678 },
+            { "Healing Stone", 679 },
+            { "Purge Magic", 680 },
+            { "Enchant", 681 },
+            { "Sleep", 682 },
+            { "Eagle Strike", 683 },
+            { "Animated Weapon", 684 },
+            { "Stone Form", 685 },
+            { "Spell Trigger", 686 },
+            { "Mass Sleep", 687 },
+            { "Cleansing Winds", 688 },
+            { "Bombard", 689 },
+            { "Spell Plague", 690 },
+            { "Hail Storm", 691 },
+            { "Nether Cyclone", 692 },
+            { "Rising Colossus", 693 },
+        };
 
-		private static readonly Dictionary<string, int> m_MasterySpellName = new Dictionary<string, int>
-		{
-			{ "Inspire", 701 },
-			{ "Invigorate", 702 },
-			{ "Resilience", 703 },
-			{ "Perseverance", 704 },
-			{ "Tribulation", 705 },
-			{ "Despair", 706 },
-			{ "Death Ray", 707 },
-			{ "Ethereal Blast", 708 },
-			{ "Nether Blast", 709 },
-			{ "Mystic Weapon", 710 },
-			{ "Command Undead", 711 },
-			{ "Conduit", 712 },
-			{ "Mana Shield", 713 },
-			{ "Summon Reaper", 714 },
-			{ "Enchanted Summoning", 715 },
-			{ "Anticipate Hit", 716 },
-			{ "Warcry", 717 },
-			{ "Intuition", 718 },
-			{ "Rejuvenate", 719 },
-			{ "Holy Fist", 720 },
-			{ "Shadow", 721 },
-			{ "White Tiger Form", 722 },
-			{ "Flaming Shot", 723 },
-			{ "Playing The Odds", 724 },
-			{ "Thrust", 725 },
-			{ "Pierce", 726 },
-			{ "Stagger", 727 },
-			{ "Toughness", 728 },
-			{ "Onslaught", 729 },
-			{ "Focused Eye", 730 },
-			{ "Elemental Fury", 731 },
-			{ "Called Shot", 732 },
-			{ "Saving Throw", 733 },
-			{ "Shield Bash", 734 },
-			{ "Bodyguard", 735 },
-			{ "Heighten Senses", 736 },
-			{ "Tolerance", 737 },
-			{ "Injected Strike", 738 },
-			{ "Potency", 739 },
-			{ "Rampage", 740 },
-			{ "Fists Of Fury", 741 },
-			{ "Knockout", 742 },
-			{ "Whispering", 743 },
-			{ "Combat Training", 744 },
-			{ "Boarding", 745 },
-		};
+        private static readonly Dictionary<string, int> m_MasterySpellName = new Dictionary<string, int>
+        {
+            { "Inspire", 701 },
+            { "Invigorate", 702 },
+            { "Resilience", 703 },
+            { "Perseverance", 704 },
+            { "Tribulation", 705 },
+            { "Despair", 706 },
+            { "Death Ray", 707 },
+            { "Ethereal Blast", 708 },
+            { "Nether Blast", 709 },
+            { "Mystic Weapon", 710 },
+            { "Command Undead", 711 },
+            { "Conduit", 712 },
+            { "Mana Shield", 713 },
+            { "Summon Reaper", 714 },
+            { "Enchanted Summoning", 715 },
+            { "Anticipate Hit", 716 },
+            { "Warcry", 717 },
+            { "Intuition", 718 },
+            { "Rejuvenate", 719 },
+            { "Holy Fist", 720 },
+            { "Shadow", 721 },
+            { "White Tiger Form", 722 },
+            { "Flaming Shot", 723 },
+            { "Playing The Odds", 724 },
+            { "Thrust", 725 },
+            { "Pierce", 726 },
+            { "Stagger", 727 },
+            { "Toughness", 728 },
+            { "Onslaught", 729 },
+            { "Focused Eye", 730 },
+            { "Elemental Fury", 731 },
+            { "Called Shot", 732 },
+            { "Saving Throw", 733 },
+            { "Shield Bash", 734 },
+            { "Bodyguard", 735 },
+            { "Heighten Senses", 736 },
+            { "Tolerance", 737 },
+            { "Injected Strike", 738 },
+            { "Potency", 739 },
+            { "Rampage", 740 },
+            { "Fists Of Fury", 741 },
+            { "Knockout", 742 },
+            { "Whispering", 743 },
+            { "Combat Training", 744 },
+            { "Boarding", 745 },
+        };
 
         private static readonly Dictionary<string, int> m_ClericSpellName = new Dictionary<string, int>
         {

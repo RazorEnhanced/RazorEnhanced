@@ -692,7 +692,7 @@ namespace Assistant
             {
                 //Console.WriteLine("walkScriptRequest - {0}", value);
                 //if ( (walkScriptRequest < 2) && (value >= 2))
-                //	System.Threading.Thread.Sleep(500);
+                //  System.Threading.Thread.Sleep(500);
                 walkScriptRequest = value;
             }
         }
@@ -853,7 +853,7 @@ namespace Assistant
                     i.Remove();
             }
 
-            /*	World.Items.Clear();
+            /*  World.Items.Clear();
                 for (int i = 0; i < Contains.Count; i++)
                 {
                     Item item = (Item)Contains[i];
@@ -933,9 +933,9 @@ namespace Assistant
         }
 
         /*internal void SendMessage( int hue, LocString loc, params object[] args )
-		{
-			SendMessage( hue, Language.Format( loc, args ) );
-		}*/
+        {
+            SendMessage( hue, Language.Format( loc, args ) );
+        }*/
 
         internal void SendMessage(MsgLevel lvl, string format, params object[] args)
         {

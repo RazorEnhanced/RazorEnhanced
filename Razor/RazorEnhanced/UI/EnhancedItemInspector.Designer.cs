@@ -2,8 +2,8 @@ using IronPython.Modules;
 
 namespace RazorEnhanced.UI
 {
-	partial class EnhancedItemInspector
-	{
+    partial class EnhancedItemInspector
+    {
 
 #pragma warning disable CS1587 // XML comment is not placed on a valid language element
         /// <summary>
@@ -710,64 +710,64 @@ namespace RazorEnhanced.UI
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
-		}
+        }
 
-		#endregion
+        #endregion
 
-		private System.Windows.Forms.Button bNameCopy;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button bPositionCopy;
-		private System.Windows.Forms.Button bColorCopy;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Button bItemIdCopy;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button bOwnedCopy;
-		private System.Windows.Forms.Button bLayerCopy;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Button bAmountCopy;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Button bRContainerCopy;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Button bContainerCopy;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.ListBox listBoxAttributes;
-		private System.Windows.Forms.Button razorButton1;
-		private System.Windows.Forms.Button bSerialCopy;
-		private System.Windows.Forms.TextBox lName;
-		private System.Windows.Forms.TextBox lSerial;
-		private System.Windows.Forms.TextBox lItemID;
-		private System.Windows.Forms.TextBox lColor;
-		private System.Windows.Forms.TextBox lPosition;
-		private System.Windows.Forms.TextBox lContainer;
-		private System.Windows.Forms.TextBox lOwned;
-		private System.Windows.Forms.TextBox lLayer;
-		private System.Windows.Forms.TextBox lAmount;
-		private System.Windows.Forms.TextBox lRootContainer;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.Label movableflaglabel;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Label potionflaglabel;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.Label multiflaglabel;
-		private System.Windows.Forms.Label doorflaglabel;
-		private System.Windows.Forms.Label corpseflaglabel;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label containerflaglabel;
-		private System.Windows.Forms.Label visibleflaglabel;
-		private System.Windows.Forms.Label groudflaglabel;
-		private System.Windows.Forms.Label twohandflaglabel;
-		private System.Windows.Forms.Panel imagepanel;
+        private System.Windows.Forms.Button bNameCopy;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button bPositionCopy;
+        private System.Windows.Forms.Button bColorCopy;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button bItemIdCopy;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button bOwnedCopy;
+        private System.Windows.Forms.Button bLayerCopy;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button bAmountCopy;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button bRContainerCopy;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button bContainerCopy;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ListBox listBoxAttributes;
+        private System.Windows.Forms.Button razorButton1;
+        private System.Windows.Forms.Button bSerialCopy;
+        private System.Windows.Forms.TextBox lName;
+        private System.Windows.Forms.TextBox lSerial;
+        private System.Windows.Forms.TextBox lItemID;
+        private System.Windows.Forms.TextBox lColor;
+        private System.Windows.Forms.TextBox lPosition;
+        private System.Windows.Forms.TextBox lContainer;
+        private System.Windows.Forms.TextBox lOwned;
+        private System.Windows.Forms.TextBox lLayer;
+        private System.Windows.Forms.TextBox lAmount;
+        private System.Windows.Forms.TextBox lRootContainer;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label movableflaglabel;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label potionflaglabel;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label multiflaglabel;
+        private System.Windows.Forms.Label doorflaglabel;
+        private System.Windows.Forms.Label corpseflaglabel;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label containerflaglabel;
+        private System.Windows.Forms.Label visibleflaglabel;
+        private System.Windows.Forms.Label groudflaglabel;
+        private System.Windows.Forms.Label twohandflaglabel;
+        private System.Windows.Forms.Panel imagepanel;
     }
 }

@@ -93,7 +93,7 @@ namespace RazorEnhanced
             {
                 paths.Add(@"C:\Program Files\IronPython 3.4");
                 paths.Add(@"C:\Program Files\IronPython 3.4\Lib"); 
-            	paths.Add(@"C:\Program Files\IronPython 3.4\DLLs");
+                paths.Add(@"C:\Program Files\IronPython 3.4\DLLs");
                 paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
             }
 

@@ -146,7 +146,7 @@ namespace Assistant
 #if DEBUG
                     if (item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA && !item.IsVirtueShield)
 #else
-					if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
+                    if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
 #endif
                     {
                         DragDropManager.Drag(item, item.Amount);
@@ -157,7 +157,7 @@ namespace Assistant
 #if DEBUG
                     if (item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA && !item.IsVirtueShield)
 #else
-					if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
+                    if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
 #endif
                     {
                         DragDropManager.Drag(item, item.Amount);

@@ -132,22 +132,22 @@ namespace Assistant
         }
 
         /*internal override int GetHashCode()
-		{
-			long oldPos = m_Stream.Position;
+        {
+            long oldPos = m_Stream.Position;
 
-			int code = 0;
+            int code = 0;
 
-			m_Stream.Position = 0;
+            m_Stream.Position = 0;
 
-			while ( m_Stream.Length - m_Stream.Position >= 4 )
-				code ^= ReadInt32();
+            while ( m_Stream.Length - m_Stream.Position >= 4 )
+                code ^= ReadInt32();
 
-			code ^= ReadByte() | (ReadByte() << 8) | (ReadByte() << 16) | (ReadByte() << 24);
+            code ^= ReadByte() | (ReadByte() << 8) | (ReadByte() << 16) | (ReadByte() << 24);
 
-			m_Stream.Position = oldPos;
+            m_Stream.Position = oldPos;
 
-			return code;
-		}*/
+            return code;
+        }*/
 
         internal static void Log(string line, params object[] args)
         {
@@ -221,7 +221,7 @@ namespace Assistant
                     //if ( buff[0] != 0x80 && buff[0] != 0x91 )
                     Utility.FormatBuffer(sw, buff, len);
                     //else
-                    //	sw.WriteLine( "[Censored for Security Reasons]" );
+                    //  sw.WriteLine( "[Censored for Security Reasons]" );
 
                     sw.WriteLine();
                     sw.WriteLine();
@@ -814,7 +814,7 @@ namespace Assistant
         internal unsafe PacketReader(byte[] buff, bool dyn)
         {
             //fixed (byte* p = buff)
-            //	m_Data = p;
+            //  m_Data = p;
             m_Data = buff;
             m_Length = buff.Length;
             m_Pos = 0;
@@ -897,7 +897,7 @@ namespace Assistant
             }
             //if (buff.Length == 65310)
             //{
-            //	System.Diagnostics.Debugger.Break();
+            //  System.Diagnostics.Debugger.Break();
             //}
             return new PacketReader(buff, false);
         }

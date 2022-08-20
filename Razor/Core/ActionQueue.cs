@@ -630,8 +630,8 @@ namespace Assistant
                 {
                     Stop();
 
-                    //	if (m_Total > 1 && World.Player != null)
-                    //		World.Player.SendMessage(LocString.QueueFinished, m_Total, ((DateTime.Now - m_StartTime) - this.Interval).TotalSeconds);
+                    //  if (m_Total > 1 && World.Player != null)
+                    //      World.Player.SendMessage(LocString.QueueFinished, m_Total, ((DateTime.Now - m_StartTime) - this.Interval).TotalSeconds);
 
                     m_Last = Serial.Zero;
                     m_Total = 0;

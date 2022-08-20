@@ -5,13 +5,13 @@ using System;
 
 namespace RazorEnhanced
 {
-	public class DragDropManager
-	{
-		internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
-		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
-		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
+    public class DragDropManager
+    {
+        internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
+        internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
+        internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
 
-        //	internal static volatile bool HoldingItem = false;
+        //  internal static volatile bool HoldingItem = false;
 
         internal static void AutoRun()
         {
@@ -66,87 +66,87 @@ namespace RazorEnhanced
                 ProcessLootList(lootbag);
             }
 
-			if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
-			{
-				try
-				{
-					if (ScavengerSerialToGrab.TryPeek(out int itemserial))
-					{
-						Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
+            {
+                try
+                {
+                    if (ScavengerSerialToGrab.TryPeek(out int itemserial))
+                    {
+                        Assistant.Item item = Assistant.World.FindItem(itemserial);
 
-						if (item == null)
-						{
-							ScavengerSerialToGrab.TryDequeue(out itemserial);
-							return;
-						}
+                        if (item == null)
+                        {
+                            ScavengerSerialToGrab.TryDequeue(out itemserial);
+                            return;
+                        }
 
-						if (item.IsLootableTarget)
-						{
-							ScavengerSerialToGrab.TryDequeue(out itemserial);
-							return;
-						}
+                        if (item.IsLootableTarget)
+                        {
+                            ScavengerSerialToGrab.TryDequeue(out itemserial);
+                            return;
+                        }
 
-						if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= Scavenger.MaxRange && CheckZLevel(item.Position.Z, World.Player.Position.Z))
-						{
-							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
-							{
-								RazorEnhanced.Scavenger.AddLog("- Max weight reached, Wait untill free some space");
-								RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space", true);
-								Thread.Sleep(2000);
-							}
-							else
-							{
-								RazorEnhanced.Scavenger.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Grabbing");
-								RazorEnhanced.Items.Move(item.Serial, Convert.ToInt32(Scavenger.GetScavengerBag()), 0);
-								Thread.Sleep(Scavenger.ScavengerDelay);
-								ScavengerSerialToGrab.TryDequeue(out itemserial);
-							}
-						}
-						else
-						{
-							ScavengerSerialToGrab.TryDequeue(out itemserial);
-							ScavengerSerialToGrab.Enqueue(itemserial);
-						}
-					}
-				}
-				catch { }
-			}
+                        if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= Scavenger.MaxRange && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+                        {
+                            if ((World.Player.MaxWeight - World.Player.Weight) < 5)
+                            {
+                                RazorEnhanced.Scavenger.AddLog("- Max weight reached, Wait untill free some space");
+                                RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space", true);
+                                Thread.Sleep(2000);
+                            }
+                            else
+                            {
+                                RazorEnhanced.Scavenger.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Grabbing");
+                                RazorEnhanced.Items.Move(item.Serial, Convert.ToInt32(Scavenger.GetScavengerBag()), 0);
+                                Thread.Sleep(Scavenger.ScavengerDelay);
+                                ScavengerSerialToGrab.TryDequeue(out itemserial);
+                            }
+                        }
+                        else
+                        {
+                            ScavengerSerialToGrab.TryDequeue(out itemserial);
+                            ScavengerSerialToGrab.Enqueue(itemserial);
+                        }
+                    }
+                }
+                catch { }
+            }
 
-			if (CorpseToCutSerial.Count > 0 && Filters.AutoCarver)
-			{
-				try
-				{
-					if (CorpseToCutSerial.TryPeek(out int itemserial))
-					{
-						Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (CorpseToCutSerial.Count > 0 && Filters.AutoCarver)
+            {
+                try
+                {
+                    if (CorpseToCutSerial.TryPeek(out int itemserial))
+                    {
+                        Assistant.Item item = Assistant.World.FindItem(itemserial);
 
-						if (item == null)
-						{
-							CorpseToCutSerial.TryDequeue(out itemserial);
-							return;
-						}
+                        if (item == null)
+                        {
+                            CorpseToCutSerial.TryDequeue(out itemserial);
+                            return;
+                        }
 
-						if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= 1 && CheckZLevel(item.Position.Z, World.Player.Position.Z))
-						{
-							Items.UseItem(Items.FindBySerial(Filters.AutoCarverBlade));
-							Target.WaitForTarget(1000, true);
-							Target.TargetExecute(item.Serial);
-							Items.Message(item.Serial, 10, "*Cutting*");
-							CorpseToCutSerial.TryDequeue(out itemserial);
-							Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
-						}
-						else
-						{
-							CorpseToCutSerial.TryDequeue(out itemserial);
-							CorpseToCutSerial.Enqueue(itemserial);
-						}
+                        if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= 1 && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+                        {
+                            Items.UseItem(Items.FindBySerial(Filters.AutoCarverBlade));
+                            Target.WaitForTarget(1000, true);
+                            Target.TargetExecute(item.Serial);
+                            Items.Message(item.Serial, 10, "*Cutting*");
+                            CorpseToCutSerial.TryDequeue(out itemserial);
+                            Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+                        }
+                        else
+                        {
+                            CorpseToCutSerial.TryDequeue(out itemserial);
+                            CorpseToCutSerial.Enqueue(itemserial);
+                        }
 
-					}
-				}
-				catch { }
-			}
-			Thread.Sleep(250);
-		}
+                    }
+                }
+                catch { }
+            }
+            Thread.Sleep(250);
+        }
 
         private static readonly System.Object autolootLock = new System.Object();
         internal static void ProcessLootList(uint lootbag)
@@ -224,14 +224,14 @@ namespace RazorEnhanced
                 }
         }
 
-		private static bool CheckZLevel(int x, int y)
-		{
-			int diff = x - y;
+        private static bool CheckZLevel(int x, int y)
+        {
+            int diff = x - y;
 
-			if (diff < -8 || diff > 8)
-				return false;
-			else
-				return true;
-		}
-	}
+            if (diff < -8 || diff > 8)
+                return false;
+            else
+                return true;
+        }
+    }
 }

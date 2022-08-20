@@ -118,7 +118,7 @@ namespace Assistant
 
             m_Items.TryRemove(item.Serial, out Item removed);
 
-            /*	while (m_Items.ContainsKey(item.Serial))
+            /*  while (m_Items.ContainsKey(item.Serial))
                 {
                     if (!m_Items.TryRemove(item.Serial, out Item removed))
                         RazorEnhanced.AutoLoot.AddLog("Fail item remove" + item.Name);

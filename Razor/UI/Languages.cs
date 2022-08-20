@@ -894,7 +894,7 @@ namespace Assistant
         public static void LoadControlNames(System.Windows.Forms.Form form)
         {
 #if LOG_CONTROL_TEXT
-			DumpControls( form );
+            DumpControls( form );
 #endif
 
             LoadControls(form.Name, form.Controls);
@@ -982,33 +982,33 @@ namespace Assistant
             return result[result.Length - 1] == '\t' ? result.Substring(0, result.Length - 1) : result;
         }
 #if LOG_CONTROL_TEXT
-		public static void DumpControls( System.Windows.Forms.Form form )
-		{
-			using ( StreamWriter w = new StreamWriter( form.Name+".controls.txt" ) )
-			{
-				w.WriteLine( "{0}::Text={1}", form.Name, form.Text );
-				Dump( form.Name, form.Controls, w );
-			}
-		}
+        public static void DumpControls( System.Windows.Forms.Form form )
+        {
+            using ( StreamWriter w = new StreamWriter( form.Name+".controls.txt" ) )
+            {
+                w.WriteLine( "{0}::Text={1}", form.Name, form.Text );
+                Dump( form.Name, form.Controls, w );
+            }
+        }
 
-		private static void Dump( string name, System.Windows.Forms.Control.ControlCollection ctrls, StreamWriter w )
-		{
-			for(int i = 0;ctrls != null && i<ctrls.Count;i++)
-			{
-				if ( !(ctrls[i] is System.Windows.Forms.TextBox) && !(ctrls[i] is System.Windows.Forms.ComboBox) )
-				{
-					if ( ctrls[i].Text.Length > 0 )
-						w.WriteLine( "{0}::{1}={2}", name, ctrls[i].Name, ctrls[i].Text );
-					if ( ctrls[i] is ListView )
-					{
-						foreach ( ColumnHeader ch in ((ListView)ctrls[i]).Columns )
-							w.WriteLine( "{0}::{1}::{2}={3}", name, ctrls[i].Name, ch.Index, ch.Text );
-					}
-				}
+        private static void Dump( string name, System.Windows.Forms.Control.ControlCollection ctrls, StreamWriter w )
+        {
+            for(int i = 0;ctrls != null && i<ctrls.Count;i++)
+            {
+                if ( !(ctrls[i] is System.Windows.Forms.TextBox) && !(ctrls[i] is System.Windows.Forms.ComboBox) )
+                {
+                    if ( ctrls[i].Text.Length > 0 )
+                        w.WriteLine( "{0}::{1}={2}", name, ctrls[i].Name, ctrls[i].Text );
+                    if ( ctrls[i] is ListView )
+                    {
+                        foreach ( ColumnHeader ch in ((ListView)ctrls[i]).Columns )
+                            w.WriteLine( "{0}::{1}::{2}={3}", name, ctrls[i].Name, ch.Index, ch.Text );
+                    }
+                }
 
-				Dump( name, ctrls[i].Controls, w );
-			}
-		}
+                Dump( name, ctrls[i].Controls, w );
+            }
+        }
 #endif
     }
 }

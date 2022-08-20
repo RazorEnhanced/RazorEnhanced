@@ -279,7 +279,7 @@ namespace RazorEnhanced
             }
 
             string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
-            //	File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(targets, Newtonsoft.Json.Formatting.Indented));
+            //  File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(targets, Newtonsoft.Json.Formatting.Indented));
             File.WriteAllText(filename + "." + tableName, xml);
 
         }
@@ -2636,7 +2636,7 @@ namespace RazorEnhanced
         {
             // Parametri di razor
             //if (profileName == "default")
-            //	RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
+            //  RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
             //else
             //RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
 
@@ -4067,7 +4067,7 @@ namespace RazorEnhanced
                 }
                 //if (ListExists(list))
                 //{
-                //	guilds.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Item"]);
+                //  guilds.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Item"]);
                 //}
             }
 
