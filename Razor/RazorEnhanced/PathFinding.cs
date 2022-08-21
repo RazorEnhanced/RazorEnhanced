@@ -64,6 +64,7 @@ namespace RazorEnhanced
         public static List<Tile> GetPath(int x, int y, int scanMaxRange, bool ignoremob)
         {
             var playerPosition = Player.Position;
+            //var squareGrid = new SquareGrid(playerPosition.X, playerPosition.Y, x, y);
             var squareGrid = new SquareGrid(playerPosition.X, playerPosition.Y, scanMaxRange);
 
             if (!squareGrid.Tiles.Any(l => l.X == x && l.Y == y))
@@ -72,6 +73,7 @@ namespace RazorEnhanced
                 return null;
             }
 
+            SquareGrid temp = squareGrid;
             var aStarSearch = new AStarSearch(squareGrid, new Tile(playerPosition.X, playerPosition.Y), new Tile(x, y), playerPosition.Z, ignoremob);
             var result = aStarSearch.FindPath();
 
@@ -146,7 +148,7 @@ namespace RazorEnhanced
         public SquareGrid(int x, int y, int squareSize)
         {
             Tiles = new List<Tile>();
-
+            TilesRect = new Rectangle2D(x - squareSize, y - squareSize, x + squareSize, y + squareSize);
             for (var i = x - squareSize; i < x + squareSize; i++)
             {
                 for (var j = y - squareSize; j < y + squareSize; j++)
@@ -158,12 +160,34 @@ namespace RazorEnhanced
 
         }
 
+        public SquareGrid(int x_origin, int y_origin, int x_dest, int y_dest)
+        {
+            int min_x = Math.Min(x_origin, x_dest);
+            int min_y = Math.Min(y_origin, y_dest);
+            int max_x = Math.Max(x_origin, x_dest);
+            int max_y = Math.Max(y_origin, y_dest);
+
+            Tiles = new List<Tile>();
+            TilesRect = new Rectangle2D(min_x, min_y, 10 + (max_x - min_x), 10 + (max_y - min_y));
+            for (var i = min_x - 5; i < max_x + 5; i++)
+            {
+                for (var j = min_y - 5; j < max_y + 5; j++)
+                {
+                    Tiles.Add(new Tile(i, j));
+                }
+            }
+        }
+
+
         public List<Tile> Tiles;
+        public Rectangle2D TilesRect;
 
         // Check if a location is within the bounds of this grid.
         public bool InBounds(Tile id)
         {
-            return Tiles.Any(x => x.Equals(id));
+            Assistant.Point2D point = new Assistant.Point2D(id.X, id.Y);
+            return TilesRect.Contains(point);
+            //return Tiles.Any(x => x.Equals(id));
         }
 
         public int Cost(Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
@@ -452,6 +476,7 @@ namespace RazorEnhanced
             return tile.Z + itemData.CalcHeight <= ourZ || ourTop <= tile.Z || (itemData.Flags & ImpassableSurface) == 0;
         }
 
+        // This is nasty, seems like could be optimized .. Credzba
         private static bool IsOk(bool ignoreDoors, bool ignoreSpellFields, int ourZ, int ourTop, List<Statics.TileInfo> tiles, IEnumerable<Assistant.Item> items)
         {
             return tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
@@ -921,6 +946,7 @@ namespace RazorEnhanced
                     Misc.SendMessage("PathFind: Destination reached", 66);
                     return true;
                 }
+
                 bool walkok = false;
                 if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
                 {
@@ -980,9 +1006,17 @@ namespace RazorEnhanced
                     {
                         Misc.Resync();
                         Misc.Pause(200);
+                        // If position gets off, try to fix it
+                        if (Misc.Distance(Player.Position.X, Player.Position.Y, step.X, step.Y) > 2)
+                        {
+                            Route fixit = new Route();
+                            fixit.X = step.X;
+                            fixit.Y = step.Y;
+                            Go(fixit);
+                        }
                     }
 
-                    return false;
+                    //return false;
                 }
                 else
                 {
@@ -1018,10 +1052,19 @@ namespace RazorEnhanced
             if (debug)
                 Misc.SendMessage("PathFind: Move to direction: " + d.ToString(), 55);
 
-            if (run)            
-                return Player.Run(d.ToString());
-            else
-                return Player.Walk(d.ToString());
+            bool result = false;
+            int retry = 5;
+            for (int i = 0; i < 5; i++)
+            {
+                if (run)
+                    result = Player.Run(d.ToString());
+                else
+                    result = Player.Walk(d.ToString());
+                if (result == true)
+                    break;
+                Misc.Pause(150);
+            }
+            return result;
         }
     }
 }

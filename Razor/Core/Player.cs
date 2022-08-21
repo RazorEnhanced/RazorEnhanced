@@ -773,14 +773,15 @@ namespace Assistant
 
         internal static int GetZ(int x, int y, int z)
         {
-            unsafe
+            /*unsafe
             {
                 if (DLLImport.Razor.IsCalibrated())
                 {
                     if (DLLImport.Razor.GetPosition(null, null, &z))
                         return z;
                 }
-            }
+            }*/
+
             return Facet.ZTop(World.Player.Map, x, y, z);
         }
 
