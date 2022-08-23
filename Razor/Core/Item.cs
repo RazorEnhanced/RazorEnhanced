@@ -220,7 +220,7 @@ namespace Assistant
                 // On OSI the amount value is used for other purposes if an item is declared not stackable in files.
                 try // avoid crash if some bad happen in Ultima.dll
                 {
-                    if ((Ultima.TileData.ItemTable[ItemID].Flags & Ultima.TileFlag.Generic) != 0)
+                    if ((RazorEnhanced.Statics.GetItemData(ItemID).Flags & Ultima.TileFlag.Generic) != 0)
                         return m_Amount;
                     if (ItemID == 0x2006)
                         return m_Amount;

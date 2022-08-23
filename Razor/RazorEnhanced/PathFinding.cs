@@ -126,7 +126,7 @@ namespace RazorEnhanced
 
     internal class SquareGrid
     {
-        public const int BigCost = 1000000;
+        public const int BigCost = int.MaxValue/2;
 
         private const int PersonHeight = 16;
         private const int StepHeight = 2;
@@ -190,34 +190,74 @@ namespace RazorEnhanced
             //return Tiles.Any(x => x.Equals(id));
         }
 
+
+        static HashSet<int> RoadIds = new HashSet<int>() { 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7a, 0x7b, 0x7c,
+            0x3cf, 0x3d0, 0x3d1, 0x3d2, 0x3d3, 0x3d4, 0x3d5, 0x3d6, 0x3d7, 0x3d8, 0x3d9, 0x3da,
+            0x3db, 0x3dc, 0x3dd, 0x3de, 0x3df, 0x3e0, 0x3e1, 0x3e2, 0x3e3, 0x3e4, 0x3e5, 0x3e6, 0x3e7, 0x3e8, 0x3e9, 0x3ea,
+            0x3eb, 0x3ec, 0x3ed, 0x3ee, 0x3ef, 0x3f0, 0x3f1, 0x3f2, 0x3f3, 0x3f4, 0x3f5, 0x3f6, 0x3f7, 0x3f8, 0x3f9, 0x3fa,
+            0x3fb, 0x3fc, 0x3fd, 0x3fe, 0x3ff, 0x400, 0x401, 0x402, 0x403, 0x404, 0x405 };
+
         public int Cost(Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
         {
             int xForward = b.X, yForward = b.Y;
             var items = World.Items.Values.Where(x => x.OnGround);
+            //var xRange = Enumerable.Range(xForward - 1, xForward + 1);
+            //var yRange = Enumerable.Range(yForward - 1, yForward + 1);
+            //var items = World.Items.Values.Where(item => item.OnGround && (xRange.Contains(item.Position.X) && yRange.Contains(item.Position.Y)));
             int newZ = 0;
+            int cost = 3;
             GetStartZ(loc, map, items.Where(x => x.Position.X == loc.X && x.Position.Y == loc.Y), out var startZ, out var startTop);
             var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, ignoremob, out newZ);
+            if (b.X == loc.X && b.Y > loc.Y) //North
+            {
+                if (moveIsOk)
+                {
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, ignoremob, out newZ);
+                }
+            }
+            else if (b.X == loc.X && b.Y < loc.Y) //South
+            {
+                if (moveIsOk)
+                {
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
+                }
+            }
+            else if (b.X > loc.X && b.Y == loc.Y) //West
+            {
+                if (moveIsOk)
+                {
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, ignoremob, out newZ);
+                }
 
-            if (b.X > loc.X && b.Y > loc.Y) //Down
+            }
+            else if (b.X > loc.X && b.Y == loc.Y) //East
+            {
+                if (moveIsOk)
+                {
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
+                }
+            }
+            
+            else if (b.X > loc.X && b.Y > loc.Y) //Down
             {
                 if (moveIsOk)
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward - 1), xForward, yForward - 1, startTop, startZ, ignoremob, out newZ);
                 if (moveIsOk)
-                    moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, ignoremob, out newZ);
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, ignoremob, out newZ);
             }
             else if (b.X < loc.X && b.Y < loc.Y) //UP
             {
                 if (moveIsOk)
-                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y  == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
                 if (moveIsOk)
-                    moveIsOk = Check(map, items.Where(x => x.Position.X  == xForward + 1 && x.Position.Y == yForward), xForward +1, yForward, startTop, startZ, ignoremob, out newZ);
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
             }
             else if (b.X > loc.X && b.Y < loc.Y) //Right
             {
                 if (moveIsOk)
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward + 1), xForward, yForward + 1, startTop, startZ, ignoremob, out newZ);
                 if (moveIsOk)
-                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward- 1, yForward, startTop, startZ, ignoremob, out newZ);
+                    moveIsOk = Check(map, items.Where(x => x.Position.X == xForward - 1 && x.Position.Y == yForward), xForward - 1, yForward, startTop, startZ, ignoremob, out newZ);
             }
             else if (b.X < loc.X && b.Y > loc.Y) //Left
             {
@@ -226,11 +266,15 @@ namespace RazorEnhanced
                 if (moveIsOk)
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
             }
-
+            
             if (moveIsOk)
             {
+                // following the road didn't reduce time
+                //var landTile = map.Tiles.GetLandTile(b.X, b.Y);
+                //if (RoadIds.Contains(landTile.ID))
+                //    cost -= 1;
                 bZ = newZ;
-                return 1;
+                return cost;
             }
 
             bZ = startZ;

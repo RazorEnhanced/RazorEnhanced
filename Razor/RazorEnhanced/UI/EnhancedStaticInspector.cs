@@ -128,47 +128,48 @@ namespace RazorEnhanced.UI
                     }
 
                     // Static Flag
-                    lStaticFlagNone.Text = (TileData.ItemTable[s.StaticID].Flags == TileFlag.None) ? "Yes" : "No";
-                    lStaticFlagNone.ForeColor = (TileData.ItemTable[s.StaticID].Flags == TileFlag.None) ? Color.Green : Color.Red;
+                    ItemData itemData = Statics.GetItemData(s.StaticID);
+                    lStaticFlagNone.Text = (itemData.Flags == TileFlag.None) ? "Yes" : "No";
+                    lStaticFlagNone.ForeColor = (itemData.Flags == TileFlag.None) ? Color.Green : Color.Red;
 
-                    lStaticFlagTranslucent.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Translucent) != 0) ? "Yes" : "No";
-                    lStaticFlagTranslucent.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Translucent) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagTranslucent.Text = ((itemData.Flags & TileFlag.Translucent) != 0) ? "Yes" : "No";
+                    lStaticFlagTranslucent.ForeColor = ((itemData.Flags & TileFlag.Translucent) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagWall.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Wall) != 0) ? "Yes" : "No";
-                    lStaticFlagWall.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Wall) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagWall.Text = ((itemData.Flags & TileFlag.Wall) != 0) ? "Yes" : "No";
+                    lStaticFlagWall.ForeColor = ((itemData.Flags & TileFlag.Wall) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagDamaging.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Damaging) != 0) ? "Yes" : "No";
-                    lStaticFlagDamaging.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Damaging) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagDamaging.Text = ((itemData.Flags & TileFlag.Damaging) != 0) ? "Yes" : "No";
+                    lStaticFlagDamaging.ForeColor = ((itemData.Flags & TileFlag.Damaging) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagImpassable.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Impassable) != 0) ? "Yes" : "No";
-                    lStaticFlagImpassable.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Impassable) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagImpassable.Text = ((itemData.Flags & TileFlag.Impassable) != 0) ? "Yes" : "No";
+                    lStaticFlagImpassable.ForeColor = ((itemData.Flags & TileFlag.Impassable) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagSurface.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Surface) != 0) ? "Yes" : "No";
-                    lStaticFlagSurface.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Surface) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagSurface.Text = ((itemData.Flags & TileFlag.Surface) != 0) ? "Yes" : "No";
+                    lStaticFlagSurface.ForeColor = ((itemData.Flags & TileFlag.Surface) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagBridge.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Bridge) != 0) ? "Yes" : "No";
-                    lStaticFlagBridge.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Bridge) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagBridge.Text = ((itemData.Flags & TileFlag.Bridge) != 0) ? "Yes" : "No";
+                    lStaticFlagBridge.ForeColor = ((itemData.Flags & TileFlag.Bridge) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagWindow.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Window) != 0) ? "Yes" : "No";
-                    lStaticFlagWindow.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Window) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagWindow.Text = ((itemData.Flags & TileFlag.Window) != 0) ? "Yes" : "No";
+                    lStaticFlagWindow.ForeColor = ((itemData.Flags & TileFlag.Window) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagNoShot.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.NoShoot) != 0) ? "Yes" : "No";
-                    lStaticFlagNoShot.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.NoShoot) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagNoShot.Text = ((itemData.Flags & TileFlag.NoShoot) != 0) ? "Yes" : "No";
+                    lStaticFlagNoShot.ForeColor = ((itemData.Flags & TileFlag.NoShoot) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagFoliage.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Foliage) != 0) ? "Yes" : "No";
-                    lStaticFlagFoliage.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Foliage) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagFoliage.Text = ((itemData.Flags & TileFlag.Foliage) != 0) ? "Yes" : "No";
+                    lStaticFlagFoliage.ForeColor = ((itemData.Flags & TileFlag.Foliage) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagHoverOver.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.HoverOver) != 0) ? "Yes" : "No";
-                    lStaticFlagHoverOver.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.HoverOver) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagHoverOver.Text = ((itemData.Flags & TileFlag.HoverOver) != 0) ? "Yes" : "No";
+                    lStaticFlagHoverOver.ForeColor = ((itemData.Flags & TileFlag.HoverOver) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagRoof.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Roof) != 0) ? "Yes" : "No";
-                    lStaticFlagRoof.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Roof) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagRoof.Text = ((itemData.Flags & TileFlag.Roof) != 0) ? "Yes" : "No";
+                    lStaticFlagRoof.ForeColor = ((itemData.Flags & TileFlag.Roof) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagDoor.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Door) != 0) ? "Yes" : "No";
-                    lStaticFlagDoor.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Door) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagDoor.Text = ((itemData.Flags & TileFlag.Door) != 0) ? "Yes" : "No";
+                    lStaticFlagDoor.ForeColor = ((itemData.Flags & TileFlag.Door) != 0) ? Color.Green : Color.Red;
 
-                    lStaticFlagWet.Text = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Wet) != 0) ? "Yes" : "No";
-                    lStaticFlagWet.ForeColor = ((TileData.ItemTable[s.StaticID].Flags & TileFlag.Wet) != 0) ? Color.Green : Color.Red;
+                    lStaticFlagWet.Text = ((itemData.Flags & TileFlag.Wet) != 0) ? "Yes" : "No";
+                    lStaticFlagWet.ForeColor = ((itemData.Flags & TileFlag.Wet) != 0) ? Color.Green : Color.Red;
 
                     break;
                 }

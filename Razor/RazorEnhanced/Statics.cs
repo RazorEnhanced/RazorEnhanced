@@ -140,7 +140,7 @@ namespace RazorEnhanced
         public static string GetTileName(int StaticID)
         {
             try{
-                return TileData.ItemTable[StaticID].Name;
+                return GetItemData(StaticID).Name;
             }
             catch (Exception){
                 Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+StaticID);
@@ -155,114 +155,119 @@ namespace RazorEnhanced
         /// <returns>Height of a Tile item.</returns>
         public static int GetTileHeight(int StaticID)
         {
-            return TileData.ItemTable[StaticID].Height;
+            return GetItemData(StaticID).Height;
         }
 
-        /// <summary>
-        /// Tile: Check Flag value of a given Tile item.
-        /// </summary>
-        /// <param name="StaticID">StaticID of a Tile item.</param>
-        /// <param name="flagname">
-        ///     None
-        ///     Translucent
-        ///     Wall
-        ///     Damaging
-        ///     Impassable
-        ///     Surface
-        ///     Bridge
-        ///     Window
-        ///     NoShoot
-        ///     Foliage
-        ///     HoverOver
-        ///     Roof
-        ///     Door
-        ///     Wet
-        /// </param>
-        /// <returns>True: if the Flag is active - False: otherwise</returns>
-        public static bool GetTileFlag(int StaticID, string flagname)
+        public static ItemData GetItemData(int StaticID)
+        {
+            return TileData.ItemTable[StaticID];
+        }
+
+            /// <summary>
+            /// Tile: Check Flag value of a given Tile item.
+            /// </summary>
+            /// <param name="StaticID">StaticID of a Tile item.</param>
+            /// <param name="flagname">
+            ///     None
+            ///     Translucent
+            ///     Wall
+            ///     Damaging
+            ///     Impassable
+            ///     Surface
+            ///     Bridge
+            ///     Window
+            ///     NoShoot
+            ///     Foliage
+            ///     HoverOver
+            ///     Roof
+            ///     Door
+            ///     Wet
+            /// </param>
+            /// <returns>True: if the Flag is active - False: otherwise</returns>
+            public static bool GetTileFlag(int StaticID, string flagname)
         {
             switch (flagname)
             {
                 case "None":
-                    if (TileData.ItemTable[StaticID].Flags == TileFlag.None)
+                    if (GetItemData(StaticID).Flags == TileFlag.None)
                         return true;
                     else
                         return false;
 
                 case "Translucent": // The tile is rendered with partial alpha-transparency.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Translucent) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Translucent) != 0)
                         return true;
                     else
                         return false;
 
                 case "Wall": // The tile is a wall.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Wall) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Wall) != 0)
                         return true;
                     else
                         return false;
 
                 case "Damaging": // The tile can cause damage when moved over.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Damaging) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Damaging) != 0)
                         return true;
                     else
                         return false;
 
                 case "Impassable": // The tile may not be moved over or through.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Impassable) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Impassable) != 0)
                         return true;
                     else
                         return false;
 
                 case "Surface": // The tile is a surface. It may be moved over, but not through.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Surface) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Surface) != 0)
                         return true;
                     else
                         return false;
 
                 case "Bridge": // The tile is a stair, ramp, or ladder.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Bridge) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Bridge) != 0)
                         return true;
                     else
                         return false;
 
                 case "Window": // The tile is a window.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Window) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Window) != 0)
                         return true;
                     else
                         return false;
 
                 case "NoShoot": // The tile blocks line of sight.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.NoShoot) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.NoShoot) != 0)
                         return true;
                     else
                         return false;
 
                 case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Foliage) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Foliage) != 0)
                         return true;
                     else
                         return false;
 
                 case "HoverOver": // Gargoyles can fly over
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.HoverOver) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.HoverOver) != 0)
                         return true;
                     else
                         return false;
 
                 case "Roof": // The tile is a slanted roof.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Roof) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Roof) != 0)
                         return true;
                     else
                         return false;
 
                 case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Door) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Door) != 0)
                         return true;
                     else
                         return false;
 
                 case "Wet":
-                    if ((TileData.ItemTable[StaticID].Flags & TileFlag.Wet) != 0)
+                    if ((GetItemData(StaticID).Flags & TileFlag.Wet) != 0)
                         return true;
                     else
                         return false;

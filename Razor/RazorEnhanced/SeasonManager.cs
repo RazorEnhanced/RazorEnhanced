@@ -37,7 +37,7 @@ namespace RazorEnhanced
         }
 
         public static void LoadSeasonFile()
-        {
+        {            
             _springLandTile = new ushort[Constants.MAX_LAND_DATA_INDEX_COUNT];
             _summerLandTile = new ushort[Constants.MAX_LAND_DATA_INDEX_COUNT];
             _fallLandTile = new ushort[Constants.MAX_LAND_DATA_INDEX_COUNT];
@@ -155,16 +155,30 @@ namespace RazorEnhanced
 
         public static ushort GetSeasonGraphic(Season season, ushort graphic)
         {
+            ushort retGraphic = graphic;
             switch (season)
             {
-                case Season.Spring: return _springGraphic[graphic] == 0 ? graphic : _springGraphic[graphic];
-                case Season.Summer: return _summerGraphic[graphic] == 0 ? graphic : _summerGraphic[graphic];
-                case Season.Fall: return _fallGraphic[graphic] == 0 ? graphic : _fallGraphic[graphic];
-                case Season.Winter: return _winterGraphic[graphic] == 0 ? graphic : _winterGraphic[graphic];
-                case Season.Desolation: return _desolationGraphic[graphic] == 0 ? graphic : _desolationGraphic[graphic];
+                case Season.Spring: 
+                    retGraphic = _springGraphic[graphic] == 0 ? graphic : _springGraphic[graphic];
+                    break;
+                case Season.Summer: 
+                    retGraphic = _summerGraphic[graphic] == 0 ? graphic : _summerGraphic[graphic];
+                    break;
+                case Season.Fall:
+                    retGraphic = _fallGraphic[graphic] == 0 ? graphic : _fallGraphic[graphic];
+                    break;
+                case Season.Winter:
+                    retGraphic = _winterGraphic[graphic] == 0 ? graphic : _winterGraphic[graphic];
+                    break;
+                case Season.Desolation:
+                    retGraphic = _desolationGraphic[graphic] == 0 ? graphic : _desolationGraphic[graphic];
+                    break;
             }
-
-            return graphic;
+            Ultima.ItemData a = RazorEnhanced.Statics.GetItemData(graphic);
+            Ultima.ItemData b = RazorEnhanced.Statics.GetItemData(retGraphic);
+            if ((a.Flags & Ultima.TileFlag.Impassable) != 0)
+                Ultima.TileData.ItemTable[retGraphic].Flags |= Ultima.TileFlag.Impassable;
+            return retGraphic;
         }
 
         public static ushort GetLandSeasonGraphic(Season season, ushort graphic)

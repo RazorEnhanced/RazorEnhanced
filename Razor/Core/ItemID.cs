@@ -27,7 +27,7 @@ namespace Assistant
         {
             try
             {
-                return string.Format("{0} ({1:X4})", Ultima.TileData.ItemTable[m_ID].Name, m_ID);
+                return string.Format("{0} ({1:X4})", RazorEnhanced.Statics.GetItemData(m_ID).Name, m_ID);
             }
             catch
             {
@@ -41,7 +41,7 @@ namespace Assistant
             {
                 try
                 {
-                    return Ultima.TileData.ItemTable[m_ID];
+                    return RazorEnhanced.Statics.GetItemData(m_ID);
                 }
                 catch
                 {
