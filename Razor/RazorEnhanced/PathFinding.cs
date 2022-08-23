@@ -47,7 +47,8 @@ namespace RazorEnhanced
 
         public override string ToString()
         {
-            return $"{X};{Y}";
+            // return $"{X};{Y}";
+            return Convert.ToString(X) + ";" + Convert.ToString(Y);
         }
     }
 
@@ -197,15 +198,16 @@ namespace RazorEnhanced
             0x3eb, 0x3ec, 0x3ed, 0x3ee, 0x3ef, 0x3f0, 0x3f1, 0x3f2, 0x3f3, 0x3f4, 0x3f5, 0x3f6, 0x3f7, 0x3f8, 0x3f9, 0x3fa,
             0x3fb, 0x3fc, 0x3fd, 0x3fe, 0x3ff, 0x400, 0x401, 0x402, 0x403, 0x404, 0x405 };
 
-        public int Cost(Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
+        public int Cost(List<Assistant.Item> items, Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
         {
             int xForward = b.X, yForward = b.Y;
-            var items = World.Items.Values.Where(x => x.OnGround);
+            
             //var xRange = Enumerable.Range(xForward - 1, xForward + 1);
             //var yRange = Enumerable.Range(yForward - 1, yForward + 1);
             //var items = World.Items.Values.Where(item => item.OnGround && (xRange.Contains(item.Position.X) && yRange.Contains(item.Position.Y)));
             int newZ = 0;
-            int cost = 3;
+            // note: if cost is > 1 the number of calls to cost grows huge, and thus the time to compute path is long
+            int cost = 1;
             GetStartZ(loc, map, items.Where(x => x.Position.X == loc.X && x.Position.Y == loc.Y), out var startZ, out var startTop);
             var moveIsOk = Check(map, items.Where(x => x.Position.X == xForward && x.Position.Y == yForward), xForward, yForward, startTop, startZ, ignoremob, out newZ);
             if (b.X == loc.X && b.Y > loc.Y) //North
@@ -523,7 +525,21 @@ namespace RazorEnhanced
         // This is nasty, seems like could be optimized .. Credzba
         private static bool IsOk(bool ignoreDoors, bool ignoreSpellFields, int ourZ, int ourTop, List<Statics.TileInfo> tiles, IEnumerable<Assistant.Item> items)
         {
-            return tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
+            //bool result = tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
+            //
+            foreach (var tile in tiles)
+            {
+                bool result = IsOk(tile, ourZ, ourTop);
+                if (result == false)
+                    return false;
+            }
+            foreach (var item in items)
+            {
+                bool result = IsOk(item, ourZ, ourTop, ignoreDoors, ignoreSpellFields);
+                if (result == false)
+                    return false;
+            }
+            return true;
         }
 
         private static bool IsOk(Assistant.Item item, int ourZ, int ourTop, bool ignoreDoors, bool ignoreSpellFields)
@@ -777,22 +793,25 @@ namespace RazorEnhanced
 
                     // Neighbors will return a List of valid tile Locations
                     // that are next to, diagonal to, above or below current
+                    List<Assistant.Item> items = World.Items.Values.Where(x => x.OnGround).ToList();
                     foreach (var neighbor in graph.Neighbors(current))
                     {
-                        var newCost = CostSoFar[new Tile(current.X, current.Y).ToString()] + graph.Cost(current, map, neighbor, ignoremob, out var neighborZ);
+                        string neigh = neighbor.ToString();
+                        int cost = graph.Cost(items, current, map, neighbor, ignoremob, out var neighborZ);
+                        var newCost = CostSoFar[new Tile(current.X, current.Y).ToString()] + cost;
                         if (newCost < SquareGrid.BigCost)
-                        {
-                            if (!CostSoFar.ContainsKey(neighbor.ToString()) || newCost < CostSoFar[neighbor.ToString()])
+                        {                            
+                            if (!CostSoFar.ContainsKey(neigh) || newCost < CostSoFar[neigh])
                             {
                                 // If we're replacing the previous cost, remove it
-                                if (CostSoFar.ContainsKey(neighbor.ToString()))
+                                if (CostSoFar.ContainsKey(neigh))
                                 {
-                                    CostSoFar.Remove(neighbor.ToString());
-                                    CameFrom.Remove(neighbor.ToString());
+                                    CostSoFar.Remove(neigh);
+                                    CameFrom.Remove(neigh);
                                 }
 
-                                CostSoFar.Add(neighbor.ToString(), newCost);
-                                CameFrom.Add(neighbor.ToString(), new Tile(current.X, current.Y));
+                                CostSoFar.Add(neigh, newCost);
+                                CameFrom.Add(neigh, new Tile(current.X, current.Y));
                                 var priority = newCost + Heuristic(neighbor, goal);
                                 var neighborTile = new Point3D(neighbor.X, neighbor.Y, neighborZ);
                                 frontier.Enqueue(neighborTile, priority);
