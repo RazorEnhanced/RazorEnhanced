@@ -559,7 +559,15 @@ namespace RazorEnhanced
             }
         }
 
+        public static Filter GetTargetingFilter(string target_name)
+        {
+            JsonData.TargetGUI targetdata = Settings.Target.TargetRead(target_name);
+            if (targetdata == null)
+                return null;
 
+            Mobiles.Filter filter = targetdata.TargetGuiObject.Filter.ToMobileFilter();
+            return filter;
+        }
 
 
         public static List<Mobile> ApplyFilter(Filter filter)
