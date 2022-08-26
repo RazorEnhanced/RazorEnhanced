@@ -6,7 +6,7 @@ This repository houses the Razor Enhanced project, a new advanced version derive
 
 Curently Requires: **.Net Framework 4.8**
 
-Performance profiling provided by NProfiler .. many thank for their support of open source developemnt
+Performance profiling provided by NProfiler .. many thank for their support of open source developement
 
 ## Reference
 
