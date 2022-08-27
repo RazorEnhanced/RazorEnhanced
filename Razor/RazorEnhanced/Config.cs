@@ -11,13 +11,14 @@ namespace RazorEnhanced
     public class Config
     {
         #region Defines
-        public static readonly string PATH_CONFIG = "Config/";
-        public static readonly string PATH_DATA = "Data/";
+        public static readonly string PATH_CONFIG = "Config";
+        public static readonly string PATH_DATA = "Data";
         public static readonly string CONFIG_DOORS = "doors.json";
         public static readonly string CONFIG_FOODS = "foods.json";
         public static readonly string CONFIG_REGIONS = "regions.json";
         public static readonly string CONFIG_WANDS = "wands.json";
         public static readonly string CONFIG_SOUNDFILTERS = "soundfilters.json";
+        public static readonly string CONFIG_PF_BYPASS = "pf_bypass.json";        
         #endregion
 
         //Dalamar: See if you like it (data/config loading)
@@ -41,8 +42,8 @@ namespace RazorEnhanced
             if (config != null) { return config; } // Load success!
 
             // Load failed.
-            var msg = String.Format("Coudn't load config file:\n{0}\n\n Please refer to Discord channel for assistance, more details:\n http://razorenhanced.net/");
-            MessageBox.Show(msg, "Fallback on default", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var msg = String.Format("Coudn't load config file:\n{0}\n\n Please refer to Discord channel for assistance, more details:\n http://razorenhanced.net/", fullpath);
+            //MessageBox.Show(msg, "Fallback on default", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             fullpath = ConfigPath(configfile, readData: false);  // Fallback: load Config
             config = ConfigFiles.Load(fullpath, configModel);
@@ -116,6 +117,7 @@ namespace RazorEnhanced
         public static void LoadAll()
         {
             // TODO: add more
+            ConfigFiles.PF_Bypass.Data = (ConfigFiles.PF_Bypass)Load(CONFIG_PF_BYPASS, typeof(ConfigFiles.PF_Bypass));
             ConfigFiles.Doors.Data = (ConfigFiles.Doors) Load(CONFIG_DOORS, typeof(ConfigFiles.Doors));
             ConfigFiles.Foods.Data = (ConfigFiles.Foods)Load(CONFIG_FOODS, typeof(ConfigFiles.Foods));
             ConfigFiles.Regions.Data = (ConfigFiles.Regions)Load(CONFIG_REGIONS, typeof(ConfigFiles.Regions));
@@ -288,6 +290,13 @@ namespace RazorEnhanced
 
         }
 
+        //pathfinding.json
+        public class PF_Bypass : ConfigData
+        {
+            new public static PF_Bypass Data = new PF_Bypass();
+            public List<int> BypassIDs;
+
+        }
     }
 
 }

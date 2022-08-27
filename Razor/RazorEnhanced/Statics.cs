@@ -545,7 +545,7 @@ namespace RazorEnhanced
 
             foreach (Multi.MultiData multi in multidata)
             {
-                if (x >= multi.Corner1.X && x <= multi.Corner2.X + 1 && y >= multi.Corner1.Y && y <= multi.Corner2.Y + 1)
+                if (x >= multi.Corner1.X && x <= multi.Corner2.X + 1 && y >= multi.Corner1.Y && y <= multi.Corner2.Y + 2)
                 {
                     return true;
                 }

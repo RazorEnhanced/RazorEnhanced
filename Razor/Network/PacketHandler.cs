@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Assistant
@@ -30,25 +31,25 @@ namespace Assistant
 
     internal class PacketHandler
     {
-        private static readonly Dictionary<int, List<PacketViewerCallback>> m_ClientViewers;
-        private static readonly Dictionary<int, List<PacketViewerCallback>> m_ServerViewers;
+        private static readonly ConcurrentDictionary<int, List<PacketViewerCallback>> m_ClientViewers;
+        private static readonly ConcurrentDictionary<int, List<PacketViewerCallback>> m_ServerViewers;
 
-        private static readonly Dictionary<int, List<PacketFilterCallback>> m_ClientFilters;
-        private static readonly Dictionary<int, List<PacketFilterCallback>> m_ServerFilters;
+        private static readonly ConcurrentDictionary<int, List<PacketFilterCallback>> m_ClientFilters;
+        private static readonly ConcurrentDictionary<int, List<PacketFilterCallback>> m_ServerFilters;
 
         static PacketHandler()
         {
-            m_ClientViewers = new Dictionary<int, List<PacketViewerCallback>>();
-            m_ServerViewers = new Dictionary<int, List<PacketViewerCallback>>();
+            m_ClientViewers = new ConcurrentDictionary<int, List<PacketViewerCallback>>();
+            m_ServerViewers = new ConcurrentDictionary<int, List<PacketViewerCallback>>();
 
-            m_ClientFilters = new Dictionary<int, List<PacketFilterCallback>>();
-            m_ServerFilters = new Dictionary<int, List<PacketFilterCallback>>();
+            m_ClientFilters = new ConcurrentDictionary<int, List<PacketFilterCallback>>();
+            m_ServerFilters = new ConcurrentDictionary<int, List<PacketFilterCallback>>();
         }
 
         internal static void RegisterClientToServerViewer(int packetID, PacketViewerCallback callback)
         {
             if (!m_ClientViewers.ContainsKey(packetID))
-                m_ClientViewers.Add(packetID, new List<PacketViewerCallback>());
+                m_ClientViewers.TryAdd(packetID, new List<PacketViewerCallback>());
 
             if (!m_ClientViewers[packetID].Contains(callback))
             {
@@ -61,7 +62,7 @@ namespace Assistant
         internal static void RegisterServerToClientViewer(int packetID, PacketViewerCallback callback)
         {
             if (!m_ServerViewers.ContainsKey(packetID))
-                m_ServerViewers.Add(packetID, new List<PacketViewerCallback>());
+                m_ServerViewers.TryAdd(packetID, new List<PacketViewerCallback>());
 
             if (!m_ServerViewers[packetID].Contains(callback))
             {
@@ -86,7 +87,7 @@ namespace Assistant
         internal static void RegisterClientToServerFilter(int packetID, PacketFilterCallback callback)
         {
             if (!m_ClientFilters.ContainsKey(packetID))
-                m_ClientFilters.Add(packetID, new List<PacketFilterCallback>());
+                m_ClientFilters.TryAdd(packetID, new List<PacketFilterCallback>());
 
             if (!m_ClientFilters[packetID].Contains(callback))
             {
@@ -99,7 +100,7 @@ namespace Assistant
         internal static void RegisterServerToClientFilter(int packetID, PacketFilterCallback callback)
         {
             if (!m_ServerFilters.ContainsKey(packetID))
-                m_ServerFilters.Add(packetID, new List<PacketFilterCallback>());
+                m_ServerFilters.TryAdd(packetID, new List<PacketFilterCallback>());
 
             if (!m_ServerFilters[packetID].Contains(callback))
             {
@@ -149,7 +150,7 @@ namespace Assistant
             if (pr != null)
             {
                 List<PacketViewerCallback> list;
-                m_ClientViewers.TryGetValue(id, out list);
+                m_ClientViewers .TryGetValue(id, out list);
                 if (list != null && list.Count > 0)
                     result = ProcessViewers(list, pr);
             }
@@ -201,19 +202,25 @@ namespace Assistant
 
             if (list == null)
                 return m_Args.Block;
-
-            foreach (PacketViewerCallback t in list)
+            try
             {
-                p.MoveToData();
+                foreach (PacketViewerCallback t in list)
+                {
+                    p.MoveToData();
 
-                try
-                {
-                    t(p, m_Args);
+                    try
+                    {
+                        t(p, m_Args);
+                    }
+                    catch (Exception e)
+                    {
+                        Engine.LogCrash(e);
+                    }
                 }
-                catch (Exception e)
-                {
-                    Engine.LogCrash(e);
-                }
+            }
+            catch(System.InvalidOperationException e)
+            {
+                // A viewer callback was added or removed will be okay next time
             }
 
             return m_Args.Block;

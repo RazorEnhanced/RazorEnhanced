@@ -24,12 +24,15 @@ namespace RazorEnhanced
         {
             X = x;
             Y = y;
+            Conflict = false;
         }
 
         /// <summary>Coordinate X.</summary>
         public int X { get; set; }
         /// <summary>Coordinate Y.</summary>
         public int Y { get; set; }
+
+        public bool Conflict { get; set; }
 
         public override bool Equals(Object obj)
         {
@@ -136,14 +139,14 @@ namespace RazorEnhanced
         // DIRS is directions
         public static readonly Tile[] Dirs =
         {
-            new Tile(1, 0),
-            new Tile(-1, 0),
-            new Tile(0, 1),
-            new Tile(0, -1),
-            new Tile(-1, -1),
-            new Tile(1, 1),
-            new Tile(-1, 1),
-            new Tile(1, -1)
+            new Tile(1, 0), // east 
+            new Tile(-1, 0), // west
+            new Tile(0, 1), // south
+            new Tile(0, -1), // north
+            new Tile(-1, -1), // NW
+            new Tile(1, 1), // SE
+            new Tile(-1, 1), // SW
+            new Tile(1, -1) // NE
         };
 
         public SquareGrid(int x, int y, int squareSize)
@@ -886,6 +889,18 @@ namespace RazorEnhanced
     /// </summary>
     public class PathFinding
     {
+        public PathFinding()
+        {
+            m_Path = new List<Tile>();
+        }
+
+        List<Tile> m_Path;
+
+        PathFinding(List<Tile> path)
+        {
+            m_Path = path;
+        }
+
         /// <summary>
         /// The Route class is used to configure the PathFinding.
         /// </summary>
@@ -954,11 +969,13 @@ namespace RazorEnhanced
             bool success;
             while ( r.MaxRetry == -1 || r.MaxRetry > 0 ) {
                 road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
+                PathFinding pf = new PathFinding(road);
+
                 timeLeft = (int) timeEnd.Subtract(DateTime.Now).TotalSeconds;
                 if (r.Run)
-                    success = RunPath(road, timeLeft, r.DebugMessage, r.UseResync);
+                    success = pf.RunPath(timeLeft, r.DebugMessage, r.UseResync);
                 else
-                    success = WalkPath(road, timeLeft, r.DebugMessage, r.UseResync);
+                    success = pf.WalkPath(timeLeft, r.DebugMessage, r.UseResync);
                 if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
                 if (success) { return true; }
                 if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
@@ -985,117 +1002,194 @@ namespace RazorEnhanced
         /// <param name="debugMessage">Outputs a debug message.</param>
         /// <param name="useResync">ReSyncs the path calculation.</param>
         /// <returns>True: if it finish the path in time. False: otherwise</returns>
-        public static bool RunPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
+        public bool RunPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
         {
-            return FollowPath(path, true, timeout, debugMessage, useResync);
+            return FollowPath(true, timeout, debugMessage, useResync);
         }
-        public static bool WalkPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
+        public bool WalkPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
         {
-            return FollowPath(path, false, timeout, debugMessage, useResync);
+            return FollowPath(false, timeout, debugMessage, useResync);
         }
 
-        internal static bool FollowPath(List<Tile> path, bool run, float timeout, bool debugMessage, bool useResync)
+        internal static List<Tile> BypassItem(List<Tile> path, int i)
         {
-            if (path == null) { return false; }
-            DateTime timeStart, timeEnd;
-            timeStart = DateTime.Now;
-            timeEnd = (timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(timeout);
-
-            Tile dst = path.Last();
-            foreach (Tile step in path)
+            List<Tile> bypass = PathMove.GetPath(path[i+1].X, path[i+1].Y, false);
+            // +1 to get a little past the item
+            return bypass;
+        }
+        internal static List<Tile> BypassHouse(List<Tile> path, int i)
+        {
+            for (; i < path.Count; i++)
             {
+                if (!Statics.CheckDeedHouse(path[i].X, path[i].Y))
+                    break;
+            }
+            List<Tile> bypass = PathMove.GetPath(path[i + 1].X, path[i + 1].Y, false);
+            // +1 to get a little past the house
+
+            return bypass;
+        }
+
+        internal void PatchPath(PacketReader p, PacketHandlerEventArgs args)
+        {
+            ushort _unk1 = p.ReadUInt16();
+            byte _artDataID = p.ReadByte();
+            uint serial = p.ReadUInt32();
+            ushort itemID = p.ReadUInt16();
+            byte direction = p.ReadByte();
+            ushort _amount = p.ReadUInt16();
+            _amount = p.ReadUInt16(); // weird I know
+
+            ushort x = p.ReadUInt16();
+            ushort y = p.ReadUInt16();
+            short z = p.ReadSByte();
+
+            foreach (var tile in m_Path)
+            {
+                if (tile.X == x && tile.Y == y)
+                    tile.Conflict = true;
+            }
+
+        }
+
+        internal bool FollowPath(bool run, float timeout, bool debugMessage, bool useResync)
+        {
+            try
+            {
+                PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(this.PatchPath));
+                
+                if (m_Path == null) { return false; }
+                DateTime timeStart, timeEnd;
+                timeStart = DateTime.Now;
+                timeEnd = (timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(timeout);
+
+                Tile dst = m_Path.Last();
+                for (int i = 0; i < m_Path.Count; i++)
+                {
+                    if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
+                    {
+                        Misc.SendMessage("PathFind: Destination reached", 66);
+                        return true;
+                    }
+
+                    bool walkok = false;
+                    Tile step = m_Path[i];
+                    foreach (var item in World.Items)
+                    {
+                        if (item.Value.Position.X == step.X && item.Value.Position.Y == step.Y)
+                        {
+                            if (step.Conflict)
+                            {
+                                List<Tile> bypass = BypassItem(m_Path, i);
+                                m_Path.InsertRange(i + 1, bypass);
+                                // insert so the continue will start with the insert
+                                continue;
+                            }
+                        }
+                    }
+                    if (Statics.CheckDeedHouse(step.X, step.Y))
+                    {
+                        List<Tile> bypass = BypassHouse(m_Path, i);
+                        for (; i < m_Path.Count; i++)
+                        {
+                            if (!Statics.CheckDeedHouse(m_Path[i].X, m_Path[i].Y))
+                                break;
+                        }
+                        m_Path.InsertRange(i + 1, bypass);
+                        // insert so the continue will start with the insert
+                        continue;
+                    }
+                    if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
+                    {
+                        Rotate(Direction.east, debugMessage);
+                        walkok = Move(Direction.east, run, debugMessage);
+                    }
+                    else if (step.X < Player.Position.X && step.Y == Player.Position.Y) // West
+                    {
+                        Rotate(Direction.west, debugMessage);
+                        walkok = Move(Direction.west, run, debugMessage);
+                    }
+                    else if (step.X == Player.Position.X && step.Y < Player.Position.Y) //North
+                    {
+                        Rotate(Direction.north, debugMessage);
+                        walkok = Move(Direction.north, run, debugMessage);
+                    }
+                    else if (step.X == Player.Position.X && step.Y > Player.Position.Y) //South
+                    {
+                        Rotate(Direction.south, debugMessage);
+                        walkok = Move(Direction.south, run, debugMessage);
+                    }
+                    else if (step.X > Player.Position.X && step.Y > Player.Position.Y) //Down
+                    {
+                        Rotate(Direction.down, debugMessage);
+                        walkok = Move(Direction.down, run, debugMessage);
+                    }
+                    else if (step.X < Player.Position.X && step.Y < Player.Position.Y) //UP
+                    {
+                        Rotate(Direction.up, debugMessage);
+                        walkok = Move(Direction.up, run, debugMessage);
+                    }
+                    else if (step.X > Player.Position.X && step.Y < Player.Position.Y) //Right
+                    {
+                        Rotate(Direction.right, debugMessage);
+                        walkok = Move(Direction.right, run, debugMessage);
+                    }
+                    else if (step.X < Player.Position.X && step.Y > Player.Position.Y) //Left
+                    {
+                        Rotate(Direction.left, debugMessage);
+                        walkok = Move(Direction.left, run, debugMessage);
+                    }
+                    else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
+                        walkok = true;
+
+                    if (timeout >= 0 && DateTime.Now.CompareTo(timeEnd) > 0)
+                    {
+                        if (debugMessage)
+                            Misc.SendMessage("PathFind: RunPath run TIMEOUT", 33);
+                        return false;
+                    }
+
+                    if (!walkok)
+                    {
+                        if (debugMessage)
+                            Misc.SendMessage("PathFind: Move action FAIL", 33);
+
+                        if (useResync)
+                        {
+                            Misc.Resync();
+                            Misc.Pause(200);
+                            // If position gets off, try to fix it
+                            if (Misc.Distance(Player.Position.X, Player.Position.Y, step.X, step.Y) > 2)
+                            {
+                                Route fixit = new Route();
+                                fixit.X = step.X;
+                                fixit.Y = step.Y;
+                                Go(fixit);
+                            }
+                        }
+
+                        //return false;
+                    }
+                    else
+                    {
+                        if (debugMessage)
+                            Misc.SendMessage("PathFind: Move action OK", 66);
+                    }
+                }
+
                 if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
                 {
                     Misc.SendMessage("PathFind: Destination reached", 66);
                     return true;
                 }
-
-                bool walkok = false;
-                if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
-                {
-                    Rotate(Direction.east, debugMessage);
-                    walkok = Move(Direction.east, run, debugMessage);
-                }
-                else if (step.X < Player.Position.X && step.Y == Player.Position.Y) // West
-                {
-                    Rotate(Direction.west, debugMessage);
-                    walkok = Move(Direction.west, run, debugMessage);
-                }
-                else if (step.X == Player.Position.X && step.Y < Player.Position.Y) //North
-                {
-                    Rotate(Direction.north, debugMessage);
-                    walkok = Move(Direction.north, run, debugMessage);
-                }
-                else if (step.X == Player.Position.X && step.Y > Player.Position.Y) //South
-                {
-                    Rotate(Direction.south, debugMessage);
-                    walkok = Move(Direction.south, run, debugMessage);
-                }
-                else if (step.X > Player.Position.X && step.Y > Player.Position.Y) //Down
-                {
-                    Rotate(Direction.down, debugMessage);
-                    walkok = Move(Direction.down, run, debugMessage);
-                }
-                else if (step.X < Player.Position.X && step.Y < Player.Position.Y) //UP
-                {
-                    Rotate(Direction.up, debugMessage);
-                    walkok = Move(Direction.up, run, debugMessage);
-                }
-                else if (step.X > Player.Position.X && step.Y < Player.Position.Y) //Right
-                {
-                    Rotate(Direction.right, debugMessage);
-                    walkok = Move(Direction.right, run, debugMessage);
-                }
-                else if (step.X < Player.Position.X && step.Y > Player.Position.Y) //Left
-                {
-                    Rotate(Direction.left, debugMessage);
-                    walkok = Move(Direction.left, run, debugMessage);
-                }
-                else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
-                    walkok = true;
-
-                if (timeout >= 0 && DateTime.Now.CompareTo(timeEnd) > 0) {
-                    if (debugMessage)
-                        Misc.SendMessage("PathFind: RunPath run TIMEOUT", 33);
-                    return false;
-                }
-
-                if (!walkok)
-                {
-                    if (debugMessage)
-                        Misc.SendMessage("PathFind: Move action FAIL", 33);
-
-                    if (useResync)
-                    {
-                        Misc.Resync();
-                        Misc.Pause(200);
-                        // If position gets off, try to fix it
-                        if (Misc.Distance(Player.Position.X, Player.Position.Y, step.X, step.Y) > 2)
-                        {
-                            Route fixit = new Route();
-                            fixit.X = step.X;
-                            fixit.Y = step.Y;
-                            Go(fixit);
-                        }
-                    }
-
-                    //return false;
-                }
                 else
                 {
-                    if (debugMessage)
-                        Misc.SendMessage("PathFind: Move action OK", 66);
+                    return false;
                 }
             }
-
-            if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
+            finally
             {
-                Misc.SendMessage("PathFind: Destination reached", 66);
-                return true;
-            }
-            else
-            {
-                return false;
+                PacketHandler.RemoveServerToClientViewer(0xF3, new PacketViewerCallback(this.PatchPath));
             }
         }
 
