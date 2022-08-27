@@ -542,6 +542,7 @@ namespace RazorEnhanced
                 [BuffIcon.GazeDespair] = "Gaze Despair",
                 [BuffIcon.GiftOfLife] = "Gift Of Life",
                 [BuffIcon.GiftOfRenewal] = "Gift Of Renewal",
+                [BuffIcon.GrapesOfWrath] = "Grapes of Wrath",
                 [BuffIcon.HealingSkill] = "Healing",
                 [BuffIcon.HeatOfBattleStatus] = "Heat Of Battle",
                 [BuffIcon.HidingAndOrStealth] = "Hiding",

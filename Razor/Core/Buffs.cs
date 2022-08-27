@@ -86,6 +86,7 @@ namespace Assistant
         TalonStrike = 1080,
         PsychicAttack = 1081,
         ConsecrateWeapon = 1082,
+        GrapesOfWrath = 1083,
         EnemyOfOneNew = 1084,
         HorrificBeast = 1085,
         LichForm = 1086,
