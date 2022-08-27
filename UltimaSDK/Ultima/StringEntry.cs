@@ -83,8 +83,9 @@ namespace Ultima
             }
             else
             {
+                //list = argstr.Split('\t').ToList();
                 foreach (string s in argstr.Split('\t'))
-                    list.Add(s); // adds an extra on to the args array
+                    list.Add(s); // adds an extra on to the args array               
             }
             const string pattern = @"(?<!\{)(?>\{\{)*\{\d(.*?)";
             var matches = Regex.Matches(m_FmtTxt, pattern);
@@ -99,7 +100,9 @@ namespace Ultima
                     list.Add("");
                 }
             }
-            return String.Format(m_FmtTxt, list.ToArray());
+            
+            string result = String.Format(m_FmtTxt, list.ToArray());
+            return result;
         }
     }
 }

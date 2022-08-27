@@ -693,6 +693,96 @@ namespace RazorEnhanced
             public Filter()
             {
             }
+
+            internal bool InFilteredItems(Assistant.Item item)
+            {
+                if (Name != String.Empty)
+                {
+                    Regex rgx = new Regex(Name, RegexOptions.IgnoreCase);
+                    // should probably use prop[0]
+                    if (!rgx.IsMatch(item.Name))
+                        return false;
+                }
+
+                if (Graphics.Count > 0)
+                {
+                    if (!Graphics.Contains(item.ItemID))
+                        return false;                
+                }
+
+                if (Hues.Count > 0)
+                {
+                    if (!Hues.Contains(item.Hue))
+                        return false;
+                }
+
+                if (RangeMin != -1)
+                {
+                    if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) < RangeMin)
+                        return false;               
+                }
+
+                if (RangeMax != -1)
+                {
+                    if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > RangeMax)
+                        return false;
+                }
+
+                if (Movable >= 0)
+                {
+                    if (!item.Movable == (Movable > 0))
+                        return false;
+                }
+
+                if (Layers.Count > 0)
+                {
+                    List<Assistant.Layer> list = new List<Assistant.Layer>();
+
+                    foreach (string text in Layers)
+                    {
+                        Enum.TryParse<Layer>(text, out Layer l);
+                        if (l != Assistant.Layer.Invalid)
+                        {
+                            list.Add(l);
+                        }
+                    }
+                    if (!list.Contains(item.Layer))
+                        return false;
+                }
+
+                if (OnGround != -1)
+                {
+                    if (!item.OnGround == Convert.ToBoolean(OnGround))
+                        return false;
+                }
+
+                if (IsContainer != -1)
+                {
+                    if (!item.IsContainer == Convert.ToBoolean(IsContainer))
+                        return false;
+                }
+
+                if (IsCorpse != -1)
+                {
+                    if (!item.IsCorpse == Convert.ToBoolean(IsCorpse))
+                        return false;
+                }
+
+                if (IsDoor != -1)
+                {
+                    if (! item.IsDoor == Convert.ToBoolean(IsDoor))
+                        return false;
+                }
+
+                if (CheckIgnoreObject)
+                {
+                    if (Misc.CheckIgnoreObject(item.Serial) == true)
+                        return false;
+                }
+            
+
+                return true;
+            }
         }
 
         /// <summary>
@@ -703,113 +793,16 @@ namespace RazorEnhanced
         public static List<Item> ApplyFilter(Filter filter)
         {
 
-            List<Item> result = new List<Item>();
-            List<Assistant.Item> assistantItems = new List<Assistant.Item>(World.Items.Values.ToList());
-
+            List<RazorEnhanced.Item> result = new List<RazorEnhanced.Item>();
             try
             {
-                if (filter.Enabled)
+                foreach (var entry in World.Items)
                 {
-                    if (filter.Serials.Count > 0)
-                    {
-                        assistantItems = assistantItems.Where((i) => filter.Serials.Contains((int)i.Serial.Value)).ToList();
-                    }
-                    else
-                    {
-                        if (filter.Name != String.Empty)
-                        {
-                            Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-                            List<Assistant.Item> list = new List<Assistant.Item>();
-                            foreach (Assistant.Item i in assistantItems)
-                            {
-                                if (rgx.IsMatch(i.Name))
-                                {
-                                    list.Add(i);
-                                }
-                            }
-                            assistantItems = list;
-                        }
-
-                        if (filter.Graphics.Count > 0)
-                        {
-                            assistantItems = assistantItems.Where((i) => filter.Graphics.Contains(i.ItemID.Value)).ToList();
-                        }
-
-                        if (filter.Hues.Count > 0)
-                        {
-                            assistantItems = assistantItems.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
-                        }
-
-                        if (filter.RangeMin != -1)
-                        {
-                            assistantItems = assistantItems.Where((i) =>
-                                Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) >= filter.RangeMin
-                            ).ToList();
-                        }
-
-                        if (filter.RangeMax != -1)
-                        {
-                            assistantItems = assistantItems.Where((i) =>
-                                Utility.Distance(World.Player.Position.X, World.Player.Position.Y, i.Position.X, i.Position.Y) <= filter.RangeMax
-                            ).ToList();
-                        }
-
-                        if (filter.Movable >= 0)
-                        {
-                            assistantItems = assistantItems.Where((i) => i.Movable == (filter.Movable > 0)).ToList();
-                        }
-
-                        if (filter.Layers.Count > 0)
-                        {
-                            List<Assistant.Layer> list = new List<Assistant.Layer>();
-
-                            foreach (string text in filter.Layers)
-                            {
-                                Enum.TryParse<Layer>(text, out Layer l);
-                                if (l != Assistant.Layer.Invalid)
-                                {
-                                    list.Add(l);
-                                }
-                            }
-
-                            assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
-                        }
-
-                        if (filter.OnGround != -1)
-                        {
-                            assistantItems = assistantItems.Where((i) => i.OnGround == Convert.ToBoolean(filter.OnGround)).ToList();
-                        }
-
-                        if (filter.IsContainer != -1)
-                        {
-                            assistantItems = assistantItems.Where((i) => i.IsContainer == Convert.ToBoolean(filter.IsContainer)).ToList();
-                        }
-
-                        if (filter.IsCorpse != -1)
-                        {
-                            assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
-                        }
-
-                        if (filter.IsDoor != -1)
-                        {
-                            assistantItems = assistantItems.Where((i) => i.IsDoor == Convert.ToBoolean(filter.IsDoor)).ToList();
-                        }
-
-                        if (filter.CheckIgnoreObject)
-                        {
-                            assistantItems = assistantItems.Where((i) => Misc.CheckIgnoreObject(i.Serial) != true).ToList();
-                        }
-                    }
+                    if (filter.InFilteredItems(entry.Value))
+                        result.Add(new RazorEnhanced.Item(entry.Value));
                 }
-
             }
             catch { }
-
-            foreach (Assistant.Item assistantItem in assistantItems)
-            {
-                RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-                result.Add(enhancedItem);
-            }
 
             return result;
         }

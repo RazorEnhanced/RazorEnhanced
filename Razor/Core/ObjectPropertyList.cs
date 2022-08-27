@@ -9,6 +9,7 @@ namespace Assistant
         {
             internal int Number = 0;
             internal string Args = null;
+            internal string m_CachedString = null;
 
             internal OPLEntry(int num)
                 : this(num, null)
@@ -23,16 +24,18 @@ namespace Assistant
 
             public override string ToString()
             {
-                int number = this.Number;
-                string args = Assistant.Language.ParseSubCliloc(this.Args);
+                if (m_CachedString == null)
+                {
+                    int number = this.Number;
+                    string args = Assistant.Language.ParseSubCliloc(this.Args);
 
-                string content;
-                if (args == null)
-                    content = Assistant.Language.GetCliloc(number);
-                else
-                    content = Assistant.Language.ClilocFormat(this.Number, args);
+                    if (args == null)
+                        m_CachedString = Assistant.Language.GetCliloc(number);
+                    else
+                        m_CachedString = Assistant.Language.ClilocFormat(this.Number, args);
+                }
 
-                return content;
+                return m_CachedString;
             }
         }
 

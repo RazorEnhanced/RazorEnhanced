@@ -392,6 +392,8 @@ namespace RazorEnhanced
             Enabled = true
         };
 
+        static int Player_last_x = -1;
+        static int Player_last_y = -1;
         internal static void AutoRun()
         {
             if (!Client.Running)
@@ -399,6 +401,14 @@ namespace RazorEnhanced
 
             if (World.Player == null)
                 return;
+
+            if (World.Player.Position.X == Player_last_x && World.Player.Position.Y == Player_last_y)
+            {
+                Misc.Pause(100);
+                return;
+            }
+            Player_last_x = World.Player.Position.X;
+            Player_last_y = World.Player.Position.Y;
 
             // Genero filtro item
             m_itemfilter.RangeMax = m_maxrange;

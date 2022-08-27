@@ -414,6 +414,11 @@ namespace RazorEnhanced
                 ResetIgnore();
                 return;
             }
+            if (corpi.Count == 0)
+            {
+                Thread.Sleep(100);
+                return;
+            }
 
             foreach (RazorEnhanced.Item corpse in corpi)
             {

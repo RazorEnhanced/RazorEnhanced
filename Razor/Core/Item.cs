@@ -266,6 +266,10 @@ namespace Assistant
                 {
                     return m_Name;
                 }
+                else if (ObjPropList.Content.Count > 0 )
+                {
+                    return ObjPropList.Content[0].ToString();
+                }
                 else
                 {
                     return m_ItemID.ToString();
