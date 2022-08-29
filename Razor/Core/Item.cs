@@ -813,6 +813,8 @@ namespace Assistant
             get { return m_ItemID.Value == 0x2006 || (m_ItemID.Value >= 0x0ECA && m_ItemID.Value <= 0x0ED2); }
         }
 
+        public int CorpseNumberItems { get; set; } = -1; 
+       
         internal static ConcurrentHashSet<uint> LoadDoorData()
         {
             ConcurrentHashSet<uint> ret = new ConcurrentHashSet<uint>();

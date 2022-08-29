@@ -422,6 +422,9 @@ namespace RazorEnhanced
 
             foreach (RazorEnhanced.Item corpse in corpi)
             {
+                if (corpse.CorpseNumberItems == 0)
+                    continue;
+
                 RazorEnhanced.Item m_sharedcont = null;
                 RazorEnhanced.Item m_OSIcont = null;
 
@@ -457,6 +460,7 @@ namespace RazorEnhanced
                 // If container is empty move on
                 if (m_cont.Contains.Count() == 0)
                 {
+                    // This is not accurate corpse.CorpseNumberItems = m_cont.Contains.Count(); // remember
                     continue;
                 }
 
@@ -500,6 +504,7 @@ namespace RazorEnhanced
                         }
                     }
                 }
+                corpse.CorpseNumberItems = m_cont.Contains.Count(); // remember # items left
             }
         }
 
@@ -540,13 +545,8 @@ namespace RazorEnhanced
                 SerialToGrabList.Enqueue(data);
         }
 
-        private static readonly Items.Filter m_corpsefilter = new Items.Filter
-        {
-            Movable = -1,
-            IsCorpse = 1,
-            OnGround = 1,
-            IsDoor = -1,
-            Enabled = true
+        private static readonly Items.AutoLootFilter m_corpsefilter = new Items.AutoLootFilter
+        {            
         };
 
         internal static void AutoRun()

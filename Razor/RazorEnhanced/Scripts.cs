@@ -191,6 +191,10 @@ namespace RazorEnhanced
             {
                 if (item.Filename == filename)
                 {
+                    if (item.FullPath == null)
+                    {
+                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                    }
                     return item.FullPath;
                 }
             }
@@ -198,6 +202,10 @@ namespace RazorEnhanced
             {
                 if (item.Filename == filename)
                 {
+                    if (item.FullPath == null)
+                    {
+                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                    }
                     return item.FullPath;
                 }
             }
@@ -205,6 +213,10 @@ namespace RazorEnhanced
             {
                 if (item.Filename == filename)
                 {
+                    if (item.FullPath == null)
+                    {
+                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                    }
                     return item.FullPath;
                 }
             }

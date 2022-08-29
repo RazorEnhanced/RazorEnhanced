@@ -214,6 +214,12 @@ namespace RazorEnhanced
         public bool IsCorpse { get { return m_AssistantItem.IsCorpse; } }
 
         /// <summary>
+        /// -1 until corpse is checked, then # items in corpse. Used by looter to ignore empty corpses
+        /// </summary>
+        public int CorpseNumberItems { get { return m_AssistantItem.CorpseNumberItems; } 
+            set { m_AssistantItem.CorpseNumberItems = value; } }
+
+        /// <summary>
         /// True: if the item is a door - False: otherwise.
         /// </summary>
         public bool IsDoor { get { return m_AssistantItem.IsDoor; } }
@@ -694,7 +700,7 @@ namespace RazorEnhanced
             {
             }
 
-            internal bool InFilteredItems(Assistant.Item item)
+            internal virtual bool InFilteredItems(Assistant.Item item)
             {
                 if (Name != String.Empty)
                 {
@@ -782,6 +788,26 @@ namespace RazorEnhanced
             
 
                 return true;
+            }
+        }
+        public class AutoLootFilter : Filter
+        {
+            internal override bool InFilteredItems(Assistant.Item item)
+            {
+                // only autoloot corpses
+                if (item.IsCorpse == false)
+                    return false;
+                // dont look in empty corpses
+                if (item.CorpseNumberItems == 0)
+                    return false;
+                // corpses dont move 
+                if (item.Movable == true)
+                    return false;
+                // corpses are on ground
+                if (!item.OnGround)
+                    return false;
+                // loot distance is limited
+                return (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= RangeMax);
             }
         }
 
