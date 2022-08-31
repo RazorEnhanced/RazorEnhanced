@@ -884,8 +884,8 @@
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
-    <PostBuildEvent>XCOPY  "$(SolutionDir)packages\IronPython.StdLib.3.4.0-alpha1\content\Lib"  "$(TargetDir)Lib\"  /y /s
-XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuildEvent>
+    <PostBuildEvent>XCOPY  "$(ProjectDir)\..\packages\IronPython.StdLib.3.4.0-alpha1\content\Lib"  "$(TargetDir)Lib\"  /y /s
+XCOPY  "$(ProjectDir)\..\BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
