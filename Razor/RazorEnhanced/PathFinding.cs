@@ -164,34 +164,17 @@ namespace RazorEnhanced
 
         }
 
-        public SquareGrid(int x_origin, int y_origin, int x_dest, int y_dest)
-        {
-            int min_x = Math.Min(x_origin, x_dest);
-            int min_y = Math.Min(y_origin, y_dest);
-            int max_x = Math.Max(x_origin, x_dest);
-            int max_y = Math.Max(y_origin, y_dest);
-
-            Tiles = new List<Tile>();
-            TilesRect = new Rectangle2D(min_x, min_y, 10 + (max_x - min_x), 10 + (max_y - min_y));
-            for (var i = min_x - 5; i < max_x + 5; i++)
-            {
-                for (var j = min_y - 5; j < max_y + 5; j++)
-                {
-                    Tiles.Add(new Tile(i, j));
-                }
-            }
-        }
-
-
         public List<Tile> Tiles;
         public Rectangle2D TilesRect;
 
         // Check if a location is within the bounds of this grid.
         public bool InBounds(Tile id)
         {
+            //X == loc.X && Y == loc.Y
             Assistant.Point2D point = new Assistant.Point2D(id.X, id.Y);
-            return TilesRect.Contains(point);
-            //return Tiles.Any(x => x.Equals(id));
+            bool result = TilesRect.Contains(point);
+            //bool result2 = Tiles.Any(x => x.Equals(id));
+            return result; 
         }
 
 
@@ -320,10 +303,11 @@ namespace RazorEnhanced
             // Check For mobiles
             if (!ignoremob)
             {
-                var mobs = World.Mobiles.Values;
+                //var mobs = World.Mobiles.Values;
                 List<Assistant.Mobile> result = new List<Assistant.Mobile>();
-                foreach (Assistant.Mobile m in mobs)
+                foreach (var entry in World.Mobiles)
                 {
+                    Assistant.Mobile m = entry.Value;
                     if (m.Position.X == x && m.Position.Y == y && m.Serial != Player.Serial)
                         result.Add(m);
                 }
@@ -334,10 +318,10 @@ namespace RazorEnhanced
                 }
             }
             // Check for deed player house
-            if (Statics.CheckDeedHouse(x, y))
-            {
-                return false;
-            }
+            //if (Statics.CheckDeedHouse(x, y))
+            //{
+            //    return false;
+            //}
 
             #region Tiles
             foreach (var tile in tiles)
@@ -528,8 +512,9 @@ namespace RazorEnhanced
         // This is nasty, seems like could be optimized .. Credzba
         private static bool IsOk(bool ignoreDoors, bool ignoreSpellFields, int ourZ, int ourTop, List<Statics.TileInfo> tiles, IEnumerable<Assistant.Item> items)
         {
-            //bool result = tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
-            //
+            bool result = tiles.All(t => IsOk(t, ourZ, ourTop)) && items.All(i => IsOk(i, ourZ, ourTop, ignoreDoors, ignoreSpellFields));
+            return result;
+            /*
             foreach (var tile in tiles)
             {
                 bool result = IsOk(tile, ourZ, ourTop);
@@ -543,6 +528,7 @@ namespace RazorEnhanced
                     return false;
             }
             return true;
+            */
         }
 
         private static bool IsOk(Assistant.Item item, int ourZ, int ourTop, bool ignoreDoors, bool ignoreSpellFields)
@@ -830,7 +816,7 @@ namespace RazorEnhanced
         {
             var path = new List<Tile>();
             var current = _goal;
-            // path.Add(current);
+            path.Add(current);
 
             while (!current.Equals(_start))
             {
@@ -968,7 +954,16 @@ namespace RazorEnhanced
             List<Tile> road;
             bool success;
             while ( r.MaxRetry == -1 || r.MaxRetry > 0 ) {
+                if (r.X == Player.Position.X && r.Y == Player.Position.Y)
+                    return true;
                 road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
+                if (road == null)
+                {
+                    if (r.X == Player.Position.X && r.Y == Player.Position.Y)
+                        return true;
+                    else
+                        return false;
+                }
                 PathFinding pf = new PathFinding(road);
 
                 timeLeft = (int) timeEnd.Subtract(DateTime.Now).TotalSeconds;
@@ -1017,17 +1012,20 @@ namespace RazorEnhanced
             // +1 to get a little past the item
             return bypass;
         }
-        internal static List<Tile> BypassHouse(List<Tile> path, int i)
+        internal static List<Tile> BypassHouse(List<Tile> path, int start)
         {
+            int i = start;
             for (; i < path.Count; i++)
             {
                 if (!Statics.CheckDeedHouse(path[i].X, path[i].Y))
                     break;
             }
-            List<Tile> bypass = PathMove.GetPath(path[i + 1].X, path[i + 1].Y, false);
             // +1 to get a little past the house
-
-            return bypass;
+            if (i < path.Count-1)
+                return PathMove.GetPath(path[i + 1].X, path[i + 1].Y, false);
+            
+            // effectively do nothing
+            return PathMove.GetPath(path[start].X, path[start].Y, false);
         }
 
         internal void PatchPath(PacketReader p, PacketHandlerEventArgs args)

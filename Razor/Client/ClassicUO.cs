@@ -563,13 +563,15 @@ namespace Assistant
         {
             bool result = false;
             int MaxTries = 10;
-            int Delay = 10;
+            int Delay = 30;
             while (result == false)
             {
-                MaxTries += 1;
+                MaxTries -= 1;
                 result = _requestMove((int)m_Dir, false);
                 if (result == false)
                     Thread.Sleep(Delay);
+                if (MaxTries <= 0)
+                    break;
             }
             return result;
         }
@@ -577,13 +579,15 @@ namespace Assistant
         {
             bool result = false;
             int MaxTries = 10;
-            int Delay = 10;
+            int Delay = 30;
             while (result == false)
             {
-                MaxTries += 1;
+                MaxTries -= 1;
                 result = _requestMove((int)m_Dir, true);
                 if (result == false)
                     Thread.Sleep(Delay);
+                if (MaxTries <= 0)
+                    break;
             }
             return result;
         }

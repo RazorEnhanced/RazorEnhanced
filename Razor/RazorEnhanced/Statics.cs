@@ -541,11 +541,10 @@ namespace RazorEnhanced
         /// <returns>True: The tile is occupied - False: otherwise</returns>
         public static bool CheckDeedHouse(int x, int y)
         {
-            List<Multi.MultiData> multidata = Assistant.World.Multis.Values.ToList();
-
-            foreach (Multi.MultiData multi in multidata)
+            foreach (var entry in Assistant.World.Multis)
             {
-                if (x >= multi.Corner1.X && x <= multi.Corner2.X + 1 && y >= multi.Corner1.Y && y <= multi.Corner2.Y + 2)
+                Multi.MultiData multi = entry.Value;
+                if (x >= multi.Corner1.X && x <= multi.Corner2.X + 1 && y >= multi.Corner1.Y && y <= multi.Corner2.Y + 1)
                 {
                     return true;
                 }

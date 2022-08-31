@@ -108,8 +108,25 @@ namespace Assistant
             }
         }
 
+        static int prev_mapnum = -1;
+        static int prev_xCheck = -1;
+        static int prev_yCheck = -1;
+        static int prev_oldZ = -1;
+        static sbyte returned_Z = -1;
+
         internal static sbyte ZTop(int mapNum, int xCheck, int yCheck, int oldZ)
         {
+            if (mapNum == prev_mapnum &&
+                xCheck == prev_xCheck &&
+                yCheck == prev_yCheck &&
+                oldZ == prev_oldZ)
+                return returned_Z;
+
+            prev_mapnum = mapNum;
+            prev_xCheck = xCheck;
+            prev_yCheck = yCheck;
+            prev_oldZ = oldZ;
+
             try
             {
                 Ultima.Map map = GetMap(mapNum);
@@ -137,12 +154,13 @@ namespace Assistant
                         isSet = true;
                     }
                 }
-
-                return (sbyte)zTop;
+                returned_Z = (sbyte)zTop;
+                return returned_Z;
             }
             catch
             {
-                return (sbyte)oldZ;
+                returned_Z = (sbyte)oldZ;
+                return returned_Z;
             }
         }
     }

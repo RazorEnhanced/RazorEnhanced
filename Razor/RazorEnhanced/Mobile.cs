@@ -267,7 +267,7 @@ namespace RazorEnhanced
                     break;
 
                 case "FacialHair":
-                    result = Assistant.Layer.FacialHair;
+                    result = Assistant.Layer.Beard;
                     break;
 
                 case "MiddleTorso":
