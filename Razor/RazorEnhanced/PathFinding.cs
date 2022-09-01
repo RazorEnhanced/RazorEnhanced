@@ -318,10 +318,10 @@ namespace RazorEnhanced
                 }
             }
             // Check for deed player house
-            //if (Statics.CheckDeedHouse(x, y))
-            //{
-            //    return false;
-            //}
+            if (Statics.CheckDeedHouse(x, y))
+            {
+                return false;
+            }
 
             #region Tiles
             foreach (var tile in tiles)
@@ -944,38 +944,50 @@ namespace RazorEnhanced
         /// <returns>True: if a destination is reachable.</returns>
         public static bool Go(Route r)
         {
-            if ( r.StopIfStuck ) { r.MaxRetry = 1; }
+            try
+            {
 
-            DateTime timeStart, timeEnd;
-            timeStart = DateTime.Now;
-            timeEnd = (r.Timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(r.Timeout);
 
-            float timeLeft;
-            List<Tile> road;
-            bool success;
-            while ( r.MaxRetry == -1 || r.MaxRetry > 0 ) {
-                if (r.X == Player.Position.X && r.Y == Player.Position.Y)
-                    return true;
-                road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
-                if (road == null)
+                if (r.StopIfStuck) { r.MaxRetry = 1; }
+
+                DateTime timeStart, timeEnd;
+                timeStart = DateTime.Now;
+                timeEnd = (r.Timeout < 0) ? timeStart.AddDays(1) : timeStart.AddSeconds(r.Timeout);
+
+                float timeLeft;
+                List<Tile> road;
+                bool success;
+                while (r.MaxRetry == -1 || r.MaxRetry > 0)
                 {
                     if (r.X == Player.Position.X && r.Y == Player.Position.Y)
                         return true;
-                    else
-                        return false;
-                }
-                PathFinding pf = new PathFinding(road);
+                    road = PathMove.GetPath(r.X, r.Y, r.IgnoreMobile);
+                    if (road == null)
+                    {
+                        if (r.X == Player.Position.X && r.Y == Player.Position.Y)
+                            return true;
+                        else
+                            return false;
+                    }
+                    PathFinding pf = new PathFinding(road);
 
-                timeLeft = (int) timeEnd.Subtract(DateTime.Now).TotalSeconds;
-                if (r.Run)
-                    success = pf.RunPath(timeLeft, r.DebugMessage, r.UseResync);
-                else
-                    success = pf.WalkPath(timeLeft, r.DebugMessage, r.UseResync);
-                if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
-                if (success) { return true; }
-                if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
+                    timeLeft = (int)timeEnd.Subtract(DateTime.Now).TotalSeconds;
+                    if (r.Run)
+                        success = pf.RunPath(timeLeft, r.DebugMessage, r.UseResync);
+                    else
+                        success = pf.WalkPath(timeLeft, r.DebugMessage, r.UseResync);
+                    if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
+                    if (success) { return true; }
+                    if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
+                }
             }
+            catch (Exception e)
+            {
+                throw;
+            }
+
             return false;
+
         }
 
         /// <summary>
@@ -1008,8 +1020,13 @@ namespace RazorEnhanced
 
         internal static List<Tile> BypassItem(List<Tile> path, int i)
         {
-            List<Tile> bypass = PathMove.GetPath(path[i+1].X, path[i+1].Y, false);
-            // +1 to get a little past the item
+            int j = i;
+            for (; j < path.Count; j++)
+            {
+                if (path[j].Conflict == false)
+                    break;
+            }
+            List<Tile> bypass = PathMove.GetPath(path[j+2].X, path[j+2].Y, false);
             return bypass;
         }
         internal static List<Tile> BypassHouse(List<Tile> path, int start)
@@ -1033,8 +1050,8 @@ namespace RazorEnhanced
             ushort _unk1 = p.ReadUInt16();
             byte _artDataID = p.ReadByte();
             uint serial = p.ReadUInt32();
-            ushort itemID = p.ReadUInt16();
-            byte direction = p.ReadByte();
+            ushort graphic = p.ReadUInt16();
+            byte graphic_inc = p.ReadByte();
             ushort _amount = p.ReadUInt16();
             _amount = p.ReadUInt16(); // weird I know
 
@@ -1042,10 +1059,33 @@ namespace RazorEnhanced
             ushort y = p.ReadUInt16();
             short z = p.ReadSByte();
 
-            foreach (var tile in m_Path)
+            Assistant.Item item = World.FindItem(serial & 0x7FFFFFFF);
+            if (item != null && item.IsMulti)
             {
-                if (tile.X == x && tile.Y == y)
-                    tile.Conflict = true;
+                Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
+
+                /*int xMin = 0;
+                int yMin = 0;
+                foreach (var m in multiinfo.SortedTiles)
+                {
+                    xMin = Math.Min(xMin, m.m_OffsetX);
+                    yMin = Math.Min(yMin, m.m_OffsetY);
+                }
+                */
+
+                //RazorEnhanced.Multi.MultiData data = World.Multis[(int)serial]; 
+                Rectangle2D area = new Rectangle2D(item.Position.X - multiinfo.Max.X, item.Position.Y - multiinfo.Max.Y,
+                                                    multiinfo.Max.X * 2, multiinfo.Max.Y * 2);
+
+                foreach (var tile in m_Path)
+                {
+                    Assistant.Point2D point = new Assistant.Point2D(tile.X, tile.Y);
+                    if (area.Contains(point))
+                        {
+                        //if (tile.X == x && tile.Y == y)
+                        tile.Conflict = true;
+                    }
+                }
             }
 
         }
@@ -1072,19 +1112,24 @@ namespace RazorEnhanced
 
                     bool walkok = false;
                     Tile step = m_Path[i];
-                    foreach (var item in World.Items)
+
+                    if (step.Conflict)
                     {
-                        if (item.Value.Position.X == step.X && item.Value.Position.Y == step.Y)
+                        List<Tile> bypass = BypassItem(m_Path, i);
+                        if (bypass != null && bypass.Count > 0)
                         {
-                            if (step.Conflict)
-                            {
-                                List<Tile> bypass = BypassItem(m_Path, i);
-                                m_Path.InsertRange(i + 1, bypass);
-                                // insert so the continue will start with the insert
-                                continue;
-                            }
+                            for (; i < m_Path.Count; i++)
+                                if (!m_Path[i].Conflict)
+                                    break;
+                            m_Path.InsertRange(i, bypass);
                         }
+                        else
+                        {
+                        }
+                        // insert so the continue will start with the insert
+                        continue;
                     }
+
                     if (Statics.CheckDeedHouse(step.X, step.Y))
                     {
                         List<Tile> bypass = BypassHouse(m_Path, i);
@@ -1093,9 +1138,35 @@ namespace RazorEnhanced
                             if (!Statics.CheckDeedHouse(m_Path[i].X, m_Path[i].Y))
                                 break;
                         }
-                        m_Path.InsertRange(i + 1, bypass);
-                        // insert so the continue will start with the insert
-                        continue;
+                        if (bypass != null && bypass.Count > 0)
+                        {
+                            m_Path.InsertRange(i + 1, bypass);
+                            // insert so the continue will start with the insert
+                            continue;
+                        }
+                    }
+
+                    foreach (var item in World.Items)
+                    {
+                        if (item.Value.Position.X == step.X && item.Value.Position.Y == step.Y)
+                        {
+                            if (step.Conflict)
+                            {
+                                List<Tile> bypass = BypassItem(m_Path, i);
+                                if (bypass != null && bypass.Count > 0)
+                                {
+                                    for (; i < m_Path.Count; i++)
+                                        if (!m_Path[i].Conflict)
+                                            break;
+                                    m_Path.InsertRange(i-1, bypass);
+                                }
+                                else 
+                                { 
+                                }
+                                // insert so the continue will start with the insert
+                                continue;
+                            }
+                        }
                     }
                     if (step.X > Player.Position.X && step.Y == Player.Position.Y) //East
                     {
