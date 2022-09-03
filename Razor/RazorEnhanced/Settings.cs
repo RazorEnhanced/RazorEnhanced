@@ -194,12 +194,25 @@ namespace RazorEnhanced
             List<RazorEnhanced.Scripts.ScriptItem> scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
             foreach (RazorEnhanced.Scripts.ScriptItem item in scriptItems)
             {
-                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
-                if (item.FullPath != null)
-                    fullpath = item.FullPath;
-                if (File.Exists(fullpath))
+                string localFilename = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                // if no fullname then set it to local 
+                if (item.FullPath == null)
                 {
-                    string suffix = Path.GetExtension(fullpath).ToLower();
+                    item.FullPath = localFilename;
+                }
+
+                // if the file doesn't exist at its full path, is it local
+                if (!File.Exists(item.FullPath)                    )
+                {
+                    if (File.Exists(localFilename))
+                    {
+                        item.FullPath = localFilename;
+                    }
+                }
+                
+                if (File.Exists(item.FullPath))
+                {
+                    string suffix = Path.GetExtension(item.FullPath).ToLower();
                     switch (suffix)
                     {
                         case ".py":
