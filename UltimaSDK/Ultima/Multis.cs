@@ -8,8 +8,11 @@ namespace Ultima
 {
     public sealed class Multis
     {
-        private static MultiComponentList[] m_Components = new MultiComponentList[0x2000];
-        private static FileIndex m_FileIndex = new FileIndex("Multi.idx", "Multi.mul", 0x2000, 14);
+        const int MAX_MULTI_DATA_INDEX_COUNT = 0x2200;
+        private static MultiComponentList[] m_Components = new MultiComponentList[MAX_MULTI_DATA_INDEX_COUNT];
+        private static FileIndex m_FileIndex = new FileIndex("multi.idx", "multi.mul", "multicollection.uop", MAX_MULTI_DATA_INDEX_COUNT, 14, ".dat", -1, false);
+        public static bool IsUOP { get; set; } = false;
+        public static int Count { get; private set; }
 
         public enum ImportType
         {
@@ -26,11 +29,11 @@ namespace Ultima
         /// <summary>
         /// ReReads multi.mul
         /// </summary>
-        public static void Reload()
-        {
-            m_FileIndex = new FileIndex("Multi.idx", "Multi.mul", 0x2000, 14);
-            m_Components = new MultiComponentList[0x2000];
-        }
+       // public static void Reload()
+        //{
+        //    m_FileIndex = new FileIndex("Multi.idx", "Multi.mul", 0x2000, 14);
+        //    m_Components = new MultiComponentList[0x2000];
+        //}
 
         /// <summary>
         /// Gets <see cref="MultiComponentList"/> of multi
@@ -60,17 +63,34 @@ namespace Ultima
         {
             try
             {
-                int length, extra;
-                bool patched;
-                Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+                
+                string uopPath = Path.Combine(Files.RootDir, "MultiCollection.uop");
+                
+                if (System.IO.File.Exists(uopPath))
+                {
+                    const int MAX_MULTI_DATA_INDEX_COUNT = 0x2200;
+                    Count = MAX_MULTI_DATA_INDEX_COUNT;
+                    //m_FileIndex = new FileIndex("multi.idx", "multi.mul", "multicollection.uop", MAX_MULTI_DATA_INDEX_COUNT, 14, ".dat", -1, false);
 
-                if (stream == null)
+                    File = new UOFileUop(uopPath, "build/multicollection/{0:D6}.bin");
+                    Entries = new UOFileIndex[Count];
+                    IsUOP = true;
                     return MultiComponentList.Empty;
+                }
 
-                if (PostHSFormat || Art.IsUOAHS())
-                    return new MultiComponentList(new BinaryReader(stream), length / 16);
-                else
-                    return new MultiComponentList(new BinaryReader(stream), length / 12);
+                    {
+                    int length, extra;
+                    bool patched;
+                    Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
+
+                    if (stream == null)
+                        return MultiComponentList.Empty;
+
+                    if (PostHSFormat || Art.IsUOAHS())
+                        return new MultiComponentList(new BinaryReader(stream), length / 16);
+                    else
+                        return new MultiComponentList(new BinaryReader(stream), length / 12);
+                }
             }
             catch
             {

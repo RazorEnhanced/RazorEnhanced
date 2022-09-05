@@ -119,6 +119,7 @@ namespace Ultima
             "mobtypes.txt",
             "multi.idx",
             "multi.mul",
+            "multicollection.uop",
             "multimap.rle",
             "radarcol.mul",
             "skillgrp.mul",
