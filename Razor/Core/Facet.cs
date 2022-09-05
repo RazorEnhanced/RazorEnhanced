@@ -1,5 +1,7 @@
 using System;
 using Ultima;
+using Ultima.IO;
+using Ultima.IO.Resources;
 
 namespace Assistant
 {
@@ -9,18 +11,9 @@ namespace Assistant
 
     internal class Facet
     {
-        internal static Ultima.Map GetMap(int mapNum)
+        internal static UOFile GetMap(int mapNum)
         {
-            switch (mapNum)
-            {
-                case 1: return Ultima.Map.Trammel;
-                case 2: return Ultima.Map.Ilshenar;
-                case 3: return Ultima.Map.Malas;
-                case 4: return Ultima.Map.Tokuno;
-                case 5: return Ultima.Map.TerMur;
-                case 0:
-                default: return Ultima.Map.Felucca;
-            }
+            return Ultima.IO.Resources.MapLoader.GetMapFile(mapNum);
         }
 
         internal static int Parse(string name)
@@ -50,13 +43,22 @@ namespace Assistant
             }
         }
 
+        StaticTiles GetStaticTiles(int x, int y)
+        {
+            TileDataLoader tiledataLoader = TileDataLoader.Instance;
+
+            return tiledataLoader.StaticData[(x * 8)+ y];
+        }
+
         internal static HuedTile GetTileNear(int mapNum, int x, int y, int z)
         {
             try
             {
-                Ultima.Map map = GetMap(mapNum);
+                
+                Ultima.IO.UOFile map = GetMap(mapNum);
 
-                HuedTile[] tiles = map.Tiles.GetStaticTiles(x, y);
+
+                StaticTiles tiles = GetStaticTiles(x, y);
                 if (tiles != null && tiles.Length > 0)
                 {
                     foreach (HuedTile tile in tiles)

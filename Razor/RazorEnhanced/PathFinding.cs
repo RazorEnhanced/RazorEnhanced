@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Assistant;
-using Ultima;
+using Ultima.IO;
+using Ultima.IO.Resources;
 
 namespace RazorEnhanced
 {
@@ -184,7 +185,7 @@ namespace RazorEnhanced
             0x3eb, 0x3ec, 0x3ed, 0x3ee, 0x3ef, 0x3f0, 0x3f1, 0x3f2, 0x3f3, 0x3f4, 0x3f5, 0x3f6, 0x3f7, 0x3f8, 0x3f9, 0x3fa,
             0x3fb, 0x3fc, 0x3fd, 0x3fe, 0x3ff, 0x400, 0x401, 0x402, 0x403, 0x404, 0x405 };
 
-        public int Cost(List<Assistant.Item> items, Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
+        public int Cost(List<Assistant.Item> items, Point3D loc, Ultima.IO.UOFile map, Tile b, bool ignoremob, out int bZ)
         {
             int xForward = b.X, yForward = b.Y;
             
@@ -269,7 +270,7 @@ namespace RazorEnhanced
             return BigCost;
         }
 
-        private static bool Check(Map map, IEnumerable<Assistant.Item> items, int x, int y, int startTop, int startZ, bool ignoremob, out int newZ)
+        private static bool Check(UOFile map, IEnumerable<Assistant.Item> items, int x, int y, int startTop, int startZ, bool ignoremob, out int newZ)
         {
             newZ = 0;
 
@@ -555,7 +556,7 @@ namespace RazorEnhanced
             return item.Position.Z + itemData.CalcHeight <= ourZ || ourTop <= item.Position.Z;
         }
 
-        private static void GetStartZ(Point3D loc, Map map, IEnumerable<Assistant.Item> itemList, out int zLow, out int zTop)
+        private static void GetStartZ(Point3D loc, UOFile map, IEnumerable<Assistant.Item> itemList, out int zLow, out int zTop)
         {
             int xCheck = loc.X, yCheck = loc.Y;
             var landTile = map.Tiles.GetLandTile(xCheck, yCheck);
@@ -659,7 +660,7 @@ namespace RazorEnhanced
             }
         }
 
-        private static void GetAverageZ(Map map, int x, int y, ref int z, ref int avg, ref int top)
+        private static void GetAverageZ(UOFile map, int x, int y, ref int z, ref int avg, ref int top)
         {
             var zTop = map.Tiles.GetLandTile(x, y).Z;
             var zLeft = map.Tiles.GetLandTile(x, y + 1).Z;

@@ -871,8 +871,8 @@
       <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
       <Name>FastColoredTextBox</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UltimaSDK\Ultima.csproj">
-      <Project>{5d66ace6-b2a4-400f-b5a5-24525959ac5c}</Project>
+    <ProjectReference Include="..\Ultima.IO\Ultima.csproj">
+      <Project>{0730eac1-ba0d-421e-9b69-13303e082af7}</Project>
       <Name>Ultima</Name>
     </ProjectReference>
   </ItemGroup>
