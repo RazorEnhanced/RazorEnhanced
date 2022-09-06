@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace Ultima
@@ -12,7 +13,11 @@ namespace Ultima
         private static MultiComponentList[] m_Components = new MultiComponentList[MAX_MULTI_DATA_INDEX_COUNT];
         private static FileIndex m_FileIndex = new FileIndex("multi.idx", "multi.mul", "multicollection.uop", MAX_MULTI_DATA_INDEX_COUNT, 14, ".dat", -1, false);
         public static bool IsUOP { get; set; } = false;
+        public static UOFileIndex[] Entries;
+        public static UOFileUop m_File;
         public static int Count { get; private set; }
+
+        public static Multis Instance { get; set; } = new Multis();
 
         public enum ImportType
         {
@@ -22,6 +27,27 @@ namespace Ultima
             WSC,
             MULTICACHE,
             UOADESIGN
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public ref struct MultiBlock
+        {
+            public ushort ID;
+            public short X;
+            public short Y;
+            public short Z;
+            public uint Flags;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public ref struct MultiBlockNew
+        {
+            public ushort ID;
+            public short X;
+            public short Y;
+            public short Z;
+            public ushort Flags;
+            public uint Unknown;
         }
 
         public static bool PostHSFormat { get; set; }
@@ -63,22 +89,23 @@ namespace Ultima
         {
             try
             {
-                
+
                 string uopPath = Path.Combine(Files.RootDir, "MultiCollection.uop");
-                
+
                 if (System.IO.File.Exists(uopPath))
                 {
                     const int MAX_MULTI_DATA_INDEX_COUNT = 0x2200;
                     Count = MAX_MULTI_DATA_INDEX_COUNT;
                     //m_FileIndex = new FileIndex("multi.idx", "multi.mul", "multicollection.uop", MAX_MULTI_DATA_INDEX_COUNT, 14, ".dat", -1, false);
 
-                    File = new UOFileUop(uopPath, "build/multicollection/{0:D6}.bin");
+                    m_File = new UOFileUop(uopPath, "build/multicollection/{0:D6}.bin");
                     Entries = new UOFileIndex[Count];
                     IsUOP = true;
-                    return MultiComponentList.Empty;
+
+                    m_File.FillEntries(ref Entries);
                 }
 
-                    {
+                {
                     int length, extra;
                     bool patched;
                     Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
@@ -96,7 +123,26 @@ namespace Ultima
             {
                 return MultiComponentList.Empty;
             }
+
         }
+
+        static public ref UOFileIndex GetValidRefEntry(int index)
+        {
+            if (index < 0 || Entries == null || index >= Entries.Length)
+            {
+                return ref UOFileIndex.Invalid;
+            }
+
+            ref UOFileIndex entry = ref Entries[index];
+
+            if (entry.Offset < 0 || entry.Length <= 0 || entry.Offset == 0x0000_0000_FFFF_FFFF)
+            {
+                return ref UOFileIndex.Invalid;
+            }
+
+            return ref entry;
+        }
+
 
         public static void Remove(int index)
         {
@@ -227,7 +273,6 @@ namespace Ultima
                                     tempitem.m_OffsetY = (short)y;
                                     tempitem.m_OffsetZ = (short)z;
                                     tempitem.m_Unk1 = 0;
-                                    arr.Add(tempitem);
                                 }
                                 data[1] = new MultiComponentList(arr);
                                 break;
@@ -361,7 +406,7 @@ namespace Ultima
     }
 
     public sealed class MultiComponentList
-    {
+    {       
         private Point m_Min, m_Max, m_Center;
         private int m_Width, m_Height, m_maxHeight, m_Surface;
         private MTile[][][] m_Tiles;
@@ -378,6 +423,7 @@ namespace Ultima
         public int maxHeight { get { return m_maxHeight; } }
         public MultiTileEntry[] SortedTiles { get { return m_SortedTiles; } }
         public int Surface { get { return m_Surface; } }
+        public int Count { get; set; }
 
         public struct MultiTileEntry
         {
@@ -490,6 +536,7 @@ namespace Ultima
 
         public MultiComponentList(BinaryReader reader, int count)
         {
+            Count = count;
             bool useNewMultiFormat = Multis.PostHSFormat || Art.IsUOAHS();
             m_Min = m_Max = Point.Empty;
             m_SortedTiles = new MultiTileEntry[count];
@@ -582,6 +629,7 @@ namespace Ultima
 
                             itemcount++;
                         }
+                        Count = itemcount;
                         int centerx = m_Max.X - (int)(Math.Round((m_Max.X - m_Min.X) / 2.0));
                         int centery = m_Max.Y - (int)(Math.Round((m_Max.Y - m_Min.Y) / 2.0));
 
@@ -662,6 +710,7 @@ namespace Ultima
 
                             ++itemcount;
                         }
+                        Count = itemcount;
                         int centerx = m_Max.X - (int)(Math.Round((m_Max.X - m_Min.X) / 2.0));
                         int centery = m_Max.Y - (int)(Math.Round((m_Max.Y - m_Min.Y) / 2.0));
 
@@ -701,8 +750,8 @@ namespace Ultima
                         int uheight = reader.ReadInt32();
 
                         int count = reader.ReadInt32();
-                        itemcount = count;
-                        m_SortedTiles = new MultiTileEntry[itemcount];
+                        Count = count;
+                        m_SortedTiles = new MultiTileEntry[count];
                         itemcount = 0;
                         m_Min.X = 10000;
                         m_Min.Y = 10000;
@@ -826,6 +875,7 @@ namespace Ultima
                                     m_maxHeight = tempitem.m_OffsetZ;
                             }
                         }
+                        Count = itemcount;
                         if (tempitem.m_ItemID != 0xFFFF)
                             m_SortedTiles[itemcount] = tempitem;
 
@@ -858,6 +908,7 @@ namespace Ultima
         {
             m_Min = m_Max = Point.Empty;
             int itemcount = arr.Count;
+            Count = itemcount;
             m_SortedTiles = new MultiTileEntry[itemcount];
             m_Min.X = 10000;
             m_Min.Y = 10000;
@@ -940,6 +991,7 @@ namespace Ultima
                 if (itemcount == count)
                     break;
             }
+            Count = itemcount;
             int centerx = m_Max.X - (int)(Math.Round((m_Max.X - m_Min.X) / 2.0));
             int centery = m_Max.Y - (int)(Math.Round((m_Max.Y - m_Min.Y) / 2.0));
 
@@ -1005,6 +1057,241 @@ namespace Ultima
             }
         }
 
+
+        public unsafe MultiComponentList(int graphic, int center_x, int center_y)
+        {
+            graphic &= (~0x4000);
+
+            m_Center = new Point(center_x, center_y);
+
+            short minX = 0;
+            short minY = 0;
+            short maxX = 0;
+            short maxY = 0;
+
+            ref UOFileIndex entry = ref Multis.GetValidRefEntry(graphic);
+
+            Multis.m_File.SetData(entry.Address, entry.FileSize);
+            bool movable = false;
+
+            if (Multis.IsUOP)
+            {
+                if (entry.Length > 0 && entry.DecompressedLength > 0)
+                {
+                    Multis.m_File.Seek(entry.Offset);
+
+                    byte[] buffer = null;
+                    Span<byte> span = entry.DecompressedLength <= 1024 ? stackalloc byte[entry.DecompressedLength] : (buffer = System.Buffers.ArrayPool<byte>.Shared.Rent(entry.DecompressedLength));
+                    try
+                    {
+                        fixed (byte* dataPtr = span)
+                        {
+                            ZLib.Decompress
+                            (
+                                Multis.m_File.PositionAddress,
+                                entry.Length,
+                                0,
+                                (IntPtr)dataPtr,
+                                entry.DecompressedLength
+                            );
+
+                            StackDataReader reader = new StackDataReader(span.Slice(0, entry.DecompressedLength));
+                            reader.Skip(4);
+
+                            int count = reader.ReadInt32LE();
+                            Count = count;
+                            m_SortedTiles = new MultiTileEntry[count];
+
+                            int sizeOf = sizeof(Multis.MultiBlockNew);
+
+                            for (int i = 0; i < count; i++)
+                            {
+                                Multis.MultiBlockNew* block = (Multis.MultiBlockNew*)(reader.PositionAddress + i * sizeOf);
+                                if (block->Unknown != 0)
+                                {
+                                    reader.Skip((int)(block->Unknown * 4));
+                                }
+
+                                if (block->X < minX)
+                                {
+                                    minX = block->X;
+                                }
+
+                                if (block->X > maxX)
+                                {
+                                    maxX = block->X;
+                                }
+
+                                if (block->Y < minY)
+                                {
+                                    minY = block->Y;
+                                }
+
+                                if (block->Y > maxY)
+                                {
+                                    maxY = block->Y;
+                                }
+
+                                if (block->Flags == 0 || block->Flags == 0x100)
+                                {
+                                    MultiComponentList.MultiTileEntry tempitem = new MultiComponentList.MultiTileEntry();
+                                    tempitem.m_ItemID = block->ID;
+                                    tempitem.m_Flags = block->Flags;
+                                    tempitem.m_OffsetX = block->X;
+                                    tempitem.m_OffsetY = block->Y;
+                                    tempitem.m_OffsetZ = block->Z;
+                                    tempitem.m_Unk1 = 0;
+                                    m_SortedTiles[i] = tempitem;
+                                    //Multi m = Multi.Create(block->ID);
+                                    //m_OffsetX = block->X;
+                                    //m.MultiOffsetY = block->Y;
+                                    //m.MultiOffsetZ = block->Z;
+                                    //m.Hue = Hue;
+                                    //m.AlphaHue = 255;
+                                    //m.IsCustom = false;
+                                    //m.State = CUSTOM_HOUSE_MULTI_OBJECT_FLAGS.CHMOF_DONT_REMOVE;
+                                    //m.IsMovable = ItemData.IsMultiMovable;
+
+                                    //m.SetInWorldTile((ushort)(X + block->X), (ushort)(Y + block->Y), (sbyte)(Z + block->Z));
+
+                                    //house.Components.Add(m);
+
+                                    //if (m.ItemData.IsMultiMovable)
+                                    //{
+                                    //    movable = true;
+                                    //}
+                                }
+                                //else if (i == 0)
+                                //{
+                                 //   MultiGraphic = block->ID;
+                                //}
+                            }
+
+                            reader.Release();
+                            m_Max = new Point(maxX, maxY);
+                            m_Min = new Point(minX, minY);
+                            m_Width = (m_Max.X - m_Min.X) + 1;
+                            m_Height = (m_Max.Y - m_Min.Y) + 1;
+
+                            MTileList[][] tiles = new MTileList[m_Width][];
+                            m_Tiles = new MTile[m_Width][][];
+
+                            for (int x = 0; x < m_Width; ++x)
+                            {
+                                tiles[x] = new MTileList[m_Height];
+                                m_Tiles[x] = new MTile[m_Height][];
+
+                                for (int y = 0; y < m_Height; ++y)
+                                    tiles[x][y] = new MTileList();
+                            }
+
+                            for (int i = 0; i < m_SortedTiles.Length; ++i)
+                            {
+                                int xOffset = m_SortedTiles[i].m_OffsetX - m_Min.X;
+                                int yOffset = m_SortedTiles[i].m_OffsetY - m_Min.Y;
+
+                                tiles[xOffset][yOffset].Add((ushort)(m_SortedTiles[i].m_ItemID), (sbyte)m_SortedTiles[i].m_OffsetZ, (sbyte)m_SortedTiles[i].m_Flags, m_SortedTiles[i].m_Unk1);
+                            }
+                        }
+
+                    }
+                    finally
+                    {
+                        if (buffer != null)
+                        {
+                            System.Buffers.ArrayPool<byte>.Shared.Return(buffer);
+                        }
+                    }
+
+                }
+            }
+        }
+        /*
+                        fixed (byte* dataPtr = span)
+                        {
+                            ZLib.Decompress
+                            (
+                                MultiLoader.Instance.File.PositionAddress,
+                                entry.Length,
+                                0,
+                                (IntPtr)dataPtr,
+                                entry.DecompressedLength
+                            );
+
+                            StackDataReader reader = new StackDataReader(span.Slice(0, entry.DecompressedLength));
+                            reader.Skip(4);
+
+                            int count = reader.ReadInt32LE();
+
+                            int sizeOf = sizeof(MultiBlockNew);
+
+                            for (int i = 0; i < count; i++)
+                            {
+                                MultiBlockNew* block = (MultiBlockNew*)(reader.PositionAddress + i * sizeOf);
+
+                                if (block->Unknown != 0)
+                                {
+                                    reader.Skip((int)(block->Unknown * 4));
+                                }
+
+                                if (block->X < minX)
+                                {
+                                    minX = block->X;
+                                }
+
+                                if (block->X > maxX)
+                                {
+                                    maxX = block->X;
+                                }
+
+                                if (block->Y < minY)
+                                {
+                                    minY = block->Y;
+                                }
+
+                                if (block->Y > maxY)
+                                {
+                                    maxY = block->Y;
+                                }
+
+                                if (block->Flags == 0 || block->Flags == 0x100)
+                                {
+                                    Multi m = Multi.Create(block->ID);
+                                    m.MultiOffsetX = block->X;
+                                    m.MultiOffsetY = block->Y;
+                                    m.MultiOffsetZ = block->Z;
+                                    m.Hue = Hue;
+                                    m.AlphaHue = 255;
+                                    m.IsCustom = false;
+                                    m.State = CUSTOM_HOUSE_MULTI_OBJECT_FLAGS.CHMOF_DONT_REMOVE;
+                                    m.IsMovable = ItemData.IsMultiMovable;
+
+                                    m.SetInWorldTile((ushort)(X + block->X), (ushort)(Y + block->Y), (sbyte)(Z + block->Z));
+
+                                    house.Components.Add(m);
+
+                                    if (m.ItemData.IsMultiMovable)
+                                    {
+                                        movable = true;
+                                    }
+                                }
+                                else if (i == 0)
+                                {
+                                    MultiGraphic = block->ID;
+                                }
+                            }
+
+                            reader.Release();
+                        }
+                }
+                else
+                {
+                    Log.Warn($"[MultiCollection.uop] invalid entry (0x{Graphic:X4})");
+                }
+            }
+        }
+        */
+
         public MultiComponentList(MTileList[][] newtiles, int count, int width, int height)
         {
             m_Min = m_Max = Point.Empty;
@@ -1045,12 +1332,14 @@ namespace Ultima
                     }
                 }
             }
+            Count = counter;
             ConvertList();
         }
 
         private MultiComponentList()
         {
             m_Tiles = new MTile[0][][];
+            Count = 0;  
         }
 
         public void ExportToTextFile(string FileName)

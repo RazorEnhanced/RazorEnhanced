@@ -97,6 +97,9 @@ namespace Assistant
         internal static void AddMulti(Item item)
         {           
             Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
+            if (multiinfo.Count == 0)
+                multiinfo = new Ultima.MultiComponentList(item.ItemID, item.Position.X, item.Position.Y);
+
             int stairSpace = 1;
             m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X, item.Position.Y + multiinfo.Min.Y), new Point2D(item.Position.X + multiinfo.Max.X, item.Position.Y + multiinfo.Max.Y + stairSpace));
         }
