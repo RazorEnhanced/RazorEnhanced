@@ -13,6 +13,7 @@ namespace Ultima
         private static MultiComponentList[] m_Components = new MultiComponentList[MAX_MULTI_DATA_INDEX_COUNT];
         private static FileIndex m_FileIndex = new FileIndex("multi.idx", "multi.mul", "multicollection.uop", MAX_MULTI_DATA_INDEX_COUNT, 14, ".dat", -1, false);
         public static bool IsUOP { get; set; } = false;
+        public static bool MultiCollectionLoaded { get; set; } = false;
         public static UOFileIndex[] Entries;
         public static UOFileUop m_File;
         public static int Count { get; private set; }
@@ -92,7 +93,7 @@ namespace Ultima
 
                 string uopPath = Path.Combine(Files.RootDir, "MultiCollection.uop");
 
-                if (System.IO.File.Exists(uopPath))
+                if (!MultiCollectionLoaded && System.IO.File.Exists(uopPath))
                 {
                     const int MAX_MULTI_DATA_INDEX_COUNT = 0x2200;
                     Count = MAX_MULTI_DATA_INDEX_COUNT;
@@ -103,6 +104,7 @@ namespace Ultima
                     IsUOP = true;
 
                     m_File.FillEntries(ref Entries);
+                    MultiCollectionLoaded = true;
                 }
 
                 {
@@ -1068,6 +1070,10 @@ namespace Ultima
             short minY = 0;
             short maxX = 0;
             short maxY = 0;
+            Count = 0;
+
+            if (Multis.MultiCollectionLoaded == false)
+                return;
 
             ref UOFileIndex entry = ref Multis.GetValidRefEntry(graphic);
 
