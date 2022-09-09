@@ -266,7 +266,6 @@ namespace RazorEnhanced
                 StartMessage = true;
                 StopMessage = false;
                 m_Filename = filename;
-                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
                 DateTime lastModified = DateTime.MinValue;
                 FileChangeDate = lastModified;
                 m_Text = text;

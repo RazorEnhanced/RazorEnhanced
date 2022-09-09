@@ -341,10 +341,7 @@ namespace Assistant
         }
         internal void OnDisconnected()
         {
-            foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
-            {
-                scriptdata.Run = false;
-            }
+
         }
 
         internal bool UsePostHSChanges

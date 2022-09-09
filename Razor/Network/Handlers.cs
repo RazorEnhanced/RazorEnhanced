@@ -1125,6 +1125,13 @@ namespace Assistant
         {
             World.Items.Clear();
             World.Mobiles.Clear();
+            foreach (var entry in RazorEnhanced.Scripts.EnhancedScripts)
+            {
+                RazorEnhanced.Scripts.EnhancedScript script = entry.Value as RazorEnhanced.Scripts.EnhancedScript;
+                script.Stop();
+                script.Reset();
+            }
+            RazorEnhanced.Scripts.EnhancedScripts.Clear();
 
             if (Engine.ClientMajor >= 7)
                 UseNewStatus = true;

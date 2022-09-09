@@ -138,6 +138,7 @@ namespace Assistant
                 script.Stop();
                 script.Reset();
             }
+            Scripts.EnhancedScripts.Clear();
 
             // Save current selected index
             int currentSelectionIndex = 0;
