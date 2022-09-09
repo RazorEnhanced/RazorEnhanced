@@ -9387,9 +9387,6 @@ namespace Assistant
             tabs_IndexChanged(this, null); // load first tab
 
             m_Tip.Active = true;
-
-            // Immediatly run update check .. removed AutoUpdater
-            // AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
         }
 
         internal void LoadSettings()

@@ -731,6 +731,13 @@ namespace Assistant
                                 MessageBoxIcon.Error);
                         }
                     }
+                    else 
+                    {
+                        string reminderPath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced.reminder.json");
+                        DateTime reminderDate = DateTime.Now.AddDays(7);
+                        string xml = Newtonsoft.Json.JsonConvert.SerializeObject(reminderDate, Newtonsoft.Json.Formatting.Indented);
+                        File.WriteAllText(reminderPath, xml);
+                    }
                 }
             }
             else

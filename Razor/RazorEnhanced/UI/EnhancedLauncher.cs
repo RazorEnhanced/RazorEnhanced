@@ -4,6 +4,7 @@ using System.IO;
 using AutoUpdaterDotNET;
 using System.Linq;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace RazorEnhanced.UI
 {
@@ -87,6 +88,21 @@ namespace RazorEnhanced.UI
 
         private void EnhancedLauncher_Load(object sender, EventArgs e)
         {
+            DateTime reminderDate = DateTime.MinValue;
+            string reminderPath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced.reminder.json");
+            if (File.Exists(reminderPath))
+            {                
+                reminderDate = Newtonsoft.Json.JsonConvert.DeserializeObject<DateTime>(File.ReadAllText(reminderPath));
+            }
+            else 
+            {
+                reminderDate = DateTime.MinValue;
+            }
+            if (DateTime.Now > reminderDate)
+            {
+                // run update check .. removed AutoUpdater
+                AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
+            }
             RefreshGUI();
         }
 
