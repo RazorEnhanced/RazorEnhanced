@@ -1,8 +1,6 @@
 * text=auto
 *.zip filter=lfs diff=lfs merge=lfs -text
-*.c text eol=lf
-*.h text eol=lf
-*.cs text eol=lf
+* text eol=lf
 *.sln text eol=crlf
 *.csproj text eol=crlf
 *.manifest text eol=crlf
