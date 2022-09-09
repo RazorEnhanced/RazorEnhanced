@@ -1131,7 +1131,6 @@ namespace Assistant
                 script.Stop();
                 script.Reset();
             }
-            RazorEnhanced.Scripts.EnhancedScripts.Clear();
 
             if (Engine.ClientMajor >= 7)
                 UseNewStatus = true;
