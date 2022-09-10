@@ -18,25 +18,25 @@ namespace RazorEnhanced
     public class Gumps
     {
         internal static Mutex gumpIdMutex = new Mutex();
-        internal static HashSet<uint> ActiveGumpIds = new HashSet<uint>();
-        internal static bool AddGump(uint gumpID)
+        internal static void AddGump(uint gumpID)
         {
             gumpIdMutex.WaitOne(500);
             try
             {
-                return ActiveGumpIds.Add(gumpID);
+                m_incomingData[gumpID] = new IncomingGumpData();
             }
             finally
             {
                 gumpIdMutex.ReleaseMutex();
             }
         }
-        internal static bool RemoveGump(uint gumpID)
+        internal static void RemoveGump(uint gumpID)
         {
             gumpIdMutex.WaitOne(500);
             try
             {
-                return ActiveGumpIds.Remove(gumpID);
+                if (m_incomingData.ContainsKey(gumpID))
+                    m_incomingData.Remove(gumpID);                
             }
             finally
             {
@@ -48,7 +48,7 @@ namespace RazorEnhanced
             gumpIdMutex.WaitOne(500);
             try
             {
-                return ActiveGumpIds.Contains(gumpID);
+                return m_incomingData.ContainsKey(gumpID);
             }
             finally
             {
@@ -60,7 +60,7 @@ namespace RazorEnhanced
             gumpIdMutex.WaitOne(500);
             try
             {
-                return ActiveGumpIds.ToList();
+                return m_incomingData.Keys.ToList();
             }
             finally
             {
@@ -937,6 +937,42 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Get a specific line from the most gumpID if it exists. Filter by line number.
+        /// </summary>
+        /// <param name="gumpID">gump id to get data from</param>
+        /// <param name="line_num">Number of the line.</param>
+        /// <returns>Text content of the line. (empty: line not found)</returns>
+        public static string GetLine(uint gumpID, int line_num)
+        {
+            if (m_incomingData.ContainsKey(gumpID))
+            {
+                if (line_num >= 0 && line_num < m_incomingData[gumpID].gumpRawText.Count)
+                {
+                    return m_incomingData[gumpID].gumpRawText[line_num];
+                }
+            }
+            return "";
+
+            try
+            {
+                if (line_num > World.Player.CurrentGumpStrings.Count)
+                {
+                    Scripts.SendMessageScriptError("Script Error: LastGumpGetLine: Text line (" + line_num + ") not exist");
+                    return "";
+                }
+                else
+                {
+                    return World.Player.CurrentGumpStrings[line_num];
+                }
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+
+        /// <summary>
         /// Get a specific line from the most recent and still open Gump. Filter by line number.
         /// </summary>
         /// <param name="line_num">Number of the line.</param>
@@ -962,6 +998,20 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Get all text from the specified Gump if still open
+        /// </summary>
+        /// <param name="gumpID">gump id to get data from</param>
+        /// <returns>Text of the gump.</returns>
+        public static List<string> GetLineList(uint gumpID)
+        {
+            if (m_incomingData.ContainsKey(gumpID))
+            {
+                return m_incomingData[gumpID].gumpRawText;
+            }
+            return new List<string>();
+        }
+
+        /// <summary>
         /// Get all text from the most recent and still open Gump.
         /// </summary>
         /// <returns>Text of the gump.</returns>
@@ -969,6 +1019,8 @@ namespace RazorEnhanced
         {
             return World.Player.CurrentGumpStrings;
         }
+
+
 
         /// <summary>
         /// Search for text inside the most recent and still open Gump.
