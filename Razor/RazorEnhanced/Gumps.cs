@@ -17,6 +17,57 @@ namespace RazorEnhanced
     
     public class Gumps
     {
+        internal static Mutex gumpIdMutex = new Mutex();
+        internal static HashSet<uint> ActiveGumpIds = new HashSet<uint>();
+        internal static bool AddGump(uint gumpID)
+        {
+            gumpIdMutex.WaitOne(500);
+            try
+            {
+                return ActiveGumpIds.Add(gumpID);
+            }
+            finally
+            {
+                gumpIdMutex.ReleaseMutex();
+            }
+        }
+        internal static bool RemoveGump(uint gumpID)
+        {
+            gumpIdMutex.WaitOne(500);
+            try
+            {
+                return ActiveGumpIds.Remove(gumpID);
+            }
+            finally
+            {
+                gumpIdMutex.ReleaseMutex();
+            }
+        }
+        public static bool HasGump(uint gumpID)
+        {
+            gumpIdMutex.WaitOne(500);
+            try
+            {
+                return ActiveGumpIds.Contains(gumpID);
+            }
+            finally
+            {
+                gumpIdMutex.ReleaseMutex();
+            }
+        }
+        public static List<uint> AllGumpIDs()
+        {
+            gumpIdMutex.WaitOne(500);
+            try
+            {
+                return ActiveGumpIds.ToList();
+            }
+            finally
+            {
+                gumpIdMutex.ReleaseMutex();
+            }
+        }
+
         public enum GumpButtonType
         {
             Page = 0,
@@ -615,6 +666,7 @@ namespace RazorEnhanced
             World.Player.CurrentGumpStrings.Clear();
             World.Player.CurrentGumpTile.Clear();
             World.Player.CurrentGumpI = 0;
+            Gumps.RemoveGump(gumpid);
         }
 
         /// <summary>

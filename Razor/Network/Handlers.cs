@@ -2535,6 +2535,7 @@ namespace Assistant
             World.Player.CurrentGumpI = p.ReadUInt32();
             World.Player.HasGump = true;
             RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
+            RazorEnhanced.Gumps.AddGump(World.Player.CurrentGumpI);
         }
 
         internal static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
@@ -2543,12 +2544,12 @@ namespace Assistant
                 return;
 
             Serial ser = p.ReadUInt32();
-            uint tid = p.ReadUInt32();
+            uint gumpID = p.ReadUInt32();
             Gumps.GumpData gd = null;
-            if (Gumps.m_gumpData.ContainsKey(tid))
+            if (Gumps.m_gumpData.ContainsKey(gumpID))
             {
                 args.Block = true;
-                gd = Gumps.m_gumpData[tid];
+                gd = Gumps.m_gumpData[gumpID];
                 gd.switches = new List<int>();
                 gd.text = new List<string>();
                 gd.textID = new List<int>();
@@ -2560,12 +2561,13 @@ namespace Assistant
 
             List<int> switchesid = new List<int>();
 
-            RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, tid, bid);
+            RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, gumpID, bid);
 
             World.Player.HasGump = false;
             World.Player.CurrentGumpI = 0;
             World.Player.CurrentGumpStrings.Clear();
             World.Player.CurrentGumpTile.Clear();
+            RazorEnhanced.Gumps.RemoveGump(gumpID);
 
             int sc = p.ReadInt32();
             if (sc < 0 || sc > 2000)
@@ -2605,7 +2607,7 @@ namespace Assistant
             RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
             if (RazorEnhanced.ScriptRecorder.OnRecord)
-                RazorEnhanced.ScriptRecorder.instance().Record_GumpsResponse(tid, bid);
+                RazorEnhanced.ScriptRecorder.instance().Record_GumpsResponse(gumpID, bid);
 
             if (gd != null)
             {
@@ -3350,6 +3352,7 @@ namespace Assistant
 
             uint currentgumps = p.ReadUInt32(); // Player Serial
             uint currentgumpi = p.ReadUInt32(); // Gump ID
+            RazorEnhanced.Gumps.AddGump(currentgumpi);
             try
             {
                 int x = p.ReadInt32(), y = p.ReadInt32(); // Position
@@ -3423,6 +3426,7 @@ namespace Assistant
             World.Player.CurrentGumpS = currentgumps;
             World.Player.CurrentGumpI = currentgumpi;
             World.Player.HasGump = true;
+
         }
 
         private static void ParseGumpString(string[] gumpPieces, string[] gumpLines)

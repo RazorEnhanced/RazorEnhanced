@@ -1301,7 +1301,7 @@ namespace RazorEnhanced
             if (args.Length == 1)
             {
                 uint gumpid = args[0].AsUInt();
-                return (gumpid == Gumps.CurrentGump());
+                return Gumps.HasGump(gumpid);
             }
             return -1;
         }

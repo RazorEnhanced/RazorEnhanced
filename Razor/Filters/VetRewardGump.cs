@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using Assistant;
 
 namespace Assistant.Filters
@@ -44,20 +45,30 @@ namespace Assistant.Filters
                 uint tid = p.ReadUInt32();
                 int x = p.ReadInt32();
                 int y = p.ReadInt32();
-                string layout = null;
 
-                if (packetID == 0xDD)
-                {
-                    layout = p.GetCompressedReader().ReadString();
-                }
-                else
-                {
-                    ushort layoutLength = p.ReadUInt16();
-                    layout = p.ReadString(layoutLength);
-                }
+                // Decompression of Gump layout section
+                PacketReader pr = p.GetCompressedReader();
+                string layout = pr.ReadString();
 
-                if (layout != null && layout.IndexOf(m_VetRewardStr) != -1)
-                    args.Block = true;
+                int numStrings = p.ReadInt32(); // Number of text lines
+                if (numStrings < 0 || numStrings > 256)
+                    numStrings = 0;
+
+                // Parsing the uncompressed Gump Layout section
+                // It is looking for all numbers and if one is a valid index for the cliloc, will be converted into string
+                string[] numbers = Regex.Split(layout, @"\D+");
+                foreach (string value in numbers)
+                {
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        int i = int.Parse(value);
+                        if (i == 1006046)
+                        {
+                            args.Block = true;
+                            RazorEnhanced.Gumps.RemoveGump(tid);
+                        }
+                    }
+                }
             }
             catch
             {
