@@ -575,6 +575,20 @@ namespace Assistant
         }
     }
 
+    internal sealed class ShowName : Packet
+    {
+        internal ShowName(Mobile mobile)
+            : base(0x98)
+        {
+            EnsureCapacity(64);
+
+            Write((uint)0);
+            Write((uint)mobile.Serial);
+
+        }
+    }
+
+
     internal sealed class VendorSellResponse : Packet
     {
         internal VendorSellResponse(Mobile vendor, List<SellListItem> list)

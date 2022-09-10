@@ -89,6 +89,8 @@ namespace RazorEnhanced
 
     internal class SpellGrid
     {
+        internal static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
+
         static bool m_open = false;
         static bool m_save_state;
         [Serializable]
@@ -684,29 +686,35 @@ namespace RazorEnhanced
             int buttonID = gd.buttonid;
             List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
 
-            SpellGridItem item = items[buttonID];
+            if (buttonID >= 0 && buttonID < items.Count)
+            {
+                SpellGridItem item = items[buttonID];
 
-            if (item.Group == "Abilities")
-            { 
-                if (item.Spell == "Primary")
-                    Player.WeaponPrimarySA();
-                if (item.Spell == "Secondary")
-                    Player.WeaponSecondarySA();
-            }
-            else if (item.Group == "Script")
-            {
-                Misc.ScriptRun(item.Spell);
-            }
-            else if (item.Group == "Skills")
-            {
-                Player.UseSkill(item.Spell);
+                if (item.Group == "Abilities")
+                {
+                    if (item.Spell == "Primary")
+                        Player.WeaponPrimarySA();
+                    if (item.Spell == "Secondary")
+                        Player.WeaponSecondarySA();
+                }
+                else if (item.Group == "Script")
+                {
+                    Misc.ScriptRun(item.Spell);
+                }
+                else if (item.Group == "Skills")
+                {
+                    Player.UseSkill(item.Spell);
+                }
+                else
+                {
+                    Spells.Cast(item.Spell);
+                }
+                GumpSpellGrid();
             }
             else
             {
-                Spells.Cast(item.Spell);
+                Log.Warn("Invalid Index passed to SpellBarAction {0} valid range {1}-{2}", buttonID, 0, items.Count - 1);
             }
-            GumpSpellGrid();
-
         }
 
 
