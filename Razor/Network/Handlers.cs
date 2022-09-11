@@ -3059,7 +3059,7 @@ namespace Assistant
 
             World.AccountName = p.ReadStringSafe(30);
             string pass = p.ReadStringSafe(30);
-            if (pass[0] == 0xff)
+            if (pass.Length == 0 || pass[0] == 0xff)
                 pass = ""; // bug in CUO
 
             if (string.IsNullOrEmpty(pass))
