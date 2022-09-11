@@ -137,6 +137,9 @@ namespace Assistant
         static ClassicUOClient()
         {
             Client.IsOSI = false;
+            string server = RazorEnhanced.CUO.GetSetting("IP");
+            IPAddress address = Dns.GetHostAddresses(server)[0];
+            m_LastConnection = address;
         }
 
         public override void SetMapWndHandle(Form mapWnd)

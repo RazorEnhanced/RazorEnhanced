@@ -400,10 +400,7 @@ namespace Assistant
         {
             get
             {
-                if (m_LastConnection == null)
-                    return Engine.IP;     // CUO was not calling OnConnect soon enough
-                else
-                    return m_LastConnection;
+                return m_LastConnection;
             }
         }
 

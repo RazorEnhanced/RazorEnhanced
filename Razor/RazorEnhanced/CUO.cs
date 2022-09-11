@@ -348,6 +348,42 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Retrieve Current CUO Setting
+        /// </summary>
+        public static string GetSetting(string settingName)
+        {
+            if (!Client.IsOSI)
+            {
+                var currentSettingProperty = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Settings")?.GetField("GlobalSettings", BindingFlags.Public | BindingFlags.Static);
+                
+                if (currentSettingProperty != null)
+                {
+                    var settings = currentSettingProperty.GetValue(null);
+                    if (settings != null)
+                    {
+                        var SettingsClass = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Settings");
+                        PropertyInfo settingProperty = null;
+                        foreach (var settingSearch in SettingsClass.GetProperties())
+                        {
+                            if (settingSearch.Name == settingName)
+                            {
+                                settingProperty = settingSearch;
+                                break;
+                            }
+                        }
+                        if (settingProperty != null)
+                        {
+                            var xxx = settingProperty.GetValue(settings);
+                            return xxx.ToString();  
+                        }
+                    }
+                }
+                
+            }
+            return "";
+                
+        }
 
     }
 }
