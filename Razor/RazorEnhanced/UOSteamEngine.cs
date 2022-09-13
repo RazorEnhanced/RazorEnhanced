@@ -14,6 +14,7 @@ using IronPython.Compiler;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -24,6 +25,7 @@ namespace RazorEnhanced
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
         private Journal m_journal;
+        private Mutex m_mutex;
         public class StopException : Exception
         {
             public StopException() : base("Stop encountered") { }
@@ -107,6 +109,7 @@ namespace RazorEnhanced
 
         private UOSteamEngine()
         {
+            m_mutex = new Mutex();
             m_serialUseOnceIgnoreList = new List<int>();
             UOScript.Interpreter.RegisterAliasHandler("ground", AliasHandler);
             UOScript.Interpreter.RegisterAliasHandler("any", AliasHandler);
@@ -160,6 +163,7 @@ namespace RazorEnhanced
 
         public void Execute(string filename)
         {
+            m_mutex.WaitOne();
             try
             {
                 var root = Lexer.Lex(filename);
@@ -175,10 +179,15 @@ namespace RazorEnhanced
                 Misc.ScriptStop(Path.GetFileName(filename));
                 throw;
             }
+            finally
+            {
+                m_mutex.ReleaseMutex();
+            }
 
         }
         public void Execute(string[] textLines, Action<string> writer)
         {
+            m_mutex.WaitOne();
             try
             {
                 var root = Lexer.Lex(textLines);
@@ -189,9 +198,13 @@ namespace RazorEnhanced
             {
                 // nothing to do for an edit session
             }
+            finally
+            {
+                m_mutex.ReleaseMutex();
+            }
         }
 
-        public void Execute(UOScript.Script script)
+        private void Execute(UOScript.Script script)
         {
             m_journal = new Journal(100);
 
