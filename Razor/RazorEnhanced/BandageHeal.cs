@@ -278,7 +278,7 @@ namespace RazorEnhanced
 
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
                 {
-                    if (Player.BuffsExist("Mortal Strike") && (target.Serial == Player.Serial))
+                    if (World.Player.Buffs.Contains(BuffIcon.MortalStrike) && (target.Serial == Player.Serial))                        
                         return;
                 }
 
@@ -367,7 +367,7 @@ namespace RazorEnhanced
                         // First wait for buf to start, but no more than 2 seconds
                         int delay = 100;
                         int countdown = 2000;
-                        while (!Player.BuffsExist("Healing"))
+                        while (!World.Player.Buffs.Contains(BuffIcon.HealingSkill) && !World.Player.Buffs.Contains(BuffIcon.Veterinary))
                         {
                             Thread.Sleep(delay);
                             countdown -= delay;
@@ -377,7 +377,7 @@ namespace RazorEnhanced
                         countdown = 10000;
                         delay = 1000;
                         int seconds = 0;
-                        while (Player.BuffsExist("Healing"))
+                        while (World.Player.Buffs.Contains(BuffIcon.HealingSkill) || World.Player.Buffs.Contains(BuffIcon.Veterinary))
                         {
                             Thread.Sleep(delay);
                             countdown -= delay;
