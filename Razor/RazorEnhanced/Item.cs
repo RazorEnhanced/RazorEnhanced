@@ -260,7 +260,7 @@ namespace RazorEnhanced
         /// @experimental
         /// Price of a recently purchased item. (see Vendor class )
         /// </summary>
-        public int Price { get { return m_AssistantItem.Price; } }
+        public int Price { get { return m_AssistantItem.Price; } set { m_AssistantItem.Price = value; } }
 
         /// <summary>
         /// @nodoc

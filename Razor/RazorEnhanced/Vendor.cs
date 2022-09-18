@@ -10,15 +10,15 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
+
     /// <summary>
-    /// @nodoc
     /// @experimental
     /// The Vendor class allow you to read the list items purchased last.
     /// </summary>
     public class Vendor
     {
         /// <summary>@nodoc</summary>
-        static public List<Assistant.Item> LastBuyList { get; set; }
+        static public List<RazorEnhanced.Item> LastBuyList { get; set; }
 
         /// <summary>@nodoc</summary>
         static public Assistant.Mobile LastVendor { get; set; }
@@ -26,49 +26,101 @@ namespace RazorEnhanced
         /// <summary>@nodoc</summary>
         static public void StoreBuyList(PacketReader p, PacketHandlerEventArgs args)
         {
-            Assistant.Serial serial = p.ReadUInt32();
-            ushort gump = p.ReadUInt16();
+            //if (Player.Serial == null)
+            //    return;
 
-            Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
+            Assistant.Serial serial = p.ReadUInt32();
+            Item container = Items.FindBySerial(serial);
+            if (container == null)
+                return;
+
+            Assistant.Mobile vendor = Assistant.World.FindMobile(container.Container);
             if (vendor == null)
                 return;
 
-            Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
-            if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
-                return;
             Vendor.LastVendor = vendor;
-            Vendor.LastBuyList = pack.Contains;
+            Vendor.LastBuyList = container.Contains;
+
+            byte count = p.ReadByte();
+            List<Item> orderedList = Vendor.LastBuyList.ToList();
+            // This order logic is weird, but hard coded in official client
+            if (container.ItemID == 0x2af8)
+                orderedList.Sort((i1, i2) => i1.Position.X - i2.Position.X);
+            else
+                orderedList.Reverse();
+            foreach (var item in orderedList)
+            {
+                int price = p.ReadInt32();
+                item.Price = price;
+                byte nameLen = p.ReadByte();
+                string name = p.ReadUTF8StringSafe(nameLen);
+            }
         }
 
         /// <summary>
-        /// @nodoc
-        /// This method needs to be restructured/redesigned before being documented.
+        /// Attempts to buy the item specified from the vendopr specified.
+        /// <param name="vendorSerial">The Vendor to buy from</param>
+        /// <param name="itemID">the itemID of the type of item to buy</param>
+        /// <param name="amount">amount to attempt to buy</param>
+        /// <param name="maxPrice">Don't buy them if the cost exceeds this price.
+        /// default value = -1 means don't check price</param>
+        /// Returns True if a purchase is made, False otherwise
         /// </summary>
-        public static void Buy(int vendorSerial, int itemID, int amount)
+        public static bool Buy(int vendorSerial, int itemID, int amount, int maxPrice=-1)
         {
-            if (LastVendor == null)
-                return;
-            if (LastBuyList == null)
-                return;
-            if (LastVendor.Serial == vendorSerial)
+            Mobile vendor = Mobiles.FindBySerial(vendorSerial);
+            if (vendor == null)
+                return false;
+            if (Misc.Distance(Player.Position.X, Player.Position.Y, vendor.Position.X, vendor.Position.Y) > 10)
+                return false;
+            LastVendor = null;
+            LastBuyList = null;
+            Misc.WaitForContext(vendorSerial, 1000, false);
+            Misc.ContextReply(vendorSerial, "Buy");
+            int maxTries = 10;
+            while (LastVendor == null)
             {
-                List<VendorBuyItem> buyList = new List<VendorBuyItem>();
-                foreach (Assistant.Item listItem in LastBuyList)
+                Misc.Pause(100);
+                maxTries -= 1;
+                if (maxTries <= 0)
+                    break;
+            }
+            if (LastVendor == null)
+                return false;
+            if (LastBuyList == null)
+                return false;
+            if (LastVendor.Serial != vendorSerial)
+                return false;
+
+            List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+            int targetAmount = amount;
+            foreach (Item listItem in LastBuyList)
+            {
+                if (listItem.ItemID == itemID)
                 {
-                    if (listItem.ItemID == itemID)
-                    {
-                        int buyAmount = Math.Min(amount, listItem.Amount);
-                        VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, 0);
-                        buyList.Add(item);
-                        Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
-                        int price = listItem.Price * buyAmount;
-                        string message = "Buy Function: bought " + buyAmount.ToString() + " items for " + price.ToString() + " gold coins";
-                        Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendorSerial));          // Journal buffer
-                        World.Player.SendMessage(message);
-                        return;
-                    }
+                    if (maxPrice >= 0 && listItem.Price > maxPrice)
+                        continue;
+                    int buyAmount = Math.Min(targetAmount, listItem.Amount);
+                    VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                    buyList.Add(item);
+                    targetAmount -= buyAmount;
+                    if (targetAmount <= 0)
+                        break;
                 }
             }
+            if (buyList.Count > 0)
+            {
+                Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
+                int totalPrice = 0;
+                int buyAmount = 0;
+                foreach (VendorBuyItem vendorBuyItem in buyList)
+                {
+                    totalPrice += vendorBuyItem.TotalCost;
+                    buyAmount += vendorBuyItem.Amount;
+                }
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -93,7 +145,7 @@ namespace RazorEnhanced
         {
             List<BuyItem> buyList = new List<BuyItem>();
             if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
-                foreach (Assistant.Item listItem in LastBuyList)
+                foreach (Item listItem in LastBuyList)
                 {
                     BuyItem item = new BuyItem();
                     item.Serial = listItem.Serial;
@@ -828,7 +880,7 @@ namespace RazorEnhanced
             int amountScheduledToBePurchased = 0;
             List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // List defined elsewhere (do not remove if cleaning around)
             Vendor.LastVendor = vendor;
-            Vendor.LastBuyList = pack.Contains;
+            //Vendor.LastBuyList = pack.Contains;
             for (int i = 0; i < pack.Contains.Count; i++)
             {
                 if (pack.Contains[i] == null)

@@ -59,7 +59,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x21, new PacketViewerCallback(MovementRej));
             PacketHandler.RegisterServerToClientViewer(0x22, new PacketViewerCallback(MovementAck));
             PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(BeginContainerContent));
-            PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(RazorEnhanced.Vendor.StoreBuyList));
+            //PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(RazorEnhanced.Vendor.StoreBuyList));
             PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
             PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
             PacketHandler.RegisterServerToClientViewer(0x95, new PacketViewerCallback(HueResponse));
@@ -76,6 +76,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
             PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
             PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
+            PacketHandler.RegisterServerToClientViewer(0x74, new PacketViewerCallback(Vendor.StoreBuyList));
             PacketHandler.RegisterServerToClientViewer(0x76, new PacketViewerCallback(ServerChange));
             PacketHandler.RegisterServerToClientFilter(0x77, new PacketFilterCallback(MobileMoving));
             PacketHandler.RegisterServerToClientFilter(0x78, new PacketFilterCallback(MobileIncoming));

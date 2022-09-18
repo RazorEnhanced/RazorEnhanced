@@ -527,7 +527,7 @@ namespace RazorEnhanced
                 [BuffIcon.DragonSlasherFear] = "Dragon Slasher Fear",
                 [BuffIcon.Enchant] = "Enchant",
                 [BuffIcon.EnemyOfOne] = "Enemy Of One",
-                [BuffIcon.EnemyOfOneNew] = "Enemy Of One (new)",
+                [BuffIcon.EnemyOfOneDebuf] = "Enemy Of One (debuf)",
                 [BuffIcon.EssenceOfWind] = "Essence Of Wind",
                 [BuffIcon.EtherealVoyage] = "Ethereal Voyage",
                 [BuffIcon.Evasion] = "Evasion",
