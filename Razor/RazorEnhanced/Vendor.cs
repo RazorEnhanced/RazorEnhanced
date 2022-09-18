@@ -58,7 +58,74 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Attempts to buy the item specified from the vendopr specified.
+        /// Attempts to buy the item from the vendor specified.
+        /// <param name="vendorSerial">The Vendor to buy from</param>
+        /// <param name="itemName">the name of the item to buy (can be partial)</param>
+        /// <param name="amount">amount to attempt to buy</param>
+        /// <param name="maxPrice">Don't buy them if the cost exceeds this price.
+        /// default value = -1 means don't check price</param>
+        /// Returns True if a purchase is made, False otherwise
+        /// </summary>
+        public static bool Buy(int vendorSerial, string itemName, int amount, int maxPrice = -1)
+        {
+            Mobile vendor = Mobiles.FindBySerial(vendorSerial);
+            if (vendor == null)
+                return false;
+            if (Misc.Distance(Player.Position.X, Player.Position.Y, vendor.Position.X, vendor.Position.Y) > 10)
+                return false;
+            LastVendor = null;
+            LastBuyList = null;
+            Misc.WaitForContext(vendorSerial, 1000, false);
+            Misc.ContextReply(vendorSerial, "Buy");
+            int maxTries = 10;
+            while (LastVendor == null)
+            {
+                Misc.Pause(100);
+                maxTries -= 1;
+                if (maxTries <= 0)
+                    break;
+            }
+            if (LastVendor == null)
+                return false;
+            if (LastBuyList == null)
+                return false;
+            if (LastVendor.Serial != vendorSerial)
+                return false;
+
+            List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+            int targetAmount = amount;
+            foreach (Item listItem in LastBuyList)
+            {
+                if (listItem.Name.ToLower().Contains(itemName.ToLower()))
+                {
+                    if (maxPrice >= 0 && listItem.Price > maxPrice)
+                        continue;
+                    int buyAmount = Math.Min(targetAmount, listItem.Amount);
+                    VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                    buyList.Add(item);
+                    targetAmount -= buyAmount;
+                    if (targetAmount <= 0)
+                        break;
+                }
+            }
+            if (buyList.Count > 0)
+            {
+                Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
+                int totalPrice = 0;
+                int buyAmount = 0;
+                foreach (VendorBuyItem vendorBuyItem in buyList)
+                {
+                    totalPrice += vendorBuyItem.TotalCost;
+                    buyAmount += vendorBuyItem.Amount;
+                }
+                return true;
+            }
+            return false;
+        }
+
+
+        /// <summary>
+        /// Attempts to buy the item from the vendor specified.
         /// <param name="vendorSerial">The Vendor to buy from</param>
         /// <param name="itemID">the itemID of the type of item to buy</param>
         /// <param name="amount">amount to attempt to buy</param>
