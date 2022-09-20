@@ -400,7 +400,17 @@ namespace Assistant
         {
             get
             {
-                return m_LastConnection;
+                if (m_LastConnection != null)
+                    return m_LastConnection;
+
+                if (!IsOSI)
+                {
+                    string server = RazorEnhanced.CUO.GetSetting("IP");
+                    IPAddress address = Dns.GetHostAddresses(server)[0];
+                    return address;
+                }                   
+
+                return Engine.IP;
             }
         }
 
