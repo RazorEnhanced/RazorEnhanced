@@ -564,9 +564,11 @@ namespace RazorEnhanced
         {
             if (!showContext)
             {
-                var HideUntilMax = Math.Min(10000, Math.Max(1000, delay)); // at least 1 sec, but nmo more than 10 seconds
+                var HideUntilMax = 500 + Math.Min(10000, Math.Max(1000, delay)); // at least 1 sec, but nmo more than 10 seconds
                 Assistant.PacketHandlers.HideContextUntil = DateTime.Now.AddMilliseconds(HideUntilMax);
             }
+            World.Player.HasContext = false;
+            World.Player.ContextID = 0;
             List<Context> retList = new List<Context>();
             Assistant.Client.Instance.SendToServerWait(new ContextMenuRequest(serial));
             int subdelay = delay;

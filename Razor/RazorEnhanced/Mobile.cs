@@ -1090,18 +1090,18 @@ namespace RazorEnhanced
 
         // Context
 
-        public static int ContextExist(Mobile mob, string name)
+        public static int ContextExist(Mobile mob, string name, bool showContext = false)
         {
-            return ContextExist(mob.Serial, name);
+            return ContextExist(mob.Serial, name, showContext);
         }
 
-        public static int ContextExist(int serial, string name)
+        public static int ContextExist(int serial, string name, bool showContext= false)
         {
             Assistant.Mobile mobile = World.FindMobile(serial);
             if (mobile == null) // Se item non valido
                 return -1;
 
-            Misc.WaitForContext(serial, 1500);
+            Misc.WaitForContext(serial, 10000, showContext);
 
             foreach (KeyValuePair<ushort, int> entry in mobile.ContextMenu)
             {

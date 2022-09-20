@@ -18,6 +18,8 @@ namespace RazorEnhanced
     public class Vendor
     {
         /// <summary>@nodoc</summary>
+        static public List<RazorEnhanced.Item> LastSellList { get; set; }
+        static public List<RazorEnhanced.Item> LastResellList { get; set; }
         static public List<RazorEnhanced.Item> LastBuyList { get; set; }
 
         /// <summary>@nodoc</summary>
@@ -38,11 +40,30 @@ namespace RazorEnhanced
             if (vendor == null)
                 return;
 
+            if (container.Contains.Count == 0)
+                return;
+            else 
+            {
+                // for debug
+            }
             Vendor.LastVendor = vendor;
-            Vendor.LastBuyList = container.Contains;
+            Assistant.Item sell = vendor.GetItemOnLayer(Layer.ShopSell);
+            Assistant.Item resell = vendor.GetItemOnLayer(Layer.ShopResale);
+
+            if (container.AssistantLayer == Layer.ShopSell)
+                Vendor.LastSellList = container.Contains;
+            else if (container.AssistantLayer == Layer.ShopResale)
+                Vendor.LastResellList = container.Contains;
+            else if (container.AssistantLayer == Layer.ShopBuy)
+                Vendor.LastBuyList = container.Contains;
+            else
+            {
+                // debug
+            }
+
 
             byte count = p.ReadByte();
-            List<Item> orderedList = Vendor.LastBuyList.ToList();
+            List<Item> orderedList = container.Contains;
             // This order logic is weird, but hard coded in official client
             if (container.ItemID == 0x2af8)
                 orderedList.Sort((i1, i2) => i1.Position.X - i2.Position.X);
@@ -68,57 +89,86 @@ namespace RazorEnhanced
         /// </summary>
         public static bool Buy(int vendorSerial, string itemName, int amount, int maxPrice = -1)
         {
-            Mobile vendor = Mobiles.FindBySerial(vendorSerial);
-            if (vendor == null)
-                return false;
-            if (Misc.Distance(Player.Position.X, Player.Position.Y, vendor.Position.X, vendor.Position.Y) > 10)
-                return false;
-            LastVendor = null;
-            LastBuyList = null;
-            Misc.WaitForContext(vendorSerial, 1000, false);
-            Misc.ContextReply(vendorSerial, "Buy");
-            int maxTries = 10;
-            while (LastVendor == null)
+            try
             {
-                Misc.Pause(100);
-                maxTries -= 1;
-                if (maxTries <= 0)
-                    break;
-            }
-            if (LastVendor == null)
-                return false;
-            if (LastBuyList == null)
-                return false;
-            if (LastVendor.Serial != vendorSerial)
-                return false;
+                Mobile vendor = Mobiles.FindBySerial(vendorSerial);
+                if (vendor == null)
+                    return false;
+                if (Misc.Distance(Player.Position.X, Player.Position.Y, vendor.Position.X, vendor.Position.Y) > 10)
+                    return false;
+                LastVendor = null;
+                LastBuyList = null;
+                LastSellList = null;
+                LastResellList = null;
 
-            List<VendorBuyItem> buyList = new List<VendorBuyItem>();
-            int targetAmount = amount;
-            foreach (Item listItem in LastBuyList)
-            {
-                if (listItem.Name.ToLower().Contains(itemName.ToLower()))
+                Assistant.PacketHandlers.HideContextUntil = DateTime.Now.AddMilliseconds(30000); // 30 seconds, but we'll clear it at end
+                Misc.WaitForContext(vendorSerial, 10000, true);
+                Misc.ContextReply(vendorSerial, "Buy");
+                int maxTries = 10;
+                while (LastVendor == null)
                 {
-                    if (maxPrice >= 0 && listItem.Price > maxPrice)
-                        continue;
-                    int buyAmount = Math.Min(targetAmount, listItem.Amount);
-                    VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
-                    buyList.Add(item);
-                    targetAmount -= buyAmount;
-                    if (targetAmount <= 0)
+                    Misc.Pause(100);
+                    maxTries -= 1;
+                    if (maxTries <= 0)
                         break;
                 }
-            }
-            if (buyList.Count > 0)
-            {
-                Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
-                int totalPrice = 0;
-                int buyAmount = 0;
-                foreach (VendorBuyItem vendorBuyItem in buyList)
+                if (LastVendor == null)
+                    return false;
+                if (LastBuyList == null)
+                    return false;
+                if (LastVendor.Serial != vendorSerial)
+                    return false;
+
+                List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+                int targetAmount = amount;
+                foreach (Item listItem in LastBuyList)
                 {
-                    totalPrice += vendorBuyItem.TotalCost;
-                    buyAmount += vendorBuyItem.Amount;
+                    if (listItem.Name.ToLower().Contains(itemName.ToLower()))
+                    {
+                        if (maxPrice >= 0 && listItem.Price > maxPrice)
+                            continue;
+                        int buyAmount = Math.Min(targetAmount, listItem.Amount);
+                        VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                        buyList.Add(item);
+                        targetAmount -= buyAmount;
+                        if (targetAmount <= 0)
+                            break;
+                    }
                 }
-                return true;
+                if (LastResellList != null)
+                {
+                    foreach (Item listItem in LastResellList)
+                    {
+                        if (listItem.Name.ToLower().Contains(itemName.ToLower()))
+                        {
+                            if (maxPrice >= 0 && listItem.Price > maxPrice)
+                                continue;
+                            int buyAmount = Math.Min(targetAmount, listItem.Amount);
+                            VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                            buyList.Add(item);
+                            targetAmount -= buyAmount;
+                            if (targetAmount <= 0)
+                                break;
+                        }
+                    }
+                }
+
+                if (buyList.Count > 0)
+                {
+                    Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
+                    int totalPrice = 0;
+                    int buyAmount = 0;
+                    foreach (VendorBuyItem vendorBuyItem in buyList)
+                    {
+                        totalPrice += vendorBuyItem.TotalCost;
+                        buyAmount += vendorBuyItem.Amount;
+                    }
+                    return true;
+                }
+            }
+            finally 
+            {
+                Assistant.PacketHandlers.HideContextUntil = DateTime.Now; // clear it at end
             }
             return false;
         }
@@ -135,57 +185,97 @@ namespace RazorEnhanced
         /// </summary>
         public static bool Buy(int vendorSerial, int itemID, int amount, int maxPrice=-1)
         {
-            Mobile vendor = Mobiles.FindBySerial(vendorSerial);
-            if (vendor == null)
-                return false;
-            if (Misc.Distance(Player.Position.X, Player.Position.Y, vendor.Position.X, vendor.Position.Y) > 10)
-                return false;
-            LastVendor = null;
-            LastBuyList = null;
-            Misc.WaitForContext(vendorSerial, 1000, false);
-            Misc.ContextReply(vendorSerial, "Buy");
-            int maxTries = 10;
-            while (LastVendor == null)
+            try
             {
-                Misc.Pause(100);
-                maxTries -= 1;
-                if (maxTries <= 0)
-                    break;
-            }
-            if (LastVendor == null)
-                return false;
-            if (LastBuyList == null)
-                return false;
-            if (LastVendor.Serial != vendorSerial)
-                return false;
+                Mobile vendor = Mobiles.FindBySerial(vendorSerial);
+                if (vendor == null)
+                    return false;
+                if (Misc.Distance(Player.Position.X, Player.Position.Y, vendor.Position.X, vendor.Position.Y) > 10)
+                    return false;
+                LastVendor = null;
+                LastBuyList = null;
+                LastSellList = null;
+                LastResellList = null;
+                Assistant.PacketHandlers.HideContextUntil = DateTime.Now.AddMilliseconds(30000); // 30 seconds, but we'll clear it at end
+                List<Misc.Context> contexts = Misc.WaitForContext(vendorSerial, 10000, true);
+                int buyIndex = -1;
+                foreach (Misc.Context context in contexts)
+                {
+                    if (context.Entry == "Buy")
+                        buyIndex = context.Response;
+                }
+                if (buyIndex >= 0)
+                {
+                    Assistant.Client.Instance.SendToServerWait(new ContextMenuResponse(vendorSerial, (ushort)buyIndex));
+                    World.Player.HasContext = false;
+                    World.Player.ContextID = 0;
+                    // Misc.ContextReply(vendorSerial, "Buy");
+                    int maxTries = 10;
+                    while (LastVendor == null)
+                    {
+                        Misc.Pause(100);
+                        maxTries -= 1;
+                        if (maxTries <= 0)
+                            break;
+                    }
+                    if (LastVendor == null)
+                        return false;
+                    if (LastBuyList == null)
+                        return false;
+                    if (LastVendor.Serial != vendorSerial)
+                        return false;
 
-            List<VendorBuyItem> buyList = new List<VendorBuyItem>();
-            int targetAmount = amount;
-            foreach (Item listItem in LastBuyList)
-            {
-                if (listItem.ItemID == itemID)
-                {
-                    if (maxPrice >= 0 && listItem.Price > maxPrice)
-                        continue;
-                    int buyAmount = Math.Min(targetAmount, listItem.Amount);
-                    VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
-                    buyList.Add(item);
-                    targetAmount -= buyAmount;
-                    if (targetAmount <= 0)
-                        break;
+                    List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+                    int targetAmount = amount;
+                    foreach (Item listItem in LastBuyList)
+                    {
+                        if (listItem.ItemID == itemID)
+                        {
+                            if (maxPrice >= 0 && listItem.Price > maxPrice)
+                                continue;
+                            int buyAmount = Math.Min(targetAmount, listItem.Amount);
+                            VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                            buyList.Add(item);
+                            targetAmount -= buyAmount;
+                            if (targetAmount <= 0)
+                                break;
+                        }
+                    }
+                    if (LastResellList != null)
+                    {
+                        foreach (Item listItem in LastResellList)
+                        {
+                            if (listItem.ItemID == itemID)
+                            {
+                                if (maxPrice >= 0 && listItem.Price > maxPrice)
+                                    continue;
+                                int buyAmount = Math.Min(targetAmount, listItem.Amount);
+                                VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                                buyList.Add(item);
+                                targetAmount -= buyAmount;
+                                if (targetAmount <= 0)
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (buyList.Count > 0)
+                    {
+                        Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
+                        int totalPrice = 0;
+                        int buyAmount = 0;
+                        foreach (VendorBuyItem vendorBuyItem in buyList)
+                        {
+                            totalPrice += vendorBuyItem.TotalCost;
+                            buyAmount += vendorBuyItem.Amount;
+                        }
+                        return true;
+                    }
                 }
             }
-            if (buyList.Count > 0)
+            finally 
             {
-                Assistant.Client.Instance.SendToServer(new VendorBuyResponse(vendorSerial, buyList));
-                int totalPrice = 0;
-                int buyAmount = 0;
-                foreach (VendorBuyItem vendorBuyItem in buyList)
-                {
-                    totalPrice += vendorBuyItem.TotalCost;
-                    buyAmount += vendorBuyItem.Amount;
-                }
-                return true;
+                Assistant.PacketHandlers.HideContextUntil = DateTime.Now; // clear it at end
             }
             return false;
         }
@@ -212,7 +302,7 @@ namespace RazorEnhanced
         {
             List<BuyItem> buyList = new List<BuyItem>();
             if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
-                foreach (Item listItem in LastBuyList)
+                foreach (Item listItem in LastSellList)
                 {
                     BuyItem item = new BuyItem();
                     item.Serial = listItem.Serial;
