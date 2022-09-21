@@ -219,11 +219,22 @@ namespace Assistant
             {
                 // On OSI the amount value is used for other purposes if an item is declared not stackable in files.
                 try // avoid crash if some bad happen in Ultima.dll
-                {
+                {                    
                     if ((RazorEnhanced.Statics.GetItemData(ItemID).Flags & Ultima.TileFlag.Generic) != 0)
                         return m_Amount;
                     if (ItemID == 0x2006)
                         return m_Amount;
+                    if (Container != null)
+                    {
+                        Item cont = Container as Item;
+                        if (cont != null)
+                        {
+                            if (cont.Layer == Layer.ShopBuy ||
+                                cont.Layer == Layer.ShopResale ||
+                                cont.Layer == Layer.ShopSell)
+                                return m_Amount;                             
+                        }
+                    }
                 }
                 catch
                 {

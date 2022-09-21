@@ -869,9 +869,13 @@ namespace Assistant
             {
                 Serial serial = p.ReadUInt32();
                 // serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
-                UInt16 itemID_pre = p.ReadUInt16();
-                sbyte itemID_byte = p.ReadSByte(); // signed, itemID offset
-                UInt16 itemID = (UInt16)(itemID_pre + itemID_byte);
+                UInt16 itemID = (UInt16)(p.ReadUInt16() + p.ReadSByte());
+                ushort amount = Math.Max(p.ReadUInt16(), (ushort)1);
+                Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
+                byte gridNum = 0;
+                if (Engine.UsePostKRPackets)
+                    gridNum = p.ReadByte();
+                Serial cont = p.ReadUInt32();
 
                 Item item = World.FindItem(serial);
                 if (item == null)
@@ -880,6 +884,9 @@ namespace Assistant
                     item.IsNew = true;
                     item.AutoStack = false;
                 }
+                item.Amount = amount;
+                item.Position = position;
+                item.GridNum = gridNum;
                 /*  else
                     {
                         item.CancelRemove();
@@ -889,14 +896,6 @@ namespace Assistant
                     continue;
 
                 item.ItemID = itemID;
-                item.Amount = p.ReadUInt16();
-                if (item.Amount == 0)
-                    item.Amount = 1;
-                item.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
-                if (Engine.UsePostKRPackets)
-                    item.GridNum = p.ReadByte();
-                Serial cont = p.ReadUInt32();
-
                 if (cont.IsItem)
                 {
                     Item container = World.FindItem(cont);
