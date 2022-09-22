@@ -343,19 +343,12 @@ namespace RazorEnhanced
                     var propType = ReplacePythonTypes(prop.propertyType,true);
 
                     //Property + Docstrings
-                    propName  = $"{IDT1}@property\n";
-                    propName += $"{IDT1}def {prop.itemName}(self) -> {propType}: ";
+                    propName = $"{IDT1}{prop.itemName}: {propType}";
                     if (propDescription.Trim().Length > 0)
                     {
-                        propName += $"\n{IDT2}{Q3}{propDescription}{Q3}";
-                        propName += $"\n{IDT2}";
+                        propName += $"\n{IDT1}{Q3}{propDescription}{Q3}";
+                        propName += $"\n{IDT1}";
                     }
-                    propName += $"return {propType.Trim('"')}() \n";
-                    
-
-                    propName += $"{IDT1}\n";
-                    propName += $"{IDT1}@{prop.itemName}.setter\n";
-                    propName += $"{IDT1}def {prop.itemName}(self, {prop.itemName}: {propType}): pass\n";
                     propsListPy.Add(propName);
                 }
 
@@ -390,6 +383,9 @@ namespace RazorEnhanced
                         }
                         else {
                             methodParam += $"Union[{ String.Join(", ", paramsSignTypes) }]";
+                            if(paramsSignTypes.Contains("None")){
+                                methodParam += " = None";
+                            }
                         }
                         methodParamsSign.Add(methodParam);
 
