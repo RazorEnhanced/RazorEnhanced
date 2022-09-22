@@ -1567,6 +1567,243 @@ namespace RazorEnhanced
             }
         }
 
+
+        // Find item matchind any of a list of ids
+        /// <summary>
+        /// Find a single Item matching specific list of ItemID, Color and Container. 
+        /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
+        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
+        /// </summary>
+        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
+        /// <param name="color">Color filter. (-1: any, 0: natural )</param>
+        /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="recursive">
+        /// Search subcontainers. 
+        ///     True: all subcontainers
+        ///     False: only main
+        ///     1,2,n: Maximum subcontainer depth
+        /// </param>
+        /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
+        /// <returns>The Item matching the criteria.</returns>
+        public static Item FindByID(List<int> itemids, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            if (container != -1)  // search in specific container
+            {
+                // range should be # of packs deep to search .. but not implemented
+                Item cont = FindBySerial(container);
+                if (cont == null) // not valid serial or container not found
+                {
+                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    return null;
+                }
+                foreach (Item i in cont.Contains)
+                {
+                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+
+                    if (itemids.Contains(i.ItemID)) // check item id
+                    {
+                        if (color != -1) // color -1 ALL
+                        {
+                            if (i.Hue == color)
+                                return i;
+                        }
+                        else
+                        {
+                            return i;
+                        }
+                    }
+                    else if (i.IsContainer && range != 0)
+                    {
+                        Item recursItem = FindByID(itemids, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
+                        if (recursItem != null)
+                            return recursItem;
+                    }
+                }
+                return null; // Return null if no item found
+            }
+            else  // Search in world
+            {
+                Items.Filter itemFilter = new Items.Filter
+                {
+                    Enabled = true
+                };
+                itemFilter.Graphics.AddRange(itemids);
+                itemFilter.RangeMax = range;
+                itemFilter.CheckIgnoreObject = considerIgnoreList;
+
+                if (color != -1)
+                    itemFilter.Hues.Add(color);
+
+                List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+                foreach (Item found in containeritem)  // Return first one found
+                    return found;
+
+                return null;
+            }
+        }
+
+
+        // Find all items matching an id
+        /// <summary>
+        /// Find a list of Item matching specific list of ItemID, Color and Container. 
+        /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
+        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
+        /// </summary>
+        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
+        /// <param name="color">Color filter. (-1: any, 0: natural )</param>
+        /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="recursive">
+        /// Search subcontainers. 
+        ///     True: all subcontainers
+        ///     False: only main
+        ///     1,2,n: Maximum subcontainer depth
+        /// </param>
+        /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
+        /// <returns>The list of Items matching the criteria.</returns>
+        public static IronPython.Runtime.PythonList FindAllByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            if (container != -1)  // search in specific container
+            {
+                // range should be # of packs deep to search .. but not implemented
+                Item cont = FindBySerial(container);
+                if (cont == null) // not valid serial or container not found
+                {
+                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    return null;
+                }
+                IronPython.Runtime.PythonList returnList = new IronPython.Runtime.PythonList();
+                foreach (Item i in cont.Contains)
+                {
+                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+
+                    if (i.ItemID == itemid) // check item id
+                    {
+                        if (color != -1) // color -1 ALL
+                        {
+                            if (i.Hue == color)
+                                returnList.Add(i);
+                        }
+                        else
+                        {
+                            returnList.Add(i);
+                        }
+                    }
+                    else if (i.IsContainer && range != 0)
+                    {
+                        var recursItems = FindAllByID(itemid, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
+                        if (recursItems != null)
+                            returnList += recursItems;
+                    }
+                }
+                return returnList; // Return null if no item found
+            }
+            else  // Search in world
+            {
+                Items.Filter itemFilter = new Items.Filter
+                {
+                    Enabled = true
+                };
+                itemFilter.Graphics.Add(itemid);
+                itemFilter.RangeMax = range;
+                itemFilter.CheckIgnoreObject = considerIgnoreList;
+
+                if (color != -1)
+                    itemFilter.Hues.Add(color);
+
+                var returnList = new IronPython.Runtime.PythonList();
+                foreach(var item in RazorEnhanced.Items.ApplyFilter(itemFilter))
+                {
+                    returnList.Add(item);
+                }
+                
+                return returnList;
+            }
+        }
+
+
+
+        // Find all items matching any of a list of ids
+        /// <summary>
+        /// Find a List of Items matching specific list of ItemID, Color and Container. 
+        /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
+        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
+        /// </summary>
+        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
+        /// <param name="color">Color filter. (-1: any, 0: natural )</param>
+        /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="recursive">
+        /// Search subcontainers. 
+        ///     True: all subcontainers
+        ///     False: only main
+        ///     1,2,n: Maximum subcontainer depth
+        /// </param>
+        /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
+        /// <returns>The Item matching the criteria.</returns>
+        public static IronPython.Runtime.PythonList FindAllByID(IronPython.Runtime.PythonList itemids, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            if (container != -1)  // search in specific container
+            {
+                // range should be # of packs deep to search .. but not implemented
+                Item cont = FindBySerial(container);
+                if (cont == null) // not valid serial or container not found
+                {
+                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    return null;
+                }
+                IronPython.Runtime.PythonList returnList = new IronPython.Runtime.PythonList();
+                foreach (Item i in cont.Contains)
+                {
+                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+
+                    if (itemids.Contains(i.ItemID)) // check item id
+                    {
+                        if (color != -1) // color -1 ALL
+                        {
+                            if (i.Hue == color)
+                                returnList.Add(i);
+                        }
+                        else
+                        {
+                            returnList.Add(i);
+                        }
+                    }
+                    else if (i.IsContainer && range != 0)
+                    {
+                        var recursItems = FindAllByID(itemids, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
+                        if (recursItems != null)                        
+                            returnList += recursItems;
+                    }
+                }
+                return returnList; // Return null if no item found
+            }
+            else  // Search in world
+            {
+                Items.Filter itemFilter = new Items.Filter
+                {
+                    Enabled = true
+                };
+                foreach(var itemID in itemids)
+                    itemFilter.Graphics.Add((int)itemID);
+                itemFilter.RangeMax = range;
+                itemFilter.CheckIgnoreObject = considerIgnoreList;
+                if (color != -1)
+                    itemFilter.Hues.Add(color);
+
+                var returnList = new IronPython.Runtime.PythonList();
+                foreach (var item in RazorEnhanced.Items.ApplyFilter(itemFilter))
+                {
+                    returnList.Add(item);
+                }
+
+                return returnList;
+            }
+        }
+
+
         // Find item by Name
         /// <summary>
         /// Find a single Item matching specific Name, Color and Container. 
