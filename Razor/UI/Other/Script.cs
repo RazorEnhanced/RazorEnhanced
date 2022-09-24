@@ -813,7 +813,6 @@ namespace Assistant
             {
                 string filename = scriptListView.SelectedItems[0].Text;
                 string fullPathName = Scripts.GetFullPathForScript(filename);
-                scriptFilePath.Text = filename;
 
                 if (scriptListView.SelectedItems[0].SubItems[2].Text == "Yes")
                     scriptloopmodecheckbox.Checked = true;
