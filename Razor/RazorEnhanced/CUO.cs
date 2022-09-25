@@ -189,6 +189,62 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Invokes the CloseWithRightClick function inside the CUO code
+        /// First T-Map is retrieved, and then only closed if it is a map
+        /// Returns True if a map was closed, else False
+        /// </summary>
+        public static bool CloseTMap()
+        {
+            bool result = false;
+            if (!Client.IsOSI)
+            {
+                // WorldMapGump worldMap = UIManager.GetGump<WorldMapGump>();
+                var getAllGumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetProperty("Gumps", BindingFlags.Public | BindingFlags.Static);
+                if (getAllGumps != null)
+                {
+                    var listOfGumps = getAllGumps.GetValue(null);
+                    if (listOfGumps != null)
+                    {
+                        IEnumerable<Object> temp = listOfGumps as IEnumerable<Object>;
+                        foreach (var gump in temp)
+                        {
+                            if (gump != null)
+                            {
+                                var gumpClass = gump.GetType();
+                                if (gumpClass.FullName == "ClassicUO.Game.UI.Gumps.MapGump")
+                                {
+                                    var MapGump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
+                                    if (MapGump != null)
+                                    {
+                                        System.Reflection.MethodInfo method = null;
+                                        var allMethods = MapGump.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
+                                        foreach (var methSearch in allMethods)
+                                        {
+                                            if (methSearch.Name == "CloseWithRightClick")
+                                            {
+                                                method = methSearch;
+                                                break;
+                                            }
+                                        }
+                                        if (method != null)
+                                        {
+                                            var parameters = new object[0] {  };
+                                            method.Invoke(gump, parameters);
+                                            result = true;
+                                            Thread.Sleep(50);
+                                            return result;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
 
 
 
