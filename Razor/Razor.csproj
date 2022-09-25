@@ -294,7 +294,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\Config.cs" />
+    <Compile Include="RazorEnhanced\Config.cs" />
     <Compile Include="Core\SkillIcon.cs" />
     <Compile Include="Core\DLLImport.cs" />
     <Compile Include="Core\TitleBar.cs" />
@@ -336,28 +336,28 @@
     <Compile Include="Network\UoMod.cs" />
     <Compile Include="Network\UoWarper.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="RazorEnhanced\Source\AutoDoc.cs" />
-    <Compile Include="RazorEnhanced\Source\Constants.cs" />
-    <Compile Include="RazorEnhanced\Source\CSharpEngine.cs" />
-    <Compile Include="RazorEnhanced\Source\CUO.cs" />
-    <Compile Include="RazorEnhanced\Source\EncodedSpeech.cs" />
-    <Compile Include="RazorEnhanced\Source\PythonEngine.cs" />
-    <Compile Include="RazorEnhanced\Source\ScriptRecorder.cs" />
-    <Compile Include="RazorEnhanced\Source\PathFinding.cs" />
-    <Compile Include="RazorEnhanced\Source\Multi.cs" />
-    <Compile Include="RazorEnhanced\Source\SeasonManager.cs" />
-    <Compile Include="RazorEnhanced\Source\Sound.cs" />
-    <Compile Include="RazorEnhanced\Source\SpellGrid.cs">
+    <Compile Include="RazorEnhanced\AutoDoc.cs" />
+    <Compile Include="RazorEnhanced\Constants.cs" />
+    <Compile Include="RazorEnhanced\CSharpEngine.cs" />
+    <Compile Include="RazorEnhanced\CUO.cs" />
+    <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
+    <Compile Include="RazorEnhanced\PythonEngine.cs" />
+    <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
+    <Compile Include="RazorEnhanced\PathFinding.cs" />
+    <Compile Include="RazorEnhanced\Multi.cs" />
+    <Compile Include="RazorEnhanced\SeasonManager.cs" />
+    <Compile Include="RazorEnhanced\Sound.cs" />
+    <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\SyncPrimitives.cs" />
-    <Compile Include="RazorEnhanced\Source\Timer.cs">
+    <Compile Include="RazorEnhanced\SyncPrimitives.cs" />
+    <Compile Include="RazorEnhanced\Timer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\Statics.cs" />
-    <Compile Include="RazorEnhanced\Source\DragDropManager.cs" />
-    <Compile Include="RazorEnhanced\Source\Profiles.cs" />
-    <Compile Include="RazorEnhanced\Source\SpecialMoves.cs">
+    <Compile Include="RazorEnhanced\Statics.cs" />
+    <Compile Include="RazorEnhanced\DragDropManager.cs" />
+    <Compile Include="RazorEnhanced\Profiles.cs" />
+    <Compile Include="RazorEnhanced\SpecialMoves.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Item.cs">
@@ -425,24 +425,24 @@
     <Compile Include="Core\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\HotKey.cs" />
-    <Compile Include="RazorEnhanced\Source\DPSMeter.cs" />
-    <Compile Include="RazorEnhanced\Source\ToolBar.cs">
+    <Compile Include="RazorEnhanced\HotKey.cs" />
+    <Compile Include="RazorEnhanced\DPSMeter.cs" />
+    <Compile Include="RazorEnhanced\ToolBar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\BandageHeal.cs" />
-    <Compile Include="RazorEnhanced\Source\Restock.cs" />
-    <Compile Include="RazorEnhanced\Source\Filters.cs" />
-    <Compile Include="RazorEnhanced\Source\JsonData.cs" />
-    <Compile Include="RazorEnhanced\Source\Target.cs" />
-    <Compile Include="RazorEnhanced\Source\Journal.cs">
+    <Compile Include="RazorEnhanced\BandageHeal.cs" />
+    <Compile Include="RazorEnhanced\Restock.cs" />
+    <Compile Include="RazorEnhanced\Filters.cs" />
+    <Compile Include="RazorEnhanced\JsonData.cs" />
+    <Compile Include="RazorEnhanced\Target.cs" />
+    <Compile Include="RazorEnhanced\Journal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\AutoLoot.cs" />
-    <Compile Include="RazorEnhanced\Source\Dress.cs" />
-    <Compile Include="RazorEnhanced\Source\GumpInspector.cs" />
-    <Compile Include="RazorEnhanced\Source\Gumps.cs" />
-    <Compile Include="RazorEnhanced\Source\Shards.cs" />
+    <Compile Include="RazorEnhanced\AutoLoot.cs" />
+    <Compile Include="RazorEnhanced\Dress.cs" />
+    <Compile Include="RazorEnhanced\GumpInspector.cs" />
+    <Compile Include="RazorEnhanced\Gumps.cs" />
+    <Compile Include="RazorEnhanced\Shards.cs" />
     <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -527,27 +527,27 @@
     <Compile Include="RazorEnhanced\UI\EnhancedLauncher.Designer.cs">
       <DependentUpon>EnhancedLauncher.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\Friend.cs" />
+    <Compile Include="RazorEnhanced\Friend.cs" />
     <Compile Include="RazorEnhanced\UI\RazorFastColoredTextBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\UI\RazorFastColoredTextBox.Designer.cs">
       <DependentUpon>RazorFastColoredTextBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\UOSteamEngine.cs" />
-    <Compile Include="RazorEnhanced\Source\Vendor.cs" />
-    <Compile Include="RazorEnhanced\Source\Organizer.cs" />
-    <Compile Include="RazorEnhanced\Source\Scavenger.cs" />
-    <Compile Include="RazorEnhanced\Source\EnhancedEntity.cs" />
-    <Compile Include="RazorEnhanced\Source\Geometry.cs" />
-    <Compile Include="RazorEnhanced\Source\Item.cs" />
-    <Compile Include="RazorEnhanced\Source\ItemID.cs" />
+    <Compile Include="RazorEnhanced\UOSteamEngine.cs" />
+    <Compile Include="RazorEnhanced\Vendor.cs" />
+    <Compile Include="RazorEnhanced\Organizer.cs" />
+    <Compile Include="RazorEnhanced\Scavenger.cs" />
+    <Compile Include="RazorEnhanced\EnhancedEntity.cs" />
+    <Compile Include="RazorEnhanced\Geometry.cs" />
+    <Compile Include="RazorEnhanced\Item.cs" />
+    <Compile Include="RazorEnhanced\ItemID.cs" />
     <Compile Include="Core\Buffs.cs" />
-    <Compile Include="RazorEnhanced\Source\Misc.cs" />
-    <Compile Include="RazorEnhanced\Source\Scripts.cs" />
-    <Compile Include="RazorEnhanced\Source\Settings.cs" />
-    <Compile Include="RazorEnhanced\Source\Spells.cs" />
-    <Compile Include="RazorEnhanced\Source\Player.cs" />
+    <Compile Include="RazorEnhanced\Misc.cs" />
+    <Compile Include="RazorEnhanced\Scripts.cs" />
+    <Compile Include="RazorEnhanced\Settings.cs" />
+    <Compile Include="RazorEnhanced\Spells.cs" />
+    <Compile Include="RazorEnhanced\Player.cs" />
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -575,8 +575,8 @@
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.Designer.cs">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\Source\Mobile.cs" />
-    <Compile Include="RazorEnhanced\Source\Property.cs" />
+    <Compile Include="RazorEnhanced\Mobile.cs" />
+    <Compile Include="RazorEnhanced\Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

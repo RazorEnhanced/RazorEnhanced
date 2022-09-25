@@ -68,8 +68,8 @@ namespace RazorEnhanced.UI
         internal void UpdateGUI()
         {
             portLabel.Text = portLabel.Text.Replace(" ", "");
-            uint port;
-            UInt32.TryParse(portLabel.Text, out port);
+            int port;
+            Int32.TryParse(portLabel.Text, out port);
 
             hostLabel.Text = hostLabel.Text.Replace(" ", "");
 
