@@ -141,22 +141,37 @@ namespace RazorEnhanced
         uint AliasHandler(string alias)
         {
             int everywhere = -1;
-            switch (alias.ToLower())
+            try
             {
-                case "ground": return (uint)everywhere;
-                case "any": return (uint)everywhere;
-                case "backpack": return (uint)Player.Backpack.Serial;
-                case "self": return (uint)Player.Serial;
-                case "bank": return (uint)Player.Bank.Serial;
-                case "mount": return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ?
-                case "lefthand": return (uint)Player.GetItemOnLayer("LeftHand").Serial;
-                case "righthand": return (uint)Player.GetItemOnLayer("RightHand").Serial;
-                case "lasttarget": return (uint)RazorEnhanced.Target.GetLast();
-                case "last": return (uint)RazorEnhanced.Target.GetLast();
-                    //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
-
-
+                switch (alias.ToLower())
+                {
+                    case "ground": return (uint)everywhere;
+                    case "any": return (uint)everywhere;
+                    case "backpack": return (uint)Player.Backpack.Serial;
+                    case "self": return (uint)Player.Serial;
+                    case "bank": return (uint)Player.Bank.Serial;
+                    case "mount": return (uint)Player.Mount.Serial; //TODO: is this the real mount serial? in every server ?
+                    case "lefthand":
+                        {
+                            Item i = Player.GetItemOnLayer("LeftHand");
+                            if (i != null)
+                                return (uint)i.Serial;
+                            return 0;
+                        }
+                    case "righthand":
+                        {
+                            Item i = Player.GetItemOnLayer("RightHand");
+                            if (i != null)
+                                return (uint)i.Serial;
+                            return 0;
+                        }
+                    case "lasttarget": return (uint)RazorEnhanced.Target.GetLast();
+                    case "last": return (uint)RazorEnhanced.Target.GetLast();
+                        //case "lastobject": return (uint)Items.LastLobject(); // TODO: Doesn't look like RE there is a way in RE to get the "last object" Serial
+                }
             }
+            catch (Exception e)
+            { }
             return 0;
         }
 
