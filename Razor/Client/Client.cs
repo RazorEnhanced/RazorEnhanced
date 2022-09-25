@@ -183,7 +183,7 @@ namespace Assistant
             string clientPath = selected.ClientPath;
             string dataDir = selected.ClientFolder;
             string addr = selected.Host;
-            int port = selected.Port;
+            uint port = selected.Port;
 
             Ultima.Files.Directory = selected.ClientFolder;
             if (!Language.Load("ENU"))
@@ -247,7 +247,7 @@ namespace Assistant
             //SplashScreen.Start();
             //m_ActiveWnd = SplashScreen.Instance;
 
-            Assistant.Client.Instance.SetConnectionInfo(Engine.IP, port);
+            Assistant.Client.Instance.SetConnectionInfo(Engine.IP, (int)port);
 
             Ultima.Multis.PostHSFormat = UsePostHSChanges;
 

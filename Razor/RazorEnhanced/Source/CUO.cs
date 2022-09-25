@@ -194,12 +194,40 @@ namespace RazorEnhanced
         /// First T-Map is retrieved, and then only closed if it is a map
         /// Returns True if a map was closed, else False
         /// </summary>
+        /// 
         public static bool CloseTMap()
         {
             bool result = false;
             if (!Client.IsOSI)
             {
-                // WorldMapGump worldMap = UIManager.GetGump<WorldMapGump>();
+                System.Reflection.PropertyInfo property = null;
+                System.Reflection.MethodInfo method = null;
+                var MapGump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
+                if (MapGump != null)
+                {
+                    foreach (var propSearch in MapGump.GetProperties())
+                    {
+                        if (propSearch.Name == "IsDisposed")
+                        {
+                            property = propSearch;
+                            break;
+                        }
+                    }
+                    var allMethods = MapGump.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
+                    foreach (var methSearch in allMethods)
+                    {
+                        if (methSearch.Name == "CloseWithRightClick")
+                        {
+                            method = methSearch;
+                            break;
+                        }
+                    }
+                }
+                if (property == null)
+                    return false;
+                if (method == null)
+                    return false;
+
                 var getAllGumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetProperty("Gumps", BindingFlags.Public | BindingFlags.Static);
                 if (getAllGumps != null)
                 {
@@ -207,37 +235,28 @@ namespace RazorEnhanced
                     if (listOfGumps != null)
                     {
                         IEnumerable<Object> temp = listOfGumps as IEnumerable<Object>;
-                        foreach (var gump in temp)
-                        {
-                            if (gump != null)
+                        lock (temp) {
+                            foreach (var gump in temp.ToArray())
                             {
-                                var gumpClass = gump.GetType();
-                                if (gumpClass.FullName == "ClassicUO.Game.UI.Gumps.MapGump")
+                                if (gump != null)
                                 {
-                                    var MapGump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
-                                    if (MapGump != null)
+                                    var gumpClass = gump.GetType();
+                                    if (gumpClass.FullName == "ClassicUO.Game.UI.Gumps.MapGump")
                                     {
-                                        System.Reflection.MethodInfo method = null;
-                                        var allMethods = MapGump.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
-                                        foreach (var methSearch in allMethods)
+                                        lock (gump)
                                         {
-                                            if (methSearch.Name == "CloseWithRightClick")
-                                            {
-                                                method = methSearch;
-                                                break;
-                                            }
+                                            bool disposed = (bool)property.GetValue(gump);
+                                            if (disposed)
+                                                continue;
+                                            //var parameters = new object[0] { };
+                                            method.Invoke(gump, null);
                                         }
-                                        if (method != null)
-                                        {
-                                            var parameters = new object[0] {  };
-                                            method.Invoke(gump, parameters);
-                                            result = true;
-                                            Thread.Sleep(50);
-                                            return result;
-                                        }
+                                        result = true;
+                                        Thread.Sleep(50);
+                                        return result;
                                     }
-
                                 }
+
                             }
                         }
                     }
@@ -245,8 +264,6 @@ namespace RazorEnhanced
             }
             return result;
         }
-
-
 
         /// <summary>
         /// Set a bool Config property in CUO by name
