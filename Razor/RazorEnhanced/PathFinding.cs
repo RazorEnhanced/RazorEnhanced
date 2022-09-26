@@ -928,6 +928,34 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Go to the given coordinates using Razor pathfinding.
+        /// </summary>
+        public static void PathFindTo(RazorEnhanced.Point3D destination)
+        {
+            PathFindTo(destination.X, destination.Y, destination.Z);           
+        }        
+
+        /// <summary>
+        /// Go to the given coordinates using Razor pathfinding.
+        /// </summary>
+        /// <param name="x">X map coordinates or Point3D</param>
+        /// <param name="y">Y map coordinates</param>
+        /// <param name="z">Z map coordinates</param>
+        public static void PathFindTo(int x, int y, int z=0)
+        {
+            Route r = new Route();
+            r.X = x; 
+            r.Y = y; 
+            if (Assistant.Client.IsOSI)
+                r.Run = false; // because run on OSI screws with the window focus
+            else
+                r.Run = true;
+            r.UseResync = true;
+            Go(r);
+            return;
+        }
+
+        /// <summary>
         /// Create a Tile starting from X,Y coordinates (see PathFindig.RunPath)
         /// </summary>
         /// <param name="x">X coordinate</param>
