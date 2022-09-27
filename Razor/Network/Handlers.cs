@@ -1914,12 +1914,6 @@ namespace Assistant
                 if (i != null)
                 {
                     Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
-                    MapItem m = i as MapItem;
-                    if (m != null)
-                    {
-                        Logger.Debug("{0} NOT removing MapItem with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
-                        return;
-                    }
                     // Update weapon special ability icons on spellgrid when removing weapons
                     if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
                     { 

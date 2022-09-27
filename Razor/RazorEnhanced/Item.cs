@@ -1670,7 +1670,7 @@ namespace RazorEnhanced
                 Item cont = FindBySerial(container);
                 if (cont == null) // not valid serial or container not found
                 {
-                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    Scripts.SendMessageScriptError("Script Error: FindAllByID: Container serial not found");
                     return null;
                 }
                 IronPython.Runtime.PythonList returnList = new IronPython.Runtime.PythonList();
@@ -1750,7 +1750,7 @@ namespace RazorEnhanced
                 Item cont = FindBySerial(container);
                 if (cont == null) // not valid serial or container not found
                 {
-                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    Scripts.SendMessageScriptError("Script Error: FindAllByID: Container serial not found");
                     return null;
                 }
                 IronPython.Runtime.PythonList returnList = new IronPython.Runtime.PythonList();
@@ -1828,7 +1828,7 @@ namespace RazorEnhanced
                 Item cont = FindBySerial(container);
                 if (cont == null) // not valid serial or container not found
                 {
-                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
+                    Scripts.SendMessageScriptError("Script Error: FindByName: Container serial not found");
                     return null;
                 }
                 foreach (Item i in cont.Contains)
