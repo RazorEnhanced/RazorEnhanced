@@ -271,6 +271,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("movetypeoffset", this.MoveTypeOffset);
             UOScript.Interpreter.RegisterCommandHandler("walk", this.Walk);
             UOScript.Interpreter.RegisterCommandHandler("turn", this.Turn);
+            UOScript.Interpreter.RegisterCommandHandler("pathfindto", this.PathFindTo);
             UOScript.Interpreter.RegisterCommandHandler("run", this.Run);
             UOScript.Interpreter.RegisterCommandHandler("useskill", this.UseSkill);
             UOScript.Interpreter.RegisterCommandHandler("feed", this.Feed);
@@ -1989,6 +1990,25 @@ namespace RazorEnhanced
 
             return true;
         }
+        
+        /// <summary>
+        /// pathfindto x y
+        /// </summary>
+        private bool PathFindTo(string command, UOScript.Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length != 2)
+            {
+                Misc.SendMessage("pathfindto requires an X and Y co-ordinates");
+                return false;
+            }
+
+            int X = args[0].AsInt();
+            int Y = args[1].AsInt();
+            PathFinding.PathFindTo(X, Y);
+
+            return true;
+        }
+
 
         /// <summary>
         /// run (direction)
