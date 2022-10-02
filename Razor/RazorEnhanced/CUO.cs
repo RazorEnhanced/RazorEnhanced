@@ -387,7 +387,7 @@ namespace RazorEnhanced
                     if (GetGump != null)
                     {
                         var gump = GetGump.Invoke(ClassicUOClient.CUOAssembly, new object[] { serial });
-                        if (gump != null)
+                        if (gump != null && gump.GetType().FullName == "ClassicUO.Game.UI.Gumps.ContainerGump")
                         {
                             var Gumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
                             if (Gumps != null)
