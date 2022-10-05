@@ -60,11 +60,15 @@ namespace RazorEnhanced
         /// <summary>
         /// @nodoc
         /// </summary>
-        public static void Test(uint target, bool display, ushort mx, ushort my)
+        internal static HashSet<ushort> IgnoreIDs = new HashSet<ushort>();
+        public static void IgnoreTypes(IronPython.Runtime.PythonList itemIdList)
         {
-            // Misc.Test(Player.Serial, True, 6928, 1028)
-            var ta = new TrackingArrow(target, display, mx, my);
-            Client.Instance.SendToClient(ta);
+            IgnoreIDs.Clear();
+            foreach (object itemid in itemIdList)
+            {
+                ushort itemID = Convert.ToUInt16(itemid);
+                IgnoreIDs.Add(itemID);
+            }
         }
 
         internal static bool isSubDirectoryOf(string candidate, string other)

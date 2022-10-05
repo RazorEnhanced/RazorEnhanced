@@ -2077,6 +2077,12 @@ namespace Assistant
 
             ushort itemID = p.ReadUInt16();
             itemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
+            
+            if (Misc.IgnoreIDs.Contains(itemID))
+            {
+                args.Block = true;
+                return;
+            }
 
             Item item = World.FindItem(serial);
             bool isNew = false;
