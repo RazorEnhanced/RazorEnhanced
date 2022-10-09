@@ -57,19 +57,6 @@ namespace RazorEnhanced
             }
             RazorEnhanced.UoWarper.UODLLHandleClass.CloseBackpack();
         }
-        /// <summary>
-        /// @nodoc
-        /// </summary>
-        internal static HashSet<ushort> IgnoreIDs = new HashSet<ushort>();
-        public static void IgnoreTypes(IronPython.Runtime.PythonList itemIdList)
-        {
-            IgnoreIDs.Clear();
-            foreach (object itemid in itemIdList)
-            {
-                ushort itemID = Convert.ToUInt16(itemid);
-                IgnoreIDs.Add(itemID);
-            }
-        }
 
         internal static bool isSubDirectoryOf(string candidate, string other)
         {
