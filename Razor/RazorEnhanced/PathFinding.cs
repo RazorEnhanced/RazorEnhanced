@@ -1001,9 +1001,9 @@ namespace RazorEnhanced
 
                     timeLeft = (int)timeEnd.Subtract(DateTime.Now).TotalSeconds;
                     if (r.Run)
-                        success = pf.RunPath(timeLeft, r.DebugMessage, r.UseResync);
+                        success = pf.runPath(timeLeft, r.DebugMessage, r.UseResync);
                     else
-                        success = pf.WalkPath(timeLeft, r.DebugMessage, r.UseResync);
+                        success = pf.walkPath(timeLeft, r.DebugMessage, r.UseResync);
                     if (r.MaxRetry > 0) { r.MaxRetry -= 1; }
                     if (success) { return true; }
                     if (DateTime.Now.CompareTo(timeEnd) > 0) { return false; }
@@ -1037,13 +1037,31 @@ namespace RazorEnhanced
         /// <param name="debugMessage">Outputs a debug message.</param>
         /// <param name="useResync">ReSyncs the path calculation.</param>
         /// <returns>True: if it finish the path in time. False: otherwise</returns>
-        public bool RunPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
+        public static bool RunPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
         {
-            return FollowPath(true, timeout, debugMessage, useResync);
+            PathFinding pf = new PathFinding(path);
+            return pf.followPath(true, timeout, debugMessage, useResync);
         }
-        public bool WalkPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
+
+        public static bool WalkPath(List<Tile> path, float timeout = -1, bool debugMessage = false, bool useResync = true)
         {
-            return FollowPath(false, timeout, debugMessage, useResync);
+            PathFinding pf = new PathFinding(path);
+            return pf.followPath(false, timeout, debugMessage, useResync);
+        }
+
+
+        /// <param name="path">List of coordinates as Tile objects.</param>
+        /// <param name="timeout">Maximum amount of time to run the path. (default: -1, no limit)</param>
+        /// <param name="debugMessage">Outputs a debug message.</param>
+        /// <param name="useResync">ReSyncs the path calculation.</param>
+        /// <returns>True: if it finish the path in time. False: otherwise</returns>
+        public bool runPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
+        {
+            return followPath(true, timeout, debugMessage, useResync);
+        }
+        public bool walkPath(float timeout = -1, bool debugMessage = false, bool useResync = true)
+        {
+            return followPath(false, timeout, debugMessage, useResync);
         }
 
         internal static List<Tile> BypassItem(List<Tile> path, int i)
@@ -1118,7 +1136,7 @@ namespace RazorEnhanced
 
         }
 
-        internal bool FollowPath(bool run, float timeout, bool debugMessage, bool useResync)
+        internal bool followPath(bool run, float timeout, bool debugMessage, bool useResync)
         {
             try
             {
