@@ -468,6 +468,23 @@ namespace RazorEnhanced
         }
 
 
+        internal static HashSet<ushort> IgnoreIDs = new HashSet<ushort>();
+        /// <summary>
+        /// Used to ignore specific types. Be careful as you wont see things you ignore, 
+        /// and could result in a mobile being able to kill you without you seeing it
+        /// </summary>
+        public static void IgnoreTypes(IronPython.Runtime.PythonList itemIdList)
+        {
+            IgnoreIDs.Clear();
+            foreach (object itemid in itemIdList)
+            {
+                ushort itemID = Convert.ToUInt16(itemid);
+                IgnoreIDs.Add(itemID);
+            }
+        }
+
+
+
         /// <summary>
         /// Open a container an wait for the Items to load, for a maximum amount of time.
         /// </summary>

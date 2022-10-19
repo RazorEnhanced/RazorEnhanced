@@ -2076,9 +2076,10 @@ namespace Assistant
             //Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
 
             ushort itemID = p.ReadUInt16();
+            Serial testSerial = serial;
             itemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
             
-            if (Mobiles.IgnoreIDs.Contains(itemID))
+            if (testSerial.IsItem && Items.IgnoreIDs.Contains(itemID))
             {
                 args.Block = true;
                 return;
