@@ -281,23 +281,16 @@ namespace RazorEnhanced
         /// NOTE: The "automatic" target is not supported by all shards, but you can restort to the Target class to handle it manually.
         /// </summary>
         /// <param name="SpellName">
-        ///    Curse Weapon
-        ///    Pain Spike
-        ///    Corpse Skin
-        ///    Evil Omen
-        ///    Blood Oath
-        ///    Wraith Form
-        ///    Mind Rot
-        ///    Summon Familiar
-        ///    Horrific Beast
-        ///    Animate Dead
-        ///    Poison Strike
-        ///    Wither
-        ///    Strangle
-        ///    Lich Form
-        ///    Exorcism
-        ///    Vengeful Spirit
-        ///    Vampiric Embrace
+        ///    Cleanse By Fire
+        ///    Close Wounds
+        ///    Consecrate Weapon
+        ///    Dispel Evil
+        ///    Divine Fury
+        ///    Enemy Of One
+        ///    Holy Light
+        ///    Noble Sacrifice
+        ///    Remove Curse
+        ///    Sacred Journey
         /// </param>
         /// <param name="target">Optional: Serial or Mobile to target (default: null)</param>
         /// <param name="wait">Optional: Wait server to confirm. (default: True)</param>
