@@ -1099,40 +1099,18 @@ namespace RazorEnhanced
             {
                 case "Self":
                     {
-                        int bandageserial = BandageHeal.SearchBandage(3617, -1);
-
-                        if (bandageserial == 0)
-                            World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
-                        else
-                        {
-                            if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
-                                Items.UseItem(bandageserial, World.Player.Serial, false);
-                            else // Vecchi client
-                            {
-                                Items.UseItem(bandageserial);
-                                Target.WaitForTarget(1000, true);
-                                Target.TargetExecute(World.Player.Serial);
-                            }
-                        }
+                        BandageHeal.Heal(World.Player, false);
                     }
                     break;
 
                 case "Last":
                     {
-                        int bandageserial = BandageHeal.SearchBandage(3617, -1);
-
-                        if (bandageserial == 0)
-                            World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
+                        Assistant.Mobile target = Assistant.World.FindMobile(Target.GetLast());
+                        if (target == null)
+                            World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
                         else
                         {
-                            if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
-                                Items.UseItem(bandageserial, Target.GetLast(), false);
-                            else // Vecchi client
-                            {
-                                Items.UseItem(bandageserial);
-                                Target.WaitForTarget(1000, true);
-                                Target.TargetExecute(Target.GetLast());
-                            }
+                            BandageHeal.Heal(target, false);
                         }
                     }
                     break;

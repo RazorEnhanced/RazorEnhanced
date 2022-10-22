@@ -278,154 +278,20 @@ namespace RazorEnhanced
 
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
                 {
-                    if (World.Player.Buffs.Contains(BuffIcon.MortalStrike) && (target.Serial == Player.Serial))                        
+                    if (World.Player.Buffs.Contains(BuffIcon.MortalStrike) && (target.Serial == Player.Serial))
                         return;
                 }
 
-                int bandageid = 0x0E21;
-                int bandagecolor = -1;
-
-                if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
-                {
-                    bandageid = m_customid;
-                    bandagecolor = m_customcolor;
-                }
-                int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
-
-                // Id base bende
-                // Conteggio bende
-                int bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
-                if (bandageamount == 0)
-                {
-                    Player.HeadMessage(10, "Bandage not found");
-                    AddLog("Bandage not found");
-                }
-                else if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
-                {
-                    Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                    AddLog("Warning: Low bandage: " + bandageamount + " left");
-                }
-
-                if (bandageamount != 0)        // Se le bende ci sono
-                {
-                    AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
-
-                    if (SelfHealUseText)
-                    {
-                        if (target.Serial == Player.Serial)
-                        {
-                            Player.ChatSay(0, SelfHealUseTextSelfContent);
-                        }
-                        else
-                        {
-                            Player.ChatSay(0, SelfHealUseTextContent);
-                            Target.WaitForTarget(1000, true);
-                            Target.TargetExecute(target.Serial);
-                        }
-                    }
-                    else if (UseTarget) // Uso nuovo packet
-                    {
-                        Items.UseItem(bandageserial);
-                        Target.WaitForTarget(1000, true);
-                        Target.TargetExecute(target.Serial);
-                    }
-                    else
-                    {
-                        Items.UseItem(bandageserial, target.Serial, true);
-                    }
-
-                    if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
-                    {
-                        double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
-                        if (delay < 1) // Limite per evitare che si vada in negativo
-                            delay = 100;
-
-                        if (ShowCountdown)          // Se deve mostrare il cooldown
-                        {
-                            int second = 0;
-
-                            var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
-                            int first = int.Parse(delays[0]);
-                            if (delays.Count() > 1)
-                                second = int.Parse(delays[1]);
-
-                            while (first > 0)
-                            {
-                                Player.HeadMessage(10, (first / 1000).ToString());
-                                first -= 1000;
-                                Thread.Sleep(1000);
-                            }
-                            Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-                        }
-                        else
-                        {
-                            Thread.Sleep((Int32)delay + 300);
-                        }
-                    }
-                    else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
-                    {
-                        // First wait for buf to start, but no more than 2 seconds
-                        int delay = 100;
-                        int countdown = 2000;
-                        while (!World.Player.Buffs.Contains(BuffIcon.HealingSkill) && !World.Player.Buffs.Contains(BuffIcon.Veterinary))
-                        {
-                            Thread.Sleep(delay);
-                            countdown -= delay;
-                            if (countdown <= 0)
-                                break;
-                        }
-                        countdown = 10000;
-                        delay = 1000;
-                        int seconds = 0;
-                        while (World.Player.Buffs.Contains(BuffIcon.HealingSkill) || World.Player.Buffs.Contains(BuffIcon.Veterinary))
-                        {
-                            Thread.Sleep(delay);
-                            countdown -= delay;
-                            if (countdown <= 0)
-                                break;
-
-                            if (ShowCountdown)          // Se deve mostrare il cooldown
-                            {
-                                seconds++;
-                                Player.HeadMessage(10, seconds.ToString());
-                            }
-                        }
-                    }
-                    else                // Se ho un delay custom
-                    {
-                        double delay = m_customdelay;
-                        if (ShowCountdown)          // Se deve mostrare il cooldown
-                        {
-                            double subdelay = delay / 1000;
-
-                            int second = 0;
-
-                            var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
-                            int first = int.Parse(delays[0]);
-                            if (delays.Count() > 1)
-                                second = int.Parse(delays[1]);
-
-                            while (first > 0)
-                            {
-                                Player.HeadMessage(10, first.ToString());
-                                first--;
-                                Thread.Sleep(1000);
-                            }
-                            Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-                        }
-                        else
-                        {
-                            Thread.Sleep((Int32)delay + 300);
-                        }
-                    }
-                }
-                else        // Fine bende
-                {
-                    Thread.Sleep(5000);
-                }
+                Heal(target, true);
             }
+            else        // Fine bende
+            {
+                Thread.Sleep(5000);
+            }
+
         }
-        internal static void Heal(Assistant.Mobile target)
+
+        internal static void Heal(Assistant.Mobile target, bool wait)
         {
             int bandageid = 0x0E21;
             int bandagecolor = -1;
@@ -439,7 +305,7 @@ namespace RazorEnhanced
 
             // Id base bende
             // Conteggio bende
-            int bandageamount = Items.BackpackCount(bandageid, bandagecolor);
+            int bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
             if (bandageamount == 0)
             {
                 Player.HeadMessage(10, "Bandage not found");
@@ -478,6 +344,8 @@ namespace RazorEnhanced
                 {
                     Items.UseItem(bandageserial, target.Serial, true);
                 }
+                if (!wait)
+                    return;
 
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
                 {
@@ -505,6 +373,35 @@ namespace RazorEnhanced
                     else
                     {
                         Thread.Sleep((Int32)delay + 300);
+                    }
+                }
+                else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
+                {
+                    // First wait for buf to start, but no more than 2 seconds
+                    int delay = 100;
+                    int countdown = 2000;
+                    while (!World.Player.Buffs.Contains(BuffIcon.HealingSkill) && !World.Player.Buffs.Contains(BuffIcon.Veterinary))
+                    {
+                        Thread.Sleep(delay);
+                        countdown -= delay;
+                        if (countdown <= 0)
+                            break;
+                    }
+                    countdown = 10000;
+                    delay = 1000;
+                    int seconds = 0;
+                    while (World.Player.Buffs.Contains(BuffIcon.HealingSkill) || World.Player.Buffs.Contains(BuffIcon.Veterinary))
+                    {
+                        Thread.Sleep(delay);
+                        countdown -= delay;
+                        if (countdown <= 0)
+                            break;
+
+                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        {
+                            seconds++;
+                            Player.HeadMessage(10, seconds.ToString());
+                        }
                     }
                 }
                 else                // Se ho un delay custom

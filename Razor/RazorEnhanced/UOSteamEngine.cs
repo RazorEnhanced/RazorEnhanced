@@ -1313,7 +1313,7 @@ namespace RazorEnhanced
         {
             int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
             if (count > 0 && (Player.Hits < Player.HitsMax || Player.Poisoned))
-                BandageHeal.Heal(Assistant.World.Player);
+                BandageHeal.Heal(Assistant.World.Player, false);
             return count;
         }
 
@@ -2084,7 +2084,7 @@ namespace RazorEnhanced
         /// </summary>
         private bool BandageSelf(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            BandageHeal.Heal(Assistant.World.Player);
+            BandageHeal.Heal(Assistant.World.Player, false);
             return true;
         }
 
