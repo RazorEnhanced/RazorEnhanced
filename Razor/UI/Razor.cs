@@ -1598,6 +1598,8 @@ namespace Assistant
             // 
             // tabs
             // 
+            this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tabs.Controls.Add(this.generalTab);
             this.tabs.Controls.Add(this.moreOptTab);
             this.tabs.Controls.Add(this.enhancedFilterTab);
@@ -1612,14 +1614,13 @@ namespace Assistant
             this.tabs.Controls.Add(this.videoTab);
             this.tabs.Controls.Add(this.DPStabPage);
             this.tabs.Controls.Add(this.statusTab);
-            this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.ItemSize = new System.Drawing.Size(90, 25);
             this.tabs.Location = new System.Drawing.Point(0, 0);
             this.tabs.Multiline = true;
             this.tabs.Name = "tabs";
             this.tabs.Padding = new System.Drawing.Point(9, 3);
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(1078, 604);
+            this.tabs.Size = new System.Drawing.Size(1078, 625);
             this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabs.TabIndex = 0;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_IndexChanged);
@@ -1648,7 +1649,7 @@ namespace Assistant
             this.generalTab.Controls.Add(this.label9);
             this.generalTab.Location = new System.Drawing.Point(4, 54);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(1070, 546);
+            this.generalTab.Size = new System.Drawing.Size(1070, 567);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
             // 
@@ -1914,7 +1915,7 @@ namespace Assistant
             this.groupBox1.Controls.Add(this.filters);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(323, 521);
+            this.groupBox1.Size = new System.Drawing.Size(323, 542);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filters";
@@ -2006,7 +2007,7 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
             this.moreOptTab.Location = new System.Drawing.Point(4, 54);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(1070, 546);
+            this.moreOptTab.Size = new System.Drawing.Size(1070, 567);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
@@ -2562,7 +2563,7 @@ namespace Assistant
             this.enhancedFilterTab.Controls.Add(this.FilterPages);
             this.enhancedFilterTab.Location = new System.Drawing.Point(4, 54);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
-            this.enhancedFilterTab.Size = new System.Drawing.Size(1070, 546);
+            this.enhancedFilterTab.Size = new System.Drawing.Size(1070, 567);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
             // 
@@ -2576,7 +2577,7 @@ namespace Assistant
             this.FilterPages.Location = new System.Drawing.Point(-4, 3);
             this.FilterPages.Name = "FilterPages";
             this.FilterPages.SelectedIndex = 0;
-            this.FilterPages.Size = new System.Drawing.Size(1078, 535);
+            this.FilterPages.Size = new System.Drawing.Size(1078, 556);
             this.FilterPages.TabIndex = 0;
             // 
             // MiscFilterPage
@@ -2590,7 +2591,7 @@ namespace Assistant
             this.MiscFilterPage.Location = new System.Drawing.Point(4, 29);
             this.MiscFilterPage.Name = "MiscFilterPage";
             this.MiscFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MiscFilterPage.Size = new System.Drawing.Size(1070, 502);
+            this.MiscFilterPage.Size = new System.Drawing.Size(1070, 523);
             this.MiscFilterPage.TabIndex = 0;
             this.MiscFilterPage.Text = "Misc";
             this.MiscFilterPage.UseVisualStyleBackColor = true;
@@ -2601,7 +2602,7 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(310, 388);
+            this.uomodgroupbox.Location = new System.Drawing.Point(310, 409);
             this.uomodgroupbox.Name = "uomodgroupbox";
             this.uomodgroupbox.Size = new System.Drawing.Size(453, 99);
             this.uomodgroupbox.TabIndex = 75;
@@ -2892,7 +2893,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(310, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(455, 382);
+            this.groupBox23.Size = new System.Drawing.Size(455, 403);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -2915,7 +2916,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(435, 298);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(435, 319);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -3093,7 +3094,7 @@ namespace Assistant
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 29);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.JournalFilterPage.Size = new System.Drawing.Size(1070, 502);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1070, 523);
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
@@ -3111,7 +3112,7 @@ namespace Assistant
             this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(1067, 490);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1067, 511);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -3153,7 +3154,7 @@ namespace Assistant
             this.AllScripts.Controls.Add(this.AllScriptsTab);
             this.AllScripts.Location = new System.Drawing.Point(4, 54);
             this.AllScripts.Name = "AllScripts";
-            this.AllScripts.Size = new System.Drawing.Size(1070, 546);
+            this.AllScripts.Size = new System.Drawing.Size(1070, 567);
             this.AllScripts.TabIndex = 19;
             this.AllScripts.Text = "Scripting";
             this.AllScripts.UseVisualStyleBackColor = true;
@@ -3174,7 +3175,7 @@ namespace Assistant
             this.scriptControlBox.Controls.Add(this.showscriptmessageCheckBox);
             this.scriptControlBox.Location = new System.Drawing.Point(746, 3);
             this.scriptControlBox.Name = "scriptControlBox";
-            this.scriptControlBox.Size = new System.Drawing.Size(321, 535);
+            this.scriptControlBox.Size = new System.Drawing.Size(321, 556);
             this.scriptControlBox.TabIndex = 1;
             this.scriptControlBox.TabStop = false;
             // 
@@ -3440,7 +3441,7 @@ namespace Assistant
             this.AllScriptsTab.Location = new System.Drawing.Point(-4, 0);
             this.AllScriptsTab.Name = "AllScriptsTab";
             this.AllScriptsTab.SelectedIndex = 0;
-            this.AllScriptsTab.Size = new System.Drawing.Size(744, 530);
+            this.AllScriptsTab.Size = new System.Drawing.Size(744, 544);
             this.AllScriptsTab.TabIndex = 0;
             // 
             // pythonScriptingTab
@@ -3450,7 +3451,7 @@ namespace Assistant
             this.pythonScriptingTab.Location = new System.Drawing.Point(4, 29);
             this.pythonScriptingTab.Name = "pythonScriptingTab";
             this.pythonScriptingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.pythonScriptingTab.Size = new System.Drawing.Size(736, 497);
+            this.pythonScriptingTab.Size = new System.Drawing.Size(736, 511);
             this.pythonScriptingTab.TabIndex = 13;
             this.pythonScriptingTab.Text = "Python";
             // 
@@ -3477,7 +3478,7 @@ namespace Assistant
             this.pyScriptListView.MultiSelect = false;
             this.pyScriptListView.Name = "pyScriptListView";
             this.pyScriptListView.ShowItemToolTips = true;
-            this.pyScriptListView.Size = new System.Drawing.Size(728, 483);
+            this.pyScriptListView.Size = new System.Drawing.Size(728, 495);
             this.pyScriptListView.TabIndex = 48;
             this.pyScriptListView.UseCompatibleStateImageBehavior = false;
             this.pyScriptListView.View = System.Windows.Forms.View.Details;
@@ -3546,7 +3547,7 @@ namespace Assistant
             this.uosScriptingTab.Controls.Add(this.uosScriptListView);
             this.uosScriptingTab.Location = new System.Drawing.Point(4, 29);
             this.uosScriptingTab.Name = "uosScriptingTab";
-            this.uosScriptingTab.Size = new System.Drawing.Size(736, 497);
+            this.uosScriptingTab.Size = new System.Drawing.Size(736, 511);
             this.uosScriptingTab.TabIndex = 14;
             this.uosScriptingTab.Text = "UOS";
             this.uosScriptingTab.UseVisualStyleBackColor = true;
@@ -3574,7 +3575,7 @@ namespace Assistant
             this.uosScriptListView.MultiSelect = false;
             this.uosScriptListView.Name = "uosScriptListView";
             this.uosScriptListView.ShowItemToolTips = true;
-            this.uosScriptListView.Size = new System.Drawing.Size(728, 494);
+            this.uosScriptListView.Size = new System.Drawing.Size(728, 508);
             this.uosScriptListView.TabIndex = 49;
             this.uosScriptListView.UseCompatibleStateImageBehavior = false;
             this.uosScriptListView.View = System.Windows.Forms.View.Details;
@@ -3643,7 +3644,7 @@ namespace Assistant
             this.csScriptingTab.Controls.Add(this.csScriptListView);
             this.csScriptingTab.Location = new System.Drawing.Point(4, 29);
             this.csScriptingTab.Name = "csScriptingTab";
-            this.csScriptingTab.Size = new System.Drawing.Size(736, 497);
+            this.csScriptingTab.Size = new System.Drawing.Size(736, 511);
             this.csScriptingTab.TabIndex = 15;
             this.csScriptingTab.Text = "C#";
             this.csScriptingTab.UseVisualStyleBackColor = true;
@@ -3671,7 +3672,7 @@ namespace Assistant
             this.csScriptListView.MultiSelect = false;
             this.csScriptListView.Name = "csScriptListView";
             this.csScriptListView.ShowItemToolTips = true;
-            this.csScriptListView.Size = new System.Drawing.Size(728, 494);
+            this.csScriptListView.Size = new System.Drawing.Size(728, 508);
             this.csScriptListView.TabIndex = 49;
             this.csScriptListView.UseCompatibleStateImageBehavior = false;
             this.csScriptListView.View = System.Windows.Forms.View.Details;
@@ -3741,7 +3742,7 @@ namespace Assistant
             this.EnhancedAgent.Location = new System.Drawing.Point(4, 54);
             this.EnhancedAgent.Name = "EnhancedAgent";
             this.EnhancedAgent.Padding = new System.Windows.Forms.Padding(3);
-            this.EnhancedAgent.Size = new System.Drawing.Size(1070, 546);
+            this.EnhancedAgent.Size = new System.Drawing.Size(1070, 567);
             this.EnhancedAgent.TabIndex = 14;
             this.EnhancedAgent.Text = "Agents";
             this.EnhancedAgent.UseVisualStyleBackColor = true;
@@ -3763,7 +3764,7 @@ namespace Assistant
             this.tabControl1.Location = new System.Drawing.Point(5, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1069, 547);
+            this.tabControl1.Size = new System.Drawing.Size(1069, 568);
             this.tabControl1.TabIndex = 0;
             // 
             // eautoloot
@@ -3788,7 +3789,7 @@ namespace Assistant
             this.eautoloot.Location = new System.Drawing.Point(4, 29);
             this.eautoloot.Name = "eautoloot";
             this.eautoloot.Padding = new System.Windows.Forms.Padding(3);
-            this.eautoloot.Size = new System.Drawing.Size(1061, 514);
+            this.eautoloot.Size = new System.Drawing.Size(1061, 535);
             this.eautoloot.TabIndex = 0;
             this.eautoloot.Text = "Autoloot";
             this.eautoloot.UseVisualStyleBackColor = true;
@@ -3906,7 +3907,7 @@ namespace Assistant
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
             this.autolootdataGridView.RowHeadersWidth = 62;
-            this.autolootdataGridView.Size = new System.Drawing.Size(630, 358);
+            this.autolootdataGridView.Size = new System.Drawing.Size(630, 353);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
@@ -4052,7 +4053,7 @@ namespace Assistant
             this.groupBox13.Controls.Add(this.autolootLogBox);
             this.groupBox13.Location = new System.Drawing.Point(653, 137);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(387, 360);
+            this.groupBox13.Size = new System.Drawing.Size(387, 355);
             this.groupBox13.TabIndex = 53;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Autoloot Log";
@@ -4065,7 +4066,7 @@ namespace Assistant
             this.autolootLogBox.ItemHeight = 20;
             this.autolootLogBox.Location = new System.Drawing.Point(10, 28);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(371, 64);
+            this.autolootLogBox.Size = new System.Drawing.Size(371, 24);
             this.autolootLogBox.TabIndex = 0;
             // 
             // autoLootCheckBox
@@ -4098,7 +4099,7 @@ namespace Assistant
             this.escavenger.Location = new System.Drawing.Point(4, 29);
             this.escavenger.Name = "escavenger";
             this.escavenger.Padding = new System.Windows.Forms.Padding(3);
-            this.escavenger.Size = new System.Drawing.Size(1061, 514);
+            this.escavenger.Size = new System.Drawing.Size(1061, 535);
             this.escavenger.TabIndex = 1;
             this.escavenger.Text = "Scavenger";
             this.escavenger.UseVisualStyleBackColor = true;
@@ -4187,7 +4188,7 @@ namespace Assistant
             this.scavengerdataGridView.Name = "scavengerdataGridView";
             this.scavengerdataGridView.RowHeadersVisible = false;
             this.scavengerdataGridView.RowHeadersWidth = 62;
-            this.scavengerdataGridView.Size = new System.Drawing.Size(572, 358);
+            this.scavengerdataGridView.Size = new System.Drawing.Size(572, 379);
             this.scavengerdataGridView.TabIndex = 72;
             this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.scavengerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellEndEdit);
@@ -4255,7 +4256,7 @@ namespace Assistant
             this.groupBox12.Controls.Add(this.scavengerLogBox);
             this.groupBox12.Location = new System.Drawing.Point(596, 137);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(444, 360);
+            this.groupBox12.Size = new System.Drawing.Size(444, 381);
             this.groupBox12.TabIndex = 70;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Scavenger Log";
@@ -4383,7 +4384,7 @@ namespace Assistant
             this.organizer.Location = new System.Drawing.Point(4, 29);
             this.organizer.Name = "organizer";
             this.organizer.Padding = new System.Windows.Forms.Padding(3);
-            this.organizer.Size = new System.Drawing.Size(1061, 514);
+            this.organizer.Size = new System.Drawing.Size(1061, 535);
             this.organizer.TabIndex = 2;
             this.organizer.Text = "Organizer";
             this.organizer.UseVisualStyleBackColor = true;
@@ -4507,7 +4508,7 @@ namespace Assistant
             this.organizerdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.organizerdataGridView.RowHeadersVisible = false;
             this.organizerdataGridView.RowHeadersWidth = 62;
-            this.organizerdataGridView.Size = new System.Drawing.Size(574, 332);
+            this.organizerdataGridView.Size = new System.Drawing.Size(574, 353);
             this.organizerdataGridView.TabIndex = 89;
             this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.organizerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellEndEdit);
@@ -4584,7 +4585,7 @@ namespace Assistant
             this.groupBox16.Controls.Add(this.organizerLogBox);
             this.groupBox16.Location = new System.Drawing.Point(599, 123);
             this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(445, 377);
+            this.groupBox16.Size = new System.Drawing.Size(445, 398);
             this.groupBox16.TabIndex = 73;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Organizer Log";
@@ -4682,7 +4683,7 @@ namespace Assistant
             this.VendorBuy.Location = new System.Drawing.Point(4, 29);
             this.VendorBuy.Name = "VendorBuy";
             this.VendorBuy.Padding = new System.Windows.Forms.Padding(3);
-            this.VendorBuy.Size = new System.Drawing.Size(1061, 514);
+            this.VendorBuy.Size = new System.Drawing.Size(1061, 535);
             this.VendorBuy.TabIndex = 3;
             this.VendorBuy.Text = "Vendor Buy";
             this.VendorBuy.UseVisualStyleBackColor = true;
@@ -4748,7 +4749,7 @@ namespace Assistant
             this.vendorbuydataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorbuydataGridView.RowHeadersVisible = false;
             this.vendorbuydataGridView.RowHeadersWidth = 62;
-            this.vendorbuydataGridView.Size = new System.Drawing.Size(573, 410);
+            this.vendorbuydataGridView.Size = new System.Drawing.Size(573, 431);
             this.vendorbuydataGridView.TabIndex = 88;
             this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.vendorbuydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellEndEdit);
@@ -4824,7 +4825,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox18.Location = new System.Drawing.Point(599, 238);
             this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(445, 251);
+            this.groupBox18.Size = new System.Drawing.Size(445, 272);
             this.groupBox18.TabIndex = 73;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Buy Log";
@@ -4902,7 +4903,7 @@ namespace Assistant
             this.VendorSell.Location = new System.Drawing.Point(4, 29);
             this.VendorSell.Name = "VendorSell";
             this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
-            this.VendorSell.Size = new System.Drawing.Size(1061, 514);
+            this.VendorSell.Size = new System.Drawing.Size(1061, 535);
             this.VendorSell.TabIndex = 4;
             this.VendorSell.Text = "Vendor Sell";
             this.VendorSell.UseVisualStyleBackColor = true;
@@ -4974,7 +4975,7 @@ namespace Assistant
             this.vendorsellGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorsellGridView.RowHeadersVisible = false;
             this.vendorsellGridView.RowHeadersWidth = 62;
-            this.vendorsellGridView.Size = new System.Drawing.Size(573, 357);
+            this.vendorsellGridView.Size = new System.Drawing.Size(573, 378);
             this.vendorsellGridView.TabIndex = 87;
             this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.vendorsellGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellEndEdit);
@@ -5051,7 +5052,7 @@ namespace Assistant
             this.groupBox20.Controls.Add(this.sellLogBox);
             this.groupBox20.Location = new System.Drawing.Point(599, 105);
             this.groupBox20.Name = "groupBox20";
-            this.groupBox20.Size = new System.Drawing.Size(445, 384);
+            this.groupBox20.Size = new System.Drawing.Size(445, 405);
             this.groupBox20.TabIndex = 83;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Sell Log";
@@ -5143,7 +5144,7 @@ namespace Assistant
             this.Dress.Location = new System.Drawing.Point(4, 29);
             this.Dress.Name = "Dress";
             this.Dress.Padding = new System.Windows.Forms.Padding(3);
-            this.Dress.Size = new System.Drawing.Size(1061, 514);
+            this.Dress.Size = new System.Drawing.Size(1061, 535);
             this.Dress.TabIndex = 5;
             this.Dress.Text = "Dress / Arm";
             this.Dress.UseVisualStyleBackColor = true;
@@ -5339,7 +5340,7 @@ namespace Assistant
             this.dressListView.Location = new System.Drawing.Point(10, 75);
             this.dressListView.MultiSelect = false;
             this.dressListView.Name = "dressListView";
-            this.dressListView.Size = new System.Drawing.Size(447, 425);
+            this.dressListView.Size = new System.Drawing.Size(447, 446);
             this.dressListView.TabIndex = 64;
             this.dressListView.UseCompatibleStateImageBehavior = false;
             this.dressListView.View = System.Windows.Forms.View.Details;
@@ -5420,7 +5421,7 @@ namespace Assistant
             this.friends.Location = new System.Drawing.Point(4, 29);
             this.friends.Name = "friends";
             this.friends.Padding = new System.Windows.Forms.Padding(3);
-            this.friends.Size = new System.Drawing.Size(1061, 514);
+            this.friends.Size = new System.Drawing.Size(1061, 535);
             this.friends.TabIndex = 6;
             this.friends.Text = "Friends";
             this.friends.UseVisualStyleBackColor = true;
@@ -5721,7 +5722,7 @@ namespace Assistant
             this.restock.Location = new System.Drawing.Point(4, 29);
             this.restock.Name = "restock";
             this.restock.Padding = new System.Windows.Forms.Padding(3);
-            this.restock.Size = new System.Drawing.Size(1061, 514);
+            this.restock.Size = new System.Drawing.Size(1061, 535);
             this.restock.TabIndex = 7;
             this.restock.Text = "Restock";
             this.restock.UseVisualStyleBackColor = true;
@@ -5846,7 +5847,7 @@ namespace Assistant
             this.restockdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.restockdataGridView.RowHeadersVisible = false;
             this.restockdataGridView.RowHeadersWidth = 62;
-            this.restockdataGridView.Size = new System.Drawing.Size(574, 332);
+            this.restockdataGridView.Size = new System.Drawing.Size(574, 353);
             this.restockdataGridView.TabIndex = 90;
             this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.restockdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellEndEdit);
@@ -5923,7 +5924,7 @@ namespace Assistant
             this.groupBox2.Controls.Add(this.restockLogBox);
             this.groupBox2.Location = new System.Drawing.Point(599, 123);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(445, 377);
+            this.groupBox2.Size = new System.Drawing.Size(445, 398);
             this.groupBox2.TabIndex = 83;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Restock Log";
@@ -6016,7 +6017,7 @@ namespace Assistant
             this.bandageheal.Location = new System.Drawing.Point(4, 29);
             this.bandageheal.Name = "bandageheal";
             this.bandageheal.Padding = new System.Windows.Forms.Padding(3);
-            this.bandageheal.Size = new System.Drawing.Size(1061, 514);
+            this.bandageheal.Size = new System.Drawing.Size(1061, 535);
             this.bandageheal.TabIndex = 8;
             this.bandageheal.Text = "Bandage Heal";
             this.bandageheal.UseVisualStyleBackColor = true;
@@ -6376,7 +6377,7 @@ namespace Assistant
             this.groupBox5.Controls.Add(this.bandagehealLogBox);
             this.groupBox5.Location = new System.Drawing.Point(10, 9);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(446, 495);
+            this.groupBox5.Size = new System.Drawing.Size(446, 516);
             this.groupBox5.TabIndex = 54;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Bandage Heal Log";
@@ -6409,7 +6410,7 @@ namespace Assistant
             this.toolbarTab.Controls.Add(this.toolbarstab);
             this.toolbarTab.Location = new System.Drawing.Point(4, 54);
             this.toolbarTab.Name = "toolbarTab";
-            this.toolbarTab.Size = new System.Drawing.Size(1070, 546);
+            this.toolbarTab.Size = new System.Drawing.Size(1070, 567);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Toolbars";
             // 
@@ -7199,7 +7200,7 @@ namespace Assistant
             this.emptyTab.Controls.Add(this.groupBox43);
             this.emptyTab.Location = new System.Drawing.Point(4, 54);
             this.emptyTab.Name = "emptyTab";
-            this.emptyTab.Size = new System.Drawing.Size(1070, 546);
+            this.emptyTab.Size = new System.Drawing.Size(1070, 567);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Targetting";
             // 
@@ -7909,7 +7910,7 @@ namespace Assistant
             this.skillsTab.Controls.Add(this.skillList);
             this.skillsTab.Location = new System.Drawing.Point(4, 54);
             this.skillsTab.Name = "skillsTab";
-            this.skillsTab.Size = new System.Drawing.Size(1070, 546);
+            this.skillsTab.Size = new System.Drawing.Size(1070, 567);
             this.skillsTab.TabIndex = 2;
             this.skillsTab.Text = "Skills";
             // 
@@ -8012,7 +8013,7 @@ namespace Assistant
             this.skillList.HideSelection = false;
             this.skillList.Location = new System.Drawing.Point(11, 19);
             this.skillList.Name = "skillList";
-            this.skillList.Size = new System.Drawing.Size(789, 514);
+            this.skillList.Size = new System.Drawing.Size(789, 535);
             this.skillList.TabIndex = 1;
             this.skillList.UseCompatibleStateImageBehavior = false;
             this.skillList.View = System.Windows.Forms.View.Details;
@@ -8058,7 +8059,7 @@ namespace Assistant
             this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 54);
             this.enhancedHotKeytabPage.Name = "enhancedHotKeytabPage";
             this.enhancedHotKeytabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(1070, 546);
+            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(1070, 567);
             this.enhancedHotKeytabPage.TabIndex = 15;
             this.enhancedHotKeytabPage.Text = "HotKey";
             this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
@@ -8248,7 +8249,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hotkeytreeView.Location = new System.Drawing.Point(14, 10);
             this.hotkeytreeView.Name = "hotkeytreeView";
-            this.hotkeytreeView.Size = new System.Drawing.Size(782, 526);
+            this.hotkeytreeView.Size = new System.Drawing.Size(782, 547);
             this.hotkeytreeView.TabIndex = 0;
             this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
             // 
@@ -8261,7 +8262,7 @@ namespace Assistant
             this.journal.Location = new System.Drawing.Point(4, 54);
             this.journal.Name = "journal";
             this.journal.Padding = new System.Windows.Forms.Padding(3);
-            this.journal.Size = new System.Drawing.Size(1070, 546);
+            this.journal.Size = new System.Drawing.Size(1070, 567);
             this.journal.TabIndex = 18;
             this.journal.Text = "Journal";
             this.journal.UseVisualStyleBackColor = true;
@@ -8329,7 +8330,7 @@ namespace Assistant
             this.journalList.RowHeadersVisible = false;
             this.journalList.RowHeadersWidth = 62;
             this.journalList.RowTemplate.Height = 28;
-            this.journalList.Size = new System.Drawing.Size(957, 506);
+            this.journalList.Size = new System.Drawing.Size(957, 527);
             this.journalList.TabIndex = 2;
             // 
             // Type
@@ -8367,7 +8368,7 @@ namespace Assistant
             this.screenshotTab.Controls.Add(this.dispTime);
             this.screenshotTab.Location = new System.Drawing.Point(4, 54);
             this.screenshotTab.Name = "screenshotTab";
-            this.screenshotTab.Size = new System.Drawing.Size(1070, 546);
+            this.screenshotTab.Size = new System.Drawing.Size(1070, 567);
             this.screenshotTab.TabIndex = 8;
             this.screenshotTab.Text = "Screen Shots";
             // 
@@ -8502,7 +8503,7 @@ namespace Assistant
             this.videoTab.Location = new System.Drawing.Point(4, 54);
             this.videoTab.Name = "videoTab";
             this.videoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.videoTab.Size = new System.Drawing.Size(1070, 546);
+            this.videoTab.Size = new System.Drawing.Size(1070, 567);
             this.videoTab.TabIndex = 16;
             this.videoTab.Text = "Video Recorder";
             // 
@@ -8697,7 +8698,7 @@ namespace Assistant
             this.DPStabPage.Location = new System.Drawing.Point(4, 54);
             this.DPStabPage.Name = "DPStabPage";
             this.DPStabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DPStabPage.Size = new System.Drawing.Size(1070, 546);
+            this.DPStabPage.Size = new System.Drawing.Size(1070, 567);
             this.DPStabPage.TabIndex = 17;
             this.DPStabPage.Text = "DPS Meter";
             this.DPStabPage.UseVisualStyleBackColor = true;
@@ -8917,14 +8918,14 @@ namespace Assistant
             this.statusTab.Controls.Add(this.razorButtonWiki);
             this.statusTab.Location = new System.Drawing.Point(4, 54);
             this.statusTab.Name = "statusTab";
-            this.statusTab.Size = new System.Drawing.Size(1070, 546);
+            this.statusTab.Size = new System.Drawing.Size(1070, 567);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             // 
             // ChkForUpdate
             // 
             this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ChkForUpdate.Location = new System.Drawing.Point(613, 361);
+            this.ChkForUpdate.Location = new System.Drawing.Point(613, 382);
             this.ChkForUpdate.Name = "ChkForUpdate";
             this.ChkForUpdate.Size = new System.Drawing.Size(150, 54);
             this.ChkForUpdate.TabIndex = 13;
@@ -8935,7 +8936,7 @@ namespace Assistant
             // advertisementLink
             // 
             this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.advertisementLink.Location = new System.Drawing.Point(412, 361);
+            this.advertisementLink.Location = new System.Drawing.Point(412, 382);
             this.advertisementLink.Name = "advertisementLink";
             this.advertisementLink.Size = new System.Drawing.Size(150, 54);
             this.advertisementLink.TabIndex = 12;
@@ -8953,7 +8954,7 @@ namespace Assistant
             this.advertisement.InitialImage = ((System.Drawing.Image)(resources.GetObject("advertisement.InitialImage")));
             this.advertisement.Location = new System.Drawing.Point(5, 4);
             this.advertisement.Name = "advertisement";
-            this.advertisement.Size = new System.Drawing.Size(760, 348);
+            this.advertisement.Size = new System.Drawing.Size(760, 369);
             this.advertisement.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.advertisement.TabIndex = 11;
             this.advertisement.TabStop = false;
@@ -8962,7 +8963,7 @@ namespace Assistant
             // 
             this.label71.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label71.Location = new System.Drawing.Point(13, 482);
+            this.label71.Location = new System.Drawing.Point(13, 503);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(1040, 56);
             this.label71.TabIndex = 10;
@@ -8972,7 +8973,7 @@ namespace Assistant
             // 
             this.labelHotride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHotride.Location = new System.Drawing.Point(13, 435);
+            this.labelHotride.Location = new System.Drawing.Point(13, 456);
             this.labelHotride.Name = "labelHotride";
             this.labelHotride.Size = new System.Drawing.Size(1040, 56);
             this.labelHotride.TabIndex = 8;
@@ -8992,7 +8993,7 @@ namespace Assistant
             // discordrazorButton
             // 
             this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.discordrazorButton.Location = new System.Drawing.Point(199, 361);
+            this.discordrazorButton.Location = new System.Drawing.Point(199, 382);
             this.discordrazorButton.Name = "discordrazorButton";
             this.discordrazorButton.Size = new System.Drawing.Size(150, 54);
             this.discordrazorButton.TabIndex = 9;
@@ -9003,7 +9004,7 @@ namespace Assistant
             // razorButtonWiki
             // 
             this.razorButtonWiki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.razorButtonWiki.Location = new System.Drawing.Point(5, 361);
+            this.razorButtonWiki.Location = new System.Drawing.Point(5, 382);
             this.razorButtonWiki.Name = "razorButtonWiki";
             this.razorButtonWiki.Size = new System.Drawing.Size(150, 54);
             this.razorButtonWiki.TabIndex = 6;
@@ -9158,7 +9159,7 @@ namespace Assistant
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(8, 19);
-            this.ClientSize = new System.Drawing.Size(1078, 604);
+            this.ClientSize = new System.Drawing.Size(1078, 625);
             this.Controls.Add(this.tabs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -10183,6 +10184,7 @@ namespace Assistant
         {
             Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
         }
+
     }
 }
 

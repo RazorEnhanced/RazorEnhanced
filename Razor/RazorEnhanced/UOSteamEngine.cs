@@ -2115,8 +2115,16 @@ namespace RazorEnhanced
             if (item == null)
                 return false;
 
-            Items.UseItem(item.Serial);
-            Misc.Pause(500);
+            // because UOS scripts seem to use usetype when they mean targettype
+            if (Assistant.Targeting.HasTarget)
+            {
+                Assistant.Targeting.Target(item.Serial, false);
+            }
+            else
+            {
+                Items.UseItem(item.Serial);
+                Misc.Pause(100);
+            }
             return true;
         }
 
@@ -2133,12 +2141,28 @@ namespace RazorEnhanced
             Assistant.Serial serial = (int)args[0].AsSerial();
             if (serial.IsItem)
             {
-                Items.UseItem(serial);
-                Misc.Pause(500);
+                // because UOS scripts seem to use usetype when they mean targettype
+                if (Assistant.Targeting.HasTarget)
+                {
+                    Assistant.Targeting.Target(serial, false);
+                }
+                else
+                {
+                    Items.UseItem(serial);
+                    Misc.Pause(100);
+                }
             }
             else
             {
-                Mobiles.UseMobile(serial);
+                // because UOS scripts seem to use usetype when they mean targettype
+                if (Assistant.Targeting.HasTarget)
+                {
+                    Assistant.Targeting.Target(serial, false);
+                }
+                else
+                {
+                    Mobiles.UseMobile(serial);
+                }
             }
 
             return true;

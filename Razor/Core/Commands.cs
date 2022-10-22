@@ -190,7 +190,7 @@ namespace Assistant
         internal static void Packet_Ping(string[] param)
         {
             int num_packets = 5;
-            if (param.Length > 0)
+            if (param != null && param.Length > 0)
             {
                 try
                 {
