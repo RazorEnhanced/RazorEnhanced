@@ -293,7 +293,7 @@ namespace RazorEnhanced
 
         internal static void Heal(Assistant.Mobile target, bool wait)
         {
-            int bandageid = 0x0E21;
+        int bandageid = 0x0E21;
             int bandagecolor = -1;
 
             if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID

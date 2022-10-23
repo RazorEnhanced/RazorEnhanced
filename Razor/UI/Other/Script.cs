@@ -723,8 +723,10 @@ namespace Assistant
 
             if (scriptTable.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                int index = scriptListView.SelectedItems[0].Index;
-                fullPath = scriptTable[index].FullPath;
+                string scriptname = scriptListView.SelectedItems[0].Text;
+                Scripts.ScriptItem scriptItem = Scripts.FindScript(scriptname);
+                if (scriptItem != null) 
+                    fullPath = scriptItem.FullPath;
             }
             if (fullPath != null)
                 EnhancedScriptEditor.Init(fullPath);
