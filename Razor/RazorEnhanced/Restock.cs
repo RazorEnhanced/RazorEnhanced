@@ -429,7 +429,7 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.RestockStartExec();
             else
             {
-                Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock already running");
+                Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock is already running.");
             }
         }
 
@@ -443,7 +443,7 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.RestockStopExec();
             else
             {
-                Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock not running");
+                Scripts.SendMessageScriptError("Script Error: Restock.FStop: Restock is not running.");
             }
         }
 
