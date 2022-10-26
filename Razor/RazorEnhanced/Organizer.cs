@@ -441,7 +441,7 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.OrganizerStartExec();
             else
             {
-                Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer already running");
+                Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer is already running.");
             }
         }
 
@@ -455,7 +455,7 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.OrganizerStopExec();
             else
             {
-                Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer not running");
+                Scripts.SendMessageScriptError("Script Error: Organizer.FStop: Organizer is not running.");
             }
         }
 
