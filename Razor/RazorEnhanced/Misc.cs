@@ -304,6 +304,20 @@ namespace RazorEnhanced
             System.Threading.Thread.Sleep(millisec);
         }
 
+
+        public static string[] WaitForCommand(string prefix)
+        {
+            Semaphore sem = new Semaphore(0, 1);
+            string[] param = null;
+            Command.Register(prefix, delegate (string[] cmd) {
+                param = cmd;
+                sem.Release();
+            });
+            sem.WaitOne();
+            Command.RemoveCommand(prefix);
+            return param;
+        }
+
         /// <summary>
         /// Trigger a client ReSync.
         /// </summary>

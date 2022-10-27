@@ -302,7 +302,7 @@ namespace Assistant
             }
         }
 
-        internal static void Register(string cmd, CommandCallback callback)
+        public static void Register(string cmd, CommandCallback callback)
         {
             if (!m_List.ContainsKey(cmd))
                 m_List.Add(cmd, callback);
