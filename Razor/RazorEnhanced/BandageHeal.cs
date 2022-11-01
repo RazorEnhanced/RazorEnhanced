@@ -284,11 +284,6 @@ namespace RazorEnhanced
 
                 Heal(target, true);
             }
-            else        // Fine bende
-            {
-                Thread.Sleep(5000);
-            }
-
         }
 
         internal static void Heal(Assistant.Mobile target, bool wait)
@@ -513,6 +508,7 @@ namespace RazorEnhanced
                 return;
 
             EngineRun(target);
+            Thread.Sleep(500);
         }
 
         // Funzioni da script
