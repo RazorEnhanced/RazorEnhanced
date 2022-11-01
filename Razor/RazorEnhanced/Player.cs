@@ -441,11 +441,17 @@ namespace RazorEnhanced
         /// </summary>
         public static Point3D Position { get { return new Point3D(World.Player.Position); } }
 
-        // Corpse Serials
+        // Corpses
         /// <summary>
-        /// Each Death Player corpse serial 
+        /// Each Death Player corpse item is added here
         /// </summary>
         public static HashSet<Assistant.Item> Corpses { get; set; } = new HashSet<Assistant.Item>();
+
+        // ClearCorpseList
+        /// <summary>
+        /// Clear the Player corpse item list
+        /// </summary>
+        public static void ClearCorpseList() { Corpses.Clear(); }
 
         /// <summary>
         /// Player current map, or facet.
