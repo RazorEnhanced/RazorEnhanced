@@ -441,6 +441,12 @@ namespace RazorEnhanced
         /// </summary>
         public static Point3D Position { get { return new Point3D(World.Player.Position); } }
 
+        // Corpse Serials
+        /// <summary>
+        /// Each Death Player corpse serial 
+        /// </summary>
+        public static HashSet<Assistant.Item> Corpses { get; set; } = new HashSet<Assistant.Item>();
+
         /// <summary>
         /// Player current map, or facet.
         /// </summary>

@@ -785,7 +785,7 @@ namespace Assistant
             return Facet.ZTop(World.Player.Map, x, y, z);
         }
 
-        internal override Point3D Position
+        public override Point3D Position
         {
             // IsCalibrated is always false on CUO and true on OSI client
             get

@@ -1004,11 +1004,11 @@ namespace Assistant
         }
     }
 
-    internal class CorpseItem : Item
+    public class CorpseItem : Item
     {
         // Used for the open corpse option to ensure it is only openned first time
-        internal bool Opened { get; set; }
-        internal CorpseItem(Serial serial)
+        public bool Opened { get; set; }
+        public CorpseItem(Serial serial)
             : base(serial)
         {
             Opened = false;

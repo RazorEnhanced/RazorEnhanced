@@ -240,15 +240,14 @@ namespace Assistant
         }
         private static void MyDeath(PacketReader p, PacketHandlerEventArgs args)
         {
-            if (!RazorEnhanced.Settings.General.ReadBool("AutoCap"))
-                return;
             byte deathType = p.ReadByte();
             // 0x00 - Notify client of his death.
             // 0x01 - Client has chosen to resurrect with penalties.
             // 0x02 - Client has chosen to play as ghost.
             if (deathType == 0x00)
             {
-                ScreenCapManager.DeathCapture(3.0);
+                if (RazorEnhanced.Settings.General.ReadBool("AutoCap"))
+                    ScreenCapManager.DeathCapture(3.0);
             }
 
         }
@@ -870,6 +869,7 @@ namespace Assistant
                 Serial serial = p.ReadUInt32();
                 // serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
                 UInt16 itemID = (UInt16)(p.ReadUInt16() + p.ReadSByte());
+
                 ushort amount = Math.Max(p.ReadUInt16(), (ushort)1);
                 Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
                 byte gridNum = 0;
@@ -901,6 +901,15 @@ namespace Assistant
                     Item container = World.FindItem(cont);
                     if (container != null && !updated.Contains(container))
                         updated.Add(container);
+                    if (itemID == 0x2fc1)
+                    {
+                        // a corpse uses the hair to store the players serial in a weird algorithm
+                        UInt32 owner = (0x7fffffff - ((UInt32)serial + 2) - 0x400) / 4;
+                        if (Player.Serial == owner)
+                        {
+                            Player.Corpses.Add(container);
+                        }
+                    }
                     //if (container != null && itemID == 0x2006 && container.RootContainer == null)
                     //  container.RootContainer = serial; //update corpse's root container. Commented out as it is not preferred to change item structure.
                 }
@@ -1913,6 +1922,9 @@ namespace Assistant
                 Item i = World.FindItem(serial);
                 if (i != null)
                 {
+                    // If corpse decayed, remove from list 
+                    if (Player.Corpses.Contains(i))
+                        Player.Corpses.Remove(i);
                     Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
                     // Update weapon special ability icons on spellgrid when removing weapons
                     if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
@@ -2128,6 +2140,9 @@ namespace Assistant
             {
                 if (item.ItemID == 0x2006)// corpse itemid = 0x2006
                 {
+                    // Somewhere here record player death
+                    //Player.CorpseSerial == item.Serial;
+                    // 
                     if (Engine.MainWindow.ShowCorpseNames.Checked)
                         Assistant.Client.Instance.SendToServer(new SingleClick(item));
 

@@ -23,11 +23,10 @@ namespace Assistant
             m_Deleted = false;
         }
 
-        internal Serial Serial { get { return m_Serial; } }
-
+        public Serial Serial { get { return m_Serial; } }
         private Point3D dont_use_pos;
 
-        internal virtual Point3D Position
+        public virtual Point3D Position
         {
             get { return dont_use_pos; }
             set
@@ -82,6 +81,16 @@ namespace Assistant
         {
             return m_Serial.GetHashCode();
         }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as UOEntity);
+        }
+
+        public bool Equals(UOEntity entity)
+        {
+            return entity != null && Serial == entity.Serial;
+        }
+
 
         virtual internal void ReadPropertyList(PacketReader p)
         {
