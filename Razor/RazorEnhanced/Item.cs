@@ -1527,61 +1527,9 @@ namespace RazorEnhanced
 
         public static Item FindByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
         {
-            if (container != -1)  // search in specific container
-            {
-                // range should be # of packs deep to search .. but not implemented
-                Item cont = FindBySerial(container);
-                if (cont == null) // not valid serial or container not found
-                {
-                    Scripts.SendMessageScriptError("Script Error: FindByID: Container serial not found");
-                    return null;
-                }
-                foreach (Item i in cont.Contains)
-                {
-                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
-                        continue;
-
-                    if (i.ItemID == itemid) // check item id
-                    {
-                        if (color != -1) // color -1 ALL
-                        {
-                            if (i.Hue == color)
-                                return i;
-                        }
-                        else
-                        {
-                            return i;
-                        }
-                    }
-                    else if (i.IsContainer && range != 0)
-                    {
-                        Item recursItem = FindByID(itemid, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
-                        if (recursItem != null)
-                            return recursItem;
-                    }
-                }
-                return null; // Return null if no item found
-            }
-            else  // Search in world
-            {
-                Items.Filter itemFilter = new Items.Filter
-                {
-                    Enabled = true
-                };
-                itemFilter.Graphics.Add(itemid);
-                itemFilter.RangeMax = range;
-                itemFilter.CheckIgnoreObject = considerIgnoreList;
-
-                if (color != -1)
-                    itemFilter.Hues.Add(color);
-
-                List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
-
-                foreach (Item found in containeritem)  // Return frist one found
-                    return found;
-
-                return null;
-            }
+            var itemids = new List<int>();
+            itemids.Append(itemid);
+            return FindByID(itemids, color, container, range, considerIgnoreList);
         }
 
 
