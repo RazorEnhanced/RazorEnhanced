@@ -1629,7 +1629,7 @@ namespace RazorEnhanced
         /// <returns>The list of Items matching the criteria.</returns>
         public static IronPython.Runtime.PythonList FindAllByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
         {
-            var itemids = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
             itemids.append(itemid);
             return FindAllByID(itemids, color, container, range, considerIgnoreList);
         }
@@ -1655,63 +1655,59 @@ namespace RazorEnhanced
         /// <returns>The Item matching the criteria.</returns>
         public static IronPython.Runtime.PythonList FindAllByID(IronPython.Runtime.PythonList itemids, int color, int container, int range, bool considerIgnoreList = true)
         {
-            if (container != -1)  // search in specific container
-            {
-                // range should be # of packs deep to search .. but not implemented
-                Item cont = FindBySerial(container);
-                if (cont == null) // not valid serial or container not found
-                {
-                    Scripts.SendMessageScriptError("Script Error: FindAllByID: Container serial not found");
-                    return null;
-                }
-                IronPython.Runtime.PythonList returnList = new IronPython.Runtime.PythonList();
-                foreach (Item i in cont.Contains)
-                {
-                    if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
-                        continue;
-
-                    if (itemids.Contains(i.ItemID)) // check item id
-                    {
-                        if (color != -1) // color -1 ALL
-                        {
-                            if (i.Hue == color)
-                                returnList.Add(i);
-                        }
-                        else
-                        {
-                            returnList.Add(i);
-                        }
-                    }
-                    else if (i.IsContainer && range != 0)
-                    {
-                        var recursItems = FindAllByID(itemids, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
-                        if (recursItems != null)                        
-                            returnList += recursItems;
-                    }
-                }
-                return returnList; // Return null if no item found
-            }
-            else  // Search in world
+            var returnList = new IronPython.Runtime.PythonList();
+            if (container == -1)  // search everywhere
             {
                 Items.Filter itemFilter = new Items.Filter
                 {
                     Enabled = true
                 };
-                foreach(var itemID in itemids)
+                foreach (var itemID in itemids)
                     itemFilter.Graphics.Add((int)itemID);
                 itemFilter.RangeMax = range;
                 itemFilter.CheckIgnoreObject = considerIgnoreList;
                 if (color != -1)
                     itemFilter.Hues.Add(color);
 
-                var returnList = new IronPython.Runtime.PythonList();
                 foreach (var item in RazorEnhanced.Items.ApplyFilter(itemFilter))
                 {
                     returnList.Add(item);
                 }
-
                 return returnList;
             }
+
+            // else just search in container
+            Item cont = FindBySerial(container);
+            if (cont == null) // not valid serial or container not found
+            {
+                Scripts.SendMessageScriptError("Script Error: FindAllByID: Container serial not found");
+                return null;
+            }
+            foreach (Item i in cont.Contains)
+            {
+                if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                    continue;
+
+                if (itemids.Contains(i.ItemID)) // check item id
+                {
+                    if (color != -1) // color -1 ALL
+                    {
+                        if (i.Hue == color)
+                            returnList.Add(i);
+                    }
+                    else
+                    {
+                        returnList.Add(i);
+                    }
+                }
+                else if (i.IsContainer && range != 0)
+                {
+                    var recursItems = FindAllByID(itemids, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
+                    if (recursItems != null)
+                        returnList += recursItems;
+                }
+            }
+            return returnList; // Return null if no item found
         }
 
 
