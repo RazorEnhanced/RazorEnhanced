@@ -9,3 +9,4 @@
 *.datasource text eol=crlf
 *.dll binary
 *.ico binary
+*.png binary
