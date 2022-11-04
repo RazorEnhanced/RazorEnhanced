@@ -47,7 +47,7 @@ namespace Assistant
             PacketHandler.RegisterClientToServerViewer(0xF8, new PacketViewerCallback(CreateCharacter));
 
             //Server -> Client handlers
-            PacketHandler.RegisterServerToClientViewer(0x0B, new PacketViewerCallback(Damage));
+            PacketHandler.RegisterServerToClientViewer(0x0B, new PacketViewerCallback(Damage));           
             PacketHandler.RegisterServerToClientViewer(0x11, new PacketViewerCallback(MobileStatus));
             PacketHandler.RegisterServerToClientViewer(0x16, new PacketViewerCallback(SAMobileStatus));
             PacketHandler.RegisterServerToClientViewer(0x17, new PacketViewerCallback(NewMobileStatus));
@@ -1329,7 +1329,8 @@ namespace Assistant
 
         private static void HitsUpdate(PacketReader p, PacketHandlerEventArgs args)
         {
-            Mobile m = World.FindMobile(p.ReadUInt32());
+            uint serial = p.ReadUInt32();
+            Mobile m = World.FindMobile(serial);
 
             if (m == null)
                 return;
@@ -1338,6 +1339,8 @@ namespace Assistant
 
             m.HitsMax = p.ReadUInt16();
             m.Hits = p.ReadUInt16();
+            if (m.HitsMax > m.Hits)
+                BandageHeal.Damaged(serial, (uint)(m.HitsMax - m.Hits));
 
             if (m == World.Player)
             {
@@ -1582,8 +1585,11 @@ namespace Assistant
 
         private static void Damage(PacketReader p, PacketHandlerEventArgs args)
         {
+            uint serial = p.ReadUInt32();
+            ushort damage = p.ReadUInt16();
             if (RazorEnhanced.DPSMeter.Enabled)
-                RazorEnhanced.DPSMeter.AddDamage(p.ReadUInt32(), p.ReadUInt16());
+                RazorEnhanced.DPSMeter.AddDamage(serial, damage);
+            BandageHeal.Damaged(serial, damage);
         }
 
         private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
