@@ -1528,7 +1528,7 @@ namespace RazorEnhanced
         public static Item FindByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
         {
             var itemids = new List<int>();
-            itemids.Append(itemid);
+            itemids.Add(itemid);
             return FindByID(itemids, color, container, range, considerIgnoreList);
         }
 
