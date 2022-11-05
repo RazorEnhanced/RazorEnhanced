@@ -357,7 +357,7 @@ namespace RazorEnhanced
             if (bandageamount != 0)        // Se le bende ci sono
             {
                 AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
-                Task CountTask = null;
+                System.Threading.Thread CountSeconds = null;
                 if (SelfHealUseText)
                 {
                     if (target.Serial == Player.Serial)
@@ -387,7 +387,8 @@ namespace RazorEnhanced
                 if (ShowCountdown)          // Se deve mostrare il cooldown
                 {
                     CountActive = true;
-                    CountTask = Task.Run(() => ShowCount(target));
+                    CountSeconds = new System.Threading.Thread(() => ShowCount(target));
+                    CountSeconds.Start();
                 }
                 BandageFinish.Reset();
 
@@ -413,7 +414,7 @@ namespace RazorEnhanced
                 if (ShowCountdown)          // Se deve mostrare il cooldown
                 {
                     CountActive = false;
-                    CountTask.Wait();
+                    CountSeconds.Abort();
                 }
             }
             else
