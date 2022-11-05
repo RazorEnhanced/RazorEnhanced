@@ -106,6 +106,7 @@ namespace Assistant
             //PacketHandler.RegisterServerToClientFilter(0xDC, new PacketFilterCallback(ServOPLHash));
             PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(CompressedGump));
             PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BuffDebuff));
+            PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BandageHeal.BuffDebuff));
             PacketHandler.RegisterServerToClientViewer(0xE2, new PacketViewerCallback(TestAnimation));
             PacketHandler.RegisterServerToClientViewer(0xF0, new PacketViewerCallback(RunUOProtocolExtention)); // Special RunUO protocol extentions (for KUOC/Razor)
             PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(SAWorldItem));

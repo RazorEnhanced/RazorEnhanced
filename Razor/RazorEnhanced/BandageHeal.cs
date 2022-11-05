@@ -256,6 +256,8 @@ namespace RazorEnhanced
                 Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
                 Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
             }
+
+
         }
 
         // Core
@@ -286,9 +288,33 @@ namespace RazorEnhanced
             }
         }
 
+        internal static bool bufHealStarted = false;
+        internal static bool bufHealFinished = false;
+        internal static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
+        {
+            UInt32 ser = p.ReadUInt32();
+            UInt16 icon = p.ReadUInt16();
+            UInt16 action = p.ReadUInt16();
+
+            if (icon == (UInt16)BuffIcon.HealingSkill || icon == (UInt16)BuffIcon.Veterinary)
+            {
+                switch (action)
+                {
+                    case 0x01:
+                        bufHealStarted = true;
+                        break;
+
+                    case 0x0:
+                        bufHealFinished = true;
+                        break;
+                }
+            }
+        }
+        
+
         internal static void Heal(Assistant.Mobile target, bool wait)
         {
-        int bandageid = 0x0E21;
+            int bandageid = 0x0E21;
             int bandagecolor = -1;
 
             if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
@@ -314,6 +340,8 @@ namespace RazorEnhanced
 
             if (bandageamount != 0)        // Se le bende ci sono
             {
+                bufHealStarted = false;
+                bufHealFinished = false;
                 AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
 
                 if (SelfHealUseText)
@@ -373,19 +401,19 @@ namespace RazorEnhanced
                 else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
                 {
                     // First wait for buf to start, but no more than 2 seconds
-                    int delay = 100;
+                    int delay = 10;
                     int countdown = 2000;
-                    while (!World.Player.Buffs.Contains(BuffIcon.HealingSkill) && !World.Player.Buffs.Contains(BuffIcon.Veterinary))
+                    while (!bufHealStarted)
                     {
                         Thread.Sleep(delay);
                         countdown -= delay;
                         if (countdown <= 0)
                             break;
                     }
-                    countdown = 10000;
-                    delay = 1000;
+                    countdown = 1000000;
+                    delay = 10;
                     int seconds = 0;
-                    while (World.Player.Buffs.Contains(BuffIcon.HealingSkill) || World.Player.Buffs.Contains(BuffIcon.Veterinary))
+                    while (!bufHealFinished)
                     {
                         Thread.Sleep(delay);
                         countdown -= delay;
@@ -518,7 +546,8 @@ namespace RazorEnhanced
 
             damageWait.Reset();
             EngineRun(target);
-            damageWait.Wait(1000);
+            if (target != null && target.HitsMax == target.Hits)
+                damageWait.Wait(1000);
         }
 
         // Funzioni da script
