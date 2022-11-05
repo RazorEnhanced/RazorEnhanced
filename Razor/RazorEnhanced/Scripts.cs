@@ -715,122 +715,151 @@ namespace RazorEnhanced
                 { }
             }
 
+            static readonly object syncLock = new object();
             private void OnTick(object state)
             {
-                foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
+                lock (syncLock)
                 {
-                    if (script.Run)
+                    foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
                     {
-                        if (ScriptStartStopMessage && script.StartMessage)
+                        if (script.Run)
                         {
-                            Misc.SendMessage("START: "+script.Filename, 70, false);
-                            script.StartMessage = false;
-                            script.StopMessage = true;
-                        }
+                            if (ScriptStartStopMessage && script.StartMessage)
+                            {
+                                Misc.SendMessage("START: " + script.Filename, 70, false);
+                                script.StartMessage = false;
+                                script.StopMessage = true;
+                            }
 
-                        if (script.Loop)
-                        {
-                            if (script.IsStopped)
-                                script.Reset();
+                            if (script.Loop)
+                            {
+                                if (script.IsStopped)
+                                    script.Reset();
 
-                            if (script.IsUnstarted)
-                                script.Start();
+                                if (script.IsUnstarted)
+                                    script.Start();
+                            }
+                            else
+                            {
+                                if (script.IsStopped)
+                                    script.Reset();
+                                else if (script.IsUnstarted)
+                                    script.Start();
+                            }
                         }
                         else
                         {
+                            if (ScriptStartStopMessage && script.StopMessage)
+                            {
+                                Misc.SendMessage("HALT: " + script.Filename, 70, false);
+                                script.StartMessage = true;
+                                script.StopMessage = false;
+                            }
+
+                            if (script.IsRunning)
+                                script.Stop();
+
                             if (script.IsStopped)
                                 script.Reset();
-                            else if (script.IsUnstarted)
-                                script.Start();
                         }
                     }
-                    else
+
+                    if (World.Player != null && Client.Running) // Parte agent
                     {
-                        if (ScriptStartStopMessage && script.StopMessage)
+
+                        if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
                         {
-                            Misc.SendMessage("HALT: " + script.Filename, 70, false);
-                            script.StartMessage = true;
-                            script.StopMessage = false;
+                            try
+                            {
+                                m_AutoLootThread = new Thread(AutoLoot.AutoRun);
+                                m_AutoLootThread.Name = "AutoLoot Thread";
+                                m_AutoLootThread.Start();
+                            }
+                            catch { }
                         }
 
-                        if (script.IsRunning)
-                            script.Stop();
-
-                        if (script.IsStopped)
-                            script.Reset();
-                    }
-                }
-
-                if (World.Player != null && Client.Running) // Parte agent
-                {
-                    if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
-                    {
-                        try
+                        if (Scavenger.AutoMode && !IsRunningThread(m_ScavengerThread))
                         {
-                            m_AutoLootThread = new Thread(AutoLoot.AutoRun);
-                            m_AutoLootThread.Start();
+                            try
+                            {
+                                m_ScavengerThread = new Thread(Scavenger.AutoRun);
+                                m_ScavengerThread.Name = "Scavenger Thread";
+                                m_ScavengerThread.Start();
+                            }
+                            catch { }
                         }
-                        catch { }
-                    }
 
-                    if (Scavenger.AutoMode && !IsRunningThread(m_ScavengerThread))
-                    {
-                        try
+                        if (BandageHeal.AutoMode && !IsRunningThread(m_BandageHealThread))
                         {
-                            m_ScavengerThread = new Thread(Scavenger.AutoRun);
-                            m_ScavengerThread.Start();
+                            try
+                            {
+                                m_BandageHealThread = new Thread(BandageHeal.AutoRun);
+                                m_BandageHealThread.Name = "Bandage Thread";
+                                m_BandageHealThread.Start();
+                                while (!IsRunningThread(m_BandageHealThread))
+                                {
+                                    Thread.Sleep(1);
+                                }
+                            }
+                            catch { }
                         }
-                        catch { }
-                    }
 
-                    if (BandageHeal.AutoMode && !IsRunningThread(m_BandageHealThread))
-                    {
-                        try
+                        if ((Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && !IsRunningThread(m_DragDropThread))
                         {
-                            m_BandageHealThread = new Thread(BandageHeal.AutoRun);
-                            m_BandageHealThread.Start();
+                            try
+                            {
+                                m_DragDropThread = new Thread(DragDropManager.AutoRun);
+                                m_DragDropThread.Name = "DragDrop Thread";
+                                m_DragDropThread.Start();
+                                Thread.Sleep(1);
+                            }
+                            catch { }
                         }
-                        catch { }
-                    }
 
-                    if ((Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && !IsRunningThread(m_DragDropThread))
-                    {
-                        try
+                        if (Filters.AutoCarver && !IsRunningThread(m_AutoCarverThread))
                         {
-                            m_DragDropThread = new Thread(DragDropManager.AutoRun);
-                            m_DragDropThread.Start();
+                            try
+                            {
+                                m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
+                                m_AutoCarverThread.Name = "AutoCarver Thread";
+                                m_AutoCarverThread.Start();
+                                while (!IsRunningThread(m_AutoCarverThread))
+                                {
+                                    Thread.Sleep(1);
+                                }
+                            }
+                            catch { }
                         }
-                        catch { }
-                    }
 
-                    if (Filters.AutoCarver && !IsRunningThread(m_AutoCarverThread))
-                    {
-                        try
+                        if (Filters.BoneCutter && !IsRunningThread(m_BoneCutterThread))
                         {
-                            m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
-                            m_AutoCarverThread.Start();
+                            try
+                            {
+                                m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
+                                m_BoneCutterThread.Name = "BoneCutter Thread";
+                                m_BoneCutterThread.Start();
+                                while (!IsRunningThread(m_BoneCutterThread))
+                                {
+                                    Thread.Sleep(1);
+                                }
+                            }
+                            catch { }
                         }
-                        catch { }
-                    }
 
-                    if (Filters.BoneCutter && !IsRunningThread(m_BoneCutterThread))
-                    {
-                        try
+                        if (Filters.AutoModeRemount && !IsRunningThread(m_AutoRemountThread))
                         {
-                            m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
-                            m_BoneCutterThread.Start();
+                            try
+                            {
+                                m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
+                                m_AutoRemountThread.Name = "AutoRemount Thread";
+                                m_AutoRemountThread.Start();
+                                while (!IsRunningThread(m_AutoRemountThread))
+                                {
+                                    Thread.Sleep(1);
+                                }
+                            }
+                            catch { }
                         }
-                        catch { }
-                    }
-
-                    if (Filters.AutoModeRemount && !IsRunningThread(m_AutoRemountThread))
-                    {
-                        try
-                        {
-                            m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
-                            m_AutoRemountThread.Start();
-                        }
-                        catch { }
                     }
                 }
             }

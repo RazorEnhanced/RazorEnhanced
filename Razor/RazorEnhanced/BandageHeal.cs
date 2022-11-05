@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RazorEnhanced
 {
@@ -288,8 +289,9 @@ namespace RazorEnhanced
             }
         }
 
-        internal static bool bufHealStarted = false;
-        internal static bool bufHealFinished = false;
+
+        internal static ManualResetEventSlim BandageFinish = new ManualResetEventSlim(true);
+
         internal static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
         {
             UInt32 ser = p.ReadUInt32();
@@ -301,16 +303,29 @@ namespace RazorEnhanced
                 switch (action)
                 {
                     case 0x01:
-                        bufHealStarted = true;
+                        BandageFinish.Reset();
                         break;
 
                     case 0x0:
-                        bufHealFinished = true;
+                        BandageFinish.Set();
                         break;
                 }
             }
         }
         
+        internal static bool CountActive = false;
+        internal static void ShowCount(Assistant.Mobile target)
+        {
+            int seconds = 0;
+            int maxCount = 10;
+            while (CountActive && maxCount > 0)
+            {
+                Thread.Sleep(1000);
+                seconds++; 
+                maxCount--;
+                target.OverheadMessage(seconds.ToString());
+            }
+        }
 
         internal static void Heal(Assistant.Mobile target, bool wait)
         {
@@ -340,10 +355,8 @@ namespace RazorEnhanced
 
             if (bandageamount != 0)        // Se le bende ci sono
             {
-                bufHealStarted = false;
-                bufHealFinished = false;
                 AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
-
+                Task CountTask = null;
                 if (SelfHealUseText)
                 {
                     if (target.Serial == Player.Serial)
@@ -370,83 +383,41 @@ namespace RazorEnhanced
                 if (!wait)
                     return;
 
+                if (ShowCountdown)          // Se deve mostrare il cooldown
+                {
+                    CountActive = true;
+                    CountTask = Task.Run(() => ShowCount(target));
+                }
+                BandageFinish.Reset();
+
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
                 {
                     double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
                     if (delay < 1) // Limite per evitare che si vada in negativo
                         delay = 100;
 
-                    if (ShowCountdown)          // Se deve mostrare il cooldown
-                    {
-                        int second = 0;
-
-                        var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
-                        int first = int.Parse(delays[0]);
-                        if (delays.Count() > 1)
-                            second = int.Parse(delays[1]);
-
-                        while (first > 0)
-                        {
-                            Player.HeadMessage(10, (first / 1000).ToString());
-                            first -= 1000;
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-                    }
-                    else
-                    {
-                        Thread.Sleep((Int32)delay + 300);
-                    }
+                    BandageFinish.Wait((Int32)delay + 300);
+                    
                 }
                 else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
                 {
-                    // First wait for buf to start, but no more than 2 seconds
-                    int delay = 10;
-                    int countdown = 2000;
-                    while (!bufHealStarted)
-                    {
-                        Thread.Sleep(delay);
-                        countdown -= delay;
-                        if (countdown <= 0)
-                            break;
-                    }
-                    countdown = 1000000;
-                    delay = 10;
-                    while (!bufHealFinished)
-                    {
-                        Thread.Sleep(delay);
-                        countdown -= delay;
-                        if (countdown <= 0)
-                            break;
-                    }
+                    BandageFinish.Wait(10000); // wait a max of 10 seconds, but buf should finish sooner
                 }
                 else                // Se ho un delay custom
                 {
                     double delay = m_customdelay;
-                    if (ShowCountdown)          // Se deve mostrare il cooldown
-                    {
-                        double subdelay = delay / 1000;
-
-                        int second = 0;
-
-                        var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
-                        int first = int.Parse(delays[0]);
-                        if (delays.Count() > 1)
-                            second = int.Parse(delays[1]);
-
-                        while (first > 0)
-                        {
-                            Player.HeadMessage(10, first.ToString());
-                            first--;
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
-                    }
-                    else
-                    {
-                        Thread.Sleep((Int32)delay + 300);
-                    }
+                    BandageFinish.Wait((Int32)delay + 300);
                 }
+
+                if (ShowCountdown)          // Se deve mostrare il cooldown
+                {
+                    CountActive = false;
+                    CountTask.Wait();
+                }
+            }
+            else
+            {
+                Thread.Sleep(5000); // If no bandaids dont loop too quickly
             }
         }
 
