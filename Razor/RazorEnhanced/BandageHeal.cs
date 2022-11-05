@@ -323,7 +323,8 @@ namespace RazorEnhanced
                 Thread.Sleep(1000);
                 seconds++; 
                 maxCount--;
-                target.OverheadMessage(seconds.ToString());
+                if (CountActive)
+                    target.OverheadMessage(seconds.ToString());
             }
         }
 
