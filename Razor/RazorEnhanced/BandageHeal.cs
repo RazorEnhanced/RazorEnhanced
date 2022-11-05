@@ -412,19 +412,12 @@ namespace RazorEnhanced
                     }
                     countdown = 1000000;
                     delay = 10;
-                    int seconds = 0;
                     while (!bufHealFinished)
                     {
                         Thread.Sleep(delay);
                         countdown -= delay;
                         if (countdown <= 0)
                             break;
-
-                        if (ShowCountdown)          // Se deve mostrare il cooldown
-                        {
-                            seconds++;
-                            Player.HeadMessage(10, seconds.ToString());
-                        }
                     }
                 }
                 else                // Se ho un delay custom
