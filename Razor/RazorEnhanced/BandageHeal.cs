@@ -265,7 +265,7 @@ namespace RazorEnhanced
 
         internal static void EngineRun(Assistant.Mobile target)
         {
-            if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
+            if (target.Poisoned || (int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit)       // Check HP se bendare o meno.
             {
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
                 {
@@ -511,7 +511,7 @@ namespace RazorEnhanced
 
             damageWait.Reset();
             EngineRun(target);
-            if (target != null && target.HitsMax == target.Hits)
+            if (target != null && target.HitsMax == target.Hits && !target.Poisoned)
                 damageWait.Wait(1000);
         }
 

@@ -774,6 +774,7 @@ namespace RazorEnhanced
                                 m_AutoLootThread = new Thread(AutoLoot.AutoRun);
                                 m_AutoLootThread.Name = "AutoLoot Thread";
                                 m_AutoLootThread.Start();
+                                Thread.Sleep(1);
                             }
                             catch { }
                         }
@@ -785,6 +786,7 @@ namespace RazorEnhanced
                                 m_ScavengerThread = new Thread(Scavenger.AutoRun);
                                 m_ScavengerThread.Name = "Scavenger Thread";
                                 m_ScavengerThread.Start();
+                                Thread.Sleep(1);
                             }
                             catch { }
                         }
@@ -796,10 +798,6 @@ namespace RazorEnhanced
                                 m_BandageHealThread = new Thread(BandageHeal.AutoRun);
                                 m_BandageHealThread.Name = "Bandage Thread";
                                 m_BandageHealThread.Start();
-                                while (!IsRunningThread(m_BandageHealThread))
-                                {
-                                    Thread.Sleep(1);
-                                }
                             }
                             catch { }
                         }
@@ -823,10 +821,7 @@ namespace RazorEnhanced
                                 m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
                                 m_AutoCarverThread.Name = "AutoCarver Thread";
                                 m_AutoCarverThread.Start();
-                                while (!IsRunningThread(m_AutoCarverThread))
-                                {
-                                    Thread.Sleep(1);
-                                }
+                                Thread.Sleep(1);
                             }
                             catch { }
                         }
@@ -838,10 +833,7 @@ namespace RazorEnhanced
                                 m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
                                 m_BoneCutterThread.Name = "BoneCutter Thread";
                                 m_BoneCutterThread.Start();
-                                while (!IsRunningThread(m_BoneCutterThread))
-                                {
-                                    Thread.Sleep(1);
-                                }
+                                Thread.Sleep(1);
                             }
                             catch { }
                         }
@@ -853,10 +845,7 @@ namespace RazorEnhanced
                                 m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
                                 m_AutoRemountThread.Name = "AutoRemount Thread";
                                 m_AutoRemountThread.Start();
-                                while (!IsRunningThread(m_AutoRemountThread))
-                                {
-                                    Thread.Sleep(1);
-                                }
+                                Thread.Sleep(1);
                             }
                             catch { }
                         }
