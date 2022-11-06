@@ -759,51 +759,48 @@ namespace Assistant
         private static bool m_ExternZ = false;
         internal static bool ExternalZ { get { return m_ExternZ; } set { m_ExternZ = value; } }
 
-        //private sbyte m_CalcZ = 0;
-        internal int CalcZ
-        {
-            get
-            {
-                if (!m_ExternZ || !DLLImport.Razor.IsCalibrated())
-                    return Assistant.Facet.ZTop(Map, Position.X, Position.Y, Position.Z);
-                else
-                    return Position.Z;
-            }
-        }
-
         internal static int GetZ(int x, int y, int z)
         {
-            /*unsafe
+            unsafe
             {
                 if (DLLImport.Razor.IsCalibrated())
                 {
                     if (DLLImport.Razor.GetPosition(null, null, &z))
                         return z;
                 }
-            }*/
+            }
 
             return Facet.ZTop(World.Player.Map, x, y, z);
         }
 
+        internal void FixZ()
+        {
+            // I had to do this to recover from falling and similar Z changes that 
+            // the client doesn't calculate properly until it receives the packet
+            // Since we get the packet before the client, their Z value is old for a bit
+            if (m_ExternZ && DLLImport.Razor.IsCalibrated())
+            {
+                int z = 0;
+                unsafe
+                {
+                    DLLImport.Razor.GetPosition(null, null, &z);
+                }
+                entityPosition.Z = z;
+            }
+        }
+
         public override Point3D Position
         {
-            // IsCalibrated is always false on CUO and true on OSI client
             get
             {
-                if (m_ExternZ && DLLImport.Razor.IsCalibrated())
-                {
-                    Point3D p = new Point3D(base.Position);
-                    p.Z = GetZ(p.X, p.Y, p.Z);
-                    return p;
-                }
-                else
-                {
                     return base.Position;
-                }
             }
             set
             {
                 base.Position = value;
+                // IsCalibrated is always false on CUO and true on OSI client
+                if (m_ExternZ && DLLImport.Razor.IsCalibrated())
+                    entityPosition.Z = GetZ(value.X, value.Y, value.Z);
             }
         }
 
@@ -910,6 +907,7 @@ namespace Assistant
 
             protected override void OnTick()
             {
+
             }
         }
 

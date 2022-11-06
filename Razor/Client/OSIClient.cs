@@ -148,6 +148,8 @@ namespace Assistant
                 return;
             }
             DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.DwmFree, UIntPtr.Zero);
+            if (World.Player != null)
+                World.Player.FixZ();
         }
 
         public override void SetMapWndHandle(Form mapWnd)

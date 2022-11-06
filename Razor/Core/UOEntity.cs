@@ -24,22 +24,17 @@ namespace Assistant
         }
 
         public Serial Serial { get { return m_Serial; } }
-        private Point3D dont_use_pos;
+        internal Point3D entityPosition;
 
         public virtual Point3D Position
         {
-            get { return dont_use_pos; }
+            get { return entityPosition; }
             set
             {
-                if (m_Serial == 0x2247A && dont_use_pos.Z != 48)
-                {
-                    // stop
-                }
-
-                if (value != dont_use_pos)
+                if (value != entityPosition)
                 {
                     OnPositionChanging(value);
-                    dont_use_pos = value;
+                    entityPosition = value;
                 }
             }
         }

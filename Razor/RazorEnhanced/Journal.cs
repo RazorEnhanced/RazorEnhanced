@@ -241,12 +241,17 @@ namespace RazorEnhanced
         {
             try
             {
-                return m_journal.Any(entrys => entrys.Text.Contains(text));
+                //return m_journal.Any(entrys => entrys.Text.Contains(text));
+                foreach (JournalEntry journalEntry in m_journal)
+                {
+                    if (journalEntry.Text.Contains(text))
+                        return true;
+                }
             }
             catch
-            {
-                return false;
+            {                
             }
+            return false;
         }
 
         /// <summary>

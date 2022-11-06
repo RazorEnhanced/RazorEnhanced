@@ -534,7 +534,14 @@ namespace RazorEnhanced
             }
             return temp;
         }
+
+
         internal static void SavePasswords(string not_used, string tableName, DataTable table)
+        {
+        }
+
+        // Standard save doesnt save passwords, and they are only saved if changed because encryption is expensive
+        internal static void SavePasswords_real(string not_used, string tableName, DataTable table)
         {
             // ensure we save passwords to top level of profile
             string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced");
@@ -4600,7 +4607,7 @@ namespace RazorEnhanced
                     newRow["Password"] = password;
                     m_Dataset.Tables["PASSWORD"].Rows.Add(newRow);
                 }
-                Save();
+                SavePasswords_real("", "PASSWORD", m_Dataset.Tables["PASSWORD"]);
             }
 
             internal static string GetPassword(string user, string IP)
