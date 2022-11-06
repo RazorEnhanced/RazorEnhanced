@@ -423,15 +423,6 @@ namespace RazorEnhanced
             }
         }
 
-        internal static ManualResetEventSlim damageWait = new ManualResetEventSlim(true);
-        internal static void Damaged(uint serial, uint damage)
-        {
-            if (Player.Serial == serial || RazorEnhanced.Friend.IsFriend((int)serial) )
-            { 
-                damageWait.Set();
-            }
-        }
-
         internal static void AutoRun()
         {
             if (!Client.Running)
@@ -510,10 +501,7 @@ namespace RazorEnhanced
             if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), m_maxrange)) // Verifica distanza
                 return;
 
-            damageWait.Reset();
             EngineRun(target);
-            if (target != null && target.HitsMax == target.Hits && !target.Poisoned)
-                damageWait.Wait(1000);
         }
 
         // Funzioni da script

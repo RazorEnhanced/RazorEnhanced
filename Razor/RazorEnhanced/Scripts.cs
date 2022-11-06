@@ -798,6 +798,7 @@ namespace RazorEnhanced
                                 m_BandageHealThread = new Thread(BandageHeal.AutoRun);
                                 m_BandageHealThread.Name = "Bandage Thread";
                                 m_BandageHealThread.Start();
+                                Thread.Sleep(1);
                             }
                             catch { }
                         }
