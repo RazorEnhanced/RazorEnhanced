@@ -526,7 +526,7 @@ namespace RazorEnhanced
                                                     var items = field.GetValue(theMacro);
                                                     SetMacroToExecute.Invoke(macros, new object[] { items });
                                                     WaitForTargetTimer.Invoke(macros, new object[] { 0 });
-                                                    Update.Invoke(macros, new object[] { });
+                                                    //Update.Invoke(macros, new object[] { });
                                                 }
                                             }
                                         }
