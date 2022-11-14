@@ -444,7 +444,7 @@ namespace RazorEnhanced
         /// Play a CUO macro by name
         /// Warning, limited testing !! 
         /// </summary>
-        public static string PlayMacro(string macroName)
+        public static void PlayMacro(string macroName)
         {
             if (!Client.IsOSI)
             {
@@ -526,7 +526,7 @@ namespace RazorEnhanced
                                                     var items = field.GetValue(theMacro);
                                                     SetMacroToExecute.Invoke(macros, new object[] { items });
                                                     WaitForTargetTimer.Invoke(macros, new object[] { 0 });
-                                                    Update.Invoke(macros, new object[] { 0 });
+                                                    Update.Invoke(macros, new object[] { });
                                                 }
                                             }
                                         }
@@ -545,7 +545,7 @@ namespace RazorEnhanced
 
 
             }
-            return "";
+            return;
         }
     }
 }
