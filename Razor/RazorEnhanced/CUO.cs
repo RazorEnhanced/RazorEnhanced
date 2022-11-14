@@ -229,7 +229,7 @@ namespace RazorEnhanced
                                         }
                                         if (method != null)
                                         {
-                                            var parameters = new object[0] {  };
+                                            var parameters = new object[0] { };
                                             method.Invoke(gump, parameters);
                                             result = true;
                                             Thread.Sleep(50);
@@ -412,7 +412,7 @@ namespace RazorEnhanced
             if (!Client.IsOSI)
             {
                 var currentSettingProperty = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Configuration.Settings")?.GetField("GlobalSettings", BindingFlags.Public | BindingFlags.Static);
-                
+
                 if (currentSettingProperty != null)
                 {
                     var settings = currentSettingProperty.GetValue(null);
@@ -431,16 +431,122 @@ namespace RazorEnhanced
                         if (settingProperty != null)
                         {
                             var xxx = settingProperty.GetValue(settings);
-                            return xxx.ToString();  
+                            return xxx.ToString();
+                        }
+                    }
+                }
+
+            }
+            return "";
+
+        }
+        /// <summary>
+        /// Play a CUO macro by name
+        /// Warning, limited testing !! 
+        /// </summary>
+        public static string PlayMacro(string macroName)
+        {
+            if (!Client.IsOSI)
+            {
+                var Client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
+                PropertyInfo Game = null;
+                foreach (var g in Client.GetProperties())
+                {
+                    if (g.Name == "Game")
+                    {
+                        Game = g;
+                        break;
+                    }
+                }
+                if (Game != null)
+                {
+                    var game = Game.GetValue(Client, null);
+                    if (game != null)
+                    {
+                        PropertyInfo Scene = null;
+                        foreach (var s in game.GetType().GetProperties())
+                        {
+                            if (s.Name == "Scene")
+                            {
+                                Scene = s;
+                                break;
+                            }
+                        }
+                        if (Scene != null)
+                        {
+                            var scene = Scene.GetValue(game);
+                            if (scene != null)
+                            {
+                                PropertyInfo Macros = null;
+                                foreach (var m in scene.GetType().GetProperties())
+                                {
+                                    if (m.Name == "Macros")
+                                    {
+                                        Macros = m;
+                                        break;
+                                    }
+                                }
+                                if (Macros != null)
+                                {
+                                    var macros = Macros.GetValue(scene);
+                                    if (macros != null)
+                                    {
+                                        MethodInfo FindMacro = null;
+                                        MethodInfo SetMacroToExecute = null;
+                                        MethodInfo WaitForTargetTimer = null;
+                                        MethodInfo Update = null;
+                                        foreach (var macroFn in macros.GetType().GetMethods())
+                                        {
+                                            if (macroFn.Name == "FindMacro" && macroFn.GetParameters().Length == 1) 
+                                            {
+                                                FindMacro = macroFn;
+                                            }
+                                            if (macroFn.Name == "SetMacroToExecute")
+                                            {
+                                                SetMacroToExecute = macroFn;
+                                            }
+                                            if (macroFn.Name == "set_WaitForTargetTimer")
+                                            {
+                                                WaitForTargetTimer = macroFn;
+                                            }
+                                            if (macroFn.Name == "Update")
+                                            {
+                                                Update = macroFn;
+                                            }
+                                        }
+                                        if (FindMacro != null && SetMacroToExecute != null 
+                                            && WaitForTargetTimer != null && Update != null)
+                                        {
+                                            var theMacro = FindMacro.Invoke(macros, new object[] { macroName });
+                                            var fields = theMacro.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
+                                            foreach (var field in fields)
+                                            {
+                                                if (field.Name == "Items")
+                                                {
+                                                    var items = field.GetValue(theMacro);
+                                                    SetMacroToExecute.Invoke(macros, new object[] { items });
+                                                    WaitForTargetTimer.Invoke(macros, new object[] { 0 });
+                                                    Update.Invoke(macros, new object[] { 0 });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
                 
+                var currentClient = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Scenes.GameScene");
+                //{ ClassicUO.Game.Managers.MacroManager}
+                // int macroid = Client.Game.GetScene<GameScene>().Macros.GetAllMacros().IndexOf(_macro);
+
+
+
             }
             return "";
-                
         }
-
     }
 }
 
