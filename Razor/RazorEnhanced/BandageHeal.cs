@@ -328,98 +328,113 @@ namespace RazorEnhanced
             }
         }
 
+        static internal Mutex HealMutex = new Mutex();
         internal static void Heal(Assistant.Mobile target, bool wait)
         {
-            int bandageid = 0x0E21;
-            int bandagecolor = -1;
+            if (false == HealMutex.WaitOne(1))
+                return;
+            try
+            {
+                int bandageid = 0x0E21;
+                int bandagecolor = -1;
 
-            if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
-            {
-                bandageid = m_customid;
-                bandagecolor = m_customcolor;
-            }
-            int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
-
-            // Id base bende
-            // Conteggio bende
-            int bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
-            if (bandageamount == 0)
-            {
-                Player.HeadMessage(10, "Bandage not found");
-                AddLog("Bandage not found");
-            }
-            else if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
-            {
-                Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                AddLog("Warning: Low bandage: " + bandageamount + " left");
-            }
-
-            if (bandageamount != 0)        // Se le bende ci sono
-            {
-                AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
-                System.Threading.Thread CountSeconds = null;
-                if (SelfHealUseText)
+                if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
                 {
-                    if (target.Serial == Player.Serial)
+                    bandageid = m_customid;
+                    bandagecolor = m_customcolor;
+                }
+                int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
+
+                // Id base bende
+                // Conteggio bende
+                int bandageamount = RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
+                if (bandageamount == 0)
+                {
+                    Player.HeadMessage(10, "Bandage not found");
+                    AddLog("Bandage not found");
+                }
+                else if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
+                {
+                    Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+                    AddLog("Warning: Low bandage: " + bandageamount + " left");
+                }
+
+                if (bandageamount != 0)        // Se le bende ci sono
+                {
+                    AddLog("Using bandage (0x" + bandageserial.ToString("X8") + ") on Target (" + target.Serial.ToString() + ")");
+                    System.Threading.Thread CountSeconds = null;
+                    if (SelfHealUseText)
                     {
-                        Player.ChatSay(0, SelfHealUseTextSelfContent);
+                        if (target.Serial == Player.Serial)
+                        {
+                            Player.ChatSay(0, SelfHealUseTextSelfContent);
+                        }
+                        else
+                        {
+                            Player.ChatSay(0, SelfHealUseTextContent);
+                            Target.WaitForTarget(1000, true);
+                            Target.TargetExecute(target.Serial);
+                        }
                     }
-                    else
+                    else if (UseTarget) // Uso nuovo packet
                     {
-                        Player.ChatSay(0, SelfHealUseTextContent);
+                        Items.UseItem(bandageserial);
                         Target.WaitForTarget(1000, true);
                         Target.TargetExecute(target.Serial);
                     }
-                }
-                else if (UseTarget) // Uso nuovo packet
-                {
-                    Items.UseItem(bandageserial);
-                    Target.WaitForTarget(1000, true);
-                    Target.TargetExecute(target.Serial);
+                    else
+                    {
+                        Items.UseItem(bandageserial, target.Serial, true);
+                    }
+                    if (!wait)
+                        return;
+
+                    if (ShowCountdown)          // Se deve mostrare il cooldown
+                    {
+                        CountActive = true;
+                        CountSeconds = new System.Threading.Thread(() => ShowCount(target));
+                        CountSeconds.Start();
+                    }
+                    //BandageFinish.Reset();
+
+                    if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
+                    {
+                        BandageFinish.Reset(); // ensure its reset
+                        double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
+                        if (delay < 1) // Limite per evitare che si vada in negativo
+                            delay = 100;
+
+                        BandageFinish.Wait((Int32)delay + 300);
+
+                    }
+                    else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
+                    {
+                        // This one doesn't reset because the heal should reset it
+                        Thread.Sleep(100);
+                        if (!BandageFinish.IsSet) // the bandage should have reset the bandage otherwise it must have gotten "you must wait"
+                            BandageFinish.Wait(10000); // wait a max of 10 seconds, but buf should finish sooner
+                    }
+                    else                // Se ho un delay custom
+                    {
+                        BandageFinish.Reset(); // ensure its reset
+                        double delay = m_customdelay;
+                        BandageFinish.Wait((Int32)delay + 300);
+                    }
+
+                    if (ShowCountdown)          // Se deve mostrare il cooldown
+                    {
+                        CountActive = false;
+                        CountSeconds.Abort();
+                    }
                 }
                 else
                 {
-                    Items.UseItem(bandageserial, target.Serial, true);
-                }
-                if (!wait)
-                    return;
-
-                if (ShowCountdown)          // Se deve mostrare il cooldown
-                {
-                    CountActive = true;
-                    CountSeconds = new System.Threading.Thread(() => ShowCount(target));
-                    CountSeconds.Start();
-                }
-                BandageFinish.Reset();
-
-                if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
-                {
-                    double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
-                    if (delay < 1) // Limite per evitare che si vada in negativo
-                        delay = 100;
-
-                    BandageFinish.Wait((Int32)delay + 300);
-                    
-                }
-                else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
-                {
-                    BandageFinish.Wait(10000); // wait a max of 10 seconds, but buf should finish sooner
-                }
-                else                // Se ho un delay custom
-                {
-                    double delay = m_customdelay;
-                    BandageFinish.Wait((Int32)delay + 300);
-                }
-
-                if (ShowCountdown)          // Se deve mostrare il cooldown
-                {
-                    CountActive = false;
-                    CountSeconds.Abort();
+                    Thread.Sleep(1000); // If no bandaids dont loop too quickly
                 }
             }
-            else
+            finally
             {
-                Thread.Sleep(5000); // If no bandaids dont loop too quickly
+                HealMutex.ReleaseMutex();
             }
         }
 
