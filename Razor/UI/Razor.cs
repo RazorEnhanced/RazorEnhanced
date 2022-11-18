@@ -136,7 +136,6 @@ namespace Assistant
         private ListBox organizerLogBox;
         private Label label27;
         private RazorAgentNumOnlyTextBox organizerDragDelay;
-        private Label organizerDestinationLabel;
         private System.Windows.Forms.Button organizerSetDestinationB;
         private Label organizerSourceLabel;
         private System.Windows.Forms.Button organizerAddTargetB;
@@ -731,6 +730,7 @@ namespace Assistant
         private ColumnHeader columnHeader18;
         private Button InspectContextButton;
         private Button InspectGumpsButton;
+        private TextBox organizerDestination;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -1049,7 +1049,6 @@ namespace Assistant
             this.organizerSetSourceB = new System.Windows.Forms.Button();
             this.organizerSetDestinationB = new System.Windows.Forms.Button();
             this.organizerSourceLabel = new System.Windows.Forms.Label();
-            this.organizerDestinationLabel = new System.Windows.Forms.Label();
             this.organizerdataGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1479,6 +1478,7 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+            this.organizerDestination = new System.Windows.Forms.TextBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -4424,12 +4424,12 @@ namespace Assistant
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.organizerDestination);
             this.groupBox11.Controls.Add(this.label57);
             this.groupBox11.Controls.Add(this.label56);
             this.groupBox11.Controls.Add(this.organizerSetSourceB);
             this.groupBox11.Controls.Add(this.organizerSetDestinationB);
             this.groupBox11.Controls.Add(this.organizerSourceLabel);
-            this.groupBox11.Controls.Add(this.organizerDestinationLabel);
             this.groupBox11.Location = new System.Drawing.Point(14, 61);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(404, 95);
@@ -4480,14 +4480,6 @@ namespace Assistant
             this.organizerSourceLabel.Size = new System.Drawing.Size(131, 28);
             this.organizerSourceLabel.TabIndex = 67;
             this.organizerSourceLabel.Text = "0x00000000";
-            // 
-            // organizerDestinationLabel
-            // 
-            this.organizerDestinationLabel.Location = new System.Drawing.Point(120, 60);
-            this.organizerDestinationLabel.Name = "organizerDestinationLabel";
-            this.organizerDestinationLabel.Size = new System.Drawing.Size(131, 28);
-            this.organizerDestinationLabel.TabIndex = 70;
-            this.organizerDestinationLabel.Text = "0x00000000";
             // 
             // organizerdataGridView
             // 
@@ -9155,6 +9147,14 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            // 
+            // organizerDestination
+            // 
+            this.organizerDestination.Location = new System.Drawing.Point(124, 54);
+            this.organizerDestination.Name = "organizerDestination";
+            this.organizerDestination.Size = new System.Drawing.Size(120, 26);
+            this.organizerDestination.TabIndex = 92;
+            this.organizerDestination.Leave += new System.EventHandler(this.organizerDestination_Leave);
             // 
             // MainForm
             // 

@@ -9,7 +9,7 @@ namespace Assistant
     {
         internal RazorAgentNumOnlyTextBox OrganizerDragDelay { get { return organizerDragDelay; } }
         internal Label OrganizerSourceLabel { get { return organizerSourceLabel; } }
-        internal Label OrganizerDestinationLabel { get { return organizerDestinationLabel; } }
+        internal TextBox OrganizerDestinationLabel { get { return organizerDestination; } }
         internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
         internal DataGridView OrganizerDataGridView { get { return organizerdataGridView; } }
         internal ComboBox OrganizerListSelect { get { return organizerListSelect; } }
@@ -218,6 +218,44 @@ namespace Assistant
                 organizerDragDelay.Text = "100";
 
             Organizer.OrganizerDelay = Convert.ToInt32(organizerDragDelay.Text);
+
+            Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
+            Organizer.RefreshLists();
+        }
+        private void organizerDestination_Leave(object sender, EventArgs e)
+        {
+            if (organizerDestination.Text == String.Empty)
+                organizerDestination.Text = "0";
+
+            int newDest = 0;
+            if (organizerDestination.Text.StartsWith("bank", StringComparison.CurrentCultureIgnoreCase))
+            {
+                if (Player.Bank == null)
+                {
+                    RazorEnhanced.Organizer.AddLog("You must open your bank box first");
+                    return;
+                }
+                else
+                    newDest = Player.Bank.Serial;
+            }
+            else if (organizerDestination.Text.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
+                {
+                if (!int.TryParse(organizerDestination.Text.Substring(2), System.Globalization.NumberStyles.HexNumber, null, out newDest))
+                {
+                    RazorEnhanced.Organizer.AddLog("Invalid destination");
+                    return;
+                }
+            }
+            else 
+            {
+                if (!int.TryParse(organizerDestination.Text.Substring(2), System.Globalization.NumberStyles.Number, null, out newDest))
+                {
+                    RazorEnhanced.Organizer.AddLog("Invalid destination");
+                    return;
+                }
+            }
+
+            Organizer.OrganizerDestination = newDest;
 
             Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
             Organizer.RefreshLists();
