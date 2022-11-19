@@ -54,24 +54,28 @@ jobs:
     - run: echo ${{ steps.checkTag.outputs.exists }}
           
     - name: Version number not valid
-      if: ${{ !steps.checkTag.outputs.exists }}
+      if: steps.checkTag.outputs.exists == 0
       run: exit -1
       
     # build   
     - name: Add MSBuild to PATH
+      if: steps.checkTag.outputs.exists == 1
       uses: microsoft/setup-msbuild@v1 
       
     - name: Restore NuGet packages
+      if: steps.checkTag.outputs.exists == 1
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
 
     - name: Build
+      if: steps.checkTag.outputs.exists == 1
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
     - name: Zip Razor
+      if: steps.checkTag.outputs.exists == 1
       id: create_zip
       uses: vimtor/action-zip@v1
       with:
@@ -80,6 +84,7 @@ jobs:
         dest: RazorEnhanced-${{ steps.get_version.outputs.version }}.zip
 
     - name: Create Release
+      if: steps.checkTag.outputs.exists == 1
       id: create_release
       uses: actions/create-release@v1
       with:
@@ -89,6 +94,7 @@ jobs:
         prerelease: false
 
     - name: Deploy        
+      if: steps.checkTag.outputs.exists == 1
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
