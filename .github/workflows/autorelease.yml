@@ -49,6 +49,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
         
+    - run: echo ${{ steps.checkTag.outputs.exists }}
+    
     # build   
     - name: Add MSBuild to PATH
       if: steps.checkTag.outputs.exists == 1
