@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
   # Triggers the workflow on push or pull request events but only for the release/0.7 branch
-  #push:
-  #  branches: [ release/0.7 ]
+  push:
+    branches: [ release/0.8 ]
   #pull_request:
   #  branches: [ release/0.7 ]
 
