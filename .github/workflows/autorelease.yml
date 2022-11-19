@@ -36,7 +36,7 @@ jobs:
       shell: powershell
       run: |
         $version = Select-String -Path Razor/Properties/AssemblyInfo.cs  -Pattern 'AssemblyVersion\(\"([\w.-]+)\"\)' -AllMatches |  %{$_.Matches.Groups[1].Value}
-        echo "version=$version" >> $GITHUB_OUTPUT
+        echo "::set-output name=version::$version"
     
     - name: Show Version
       run: echo "${{steps.get_version.outputs.version}}"
