@@ -55,7 +55,8 @@ jobs:
           
     - name: Version number not valid
       if: ${{ !steps.checkTag.outputs.exists }}
-      uses: andymckay/cancel-action@0.2
+      run: exit -1
+      
     # build   
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1 
