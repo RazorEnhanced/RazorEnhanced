@@ -29,6 +29,8 @@ jobs:
     runs-on: windows-latest
 
     steps:         
+    - uses: actions/checkout@v2   
+    
     - name: Grab Version
       id: get_version
       shell: powershell
@@ -45,10 +47,7 @@ jobs:
       with: 
         tag: "v${{steps.get_version.outputs.version}}"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-    - uses: actions/checkout@v2   
-      if: steps.checkTag.outputs.exists == 1
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
         
     # build   
     - name: Add MSBuild to PATH
