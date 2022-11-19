@@ -22,7 +22,6 @@ namespace Assistant
 
         private static IPAddress m_ip;
 
-        // Test a useless change
         internal static IPAddress IP
         {
             get { return m_ip; }
