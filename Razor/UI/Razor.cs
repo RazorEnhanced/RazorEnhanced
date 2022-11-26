@@ -1044,6 +1044,7 @@ namespace Assistant
             this.organizerExecuteButton = new System.Windows.Forms.Button();
             this.organizerStopButton = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.organizerDestination = new System.Windows.Forms.TextBox();
             this.label57 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.organizerSetSourceB = new System.Windows.Forms.Button();
@@ -1478,7 +1479,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.organizerDestination = new System.Windows.Forms.TextBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1598,8 +1598,9 @@ namespace Assistant
             // 
             // tabs
             // 
-            this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabs.Controls.Add(this.generalTab);
             this.tabs.Controls.Add(this.moreOptTab);
             this.tabs.Controls.Add(this.enhancedFilterTab);
@@ -4436,6 +4437,14 @@ namespace Assistant
             this.groupBox11.TabIndex = 90;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Organizer Bags";
+            // 
+            // organizerDestination
+            // 
+            this.organizerDestination.Location = new System.Drawing.Point(124, 54);
+            this.organizerDestination.Name = "organizerDestination";
+            this.organizerDestination.Size = new System.Drawing.Size(120, 26);
+            this.organizerDestination.TabIndex = 92;
+            this.organizerDestination.Leave += new System.EventHandler(this.organizerDestination_Leave);
             // 
             // label57
             // 
@@ -9147,14 +9156,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            // 
-            // organizerDestination
-            // 
-            this.organizerDestination.Location = new System.Drawing.Point(124, 54);
-            this.organizerDestination.Name = "organizerDestination";
-            this.organizerDestination.Size = new System.Drawing.Size(120, 26);
-            this.organizerDestination.TabIndex = 92;
-            this.organizerDestination.Leave += new System.EventHandler(this.organizerDestination_Leave);
             // 
             // MainForm
             // 
