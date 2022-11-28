@@ -116,733 +116,45 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Accord.Controls.Imaging, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Controls.Imaging.3.7.0\lib\net462\Accord.Controls.Imaging.dll</HintPath>
-    </Reference>
-    <Reference Include="Accord.Imaging, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Imaging.3.8.0\lib\net462\Accord.Imaging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Accord.Video, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Video.3.7.0\lib\net462\Accord.Video.dll</HintPath>
-    </Reference>
-    <Reference Include="Accord.Video.DirectShow, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Video.DirectShow.3.7.0\lib\net462\Accord.Video.DirectShow.dll</HintPath>
-    </Reference>
-    <Reference Include="Accord.Video.FFMPEG, Version=3.7.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=x86">
-      <HintPath>..\packages\Accord.Video.FFMPEG.3.7.0\lib\net462\Accord.Video.FFMPEG.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoUpdater.NET, Version=1.6.4.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autoupdater.NET.Official.1.6.4\lib\net45\AutoUpdater.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="ConcurrentCollections, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ConcurrentHashSet.1.1.0\lib\netstandard1.0\ConcurrentCollections.dll</HintPath>
-    </Reference>
-    <Reference Include="CrashReporter.NET, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7828e0fd88cab698, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrashReporter.NET.Official.1.6.0\lib\net462\CrashReporter.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="cuoapi">
-      <HintPath>.\cuoapi.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.33.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.33\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython, Version=3.4.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.3.4.0-alpha1\lib\net46\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Modules, Version=3.4.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.3.4.0-alpha1\lib\net46\IronPython.Modules.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.SQLite, Version=3.4.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.3.4.0-alpha1\lib\net46\IronPython.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Wpf, Version=3.4.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.3.4.0-alpha1\lib\net46\IronPython.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.3.0\lib\net45\Microsoft.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.3.0\lib\net45\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.3.0\lib\net45\Microsoft.Scripting.Metadata.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.5.0.1\lib\net46\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="System">
-      <Name>System</Name>
-    </Reference>
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data">
-      <Name>System.Data</Name>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Design" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Drawing">
-      <Name>System.Drawing</Name>
-    </Reference>
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.4.3.1\lib\net462\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Extensions, Version=4.1.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.Extensions.4.3.1\lib\net462\System.Runtime.Extensions.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.2\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms">
-      <Name>System.Windows.Forms</Name>
-    </Reference>
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml">
-      <Name>System.XML</Name>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.1\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Client\ClassicUO.cs" />
-    <Compile Include="Client\Client.cs" />
-    <Compile Include="Client\UOAssist.cs" />
-    <Compile Include="Core\ActionQueue.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\Config.cs" />
-    <Compile Include="Core\SkillIcon.cs" />
-    <Compile Include="Core\DLLImport.cs" />
-    <Compile Include="Core\TitleBar.cs" />
-    <Compile Include="Core\VideoCapture.cs" />
-    <Compile Include="Core\Commands.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\Death.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\Filter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\Light.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\MessageFilter.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\Season.cs" />
-    <Compile Include="Filters\SoundFilters.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\StaffNpcs.cs" />
-    <Compile Include="Filters\StaffItems.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\VetRewardGump.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Filters\Weather.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Geometry.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Network\Ping.cs" />
-    <Compile Include="Network\PacketTable.cs" />
-    <Compile Include="Network\UoMod.cs" />
-    <Compile Include="Network\UoWarper.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="RazorEnhanced\AutoDoc.cs" />
-    <Compile Include="RazorEnhanced\Constants.cs" />
-    <Compile Include="RazorEnhanced\CSharpEngine.cs" />
-    <Compile Include="RazorEnhanced\CUO.cs" />
-    <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
-    <Compile Include="RazorEnhanced\PythonEngine.cs" />
-    <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
-    <Compile Include="RazorEnhanced\PathFinding.cs" />
-    <Compile Include="RazorEnhanced\Multi.cs" />
-    <Compile Include="RazorEnhanced\SeasonManager.cs" />
-    <Compile Include="RazorEnhanced\Sound.cs" />
-    <Compile Include="RazorEnhanced\SpellGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\SyncPrimitives.cs" />
-    <Compile Include="RazorEnhanced\Timer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\Statics.cs" />
-    <Compile Include="RazorEnhanced\DragDropManager.cs" />
-    <Compile Include="RazorEnhanced\Profiles.cs" />
-    <Compile Include="RazorEnhanced\SpecialMoves.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Item.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\ItemID.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Main.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Facet.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Mobile.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\MsgQueue.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Client\OSIClient.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Network\Handlers.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Network\Packet.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Network\PacketHandler.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Network\Packets.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\ObjectPropertyList.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\PasswordMemory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Player.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Core\ScreenCapture.cs">
+    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="src\Clients\Client.cs" />
+    <Compile Include="src\Clients\CUOClient.cs" />
+    <Compile Include="src\Clients\OSIClient.cs" />
+    <Compile Include="src\Core\ZLib.cs" />
+    <Compile Include="src\DLLImport.cs" />
+    <Compile Include="src\Platform.cs" />
+    <Compile Include="src\Main.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Serial.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Spells.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\StealthSteps.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Targeting.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Timer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\HotKey.cs" />
-    <Compile Include="RazorEnhanced\DPSMeter.cs" />
-    <Compile Include="RazorEnhanced\ToolBar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\BandageHeal.cs" />
-    <Compile Include="RazorEnhanced\Restock.cs" />
-    <Compile Include="RazorEnhanced\Filters.cs" />
-    <Compile Include="RazorEnhanced\JsonData.cs" />
-    <Compile Include="RazorEnhanced\Target.cs" />
-    <Compile Include="RazorEnhanced\Journal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\AutoLoot.cs" />
-    <Compile Include="RazorEnhanced\Dress.cs" />
-    <Compile Include="RazorEnhanced\GumpInspector.cs" />
-    <Compile Include="RazorEnhanced\Gumps.cs" />
-    <Compile Include="RazorEnhanced\Shards.cs" />
-    <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.Designer.cs">
-      <DependentUpon>EnhancedAgentAddList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedChangeLog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedChangeLog.Designer.cs">
-      <DependentUpon>EnhancedChangeLog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.Designer.cs">
-      <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedObjectInspector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedObjectInspector.Designer.cs">
-      <DependentUpon>EnhancedObjectInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedStaticInspector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedStaticInspector.Designer.cs">
-      <DependentUpon>EnhancedStaticInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileImport.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileImport.Designer.cs">
-      <DependentUpon>EnhancedProfileImport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileClone.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileClone.Designer.cs">
-      <DependentUpon>EnhancedProfileClone.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileRename.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileRename.Designer.cs">
-      <DependentUpon>EnhancedProfileRename.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedProfileAdd.Designer.cs">
-      <DependentUpon>EnhancedProfileAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.Designer.cs">
-      <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.Designer.cs">
-      <DependentUpon>EnhancedFriendAddPlayerManual.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.Designer.cs">
-      <DependentUpon>EnhancedDressAddUndressLayer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.Designer.cs">
-      <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedLauncher.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedLauncher.Designer.cs">
-      <DependentUpon>EnhancedLauncher.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\Friend.cs" />
-    <Compile Include="RazorEnhanced\UI\RazorFastColoredTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\RazorFastColoredTextBox.Designer.cs">
-      <DependentUpon>RazorFastColoredTextBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UOSteamEngine.cs" />
-    <Compile Include="RazorEnhanced\Vendor.cs" />
-    <Compile Include="RazorEnhanced\Organizer.cs" />
-    <Compile Include="RazorEnhanced\Scavenger.cs" />
-    <Compile Include="RazorEnhanced\EnhancedEntity.cs" />
-    <Compile Include="RazorEnhanced\Geometry.cs" />
-    <Compile Include="RazorEnhanced\Item.cs" />
-    <Compile Include="RazorEnhanced\ItemID.cs" />
-    <Compile Include="Core\Buffs.cs" />
-    <Compile Include="RazorEnhanced\Misc.cs" />
-    <Compile Include="RazorEnhanced\Scripts.cs" />
-    <Compile Include="RazorEnhanced\Settings.cs" />
-    <Compile Include="RazorEnhanced\Spells.cs" />
-    <Compile Include="RazorEnhanced\Player.cs" />
-    <Compile Include="RazorEnhanced\UI\Controls.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.Designer.cs">
-      <DependentUpon>EnhancedScavengerEditItemProps.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedItemInspector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedItemInspector.Designer.cs">
-      <DependentUpon>EnhancedItemInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedMobileInspector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedMobileInspector.Designer.cs">
-      <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.Designer.cs">
-      <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\Mobile.cs" />
-    <Compile Include="RazorEnhanced\Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="UI\Agent\AutoLoot.cs">
+    <Compile Include="src\Shards.cs" />
+    <Compile Include="UI\EnhancedAgentAddList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Agent\BandageHeal.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\Dress.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\Common.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\DPSMeter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Ext.cs" />
-    <Compile Include="UI\Filter\EN-Filters.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\Friends.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Filter\Filters.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Other\Hotkey.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\HueEntry.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Languages.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\Organizer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Other\Profile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Razor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\Restock.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\Scavenger.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Grids-Bars\SpellGrid.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Other\Script.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Other\Skills.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Other\Target.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Video-Screen\ScreenShot.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\SplashScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Core\UOEntity.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\Utility.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\World.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Core\ZLib.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\Grids-Bars\Toolbar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\VendorBuy.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Agent\VendorSell.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Video-Screen\VideoRecorder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAgentAddList.resx">
+    <Compile Include="UI\EnhancedAgentAddList.Designer.cs">
       <DependentUpon>EnhancedAgentAddList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedChangeLog.resx">
-      <DependentUpon>EnhancedChangeLog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.resx">
-      <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedObjectInspector.resx">
-      <DependentUpon>EnhancedObjectInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedStaticInspector.resx">
-      <DependentUpon>EnhancedStaticInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileImport.resx">
-      <DependentUpon>EnhancedProfileImport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileClone.resx">
-      <DependentUpon>EnhancedProfileClone.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileRename.resx">
-      <DependentUpon>EnhancedProfileRename.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileAdd.resx">
-      <DependentUpon>EnhancedProfileAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.resx">
-      <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.resx">
-      <DependentUpon>EnhancedFriendAddPlayerManual.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.resx">
-      <DependentUpon>EnhancedDressAddUndressLayer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGumpInspector.resx">
-      <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedLauncher.resx">
+    </Compile>
+    <Compile Include="UI\EnhancedLauncher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EnhancedLauncher.Designer.cs">
       <DependentUpon>EnhancedLauncher.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.resx">
-      <DependentUpon>EnhancedScavengerEditItemProps.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedItemInspector.resx">
-      <DependentUpon>EnhancedItemInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedMobileInspector.resx">
-      <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
-      <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\App.ico" />
-    <EmbeddedResource Include="UI\HueEntry.resx">
-      <DependentUpon>HueEntry.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Razor.resx">
-      <DependentUpon>Razor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\SplashScreen.resx">
-      <DependentUpon>SplashScreen.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="..\.editorconfig">
-      <Link>RazorEnhanced\.editorconfig</Link>
-    </None>
+    </Compile>
+    <None Include="Resources\razor-enhanced.ico" />
+    <None Include="Resources\document-save-5.png" />
+    <None Include="Resources\document-close-2.png" />
+    <None Include="Resources\document-open-7.png" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\Client.datasource" />
-    <None Include="Properties\DataSources\Ultima.Client.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="RazorEnhanced\Resources\bug-add.png" />
-    <None Include="RazorEnhanced\Resources\bug-delete.png" />
-    <None Include="RazorEnhanced\Resources\document-close-2.png" />
-    <None Include="RazorEnhanced\Resources\document-open-7.png" />
-    <None Include="RazorEnhanced\Resources\document-save-5.png" />
-    <None Include="RazorEnhanced\Resources\accessories-text-editor-5.ico" />
-    <None Include="RazorEnhanced\Resources\applications-utilities.png" />
-    <None Include="RazorEnhanced\Resources\applications-utilities.ico" />
     <Content Include="razor-enhanced.ico" />
-    <None Include="RazorEnhanced\Resources\bug.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaBordoDestro.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaBordoSinistro.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaleSlot.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaleSpazioStat.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleBordoSopra.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleBordoSotto.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleSlot.png" />
-    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleSpazioStat.png" />
-    <None Include="RazorEnhanced\Resources\BarraOrizzontaBordoDestro.png" />
-    <None Include="RazorEnhanced\Resources\BarraOrizzontaBordoSinistro.png" />
-    <None Include="RazorEnhanced\Resources\BarraOrizzontaleSlot.png" />
-    <None Include="RazorEnhanced\Resources\BarraOrizzontaleSpazioStat.png" />
-    <None Include="RazorEnhanced\Resources\BarraVerticaleBordoSopra.png" />
-    <None Include="RazorEnhanced\Resources\BarraVerticaleBordoSotto.png" />
-    <None Include="RazorEnhanced\Resources\BarraVerticaleSlot.png" />
-    <None Include="RazorEnhanced\Resources\BarraVerticaleSpazioStat.png" />
-    <None Include="RazorEnhanced\Resources\bug_go.png" />
-    <None Include="RazorEnhanced\Resources\aggiungi.png" />
-    <None Include="RazorEnhanced\Resources\cancella.png" />
-    <None Include="RazorEnhanced\Resources\esporta.png" />
-    <Content Include="RazorEnhanced\Resources\green.png" />
-    <None Include="RazorEnhanced\Resources\media-playback-start.png" />
-    <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
-    <None Include="RazorEnhanced\Resources\media-seek-forward-3.png" />
-    <None Include="RazorEnhanced\Resources\media-playback-start-3.png" />
-    <None Include="RazorEnhanced\Resources\media-skip-forward-3.png" />
-    <None Include="RazorEnhanced\Resources\media-playback-pause-3.png" />
-    <None Include="RazorEnhanced\Resources\razor-enhanced.ico" />
-    <None Include="RazorEnhanced\Resources\razor-enhanced.png" />
-    <None Include="RazorEnhanced\Resources\gump.png" />
-    <None Include="RazorEnhanced\Resources\map-poison.gif" />
-    <None Include="RazorEnhanced\Resources\map-dead.gif" />
-    <None Include="RazorEnhanced\Resources\map-mortal.gif" />
-    <None Include="RazorEnhanced\Resources\map-paralized.gif" />
-    <None Include="RazorEnhanced\Resources\map-deadIn.png" />
-    <None Include="RazorEnhanced\Resources\map-deadOut.png" />
-    <None Include="RazorEnhanced\Resources\importa.png" />
-    <Content Include="RazorEnhanced\Resources\loop.png" />
-    <None Include="RazorEnhanced\Resources\playagent.png" />
-    <Content Include="RazorEnhanced\Resources\PayPal.png" />
-    <Content Include="RazorEnhanced\Resources\razor-enhanced-splash.png" />
-    <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
-    <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
-    <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />
-    <Content Include="RazorEnhanced\Resources\RazorRadioButton.Off.png" />
-    <Content Include="RazorEnhanced\Resources\RazorRadioButton.On.png" />
-    <None Include="RazorEnhanced\Resources\record.png" />
-    <Content Include="RazorEnhanced\Resources\red.png" />
-    <None Include="RazorEnhanced\Resources\RoundButton.png" />
-    <None Include="RazorEnhanced\Resources\uod_logo.png" />
-    <None Include="RazorEnhanced\Resources\toolbar.png" />
-    <None Include="RazorEnhanced\Resources\stopagent.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Anatomy.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_AnimalLore.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_AnimalTaming.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_ArmsLore.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Begging.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Cartography.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_DetectingHidden.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Discordance.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_EvalInt.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_ForesicEvalutation.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Hiding.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Imbuing.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Inscription.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_ItemID.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Meditation.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Peacemaking.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Poisoning.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Provocation.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_RemoveTrap.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_SpiritSpeak.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Stealing.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Stealth.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_TasteID.png" />
-    <None Include="RazorEnhanced\Resources\Skill_Icon_Tracking.png" />
-    <None Include="RazorEnhanced\Resources\splashnew.jpg" />
-    <Content Include="RazorEnhanced\Resources\search2.png" />
-    <Content Include="RazorEnhanced\Resources\yellow.png" />
-    <Content Include="UI\Lock.ico" />
-    <Content Include="UI\UOPS.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -867,17 +179,49 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FastColoredTextBox\FastColoredTextBox.csproj">
-      <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
-      <Name>FastColoredTextBox</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UltimaSDK\Ultima.csproj">
-      <Project>{5d66ace6-b2a4-400f-b5a5-24525959ac5c}</Project>
-      <Name>Ultima</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <Reference Include="AutoUpdater.NET, Version=1.7.6.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.7.6\lib\net45\AutoUpdater.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="CrashReporter.NET, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7828e0fd88cab698, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrashReporter.NET.Official.1.6.0\lib\net462\CrashReporter.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.1418.22, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1418.22\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.WinForms, Version=1.0.1418.22, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1418.22\lib\net45\Microsoft.Web.WebView2.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebView2.Wpf, Version=1.0.1418.22, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1418.22\lib\net45\Microsoft.Web.WebView2.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EnhancedAgentAddList.resx">
+      <DependentUpon>EnhancedAgentAddList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EnhancedLauncher.resx">
+      <DependentUpon>EnhancedLauncher.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -893,11 +237,7 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
-    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
-    <Error Condition="!Exists('..\packages\Accord.Video.FFMPEG.3.7.0\build\Accord.Video.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.Video.FFMPEG.3.7.0\build\Accord.Video.FFMPEG.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.1418.22\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.1418.22\build\Microsoft.Web.WebView2.targets'))" />
   </Target>
-  <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
-  <Import Project="..\packages\Accord.Video.FFMPEG.3.7.0\build\Accord.Video.FFMPEG.targets" Condition="Exists('..\packages\Accord.Video.FFMPEG.3.7.0\build\Accord.Video.FFMPEG.targets')" />
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebView2.1.0.1418.22\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.1418.22\build\Microsoft.Web.WebView2.targets')" />
 </Project>
