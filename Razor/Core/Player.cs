@@ -101,7 +101,8 @@ namespace Assistant
         Compassion = 0x4,
         Honesty = 0x5,
         Humility = 0x6,
-        Justice = 0x7
+        Justice = 0x7,
+        Spirituality = 0x8
     }
     public enum StatName
     {

@@ -116,5 +116,26 @@
     {"ItemID": 0x9A91, "Searchable": true},
     {"ItemID": 0x9A92, "Searchable": true},
     {"ItemID": 0x2FB7, "Searchable": true},
-    {"ItemID": 0x3171, "Searchable": true}
- ]
+    {"ItemID": 0x3171, "Searchable": true},
+    {"ItemID": 0xA0A1, "Searchable": true},
+    {"ItemID": 0x9E1A, "Searchable": true},
+    {"ItemID": 0xA306, "Searchable": true},
+    {"ItemID": 0xA307, "Searchable": true},
+    {"ItemID": 0xA308, "Searchable": true},
+    {"ItemID": 0xA309, "Searchable": true},
+    {"ItemID": 0xA639, "Searchable": true},
+    {"ItemID": 0x9E85, "Searchable": true},
+    {"ItemID": 0x9706, "Searchable": true},
+    {"ItemID": 0x4D0C, "Searchable": true},
+    {"ItemID": 0xA851, "Searchable": true},
+    {"ItemID": 0x0ecc, "Searchable": true},
+    {"ItemID": 0xa30a, "Searchable": true},
+    {"ItemID": 0xa30b, "Searchable": true},
+    {"ItemID": 0x4be7, "Searchable": true},
+    {"ItemID": 0x4be9, "Searchable": true},
+    {"ItemID": 0xA333, "Searchable": true},
+    {"ItemID": 0x4025, "Searchable": true},
+    {"ItemID": 0x49cc, "Searchable": true},
+    {"ItemID": 0x0fae, "Searchable": true},
+    {"ItemID": 0xa63c, "Searchable": true}
+]

@@ -2147,6 +2147,7 @@ namespace RazorEnhanced
         ///    Honesty
         ///    Humility
         ///    Justice
+        ///    Spirituality
         /// </param>
         public static void InvokeVirtue(string virtue)
         {
@@ -2157,6 +2158,25 @@ namespace RazorEnhanced
             }
 
             Assistant.Client.Instance.SendToServerWait(new InvokeVirtue((byte)v));
+        }
+
+        // Virtue
+        /// <summary>
+        /// Invoke a virtue by name.
+        /// </summary>
+        /// <param name="virtue">
+        ///    Honor
+        ///    Sacrifice
+        ///    Valor
+        ///    Compassion
+        ///    Honesty
+        ///    Humility
+        ///    Justice
+        ///    Spirituality
+        /// </param>
+        public static void InvokeVirtue(int virtue)
+        {
+            Assistant.Client.Instance.SendToServerWait(new InvokeVirtue((byte)virtue));
         }
 
 
