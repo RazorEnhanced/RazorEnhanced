@@ -1028,8 +1028,10 @@ namespace Assistant
         public void KeyPress(int keyCode)
         {
             const uint WM_KEYDOWN = 0x100;
-            //const uint WM_KEYUP = 0x101;
+            const uint WM_KEYUP = 0x101;
             SendMessage(FindUOWindow(), WM_KEYDOWN, (IntPtr)keyCode, (IntPtr)1);
+            Thread.Sleep(10);
+            SendMessage(FindUOWindow(), WM_KEYUP, (IntPtr)keyCode, (IntPtr)1);
         }
 
         public void KeySend(string keys)

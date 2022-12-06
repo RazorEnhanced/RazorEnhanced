@@ -467,7 +467,7 @@ namespace RazorEnhanced
 
             #endregion
 
-            if (!considerLand || landBlocks || stepTop < landZ)
+            if (!considerLand || landBlocks ) // Felix || stepTop < landZ)
             {
                 return moveIsOk;
             }
@@ -1257,6 +1257,37 @@ namespace RazorEnhanced
                     else if (Player.Position.X == step.X && Player.Position.Y == step.Y) // no action
                         walkok = true;
 
+                    Map map = null;
+                    switch (Player.Map)
+                    {
+                        case 0:
+                            map = Ultima.Map.Felucca;
+                            break;
+                        case 1:
+                            map = Ultima.Map.Trammel;
+                            break;
+                        case 2:
+                            map = Ultima.Map.Ilshenar;
+                            break;
+                        case 3:
+                            map = Ultima.Map.Malas;
+                            break;
+                        case 4:
+                            map = Ultima.Map.Tokuno;
+                            break;
+                        case 5:
+                            map = Ultima.Map.TerMur;
+                            break;
+                        default:
+                            break;
+                    }
+                    if (map != null)
+                    {
+                        var zTop = map.Tiles.GetLandTile(step.X, step.Y).Z;
+                        if ( Math.Abs(Player.Position.Z - zTop) > 2)
+                            RazorEnhanced.Misc.Resync();
+                    }
+
                     if (timeout >= 0 && DateTime.Now.CompareTo(timeEnd) > 0)
                     {
                         if (debugMessage)
@@ -1295,6 +1326,7 @@ namespace RazorEnhanced
                 if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
                 {
                     Misc.SendMessage("PathFind: Destination reached", 66);
+                    RazorEnhanced.Misc.Resync();
                     return true;
                 }
                 else
