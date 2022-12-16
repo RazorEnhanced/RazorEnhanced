@@ -3179,7 +3179,7 @@ namespace Assistant
             this.scriptControlBox.Size = new System.Drawing.Size(321, 556);
             this.scriptControlBox.TabIndex = 1;
             this.scriptControlBox.TabStop = false;
-            // 
+            // scriptshowStartStopCheckBox
             // InspectGumpsButton
             // 
             this.InspectGumpsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -3216,6 +3216,8 @@ namespace Assistant
             this.scriptshowStartStopCheckBox.Size = new System.Drawing.Size(280, 32);
             this.scriptshowStartStopCheckBox.TabIndex = 76;
             this.scriptshowStartStopCheckBox.Text = "Show Start/Stop Message";
+            this.scriptshowStartStopCheckBox.CheckedChanged += new System.EventHandler(this.scriptshowStartStopCheckBox_CheckedChanged);
+
             // 
             // groupBox30
             // 

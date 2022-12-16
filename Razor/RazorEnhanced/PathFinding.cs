@@ -1326,7 +1326,7 @@ namespace RazorEnhanced
                 if (Player.Position.X == dst.X && Player.Position.Y == dst.Y)
                 {
                     Misc.SendMessage("PathFind: Destination reached", 66);
-                    RazorEnhanced.Misc.Resync();
+                    Misc.Resync();
                     return true;
                 }
                 else
