@@ -42,6 +42,7 @@ namespace Assistant
         private bool m_Warmode;
         private bool m_Paralized;
         private bool m_Flying;
+        private bool m_IsDeadPet;
 
         // Stats & Props
         private bool m_PropsUpdated = false;
@@ -173,6 +174,12 @@ namespace Assistant
         {
             get { return m_Flying; }
             set { m_Flying = value; }
+        }
+
+        internal bool IsDeadPet
+        {
+            get { return m_IsDeadPet; }
+            set { m_IsDeadPet = value; }
         }
 
         internal byte Notoriety

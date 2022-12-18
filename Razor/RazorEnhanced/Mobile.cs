@@ -77,6 +77,12 @@ namespace RazorEnhanced
         public bool Flying { get { return m_AssistantMobile.Flying; } }
 
         /// <summary>
+        /// The mobile is a dead pet (pet ghost).
+        /// </summary>
+
+        public bool IsDeadPet { get { return m_AssistantMobile.IsDeadPet; } }
+
+        /// <summary>
         /// Check is the Mobile has a human body.
         /// Match any MobileID in the list:
         ///     183, 184, 185, 186, 400, 

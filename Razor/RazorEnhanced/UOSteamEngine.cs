@@ -445,6 +445,7 @@ namespace RazorEnhanced
 
             UOScript.Interpreter.RegisterExpressionHandler("name", this.Name);
             UOScript.Interpreter.RegisterExpressionHandler("dead", this.IsDead);
+            UOScript.Interpreter.RegisterExpressionHandler("isdeadpet", this.IsDeadPet);
             UOScript.Interpreter.RegisterExpressionHandler("direction", this.Direction); //Dalamar: Fix original UOS direction, in numbers
             UOScript.Interpreter.RegisterExpressionHandler("directionname", this.DirectionName);  //Dalamar: Added RE style directions with names
             UOScript.Interpreter.RegisterExpressionHandler("flying", this.IsFlying);
@@ -1061,6 +1062,23 @@ namespace RazorEnhanced
                 }
             }
 
+            return false;
+        }
+
+        /// <summary>
+        /// isdeadpet (serial)
+        /// </summary>
+        private IComparable IsDeadPet(string expression, UOScript.Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                uint serial = args[0].AsSerial();
+                Mobile theMobile = Mobiles.FindBySerial((int)serial);
+                if (theMobile != null)
+                {
+                    return theMobile.IsDeadPet;
+                }
+            }
             return false;
         }
 
