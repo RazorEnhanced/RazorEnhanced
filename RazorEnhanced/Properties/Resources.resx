@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BarraOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_ForesicEvalutation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_ForesicEvalutation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="accessories_text_editor_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\accessories-text-editor-5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uod_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\uod_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_deadOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-deadOut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorComboBox_Arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorComboBox.Arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Anatomy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Anatomy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Begging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Begging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Stealing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Stealing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="esporta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\esporta.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\yellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_deadIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-deadIn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="applications_utilities1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\applications-utilities.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug-delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="splashnew" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\splashnew.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Discordance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Discordance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorCheckBox_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorCheckBox.On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_TasteID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_TasteID.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_start_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-playback-start-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorCheckBox_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorCheckBox.Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Poisoning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Poisoning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RoundButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RoundButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorRadioButton_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorRadioButton.On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_loop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\loop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="playagent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\playagent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_seek_forward_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-seek-forward-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_poison" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-poison.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Hiding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Hiding.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Inscription" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Inscription.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_ArmsLore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_ArmsLore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_EvalInt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_EvalInt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_open_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\document-open-7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_pause_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-playback-pause-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Stealth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Stealth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="aggiungi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\aggiungi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_DetectingHidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_DetectingHidden.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug_go.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Tracking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Tracking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stopagent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\stopagent.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_save_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\document-save-5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="razor_enhanced_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_dead" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-dead.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_AnimalLore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_AnimalLore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="razor_enhanced_splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced-splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Meditation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Meditation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_mortal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-mortal.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="importa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\importa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Peacemaking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Peacemaking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gump" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\gump.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="razor_enhanced_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_SpiritSpeak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_SpiritSpeak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_paralized" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-paralized.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_skip_forward_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-skip-forward-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cancella" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\cancella.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_ItemID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_ItemID.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Cartography" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Cartography.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="toolbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\toolbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PayPal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\PayPal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_AnimalTaming" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_AnimalTaming.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="record" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\record.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_close_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\document-close-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="applications_utilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\applications-utilities.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_stop_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-playback-stop-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Provocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Provocation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_RemoveTrap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_RemoveTrap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorRadioButton_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorRadioButton.Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Imbuing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Imbuing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="splashnew1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\splashnew.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="search2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\search2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+</root>
