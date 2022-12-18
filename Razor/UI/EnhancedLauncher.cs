@@ -55,7 +55,7 @@ namespace RazorEnhanced.UI
                 launchCUO.Enabled = false;
             }
 
-            var ip = Assistant.Engine.Resolve(hostLabel.Text);
+            var ip = Assistant.Utility.Resolve(hostLabel.Text);
             if (ip == null || ip == System.Net.IPAddress.None || Convert.ToInt32(portLabel.Text) == 0)
             {
                 // felix fix RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -126,6 +126,9 @@
     <Compile Include="src\Clients\Client.cs" />
     <Compile Include="src\Clients\CUOClient.cs" />
     <Compile Include="src\Clients\OSIClient.cs" />
+    <Compile Include="src\Core\Packet.cs" />
+    <Compile Include="src\Core\PacketHandler.cs" />
+    <Compile Include="src\Core\Utility.cs" />
     <Compile Include="src\Core\ZLib.cs" />
     <Compile Include="src\DLLImport.cs" />
     <Compile Include="src\Platform.cs" />

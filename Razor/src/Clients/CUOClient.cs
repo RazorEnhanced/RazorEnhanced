@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +9,7 @@ namespace Assistant
 {
     internal class CUOClient : Client
     {
+
         internal CUOClient(RazorEnhanced.Shard shard)
             : base(shard)
         {
@@ -35,6 +36,27 @@ namespace Assistant
             cuo.Start();
             return Loader_Error.SUCCESS;
         }
-
+        public override IntPtr GetWindowHandle()
+        {
+            return (IntPtr)0;
+        }
+        public unsafe override bool InstallHooks(IntPtr pluginPtr)
+        {          
+            return true;
+        }
+        public override bool OnMessage(uint wParam, int lParam)
+        {
+            return false;
+        }
+        public override int OnUOAMessage(int Msg, int wParam, int lParam)
+        {
+            return 0;
+        }
+        public override void RunUI()
+        {
+        }
+        public override void SetConnectionInfo(System.Net.IPAddress addr, int port)
+        {
+        }
     }
 }

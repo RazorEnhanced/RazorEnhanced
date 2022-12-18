@@ -14,9 +14,13 @@ using CrashReporterDotNET;
 
 namespace Assistant
 {
+
+
     public partial class Engine
     {
         private static string _rootPath = null;
+        internal static int ClientBuild = 50;
+        internal static int ClientMajor = 6;
 
         public static string RootPath =>
             _rootPath ?? (_rootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Engine)).Location));
@@ -62,33 +66,35 @@ namespace Assistant
             Client theClient = Init();
             if (theClient != null)
             {
-                theClient.LaunchClient();
+                Assistant.Client.Loader_Error result = theClient.LaunchClient();
+                if (result != Assistant.Client.Loader_Error.SUCCESS)
+                {
+                    if (theClient.ClientPath == null || (!File.Exists(theClient.ClientPath)))
+                        MessageBox.Show("Unable to find the client " + theClient.ClientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                        MessageBox.Show("Unable to launch the client " + theClient.ClientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                    return;
+                }
+
+
+                IPAddress ip = Utility.Resolve(theClient.Addr);
+                if (Engine.IP == IPAddress.None || theClient.Port == 0)
+                {
+                    MessageBox.Show("Bad Server Address", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //SplashScreen.End();
+                    //RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                    return;
+                }
+
+                int ClientBuild = FileVersionInfo.GetVersionInfo(theClient.ClientPath).FileBuildPart;
+                int ClientMajor = FileVersionInfo.GetVersionInfo(theClient.ClientPath).FileMajorPart;
+
+                theClient.RunUI();
+
             }
         }
 
-        internal static IPAddress Resolve(string addr)
-        {
-            IPAddress ipAddr = IPAddress.None;
-
-            if (string.IsNullOrEmpty(addr))
-                return ipAddr;
-
-            if (!IPAddress.TryParse(addr, out ipAddr))
-            {
-                try
-                {
-                    IPHostEntry iphe = Dns.GetHostEntry(addr);
-
-                    if (iphe.AddressList.Length > 0)
-                        ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
-                }
-                catch
-                {
-                }
-            }
-
-            return ipAddr;
-        }
 
         internal static Client Init()
         {
@@ -133,9 +139,13 @@ namespace Assistant
                     selected = shards.FirstOrDefault(s => s.Selected);
                     version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
                     if (launcher.ActiveControl.Text == "Launch CUO")
-                        return new CUOClient(selected);
+                    {
+                        //return new CUOClient(selected);
+                    }
                     else
+                    {
                         return new OSIClient(selected);
+                    }
                 }
             }
             else
