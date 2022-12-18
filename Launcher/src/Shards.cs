@@ -102,8 +102,8 @@ namespace RazorEnhanced
             }
             else
             {
-                Insert("UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false);
-                Insert("OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, false );
+                Insert("UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false, false);
+                Insert("OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, true, false );
             }
         }
 
@@ -112,14 +112,14 @@ namespace RazorEnhanced
             return m_Dataset.ContainsKey(description.ToLower());
         }
 
-        internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool rememberPw)
+        internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool selected, bool rememberPw)
         {
             foreach (var entry in m_Dataset)
             {
                 entry.Value.Selected = false;
             }
 
-            Shard newEntry = new Shard(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, false, rememberPw);
+            Shard newEntry = new Shard(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, selected, rememberPw);
             m_Dataset[newEntry.Description] = newEntry;
 
             Save();
