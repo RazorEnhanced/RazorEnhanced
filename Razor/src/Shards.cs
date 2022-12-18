@@ -49,7 +49,10 @@ namespace RazorEnhanced
         [JsonProperty("Selected")]
         internal bool Selected { get; set; }
 
-        public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected)
+        [JsonProperty("RememberPW")]
+        internal bool RememberPW { get; set; }
+
+        public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected, bool rememberPw)
         {
             Description = description;
             ClientPath = clientpath;
@@ -60,6 +63,7 @@ namespace RazorEnhanced
             PatchEnc = patchenc;
             OSIEnc = osienc;
             Selected = selected;
+            RememberPW = rememberPw;
         }
         internal static void Load(bool tryBackup = true)
         {
@@ -98,8 +102,8 @@ namespace RazorEnhanced
             }
             else
             {
-                Insert("UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false);
-                Insert("OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true );
+                Insert("UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false, false);
+                Insert("OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true, false );
             }
         }
 
@@ -108,20 +112,20 @@ namespace RazorEnhanced
             return m_Dataset.ContainsKey(description.ToLower());
         }
 
-        internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc)
+        internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc, bool rememberPw)
         {
             foreach (var entry in m_Dataset)
             {
                 entry.Value.Selected = false;
             }
 
-            Shard newEntry = new Shard(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, true);
+            Shard newEntry = new Shard(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, false, rememberPw);
             m_Dataset[newEntry.Description] = newEntry;
 
             Save();
         }
 
-        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected)
+        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected, bool rememberPw)
         {
             if (m_Dataset.ContainsKey(description))
             {
@@ -132,7 +136,7 @@ namespace RazorEnhanced
                         entry.Selected = false;
                     }
                 }
-                m_Dataset[description] = new Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected);
+                m_Dataset[description] = new Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected, rememberPw);
                 Save();
             }
         }
@@ -171,7 +175,7 @@ namespace RazorEnhanced
             {
                 var entry = row.Value;
                 RazorEnhanced.Shard shard = new RazorEnhanced.Shard(entry.Description, entry.ClientPath, 
-                    entry.ClientFolder, entry.CUOClient, entry.Host, entry.Port, entry.PatchEnc, entry.OSIEnc, entry.Selected);
+                    entry.ClientFolder, entry.CUOClient, entry.Host, entry.Port, entry.PatchEnc, entry.OSIEnc, entry.Selected, entry.RememberPW);
                 shardsOut.Add(shard);
             }
 

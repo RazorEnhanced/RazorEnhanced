@@ -66,6 +66,8 @@ namespace Assistant
             Client theClient = Init();
             if (theClient != null)
             {
+                PacketHandler.RegisterClientToServerFilter(0x91, new PacketFilterCallback(theClient.GameLogin));
+                PacketHandler.RegisterClientToServerFilter(0x80, new PacketFilterCallback(theClient.ServerListLogin));
                 Assistant.Client.Loader_Error result = theClient.LaunchClient();
                 if (result != Assistant.Client.Loader_Error.SUCCESS)
                 {
@@ -138,9 +140,10 @@ namespace Assistant
                     RazorEnhanced.Shard.Read(out shards);
                     selected = shards.FirstOrDefault(s => s.Selected);
                     version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+
                     if (launcher.ActiveControl.Text == "Launch CUO")
                     {
-                        //return new CUOClient(selected);
+                        return new CUOClient(selected);
                     }
                     else
                     {
@@ -156,8 +159,7 @@ namespace Assistant
             return null;
 
         }
-        
-        
+
         // Used for auto update  prompt
         private static void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {

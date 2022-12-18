@@ -124,7 +124,7 @@ namespace RazorEnhanced.UI
                 switch (m_agentid)
                 {
                     case 9:
-                        RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "Optional", "0.0.0.0", 0, false, false);
+                        RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "Optional", "0.0.0.0", 0, false, false, false);
                         break;
                 }
 

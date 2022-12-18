@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using System.Windows.Forms;
 using System.Net;
+using System.DirectoryServices;
 
 namespace Assistant
 {
@@ -468,5 +469,191 @@ namespace Assistant
             }
             catch { }
         }
+
+        public static class StringCipher
+        {
+            // This constant is used to determine the keysize of the encryption algorithm in bits.
+            // We divide this by 8 within the code below to get the equivalent number of bytes.
+            private const int Keysize = 256;
+
+            // This constant determines the number of iterations for the password bytes generation function.
+            private const int DerivationIterations = 1000;
+
+            public static string Encrypt(string plainText, string passPhrase)
+            {
+                // Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
+                // so that the same Salt and IV values can be used when decrypting.
+                var saltStringBytes = Generate256BitsOfRandomEntropy();
+                var ivStringBytes = Generate256BitsOfRandomEntropy();
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+                using (var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
+                {
+                    var keyBytes = password.GetBytes(Keysize / 8);
+                    using (var symmetricKey = new System.Security.Cryptography.RijndaelManaged())
+                    {
+                        symmetricKey.BlockSize = 256;
+                        symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
+                        symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+                        using (var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                using (var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, encryptor, System.Security.Cryptography.CryptoStreamMode.Write))
+                                {
+                                    cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                                    cryptoStream.FlushFinalBlock();
+                                    // Create the final bytes as a concatenation of the random salt bytes, the random iv bytes and the cipher bytes.
+                                    var cipherTextBytes = saltStringBytes;
+                                    cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
+                                    cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
+                                    memoryStream.Close();
+                                    cryptoStream.Close();
+                                    return Convert.ToBase64String(cipherTextBytes);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            public static string Decrypt(string cipherText, string passPhrase)
+            {
+                // Get the complete stream of bytes that represent:
+                // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
+                var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
+                // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
+                var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
+                // Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
+                var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
+                // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
+                var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
+
+                using (var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
+                {
+                    var keyBytes = password.GetBytes(Keysize / 8);
+                    using (var symmetricKey = new System.Security.Cryptography.RijndaelManaged())
+                    {
+                        symmetricKey.BlockSize = 256;
+                        symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
+                        symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+                        using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
+                        {
+                            using (var memoryStream = new MemoryStream(cipherTextBytes))
+                            {
+                                using (var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, decryptor, System.Security.Cryptography.CryptoStreamMode.Read))
+                                {
+                                    var plainTextBytes = new byte[cipherTextBytes.Length];
+                                    var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                                    memoryStream.Close();
+                                    cryptoStream.Close();
+                                    return System.Text.Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            private static byte[] Generate256BitsOfRandomEntropy()
+            {
+                var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
+                using (var rngCsp = new System.Security.Cryptography.RNGCryptoServiceProvider())
+                {
+                    // Fill the array with cryptographically secure random bytes.
+                    rngCsp.GetBytes(randomBytes);
+                }
+                return randomBytes;
+            }
+        }
+        internal static bool IsLinux
+        {
+            get
+            {
+                try
+                {
+                    using (Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64))
+                    {
+                        using (Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Wine\\Drives"))
+                        {
+                            if (key != null)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                return false;
+            }
+        }
+
+        public static string GetComputerSid()
+        {
+            if (IsLinux)
+            {
+                try
+                {
+                    using (Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64))
+                    {
+                        using (Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Microsoft\\Cryptography"))
+                        {
+                            {
+                                if (key != null)
+                                {
+                                    var o = key.GetValue("MachineGuid");
+                                    if (o != null)
+                                    {
+                                        return o.ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                { }
+            }
+            else
+            {
+                System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier((byte[])new DirectoryEntry(string.Format("WinNT://{0},Computer", Environment.MachineName)).Children.Cast<DirectoryEntry>().First().InvokeGet("objectSID"), 0).AccountDomainSid;
+                return sid.ToString();
+            }
+            return "Some crap I made up112.45678-234523";
+        }
+        internal static string key = GetComputerSid();
+        // Passwords
+        public static string Protect(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return "";
+            try
+            {
+                return StringCipher.Encrypt(text, key);
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
+        public static string Unprotect(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return "";
+            try
+            {
+                return StringCipher.Decrypt(text, key);
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
+
+
+
     }
 }

@@ -35,6 +35,7 @@ namespace RazorEnhanced.UI
                     portLabel.Text = shard.Port.ToString();
                     patchEnc.Checked = shard.PatchEnc;
                     osiEnc.Checked = shard.OSIEnc;
+                    rememberPW.Checked = shard.RememberPW;
                 }
             }
             
@@ -72,7 +73,7 @@ namespace RazorEnhanced.UI
 
             hostLabel.Text = hostLabel.Text.Replace(" ", "");
 
-            Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, cuoClientLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
+            Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, cuoClientLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true, rememberPW.Checked);
 
             Shard.Read(out List<Shard> shards);
 
@@ -147,6 +148,7 @@ namespace RazorEnhanced.UI
                     portLabel.Text = shard.Port.ToString();
                     patchEnc.Checked = shard.PatchEnc;
                     osiEnc.Checked = shard.OSIEnc;
+                    rememberPW.Checked = shard.RememberPW;
                 }
             }
 
@@ -264,6 +266,17 @@ namespace RazorEnhanced.UI
                 MessageBoxDefaultButton.Button1);
                 this.Close();
             }
+        }
+
+        
+        private void rememberPW_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateGUI();
+
+            // Need to fix up settuings.json
+            //StreamWriter login;
+            //string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
+            //string logincfgpath = cuoClientLabel.Text.Substring(0, cuoClientLabel.Text.LastIndexOf("\\") + 1);
         }
 
 

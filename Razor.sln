@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Razor", "Razor\Razor.csproj", "{B24E4FB1-4936-4544-9E88-F3FF9B04FDBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Razor\Launcher.csproj", "{B24E4FB1-4936-4544-9E88-F3FF9B04FDBA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B32A4D9E-3AF1-4C75-989D-D62C4E8F08B1} = {B32A4D9E-3AF1-4C75-989D-D62C4E8F08B1}
 		{F308E8D5-2B4F-40AD-9BF7-9A8F5DDA420D} = {F308E8D5-2B4F-40AD-9BF7-9A8F5DDA420D}
