@@ -2796,11 +2796,17 @@ namespace Assistant
                         }
                         break;
                     }
-                case 0x19: //  stat locks
+                case 0x19: //  stat locks, bonded pet status
                     {
-                        if (p.ReadByte() == 0x02)
+                        // 0x19 was originally for stat locks, on a subtype of
+                        // 0x02 (for 2d client, 0x05 for EC). Subtype 0x00 has
+                        // been added for a bonded pet alive/dead flag. There is
+                        // very little public info on the "why" of any of this.
+                        var subtype = p.ReadByte();
+                        var serial = p.ReadUInt32();
+                        var m = World.FindMobile(serial);
+                        if (subtype == 0x02)
                         {
-                            Mobile m = World.FindMobile(p.ReadUInt32());
                             if (World.Player == m && m != null)
                             {
                                 p.ReadByte();// 0?
@@ -2811,6 +2817,10 @@ namespace Assistant
                                 World.Player.DexLock = (LockType)((locks >> 2) & 3);
                                 World.Player.IntLock = (LockType)(locks & 3);
                             }
+                        }
+                        else if (subtype == 0x00)
+                        {
+                            m.IsDeadPet = p.ReadBoolean();
                         }
                         break;
                     }
