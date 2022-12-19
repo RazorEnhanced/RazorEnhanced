@@ -285,7 +285,6 @@
   <ItemGroup>
     <Compile Include="Client\ClassicUO.cs" />
     <Compile Include="Client\Client.cs" />
-    <Compile Include="Client\Plugin.cs" />
     <Compile Include="Client\UOAssist.cs" />
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
