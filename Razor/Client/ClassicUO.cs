@@ -1,4 +1,3 @@
-using CUO_API;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -11,40 +10,14 @@ using System.Collections.Generic;
 using Assistant;
 using Assistant.UI;
 using System.Linq;
-
-// For CUO Settings
-//using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
+using CUO_API;
 
 
 namespace Assistant
 {
     public partial class Engine
     {
-
-        public static unsafe void RE_Install(PluginHeader* plugin, System.Collections.Generic.Dictionary<string, IntPtr> fns)
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, e) =>
-            {
-                string[] fields = e.Name.Split(',');
-                string name = fields[0];
-                string culture = fields[2];
-
-                if (name.EndsWith(".resources") && !culture.EndsWith("neutral"))
-                {
-                    return null;
-                }
-
-                AssemblyName askedassembly = new AssemblyName(e.Name);
-
-                bool isdll = File.Exists(Path.Combine(RootPath, askedassembly.Name + ".dll"));
-
-                return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
-            };
-
-            
-            Install2(plugin);
-        }
 
         public static unsafe void Install(PluginHeader* plugin)
         {
