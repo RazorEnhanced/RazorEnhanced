@@ -219,7 +219,7 @@ namespace Assistant
 
                 if (result != Assistant.Client.Loader_Error.SUCCESS)
                 {
-                    if (clientPath == null && File.Exists(clientPath))
+                    if (clientPath == null || File.Exists(clientPath))
                         MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                         MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);

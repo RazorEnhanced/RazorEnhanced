@@ -664,6 +664,7 @@ namespace RazorEnhanced
                 [BuffIcon.BarakoDraftOfMight] = "Barako Draft Of Might",
                 [BuffIcon.UraliTranceTonic] = "Urali Trance Tonic,",
                 [BuffIcon.SakkhraProphylaxis] = "Sakkhra Prophylaxis",
+                [BuffIcon.Veterinary] = "Veterinary",
             };
 
             return buffs;
