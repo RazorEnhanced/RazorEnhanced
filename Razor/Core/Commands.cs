@@ -29,6 +29,8 @@ namespace Assistant
             Command.Register("playscript", new CommandCallback(PlayScript));
             Command.Register("hideitem", new CommandCallback(HideItem));
             Command.Register("drop", new CommandCallback(DropItem));
+            Command.Register("macro", new CommandCallback(RazorMacro));
+
         }
 
         private static void GetSerial(string[] param)
@@ -275,6 +277,35 @@ namespace Assistant
             else
                 RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist", 33, false);
         }
+        internal static void RazorMacro(string[] param)
+        {
+            if (param == null || param.Length == 0)
+                return;
+            string scriptname = param[0];
+
+            if (param.Length > 1)
+            {
+                for (int i = 1; i < param.Length; i++)
+                {
+                    scriptname = scriptname + " " + param[i];
+                }
+            }
+
+            RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(scriptname);
+            if (script == null)
+            {
+                script = RazorEnhanced.Scripts.Search(scriptname+".py");
+            }
+            if (script != null)
+            {
+                if (script.Run)
+                    script.Stop();
+                else
+                    script.Run = true;
+            }
+            else
+                RazorEnhanced.Misc.SendMessage("RazorMacro: Script not exist", 33, false);
+        }
     }
 
     internal delegate void CommandCallback(string[] param);
@@ -385,7 +416,7 @@ namespace Assistant
             }
             else
             {
-                if (text[0] == '<')
+                if (text[0] == '<'|| text[0] == '>')
                 {
                     args.Block = ExecCommand(text);
                 }
