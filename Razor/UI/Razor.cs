@@ -683,6 +683,7 @@ namespace Assistant
         private Button buttonScriptUp;
         private Button buttonScriptEditor;
         private Button buttonScriptStop;
+        private Button buttonCreateMacro;
         private Button buttonScriptPlay;
         private GroupBox groupBox30;
         private CheckBox scriptautostartcheckbox;
@@ -955,6 +956,7 @@ namespace Assistant
             this.buttonScriptUp = new System.Windows.Forms.Button();
             this.buttonScriptEditor = new System.Windows.Forms.Button();
             this.buttonScriptStop = new System.Windows.Forms.Button();
+            this.buttonCreateMacro = new System.Windows.Forms.Button();
             this.buttonScriptPlay = new System.Windows.Forms.Button();
             this.showscriptmessageCheckBox = new System.Windows.Forms.CheckBox();
             this.AllScriptsTab = new System.Windows.Forms.TabControl();
@@ -1444,6 +1446,9 @@ namespace Assistant
             this.label66 = new System.Windows.Forms.Label();
             this.DPSmetermindamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.DpsMeterGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DPSMeterStatusLabel = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
             this.DPSMeterPauseButton = new System.Windows.Forms.Button();
@@ -1478,9 +1483,6 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -3254,6 +3256,7 @@ namespace Assistant
             this.scriptControlBox.Controls.Add(this.scripterrorlogCheckBox);
             this.scriptControlBox.Controls.Add(this.groupBox31);
             this.scriptControlBox.Controls.Add(this.showscriptmessageCheckBox);
+            this.scriptControlBox.Controls.Add(this.buttonCreateMacro);
             this.scriptControlBox.Location = new System.Drawing.Point(953, 2);
             this.scriptControlBox.Name = "scriptControlBox";
             this.scriptControlBox.Size = new System.Drawing.Size(201, 585);
@@ -3489,6 +3492,16 @@ namespace Assistant
             this.buttonScriptStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonScriptStop.UseVisualStyleBackColor = true;
             this.buttonScriptStop.Click += new System.EventHandler(this.buttonScriptStop_Click);
+            // 
+            // buttonCreateMacro
+            // 
+            this.buttonCreateMacro.Location = new System.Drawing.Point(42, 368);
+            this.buttonCreateMacro.Name = "buttonCreateMacro";
+            this.buttonCreateMacro.Size = new System.Drawing.Size(82, 27);
+            this.buttonCreateMacro.TabIndex = 24;
+            this.buttonCreateMacro.Text = "Create Button";
+            this.buttonCreateMacro.UseVisualStyleBackColor = true;
+            this.buttonCreateMacro.Click += new System.EventHandler(this.buttonCreateMacro_Click);
             // 
             // buttonScriptPlay
             // 
@@ -8849,6 +8862,38 @@ namespace Assistant
             this.DpsMeterGridView.Size = new System.Drawing.Size(845, 545);
             this.DpsMeterGridView.TabIndex = 65;
             // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.dataGridViewTextBoxColumn13.FillWeight = 20F;
+            this.dataGridViewTextBoxColumn13.Frozen = true;
+            this.dataGridViewTextBoxColumn13.HeaderText = "Serial";
+            this.dataGridViewTextBoxColumn13.MinimumWidth = 15;
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
+            this.dataGridViewTextBoxColumn13.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn13.Width = 170;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn14.FillWeight = 75F;
+            this.dataGridViewTextBoxColumn14.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn14.MinimumWidth = 8;
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
+            this.dataGridViewTextBoxColumn14.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // dataGridViewTextBoxColumn15
+            // 
+            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn15.FillWeight = 32.83951F;
+            this.dataGridViewTextBoxColumn15.HeaderText = "Damage";
+            this.dataGridViewTextBoxColumn15.MinimumWidth = 15;
+            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
+            this.dataGridViewTextBoxColumn15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
             // DPSMeterStatusLabel
             // 
             this.DPSMeterStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -9160,38 +9205,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn13.FillWeight = 20F;
-            this.dataGridViewTextBoxColumn13.Frozen = true;
-            this.dataGridViewTextBoxColumn13.HeaderText = "Serial";
-            this.dataGridViewTextBoxColumn13.MinimumWidth = 15;
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.ReadOnly = true;
-            this.dataGridViewTextBoxColumn13.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTextBoxColumn13.Width = 170;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn14.FillWeight = 75F;
-            this.dataGridViewTextBoxColumn14.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn14.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.ReadOnly = true;
-            this.dataGridViewTextBoxColumn14.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // dataGridViewTextBoxColumn15
-            // 
-            this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn15.FillWeight = 32.83951F;
-            this.dataGridViewTextBoxColumn15.HeaderText = "Damage";
-            this.dataGridViewTextBoxColumn15.MinimumWidth = 15;
-            this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-            this.dataGridViewTextBoxColumn15.ReadOnly = true;
-            this.dataGridViewTextBoxColumn15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // MainForm
             // 

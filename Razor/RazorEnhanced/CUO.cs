@@ -11,6 +11,10 @@ using static RazorEnhanced.HotKey;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using static RazorEnhanced.Misc;
+using System.Collections;
+
+using ClassicUO;
 
 namespace RazorEnhanced
 {
@@ -497,7 +501,7 @@ namespace RazorEnhanced
                                         MethodInfo Update = null;
                                         foreach (var macroFn in macros.GetType().GetMethods())
                                         {
-                                            if (macroFn.Name == "FindMacro" && macroFn.GetParameters().Length == 1) 
+                                            if (macroFn.Name == "FindMacro" && macroFn.GetParameters().Length == 1)
                                             {
                                                 FindMacro = macroFn;
                                             }
@@ -514,7 +518,7 @@ namespace RazorEnhanced
                                                 Update = macroFn;
                                             }
                                         }
-                                        if (FindMacro != null && SetMacroToExecute != null 
+                                        if (FindMacro != null && SetMacroToExecute != null
                                             && WaitForTargetTimer != null && Update != null)
                                         {
                                             var theMacro = FindMacro.Invoke(macros, new object[] { macroName });
@@ -537,7 +541,7 @@ namespace RazorEnhanced
                         }
                     }
                 }
-                
+
                 var currentClient = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Scenes.GameScene");
                 //{ ClassicUO.Game.Managers.MacroManager}
                 // int macroid = Client.Game.GetScene<GameScene>().Macros.GetAllMacros().IndexOf(_macro);
@@ -547,6 +551,8 @@ namespace RazorEnhanced
             }
             return;
         }
+
+       
     }
 }
 

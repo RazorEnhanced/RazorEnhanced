@@ -1,4 +1,5 @@
 using RazorEnhanced;
+
 using RazorEnhanced.UI;
 using System;
 using System.Data;
@@ -9,6 +10,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Assistant.UI;
+//using Sentry;
+using System.Reflection;
+using static RazorEnhanced.CUO;
+using RazorEnhanced.Reflection;
+
 
 namespace Assistant
 {
@@ -487,7 +493,7 @@ namespace Assistant
         {
             RunCurrentScript(false);
         }
-
+       
         private void RunCurrentScript(bool run)
         {
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
@@ -774,6 +780,33 @@ namespace Assistant
         private void buttonScriptStop_Click(object sender, EventArgs e)
         {
             RunCurrentScript(false);
+        }
+        private void buttonCreateMacro_Click(object sender, EventArgs e)
+        {
+            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            {
+                string filename = scriptListView.SelectedItems[0].Text;
+                Scripts.EnhancedScript script = Scripts.Search(filename);
+                if (script != null)
+                {
+                    Macros.CreateMacroButton(filename);
+                }
+            }
+            
         }
 
         private void textBoxEngineDelay_TextChanged(object sender, EventArgs e)
