@@ -9207,6 +9207,8 @@ namespace Assistant
             this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.LocationChanged += new System.EventHandler(this.MainForm_LocationChanged);
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Move += new System.EventHandler(this.MainForm_Move);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.tabs.ResumeLayout(false);
@@ -9409,6 +9411,16 @@ namespace Assistant
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
+            // Upgrade?
+            if (Properties.Settings.Default.F1Size.Width == 686)
+            {
+                Properties.Settings.Default.Upgrade();
+            }
+
+            this.Size = Properties.Settings.Default.F1Size;
+            this.Location = Properties.Settings.Default.F1Location;
+            this.WindowState = Properties.Settings.Default.F1State;
+
             m_SystemTimer = new System.Timers.Timer(5);
             m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
             Timer.SystemTimer = m_SystemTimer;
@@ -10225,6 +10237,37 @@ namespace Assistant
         {
             Targeting.OneTimeTarget(true, new Targeting.TargetResponseCallback(Commands.GetInfoTarget_Callback));
         }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            MainForm_SaveWindowLocation();
+        }
+
+        private void MainForm_LocationChanged(object sender, EventArgs e)
+        {
+            MainForm_SaveWindowLocation();
+        }
+
+        internal void MainForm_SaveWindowLocation()
+        {
+            Properties.Settings.Default.F1State = this.WindowState;
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                // save location and size if the state is normal
+                Properties.Settings.Default.F1Location = this.Location;
+                Properties.Settings.Default.F1Size = this.Size;
+            }
+            else
+            {
+                // save the RestoreBounds if the form is minimized or maximized!
+                Properties.Settings.Default.F1Location = this.RestoreBounds.Location;
+                Properties.Settings.Default.F1Size = this.RestoreBounds.Size;
+            }
+
+            // don't forget to save the settings
+            Properties.Settings.Default.Save();
+        }
+
 
     }
 }
