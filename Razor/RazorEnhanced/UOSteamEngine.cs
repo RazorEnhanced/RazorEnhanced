@@ -1457,7 +1457,7 @@ namespace RazorEnhanced
             }
 
             string skillname = args[0].AsString();
-            double skillvalue = Player.GetSkillValue(skillname);
+            double skillvalue = Player.GetRealSkillValue(skillname);
             return skillvalue;
         }
 
