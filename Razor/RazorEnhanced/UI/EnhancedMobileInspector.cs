@@ -123,7 +123,8 @@ namespace RazorEnhanced.UI
         {
             try
             {
-                m_ProcessInfo.Abort();
+                if (m_ProcessInfo != null) // temporary patch; no process
+                    m_ProcessInfo.Abort(); // on other mobiles.
             }
             catch { }
 
@@ -184,7 +185,8 @@ namespace RazorEnhanced.UI
         {
             try
             {
-                m_ProcessInfo.Abort();
+                if (m_ProcessInfo != null) // Temporary patch; no process when querying
+                    m_ProcessInfo.Abort(); // another mobile.
             }
             catch { }
         }
@@ -282,7 +284,6 @@ namespace RazorEnhanced.UI
                 lName.Text = m_mobile.Name.ToString();
             }
 
-
             if (m_mobile == Assistant.World.Player)
             {
                 listBoxAttributes.Items.Add(String.Empty);
@@ -313,24 +314,22 @@ namespace RazorEnhanced.UI
                                     listBoxAttributes.Items.Add("Race: Gargoyle");
                                     break;
                             }
-
-                            listBoxAttributes.Items.Add("Max Weight: " + Assistant.World.Player.MaxWeight);
-
-                            if (World.Player.Expansion >= 3)
-                            {
-                                m_ProcessInfo = new Thread(ProcessInfoThread);
-                                m_ProcessInfo.Start();
-                            }
+                        }
+                        else
+                        {
+                            // the shard allows only human race as character player
+                            // when Expansion 5 isn't installed.
+                            listBoxAttributes.Items.Add("Race: Human");
                         }
                     }
+
+                    // Details available with Expansion 3 but required
+                    // after Expansions 4 and 5 details.
+                    listBoxAttributes.Items.Add("Max Weight: " + Assistant.World.Player.MaxWeight);
+                    m_ProcessInfo = new Thread(ProcessInfoThread);
+                    m_ProcessInfo.Start();
                 }
             }
-            else
-            {
-                m_ProcessInfo = new Thread(ProcessInfoThread);
-                m_ProcessInfo.Start();
-            }
         }
-
     }
 }
