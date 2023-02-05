@@ -302,7 +302,7 @@ namespace RazorEnhanced
         {
             List<BuyItem> buyList = new List<BuyItem>();
             if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
-                foreach (Item listItem in LastSellList)
+                foreach (Item listItem in LastBuyList)
                 {
                     BuyItem item = new BuyItem();
                     item.Serial = listItem.Serial;
