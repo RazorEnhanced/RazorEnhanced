@@ -9953,7 +9953,8 @@ namespace Assistant
 
         private void discordrazorButton_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
+            //ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
+            ProcessStartInfo p = new ProcessStartInfo("https://discord.com/invite/ukQUK7cSPd");
             try
             {
                 Process.Start(p);
