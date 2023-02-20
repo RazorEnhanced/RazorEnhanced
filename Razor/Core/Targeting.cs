@@ -39,7 +39,7 @@ namespace Assistant
         private static bool m_AllowGround;
         private static uint m_CurrentID;
         private static byte m_CurFlags;
-
+        
         private static uint m_PreviousID;
         private static bool m_PreviousGround;
         private static byte m_PrevFlags;
@@ -61,6 +61,8 @@ namespace Assistant
         private static readonly List<uint> m_FilterCancel = new List<uint>();
 
         internal static bool HasTarget { get { return m_HasTarget; } }
+
+        internal static byte TargetFlags { get { return m_CurFlags; } }
 
         internal static bool NoShowTarget { get { return m_NoShowTarget; } set { m_NoShowTarget = value; } }
 
