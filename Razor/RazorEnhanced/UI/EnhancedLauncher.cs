@@ -221,6 +221,8 @@ namespace RazorEnhanced.UI
 
         private void BNameCopy_Click(object sender, EventArgs e)
         {
+            this.openclientlocation.FileName = "client.exe";
+            this.openclientlocation.Filter = "Executable Files|Client.exe|Executable Files|*.exe";
             openclientlocation.RestoreDirectory = true;
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
             {
@@ -301,6 +303,8 @@ namespace RazorEnhanced.UI
 
         private void CuoClient_Click(object sender, EventArgs e)
         {
+            this.openclientlocation.FileName = "ClassicUO.exe";
+            this.openclientlocation.Filter = "Executable Files|ClassicUO.exe|Executable Files|*.exe";
             openclientlocation.RestoreDirectory = true;
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
             {
