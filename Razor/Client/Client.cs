@@ -134,10 +134,12 @@ namespace Assistant
                     }
                     else
                     {
-                        RazorEnhanced.Shard.Read(out shards);
-                        selected = Instance.SelectShard(shards);
-                        m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
-
+                        if (File.Exists(selected.ClientPath))
+                        {
+                            RazorEnhanced.Shard.Read(out shards);
+                            selected = Instance.SelectShard(shards);
+                            m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+                        }
                         if (launcher.ActiveControl.Text == "Launch CUO")
                         {
                             // Spin up CUO
@@ -148,12 +150,20 @@ namespace Assistant
                             {
                                 osiEnc = 5;
                             }
-
-                            string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", m_Version.FileMajorPart, m_Version.FileMinorPart, m_Version.FileBuildPart, m_Version.FilePrivatePart);
-                            cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
-                                                        selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
-                                                        ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
-                                                        verString);
+                            if (File.Exists(selected.ClientPath))
+                            {
+                                string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", m_Version.FileMajorPart, m_Version.FileMinorPart, m_Version.FileBuildPart, m_Version.FilePrivatePart);
+                                cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
+                                                            selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
+                                                            ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
+                                                            verString);
+                            } else
+                            {
+                                cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\"",
+                                                            selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
+                                                            ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+                                                            );
+                            }
                             cuo.Start();
                             m_Running = false;
                             return false;

@@ -38,13 +38,16 @@ namespace RazorEnhanced.UI
                     osiEnc.Checked = shard.OSIEnc;
                 }
             }
-            
+
             if (shardlistCombobox.SelectedIndex == -1)
                 groupBox2.Enabled = false;
 
-            if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
+            if (Directory.Exists(clientFolderLabel.Text))
             {
-                okay.Enabled = true;
+                if (File.Exists(clientPathLabel.Text))
+                {
+                    okay.Enabled = true;
+                }
                 if (File.Exists(cuoClientLabel.Text))
                 {
                     launchCUO.Enabled = true;
