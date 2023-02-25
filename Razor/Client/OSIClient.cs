@@ -18,6 +18,8 @@ namespace Assistant
 
     internal unsafe sealed class OSIClient : Client
     {
+        private FileVersionInfo m_Version = null;
+
         private const int WM_CUSTOMTITLE = WM_USER + 2;
 
         internal enum UONetMessage
@@ -178,7 +180,12 @@ namespace Assistant
         }
         public override RazorEnhanced.Shard SelectShard(List<RazorEnhanced.Shard> shards)
         {
-            return shards.FirstOrDefault(s => s.Selected);
+            RazorEnhanced.Shard shard = shards.FirstOrDefault(s => s.Selected);
+            if (File.Exists(shard.ClientPath))
+            {
+                m_Version = FileVersionInfo.GetVersionInfo(shard.ClientPath);
+            }
+            return shard;
         }
 
 
@@ -1144,6 +1151,16 @@ namespace Assistant
             validFileLocations.Add(Assistant.Engine.RootPath);
 
             return validFileLocations;
+        }
+
+        public override int GetBuildPart()
+        {
+            return m_Version.FileBuildPart;
+        }
+
+        public override int GetMajorPart()
+        {
+            return m_Version.FileMajorPart;
         }
     }
 }

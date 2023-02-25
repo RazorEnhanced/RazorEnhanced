@@ -51,7 +51,7 @@ namespace Assistant
     {
         public static Client Instance;
         public static bool IsOSI;
-        internal static FileVersionInfo m_Version = null;
+        
 
         private static bool m_Running;
         internal static bool Running { get { return m_Running; } }
@@ -113,8 +113,7 @@ namespace Assistant
             m_Running = true;
 
             if ((!isOSI) || (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
-            {
-                m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+            {                
                 Instance.Start(selected);
             }
             else
@@ -125,7 +124,6 @@ namespace Assistant
                 {
                     laucherdialog = launcher.ShowDialog();
                 }
-
                 if (laucherdialog == DialogResult.OK)                   // Avvia solo se premuto launch e non se exit
                 {
                     if (selected == null)
@@ -137,8 +135,7 @@ namespace Assistant
                         if (File.Exists(selected.ClientPath))
                         {
                             RazorEnhanced.Shard.Read(out shards);
-                            selected = Instance.SelectShard(shards);
-                            m_Version = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+                            selected = Instance.SelectShard(shards);                            
                         }
                         if (launcher.ActiveControl.Text == "Launch CUO")
                         {
@@ -152,7 +149,8 @@ namespace Assistant
                             }
                             if (File.Exists(selected.ClientPath))
                             {
-                                string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", m_Version.FileMajorPart, m_Version.FileMinorPart, m_Version.FileBuildPart, m_Version.FilePrivatePart);
+                                var clientVersion = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+                                string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", clientVersion.FileMajorPart, clientVersion.FileMinorPart, clientVersion.FileBuildPart, clientVersion.FilePrivatePart);
                                 cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
                                                             selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
                                                             ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
@@ -251,11 +249,8 @@ namespace Assistant
                 return;
             }
 
-            Engine.ClientBuild = FileVersionInfo.GetVersionInfo(clientPath).FileBuildPart;
-            Engine.ClientMajor = FileVersionInfo.GetVersionInfo(clientPath).FileMajorPart;
-
-            //SplashScreen.Start();
-            //m_ActiveWnd = SplashScreen.Instance;
+            Engine.ClientBuild = GetBuildPart();  
+            Engine.ClientMajor = GetMajorPart();  
 
             Assistant.Client.Instance.SetConnectionInfo(Engine.IP, (int)port);
 
@@ -590,6 +585,7 @@ namespace Assistant
             RazorEnhanced.UI.EnhancedScriptEditor.End();
         }
 
+
         public abstract void SetTitleStr(string str);
 
         public abstract bool OnMessage(MainForm razor, uint wParam, int lParam);
@@ -845,6 +841,9 @@ namespace Assistant
             }
 
         }
+
+        public abstract int GetBuildPart();
+        public abstract int GetMajorPart();
 
     }
 }
