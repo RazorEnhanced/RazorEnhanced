@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Threading;
+using System.Globalization;
 
 namespace RazorEnhanced
 {
@@ -1760,13 +1761,18 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        ///  targetexists ('timer name')
+        ///  targetexists ('Any' | 'Harmful' | 'Neutral' | 'Beneficial')
         /// </summary>
         private IComparable TargetExists(string expression, UOScript.Argument[] args, bool quiet)
         {
-            if (args.Length == 0) { WrongParameterCount(expression, 1, args.Length); }
-
-            return true;
+            if (args.Length >= 1)
+            {
+                CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
+                TextInfo textInfo = cultureInfo.TextInfo;
+                string targetFlag = textInfo.ToTitleCase(args[0].AsString().ToLower());
+                return RazorEnhanced.Target.HasTarget(targetFlag);
+            }
+            return RazorEnhanced.Target.HasTarget();
         }
 
         /// <summary>
