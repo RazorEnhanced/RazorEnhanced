@@ -351,7 +351,7 @@ namespace RazorEnhanced
             UOScript.Interpreter.RegisterCommandHandler("clearignorelist", this.ClearIgnoreList);
             UOScript.Interpreter.RegisterCommandHandler("setskill", this.SetSkill);
             UOScript.Interpreter.RegisterCommandHandler("waitforproperties", this.WaitForProperties);
-            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick); // I dont see the need. not going to implement
+            UOScript.Interpreter.RegisterCommandHandler("autocolorpick", this.AutoColorPick);
             UOScript.Interpreter.RegisterCommandHandler("waitforcontents", this.WaitForContents);
             UOScript.Interpreter.RegisterCommandHandler("miniheal", this.MiniHeal);
             UOScript.Interpreter.RegisterCommandHandler("bigheal", this.BigHeal);
@@ -3759,11 +3759,28 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// autocolorpick (color) NOT IMPLEMENTED
+        /// autocolorpick (color) (dyesSerial) (dyeTubSerial)
         /// </summary>
         private bool AutoColorPick(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            if (args.Length != 3)
+            {
+                Misc.SendMessage("Usage is: autocolorpick color dyesSerial dyeTubSerial");
+                WrongParameterCount(command, 3, args.Length, "Usage is: autocolorpick color dyesSerial dyeTubSerial");
+
+            }
+            int color = args[0].AsInt();
+            uint dyesSerial = args[1].AsSerial();
+            uint dyeTubSerial = args[2].AsSerial();
+            Item dyes = Items.FindBySerial((int)dyesSerial);
+            Item dyeTub = Items.FindBySerial((int)dyeTubSerial);
+            if (dyes == null) { Misc.SendMessage("autocolorpick: error: can't find dyes with serial " + dyesSerial); }
+            if (dyeTub == null) { Misc.SendMessage("autocolorpick: error: can't find dye tub with serial " + dyeTubSerial); }
+            if (dyes != null && dyeTub != null)
+            {
+                Items.ChangeDyeingTubColor(dyes, dyeTub, color);
+            }
+            return true;
         }
 
         /// <summary>
