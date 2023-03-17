@@ -176,9 +176,21 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextSelfContent.Enabled = value);
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTextContent.Enabled = value);
                 Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealUseTarget.Enabled = !value);
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealIgnoreCount.Enabled = value);
             }
         }
+        internal static bool SelfHealIgnoreCount
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.BandageHealIgnoreCount.Checked;
+            }
 
+            set
+            {
+                Assistant.Engine.MainWindow.SafeAction(s => s.BandageHealIgnoreCount.Checked = value);
+            }
+        }
         internal static string SelfHealUseTextSelfContent
         {
             get
@@ -237,6 +249,7 @@ namespace RazorEnhanced
             SelfHealUseText = Settings.General.ReadBool("BandageHealUseText");
             SelfHealUseTextSelfContent = Settings.General.ReadString("BandageHealUseTextSelfContent");
             SelfHealUseTextContent = Settings.General.ReadString("BandageHealUseTextContent");
+            SelfHealIgnoreCount = Settings.General.ReadBool("BandageHealIgnoreCount");
 
             Engine.MainWindow.BandageHealAutostartCheckBox.Checked = Settings.General.ReadBool("BandageHealAutostartCheckBox");
 
@@ -336,42 +349,57 @@ namespace RazorEnhanced
                 return;
             try
             {
-                int bandageid = 0x0E21;
-                int bandagecolor = -1;
+                bool checkForBandage = true;
+                if (SelfHealUseText && SelfHealIgnoreCount)
+                    checkForBandage = false;
 
-                if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
+                Item bandage = null;
+                if (checkForBandage)
                 {
-                    bandageid = m_customid;
-                    bandagecolor = m_customcolor;
-                }
-                Item bandage = SearchBandage(bandageid, bandagecolor); // Get serial bende
+                    int bandageid = 0x0E21;
+                    int bandagecolor = -1;
 
-                // Id base bende
-                // Conteggio bende
-                int bandageamount = 0;
-                if (bandage != null)
-                    bandageamount = bandage.Amount; // RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
-                if (bandageamount == 0)
-                {
-                    if (NoBandageMsgCount <= 0)
+                    if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
                     {
-                        Player.HeadMessage(10, "Bandage not found");
-                        NoBandageMsgCount = 10;
+                        bandageid = m_customid;
+                        bandagecolor = m_customcolor;
                     }
-                    NoBandageMsgCount--;
-                    AddLog("Bandage not found");
-                    Thread.Sleep(1000); // If no bandaids dont loop too quickly
-                    return;
-                }
+                    bandage = SearchBandage(bandageid, bandagecolor); // Get serial bende
 
-                if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
+                    // Id base bende
+                    // Conteggio bende
+                    int bandageamount = 0;
+                    if (bandage != null)
+                        bandageamount = bandage.Amount; // RazorEnhanced.Items.BackpackCount(bandageid, bandagecolor);
+                    if (bandageamount == 0)
+                    {
+                        if (NoBandageMsgCount <= 0)
+                        {
+                            Player.HeadMessage(10, "Bandage not found");
+                            NoBandageMsgCount = 10;
+                        }
+                        NoBandageMsgCount--;
+                        AddLog("Bandage not found");
+                        Thread.Sleep(1000); // If no bandaids dont loop too quickly
+                        return;
+                    }
+
+                    if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
+                    {
+                        Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+                        AddLog("Warning: Low bandage: " + bandageamount + " left");
+                    }
+                    AddLog("Using bandage (0x" + bandage.Serial.ToString("X8") + ") on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
+                }
+                else 
                 {
-                    Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                    AddLog("Warning: Low bandage: " + bandageamount + " left");
+                    AddLog("Using bandage on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
                 }
 
-                AddLog("Using bandage (0x" + bandage.Serial.ToString("X8") + ") on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
+
                 System.Threading.Thread CountSeconds = null;
+
+
                 if (SelfHealUseText)
                 {
                     if (target.Serial == Player.Serial)
