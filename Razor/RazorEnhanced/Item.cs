@@ -590,7 +590,7 @@ namespace RazorEnhanced
         /// <param name="dyes">Dyes as Item object.</param>
         /// <param name="dyeingTub">Dyeing Tub as Item object.</param>
         /// <param name="color">Color to choose.</param>
-        public void ChangeDyeingTubColor(Item dyes, Item dyeingTub, int color)
+        public static void ChangeDyeingTubColor(Item dyes, Item dyeingTub, int color)
         {
             Items.UseItem(dyes);
             if (Target.WaitForTarget(1000))
