@@ -19,7 +19,7 @@ namespace RazorEnhanced
     internal class Settings
     {
         // Versione progressiva della struttura dei salvataggi per successive modifiche
-        private static readonly int SettingVersion = 16;
+        private static readonly int SettingVersion = 17;
 
         private static string m_profileName = null;
 
