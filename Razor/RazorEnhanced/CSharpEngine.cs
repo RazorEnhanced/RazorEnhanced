@@ -258,12 +258,14 @@ namespace RazorEnhanced
             errorwarnings = new();
             assembly = null;
 
+
             // If debug is true I check for the force release directive
             if (debug)
             {
-                debug = (CheckForceReleaseDirective(path) != true); // If flag is true then debug is false
+                debug = !CheckForceReleaseDirective(path); // If flag is true then debug is false
             }
-
+            
+            
             List<string> filesList = new() { }; // List of files.
             FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
             if (errorwarnings.Count > 0)

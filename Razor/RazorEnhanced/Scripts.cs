@@ -306,6 +306,7 @@ namespace RazorEnhanced
                     if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))
                     {
                         CSharpEngine csharpEngine = CSharpEngine.Instance;
+                        
                         bool compileErrors = csharpEngine.CompileFromFile(fullpath, false, out List<string> compileMessages, out Assembly assembly);
                         
                         foreach (string str in compileMessages)
