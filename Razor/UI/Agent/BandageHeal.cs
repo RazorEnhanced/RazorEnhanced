@@ -29,7 +29,7 @@ namespace Assistant
         internal CheckBox BandageHealUseText { get { return bandagehealusetext; } }
         internal TextBox BandageHealUseTextContent { get { return bandagehealusetextContent; } }
         internal TextBox BandageHealUseTextSelfContent { get { return bandagehealusetextSelfContent; } }
-
+        internal CheckBox BandageHealIgnoreCount { get { return bandageHealIgnoreCount; } }
         internal CheckBox BandageHealUseTarget { get { return bandagehealusetarget; } }
         internal System.Windows.Forms.Button BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
         internal CheckBox BandageHealAutostartCheckBox { get { return bandagehealAutostartCheckBox; } }
@@ -263,6 +263,18 @@ namespace Assistant
                 Engine.MainWindow.SafeAction(s => { s.SetBandSelfState(); });
             }
         }
+
+        
+        private void bandagehealignorecount_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bandageHealIgnoreCount.Focused)
+            {
+                Settings.General.WriteBool("BandageHealIgnoreCount", bandageHealIgnoreCount.Checked);
+            }
+        }
+
+
+
         private void bandagehealusetext_Content_Leave(object sender, EventArgs e)
         {
             if (bandagehealusetextContent.Text == String.Empty)

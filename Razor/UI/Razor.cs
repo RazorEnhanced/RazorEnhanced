@@ -732,6 +732,7 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private RazorAgentNumOnlyTextBox autoLootTextBoxDelay;
+        private CheckBox bandageHealIgnoreCount;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -1481,6 +1482,7 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
+            this.bandageHealIgnoreCount = new System.Windows.Forms.CheckBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -6064,6 +6066,7 @@ namespace Assistant
             // groupBox6
             // 
             this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox6.Controls.Add(this.bandageHealIgnoreCount);
             this.groupBox6.Controls.Add(this.bandagehealTimeWithBufCheckBox);
             this.groupBox6.Controls.Add(this.label78);
             this.groupBox6.Controls.Add(this.label77);
@@ -6114,7 +6117,7 @@ namespace Assistant
             // label78
             // 
             this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(210, 249);
+            this.label78.Location = new System.Drawing.Point(207, 248);
             this.label78.Name = "label78";
             this.label78.Size = new System.Drawing.Size(36, 13);
             this.label78.TabIndex = 96;
@@ -6159,6 +6162,18 @@ namespace Assistant
             this.bandagehealusetext.Text = "Send text for self heal";
             this.bandagehealusetext.UseVisualStyleBackColor = true;
             this.bandagehealusetext.CheckedChanged += new System.EventHandler(this.bandagehealusetext_CheckedChanged);
+            // 
+            // IgnoreCount
+            // 
+            this.bandageHealIgnoreCount.AutoSize = true;
+            this.bandageHealIgnoreCount.Location = new System.Drawing.Point(210, 267);
+            this.bandageHealIgnoreCount.Name = "IgnoreCount";
+            this.bandageHealIgnoreCount.Size = new System.Drawing.Size(87, 17);
+            this.bandageHealIgnoreCount.TabIndex = 98;
+            this.bandageHealIgnoreCount.Text = "Ignore Count";
+            this.bandageHealIgnoreCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bandageHealIgnoreCount.UseVisualStyleBackColor = true;
+            this.bandageHealIgnoreCount.CheckedChanged += new System.EventHandler(this.bandagehealignorecount_CheckedChanged);
             // 
             // bandagehealusetarget
             // 
@@ -9694,8 +9709,9 @@ namespace Assistant
             bandagehealusetextSelfContent.Enabled = bandagehealusetext.Checked;
             bandagehealusetextContent.Enabled = bandagehealusetext.Checked;
             BandageHealUseTarget.Enabled = !bandagehealusetext.Checked;
+            bandageHealIgnoreCount.Enabled = bandagehealusetext.Checked;
         }
-
+        
         internal void DisableGameSize()
         {
             this.gameSize.Text = "Unavailable / CUO";
@@ -9953,7 +9969,8 @@ namespace Assistant
 
         private void discordrazorButton_Click(object sender, EventArgs e)
         {
-            ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
+            //ProcessStartInfo p = new ProcessStartInfo("https://discord.gg/P3Q7mKT");
+            ProcessStartInfo p = new ProcessStartInfo("https://discord.com/invite/ukQUK7cSPd");
             try
             {
                 Process.Start(p);

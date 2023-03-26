@@ -82,7 +82,7 @@ namespace Assistant
 
         private readonly Process m_ClientProcess = null;
         private bool m_ClientRunning = false;
-        private string m_ClientVersion;
+        private Version m_ClientVersion;
 
         private static OnPacketSendRecv _sendToClient, _sendToServer, _recv, _send;
         private static OnGetPacketLength _getPacketLength;
@@ -169,7 +169,7 @@ namespace Assistant
             _uoFilePath =
                 (OnGetUOFilePath)Marshal.GetDelegateForFunctionPointer(header->GetUOFilePath, typeof(OnGetUOFilePath));
             m_ClientVersion = new Version((byte)(header->ClientVersion >> 24), (byte)(header->ClientVersion >> 16),
-                (byte)(header->ClientVersion >> 8), (byte)header->ClientVersion).ToString();
+                (byte)(header->ClientVersion >> 8), (byte)header->ClientVersion);
             m_ClientRunning = true;
             m_ClientWindow = header->HWND;
             _tick = Tick;
@@ -514,7 +514,7 @@ namespace Assistant
 
         public override string GetClientVersion()
         {
-            return m_ClientVersion;
+            return m_ClientVersion.ToString();
         }
 
         public override string GetUoFilePath()
@@ -603,6 +603,16 @@ namespace Assistant
 
             return validFileLocations;
         }
+        public override int GetBuildPart()
+        {
+            return m_ClientVersion.Build;
+        }
+
+        public override int GetMajorPart()
+        {
+            return m_ClientVersion.Major;
+        }
+
     }
 }
 

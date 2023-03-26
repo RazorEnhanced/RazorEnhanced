@@ -19,7 +19,7 @@ namespace RazorEnhanced
     internal class Settings
     {
         // Versione progressiva della struttura dei salvataggi per successive modifiche
-        private static readonly int SettingVersion = 16;
+        private static readonly int SettingVersion = 17;
 
         private static string m_profileName = null;
 
@@ -2337,6 +2337,7 @@ namespace RazorEnhanced
             general.Columns.Add("BandageHealUseTextContent", typeof(string));
             general.Columns.Add("BandageHealUseTextSelfContent", typeof(string));
             general.Columns.Add("BandageHealTimeWithBuf", typeof(bool));
+            general.Columns.Add("BandageHealIgnoreCount", typeof(bool));
 
             // Parametri Tab (Enhanced Filters)
             general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
@@ -2571,7 +2572,7 @@ namespace RazorEnhanced
             // Composizione Parematri base primo avvio
             object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
-                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself", false,
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself", false, false,
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
@@ -5386,6 +5387,15 @@ namespace RazorEnhanced
                     row["UO3dEquipUnEquip"] = newUo3D;
                 }
                 realVersion = 16;
+                General.WriteInt("SettingVersion", realVersion);
+            }
+
+            if (realVersion == 16)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                general.Columns.Add("BandageHealIgnoreCount", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("BandageHealIgnoreCount", false);
+                realVersion = 17;
                 General.WriteInt("SettingVersion", realVersion);
             }
 

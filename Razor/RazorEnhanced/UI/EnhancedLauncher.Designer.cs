@@ -63,7 +63,7 @@ namespace RazorEnhanced.UI
             // 
             this.openclientlocation.DefaultExt = "exe";
             this.openclientlocation.FileName = "client.exe";
-            this.openclientlocation.Filter = "Executable Files|*.exe";
+            this.openclientlocation.Filter = "Executable Files|Client.exe";
             this.openclientlocation.RestoreDirectory = true;
             this.openclientlocation.Title = "Select Client";
             // 

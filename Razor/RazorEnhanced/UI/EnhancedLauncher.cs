@@ -38,13 +38,16 @@ namespace RazorEnhanced.UI
                     osiEnc.Checked = shard.OSIEnc;
                 }
             }
-            
+
             if (shardlistCombobox.SelectedIndex == -1)
                 groupBox2.Enabled = false;
 
-            if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
+            if (Directory.Exists(clientFolderLabel.Text))
             {
-                okay.Enabled = true;
+                if (File.Exists(clientPathLabel.Text))
+                {
+                    okay.Enabled = true;
+                }
                 if (File.Exists(cuoClientLabel.Text))
                 {
                     launchCUO.Enabled = true;
@@ -221,6 +224,8 @@ namespace RazorEnhanced.UI
 
         private void BNameCopy_Click(object sender, EventArgs e)
         {
+            this.openclientlocation.FileName = "client.exe";
+            this.openclientlocation.Filter = "Executable Files|Client.exe|Executable Files|*.exe";
             openclientlocation.RestoreDirectory = true;
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
             {
@@ -301,6 +306,8 @@ namespace RazorEnhanced.UI
 
         private void CuoClient_Click(object sender, EventArgs e)
         {
+            this.openclientlocation.FileName = "ClassicUO.exe";
+            this.openclientlocation.Filter = "Executable Files|ClassicUO.exe|Executable Files|*.exe";
             openclientlocation.RestoreDirectory = true;
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
             {

@@ -1,6 +1,10 @@
+using Accord;
 using Assistant;
+using Assistant.Enums;
 using JsonData;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 
 namespace RazorEnhanced
@@ -19,7 +23,37 @@ namespace RazorEnhanced
         /// <returns>True: Cursor has target - False: otherwise</returns>
         public static bool HasTarget()
         {
-            return Assistant.Targeting.HasTarget;
+            return HasTarget("Any");
+        }
+
+        /// <summary>
+        /// Get status if have in-game cursor has target shape.
+        /// U can check if cursor is beneficial, harmful or neutral
+        /// </summary>
+        /// <returns>True: Cursor has target - False: otherwise</returns>
+        public static bool HasTarget(string targetFlagsExists = "Any")
+        {
+            if (!Enum.TryParse(targetFlagsExists, out Assistant.Enums.TargetFlagsExists enumValue))
+            {
+                enumValue = Assistant.Enums.TargetFlagsExists.Any;                
+            }
+
+            switch (enumValue)
+            {
+                case Assistant.Enums.TargetFlagsExists.Any:                    
+                    return Assistant.Targeting.HasTarget;
+                case Assistant.Enums.TargetFlagsExists.Beneficial:
+                    return Assistant.Targeting.HasTarget &&
+                           Assistant.Enums.TargetFlags.Beneficial.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
+                case Assistant.Enums.TargetFlagsExists.Harmful:
+                    return Assistant.Targeting.HasTarget &&
+                           Assistant.Enums.TargetFlags.Harmful.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
+                case Assistant.Enums.TargetFlagsExists.Neutral:
+                    return Assistant.Targeting.HasTarget &&
+                           Assistant.Enums.TargetFlags.None.GetHashCode().Equals(Assistant.Targeting.TargetFlags);                  
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }            
         }
 
         /// <summary>
