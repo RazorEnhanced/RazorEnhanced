@@ -1,0 +1,9 @@
+{
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.stubPath": "..\\Config",
+    "python.analysis.typeCheckingMode": "off",
+    "python.analysis.extraPaths": [
+        "../Lib/"
+    ],
+}
