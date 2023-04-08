@@ -1111,9 +1111,10 @@ namespace RazorEnhanced
         /// <summary>
         /// Creates a snapshot of the current UO window.
         /// </summary>
-        public static void CaptureNow()
+        /// <returns>The path to the saved file.</returns>
+        public static string CaptureNow()
         {
-            ScreenCapManager.CaptureNow();
+            return ScreenCapManager.CaptureNowPath();
         }
 
 
