@@ -267,8 +267,10 @@ namespace Assistant
                 bool isView = PacketHandler.HasServerViewer(id);
                 bool isFilter = PacketHandler.HasServerFilter(id);
 
+                                
                 if (isView)
                 {
+                    
                     reader = new PacketReader(ptr, length, PacketsTable.IsDynLength(id));
                     result = !PacketHandler.OnServerPacket(id, reader, packet);
                 }
@@ -280,7 +282,9 @@ namespace Assistant
                     data = packet.Compile();
                     length = (int)packet.Length;
                 }
-
+                //TODO: check if this is done correctly
+                Packet.Log(PacketPath.ServerToClient, ptr, data.Length, result);
+                
                 return result;
             }
         }
@@ -311,7 +315,8 @@ namespace Assistant
                     data = packet.Compile();
                     length = (int)packet.Length;
                 }
-
+                //TODO: check if this is done correctly
+                Packet.Log(PacketPath.ClientToServer, ptr, data.Length, result);
                 return result;
             }
         }

@@ -16,7 +16,44 @@ namespace Assistant
 
     public class Packet
     {
+        internal static readonly string DEFAULT_LOG_DIR = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        internal static readonly string DEFAULT_LOG_FILE = "Razor_Packets.log";
+
         private static bool m_Logging = false;
+
+
+        private static string m_LoggingFolder = DEFAULT_LOG_DIR;
+        private static string m_LoggingFile = DEFAULT_LOG_FILE;
+
+
+        internal static string StartRecording(string folder, string filename, bool appendLogs = false)
+        {
+            if (!m_Logging)
+            {
+                m_Logging = true;
+                m_LoggingFolder = folder;
+                m_LoggingFile = filename;
+                Directory.CreateDirectory(m_LoggingFolder);
+                if (appendLogs == false)
+                {
+                    System.IO.File.Create(PacketsLogFile).Dispose();
+                }
+                BeginLog();
+            }
+            return PacketsLogFile;
+        }
+
+        internal static string StopRecording()
+        {
+            var lastPath = PacketsLogFile;
+            if (m_Logging)
+            {
+                m_LoggingFolder = DEFAULT_LOG_DIR;
+                m_LoggingFile = DEFAULT_LOG_FILE;
+                m_Logging = false;
+            }
+            return lastPath;
+        }
 
         internal static bool Logging
         {
@@ -39,7 +76,7 @@ namespace Assistant
         {
             get
             {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Razor_Packets.log");
+                return Path.Combine(m_LoggingFolder, m_LoggingFile);
             }
         }
 
