@@ -1125,8 +1125,6 @@ namespace RazorEnhanced
         /// <returns>The path to the saved file.</returns>
         public static string PacketLogStart(string folder=null, string filename=null)
         {
-            if (folder == null) folder = Packet.DEFAULT_LOG_DIR;
-            if (filename == null) filename = Packet.DEFAULT_LOG_DIR;
             return Assistant.Packet.StartRecording(folder, filename);
         }
 

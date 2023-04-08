@@ -1,3 +1,4 @@
+using RazorEnhanced;
 using System;
 using System.IO;
 using System.Text;
@@ -26,20 +27,22 @@ namespace Assistant
         private static string m_LoggingFile = DEFAULT_LOG_FILE;
 
 
-        internal static string StartRecording(string folder, string filename, bool appendLogs = false)
+        internal static string StartRecording(string folder=null, string filename = null, bool appendLogs = false)
         {
             if (!m_Logging)
             {
                 m_Logging = true;
-                m_LoggingFolder = folder;
-                m_LoggingFile = filename;
+                m_LoggingFolder = folder !=null ? folder: DEFAULT_LOG_DIR;
+                m_LoggingFile = filename != null ? filename : DEFAULT_LOG_FILE;
                 Directory.CreateDirectory(m_LoggingFolder);
                 if (appendLogs == false)
                 {
                     System.IO.File.Create(PacketsLogFile).Dispose();
                 }
+               
                 BeginLog();
             }
+            
             return PacketsLogFile;
         }
 
@@ -52,6 +55,7 @@ namespace Assistant
                 m_LoggingFile = DEFAULT_LOG_FILE;
                 m_Logging = false;
             }
+            
             return lastPath;
         }
 

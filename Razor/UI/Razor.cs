@@ -3263,12 +3263,13 @@ namespace Assistant
             // 
             // scriptPacketLogCheckBox
             // 
+            this.scriptPacketLogCheckBox.AccessibleDescription = "";
             this.scriptPacketLogCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.scriptPacketLogCheckBox.Location = new System.Drawing.Point(18, 524);
             this.scriptPacketLogCheckBox.Name = "scriptPacketLogCheckBox";
             this.scriptPacketLogCheckBox.Size = new System.Drawing.Size(256, 34);
             this.scriptPacketLogCheckBox.TabIndex = 79;
-            this.scriptPacketLogCheckBox.Text = "Enable Packet Log ";
+            this.scriptPacketLogCheckBox.Text = "Enable Packet Logging";
             this.scriptPacketLogCheckBox.CheckStateChanged += new System.EventHandler(this.scriptPacketLogCheckBox_CheckStateChanged);
             // 
             // InspectGumpsButton
@@ -10308,7 +10309,23 @@ namespace Assistant
 
         private void scriptPacketLogCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
-            Assistant.Packet.Logging = scriptPacketLogCheckBox.Checked;
+            if (scriptPacketLogCheckBox.Checked)
+            {
+                var path = Assistant.Packet.StartRecording(appendLogs:true);
+                if (this.scriptshowStartStopCheckBox.Checked ) { 
+                    Misc.SendMessage($"Packet Logger: START", 178);
+                    Misc.SendMessage(path, 178);
+                }
+            }
+            else {
+                
+                var path = Assistant.Packet.StopRecording();
+                if (this.scriptshowStartStopCheckBox.Checked)
+                {
+                    Misc.SendMessage($"Packet Logger: STOP", 138);
+                    // Misc.SendMessage(path);
+                }
+            }
         }
         
     }
