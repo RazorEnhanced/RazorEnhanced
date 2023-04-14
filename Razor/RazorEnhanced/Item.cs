@@ -490,15 +490,15 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="bag">Container as Item object.</param>
         /// <param name="delay">Maximum wait, in milliseconds.</param>
-        public static void WaitForContents(Item bag, int delay) // Delay in MS
+        public static bool WaitForContents(Item bag, int delay) // Delay in MS
         {
             if (bag == null || (!bag.IsCorpse && !bag.IsContainer))
-                return;
+                return false;
 
             RazorEnhanced.Items.UseItem(bag);
 
             if (bag.Updated)
-                return;
+                return true;
 
             int subdelay = delay;
             while (!bag.Updated)
@@ -506,17 +506,21 @@ namespace RazorEnhanced
                 Thread.Sleep(2);
                 subdelay -= 2;
                 if (subdelay <= 0)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
         /// <param name="bag_serial">Container as Item serial.</param>
         /// <param name="delay">max time to wait for contents</param>
-        public static void WaitForContents(int bag_serial, int delay) // Delay in MS
+        public static bool WaitForContents(int bag_serial, int delay) // Delay in MS
         {
             Item bag = FindBySerial(bag_serial);
             if (bag != null)
-                WaitForContents(bag, delay);
+                return WaitForContents(bag, delay);
+
+            return false; 
         }
 
         private static readonly Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
