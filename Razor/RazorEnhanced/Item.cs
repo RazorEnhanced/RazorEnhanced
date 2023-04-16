@@ -1543,7 +1543,7 @@ namespace RazorEnhanced
         /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
         /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
         /// </summary>
-        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
+        /// <param name="itemid"> List of ItemID filter.</param>
         /// <param name="color">Color filter. (-1: any, 0: natural )</param>
         /// <param name="container">Serial of the container to search. (-1: any Item)</param>
         /// <param name="recursive">

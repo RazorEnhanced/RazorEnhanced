@@ -52,7 +52,10 @@ namespace Assistant
             return img;
         }
 
-        internal static void CaptureNow()
+        internal static void CaptureNow() {
+            CaptureNowPath();
+        }
+        internal static string CaptureNowPath()
         {
             string filename;
             string timestamp;
@@ -101,6 +104,7 @@ namespace Assistant
 
             //Engine.MainWindow.ReloadScreenShotsList();
             Engine.MainWindow.SafeAction(s => s.ReloadScreenShotsList());
+            return filename;
         }
 
         private static ImageFormat GetFormat(string fmt)
