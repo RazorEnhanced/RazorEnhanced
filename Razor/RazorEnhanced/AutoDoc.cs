@@ -870,6 +870,7 @@ namespace RazorEnhanced
                 typeof(Sound),
                 typeof(CUO),
                 typeof(HotKeyEvent),
+                typeof(PacketLogger),
 
                 // API Agents
                 typeof(AutoLoot),

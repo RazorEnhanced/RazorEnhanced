@@ -278,12 +278,9 @@ namespace Assistant
                 {
                     packet = new Packet(data, length, PacketsTable.IsDynLength(id));
                     result = !PacketHandler.OnServerPacket(id, reader, packet);
-
-                    data = packet.Compile();
-                    length = (int)packet.Length;
                 }
                 //TODO: check if this is done correctly
-                Packet.Log(PacketPath.ServerToClient, ptr, data.Length, result);
+                PacketLogger.SharedInstance.LogPacketData(PacketPath.ServerToClient, data, result);
                 
                 return result;
             }
@@ -311,12 +308,9 @@ namespace Assistant
                 {
                     packet = new Packet(data, length, PacketsTable.IsDynLength(id));
                     result = !PacketHandler.OnClientPacket(id, reader, packet);
-
-                    data = packet.Compile();
-                    length = (int)packet.Length;
                 }
                 //TODO: check if this is done correctly
-                Packet.Log(PacketPath.ClientToServer, ptr, data.Length, result);
+                PacketLogger.SharedInstance.LogPacketData(PacketPath.ClientToServer, data, result);
                 return result;
             }
         }

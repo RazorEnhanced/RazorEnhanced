@@ -10311,7 +10311,7 @@ namespace Assistant
         {
             if (scriptPacketLogCheckBox.Checked)
             {
-                var path = Assistant.Packet.StartRecording(appendLogs:true);
+                var path = PacketLogger.SharedInstance.StartRecording(appendLogs:true);
                 if (this.scriptshowStartStopCheckBox.Checked ) { 
                     Misc.SendMessage($"Packet Logger: START", 178);
                     Misc.SendMessage(path, 178);
@@ -10319,7 +10319,7 @@ namespace Assistant
             }
             else {
                 
-                var path = Assistant.Packet.StopRecording();
+                var path = PacketLogger.SharedInstance.StopRecording();
                 if (this.scriptshowStartStopCheckBox.Checked)
                 {
                     Misc.SendMessage($"Packet Logger: STOP", 138);

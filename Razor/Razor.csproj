@@ -179,6 +179,7 @@
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Dynamic, Version=1.3.3.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicLanguageRuntime.1.3.3\lib\net452\Microsoft.Dynamic.dll</HintPath>
     </Reference>
@@ -292,6 +293,7 @@
     <Compile Include="Enums\TargetFlagsExists.cs" />
     <Compile Include="Enums\TargetFlags.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Network\PacketLogger.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -344,6 +346,7 @@
     <Compile Include="RazorEnhanced\CSharpEngine.cs" />
     <Compile Include="RazorEnhanced\CUO.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
+    <Compile Include="RazorEnhanced\PacketLogger.cs" />
     <Compile Include="RazorEnhanced\PythonEngine.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />

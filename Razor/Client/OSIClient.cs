@@ -871,6 +871,8 @@ namespace Assistant
 
                 }
 
+                
+
                 bool blocked = false;
                 switch (path)
                 {
@@ -887,6 +889,12 @@ namespace Assistant
                         }
                 }
 
+                if (path == PacketPath.ClientToServer || path == PacketPath.ServerToClient)
+                {
+                    var data = new byte[len];
+                    System.Runtime.InteropServices.Marshal.Copy((IntPtr)buff, data, 0, len);
+                    PacketLogger.SharedInstance.LogPacketData(path, data, blocked);
+                }
 
                 if (filter)
                 {
@@ -900,9 +908,10 @@ namespace Assistant
                         //Debug.WriteLine("Packet id 0x{0:X}", data[0]);
                     }
 
+                    
                     fixed (byte* ptr = data)
                     {
-                        Packet.Log(path, ptr, data.Length, blocked);
+                        //Packet.Log(path, ptr, data.Length, blocked);
                         if (!blocked)
                             CopyToBuffer(outBuff, ptr, data.Length);
                     }

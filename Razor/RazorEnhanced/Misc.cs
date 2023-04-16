@@ -1118,27 +1118,6 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Start the RazorEnhanced packet logger.
-        /// </summary>
-        /// <param name="folder">Custom output folder (Default: Desktop)</param>
-        /// <param name="filename">Custom output filename (Default: Razor_Packets.log)</param>
-        /// <returns>The path to the saved file.</returns>
-        public static string PacketLogStart(string folder=null, string filename=null)
-        {
-            return Assistant.Packet.StartRecording(folder, filename);
-        }
-
-        /// <summary>
-        /// Stop the RazorEnhanced packet logger.
-        /// </summary>
-        /// <returns>The path to the saved file.</returns>
-        public static string PacketLogStop()
-        {
-            return Assistant.Packet.StopRecording();
-        }
-
-
-        /// <summary>
         /// The MapInfo class is used to store information about the Map location.
         /// </summary>
         public class MapInfo
