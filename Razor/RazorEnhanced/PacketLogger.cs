@@ -1,4 +1,4 @@
-﻿using Accord;
+using Accord;
 using Accord.Math;
 using Assistant;
 using System;

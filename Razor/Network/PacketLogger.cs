@@ -1,4 +1,4 @@
-﻿using Accord.Math;
+using Accord.Math;
 using Accord;
 using Newtonsoft.Json;
 using System;

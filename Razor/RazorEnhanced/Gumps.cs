@@ -43,6 +43,20 @@ namespace RazorEnhanced
                 gumpIdMutex.ReleaseMutex();
             }
         }
+
+        // easy access to get text by id
+        public static string GetTextByID(GumpData gd, int id)
+        {
+            for(int i=0; i< gd.textID.Count; i++)
+            {
+                if (gd.textID[i] == id)
+                {
+                    return gd.text[i];
+                }
+            }
+            return null;
+        }
+
         public static bool HasGump(uint gumpID)
         {
             gumpIdMutex.WaitOne(500);
