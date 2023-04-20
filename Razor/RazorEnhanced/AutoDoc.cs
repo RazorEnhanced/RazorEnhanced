@@ -871,6 +871,10 @@ namespace RazorEnhanced
                 typeof(CUO),
                 typeof(HotKeyEvent),
                 typeof(PacketLogger),
+                typeof(PacketLogger.PacketTemplate),
+                typeof(PacketLogger.PacketTemplate.FieldTemplate),
+                typeof(PacketLogger.PacketTemplate.FieldType),
+                typeof(PacketLogger.PacketTemplateParser),
 
                 // API Agents
                 typeof(AutoLoot),

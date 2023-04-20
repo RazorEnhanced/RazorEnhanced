@@ -1,15 +1,17 @@
-﻿using Accord.Math;
+using Accord.Math;
 using Accord;
 using Newtonsoft.Json;
-using RazorEnhanced;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.UI;
+using static RazorEnhanced.PacketLogger;
 
 namespace Assistant
 {
+
+
     public class PacketLogger
     {
         //internal static readonly string DEFAULT_LOG_DIR = Misc.ScriptDirectory() + "\\log\\";
@@ -22,7 +24,10 @@ namespace Assistant
 
         private Dictionary<int, PacketTemplate> m_PacketTemplates = new Dictionary<int, PacketTemplate>();
 
+        private List<PacketPath> m_PacketPaths = new List<PacketPath> { PacketPath.ClientToServer, PacketPath.ServerToClient };
+
         public bool DiscardAll = false;
+        public bool DiscardShowHeader = false;
         private List<int> m_PacketWhitelist = new List<int>();
         private List<int> m_PacketBlacklist = new List<int>();
 
@@ -47,19 +52,9 @@ namespace Assistant
                 m_BaseDir = Path.GetDirectoryName(m_OutputPath);
             }
         }
+        public PacketPath[] ActivePacketPaths() { return m_PacketPaths.ToArray(); }
 
-        public static string PacketPathText(PacketPath path)
-        {
-            switch (path)
-            {
-                case PacketPath.ClientToServer: return "Client -> Server";
-                case PacketPath.ServerToClient: return "Server -> Client";
-                case PacketPath.RazorToServer: return "Razor -> Server";
-                case PacketPath.RazorToClient: return "Razor -> Client";
-                case PacketPath.PacketVideo: return "PacketVideo -> Client";
-            }
-            return "Unknown -> Unknown";
-        }
+
 
         public PacketLogger(string OutputPath)
         {
@@ -119,6 +114,18 @@ namespace Assistant
             }
             catch
             {
+            }
+        }
+
+        public void ListenPacketPath(PacketPath path, bool active=true)
+        {
+            if (active && !m_PacketPaths.Contains(path))
+            {
+                m_PacketPaths.Add(path);
+            }
+            else if(!active && m_PacketPaths.Contains(path))
+            {
+                m_PacketPaths.Remove(path);
             }
         }
 
@@ -188,7 +195,7 @@ namespace Assistant
             }
 
             PacketTemplate template = m_PacketTemplates[packetID];
-            var packet = template.parse(packetData);
+            var packet = PacketTemplateParser.parse(template,packetData);
             var jsonDump = JsonConvert.SerializeObject(packet, Formatting.Indented);
             sw.WriteLine(jsonDump);
             return !template.showHexDump;
@@ -198,14 +205,18 @@ namespace Assistant
         public void LogPacketData(PacketPath path, byte[] packetData, bool blocked = false)
         {
             if (!m_Active) return;
+            if (!m_PacketPaths.Contains(path)) { return; }
+
             var packetLen = packetData.Length;
             if (packetLen == 0) return;
 
             int packetID = packetData[0];
-            if (DiscardAll && !m_PacketWhitelist.Contains(packetID)) { return; }
-            if (m_PacketBlacklist.Contains(packetID)) { return; }
+            var shouldDiscardW = DiscardAll && !m_PacketWhitelist.Contains(packetID);
+            var shouldDiscardB = !DiscardAll && !m_PacketBlacklist.Contains(packetID);
+            var shouldDiscard = shouldDiscardW || shouldDiscardB;
+            if (shouldDiscard && !DiscardShowHeader) { return; }
 
-            var pathStr = PacketPathText(path);
+            var pathStr = _packetPathOutput(path);
 
             try
             {
@@ -214,6 +225,7 @@ namespace Assistant
                     sw.AutoFlush = true;
 
                     sw.WriteLine("{0}: {1}{2}0x{3:X2} (Length: {4})", DateTime.Now.ToString("HH:mm:ss.ffff"), pathStr, blocked ? " [BLOCKED] " : " ", packetID, packetLen);
+                    if (shouldDiscard) { return; }
                     
                     var showHexDump = !DisplayTemplate(sw, packetData);
                     if (showHexDump) { 
@@ -228,215 +240,36 @@ namespace Assistant
             }
         }
 
+        private string _packetPathOutput(PacketPath path)
+        {
+            switch (path)
+            {
+                case PacketPath.ClientToServer: return "Client -> Server";
+                case PacketPath.ServerToClient: return "Server -> Client";
+                case PacketPath.RazorToServer: return "Razor -> Server";
+                case PacketPath.RazorToClient: return "Razor -> Client";
+                case PacketPath.PacketVideo: return "PacketVideo -> Client";
+            }
+            return "Unknown -> Unknown";
+        }
+
+
+
         public void Reset()
         {
             StopRecording();
             m_PacketBlacklist.Clear();
             m_PacketWhitelist.Clear();
             m_PacketTemplates.Clear();
+            m_PacketPaths.Clear();
+            m_PacketPaths.Add(PacketPath.ClientToServer);
+            m_PacketPaths.Add(PacketPath.ServerToClient);
             OutputPath = DEFAULT_LOG_OUTPATH;
         }
 
-    }
 
 
-
-
-    /* PACKET TEMPLATE */
-    /*
-        {
-           version: 1,
-           packetID: 0x01,
-           name: "Test",
-           fields:[
-               {name:"", length:""},
-               {name:"", type:""},
-               {name:"", type:"", length:"" },
-               {name:"", type:"", fields:[
-                   {name:"", type:"", },
-                   {name:"", type:"", },
-               ]},
-               {name:"", type:""},
-           ]
-        }
-        */
-
-    /*
-     {
-        version: 1,
-        packetID: 0x0B,
-        name: "Damage",
-        fields:[
-            {name:"packetID", length:1, type="hex"},
-            {name:"Serial", length:4, type="hex"},
-            {name:"Damage", length:2, type="num"},
-        ]
-     }
-     */
-
-    public class PacketTemplate
-    {
-        public int version = 1;
-        public int packetID;
-        public string name = "";
-        public bool dynamicLength = false;
-        public bool showHexDump = false;
-        public List<PacketTemplateField> fields;
-
-        public Dictionary<string, dynamic> parse(byte[] packetData)
-        {
-            var packetReader = new PacketReader(packetData, dynamicLength);
-            return parse(packetReader);
-        }
-
-        public Dictionary<string, dynamic> parse(PacketReader packetReader)
-        {
-            Dictionary<string, dynamic> fieldsObject = new Dictionary<string, dynamic>();
-            foreach (var field in fields)
-            {
-                var fieldObj = field.parse(packetReader);
-                if (fieldObj != null)
-                {
-                    fieldsObject.Add(field.name, fieldObj);
-                }
-            }
-            Dictionary<string, dynamic> packetObject = new Dictionary<string, dynamic>{
-                //{ "version", version },
-                { "name", name },
-                { "packetID", "0x{0:X2}".Format(packetID) },
-                { "fields", fieldsObject }
-            };
-            return packetObject;
-        }
-    }
-
-    public class PacketTemplateField
-    {
-        public string name = "";
-        public int length = -1;
-        public string type = "hex";
-        public List<PacketTemplateField> fields;
-        public PacketTemplate subpacket;
-
-        
-
-        public dynamic parse(PacketReader packetReader)
-        {
-
-            if (subpacket != null)
-            {
-                return subpacket.parse(packetReader);
-            }
-
-            if (fields != null)
-            {
-                var fieldsObjects = fields.Apply(field => field.parse(packetReader));
-                if (type == "for")
-                {
-                    var i = 0;
-                    while (true)
-                    {
-                        if (packetReader.Position >= packetReader.Length) break;
-                        if (length > 0 && i > length) break;
-                        var fieldObjs = fields.Apply(field => field.parse(packetReader));
-                        fieldsObjects.Concatenate(fieldObjs);
-                        i++;
-                    }
-                }                                        
-                return fieldsObjects;
-
-            }
-
-            if (type == "int")
-            {
-                switch (length)
-                {
-                    case 1: return packetReader.ReadByte();
-                    case 2: return packetReader.ReadInt16();
-                    case 3: return (((Int32)packetReader.ReadInt16()) << 8) | packetReader.ReadByte();
-                    case 4: return packetReader.ReadInt32();
-                }
-            }
-
-
-            if (type == "serial")
-            {
-                return "0x{0:X8}".Format(packetReader.ReadUInt32());
-            }
-
-            if (type == "ID")
-            {
-                return "0x{0:X4}".Format(packetReader.ReadUInt16());
-            }
-
-            if (type == "packetID")
-            {
-                return "0x{0:X2}".Format(packetReader.ReadByte());
-            }
-
-            if (type == "uint")
-            {
-                switch (length)
-                {
-                    case 1: return packetReader.ReadByte();
-                    case 2: return packetReader.ReadUInt16();
-                    case 3: return ((packetReader.ReadUInt16()) << 8) | packetReader.ReadByte();
-                    case 4: return packetReader.ReadUInt32();
-                }
-            }
-
-            if (type == "hex")
-            {
-                switch (length)
-                {
-                    case 1: return "0x{0:X2}".Format(packetReader.ReadByte());
-                    case 2: return "0x{0:X4}".Format(packetReader.ReadUInt16());
-                    case 3: return "0x{0:X6}".Format(((packetReader.ReadUInt16()) << 8) + packetReader.ReadByte());
-                    case 4: return "0x{0:X8}".Format(packetReader.ReadUInt32());
-                }
-            }
-
-            if (type == "text")
-            {
-                return packetReader.ReadString(length);
-            }
-
-            if (type == "utf8")
-            {
-                return packetReader.ReadString(length);
-            }
-
-            if (type == "boolean")
-            {
-                return packetReader.ReadBoolean();
-            }
-
-            if (type == "skip")
-            {
-                packetReader.Seek(length, SeekOrigin.Current);
-                return $"skip:{length}";
-            }
-
-            if (type == "dump")
-            {
-                var data = packetReader.CopyBytes(packetReader.Position, length);
-                packetReader.Seek(length, SeekOrigin.Current);
-                var hexlist = BitConverter.ToString(data).Split('-').ToList();
-                var charPerLines = 16;
-                var newLines = (int)Math.Floor(hexlist.Count() / (float)charPerLines);
-                for (int i = 0; i < newLines; i++)
-                {
-                    var pos = (newLines - i) * charPerLines;
-                    hexlist.Insert(pos, "\n");
-                }
-                return String.Join(" ", hexlist.ToArray());
-            }
-
-
-            return "(null)";
-        }
 
     }
-
 
 }
