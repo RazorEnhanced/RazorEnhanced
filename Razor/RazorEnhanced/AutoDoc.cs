@@ -872,9 +872,9 @@ namespace RazorEnhanced
                 typeof(HotKeyEvent),
                 typeof(PacketLogger),
                 typeof(PacketLogger.PacketTemplate),
-                typeof(PacketLogger.PacketTemplate.FieldTemplate),
-                typeof(PacketLogger.PacketTemplate.FieldType),
-                typeof(PacketLogger.PacketTemplateParser),
+                typeof(PacketLogger.FieldTemplate),
+                typeof(PacketLogger.FieldType),
+                //typeof(PacketLogger.TemplateParser), // Probably is not needed 
 
                 // API Agents
                 typeof(AutoLoot),

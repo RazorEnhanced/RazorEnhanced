@@ -195,7 +195,7 @@ namespace Assistant
             }
 
             PacketTemplate template = m_PacketTemplates[packetID];
-            var packet = PacketTemplateParser.parse(template,packetData);
+            var packet = RazorEnhanced.PacketLogger.TemplateParser.parse(template,packetData);
             var jsonDump = JsonConvert.SerializeObject(packet, Formatting.Indented);
             sw.WriteLine(jsonDump);
             return !template.showHexDump;
