@@ -3091,7 +3091,7 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// replygump gump-id button
+        /// replygump gump-id button [switch ...]
         /// </summary>
         private bool ReplyGump(string command, UOScript.Argument[] args, bool quiet, bool force)
         {
@@ -3101,6 +3101,20 @@ namespace RazorEnhanced
                 int buttonid = args[1].AsInt();
                 Gumps.SendAction(gumpid, buttonid);
             }
+            if (args.Length > 2)
+            {
+                uint gumpid = args[0].AsUInt();
+                int buttonid = args[1].AsInt();
+                List<int> switches = new List<int>();
+                for (int i= 2; i < args.Length; i++)
+                {
+                    int switchid = args[i].AsInt();
+                    switches.Add(switchid);
+                }
+                
+                Gumps.SendAdvancedAction(gumpid, buttonid, switches);
+            }
+
             return true;
         }
 
