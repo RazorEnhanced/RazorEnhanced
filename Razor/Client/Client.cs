@@ -344,9 +344,16 @@ namespace Assistant
 
             return ipAddr;
         }
+
+        internal bool Connected { get; set; }
+
         internal void OnDisconnected()
         {
-
+            Connected = false;
+        }
+        internal void OnConnected()
+        {
+            Connected = true;
         }
 
         internal bool UsePostHSChanges

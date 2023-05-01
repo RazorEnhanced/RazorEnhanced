@@ -544,6 +544,7 @@ namespace Assistant
                     m_ConnectionStart = DateTime.UtcNow;
                     try
                     {
+                        OnConnected();
                         m_LastConnection = new IPAddress((uint)lParam);
                     }
                     catch
@@ -552,10 +553,12 @@ namespace Assistant
                     break;
 
                 case UONetMessage.Disconnect:
+                    OnDisconnected();
                     OnLogout(false);
                     break;
 
                 case UONetMessage.Close:
+                    OnDisconnected();
                     OnLogout();
                     ClientProc = null;
                     Engine.MainWindow.CanClose = true;

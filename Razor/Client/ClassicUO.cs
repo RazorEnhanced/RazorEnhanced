@@ -400,6 +400,7 @@ namespace Assistant
 
         private void OnConnected()
         {
+            base.OnConnected();
             bool ReWindowVisible = false;
             foreach (Screen screen in Screen.AllScreens)
             {
