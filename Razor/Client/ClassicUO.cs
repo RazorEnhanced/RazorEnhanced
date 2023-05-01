@@ -182,7 +182,6 @@ namespace Assistant
             _onInitialize = OnInitialize;
             _onConnected = OnConnected;
             _onDisconnected = OnDisconnected;
-            _onConnected = OnConnected;
             _onFocusGained = OnFocusGained;
             _onFocusLost = OnFocusLost;
             header->Tick = Marshal.GetFunctionPointerForDelegate(_tick);
@@ -401,7 +400,6 @@ namespace Assistant
 
         private void OnConnected()
         {
-            base.OnConnected();
             bool ReWindowVisible = false;
             foreach (Screen screen in Screen.AllScreens)
             {
