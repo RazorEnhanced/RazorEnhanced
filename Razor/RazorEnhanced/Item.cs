@@ -310,7 +310,7 @@ namespace RazorEnhanced
                     switch (number)
                     {
                         case 1072788:
-                            return 1;       // Peso 1 se cliloc è 1072788
+                            return 1;       // Peso 1 se cliloc ï¿½ 1072788
                         case 1072789:
                             try
                             {
@@ -878,20 +878,21 @@ namespace RazorEnhanced
             switch (selector)
             {
                 case "Random":
-                    result = items[Utility.Random(items.Count)] as Item;
+                    result = items[Utility.Random(items.Count)];
                     break;
 
                 case "Nearest":
                     Item nearest = items[0];
                     if (nearest != null)
                     {
-                        double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
+                        double minDist = Utility.Distance( Player.Position.X, Player.Position.Y, nearest.Position.X, nearest.Position.Y );
+
                         foreach (Item t in items)
                         {
                             if (t == null)
                                 continue;
 
-                            double dist = Misc.DistanceSqrt(Player.Position, t.Position);
+                            double dist = Utility.Distance( Player.Position.X, Player.Position.Y, t.Position.X, t.Position.Y );
 
                             if (!(dist < minDist))
                                 continue;
@@ -907,13 +908,14 @@ namespace RazorEnhanced
                     Item farthest = items[0];
                     if (farthest != null)
                     {
-                        double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
+                        double maxDist = Utility.Distance( Player.Position.X, Player.Position.Y, farthest.Position.X, farthest.Position.Y );
+                        
                         foreach (Item t in items)
                         {
                             if (t == null)
                                 continue;
 
-                            double dist = Misc.DistanceSqrt(Player.Position, t.Position);
+                            double dist = Utility.Distance( Player.Position.X, Player.Position.Y, t.Position.X, t.Position.Y );
                             if (dist > maxDist)
                             {
                                 farthest = t;
