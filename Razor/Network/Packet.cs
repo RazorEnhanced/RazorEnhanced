@@ -1,10 +1,11 @@
+using RazorEnhanced;
 using System;
 using System.IO;
 using System.Text;
 
 namespace Assistant
 {
-    internal enum PacketPath
+    public enum PacketPath
     {
         ClientToServer,
         RazorToServer,
@@ -16,47 +17,6 @@ namespace Assistant
 
     public class Packet
     {
-        private static bool m_Logging = false;
-
-        internal static bool Logging
-        {
-            get
-            {
-                return m_Logging;
-            }
-            set
-            {
-                if (value != m_Logging)
-                {
-                    m_Logging = value;
-                    if (m_Logging)
-                        BeginLog();
-                }
-            }
-        }
-
-        internal static string PacketsLogFile
-        {
-            get
-            {
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Razor_Packets.log");
-            }
-        }
-
-        private static void BeginLog()
-        {
-            using (StreamWriter sw = new StreamWriter(PacketsLogFile, true))
-            {
-                sw.AutoFlush = true;
-                sw.WriteLine();
-                sw.WriteLine();
-                sw.WriteLine();
-                sw.WriteLine(">>>>>>>>>> Logging started {0} <<<<<<<<<<", DateTime.Now);
-                sw.WriteLine();
-                sw.WriteLine();
-            }
-        }
-
         private static readonly byte[] m_Buffer = new byte[4]; // Internal format buffer.
         private MemoryStream m_Stream;
         private bool m_DynSize;
@@ -149,6 +109,7 @@ namespace Assistant
             return code;
         }*/
 
+        /*
         internal static void Log(string line, params object[] args)
         {
             Log(String.Format(line, args));
@@ -156,21 +117,7 @@ namespace Assistant
 
         internal static void Log(string line)
         {
-            if (!m_Logging)
-                return;
-
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(PacketsLogFile, true))
-                {
-                    sw.AutoFlush = true;
-                    sw.WriteLine(line);
-                    sw.WriteLine();
-                }
-            }
-            catch
-            {
-            }
+            PacketLogger.SharedInstance.LogString(line);  
         }
 
         internal static unsafe void Log(PacketPath path, byte* buff, int len)
@@ -180,57 +127,11 @@ namespace Assistant
 
         internal static unsafe void Log(PacketPath path, byte* buff, int len, bool blocked)
         {
-            if (!m_Logging)
-                return;
-
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(PacketsLogFile, true))
-                {
-                    sw.AutoFlush = true;
-
-                    string pathStr;
-                    switch (path)
-                    {
-                        case PacketPath.ClientToServer:
-                            pathStr = "Client -> Server";
-                            break;
-
-                        case PacketPath.RazorToServer:
-                            pathStr = "Razor -> Server";
-                            break;
-
-                        case PacketPath.ServerToClient:
-                            pathStr = "Server -> Client";
-                            break;
-
-                        case PacketPath.RazorToClient:
-                            pathStr = "Razor -> Client";
-                            break;
-
-                        case PacketPath.PacketVideo:
-                            pathStr = "PacketVideo -> Client";
-                            break;
-
-                        default:
-                            pathStr = "Unknown -> Unknown";
-                            break;
-                    }
-
-                    sw.WriteLine("{0}: {1}{2}0x{3:X2} (Length: {4})", DateTime.Now.ToString("HH:mm:ss.ffff"), pathStr, blocked ? " [BLOCKED] " : " ", buff[0], len);
-                    //if ( buff[0] != 0x80 && buff[0] != 0x91 )
-                    Utility.FormatBuffer(sw, buff, len);
-                    //else
-                    //  sw.WriteLine( "[Censored for Security Reasons]" );
-
-                    sw.WriteLine();
-                    sw.WriteLine();
-                }
-            }
-            catch
-            {
-            }
+            var data = new byte[len];
+            System.Runtime.InteropServices.Marshal.Copy((IntPtr)buff, data, 0, len);
+            PacketLogger.SharedInstance.LogPacketData(path, data, blocked);      
         }
+        */
 
         internal long Seek(int offset, SeekOrigin origin)
         {

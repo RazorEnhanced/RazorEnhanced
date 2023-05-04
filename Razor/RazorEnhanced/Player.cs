@@ -404,7 +404,7 @@ namespace RazorEnhanced
         /// </summary>
         public static bool Connected
         {
-            get { return Client.Instance.Connected;  }
+            get { return Client.Instance.Connected; }
         }
 
 

@@ -490,15 +490,15 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="bag">Container as Item object.</param>
         /// <param name="delay">Maximum wait, in milliseconds.</param>
-        public static void WaitForContents(Item bag, int delay) // Delay in MS
+        public static bool WaitForContents(Item bag, int delay) // Delay in MS
         {
             if (bag == null || (!bag.IsCorpse && !bag.IsContainer))
-                return;
+                return false;
 
             RazorEnhanced.Items.UseItem(bag);
 
             if (bag.Updated)
-                return;
+                return true;
 
             int subdelay = delay;
             while (!bag.Updated)
@@ -506,17 +506,21 @@ namespace RazorEnhanced
                 Thread.Sleep(2);
                 subdelay -= 2;
                 if (subdelay <= 0)
-                    break;
+                    return false;
             }
+
+            return true;
         }
 
         /// <param name="bag_serial">Container as Item serial.</param>
         /// <param name="delay">max time to wait for contents</param>
-        public static void WaitForContents(int bag_serial, int delay) // Delay in MS
+        public static bool WaitForContents(int bag_serial, int delay) // Delay in MS
         {
             Item bag = FindBySerial(bag_serial);
             if (bag != null)
-                WaitForContents(bag, delay);
+                return WaitForContents(bag, delay);
+
+            return false; 
         }
 
         private static readonly Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
@@ -1539,7 +1543,7 @@ namespace RazorEnhanced
         /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
         /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
         /// </summary>
-        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
+        /// <param name="itemid"> List of ItemID filter.</param>
         /// <param name="color">Color filter. (-1: any, 0: natural )</param>
         /// <param name="container">Serial of the container to search. (-1: any Item)</param>
         /// <param name="recursive">
@@ -1609,40 +1613,14 @@ namespace RazorEnhanced
             }
         }
 
-
-        // Find all items matching an id
-        /// <summary>
-        /// Find a list of Item matching specific list of ItemID, Color and Container. 
-        /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
-        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
-        /// </summary>
-        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
-        /// <param name="color">Color filter. (-1: any, 0: natural )</param>
-        /// <param name="container">Serial of the container to search. (-1: any Item)</param>
-        /// <param name="recursive">
-        /// Search subcontainers. 
-        ///     True: all subcontainers
-        ///     False: only main
-        ///     1,2,n: Maximum subcontainer depth
-        /// </param>
-        /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
-        /// <returns>The list of Items matching the criteria.</returns>
-        public static IronPython.Runtime.PythonList FindAllByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
-        {
-            IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
-            itemids.append(itemid);
-            return FindAllByID(itemids, color, container, range, considerIgnoreList);
-        }
-
-
-
         // Find all items matching any of a list of ids
         /// <summary>
         /// Find a List of Items matching specific list of ItemID, Color and Container. 
         /// Optionally can search in all subcontaners or to a maximum depth in subcontainers.
-        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory. The depth defaults to only the top but can search for # of sub containers.
+        /// Can use -1 on color for no chose color, can use -1 on container for search in all item in memory.
+        /// The depth defaults to only the top but can search for # of sub containers.
         /// </summary>
-        /// <param name="itemid"> List of ItemID </ItemID> filter.</param>
+        /// <param name="itemid"> List of ItemID filter.</param>
         /// <param name="color">Color filter. (-1: any, 0: natural )</param>
         /// <param name="container">Serial of the container to search. (-1: any Item)</param>
         /// <param name="recursive">
@@ -1708,6 +1686,21 @@ namespace RazorEnhanced
                 }
             }
             return returnList; // Return null if no item found
+        }
+        // Find all items matching an id
+        public static IronPython.Runtime.PythonList FindAllByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
+            itemids.append(itemid);
+            return FindAllByID(itemids, color, container, range, considerIgnoreList);
+        }
+        // Find all items matching an C# list[ids]
+        public static IronPython.Runtime.PythonList FindAllByID( List<int>itemids, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            
+            IronPython.Runtime.PythonList itemids_py = new IronPython.Runtime.PythonList();
+            itemids_py.extend(itemids);
+            return FindAllByID(itemids_py, color, container, range, considerIgnoreList);
         }
 
 

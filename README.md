@@ -1,3 +1,11 @@
+![GitHub](https://img.shields.io/github/license/RazorEnhanced/RazorEnhanced)
+![GitHub repo size](https://img.shields.io/github/repo-size/RazorEnhanced/RazorEnhanced)
+![GitHub lines](https://tokei.rs/b1/github/RazorEnhanced/RazorEnhanced)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/RazorEnhanced/RazorEnhanced)
+![GitHub contributors](https://img.shields.io/github/contributors/RazorEnhanced/RazorEnhanced)
+![GitHub all releases](https://img.shields.io/github/downloads/RazorEnhanced/RazorEnhanced/total)
+
+
 ![drawing](dokuwiki/media/razor-enhanced-splash.png)
 
 # Razor Enhanced 🪒

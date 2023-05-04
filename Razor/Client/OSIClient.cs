@@ -398,6 +398,81 @@ namespace Assistant
             MessageBox.Show(sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
         }
 
+        internal void OnLogout()
+        {
+            base.OnDisconnected();
+            OnLogout(true);
+        }
+
+        private void OnLogout(bool fake)
+        {
+            if (!fake)
+            {
+                PacketHandlers.Party.Clear();
+
+                Engine.MainWindow.UpdateTitle();
+                m_ConnectionStart = DateTime.MinValue;
+            }
+
+            Assistant.Client.Instance.SetTitleStr(""); // Restore titlebar standard
+
+            if (World.Player != null)
+            {
+                // Stop forzato di tutti i thread agent
+                RazorEnhanced.AutoLoot.AutoMode = false;
+                RazorEnhanced.Scavenger.AutoMode = false;
+                RazorEnhanced.BandageHeal.AutoMode = false;
+
+                if (RazorEnhanced.Scripts.Timer != null)
+                    RazorEnhanced.Scripts.Timer.Close();
+
+                if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+                    Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+
+                if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+                    Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+
+                if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                    Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+
+                if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+                    Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+
+                if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                    Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+
+                if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+                    Assistant.Engine.MainWindow.RestockStop.PerformClick();
+
+                if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+                    Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
+
+                if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+                    Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
+
+                if (RazorEnhanced.ToolBar.ToolBarForm != null)
+                    RazorEnhanced.ToolBar.ToolBarForm.Close();
+
+                if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+                    RazorEnhanced.SpellGrid.SpellGridForm.Close();
+
+                //Stop video recorder
+                Assistant.MainForm.StopVideoRecorder();
+            }
+
+            PlayerData.ExternalZ = false;
+            World.Player = null;
+            PlayerData.FastWalkKey = 0;
+            World.Items.Clear();
+            World.Mobiles.Clear();
+            ActionQueue.Stop();
+            StealthSteps.Unhide();
+
+            PacketHandlers.Party.Clear();
+            PacketHandlers.IgnoreGumps.Clear();
+
+
+        }
 
         [DllImport("user32.dll")]
         static new extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
@@ -479,10 +554,12 @@ namespace Assistant
 
                 case UONetMessage.Disconnect:
                     OnDisconnected();
+                    OnLogout(false);
                     break;
 
                 case UONetMessage.Close:
                     OnDisconnected();
+                    OnLogout();
                     ClientProc = null;
                     Engine.MainWindow.CanClose = true;
                     Engine.MainWindow.Close();
@@ -871,6 +948,8 @@ namespace Assistant
 
                 }
 
+                
+
                 bool blocked = false;
                 switch (path)
                 {
@@ -887,6 +966,12 @@ namespace Assistant
                         }
                 }
 
+                if (path == PacketPath.ClientToServer || path == PacketPath.ServerToClient)
+                {
+                    var data = new byte[len];
+                    System.Runtime.InteropServices.Marshal.Copy((IntPtr)buff, data, 0, len);
+                    PacketLogger.SharedInstance.LogPacketData(path, data, blocked);
+                }
 
                 if (filter)
                 {
@@ -900,9 +985,10 @@ namespace Assistant
                         //Debug.WriteLine("Packet id 0x{0:X}", data[0]);
                     }
 
+                    
                     fixed (byte* ptr = data)
                     {
-                        Packet.Log(path, ptr, data.Length, blocked);
+                        //Packet.Log(path, ptr, data.Length, blocked);
                         if (!blocked)
                             CopyToBuffer(outBuff, ptr, data.Length);
                     }
