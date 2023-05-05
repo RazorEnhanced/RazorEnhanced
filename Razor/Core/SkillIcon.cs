@@ -54,7 +54,7 @@ namespace Assistant
         PlayingTheOdds,
         Thrust,
         Pierce,
-        Stagger,
+        Stagger = 0x2D7,
         Toughness,
         Onslaught = 0x2D9,
         FocusedEye,
