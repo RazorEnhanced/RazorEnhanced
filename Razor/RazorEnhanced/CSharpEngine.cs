@@ -6,6 +6,7 @@ using System.Reflection;
 using Microsoft.Scripting;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -29,11 +30,13 @@ namespace RazorEnhanced
 
         }
 
-        private CompilerParameters CompilerSettings(bool IncludeDebugInformation)
+        private CompilerParameters CompilerSettings(bool IncludeDebugInformation, List<string> assemblies)
         {
-            CompilerParameters parameters = new CompilerParameters();
-            List<string> assemblies = GetReferenceAssemblies();
-            foreach (string assembly in assemblies)
+            CompilerParameters parameters = new();
+            List<string> assemblies_cfg = GetReferenceAssemblies(); // Gets all assemblies inside the Assemblies.cfg file
+            List<string> allAssemblies = assemblies.Concat(assemblies_cfg).ToList(); // Merges asseblies found in assemblies.cfg with assemblies from directives
+
+            foreach (string assembly in allAssemblies)
             {
                 parameters.ReferencedAssemblies.Add(assembly);
             }
@@ -48,7 +51,7 @@ namespace RazorEnhanced
             parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
             return parameters;
         }
-        class CompilerOptions : IProviderOptions
+        private class CompilerOptions : IProviderOptions
         {
             string _compilerVersion = "8.0";
             IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
@@ -63,7 +66,7 @@ namespace RazorEnhanced
 
         private List<string> GetReferenceAssemblies()
         {
-            List<string> list = new();
+            List<string> assemblies = new();
 
             string assemblies_cfg_path = Path.Combine(Assistant.Engine.RootPath, "Scripts", "Assemblies.cfg");
 
@@ -75,24 +78,24 @@ namespace RazorEnhanced
                 while ((line = ip.ReadLine()) != null)
                 {
                     if (line.Length > 0 && !line.StartsWith("#"))  // # means comment
-                        list.Add(line);
+                        assemblies.Add(line);
                 }
             }
 
             // Replace with full path all assemblis that are in razor path
-            for (int i = 0; i < list.Count; i++)
+            for (int i = 0; i < assemblies.Count; i++)
             {
-                string assembly_path = Path.Combine(Assistant.Engine.RootPath, list[i]);
+                string assembly_path = Path.Combine(Assistant.Engine.RootPath, assemblies[i]);
                 if (File.Exists(assembly_path))
                 {
-                    list[i] = assembly_path;
+                    assemblies[i] = assembly_path;
                 }
             }
 
             // Adding Razor and Ultima.dll as default
-            list.Add(Assistant.Engine.RootPath + Path.DirectorySeparatorChar + "RazorEnhanced.exe");
-            list.Add(Assistant.Engine.RootPath + Path.DirectorySeparatorChar + "Ultima.dll");
-            return list;
+            assemblies.Add(Assistant.Engine.RootPath + Path.DirectorySeparatorChar + "RazorEnhanced.exe");
+            assemblies.Add(Assistant.Engine.RootPath + Path.DirectorySeparatorChar + "Ultima.dll");
+            return assemblies;
         }
 
         private bool ManageCompileResult(CompilerResults results, ref List<string> errorwarnings)
@@ -122,7 +125,104 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// This function search for our custom directive //#import that allows import classes from other C# files
+        /// This function finds for a specific directive inside a script. 
+        /// </summary>
+        /// <param name="filename">File where look for the directive</param>
+        /// <param name="directive">Which directive must be found</param>
+        /// <param name="directiveList">List of all directives found</param>
+        /// <returns>Returns false if file does not exist</returns>
+        private bool FindDirectivesInFile(string filename, string directive, ref List<string> directiveList)
+        {
+            if (!File.Exists(filename))
+            {
+                return false;
+            }
+
+            // Searching all the lines with the directive
+            foreach (string line in File.ReadAllLines(filename))
+            {
+                if (line.ToLower().Contains(directive))
+                {
+                    string file = Regex.Replace(line, directive, "", RegexOptions.IgnoreCase).Trim(); // Removing the directive token from the string
+                    directiveList.Add(file);
+                }
+
+                // If namespace string is found function can stop searching because all directives must exists before namespace string
+                if (line.ToLower().Contains("namespace")) { break; }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Estract the filename from a file directive
+        /// </summary>
+        /// <param name="directive">String containing the whole directive</param>
+        /// <param name="basepath">Basepath for the relative path directives</param>
+        /// <param name="ignoreBasePath">Force to ignore the BasePath on the &lt; &gt; directive </param>
+        /// <param name="filename">Extracted filename</param>
+        /// <returns>Returns false if an error occurs</returns>
+        private bool ExtractFileNameFromDirective(string directive, string basepath, bool ignoreBasePath, out string filename)
+        {
+            if (directive.StartsWith("<") && directive.EndsWith(">"))
+            {
+                // Relative path. Adding base folder
+                filename = directive.Substring(1, directive.Length - 2); // Removes < >
+                if (!ignoreBasePath) filename = Path.GetFullPath(Path.Combine(basepath, filename)); // Basepath is Scripts folder
+            }
+            else if (directive.StartsWith("\"") && directive.EndsWith("\""))
+            {
+                // Absolute path. Adding as is
+                filename = directive.Substring(1, directive.Length - 2); // Removes " "
+                filename = Path.GetFullPath(filename); // This should resolve the relative ../ path
+            }
+            else {
+                filename = "";
+                return false; 
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// This function searches for our custom directive //#assembly that allow include a specific assembly (DLL) into the script
+        /// </summary>
+        /// <param name="filesList">Full path of all files where search for the directive</param>
+        /// <param name="assemblies">List of all assemblies that must be inclide during the compile process</param>
+        /// <param name="errorwarnings">List of error and warnings</param>
+        private void FindAllAssembliesIncludedInCSharpScripts(List<string> filesList, ref List<string> assemblies, ref List<string> errorwarnings) 
+        {
+            const string directive = "//#assembly";
+
+            foreach (string filename in filesList) 
+            {
+                List<string> foundDirectives = new();
+                if (!FindDirectivesInFile(filename, directive, ref foundDirectives))
+                {
+                    errorwarnings.Add(string.Format("Error on directive {0}. Unable to find {1}", directive, filename));
+                    return;
+                }
+
+                if (foundDirectives.Count <= 0)
+                {
+                    return;
+                }
+
+                string basepath = Path.GetDirectoryName(filename); // BasePath of the imported file
+
+                foreach (string line in foundDirectives)
+                {
+                    if (!ExtractFileNameFromDirective(line, basepath, true, out string assembly))
+                    {
+                        errorwarnings.Add(string.Format("Error on RE Directive {0}", directive));
+                        break;
+                    }
+                    assemblies.Add(assembly);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// This function searches for our custom directive //#import that allows import classes from other C# files
         /// The directive must be added anywhere before the namespace and can be used in C stile with &gt; &lt; or ""
         /// Using relative path with &gt; &lt; the base directory will the Scripts folder
         /// </summary>
@@ -133,7 +233,9 @@ namespace RazorEnhanced
         {
             const string directive = "//#import";
 
-            if (!File.Exists(sourceFile))
+            // Searching all the lines with the directive
+            List<string> imports = new();
+            if (!FindDirectivesInFile(sourceFile, directive, ref imports))
             {
                 errorwarnings.Add(string.Format("Error on directive {0}. Unable to find {1}", directive, sourceFile));
                 return;
@@ -142,44 +244,14 @@ namespace RazorEnhanced
             string basepath = Path.GetDirectoryName(sourceFile); // BasePath of the imported file
             filesList.Add(sourceFile);
 
-            // Searching all the lines with the directive
-            List<string> imports = new();
-            foreach (string line in File.ReadAllLines(sourceFile))
-            {
-                if (line.Contains(directive))
-                {
-                    string file = line.Replace(directive, "").Trim();
-                    imports.Add(file);
-                }
-
-                // If namespace directive is found stop searching
-                if (line.ToLower().Contains("namespace")) { break; }
-            }
-
             // If nothing is found return only the main file
             if (imports.Count == 0) { return; }
 
-            // Parsing each line
-            int lineCnt = 0;
             foreach (string line in imports)
             {
-                string file = "";
-                lineCnt++; // Count lines from 1
-                if (line.StartsWith("<") && line.EndsWith(">"))
+                if (!ExtractFileNameFromDirective(line, basepath, false, out string file))
                 {
-                    // Relative path. Adding base folder
-                    file = line.Substring(1, line.Length - 2); // Removes < >
-                    file = Path.GetFullPath(Path.Combine(basepath, file)); // Basepath is Scripts folder
-                }
-                else if (line.StartsWith("\"") && line.EndsWith("\""))
-                {
-                    // Absolute path. Adding as is
-                    file = line.Substring(1, line.Length - 2); // Removes " "
-                    file = Path.GetFullPath(file); // This should resolve the relative ../ path
-                }
-                else
-                {
-                    errorwarnings.Add(string.Format("Error on RE Directive {0} at line {1}", directive, lineCnt));
+                    errorwarnings.Add(string.Format("Error on RE Directive {0}", directive));
                     break;
                 }
 
@@ -271,6 +343,13 @@ namespace RazorEnhanced
                 return true;
             }
 
+            List<string> assembliesList = new() { }; // List of assemblies.
+            FindAllAssembliesIncludedInCSharpScripts(filesList, ref assembliesList, ref errorwarnings);
+            if (errorwarnings.Count > 0)
+            {
+                return true;
+            }
+
             if (debug)
             {
                 Misc.SendMessage("Compiling C# Script [DEBUG] " + Path.GetFileName(path));
@@ -284,7 +363,7 @@ namespace RazorEnhanced
 
             CompilerOptions m_opt = new();
             CSharpCodeProvider m_provider = new(m_opt);
-            CompilerParameters m_compileParameters = CompilerSettings(true); 
+            CompilerParameters m_compileParameters = CompilerSettings(true, assembliesList); 
 
             m_compileParameters.IncludeDebugInformation = debug;
             CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
