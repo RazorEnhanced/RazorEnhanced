@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RazorEnhanced
 {
@@ -16,6 +17,9 @@ namespace RazorEnhanced
     {
         private int m_ptarget;
         private RazorEnhanced.Point3D m_pgtarget;
+
+        private Task<int> promptTargetTask;
+        public int PromptTargetAsyncResult { get; private set; }
 
         /// <summary>
         /// Get status if have in-game cursor has target shape.
@@ -371,6 +375,57 @@ namespace RazorEnhanced
         {
             Assistant.Targeting.ClearQueue();
             Assistant.Targeting.ClearLast();
+        }
+
+        #region PROMPT TARGET ASYNC SUPPORTING METHODS
+        private async Task<int> PromptInputAsync(string message = "Select Item or Mobile", int color = 945)
+        {
+            this.m_ptarget = -1;
+            Misc.SendMessage(message, color, true);
+            Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(this.PromptTargetExex_Callback));
+
+            while (!Targeting.HasTarget)
+                await Task.Delay(30);
+
+            while (this.m_ptarget == -1 && Targeting.HasTarget)
+                await Task.Delay(30);
+
+            await Task.Delay(100);
+
+            if (this.m_ptarget == -1)
+                Misc.SendMessage("Prompt Target Cancelled", color, true);
+
+            return this.m_ptarget;
+        }
+
+        private async Task PromptTargetAsyncTask()
+        {
+            // Start the prompt input task
+            this.promptTargetTask = this.PromptInputAsync();
+
+            // Perform other non-blocking operations here
+
+            // Wait for the prompt input task to complete
+            var result = await this.promptTargetTask;
+
+            // Continue with the rest of the code here
+            this.PromptTargetAsyncResult = result;
+        }
+
+        public void ClearPromptTargetAsyncResult()
+        {
+            this.PromptTargetAsyncResult = 0;
+        }
+        #endregion
+
+        /// <summary>
+        /// Prompt a target in-game, wait for the Player to select an Item or a Mobile. Can also specific a text message for prompt.
+        /// </summary>
+        /// <param name="message">Hint on what to select.</param>
+        /// <param name="color">Color of the message. (default: 945, gray)</param>
+        public async Task PromptTargetAsync(string message = "Select Item or Mobile", int color = 945)
+        {
+            await this.PromptTargetAsyncTask();
         }
 
         /// <summary>
