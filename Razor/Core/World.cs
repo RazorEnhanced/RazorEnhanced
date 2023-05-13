@@ -6,7 +6,9 @@ namespace Assistant
     internal class World
     {
         private static readonly ConcurrentDictionary<Serial, Item> m_Items;
+        private static long m_ItemUpdateCount;
         private static readonly ConcurrentDictionary<Serial, Mobile> m_Mobiles;
+        private static long m_MobileUpdateCount;
         private static readonly ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData> m_Multis;
         private static PlayerData m_Player;
         private static string m_ShardName, m_PlayerName, m_AccountName;
@@ -23,7 +25,9 @@ namespace Assistant
 
         internal static ConcurrentDictionary<ushort, string> Servers { get { return m_Servers; } }
         internal static ConcurrentDictionary<Serial, Item> Items { get { return m_Items; } }
+        internal static long itemUpdateCounter { get { return m_ItemUpdateCount; } }
         internal static ConcurrentDictionary<Serial, Mobile> Mobiles { get { return m_Mobiles; } }
+        internal static long mobileUpdateCounter { get { return m_MobileUpdateCount; } }
         internal static ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData> Multis { get { return m_Multis; } }
 
         internal static Item FindItem(Serial serial)
@@ -92,6 +96,7 @@ namespace Assistant
         internal static void AddItem(Item item)
         {
             m_Items[item.Serial] = item;
+            m_ItemUpdateCount++;
         }
 
         internal static void AddMulti(Item item)
@@ -107,12 +112,15 @@ namespace Assistant
         internal static void AddMobile(Mobile mob)
         {
             m_Mobiles[mob.Serial] = mob;
+            m_MobileUpdateCount++;
         }
 
         internal static void RemoveMobile(Mobile mob)
         {
-            Mobile removed;
-            m_Mobiles.TryRemove(mob.Serial, out removed);
+            if (m_Mobiles.TryRemove(mob.Serial, out Mobile removed) == true)
+            {
+                m_MobileUpdateCount++;
+            }
         }
 
         internal static void RemoveItem(Item item)
@@ -120,7 +128,10 @@ namespace Assistant
             if (item.IsMulti)
                 RemoveMulti(item);
 
-            m_Items.TryRemove(item.Serial, out Item removed);
+            if (m_Items.TryRemove(item.Serial, out Item removed) == true)
+            {
+                m_ItemUpdateCount++;
+            }
 
             /*  while (m_Items.ContainsKey(item.Serial))
                 {

@@ -815,6 +815,15 @@ namespace RazorEnhanced
             return result;
         }
 
+        /// <summary>
+        /// Incremental count on when the server updated the mobile list
+        /// </summary>
+        /// <returns>Counter</returns>
+        public static long GetMobileUpdateCounter()
+        {
+            return World.mobileUpdateCounter;
+        }
+
 
         /// <summary>
         /// The TrackingInfo class hold the latest information about. 

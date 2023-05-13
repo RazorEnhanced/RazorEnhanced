@@ -855,6 +855,15 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Incremental count on when the server updated the item list
+        /// </summary>
+        /// <returns>Counter</returns>
+        public static long GetItemUpdateCounter()
+        {
+            return World.itemUpdateCounter;
+        }
+
+        /// <summary>
         /// Select a single Item from a list by some criteria: Distance, Amount, Durability or Randomly
         /// </summary>
         /// <param name="items">List of Item.</param>
