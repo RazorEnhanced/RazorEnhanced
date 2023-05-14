@@ -346,87 +346,14 @@ namespace Assistant
         }
 
         internal bool Connected { get; set; }
+
         internal void OnDisconnected()
         {
             Connected = false;
-            OnLogout(false);
         }
         internal void OnConnected()
         {
             Connected = true;
-        }
-
-        internal void OnLogout()
-        {
-            OnLogout(true);
-        }
-
-        internal void OnLogout(bool fake)
-        {
-            if (!fake)
-            {
-                PacketHandlers.Party.Clear();
-
-                Engine.MainWindow.UpdateTitle();
-                m_ConnectionStart = DateTime.MinValue;
-            }
-
-            Assistant.Client.Instance.SetTitleStr(""); // Restore titlebar standard
-
-            if (World.Player != null)
-            {
-                // Stop forzato di tutti i thread agent
-                RazorEnhanced.AutoLoot.AutoMode = false;
-                RazorEnhanced.Scavenger.AutoMode = false;
-                RazorEnhanced.BandageHeal.AutoMode = false;
-
-                if (RazorEnhanced.Scripts.Timer != null)
-                    RazorEnhanced.Scripts.Timer.Close();
-
-                if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-                    Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
-
-                if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-                    Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
-
-                if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                    Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
-
-                if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                    Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
-
-                if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                    Assistant.Engine.MainWindow.DressStopButton.PerformClick();
-
-                if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-                    Assistant.Engine.MainWindow.RestockStop.PerformClick();
-
-                if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-                    Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
-
-                if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
-                    Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
-
-                if (RazorEnhanced.ToolBar.ToolBarForm != null)
-                    RazorEnhanced.ToolBar.ToolBarForm.Close();
-
-                if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-                    RazorEnhanced.SpellGrid.SpellGridForm.Close();
-
-                //Stop video recorder
-                Assistant.MainForm.StopVideoRecorder();
-            }
-
-            PlayerData.ExternalZ = false;
-            World.Player = null;
-            PlayerData.FastWalkKey = 0;
-            World.Items.Clear();
-            World.Mobiles.Clear();
-            ActionQueue.Stop();
-            StealthSteps.Unhide();
-
-            PacketHandlers.Party.Clear();
-            PacketHandlers.IgnoreGumps.Clear();
         }
 
         internal bool UsePostHSChanges

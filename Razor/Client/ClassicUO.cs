@@ -182,7 +182,6 @@ namespace Assistant
             _onInitialize = OnInitialize;
             _onConnected = OnConnected;
             _onDisconnected = OnDisconnected;
-            _onConnected = OnConnected;
             _onFocusGained = OnFocusGained;
             _onFocusLost = OnFocusLost;
             header->Tick = Marshal.GetFunctionPointerForDelegate(_tick);
