@@ -1080,11 +1080,16 @@ namespace RazorEnhanced
         /// <summary>
         /// Stop all script running.
         /// </summary>
-        public static void ScriptStopAll()
+        /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
+        public static void ScriptStopAll(bool skipCurrent=false)
         {
-            foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
+            Scripts.EnhancedScript currentScript = Scripts.CurrentScript();
+            foreach (RazorEnhanced.Scripts.EnhancedScript script in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
             {
-                scriptdata.Run = false;
+                if ( skipCurrent && currentScript == script) { 
+                    continue; 
+                }
+                script.Run = false;
             }
         }
 
