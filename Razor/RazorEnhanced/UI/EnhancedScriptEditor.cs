@@ -80,6 +80,10 @@ namespace RazorEnhanced.UI
         private object m_CurrentPayload;
         private int m_ThreadID;
 
+        //Dalamar:
+        //TODO: replace current implementation with 
+        private EnhancedScript m_Script; 
+
         private readonly List<int> m_Breakpoints = new List<int>();
 
         private volatile bool m_Breaktrace = false;
@@ -606,7 +610,146 @@ namespace RazorEnhanced.UI
                     {
                         SetErrorBox("Due to a limitation, C# scripts must be saved before run it");
                         throw new Exception();
-                    } 
+                    }
+                    else
+                    {
+                        Save();
+                        SetErrorBox(m_Filename + " saved");
+                    }
+
+                    CSharpEngine csharpEngine = CSharpEngine.Instance;
+
+                    // Changed the logic: Now scripts are not executed as a text tring. Text will be saved and executed as a file.
+                    // This change simplify alot the management of the #import directive. This behaviour should change in future maybe with a new editor
+                    // 
+                    // If compile error occurs a SyntaxErrorException is thrown
+                    //bool compileErrors = csharpEngine.CompileFromText(text, out List<string> compileMessages, out Assembly assembly);
+                    bool compileErrors = csharpEngine.CompileFromFile(m_Filepath, true, out List<string> compileMessages, out Assembly assembly);
+
+                    if (compileMessages.Count > 0)
+                    {
+                        SetErrorBox("C# compile warning:");
+                        foreach (string str in compileMessages)
+                        {
+                            SetErrorBox(str);
+                        }
+                    }
+                    if (assembly != null)
+                    {
+                        csharpEngine.Execute(assembly);
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                    SetErrorBox("Script " + m_Filename + " run completed!");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                }
+                else if (m_Filetype == ".uos")
+                {
+                    // Deprecation of // 
+                    if ((text.Substring(0, 2) == "//") && !(text.Substring(0, 5).ToUpper() == "//UOS"))
+                    {
+                        string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
+                        SetErrorBox(message);
+                        Misc.SendMessage(message);
+                    }
+                    string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                    UOSteamEngine uosteam = UOSteamEngine.Instance;
+                    var script = uosteam.Load(lines, this.SetErrorBox);
+                    uosteam.Execute(script);
+                    SetErrorBox("Script " + m_Filename + " run completed!");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                }
+                else
+                {
+
+                    m_pe.Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
+                    m_pe.Load(text);
+                    m_pe.Execute();
+
+
+                    SetErrorBox("Script " + m_Filename + " run completed!");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                }
+            }
+            catch (IronPython.Runtime.Exceptions.SystemExitException)
+            {
+                Stop();
+                // sys.exit - terminate the thread
+            }
+            catch (Exception ex)
+            {
+                if (ex is SyntaxErrorException)
+                {
+                    SyntaxErrorException se = ex as SyntaxErrorException;
+                    SetErrorBox("Syntax Error:");
+                    SetErrorBox("--> LINE: " + se.Line);
+                    SetErrorBox("--> COLUMN: " + se.Column);
+                    SetErrorBox("--> SEVERITY: " + se.Severity);
+                    SetErrorBox("--> MESSAGE: " + se.Message);
+                }
+                else
+                {
+                    SetErrorBox("Generic Error:");
+                    ExceptionOperations eo = m_pe.Engine.GetService<ExceptionOperations>();
+                    string error = eo.FormatException(ex);
+                    error = error.Trim();
+                    error = Regex.Replace(error, "\n\n", "\n");     //remove empty lines
+                    foreach (var line in error.Split('\n'))
+                    {
+                        SetErrorBox(line);
+                    }
+                }
+                SetStatusLabel("IDLE", Color.DarkTurquoise);
+            }
+
+            if (Scripts.ScriptEditorThread != null)
+                Scripts.ScriptEditorThread.Abort();
+        }
+
+        private void AsyncStartOld(bool debug)
+        {
+            if (ScriptRecorder.OnRecord)
+            {
+                SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
+                return;
+            }
+
+            if (debug)
+            {
+                SetErrorBox("Starting Script in debug mode: " + m_Filename);
+                SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
+            }
+            else
+            {
+                SetErrorBox("Starting Script: " + m_Filename);
+                SetStatusLabel("SCRIPT RUNNING", Color.Green);
+            }
+
+            try
+            {
+                if (debug)
+                {
+                    m_Breaktrace = true;
+                }
+                else
+                {
+                    m_Breaktrace = false;
+                }
+
+                m_Queue = new ConcurrentQueue<Command>();
+
+                string text = GetFastTextBoxText();
+                if (m_Filetype == ".cs")
+                //if (text.Length >= 4 && text.Substring(0, 4).ToUpper() == "//C#")
+                {
+                    if (m_Filepath == "")
+                    {
+                        SetErrorBox("Due to a limitation, C# scripts must be saved before run it");
+                        throw new Exception();
+                    }
                     else
                     {
                         Save();
@@ -642,7 +785,7 @@ namespace RazorEnhanced.UI
                     SetErrorBox("Script " + m_Filename + " run completed!");
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
                 }
-                else if (m_Filetype == ".uos")                     
+                else if (m_Filetype == ".uos")
                 {
                     // Deprecation of // 
                     if ((text.Substring(0, 2) == "//") && !(text.Substring(0, 5).ToUpper() == "//UOS"))
@@ -653,7 +796,8 @@ namespace RazorEnhanced.UI
                     }
                     string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
                     UOSteamEngine uosteam = UOSteamEngine.Instance;
-                    uosteam.Execute(lines, this.SetErrorBox);
+                    var script = uosteam.Load(lines, this.SetErrorBox);
+                    uosteam.Execute(script);
                     SetErrorBox("Script " + m_Filename + " run completed!");
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
                 }
@@ -661,14 +805,15 @@ namespace RazorEnhanced.UI
                 {
 
                     m_pe.Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
-                    m_pe.Execute(text);
+                    m_pe.Load(text);
+                    m_pe.Execute();
 
 
                     SetErrorBox("Script " + m_Filename + " run completed!");
                     SetStatusLabel("IDLE", Color.DarkTurquoise);
                 }
             }
-            catch (IronPython.Runtime.Exceptions.SystemExitException )
+            catch (IronPython.Runtime.Exceptions.SystemExitException)
             {
                 Stop();
                 // sys.exit - terminate the thread
@@ -691,7 +836,8 @@ namespace RazorEnhanced.UI
                     string error = eo.FormatException(ex);
                     error = error.Trim();
                     error = Regex.Replace(error, "\n\n", "\n");     //remove empty lines
-                    foreach (var line in error.Split('\n') ) {
+                    foreach (var line in error.Split('\n'))
+                    {
                         SetErrorBox(line);
                     }
                 }
@@ -1007,7 +1153,7 @@ namespace RazorEnhanced.UI
 
         private void ReloadAfterSave()
         {
-            Scripts.EnhancedScript script = Scripts.Search(m_Filename);
+            EnhancedScript script = Scripts.Search(m_Filename);
             if (script != null)
             {
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);

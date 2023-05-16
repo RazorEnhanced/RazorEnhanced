@@ -416,7 +416,7 @@ namespace RazorEnhanced
                         if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
                         {
                             RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33, false);
-                            foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
+                            foreach (EnhancedScript scriptdata in Scripts.EnhancedScripts.Values.ToList())
                             {
                                 scriptdata.Run = false;
                             }
@@ -428,7 +428,7 @@ namespace RazorEnhanced
                         if (item != null)
                         {
                             string filename = item.Filename;
-                            Scripts.EnhancedScript script = Scripts.Search(filename);
+                            EnhancedScript script = Scripts.Search(filename);
                             if (script != null)
                             {
                                 if (script.Loop)

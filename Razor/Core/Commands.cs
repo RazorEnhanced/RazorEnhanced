@@ -264,7 +264,7 @@ namespace Assistant
                 }
             }
 
-            RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(scriptname);
+            RazorEnhanced.EnhancedScript script = RazorEnhanced.Scripts.Search(scriptname);
             if (script != null)
             {
                 if (script.Run)

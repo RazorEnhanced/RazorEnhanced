@@ -27,7 +27,7 @@ namespace Assistant
                 return "ERROR: file not found";
             }
 
-            Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
+            EnhancedScript script = new EnhancedScript(filename, text, wait, loop, run, autostart);
             if (Scripts.EnhancedScripts.ContainsKey(filename))
             {
                 Scripts.EnhancedScripts[filename] = script;
@@ -133,7 +133,7 @@ namespace Assistant
 
         private void LoadAndInitializeScripts()
         {
-            foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
+            foreach (EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
             {
                 script.Stop();
                 script.Reset();
@@ -424,7 +424,7 @@ namespace Assistant
                     foreach (ListViewItem litem in scriptListView.Items)
                     {
                         string filename = litem.Text;
-                        Scripts.EnhancedScript script = Scripts.Search(filename);
+                        EnhancedScript script = Scripts.Search(filename);
                         {
                             if (script != null)
                             {
@@ -507,7 +507,7 @@ namespace Assistant
             if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
                 string filename = scriptListView.SelectedItems[0].Text;
-                Scripts.EnhancedScript script = Scripts.Search(filename);
+                EnhancedScript script = Scripts.Search(filename);
                 if (script != null)
                 {
                     script.Run = run;
@@ -605,7 +605,7 @@ namespace Assistant
             {
                 int index = scriptListView.SelectedItems[0].Index;
                 string scriptname = list[index].Filename;
-                Scripts.EnhancedScript script = Scripts.Search(scriptname);
+                EnhancedScript script = Scripts.Search(scriptname);
                 if (script != null)
                 {
                     string fullpath = list[index].FullPath;

@@ -1056,7 +1056,7 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptRun(string scriptfile)
         {
-            Scripts.EnhancedScript script = Scripts.Search(scriptfile);
+            EnhancedScript script = Scripts.Search(scriptfile);
             if (script != null)
             {
                 script.Run = true;
@@ -1071,7 +1071,7 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptStop(string scriptfile)
         {
-            Scripts.EnhancedScript script = Scripts.Search(scriptfile);
+            EnhancedScript script = Scripts.Search(scriptfile);
             if (script != null)
             {
                 script.Run = false;
@@ -1086,8 +1086,8 @@ namespace RazorEnhanced
         /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
         public static void ScriptStopAll(bool skipCurrent=false)
         {
-            Scripts.EnhancedScript currentScript = Scripts.CurrentScript();
-            foreach (RazorEnhanced.Scripts.EnhancedScript script in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
+            EnhancedScript currentScript = Scripts.CurrentScript();
+            foreach (EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
             {
                 if ( skipCurrent && currentScript == script) { 
                     continue; 
@@ -1103,7 +1103,7 @@ namespace RazorEnhanced
         /// <returns>True: Script is running - False: otherwise.</returns>
         public static bool ScriptStatus(string scriptfile)
         {
-            Scripts.EnhancedScript script = Scripts.Search(scriptfile);
+            EnhancedScript script = Scripts.Search(scriptfile);
             if (script != null)
             {
                 return script.Run;
