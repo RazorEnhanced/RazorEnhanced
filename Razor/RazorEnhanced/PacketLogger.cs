@@ -1,10 +1,12 @@
 using Accord;
 using Accord.Math;
 using Assistant;
+using IronPython.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using static RazorEnhanced.PacketLogger;
 using static RazorEnhanced.PacketLogger.PacketTemplate;
@@ -16,6 +18,24 @@ namespace RazorEnhanced
     /// </summary>
     public class PacketLogger
     {
+        public readonly static Dictionary<PacketPath, string> PathToString = new Dictionary<PacketPath, string> {
+            { PacketPath.ClientToServer, "ClientToServer" },
+            { PacketPath.ServerToClient, "ServerToClient" },
+            { PacketPath.RazorToServer, "RazorToServer" },
+            { PacketPath.RazorToClient,  "RazorToClient" },
+            { PacketPath.PacketVideo, "PacketVideo" },
+        };
+
+        public readonly static Dictionary<string, PacketPath> StringToPath = new Dictionary<string, PacketPath> {
+            { "ClientToServer", PacketPath.ClientToServer},
+            { "ServerToClient", PacketPath.ServerToClient},
+            { "RazorToServer", PacketPath.RazorToServer },
+            { "RazorToClient", PacketPath.RazorToClient },
+            { "PacketVideo", PacketPath.PacketVideo },
+        };
+
+
+
         /// <summary>
         /// Set the RazorEnhanced packet logger. Calling it without a path it rester it to the default path.
         /// </summary>
@@ -53,6 +73,7 @@ namespace RazorEnhanced
         {
             return Assistant.PacketLogger.SharedInstance.StopRecording();
         }
+        
 
         /// <summary>
         /// Add a custom template for RazorEnhanced packet logger.
@@ -149,22 +170,16 @@ namespace RazorEnhanced
         /// <returns>List of strings of currently active packet paths.</returns>
         public static string[] ListenPacketPath(string packetPath = "", bool active = true)
         {
-            var stringToPath = new Dictionary<string, PacketPath> {
-                { "ClientToServer", PacketPath.ClientToServer },
-                { "ServerToClient", PacketPath.ServerToClient },
-                { "RazorToServer", PacketPath.RazorToServer },
-                { "RazorToClient", PacketPath.RazorToClient },
-                { "PacketVideo", PacketPath.PacketVideo },
-            };
-            var compareKeys = stringToPath.Keys.ToList();
-            var compareLower = stringToPath.Keys.Select(x => x.ToLower()).ToList();
+            
+            var compareKeys = StringToPath.Keys.ToList();
+            var compareLower = StringToPath.Keys.Select(x => x.ToLower()).ToList();
             var matchPath = Regex.Replace(packetPath.ToLower(), "[^a-z]", "");
             var found = compareLower.IndexOf(matchPath);
 
             if (found != -1)
             {
                 var originalKey = compareKeys[found];
-                PacketPath path = stringToPath[originalKey];
+                PacketPath path = StringToPath[originalKey];
                 Assistant.PacketLogger.SharedInstance.ListenPacketPath(path, active);
             }
             else {
@@ -172,7 +187,7 @@ namespace RazorEnhanced
             }
 
             PacketPath[] activePaths = Assistant.PacketLogger.SharedInstance.ActivePacketPaths();
-            var activeKeys = stringToPath.Where(entry => activePaths.Contains(entry.Value)).Select(entry => entry.Key);
+            var activeKeys = StringToPath.Where(entry => activePaths.Contains(entry.Value)).Select(entry => entry.Key);
 
             return activeKeys.ToArray();
         }
@@ -181,7 +196,8 @@ namespace RazorEnhanced
         /// Rapresents a general purpose template system for packets. 
         /// The templates allow to format packets in the logger, making them readable.
         /// 
-        /// /// Example of "Damage" (0x0B) packet:
+        /// Example of "Damage" (0x0B) packet:
+        /// 
         /// {
         ///  'packetID': 0x0B,
         ///  'name': 'Damage 0x0B',
@@ -228,6 +244,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Class representing the fields inside a packet template.
         /// Example of "Damage" (0x0B) packet:
+        /// 
         /// {
         ///  'packetID': 0x0B,
         ///  'name': 'Damage 0x0B',
@@ -267,6 +284,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Type of Fields available for FieldTemplate 
         /// Example of "Damage" (0x0B) packet:
+        /// 
         /// {
         ///  'packetID': 0x0B,
         ///  'name': 'Damage 0x0B',

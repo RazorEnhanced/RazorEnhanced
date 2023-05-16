@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace RazorEnhanced
 {
-    class CSharpEngine
+    public class CSharpEngine
     {
         private static CSharpEngine m_instance = null;
 

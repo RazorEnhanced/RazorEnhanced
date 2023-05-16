@@ -1136,7 +1136,7 @@ namespace Assistant
             World.Mobiles.Clear();
             foreach (var entry in RazorEnhanced.Scripts.EnhancedScripts)
             {
-                RazorEnhanced.Scripts.EnhancedScript script = entry.Value as RazorEnhanced.Scripts.EnhancedScript;
+                EnhancedScript script = entry.Value;
                 script.Stop();
                 script.Reset();
             }
