@@ -1,8 +1,10 @@
 using Accord;
+using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -53,6 +55,28 @@ namespace RazorEnhanced
         {
             return Assistant.PacketLogger.SharedInstance.StopRecording();
         }
+
+        /// <summary>
+        /// Send a packet to the server.                                                                                     
+        /// </summary>
+        public static void SendToServer(byte[] packetData)
+        {
+            var packet = new Packet(packetData, packetData.Length, false);
+            Assistant.Client.Instance.SendToServer(packet);
+        }
+
+        /// <summary>
+        /// Send a packet to the client. 
+        /// </summary>
+        public static void SendToClient(byte[] packetData)
+        {
+            var packet = new Packet(packetData, packetData.Length, false);
+            Assistant.Client.Instance.SendToClient(packet);
+        }
+
+
+
+
 
         /// <summary>
         /// Add a custom template for RazorEnhanced packet logger.
@@ -142,9 +166,9 @@ namespace RazorEnhanced
         /// Possible values:
         ///    ClientToServer
         ///    ServerToClient
-        ///    RazorToServer
-        ///    RazorToClient
-        ///    PacketVideo
+        ///    RazorToServer (TODO)
+        ///    RazorToClient (TODO)
+        ///    PacketVideo   (TODO)
         /// </param>
         /// <returns>List of strings of currently active packet paths.</returns>
         public static string[] ListenPacketPath(string packetPath = "", bool active = true)
