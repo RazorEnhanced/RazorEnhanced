@@ -330,12 +330,14 @@ namespace RazorEnhanced
             errorwarnings = new();
             assembly = null;
 
-            // If debug is true I check for the force release directive
-            if (debug == true)
-            {
-                debug = (CheckForceReleaseDirective(path) != true); // If flag is true then debug is false
-            }
 
+            // If debug is true I check for the force release directive
+            if (debug)
+            {
+                debug = !CheckForceReleaseDirective(path); // If flag is true then debug is false
+            }
+            
+            
             List<string> filesList = new() { }; // List of files.
             FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
             if (errorwarnings.Count > 0)
@@ -354,10 +356,6 @@ namespace RazorEnhanced
             {
                 Misc.SendMessage("Compiling C# Script [DEBUG] " + Path.GetFileName(path));
             }
-            else
-            {
-                Misc.SendMessage("Compiling C# Script [RELEASE] " + Path.GetFileName(path));
-            }
 
             DateTime start = DateTime.Now;
 
@@ -369,7 +367,11 @@ namespace RazorEnhanced
             CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
 
             DateTime stop = DateTime.Now;
-            Misc.SendMessage("Script compiled in " + (stop - start).TotalMilliseconds.ToString("F0") + " ms");
+            
+            if (debug)
+            {
+                Misc.SendMessage("Script compiled in " + (stop - start).TotalMilliseconds.ToString("F0") + " ms");
+            }
 
             bool has_error = ManageCompileResult(results, ref errorwarnings);
             if (!has_error)
