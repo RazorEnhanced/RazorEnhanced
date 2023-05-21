@@ -78,7 +78,14 @@ namespace Assistant
                     RazorEnhanced.Profiles.ProfileChange(profilesComboBox.Text);
                 }
             }
-            profilelinklabel.Text = "Linked to: " + RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text);
+            var linkName = RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text);
+            m_Tip.SetToolTip(profilelinklabel, linkName);
+            if (linkName.Length > 25)
+            {
+                linkName = linkName.Substring(0, 25);
+                linkName += "...";
+            }
+            profilelinklabel.Text = "Linked to: " + linkName;
         }
 
         private void profilesLinkButton_Click(object sender, EventArgs e)
@@ -94,14 +101,28 @@ namespace Assistant
             }
 
             RazorEnhanced.Profiles.Link(World.Player.Serial, profilesComboBox.Text, World.Player.Name);
-            profilelinklabel.Text = "Linked to: " + World.Player.Name;
-            Misc.SendMessage("Profile: " + profilesComboBox.Text + " linked to player: " + World.Player.Name, false);
+            var linkName = RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text);
+            m_Tip.SetToolTip(profilelinklabel, linkName);
+            if (linkName.Length > 25)
+            {
+                linkName = linkName.Substring(0, 25);
+                linkName += "...";
+            }
+            profilelinklabel.Text = "Linked to: " + linkName;
+            Misc.SendMessage("Profile: " + profilesComboBox.Text + " linked to player: " + RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text), false);
         }
 
         private void profilesUnlinkButton_Click(object sender, EventArgs e)
         {
-            RazorEnhanced.Profiles.UnLink(profilesComboBox.Text);
-            profilelinklabel.Text = "Linked to: None";
+            RazorEnhanced.Profiles.UnLink(profilesComboBox.Text, World.Player.Serial);
+            var linkName = RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text);
+            m_Tip.SetToolTip(profilelinklabel, linkName);
+            if (linkName.Length > 25)
+            {
+                linkName = linkName.Substring(0, 25);
+                linkName += "...";
+            }
+            profilelinklabel.Text = "Linked to: " + linkName;
         }
 
         private void profilesRenameButton_Click(object sender, EventArgs e)
