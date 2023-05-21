@@ -3579,11 +3579,81 @@ namespace Assistant
             Targeting.LastAttack = serialbersaglio;
         }
 
+
+
+        enum TradeAction
+        {
+            Start = 0,
+            Cancel = 1,
+            Update = 2,
+            MoneyTrader = 3,
+            MoneyMe = 4,
+        };
+
         private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args)
         {
+            if (World.Player == null) { return; }
             if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
             {
                 args.Block = true;
+                return;
+            }
+
+            var action = (TradeAction)p.ReadByte();
+            int tradeID = (int)p.ReadUInt32();
+
+            SecureTrade trade;
+            switch (action)
+            {
+                case TradeAction.Start:
+                    trade = new SecureTrade();
+
+                    trade.ContainerMe = (int)p.ReadUInt32();
+                    trade.ContainerTrader = (int)p.ReadUInt32();
+                    var contMe = Mobiles.FindBySerial(trade.ContainerMe);
+                    var contTrader = Mobiles.FindBySerial(trade.ContainerTrader);
+
+                    // Both player must be found/visible
+                    if (contMe == null || contTrader == null) { return; }
+
+                    bool hasName = p.ReadBoolean();
+                    trade.NameTrader = string.Empty;
+
+                    if (hasName && p.Position < p.Length)
+                    {
+                        trade.NameTrader = p.ReadString();
+                    }
+                    World.Player.SecureTrades.Add(tradeID, trade);
+                    break;
+
+                case TradeAction.Cancel:
+                    World.Player.SecureTrades.Remove(tradeID);
+                    break;
+
+                case TradeAction.Update:
+                    if (!World.Player.SecureTrades.ContainsKey(tradeID)) { return; }
+                    trade = World.Player.SecureTrades[tradeID];
+
+                    uint acceptMe = p.ReadUInt32();
+                    uint acceptTrader = p.ReadUInt32();
+
+                    trade.AcceptMe = acceptMe != 0;
+                    trade.AcceptTrader = acceptTrader != 0;
+
+                    break;
+                case TradeAction.MoneyTrader:
+                    if (!World.Player.SecureTrades.ContainsKey(tradeID)) { return; }
+                    trade = World.Player.SecureTrades[tradeID];
+                    trade.GoldTrader = (int)p.ReadUInt32();
+                    trade.PlatinumTrader = (int)p.ReadUInt32();
+                    break;
+
+                case TradeAction.MoneyMe:
+                    if (!World.Player.SecureTrades.ContainsKey(tradeID)) { return; }
+                    trade = World.Player.SecureTrades[tradeID];
+                    trade.GoldMe = (int)p.ReadUInt32();
+                    trade.PlatinumMe = (int)p.ReadUInt32();
+                    break;
             }
         }
     }

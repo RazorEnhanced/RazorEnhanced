@@ -12,6 +12,11 @@ namespace RazorEnhanced
     /// </summary>
     public class Player
     {
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        public class TradeInfo : Assistant.SecureTrade {}
+
         internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         // Stats
@@ -180,6 +185,30 @@ namespace RazorEnhanced
             Client.Instance.SendToClient(new TrackingArrow(target, display, x, y));
         }
 
+
+        /// <summary>
+        /// Returns the list of currently active Secure Trading gumps. 
+        /// </summary>
+        /// <returns>A list of Player.SecureTrade objects. Each containing the details of each trade window.</returns>
+        public static List<TradeInfo> TradeList()
+        {
+            var trades = World.Player.SecureTrades.Values.ToList().Apply(trade => {
+                var tradeInfo = new TradeInfo(); //export a copy of the original object.
+                tradeInfo.TradeID = trade.TradeID;
+                tradeInfo.NameTrader = trade.NameTrader;
+                tradeInfo.ContainerMe = trade.ContainerMe;
+                tradeInfo.ContainerTrader = trade.ContainerTrader;
+                tradeInfo.GoldMe = trade.GoldMe;
+                tradeInfo.GoldTrader = trade.GoldTrader;
+                tradeInfo.PlatinumMe = trade.PlatinumMe;
+                tradeInfo.PlatinumTrader = trade.PlatinumTrader;
+                tradeInfo.AcceptMe = trade.AcceptMe;
+                tradeInfo.AcceptTrader = trade.AcceptTrader;
+                return tradeInfo;
+            });
+
+            return trades.ToList();
+        }
 
         // Flags
         /// <summary>

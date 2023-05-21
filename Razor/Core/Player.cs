@@ -173,6 +173,58 @@ namespace Assistant
         Throwing = 57
     }
 
+    /// <summary>
+    /// SecureTrades holds the information about a single tradeing window.
+    /// </summary>
+    public class SecureTrade
+    {
+
+        public int TradeID;
+        /// <summary>
+        /// Name of the Trader (other).
+        /// </summary>
+        public string NameTrader;
+
+        /// <summary>
+        /// Serial of the container holding the items offerd by the Player (me).
+        /// </summary>
+        public int ContainerMe;
+
+        /// <summary>
+        /// Serial of the container holding the items offerd by the Trader (other).
+        /// </summary>
+        public int ContainerTrader;
+
+        /// <summary>
+        /// Amount of Gold offerd by the Player (me).
+        /// </summary>
+        public int GoldMe;
+        /// <summary>
+        /// Amount of Gold offerd by the Trader (other).
+        /// </summary>
+        public int GoldTrader;
+
+
+        /// <summary>
+        /// Amount of Platrinum offerd by the Player (me).
+        /// </summary>
+        public int PlatinumMe;
+        /// <summary>
+        /// Amount of Platrinum offerd by the Trader (other).
+        /// </summary>
+        public int PlatinumTrader;
+
+        /// <summary>
+        /// Trade has been accepted by the Player (me).
+        /// </summary>
+        public bool AcceptMe;
+
+        /// <summary>
+        /// Trade has been accepted by the Trader (other).
+        /// </summary>
+        public bool AcceptTrader;
+    }
+
     internal class PlayerData : Mobile
     {
         internal class MoveEntry
@@ -221,6 +273,8 @@ namespace Assistant
         private byte m_Season;
         private byte m_ForcedSeason;
         private int[] m_MapPatches = new int[10];
+
+        private readonly Dictionary<int, SecureTrade> m_SecureTrades = new Dictionary<int, SecureTrade>();
 
         private bool m_SkillsSent;
 
@@ -552,6 +606,10 @@ namespace Assistant
         }
 
         internal byte WalkSequence { get { return m_WalkSeq; } }
+
+        internal Dictionary<int,SecureTrade> SecureTrades { 
+            get { return m_SecureTrades; } 
+        }
 
         internal int CriminalTime
         {
