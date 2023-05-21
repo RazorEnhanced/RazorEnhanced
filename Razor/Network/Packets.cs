@@ -2026,12 +2026,55 @@ namespace Assistant
             if (string.IsNullOrEmpty(lang)) lang = "ENU";
             if (text == null) text = "";
 
-            this.EnsureCapacity(2 + 4 + 2 + (text.Length * 2));
+            EnsureCapacity(2 + 4 + 2 + (text.Length * 2));
 
             WriteAsciiFixed(lang.ToUpper(), 4);
             Write(action);
             WriteBigUniNull(text);
         }
     }
+
+    internal sealed class TradePacket : Packet
+    {
+        internal static TradePacket TradeOffer(uint tradeID, uint gold, uint paltinum)
+        {
+            return new TradePacket(3, tradeID, gold, paltinum);
+        }
+
+        internal static TradePacket TradeCancel(uint tradeID)
+        {
+            return new TradePacket(1, tradeID);
+        }
+
+        internal static TradePacket TradeAcceptState(uint tradeID, bool accept)
+        {
+            return new TradePacket(2, tradeID, (uint)(accept?1:0));
+        }
+        internal TradePacket(ushort action, uint serial, uint num1=0, uint num2=0) // TradePacket 0x6F
+            : base(0x6F)
+        {
+            var extraCapacity = 0;
+            switch (action) {
+                case 1: extraCapacity = 0; break;
+                case 2: extraCapacity = 4; break;
+                case 0:
+                case 3:
+                case 4: extraCapacity = 4 + 4; break;
+            } 
+
+            EnsureCapacity(2 + 4 + 4 + extraCapacity);
+            Write(action);
+            Write(serial);
+            if (action != 1){
+                Write(num1);
+                if (action != 2)
+                {
+                    Write(num2);
+                }
+            }
+        }
+    }
+
+    
 
 }

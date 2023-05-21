@@ -192,15 +192,18 @@ namespace RazorEnhanced
         /// <returns>A list of Player.SecureTrade objects. Each containing the details of each trade window.</returns>
         public static List<TradeInfo> TradeList()
         {
-            var trades = World.Player.SecureTrades.Values.ToList().Apply(trade => {
+            var trades = World.Player.SecureTrades.Values.ToList().Select(trade => {
                 var tradeInfo = new TradeInfo(); //export a copy of the original object.
                 tradeInfo.TradeID = trade.TradeID;
+                tradeInfo.SerialTrader = trade.SerialTrader;
                 tradeInfo.NameTrader = trade.NameTrader;
                 tradeInfo.ContainerMe = trade.ContainerMe;
                 tradeInfo.ContainerTrader = trade.ContainerTrader;
+                tradeInfo.GoldMax = trade.GoldMax;
+                tradeInfo.PlatinumMax = trade.PlatinumMax;
                 tradeInfo.GoldMe = trade.GoldMe;
-                tradeInfo.GoldTrader = trade.GoldTrader;
                 tradeInfo.PlatinumMe = trade.PlatinumMe;
+                tradeInfo.GoldTrader = trade.GoldTrader;
                 tradeInfo.PlatinumTrader = trade.PlatinumTrader;
                 tradeInfo.AcceptMe = trade.AcceptMe;
                 tradeInfo.AcceptTrader = trade.AcceptTrader;
@@ -209,6 +212,54 @@ namespace RazorEnhanced
 
             return trades.ToList();
         }
+
+        /// <summary>
+        /// Set the accept state of the trade
+        /// </summary>
+        /// <param name="TradeID">ID of the Trade</param>
+        /// <param name="accept">Set the state ofthe checkbox</param>
+        /// <returns>True: Trade found, False: Trade not found</returns>
+        public static bool TradeAccept(int TradeID, bool accept)
+        {
+            if (!World.Player.SecureTrades.ContainsKey(TradeID)) { return false; }
+            var packet = TradePacket.TradeAcceptState((uint)TradeID, accept);
+            Assistant.Client.Instance.SendToServer(packet);
+            Assistant.Client.Instance.SendToClient(packet);
+            return true;
+        }
+
+        /// <summary>
+        /// Set the accept state of the trade
+        /// </summary>
+        /// <param name="TradeID">ID of the Trade</param>
+        /// <returns>True: Trade found, False: Trade not found</returns>
+        public static bool TradeCancel(int TradeID)
+        {
+            if (!World.Player.SecureTrades.ContainsKey(TradeID)) { return false; }
+            World.Player.SecureTrades.Remove(TradeID);
+            var packet = TradePacket.TradeCancel((uint)TradeID);
+            Assistant.Client.Instance.SendToServer(packet);
+            Assistant.Client.Instance.SendToClient(packet);
+            return true;
+        }
+
+        /// <summary>
+        /// Update the amount of gold and platinum in the trade. ( client view dosen't update )
+        /// </summary>
+        /// <param name="TradeID">ID of the Trade</param>
+        /// <returns>True: Trade found, False: Trade not found</returns>
+        public static bool TradeOffer(int TradeID, int gold, int platinum)
+        {
+            if (!World.Player.SecureTrades.ContainsKey(TradeID)) { return false; }
+            var trade = World.Player.SecureTrades[TradeID];
+            var packet = TradePacket.TradeOffer((uint)TradeID, (uint)gold, (uint)platinum);
+            Assistant.Client.Instance.SendToServer(packet);
+            trade.GoldMe = gold;
+            trade.PlatinumMe = platinum;
+            return true;
+        }
+
+
 
         // Flags
         /// <summary>

@@ -178,8 +178,15 @@ namespace Assistant
     /// </summary>
     public class SecureTrade
     {
-
+        /// <summary>
+        /// ID of the Trade.
+        /// </summary>
         public int TradeID;
+
+        /// <summary>
+        /// Serial of the Trader (other) .
+        /// </summary>
+        public int SerialTrader;
         /// <summary>
         /// Name of the Trader (other).
         /// </summary>
@@ -196,21 +203,32 @@ namespace Assistant
         public int ContainerTrader;
 
         /// <summary>
+        /// Maximum amount of Gold available for the Player (me).
+        /// </summary>
+        public int GoldMax;
+
+        /// <summary>
+        /// Maximum amount of Platinum available for the Player (me).
+        /// </summary>
+        public int PlatinumMax;
+
+        /// <summary>
         /// Amount of Gold offerd by the Player (me).
         /// </summary>
         public int GoldMe;
+
+        /// <summary>
+        /// Amount of Platinum offerd by the Player (me).
+        /// </summary>
+        public int PlatinumMe;
+
         /// <summary>
         /// Amount of Gold offerd by the Trader (other).
         /// </summary>
         public int GoldTrader;
 
-
         /// <summary>
-        /// Amount of Platrinum offerd by the Player (me).
-        /// </summary>
-        public int PlatinumMe;
-        /// <summary>
-        /// Amount of Platrinum offerd by the Trader (other).
+        /// Amount of Platinum offerd by the Trader (other).
         /// </summary>
         public int PlatinumTrader;
 
