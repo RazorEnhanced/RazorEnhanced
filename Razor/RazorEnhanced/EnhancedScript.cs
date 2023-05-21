@@ -14,6 +14,13 @@ using System.Threading;
 using Microsoft.Scripting;
 using static RazorEnhanced.Scripts;
 using UOSScript = RazorEnhanced.UOScript.Script;
+using Assistant.Network;
+using Assistant.UI;
+using System.Text.RegularExpressions;
+using NLog;
+using RazorEnhanced.UOScript;
+using Newtonsoft.Json.Linq;
+using RazorEnhanced;
 
 namespace RazorEnhanced
 {
@@ -26,33 +33,59 @@ namespace RazorEnhanced
     }
     public class EnhancedScript
     {
-        internal bool StopMessage { get; set; }
-        internal bool StartMessage { get; set; }
+        private string m_Filename="";
+        private string m_Fullpath="";
+        private string m_Text = "";
+        
+        private bool m_Wait;
+        private bool m_Loop;
+        private bool m_AutoStart;
+        private bool m_Editor;
+        private bool m_Run;
 
-        internal DateTime FileChangeDate { get; set; }
+        private Thread m_Thread;
 
         internal EnhancedScriptEngine m_ScriptEngine;
-        internal EnhancedScriptEngine ScriptEngine { get => m_ScriptEngine; }
+        internal bool StopMessage;
+        internal bool StartMessage;
+        internal DateTime LastModified;
 
-
-        internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
+        private readonly object m_Lock = new object();
+        
+        internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart, bool editor)
         {
-            StartMessage = true;
-            StopMessage = false;
             m_Filename = filename;
-            DateTime lastModified = DateTime.MinValue;
-            FileChangeDate = lastModified;
+            
+
             m_Text = text;
             m_Wait = wait;
             m_Loop = loop;
             m_Run = run;
             m_AutoStart = autostart;
+            m_Editor = editor;
+
+            StartMessage = true;
+            StopMessage = false;
+            LastModified = DateTime.MinValue;
+
+
             m_Thread = new Thread(AsyncStart);
-            m_ScriptEngine = new EnhancedScriptEngine(this);
-            m_ScriptEngine.Load(); //preload script
+            m_ScriptEngine = new EnhancedScriptEngine(this, true);
         }
 
-        internal Thread Thread { get => m_Thread; }
+        //Methods
+
+        public static ScriptLanguage ExtToLanguage(string extenstion)
+        {
+            switch (extenstion)
+            {
+                case ".py": return ScriptLanguage.PYTHON;
+                case ".cs": return ScriptLanguage.CSHARP;
+                case ".uos": return ScriptLanguage.UOSTEAM;
+                default: return ScriptLanguage.UNKNOWN;
+            }
+        }
+
 
         internal void Start()
         {
@@ -61,6 +94,7 @@ namespace RazorEnhanced
 
             try
             {
+                EventManager.Instance.Unsubscribe(m_Thread); 
                 m_Thread.Start();
                 while (!m_Thread.IsAlive)
                 {
@@ -77,6 +111,7 @@ namespace RazorEnhanced
 
             try
             {
+                EventManager.Instance.Unsubscribe(m_Thread);
                 m_ScriptEngine.Run();
             }
             catch (Exception ex)
@@ -93,6 +128,7 @@ namespace RazorEnhanced
                 {
                     if (m_Thread.ThreadState != ThreadState.AbortRequested)
                     {
+                        EventManager.Instance.Unsubscribe(m_Thread);
                         m_Thread.Abort();
                     }
                 }
@@ -104,6 +140,9 @@ namespace RazorEnhanced
             m_Thread = new Thread(AsyncStart);
             m_Run = false;
         }
+
+
+        //Properties
 
         internal string Status
         {
@@ -125,102 +164,65 @@ namespace RazorEnhanced
             }
         }
 
-        private readonly string m_Filename;
-        internal string Filename
-        {
-            get
-            {
-                lock (m_Lock)
-                {
-                    return m_Filename;
-                }
-            }
+
+        internal Thread Thread { get => m_Thread; }
+
+        internal EnhancedScriptEngine ScriptEngine { get => m_ScriptEngine; }
+
+        internal string Filename {
+            get{ lock (m_Lock) { return m_Filename; } }
+            set{ lock (m_Lock) { 
+                m_Filename = value;
+                m_Fullpath = Scripts.GetFullPathForScript(m_Filename);
+            }}
         }
 
-        private string m_Text;
-        internal string Text
+        internal string Fullpath
         {
-            get
-            {
-                lock (m_Lock)
-                {
-                    return m_Text;
-                }
-            }
+            get { lock (m_Lock) { return m_Fullpath; } }
+            set { lock (m_Lock) {
+                m_Fullpath = value;
+                m_Filename = Path.GetFileName(m_Fullpath);
+            }}
         }
 
-        private Thread m_Thread;
 
-        private readonly bool m_Wait;
-        internal bool Wait
-        {
-            get
-            {
-                lock (m_Lock)
-                {
-                    return m_Wait;
-                }
-            }
+
+        internal string Text{
+            get{lock (m_Lock){return m_Text;}}
+            set{lock (m_Lock){m_Text = value;}}
         }
 
-        private bool m_Loop;
-        internal bool Loop
-        {
-            get
-            {
-                lock (m_Lock)
-                {
-                    return m_Loop;
-                }
-            }
-            set
-            {
-                lock (m_Lock)
-                {
-                    m_Loop = value;
-                }
-            }
+        
+
+       
+        internal bool Wait{
+            get{lock (m_Lock){return m_Wait;}}
         }
 
-        private bool m_AutoStart;
-        internal bool AutoStart
-        {
-            get
-            {
-                lock (m_Lock)
-                {
-                    return m_AutoStart;
-                }
-            }
-            set
-            {
-                lock (m_Lock)
-                {
-                    m_AutoStart = value;
-                }
-            }
+        
+        internal bool Loop{
+            get{lock (m_Lock){return m_Loop;}}
+            set{lock (m_Lock){m_Loop = value;}}
         }
 
-        private bool m_Run;
-        internal bool Run
-        {
-            get
-            {
-                lock (m_Lock)
-                {
-                    return m_Run;
-                }
-            }
-            set
-            {
-                lock (m_Lock)
-                {
-                    m_Run = value;
-                }
-            }
+        
+        internal bool AutoStart{
+            get{lock (m_Lock){return m_AutoStart;}}
+            set{lock (m_Lock){m_AutoStart = value;}}
+        }
+        
+        internal bool Editor{
+            get{lock (m_Lock){return m_Editor;}}
+        }
+        
+        internal bool Run{
+            get{lock (m_Lock){return m_Run;}}
+            set{lock (m_Lock){m_Run = value;}}
         }
 
-        private readonly object m_Lock = new object();
+
+       
 
         internal bool IsRunning
         {
@@ -266,6 +268,8 @@ namespace RazorEnhanced
                 }
             }
         }
+
+        
     }
 
 
@@ -279,29 +283,27 @@ namespace RazorEnhanced
         private EnhancedScript m_Script;
         private ScriptLanguage m_Language = ScriptLanguage.UNKNOWN;
         private bool m_Loaded = false;
-        private bool m_Editor = false;
 
-        private string m_Fullpath = "";
-        private string m_Soruce = "";
-
-
-
+        
+        
         public PythonEngine pyEngine;
         public CSharpEngine csEngine;
         public UOSteamEngine uosEngine;
 
-        public Assembly csProgram;
+        public Assembly csProgram;                                                    
         public UOSScript uosProgram;
 
         public TracebackDelegate pyTraceback;
-        public Action<string> sendStdout;
-        public Action<string> sendStderr;
+        public Action<string> m_StdoutWriter;
+        public Action<string> m_StderrWriter;
+
+
+        
 
 
         public EnhancedScriptEngine(EnhancedScript script, bool autoLoad = true)
         {
             m_Script = script;
-            m_Fullpath = Scripts.GetFullPathForScript(m_Script.Filename);
             var lang = SetLanguage();
             if (autoLoad && lang != ScriptLanguage.UNKNOWN)
             {
@@ -316,28 +318,48 @@ namespace RazorEnhanced
 
         public void SetStdout(Action<string> stdoutWriter)
         {
-            sendStdout = stdoutWriter;
+            m_StdoutWriter = stdoutWriter;
         }
         public void SetStderr(Action<string> stderrWriter)
         {
-            sendStderr = stderrWriter;
+            m_StderrWriter = stderrWriter;
         }
+
+
+        public void SendOutput(string message)
+        {
+            //Misc.SendMessage(message);
+            SendMessageScriptError(message);
+            if (m_StdoutWriter != null) {
+                m_StdoutWriter(message);
+            }
+        }
+        public void SendError(string message)
+        {
+            SendMessageScriptError(message, 138);
+            if (m_StderrWriter != null) {
+                m_StderrWriter(message);
+            } else if (m_StdoutWriter != null) {
+                m_StdoutWriter(message);
+            }
+        }
+
 
         public ScriptLanguage SetLanguage(ScriptLanguage language = ScriptLanguage.UNKNOWN)
         {
-            string ext = Path.GetExtension(m_Fullpath).ToLower();
-
-            m_Language = language;
+            if (language != ScriptLanguage.UNKNOWN) { m_Language = language; }
             if (m_Language == ScriptLanguage.UNKNOWN)
             {
-                switch (ext)
-                {
-                    case ".py": m_Language = ScriptLanguage.PYTHON; break;
-                    case ".cs": m_Language = ScriptLanguage.CSHARP; break;
-                    case ".uos": m_Language = ScriptLanguage.UOSTEAM; break;
-                }
+                string ext = Path.GetExtension(m_Script.Fullpath).ToLower();
+                m_Language = EnhancedScript.ExtToLanguage(ext);
             }
 
+            return m_Language;
+        }
+
+        public ScriptLanguage GetLanguage()
+        {
+            if (m_Language == ScriptLanguage.UNKNOWN) { SetLanguage(); }
             return m_Language;
         }
 
@@ -346,10 +368,12 @@ namespace RazorEnhanced
         /// </summary>
         public bool Load()
         {
+            SetLanguage();
             try
             {
                 switch (m_Language)
                 {
+                    default:
                     case ScriptLanguage.PYTHON: m_Loaded = LoadPython(); break;
                     case ScriptLanguage.CSHARP: m_Loaded = LoadCSharp(); break;
                     case ScriptLanguage.UOSTEAM: m_Loaded = LoadUOSteam(); break;
@@ -376,6 +400,7 @@ namespace RazorEnhanced
             {
                 switch (m_Language)
                 {
+                    default:
                     case ScriptLanguage.PYTHON: return RunPython();
                     case ScriptLanguage.CSHARP: return RunCSharp();
                     case ScriptLanguage.UOSTEAM: return RunUOSteam();
@@ -392,8 +417,6 @@ namespace RazorEnhanced
 
         private bool LoadPython()
         {
-            if (!File.Exists(m_Fullpath)) return false;
-
             try
             {
                 pyEngine = new PythonEngine();
@@ -404,8 +427,11 @@ namespace RazorEnhanced
                 if (hooks != null) { hooks.Clear(); }
 
                 //Load text
-                var content = File.ReadAllText(m_Fullpath);
-                pyEngine.Load(content);
+                var content = m_Script.Text;
+                if (content == "" && File.Exists(m_Script.Fullpath)){ 
+                    content = File.ReadAllText(m_Script.Fullpath); 
+                }
+                pyEngine.Load(content, m_Script.Fullpath);
 
                 //get list of imported files (?hopefully?)
                 var filenames = pyEngine.Compiled.Engine.GetModuleFilenames();
@@ -426,25 +452,25 @@ namespace RazorEnhanced
 
         private bool RunPython()
         {
-            DateTime lastModified = System.IO.File.GetLastWriteTime(m_Fullpath);
-            if (m_Script.FileChangeDate < lastModified)
+            DateTime lastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
+            if (m_Script.LastModified < lastModified)
             {
                 LoadPython();
                 // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
-                m_Script.FileChangeDate = System.IO.File.GetLastWriteTime(m_Fullpath);
+                m_Script.LastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
             }
 
             if (pyTraceback != null)
             {
                 pyEngine.Engine.SetTrace(pyTraceback);
             }
-            if (sendStderr != null)
+            if (m_StderrWriter != null)
             {
-                pyEngine.SetStderr(sendStderr);
+                pyEngine.SetStderr(m_StderrWriter);
             }
-            if (sendStdout != null)
+            if (m_StdoutWriter != null)
             {
-                pyEngine.SetStdout(sendStdout);
+                pyEngine.SetStdout(m_StdoutWriter);
             }
             pyEngine.Execute();
             return true;
@@ -463,14 +489,14 @@ namespace RazorEnhanced
             try
             {
                 csEngine = CSharpEngine.Instance;
-                compileErrors = csEngine.CompileFromFile(m_Fullpath, true, out List<string> compileMessages, out Assembly assembly);
+                compileErrors = csEngine.CompileFromFile(m_Script.Fullpath, true, out List<string> compileMessages, out Assembly assembly);
                 if (!compileErrors)
                 {
                     csProgram = assembly;
                 }
-                foreach (string str in compileMessages)
+                foreach (string errorMessage in compileMessages)
                 {
-                    Misc.SendMessage(str);
+                    SendError(errorMessage);
                 }
             }
             catch (Exception ex)
@@ -505,13 +531,14 @@ namespace RazorEnhanced
         {
             uosEngine = UOSteamEngine.Instance;
             // Using // only will be deprecated instead of //UOS
-            var text = System.IO.File.ReadAllLines(m_Fullpath);
+            var text = System.IO.File.ReadAllLines(m_Script.Fullpath);
             if ((text[0].Substring(0, 2) == "//") && text[0].Length < 5)
             {
                 string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
-                Misc.SendMessage(message);
+                SendOutput(message);
             }
-            uosProgram = uosEngine.Load(m_Fullpath);
+
+            uosProgram = uosEngine.Load(m_Script.Fullpath);
 
             return uosProgram != null;
         }
@@ -549,39 +576,40 @@ namespace RazorEnhanced
 
         private void OutputException(Exception ex, bool logError = false)
         {
-            string display_error = ex.Message;
-            if (pyEngine != null && pyEngine.Engine != null)
-            {
-                display_error = pyEngine.Engine.GetService<ExceptionOperations>().FormatException(ex);
-            }
-            var errorMessage = display_error.Replace("\n", " | ");
-
-            SendMessageScriptError("ERROR " + m_Script.Filename + ": " + errorMessage);
-
-            if (!logError) { return; }
-            StringBuilder log = new StringBuilder();
-            log.Append(Environment.NewLine + "============================ START REPORT ============================" + Environment.NewLine);
-
-            DateTime dt = DateTime.Now;
-            log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
-            log.Append(Environment.NewLine);
-
+            String message = "";
             if (ex is SyntaxErrorException)
             {
                 SyntaxErrorException se = ex as SyntaxErrorException;
-                log.Append("----> Syntax Error:" + Environment.NewLine);
-                log.Append("-> LINE: " + se.Line + Environment.NewLine);
-                log.Append("-> COLUMN: " + se.Column + Environment.NewLine);
-                log.Append("-> SEVERITY: " + se.Severity + Environment.NewLine);
-                log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
+                message += "Syntax Error:" + Environment.NewLine;
+                message += "- LINE: " + se.Line + Environment.NewLine;
+                message += "- COLUMN: " + se.Column + Environment.NewLine;
+                message += "- SEVERITY: " + se.Severity + Environment.NewLine;
+                message += "- MESSAGE: " + se.Message + Environment.NewLine;
             }
             else
             {
-
-                log.Append("----> Generic Error:" + Environment.NewLine);
-                log.Append(display_error);
+                message += "Generic Error:";
+                ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
+                string error = eo.FormatException(ex);
+                message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
             }
+            SendError("ERROR " + m_Script.Filename + ": " + message);
 
+            if (logError) {
+                LogException(message);
+            }
+        }
+        private void LogException(string message)
+        {
+            
+            StringBuilder log = new StringBuilder();
+            log.Append(Environment.NewLine);
+            log.Append("============================ START REPORT ============================");
+            log.Append(Environment.NewLine);
+            DateTime dt = DateTime.Now;
+            log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
+            log.Append(Environment.NewLine);
+            log.Append(message);
             log.Append(Environment.NewLine);
             log.Append("============================ END REPORT ============================");
             log.Append(Environment.NewLine);
@@ -594,6 +622,8 @@ namespace RazorEnhanced
             catch { }
             log.Clear();
         }
+
+
 
 
 
