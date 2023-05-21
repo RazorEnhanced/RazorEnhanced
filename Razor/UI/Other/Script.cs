@@ -27,15 +27,9 @@ namespace Assistant
                 return "ERROR: file not found";
             }
 
-            EnhancedScript script = new EnhancedScript(filename, text, wait, loop, run, autostart);
-            if (Scripts.EnhancedScripts.ContainsKey(filename))
-            {
-                Scripts.EnhancedScripts[filename] = script;
-            }
-            else
-            {
-                Scripts.EnhancedScripts.TryAdd(filename, script);
-            }
+            EnhancedScript script = new EnhancedScript(filename, text, wait, loop, run, autostart, false);
+            Scripts.AddScript(script);
+            
             return status;
         }
 
@@ -615,7 +609,7 @@ namespace Assistant
 
                         if (isRunning)
                             script.Stop();
-                        Scripts.EnhancedScripts[scriptname].FileChangeDate = DateTime.MinValue;
+                        Scripts.EnhancedScripts[scriptname].LastModified = DateTime.MinValue;
                         if (isRunning)
                             script.Start();
                     }

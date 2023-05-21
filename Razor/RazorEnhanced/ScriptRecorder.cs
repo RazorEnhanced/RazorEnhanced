@@ -14,17 +14,17 @@ namespace RazorEnhanced
 
         internal static ScriptRecorder instance()
         {
-            if (UI.EnhancedScriptEditor.GetFiletype() == ".py")
+            if (UI.EnhancedScriptEditor.GetScriptLanguage() == ScriptLanguage.PYTHON)
             {
                 return new PyScriptRecorder();
             }
 
-            if (UI.EnhancedScriptEditor.GetFiletype() == ".uos")
+            if (UI.EnhancedScriptEditor.GetScriptLanguage() == ScriptLanguage.UOSTEAM)
             {
                 return new UosScriptRecorder();
             }
 
-            if (UI.EnhancedScriptEditor.GetFiletype() == ".cs")
+            if (UI.EnhancedScriptEditor.GetScriptLanguage() == ScriptLanguage.CSHARP)
             {
                 return new CsScriptRecorder();
             }

@@ -13,7 +13,7 @@ namespace RazorEnhanced
 {
     public partial class Scripts
     {
-        internal static Thread ScriptEditorThread;
+        //internal static Thread ScriptEditorThread;
         internal static bool ScriptErrorLog = false;
         internal static bool ScriptStartStopMessage = false;
 
@@ -223,13 +223,13 @@ namespace RazorEnhanced
             Loop,
         }
 
-        internal static void SendMessageScriptError(string msg)
+        internal static void SendMessageScriptError(string msg, int color = 945)
         {
             if (Assistant.World.Player == null)
                 return;
 
             if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
+                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
         }
         public class ScriptItem : ListAbleItem
         {
@@ -512,7 +512,7 @@ namespace RazorEnhanced
             foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
             {
                 //if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
-                pair.Value.FileChangeDate = DateTime.MinValue;
+                pair.Value.LastModified = DateTime.MinValue;
             }
         }
 
@@ -553,12 +553,51 @@ namespace RazorEnhanced
         {
             foreach (var script in EnhancedScripts.Values)
             {
-                if (script.Thread.Equals(thread)) { 
+                if (script.Thread.Equals(thread))
+                {
                     return script;
                 }
             }
             return null;
         }
+
+        internal static void ResetAll()
+        {
+            foreach (var script in EnhancedScripts.Values)
+            {
+                script.Stop();
+                script.Reset();
+            }
+        }
+
+        internal static void StopAll()
+        {
+            foreach (var script in EnhancedScripts.Values)
+            {
+                script.Stop();
+            }
+        }
+        internal static bool AddScript(EnhancedScript script)
+        {
+            if (EnhancedScripts.ContainsKey(script.Filename))
+            {
+                EnhancedScripts[script.Filename] = script;
+                return true;
+            }
+            else
+            {
+                return EnhancedScripts.TryAdd(script.Filename, script);
+            }
+        }
+        internal static bool RemoveScript(EnhancedScript script)
+        {
+            if (EnhancedScripts.ContainsKey(script.Filename))
+            {
+                return EnhancedScripts.TryRemove(script.Filename, out _);
+            }
+            return true;
+        }
+        
 
         // Autostart
         internal static void AutoStart()
