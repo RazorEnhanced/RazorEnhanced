@@ -620,7 +620,7 @@ namespace RazorEnhanced.UI
                     // 
                     // If compile error occurs a SyntaxErrorException is thrown
                     //bool compileErrors = csharpEngine.CompileFromText(text, out List<string> compileMessages, out Assembly assembly);
-                    bool compileErrors = csharpEngine.CompileFromFile(m_Filepath, true, out List<string> compileMessages, out Assembly assembly);
+                    bool compileErrors = csharpEngine.CompileFromFile(m_Filepath, debug, out List<string> compileMessages, out Assembly assembly);
 
                     if (compileMessages.Count > 0)
                     {
