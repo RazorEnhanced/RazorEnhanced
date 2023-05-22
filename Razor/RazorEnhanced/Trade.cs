@@ -150,7 +150,7 @@ namespace RazorEnhanced
             if (!TradeService.Instance.TradeData.ContainsKey(TradeID)) { return false; }
             var packet = new TradeAccept((uint)TradeID, accept);
             Assistant.Client.Instance.SendToServer(packet);
-            //Assistant.Client.Instance.SendToClient(packet);
+            
             return true;
         }
         public static bool Accept(bool accept = true)
@@ -171,7 +171,6 @@ namespace RazorEnhanced
             //World.Player.SecureTrades.Remove(TradeID);
 
             var packet = new TradeCancel((uint)TradeID);
-            //Assistant.Client.Instance.SendToClient(packet);
             Assistant.Client.Instance.SendToServer(packet);
 
             return true;
@@ -186,27 +185,32 @@ namespace RazorEnhanced
         /// <summary>
         /// Update the amount of gold and platinum in the trade. ( client view dosen't update )
         /// </summary>
-        /// <param name="TradeID">ID of the Trade (Default = -1: Pick a random active trade)</param>
+        /// <param name="TradeID">ID of the Trade (Default = -1: Pick latest active trade)</param>
+        /// <param name="gold">Amount of Gold to offer</param>
+        /// <param name="platinum">Amount of Platinum to offer</param>
+        /// <param name="quiet">Suppress output (Default: false - Show warning)</param>
         /// <returns>True: Trade found, False: Trade not found</returns>
-        public static bool Offer(int TradeID, int gold, int platinum)
+        public static bool Offer(int TradeID, int gold, int platinum, bool quiet = false)
         {
             if (!TradeService.Instance.TradeData.ContainsKey(TradeID)) { return false; }
             var trade = TradeService.Instance.TradeData[TradeID];
 
             var packet = new TradeOffer((uint)TradeID, (uint)gold, (uint)platinum);
-            Assistant.Client.Instance.SendToServer(packet);
-            Misc.SendMessage("WARNING: Trade.Offer() CANNOT update the offer Gold and Platinum on client, but works.", 148);
-            Misc.SendMessage($"CURRENTLY OFFERING:\nGold:     {gold}\nPlatinum: {platinum}", 148);
+            Assistant.Client.Instance.SendToServer(packet); //DONT SEND TO CLIENT, EVER
+            if (!quiet) { 
+                Misc.SendMessage("WARNING: Trade.Offer() CANNOT update the offer Gold and Platinum on client, but works.", 148);
+                Misc.SendMessage($"CURRENTLY OFFERING: \nGold:     {gold} \nPlatinum: {platinum}", 148);
+            }
             trade.LastUpdate = TradeService.Timestamp();
             trade.GoldMe = gold;
             trade.PlatinumMe = platinum;
             return true;
         }
 
-        public static bool Offer(int gold, int platinum) {
+        public static bool Offer(int gold, int platinum, bool quiet = false) {
             if (TradeService.Instance.TradeData.Count == 0) { return false; }
             var trade = TradeService.Instance.TradeList.First();
-            return Offer(trade.TradeID, gold,platinum);
+            return Offer(trade.TradeID, gold,platinum, quiet);
         }
     }
 }
