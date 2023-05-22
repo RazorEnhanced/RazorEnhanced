@@ -261,6 +261,8 @@ namespace RazorEnhanced
             private PythonEngine m_pe;
             internal DateTime FileChangeDate { get; set; }
 
+            internal PythonEngine PythonEngine { get => m_pe; }
+
             internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
             {
                 StartMessage = true;
@@ -275,6 +277,8 @@ namespace RazorEnhanced
                 m_AutoStart = autostart;
                 m_Thread = new Thread(AsyncStart);
             }
+
+            internal Thread Thread { get => m_Thread; }
 
             internal void Start()
             {
@@ -306,7 +310,8 @@ namespace RazorEnhanced
                     if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))
                     {
                         CSharpEngine csharpEngine = CSharpEngine.Instance;
-                        bool compileErrors = csharpEngine.CompileFromFile(fullpath, true, out List<string> compileMessages, out Assembly assembly);
+                        
+                        bool compileErrors = csharpEngine.CompileFromFile(fullpath, false, out List<string> compileMessages, out Assembly assembly);
                         
                         foreach (string str in compileMessages)
                         {
@@ -915,17 +920,31 @@ namespace RazorEnhanced
             return watcher;
         }
 
-
+        internal static EnhancedScript CurrentScript()
+        {
+            return Search(Thread.CurrentThread);
+        }
 
 
         internal static EnhancedScript Search(string filename)
         {
             foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
             {
-                if (pair.Key.ToLower() == filename.ToLower())
-                    return pair.Value;
+                if (pair.Key.ToLower() == filename.ToLower()) { 
+                    return pair.Value; 
+                }
             }
+            return null;
+        }
 
+        internal static EnhancedScript Search(Thread thread)
+        {
+            foreach (var script in EnhancedScripts.Values)
+            {
+                if (script.Thread.Equals(thread)) { 
+                    return script;
+                }
+            }
             return null;
         }
 

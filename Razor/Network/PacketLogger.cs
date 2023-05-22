@@ -212,7 +212,7 @@ namespace Assistant
 
             int packetID = packetData[0];
             var shouldDiscardW = DiscardAll && !m_PacketWhitelist.Contains(packetID);
-            var shouldDiscardB = !DiscardAll && !m_PacketBlacklist.Contains(packetID);
+            var shouldDiscardB = !DiscardAll && m_PacketBlacklist.Contains(packetID);
             var shouldDiscard = shouldDiscardW || shouldDiscardB;
             if (shouldDiscard && !DiscardShowHeader) { return; }
 

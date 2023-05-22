@@ -47,6 +47,7 @@ namespace Assistant
         private bool m_PropsUpdated = false;
         private bool m_StatsUpdated = false;
 
+        private bool m_CanRename;
         private ushort m_HitsMax, m_Hits;
         protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
 
@@ -222,12 +223,18 @@ namespace Assistant
                 return 0;
         }
 
+        internal bool CanRename
+        {
+            get { return m_CanRename; }
+            set { m_CanRename = value; }
+        }
+
         internal ushort HitsMax
         {
             get { return m_HitsMax; }
             set { m_HitsMax = value; }
         }
-
+        
         internal ushort Hits
         {
             get { return m_Hits; }
