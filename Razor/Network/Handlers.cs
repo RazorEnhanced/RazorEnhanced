@@ -31,6 +31,7 @@ namespace Assistant
             // 0x29 - UOKR confirm drop.  0 bytes payload (just a single byte, 0x29, no length or data)
             PacketHandler.RegisterClientToServerViewer(0x3A, new PacketViewerCallback(SetSkillLock));
             PacketHandler.RegisterClientToServerViewer(0x5D, new PacketViewerCallback(PlayCharacter));
+            PacketHandler.RegisterClientToServerViewer(0x6F, new PacketViewerCallback(TradeRequestFromClient));
             PacketHandler.RegisterClientToServerViewer(0x75, new PacketViewerCallback(RenameMobile));
             PacketHandler.RegisterClientToServerViewer(0x7D, new PacketViewerCallback(MenuResponse));
             PacketHandler.RegisterClientToServerFilter(0x80, new PacketFilterCallback(ServerListLogin));
@@ -45,6 +46,7 @@ namespace Assistant
             PacketHandler.RegisterClientToServerViewer(0xC2, new PacketViewerCallback(UnicodePromptSend));
             PacketHandler.RegisterClientToServerViewer(0xD7, new PacketViewerCallback(ClientEncodedPacket));
             PacketHandler.RegisterClientToServerViewer(0xF8, new PacketViewerCallback(CreateCharacter));
+            
 
             //Server -> Client handlers                       
             PacketHandler.RegisterServerToClientViewer(0x11, new PacketViewerCallback(MobileStatus));
@@ -72,7 +74,9 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x4E, new PacketViewerCallback(PersonalLight));
             PacketHandler.RegisterServerToClientViewer(0x4F, new PacketViewerCallback(GlobalLight));
             PacketHandler.RegisterServerToClientViewer(0x56, new PacketViewerCallback(PinLocation));
-            PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
+            PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequestFromServer));
+            
+
             PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
             PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
             PacketHandler.RegisterServerToClientViewer(0x74, new PacketViewerCallback(Vendor.StoreBuyList));
@@ -3579,11 +3583,99 @@ namespace Assistant
             Targeting.LastAttack = serialbersaglio;
         }
 
-        private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args)
+
+
+        enum TradeAction
         {
+            Start = 0,
+            Cancel = 1,
+            Update = 2,
+            MoneyUpdate = 3,
+            MoneyLimit = 4,
+        };
+
+        private static void TradeRequestFromClient(PacketReader p, PacketHandlerEventArgs args) {
+            TradeRequest(p, args, false);
+        }
+        private static void TradeRequestFromServer(PacketReader p, PacketHandlerEventArgs args) {
             if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
             {
                 args.Block = true;
+                return;
+            }
+            TradeRequest(p, args, true);
+        }
+        private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args, bool server)
+        {
+            if (World.Player == null) { return; }
+            
+
+            var action = (TradeAction)p.ReadByte();
+            int serial = (int)p.ReadUInt32();
+
+            Trade.TradeData trade;
+            switch (action)
+            {                                       
+                case TradeAction.Start:
+                    trade = new Trade.TradeData();
+                    trade.LastUpdate = TradeService.Timestamp();
+                    trade.SerialTrader = serial;
+                    trade.ContainerMe = (int)p.ReadUInt32();
+                    trade.TradeID = trade.ContainerMe;
+                    trade.ContainerTrader = (int)p.ReadUInt32();
+                    var contMe = Items.FindBySerial(trade.ContainerMe);
+                    var contTrader = Items.FindBySerial(trade.ContainerTrader);
+
+                    // Both player must be found/visible
+                    if (contMe == null || contTrader == null) { return; }
+
+                    bool hasName = p.ReadBoolean();
+                    trade.NameTrader = string.Empty;
+
+                    if (hasName && p.Position < p.Length)
+                    {
+                        trade.NameTrader = p.ReadString();
+                    }
+                    TradeService.Instance.TradeData.Add(trade.TradeID, trade);
+                    break;
+
+                case TradeAction.Cancel:
+                    TradeService.Instance.TradeData.Remove(serial);
+                    break;
+
+                case TradeAction.Update:
+                    if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
+                    trade = TradeService.Instance.TradeData[serial];
+
+                    uint acceptMe = p.ReadUInt32();
+                    uint acceptTrader = p.ReadUInt32();
+
+                    trade.LastUpdate = TradeService.Timestamp();
+                    trade.AcceptMe = acceptMe != 0;
+                    trade.AcceptTrader = acceptTrader != 0;
+
+                    break;
+                case TradeAction.MoneyUpdate:
+                    if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
+                    trade = TradeService.Instance.TradeData[serial];
+                    trade.LastUpdate = TradeService.Timestamp();
+                    if (server){
+                        trade.GoldTrader = (int)p.ReadUInt32();
+                        trade.PlatinumTrader = (int)p.ReadUInt32();
+                    }
+                    else {
+                        trade.GoldMe = (int)p.ReadUInt32();
+                        trade.PlatinumMe = (int)p.ReadUInt32();
+                    }
+                    break;
+
+                case TradeAction.MoneyLimit:
+                    if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
+                    trade = TradeService.Instance.TradeData[serial];
+                    trade.LastUpdate = TradeService.Timestamp();
+                    trade.GoldMax = (int)p.ReadUInt32();
+                    trade.PlatinumMax = (int)p.ReadUInt32();
+                    break;
             }
         }
     }

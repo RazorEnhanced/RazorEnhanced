@@ -173,6 +173,8 @@ namespace Assistant
         Throwing = 57
     }
 
+    
+
     internal class PlayerData : Mobile
     {
         internal class MoveEntry
@@ -221,6 +223,8 @@ namespace Assistant
         private byte m_Season;
         private byte m_ForcedSeason;
         private int[] m_MapPatches = new int[10];
+
+        
 
         private bool m_SkillsSent;
 

@@ -449,6 +449,7 @@
     <Compile Include="RazorEnhanced\GumpInspector.cs" />
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\Trade.cs" />
     <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -2026,12 +2026,56 @@ namespace Assistant
             if (string.IsNullOrEmpty(lang)) lang = "ENU";
             if (text == null) text = "";
 
-            this.EnsureCapacity(2 + 4 + 2 + (text.Length * 2));
+            EnsureCapacity(2 + 4 + 2 + (text.Length * 2));
 
             WriteAsciiFixed(lang.ToUpper(), 4);
             Write(action);
             WriteBigUniNull(text);
         }
     }
+
+    internal sealed class TradeAccept : Packet
+    {
+        internal TradeAccept(uint TradeID, bool accept) // TradePacket 0x6F: Trace Accept
+            : base(0x6F, 17)
+        {
+            Write((ushort) 17);
+            Write((byte) 2);
+            Write((uint) TradeID);
+            Write((uint) (accept ? 1 : 0));
+            Write((uint) 0);
+            Write((byte) 0);
+        }
+    }
+
+    internal sealed class TradeCancel : Packet
+    {
+        internal TradeCancel(uint TradeID) // TradePacket 0x6F   : Cancel trade
+            : base(0x6F, 17)
+        {
+            Write((ushort) 17);
+            Write((byte) 1);
+            Write((uint) TradeID);
+            Write((uint) 0);
+            Write((uint) 0);
+            Write((byte) 0);
+        }
+    }
+
+    internal sealed class TradeOffer : Packet
+    {
+        internal TradeOffer(uint TradeID, uint gold, uint paltinum) // TradePacket 0x6F: Offer gold/plat
+            : base(0x6F, 17)
+        {
+            Write((ushort) 17);
+            Write((byte) 3);
+            Write((uint) TradeID);
+            Write((uint) gold);
+            Write((uint) paltinum);
+            Write((byte)0);
+        }
+    }
+
+
 
 }

@@ -841,6 +841,17 @@ namespace Assistant
                 | ReadByte());
         }
 
+        internal uint ReadUInt32BE()
+        {
+            byte b0, b1, b2, b3;
+            b0 = ReadByte();
+            b1 = ReadByte();
+            b2 = ReadByte();
+            b3 = ReadByte();
+            return (uint)b3 | (uint)b2 << 8 | (uint)b1 << 16 | (uint)b0 << 24;
+        }
+
+
         internal ulong ReadRawUInt64()
         {
             return (ulong)
