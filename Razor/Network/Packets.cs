@@ -2034,47 +2034,48 @@ namespace Assistant
         }
     }
 
-    internal sealed class TradePacket : Packet
+    internal sealed class TradeAccept : Packet
     {
-        internal static TradePacket TradeOffer(uint tradeID, uint gold, uint paltinum)
+        internal TradeAccept(uint TradeID, bool accept) // TradePacket 0x6F: Trace Accept
+            : base(0x6F, 17)
         {
-            return new TradePacket(3, tradeID, gold, paltinum);
-        }
-
-        internal static TradePacket TradeCancel(uint tradeID)
-        {
-            return new TradePacket(1, tradeID);
-        }
-
-        internal static TradePacket TradeAcceptState(uint tradeID, bool accept)
-        {
-            return new TradePacket(2, tradeID, (uint)(accept?1:0));
-        }
-        internal TradePacket(ushort action, uint serial, uint num1=0, uint num2=0) // TradePacket 0x6F
-            : base(0x6F)
-        {
-            var extraCapacity = 0;
-            switch (action) {
-                case 1: extraCapacity = 0; break;
-                case 2: extraCapacity = 4; break;
-                case 0:
-                case 3:
-                case 4: extraCapacity = 4 + 4; break;
-            } 
-
-            EnsureCapacity(2 + 4 + 4 + extraCapacity);
-            Write(action);
-            Write(serial);
-            if (action != 1){
-                Write(num1);
-                if (action != 2)
-                {
-                    Write(num2);
-                }
-            }
+            Write((ushort) 17);
+            Write((byte) 2);
+            Write((uint) TradeID);
+            Write((uint) (accept ? 1 : 0));
+            Write((uint) 0);
+            Write((byte) 0);
         }
     }
 
-    
+    internal sealed class TradeCancel : Packet
+    {
+        internal TradeCancel(uint TradeID) // TradePacket 0x6F   : Cancel trade
+            : base(0x6F, 17)
+        {
+            Write((ushort) 17);
+            Write((byte) 1);
+            Write((uint) TradeID);
+            Write((uint) 0);
+            Write((uint) 0);
+            Write((byte) 0);
+        }
+    }
+
+    internal sealed class TradeOffer : Packet
+    {
+        internal TradeOffer(uint TradeID, uint gold, uint paltinum) // TradePacket 0x6F: Offer gold/plat
+            : base(0x6F, 17)
+        {
+            Write((ushort) 17);
+            Write((byte) 3);
+            Write((uint) TradeID);
+            Write((uint) gold);
+            Write((uint) paltinum);
+            Write((byte)0);
+        }
+    }
+
+
 
 }

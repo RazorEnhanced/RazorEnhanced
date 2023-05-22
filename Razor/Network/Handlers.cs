@@ -3598,26 +3598,27 @@ namespace Assistant
             TradeRequest(p, args, false);
         }
         private static void TradeRequestFromServer(PacketReader p, PacketHandlerEventArgs args) {
+            if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
+            {
+                args.Block = true;
+                return;
+            }
             TradeRequest(p, args, true);
         }
         private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args, bool server)
         {
             if (World.Player == null) { return; }
-            if (server && Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
-            {
-                args.Block = true;
-                return;
-            }
+            
 
             var action = (TradeAction)p.ReadByte();
             int serial = (int)p.ReadUInt32();
 
-            SecureTrade trade;
+            Trade.TradeData trade;
             switch (action)
             {                                       
                 case TradeAction.Start:
-                    trade = new SecureTrade();
-
+                    trade = new Trade.TradeData();
+                    trade.LastUpdate = TradeService.Timestamp();
                     trade.SerialTrader = serial;
                     trade.ContainerMe = (int)p.ReadUInt32();
                     trade.TradeID = trade.ContainerMe;
@@ -3635,27 +3636,29 @@ namespace Assistant
                     {
                         trade.NameTrader = p.ReadString();
                     }
-                    World.Player.SecureTrades.Add(trade.TradeID, trade);
+                    TradeService.Instance.TradeData.Add(trade.TradeID, trade);
                     break;
 
                 case TradeAction.Cancel:
-                    World.Player.SecureTrades.Remove(serial);
+                    TradeService.Instance.TradeData.Remove(serial);
                     break;
 
                 case TradeAction.Update:
-                    if (!World.Player.SecureTrades.ContainsKey(serial)) { return; }
-                    trade = World.Player.SecureTrades[serial];
+                    if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
+                    trade = TradeService.Instance.TradeData[serial];
 
                     uint acceptMe = p.ReadUInt32();
                     uint acceptTrader = p.ReadUInt32();
 
+                    trade.LastUpdate = TradeService.Timestamp();
                     trade.AcceptMe = acceptMe != 0;
                     trade.AcceptTrader = acceptTrader != 0;
 
                     break;
                 case TradeAction.MoneyUpdate:
-                    if (!World.Player.SecureTrades.ContainsKey(serial)) { return; }
-                    trade = World.Player.SecureTrades[serial];
+                    if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
+                    trade = TradeService.Instance.TradeData[serial];
+                    trade.LastUpdate = TradeService.Timestamp();
                     if (server){
                         trade.GoldTrader = (int)p.ReadUInt32();
                         trade.PlatinumTrader = (int)p.ReadUInt32();
@@ -3667,8 +3670,9 @@ namespace Assistant
                     break;
 
                 case TradeAction.MoneyLimit:
-                    if (!World.Player.SecureTrades.ContainsKey(serial)) { return; }
-                    trade = World.Player.SecureTrades[serial];
+                    if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
+                    trade = TradeService.Instance.TradeData[serial];
+                    trade.LastUpdate = TradeService.Timestamp();
                     trade.GoldMax = (int)p.ReadUInt32();
                     trade.PlatinumMax = (int)p.ReadUInt32();
                     break;
