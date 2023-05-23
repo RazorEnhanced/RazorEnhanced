@@ -14,13 +14,7 @@ using System.Threading;
 using Microsoft.Scripting;
 using static RazorEnhanced.Scripts;
 using UOSScript = RazorEnhanced.UOScript.Script;
-using Assistant.Network;
-using Assistant.UI;
 using System.Text.RegularExpressions;
-using NLog;
-using RazorEnhanced.UOScript;
-using Newtonsoft.Json.Linq;
-using RazorEnhanced;
 
 namespace RazorEnhanced
 {
@@ -94,7 +88,7 @@ namespace RazorEnhanced
 
             try
             {
-                EventManager.Instance.Unsubscribe(m_Thread); 
+                //EventManager.Instance.Unsubscribe(m_Thread); 
                 m_Thread.Start();
                 while (!m_Thread.IsAlive)
                 {
@@ -111,7 +105,7 @@ namespace RazorEnhanced
 
             try
             {
-                EventManager.Instance.Unsubscribe(m_Thread);
+                //EventManager.Instance.Unsubscribe(m_Thread);
                 m_ScriptEngine.Run();
             }
             catch (Exception ex)
@@ -128,7 +122,7 @@ namespace RazorEnhanced
                 {
                     if (m_Thread.ThreadState != ThreadState.AbortRequested)
                     {
-                        EventManager.Instance.Unsubscribe(m_Thread);
+                        //EventManager.Instance.Unsubscribe(m_Thread);
                         m_Thread.Abort();
                     }
                 }
