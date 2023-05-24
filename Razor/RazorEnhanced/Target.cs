@@ -392,6 +392,11 @@ namespace RazorEnhanced
 
             await Task.Delay(100);
 
+            if (this.m_ptarget == 0)
+            {
+                this.m_ptarget = -2;
+            }
+
             if (this.m_ptarget == -1)
                 Misc.SendMessage("Prompt Target Cancelled", color, true);
 
