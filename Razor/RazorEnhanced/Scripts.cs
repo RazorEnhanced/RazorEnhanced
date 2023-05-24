@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-    public partial class Scripts
+    public class Scripts
     {
         //internal static Thread ScriptEditorThread;
         internal static bool ScriptErrorLog = false;
@@ -293,7 +293,8 @@ namespace RazorEnhanced
             {
                 try
                 {
-                    UI.EnhancedScriptEditor.End();
+                    //UI.EnhancedScriptEditor.End();
+                    ScriptRecorderService.Instance.RemoveAll();
 
                     this.Stop();
 
@@ -339,7 +340,7 @@ namespace RazorEnhanced
                 {
                     foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
                     {
-                        if (script.Run)
+                        if (script.IsRunning)
                         {
                             if (ScriptStartStopMessage && script.StartMessage)
                             {
@@ -490,8 +491,8 @@ namespace RazorEnhanced
         private static ScriptTimer m_Timer = new ScriptTimer();
         internal static ScriptTimer Timer { get { return m_Timer; } }
 
-        private static readonly ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
-        internal static ConcurrentDictionary<string, EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
+        //private static readonly ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
+        internal static Dictionary<string, EnhancedScript> EnhancedScripts { get { return EnhancedScript.ScriptList; } }
 
         public static void Initialize()
         {
@@ -509,10 +510,17 @@ namespace RazorEnhanced
 
         static void ScriptChanged(object sender, FileSystemEventArgs e)
         {
-            foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
+            /*
+            var script = Scripts.Search(e.FullPath);
+            if (script != null) {
+                script.Load();
+            }
+            */
+            foreach (var script in EnhancedScripts.Values)
             {
-                //if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
-                pair.Value.LastModified = DateTime.MinValue;
+                // if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
+                // script.LastModified = DateTime.MinValue;
+                script.Load();
             }
         }
 
@@ -532,77 +540,11 @@ namespace RazorEnhanced
             return watcher;
         }
 
-        internal static EnhancedScript CurrentScript()
-        {
-            return Search(Thread.CurrentThread);
-        }
-
-
-        internal static EnhancedScript Search(string filename)
-        {
-            foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
-            {
-                if (pair.Key.ToLower() == filename.ToLower()) { 
-                    return pair.Value; 
-                }
-            }
-            return null;
-        }
-
-        internal static EnhancedScript Search(Thread thread)
-        {
-            foreach (var script in EnhancedScripts.Values)
-            {
-                if (script.Thread.Equals(thread))
-                {
-                    return script;
-                }
-            }
-            return null;
-        }
-
-        internal static void ResetAll()
-        {
-            foreach (var script in EnhancedScripts.Values)
-            {
-                script.Stop();
-                script.Reset();
-            }
-        }
-
-        internal static void StopAll()
-        {
-            foreach (var script in EnhancedScripts.Values)
-            {
-                script.Stop();
-            }
-        }
-        internal static bool AddScript(EnhancedScript script)
-        {
-            if (EnhancedScripts.ContainsKey(script.Filename))
-            {
-                EnhancedScripts[script.Filename] = script;
-                return true;
-            }
-            else
-            {
-                return EnhancedScripts.TryAdd(script.Filename, script);
-            }
-        }
-        internal static bool RemoveScript(EnhancedScript script)
-        {
-            if (EnhancedScripts.ContainsKey(script.Filename))
-            {
-                return EnhancedScripts.TryRemove(script.Filename, out _);
-            }
-            return true;
-        }
-        
 
         // Autostart
         internal static void AutoStart()
         {
-            foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
+            foreach (EnhancedScript script in EnhancedScripts.Values)
             {
                 if (!script.IsRunning && script.AutoStart)
                     script.Start();
