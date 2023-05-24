@@ -86,7 +86,7 @@ namespace RazorEnhanced
 
         internal static EnhancedScript Search(string filename, bool editor=false)
         {
-            foreach (var script in EnhancedScripts.Values)
+            foreach (var script in ScriptList.Values)
             {
                 if (!editor && script.Editor) { continue; }
                 if (script.Fullpath.ToLower() == filename.ToLower())
@@ -103,7 +103,7 @@ namespace RazorEnhanced
 
         internal static EnhancedScript Search(Thread thread)
         {
-            foreach (var script in EnhancedScripts.Values)
+            foreach (var script in ScriptList.Values)
             {
                 if (script.Thread.Equals(thread))
                 {
@@ -114,17 +114,17 @@ namespace RazorEnhanced
         }
         internal static void ClearAll()
         {
-            foreach (var script in EnhancedScripts.Values)
+            foreach (var script in ScriptList.Values)
             {
                 script.Reset();
             }
-            EnhancedScripts.Clear();
+            m_ScriptList.Clear();
         }
 
 
         internal static void ResetAll()
         {
-            foreach (var script in EnhancedScripts.Values)
+            foreach (var script in ScriptList.Values)
             {
                 script.Reset();
             }
@@ -132,7 +132,7 @@ namespace RazorEnhanced
 
         internal static void StopAll()
         {
-            foreach (var script in EnhancedScripts.Values)
+            foreach (var script in ScriptList.Values)
             {
                 script.Stop();
             }
