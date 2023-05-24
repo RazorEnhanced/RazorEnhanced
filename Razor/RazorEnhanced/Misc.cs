@@ -1056,10 +1056,10 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptRun(string scriptfile)
         {
-            EnhancedScript script = Scripts.Search(scriptfile);
+            EnhancedScript script = EnhancedScript.Search(scriptfile);
             if (script != null)
             {
-                script.Run = true;
+                script.Start();
             }
             else
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
@@ -1071,10 +1071,10 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptStop(string scriptfile)
         {
-            EnhancedScript script = Scripts.Search(scriptfile);
+            EnhancedScript script = EnhancedScript.Search(scriptfile);
             if (script != null)
             {
-                script.Run = false;
+                script.Start();
             }
             else
                 Scripts.SendMessageScriptError("ScriptStop: Script not exist");
@@ -1086,13 +1086,13 @@ namespace RazorEnhanced
         /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
         public static void ScriptStopAll(bool skipCurrent=false)
         {
-            EnhancedScript currentScript = Scripts.CurrentScript();
+            EnhancedScript currentScript = EnhancedScript.CurrentScript();
             foreach (EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
             {
                 if ( skipCurrent && currentScript == script) { 
                     continue; 
                 }
-                script.Run = false;
+                script.Stop();
             }
         }
 
@@ -1103,10 +1103,10 @@ namespace RazorEnhanced
         /// <returns>True: Script is running - False: otherwise.</returns>
         public static bool ScriptStatus(string scriptfile)
         {
-            EnhancedScript script = Scripts.Search(scriptfile);
+            EnhancedScript script = EnhancedScript.Search(scriptfile);
             if (script != null)
             {
-                return script.Run;
+                return script.IsRunning;
             }
             else
             {
