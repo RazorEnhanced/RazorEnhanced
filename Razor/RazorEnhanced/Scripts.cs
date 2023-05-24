@@ -269,7 +269,7 @@ namespace RazorEnhanced
             {
                 m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
 
-                foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
+                foreach (EnhancedScript script in EnhancedScript.ScriptList.Values.ToList())
                 {
                     if (script.IsRunning)
                     {
@@ -338,7 +338,7 @@ namespace RazorEnhanced
             {
                 lock (syncLock)
                 {
-                    foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
+                    foreach (EnhancedScript script in EnhancedScript.ScriptList.Values.ToList())
                     {
                         if (script.IsRunning)
                         {
@@ -491,8 +491,9 @@ namespace RazorEnhanced
         private static ScriptTimer m_Timer = new ScriptTimer();
         internal static ScriptTimer Timer { get { return m_Timer; } }
 
+        //Dalamar: Moved to EnhancedScript.cs
         //private static readonly ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
-        internal static Dictionary<string, EnhancedScript> EnhancedScripts { get { return EnhancedScript.ScriptList; } }
+        //internal static Dictionary<string, EnhancedScript> EnhancedScripts { get { return EnhancedScript.ScriptList; } }
 
         public static void Initialize()
         {
@@ -516,7 +517,7 @@ namespace RazorEnhanced
                 script.Load();
             }
             */
-            foreach (var script in EnhancedScripts.Values)
+            foreach (var script in EnhancedScript.ScriptList.Values)
             {
                 // if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
                 // script.LastModified = DateTime.MinValue;
@@ -544,7 +545,7 @@ namespace RazorEnhanced
         // Autostart
         internal static void AutoStart()
         {
-            foreach (EnhancedScript script in EnhancedScripts.Values)
+            foreach (EnhancedScript script in EnhancedScript.ScriptList.Values)
             {
                 if (!script.IsRunning && script.AutoStart)
                     script.Start();

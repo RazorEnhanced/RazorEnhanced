@@ -588,13 +588,14 @@ namespace Assistant
                 if (script != null)
                 {
                     string fullpath = list[index].FullPath;
-                    if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
+                    if (File.Exists(fullpath) && EnhancedScript.ScriptList.ContainsKey(scriptname))
                     {
                         bool isRunning = script.IsRunning;
 
                         if (isRunning)
                             script.Stop();
-                        Scripts.EnhancedScripts[scriptname].LastModified = DateTime.MinValue;
+                        
+                        script.LastModified = DateTime.MinValue;
                         if (isRunning)
                             script.Start();
                     }
