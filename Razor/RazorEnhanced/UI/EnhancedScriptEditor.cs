@@ -1125,11 +1125,7 @@ namespace RazorEnhanced.UI
 
         private void ScriptRecord()
         {
-            if (m_Script.Thread == null ||
-                    (m_Script.Thread != null && m_Script.Thread.ThreadState != ThreadState.Running &&
-                    m_Script.Thread.ThreadState != ThreadState.Unstarted &&
-                    m_Script.Thread.ThreadState != ThreadState.WaitSleepJoin)
-                )
+            if (!m_Script.IsRunning)
             {
                 if (m_Recorder == null) {
                     m_Recorder = ScriptRecorderService.RecorderForLanguage(m_Script.Language);
