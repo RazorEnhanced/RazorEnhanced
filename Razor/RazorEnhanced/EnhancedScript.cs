@@ -274,8 +274,8 @@ namespace RazorEnhanced
 
         internal void Start()
         {
-            if (IsRunning || !IsUnstarted)
-                return;
+            //if (IsRunning || !IsUnstarted)
+            if (IsRunning) return;
 
             try
             {
@@ -416,22 +416,18 @@ namespace RazorEnhanced
             set { lock (m_Lock) { m_Preload = value; } }
         }
 
-        /*
-        internal bool Run{
-            get{lock (m_Lock){return m_Run;}}
-            set{lock (m_Lock){m_Run = value;}}
-        }
-          */
-
-       
-
         internal bool IsRunning
         {
             get
             {
                 lock (m_Lock)
                 {
-                    if ((m_Thread.ThreadState & (ThreadState.Unstarted | ThreadState.Stopped)) == 0)
+                    if (  (m_Thread.ThreadState & 
+                          ( ThreadState.Unstarted | 
+                            ThreadState.Stopped | 
+                            ThreadState.Aborted | 
+                            ThreadState.StopRequested | 
+                            ThreadState.AbortRequested) ) == 0)
                         //if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
                         return true;
                     else
@@ -444,14 +440,7 @@ namespace RazorEnhanced
         {
             get
             {
-                lock (m_Lock)
-                {
-                    if ((m_Thread.ThreadState & ThreadState.Stopped) != 0 || (m_Thread.ThreadState & ThreadState.Aborted) != 0)
-                        //if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
-                        return true;
-                    else
-                        return false;
-                }
+                return !IsRunning;
             }
         }
 

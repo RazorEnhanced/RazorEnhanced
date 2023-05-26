@@ -428,27 +428,13 @@ namespace RazorEnhanced
                             EnhancedScript script = EnhancedScript.Search(filename,false);
                             if (script != null)
                             {
-                                if (script.Loop)
+                                if (script.IsRunning)
                                 {
-                                    if (script.IsUnstarted)
-                                        script.Start();
-                                    else
-                                    {
-                                        script.Stop();
-                                        script.Reset();
-                                    }
+                                    if (!script.Wait) { script.Reset(); }
                                 }
-                                else
+                                else if (!script.IsRunning)
                                 {
-                                    if (!script.Wait && script.IsRunning)
-                                    {
-                                        script.Stop();
-                                        script.Reset();
-                                    }
-                                    else if (!script.IsRunning)
-                                    {
-                                        script.Start();
-                                    }
+                                    script.Start();
                                 }
                             }
                         }
