@@ -265,14 +265,18 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// This function checks for directive //#forcerelease
-        /// If this directive is present, script will be builded in release instead of debug
+        /// This function checks for directive //#forcedebug
+        /// By default all scripts are builded in release. Only the button "Debug Mode", in the Script Editor, allow you to compile in debug.
+        /// If this directive is present, the script will be builded in debug instead of release bypassing all the default rules
         /// </summary>
         /// <param name="sourceFile">Filename of the main source file</param>
+        /// <param name="debug_requested">If false, Razor is requesting to run the script in release</param>
         /// <returns></returns>
-        private bool CheckForceReleaseDirective(string sourceFile)
+        private bool CheckForceDebugDirective(string sourceFile, bool debug_requested)
         {
-            const string directive = "//#forcerelease";
+            if (debug_requested) return true; // If already Razor is requesting debug no check needed
+
+            const string directive = "//#forcedebug";
 
             // Searching the directive in all lines untill "namespace"
             foreach (string line in File.ReadAllLines(sourceFile))
@@ -330,14 +334,8 @@ namespace RazorEnhanced
             errorwarnings = new();
             assembly = null;
 
+            debug = CheckForceDebugDirective(path, debug); // The forcedebug directive, if present, will override the value of debug variable
 
-            // If debug is true I check for the force release directive
-            if (debug)
-            {
-                debug = !CheckForceReleaseDirective(path); // If flag is true then debug is false
-            }
-            
-            
             List<string> filesList = new() { }; // List of files.
             FindAllIncludedCSharpScript(path, ref filesList, ref errorwarnings);
             if (errorwarnings.Count > 0)
