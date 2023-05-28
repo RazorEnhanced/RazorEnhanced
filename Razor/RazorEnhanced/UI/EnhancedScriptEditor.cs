@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using FastColoredTextBoxNS;
 using System.Text.RegularExpressions;
 using Accord.Math;
+using Microsoft.Scripting.Utils;
+using RazorEnhanced.UOScript;
 
 namespace RazorEnhanced.UI
 {
@@ -38,25 +40,18 @@ namespace RazorEnhanced.UI
 
 
         private static List<EnhancedScriptEditor> m_EnhancedScriptEditors = new List<EnhancedScriptEditor>();
+        
 
-        internal static EnhancedScriptEditor LatestEditor
+        public static EnhancedScriptEditor Search(string fullpath)
         {
-            get
-            {
-                var edtior = m_EnhancedScriptEditors.Last();
-                if (edtior == null) { return null; }
-                return edtior;
+            foreach (var editor in m_EnhancedScriptEditors){ 
+                if (editor.Script != null && editor.Script.Fullpath == fullpath){
+                    return editor;
+                }
             }
+            return null;
         }
-
-        internal static FastColoredTextBox EnhancedScriptEditorTextArea
-        {
-            get
-            {
-                if (LatestEditor == null) { return null; }
-                return LatestEditor.fastColoredTextBoxEditor;
-            }
-        }
+        
         private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
         private static Command m_CurrentCommand = Command.None;
         private static readonly AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
@@ -76,11 +71,13 @@ namespace RazorEnhanced.UI
         private FunctionCode m_CurrentCode;
         private string m_CurrentResult;
         private object m_CurrentPayload;
-        //private int m_ThreadID;
 
+
+        
         //Dalamar:
         //TODO: replace current implementation with 
         private EnhancedScript m_Script; 
+        public EnhancedScript Script { get { return m_Script; } }
         private ScriptRecorder m_Recorder;
 
         private readonly List<int> m_Breakpoints = new List<int>();
@@ -111,8 +108,12 @@ namespace RazorEnhanced.UI
                 suffix = Path.GetExtension(filename);
             }
 
-            var editor = new EnhancedScriptEditor(filename, suffix);
-            editor.Show();
+            var editor = EnhancedScriptEditor.Search(filename);
+            if (editor == null) {
+                editor = new EnhancedScriptEditor(filename, suffix);
+                editor.Show();
+            }
+            editor.BringToFront();
         }
 
         /*
@@ -131,7 +132,8 @@ namespace RazorEnhanced.UI
 
         public bool LoadFromFile(string filepath)
         {
-            m_Script = EnhancedScript.Get(filepath);
+            if (!File.Exists(filepath)) { return false; }
+            m_Script = EnhancedScript.FromFile(filepath);
             var language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = m_Script.Text;
@@ -141,8 +143,8 @@ namespace RazorEnhanced.UI
 
         public void LoadNewFile(ScriptLanguage language)
         {
-            m_Script = EnhancedScript.Get();
-            language = m_Script.SetLanguage(language);
+            m_Script = EnhancedScript.FromText("",language);
+            language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = "";
             UpdateTitle();
@@ -268,9 +270,6 @@ namespace RazorEnhanced.UI
                     autodocMethods.Add((string)method, tooltip);
                 }
             }
-
-
-
         }
 
 
@@ -637,14 +636,14 @@ namespace RazorEnhanced.UI
                     m_Script.ScriptEngine.SetTracebackPython(OnTraceback);
                     break;
                 case ScriptLanguage.CSHARP:
-                    if (m_Script.Fullpath != "")
+                    if (m_Script.HasValidPath)
                     {
                         Save();
-                        SetErrorBox(m_Script.Fullpath + " saved");
+                        SetErrorBox("SAVE: "+ m_Script.Fullpath);
                     }
                     else
                     {
-                        SetErrorBox("Due to a limitation, C# scripts must be saved before run it");
+                        SetErrorBox("ERROR: Due to a limitation, C# scripts must be saved before run it");
                         throw new Exception();
                     }
                     break;
@@ -811,12 +810,7 @@ namespace RazorEnhanced.UI
 
         private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            m_onclosing = true;
-            Stop();
-            if (m_Recorder != null) { m_Recorder.Stop(); }
-            if (!CloseAndSave())
-                e.Cancel = true;
-            m_onclosing = false;
+            e.Cancel = !CloseAndSave();
         }
 
         private void ToolStripButtonPlay_Click(object sender, EventArgs e)
@@ -881,7 +875,9 @@ namespace RazorEnhanced.UI
 
         private void ToolStripButtonClose_Click(object sender, EventArgs e)
         {
+            var language = m_Script.Language;
             CloseAndSave();
+            LoadNewFile(language);
         }
 
         private void ToolStripButtonInspect_Click(object sender, EventArgs e)
@@ -970,13 +966,10 @@ namespace RazorEnhanced.UI
         private void Save()
         {
             m_Script.Text = fastColoredTextBoxEditor.Text;
-            if (m_Script.Fullpath != String.Empty)
+            if (m_Script.Exist)
             {
                 UpdateTitle();
-
                 m_Script.Save();
-                                                                                            
-                ReloadAfterSave();
             }
             else
             {
@@ -1004,64 +997,86 @@ namespace RazorEnhanced.UI
                 Filter = filter,
                 RestoreDirectory = true
             };
-            save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
+
+            if (m_Script.HasValidPath && !m_Script.Exist)
+            {
+                save.InitialDirectory = Path.GetDirectoryName(m_Script.Fullpath);
+                save.FileName = m_Script.Filename;
+            } else { 
+                save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
+            }
+        
             if (save.ShowDialog() == DialogResult.OK)
             {
-                EnhancedScript.RemoveScript(m_Script);
-                m_Script.Fullpath = save.FileName;
-                EnhancedScript.AddScript(m_Script);
-                Save();
+                var fullpath = save.FileName;
+                if (m_Script.Editor)
+                {
+                    EnhancedScript.RemoveScript(m_Script);
+                }
+                //Dalamar:
+                //TODO: add YES/NO dialog for overwrite check File.Exists(fullpath)
+                m_Script = EnhancedScript.FromFile(fullpath);
+                UpdateTitle();
+                m_Script.Save();
             }
         }
 
         private bool CloseAndSave()
         {
+            m_onclosing = true;
+            Stop();
+            if (m_Recorder != null) { m_Recorder.Stop(); }
+            
             // Not ask to save empty text
-            if (fastColoredTextBoxEditor.Text == String.Empty) { return true; }
+            var editorContent = fastColoredTextBoxEditor.Text;
+            if (editorContent != null && editorContent != "")
+            {
+                string fileContent="";
+                bool valid = false;
+                try {
+                    fileContent = File.ReadAllText(m_Script.Fullpath);
+                    valid = true;
+                } catch { }
 
-
-            if ( 
-                 (!File.Exists(m_Script.Fullpath) && fastColoredTextBoxEditor.Text != "" ) || 
-                 (File.Exists(m_Script.Fullpath) && File.ReadAllText(m_Script.Fullpath) != fastColoredTextBoxEditor.Text ) 
-               ){
-                 DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                if (res == System.Windows.Forms.DialogResult.Cancel){  return false; }
-
-                if (res == System.Windows.Forms.DialogResult.Yes)
+                if (valid && fileContent != editorContent)
                 {
-                    if (m_Script.Fullpath != null && m_Script.Fullpath != String.Empty)
-                    {
-                        m_Script.Text = fastColoredTextBoxEditor.Text;
-                        Save();
-                    }
-                    else
-                    {
-                        SaveFileDialog save = new SaveFileDialog
-                        {
-                            Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
-                            FileName = m_Script.Fullpath
-                        };
+                    DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    if (res == System.Windows.Forms.DialogResult.Cancel) { return false; }
 
-                        if (save.ShowDialog() == DialogResult.OK)
+                    if (res == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        if (m_Script.HasValidPath)
                         {
-                            if (save.FileName != null && save.FileName != string.Empty && fastColoredTextBoxEditor.Text != null)
-                            {
-                                m_Script.Text = fastColoredTextBoxEditor.Text;
-                                m_Script.Fullpath = save.FileName;
-                                Save();
-                            }
+                            Save();
                         }
                         else
                         {
-                            return false;
-                        }
-                    }
+                            SaveFileDialog save = new SaveFileDialog
+                            {
+                                Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
+                                FileName = m_Script.Fullpath
+                            };
 
+                            if (save.ShowDialog() == DialogResult.OK)
+                            {
+                                if (save.FileName != null && save.FileName != string.Empty)
+                                {
+                                    m_Script.Fullpath = save.FileName;
+                                    Save();
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+
+                    }
                 }
 
             }
             UnloadScript();
-            
+            m_onclosing = false;
             return true;
         }
 
