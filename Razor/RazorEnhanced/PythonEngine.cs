@@ -131,6 +131,7 @@ namespace RazorEnhanced
             Modules.Add("PathFinding", new RazorEnhanced.PathFinding());
             Modules.Add("DPSMeter", new RazorEnhanced.DPSMeter());
             Modules.Add("Timer", new RazorEnhanced.Timer());
+            Modules.Add("Trade", new RazorEnhanced.Trade());
             Modules.Add("Vendor", new RazorEnhanced.Vendor());
             Modules.Add("PacketLogger", new RazorEnhanced.PacketLogger());
             

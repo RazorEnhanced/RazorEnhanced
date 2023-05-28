@@ -118,6 +118,12 @@ namespace RazorEnhanced
         /// </summary>
 
         public int Notoriety { get { return m_AssistantMobile.Notoriety; } }
+
+        /// <summary>
+        /// Determine if a mobile can be renamed. (Ex: pets, summons, etc ) 
+        /// </summary>
+        public bool CanRename { get { return m_AssistantMobile.CanRename; } }
+
         /// <summary>
         /// Maximum hitpoint of a Mobile. 
         /// </summary>

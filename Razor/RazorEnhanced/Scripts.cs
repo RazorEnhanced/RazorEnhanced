@@ -550,6 +550,10 @@ namespace RazorEnhanced
             return watcher;
         }
 
+        internal static EnhancedScript CurrentScript()
+        {
+            return Search(Thread.CurrentThread);
+        }
 
         // Autostart
         internal static void AutoStart()

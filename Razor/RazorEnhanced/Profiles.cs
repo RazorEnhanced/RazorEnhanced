@@ -8,45 +8,99 @@ using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace RazorEnhanced
 {
     internal class Profiles
     {
-        private static readonly string m_Save = "RazorEnhanced.profiles";
-        private static DataSet m_Dataset;
-        internal static DataSet Dataset { get { return m_Dataset; } }
+        private static readonly string m_Save = "RazorEnhanced.NewProfiles";
+        private static readonly string m_OldSave = "RazorEnhanced.profiles";
+        private static List<Profile> m_Dataset;
 
-        public class ProfilesData
+        internal class PlayerEntry
         {
-            private readonly string m_Name;
-            public string Name { get { return m_Name; } }
-
-            private readonly bool m_Last;
-            internal bool Last { get { return m_Last; } }
-
-            public ProfilesData(string name, bool last)
+            public PlayerEntry(string playerName)
             {
-                m_Name = name;
-                m_Last = last;
+                PlayerName = playerName;
+                PlayerSerial = 0;
             }
+
+            [JsonProperty]
+            internal string PlayerName { get; set; }
+
+            [JsonProperty]
+            internal int PlayerSerial { get; set; }
+
         }
 
-        internal static void Load(bool try_backup=true)
+        public class Profile
+        {
+            public Profile(string name)
+            {
+                Name = name;
+                Last = false;
+                Players = new List<PlayerEntry>();
+            }
+            public string Name { get; set; }
+            public bool Last { get; set; }
+            public List<PlayerEntry> Players  { get; set; }
+
+            public void Add(string playername, int serial)
+            {
+                PlayerEntry playerEntry = new PlayerEntry(playername);
+                playerEntry.PlayerSerial = serial;
+                Players.Add(playerEntry);
+            }
+
+            public void Remove(string playerName)
+            {
+                Players.RemoveAll(profileEntry => profileEntry.PlayerName == playerName);
+            }
+            public bool Contains(string playerName)
+            {
+                foreach (var profileEntry in Players)
+                {
+                    if (profileEntry.PlayerName == playerName)
+                        return true;
+                }
+                return false;
+            }
+
+            public void Remove(int playerSerial)
+            {
+                Players.RemoveAll(profileEntry => profileEntry.PlayerSerial == playerSerial);
+            }
+
+            public bool Contains(int playerSerial)
+            {
+                foreach (var profileEntry in Players)
+                {
+                    if (profileEntry.PlayerSerial == playerSerial)
+                        return true;
+                }
+                return false;
+            }
+
+        }
+
+        internal static void Load(bool try_backup = true)
         {
             if (m_Dataset != null)
                 return;
 
-            m_Dataset = new DataSet();
-            string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles" ,m_Save);
+            string profileDir = Path.Combine(Assistant.Engine.RootPath, "Profiles");
+            string filename = Path.Combine(profileDir, m_Save);
+            string oldFilename = Path.Combine(profileDir, m_OldSave);
             string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
 
             if (File.Exists(filename))
             {
                 try
                 {
-                    m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(filename));
+                    m_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Profile>>(File.ReadAllText(filename));
                     File.Copy(filename, backup, true);
+                    return;
                 }
                 catch
                 {
@@ -55,48 +109,73 @@ namespace RazorEnhanced
                         MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
                         File.Copy(backup, filename, true);
                         Load(false);
+                        return;
                     }
                     else
                     {
-                        throw;
+                        MessageBox.Show("All failed!, recovering from Profile names, linked characters will be lost");
                     }
-                    return;
                 }
+            }
+
+
+            int countFoundProfiles = 0;
+            string[] directorNames = Directory.GetDirectories(profileDir);
+            m_Dataset = new List<Profile>();
+
+            if (directorNames.Length == 0)
+            {
+                Profile defaultProfile = new Profile("default");
+                defaultProfile.Last = true;
+                m_Dataset.Add(defaultProfile);
             }
             else
             {
-                // Profile
-                DataTable profile = new DataTable("PROFILES");
-                profile.Columns.Add("Name", typeof(string));
-                profile.Columns.Add("Last", typeof(bool));
-                profile.Columns.Add("PlayerName", typeof(string));
-                profile.Columns.Add("PlayerSerial", typeof(int));
-
-                DataRow profilerow = profile.NewRow();
-                profilerow.ItemArray = new object[] { "default", true, "None", 0 };
-                profile.Rows.Add(profilerow);
-
-                m_Dataset.Tables.Add(profile);
-
-                m_Dataset.AcceptChanges();
+                foreach (string directorName in directorNames)
+                {
+                    Profile profile = new Profile(Path.GetFileName(directorName));
+                    m_Dataset.Add(profile);
+                }
+                SetLast(directorNames[0]); // default first one as last
+                if (File.Exists(oldFilename))
+                {
+                    var old_Dataset = new DataSet();
+                    try
+                    {
+                        old_Dataset = Newtonsoft.Json.JsonConvert.DeserializeObject<DataSet>(File.ReadAllText(oldFilename));
+                        foreach (DataRow row in old_Dataset.Tables["PROFILES"].Rows)
+                        {
+                            if ((bool)row["Last"])
+                                SetLast((string)row["Name"]);
+                        }
+                        foreach (DataRow row in old_Dataset.Tables["PROFILES"].Rows)
+                        {
+                            try
+                            {
+                                string profileName = (string)row["Name"];
+                                string playerName = (string)row["PlayerName"];
+                                int serial = (int)(Int64)row["PlayerSerial"];
+                                Link(serial, profileName, playerName);
+                            }
+                            catch
+                            { }
+                        }
+                    }
+                    catch
+                    { }
+                }
             }
+
         }
 
         // Funzioni di accesso al salvataggio
         internal static List<string> ReadAll()
         {
-            DataTable profiles = m_Dataset.Tables["PROFILES"];
-
-            IEnumerable<DataRow> query =
-                from profile in profiles.AsEnumerable()
-                orderby profile.Field<string>("Name")
-                select profile;
-
             List<string> profilelist = new List<string>();
 
-            foreach (DataRow contact in query)
+            foreach (var profile in m_Dataset)
             {
-                profilelist.Add(contact.Field<string>("Name"));
+                profilelist.Add(profile.Name);
             }
 
             return profilelist;
@@ -104,12 +183,11 @@ namespace RazorEnhanced
 
         internal static string LastUsed()
         {
-            if (m_Dataset != null)
+            foreach (var profile in m_Dataset)
             {
-                foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+                if (profile.Last)
                 {
-                    if ((bool)row["Last"])
-                        return (string)row["Name"];
+                    return profile.Name;
                 }
             }
 
@@ -118,14 +196,15 @@ namespace RazorEnhanced
 
         internal static void SetLast(string name)
         {
-            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+            for (int i=0; i < m_Dataset.Count; i++)
             {
-                if ((string)row["Name"] == name)
+                if (m_Dataset[i].Name == name)
                 {
-                    row["Last"] = true;
+                    m_Dataset[i].Last = true;
+                } else
+                {
+                    m_Dataset[i].Last = false;
                 }
-                else
-                    row["Last"] = false;
             }
 
             Save();
@@ -133,74 +212,88 @@ namespace RazorEnhanced
 
         internal static void Add(string name)
         {
-            DataRow row = m_Dataset.Tables["PROFILES"].NewRow();
-            row["Name"] = (String)name;
-            row["Last"] = (bool)true;
-            row["PlayerName"] = (String)"None";
-            row["PlayerSerial"] = (int)0;
-            m_Dataset.Tables["PROFILES"].Rows.Add(row);
+            Profile newProfile = new Profile(name);
+            newProfile.Last = true;
+            m_Dataset.Add(newProfile);
 
             Save();
         }
 
         internal static void Delete(string name)
         {
-            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
-            {
-                if ((string) row["Name"] != name)
-                    continue;
-
-                row.Delete();
-                break;
-            }
-
+            m_Dataset.RemoveAll(profile => profile.Name == name);
             Save();
         }
 
         internal static bool Exist(string name)
         {
-            return m_Dataset.Tables["PROFILES"].Rows.Cast<DataRow>().Any(row => (string) row["Name"] == name);
+            foreach (var profile in m_Dataset)
+            {
+                if (profile.Name == name)
+                    return true;
+            }
+            return false;
         }
 
         internal static string IsLinked(int serial)
         {
-            return (from DataRow row in m_Dataset.Tables["PROFILES"].Rows where Convert.ToInt32(row["PlayerSerial"]) == serial select (string)row["Name"]).FirstOrDefault();
+            foreach (var profile in m_Dataset)
+            {
+                if (profile.Contains(serial))
+                    return profile.Name;
+            }
+            return null;           
         }
 
         internal static string GetLinkName(string profilename)
         {
-            return (from DataRow row in m_Dataset.Tables["PROFILES"].Rows where (string) row["Name"] == profilename select (string) row["PlayerName"]).FirstOrDefault();
-        }
-
-        internal static void Link(int serial, string profile, string playername)
-        {
-            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  // Slinka se gia linkato
+            string addComma = "";
+            string allLinkNames = "";
+            foreach (var profile in m_Dataset)
             {
-                if (Convert.ToInt32(row["PlayerSerial"]) == serial)
+                if (profile.Name == profilename)
                 {
-                    row["PlayerSerial"] = 0;
-                    row["PlayerName"] = String.Empty;
+                    foreach (var profileEntry in profile.Players)
+                    {
+                        allLinkNames += (addComma + profileEntry.PlayerName);
+                        addComma = ",";
+                    }
+                    return allLinkNames;
                 }
             }
-            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  // Linko nuovo profilo
+            return "None";
+        }
+
+        internal static void Link(int serial, string profileName, string playername)
+        {
+            foreach (var profile in m_Dataset)
             {
-                if ((string)row["Name"] == profile)
+                if (profile.Contains(serial))
                 {
-                    row["PlayerSerial"] = serial;
-                    row["PlayerName"] = playername;
+                    profile.Remove(serial);
+                    break;
+                }
+            }
+            foreach (var profile in m_Dataset)  // Linko nuovo profilo
+            {
+                if (profile.Name == profileName)
+                {
+                    profile.Add(playername, serial);
+                    break;
                 }
             }
             Save();
         }
 
-        internal static void UnLink(string profile)
+        internal static void UnLink(string profileName, int serial)
         {
-            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+            foreach (var profile in m_Dataset)
             {
-                if ((string)row["Name"] == profile)
+                
+                if (profile.Name == profileName)
                 {
-                    row["PlayerSerial"] = 0;
-                    row["PlayerName"] = "None";
+                    profile.Remove(serial);
+                    break;
                 }
             }
             Save();
@@ -208,11 +301,11 @@ namespace RazorEnhanced
 
         internal static void Rename(string oldname, string newname)
         {
-            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+            for (int i = 0; i < m_Dataset.Count; i++)
             {
-                if ((string)row["Name"] == oldname)
+                if (m_Dataset[i].Name == oldname)
                 {
-                    row["Name"] = newname;
+                    m_Dataset[i].Name = newname;
                     break;
                 }
             }
@@ -376,8 +469,6 @@ namespace RazorEnhanced
         {
             try
             {
-                m_Dataset.AcceptChanges();
-
                 string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
                 File.WriteAllText(filename, Newtonsoft.Json.JsonConvert.SerializeObject(m_Dataset, Newtonsoft.Json.Formatting.Indented));
             }

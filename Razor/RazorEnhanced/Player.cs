@@ -12,6 +12,7 @@ namespace RazorEnhanced
     /// </summary>
     public class Player
     {
+
         internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         // Stats
@@ -179,7 +180,6 @@ namespace RazorEnhanced
                 target = (uint)Player.Serial;
             Client.Instance.SendToClient(new TrackingArrow(target, display, x, y));
         }
-
 
         // Flags
         /// <summary>

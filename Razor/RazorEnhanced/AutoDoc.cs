@@ -865,6 +865,8 @@ namespace RazorEnhanced
                 typeof(Journal),
                 typeof(Journal.JournalEntry),
                 typeof(Target),
+                typeof(Trade),
+                typeof(Trade.TradeData),
                 typeof(Statics),
                 typeof(Statics.TileInfo),
                 typeof(Sound),

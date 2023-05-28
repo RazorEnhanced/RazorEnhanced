@@ -17,12 +17,14 @@ namespace RazorEnhanced.UI
             InitializeComponent();
             MaximizeBox = false;
             this.Text = m_Title;
+            
         }
 
         private void RefreshGUI()
         {
             RazorEnhanced.Shard.Read(out List<Shard> shards);
             clientFolderLabel.Text = clientPathLabel.Text = String.Empty;
+            m_Tip.SetToolTip(clientFolderLabel, clientFolderLabel.Text);
 
             foreach (Shard shard in shards)
             {
@@ -30,8 +32,11 @@ namespace RazorEnhanced.UI
                 {
                     shardlistCombobox.SelectedIndex = shardlistCombobox.Items.IndexOf(shard.Description);
                     clientPathLabel.Text = shard.ClientPath;
+                    m_Tip.SetToolTip(clientPathLabel, clientPathLabel.Text);
                     clientFolderLabel.Text = shard.ClientFolder;
+                    m_Tip.SetToolTip(clientFolderLabel, clientFolderLabel.Text);
                     cuoClientLabel.Text = shard.CUOClient;
+                    m_Tip.SetToolTip(cuoClientLabel, cuoClientLabel.Text);
                     hostLabel.Text = shard.Host;
                     portLabel.Text = shard.Port.ToString();
                     patchEnc.Checked = shard.PatchEnc;
@@ -145,8 +150,11 @@ namespace RazorEnhanced.UI
                 {
                     shardlistCombobox.SelectedIndex = shardlistCombobox.Items.IndexOf(shard.Description);
                     clientPathLabel.Text = shard.ClientPath;
+                    m_Tip.SetToolTip(clientPathLabel, clientPathLabel.Text);
                     clientFolderLabel.Text = shard.ClientFolder;
+                    m_Tip.SetToolTip(clientFolderLabel, clientFolderLabel.Text);
                     cuoClientLabel.Text = shard.CUOClient;
+                    m_Tip.SetToolTip(cuoClientLabel, cuoClientLabel.Text);
                     hostLabel.Text = shard.Host;
                     portLabel.Text = shard.Port.ToString();
                     patchEnc.Checked = shard.PatchEnc;
@@ -230,6 +238,7 @@ namespace RazorEnhanced.UI
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
             {
                 clientPathLabel.Text = openclientlocation.FileName;
+                m_Tip.SetToolTip(clientPathLabel, clientPathLabel.Text);
                 clientFolderLabel.Text = Path.GetDirectoryName(openclientlocation.FileName);
                 UpdateGUI();
             }
@@ -312,6 +321,7 @@ namespace RazorEnhanced.UI
             if (openclientlocation.ShowDialog(this) == DialogResult.OK)
             {
                 cuoClientLabel.Text = openclientlocation.FileName;
+                m_Tip.SetToolTip(cuoClientLabel, cuoClientLabel.Text);
             }
             UpdateGUI();
         }

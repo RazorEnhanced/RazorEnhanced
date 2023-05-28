@@ -58,6 +58,7 @@ namespace RazorEnhanced.UI
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
+            this.m_Tip = new System.Windows.Forms.ToolTip();
             // 
             // openclientlocation
             // 
@@ -308,6 +309,7 @@ namespace RazorEnhanced.UI
             this.clientPathLabel.Size = new System.Drawing.Size(374, 20);
             this.clientPathLabel.TabIndex = 5;
             this.clientPathLabel.Text = "Not Set";
+            m_Tip.SetToolTip(clientPathLabel, clientPathLabel.Text);
             // 
             // label2
             // 
@@ -390,7 +392,7 @@ namespace RazorEnhanced.UI
         }
 
         #endregion
-
+        internal System.Windows.Forms.ToolTip m_Tip;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button removeShard;

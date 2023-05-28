@@ -184,7 +184,5 @@ namespace Assistant
                 BuyAgent.CompleteAmount = buyToCompleteAmount.Checked;
             }
         }
-
-
     }
 }
