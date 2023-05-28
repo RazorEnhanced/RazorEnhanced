@@ -174,21 +174,22 @@ namespace RazorEnhanced
 
         public bool Load(String text, String path = null)
         {
-            if (Engine == null) return false;
+            if (Engine == null) { return false; }
 
             //CACHE (should we?)
             Text = text;
             FilePath = path;
 
             //LOAD code as text
-            if (text == null) return false; // no text
+            if (text == null) { return false; } // no text
             Source = Engine.CreateScriptSourceFromString(text, path);
-            if (Source == null) return false;
+            if (Source == null) { return false; }
 
             //COMPILE with OPTIONS
             //PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
             Compiled = Source.Compile(CompilerOptions);
-            if (Compiled == null) return false;
+            if (Compiled == null) { 
+                return false; }
             
             Scope = Engine.CreateScope();
             return true;

@@ -225,11 +225,20 @@ namespace RazorEnhanced
 
         internal static void SendMessageScriptError(string msg, int color = 945)
         {
-            if (Assistant.World.Player == null)
-                return;
+            if (Assistant.World.Player == null) { return; }
 
-            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox")) {
+                List<string> lines;
+                if (Client.IsOSI){
+                    lines = msg.Split('\n').ToList();
+                } else {
+                    lines = new List<string>{msg};
+                }
+                foreach(var line in lines){
+                    Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", line.ToString()));
+                }
+                
+            }
         }
         public class ScriptItem : ListAbleItem
         {

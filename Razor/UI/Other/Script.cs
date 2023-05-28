@@ -26,12 +26,14 @@ namespace Assistant
             Keys key = item.Hotkey;
             bool autostart = item.AutoStart;
             string fullPath = item.FullPath;
+            bool preload = true;
+            bool editor = false;
 
             bool run = false;
             if (status == "Running")
                 run = true;
 
-            var script = EnhancedScript.FromFile(fullPath, wait, loop, run, autostart);
+            var script = EnhancedScript.FromFile(fullPath, wait, loop, run, autostart, preload, editor);
             if (script != null) { status = "Loaded"; }
 
 
