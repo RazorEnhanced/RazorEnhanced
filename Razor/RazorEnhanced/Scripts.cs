@@ -228,11 +228,11 @@ namespace RazorEnhanced
             if (Assistant.World.Player == null) { return; }
 
             if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox")) {
-                List<string> lines;
+                string[] lines;
                 if (Client.IsOSI){
-                    lines = msg.Split('\n').ToList();
+                    lines = msg.Split('\n');
                 } else {
-                    lines = new List<string>{msg};
+                    lines = new string[]{msg};
                 }
                 foreach(var line in lines){
                     Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", line.ToString()));
