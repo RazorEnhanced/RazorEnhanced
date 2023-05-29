@@ -178,7 +178,7 @@ namespace Assistant
             //}
             Application.Run(Engine.MainWnd);
         }
-        public override RazorEnhanced.Shard SelectShard(List<RazorEnhanced.Shard> shards)
+        internal override RazorEnhanced.Shard SelectShard(List<RazorEnhanced.Shard> shards)
         {
             RazorEnhanced.Shard shard = shards.FirstOrDefault(s => s.Selected);
             if (File.Exists(shard.ClientPath))

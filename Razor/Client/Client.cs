@@ -107,7 +107,7 @@ namespace Assistant
 
             RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
 
-            RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
+            var shards = RazorEnhanced.Shard.Read();
 
             RazorEnhanced.Shard selected = Client.Instance.SelectShard(shards);
             m_Running = true;
@@ -134,7 +134,7 @@ namespace Assistant
                     {
                         if (File.Exists(selected.ClientPath))
                         {
-                            RazorEnhanced.Shard.Read(out shards);
+                            shards = RazorEnhanced.Shard.Read();
                             selected = Instance.SelectShard(shards);                            
                         }
                         if (launcher.ActiveControl.Text == "Launch CUO")
@@ -401,7 +401,7 @@ namespace Assistant
             m_Features = features;
         }
         public abstract void RunUI();
-        public abstract RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards);
+        internal abstract RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards);
 
         protected DateTime m_ConnectionStart;
         //public  DateTime ConnectionStart { get; }

@@ -22,7 +22,7 @@ namespace RazorEnhanced.UI
 
         private void RefreshGUI()
         {
-            RazorEnhanced.Shard.Read(out List<Shard> shards);
+            var shards = RazorEnhanced.Shard.Read();
             clientFolderLabel.Text = clientPathLabel.Text = String.Empty;
             m_Tip.SetToolTip(clientFolderLabel, clientFolderLabel.Text);
 
@@ -51,7 +51,7 @@ namespace RazorEnhanced.UI
             {
                 if (File.Exists(clientPathLabel.Text))
                 {
-                    okay.Enabled = true;
+                    launch.Enabled = true;
                 }
                 if (File.Exists(cuoClientLabel.Text))
                 {
@@ -60,7 +60,7 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                okay.Enabled = false;
+                launch.Enabled = false;
                 launchCUO.Enabled = false;
             }
 
@@ -69,7 +69,7 @@ namespace RazorEnhanced.UI
             {
                 RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
                 launchCUO.Enabled = false;
-                okay.Enabled = false;
+                launch.Enabled = false;
             }
         }
 
@@ -83,7 +83,7 @@ namespace RazorEnhanced.UI
 
             Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, cuoClientLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
-            Shard.Read(out List<Shard> shards);
+            var shards = Shard.Read();
 
             shardlistCombobox.Items.Clear();
             foreach (Shard shard in shards)
@@ -127,7 +127,7 @@ namespace RazorEnhanced.UI
             //int port;
             //Int32.TryParse(portLabel.Text, out port);
 
-            RazorEnhanced.Shard.Read(out List<Shard> shards);
+            var shards = RazorEnhanced.Shard.Read();
 
             shardlistCombobox.Items.Clear();
             foreach (Shard shard in shards)
@@ -142,7 +142,7 @@ namespace RazorEnhanced.UI
         private void ShardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
             RazorEnhanced.Shard.UpdateLast(shardlistCombobox.Text);
-            RazorEnhanced.Shard.Read(out List<Shard> shards);
+            var shards = RazorEnhanced.Shard.Read();
 
             foreach (Shard shard in shards)
             {
@@ -181,9 +181,9 @@ namespace RazorEnhanced.UI
             }
 
             if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
-                okay.Enabled = true;
+                launch.Enabled = true;
             else
-                okay.Enabled = false;
+                launch.Enabled = false;
 
             if (File.Exists(cuoClientLabel.Text))
             {
