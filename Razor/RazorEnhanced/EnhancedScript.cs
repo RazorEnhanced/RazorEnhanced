@@ -316,9 +316,7 @@ namespace RazorEnhanced
             {
                 //EventManager.Instance.Unsubscribe(m_Thread); 
                 m_Thread.Start();
-                while (!m_Thread.IsAlive)
-                {
-                }
+                while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
                 //m_Run = true;
             }
@@ -334,15 +332,12 @@ namespace RazorEnhanced
                 //EventManager.Instance.Unsubscribe(m_Thread);
                 m_ScriptEngine.Run();
             }
-            catch (ThreadAbortException ex)
-            {
-                Stop();
-            }
+            catch (ThreadAbortException ex){ return; }
             catch (Exception ex)
             {
-                Stop();
                 Misc.SendMessage($"EnhancedScript:AsyncStart:{ex.GetType()}:\n{ex.Message}", 138);
             }
+            if (Loop) { ScriptEngine.Run(); }
         }
 
         internal void Stop()
@@ -616,20 +611,21 @@ namespace RazorEnhanced
         /// </summary>
         public bool Run()
         {
-            if (!m_Loaded && !Load()) { 
-                return false; } // not loaded, and fail automatic loading.
+            if (!m_Loaded && !Load()) { return false; } // not loaded, and fail automatic loading.
 
+            bool result;
             try {
                 switch (m_Script.Language) {
                     default:
-                    case ScriptLanguage.PYTHON: return RunPython();
-                    case ScriptLanguage.CSHARP: return RunCSharp();
-                    case ScriptLanguage.UOSTEAM: return RunUOSteam();
+                    case ScriptLanguage.PYTHON: result = RunPython(); break;
+                    case ScriptLanguage.CSHARP: result = RunCSharp(); break;
+                    case ScriptLanguage.UOSTEAM: result = RunUOSteam(); break;
                 }
             } catch (Exception ex) {
                 return HandleException(ex);
             }
-            
+            if (m_Script.Loop) { Run(); }
+            return result;
         }
 
         // ----------------------------------------- PYTHON -----------------------------
@@ -795,7 +791,7 @@ namespace RazorEnhanced
         }
 
         // ----------------------------------------- Exceptions & Log -----------------------------
-        private bool HandleException(Exception ex)
+        public bool HandleException(Exception ex)
         {
             
             var exceptionType = ex.GetType();
@@ -803,7 +799,8 @@ namespace RazorEnhanced
             // GRACEFUL/SILENT EXIT
             if (exceptionType == typeof(ThreadAbortException)) { return true; } // thread stopped: All good
             if (exceptionType == typeof(SystemExitException)) { // sys.exit() or end of script
-                m_Script.Stop();
+
+                if (m_Script.Loop) { Run(); }
                 return true;
             }
 
@@ -829,7 +826,7 @@ namespace RazorEnhanced
                 message += Regex.Replace(ex.Message.Trim(), "\n\n", "\n");     //remove empty lines
             }
 
-
+            if (m_Script.Loop) { Run(); }
             OutputException(message);
             return false;
         }
