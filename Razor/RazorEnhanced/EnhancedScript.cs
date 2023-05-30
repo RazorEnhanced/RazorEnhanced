@@ -19,6 +19,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using RazorEnhanced.UOScript;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace RazorEnhanced
 {
@@ -337,7 +338,10 @@ namespace RazorEnhanced
             {
                 Misc.SendMessage($"EnhancedScript:AsyncStart:{ex.GetType()}:\n{ex.Message}", 138);
             }
-            if (Loop) { ScriptEngine.Run(); }
+            if (Loop) {
+                Misc.Pause(1);
+                ScriptEngine.Run(); 
+            }
         }
 
         internal void Stop()
@@ -582,12 +586,26 @@ namespace RazorEnhanced
             }
         }
 
+        public void AutoLoop()
+        {
+            if (m_Script.Loop) {
+                Misc.Pause(1);
+                Run();
+            }
+        }
+
 
         ///<summary>
         /// Load the script and bring the specifict engine state at one step before execution.
         /// </summary>
         public bool Load()
         {
+            if (m_Script.Text.Trim() == "") { 
+                //what if there are only comments but no actual code ? 
+                m_Loaded = false;
+                return false;
+            }
+
             m_Script.SetLanguage();
             try
             {
@@ -622,9 +640,9 @@ namespace RazorEnhanced
                     case ScriptLanguage.UOSTEAM: result = RunUOSteam(); break;
                 }
             } catch (Exception ex) {
-                return HandleException(ex);
+                result = HandleException(ex);
             }
-            if (m_Script.Loop) { Run(); }
+            AutoLoop();
             return result;
         }
 
@@ -800,7 +818,7 @@ namespace RazorEnhanced
             if (exceptionType == typeof(ThreadAbortException)) { return true; } // thread stopped: All good
             if (exceptionType == typeof(SystemExitException)) { // sys.exit() or end of script
 
-                if (m_Script.Loop) { Run(); }
+                AutoLoop();
                 return true;
             }
 
@@ -826,7 +844,7 @@ namespace RazorEnhanced
                 message += Regex.Replace(ex.Message.Trim(), "\n\n", "\n");     //remove empty lines
             }
 
-            if (m_Script.Loop) { Run(); }
+            AutoLoop();
             OutputException(message);
             return false;
         }

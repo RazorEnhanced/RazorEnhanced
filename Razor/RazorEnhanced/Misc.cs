@@ -301,6 +301,7 @@ namespace RazorEnhanced
         /// <param name="millisec">Pause duration, in milliseconds.</param>
         public static void Pause(int millisec)
         {
+            if (millisec < 0) { millisec = 0; } // 0 -> skip rest of time slice | <0 -> Exception 
             System.Threading.Thread.Sleep(millisec);
         }
 
