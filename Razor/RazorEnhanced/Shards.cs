@@ -4,24 +4,31 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-    [Serializable]
-    public class Shard
+
+    internal static class Shards
     {
-        [JsonIgnore]
-        private static readonly string m_Save = "RazorEnhanced.shards";
+        internal static readonly string m_Save = "RazorEnhanced.shards";
+        internal static AllShards allShards = new AllShards();
+        public static bool AllowBeta { get { return allShards.AllowBeta; } }
+    }
 
-        [JsonIgnore]
-        private static Dictionary<string, Shard> m_Dataset;
+    [Serializable]
+    internal class AllShards
+    {
+        [JsonProperty("AllowBeta")]
+        internal bool AllowBeta = new bool();
+        [JsonProperty("Shards")]
+        internal Dictionary<string, Shard> m_Shards = new Dictionary<string, Shard>();
+    }
 
-        [JsonIgnore]
-        internal static Dictionary<string, Shard> Dataset { get { return m_Dataset; } }
 
+    [Serializable]
+    internal class Shard
+    {
         [JsonProperty("Description")]
         internal string Description { get; set; }
 
@@ -63,41 +70,53 @@ namespace RazorEnhanced
         }
         internal static void Load(bool tryBackup = true)
         {
-            //if (m_Dataset != null)
-            //  return;
-
-            m_Dataset = new Dictionary<string, Shard>();
-            string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
-            string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", m_Save);
+            string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", Shards.m_Save);
+            string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", Shards.m_Save);
 
             if (File.Exists(filename))
             {
+                var content = File.ReadAllText(filename);
+                bool error = false;
                 try
                 {
-                    Dictionary<string, List<Shard>> keyValuePairs = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, List<Shard>>>(File.ReadAllText(filename));
-                    File.Copy(filename, backup, true);
-                    foreach (var entry in keyValuePairs["SHARDS"])
-                    {
-                        m_Dataset[entry.Description] = entry;
-                    }
+                    Shards.allShards = Newtonsoft.Json.JsonConvert.DeserializeObject<AllShards>(content);
                 }
                 catch (Exception)
                 {
-                    if (tryBackup)
+                    Dictionary<string, List<Shard>> tempShards = new();
+                    // try to load old format
+                    try
                     {
-                        MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
-                        File.Copy(backup, filename, true);
-                        Load(false);
+                        tempShards = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, List<Shard>>>(content);
+                        foreach (Shard entry in tempShards["SHARDS"])
+                        {
+                            Shards.allShards.m_Shards.Add(entry.Description, entry);
+                        }
+                        Save(); // force save of conversion
                     }
-                    else
+                    catch (Exception)
                     {
-                        throw;
+                        error = true;
                     }
+                    if (error)
+                    {
+                        if (tryBackup)
+                        {
+                            MessageBox.Show("Error loading " + Shards.m_Save + ", Try to restore from backup!");
+                            File.Copy(backup, filename, true);
+                            Load(false);
+                        } else {
+                            throw;
+                        }
+                    }
+
+                    File.Copy(filename, backup, true);
                     return;
                 }
             }
             else
             {
+                Shards.allShards = new AllShards();
                 Insert("UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false);
                 Insert("OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true );
             }
@@ -105,41 +124,41 @@ namespace RazorEnhanced
 
         internal static bool Exists(string description)
         {
-            return m_Dataset.ContainsKey(description.ToLower());
+            return Shards.allShards.m_Shards.ContainsKey(description.ToLower());
         }
 
         internal static void Insert(string description, string clientpath, string clientfolder, string cuoClient, string host, int port, bool patchenc, bool osienc)
         {
-            foreach (var entry in m_Dataset)
+            foreach (var entry in Shards.allShards.m_Shards)
             {
                 entry.Value.Selected = false;
             }
 
             Shard newEntry = new Shard(description, clientpath, clientfolder, cuoClient, host, (uint)port, patchenc, osienc, true);
-            m_Dataset[newEntry.Description] = newEntry;
+            Shards.allShards.m_Shards[newEntry.Description] = newEntry;
 
             Save();
         }
 
         internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected)
         {
-            if (m_Dataset.ContainsKey(description))
+            if (Shards.allShards.m_Shards.ContainsKey(description))
             {
                 if (selected)
                 {
-                    foreach (Shard entry in m_Dataset.Values)
+                    foreach (Shard entry in Shards.allShards.m_Shards.Values)
                     {
                         entry.Selected = false;
                     }
                 }
-                m_Dataset[description] = new Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected);
+                Shards.allShards.m_Shards[description] = new Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected);
                 Save();
             }
         }
 
         internal static void UpdateLast(string description)
         {
-            foreach (var entry in m_Dataset)
+            foreach (var entry in Shards.allShards.m_Shards)
             {
                 if (entry.Value.Description == description)
                     entry.Value.Selected = true;
@@ -151,50 +170,43 @@ namespace RazorEnhanced
 
         internal static void Delete(string shardname)
         {
-            if (m_Dataset.ContainsKey(shardname))
+            if (Shards.allShards.m_Shards.ContainsKey(shardname))
             {
-                Shard row = m_Dataset[shardname];
-                m_Dataset.Remove(shardname);
-                if (row.Selected && m_Dataset.Count > 0)
+                Shard row = Shards.allShards.m_Shards[shardname];
+                Shards.allShards.m_Shards.Remove(shardname);
+                if (row.Selected && Shards.allShards.m_Shards.Count > 0)
                 {
-                    m_Dataset.FirstOrDefault().Value.Selected = true;
+                    foreach(var entry in Shards.allShards.m_Shards)
+                    {
+                        entry.Value.Selected = true;
+                        break;
+                    }
                 }
             }
             Save();
         }
 
-        internal static void Read(out List<RazorEnhanced.Shard> shards)
+        internal static List<RazorEnhanced.Shard> Read()
         {
-            List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
-
-            foreach (var row in m_Dataset)
+            List < RazorEnhanced.Shard > returnList = new List<RazorEnhanced.Shard>();
+            foreach (var entry in Shards.allShards.m_Shards)
             {
-                var entry = row.Value;
-                RazorEnhanced.Shard shard = new RazorEnhanced.Shard(entry.Description, entry.ClientPath, 
-                    entry.ClientFolder, entry.CUOClient, entry.Host, entry.Port, entry.PatchEnc, entry.OSIEnc, entry.Selected);
-                shardsOut.Add(shard);
+                returnList.Add(entry.Value);
             }
-
-            shards = shardsOut;
+            return returnList;
         }
 
         internal static void Save()
         {
             try
             {
-                Dictionary<string, List<Shard>> keyValuePairs = new Dictionary<string, List<Shard>>();
-                keyValuePairs["SHARDS"] = new List<Shard>();                
-                foreach (var entry in m_Dataset.Values)
-                {
-                    keyValuePairs["SHARDS"].Add(entry);
-                }
-                string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", m_Save);
-                string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(keyValuePairs, Newtonsoft.Json.Formatting.Indented);
+                string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", Shards.m_Save);
+                string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(Shards.allShards, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(filename, serialized);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error writing " + m_Save + ": " + ex);
+                MessageBox.Show("Error writing " + Shards.m_Save + ": " + ex);
             }
         }
     }

@@ -245,7 +245,7 @@ namespace Assistant
             t.IsBackground = true;
             t.Start();
         }
-        public override RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards)
+        internal override RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards)
         {
             RazorEnhanced.Shard cuo_shard =
                 new RazorEnhanced.Shard("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
