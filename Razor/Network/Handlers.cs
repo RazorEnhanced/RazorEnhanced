@@ -1124,7 +1124,7 @@ namespace Assistant
         {
             World.Items.Clear();
             World.Mobiles.Clear();
-            EnhancedScript.ResetAll();
+            EnhancedScript.StopAll();
 
 
             if (Engine.ClientMajor >= 7)

@@ -53,10 +53,7 @@ namespace RazorEnhanced
 
         private readonly object m_Lock = new object();
 
-        //Dalamar
-        //TODO: moved from Scripts.cs
-        // Should we move/split all static vars and mehtods to a separate static/signleton class called, for example,
-        // EnhancedScriptService to handle all the m_ScriptList related methods?
+        
         private static readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
         internal static Dictionary<string, EnhancedScript> ScriptList { get { return m_ScriptList.Values.ToDictionary(entry=>entry.Fullpath); } }
 
@@ -108,6 +105,7 @@ namespace RazorEnhanced
         {
             foreach (var script in ScriptList.Values)
             {
+                if (script.Thread == null) { continue; }
                 if (script.Thread.Equals(thread))
                 {
                     return script;
@@ -117,20 +115,8 @@ namespace RazorEnhanced
         }
         internal static void ClearAll()
         {
-            foreach (var script in ScriptList.Values)
-            {
-                script.Reset();
-            }
+            StopAll();
             m_ScriptList.Clear();
-        }
-
-
-        internal static void ResetAll()
-        {
-            foreach (var script in ScriptList.Values)
-            {
-                script.Reset();
-            }
         }
 
         internal static void StopAll()
@@ -223,7 +209,7 @@ namespace RazorEnhanced
             LastModified = DateTime.MinValue;
 
 
-            m_Thread = new Thread(AsyncStart);
+            //m_Thread = new Thread(AsyncStart);
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
             Add();
 
@@ -243,12 +229,20 @@ namespace RazorEnhanced
 
         public bool Load()
         {
-            String content;
-            if (!File.Exists(Fullpath)) { return false; }
+            string content;
+            /* included in the catch? dirty ? 
+            if (!File.Exists(Fullpath)) {
+                m_Text = "";
+                return false; 
+            }
+            */
+
             try{
                 content = File.ReadAllText(Fullpath);
+                LastModified = DateTime.Now;
             } catch (Exception e) {
                 Misc.SendMessage("ERROR:EnhancedScript:Load: " + e.Message, 178);
+                m_Text = "";
                 return false;
             }
 
@@ -316,6 +310,8 @@ namespace RazorEnhanced
             try
             {
                 //EventManager.Instance.Unsubscribe(m_Thread); 
+                if (m_Thread != null) { Stop(); }
+                m_Thread = new Thread(AsyncStart);
                 m_Thread.Start();
                 while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
@@ -326,33 +322,35 @@ namespace RazorEnhanced
 
         private void AsyncStart()
         {
-            if (World.Player == null) return;
+            do
+            {
+                if (World.Player == null) return;
 
-            try
-            {
-                //EventManager.Instance.Unsubscribe(m_Thread);
-                m_ScriptEngine.Run();
-            }
-            catch (ThreadAbortException ex){ return; }
-            catch (Exception ex)
-            {
-                Misc.SendMessage($"EnhancedScript:AsyncStart:{ex.GetType()}:\n{ex.Message}", 138);
-            }
-            if (Loop) {
+                try
+                {
+                    //EventManager.Instance.Unsubscribe(m_Thread);
+                    m_ScriptEngine.Run();
+                }
+                catch (ThreadAbortException ex) { return; }
+                catch (Exception ex)
+                {
+                    Misc.SendMessage($"EnhancedScript:AsyncStart:{ex.GetType()}:\n{ex.Message}", 138);
+                }
+                
                 Misc.Pause(1);
-                ScriptEngine.Run(); 
-            }
+            } while (Loop);
         }
 
         internal void Stop()
         {
-            if (!IsStopped) { 
+            if (IsRunning) { 
                 try
                 {
                     if (m_Thread.ThreadState != ThreadState.AbortRequested)
                     {
                         //EventManager.Instance.Unsubscribe(m_Thread);
                         m_Thread.Abort();
+                        m_Thread = null;
                     }
                 }
                 catch { }
@@ -362,7 +360,7 @@ namespace RazorEnhanced
         internal void Reset()
         {
             Stop();
-            m_Thread = new Thread(AsyncStart);
+            //m_Thread = new Thread(AsyncStart);
             //m_Run = false;
         }
 
@@ -373,17 +371,21 @@ namespace RazorEnhanced
         {
             get
             {
+                if (m_Thread == null) { return "Stopped"; }
                 switch (m_Thread.ThreadState)
                 {
-                    case ThreadState.Aborted:
+                    
                     case ThreadState.AbortRequested:
                         return "Stopping";
 
                     case ThreadState.WaitSleepJoin:
                     case ThreadState.Running:
-                        return "Running";
+                        return "Run";
+
 
                     default:
+                    case ThreadState.Unstarted:
+                    case ThreadState.Aborted:
                         return "Stopped";
                 }
             }
@@ -477,6 +479,7 @@ namespace RazorEnhanced
             {
                 lock (m_Lock)
                 {
+                    if (m_Thread == null) { return false; }
                     if (  (m_Thread.ThreadState & 
                           ( ThreadState.Unstarted | 
                             ThreadState.Stopped | 
@@ -491,35 +494,11 @@ namespace RazorEnhanced
             }
         }
 
-        internal bool IsStopped
-        {
-            get
-            {
-                return !IsRunning;
-            }
-        }
-
-        internal bool IsUnstarted
-        {
-            get
-            {
-                lock (m_Lock)
-                {
-                    if ((m_Thread.ThreadState & ThreadState.Unstarted) != 0)
-                        //  if (m_Thread.ThreadState == ThreadState.Unstarted)
-                        return true;
-                    else
-                        return false;
-                }
-            }
-        }
-
-        
     }
 
 
     
-
+ // --------------------------------------------- ENHANCED SCRIPT ENGINE ----------------------------------------------------
 
 
 
@@ -586,14 +565,6 @@ namespace RazorEnhanced
             }
         }
 
-        public void AutoLoop()
-        {
-            if (m_Script.Loop) {
-                Misc.Pause(1);
-                Run();
-            }
-        }
-
 
         ///<summary>
         /// Load the script and bring the specifict engine state at one step before execution.
@@ -630,7 +601,7 @@ namespace RazorEnhanced
         public bool Run()
         {
             if (!m_Loaded && !Load()) { return false; } // not loaded, and fail automatic loading.
-
+            Misc.SendMessage($"ThreadID: {Thread.CurrentThread.ManagedThreadId}", 147);
             bool result;
             try {
                 switch (m_Script.Language) {
@@ -642,7 +613,7 @@ namespace RazorEnhanced
             } catch (Exception ex) {
                 result = HandleException(ex);
             }
-            AutoLoop();
+            
             return result;
         }
 
@@ -817,8 +788,6 @@ namespace RazorEnhanced
             // GRACEFUL/SILENT EXIT
             if (exceptionType == typeof(ThreadAbortException)) { return true; } // thread stopped: All good
             if (exceptionType == typeof(SystemExitException)) { // sys.exit() or end of script
-
-                AutoLoop();
                 return true;
             }
 
@@ -844,7 +813,7 @@ namespace RazorEnhanced
                 message += Regex.Replace(ex.Message.Trim(), "\n\n", "\n");     //remove empty lines
             }
 
-            AutoLoop();
+            
             OutputException(message);
             return false;
         }
