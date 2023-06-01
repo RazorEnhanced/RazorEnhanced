@@ -277,14 +277,7 @@ namespace RazorEnhanced
             public void Stop()
             {
                 m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
-
-                foreach (EnhancedScript script in EnhancedScript.ScriptList.Values.ToList())
-                {
-                    if (script.IsRunning)
-                    {
-                        script.Stop();
-                    }
-                }
+                EnhancedScript.StopAll();
             }
 
             private bool IsRunningThread(Thread thread)
@@ -358,6 +351,7 @@ namespace RazorEnhanced
                                 script.StopMessage = true;
                             }
 
+                            /*
                             if (script.Loop)
                             {
                                 if (script.IsStopped)
@@ -373,6 +367,7 @@ namespace RazorEnhanced
                                 else if (script.IsUnstarted)
                                     script.Start();
                             }
+                            */
                         }
                         else
                         {
@@ -383,11 +378,13 @@ namespace RazorEnhanced
                                 script.StopMessage = false;
                             }
 
+                            /*
                             if (script.IsRunning)
                                 script.Stop();
 
                             if (script.IsStopped)
                                 script.Reset();
+                            */
                         }
                     }
 
