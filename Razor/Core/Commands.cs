@@ -264,13 +264,13 @@ namespace Assistant
                 }
             }
 
-            RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(scriptname);
+            RazorEnhanced.EnhancedScript script = RazorEnhanced.EnhancedScript.Search(scriptname);
             if (script != null)
             {
-                if (script.Run)
+                if (script.IsRunning)
                     script.Stop();
                 else
-                    script.Run = true;
+                    script.Start();
             }
             else
                 RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist", 33, false);
@@ -361,10 +361,8 @@ namespace Assistant
                 text = pvSrc.ReadUnicodeStringSafe();
             }
 
-            if (RazorEnhanced.ScriptRecorder.OnRecord)
-            {
-                RazorEnhanced.ScriptRecorder.instance().Record_UnicodeSpeech(type, text, hue);
-            }
+            RazorEnhanced.ScriptRecorderService.Instance.Record_UnicodeSpeech(type, text, hue);
+            
 
             text = text.Trim();
 

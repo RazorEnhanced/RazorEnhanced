@@ -1,28 +1,19 @@
 using Assistant;
-using IronPython.Hosting;
-using IronPython.Runtime.Exceptions;
-using Microsoft.Scripting.Hosting;
 using System;
 using System.IO;
-using System.Text;
 using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.Scripting;
-using IronPython.Runtime;
-using IronPython.Compiler;
-using System.CodeDom.Compiler;
-using System.Reflection;
-using Microsoft.CSharp;
-using Assistant.UI;
+
+
 
 namespace RazorEnhanced
 {
-    internal class Scripts
+    public class Scripts
     {
-        internal static Thread ScriptEditorThread;
+        //internal static Thread ScriptEditorThread;
         internal static bool ScriptErrorLog = false;
         internal static bool ScriptStartStopMessage = false;
 
@@ -232,13 +223,22 @@ namespace RazorEnhanced
             Loop,
         }
 
-        internal static void SendMessageScriptError(string msg)
+        internal static void SendMessageScriptError(string msg, int color = 945)
         {
-            if (Assistant.World.Player == null)
-                return;
+            if (Assistant.World.Player == null) { return; }
 
-            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-                Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
+            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox")) {
+                string[] lines;
+                if (Client.IsOSI){
+                    lines = msg.Split('\n');
+                } else {
+                    lines = new string[]{msg};
+                }
+                foreach(var line in lines){
+                    Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", line.ToString()));
+                }
+                
+            }
         }
         public class ScriptItem : ListAbleItem
         {
@@ -251,385 +251,6 @@ namespace RazorEnhanced
             public bool HotKeyPass { get; set; }
             public bool AutoStart { get; set; }
             public string FullPath { get; set; }
-        }
-
-
-        internal class EnhancedScript
-        {
-            internal bool StopMessage { get; set; }
-            internal bool StartMessage { get; set; }
-            private PythonEngine m_pe;
-            internal DateTime FileChangeDate { get; set; }
-
-            internal PythonEngine PythonEngine { get => m_pe; }
-
-            internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
-            {
-                StartMessage = true;
-                StopMessage = false;
-                m_Filename = filename;
-                DateTime lastModified = DateTime.MinValue;
-                FileChangeDate = lastModified;
-                m_Text = text;
-                m_Wait = wait;
-                m_Loop = loop;
-                m_Run = run;
-                m_AutoStart = autostart;
-                m_Thread = new Thread(AsyncStart);
-            }
-
-            internal Thread Thread { get => m_Thread; }
-
-            internal void Start()
-            {
-                if (IsRunning || !IsUnstarted)
-                    return;
-
-                try
-                {
-                    m_Thread.Start();
-                    while (!m_Thread.IsAlive)
-                    {
-                    }
-
-                    m_Run = true;
-                }
-                catch { }
-            }
-
-            private void AsyncStart()
-            {
-                if (World.Player == null)
-                    return;
-
-                try
-                {
-                    string fullpath = Scripts.GetFullPathForScript(m_Filename);
-                    string ext = Path.GetExtension(fullpath);
-
-                    if (ext.Equals(".cs", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        CSharpEngine csharpEngine = CSharpEngine.Instance;
-                        
-                        bool compileErrors = csharpEngine.CompileFromFile(fullpath, false, out List<string> compileMessages, out Assembly assembly);
-                        
-                        foreach (string str in compileMessages)
-                        {
-                            Misc.SendMessage(str);
-                        }
-                        if (compileErrors == true)
-                        {
-                            Stop();
-                            return;
-                        } 
-                        csharpEngine.Execute(assembly);
-                    }
-                    else if (ext.Equals(".uos", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        // Using // only will be deprecated instead of //UOS
-                        var text = System.IO.File.ReadAllLines(fullpath);
-                        if ((text[0].Substring(0, 2) == "//") && text[0].Length < 5)
-                        {
-                            string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
-                            Misc.SendMessage(message);
-                        }
-
-                        UOSteamEngine uosteam = UOSteamEngine.Instance;
-                        uosteam.Execute(fullpath);
-                    }
-                    else
-                    {
-                        DateTime lastModified = System.IO.File.GetLastWriteTime(fullpath);
-                        if (FileChangeDate < lastModified)
-                        {
-                            ReadText(fullpath);
-                            Create(null);
-                            
-                            // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
-                            FileChangeDate = System.IO.File.GetLastWriteTime(fullpath);
-                        }
-
-                        m_pe.Execute(m_Text);
-                    }
-                }
-                catch (IronPython.Runtime.Exceptions.SystemExitException)
-                {
-                    Stop();
-                    // sys.exit - terminate the thread
-                }
-                catch (Exception ex)
-                {
-                    if (ex is System.Threading.ThreadAbortException)
-                        return;
-
-                    string display_error = ex.Message;
-                    if (m_pe != null && m_pe.Engine != null ) {
-                        display_error = m_pe.Engine.GetService<ExceptionOperations>().FormatException(ex);
-                    }
-                    SendMessageScriptError("ERROR " + m_Filename + ":" + display_error.Replace("\n", " | "));
-
-                    if (ScriptErrorLog) // enabled log of error
-                    {
-                        StringBuilder log = new StringBuilder();
-                        log.Append(Environment.NewLine + "============================ START REPORT ============================ " + Environment.NewLine);
-
-                        DateTime dt = DateTime.Now;
-                        log.Append("---> Time: " + String.Format("{0:F}", dt) + Environment.NewLine);
-                        log.Append(Environment.NewLine);
-
-                        if (ex is SyntaxErrorException)
-                        {
-                            SyntaxErrorException se = ex as SyntaxErrorException;
-                            log.Append("----> Syntax Error:" + Environment.NewLine);
-                            log.Append("-> LINE: " + se.Line + Environment.NewLine);
-                            log.Append("-> COLUMN: " + se.Column + Environment.NewLine);
-                            log.Append("-> SEVERITY: " + se.Severity + Environment.NewLine);
-                            log.Append("-> MESSAGE: " + se.Message + Environment.NewLine);
-                        }
-                        else
-                        {
-                            log.Append("----> Generic Error:" + Environment.NewLine);
-                            log.Append(display_error);
-                        }
-
-                        log.Append(Environment.NewLine);
-                        log.Append("============================ END REPORT ============================ ");
-                        log.Append(Environment.NewLine);
-
-                        try // For prevent crash in case of file are busy or inaccessible
-                        {
-                            File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Filename + ".ERROR", log.ToString());
-                        }
-                        catch { }
-                        log.Clear();
-                    }
-                }
-                finally
-                {
-                    //
-
-                    //
-                }
-            }
-
-            internal void ReadText(string fullpath)
-            {
-                //string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
-                if (File.Exists(fullpath))
-                {
-                    m_Text = File.ReadAllText(fullpath);
-                }
-            }
-
-
-            internal void Stop()
-            {
-                if (!IsStopped)
-                    try
-                    {
-                        if (m_Thread.ThreadState != ThreadState.AbortRequested)
-                        {
-                            m_Thread.Abort();
-                        }
-                    }
-                    catch { }
-            }
-
-            internal void Reset()
-            {
-                m_Thread = new Thread(AsyncStart);
-                m_Run = false;
-            }
-
-            internal string Create(TracebackDelegate traceFunc)
-            {
-                string result = String.Empty;
-                try
-                {
-                    Action<string> action = (aString) => { Misc.SendMessage(aString.Trim('\r', '\n'), 55, false); };
-                    m_pe = new PythonEngine(action);
-                    
-                    var pc = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(m_pe.Engine) as PythonContext;
-                    var temp = pc.SystemState.Get__dict__()["path_hooks"];
-                    PythonDictionary hooks = (PythonDictionary)temp;
-                    hooks.Clear();
-
-                    if (traceFunc != null)
-                        m_pe.Engine.SetTrace(traceFunc);
-
-                    result = "Created";
-                }
-                catch (Exception ex)
-                {
-                    result = ex.Message;
-                }
-
-                return result;
-            }
-
-            internal string Status
-            {
-                get
-                {
-                    switch (m_Thread.ThreadState)
-                    {
-                        case ThreadState.Aborted:
-                        case ThreadState.AbortRequested:
-                            return "Stopping";
-
-                        case ThreadState.WaitSleepJoin:
-                        case ThreadState.Running:
-                            return "Running";
-
-                        default:
-                            return "Stopped";
-                    }
-                }
-            }
-
-            private readonly string m_Filename;
-            internal string Filename
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        return m_Filename;
-                    }
-                }
-            }
-
-            private string m_Text;
-            internal string Text
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        return m_Text;
-                    }
-                }
-            }
-
-            private Thread m_Thread;
-
-            private readonly bool m_Wait;
-            internal bool Wait
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        return m_Wait;
-                    }
-                }
-            }
-
-            private bool m_Loop;
-            internal bool Loop
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        return m_Loop;
-                    }
-                }
-                set
-                {
-                    lock (m_Lock)
-                    {
-                        m_Loop = value;
-                    }
-                }
-            }
-
-            private bool m_AutoStart;
-            internal bool AutoStart
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        return m_AutoStart;
-                    }
-                }
-                set
-                {
-                    lock (m_Lock)
-                    {
-                        m_AutoStart = value;
-                    }
-                }
-            }
-
-            private bool m_Run;
-            internal bool Run
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        return m_Run;
-                    }
-                }
-                set
-                {
-                    lock (m_Lock)
-                    {
-                        m_Run = value;
-                    }
-                }
-            }
-
-            private readonly object m_Lock = new object();
-
-            internal bool IsRunning
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        if ( (m_Thread.ThreadState & (ThreadState.Unstarted | ThreadState.Stopped)) == 0)
-                        //if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
-                            return true;
-                        else
-                            return false;
-                    }
-                }
-            }
-
-            internal bool IsStopped
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        if ( (m_Thread.ThreadState & ThreadState.Stopped) != 0 || (m_Thread.ThreadState & ThreadState.Aborted) != 0 )
-                            //if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
-                            return true;
-                        else
-                            return false;
-                    }
-                }
-            }
-
-            internal bool IsUnstarted
-            {
-                get
-                {
-                    lock (m_Lock)
-                    {
-                        if ((m_Thread.ThreadState & ThreadState.Unstarted) != 0)
-                    //  if (m_Thread.ThreadState == ThreadState.Unstarted)
-                            return true;
-                        else
-                            return false;
-                    }
-                }
-            }
-
-
         }
 
         internal class ScriptTimer
@@ -656,14 +277,7 @@ namespace RazorEnhanced
             public void Stop()
             {
                 m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
-
-                foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
-                {
-                    if (script.IsRunning)
-                    {
-                        script.Stop();
-                    }
-                }
+                EnhancedScript.StopAll();
             }
 
             private bool IsRunningThread(Thread thread)
@@ -681,7 +295,8 @@ namespace RazorEnhanced
             {
                 try
                 {
-                    UI.EnhancedScriptEditor.End();
+                    //UI.EnhancedScriptEditor.End();
+                    ScriptRecorderService.Instance.RemoveAll();
 
                     this.Stop();
 
@@ -725,9 +340,9 @@ namespace RazorEnhanced
             {
                 lock (syncLock)
                 {
-                    foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
+                    foreach (EnhancedScript script in EnhancedScript.ScriptList.Values.ToList())
                     {
-                        if (script.Run)
+                        if (script.IsRunning)
                         {
                             if (ScriptStartStopMessage && script.StartMessage)
                             {
@@ -736,6 +351,7 @@ namespace RazorEnhanced
                                 script.StopMessage = true;
                             }
 
+                            /*
                             if (script.Loop)
                             {
                                 if (script.IsStopped)
@@ -751,6 +367,7 @@ namespace RazorEnhanced
                                 else if (script.IsUnstarted)
                                     script.Start();
                             }
+                            */
                         }
                         else
                         {
@@ -761,11 +378,13 @@ namespace RazorEnhanced
                                 script.StopMessage = false;
                             }
 
+                            /*
                             if (script.IsRunning)
                                 script.Stop();
 
                             if (script.IsStopped)
                                 script.Reset();
+                            */
                         }
                     }
 
@@ -878,8 +497,9 @@ namespace RazorEnhanced
         private static ScriptTimer m_Timer = new ScriptTimer();
         internal static ScriptTimer Timer { get { return m_Timer; } }
 
-        private static readonly ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
-        internal static ConcurrentDictionary<string, EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
+        //Dalamar: Moved to EnhancedScript.cs
+        //private static readonly ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
+        //internal static Dictionary<string, EnhancedScript> EnhancedScripts { get { return EnhancedScript.ScriptList; } }
 
         public static void Initialize()
         {
@@ -897,10 +517,17 @@ namespace RazorEnhanced
 
         static void ScriptChanged(object sender, FileSystemEventArgs e)
         {
-            foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
+            /*
+            var script = Scripts.Search(e.FullPath);
+            if (script != null) {
+                script.Load();
+            }
+            */
+            foreach (var script in EnhancedScript.ScriptList.Values)
             {
-                //if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
-                pair.Value.FileChangeDate = DateTime.MinValue;
+                // if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
+                // script.LastModified = DateTime.MinValue;
+                script.Load();
             }
         }
 
@@ -920,38 +547,11 @@ namespace RazorEnhanced
             return watcher;
         }
 
-        internal static EnhancedScript CurrentScript()
-        {
-            return Search(Thread.CurrentThread);
-        }
-
-
-        internal static EnhancedScript Search(string filename)
-        {
-            foreach (KeyValuePair<string, EnhancedScript> pair in EnhancedScripts)
-            {
-                if (pair.Key.ToLower() == filename.ToLower()) { 
-                    return pair.Value; 
-                }
-            }
-            return null;
-        }
-
-        internal static EnhancedScript Search(Thread thread)
-        {
-            foreach (var script in EnhancedScripts.Values)
-            {
-                if (script.Thread.Equals(thread)) { 
-                    return script;
-                }
-            }
-            return null;
-        }
 
         // Autostart
         internal static void AutoStart()
         {
-            foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
+            foreach (EnhancedScript script in EnhancedScript.ScriptList.Values)
             {
                 if (!script.IsRunning && script.AutoStart)
                     script.Start();

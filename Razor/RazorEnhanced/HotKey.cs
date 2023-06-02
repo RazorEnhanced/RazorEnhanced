@@ -416,10 +416,7 @@ namespace RazorEnhanced
                         if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
                         {
                             RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33, false);
-                            foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
-                            {
-                                scriptdata.Run = false;
-                            }
+                            EnhancedScript.StopAll();
                         }
                         break;
 
@@ -428,30 +425,16 @@ namespace RazorEnhanced
                         if (item != null)
                         {
                             string filename = item.Filename;
-                            Scripts.EnhancedScript script = Scripts.Search(filename);
+                            EnhancedScript script = EnhancedScript.Search(filename,false);
                             if (script != null)
                             {
-                                if (script.Loop)
+                                if (script.IsRunning)
                                 {
-                                    if (script.IsUnstarted)
-                                        script.Start();
-                                    else
-                                    {
-                                        script.Stop();
-                                        script.Reset();
-                                    }
+                                    if (!script.Wait) { script.Reset(); }
                                 }
-                                else
+                                else if (!script.IsRunning)
                                 {
-                                    if (!script.Wait && script.IsRunning)
-                                    {
-                                        script.Stop();
-                                        script.Reset();
-                                    }
-                                    else if (!script.IsRunning)
-                                    {
-                                        script.Start();
-                                    }
+                                    script.Start();
                                 }
                             }
                         }

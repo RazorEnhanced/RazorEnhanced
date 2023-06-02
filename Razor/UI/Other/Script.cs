@@ -15,30 +15,7 @@ namespace Assistant
     public partial class MainForm : System.Windows.Forms.Form
     {
         //private DataTable scriptTable;
-
-        private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart, string fullpath)
-        {
-            string status = "Loaded";
-            string classname = Path.GetFileNameWithoutExtension(filename);
-            string text = null;
-
-            if (!File.Exists(fullpath))
-            {
-                return "ERROR: file not found";
-            }
-
-            Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
-            if (Scripts.EnhancedScripts.ContainsKey(filename))
-            {
-                Scripts.EnhancedScripts[filename] = script;
-            }
-            else
-            {
-                Scripts.EnhancedScripts.TryAdd(filename, script);
-            }
-            return status;
-        }
-
+        
         internal static bool LoadItem(int index, Scripts.ScriptItem item, ScriptListView view)
         {
             string filename = item.Filename;
@@ -49,20 +26,23 @@ namespace Assistant
             Keys key = item.Hotkey;
             bool autostart = item.AutoStart;
             string fullPath = item.FullPath;
+            bool preload = true;
+            bool editor = false;
 
             bool run = false;
             if (status == "Running")
                 run = true;
 
-            string result = LoadFromFile(filename, wait, loop, run, autostart, fullPath);
+            var script = EnhancedScript.FromFile(fullPath, wait, loop, run, autostart, preload, editor);
+            if (script != null) { status = "Loaded"; }
 
-            if (result == "Loaded")
+
+            if (status == "Loaded")
             {
                 ListViewItem listitem = new ListViewItem();
 
                 listitem.Text = filename;
-                string fileSuffix = Path.GetExtension(filename);
-
+                
                 listitem.ToolTipText = fullPath; // fullPath;
 
                 listitem.SubItems.Add(status);
@@ -133,13 +113,8 @@ namespace Assistant
 
         private void LoadAndInitializeScripts()
         {
-            foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
-            {
-                script.Stop();
-                script.Reset();
-            }
-            Scripts.EnhancedScripts.Clear();
-
+            EnhancedScript.ClearAll();
+            
             // Save current selected index
             int currentSelectionIndex = 0;
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
@@ -424,7 +399,7 @@ namespace Assistant
                     foreach (ListViewItem litem in scriptListView.Items)
                     {
                         string filename = litem.Text;
-                        Scripts.EnhancedScript script = Scripts.Search(filename);
+                        EnhancedScript script = EnhancedScript.Search(filename);
                         {
                             if (script != null)
                             {
@@ -507,10 +482,16 @@ namespace Assistant
             if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
                 string filename = scriptListView.SelectedItems[0].Text;
-                Scripts.EnhancedScript script = Scripts.Search(filename);
+                EnhancedScript script = EnhancedScript.Search(filename);
                 if (script != null)
                 {
-                    script.Run = run;
+                    if (run)
+                    {
+                        script.Start();
+                    }
+                    else { 
+                        script.Stop();
+                    }
                 }           
             }
         }
@@ -605,17 +586,18 @@ namespace Assistant
             {
                 int index = scriptListView.SelectedItems[0].Index;
                 string scriptname = list[index].Filename;
-                Scripts.EnhancedScript script = Scripts.Search(scriptname);
+                EnhancedScript script = EnhancedScript.Search(scriptname);
                 if (script != null)
                 {
                     string fullpath = list[index].FullPath;
-                    if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
+                    if (File.Exists(fullpath) && EnhancedScript.ScriptList.ContainsKey(scriptname))
                     {
                         bool isRunning = script.IsRunning;
 
                         if (isRunning)
                             script.Stop();
-                        Scripts.EnhancedScripts[scriptname].FileChangeDate = DateTime.MinValue;
+                        
+                        script.LastModified = DateTime.MinValue;
                         if (isRunning)
                             script.Start();
                     }
