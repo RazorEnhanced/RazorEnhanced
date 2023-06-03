@@ -258,7 +258,7 @@ namespace RazorEnhanced
         public bool Save(){
             try {
                 File.WriteAllText(Fullpath, Text);
-                LastModified = DateTime.Now;
+                //LastModified = DateTime.Now;
             } catch (Exception e) {
                 Misc.SendMessage("ERROR:EnhancedScript:Save: " + e.Message, 178);
                 return false;
@@ -706,10 +706,12 @@ namespace RazorEnhanced
             try
             {
                 csEngine = CSharpEngine.Instance;
-                result = !csEngine.CompileFromFile(m_Script.Fullpath, true, out List<string> compileMessages, out Assembly assembly);
+                result = !csEngine.CompileFromFile(m_Script.Fullpath, false, out List<string> compileMessages, out Assembly assembly);
                 if (result)
                 {
                     csProgram = assembly;
+                    m_Script.LastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
+
                 }
                 foreach (string errorMessage in compileMessages)
                 {
@@ -729,6 +731,14 @@ namespace RazorEnhanced
 
         private bool RunCSharp()
         {
+            DateTime lastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
+            if (m_Script.LastModified < lastModified)
+            {
+                LoadCSharp();
+                // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
+                m_Script.LastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
+            }
+
             try
             {
                 csEngine.Execute(csProgram);
