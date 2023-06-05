@@ -321,7 +321,10 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static double DistanceSqrt(Point3D point_a, Point3D point_b)
         {
-            double distance = Math.Sqrt(((point_a.X - point_b.X) ^ 2) + (point_a.Y - point_b.Y) ^ 2);
+            double deltaX = Math.Pow((point_a.X - point_b.X), 2);
+            double deltaY = Math.Pow((point_a.Y - point_b.Y), 2);
+
+            double distance = Math.Sqrt( deltaX + deltaY );
             return distance;
         }
 
