@@ -779,7 +779,6 @@ namespace Assistant
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.friendlistView = new System.Windows.Forms.ListView();
             this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -931,7 +930,7 @@ namespace Assistant
             this.JournalFilterPage = new System.Windows.Forms.TabPage();
             this.journalfilterdatagrid = new System.Windows.Forms.DataGridView();
             this.journalFilterText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AllScripts = new System.Windows.Forms.TabPage();
             this.scriptControlBox = new System.Windows.Forms.GroupBox();
@@ -1465,10 +1464,10 @@ namespace Assistant
             this.labelStatus = new System.Windows.Forms.Label();
             this.discordrazorButton = new System.Windows.Forms.Button();
             this.razorButtonWiki = new System.Windows.Forms.Button();
-            this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon();
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
-            this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.scriptgridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.timerupdatestatus = new System.Windows.Forms.Timer();
+            this.scriptgridMenuStrip = new System.Windows.Forms.ContextMenuStrip();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1482,7 +1481,7 @@ namespace Assistant
             this.autoStartAtLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
+            this.timertitlestatusbar = new System.Windows.Forms.Timer();
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
             this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
             this.tabs.SuspendLayout();

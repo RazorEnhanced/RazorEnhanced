@@ -55,7 +55,14 @@ namespace RazorEnhanced
 
         
         private static readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
-        internal static Dictionary<string, EnhancedScript> ScriptList { get { return m_ScriptList.Values.ToDictionary(entry=>entry.Fullpath); } }
+
+        internal static List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList(); }
+        internal static List<EnhancedScript> ScriptListEditor() { return m_ScriptList.Values.Where(script => script.Editor).ToList(); }
+        internal static List<EnhancedScript> ScriptListTab() { return m_ScriptList.Values.Where(script => !script.Editor && script.Exist).ToList(); }
+        internal static List<EnhancedScript> ScriptListTabPy() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.PYTHON).ToList(); }
+        internal static List<EnhancedScript> ScriptListTabCs() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.CSHARP).ToList(); }
+        internal static List<EnhancedScript> ScriptListTabUos() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.UOSTEAM).ToList(); }
+        
 
         internal static bool AddScript(EnhancedScript script)
         {
@@ -86,7 +93,7 @@ namespace RazorEnhanced
 
         internal static EnhancedScript Search(string filename, bool editor=false)
         {
-            foreach (var script in ScriptList.Values)
+            foreach (var script in ScriptList() )
             {
                 if (!editor && script.Editor) { continue; }
                 if (script.Fullpath.ToLower() == filename.ToLower())
@@ -103,7 +110,7 @@ namespace RazorEnhanced
 
         internal static EnhancedScript Search(Thread thread)
         {
-            foreach (var script in ScriptList.Values)
+            foreach (var script in ScriptList())
             {
                 if (script.Thread == null) { continue; }
                 if (script.Thread.Equals(thread))
@@ -121,7 +128,7 @@ namespace RazorEnhanced
 
         internal static void StopAll()
         {
-            foreach (var script in ScriptList.Values)
+            foreach (var script in ScriptList())
             {
                 script.Stop();
             }
@@ -168,11 +175,17 @@ namespace RazorEnhanced
             }
             return Path.Combine(dir, filename + count + ext);
         }
-
-
-        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, bool run = false, bool autostart = false, bool preload = true, bool editor=true)
+        public static EnhancedScript FromScriptItem(ScriptItem item)
         {
-            if (!File.Exists(fullpath)) { return null; } 
+            var run = false;
+            var preload = true;
+            var editor = false;
+            return FromFile(item.FullPath, item.Wait, item.Loop, run, item.AutoStart, preload, editor);
+        }
+
+        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, bool run = false, bool autostart = false, bool preload = true, bool editor = true)
+        {
+            if (!File.Exists(fullpath)) { return null; }
             if (m_ScriptList.ContainsKey(fullpath))
             {
                 return m_ScriptList[fullpath];
@@ -227,7 +240,7 @@ namespace RazorEnhanced
 
 
 
-        public bool Load()
+        public bool Load(bool force=false)
         {
             string content;
             /* included in the catch? dirty ? 
@@ -246,7 +259,7 @@ namespace RazorEnhanced
                 return false;
             }
 
-            if (content != m_Text) { 
+            if (force || content != m_Text ) { 
                 m_Text = content;
                 if (m_Preload) { 
                     m_ScriptEngine.Load();
@@ -684,12 +697,11 @@ namespace RazorEnhanced
                 {
                     pyEngine.SetStdout(m_StdoutWriter);
                 }
-                pyEngine.Execute();
+                return pyEngine.Execute();
             } catch (Exception ex)
             {
                 return HandleException(ex);
             }
-            return true;
         }
 
         // ----------------------------------------- CSHARP -----------------------------

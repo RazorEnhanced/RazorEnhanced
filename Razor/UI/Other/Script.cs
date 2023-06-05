@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Assistant.UI;
+using System.Threading.Tasks;
 
 namespace Assistant
 {
@@ -586,21 +587,18 @@ namespace Assistant
             {
                 int index = scriptListView.SelectedItems[0].Index;
                 string scriptname = list[index].Filename;
-                EnhancedScript script = EnhancedScript.Search(scriptname);
+                string fullpath = list[index].FullPath;
+                EnhancedScript script = EnhancedScript.Search(fullpath);
                 if (script != null)
                 {
-                    string fullpath = list[index].FullPath;
-                    if (File.Exists(fullpath) && EnhancedScript.ScriptList.ContainsKey(scriptname))
-                    {
-                        bool isRunning = script.IsRunning;
-
-                        if (isRunning)
-                            script.Stop();
-                        
-                        script.LastModified = DateTime.MinValue;
-                        if (isRunning)
-                            script.Start();
-                    }
+                    bool isRunning = script.IsRunning;
+                     
+                    if (isRunning)
+                        script.Stop();
+                    script.Load();    
+                    script.LastModified = DateTime.MinValue;
+                    if (isRunning)
+                        script.Start();
                 }
             }
         }

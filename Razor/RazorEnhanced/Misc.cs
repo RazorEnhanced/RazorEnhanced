@@ -1088,7 +1088,7 @@ namespace RazorEnhanced
         public static void ScriptStopAll(bool skipCurrent=false)
         {
             EnhancedScript currentScript = EnhancedScript.CurrentScript();
-            foreach (EnhancedScript script in EnhancedScript.ScriptList.Values.ToList())
+            foreach (EnhancedScript script in EnhancedScript.ScriptList() )
             {
                 if ( skipCurrent && currentScript == script) { 
                     continue; 
