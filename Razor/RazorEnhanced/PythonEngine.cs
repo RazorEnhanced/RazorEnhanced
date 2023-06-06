@@ -13,7 +13,7 @@ using System.IO;
 
 namespace RazorEnhanced
 {
-    public class PythonEngine
+    class PythonEngine
     {
         public Dictionary<string, object> Modules;
         public ScriptEngine Engine { get;  }
@@ -61,24 +61,16 @@ namespace RazorEnhanced
             }
         }
 
-        public void SetStdout(Action<string> stdoutWriter)
-        {
-            PythonWriter outputWriter = new PythonWriter(stdoutWriter);
-            Engine.Runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
-        }
-
-        public void SetStderr(Action<string> stderrWriter)
-        {
-            PythonWriter errorWriter = new PythonWriter(stderrWriter);
-            Engine.Runtime.IO.SetErrorOutput(errorWriter, Encoding.ASCII);
-        }
-
-        public PythonEngine(Action<string> stdoutWriter = null) {
+        public PythonEngine(Action<string> stdoutWriter) {
             var runtime = IronPython.Hosting.Python.CreateRuntime();
-            Engine = IronPython.Hosting.Python.GetEngine(runtime);
-            if (stdoutWriter != null){
-                SetStderr(stdoutWriter);
+            if (stdoutWriter != null)
+            {
+                PythonWriter outputWriter = new PythonWriter(stdoutWriter);
+                runtime.IO.SetErrorOutput(outputWriter, Encoding.ASCII);
+                runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
             }
+            Engine = IronPython.Hosting.Python.GetEngine(runtime);
+
 
 
             //Paths for IronPython 3.4
@@ -134,7 +126,7 @@ namespace RazorEnhanced
             Modules.Add("Trade", new RazorEnhanced.Trade());
             Modules.Add("Vendor", new RazorEnhanced.Vendor());
             Modules.Add("PacketLogger", new RazorEnhanced.PacketLogger());
-            
+
             //Setup builtin modules and scope
             foreach (var module in Modules) {
                 Engine.Runtime.Globals.SetVariable(module.Key, module.Value);
@@ -147,58 +139,27 @@ namespace RazorEnhanced
             CompilerOptions.Module |= ModuleOptions.Initialize;
         }
 
-        public dynamic Call(PythonFunction function, params object[] args) {
-            try { 
-                return Engine.Operations.Invoke(function, args);
-            } catch {
-                return null;
-            }
-        }
-
-        /*
-        public void Register(PythonFunction function, OnLogPacketDataCallBack callback)
+        public void Execute(String text, String path=null)
         {
-            Thread thread = Thread.CurrentThread;
-            if (!m_Callbacks.ContainsKey(thread))
-            {
-                m_Callbacks[thread] = new Dictionary<int, HashSet<OnLogPacketDataCallBack>>();
-            }
-            if (!m_Callbacks[thread].ContainsKey(packetID))
-            {
-                m_Callbacks[thread][packetID] = new HashSet<OnLogPacketDataCallBack>();
-            }
-            m_Callbacks[thread][packetID].Add(callback);
-        }
-        */
-
-
-
-        public bool Load(String text, String path = null)
-        {
-            if (Engine == null) { return false; }
+            if (Engine == null) return;
 
             //CACHE (should we?)
             Text = text;
             FilePath = path;
 
             //LOAD code as text
-            if (text == null) { return false; } // no text
+            if (text == null) return; // no text
             Source = Engine.CreateScriptSourceFromString(text, path);
-            if (Source == null) { return false; }
+            if (Source == null) return;
 
             //COMPILE with OPTIONS
             //PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
             Compiled = Source.Compile(CompilerOptions);
-            if (Compiled == null) { 
-                return false; }
-            
-            Scope = Engine.CreateScope();
-            return true;
-        }
-        public void Execute() { 
+
             //EXECUTE
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;
+            Scope = Engine.CreateScope();
             Compiled.Execute(Scope);
             journal.Active = false;
 

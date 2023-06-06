@@ -346,7 +346,6 @@
     <Compile Include="RazorEnhanced\CSharpEngine.cs" />
     <Compile Include="RazorEnhanced\CUO.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
-    <Compile Include="RazorEnhanced\EnhancedScript.cs" />
     <Compile Include="RazorEnhanced\PacketLogger.cs" />
     <Compile Include="RazorEnhanced\PythonEngine.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />

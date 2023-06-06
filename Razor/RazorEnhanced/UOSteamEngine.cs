@@ -20,7 +20,7 @@ using System.Globalization;
 namespace RazorEnhanced
 {
     //
-    public class UOSteamEngine
+    class UOSteamEngine
     {
         private int m_lastMount;
         private int m_toggle_LeftSave;
@@ -176,69 +176,50 @@ namespace RazorEnhanced
             return 0;
         }
 
-        public UOScript.Script Load(string filename)
+
+        public void Execute(string filename)
         {
-            UOScript.Script script = null;
             m_mutex.WaitOne();
             try
             {
                 var root = Lexer.Lex(filename);
-                script = new UOScript.Script(root, Misc.SendMessage);
-                script.Filename = filename;
-            }
-            catch (Exception e)
-            {
-                Misc.SendMessage($"UOSEngine: fail to load script:\n{e.Message}");
-            }
-            m_mutex.ReleaseMutex();
-            return script;
-        }
-
-        public UOScript.Script Load(string[] textLines, Action<string> writer, string filename="")
-        {
-            UOScript.Script script = null;
-            m_mutex.WaitOne();
-            try
-            {
-                var root = Lexer.Lex(textLines);
-                script = new UOScript.Script(root, writer);
-                script.Filename = filename;
-            }
-            catch { }
-            
-            m_mutex.ReleaseMutex();
-            return script;
-        }
-
-
-        public bool Execute(UOScript.Script script, bool editorMode = false)
-        {
-
-            m_mutex.WaitOne();
-            try
-            {
+                UOScript.Script script = new UOScript.Script(root, Misc.SendMessage);
                 Execute(script);
             }
             catch (UOSteamEngine.StopException)
             {
-                if (!editorMode && script.Filename!="") { 
-                    Misc.ScriptStop(Path.GetFileName(script.Filename));
-                }
+                Misc.ScriptStop(Path.GetFileName(filename));
             }
             catch (Exception e)
             {
-                if (!editorMode && script.Filename != ""){
-                    Misc.ScriptStop(Path.GetFileName(script.Filename));
-                }
+                Misc.ScriptStop(Path.GetFileName(filename));
                 throw;
             }
             finally
             {
                 m_mutex.ReleaseMutex();
             }
-            return true;
+
         }
-        
+        public void Execute(string[] textLines, Action<string> writer)
+        {
+            m_mutex.WaitOne();
+            try
+            {
+                var root = Lexer.Lex(textLines);
+                UOScript.Script script = new UOScript.Script(root, writer);
+                Execute(script);
+            }
+            catch (UOSteamEngine.StopException)
+            {
+                // nothing to do for an edit session
+            }
+            finally
+            {
+                m_mutex.ReleaseMutex();
+            }
+        }
+
         private void Execute(UOScript.Script script)
         {
             m_journal = new Journal(100);
@@ -4899,7 +4880,6 @@ namespace RazorEnhanced
         public class Script
         {
             bool Debug { get; set; }
-            public string Filename;
             Action<string> debugWriter;
 
             public Script()
