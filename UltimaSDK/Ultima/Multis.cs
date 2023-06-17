@@ -1078,7 +1078,7 @@ namespace Ultima
             ref UOFileIndex entry = ref Multis.GetValidRefEntry(graphic);
 
             Multis.m_File.SetData(entry.Address, entry.FileSize);
-            bool movable = false;
+            //bool movable = false;
 
             if (Multis.IsUOP)
             {
