@@ -46,14 +46,14 @@ namespace RazorEnhanced
             parameters.TreatWarningsAsErrors = false; // Set whether to treat all warnings as errors.
             parameters.WarningLevel = 4; // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings
             //parameters.CompilerOptions = "/optimize"; // Set compiler argument to optimize output.
-            //parameters.CompilerOptions = "-langversion:8.0";
-            parameters.CompilerOptions = "-parallel";
+            parameters.CompilerOptions += " -langversion:9.0";
+            parameters.CompilerOptions += " -parallel";
             parameters.IncludeDebugInformation = IncludeDebugInformation; // Build in debug or release
             return parameters;
         }
         private class CompilerOptions : IProviderOptions
         {
-            string _compilerVersion = "8.0";
+            string _compilerVersion = "9.0";
             IDictionary<string, string> _compilerOptions = new Dictionary<string, string>() { };
             public string CompilerVersion { get => _compilerVersion; set { _compilerVersion = value; } }
             public bool WarnAsError => false;
