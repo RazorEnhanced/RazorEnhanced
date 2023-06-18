@@ -908,13 +908,13 @@ namespace RazorEnhanced
             m_form = new ToolBarForm();
             m_form.SuspendLayout();
 
-            int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BigBarHorizontalSpaceStat.Width;
+            int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaleSpazioStat.Width;
             int offsetstat = 10;
             int paneloffset = 18;
 
 
             // Generic Background
-            Bitmap tempBackground = Assistant.Properties.Resources.BigBarHorizontalSpaceStat;
+            Bitmap tempBackground = Assistant.Properties.Resources.BarraGrandeOrizzontaleSpazioStat;
 
             if (Settings.General.ReadBool("ShowHitsToolBarCheckBox") || Settings.General.ReadBool("ShowStaminaToolBarCheckBox") || Settings.General.ReadBool("ShowManaToolBarCheckBox") ||
                 Settings.General.ReadBool("ShowWeightToolBarCheckBox") || Settings.General.ReadBool("ShowFollowerToolBarCheckBox") || Settings.General.ReadBool("ShowTitheToolBarCheckBox"))
