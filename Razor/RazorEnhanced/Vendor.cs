@@ -25,6 +25,40 @@ namespace RazorEnhanced
         /// <summary>@nodoc</summary>
         static public Assistant.Mobile LastVendor { get; set; }
 
+        static public void StoreSellList(PacketReader p, PacketHandlerEventArgs args)
+        {
+            Assistant.Serial serial = p.ReadUInt32();
+            var count = p.ReadUInt16();
+
+            var sellItems = new List<RazorEnhanced.Item>();
+
+            for (int i = 0; i < count; i++)
+            {
+                var itSerial = p.ReadUInt32();
+                var itId = p.ReadUInt16();
+                var itHue = p.ReadUInt16();
+                var itAmount = p.ReadUInt16();
+                var itPrice = p.ReadUInt16();
+                var itNameLength = p.ReadUInt16();
+                string itName = null;
+                
+                if (itNameLength > 0)
+                {
+                    itName = p.ReadString(itNameLength);
+                }
+                
+                var newItem = Assistant.Item.Factory(itSerial, itId);
+                newItem.Hue = itHue;
+                newItem.Amount = itAmount;
+                newItem.Price = itPrice;
+                newItem.Name = itName;
+
+                sellItems.Add(new RazorEnhanced.Item(newItem));
+            }
+
+            Vendor.LastSellList = sellItems;
+        }
+        
         /// <summary>@nodoc</summary>
         static public void StoreBuyList(PacketReader p, PacketHandlerEventArgs args)
         {

@@ -92,6 +92,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x90, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
             PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
+            PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(Vendor.StoreSellList));
             PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
             PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
             PacketHandler.RegisterServerToClientViewer(0xA3, new PacketViewerCallback(StamUpdate));
