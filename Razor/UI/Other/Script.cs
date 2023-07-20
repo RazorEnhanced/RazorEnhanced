@@ -400,7 +400,7 @@ namespace Assistant
                     foreach (ListViewItem litem in scriptListView.Items)
                     {
                         string filename = litem.Text;
-                        EnhancedScript script = EnhancedScript.Search(filename);
+                        EnhancedScript script = EnhancedScript.Service.Search(filename);
                         {
                             if (script != null)
                             {
@@ -483,7 +483,7 @@ namespace Assistant
             if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
                 string filename = scriptListView.SelectedItems[0].Text;
-                EnhancedScript script = EnhancedScript.Search(filename);
+                EnhancedScript script = EnhancedScript.Service.Search(filename);
                 if (script != null)
                 {
                     if (run)
@@ -588,7 +588,7 @@ namespace Assistant
                 int index = scriptListView.SelectedItems[0].Index;
                 string scriptname = list[index].Filename;
                 string fullpath = list[index].FullPath;
-                EnhancedScript script = EnhancedScript.Search(fullpath);
+                EnhancedScript script = EnhancedScript.Service.Search(fullpath);
                 if (script != null)
                 {
                     bool isRunning = script.IsRunning;

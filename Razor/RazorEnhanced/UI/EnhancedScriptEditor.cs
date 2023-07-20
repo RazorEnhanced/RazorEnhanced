@@ -1011,7 +1011,7 @@ namespace RazorEnhanced.UI
                 var fullpath = save.FileName;
                 if (m_Script.Editor)
                 {
-                    EnhancedScript.RemoveScript(m_Script);
+                    EnhancedScript.Service.RemoveScript(m_Script);
                 }
                 //Dalamar:
                 //TODO: add YES/NO dialog for overwrite check File.Exists(fullpath)
@@ -1084,7 +1084,7 @@ namespace RazorEnhanced.UI
             fastColoredTextBoxEditor.Text = String.Empty;
             if (m_Script.Editor)
             {
-                EnhancedScript.RemoveScript(m_Script);
+                EnhancedScript.Service.RemoveScript(m_Script);
             }
             m_Script = null;
             UpdateTitle();

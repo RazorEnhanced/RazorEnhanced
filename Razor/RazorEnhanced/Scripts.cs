@@ -285,7 +285,7 @@ namespace RazorEnhanced
             public void Stop()
             {
                 m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
-                EnhancedScript.StopAll();
+                EnhancedScript.Service.StopAll();
             }
 
             private bool IsRunningThread(Thread thread)
@@ -358,7 +358,7 @@ namespace RazorEnhanced
             {
                 lock (syncLockScripts)
                 {
-                    foreach (EnhancedScript script in EnhancedScript.ScriptList())
+                    foreach (EnhancedScript script in EnhancedScript.Service.ScriptList())
                     {
                         if (script.IsRunning)
                         {
@@ -522,7 +522,7 @@ namespace RazorEnhanced
                 script.Load();
             }
             */
-            foreach (var script in EnhancedScript.ScriptList())
+            foreach (var script in EnhancedScript.Service.ScriptList())
             {
                 // if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
                 // script.LastModified = DateTime.MinValue;
@@ -550,7 +550,7 @@ namespace RazorEnhanced
         // Autostart
         internal static void AutoStart()
         {
-            foreach (EnhancedScript script in EnhancedScript.ScriptList())
+            foreach (EnhancedScript script in EnhancedScript.Service.ScriptList())
             {
                 if (!script.IsRunning && script.AutoStart)
                     script.Start();

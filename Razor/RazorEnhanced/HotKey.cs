@@ -416,7 +416,7 @@ namespace RazorEnhanced
                         if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
                         {
                             RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33, false);
-                            EnhancedScript.StopAll();
+                            EnhancedScript.Service.StopAll();
                         }
                         break;
 
@@ -425,7 +425,7 @@ namespace RazorEnhanced
                         if (item != null)
                         {
                             string filename = item.Filename;
-                            EnhancedScript script = EnhancedScript.Search(filename,false);
+                            EnhancedScript script = EnhancedScript.Service.Search(filename,false);
                             if (script != null)
                             {
                                 if (script.IsRunning)

@@ -1057,7 +1057,7 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptRun(string scriptfile)
         {
-            EnhancedScript script = EnhancedScript.Search(scriptfile);
+            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
             if (script != null)
             {
                 script.Start();
@@ -1072,7 +1072,7 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptStop(string scriptfile)
         {
-            EnhancedScript script = EnhancedScript.Search(scriptfile);
+            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
             if (script != null)
             {
                 script.Start();
@@ -1087,8 +1087,8 @@ namespace RazorEnhanced
         /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
         public static void ScriptStopAll(bool skipCurrent=false)
         {
-            EnhancedScript currentScript = EnhancedScript.CurrentScript();
-            foreach (EnhancedScript script in EnhancedScript.ScriptList() )
+            EnhancedScript currentScript = EnhancedScript.Service.CurrentScript();
+            foreach (EnhancedScript script in EnhancedScript.Service.ScriptList() )
             {
                 if ( skipCurrent && currentScript == script) { 
                     continue; 
@@ -1104,7 +1104,7 @@ namespace RazorEnhanced
         /// <returns>True: Script is running - False: otherwise.</returns>
         public static bool ScriptStatus(string scriptfile)
         {
-            EnhancedScript script = EnhancedScript.Search(scriptfile);
+            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
             if (script != null)
             {
                 return script.IsRunning;
@@ -1126,16 +1126,7 @@ namespace RazorEnhanced
             return ScreenCapManager.CaptureNowPath();
         }
 
-        /// <summary>
-        /// Stop the RazorEnhanced packet logger.
-        /// </summary>
-        /// <returns>The path to the saved file.</returns>
-        public static string PacketLogStop()
-        {
-            return Assistant.Packet.StopRecording();
-        }
-
-
+ 
         /// <summary>
         /// The MapInfo class is used to store information about the Map location.
         /// </summary>

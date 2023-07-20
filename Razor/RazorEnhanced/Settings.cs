@@ -243,7 +243,7 @@ namespace RazorEnhanced
         private static void SaveScripting(string filename, string tableName, DataTable targets)
         {
             List<RazorEnhanced.Scripts.ScriptItem> items = new List<RazorEnhanced.Scripts.ScriptItem>();
-            var scriptList = EnhancedScript.ScriptListTab();
+            var scriptList = EnhancedScript.Service.ScriptListTab();
 
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
                 items.Add(item);
@@ -2647,7 +2647,7 @@ namespace RazorEnhanced
             {
                 m_Dataset.Clear();
                 Scripts.Clear();
-                EnhancedScript.ClearAll(); //Dalamar: should i ? 
+                EnhancedScript.Service.ClearAll(); //Dalamar: should i ? 
             }
 
             m_profileName = profileName;
