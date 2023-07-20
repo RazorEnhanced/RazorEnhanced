@@ -34,7 +34,7 @@ namespace Assistant
             if (status == "Running")
                 run = true;
 
-            var script = EnhancedScript.FromFile(fullPath, wait, loop, run, autostart, preload, editor);
+            var script = EnhancedScript.FromScriptItem(item);
             if (script != null) { status = "Loaded"; }
 
 
@@ -114,7 +114,7 @@ namespace Assistant
 
         private void LoadAndInitializeScripts()
         {
-            EnhancedScript.ClearAll();
+            //EnhancedScript.ClearAll();
             
             // Save current selected index
             int currentSelectionIndex = 0;
@@ -354,7 +354,7 @@ namespace Assistant
         {
             RazorEnhanced.Settings.Save();
             LoadAndInitializeScripts();
-            RazorEnhanced.HotKey.Init();
+            RazorEnhanced.HotKey.Init();            
         }
 
         internal void UpdateScriptGridKey()
@@ -904,8 +904,8 @@ namespace Assistant
                 scriptListView.SelectedItems[0].SubItems[2].Text = "Yes";
             else
                 scriptListView.SelectedItems[0].SubItems[2].Text = "No";
-
-            ReloadScriptTable();
+            
+            ReloadScriptTable();    
         }
 
         private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)

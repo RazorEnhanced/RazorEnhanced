@@ -6,8 +6,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
-
-
+using System.Threading.Tasks;
+using RazorEnhanced.UOScript;
+using Accord.Math;
 
 namespace RazorEnhanced
 {
@@ -26,6 +27,13 @@ namespace RazorEnhanced
             PyScripts = new List<ScriptItem>();
             UosScripts = new List<ScriptItem>();
             CsScripts = new List<ScriptItem>();
+        }
+
+        public static void RefreshScriptItems() {
+            
+            Scripts.PyScripts = EnhancedScript.Service.ScriptListTabPy().Apply(script => script.ToScriptItem()).ToList();
+            Scripts.CsScripts = EnhancedScript.Service.ScriptListTabCs().Apply(script => script.ToScriptItem()).ToList();
+            Scripts.UosScripts = EnhancedScript.Service.ScriptListTabUos().Apply(script => script.ToScriptItem()).ToList();
         }
 
         internal static void ClearScriptKey(Keys key)
@@ -335,12 +343,22 @@ namespace RazorEnhanced
                 { }
             }
 
-            static readonly object syncLock = new object();
+            
             private void OnTick(object state)
             {
-                lock (syncLock)
+                var updateScripts = Task.Run(() => OnTickScripts(state));
+                var updateAgents = Task.Run(() => OnTickAgents(state));
+                while (!updateAgents.IsCompleted || !updateAgents.IsCompleted) {
+                    Misc.Pause(1);
+                }
+            }
+
+            static readonly object syncLockScripts = new object();
+            private void OnTickScripts(object state)
+            {
+                lock (syncLockScripts)
                 {
-                    foreach (EnhancedScript script in EnhancedScript.ScriptList.Values.ToList())
+                    foreach (EnhancedScript script in EnhancedScript.ScriptList())
                     {
                         if (script.IsRunning)
                         {
@@ -351,23 +369,6 @@ namespace RazorEnhanced
                                 script.StopMessage = true;
                             }
 
-                            /*
-                            if (script.Loop)
-                            {
-                                if (script.IsStopped)
-                                    script.Reset();
-
-                                if (script.IsUnstarted)
-                                    script.Start();
-                            }
-                            else
-                            {
-                                if (script.IsStopped)
-                                    script.Reset();
-                                else if (script.IsUnstarted)
-                                    script.Start();
-                            }
-                            */
                         }
                         else
                         {
@@ -377,18 +378,16 @@ namespace RazorEnhanced
                                 script.StartMessage = true;
                                 script.StopMessage = false;
                             }
-
-                            /*
-                            if (script.IsRunning)
-                                script.Stop();
-
-                            if (script.IsStopped)
-                                script.Reset();
-                            */
                         }
                     }
-
-                    if (World.Player != null && Client.Running) // Parte agent
+                }
+            }
+            static readonly object syncLockAgents = new object();
+            private void OnTickAgents(object state)
+            {
+                lock (syncLockAgents)
+                {
+                            if (World.Player != null && Client.Running) // Parte agent
                     {
 
                         if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
@@ -523,7 +522,7 @@ namespace RazorEnhanced
                 script.Load();
             }
             */
-            foreach (var script in EnhancedScript.ScriptList.Values)
+            foreach (var script in EnhancedScript.ScriptList())
             {
                 // if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
                 // script.LastModified = DateTime.MinValue;
@@ -551,7 +550,7 @@ namespace RazorEnhanced
         // Autostart
         internal static void AutoStart()
         {
-            foreach (EnhancedScript script in EnhancedScript.ScriptList.Values)
+            foreach (EnhancedScript script in EnhancedScript.ScriptList())
             {
                 if (!script.IsRunning && script.AutoStart)
                     script.Start();

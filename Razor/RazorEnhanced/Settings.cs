@@ -194,45 +194,25 @@ namespace RazorEnhanced
             List<RazorEnhanced.Scripts.ScriptItem> scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
             foreach (RazorEnhanced.Scripts.ScriptItem item in scriptItems)
             {
-                string localFilename = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
                 // if no fullname then set it to local 
-                if (item.FullPath == null)
-                {
-                    item.FullPath = localFilename;
-                }
-
                 // if the file doesn't exist at its full path, is it local
-                if (!File.Exists(item.FullPath)                    )
+                string defaultPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
                 {
-                    if (File.Exists(localFilename))
-                    {
-                        item.FullPath = localFilename;
-                    }
+                    item.FullPath = defaultPath;
                 }
                 
-                if (File.Exists(item.FullPath))
+                //Dalamar: find a nice way to instantiate EnhancedScripts
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null) { continue; } // SKIP SCRIPT
+
+                switch (script.Language)
                 {
-                    string suffix = Path.GetExtension(item.FullPath).ToLower();
-                    switch (suffix)
-                    {
-                        case ".py":
-                            Scripts.PyScripts.Add(item);
-                            break;
-                        case ".uos":
-                            Scripts.UosScripts.Add(item);
-                            break;
-                        case ".cs":
-                            Scripts.CsScripts.Add(item);
-                            break;
-                        default:
-                            // drop it
-                            break;
-                    }
+                    case ScriptLanguage.PYTHON: Scripts.PyScripts.Add(item); break;
+                    case ScriptLanguage.CSHARP: Scripts.CsScripts.Add(item); break;
+                    case ScriptLanguage.UOSTEAM: Scripts.UosScripts.Add(item); break;
                 }
-                else
-                {
-                    // drop it from scripts as it doesn't exist
-                }
+
             }
             DataTable temp = initDict[tableName](tableName);
 
@@ -263,6 +243,8 @@ namespace RazorEnhanced
         private static void SaveScripting(string filename, string tableName, DataTable targets)
         {
             List<RazorEnhanced.Scripts.ScriptItem> items = new List<RazorEnhanced.Scripts.ScriptItem>();
+            var scriptList = EnhancedScript.ScriptListTab();
+
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
                 items.Add(item);
             foreach (Scripts.ScriptItem item in Scripts.UosScripts)
@@ -2665,6 +2647,7 @@ namespace RazorEnhanced
             {
                 m_Dataset.Clear();
                 Scripts.Clear();
+                EnhancedScript.ClearAll(); //Dalamar: should i ? 
             }
 
             m_profileName = profileName;
