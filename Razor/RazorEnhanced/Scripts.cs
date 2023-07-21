@@ -30,11 +30,33 @@ namespace RazorEnhanced
         }
 
         public static void RefreshScriptItems() {
-            
             Scripts.PyScripts = EnhancedScript.Service.ScriptListTabPy().Apply(script => script.ToScriptItem()).ToList();
             Scripts.CsScripts = EnhancedScript.Service.ScriptListTabCs().Apply(script => script.ToScriptItem()).ToList();
             Scripts.UosScripts = EnhancedScript.Service.ScriptListTabUos().Apply(script => script.ToScriptItem()).ToList();
         }
+
+        public static void LoadEnhancedScripts(List<RazorEnhanced.Scripts.ScriptItem> scriptItems) {
+            EnhancedScript.Service.ClearAll();
+            foreach (var item in scriptItems)
+            {
+                // if no fullname then set it to local 
+                // if the file doesn't exist at its full path, is it local
+                string defaultPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
+                {
+                    item.FullPath = defaultPath;
+                }
+
+                //Dalamar: find a nice way to instantiate EnhancedScripts
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null)
+                {
+                    Misc.SendMessage($"ERROR: File not found: {item.FullPath}", 138);
+                }
+            }
+            Scripts.RefreshScriptItems();
+        }
+
 
         internal static void ClearScriptKey(Keys key)
         {

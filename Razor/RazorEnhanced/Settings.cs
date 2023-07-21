@@ -191,31 +191,11 @@ namespace RazorEnhanced
         }
         private static DataTable LoadScripting(string filename, string tableName)
         {
-            List<RazorEnhanced.Scripts.ScriptItem> scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
-            foreach (RazorEnhanced.Scripts.ScriptItem item in scriptItems)
-            {
-                // if no fullname then set it to local 
-                // if the file doesn't exist at its full path, is it local
-                string defaultPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
-                if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
-                {
-                    item.FullPath = defaultPath;
-                }
-                
-                //Dalamar: find a nice way to instantiate EnhancedScripts
-                var script = EnhancedScript.FromScriptItem(item);
-                if (script == null) { continue; } // SKIP SCRIPT
-
-                switch (script.Language)
-                {
-                    case ScriptLanguage.PYTHON: Scripts.PyScripts.Add(item); break;
-                    case ScriptLanguage.CSHARP: Scripts.CsScripts.Add(item); break;
-                    case ScriptLanguage.UOSTEAM: Scripts.UosScripts.Add(item); break;
-                }
-
-            }
+            
+            var scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
+            Scripts.LoadEnhancedScripts(scriptItems);
+            
             DataTable temp = initDict[tableName](tableName);
-
             return temp;
         }
         internal static DataTable InitItems<T>(string tableName) where T : ListAbleItem

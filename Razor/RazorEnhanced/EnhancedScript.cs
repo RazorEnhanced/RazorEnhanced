@@ -39,7 +39,7 @@ namespace RazorEnhanced
 
         internal List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList(); }
         internal List<EnhancedScript> ScriptListEditor() { return m_ScriptList.Values.Where(script => script.Editor).ToList(); }
-        internal List<EnhancedScript> ScriptListTab() { return m_ScriptList.Values.Where(script => !script.Editor && script.Exist).ToList(); }
+        internal List<EnhancedScript> ScriptListTab() { return m_ScriptList.Values.Where(script => script != null && !script.Editor && script.Exist).ToList(); }
         internal List<EnhancedScript> ScriptListTabPy() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.PYTHON).ToList(); }
         internal List<EnhancedScript> ScriptListTabCs() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.CSHARP).ToList(); }
         internal List<EnhancedScript> ScriptListTabUos() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.UOSTEAM).ToList(); }
@@ -189,6 +189,7 @@ namespace RazorEnhanced
             var preload = true;
             var editor = false;
             var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, preload, editor);
+            if (script == null) return null;
             script.ScriptItem = item;
             return script;
         }
@@ -251,19 +252,6 @@ namespace RazorEnhanced
 
         public ScriptItem ToScriptItem()
         {
-            if (m_ScriptItem == null)
-            {
-                m_ScriptItem = new ScriptItem()
-                {
-                    Loop = m_Loop,
-                    Hotkey = m_Hotkey,
-                    AutoStart = m_AutoStart,
-                    Filename = Filename,
-                    FullPath = m_Fullpath,
-                    HotKeyPass = m_HotKeyPass,
-                    Wait = m_Wait,
-                };
-            }
             return m_ScriptItem;
         }
 
@@ -421,7 +409,7 @@ namespace RazorEnhanced
 
                     case ThreadState.WaitSleepJoin:
                     case ThreadState.Running:
-                        return "Run";
+                        return "Running";
 
 
                     default:

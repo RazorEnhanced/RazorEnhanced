@@ -1483,7 +1483,7 @@ namespace Assistant
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timertitlestatusbar = new System.Windows.Forms.Timer();
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
-            this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
+            this.m_Tip = new System.Windows.Forms.ToolTip();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();

@@ -16,69 +16,33 @@ namespace Assistant
     public partial class MainForm : System.Windows.Forms.Form
     {
         //private DataTable scriptTable;
-        
-        internal static bool LoadItem(int index, Scripts.ScriptItem item, ScriptListView view)
+
+
+
+        internal static ListViewItem ScriptToTableRow(EnhancedScript script, int index)
         {
-            string filename = item.Filename;
-            bool wait = item.Wait;
-            bool loop = item.Loop;
-            string status = item.Status;
-            bool passkey = item.HotKeyPass;
-            Keys key = item.Hotkey;
-            bool autostart = item.AutoStart;
-            string fullPath = item.FullPath;
-            bool preload = true;
-            bool editor = false;
+            ListViewItem listitem = new ListViewItem();
+            listitem.Text = script.Filename;
+            listitem.ToolTipText = script.Fullpath;
+            var row = listitem.SubItems;
 
-            bool run = false;
-            if (status == "Running")
-                run = true;
+            var text_status = script.Status;
+            var text_loop = script.Loop ? "Yes" : "No";
+            var text_autostart = script.AutoStart ? "Yes" : "No";
+            var text_wait = script.Wait ? "Yes" : "No";
+            var text_hotkey = script.HotKey.ToString();
+            var text_hotkeypass = script.HotKeyPass ? "Yes" : "No";
+            var text_index = Convert.ToString(index);
 
-            var script = EnhancedScript.FromScriptItem(item);
-            if (script != null) { status = "Loaded"; }
-
-
-            if (status == "Loaded")
-            {
-                ListViewItem listitem = new ListViewItem();
-
-                listitem.Text = filename;
-                
-                listitem.ToolTipText = fullPath; // fullPath;
-
-                listitem.SubItems.Add(status);
-
-                if (loop)
-                    listitem.SubItems.Add("Yes");
-                else
-                    listitem.SubItems.Add("No");
-
-                if (autostart)
-                    listitem.SubItems.Add("Yes");
-                else
-                    listitem.SubItems.Add("No");
-
-                if (wait)
-                    listitem.SubItems.Add("Yes");
-                else
-                    listitem.SubItems.Add("No");
-
-
-                listitem.SubItems.Add(HotKey.KeyString(key));
-
-                if (passkey)
-                    listitem.SubItems.Add("Yes");
-                else
-                    listitem.SubItems.Add("No");
-
-                listitem.SubItems.Add(Convert.ToString(index));
-
-                view.Items.Add(listitem);
-
-                item.Status = "Stopped";
-                return true;
-            }
-            return false;
+            row.Add(text_status);
+            row.Add(text_loop);
+            row.Add(text_autostart);
+            row.Add(text_wait);
+            row.Add(text_hotkey);
+            row.Add(text_hotkeypass);
+            row.Add(text_index);
+            
+            return listitem;
         }
 
         internal static void LoadScriptList(System.Collections.Generic.List<Scripts.ScriptItem> scripts, ScriptListView scriptlistView)
@@ -86,9 +50,11 @@ namespace Assistant
             int index = 0;
             foreach (Scripts.ScriptItem item in scripts)
             {
-                bool success = LoadItem(index, item, scriptlistView);
-                if (success)
-                {
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script != null) {
+                
+                    var listitem = ScriptToTableRow(script, index);
+                    scriptlistView.Items.Add(listitem);
                     index++;
                 }
                 else
@@ -106,11 +72,12 @@ namespace Assistant
                     listitem.SubItems.Add("No");
                     listitem.SubItems.Add("0");
                     scriptlistView.Items.Add(listitem);
-                    item.Status = "Error";
                 }
+                
             }
 
         }
+
 
         private void LoadAndInitializeScripts()
         {
@@ -149,7 +116,8 @@ namespace Assistant
 
             if (scriptListView.Items.Count > currentSelectionIndex)
             {
-                scriptListView.Items[currentSelectionIndex].Selected = true;
+                var selected = scriptListView.Items[currentSelectionIndex];
+                selected.Selected = true;
             }
 
         }
@@ -853,7 +821,7 @@ namespace Assistant
             else
                 scriptListView.SelectedItems[0].SubItems[3].Text = "No";
 
-            ReloadScriptTable();
+            //ReloadScriptTable();
         }
 
         private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
@@ -905,7 +873,7 @@ namespace Assistant
             else
                 scriptListView.SelectedItems[0].SubItems[2].Text = "No";
             
-            ReloadScriptTable();    
+            //ReloadScriptTable();    
         }
 
         private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)
@@ -956,7 +924,7 @@ namespace Assistant
             else
                 scriptListView.SelectedItems[0].SubItems[4].Text = "No";
 
-            ReloadScriptTable();
+            //ReloadScriptTable();
         }
 
         private void scriptwaitmodecheckbox_CheckedChanged(object sender, EventArgs e)
