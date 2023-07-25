@@ -438,7 +438,13 @@ namespace RazorEnhanced
         internal string Fullpath
         {
             get { lock (m_Lock) { return m_Fullpath; } }
-            set { lock (m_Lock) { m_Fullpath = value; } }
+            set { 
+                lock (m_Lock) { m_Fullpath = value; }
+                if (m_ScriptItem != null){
+                    m_ScriptItem.FullPath = m_Fullpath;
+                    m_ScriptItem.Filename = Filename;
+                }
+            }
         }
 
         internal ScriptItem ScriptItem
@@ -486,18 +492,35 @@ namespace RazorEnhanced
 
         internal bool Wait{
             get{lock (m_Lock){return m_Wait;}}
+            set {
+                lock (m_Lock) { m_Wait = value; }
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.Wait = m_Wait;
+                }
+            }
         }
 
         
         internal bool Loop{
             get{lock (m_Lock){return m_Loop;}}
-            set{lock (m_Lock){m_Loop = value;}}
+            set{lock (m_Lock){m_Loop = value;}
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.Loop = m_Loop;
+                }
+            }
         }
 
         
         internal bool AutoStart{
             get{lock (m_Lock){return m_AutoStart;}}
-            set{lock (m_Lock){m_AutoStart = value;}}
+            set{lock (m_Lock){m_AutoStart = value;}
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.AutoStart = m_AutoStart;
+                }
+            }
         }
 
         internal bool Editor
@@ -514,13 +537,23 @@ namespace RazorEnhanced
         internal Keys HotKey
         {
             get { lock (m_Lock) { return m_Hotkey; } }
-            set { lock (m_Lock) { m_Hotkey = value; } }
+            set { lock (m_Lock) { m_Hotkey = value; }
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.Hotkey = m_Hotkey;
+                }
+            }
         }
 
         internal bool HotKeyPass
         {
             get { lock (m_Lock) { return m_HotKeyPass; } }
-            set { lock (m_Lock) { m_HotKeyPass = value; } }
+            set { lock (m_Lock) { m_HotKeyPass = value; }
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.HotKeyPass = m_HotKeyPass;
+                }
+            }
         }
 
         internal bool IsRunning

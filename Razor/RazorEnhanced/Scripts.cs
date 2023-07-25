@@ -29,7 +29,7 @@ namespace RazorEnhanced
             CsScripts = new List<ScriptItem>();
         }
 
-        public static void RefreshScriptItems() {
+        public static void UpdateScriptItems() {
             Scripts.PyScripts = EnhancedScript.Service.ScriptListTabPy().Apply(script => script.ToScriptItem()).ToList();
             Scripts.CsScripts = EnhancedScript.Service.ScriptListTabCs().Apply(script => script.ToScriptItem()).ToList();
             Scripts.UosScripts = EnhancedScript.Service.ScriptListTabUos().Apply(script => script.ToScriptItem()).ToList();
@@ -54,7 +54,7 @@ namespace RazorEnhanced
                     Misc.SendMessage($"ERROR: File not found: {item.FullPath}", 138);
                 }
             }
-            Scripts.RefreshScriptItems();
+            Scripts.UpdateScriptItems();
         }
 
 

@@ -479,7 +479,7 @@ namespace Assistant
             if (scriptListView == null)
                 return;
 
-            openFileDialogscript.Filter = "Script Files|";  // *.py;*.uos;*.txt;*.cs";
+            openFileDialogscript.Filter = "Script Files|";  // *.py; *.uos; *.txt; *.cs
 
             System.Collections.Generic.List<Scripts.ScriptItem> list = null;           
             if (scriptListView.Name == "pyScriptListView")
@@ -519,7 +519,8 @@ namespace Assistant
                     scriptItem.HotKeyPass = false;
                     scriptItem.Hotkey = Keys.None;
                     scriptItem.FullPath = Path.Combine(scriptPath.ToLower(), filename);
-                    list.Add(scriptItem);
+                    EnhancedScript.FromScriptItem(scriptItem);
+                    Scripts.UpdateScriptItems();
                     ReloadScriptTable();
                 }
              }
@@ -603,9 +604,14 @@ namespace Assistant
                 }
                 if (removeIndex >= 0)
                 {
-                    list.RemoveAt(removeIndex);
+                    var item = list[removeIndex];
+                    var script = EnhancedScript.FromScriptItem(item);
+                    if (script != null)
+                    {
+                        EnhancedScript.Service.RemoveScript(script);
+                        Scripts.UpdateScriptItems();
+                    }
                 }
-
                 ReloadScriptTable();
                 HotKey.Init();
             }
