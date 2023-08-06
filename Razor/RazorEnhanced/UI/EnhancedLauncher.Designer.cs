@@ -152,7 +152,7 @@ namespace RazorEnhanced.UI
             this.cuoPathClick.Location = new System.Drawing.Point(6, 67);
             this.cuoPathClick.Name = "cuoPathClick";
             this.cuoPathClick.Size = new System.Drawing.Size(20, 20);
-            this.cuoPathClick.TabIndex = 18;
+            this.cuoPathClick.TabIndex = 30;
             this.cuoPathClick.UseVisualStyleBackColor = true;
             this.cuoPathClick.Click += new System.EventHandler(this.CuoClient_Click);
             // 
@@ -162,7 +162,7 @@ namespace RazorEnhanced.UI
             this.cuoClientLabel.Location = new System.Drawing.Point(118, 70);
             this.cuoClientLabel.Name = "cuoClientLabel";
             this.cuoClientLabel.Size = new System.Drawing.Size(249, 13);
-            this.cuoClientLabel.TabIndex = 17;
+            this.cuoClientLabel.TabIndex = 32;
             this.cuoClientLabel.Text = "Optional";
             this.cuoClientLabel.Click += new System.EventHandler(this.CuoClient_Click);
             // 
@@ -172,7 +172,7 @@ namespace RazorEnhanced.UI
             this.label4.Location = new System.Drawing.Point(32, 70);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(62, 13);
-            this.label4.TabIndex = 16;
+            this.label4.TabIndex = 31;
             this.label4.Text = "CUO Client:";
             // 
             // osiEnc
@@ -180,7 +180,7 @@ namespace RazorEnhanced.UI
             this.osiEnc.Location = new System.Drawing.Point(217, 125);
             this.osiEnc.Name = "osiEnc";
             this.osiEnc.Size = new System.Drawing.Size(140, 22);
-            this.osiEnc.TabIndex = 15;
+            this.osiEnc.TabIndex = 51;
             this.osiEnc.Text = "Use OSI Encryption";
             this.osiEnc.CheckedChanged += new System.EventHandler(this.OsiEnc_CheckedChanged);
             // 
@@ -190,7 +190,7 @@ namespace RazorEnhanced.UI
             this.patchEnc.Location = new System.Drawing.Point(15, 124);
             this.patchEnc.Name = "patchEnc";
             this.patchEnc.Size = new System.Drawing.Size(140, 22);
-            this.patchEnc.TabIndex = 14;
+            this.patchEnc.TabIndex = 50;
             this.patchEnc.Text = "Patch client encryption";
             this.patchEnc.UseVisualStyleBackColor = false;
             this.patchEnc.CheckedChanged += new System.EventHandler(this.PatchEncy_CheckedChanged);
@@ -205,9 +205,9 @@ namespace RazorEnhanced.UI
             this.portLabel.Location = new System.Drawing.Point(333, 101);
             this.portLabel.Name = "portLabel";
             this.portLabel.Size = new System.Drawing.Size(35, 20);
-            this.portLabel.TabIndex = 13;
+            this.portLabel.TabIndex = 43;
             this.portLabel.Text = "2593";
-            this.portLabel.TextChanged += new System.EventHandler(this.ServerportT_TextChanged);
+            this.portLabel.Leave += new System.EventHandler(this.ServerportT_TextChanged);
             // 
             // label7
             // 
@@ -215,7 +215,7 @@ namespace RazorEnhanced.UI
             this.label7.Location = new System.Drawing.Point(299, 101);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 13);
-            this.label7.TabIndex = 12;
+            this.label7.TabIndex = 42;
             this.label7.Text = "Port:";
             // 
             // hostLabel
@@ -228,8 +228,8 @@ namespace RazorEnhanced.UI
             this.hostLabel.Location = new System.Drawing.Point(95, 101);
             this.hostLabel.Name = "hostLabel";
             this.hostLabel.Size = new System.Drawing.Size(200, 20);
-            this.hostLabel.TabIndex = 11;
-            this.hostLabel.TextChanged += new System.EventHandler(this.ServeraddressT_TextChanged);
+            this.hostLabel.TabIndex = 41;
+            this.hostLabel.Leave += new System.EventHandler(this.ServeraddressT_TextChanged);
             // 
             // label6
             // 
@@ -237,7 +237,7 @@ namespace RazorEnhanced.UI
             this.label6.Location = new System.Drawing.Point(7, 103);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(82, 13);
-            this.label6.TabIndex = 10;
+            this.label6.TabIndex = 40;
             this.label6.Text = "Server Address:";
             // 
             // button1
@@ -247,7 +247,7 @@ namespace RazorEnhanced.UI
             this.button1.Location = new System.Drawing.Point(6, 43);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(20, 20);
-            this.button1.TabIndex = 9;
+            this.button1.TabIndex = 20;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
@@ -257,7 +257,7 @@ namespace RazorEnhanced.UI
             this.clientFolderLabel.Location = new System.Drawing.Point(118, 46);
             this.clientFolderLabel.Name = "clientFolderLabel";
             this.clientFolderLabel.Size = new System.Drawing.Size(249, 13);
-            this.clientFolderLabel.TabIndex = 8;
+            this.clientFolderLabel.TabIndex = 22;
             this.clientFolderLabel.Text = "Not Set";
             // 
             // label5
@@ -266,7 +266,7 @@ namespace RazorEnhanced.UI
             this.label5.Location = new System.Drawing.Point(32, 46);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 13);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 21;
             this.label5.Text = "UO Folder:";
             // 
             // bNameCopy
@@ -276,7 +276,7 @@ namespace RazorEnhanced.UI
             this.bNameCopy.Location = new System.Drawing.Point(6, 20);
             this.bNameCopy.Name = "bNameCopy";
             this.bNameCopy.Size = new System.Drawing.Size(20, 20);
-            this.bNameCopy.TabIndex = 6;
+            this.bNameCopy.TabIndex = 10;
             this.bNameCopy.UseVisualStyleBackColor = true;
             this.bNameCopy.Click += new System.EventHandler(this.BNameCopy_Click);
             // 
@@ -286,7 +286,7 @@ namespace RazorEnhanced.UI
             this.clientPathLabel.Location = new System.Drawing.Point(118, 23);
             this.clientPathLabel.Name = "clientPathLabel";
             this.clientPathLabel.Size = new System.Drawing.Size(249, 13);
-            this.clientPathLabel.TabIndex = 5;
+            this.clientPathLabel.TabIndex = 12;
             this.clientPathLabel.Text = "Not Set";
             this.m_Tip.SetToolTip(this.clientPathLabel, "Not Set");
             // 
@@ -296,7 +296,7 @@ namespace RazorEnhanced.UI
             this.label2.Location = new System.Drawing.Point(32, 23);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 13);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 11;
             this.label2.Text = "Client Location:";
             // 
             // checkupdatebutton
@@ -305,7 +305,7 @@ namespace RazorEnhanced.UI
             this.checkupdatebutton.Location = new System.Drawing.Point(205, 229);
             this.checkupdatebutton.Name = "checkupdatebutton";
             this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
-            this.checkupdatebutton.TabIndex = 10;
+            this.checkupdatebutton.TabIndex = 102;
             this.checkupdatebutton.Text = "Check Update";
             this.checkupdatebutton.Click += new System.EventHandler(this.Checkupdatebutton_Click);
             // 
@@ -315,7 +315,7 @@ namespace RazorEnhanced.UI
             this.quit.Location = new System.Drawing.Point(295, 229);
             this.quit.Name = "quit";
             this.quit.Size = new System.Drawing.Size(84, 21);
-            this.quit.TabIndex = 9;
+            this.quit.TabIndex = 103;
             this.quit.Text = "Exit";
             this.quit.Click += new System.EventHandler(this.Quit_Click);
             // 
@@ -325,7 +325,7 @@ namespace RazorEnhanced.UI
             this.launch.Location = new System.Drawing.Point(27, 229);
             this.launch.Name = "launch";
             this.launch.Size = new System.Drawing.Size(84, 21);
-            this.launch.TabIndex = 8;
+            this.launch.TabIndex = 100;
             this.launch.Text = "Launch";
             this.launch.Click += new System.EventHandler(this.Okay_Click);
             // 
@@ -336,7 +336,7 @@ namespace RazorEnhanced.UI
             this.launchCUO.Location = new System.Drawing.Point(116, 229);
             this.launchCUO.Name = "launchCUO";
             this.launchCUO.Size = new System.Drawing.Size(84, 21);
-            this.launchCUO.TabIndex = 11;
+            this.launchCUO.TabIndex = 101;
             this.launchCUO.Text = "Launch CUO";
             this.launchCUO.Click += new System.EventHandler(this.LaunchCUO_Click);
             // 
