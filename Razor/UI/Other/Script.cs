@@ -16,9 +16,7 @@ namespace Assistant
     public partial class MainForm : System.Windows.Forms.Form
     {
         //private DataTable scriptTable;
-
-
-
+        // ---------------------------------------------------------------------- UTILS ----------------------------------------------------------------------
         internal static ListViewItem ScriptToTableRow(EnhancedScript script, int index)
         {
             ListViewItem listitem = new ListViewItem();
@@ -43,6 +41,33 @@ namespace Assistant
             row.Add(text_index);
             
             return listitem;
+        }
+
+
+        internal static ScriptListView GetCurrentAllScriptsTab()
+        {
+            return (ScriptListView)Engine.MainWindow.AllScriptsTab.SelectedTab.Controls[0];
+        }
+
+        internal static TabControl GetAllScriptsTab()
+        {
+            return Engine.MainWindow.AllScriptsTab;
+        }
+
+
+        internal static string NormalizePath(string path)
+        {
+            return Path.GetFullPath(new Uri(path).LocalPath)
+                        .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                        .ToUpperInvariant();
+        }
+
+        // ---------------------------------------------------------------------- LOAD/REFRESH ----------------------------------------------------------------------
+        internal void ReloadScriptTable()
+        {
+            RazorEnhanced.Settings.Save();
+            LoadAndInitializeScripts();
+            RazorEnhanced.HotKey.Init();
         }
 
         internal static void LoadScriptList(System.Collections.Generic.List<Scripts.ScriptItem> scripts, ScriptListView scriptlistView)
@@ -121,18 +146,112 @@ namespace Assistant
             }
 
         }
-
-        internal static ScriptListView GetCurrentAllScriptsTab()
+        
+        internal void UpdateScriptGrid()
         {
-            return (ScriptListView)Engine.MainWindow.AllScriptsTab.SelectedTab.Controls[0];
+
+            if (tabs.SelectedTab != AllScripts)
+                return;
+
+            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return;
+
+            if (scriptListView.Items.Count > 0)
+            {
+                scriptListView.BeginUpdate();
+                try
+                {
+                    foreach (ListViewItem litem in scriptListView.Items)
+                    {
+                        string filename = litem.Text;
+                        EnhancedScript script = EnhancedScript.Service.Search(filename);
+                        {
+                            if (script != null)
+                            {
+                                string status = script.Status;
+                                if (status == "Stopped")
+                                {
+                                    litem.BackColor = SystemColors.Window;
+                                    if (scriptSearchTextBox.Text != String.Empty)
+                                    {
+                                        if (litem.Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+                                        {
+                                            litem.ForeColor = Color.Blue; // Set highlight color
+                                        }
+                                        else
+                                        {
+                                            litem.ForeColor = Color.LightGray;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        litem.ForeColor = SystemColors.WindowText;
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (scriptSearchTextBox.Text != String.Empty)
+                                    {
+                                        if (litem.Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
+                                        {
+                                            litem.ForeColor = Color.Blue; // Set highlight color
+                                            litem.BackColor = Color.DarkGreen;
+                                        }
+                                        else
+                                        {
+                                            litem.ForeColor = Color.LightGray;
+                                            litem.BackColor = Color.Green;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        litem.ForeColor = Color.White;
+                                        litem.BackColor = Color.DarkGreen;
+                                    }
+                                }
+                                litem.SubItems[1].Text = status;
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    scriptListView.EndUpdate();
+                }
+            }
+
         }
 
-        internal static TabControl GetAllScriptsTab()
+
+
+
+        // ---------------------------------------------------------------------- MOVE ----------------------------------------------------------------------
+        private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            return Engine.MainWindow.AllScriptsTab;
+            ScriptGridMoveUp();
         }
 
-        //
+        private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScriptGridMoveDown();
+        }
+
+        private void moveToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string value = "0";
+            if (InputBox("Move to Index", "Index:", ref value) == DialogResult.OK)
+            {
+                try
+                {
+                    ScriptGridMoveTo(Convert.ToInt32(value));
+                }
+                catch (Exception)
+                { }
+            }
+        }
+
         public static DialogResult InputBox(string title, string promptText, ref string value)
         {
             Form form = new Form();
@@ -175,106 +294,6 @@ namespace Assistant
             return dialogResult;
         }
 
-        //
-        private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ScriptGridMoveUp();
-        }
-        private void moveToToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string value = "0";
-            if (InputBox("Move to Index", "Index:", ref value) == DialogResult.OK)
-            {
-                try
-                {
-                    ScriptGridMoveTo(Convert.ToInt32(value));
-                }
-                catch (Exception)
-                { }
-            }
-        }
-
-        private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ScriptGridMoveDown();
-        }
-        private void ScriptGridMoveDown()
-        {
-            if (sorted) // No move script index if user have place some different ordering
-                return;
-
-            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
-            if (scriptListView == null)
-                return;
-
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
-                return;
-
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                int rowCount = scriptListView.Items.Count;
-                int index = scriptListView.SelectedItems[0].Index;
-
-                if (index == 0) // include the header row
-                {
-                    return;
-                }
-                int location = index + 1;
-
-                if (location < 0 || location >= rowCount)
-                    return;
-
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(location, item);
-
-                ReloadScriptTable();
-                scriptListView.Items[location].Selected = true;
-            }
-        }
-
-        private void ScriptGridMoveTo(int location)
-        {
-            if (sorted) // No move script index if user have place some different ordering
-                return;
-
-            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
-            if (scriptListView == null)
-                return;
-
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
-                return;
-
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                int rowCount = scriptListView.Items.Count;
-                int index = scriptListView.SelectedItems[0].Index;
-
-                if (location < 0 || location >= rowCount)
-                    return;
-
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(location, item);
-
-                ReloadScriptTable();
-                scriptListView.Items[location].Selected = true;
-            }
-        }
 
         private void ScriptGridMoveUp()
         {
@@ -318,109 +337,85 @@ namespace Assistant
             }
         }
 
-        internal void ReloadScriptTable()
+        private void ScriptGridMoveDown()
         {
-            RazorEnhanced.Settings.Save();
-            LoadAndInitializeScripts();
-            RazorEnhanced.HotKey.Init();            
-        }
-
-        internal void UpdateScriptGridKey()
-        {
-            int i = 0;
-
-            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
-            if (scriptListView == null)
-                return;
-
-            scriptListView.BeginUpdate();
-            DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
-            //int index = 0;
-            foreach (DataRow row in scriptTable.Rows)
-            {
-                bool passkey = (bool)row["HotKeyPass"];
-                Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
-                scriptListView.Items[i].SubItems[5].Text = HotKey.KeyString(key);
-                if (passkey)
-                    scriptListView.Items[i].SubItems[6].Text = "Yes";
-                else
-                    scriptListView.Items[i].SubItems[6].Text = "No";
-                i++;
-            }
-            scriptListView.EndUpdate();
-        }
-
-        internal void UpdateScriptGrid()
-        {
-
-            if (tabs.SelectedTab != AllScripts)
+            if (sorted) // No move script index if user have place some different ordering
                 return;
 
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
             if (scriptListView == null)
                 return;
 
-            if (scriptListView.Items.Count > 0)
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
-                scriptListView.BeginUpdate();
-                try
-                {
-                    foreach (ListViewItem litem in scriptListView.Items)
-                    {
-                        string filename = litem.Text;
-                        EnhancedScript script = EnhancedScript.Service.Search(filename);
-                        {
-                            if (script != null)
-                            {
-                                string status = script.Status;
-                                if (status == "Stopped")
-                                {
-                                    litem.BackColor = SystemColors.Window;
-                                    if (scriptSearchTextBox.Text != String.Empty)
-                                    {
-                                        if (litem.Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
-                                        {
-                                            litem.ForeColor = Color.Blue; // Set highlight color
-                                        } else {
-                                            litem.ForeColor = Color.LightGray;
-                                        }
-                                    } else
-                                    {
-                                        litem.ForeColor = SystemColors.WindowText;
-                                    }
-                                } else {
+                int rowCount = scriptListView.Items.Count;
+                int index = scriptListView.SelectedItems[0].Index;
+                int location = index + 1;
 
-                                    if (scriptSearchTextBox.Text != String.Empty)
-                                    {
-                                        if (litem.Text.ToLower().Contains(scriptSearchTextBox.Text.ToLower()))
-                                        {
-                                            litem.ForeColor = Color.Blue; // Set highlight color
-                                            litem.BackColor = Color.DarkGreen;
-                                        }
-                                        else
-                                        {
-                                            litem.ForeColor = Color.LightGray;
-                                            litem.BackColor = Color.Green;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        litem.ForeColor = Color.White;
-                                        litem.BackColor = Color.DarkGreen;
-                                    }
-                                }       
-                                litem.SubItems[1].Text = status;
-                            }
-                        }
-                    }
-                }
-                finally
-                {
-                    scriptListView.EndUpdate();
-                }
+                if (location < 0 || location >= rowCount)
+                    return;
+
+                var item = list[index];
+                list.RemoveAt(index);
+                list.Insert(location, item);
+
+                ReloadScriptTable();
+                scriptListView.Items[location].Selected = true;
             }
-
         }
+
+        private void ScriptGridMoveTo(int location)
+        {
+            if (sorted) // No move script index if user have place some different ordering
+                return;
+
+            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            {
+                int rowCount = scriptListView.Items.Count;
+                int index = scriptListView.SelectedItems[0].Index;
+
+                if (location >= rowCount) { location = rowCount - 1; }
+                if (location < 0) { location = 0; }
+
+                
+                var item = list[index];
+                list.RemoveAt(index);
+                list.Insert(location, item);
+
+                ReloadScriptTable();
+                scriptListView.Items[location].Selected = true;
+            }
+        }
+
+        
+        
+
+        // ---------------------------------------------------------------------- RUN/STOP/REFRERSH ----------------------------------------------------------------------
+
 
         private void playToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -463,16 +458,48 @@ namespace Assistant
                     }
                 }           
             }
-        }
+        }      
 
-        internal static string NormalizePath(string path)
+        
+        private void buttonScriptRefresh_Click(object sender, EventArgs e)
         {
-            return Path.GetFullPath(new Uri(path).LocalPath)
-                        .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
-                        .ToUpperInvariant();
+            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return;
+
+            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+                list = Scripts.PyScripts;
+            if (scriptListView.Name == "uosScriptListView")
+                list = Scripts.UosScripts;
+            if (scriptListView.Name == "csScriptListView")
+                list = Scripts.CsScripts;
+            if (list == null)
+                return;
+
+            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            {
+                int index = scriptListView.SelectedItems[0].Index;
+                string scriptname = list[index].Filename;
+                string fullpath = list[index].FullPath;
+                EnhancedScript script = EnhancedScript.Service.Search(fullpath);
+                if (script != null)
+                {
+                    bool isRunning = script.IsRunning;
+
+                    if (isRunning)
+                        script.Stop();
+                    script.Load();
+                    script.LastModified = DateTime.MinValue;
+                    if (isRunning)
+                        script.Start();
+                }
+            }
         }
 
 
+
+        // ---------------------------------------------------------------------- ADD\REMOVE ----------------------------------------------------------------------
         private void AddScriptInGrid()
         {
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
@@ -526,6 +553,7 @@ namespace Assistant
              }
         }
 
+
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddScriptInGrid();
@@ -536,41 +564,9 @@ namespace Assistant
             AddScriptInGrid();
         }
 
-        private void buttonScriptRefresh_Click(object sender, EventArgs e)
-        {
-            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
-            if (scriptListView == null)
-                return;
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
-                return;
+        
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                int index = scriptListView.SelectedItems[0].Index;
-                string scriptname = list[index].Filename;
-                string fullpath = list[index].FullPath;
-                EnhancedScript script = EnhancedScript.Service.Search(fullpath);
-                if (script != null)
-                {
-                    bool isRunning = script.IsRunning;
-                     
-                    if (isRunning)
-                        script.Stop();
-                    script.Load();    
-                    script.LastModified = DateTime.MinValue;
-                    if (isRunning)
-                        script.Start();
-                }
-            }
-        }
 
         private void RemoveScriptInGrid()
         {
@@ -621,6 +617,35 @@ namespace Assistant
             RemoveScriptInGrid();
         }
 
+        // ---------------------------------------------------------------------- HOTKEYS ----------------------------------------------------------------------
+
+        internal void UpdateScriptGridKey()
+        {
+            int i = 0;
+
+            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return;
+
+            scriptListView.BeginUpdate();
+            DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
+            //int index = 0;
+            foreach (DataRow row in scriptTable.Rows)
+            {
+                bool passkey = (bool)row["HotKeyPass"];
+                Keys key = (Keys)Convert.ToInt32(row["HotKey"]);
+                scriptListView.Items[i].SubItems[5].Text = HotKey.KeyString(key);
+                if (passkey)
+                    scriptListView.Items[i].SubItems[6].Text = "Yes";
+                else
+                    scriptListView.Items[i].SubItems[6].Text = "No";
+                i++;
+            }
+            scriptListView.EndUpdate();
+        }
+
+        // ---------------------------------------------------------------------- CONTEXT MENU ----------------------------------------------------------------------
+        // right click on the script list
         private void scriptlistView_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
