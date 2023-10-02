@@ -258,36 +258,32 @@ namespace RazorEnhanced
 
         public bool Load(bool force=false)
         {
-            string content;
-            /* included in the catch? dirty ? 
-            if (!File.Exists(Fullpath)) {
-                m_Text = "";
-                return false; 
-            }
-            */
-
+            string content = "";
             try{
+                LastModified = File.GetLastWriteTime(Fullpath);
                 content = File.ReadAllText(Fullpath);
-                LastModified = DateTime.Now;
             } catch (Exception e) {
                 Misc.SendMessage("ERROR:EnhancedScript:Load: " + e.Message, 178);
-                m_Text = "";
                 return false;
             }
 
-            if (force || content != m_Text ) { 
-                m_Text = content;
+
+            if (force || content != m_Text) {
+                if (m_Text == null || m_Text == "") {
+                    m_Text = content;
+                }
                 if (m_Preload) { 
                     m_ScriptEngine.Load();
                 }
             }
             return true;
         }
-
+        
         public bool Save(){
             try {
                 File.WriteAllText(Fullpath, Text);
-                LastModified = DateTime.Now;
+                LastModified = File.GetLastWriteTime(Fullpath);
+                Load(true);
             } catch (Exception e) {
                 Misc.SendMessage("ERROR:EnhancedScript:Save: " + e.Message, 178);
                 return false;
@@ -680,7 +676,7 @@ namespace RazorEnhanced
         public bool Run()
         {
             if (!m_Loaded && !Load()) { return false; } // not loaded, and fail automatic loading.
-            Misc.SendMessage($"ThreadID: {Thread.CurrentThread.ManagedThreadId}", 147);
+            //Misc.SendMessage($"ThreadID: {Thread.CurrentThread.ManagedThreadId}", 147);
             bool result;
             try {
                 switch (m_Script.Language) {
@@ -732,8 +728,6 @@ namespace RazorEnhanced
                 return HandleException(ex);
             }
 
-
-
             return true;
         }
 
@@ -743,12 +737,12 @@ namespace RazorEnhanced
         {
             try
             {
-                DateTime lastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
+                DateTime lastModified = File.GetLastWriteTime(m_Script.Fullpath);
                 if (m_Script.LastModified < lastModified)
                 {
                     LoadPython();
                     // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
-                    m_Script.LastModified = System.IO.File.GetLastWriteTime(m_Script.Fullpath);
+                    m_Script.LastModified = lastModified;
                 }
 
                 if (pyTraceback != null)

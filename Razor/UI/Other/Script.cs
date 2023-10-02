@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Assistant.UI;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Assistant
 {
@@ -47,6 +48,27 @@ namespace Assistant
         internal static ScriptListView GetCurrentAllScriptsTab()
         {
             return (ScriptListView)Engine.MainWindow.AllScriptsTab.SelectedTab.Controls[0];
+        }
+
+        internal static List<Scripts.ScriptItem> GetScriptsCurrentTab()
+        {
+            ScriptListView scriptListView = GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return null;
+
+            if (scriptListView.SelectedItems.Count != 1) // Selezione multipla o mancata
+                return null;
+            
+
+            List<Scripts.ScriptItem> list = null;
+            if (scriptListView.Name == "pyScriptListView")
+            { list = Scripts.PyScripts; }
+            else if (scriptListView.Name == "uosScriptListView")
+            { list = Scripts.UosScripts; }
+            else if (scriptListView.Name == "csScriptListView")
+            { list = Scripts.CsScripts; }
+
+            return list;
         }
 
         internal static TabControl GetAllScriptsTab()
@@ -301,40 +323,30 @@ namespace Assistant
                 return;
 
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
-            if (scriptListView == null)
-                return;
+            if (scriptListView == null) return;
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
-                return;
+            List<Scripts.ScriptItem> list = GetScriptsCurrentTab();
+            if (list == null || list.Count == 0) return;
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
+            
+            int rowCount = scriptListView.Items.Count;
+            int index = scriptListView.SelectedItems[0].Index;
+
+            if (index == 0) // include the header row
             {
-                int rowCount = scriptListView.Items.Count;
-                int index = scriptListView.SelectedItems[0].Index;
-
-                if (index == 0) // include the header row
-                {
-                    return;
-                }
-                int location = index - 1;
-
-                if (location < 0 || location >= rowCount)
-                    return;
-
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(location, item);
-
-                ReloadScriptTable();
-                scriptListView.Items[location].Selected = true;
+                return;
             }
+            int location = index - 1;
+
+            if (location < 0 || location >= rowCount)
+                return;
+
+            var item = list[index];
+            list.RemoveAt(index);
+            list.Insert(location, item);
+
+            ReloadScriptTable();
+            scriptListView.Items[location].Selected = true;
         }
 
         private void ScriptGridMoveDown()
@@ -346,32 +358,24 @@ namespace Assistant
             if (scriptListView == null)
                 return;
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
+            List<Scripts.ScriptItem> list = GetScriptsCurrentTab();
+            if (list == null || list.Count == 0) return;
+
+     
+            int rowCount = scriptListView.Items.Count;
+            int index = scriptListView.SelectedItems[0].Index;
+            int location = index + 1;
+
+            if (location < 0 || location >= rowCount)
                 return;
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                int rowCount = scriptListView.Items.Count;
-                int index = scriptListView.SelectedItems[0].Index;
-                int location = index + 1;
+            var item = list[index];
+            list.RemoveAt(index);
+            list.Insert(location, item);
 
-                if (location < 0 || location >= rowCount)
-                    return;
-
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(location, item);
-
-                ReloadScriptTable();
-                scriptListView.Items[location].Selected = true;
-            }
+            ReloadScriptTable();
+            scriptListView.Items[location].Selected = true;
+            
         }
 
         private void ScriptGridMoveTo(int location)
@@ -383,32 +387,22 @@ namespace Assistant
             if (scriptListView == null)
                 return;
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
-                return;
+            List<Scripts.ScriptItem> list = GetScriptsCurrentTab();
+            if (list == null || list.Count == 0) return;
+            int rowCount = scriptListView.Items.Count;
+            int index = scriptListView.SelectedItems[0].Index;
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                int rowCount = scriptListView.Items.Count;
-                int index = scriptListView.SelectedItems[0].Index;
-
-                if (location >= rowCount) { location = rowCount - 1; }
-                if (location < 0) { location = 0; }
+            if (location >= rowCount) { location = rowCount - 1; }
+            if (location < 0) { location = 0; }
 
                 
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(location, item);
+            var item = list[index];
+            list.RemoveAt(index);
+            list.Insert(location, item);
 
-                ReloadScriptTable();
-                scriptListView.Items[location].Selected = true;
-            }
+            ReloadScriptTable();
+            scriptListView.Items[location].Selected = true;
+            
         }
 
         
@@ -838,15 +832,18 @@ namespace Assistant
             if (list == null)
                 return;
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                Scripts.ScriptItem item = Scripts.FindScript(scriptListView.SelectedItems[0].Text);
-                if (item != null)
-                {
-                    item.AutoStart = scriptautostartcheckbox.Checked;
-                }
-            }
+            if (list == null || list.Count == 0) return;
 
+            var selectedRow = scriptListView.SelectedItems[0];
+            Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+            if (item == null) return;
+
+            var script = EnhancedScript.FromScriptItem(item);
+            if (script == null) return;
+
+            item.AutoStart = scriptautostartcheckbox.Checked;
+            script.AutoStart = scriptautostartcheckbox.Checked;
+            
             if (scriptautostartcheckbox.Checked)
                 scriptListView.SelectedItems[0].SubItems[3].Text = "Yes";
             else
@@ -888,17 +885,20 @@ namespace Assistant
                 list = Scripts.UosScripts;
             if (scriptListView.Name == "csScriptListView")
                 list = Scripts.CsScripts;
-            if (list == null)
-                return;
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                Scripts.ScriptItem item = Scripts.FindScript(scriptListView.SelectedItems[0].Text);
-                if (item != null)
-                {
-                    item.Loop = scriptloopmodecheckbox.Checked;
-                }
-            }
+            if (list == null || list.Count == 0 ) return;
+
+            var selectedRow = scriptListView.SelectedItems[0];
+            Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+            if (item == null) return;
+
+            var script = EnhancedScript.FromScriptItem(item);
+            if (script == null) return;
+            
+            script.Loop = scriptloopmodecheckbox.Checked;
+            item.Loop = scriptloopmodecheckbox.Checked;
+            
+            
             if (scriptloopmodecheckbox.Checked)
                 scriptListView.SelectedItems[0].SubItems[2].Text = "Yes";
             else
@@ -939,17 +939,19 @@ namespace Assistant
                 list = Scripts.UosScripts;
             if (scriptListView.Name == "csScriptListView")
                 list = Scripts.CsScripts;
-            if (list == null)
-                return;
 
-            if (list.Count > 0 && scriptListView.SelectedItems.Count == 1)
-            {
-                Scripts.ScriptItem item = Scripts.FindScript(scriptListView.SelectedItems[0].Text);
-                if (item != null)
-                {
-                    item.Wait = scriptwaitmodecheckbox.Checked;
-                }
-            }
+            if (list == null || list.Count == 0) return;
+
+            var selectedRow = scriptListView.SelectedItems[0];
+            Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+            if (item == null) return;
+
+            var script = EnhancedScript.FromScriptItem(item);
+            if (script == null) return;
+
+            script.Wait = scriptwaitmodecheckbox.Checked;
+            item.Wait = scriptwaitmodecheckbox.Checked;
+
             if (scriptwaitmodecheckbox.Checked)
                 scriptListView.SelectedItems[0].SubItems[4].Text = "Yes";
             else
