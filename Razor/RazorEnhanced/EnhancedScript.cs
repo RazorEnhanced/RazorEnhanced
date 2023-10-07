@@ -256,29 +256,43 @@ namespace RazorEnhanced
         }
 
 
-        public bool Load(bool force=false)
+        public bool Load(bool force = false)
         {
             string content = "";
-            try{
+            try
+            {
                 LastModified = File.GetLastWriteTime(Fullpath);
                 content = File.ReadAllText(Fullpath);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Misc.SendMessage("ERROR:EnhancedScript:Load: " + e.Message, 178);
                 return false;
             }
 
 
-            if (force || content != m_Text) {
-                if (m_Text == null || m_Text == "") {
-                    m_Text = content;
-                }
-                if (m_Preload) { 
-                    m_ScriptEngine.Load();
-                }
+            if (force || content != m_Text)
+            {
+                m_Text = content;
+                InitEngine();
             }
             return true;
         }
-        
+
+        public bool InitEngine()
+        {
+            if (m_Text.Trim() == "") {
+                return false;
+            }
+            if (m_Preload)
+            {
+                m_ScriptEngine.Load();
+            }
+            return true;
+        }
+
+
+
         public bool Save(){
             try {
                 File.WriteAllText(Fullpath, Text);

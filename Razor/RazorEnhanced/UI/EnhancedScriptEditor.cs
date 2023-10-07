@@ -14,6 +14,8 @@ using System.Text.RegularExpressions;
 using Accord.Math;
 using Microsoft.Scripting.Utils;
 using RazorEnhanced.UOScript;
+using System.Threading.Tasks;
+using CUO_API;
 
 namespace RazorEnhanced.UI
 {
@@ -55,7 +57,7 @@ namespace RazorEnhanced.UI
         private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
         private static Command m_CurrentCommand = Command.None;
         private static readonly AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
-
+                                                        
         
         
 
@@ -82,8 +84,11 @@ namespace RazorEnhanced.UI
 
         private readonly List<int> m_Breakpoints = new List<int>();
 
-        private volatile bool m_Breaktrace = false;
+        private volatile bool m_Debugger = false;
         private bool m_onclosing = false;
+
+        private bool m_ScriptWasRunning=false;
+        private System.Threading.Timer m_Timer;
 
         private readonly FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
 
@@ -114,7 +119,53 @@ namespace RazorEnhanced.UI
                 editor.Show();
             }
             editor.BringToFront();
+            
         }
+
+
+        private void OnLoad()
+        {
+            var TimerDelay = 100;
+            var TimerTick = new System.Threading.TimerCallback(OnRefresh);
+            m_Timer = new System.Threading.Timer(TimerTick, null, TimerDelay, TimerDelay);
+
+            toolStripStatusLabelScript.Width = this.Width - 20;
+            SetStatusLabel("IDLE", Color.DarkTurquoise);
+        }
+
+        private bool OnUnload()
+        {
+            if (!CloseAndSave()) return false;
+            m_EnhancedScriptEditors.Remove(this);
+            m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            m_Timer = null;
+            return true;
+        }
+
+        private void OnRefresh(object state)
+        {
+            if (m_Script == null) { return; }
+            if (!m_Script.IsRunning && m_ScriptWasRunning)
+            {
+                SetStatusLabel("STOP", Color.DarkTurquoise);
+            }
+            else if (m_Script.IsRunning && !m_ScriptWasRunning)
+            { 
+                if (m_Debugger)
+                {
+                    SetErrorBox("DEBUG: " + m_Script.Fullpath);
+                    SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
+                }
+                else
+                {
+                    SetErrorBox("RUN: " + m_Script.Fullpath);
+                    SetStatusLabel("SCRIPT RUNNING", Color.Green);
+                }
+            }
+
+            m_ScriptWasRunning = m_Script.IsRunning;
+        }
+
 
         /*
         internal static void End()
@@ -482,7 +533,7 @@ namespace RazorEnhanced.UI
 
         private TracebackDelegate OnTraceback(TraceBackFrame frame, string result, object payload)
         {
-            if (m_Breaktrace)
+            if (m_Debugger)
             {
                 m_WaitDebug.WaitOne();
                 CheckCurrentCommand();
@@ -586,7 +637,7 @@ namespace RazorEnhanced.UI
             m_CurrentPayload = payload;
         }
 
-        private void Start(bool debug)
+        private void Start(bool debugger)
         {
             if (World.Player == null)
             {
@@ -599,35 +650,16 @@ namespace RazorEnhanced.UI
                 SetErrorBox("ERROR: Can't start script if record mode is ON.");
                 return;
             }
-
-            if (debug)
-            {
-                SetErrorBox("DEBUG: " + m_Script.Fullpath);
-                SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
-            }
-            else
-            {
-                SetErrorBox("RUN: " + m_Script.Fullpath);
-                SetStatusLabel("SCRIPT RUNNING", Color.Green);
-            }
             
-
-
-            if (debug)
-            {
-                m_Breaktrace = true;
-            }
-            else
-            {
-                m_Breaktrace = false;
-            }
+            m_Debugger = debugger;
+            
 
             m_Queue = new ConcurrentQueue<Command>();
 
             string text = GetFastTextBoxText();
             m_Script.Text = text;
             m_Script.LastModified = DateTime.Now;
-            m_Script.Load(true);
+            m_Script.InitEngine();
             
             //Editor specific setup for each language Check 
             switch (m_Script.Language)
@@ -640,7 +672,7 @@ namespace RazorEnhanced.UI
                     if (m_Script.HasValidPath)
                     {
                         Save();
-                        SetErrorBox("SAVE: "+ m_Script.Fullpath);
+                        SetErrorBox("SAVE: " + m_Script.Fullpath);
                     }
                     else
                     {
@@ -656,7 +688,7 @@ namespace RazorEnhanced.UI
         {
             if (m_Recorder != null && m_Recorder.IsRecording()) return;
 
-            m_Breaktrace = false;
+            m_Debugger = false;
             m_Queue = new ConcurrentQueue<Command>();
             m_Breakpoints.Clear();
 
@@ -811,9 +843,10 @@ namespace RazorEnhanced.UI
 
         private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = !CloseAndSave();
+            var shouldClose = OnUnload();
+            e.Cancel = !shouldClose;
         }
-
+        
         private void ToolStripButtonPlay_Click(object sender, EventArgs e)
         {
             Start(false);
@@ -1042,9 +1075,9 @@ namespace RazorEnhanced.UI
                 if (valid && fileContent != editorContent)
                 {
                     DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                    if (res == System.Windows.Forms.DialogResult.Cancel) { return false; }
-
-                    if (res == System.Windows.Forms.DialogResult.Yes)
+                    if (res == DialogResult.Cancel) { return false; }
+                    if (res == DialogResult.No) { m_Script.Load(true); return true; }
+                    if (res == DialogResult.Yes)
                     {
                         if (m_Script.HasValidPath)
                         {
@@ -1264,11 +1297,6 @@ namespace RazorEnhanced.UI
             }
         }
 
-        private void EnhancedScriptEditor_Load(object sender, EventArgs e)
-        {
-            toolStripStatusLabelScript.Width = this.Width - 20;
-            SetStatusLabel("IDLE", Color.DarkTurquoise);
-        }
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1352,6 +1380,11 @@ namespace RazorEnhanced.UI
                 }
             }
             new EnhancedObjectInspector().Show();
+        }
+
+        private void EnhancedScriptEditor_Load(object sender, EventArgs e)
+        {
+            OnLoad();
         }
     }
 

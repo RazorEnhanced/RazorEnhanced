@@ -36,13 +36,13 @@ namespace RazorEnhanced.UI
             this.toolStripButtonOpen = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSaveAs = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPlay = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGumps = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonInspect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -50,6 +50,8 @@ namespace RazorEnhanced.UI
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.inspectaliasbutton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripButtonWiki = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownDebugButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripButtonDebug = new System.Windows.Forms.ToolStripButton();
             this.toolStripNextCall = new System.Windows.Forms.ToolStripButton();
@@ -77,8 +79,6 @@ namespace RazorEnhanced.UI
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.textBoxDebug = new System.Windows.Forms.TextBox();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.ToolStripButtonWiki = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -175,21 +175,6 @@ namespace RazorEnhanced.UI
             this.toolStripButtonSaveAs.ToolTipText = "Save As ( CTRL + SHIFT + S )";
             this.toolStripButtonSaveAs.Click += new System.EventHandler(this.ToolStripButtonSaveAs_Click);
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 34);
-            // 
-            // toolStripButtonSearch
-            // 
-            this.toolStripButtonSearch.Image = global::Assistant.Properties.Resources.search2;
-            this.toolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSearch.Name = "toolStripButtonSearch";
-            this.toolStripButtonSearch.Size = new System.Drawing.Size(92, 29);
-            this.toolStripButtonSearch.Text = "Search";
-            this.toolStripButtonSearch.ToolTipText = "Search ( CTRL + F )";
-            this.toolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -229,6 +214,21 @@ namespace RazorEnhanced.UI
             this.toolStripButtonGumps.Text = "Record";
             this.toolStripButtonGumps.ToolTipText = "Record ( CTRL + R )";
             this.toolStripButtonGumps.Click += new System.EventHandler(this.ToolStripRecord_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 34);
+            // 
+            // toolStripButtonSearch
+            // 
+            this.toolStripButtonSearch.Image = global::Assistant.Properties.Resources.search2;
+            this.toolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSearch.Name = "toolStripButtonSearch";
+            this.toolStripButtonSearch.Size = new System.Drawing.Size(92, 29);
+            this.toolStripButtonSearch.Text = "Search";
+            this.toolStripButtonSearch.ToolTipText = "Search ( CTRL + F )";
+            this.toolStripButtonSearch.Click += new System.EventHandler(this.ToolStripButtonSearch_Click);
             // 
             // toolStripSeparator2
             // 
@@ -279,6 +279,20 @@ namespace RazorEnhanced.UI
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 34);
+            // 
+            // ToolStripButtonWiki
+            // 
+            this.ToolStripButtonWiki.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonWiki.Image")));
+            this.ToolStripButtonWiki.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ToolStripButtonWiki.Name = "ToolStripButtonWiki";
+            this.ToolStripButtonWiki.Size = new System.Drawing.Size(74, 29);
+            this.ToolStripButtonWiki.Text = "Wiki";
+            this.ToolStripButtonWiki.Click += new System.EventHandler(this.ToolStripButtonWiki_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 34);
             // 
             // toolStripDropDownDebugButton
             // 
@@ -422,6 +436,7 @@ namespace RazorEnhanced.UI
         '\"',
         '\'',
         '\''};
+            this.fastColoredTextBoxEditor.AutoIndentExistingLines = false;
             this.fastColoredTextBoxEditor.AutoScrollMinSize = new System.Drawing.Size(35, 22);
             this.fastColoredTextBoxEditor.BackBrush = null;
             this.fastColoredTextBoxEditor.CharHeight = 22;
@@ -431,7 +446,6 @@ namespace RazorEnhanced.UI
             this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBoxEditor.IsReplaceMode = false;
             this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
             this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -585,20 +599,6 @@ namespace RazorEnhanced.UI
             this.imageList2.Images.SetKeyName(3, "Method_black_16x.png");
             this.imageList2.Images.SetKeyName(4, "Field_blue_16x.png");
             this.imageList2.Images.SetKeyName(5, "Field_black_16x.png");
-            // 
-            // ToolStripButtonWiki
-            // 
-            this.ToolStripButtonWiki.Image = ((System.Drawing.Image)(resources.GetObject("ToolStripButtonWiki.Image")));
-            this.ToolStripButtonWiki.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ToolStripButtonWiki.Name = "ToolStripButtonWiki";
-            this.ToolStripButtonWiki.Size = new System.Drawing.Size(74, 29);
-            this.ToolStripButtonWiki.Text = "Wiki";
-            this.ToolStripButtonWiki.Click += new System.EventHandler(this.ToolStripButtonWiki_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 34);
             // 
             // EnhancedScriptEditor
             // 
