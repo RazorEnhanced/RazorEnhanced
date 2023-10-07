@@ -376,6 +376,37 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Set a location that CUO will open the next gump or container at
+        /// </summary>
+        public static void NextGumpLocation(int gumpserial, int x, int y)
+        {
+            NextGumpLocation((uint)gumpserial, x, y);
+        }
+
+        /// <summary>
+        /// Set a location that CUO will open the next gump or container at
+        /// </summary>
+        public static void NextGumpLocation(uint gumpserial, int x, int y)
+        {
+            if (!Client.IsOSI)
+            {
+
+                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
+                if (assembly != null)
+                {
+                    Type Point = assembly.GetType("Microsoft.Xna.Framework.Point");
+                    System.Reflection.ConstructorInfo ctor = Point.GetConstructor(new[] { typeof(int), typeof(int) });
+                    var pos = ctor.Invoke(new object[] { x, y });
+                    var SavePosition = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetMethod("SavePosition", BindingFlags.Public | BindingFlags.Static);
+                    if (SavePosition != null)
+                    {
+                        SavePosition.Invoke(assembly, new object[] { (uint)gumpserial, pos });
+                    }
+                }
+            }
+        }
+
         public static void CloseGump(uint serial)
         {
             if (!Client.IsOSI)
