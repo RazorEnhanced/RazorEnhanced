@@ -276,6 +276,18 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Add tooltip to the previously added control
+        /// </summary>
+        /// <param name="gd"> GumpData structure</param>
+        /// <param name="cliloc"> cliloc for tooltip</param>
+        /// <param name="text"> string for tooltip</param>
+        public static void AddTooltip(ref GumpData gd, int cliloc, string text)
+        {
+            string textEntry = string.Format("{{ tooltip {0} @{1}@ }}", cliloc, text);
+            gd.gumpDefinition += textEntry;
+        }
+
+        /// <summary>
         /// Add a textured background for the gump. Its a transparent background
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
