@@ -425,8 +425,6 @@ namespace RazorEnhanced
                                                 if (prop != null)
                                                 {
                                                     var gumpserial = prop.GetValue(gump);
-
-                                                    Misc.SendMessage("Gump Serial :" + gumpserial);
                                                     if ((uint)gumpserial == serial)
                                                     {
                                                         var locprop = Gump.GetProperty("Location");
