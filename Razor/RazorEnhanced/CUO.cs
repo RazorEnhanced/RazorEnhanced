@@ -362,19 +362,7 @@ namespace RazorEnhanced
         {
             if (!Client.IsOSI)
             {
-
-                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
-                if (assembly != null)
-                {
-                    Type Point = assembly.GetType("Microsoft.Xna.Framework.Point");
-                    System.Reflection.ConstructorInfo ctor = Point.GetConstructor(new[] { typeof(int), typeof(int) });
-                    var pos = ctor.Invoke(new object[] { x, y });
-                    var SavePosition = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetMethod("SavePosition", BindingFlags.Public | BindingFlags.Static);
-                    if (SavePosition != null)
-                    {
-                        SavePosition.Invoke(assembly, new object[] { (uint)bag, pos });
-                    }
-                }
+                SetGumpOpenLocation(bag, x, y);
                 Items.UseItem((int)bag);
             }
         }
@@ -537,7 +525,7 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Set a location that CUO will open the next gump or container at
+        /// Open a mobiles health bar at a specified location on the screen
         /// </summary>
         public static void OpenMobileHealthBar(int mobileserial, int x, int y, bool custom)
         {
