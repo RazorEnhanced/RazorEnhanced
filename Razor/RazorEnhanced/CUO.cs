@@ -11,6 +11,12 @@ using static RazorEnhanced.HotKey;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
+using Accord.Imaging.Filters;
+using IronPython.Runtime;
+using System.Globalization;
+using System.Web.UI.WebControls;
+using Accord.Collections;
+using Accord.Math;
 
 namespace RazorEnhanced
 {
@@ -68,7 +74,6 @@ namespace RazorEnhanced
                 }
             }
         }
-
 
         /// <summary>
         /// Invokes the GoToMarker function inside the CUO code
@@ -246,8 +251,6 @@ namespace RazorEnhanced
             return result;
         }
 
-
-
         /// <summary>
         /// Set a bool Config property in CUO by name
         /// </summary>
@@ -359,6 +362,18 @@ namespace RazorEnhanced
         {
             if (!Client.IsOSI)
             {
+                SetGumpOpenLocation(bag, x, y);
+                Items.UseItem((int)bag);
+            }
+        }
+
+        /// <summary>
+        /// Set a location that CUO will open the next gump or container at
+        /// </summary>
+        public static void SetGumpOpenLocation(uint gumpserial, int x, int y)
+        {
+            if (!Client.IsOSI)
+            {
 
                 System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
                 if (assembly != null)
@@ -369,13 +384,312 @@ namespace RazorEnhanced
                     var SavePosition = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetMethod("SavePosition", BindingFlags.Public | BindingFlags.Static);
                     if (SavePosition != null)
                     {
-                        SavePosition.Invoke(assembly, new object[] { (uint)bag, pos });
+                        SavePosition.Invoke(assembly, new object[] { (uint)gumpserial, pos });
                     }
                 }
-                Items.UseItem((int)bag);
             }
         }
 
+        /// <summary>
+        /// Invokes the Method move a gump or container if open.
+        /// </summary>
+        public static void MoveGump(uint serial, int x, int y)
+        {
+            if (!Client.IsOSI)
+            {
+                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
+                if (assembly != null)
+                {
+                    var getAllGumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetProperty("Gumps", BindingFlags.Public | BindingFlags.Static);
+                    if (getAllGumps != null)
+                    {
+                        var listOfGumps = getAllGumps.GetValue(null);
+                        if (listOfGumps != null)
+                        {
+                            IEnumerable<Object> temp = listOfGumps as IEnumerable<Object>;
+                            foreach (var gump in temp)
+                            {
+                                if (gump != null)
+                                {
+                                    var GumpType = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump")?.GetProperty("GumpType", BindingFlags.Public | BindingFlags.Instance);
+                                    if (GumpType != null)
+                                    {
+                                        int GumpTypeEnum = (int)GumpType.GetValue(gump);
+                                      
+                                        if (GumpTypeEnum == 0)
+                                        {
+                                            var Gump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
+                                            if (Gump != null)
+                                            {
+                                                var prop = Gump.GetProperty("ServerSerial", BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+                                                if (prop != null)
+                                                {
+                                                    var gumpserial = prop.GetValue(gump);
+                                                    if ((uint)gumpserial == serial)
+                                                    {
+                                                        var locprop = Gump.GetProperty("Location");
+
+                                                        Type Point = assembly.GetType("Microsoft.Xna.Framework.Point");
+                                                        System.Reflection.ConstructorInfo ctor = Point.GetConstructor(new[] { typeof(int), typeof(int) });
+                                                        var pos = ctor.Invoke(new object[] { x, y });
+
+                                                        if (locprop != null)
+                                                        {
+                                                            locprop.SetValue(gump, pos, null);
+                                                        }
+                                                    }
+                                                }  
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the Method to close your status bar gump inside the CUO code
+        /// </summary>
+        public static void CloseMyStatusBar()
+        {
+            if (!Client.IsOSI)
+            {
+                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
+                if (assembly != null)
+                {
+                    var StatusGumpBase = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.StatusGumpBase");
+                    if (StatusGumpBase != null)
+                    {
+                        var status = StatusGumpBase?.GetMethod("GetStatusGump", BindingFlags.Public | BindingFlags.Static);
+                        if (status != null)
+                        {
+                            var gump = status.Invoke(assembly, new object[] { });
+
+                            if(gump!= null)
+                            {
+                                var Gumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
+                                if (Gumps != null)
+                                {
+                                    MethodInfo Dispose = Gumps.GetMethod("Dispose");
+                                    if (Dispose != null)
+                                    {
+                                        Dispose.Invoke(gump, new object[] { });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invokes the Method to open your status bar gump inside the CUO code
+        /// </summary>
+        public static void OpenMyStatusBar(int x, int y)
+        {
+            if (!Client.IsOSI)
+            {
+                CloseMyStatusBar();
+                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
+                if (assembly != null)
+                {
+                    var StatusGumpBase = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.StatusGumpBase");
+                    if (StatusGumpBase != null)
+                    {
+                        var status = StatusGumpBase?.GetMethod("AddStatusGump", BindingFlags.Public | BindingFlags.Static);
+                        if (status != null)
+                        {
+                            var parameters = new object[2] { x, y };
+                            var gump = status.Invoke(assembly, parameters);
+                            
+                            var uimanager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");
+                            if (uimanager != null)
+                            {
+                                var add = uimanager?.GetMethod("Add", BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+                                 if(add != null)
+                                {
+                                    add.Invoke(assembly, new object[] { gump, true });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Open a mobiles health bar at a specified location on the screen
+        /// </summary>
+        public static void OpenMobileHealthBar(int mobileserial, int x, int y, bool custom)
+        {
+            OpenMobileHealthBar((uint)mobileserial, x, y, custom);
+        }
+
+        /// <summary>
+        /// Invokes the Method to open your status bar gump inside the CUO code
+        /// </summary>
+        public static void OpenMobileHealthBar(uint mobileserial, int x, int y, bool custom)
+        {
+            if (!Client.IsOSI)
+            {
+                System.Reflection.Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(assembly => assembly.GetName().Name == "FNA");
+                if (assembly != null)
+                {
+                    if (custom)
+                    {
+                        var StatusGumpBase = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.HealthBarGumpCustom");
+                        if (StatusGumpBase != null)
+                        {
+                            Type[] types = new Type[1];
+                            types[0] = typeof(uint);
+
+                            var status = StatusGumpBase?.GetConstructor(types);
+
+                            if (status != null)
+                            {
+                                var parameters = new object[1] { (uint)mobileserial };
+                                var gump = status.Invoke(parameters);
+
+                                var uimanager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");
+                                if (uimanager != null)
+                                {
+                                    var add = uimanager?.GetMethod("Add", BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+                                    if (add != null)
+                                    {
+                                        add.Invoke(assembly, new object[] { gump, true });
+
+                                        var prop = StatusGumpBase.GetProperty("Location");
+
+                                        Type Point = assembly.GetType("Microsoft.Xna.Framework.Point");
+                                        System.Reflection.ConstructorInfo ctor = Point.GetConstructor(new[] { typeof(int), typeof(int) });
+                                        var pos = ctor.Invoke(new object[] { x, y });
+
+                                        if (prop != null)
+                                        {
+                                            prop.SetValue(gump, pos, null);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var StatusGumpBase = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.HealthBarGump");
+                        if (StatusGumpBase != null)
+                        {
+                            Type[] types = new Type[1];
+                            types[0] = typeof(uint);
+
+                            var status = StatusGumpBase?.GetConstructor(types);
+
+                            if (status != null)
+                            {
+                                var parameters = new object[1] { (uint)mobileserial };
+                                var gump = status.Invoke(parameters);
+
+                                var uimanager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");
+                                if (uimanager != null)
+                                {
+                                    var add = uimanager?.GetMethod("Add", BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+                                    if (add != null)
+                                    {
+                                        add.Invoke(assembly, new object[] { gump, true });
+
+                                        var prop = StatusGumpBase.GetProperty("Location");
+
+                                        Type Point = assembly.GetType("Microsoft.Xna.Framework.Point");
+                                        System.Reflection.ConstructorInfo ctor = Point.GetConstructor(new[] { typeof(int), typeof(int) });
+                                        var pos = ctor.Invoke(new object[] { x, y });
+
+                                        if (prop != null)
+                                        {
+                                            prop.SetValue(gump, pos, null);
+                                        }
+
+
+
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Closes a Mobile Status Gump of an Entity
+        /// </summary>
+        public static void CloseMobileHealthBar(int mobileserial)
+        {
+            CloseMobileHealthBar((uint)mobileserial);
+        }
+
+        /// <summary>
+        /// Closes a Mobile Status Gump of an Entity
+        /// </summary>
+        public static void CloseMobileHealthBar(uint mobileserial)
+        {
+            if (!Client.IsOSI)
+            {
+                var getAllGumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager")?.GetProperty("Gumps", BindingFlags.Public | BindingFlags.Static);
+                if (getAllGumps != null)
+                {
+                    var listOfGumps = getAllGumps.GetValue(null);
+                    if (listOfGumps != null)
+                    {
+                        IEnumerable<Object> temp = listOfGumps as IEnumerable<Object>;
+                        foreach (var gump in temp)
+                        {
+                            if (gump != null)
+                            {
+                                var GumpType = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump")?.GetProperty("GumpType", BindingFlags.Public | BindingFlags.Instance);
+                                if (GumpType != null)
+                                {
+                                    int GumpTypeEnum = (int)GumpType.GetValue(gump);
+                                    if (GumpTypeEnum == 4)
+                                    {
+                                        var HealthBarGump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.BaseHealthBarGump");
+                                        if (HealthBarGump != null)
+                                        {
+                                            var prop = HealthBarGump.GetProperty("LocalSerial", BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
+                                            if (prop != null)
+                                            {
+                                                var gumpserial = prop.GetValue(gump);
+
+                                                if ((uint)gumpserial == mobileserial)
+                                                {
+                                                    MethodInfo Dispose = HealthBarGump.GetMethod("Dispose");
+                                                    if (Dispose != null)
+                                                    {
+                                                        Dispose.Invoke(gump, new object[] { });
+                                                    }
+
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                   
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Invokes the Method close a gump
+        /// </summary>
         public static void CloseGump(uint serial)
         {
             if (!Client.IsOSI)
@@ -440,6 +754,7 @@ namespace RazorEnhanced
             return "";
 
         }
+        
         /// <summary>
         /// Play a CUO macro by name
         /// Warning, limited testing !! 
@@ -547,6 +862,7 @@ namespace RazorEnhanced
             }
             return;
         }
+
     }
 }
 
