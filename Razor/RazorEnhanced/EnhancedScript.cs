@@ -136,8 +136,8 @@ namespace RazorEnhanced
         private Thread m_Thread;
 
         internal EnhancedScriptEngine m_ScriptEngine;
-        internal bool StopMessage;
-        internal bool StartMessage;
+        //internal bool StopMessage;
+        //internal bool StartMessage;
         internal DateTime LastModified;
 
         private readonly object m_Lock = new object();
@@ -231,8 +231,8 @@ namespace RazorEnhanced
             m_Preload = preload;
             m_Editor = editor;
 
-            StartMessage = true;
-            StopMessage = false;
+            //StartMessage = true;
+            //StopMessage = false;
             LastModified = DateTime.MinValue;
 
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
@@ -692,6 +692,8 @@ namespace RazorEnhanced
             if (!m_Loaded && !Load()) { return false; } // not loaded, and fail automatic loading.
             //Misc.SendMessage($"ThreadID: {Thread.CurrentThread.ManagedThreadId}", 147);
             bool result;
+
+            Misc.SendMessage("START: " + m_Script.Filename, 70, false);
             try {
                 switch (m_Script.Language) {
                     default:
@@ -702,7 +704,8 @@ namespace RazorEnhanced
             } catch (Exception ex) {
                 result = HandleException(ex);
             }
-            
+            Misc.SendMessage("HALT: " + m_Script.Filename, 70, false);
+
             return result;
         }
 

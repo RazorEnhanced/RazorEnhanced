@@ -368,16 +368,18 @@ namespace RazorEnhanced
             
             private void OnTick(object state)
             {
-                var updateScripts = Task.Run(() => OnTickScripts(state));
+                //var updateScripts = Task.Run(() => OnTickScripts(state));
                 var updateAgents = Task.Run(() => OnTickAgents(state));
                 while (!updateAgents.IsCompleted || !updateAgents.IsCompleted) {
                     Misc.Pause(1);
                 }
             }
 
+            /*
             static readonly object syncLockScripts = new object();
             private void OnTickScripts(object state)
             {
+                
                 lock (syncLockScripts)
                 {
                     foreach (EnhancedScript script in EnhancedScript.Service.ScriptList())
@@ -404,6 +406,9 @@ namespace RazorEnhanced
                     }
                 }
             }
+            */
+
+
             static readonly object syncLockAgents = new object();
             private void OnTickAgents(object state)
             {
