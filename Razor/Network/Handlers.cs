@@ -2148,7 +2148,7 @@ namespace Assistant
                         Assistant.Client.Instance.SendToServer(new SingleClick(item));
 
                     bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
-                    if (World.Player != null
+                    if (World.Player != null && !World.Player.IsGhost
                         && !RazorEnhanced.AutoLoot.AutoMode
                         && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses")
                         && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange"))
