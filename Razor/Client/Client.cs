@@ -12,6 +12,7 @@ using Microsoft.Win32.SafeHandles;
 using System.Linq;
 using System.Reflection;
 using AutoUpdaterDotNET;
+using RazorEnhanced;
 
 namespace Assistant
 {
@@ -509,7 +510,8 @@ namespace Assistant
             if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
                 Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
-            RazorEnhanced.UI.EnhancedScriptEditor.End();
+            ScriptRecorderService.Instance.RemoveAll();
+            //RazorEnhanced.UI.EnhancedScriptEditor.End();
         }
 
 

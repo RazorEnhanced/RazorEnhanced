@@ -13,7 +13,8 @@ using System.IO;
 
 namespace RazorEnhanced
 {
-    class PythonEngine
+    // --------------------------------------------------------- PythonEngine --------------------------------------------------------
+    public class PythonEngine
     {
         public Dictionary<string, object> Modules;
         public ScriptEngine Engine { get;  }
@@ -23,56 +24,12 @@ namespace RazorEnhanced
         public ScriptSource Source { get; set; }
         public CompiledCode Compiled { get; set; }
         public PythonCompilerOptions CompilerOptions { get; set; }
+        
 
-        public class PythonWriter : MemoryStream
-        {
-            internal Action<string> m_action;
-
-            public PythonWriter(Action<string> stdoutWriter)
-                : base()
-            {
-                m_action = stdoutWriter;
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                if (m_action != null)
-                    m_action(System.Text.Encoding.ASCII.GetString(buffer));
-                base.Write(buffer, offset, count);
-            }
-
-            public override Task WriteAsync(byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken)
-            {
-                if (m_action != null)
-                    m_action(System.Text.Encoding.ASCII.GetString(buffer));
-                return base.WriteAsync(buffer, offset, count, cancellationToken);
-            }
-
-            public override void WriteByte(byte value)
-            {
-                if (m_action != null)
-                    m_action(value.ToString());
-                base.WriteByte(value);
-            }
-
-            public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
-            {
-                return base.BeginWrite(buffer, offset, count, callback, state);
-            }
-        }
-
-        public PythonEngine(Action<string> stdoutWriter) {
+        public PythonEngine() {
             var runtime = IronPython.Hosting.Python.CreateRuntime();
-            if (stdoutWriter != null)
-            {
-                PythonWriter outputWriter = new PythonWriter(stdoutWriter);
-                runtime.IO.SetErrorOutput(outputWriter, Encoding.ASCII);
-                runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
-            }
             Engine = IronPython.Hosting.Python.GetEngine(runtime);
-
-
-
+            
             //Paths for IronPython 3.4
             var paths = new List<string>();
             var basepath = Assistant.Engine.RootPath;
@@ -98,34 +55,34 @@ namespace RazorEnhanced
             }
 
             //RE Modules list
-            Modules = new Dictionary<string, object>();
-            Modules.Add("Misc", new RazorEnhanced.Misc());
-
-            Modules.Add("Items", new RazorEnhanced.Items());
-            Modules.Add("Mobiles", new RazorEnhanced.Mobiles());
-            Modules.Add("Player", new RazorEnhanced.Player());
-            Modules.Add("Spells", new RazorEnhanced.Spells());
-            Modules.Add("Gumps", new RazorEnhanced.Gumps());
-            Modules.Add("Journal", new RazorEnhanced.Journal());
-            Modules.Add("Target", new RazorEnhanced.Target());
-            Modules.Add("Statics", new RazorEnhanced.Statics());
-            Modules.Add("Sound", new RazorEnhanced.Sound());
-            Modules.Add("CUO", new RazorEnhanced.CUO());
-            Modules.Add("AutoLoot", new RazorEnhanced.AutoLoot());
-            Modules.Add("Scavenger", new RazorEnhanced.Scavenger());
-            Modules.Add("SellAgent", new RazorEnhanced.SellAgent());
-            Modules.Add("BuyAgent", new RazorEnhanced.BuyAgent());
-            Modules.Add("Organizer", new RazorEnhanced.Organizer());
-            Modules.Add("Dress", new RazorEnhanced.Dress());
-            Modules.Add("Friend", new RazorEnhanced.Friend());
-            Modules.Add("Restock", new RazorEnhanced.Restock());
-            Modules.Add("BandageHeal", new RazorEnhanced.BandageHeal());
-            Modules.Add("PathFinding", new RazorEnhanced.PathFinding());
-            Modules.Add("DPSMeter", new RazorEnhanced.DPSMeter());
-            Modules.Add("Timer", new RazorEnhanced.Timer());
-            Modules.Add("Trade", new RazorEnhanced.Trade());
-            Modules.Add("Vendor", new RazorEnhanced.Vendor());
-            Modules.Add("PacketLogger", new RazorEnhanced.PacketLogger());
+            Modules = new Dictionary<string, object>{
+                { "Misc", new RazorEnhanced.Misc() },
+                { "Items", new RazorEnhanced.Items() },
+                { "Mobiles", new RazorEnhanced.Mobiles() },
+                { "Player", new RazorEnhanced.Player() },
+                { "Spells", new RazorEnhanced.Spells() },
+                { "Gumps", new RazorEnhanced.Gumps() },
+                { "Journal", new RazorEnhanced.Journal() },
+                { "Target", new RazorEnhanced.Target() },
+                { "Statics", new RazorEnhanced.Statics() },
+                { "Sound", new RazorEnhanced.Sound() },
+                { "CUO", new RazorEnhanced.CUO() },
+                { "AutoLoot", new RazorEnhanced.AutoLoot() },
+                { "Scavenger", new RazorEnhanced.Scavenger() },
+                { "SellAgent", new RazorEnhanced.SellAgent() },
+                { "BuyAgent", new RazorEnhanced.BuyAgent() },
+                { "Organizer", new RazorEnhanced.Organizer() },
+                { "Dress", new RazorEnhanced.Dress() },
+                { "Friend", new RazorEnhanced.Friend() },
+                { "Restock", new RazorEnhanced.Restock() },
+                { "BandageHeal", new RazorEnhanced.BandageHeal() },
+                { "PathFinding", new RazorEnhanced.PathFinding() },
+                { "DPSMeter", new RazorEnhanced.DPSMeter() },
+                { "Timer", new RazorEnhanced.Timer() },
+                { "Trade", new RazorEnhanced.Trade() },
+                { "Vendor", new RazorEnhanced.Vendor() },
+                { "PacketLogger", new RazorEnhanced.PacketLogger() }
+            };
 
             //Setup builtin modules and scope
             foreach (var module in Modules) {
@@ -138,34 +95,128 @@ namespace RazorEnhanced
             CompilerOptions.ModuleName = "__main__";
             CompilerOptions.Module |= ModuleOptions.Initialize;
         }
+        
+        ~PythonEngine() { 
 
-        public void Execute(String text, String path=null)
+        }
+
+        public void SetStdout(Action<string> stdoutWriter)
         {
-            if (Engine == null) return;
+            PythonWriter outputWriter = new PythonWriter(stdoutWriter);
+            Engine.Runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
+        }
+
+        public void SetStderr(Action<string> stderrWriter)
+        {
+            PythonWriter errorWriter = new PythonWriter(stderrWriter);
+            Engine.Runtime.IO.SetErrorOutput(errorWriter, Encoding.ASCII);
+        }
+
+        public dynamic Call(PythonFunction function, params object[] args) {
+            try { 
+                return Engine.Operations.Invoke(function, args);
+            } catch {
+                return null;
+            }
+        }
+
+        /*
+        public void Register(PythonFunction function, OnLogPacketDataCallBack callback)
+        {
+            Thread thread = Thread.CurrentThread;
+            if (!m_Callbacks.ContainsKey(thread))
+            {
+                m_Callbacks[thread] = new Dictionary<int, HashSet<OnLogPacketDataCallBack>>();
+            }
+            if (!m_Callbacks[thread].ContainsKey(packetID))
+            {
+                m_Callbacks[thread][packetID] = new HashSet<OnLogPacketDataCallBack>();
+            }
+            m_Callbacks[thread][packetID].Add(callback);
+        }
+        */
+
+
+
+        public bool Load(String text, String path = null)
+        {
+            Source = null;
+            Compiled = null;
+            Scope = null;
+            if (Engine == null) { return false; }
 
             //CACHE (should we?)
             Text = text;
             FilePath = path;
 
             //LOAD code as text
-            if (text == null) return; // no text
+            if (text == null) { return false; } // no text
             Source = Engine.CreateScriptSourceFromString(text, path);
-            if (Source == null) return;
+            if (Source == null) { return false; }
 
             //COMPILE with OPTIONS
             //PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
             Compiled = Source.Compile(CompilerOptions);
-
+            if (Compiled == null) { return false; }
+            
+            Scope = Engine.CreateScope();
+            return true;
+        }
+        public bool Execute() {
             //EXECUTE
+            if (Source == null)   { return false; }
+            if (Compiled == null) { return false; }
+            if (Scope == null)    { return false; }
+
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;
-            Scope = Engine.CreateScope();
             Compiled.Execute(Scope);
             journal.Active = false;
+
+            return true;
 
             //DONT USE
             //Execute directly, unless you are not planning to import external modules.
             //Source.Execute(m_Scope);
+        }
+    }
+
+
+    // --------------------------------------------------------- PythonWriter --------------------------------------------------------
+    public class PythonWriter : MemoryStream
+    {
+        internal Action<string> m_action;
+
+        public PythonWriter(Action<string> stdoutWriter)
+            : base()
+        {
+            m_action = stdoutWriter;
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            if (m_action != null)
+                m_action(System.Text.Encoding.ASCII.GetString(buffer));
+            base.Write(buffer, offset, count);
+        }
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken)
+        {
+            if (m_action != null)
+                m_action(System.Text.Encoding.ASCII.GetString(buffer));
+            return base.WriteAsync(buffer, offset, count, cancellationToken);
+        }
+
+        public override void WriteByte(byte value)
+        {
+            if (m_action != null)
+                m_action(value.ToString());
+            base.WriteByte(value);
+        }
+
+        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
+        {
+            return base.BeginWrite(buffer, offset, count, callback, state);
         }
     }
 }

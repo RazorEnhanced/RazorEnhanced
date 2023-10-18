@@ -1,9 +1,6 @@
 using Assistant;
-using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
-using Microsoft.Scripting;
-using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,15 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using System.Text;
 using FastColoredTextBoxNS;
-using IronPython.Compiler;
 using System.Text.RegularExpressions;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
-using System.Reflection;
+using Accord.Math;
+using Microsoft.Scripting.Utils;
+using RazorEnhanced.UOScript;
 using System.Threading.Tasks;
-using Assistant.UI;
+using CUO_API;
 
 namespace RazorEnhanced.UI
 {
@@ -45,45 +40,55 @@ namespace RazorEnhanced.UI
             Breakpoint
         }
 
-        private static EnhancedScriptEditor m_EnhancedScriptEditor;
-        internal static FastColoredTextBox EnhancedScriptEditorTextArea { get { return m_EnhancedScriptEditor.fastColoredTextBoxEditor; } }
+
+        private static List<EnhancedScriptEditor> m_EnhancedScriptEditors = new List<EnhancedScriptEditor>();
+        
+
+        public static EnhancedScriptEditor Search(string fullpath)
+        {
+            foreach (var editor in m_EnhancedScriptEditors){ 
+                if (editor.Script != null && editor.Script.Fullpath == fullpath){
+                    return editor;
+                }
+            }
+            return null;
+        }
+        
         private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
         private static Command m_CurrentCommand = Command.None;
         private static readonly AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
+                                                        
+        
+        
 
-        private string Title {
-            get
-            {
-                if (World.Player != null)
-                {
-                    if (m_Filename != String.Empty)
-                        return String.Format("Enhanced Script Editor - ({0}) - {1} ({2})", m_Filename, World.Player.Name, World.ShardName);
-                    else
-                        return String.Format("Enhanced Script Editor - {0} ({1})", World.Player.Name, World.ShardName);
-                }
-                else
-                    return "Enhanced Script Editor";
-            }
-        }
+        //private string m_Filename = String.Empty;
+        //private string m_Filetype = String.Empty;
+        //public static ScriptLanguage GetScriptLanguage() {  return LatestEditor.m_Script.GetLanguage(); }
 
-        private string m_Filename = String.Empty;
-        private string m_Filetype = String.Empty;
-        public  static string GetFiletype() {  return m_EnhancedScriptEditor.m_Filetype; }
+        //private string m_Filepath = String.Empty;
 
-        private string m_Filepath = String.Empty;
-
-        private readonly PythonEngine m_pe;
+        //private readonly PythonEngine m_pe;
 
         private TraceBackFrame m_CurrentFrame;
         private FunctionCode m_CurrentCode;
         private string m_CurrentResult;
         private object m_CurrentPayload;
-        private int m_ThreadID;
+
+
+        
+        //Dalamar:
+        //TODO: replace current implementation with 
+        private EnhancedScript m_Script; 
+        public EnhancedScript Script { get { return m_Script; } }
+        private ScriptRecorder m_Recorder;
 
         private readonly List<int> m_Breakpoints = new List<int>();
 
-        private volatile bool m_Breaktrace = false;
+        private volatile bool m_Debugger = false;
         private bool m_onclosing = false;
+
+        private bool m_ScriptWasRunning=false;
+        private System.Threading.Timer m_Timer;
 
         private readonly FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
 
@@ -108,22 +113,96 @@ namespace RazorEnhanced.UI
                 suffix = Path.GetExtension(filename);
             }
 
-            m_EnhancedScriptEditor = new EnhancedScriptEditor(filename, suffix);
-            m_EnhancedScriptEditor.Show();
+            var editor = EnhancedScriptEditor.Search(filename);
+            if (editor == null) {
+                editor = new EnhancedScriptEditor(filename, suffix);
+                editor.Show();
+            }
+            editor.BringToFront();
+            
         }
 
+
+        private void OnLoad()
+        {
+            var TimerDelay = 100;
+            var TimerTick = new System.Threading.TimerCallback(OnRefresh);
+            m_Timer = new System.Threading.Timer(TimerTick, null, TimerDelay, TimerDelay);
+
+            toolStripStatusLabelScript.Width = this.Width - 20;
+            SetStatusLabel("IDLE", Color.DarkTurquoise);
+        }
+
+        private bool OnUnload()
+        {
+            if (!CloseAndSave()) return false;
+            m_EnhancedScriptEditors.Remove(this);
+            m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+            m_Timer = null;
+            return true;
+        }
+
+        private void OnRefresh(object state)
+        {
+            if (m_Script == null) { return; }
+            if (!m_Script.IsRunning && m_ScriptWasRunning)
+            {
+                SetStatusLabel("STOP", Color.DarkTurquoise);
+            }
+            else if (m_Script.IsRunning && !m_ScriptWasRunning)
+            { 
+                if (m_Debugger)
+                {
+                    SetErrorBox("DEBUG: " + m_Script.Fullpath);
+                    SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
+                }
+                else
+                {
+                    SetErrorBox("RUN: " + m_Script.Fullpath);
+                    SetStatusLabel("SCRIPT RUNNING", Color.Green);
+                }
+            }
+
+            m_ScriptWasRunning = m_Script.IsRunning;
+        }
+
+
+        /*
         internal static void End()
         {
-            if (m_EnhancedScriptEditor != null)
+            if (m_EnhancedScriptEditors.Count > 0)
             {
+                //m_Recorder.Recording = false;
                 if (ScriptRecorder.OnRecord)
                     ScriptRecorder.OnRecord = false;
 
-                m_EnhancedScriptEditor.Stop();
+                LatestEditor.Stop();
             }
         }
+        */
 
-        internal EnhancedScriptEditor(string filename, string filetype)
+        public bool LoadFromFile(string filepath)
+        {
+            if (!File.Exists(filepath)) { return false; }
+            m_Script = EnhancedScript.FromFile(filepath);
+            var language = m_Script.GetLanguage();
+            LoadLanguage(language);
+            fastColoredTextBoxEditor.Text = m_Script.Text;
+            UpdateTitle();
+            return true;
+        }
+
+        public void LoadNewFile(ScriptLanguage language)
+        {
+            m_Script = EnhancedScript.FromText("",language);
+            language = m_Script.GetLanguage();
+            LoadLanguage(language);
+            fastColoredTextBoxEditor.Text = "";
+            UpdateTitle();
+        }
+
+
+        internal EnhancedScriptEditor(string filename, string filetype = ".py")
         {
             InitializeComponent();
             //Automenu Section
@@ -134,45 +213,61 @@ namespace RazorEnhanced.UI
             m_popupMenu.ToolTipDuration = 5000;
             m_popupMenu.AppearInterval = 100;
 
-
-            if (filetype == null)
-            {
-                filetype = ".py";
-            }
-            m_Filetype = filetype;
-
-            if (m_Filetype == ".uos")
-            {
-                fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
-                fastColoredTextBoxEditor.AutoIndentExistingLines = true;
-                InitUOSSyntaxHighlight();
-            }
-            else if (m_Filetype == ".cs")
-            {
-                fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.CSharp;
-                // do we need special init for CS ?                
-            }
-            else 
-            {
-                fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
-                InitPythonSyntaxHighlight();
+            if (!LoadFromFile(filename)) {
+                var language = EnhancedScript.ExtToLanguage(filetype);
+                LoadNewFile(language);
             }
 
+            if (m_Script.GetLanguage() == ScriptLanguage.PYTHON) { 
+                m_Script.ScriptEngine.SetTracebackPython(null);
+                m_Script.ScriptEngine.SetStdout(this.SetErrorBox);
+            }
             // Always have to make these or Open() wont work from UOS to PY
-            m_pe = new PythonEngine(this.SetErrorBox);
-            m_pe.Engine.SetTrace(null);
-            this.Text = Title;
+            // m_pe = new PythonEngine(this.SetErrorBox);
+            // m_pe.Engine.SetTrace(null);
+            UpdateTitle();
 
-            if (filename != null && File.Exists(filename))
+            m_EnhancedScriptEditors.Add(this);
+        }
+
+        public void LoadLanguage(ScriptLanguage language = ScriptLanguage.UNKNOWN) {
+            switch (language)
             {
-                m_Filepath = filename;
-                m_Filename = Path.GetFileName(filename);
-                this.Text = Title;
-                fastColoredTextBoxEditor.Text = File.ReadAllText(filename);
+                default:
+                case ScriptLanguage.PYTHON:
+                    fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
+                    InitPythonSyntaxHighlight();
+                    break;
+                case ScriptLanguage.CSHARP:
+                    fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.CSharp;
+                    break;
+                case ScriptLanguage.UOSTEAM:
+                    fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
+                    fastColoredTextBoxEditor.AutoIndentExistingLines = true;
+                    InitUOSSyntaxHighlight();
+                    break;
             }
         }
 
-        
+        private void UpdateTitle()
+        {
+            var title = "Enhanced Script Editor";
+            if (World.Player != null)
+            {
+                if (m_Script != null && m_Script.Fullpath != String.Empty)
+                {
+                    title = String.Format("{0} ({1}) - {2}", World.Player.Name, World.ShardName, m_Script.Fullpath);
+                }
+                else
+                {
+                    title = String.Format("Enhanced Script Editor - {0} ({1})", World.Player.Name, World.ShardName);
+                }
+            }
+
+            this.Text = title;
+        }
+
+
         public void InitUOSSyntaxHighlight()
         {
             // keywords
@@ -226,9 +321,6 @@ namespace RazorEnhanced.UI
                     autodocMethods.Add((string)method, tooltip);
                 }
             }
-
-
-
         }
 
 
@@ -441,7 +533,7 @@ namespace RazorEnhanced.UI
 
         private TracebackDelegate OnTraceback(TraceBackFrame frame, string result, object payload)
         {
-            if (m_Breaktrace)
+            if (m_Debugger)
             {
                 m_WaitDebug.WaitOne();
                 CheckCurrentCommand();
@@ -545,169 +637,58 @@ namespace RazorEnhanced.UI
             m_CurrentPayload = payload;
         }
 
-        private void Start(bool debug)
+        private void Start(bool debugger)
         {
             if (World.Player == null)
             {
-                SetErrorBox("Starting ERROR: Can't start script if not logged in game.");
+                SetErrorBox("ERROR: Can't start script if not logged in game.");
                 return;
             }
 
-            if (Scripts.ScriptEditorThread == null ||
-                    (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Running &&
-                    Scripts.ScriptEditorThread.ThreadState != ThreadState.Unstarted &&
-                    Scripts.ScriptEditorThread.ThreadState != ThreadState.WaitSleepJoin)
-                )
+            if (m_Recorder != null && m_Recorder.IsRecording())
             {
-                Scripts.ScriptEditorThread = new Thread(() => AsyncStart(debug));
-                Scripts.ScriptEditorThread.Start();
-                m_ThreadID = Scripts.ScriptEditorThread.ManagedThreadId;
-            }
-            else
-                SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
-        }
-        private void AsyncStart(bool debug)
-        {
-            if (ScriptRecorder.OnRecord)
-            {
-                SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
+                SetErrorBox("ERROR: Can't start script if record mode is ON.");
                 return;
             }
+            
+            m_Debugger = debugger;
+            
 
-            if (debug)
+            m_Queue = new ConcurrentQueue<Command>();
+
+            string text = GetFastTextBoxText();
+            m_Script.Text = text;
+            m_Script.LastModified = DateTime.Now;
+            m_Script.InitEngine();
+            
+            //Editor specific setup for each language Check 
+            switch (m_Script.Language)
             {
-                SetErrorBox("Starting Script in debug mode: " + m_Filename);
-                SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
-            }
-            else
-            {
-                SetErrorBox("Starting Script: " + m_Filename);
-                SetStatusLabel("SCRIPT RUNNING", Color.Green);
-            }
-
-            try
-            {
-                if (debug)
-                {
-                    m_Breaktrace = true;
-                }
-                else
-                {
-                    m_Breaktrace = false;
-                }
-
-                m_Queue = new ConcurrentQueue<Command>();
-
-                string text = GetFastTextBoxText();
-                if (m_Filetype == ".cs")
-                //if (text.Length >= 4 && text.Substring(0, 4).ToUpper() == "//C#")
-                {
-                    if (m_Filepath == "")
-                    {
-                        SetErrorBox("Due to a limitation, C# scripts must be saved before run it");
-                        throw new Exception();
-                    } 
-                    else
+                default:
+                case ScriptLanguage.PYTHON:
+                    m_Script.ScriptEngine.SetTracebackPython(OnTraceback);
+                    break;
+                case ScriptLanguage.CSHARP:
+                    if (m_Script.HasValidPath)
                     {
                         Save();
-                        SetErrorBox(m_Filename + " saved");
-                    }
-
-                    CSharpEngine csharpEngine = CSharpEngine.Instance;
-
-                    // Changed the logic: Now scripts are not executed as a text tring. Text will be saved and executed as a file.
-                    // This change simplify alot the management of the #import directive. This behaviour should change in future maybe with a new editor
-                    // 
-                    // If compile error occurs a SyntaxErrorException is thrown
-                    //bool compileErrors = csharpEngine.CompileFromText(text, out List<string> compileMessages, out Assembly assembly);
-                    bool compileErrors = csharpEngine.CompileFromFile(m_Filepath, debug, out List<string> compileMessages, out Assembly assembly);
-
-                    if (compileMessages.Count > 0)
-                    {
-                        SetErrorBox("C# compile warning:");
-                        foreach (string str in compileMessages)
-                        {
-                            SetErrorBox(str);
-                        }
-                    }
-                    if (assembly != null)
-                    {
-                        csharpEngine.Execute(assembly);
+                        SetErrorBox("SAVE: " + m_Script.Fullpath);
                     }
                     else
                     {
+                        SetErrorBox("ERROR: Due to a limitation, C# scripts must be saved before run it");
                         throw new Exception();
                     }
-
-                    SetErrorBox("Script " + m_Filename + " run completed!");
-                    SetStatusLabel("IDLE", Color.DarkTurquoise);
-                }
-                else if (m_Filetype == ".uos")                     
-                {
-                    // Deprecation of // 
-                    if ((text.Substring(0, 2) == "//") && !(text.Substring(0, 5).ToUpper() == "//UOS"))
-                    {
-                        string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
-                        SetErrorBox(message);
-                        Misc.SendMessage(message);
-                    }
-                    string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                    UOSteamEngine uosteam = UOSteamEngine.Instance;
-                    uosteam.Execute(lines, this.SetErrorBox);
-                    SetErrorBox("Script " + m_Filename + " run completed!");
-                    SetStatusLabel("IDLE", Color.DarkTurquoise);
-                }
-                else
-                {
-
-                    m_pe.Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
-                    m_pe.Execute(text);
-
-
-                    SetErrorBox("Script " + m_Filename + " run completed!");
-                    SetStatusLabel("IDLE", Color.DarkTurquoise);
-                }
+                    break;
             }
-            catch (IronPython.Runtime.Exceptions.SystemExitException )
-            {
-                Stop();
-                // sys.exit - terminate the thread
-            }
-            catch (Exception ex)
-            {
-                if (ex is SyntaxErrorException)
-                {
-                    SyntaxErrorException se = ex as SyntaxErrorException;
-                    SetErrorBox("Syntax Error:");
-                    SetErrorBox("--> LINE: " + se.Line);
-                    SetErrorBox("--> COLUMN: " + se.Column);
-                    SetErrorBox("--> SEVERITY: " + se.Severity);
-                    SetErrorBox("--> MESSAGE: " + se.Message);
-                }
-                else
-                {
-                    SetErrorBox("Generic Error:");
-                    ExceptionOperations eo = m_pe.Engine.GetService<ExceptionOperations>();
-                    string error = eo.FormatException(ex);
-                    error = error.Trim();
-                    error = Regex.Replace(error, "\n\n", "\n");     //remove empty lines
-                    foreach (var line in error.Split('\n') ) {
-                        SetErrorBox(line);
-                    }
-                }
-                SetStatusLabel("IDLE", Color.DarkTurquoise);
-            }
-
-            if (Scripts.ScriptEditorThread != null)
-                Scripts.ScriptEditorThread.Abort();
+            m_Script.Start();
         }
-
+        
         private void Stop()
         {
-            if (ScriptRecorder.OnRecord)
-                return;
+            if (m_Recorder != null && m_Recorder.IsRecording()) return;
 
-            m_Breaktrace = false;
+            m_Debugger = false;
             m_Queue = new ConcurrentQueue<Command>();
             m_Breakpoints.Clear();
 
@@ -720,16 +701,8 @@ namespace RazorEnhanced.UI
             SetStatusLabel("IDLE", Color.DarkTurquoise);
             SetTraceback(String.Empty);
 
-            if (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Stopped && m_ThreadID == Scripts.ScriptEditorThread.ManagedThreadId)
-            {
-                try
-                {
-                    Scripts.ScriptEditorThread.Abort();
-                }
-                catch { }
-                SetErrorBox("Script stopped: " + m_Filename);
-                Scripts.ScriptEditorThread = null;
-            }
+            m_Script.Stop();
+            SetErrorBox("STOP: " + m_Script.Fullpath);
         }
 
         private void SetHighlightLine(int iline, Color background)
@@ -857,8 +830,11 @@ namespace RazorEnhanced.UI
                 }
                 else
                 {
-                    this.messagelistBox.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] - " + text);
-                    this.messagelistBox.TopIndex = this.messagelistBox.Items.Count - 1;
+                    var lines = text.Split('\n').ToList();
+                    lines.ForEach(line =>{
+                        this.messagelistBox.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] - " + line);
+                        this.messagelistBox.TopIndex = this.messagelistBox.Items.Count - 1;
+                    });
                 }
             }
             catch
@@ -867,14 +843,10 @@ namespace RazorEnhanced.UI
 
         private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            m_EnhancedScriptEditor.m_onclosing = true;
-            Stop();
-            End();
-            if (!CloseAndSave())
-                e.Cancel = true;
-            m_EnhancedScriptEditor.m_onclosing = false;
+            var shouldClose = OnUnload();
+            e.Cancel = !shouldClose;
         }
-
+        
         private void ToolStripButtonPlay_Click(object sender, EventArgs e)
         {
             Start(false);
@@ -937,7 +909,9 @@ namespace RazorEnhanced.UI
 
         private void ToolStripButtonClose_Click(object sender, EventArgs e)
         {
+            var language = m_Script.Language;
             CloseAndSave();
+            LoadNewFile(language);
         }
 
         private void ToolStripButtonInspect_Click(object sender, EventArgs e)
@@ -985,34 +959,21 @@ namespace RazorEnhanced.UI
             {
                 if (open.FileName != null && File.Exists(open.FileName))
                 {
-                    m_Filename = Path.GetFileName(open.FileName);
-                    m_Filepath = open.FileName;
-                    this.Text = Title;
-                    if (m_Filename != null && Path.GetExtension(m_Filename) == ".uos")
-                    {
-                        fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
-                        fastColoredTextBoxEditor.AutoIndentExistingLines = true;
-                        InitUOSSyntaxHighlight();
-                    }
-                    else
-                    {
-                        fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
-                        InitPythonSyntaxHighlight();
-                    }
-
-                    fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
+                    LoadFromFile(open.FileName);
                 }
             }
         }
 
         private void ReloadAfterSave()
         {
-            Scripts.EnhancedScript script = Scripts.Search(m_Filename);
+
+            /*
+            EnhancedScript script = Scripts.Search(m_Script.Filename);
             if (script != null)
             {
-                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Filename);
+                string fullpath = Path.Combine(Assistant.Engine.RootPath, "Scripts", m_Script.Filename);
 
-                if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename))
+                if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Script.Filename))
                 {
                     //string text = File.ReadAllText(fullpath);
                     //bool loop = script.Loop;
@@ -1026,32 +987,23 @@ namespace RazorEnhanced.UI
 
                     //Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename, text, wait, loop, run, autostart);
                     //reloaded.Create(null);
-                    Scripts.EnhancedScripts[m_Filename].FileChangeDate = DateTime.MinValue;
+                    Scripts.EnhancedScripts[m_Script.Filename].LastModified = DateTime.MinValue;
 
                     if (isRunning)
                         script.Start();
                 }
             }
+            */
         }
 
-        private void SavaData()
-        {
-            try // Avoid crash if for some reasons file are unaccessible.
-            {
-                File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
-            }
-            catch { }
-        }
 
         private void Save()
         {
-            if (m_Filename != String.Empty)
+            m_Script.Text = fastColoredTextBoxEditor.Text;
+            if (m_Script.Exist)
             {
-                this.Text = Title;
-
-                SavaData();
-
-                ReloadAfterSave();
+                UpdateTitle();
+                m_Script.Save();
             }
             else
             {
@@ -1061,92 +1013,117 @@ namespace RazorEnhanced.UI
 
         private void SaveAs()
         {
-            string filter = "Python Files|*.py|Text Files|*.txt";
-            if (m_Filetype == ".uos")
-                filter = "UOS Files|*.uos|Text Files|*.txt";
-            if (m_Filetype == ".cs")
-                filter = "C# Files|*.cs|Text Files|*.txt";
+            var language = m_Script.GetLanguage();
+            string filter;
+            switch (language){
+                default:
+                case ScriptLanguage.PYTHON: 
+                    filter = "Python Files|*.py|Text Files|*.txt"; break;
+                case ScriptLanguage.CSHARP: 
+                    filter = "C# Files|*.cs|Text Files|*.txt"; break;
+                case ScriptLanguage.UOSTEAM: 
+                    filter = "UOS Files|*.uos|Text Files|*.txt"; break;
+            }
+                
 
             SaveFileDialog save = new SaveFileDialog
             {
                 Filter = filter,
                 RestoreDirectory = true
             };
-            save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
+
+            if (m_Script.HasValidPath && !m_Script.Exist)
+            {
+                save.InitialDirectory = Path.GetDirectoryName(m_Script.Fullpath);
+                save.FileName = m_Script.Filename;
+            } else { 
+                save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
+            }
+        
             if (save.ShowDialog() == DialogResult.OK)
             {
-                m_Filename = Path.GetFileName(save.FileName);
-                this.Text = Title;
-                m_Filepath = save.FileName;
-                m_Filename = Path.GetFileName(save.FileName);
-                SavaData();
-                ReloadAfterSave();
+                var fullpath = save.FileName;
+                if (m_Script.Editor)
+                {
+                    EnhancedScript.Service.RemoveScript(m_Script);
+                }
+                //Dalamar:
+                //TODO: add YES/NO dialog for overwrite check File.Exists(fullpath)
+                m_Script = EnhancedScript.FromFile(fullpath);
+                UpdateTitle();
+                m_Script.Save();
             }
         }
 
         private bool CloseAndSave()
         {
-            if (File.Exists(m_Filepath) && File.ReadAllText(m_Filepath) == fastColoredTextBoxEditor.Text)
+            m_onclosing = true;
+            Stop();
+            if (m_Recorder != null) { m_Recorder.Stop(); }
+            
+            // Not ask to save empty text
+            var editorContent = fastColoredTextBoxEditor.Text;
+            if (editorContent != null && editorContent != "")
             {
-                fastColoredTextBoxEditor.Text = String.Empty;
-                m_Filename = String.Empty;
-                m_Filepath = String.Empty;
-                this.Text = Title;
-                return true;
-            }
+                string fileContent="";
+                bool valid = false;
+                try {
+                    fileContent = File.ReadAllText(m_Script.Fullpath);
+                    valid = true;
+                } catch { }
 
-            if (fastColoredTextBoxEditor.Text == String.Empty) // Not ask to save empty text
-                return true;
-
-            DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-            if (res == System.Windows.Forms.DialogResult.Yes)
-            {
-                if (m_Filename != null && m_Filename != String.Empty)
+                if (valid && fileContent != editorContent)
                 {
-                    SavaData();
-                    ReloadAfterSave();
-                }
-                else
-                {
-                    SaveFileDialog save = new SaveFileDialog
+                    DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    if (res == DialogResult.Cancel) { return false; }
+                    if (res == DialogResult.No) { m_Script.Load(true); return true; }
+                    if (res == DialogResult.Yes)
                     {
-                        Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
-                        FileName = m_Filename
-                    };
-
-                    if (save.ShowDialog() == DialogResult.OK)
-                    {
-                        if (save.FileName != null && save.FileName != string.Empty && fastColoredTextBoxEditor.Text != null)
+                        if (m_Script.HasValidPath)
                         {
-                            SavaData();
-                            m_Filename = save.FileName;
-                            ReloadAfterSave();
+                            Save();
                         }
+                        else
+                        {
+                            SaveFileDialog save = new SaveFileDialog
+                            {
+                                Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
+                                FileName = m_Script.Fullpath
+                            };
+
+                            if (save.ShowDialog() == DialogResult.OK)
+                            {
+                                if (save.FileName != null && save.FileName != string.Empty)
+                                {
+                                    m_Script.Fullpath = save.FileName;
+                                    Save();
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+
                     }
-                    else
-                        return false;
                 }
 
-                fastColoredTextBoxEditor.Text = String.Empty;
-                m_Filename = String.Empty;
-                m_Filepath = String.Empty;
-                this.Text = Title;
-                return true;
             }
-            else if (res == System.Windows.Forms.DialogResult.No)
-            {
-                fastColoredTextBoxEditor.Text = String.Empty;
-                m_Filename = String.Empty;
-                m_Filepath = String.Empty;
-                this.Text = Title;
-                return true;
-            }
-            else if (res == System.Windows.Forms.DialogResult.Cancel)
-            {
-                return false;
-            }
+            UnloadScript();
+            m_onclosing = false;
             return true;
         }
+
+        public void UnloadScript() {
+            fastColoredTextBoxEditor.Text = String.Empty;
+            if (m_Script.Editor)
+            {
+                EnhancedScript.Service.RemoveScript(m_Script);
+            }
+            m_Script = null;
+            UpdateTitle();
+        }
+
 
         private void AddBreakpoint()
         {
@@ -1197,26 +1174,32 @@ namespace RazorEnhanced.UI
 
         private void ScriptRecord()
         {
-            if (Scripts.ScriptEditorThread == null ||
-                    (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Running &&
-                    Scripts.ScriptEditorThread.ThreadState != ThreadState.Unstarted &&
-                    Scripts.ScriptEditorThread.ThreadState != ThreadState.WaitSleepJoin)
-                )
+            if (!m_Script.IsRunning)
             {
-                if (ScriptRecorder.OnRecord)
+                if (m_Recorder == null) {
+                    m_Recorder = ScriptRecorderService.RecorderForLanguage(m_Script.Language);
+                    m_Recorder.Output = (code) => {
+                        fastColoredTextBoxEditor.Text += "\n" + code;
+                    };
+                }
+
+
+                if (!m_Recorder.IsRecording())
                 {
-                    SetErrorBox("RECORDER: Stop Record");
-                    ScriptRecorder.OnRecord = false;
-                    SetStatusLabel("IDLE", Color.DarkTurquoise);
-                    SetRecordButton("Record");
+                    m_Recorder.Start();
+                    //ScriptRecorder.OnRecord = true;
+                    SetErrorBox("RECORDER: Start Record");
+                    SetStatusLabel("ON RECORD", Color.Red);
+                    SetRecordButton("Stop Record");
                     return;
                 }
                 else
                 {
-                    SetErrorBox("RECORDER: Start Record");
-                    ScriptRecorder.OnRecord = true;
-                    SetStatusLabel("ON RECORD", Color.Red);
-                    SetRecordButton("Stop Record");
+                    m_Recorder.Stop();
+                    //ScriptRecorder.OnRecord = false;
+                    SetErrorBox("RECORDER: Stop Record");
+                    SetStatusLabel("IDLE", Color.DarkTurquoise);
+                    SetRecordButton("Record");
                     return;
                 }
             }
@@ -1314,11 +1297,6 @@ namespace RazorEnhanced.UI
             }
         }
 
-        private void EnhancedScriptEditor_Load(object sender, EventArgs e)
-        {
-            toolStripStatusLabelScript.Width = this.Width - 20;
-            SetStatusLabel("IDLE", Color.DarkTurquoise);
-        }
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1402,6 +1380,11 @@ namespace RazorEnhanced.UI
                 }
             }
             new EnhancedObjectInspector().Show();
+        }
+
+        private void EnhancedScriptEditor_Load(object sender, EventArgs e)
+        {
+            OnLoad();
         }
     }
 
