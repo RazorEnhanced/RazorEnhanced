@@ -1075,10 +1075,12 @@ namespace RazorEnhanced
             EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
             if (script != null)
             {
-                script.Start();
+                script.Stop();
             }
             else
+            {
                 Scripts.SendMessageScriptError("ScriptStop: Script not exist");
+            }
         }
 
         /// <summary>
