@@ -1013,6 +1013,7 @@ namespace RazorEnhanced.UI
 
         private void SaveAs()
         {
+            m_Script.Text = fastColoredTextBoxEditor.Text;
             var language = m_Script.GetLanguage();
             string filter;
             switch (language){
@@ -1030,7 +1031,7 @@ namespace RazorEnhanced.UI
             {
                 Filter = filter,
                 RestoreDirectory = true
-            };
+            };         
 
             if (m_Script.HasValidPath && !m_Script.Exist)
             {
@@ -1042,14 +1043,14 @@ namespace RazorEnhanced.UI
         
             if (save.ShowDialog() == DialogResult.OK)
             {
-                var fullpath = save.FileName;
+                m_Script.Fullpath = save.FileName;
                 if (m_Script.Editor)
                 {
                     EnhancedScript.Service.RemoveScript(m_Script);
                 }
                 //Dalamar:
                 //TODO: add YES/NO dialog for overwrite check File.Exists(fullpath)
-                m_Script = EnhancedScript.FromFile(fullpath);
+                // The dialog asks this, I think not needed - Credzba
                 UpdateTitle();
                 m_Script.Save();
             }
