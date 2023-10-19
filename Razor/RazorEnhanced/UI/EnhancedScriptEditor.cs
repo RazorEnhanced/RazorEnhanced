@@ -1014,6 +1014,7 @@ namespace RazorEnhanced.UI
         private void SaveAs()
         {
             m_Script.Text = fastColoredTextBoxEditor.Text;
+
             var language = m_Script.GetLanguage();
             string filter;
             switch (language){
@@ -1043,16 +1044,27 @@ namespace RazorEnhanced.UI
         
             if (save.ShowDialog() == DialogResult.OK)
             {
-                m_Script.Fullpath = save.FileName;
+                var fullpath = save.FileName;
+
                 if (m_Script.Editor)
                 {
                     EnhancedScript.Service.RemoveScript(m_Script);
                 }
-                //Dalamar:
-                //TODO: add YES/NO dialog for overwrite check File.Exists(fullpath)
-                // The dialog asks this, I think not needed - Credzba
-                UpdateTitle();
+
+                if (File.Exists(fullpath))
+                {
+                    m_Script = EnhancedScript.FromFile(fullpath, editor:true);
+                    m_Script.Text = fastColoredTextBoxEditor.Text;
+                }
+                else { 
+                    m_Script.Fullpath = fullpath;
+                }
+
+
                 m_Script.Save();
+
+                
+                UpdateTitle();
             }
         }
 
