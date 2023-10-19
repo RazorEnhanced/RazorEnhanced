@@ -184,7 +184,13 @@ namespace RazorEnhanced.UI
         public bool LoadFromFile(string filepath)
         {
             if (!File.Exists(filepath)) { return false; }
-            m_Script = EnhancedScript.FromFile(filepath);
+            
+            if (m_Script != null && m_Script.Editor)
+            {
+                EnhancedScript.Service.RemoveScript(m_Script);
+            }
+
+            m_Script = EnhancedScript.FromFile(filepath, editor:true);
             var language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = m_Script.Text;
@@ -950,6 +956,8 @@ namespace RazorEnhanced.UI
         }
         private void Open()
         {
+            
+
             OpenFileDialog open = new OpenFileDialog
             {
                 Filter = "Script Files|*.py;*.txt;*.uos;*.cs",
