@@ -1087,13 +1087,13 @@ namespace RazorEnhanced.UI
             if (editorContent != null && editorContent != "")
             {
                 string fileContent="";
-                bool valid = false;
+                //bool valid = false;
                 try {
                     fileContent = File.ReadAllText(m_Script.Fullpath);
-                    valid = true;
+                    //valid = true;
                 } catch { }
 
-                if (valid && fileContent != editorContent)
+                if (/*valid &&*/ fileContent != editorContent)
                 {
                     DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
                     if (res == DialogResult.Cancel) { return false; }
