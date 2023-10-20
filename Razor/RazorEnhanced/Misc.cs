@@ -301,7 +301,6 @@ namespace RazorEnhanced
         /// <param name="millisec">Pause duration, in milliseconds.</param>
         public static void Pause(int millisec)
         {
-            if (millisec < 0) { millisec = 0; } // 0 -> skip rest of time slice | <0 -> Exception 
             System.Threading.Thread.Sleep(millisec);
         }
 
@@ -1057,10 +1056,10 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptRun(string scriptfile)
         {
-            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
+            Scripts.EnhancedScript script = Scripts.Search(scriptfile);
             if (script != null)
             {
-                script.Start();
+                script.Run = true;
             }
             else
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
@@ -1072,15 +1071,13 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptStop(string scriptfile)
         {
-            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
+            Scripts.EnhancedScript script = Scripts.Search(scriptfile);
             if (script != null)
             {
-                script.Stop();
+                script.Run = false;
             }
             else
-            {
                 Scripts.SendMessageScriptError("ScriptStop: Script not exist");
-            }
         }
 
         /// <summary>
@@ -1089,13 +1086,13 @@ namespace RazorEnhanced
         /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
         public static void ScriptStopAll(bool skipCurrent=false)
         {
-            EnhancedScript currentScript = EnhancedScript.Service.CurrentScript();
-            foreach (EnhancedScript script in EnhancedScript.Service.ScriptList() )
+            Scripts.EnhancedScript currentScript = Scripts.CurrentScript();
+            foreach (RazorEnhanced.Scripts.EnhancedScript script in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
             {
                 if ( skipCurrent && currentScript == script) { 
                     continue; 
                 }
-                script.Stop();
+                script.Run = false;
             }
         }
 
@@ -1106,10 +1103,10 @@ namespace RazorEnhanced
         /// <returns>True: Script is running - False: otherwise.</returns>
         public static bool ScriptStatus(string scriptfile)
         {
-            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
+            Scripts.EnhancedScript script = Scripts.Search(scriptfile);
             if (script != null)
             {
-                return script.IsRunning;
+                return script.Run;
             }
             else
             {
@@ -1128,7 +1125,6 @@ namespace RazorEnhanced
             return ScreenCapManager.CaptureNowPath();
         }
 
- 
         /// <summary>
         /// The MapInfo class is used to store information about the Map location.
         /// </summary>

@@ -1,194 +1,72 @@
 using Assistant;
-using IronPython.Runtime.Exceptions;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RazorEnhanced
 {
-    public delegate void ScriptRecorderOutput(string code);
-
-    public class ScriptRecorderService{ 
-        public readonly static ScriptRecorderService Instance = new ScriptRecorderService();
-        private readonly List<ScriptRecorder> m_ScriptRecorderList = new List<ScriptRecorder>();
-        public List<ScriptRecorder> ScriptRecorderList { get { return new List<ScriptRecorder>(m_ScriptRecorderList); } }
-
-        private int m_Count=0;
-
-        internal static ScriptRecorder RecorderForLanguage(ScriptLanguage language)
-        {
-            switch (language)
-            {
-                default:
-                case ScriptLanguage.PYTHON: return new PyScriptRecorder();
-                case ScriptLanguage.CSHARP: return new CsScriptRecorder();
-                case ScriptLanguage.UOSTEAM: return new UosScriptRecorder();
-            }
-        }
-
-        public bool Active() { 
-            return m_Count > 0;
-        }
-
-        public int RecorderCount()
-        {
-            return m_Count;
-        }
-        public void Add(ScriptRecorder scriptRecorder)
-        {
-            m_ScriptRecorderList.Add(scriptRecorder);
-            m_Count = m_ScriptRecorderList.Count;
-        }
-        public void Remove(ScriptRecorder scriptRecorder)
-        {
-            m_ScriptRecorderList.Remove(scriptRecorder);
-            m_Count = m_ScriptRecorderList.Count;
-        }
-        public void RemoveAll()
-        {
-            ScriptRecorderList.ForEach(recorder => recorder.Stop());
-            m_Count = m_ScriptRecorderList.Count;
-        }
-
-
-        // -------------------------------------------------- RECORDER METHODS ---------------------------------------------------------------------------
-        internal void Record_AttackRequest(uint serial)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_AttackRequest(serial); } ).Start());
-        }
-
-        internal void Record_ClientDoubleClick(Assistant.Serial ser)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_ClientDoubleClick(ser); }).Start());
-        }
-        internal void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_DropRequest(i,dest); }).Start());
-        }
-        internal void Record_ClientTextCommand(int type, int id)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_ClientTextCommand(type, id); }).Start());
-        }
-        internal void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_EquipRequest(item, l, m); }).Start());
-        }
-        internal void Record_RenameMobile(int serial, string name)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_RenameMobile(serial, name); }).Start());
-        }
-        internal void Record_AsciiPromptResponse(uint type, string text)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_AsciiPromptResponse(type, text); }).Start());
-        }
-        internal void Record_UnicodeSpeech(MessageType type, string text, int hue)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_UnicodeSpeech(type, text, hue); }).Start());
-        }
-        internal void Record_GumpsResponse(uint id, int operation)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_GumpsResponse(id, operation); }).Start());
-        }
-        internal void Record_SADisarm()
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_SADisarm(); }).Start());
-        }
-        internal void Record_SAStun()
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_SAStun(); }).Start());
-        }
-        internal void Record_ContextMenuResponse(int serial, ushort idx)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_ContextMenuResponse(serial, idx); }).Start());
-        }
-        internal void Record_ResponseStringQuery(byte yesno, string text)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_ResponseStringQuery(yesno, text); }).Start());
-        }
-        internal void Record_MenuResponse(int index)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_MenuResponse(index); }).Start());
-        }
-        internal void Record_Movement(Direction dir)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_Movement(dir); }).Start());
-        }
-        internal void Record_Target(TargetInfo info)
-        {
-            if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_Target(info); }).Start());
-        }
-
-
-    }
-
     public class ScriptRecorder
     {
-        public ScriptRecorderOutput Output;
+        private static bool m_onrecord = false;
+        internal static bool OnRecord { get { return m_onrecord; } set { m_onrecord = value; } }
 
-        private bool m_Recording = false;
-
-        public bool IsRecording()
-        { return m_Recording; }
-
-        public void Start()
+        internal static void AddLog(string code)
         {
-            ScriptRecorderService.Instance.Add(this);
-            m_Recording = true;
+            if (UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea != null)
+                UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text = UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text + "\n" + code;
         }
 
-        public void Stop()
+        internal static ScriptRecorder instance()
         {
-            ScriptRecorderService.Instance.Remove(this);
-            m_Recording = false;
+            if (UI.EnhancedScriptEditor.GetFiletype() == ".py")
+            {
+                return new PyScriptRecorder();
+            }
+
+            if (UI.EnhancedScriptEditor.GetFiletype() == ".uos")
+            {
+                return new UosScriptRecorder();
+            }
+
+            if (UI.EnhancedScriptEditor.GetFiletype() == ".cs")
+            {
+                return new CsScriptRecorder();
+            }
+
+            return null;
         }
-
-        ~ScriptRecorder(){
-            ScriptRecorderService.Instance.Remove(this);
-        }
-
-        internal void AddLog(string code)
-        {
-            if (m_Recording &&  Output != null) { Output(code); }
-        }
-
-
-
-        internal virtual void Record_AttackRequest(uint serial) { }
-        internal virtual void Record_ClientDoubleClick(Assistant.Serial ser){ }
-        internal virtual void Record_DropRequest(Assistant.Item i, Assistant.Serial dest){ }
-        internal virtual void Record_ClientTextCommand(int type, int id){ }
-        internal virtual void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m){ }
-        internal virtual void Record_RenameMobile(int serial, string name){ }
-        internal virtual void Record_AsciiPromptResponse(uint type, string text){ }
-        internal virtual void Record_UnicodeSpeech(MessageType type, string text, int hue){ }
-        internal virtual void Record_GumpsResponse(uint id, int operation){ }
-        internal virtual void Record_SADisarm(){ }
-        internal virtual void Record_SAStun(){ }
-        internal virtual void Record_ContextMenuResponse(int serial, ushort idx){ }
-        internal virtual void Record_ResponseStringQuery(byte yesno, string text){ }
-        internal virtual void Record_MenuResponse(int index){ }
-        internal virtual void Record_Movement(Direction dir){ }
-        internal virtual void Record_Target(TargetInfo info){ }
+        internal virtual void Record_AttackRequest(uint serial)
+        { }
+        internal virtual void Record_ClientDoubleClick(Assistant.Serial ser)
+        { }
+        internal virtual void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
+        { }
+        internal virtual void Record_ClientTextCommand(int type, int id)
+        { }
+        internal virtual void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
+        { }
+        internal virtual void Record_RenameMobile(int serial, string name)
+        { }
+        internal virtual void Record_AsciiPromptResponse(uint type, string text)
+        { }
+        internal virtual void Record_UnicodeSpeech(MessageType type, string text, int hue)
+        { }
+        internal virtual void Record_GumpsResponse(uint id, int operation)
+        { }
+        internal virtual void Record_SADisarm()
+        { }
+        internal virtual void Record_SAStun()
+        { }
+        internal virtual void Record_ContextMenuResponse(int serial, ushort idx)
+        { }
+        internal virtual void Record_ResponseStringQuery(byte yesno, string text)
+        { }
+        internal virtual void Record_MenuResponse(int index)
+        { }
+        internal virtual void Record_Movement(Direction dir)
+        { }
+        internal virtual void Record_Target(TargetInfo info)
+        { }
     }
     public class PyScriptRecorder : ScriptRecorder
     {
+
         internal override void Record_AttackRequest(uint serial)
         {
                 AddLog("Player.Attack(0x" + serial.ToString("X8") + ")");
@@ -530,6 +408,7 @@ namespace RazorEnhanced
     }
     public class UosScriptRecorder : ScriptRecorder
     {
+
         internal override void Record_AttackRequest(uint serial)
         {
                 AddLog("attack " + "0x" + serial.ToString("X8"));

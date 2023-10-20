@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
-    public class CSharpEngine
+    class CSharpEngine
     {
         private static CSharpEngine m_instance = null;
 
