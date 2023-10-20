@@ -1,4 +1,4 @@
-﻿using Assistant;
+using Assistant;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
