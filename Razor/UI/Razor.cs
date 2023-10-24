@@ -887,8 +887,6 @@ namespace Assistant
             this.uomodglobalsoundCheckBox = new System.Windows.Forms.CheckBox();
             this.uomodFPSCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox32 = new System.Windows.Forms.GroupBox();
-            this.remountedelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.remountdelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label48 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.remountseriallabel = new System.Windows.Forms.Label();
@@ -961,45 +959,14 @@ namespace Assistant
             this.showscriptmessageCheckBox = new System.Windows.Forms.CheckBox();
             this.AllScriptsTab = new System.Windows.Forms.TabControl();
             this.pythonScriptingTab = new System.Windows.Forms.TabPage();
-            this.pyScriptListView = new RazorEnhanced.UI.ScriptListView();
-            this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.loop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.autostart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.wait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.uosScriptingTab = new System.Windows.Forms.TabPage();
-            this.uosScriptListView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.csScriptingTab = new System.Windows.Forms.TabPage();
-            this.csScriptListView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.eautoloot = new System.Windows.Forms.TabPage();
             this.autoLootButtonListClone = new System.Windows.Forms.Button();
             this.autolootautostartCheckBox = new System.Windows.Forms.CheckBox();
             this.label60 = new System.Windows.Forms.Label();
-            this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.autolootItemPropsB = new System.Windows.Forms.Button();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.label55 = new System.Windows.Forms.Label();
@@ -1015,7 +982,6 @@ namespace Assistant
             this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.autoLootnoopenCheckBox = new System.Windows.Forms.CheckBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.autoLootButtonRemoveList = new System.Windows.Forms.Button();
             this.autolootButtonAddList = new System.Windows.Forms.Button();
             this.autolootListSelect = new System.Windows.Forms.ComboBox();
@@ -1047,8 +1013,6 @@ namespace Assistant
             this.scavengerButtonRemoveList = new System.Windows.Forms.Button();
             this.scavengerButtonAddList = new System.Windows.Forms.Button();
             this.scavengerListSelect = new System.Windows.Forms.ComboBox();
-            this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
-            this.scavengerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.organizer = new System.Windows.Forms.TabPage();
             this.organizerCloneListB = new System.Windows.Forms.Button();
             this.organizerExecuteButton = new System.Windows.Forms.Button();
@@ -1074,7 +1038,6 @@ namespace Assistant
             this.organizerRemoveListB = new System.Windows.Forms.Button();
             this.organizerAddListB = new System.Windows.Forms.Button();
             this.organizerListSelect = new System.Windows.Forms.ComboBox();
-            this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.VendorBuy = new System.Windows.Forms.TabPage();
             this.buyToCompleteAmount = new System.Windows.Forms.CheckBox();
             this.buyLogBox = new System.Windows.Forms.ListBox();
@@ -1130,7 +1093,6 @@ namespace Assistant
             this.dressSetBagB = new System.Windows.Forms.Button();
             this.undressExecuteButton = new System.Windows.Forms.Button();
             this.dressExecuteButton = new System.Windows.Forms.Button();
-            this.dressDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.dressListView = new System.Windows.Forms.ListView();
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1188,7 +1150,6 @@ namespace Assistant
             this.restockRemoveListB = new System.Windows.Forms.Button();
             this.restockAddListB = new System.Windows.Forms.Button();
             this.restockListSelect = new System.Windows.Forms.ComboBox();
-            this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.bandageheal = new System.Windows.Forms.TabPage();
             this.bandagehealAutostartCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -1200,21 +1161,16 @@ namespace Assistant
             this.bandagehealusetextSelfContent = new System.Windows.Forms.TextBox();
             this.bandagehealusetext = new System.Windows.Forms.CheckBox();
             this.bandagehealusetarget = new System.Windows.Forms.CheckBox();
-            this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label46 = new System.Windows.Forms.Label();
             this.bandagehealcountdownCheckBox = new System.Windows.Forms.CheckBox();
             this.bandagehealhiddedCheckBox = new System.Windows.Forms.CheckBox();
             this.bandagehealmortalCheckBox = new System.Windows.Forms.CheckBox();
             this.bandagehealpoisonCheckBox = new System.Windows.Forms.CheckBox();
             this.label33 = new System.Windows.Forms.Label();
-            this.bandagehealhpTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label32 = new System.Windows.Forms.Label();
-            this.bandagehealdelayTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label31 = new System.Windows.Forms.Label();
             this.bandagehealdexformulaCheckBox = new System.Windows.Forms.CheckBox();
-            this.bandagehealcustomcolorTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.bandagehealcustomIDTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.bandagehealcustomCheckBox = new System.Windows.Forms.CheckBox();
             this.bandagehealtargetLabel = new System.Windows.Forms.Label();
@@ -1258,12 +1214,10 @@ namespace Assistant
             this.label37 = new System.Windows.Forms.Label();
             this.toolboxcountClearButton = new System.Windows.Forms.Button();
             this.toolboxcountTargetButton = new System.Windows.Forms.Button();
-            this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label36 = new System.Windows.Forms.Label();
             this.toolboxcountHueWarningCheckBox = new System.Windows.Forms.CheckBox();
             this.toolboxcountHueTextBox = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
-            this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.toolboxcountComboBox = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -1384,7 +1338,6 @@ namespace Assistant
             this.enhancedHotKeytabPage = new System.Windows.Forms.TabPage();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.hotkeyMasterClearButton = new System.Windows.Forms.Button();
-            this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorHotKeyTextBox();
             this.hotkeyMasterSetButton = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
@@ -1397,7 +1350,6 @@ namespace Assistant
             this.hotkeyClearButton = new System.Windows.Forms.Button();
             this.hotkeySetButton = new System.Windows.Forms.Button();
             this.label39 = new System.Windows.Forms.Label();
-            this.hotkeytextbox = new RazorEnhanced.UI.RazorHotKeyTextBox();
             this.hotkeytreeView = new System.Windows.Forms.TreeView();
             this.journal = new System.Windows.Forms.TabPage();
             this.viewFilter = new System.Windows.Forms.Label();
@@ -1440,12 +1392,9 @@ namespace Assistant
             this.DPSMeterApplyFilterButton = new System.Windows.Forms.Button();
             this.DPSmetername = new System.Windows.Forms.TextBox();
             this.label70 = new System.Windows.Forms.Label();
-            this.DPSmeterserial = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
             this.label69 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
-            this.DPSmetermaxdamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.label66 = new System.Windows.Forms.Label();
-            this.DPSmetermindamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.DpsMeterGridView = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1485,6 +1434,57 @@ namespace Assistant
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
             this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
+            this.remountedelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.remountdelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.pyScriptListView = new RazorEnhanced.UI.ScriptListView();
+            this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.loop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.autostart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.wait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.uosScriptListView = new RazorEnhanced.UI.ScriptListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.csScriptListView = new RazorEnhanced.UI.ScriptListView();
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.scavengerRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.scavengerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.organizerDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.dressDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.restockDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.bandagehealhpTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.bandagehealdelayTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.bandagehealcustomcolorTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
+            this.bandagehealcustomIDTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
+            this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
+            this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorHotKeyTextBox();
+            this.hotkeytextbox = new RazorEnhanced.UI.RazorHotKeyTextBox();
+            this.DPSmeterserial = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
+            this.DPSmetermaxdamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.DPSmetermindamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1625,7 +1625,7 @@ namespace Assistant
             this.friendlistView.MinimumSize = new System.Drawing.Size(10, 10);
             this.friendlistView.MultiSelect = false;
             this.friendlistView.Name = "friendlistView";
-            this.friendlistView.Size = new System.Drawing.Size(656, 243);
+            this.friendlistView.Size = new System.Drawing.Size(656, 245);
             this.friendlistView.TabIndex = 64;
             this.friendlistView.UseCompatibleStateImageBehavior = false;
             this.friendlistView.View = System.Windows.Forms.View.Details;
@@ -1664,7 +1664,7 @@ namespace Assistant
             this.friendguildListView.MinimumSize = new System.Drawing.Size(10, 10);
             this.friendguildListView.MultiSelect = false;
             this.friendguildListView.Name = "friendguildListView";
-            this.friendguildListView.Size = new System.Drawing.Size(656, 264);
+            this.friendguildListView.Size = new System.Drawing.Size(656, 263);
             this.friendguildListView.TabIndex = 77;
             this.friendguildListView.UseCompatibleStateImageBehavior = false;
             this.friendguildListView.View = System.Windows.Forms.View.Details;
@@ -2087,9 +2087,9 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.txtSpellFormat);
             this.moreOptTab.Controls.Add(this.chkForceSpellHue);
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
-            this.moreOptTab.Location = new System.Drawing.Point(4, 54);
+            this.moreOptTab.Location = new System.Drawing.Point(4, 29);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(684, 374);
+            this.moreOptTab.Size = new System.Drawing.Size(1104, 602);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
@@ -2643,9 +2643,9 @@ namespace Assistant
             // enhancedFilterTab
             // 
             this.enhancedFilterTab.Controls.Add(this.FilterPages);
-            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 54);
+            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 29);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
-            this.enhancedFilterTab.Size = new System.Drawing.Size(684, 374);
+            this.enhancedFilterTab.Size = new System.Drawing.Size(1104, 602);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
             // 
@@ -2659,7 +2659,7 @@ namespace Assistant
             this.FilterPages.Location = new System.Drawing.Point(-2, 2);
             this.FilterPages.Name = "FilterPages";
             this.FilterPages.SelectedIndex = 0;
-            this.FilterPages.Size = new System.Drawing.Size(663, 380);
+            this.FilterPages.Size = new System.Drawing.Size(1083, 608);
             this.FilterPages.TabIndex = 0;
             // 
             // MiscFilterPage
@@ -2673,7 +2673,7 @@ namespace Assistant
             this.MiscFilterPage.Location = new System.Drawing.Point(4, 22);
             this.MiscFilterPage.Name = "MiscFilterPage";
             this.MiscFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MiscFilterPage.Size = new System.Drawing.Size(655, 354);
+            this.MiscFilterPage.Size = new System.Drawing.Size(1075, 582);
             this.MiscFilterPage.TabIndex = 0;
             this.MiscFilterPage.Text = "Misc";
             this.MiscFilterPage.UseVisualStyleBackColor = true;
@@ -2684,7 +2684,7 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(194, 216);
+            this.uomodgroupbox.Location = new System.Drawing.Point(194, 446);
             this.uomodgroupbox.Name = "uomodgroupbox";
             this.uomodgroupbox.Size = new System.Drawing.Size(234, 67);
             this.uomodgroupbox.TabIndex = 75;
@@ -2729,38 +2729,12 @@ namespace Assistant
             this.groupBox32.Controls.Add(this.label47);
             this.groupBox32.Controls.Add(this.remountsetbutton);
             this.groupBox32.Controls.Add(this.remountcheckbox);
-            this.groupBox32.Location = new System.Drawing.Point(484, 172);
+            this.groupBox32.Location = new System.Drawing.Point(904, 172);
             this.groupBox32.Name = "groupBox32";
             this.groupBox32.Size = new System.Drawing.Size(165, 118);
             this.groupBox32.TabIndex = 74;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "Auto Remount";
-            // 
-            // remountedelay
-            // 
-            this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.remountedelay.BackColor = System.Drawing.Color.White;
-            this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.remountedelay.Location = new System.Drawing.Point(93, 89);
-            this.remountedelay.Name = "remountedelay";
-            this.remountedelay.Size = new System.Drawing.Size(58, 20);
-            this.remountedelay.TabIndex = 68;
-            this.remountedelay.Leave += new System.EventHandler(this.remountedelay_Leave);
-            // 
-            // remountdelay
-            // 
-            this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.remountdelay.BackColor = System.Drawing.Color.White;
-            this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.remountdelay.Location = new System.Drawing.Point(93, 64);
-            this.remountdelay.Name = "remountdelay";
-            this.remountdelay.Size = new System.Drawing.Size(58, 20);
-            this.remountdelay.TabIndex = 67;
-            this.remountdelay.Leave += new System.EventHandler(this.remountdelay_Leave);
             // 
             // label48
             // 
@@ -2975,7 +2949,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(194, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(274, 209);
+            this.groupBox23.Size = new System.Drawing.Size(694, 439);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -2998,7 +2972,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(262, 149);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(682, 379);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -3075,7 +3049,7 @@ namespace Assistant
             this.groupBox10.Controls.Add(this.label34);
             this.groupBox10.Controls.Add(this.autocarverrazorButton);
             this.groupBox10.Controls.Add(this.autocarverCheckBox);
-            this.groupBox10.Location = new System.Drawing.Point(483, 0);
+            this.groupBox10.Location = new System.Drawing.Point(903, 0);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(166, 80);
             this.groupBox10.TabIndex = 71;
@@ -3126,7 +3100,7 @@ namespace Assistant
             this.groupBox9.Controls.Add(this.label16);
             this.groupBox9.Controls.Add(this.boneCutterrazorButton);
             this.groupBox9.Controls.Add(this.bonecutterCheckBox);
-            this.groupBox9.Location = new System.Drawing.Point(483, 86);
+            this.groupBox9.Location = new System.Drawing.Point(903, 86);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(166, 80);
             this.groupBox9.TabIndex = 70;
@@ -3176,7 +3150,7 @@ namespace Assistant
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 22);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.JournalFilterPage.Size = new System.Drawing.Size(655, 354);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1075, 582);
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
@@ -3194,7 +3168,7 @@ namespace Assistant
             this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(643, 324);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1063, 554);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -3536,7 +3510,7 @@ namespace Assistant
             this.AllScriptsTab.Location = new System.Drawing.Point(-2, 0);
             this.AllScriptsTab.Name = "AllScriptsTab";
             this.AllScriptsTab.SelectedIndex = 0;
-            this.AllScriptsTab.Size = new System.Drawing.Size(903, 606);
+            this.AllScriptsTab.Size = new System.Drawing.Size(903, 602);
             this.AllScriptsTab.TabIndex = 0;
             // 
             // pythonScriptingTab
@@ -3550,286 +3524,25 @@ namespace Assistant
             this.pythonScriptingTab.TabIndex = 13;
             this.pythonScriptingTab.Text = "Python";
             // 
-            // pyScriptListView
-            // 
-            this.pyScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pyScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.filename,
-            this.status,
-            this.loop,
-            this.autostart,
-            this.wait,
-            this.hotkey,
-            this.heypass,
-            this.index,
-            this.fullFilePath});
-            this.pyScriptListView.FullRowSelect = true;
-            this.pyScriptListView.GridLines = true;
-            this.pyScriptListView.HideSelection = false;
-            this.pyScriptListView.LabelWrap = false;
-            this.pyScriptListView.Location = new System.Drawing.Point(4, -2);
-            this.pyScriptListView.MultiSelect = false;
-            this.pyScriptListView.Name = "pyScriptListView";
-            this.pyScriptListView.ShowItemToolTips = true;
-            this.pyScriptListView.Size = new System.Drawing.Size(884, 576);
-            this.pyScriptListView.TabIndex = 48;
-            this.pyScriptListView.UseCompatibleStateImageBehavior = false;
-            this.pyScriptListView.View = System.Windows.Forms.View.Details;
-            this.pyScriptListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
-            this.pyScriptListView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
-            this.pyScriptListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
-            this.pyScriptListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
-            // 
-            // filename
-            // 
-            this.filename.DisplayIndex = 1;
-            this.filename.Text = "Filename";
-            this.filename.Width = 350;
-            // 
-            // status
-            // 
-            this.status.DisplayIndex = 2;
-            this.status.Text = "Status";
-            this.status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.status.Width = 80;
-            // 
-            // loop
-            // 
-            this.loop.DisplayIndex = 3;
-            this.loop.Text = "Loop";
-            this.loop.Width = 50;
-            // 
-            // autostart
-            // 
-            this.autostart.DisplayIndex = 5;
-            this.autostart.Text = "A.S.";
-            this.autostart.Width = 55;
-            // 
-            // wait
-            // 
-            this.wait.Text = "Wait";
-            this.wait.Width = 40;
-            // 
-            // hotkey
-            // 
-            this.hotkey.DisplayIndex = 6;
-            this.hotkey.Text = "HotKey";
-            this.hotkey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.hotkey.Width = 80;
-            // 
-            // heypass
-            // 
-            this.heypass.DisplayIndex = 7;
-            this.heypass.Text = "KeyPass";
-            this.heypass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.heypass.Width = 80;
-            // 
-            // index
-            // 
-            this.index.DisplayIndex = 0;
-            this.index.Text = "#";
-            this.index.Width = 40;
-            // 
-            // fullFilePath
-            // 
-            this.fullFilePath.Text = "";
-            this.fullFilePath.Width = 0;
-            // 
             // uosScriptingTab
             // 
             this.uosScriptingTab.Controls.Add(this.uosScriptListView);
             this.uosScriptingTab.Location = new System.Drawing.Point(4, 22);
             this.uosScriptingTab.Name = "uosScriptingTab";
-            this.uosScriptingTab.Size = new System.Drawing.Size(895, 580);
+            this.uosScriptingTab.Size = new System.Drawing.Size(895, 576);
             this.uosScriptingTab.TabIndex = 14;
             this.uosScriptingTab.Text = "UOS";
             this.uosScriptingTab.UseVisualStyleBackColor = true;
-            // 
-            // uosScriptListView
-            // 
-            this.uosScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uosScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8,
-            this.columnHeader9});
-            this.uosScriptListView.FullRowSelect = true;
-            this.uosScriptListView.GridLines = true;
-            this.uosScriptListView.HideSelection = false;
-            this.uosScriptListView.LabelWrap = false;
-            this.uosScriptListView.Location = new System.Drawing.Point(2, 1);
-            this.uosScriptListView.MultiSelect = false;
-            this.uosScriptListView.Name = "uosScriptListView";
-            this.uosScriptListView.ShowItemToolTips = true;
-            this.uosScriptListView.Size = new System.Drawing.Size(890, 576);
-            this.uosScriptListView.TabIndex = 49;
-            this.uosScriptListView.UseCompatibleStateImageBehavior = false;
-            this.uosScriptListView.View = System.Windows.Forms.View.Details;
-            this.uosScriptListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
-            this.uosScriptListView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
-            this.uosScriptListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
-            this.uosScriptListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.DisplayIndex = 1;
-            this.columnHeader1.Text = "Filename";
-            this.columnHeader1.Width = 350;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.DisplayIndex = 2;
-            this.columnHeader2.Text = "Status";
-            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 80;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.DisplayIndex = 3;
-            this.columnHeader3.Text = "Loop";
-            this.columnHeader3.Width = 50;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.DisplayIndex = 5;
-            this.columnHeader4.Text = "A.S.";
-            this.columnHeader4.Width = 55;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Wait";
-            this.columnHeader5.Width = 40;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.DisplayIndex = 6;
-            this.columnHeader6.Text = "HotKey";
-            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader6.Width = 80;
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.DisplayIndex = 7;
-            this.columnHeader7.Text = "KeyPass";
-            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader7.Width = 80;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.DisplayIndex = 0;
-            this.columnHeader8.Text = "#";
-            this.columnHeader8.Width = 40;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "";
-            this.columnHeader9.Width = 0;
             // 
             // csScriptingTab
             // 
             this.csScriptingTab.Controls.Add(this.csScriptListView);
             this.csScriptingTab.Location = new System.Drawing.Point(4, 22);
             this.csScriptingTab.Name = "csScriptingTab";
-            this.csScriptingTab.Size = new System.Drawing.Size(895, 580);
+            this.csScriptingTab.Size = new System.Drawing.Size(895, 576);
             this.csScriptingTab.TabIndex = 15;
             this.csScriptingTab.Text = "C#";
             this.csScriptingTab.UseVisualStyleBackColor = true;
-            // 
-            // csScriptListView
-            // 
-            this.csScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.csScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13,
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader18});
-            this.csScriptListView.FullRowSelect = true;
-            this.csScriptListView.GridLines = true;
-            this.csScriptListView.HideSelection = false;
-            this.csScriptListView.LabelWrap = false;
-            this.csScriptListView.Location = new System.Drawing.Point(2, 1);
-            this.csScriptListView.MultiSelect = false;
-            this.csScriptListView.Name = "csScriptListView";
-            this.csScriptListView.ShowItemToolTips = true;
-            this.csScriptListView.Size = new System.Drawing.Size(890, 576);
-            this.csScriptListView.TabIndex = 49;
-            this.csScriptListView.UseCompatibleStateImageBehavior = false;
-            this.csScriptListView.View = System.Windows.Forms.View.Details;
-            this.csScriptListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
-            this.csScriptListView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
-            this.csScriptListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
-            this.csScriptListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.DisplayIndex = 1;
-            this.columnHeader10.Text = "Filename";
-            this.columnHeader10.Width = 350;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.DisplayIndex = 2;
-            this.columnHeader11.Text = "Status";
-            this.columnHeader11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader11.Width = 80;
-            // 
-            // columnHeader12
-            // 
-            this.columnHeader12.DisplayIndex = 3;
-            this.columnHeader12.Text = "Loop";
-            this.columnHeader12.Width = 50;
-            // 
-            // columnHeader13
-            // 
-            this.columnHeader13.DisplayIndex = 5;
-            this.columnHeader13.Text = "A.S.";
-            this.columnHeader13.Width = 55;
-            // 
-            // columnHeader14
-            // 
-            this.columnHeader14.Text = "Wait";
-            this.columnHeader14.Width = 40;
-            // 
-            // columnHeader15
-            // 
-            this.columnHeader15.DisplayIndex = 6;
-            this.columnHeader15.Text = "HotKey";
-            this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader15.Width = 80;
-            // 
-            // columnHeader16
-            // 
-            this.columnHeader16.DisplayIndex = 7;
-            this.columnHeader16.Text = "KeyPass";
-            this.columnHeader16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader16.Width = 80;
-            // 
-            // columnHeader17
-            // 
-            this.columnHeader17.DisplayIndex = 0;
-            this.columnHeader17.Text = "#";
-            this.columnHeader17.Width = 40;
-            // 
-            // columnHeader18
-            // 
-            this.columnHeader18.Text = "";
-            this.columnHeader18.Width = 0;
             // 
             // EnhancedAgent
             // 
@@ -3916,16 +3629,6 @@ namespace Assistant
             this.label60.TabIndex = 65;
             this.label60.Text = "Max Range";
             // 
-            // autoLootTextBoxMaxRange
-            // 
-            this.autoLootTextBoxMaxRange.BackColor = System.Drawing.Color.White;
-            this.autoLootTextBoxMaxRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.autoLootTextBoxMaxRange.Location = new System.Drawing.Point(411, 65);
-            this.autoLootTextBoxMaxRange.Name = "autoLootTextBoxMaxRange";
-            this.autoLootTextBoxMaxRange.Size = new System.Drawing.Size(45, 20);
-            this.autoLootTextBoxMaxRange.TabIndex = 64;
-            this.autoLootTextBoxMaxRange.Leave += new System.EventHandler(this.autoLootTextBoxMaxRange_Leave);
-            // 
             // autolootItemPropsB
             // 
             this.autolootItemPropsB.Location = new System.Drawing.Point(540, 66);
@@ -4002,7 +3705,7 @@ namespace Assistant
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
             this.autolootdataGridView.RowHeadersWidth = 62;
-            this.autolootdataGridView.Size = new System.Drawing.Size(823, 466);
+            this.autolootdataGridView.Size = new System.Drawing.Size(823, 468);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
@@ -4094,16 +3797,6 @@ namespace Assistant
             this.label21.TabIndex = 59;
             this.label21.Text = "Delay (ms)";
             // 
-            // autoLootTextBoxDelay
-            // 
-            this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
-            this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.autoLootTextBoxDelay.Location = new System.Drawing.Point(411, 41);
-            this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
-            this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
-            this.autoLootTextBoxDelay.TabIndex = 58;
-            this.autoLootTextBoxDelay.Leave += new System.EventHandler(this.autoLootTextBoxDelay_Leave);
-            // 
             // autoLootButtonRemoveList
             // 
             this.autoLootButtonRemoveList.Location = new System.Drawing.Point(347, 12);
@@ -4148,7 +3841,7 @@ namespace Assistant
             this.groupBox13.Controls.Add(this.autolootLogBox);
             this.groupBox13.Location = new System.Drawing.Point(838, 94);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(243, 467);
+            this.groupBox13.Size = new System.Drawing.Size(243, 469);
             this.groupBox13.TabIndex = 53;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Autoloot Log";
@@ -4160,7 +3853,7 @@ namespace Assistant
             this.autolootLogBox.FormattingEnabled = true;
             this.autolootLogBox.Location = new System.Drawing.Point(6, 19);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(232, 290);
+            this.autolootLogBox.Size = new System.Drawing.Size(232, 316);
             this.autolootLogBox.TabIndex = 0;
             // 
             // autoLootCheckBox
@@ -4282,7 +3975,7 @@ namespace Assistant
             this.scavengerdataGridView.Name = "scavengerdataGridView";
             this.scavengerdataGridView.RowHeadersVisible = false;
             this.scavengerdataGridView.RowHeadersWidth = 62;
-            this.scavengerdataGridView.Size = new System.Drawing.Size(787, 453);
+            this.scavengerdataGridView.Size = new System.Drawing.Size(787, 455);
             this.scavengerdataGridView.TabIndex = 72;
             this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.scavengerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellEndEdit);
@@ -4350,7 +4043,7 @@ namespace Assistant
             this.groupBox12.Controls.Add(this.scavengerLogBox);
             this.groupBox12.Location = new System.Drawing.Point(802, 94);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(279, 454);
+            this.groupBox12.Size = new System.Drawing.Size(279, 456);
             this.groupBox12.TabIndex = 70;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Scavenger Log";
@@ -4362,7 +4055,7 @@ namespace Assistant
             this.scavengerLogBox.FormattingEnabled = true;
             this.scavengerLogBox.Location = new System.Drawing.Point(7, 18);
             this.scavengerLogBox.Name = "scavengerLogBox";
-            this.scavengerLogBox.Size = new System.Drawing.Size(265, 290);
+            this.scavengerLogBox.Size = new System.Drawing.Size(265, 329);
             this.scavengerLogBox.TabIndex = 0;
             // 
             // label23
@@ -4438,26 +4131,6 @@ namespace Assistant
             this.scavengerListSelect.Size = new System.Drawing.Size(175, 21);
             this.scavengerListSelect.TabIndex = 61;
             this.scavengerListSelect.SelectedIndexChanged += new System.EventHandler(this.scavengertListSelect_SelectedIndexChanged);
-            // 
-            // scavengerRange
-            // 
-            this.scavengerRange.BackColor = System.Drawing.Color.White;
-            this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scavengerRange.Location = new System.Drawing.Point(416, 68);
-            this.scavengerRange.Name = "scavengerRange";
-            this.scavengerRange.Size = new System.Drawing.Size(45, 20);
-            this.scavengerRange.TabIndex = 74;
-            this.scavengerRange.Leave += new System.EventHandler(this.scavengerRange_Leave);
-            // 
-            // scavengerDragDelay
-            // 
-            this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
-            this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.scavengerDragDelay.Location = new System.Drawing.Point(416, 42);
-            this.scavengerDragDelay.Name = "scavengerDragDelay";
-            this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
-            this.scavengerDragDelay.TabIndex = 68;
-            this.scavengerDragDelay.Leave += new System.EventHandler(this.scavengerDragDelay_Leave);
             // 
             // organizer
             // 
@@ -4601,7 +4274,7 @@ namespace Assistant
             this.organizerdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.organizerdataGridView.RowHeadersVisible = false;
             this.organizerdataGridView.RowHeadersWidth = 62;
-            this.organizerdataGridView.Size = new System.Drawing.Size(789, 435);
+            this.organizerdataGridView.Size = new System.Drawing.Size(789, 437);
             this.organizerdataGridView.TabIndex = 89;
             this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.organizerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellEndEdit);
@@ -4678,7 +4351,7 @@ namespace Assistant
             this.groupBox16.Controls.Add(this.organizerLogBox);
             this.groupBox16.Location = new System.Drawing.Point(804, 84);
             this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(278, 466);
+            this.groupBox16.Size = new System.Drawing.Size(278, 468);
             this.groupBox16.TabIndex = 73;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Organizer Log";
@@ -4690,7 +4363,7 @@ namespace Assistant
             this.organizerLogBox.FormattingEnabled = true;
             this.organizerLogBox.Location = new System.Drawing.Point(6, 19);
             this.organizerLogBox.Name = "organizerLogBox";
-            this.organizerLogBox.Size = new System.Drawing.Size(265, 290);
+            this.organizerLogBox.Size = new System.Drawing.Size(265, 329);
             this.organizerLogBox.TabIndex = 0;
             // 
             // label27
@@ -4748,16 +4421,6 @@ namespace Assistant
             this.organizerListSelect.TabIndex = 61;
             this.organizerListSelect.SelectedIndexChanged += new System.EventHandler(this.organizerListSelect_SelectedIndexChanged);
             // 
-            // organizerDragDelay
-            // 
-            this.organizerDragDelay.BackColor = System.Drawing.Color.White;
-            this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.organizerDragDelay.Location = new System.Drawing.Point(379, 52);
-            this.organizerDragDelay.Name = "organizerDragDelay";
-            this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
-            this.organizerDragDelay.TabIndex = 71;
-            this.organizerDragDelay.Leave += new System.EventHandler(this.organizerDragDelay_Leave);
-            // 
             // VendorBuy
             // 
             this.VendorBuy.Controls.Add(this.buyToCompleteAmount);
@@ -4800,7 +4463,7 @@ namespace Assistant
             this.buyLogBox.FormattingEnabled = true;
             this.buyLogBox.Location = new System.Drawing.Point(812, 177);
             this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(266, 238);
+            this.buyLogBox.Size = new System.Drawing.Size(266, 264);
             this.buyLogBox.TabIndex = 0;
             // 
             // buyCompareNameCheckBox
@@ -4843,7 +4506,7 @@ namespace Assistant
             this.vendorbuydataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorbuydataGridView.RowHeadersVisible = false;
             this.vendorbuydataGridView.RowHeadersWidth = 62;
-            this.vendorbuydataGridView.Size = new System.Drawing.Size(788, 489);
+            this.vendorbuydataGridView.Size = new System.Drawing.Size(788, 491);
             this.vendorbuydataGridView.TabIndex = 88;
             this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.vendorbuydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellEndEdit);
@@ -4919,7 +4582,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox18.Location = new System.Drawing.Point(804, 163);
             this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(278, 380);
+            this.groupBox18.Size = new System.Drawing.Size(278, 382);
             this.groupBox18.TabIndex = 73;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Buy Log";
@@ -5069,7 +4732,7 @@ namespace Assistant
             this.vendorsellGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorsellGridView.RowHeadersVisible = false;
             this.vendorsellGridView.RowHeadersWidth = 62;
-            this.vendorsellGridView.Size = new System.Drawing.Size(788, 453);
+            this.vendorsellGridView.Size = new System.Drawing.Size(788, 455);
             this.vendorsellGridView.TabIndex = 87;
             this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.vendorsellGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellEndEdit);
@@ -5146,7 +4809,7 @@ namespace Assistant
             this.groupBox20.Controls.Add(this.sellLogBox);
             this.groupBox20.Location = new System.Drawing.Point(804, 72);
             this.groupBox20.Name = "groupBox20";
-            this.groupBox20.Size = new System.Drawing.Size(278, 471);
+            this.groupBox20.Size = new System.Drawing.Size(278, 473);
             this.groupBox20.TabIndex = 83;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Sell Log";
@@ -5158,7 +4821,7 @@ namespace Assistant
             this.sellLogBox.FormattingEnabled = true;
             this.sellLogBox.Location = new System.Drawing.Point(7, 18);
             this.sellLogBox.Name = "sellLogBox";
-            this.sellLogBox.Size = new System.Drawing.Size(265, 329);
+            this.sellLogBox.Size = new System.Drawing.Size(265, 355);
             this.sellLogBox.TabIndex = 0;
             // 
             // label26
@@ -5359,7 +5022,7 @@ namespace Assistant
             this.groupBox21.Controls.Add(this.dressLogBox);
             this.groupBox21.Location = new System.Drawing.Point(719, 134);
             this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(257, 411);
+            this.groupBox21.Size = new System.Drawing.Size(257, 414);
             this.groupBox21.TabIndex = 74;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "Organizer Log";
@@ -5371,7 +5034,7 @@ namespace Assistant
             this.dressLogBox.FormattingEnabled = true;
             this.dressLogBox.Location = new System.Drawing.Point(3, 13);
             this.dressLogBox.Name = "dressLogBox";
-            this.dressLogBox.Size = new System.Drawing.Size(250, 277);
+            this.dressLogBox.Size = new System.Drawing.Size(250, 303);
             this.dressLogBox.TabIndex = 0;
             // 
             // dressSetBagB
@@ -5404,17 +5067,6 @@ namespace Assistant
             this.dressExecuteButton.Text = "Dress";
             this.dressExecuteButton.Click += new System.EventHandler(this.dressExecuteButton_Click);
             // 
-            // dressDragDelay
-            // 
-            this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dressDragDelay.BackColor = System.Drawing.Color.White;
-            this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dressDragDelay.Location = new System.Drawing.Point(921, 58);
-            this.dressDragDelay.Name = "dressDragDelay";
-            this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
-            this.dressDragDelay.TabIndex = 75;
-            this.dressDragDelay.Leave += new System.EventHandler(this.dressDragDelay_Leave);
-            // 
             // dressListView
             // 
             this.dressListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -5435,7 +5087,7 @@ namespace Assistant
             this.dressListView.Location = new System.Drawing.Point(6, 51);
             this.dressListView.MultiSelect = false;
             this.dressListView.Name = "dressListView";
-            this.dressListView.Size = new System.Drawing.Size(710, 501);
+            this.dressListView.Size = new System.Drawing.Size(710, 503);
             this.dressListView.TabIndex = 64;
             this.dressListView.UseCompatibleStateImageBehavior = false;
             this.dressListView.View = System.Windows.Forms.View.Details;
@@ -5536,8 +5188,8 @@ namespace Assistant
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.friendguildListView);
-            this.splitContainer1.Size = new System.Drawing.Size(662, 520);
-            this.splitContainer1.SplitterDistance = 248;
+            this.splitContainer1.Size = new System.Drawing.Size(662, 522);
+            this.splitContainer1.SplitterDistance = 250;
             this.splitContainer1.TabIndex = 83;
             // 
             // groupBox34
@@ -5892,7 +5544,7 @@ namespace Assistant
             this.restockdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.restockdataGridView.RowHeadersVisible = false;
             this.restockdataGridView.RowHeadersWidth = 62;
-            this.restockdataGridView.Size = new System.Drawing.Size(789, 435);
+            this.restockdataGridView.Size = new System.Drawing.Size(789, 437);
             this.restockdataGridView.TabIndex = 90;
             this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.restockdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellEndEdit);
@@ -5969,7 +5621,7 @@ namespace Assistant
             this.groupBox2.Controls.Add(this.restockLogBox);
             this.groupBox2.Location = new System.Drawing.Point(804, 84);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(278, 466);
+            this.groupBox2.Size = new System.Drawing.Size(278, 468);
             this.groupBox2.TabIndex = 83;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Restock Log";
@@ -5981,7 +5633,7 @@ namespace Assistant
             this.restockLogBox.FormattingEnabled = true;
             this.restockLogBox.Location = new System.Drawing.Point(7, 18);
             this.restockLogBox.Name = "restockLogBox";
-            this.restockLogBox.Size = new System.Drawing.Size(265, 290);
+            this.restockLogBox.Size = new System.Drawing.Size(265, 329);
             this.restockLogBox.TabIndex = 0;
             // 
             // label13
@@ -6040,17 +5692,6 @@ namespace Assistant
             this.restockListSelect.Size = new System.Drawing.Size(183, 21);
             this.restockListSelect.TabIndex = 67;
             this.restockListSelect.SelectedIndexChanged += new System.EventHandler(this.restockListSelect_SelectedIndexChanged);
-            // 
-            // restockDragDelay
-            // 
-            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.restockDragDelay.BackColor = System.Drawing.Color.White;
-            this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.restockDragDelay.Location = new System.Drawing.Point(804, 51);
-            this.restockDragDelay.Name = "restockDragDelay";
-            this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
-            this.restockDragDelay.TabIndex = 81;
-            this.restockDragDelay.Leave += new System.EventHandler(this.restockDragDelay_Leave);
             // 
             // bandageheal
             // 
@@ -6198,19 +5839,6 @@ namespace Assistant
             this.bandagehealusetarget.Text = "Use Normal Target";
             this.bandagehealusetarget.CheckedChanged += new System.EventHandler(this.bandagehealusetarget_CheckedChanged);
             // 
-            // bandagehealmaxrangeTextBox
-            // 
-            this.bandagehealmaxrangeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bandagehealmaxrangeTextBox.BackColor = System.Drawing.Color.White;
-            this.bandagehealmaxrangeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealmaxrangeTextBox.Location = new System.Drawing.Point(77, 270);
-            this.bandagehealmaxrangeTextBox.Name = "bandagehealmaxrangeTextBox";
-            this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(29, 20);
-            this.bandagehealmaxrangeTextBox.TabIndex = 91;
-            this.bandagehealmaxrangeTextBox.Leave += new System.EventHandler(this.bandagehealmaxrangeTextBox_Leave);
-            // 
             // label46
             // 
             this.label46.AutoSize = true;
@@ -6269,19 +5897,6 @@ namespace Assistant
             this.label33.TabIndex = 85;
             this.label33.Text = "% hits";
             // 
-            // bandagehealhpTextBox
-            // 
-            this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
-            this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealhpTextBox.Location = new System.Drawing.Point(76, 136);
-            this.bandagehealhpTextBox.Name = "bandagehealhpTextBox";
-            this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
-            this.bandagehealhpTextBox.TabIndex = 84;
-            this.bandagehealhpTextBox.Leave += new System.EventHandler(this.bandagehealhpTextBox_Leave);
-            // 
             // label32
             // 
             this.label32.AutoSize = true;
@@ -6290,19 +5905,6 @@ namespace Assistant
             this.label32.Size = new System.Drawing.Size(64, 13);
             this.label32.TabIndex = 83;
             this.label32.Text = "Start Below:";
-            // 
-            // bandagehealdelayTextBox
-            // 
-            this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
-            this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealdelayTextBox.Location = new System.Drawing.Point(283, 134);
-            this.bandagehealdelayTextBox.Name = "bandagehealdelayTextBox";
-            this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
-            this.bandagehealdelayTextBox.TabIndex = 82;
-            this.bandagehealdelayTextBox.Leave += new System.EventHandler(this.bandagehealdelayTextBox_Leave);
             // 
             // label31
             // 
@@ -6323,20 +5925,6 @@ namespace Assistant
             this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
             this.bandagehealdexformulaCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealdexformulaCheckBox_CheckedChanged);
             // 
-            // bandagehealcustomcolorTextBox
-            // 
-            this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
-            this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealcustomcolorTextBox.Enabled = false;
-            this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 76);
-            this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
-            this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
-            this.bandagehealcustomcolorTextBox.TabIndex = 79;
-            this.bandagehealcustomcolorTextBox.Leave += new System.EventHandler(this.bandagehealcustomcolorTextBox_Leave);
-            // 
             // label30
             // 
             this.label30.AutoSize = true;
@@ -6345,20 +5933,6 @@ namespace Assistant
             this.label30.Size = new System.Drawing.Size(34, 13);
             this.label30.TabIndex = 78;
             this.label30.Text = "Color:";
-            // 
-            // bandagehealcustomIDTextBox
-            // 
-            this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
-            this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealcustomIDTextBox.Enabled = false;
-            this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 75);
-            this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
-            this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
-            this.bandagehealcustomIDTextBox.TabIndex = 77;
-            this.bandagehealcustomIDTextBox.Leave += new System.EventHandler(this.bandagehealcustomIDTextBox_Leave);
             // 
             // label19
             // 
@@ -6434,7 +6008,7 @@ namespace Assistant
             this.groupBox5.Controls.Add(this.bandagehealLogBox);
             this.groupBox5.Location = new System.Drawing.Point(6, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(710, 548);
+            this.groupBox5.Size = new System.Drawing.Size(710, 550);
             this.groupBox5.TabIndex = 54;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Bandage Heal Log";
@@ -6464,9 +6038,9 @@ namespace Assistant
             // toolbarTab
             // 
             this.toolbarTab.Controls.Add(this.toolbarstab);
-            this.toolbarTab.Location = new System.Drawing.Point(4, 54);
+            this.toolbarTab.Location = new System.Drawing.Point(4, 29);
             this.toolbarTab.Name = "toolbarTab";
-            this.toolbarTab.Size = new System.Drawing.Size(684, 374);
+            this.toolbarTab.Size = new System.Drawing.Size(1104, 602);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Toolbars";
             // 
@@ -6812,19 +6386,6 @@ namespace Assistant
             this.toolboxcountTargetButton.Text = "Get Data";
             this.toolboxcountTargetButton.Click += new System.EventHandler(this.toolboxcountTargetButton_Click);
             // 
-            // toolboxcountWarningTextBox
-            // 
-            this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
-            this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolboxcountWarningTextBox.Location = new System.Drawing.Point(64, 148);
-            this.toolboxcountWarningTextBox.Name = "toolboxcountWarningTextBox";
-            this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
-            this.toolboxcountWarningTextBox.TabIndex = 66;
-            this.toolboxcountWarningTextBox.TextChanged += new System.EventHandler(this.toolboxcountWarningTextBox_TextChanged);
-            // 
             // label36
             // 
             this.label36.AutoSize = true;
@@ -6864,19 +6425,6 @@ namespace Assistant
             this.label35.Size = new System.Drawing.Size(34, 13);
             this.label35.TabIndex = 3;
             this.label35.Text = "Color:";
-            // 
-            // toolboxcountGraphTextBox
-            // 
-            this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
-            this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolboxcountGraphTextBox.Location = new System.Drawing.Point(64, 73);
-            this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
-            this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
-            this.toolboxcountGraphTextBox.TabIndex = 2;
-            this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountGraphTextBox_TextChanged);
             // 
             // label18
             // 
@@ -7254,9 +6802,9 @@ namespace Assistant
             this.emptyTab.Controls.Add(this.groupBox45);
             this.emptyTab.Controls.Add(this.groupBox44);
             this.emptyTab.Controls.Add(this.groupBox43);
-            this.emptyTab.Location = new System.Drawing.Point(4, 54);
+            this.emptyTab.Location = new System.Drawing.Point(4, 29);
             this.emptyTab.Name = "emptyTab";
-            this.emptyTab.Size = new System.Drawing.Size(684, 374);
+            this.emptyTab.Size = new System.Drawing.Size(1104, 602);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Targetting";
             // 
@@ -7963,16 +7511,16 @@ namespace Assistant
             this.skillsTab.Controls.Add(this.setlocks);
             this.skillsTab.Controls.Add(this.resetDelta);
             this.skillsTab.Controls.Add(this.skillList);
-            this.skillsTab.Location = new System.Drawing.Point(4, 54);
+            this.skillsTab.Location = new System.Drawing.Point(4, 29);
             this.skillsTab.Name = "skillsTab";
-            this.skillsTab.Size = new System.Drawing.Size(684, 374);
+            this.skillsTab.Size = new System.Drawing.Size(1104, 602);
             this.skillsTab.TabIndex = 2;
             this.skillsTab.Text = "Skills";
             // 
             // dispDelta
             // 
             this.dispDelta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dispDelta.Location = new System.Drawing.Point(536, 144);
+            this.dispDelta.Location = new System.Drawing.Point(956, 144);
             this.dispDelta.Name = "dispDelta";
             this.dispDelta.Size = new System.Drawing.Size(113, 22);
             this.dispDelta.TabIndex = 11;
@@ -7982,7 +7530,7 @@ namespace Assistant
             // skillCopyAll
             // 
             this.skillCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.skillCopyAll.Location = new System.Drawing.Point(536, 109);
+            this.skillCopyAll.Location = new System.Drawing.Point(956, 109);
             this.skillCopyAll.Name = "skillCopyAll";
             this.skillCopyAll.Size = new System.Drawing.Size(132, 20);
             this.skillCopyAll.TabIndex = 9;
@@ -7992,7 +7540,7 @@ namespace Assistant
             // skillCopySel
             // 
             this.skillCopySel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.skillCopySel.Location = new System.Drawing.Point(536, 81);
+            this.skillCopySel.Location = new System.Drawing.Point(956, 81);
             this.skillCopySel.Name = "skillCopySel";
             this.skillCopySel.Size = new System.Drawing.Size(132, 21);
             this.skillCopySel.TabIndex = 8;
@@ -8002,7 +7550,7 @@ namespace Assistant
             // baseTotal
             // 
             this.baseTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.baseTotal.Location = new System.Drawing.Point(606, 175);
+            this.baseTotal.Location = new System.Drawing.Point(1026, 175);
             this.baseTotal.Name = "baseTotal";
             this.baseTotal.ReadOnly = true;
             this.baseTotal.Size = new System.Drawing.Size(43, 20);
@@ -8011,7 +7559,7 @@ namespace Assistant
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(536, 179);
+            this.label1.Location = new System.Drawing.Point(956, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 15);
             this.label1.TabIndex = 6;
@@ -8026,7 +7574,7 @@ namespace Assistant
             "Up",
             "Down",
             "Locked"});
-            this.locks.Location = new System.Drawing.Point(618, 45);
+            this.locks.Location = new System.Drawing.Point(1038, 45);
             this.locks.Name = "locks";
             this.locks.Size = new System.Drawing.Size(50, 23);
             this.locks.TabIndex = 5;
@@ -8034,7 +7582,7 @@ namespace Assistant
             // setlocks
             // 
             this.setlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.setlocks.Location = new System.Drawing.Point(536, 46);
+            this.setlocks.Location = new System.Drawing.Point(956, 46);
             this.setlocks.Name = "setlocks";
             this.setlocks.Size = new System.Drawing.Size(76, 20);
             this.setlocks.TabIndex = 4;
@@ -8044,7 +7592,7 @@ namespace Assistant
             // resetDelta
             // 
             this.resetDelta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetDelta.Location = new System.Drawing.Point(536, 13);
+            this.resetDelta.Location = new System.Drawing.Point(956, 13);
             this.resetDelta.Name = "resetDelta";
             this.resetDelta.Size = new System.Drawing.Size(132, 20);
             this.resetDelta.TabIndex = 3;
@@ -8068,7 +7616,7 @@ namespace Assistant
             this.skillList.HideSelection = false;
             this.skillList.Location = new System.Drawing.Point(7, 13);
             this.skillList.Name = "skillList";
-            this.skillList.Size = new System.Drawing.Size(511, 375);
+            this.skillList.Size = new System.Drawing.Size(931, 603);
             this.skillList.TabIndex = 1;
             this.skillList.UseCompatibleStateImageBehavior = false;
             this.skillList.View = System.Windows.Forms.View.Details;
@@ -8111,10 +7659,10 @@ namespace Assistant
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox28);
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox27);
             this.enhancedHotKeytabPage.Controls.Add(this.hotkeytreeView);
-            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 54);
+            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 29);
             this.enhancedHotKeytabPage.Name = "enhancedHotKeytabPage";
             this.enhancedHotKeytabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(684, 374);
+            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(1104, 602);
             this.enhancedHotKeytabPage.TabIndex = 15;
             this.enhancedHotKeytabPage.Text = "HotKey";
             this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
@@ -8126,7 +7674,7 @@ namespace Assistant
             this.groupBox8.Controls.Add(this.hotkeyKeyMasterTextBox);
             this.groupBox8.Controls.Add(this.hotkeyMasterSetButton);
             this.groupBox8.Controls.Add(this.label42);
-            this.groupBox8.Location = new System.Drawing.Point(521, 105);
+            this.groupBox8.Location = new System.Drawing.Point(941, 105);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(157, 84);
             this.groupBox8.TabIndex = 4;
@@ -8142,21 +7690,6 @@ namespace Assistant
             this.hotkeyMasterClearButton.Text = "Clear";
             this.hotkeyMasterClearButton.UseVisualStyleBackColor = true;
             this.hotkeyMasterClearButton.Click += new System.EventHandler(this.hotkeyMasterClearButton_Click);
-            // 
-            // hotkeyKeyMasterTextBox
-            // 
-            this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
-            this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.hotkeyKeyMasterTextBox.Location = new System.Drawing.Point(41, 19);
-            this.hotkeyKeyMasterTextBox.Name = "hotkeyKeyMasterTextBox";
-            this.hotkeyKeyMasterTextBox.ReadOnly = true;
-            this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
-            this.hotkeyKeyMasterTextBox.TabIndex = 5;
-            this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
-            this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
             // 
             // hotkeyMasterSetButton
             // 
@@ -8184,7 +7717,7 @@ namespace Assistant
             this.groupBox28.Controls.Add(this.hotkeyMEnableButton);
             this.groupBox28.Controls.Add(this.hotkeyKeyMasterLabel);
             this.groupBox28.Controls.Add(this.hotkeyStatusLabel);
-            this.groupBox28.Location = new System.Drawing.Point(521, 7);
+            this.groupBox28.Location = new System.Drawing.Point(941, 7);
             this.groupBox28.Name = "groupBox28";
             this.groupBox28.Size = new System.Drawing.Size(157, 92);
             this.groupBox28.TabIndex = 3;
@@ -8237,7 +7770,7 @@ namespace Assistant
             this.groupBox27.Controls.Add(this.hotkeySetButton);
             this.groupBox27.Controls.Add(this.label39);
             this.groupBox27.Controls.Add(this.hotkeytextbox);
-            this.groupBox27.Location = new System.Drawing.Point(521, 195);
+            this.groupBox27.Location = new System.Drawing.Point(941, 195);
             this.groupBox27.Name = "groupBox27";
             this.groupBox27.Size = new System.Drawing.Size(157, 107);
             this.groupBox27.TabIndex = 2;
@@ -8282,21 +7815,6 @@ namespace Assistant
             this.label39.TabIndex = 2;
             this.label39.Text = "Key:";
             // 
-            // hotkeytextbox
-            // 
-            this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hotkeytextbox.BackColor = System.Drawing.Color.White;
-            this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.hotkeytextbox.Location = new System.Drawing.Point(41, 17);
-            this.hotkeytextbox.Name = "hotkeytextbox";
-            this.hotkeytextbox.ReadOnly = true;
-            this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
-            this.hotkeytextbox.TabIndex = 1;
-            this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
-            this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
-            // 
             // hotkeytreeView
             // 
             this.hotkeytreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -8304,7 +7822,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hotkeytreeView.Location = new System.Drawing.Point(10, 7);
             this.hotkeytreeView.Name = "hotkeytreeView";
-            this.hotkeytreeView.Size = new System.Drawing.Size(508, 367);
+            this.hotkeytreeView.Size = new System.Drawing.Size(928, 595);
             this.hotkeytreeView.TabIndex = 0;
             this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
             // 
@@ -8314,10 +7832,10 @@ namespace Assistant
             this.journal.Controls.Add(this.journalFilterString);
             this.journal.Controls.Add(this.journalTextSelection);
             this.journal.Controls.Add(this.journalList);
-            this.journal.Location = new System.Drawing.Point(4, 54);
+            this.journal.Location = new System.Drawing.Point(4, 29);
             this.journal.Name = "journal";
             this.journal.Padding = new System.Windows.Forms.Padding(3);
-            this.journal.Size = new System.Drawing.Size(684, 374);
+            this.journal.Size = new System.Drawing.Size(1104, 602);
             this.journal.TabIndex = 18;
             this.journal.Text = "Journal";
             this.journal.UseVisualStyleBackColor = true;
@@ -8338,7 +7856,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.journalFilterString.Location = new System.Drawing.Point(126, 5);
             this.journalFilterString.Name = "journalFilterString";
-            this.journalFilterString.Size = new System.Drawing.Size(556, 20);
+            this.journalFilterString.Size = new System.Drawing.Size(976, 20);
             this.journalFilterString.TabIndex = 4;
             this.journalFilterString.Leave += new System.EventHandler(this.journalFilter_TextChanged);
             // 
@@ -8363,7 +7881,7 @@ namespace Assistant
             "Special"});
             this.journalTextSelection.Location = new System.Drawing.Point(-2, 0);
             this.journalTextSelection.Name = "journalTextSelection";
-            this.journalTextSelection.Size = new System.Drawing.Size(69, 169);
+            this.journalTextSelection.Size = new System.Drawing.Size(69, 439);
             this.journalTextSelection.TabIndex = 3;
             this.journalTextSelection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnJournalFilterCheck);
             // 
@@ -8385,7 +7903,7 @@ namespace Assistant
             this.journalList.RowHeadersVisible = false;
             this.journalList.RowHeadersWidth = 62;
             this.journalList.RowTemplate.Height = 28;
-            this.journalList.Size = new System.Drawing.Size(607, 358);
+            this.journalList.Size = new System.Drawing.Size(1027, 586);
             this.journalList.TabIndex = 2;
             // 
             // Type
@@ -8421,9 +7939,9 @@ namespace Assistant
             this.screenshotTab.Controls.Add(this.screensList);
             this.screenshotTab.Controls.Add(this.screenPrev);
             this.screenshotTab.Controls.Add(this.dispTime);
-            this.screenshotTab.Location = new System.Drawing.Point(4, 54);
+            this.screenshotTab.Location = new System.Drawing.Point(4, 29);
             this.screenshotTab.Name = "screenshotTab";
-            this.screenshotTab.Size = new System.Drawing.Size(684, 374);
+            this.screenshotTab.Size = new System.Drawing.Size(1104, 602);
             this.screenshotTab.TabIndex = 8;
             this.screenshotTab.Text = "Screen Shots";
             // 
@@ -8457,7 +7975,7 @@ namespace Assistant
             // capNow
             // 
             this.capNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.capNow.Location = new System.Drawing.Point(339, 11);
+            this.capNow.Location = new System.Drawing.Point(759, 11);
             this.capNow.Name = "capNow";
             this.capNow.Size = new System.Drawing.Size(285, 20);
             this.capNow.TabIndex = 8;
@@ -8473,7 +7991,7 @@ namespace Assistant
             this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.screenPath.Location = new System.Drawing.Point(7, 14);
             this.screenPath.Name = "screenPath";
-            this.screenPath.Size = new System.Drawing.Size(271, 20);
+            this.screenPath.Size = new System.Drawing.Size(691, 20);
             this.screenPath.TabIndex = 7;
             this.screenPath.TextChanged += new System.EventHandler(this.screenPath_TextChanged);
             // 
@@ -8554,10 +8072,10 @@ namespace Assistant
             this.videoTab.Controls.Add(this.videorecbutton);
             this.videoTab.Controls.Add(this.videostopbutton);
             this.videoTab.Controls.Add(this.groupBox15);
-            this.videoTab.Location = new System.Drawing.Point(4, 54);
+            this.videoTab.Location = new System.Drawing.Point(4, 29);
             this.videoTab.Name = "videoTab";
             this.videoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.videoTab.Size = new System.Drawing.Size(684, 374);
+            this.videoTab.Size = new System.Drawing.Size(1104, 602);
             this.videoTab.TabIndex = 16;
             this.videoTab.Text = "Video Recorder";
             // 
@@ -8748,10 +8266,10 @@ namespace Assistant
             this.DPStabPage.Controls.Add(this.DPSMeterStopButton);
             this.DPStabPage.Controls.Add(this.DPSMeterStartButton);
             this.DPStabPage.Controls.Add(this.DPSMeterClearButton);
-            this.DPStabPage.Location = new System.Drawing.Point(4, 54);
+            this.DPStabPage.Location = new System.Drawing.Point(4, 29);
             this.DPStabPage.Name = "DPStabPage";
             this.DPStabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DPStabPage.Size = new System.Drawing.Size(684, 374);
+            this.DPStabPage.Size = new System.Drawing.Size(1104, 602);
             this.DPStabPage.TabIndex = 17;
             this.DPStabPage.Text = "DPS Meter";
             this.DPStabPage.UseVisualStyleBackColor = true;
@@ -8769,7 +8287,7 @@ namespace Assistant
             this.filtergroup.Controls.Add(this.DPSmetermaxdamage);
             this.filtergroup.Controls.Add(this.label66);
             this.filtergroup.Controls.Add(this.DPSmetermindamage);
-            this.filtergroup.Location = new System.Drawing.Point(391, 53);
+            this.filtergroup.Location = new System.Drawing.Point(811, 53);
             this.filtergroup.Name = "filtergroup";
             this.filtergroup.Size = new System.Drawing.Size(287, 167);
             this.filtergroup.TabIndex = 66;
@@ -8810,13 +8328,6 @@ namespace Assistant
             this.label70.TabIndex = 7;
             this.label70.Text = "Name:";
             // 
-            // DPSmeterserial
-            // 
-            this.DPSmeterserial.Location = new System.Drawing.Point(48, 58);
-            this.DPSmeterserial.Name = "DPSmeterserial";
-            this.DPSmeterserial.Size = new System.Drawing.Size(100, 20);
-            this.DPSmeterserial.TabIndex = 6;
-            // 
             // label69
             // 
             this.label69.AutoSize = true;
@@ -8835,13 +8346,6 @@ namespace Assistant
             this.label68.TabIndex = 3;
             this.label68.Text = "Damage Max:";
             // 
-            // DPSmetermaxdamage
-            // 
-            this.DPSmetermaxdamage.Location = new System.Drawing.Point(220, 23);
-            this.DPSmetermaxdamage.Name = "DPSmetermaxdamage";
-            this.DPSmetermaxdamage.Size = new System.Drawing.Size(56, 20);
-            this.DPSmetermaxdamage.TabIndex = 2;
-            // 
             // label66
             // 
             this.label66.AutoSize = true;
@@ -8850,13 +8354,6 @@ namespace Assistant
             this.label66.Size = new System.Drawing.Size(70, 13);
             this.label66.TabIndex = 1;
             this.label66.Text = "Damage Min:";
-            // 
-            // DPSmetermindamage
-            // 
-            this.DPSmetermindamage.Location = new System.Drawing.Point(82, 23);
-            this.DPSmetermindamage.Name = "DPSmetermindamage";
-            this.DPSmetermindamage.Size = new System.Drawing.Size(56, 20);
-            this.DPSmetermindamage.TabIndex = 0;
             // 
             // DpsMeterGridView
             // 
@@ -8874,7 +8371,7 @@ namespace Assistant
             this.DpsMeterGridView.Name = "DpsMeterGridView";
             this.DpsMeterGridView.RowHeadersVisible = false;
             this.DpsMeterGridView.RowHeadersWidth = 62;
-            this.DpsMeterGridView.Size = new System.Drawing.Size(376, 379);
+            this.DpsMeterGridView.Size = new System.Drawing.Size(796, 607);
             this.DpsMeterGridView.TabIndex = 65;
             // 
             // dataGridViewTextBoxColumn13
@@ -8915,7 +8412,7 @@ namespace Assistant
             this.DPSMeterStatusLabel.AutoSize = true;
             this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DPSMeterStatusLabel.ForeColor = System.Drawing.Color.Green;
-            this.DPSMeterStatusLabel.Location = new System.Drawing.Point(648, 331);
+            this.DPSMeterStatusLabel.Location = new System.Drawing.Point(1068, 331);
             this.DPSMeterStatusLabel.Name = "DPSMeterStatusLabel";
             this.DPSMeterStatusLabel.Size = new System.Drawing.Size(28, 13);
             this.DPSMeterStatusLabel.TabIndex = 64;
@@ -8925,7 +8422,7 @@ namespace Assistant
             // 
             this.label67.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(608, 331);
+            this.label67.Location = new System.Drawing.Point(1028, 331);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(40, 13);
             this.label67.TabIndex = 63;
@@ -8934,7 +8431,7 @@ namespace Assistant
             // DPSMeterPauseButton
             // 
             this.DPSMeterPauseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterPauseButton.Location = new System.Drawing.Point(534, 17);
+            this.DPSMeterPauseButton.Location = new System.Drawing.Point(954, 17);
             this.DPSMeterPauseButton.Name = "DPSMeterPauseButton";
             this.DPSMeterPauseButton.Size = new System.Drawing.Size(64, 21);
             this.DPSMeterPauseButton.TabIndex = 61;
@@ -8944,7 +8441,7 @@ namespace Assistant
             // DPSMeterStopButton
             // 
             this.DPSMeterStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterStopButton.Location = new System.Drawing.Point(466, 17);
+            this.DPSMeterStopButton.Location = new System.Drawing.Point(886, 17);
             this.DPSMeterStopButton.Name = "DPSMeterStopButton";
             this.DPSMeterStopButton.Size = new System.Drawing.Size(62, 21);
             this.DPSMeterStopButton.TabIndex = 60;
@@ -8954,7 +8451,7 @@ namespace Assistant
             // DPSMeterStartButton
             // 
             this.DPSMeterStartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterStartButton.Location = new System.Drawing.Point(396, 17);
+            this.DPSMeterStartButton.Location = new System.Drawing.Point(816, 17);
             this.DPSMeterStartButton.Name = "DPSMeterStartButton";
             this.DPSMeterStartButton.Size = new System.Drawing.Size(63, 21);
             this.DPSMeterStartButton.TabIndex = 59;
@@ -8964,7 +8461,7 @@ namespace Assistant
             // DPSMeterClearButton
             // 
             this.DPSMeterClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterClearButton.Location = new System.Drawing.Point(603, 17);
+            this.DPSMeterClearButton.Location = new System.Drawing.Point(1023, 17);
             this.DPSMeterClearButton.Name = "DPSMeterClearButton";
             this.DPSMeterClearButton.Size = new System.Drawing.Size(63, 21);
             this.DPSMeterClearButton.TabIndex = 58;
@@ -8981,16 +8478,16 @@ namespace Assistant
             this.statusTab.Controls.Add(this.labelStatus);
             this.statusTab.Controls.Add(this.discordrazorButton);
             this.statusTab.Controls.Add(this.razorButtonWiki);
-            this.statusTab.Location = new System.Drawing.Point(4, 54);
+            this.statusTab.Location = new System.Drawing.Point(4, 29);
             this.statusTab.Name = "statusTab";
-            this.statusTab.Size = new System.Drawing.Size(684, 374);
+            this.statusTab.Size = new System.Drawing.Size(1104, 602);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             // 
             // ChkForUpdate
             // 
             this.ChkForUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.ChkForUpdate.Location = new System.Drawing.Point(383, 282);
+            this.ChkForUpdate.Location = new System.Drawing.Point(383, 510);
             this.ChkForUpdate.Name = "ChkForUpdate";
             this.ChkForUpdate.Size = new System.Drawing.Size(94, 37);
             this.ChkForUpdate.TabIndex = 13;
@@ -9001,7 +8498,7 @@ namespace Assistant
             // advertisementLink
             // 
             this.advertisementLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.advertisementLink.Location = new System.Drawing.Point(258, 282);
+            this.advertisementLink.Location = new System.Drawing.Point(258, 510);
             this.advertisementLink.Name = "advertisementLink";
             this.advertisementLink.Size = new System.Drawing.Size(93, 37);
             this.advertisementLink.TabIndex = 12;
@@ -9019,7 +8516,7 @@ namespace Assistant
             this.advertisement.InitialImage = ((System.Drawing.Image)(resources.GetObject("advertisement.InitialImage")));
             this.advertisement.Location = new System.Drawing.Point(3, 3);
             this.advertisement.Name = "advertisement";
-            this.advertisement.Size = new System.Drawing.Size(493, 264);
+            this.advertisement.Size = new System.Drawing.Size(913, 492);
             this.advertisement.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.advertisement.TabIndex = 11;
             this.advertisement.TabStop = false;
@@ -9028,7 +8525,7 @@ namespace Assistant
             // 
             this.label71.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label71.Location = new System.Drawing.Point(3, 354);
+            this.label71.Location = new System.Drawing.Point(3, 582);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(650, 24);
             this.label71.TabIndex = 10;
@@ -9038,7 +8535,7 @@ namespace Assistant
             // 
             this.labelHotride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHotride.Location = new System.Drawing.Point(3, 322);
+            this.labelHotride.Location = new System.Drawing.Point(3, 550);
             this.labelHotride.Name = "labelHotride";
             this.labelHotride.Size = new System.Drawing.Size(650, 45);
             this.labelHotride.TabIndex = 8;
@@ -9050,7 +8547,7 @@ namespace Assistant
             // 
             this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelStatus.Location = new System.Drawing.Point(502, 9);
+            this.labelStatus.Location = new System.Drawing.Point(922, 9);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(176, 268);
             this.labelStatus.TabIndex = 1;
@@ -9058,7 +8555,7 @@ namespace Assistant
             // discordrazorButton
             // 
             this.discordrazorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.discordrazorButton.Location = new System.Drawing.Point(124, 282);
+            this.discordrazorButton.Location = new System.Drawing.Point(124, 510);
             this.discordrazorButton.Name = "discordrazorButton";
             this.discordrazorButton.Size = new System.Drawing.Size(94, 37);
             this.discordrazorButton.TabIndex = 9;
@@ -9069,7 +8566,7 @@ namespace Assistant
             // razorButtonWiki
             // 
             this.razorButtonWiki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.razorButtonWiki.Location = new System.Drawing.Point(3, 282);
+            this.razorButtonWiki.Location = new System.Drawing.Point(3, 510);
             this.razorButtonWiki.Name = "razorButtonWiki";
             this.razorButtonWiki.Size = new System.Drawing.Size(94, 37);
             this.razorButtonWiki.TabIndex = 6;
@@ -9220,6 +8717,509 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
+            // 
+            // remountedelay
+            // 
+            this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.remountedelay.BackColor = System.Drawing.Color.White;
+            this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.remountedelay.Location = new System.Drawing.Point(93, 89);
+            this.remountedelay.Name = "remountedelay";
+            this.remountedelay.Size = new System.Drawing.Size(58, 20);
+            this.remountedelay.TabIndex = 68;
+            this.remountedelay.Leave += new System.EventHandler(this.remountedelay_Leave);
+            // 
+            // remountdelay
+            // 
+            this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.remountdelay.BackColor = System.Drawing.Color.White;
+            this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.remountdelay.Location = new System.Drawing.Point(93, 64);
+            this.remountdelay.Name = "remountdelay";
+            this.remountdelay.Size = new System.Drawing.Size(58, 20);
+            this.remountdelay.TabIndex = 67;
+            this.remountdelay.Leave += new System.EventHandler(this.remountdelay_Leave);
+            // 
+            // pyScriptListView
+            // 
+            this.pyScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pyScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.filename,
+            this.status,
+            this.loop,
+            this.autostart,
+            this.wait,
+            this.hotkey,
+            this.heypass,
+            this.index,
+            this.fullFilePath});
+            this.pyScriptListView.FullRowSelect = true;
+            this.pyScriptListView.GridLines = true;
+            this.pyScriptListView.HideSelection = false;
+            this.pyScriptListView.LabelWrap = false;
+            this.pyScriptListView.Location = new System.Drawing.Point(4, -2);
+            this.pyScriptListView.MultiSelect = false;
+            this.pyScriptListView.Name = "pyScriptListView";
+            this.pyScriptListView.ShowItemToolTips = true;
+            this.pyScriptListView.Size = new System.Drawing.Size(892, 579);
+            this.pyScriptListView.TabIndex = 48;
+            this.pyScriptListView.UseCompatibleStateImageBehavior = false;
+            this.pyScriptListView.View = System.Windows.Forms.View.Details;
+            this.pyScriptListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
+            this.pyScriptListView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
+            this.pyScriptListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
+            this.pyScriptListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
+            // 
+            // filename
+            // 
+            this.filename.DisplayIndex = 1;
+            this.filename.Text = "Filename";
+            this.filename.Width = 350;
+            // 
+            // status
+            // 
+            this.status.DisplayIndex = 2;
+            this.status.Text = "Status";
+            this.status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.status.Width = 80;
+            // 
+            // loop
+            // 
+            this.loop.DisplayIndex = 3;
+            this.loop.Text = "Loop";
+            this.loop.Width = 50;
+            // 
+            // autostart
+            // 
+            this.autostart.DisplayIndex = 5;
+            this.autostart.Text = "A.S.";
+            this.autostart.Width = 55;
+            // 
+            // wait
+            // 
+            this.wait.Text = "Wait";
+            this.wait.Width = 40;
+            // 
+            // hotkey
+            // 
+            this.hotkey.DisplayIndex = 6;
+            this.hotkey.Text = "HotKey";
+            this.hotkey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.hotkey.Width = 80;
+            // 
+            // heypass
+            // 
+            this.heypass.DisplayIndex = 7;
+            this.heypass.Text = "KeyPass";
+            this.heypass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.heypass.Width = 80;
+            // 
+            // index
+            // 
+            this.index.DisplayIndex = 0;
+            this.index.Text = "#";
+            this.index.Width = 40;
+            // 
+            // fullFilePath
+            // 
+            this.fullFilePath.Text = "";
+            this.fullFilePath.Width = 0;
+            // 
+            // uosScriptListView
+            // 
+            this.uosScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uosScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9});
+            this.uosScriptListView.FullRowSelect = true;
+            this.uosScriptListView.GridLines = true;
+            this.uosScriptListView.HideSelection = false;
+            this.uosScriptListView.LabelWrap = false;
+            this.uosScriptListView.Location = new System.Drawing.Point(2, 1);
+            this.uosScriptListView.MultiSelect = false;
+            this.uosScriptListView.Name = "uosScriptListView";
+            this.uosScriptListView.ShowItemToolTips = true;
+            this.uosScriptListView.Size = new System.Drawing.Size(889, 572);
+            this.uosScriptListView.TabIndex = 49;
+            this.uosScriptListView.UseCompatibleStateImageBehavior = false;
+            this.uosScriptListView.View = System.Windows.Forms.View.Details;
+            this.uosScriptListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
+            this.uosScriptListView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
+            this.uosScriptListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
+            this.uosScriptListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.DisplayIndex = 1;
+            this.columnHeader1.Text = "Filename";
+            this.columnHeader1.Width = 350;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.DisplayIndex = 2;
+            this.columnHeader2.Text = "Status";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader2.Width = 80;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.DisplayIndex = 3;
+            this.columnHeader3.Text = "Loop";
+            this.columnHeader3.Width = 50;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 5;
+            this.columnHeader4.Text = "A.S.";
+            this.columnHeader4.Width = 55;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Wait";
+            this.columnHeader5.Width = 40;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.DisplayIndex = 6;
+            this.columnHeader6.Text = "HotKey";
+            this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader6.Width = 80;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.DisplayIndex = 7;
+            this.columnHeader7.Text = "KeyPass";
+            this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader7.Width = 80;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.DisplayIndex = 0;
+            this.columnHeader8.Text = "#";
+            this.columnHeader8.Width = 40;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "";
+            this.columnHeader9.Width = 0;
+            // 
+            // csScriptListView
+            // 
+            this.csScriptListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.csScriptListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader10,
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader17,
+            this.columnHeader18});
+            this.csScriptListView.FullRowSelect = true;
+            this.csScriptListView.GridLines = true;
+            this.csScriptListView.HideSelection = false;
+            this.csScriptListView.LabelWrap = false;
+            this.csScriptListView.Location = new System.Drawing.Point(2, 1);
+            this.csScriptListView.MultiSelect = false;
+            this.csScriptListView.Name = "csScriptListView";
+            this.csScriptListView.ShowItemToolTips = true;
+            this.csScriptListView.Size = new System.Drawing.Size(889, 572);
+            this.csScriptListView.TabIndex = 49;
+            this.csScriptListView.UseCompatibleStateImageBehavior = false;
+            this.csScriptListView.View = System.Windows.Forms.View.Details;
+            this.csScriptListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.scriptlistView_ColumnClick);
+            this.csScriptListView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
+            this.csScriptListView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
+            this.csScriptListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseDoubleClick);
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.DisplayIndex = 1;
+            this.columnHeader10.Text = "Filename";
+            this.columnHeader10.Width = 350;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.DisplayIndex = 2;
+            this.columnHeader11.Text = "Status";
+            this.columnHeader11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader11.Width = 80;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.DisplayIndex = 3;
+            this.columnHeader12.Text = "Loop";
+            this.columnHeader12.Width = 50;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.DisplayIndex = 5;
+            this.columnHeader13.Text = "A.S.";
+            this.columnHeader13.Width = 55;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Wait";
+            this.columnHeader14.Width = 40;
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.DisplayIndex = 6;
+            this.columnHeader15.Text = "HotKey";
+            this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader15.Width = 80;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.DisplayIndex = 7;
+            this.columnHeader16.Text = "KeyPass";
+            this.columnHeader16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader16.Width = 80;
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.DisplayIndex = 0;
+            this.columnHeader17.Text = "#";
+            this.columnHeader17.Width = 40;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "";
+            this.columnHeader18.Width = 0;
+            // 
+            // autoLootTextBoxMaxRange
+            // 
+            this.autoLootTextBoxMaxRange.BackColor = System.Drawing.Color.White;
+            this.autoLootTextBoxMaxRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.autoLootTextBoxMaxRange.Location = new System.Drawing.Point(411, 65);
+            this.autoLootTextBoxMaxRange.Name = "autoLootTextBoxMaxRange";
+            this.autoLootTextBoxMaxRange.Size = new System.Drawing.Size(45, 20);
+            this.autoLootTextBoxMaxRange.TabIndex = 64;
+            this.autoLootTextBoxMaxRange.Leave += new System.EventHandler(this.autoLootTextBoxMaxRange_Leave);
+            // 
+            // autoLootTextBoxDelay
+            // 
+            this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
+            this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.autoLootTextBoxDelay.Location = new System.Drawing.Point(411, 41);
+            this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
+            this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
+            this.autoLootTextBoxDelay.TabIndex = 58;
+            this.autoLootTextBoxDelay.Leave += new System.EventHandler(this.autoLootTextBoxDelay_Leave);
+            // 
+            // scavengerRange
+            // 
+            this.scavengerRange.BackColor = System.Drawing.Color.White;
+            this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scavengerRange.Location = new System.Drawing.Point(416, 68);
+            this.scavengerRange.Name = "scavengerRange";
+            this.scavengerRange.Size = new System.Drawing.Size(45, 20);
+            this.scavengerRange.TabIndex = 74;
+            this.scavengerRange.Leave += new System.EventHandler(this.scavengerRange_Leave);
+            // 
+            // scavengerDragDelay
+            // 
+            this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
+            this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scavengerDragDelay.Location = new System.Drawing.Point(416, 42);
+            this.scavengerDragDelay.Name = "scavengerDragDelay";
+            this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
+            this.scavengerDragDelay.TabIndex = 68;
+            this.scavengerDragDelay.Leave += new System.EventHandler(this.scavengerDragDelay_Leave);
+            // 
+            // organizerDragDelay
+            // 
+            this.organizerDragDelay.BackColor = System.Drawing.Color.White;
+            this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.organizerDragDelay.Location = new System.Drawing.Point(379, 52);
+            this.organizerDragDelay.Name = "organizerDragDelay";
+            this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
+            this.organizerDragDelay.TabIndex = 71;
+            this.organizerDragDelay.Leave += new System.EventHandler(this.organizerDragDelay_Leave);
+            // 
+            // dressDragDelay
+            // 
+            this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dressDragDelay.BackColor = System.Drawing.Color.White;
+            this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.dressDragDelay.Location = new System.Drawing.Point(921, 58);
+            this.dressDragDelay.Name = "dressDragDelay";
+            this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
+            this.dressDragDelay.TabIndex = 75;
+            this.dressDragDelay.Leave += new System.EventHandler(this.dressDragDelay_Leave);
+            // 
+            // restockDragDelay
+            // 
+            this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.restockDragDelay.BackColor = System.Drawing.Color.White;
+            this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.restockDragDelay.Location = new System.Drawing.Point(804, 51);
+            this.restockDragDelay.Name = "restockDragDelay";
+            this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
+            this.restockDragDelay.TabIndex = 81;
+            this.restockDragDelay.Leave += new System.EventHandler(this.restockDragDelay_Leave);
+            // 
+            // bandagehealmaxrangeTextBox
+            // 
+            this.bandagehealmaxrangeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealmaxrangeTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealmaxrangeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealmaxrangeTextBox.Location = new System.Drawing.Point(77, 270);
+            this.bandagehealmaxrangeTextBox.Name = "bandagehealmaxrangeTextBox";
+            this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(29, 20);
+            this.bandagehealmaxrangeTextBox.TabIndex = 91;
+            this.bandagehealmaxrangeTextBox.Leave += new System.EventHandler(this.bandagehealmaxrangeTextBox_Leave);
+            // 
+            // bandagehealhpTextBox
+            // 
+            this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealhpTextBox.Location = new System.Drawing.Point(76, 136);
+            this.bandagehealhpTextBox.Name = "bandagehealhpTextBox";
+            this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealhpTextBox.TabIndex = 84;
+            this.bandagehealhpTextBox.Leave += new System.EventHandler(this.bandagehealhpTextBox_Leave);
+            // 
+            // bandagehealdelayTextBox
+            // 
+            this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealdelayTextBox.Location = new System.Drawing.Point(283, 134);
+            this.bandagehealdelayTextBox.Name = "bandagehealdelayTextBox";
+            this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealdelayTextBox.TabIndex = 82;
+            this.bandagehealdelayTextBox.Leave += new System.EventHandler(this.bandagehealdelayTextBox_Leave);
+            // 
+            // bandagehealcustomcolorTextBox
+            // 
+            this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealcustomcolorTextBox.Enabled = false;
+            this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 76);
+            this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
+            this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealcustomcolorTextBox.TabIndex = 79;
+            this.bandagehealcustomcolorTextBox.Leave += new System.EventHandler(this.bandagehealcustomcolorTextBox_Leave);
+            // 
+            // bandagehealcustomIDTextBox
+            // 
+            this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealcustomIDTextBox.Enabled = false;
+            this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 75);
+            this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
+            this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealcustomIDTextBox.TabIndex = 77;
+            this.bandagehealcustomIDTextBox.Leave += new System.EventHandler(this.bandagehealcustomIDTextBox_Leave);
+            // 
+            // toolboxcountWarningTextBox
+            // 
+            this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountWarningTextBox.Location = new System.Drawing.Point(64, 148);
+            this.toolboxcountWarningTextBox.Name = "toolboxcountWarningTextBox";
+            this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountWarningTextBox.TabIndex = 66;
+            this.toolboxcountWarningTextBox.TextChanged += new System.EventHandler(this.toolboxcountWarningTextBox_TextChanged);
+            // 
+            // toolboxcountGraphTextBox
+            // 
+            this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountGraphTextBox.Location = new System.Drawing.Point(64, 73);
+            this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
+            this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountGraphTextBox.TabIndex = 2;
+            this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountGraphTextBox_TextChanged);
+            // 
+            // hotkeyKeyMasterTextBox
+            // 
+            this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
+            this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hotkeyKeyMasterTextBox.Location = new System.Drawing.Point(41, 19);
+            this.hotkeyKeyMasterTextBox.Name = "hotkeyKeyMasterTextBox";
+            this.hotkeyKeyMasterTextBox.ReadOnly = true;
+            this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
+            this.hotkeyKeyMasterTextBox.TabIndex = 5;
+            this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
+            this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+            // 
+            // hotkeytextbox
+            // 
+            this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeytextbox.BackColor = System.Drawing.Color.White;
+            this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hotkeytextbox.Location = new System.Drawing.Point(41, 17);
+            this.hotkeytextbox.Name = "hotkeytextbox";
+            this.hotkeytextbox.ReadOnly = true;
+            this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
+            this.hotkeytextbox.TabIndex = 1;
+            this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
+            this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+            // 
+            // DPSmeterserial
+            // 
+            this.DPSmeterserial.Location = new System.Drawing.Point(48, 58);
+            this.DPSmeterserial.Name = "DPSmeterserial";
+            this.DPSmeterserial.Size = new System.Drawing.Size(100, 20);
+            this.DPSmeterserial.TabIndex = 6;
+            // 
+            // DPSmetermaxdamage
+            // 
+            this.DPSmetermaxdamage.Location = new System.Drawing.Point(220, 23);
+            this.DPSmetermaxdamage.Name = "DPSmetermaxdamage";
+            this.DPSmetermaxdamage.Size = new System.Drawing.Size(56, 20);
+            this.DPSmetermaxdamage.TabIndex = 2;
+            // 
+            // DPSmetermindamage
+            // 
+            this.DPSmetermindamage.Location = new System.Drawing.Point(82, 23);
+            this.DPSmetermindamage.Name = "DPSmetermindamage";
+            this.DPSmetermindamage.Size = new System.Drawing.Size(56, 20);
+            this.DPSmetermindamage.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -10318,6 +10318,7 @@ namespace Assistant
                 }
             }
         }
+
     }
 }
 
