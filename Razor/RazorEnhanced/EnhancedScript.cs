@@ -132,12 +132,13 @@ namespace RazorEnhanced
         private bool m_Editor;
         private Keys m_Hotkey;
         private bool m_HotKeyPass;
+        private int m_Position;
 
         private Thread m_Thread;
 
         internal EnhancedScriptEngine m_ScriptEngine;
-        internal bool StopMessage;
         internal bool StartMessage;
+        internal bool StopMessage;
         internal DateTime LastModified;
 
         private readonly object m_Lock = new object();
@@ -231,8 +232,8 @@ namespace RazorEnhanced
             m_Preload = preload;
             m_Editor = editor;
 
-            //StartMessage = true;
-            //StopMessage = false;
+            StartMessage = true;
+            StopMessage = false;
             LastModified = DateTime.MinValue;
 
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
@@ -352,7 +353,7 @@ namespace RazorEnhanced
                 if (m_Thread != null) { Stop(); }
                 m_Thread = new Thread(AsyncStart);
                 m_Thread.Start();
-                while (!m_Thread.IsAlive){ Misc.Pause(1); }
+                //while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
                 //m_Run = true;
             }
@@ -388,6 +389,8 @@ namespace RazorEnhanced
                     if (m_Thread.ThreadState != ThreadState.AbortRequested)
                     {
                         //EventManager.Instance.Unsubscribe(m_Thread);
+                        //m_Thread.Interrupt();
+                        //m_Thread.Join();
                         m_Thread.Abort();
                         m_Thread = null;
                     }
@@ -558,13 +561,31 @@ namespace RazorEnhanced
         internal bool HotKeyPass
         {
             get { lock (m_Lock) { return m_HotKeyPass; } }
-            set { lock (m_Lock) { m_HotKeyPass = value; }
+            set
+            {
+                lock (m_Lock) { m_HotKeyPass = value; }
                 if (m_ScriptItem != null)
                 {
                     m_ScriptItem.HotKeyPass = m_HotKeyPass;
                 }
             }
         }
+
+        internal int Position
+        {
+            get { lock (m_Lock) { return m_Position; } }
+            set
+            {
+                lock (m_Lock) { m_Position = value; }
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.Position = m_Position;
+                }
+            }
+        }
+
+        
+
 
         internal bool IsRunning
         {

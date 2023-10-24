@@ -281,11 +281,13 @@ namespace RazorEnhanced
             public bool HotKeyPass { get; set; }
             public bool AutoStart { get; set; }
             public string FullPath { get; set; }
+            public int Position { get; set; }
         }
 
         internal class ScriptTimer
         {
             private System.Threading.Timer m_Timer;
+
 
             private Thread m_AutoLootThread;
             private Thread m_ScavengerThread;
