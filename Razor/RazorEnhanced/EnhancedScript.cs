@@ -20,6 +20,14 @@ using System.Threading;
 using System.Windows.Forms;
 using static RazorEnhanced.Scripts;
 using UOSScript = RazorEnhanced.UOScript.Script;
+using System.Text.RegularExpressions;
+using System.Collections.Concurrent;
+using System.Linq;
+using RazorEnhanced.UOScript;
+using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Management.Instrumentation;
+using Microsoft.Scripting.Utils;
 
 namespace RazorEnhanced
 {
