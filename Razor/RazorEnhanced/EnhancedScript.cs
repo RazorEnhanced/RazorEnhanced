@@ -21,6 +21,7 @@ using RazorEnhanced.UOScript;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Management.Instrumentation;
+using Microsoft.Scripting.Utils;
 
 namespace RazorEnhanced
 {
@@ -37,9 +38,9 @@ namespace RazorEnhanced
 
         private  readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
 
-        internal List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList(); }
-        internal List<EnhancedScript> ScriptListEditor() { return m_ScriptList.Values.Where(script => script.Editor).ToList(); }
-        internal List<EnhancedScript> ScriptListTab() { return m_ScriptList.Values.Where(script => script != null && !script.Editor && script.Exist).ToList(); }
+        internal List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList().ToSortedList((s1, s2) => s1.Position - s2.Position).ToList(); }
+        internal List<EnhancedScript> ScriptListEditor() { return ScriptList().Where(script => script.Editor).ToList(); }
+        internal List<EnhancedScript> ScriptListTab() { return ScriptList().Where(script => script != null && !script.Editor && script.Exist).ToList(); }
         internal List<EnhancedScript> ScriptListTabPy() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.PYTHON).ToList(); }
         internal List<EnhancedScript> ScriptListTabCs() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.CSHARP).ToList(); }
         internal List<EnhancedScript> ScriptListTabUos() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.UOSTEAM).ToList(); }
@@ -189,36 +190,36 @@ namespace RazorEnhanced
         {
             var preload = true;
             var editor = false;
-            var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, preload, editor);
+            var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, item.Position, preload, editor);
             if (script == null) return null;
             script.ScriptItem = item;
             return script;
         }
 
-        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool autostart = false, bool preload = true, bool editor = true)
+        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool autostart = false, int position = -1, bool preload = true, bool editor = true)
         {
             if (!File.Exists(fullpath)) { return null; }
 
             var script = Service.Search(fullpath);
             if (script!=null){ return script; }
 
-            script = new EnhancedScript(fullpath, "", wait, loop, hotkey, hotkeyPass, autostart, preload, editor);
+            script = new EnhancedScript(fullpath, "", wait, loop, hotkey, hotkeyPass, autostart, position, preload, editor);
 
             script.Load();
             return script;
         }
 
-        public static EnhancedScript FromText(string content, ScriptLanguage language=ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey=Keys.None, bool hotkeyPass=false, bool run = false, bool autostart = false, bool preload = true)
+        public static EnhancedScript FromText(string content, ScriptLanguage language=ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey=Keys.None, bool hotkeyPass=false, bool run = false, int position=-1, bool autostart = false, bool preload = true)
         {
             var filename = EnhancedScript.TempFilename(language);
-            EnhancedScript script = new EnhancedScript(filename, content, wait, loop, hotkey, hotkeyPass, autostart, preload, true);
+            EnhancedScript script = new EnhancedScript(filename, content, wait, loop, hotkey, hotkeyPass, autostart, position, preload, true);
             script.SetLanguage(language);
             return script;
         }
 
 
         // beginning of instance related, non-static methods/constructors/propeerties
-        internal EnhancedScript(string fullpath, string text, bool wait, bool loop, Keys hotkey, bool hotkeyPass, bool autostart, bool preload, bool editor)
+        internal EnhancedScript(string fullpath, string text, bool wait, bool loop, Keys hotkey, bool hotkeyPass, bool autostart, int position, bool preload, bool editor)
         {
 
             m_Fullpath = fullpath;
@@ -229,8 +230,11 @@ namespace RazorEnhanced
             m_Hotkey = hotkey;
             m_HotKeyPass = hotkeyPass;
             m_AutoStart = autostart;
+            
+
             m_Preload = preload;
             m_Editor = editor;
+            
 
             StartMessage = true;
             StopMessage = false;
