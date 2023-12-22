@@ -94,15 +94,13 @@ namespace Assistant
 
         internal static void LoadScriptList(System.Collections.Generic.List<Scripts.ScriptItem> scripts, ScriptListView scriptlistView)
         {
-            int index = 0;
             foreach (Scripts.ScriptItem item in scripts)
             {
                 var script = EnhancedScript.FromScriptItem(item);
                 if (script != null) {
                 
-                    var listitem = ScriptToTableRow(script, index);
+                    var listitem = ScriptToTableRow(script, item.Position);
                     scriptlistView.Items.Add(listitem);
-                    index++;
                 }
                 else
                 {
@@ -124,7 +122,6 @@ namespace Assistant
             }
 
         }
-
 
         private void LoadAndInitializeScripts()
         {
@@ -343,6 +340,7 @@ namespace Assistant
 
             var item = list[index];
             list.RemoveAt(index);
+            item.Position = location;
             list.Insert(location, item);
 
             ReloadScriptTable();
@@ -371,6 +369,7 @@ namespace Assistant
 
             var item = list[index];
             list.RemoveAt(index);
+            item.Position = location;
             list.Insert(location, item);
 
             ReloadScriptTable();
@@ -398,6 +397,7 @@ namespace Assistant
                 
             var item = list[index];
             list.RemoveAt(index);
+            item.Position = location;
             list.Insert(location, item);
 
             ReloadScriptTable();
@@ -664,7 +664,6 @@ namespace Assistant
         private void buttonScriptTo_Click(object sender, EventArgs e)
         {
             moveToToolStripMenuItem_Click(sender, e);
-            //ScriptGridMoveTo(0);
         }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -193,6 +193,7 @@ namespace RazorEnhanced
             var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, item.Position, preload, editor);
             if (script == null) return null;
             script.ScriptItem = item;
+            script.Position = item.Position;
             return script;
         }
 
