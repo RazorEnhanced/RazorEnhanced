@@ -37,6 +37,9 @@ namespace RazorEnhanced
 
         public static void LoadEnhancedScripts(List<RazorEnhanced.Scripts.ScriptItem> scriptItems) {
             EnhancedScript.Service.ClearAll();
+            int prevPyIndex = 0;
+            int prevUosIndex = 0;
+            int prevCsIndex = 0;
             foreach (var item in scriptItems)
             {
                 // if no fullname then set it to local 
@@ -45,6 +48,52 @@ namespace RazorEnhanced
                 if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
                 {
                     item.FullPath = defaultPath;
+                }
+
+                // If no position use the previous index + 1
+                // In theory this should only happen first load after update
+                string suffix = Path.GetExtension(item.FullPath).ToLower();
+                switch (suffix)
+                {
+                    case ".py":
+                        if (item.Position == 0)
+                        {
+                            prevPyIndex++;
+                            item.Position = prevPyIndex;
+                        }
+                        else
+                        {
+                            prevPyIndex = item.Position;
+                        }
+                        Scripts.PyScripts.Add(item);
+                        break;
+                    case ".uos":
+                        if (item.Position == 0)
+                        {
+                            prevUosIndex++;
+                            item.Position = prevUosIndex;
+                        }
+                        else
+                        {
+                            prevUosIndex = item.Position;
+                        }
+                        Scripts.UosScripts.Add(item);
+                        break;
+                    case ".cs":
+                        if (item.Position == 0)
+                        {
+                            prevCsIndex++;
+                            item.Position = prevCsIndex;
+                        }
+                        else
+                        {
+                            prevCsIndex = item.Position;
+                        }
+                        Scripts.CsScripts.Add(item);
+                        break;
+                    default:
+                        // drop it
+                        break;
                 }
 
                 //Dalamar: find a nice way to instantiate EnhancedScripts
@@ -281,11 +330,13 @@ namespace RazorEnhanced
             public bool HotKeyPass { get; set; }
             public bool AutoStart { get; set; }
             public string FullPath { get; set; }
+            public int Position { get; set; }
         }
 
         internal class ScriptTimer
         {
             private System.Threading.Timer m_Timer;
+
 
             private Thread m_AutoLootThread;
             private Thread m_ScavengerThread;

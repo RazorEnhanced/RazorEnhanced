@@ -21,6 +21,7 @@ using RazorEnhanced.UOScript;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Management.Instrumentation;
+using Microsoft.Scripting.Utils;
 
 namespace RazorEnhanced
 {
@@ -37,9 +38,9 @@ namespace RazorEnhanced
 
         private  readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
 
-        internal List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList(); }
-        internal List<EnhancedScript> ScriptListEditor() { return m_ScriptList.Values.Where(script => script.Editor).ToList(); }
-        internal List<EnhancedScript> ScriptListTab() { return m_ScriptList.Values.Where(script => script != null && !script.Editor && script.Exist).ToList(); }
+        internal List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList().ToSortedList((s1, s2) => s1.Position - s2.Position).ToList(); }
+        internal List<EnhancedScript> ScriptListEditor() { return ScriptList().Where(script => script.Editor).ToList(); }
+        internal List<EnhancedScript> ScriptListTab() { return ScriptList().Where(script => script != null && !script.Editor && script.Exist).ToList(); }
         internal List<EnhancedScript> ScriptListTabPy() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.PYTHON).ToList(); }
         internal List<EnhancedScript> ScriptListTabCs() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.CSHARP).ToList(); }
         internal List<EnhancedScript> ScriptListTabUos() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.UOSTEAM).ToList(); }
@@ -132,12 +133,13 @@ namespace RazorEnhanced
         private bool m_Editor;
         private Keys m_Hotkey;
         private bool m_HotKeyPass;
+        private int m_Position;
 
         private Thread m_Thread;
 
         internal EnhancedScriptEngine m_ScriptEngine;
-        internal bool StopMessage;
         internal bool StartMessage;
+        internal bool StopMessage;
         internal DateTime LastModified;
 
         private readonly object m_Lock = new object();
@@ -188,36 +190,37 @@ namespace RazorEnhanced
         {
             var preload = true;
             var editor = false;
-            var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, preload, editor);
+            var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, item.Position, preload, editor);
             if (script == null) return null;
             script.ScriptItem = item;
+            script.Position = item.Position;
             return script;
         }
 
-        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool autostart = false, bool preload = true, bool editor = true)
+        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool autostart = false, int position = -1, bool preload = true, bool editor = true)
         {
             if (!File.Exists(fullpath)) { return null; }
 
             var script = Service.Search(fullpath);
             if (script!=null){ return script; }
 
-            script = new EnhancedScript(fullpath, "", wait, loop, hotkey, hotkeyPass, autostart, preload, editor);
+            script = new EnhancedScript(fullpath, "", wait, loop, hotkey, hotkeyPass, autostart, position, preload, editor);
 
             script.Load();
             return script;
         }
 
-        public static EnhancedScript FromText(string content, ScriptLanguage language=ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey=Keys.None, bool hotkeyPass=false, bool run = false, bool autostart = false, bool preload = true)
+        public static EnhancedScript FromText(string content, ScriptLanguage language=ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey=Keys.None, bool hotkeyPass=false, bool run = false, int position=-1, bool autostart = false, bool preload = true)
         {
             var filename = EnhancedScript.TempFilename(language);
-            EnhancedScript script = new EnhancedScript(filename, content, wait, loop, hotkey, hotkeyPass, autostart, preload, true);
+            EnhancedScript script = new EnhancedScript(filename, content, wait, loop, hotkey, hotkeyPass, autostart, position, preload, true);
             script.SetLanguage(language);
             return script;
         }
 
 
         // beginning of instance related, non-static methods/constructors/propeerties
-        internal EnhancedScript(string fullpath, string text, bool wait, bool loop, Keys hotkey, bool hotkeyPass, bool autostart, bool preload, bool editor)
+        internal EnhancedScript(string fullpath, string text, bool wait, bool loop, Keys hotkey, bool hotkeyPass, bool autostart, int position, bool preload, bool editor)
         {
 
             m_Fullpath = fullpath;
@@ -228,11 +231,14 @@ namespace RazorEnhanced
             m_Hotkey = hotkey;
             m_HotKeyPass = hotkeyPass;
             m_AutoStart = autostart;
+            
+
             m_Preload = preload;
             m_Editor = editor;
+            
 
-            //StartMessage = true;
-            //StopMessage = false;
+            StartMessage = true;
+            StopMessage = false;
             LastModified = DateTime.MinValue;
 
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
@@ -352,7 +358,7 @@ namespace RazorEnhanced
                 if (m_Thread != null) { Stop(); }
                 m_Thread = new Thread(AsyncStart);
                 m_Thread.Start();
-                while (!m_Thread.IsAlive){ Misc.Pause(1); }
+                //while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
                 //m_Run = true;
             }
@@ -388,6 +394,8 @@ namespace RazorEnhanced
                     if (m_Thread.ThreadState != ThreadState.AbortRequested)
                     {
                         //EventManager.Instance.Unsubscribe(m_Thread);
+                        //m_Thread.Interrupt();
+                        //m_Thread.Join();
                         m_Thread.Abort();
                         m_Thread = null;
                     }
@@ -558,13 +566,31 @@ namespace RazorEnhanced
         internal bool HotKeyPass
         {
             get { lock (m_Lock) { return m_HotKeyPass; } }
-            set { lock (m_Lock) { m_HotKeyPass = value; }
+            set
+            {
+                lock (m_Lock) { m_HotKeyPass = value; }
                 if (m_ScriptItem != null)
                 {
                     m_ScriptItem.HotKeyPass = m_HotKeyPass;
                 }
             }
         }
+
+        internal int Position
+        {
+            get { lock (m_Lock) { return m_Position; } }
+            set
+            {
+                lock (m_Lock) { m_Position = value; }
+                if (m_ScriptItem != null)
+                {
+                    m_ScriptItem.Position = m_Position;
+                }
+            }
+        }
+
+        
+
 
         internal bool IsRunning
         {
