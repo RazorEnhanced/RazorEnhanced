@@ -225,12 +225,27 @@ namespace RazorEnhanced
             List<RazorEnhanced.Scripts.ScriptItem> items = new List<RazorEnhanced.Scripts.ScriptItem>();
             var scriptList = EnhancedScript.Service.ScriptListTab();
 
+            int index = 1;
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
+            {
+                item.Position = index;
                 items.Add(item);
+                index++;
+            }
+            index = 1;
             foreach (Scripts.ScriptItem item in Scripts.UosScripts)
+            {
+                item.Position = index;
                 items.Add(item);
+                index++;
+            }
+            index = 1;
             foreach (Scripts.ScriptItem item in Scripts.CsScripts)
+            {
+                item.Position = index;
                 items.Add(item);
+                index++;
+            }
 
             string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(filename + "." + tableName, xml);
