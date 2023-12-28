@@ -63,7 +63,8 @@ namespace RazorEnhanced.UI
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelScript = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitMain = new System.Windows.Forms.SplitContainer();
+            this.splitEditorOutput = new System.Windows.Forms.SplitContainer();
             this.fastColoredTextBoxEditor = new Assistant.RazorFastColoredTextBox();
             this.textareaMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,25 +73,31 @@ namespace RazorEnhanced.UI
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.commentSelectLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unCommentLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.messagelistBox = new System.Windows.Forms.ListBox();
-            this.logboxMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.outputConsole = new System.Windows.Forms.RichTextBox();
+            this.outputMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.autoclearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitDebugger = new System.Windows.Forms.SplitContainer();
             this.textBoxDebug = new System.Windows.Forms.TextBox();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
+            this.splitMain.Panel1.SuspendLayout();
+            this.splitMain.Panel2.SuspendLayout();
+            this.splitMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitEditorOutput)).BeginInit();
+            this.splitEditorOutput.Panel1.SuspendLayout();
+            this.splitEditorOutput.Panel2.SuspendLayout();
+            this.splitEditorOutput.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).BeginInit();
             this.textareaMenuStrip.SuspendLayout();
-            this.logboxMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
+            this.outputMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitDebugger)).BeginInit();
+            this.splitDebugger.Panel1.SuspendLayout();
+            this.splitDebugger.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -118,7 +125,7 @@ namespace RazorEnhanced.UI
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(2106, 34);
+            this.toolStrip1.Size = new System.Drawing.Size(1766, 34);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -390,7 +397,7 @@ namespace RazorEnhanced.UI
             this.statusStrip1.Location = new System.Drawing.Point(0, 950);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(2106, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1766, 22);
             this.statusStrip1.TabIndex = 2;
             // 
             // toolStripStatusLabelScript
@@ -403,25 +410,47 @@ namespace RazorEnhanced.UI
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 15);
             // 
-            // splitContainer1
+            // splitMain
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 34);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.splitContainer1.Name = "splitContainer1";
+            this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitMain.Location = new System.Drawing.Point(0, 34);
+            this.splitMain.Name = "splitMain";
             // 
-            // splitContainer1.Panel1
+            // splitMain.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.fastColoredTextBoxEditor);
-            this.splitContainer1.Panel1.Controls.Add(this.messagelistBox);
+            this.splitMain.Panel1.Controls.Add(this.splitEditorOutput);
+            this.splitMain.Panel1.Padding = new System.Windows.Forms.Padding(3);
+            this.splitMain.Panel1MinSize = 100;
             // 
-            // splitContainer1.Panel2
+            // splitMain.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(2106, 916);
-            this.splitContainer1.SplitterDistance = 1564;
-            this.splitContainer1.SplitterWidth = 6;
-            this.splitContainer1.TabIndex = 3;
+            this.splitMain.Panel2.Controls.Add(this.splitDebugger);
+            this.splitMain.Panel2MinSize = 10;
+            this.splitMain.Size = new System.Drawing.Size(1766, 916);
+            this.splitMain.SplitterDistance = 1311;
+            this.splitMain.SplitterWidth = 6;
+            this.splitMain.TabIndex = 3;
+            // 
+            // splitEditorOutput
+            // 
+            this.splitEditorOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitEditorOutput.Location = new System.Drawing.Point(3, 3);
+            this.splitEditorOutput.Name = "splitEditorOutput";
+            this.splitEditorOutput.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitEditorOutput.Panel1
+            // 
+            this.splitEditorOutput.Panel1.Controls.Add(this.fastColoredTextBoxEditor);
+            this.splitEditorOutput.Panel1.Padding = new System.Windows.Forms.Padding(3);
+            // 
+            // splitEditorOutput.Panel2
+            // 
+            this.splitEditorOutput.Panel2.Controls.Add(this.outputConsole);
+            this.splitEditorOutput.Panel2.Padding = new System.Windows.Forms.Padding(3);
+            this.splitEditorOutput.Panel2MinSize = 50;
+            this.splitEditorOutput.Size = new System.Drawing.Size(1305, 910);
+            this.splitEditorOutput.SplitterDistance = 645;
+            this.splitEditorOutput.TabIndex = 3;
             // 
             // fastColoredTextBoxEditor
             // 
@@ -450,7 +479,7 @@ namespace RazorEnhanced.UI
             this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
             this.fastColoredTextBoxEditor.LeftBracket = '(';
             this.fastColoredTextBoxEditor.LeftBracket2 = '[';
-            this.fastColoredTextBoxEditor.Location = new System.Drawing.Point(0, 0);
+            this.fastColoredTextBoxEditor.Location = new System.Drawing.Point(3, 3);
             this.fastColoredTextBoxEditor.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.fastColoredTextBoxEditor.Name = "fastColoredTextBoxEditor";
             this.fastColoredTextBoxEditor.Paddings = new System.Windows.Forms.Padding(0);
@@ -458,8 +487,8 @@ namespace RazorEnhanced.UI
             this.fastColoredTextBoxEditor.RightBracket2 = ']';
             this.fastColoredTextBoxEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
             this.fastColoredTextBoxEditor.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBoxEditor.ServiceColors")));
-            this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(1564, 732);
-            this.fastColoredTextBoxEditor.TabIndex = 0;
+            this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(1299, 639);
+            this.fastColoredTextBoxEditor.TabIndex = 1;
             this.fastColoredTextBoxEditor.Zoom = 100;
             // 
             // textareaMenuStrip
@@ -520,34 +549,34 @@ namespace RazorEnhanced.UI
             this.unCommentLineToolStripMenuItem.Text = "UnComment Line";
             this.unCommentLineToolStripMenuItem.Click += new System.EventHandler(this.UnCommentLineToolStripMenuItem_Click);
             // 
-            // messagelistBox
+            // outputConsole
             // 
-            this.messagelistBox.ContextMenuStrip = this.logboxMenuStrip;
-            this.messagelistBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.messagelistBox.FormattingEnabled = true;
-            this.messagelistBox.HorizontalScrollbar = true;
-            this.messagelistBox.ItemHeight = 20;
-            this.messagelistBox.Location = new System.Drawing.Point(0, 732);
-            this.messagelistBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.messagelistBox.Name = "messagelistBox";
-            this.messagelistBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.messagelistBox.Size = new System.Drawing.Size(1564, 184);
-            this.messagelistBox.TabIndex = 1;
-            this.messagelistBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MessagelistBox_KeyUp);
+            this.outputConsole.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.outputConsole.ContextMenuStrip = this.outputMenuStrip;
+            this.outputConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputConsole.Font = new System.Drawing.Font("Cascadia Mono", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputConsole.Location = new System.Drawing.Point(3, 3);
+            this.outputConsole.Name = "outputConsole";
+            this.outputConsole.ReadOnly = true;
+            this.outputConsole.Size = new System.Drawing.Size(1299, 255);
+            this.outputConsole.TabIndex = 3;
+            this.outputConsole.Text = "";
             // 
-            // logboxMenuStrip
+            // outputMenuStrip
             // 
-            this.logboxMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.logboxMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.outputMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.outputMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearToolStripMenuItem,
-            this.copyToolStripMenuItem1});
-            this.logboxMenuStrip.Name = "logboxMenuStrip";
-            this.logboxMenuStrip.Size = new System.Drawing.Size(189, 68);
+            this.copyToolStripMenuItem1,
+            this.autoclearToolStripMenuItem,
+            this.timeToolStripMenuItem});
+            this.outputMenuStrip.Name = "logboxMenuStrip";
+            this.outputMenuStrip.Size = new System.Drawing.Size(222, 132);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(188, 32);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(221, 32);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
@@ -555,38 +584,53 @@ namespace RazorEnhanced.UI
             // 
             this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
             this.copyToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(188, 32);
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(221, 32);
             this.copyToolStripMenuItem1.Text = "Copy";
             this.copyToolStripMenuItem1.Click += new System.EventHandler(this.CopyToolStripMenuItem1_Click);
             // 
-            // splitContainer2
+            // autoclearToolStripMenuItem
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.autoclearToolStripMenuItem.Checked = true;
+            this.autoclearToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.autoclearToolStripMenuItem.Name = "autoclearToolStripMenuItem";
+            this.autoclearToolStripMenuItem.Size = new System.Drawing.Size(221, 32);
+            this.autoclearToolStripMenuItem.Text = "Clear on Play";
+            this.autoclearToolStripMenuItem.Click += new System.EventHandler(this.autoclearToolStripMenuItem_Click);
             // 
-            // splitContainer2.Panel1
+            // timeToolStripMenuItem
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.textBoxDebug);
-            this.splitContainer2.Panel1MinSize = 0;
-            this.splitContainer2.Panel2MinSize = 0;
-            this.splitContainer2.Size = new System.Drawing.Size(536, 916);
-            this.splitContainer2.SplitterDistance = 870;
-            this.splitContainer2.SplitterWidth = 6;
-            this.splitContainer2.TabIndex = 0;
+            this.timeToolStripMenuItem.Name = "timeToolStripMenuItem";
+            this.timeToolStripMenuItem.Size = new System.Drawing.Size(221, 32);
+            this.timeToolStripMenuItem.Text = "Show Timestamp";
+            this.timeToolStripMenuItem.Click += new System.EventHandler(this.timeToolStripMenuItem_Click);
+            // 
+            // splitDebugger
+            // 
+            this.splitDebugger.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitDebugger.Location = new System.Drawing.Point(0, 0);
+            this.splitDebugger.Name = "splitDebugger";
+            this.splitDebugger.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitDebugger.Panel1
+            // 
+            this.splitDebugger.Panel1.Controls.Add(this.textBoxDebug);
+            this.splitDebugger.Panel1MinSize = 0;
+            this.splitDebugger.Panel2MinSize = 0;
+            this.splitDebugger.Size = new System.Drawing.Size(449, 916);
+            this.splitDebugger.SplitterDistance = 863;
+            this.splitDebugger.SplitterWidth = 6;
+            this.splitDebugger.TabIndex = 0;
             // 
             // textBoxDebug
             // 
             this.textBoxDebug.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDebug.Location = new System.Drawing.Point(0, 0);
-            this.textBoxDebug.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxDebug.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxDebug.Multiline = true;
             this.textBoxDebug.Name = "textBoxDebug";
             this.textBoxDebug.ReadOnly = true;
             this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDebug.Size = new System.Drawing.Size(536, 870);
+            this.textBoxDebug.Size = new System.Drawing.Size(449, 863);
             this.textBoxDebug.TabIndex = 0;
             // 
             // imageList2
@@ -604,8 +648,8 @@ namespace RazorEnhanced.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2106, 972);
-            this.Controls.Add(this.splitContainer1);
+            this.ClientSize = new System.Drawing.Size(1766, 972);
+            this.Controls.Add(this.splitMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -619,17 +663,21 @@ namespace RazorEnhanced.UI
             this.toolStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.splitMain.Panel1.ResumeLayout(false);
+            this.splitMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
+            this.splitMain.ResumeLayout(false);
+            this.splitEditorOutput.Panel1.ResumeLayout(false);
+            this.splitEditorOutput.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitEditorOutput)).EndInit();
+            this.splitEditorOutput.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).EndInit();
             this.textareaMenuStrip.ResumeLayout(false);
-            this.logboxMenuStrip.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
+            this.outputMenuStrip.ResumeLayout(false);
+            this.splitDebugger.Panel1.ResumeLayout(false);
+            this.splitDebugger.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitDebugger)).EndInit();
+            this.splitDebugger.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -653,15 +701,13 @@ namespace RazorEnhanced.UI
         private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButtonInspect;
-        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.SplitContainer splitMain;
         private System.Windows.Forms.TextBox textBoxDebug;
         private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
         private System.Windows.Forms.ToolStripButton toolStripButtonGumps;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private Assistant.RazorFastColoredTextBox fastColoredTextBoxEditor;
+        private System.Windows.Forms.SplitContainer splitDebugger;
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ListBox messagelistBox;
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.ToolStripButton inspectaliasbutton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -673,9 +719,6 @@ namespace RazorEnhanced.UI
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem commentSelectLineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unCommentLineToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip logboxMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
@@ -686,5 +729,13 @@ namespace RazorEnhanced.UI
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripButton ToolStripButtonWiki;
+        private System.Windows.Forms.SplitContainer splitEditorOutput;
+        private Assistant.RazorFastColoredTextBox fastColoredTextBoxEditor;
+        private System.Windows.Forms.RichTextBox outputConsole;
+        private System.Windows.Forms.ContextMenuStrip outputMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem timeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem autoclearToolStripMenuItem;
     }
 }

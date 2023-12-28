@@ -47,7 +47,10 @@ namespace Assistant
 
         internal static ScriptListView GetCurrentAllScriptsTab()
         {
-            return (ScriptListView)Engine.MainWindow.AllScriptsTab.SelectedTab.Controls[0];
+            var selectedTab = Engine.MainWindow.AllScriptsTab.SelectedTab;
+            if (selectedTab.Controls.Count == 0) return null;
+
+            return (ScriptListView)selectedTab.Controls[0];
         }
 
         internal static List<Scripts.ScriptItem> GetScriptsCurrentTab()

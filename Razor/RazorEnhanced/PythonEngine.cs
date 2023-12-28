@@ -16,7 +16,11 @@ namespace RazorEnhanced
     // --------------------------------------------------------- PythonEngine --------------------------------------------------------
     public class PythonEngine
     {
+
+
         public Dictionary<string, object> Modules;
+
+        public static ScriptRuntime Runtime;
         public ScriptEngine Engine { get;  }
         public ScriptScope Scope { get; set; }
         public String Text { get; set; }
@@ -24,11 +28,14 @@ namespace RazorEnhanced
         public ScriptSource Source { get; set; }
         public CompiledCode Compiled { get; set; }
         public PythonCompilerOptions CompilerOptions { get; set; }
+
         
 
         public PythonEngine() {
-            var runtime = IronPython.Hosting.Python.CreateRuntime();
-            Engine = IronPython.Hosting.Python.GetEngine(runtime);
+            if (Runtime == null) {
+                Runtime = IronPython.Hosting.Python.CreateRuntime();
+            }
+            Engine = IronPython.Hosting.Python.GetEngine(Runtime);
             
             //Paths for IronPython 3.4
             var paths = new List<string>();
@@ -86,14 +93,10 @@ namespace RazorEnhanced
 
             //Setup builtin modules and scope
             foreach (var module in Modules) {
-                Engine.Runtime.Globals.SetVariable(module.Key, module.Value);
+                Runtime.Globals.SetVariable(module.Key, module.Value);
                 Engine.GetBuiltinModule().SetVariable(module.Key, module.Value);
             }
-            Scope = Engine.CreateScope();
-
-            CompilerOptions = (PythonCompilerOptions)Engine.GetCompilerOptions(Scope);
-            CompilerOptions.ModuleName = "__main__";
-            CompilerOptions.Module |= ModuleOptions.Initialize;
+            
         }
         
         ~PythonEngine() { 
@@ -156,17 +159,25 @@ namespace RazorEnhanced
 
             //COMPILE with OPTIONS
             //PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+            Scope = Engine.CreateScope();
+
+            CompilerOptions = (PythonCompilerOptions)Engine.GetCompilerOptions(Scope);
+            CompilerOptions.ModuleName = "__main__";
+            CompilerOptions.Module |= ModuleOptions.Initialize;
+            CompilerOptions.Optimized = true;
+            
             Compiled = Source.Compile(CompilerOptions);
             if (Compiled == null) { return false; }
             
-            Scope = Engine.CreateScope();
             return true;
         }
         public bool Execute() {
             //EXECUTE
-            if (Source == null)   { return false; }
-            if (Compiled == null) { return false; }
-            if (Scope == null)    { return false; }
+            if (Scope == null) { return false; }
+            else if (Compiled == null) { return false; }
+            else if (Source == null)   { return false; }
+            
+           
 
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;

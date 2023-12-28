@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Management.Instrumentation;
 using Microsoft.Scripting.Utils;
+using System.Diagnostics.Tracing;
 
 namespace RazorEnhanced
 {
@@ -45,26 +46,31 @@ namespace RazorEnhanced
         internal List<EnhancedScript> ScriptListTabCs() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.CSHARP).ToList(); }
         internal List<EnhancedScript> ScriptListTabUos() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.UOSTEAM).ToList(); }
 
+        public event Action<EnhancedScript, bool> OnScriptListChanged;
 
         internal bool AddScript(EnhancedScript script)
         {
+            bool result = true;
             if (m_ScriptList.ContainsKey(script.Fullpath))
             {
                 m_ScriptList[script.Fullpath] = script;
-                return true;
             }
             else
             {
-                return m_ScriptList.TryAdd(script.Fullpath, script);
+                result = m_ScriptList.TryAdd(script.Fullpath, script);
             }
+            OnScriptListChanged?.Invoke(script, result);
+            return result;
         }
         internal bool RemoveScript(EnhancedScript script)
         {
+            bool result = true;
             if (m_ScriptList.ContainsKey(script.Fullpath))
             {
-                return m_ScriptList.TryRemove(script.Fullpath, out _);
+                result = m_ScriptList.TryRemove(script.Fullpath, out _);
             }
-            return true;
+            OnScriptListChanged?.Invoke(script, !result);
+            return result;
         }
 
         internal EnhancedScript CurrentScript()
@@ -144,7 +150,11 @@ namespace RazorEnhanced
 
         private readonly object m_Lock = new object();
 
-
+        public event Action<EnhancedScript, bool> OnLoad;
+        public event Action<EnhancedScript> OnStart;
+        public event Action<EnhancedScript> OnStop;
+        public event Action<EnhancedScript, string> OnError;
+        public event Action<EnhancedScript, string> OnOutput;
 
         public static ScriptLanguage ExtToLanguage(string extenstion)
         {
@@ -264,15 +274,22 @@ namespace RazorEnhanced
 
         public bool Load(bool force = false)
         {
-            string content = "";
+            string content = m_Text ?? "";
             try
             {
-                LastModified = File.GetLastWriteTime(Fullpath);
-                content = File.ReadAllText(Fullpath);
+                if (this.Exist)
+                {
+                    LastModified = File.GetLastWriteTime(Fullpath);
+                    content = File.ReadAllText(Fullpath);
+                }
+                else {
+                    Misc.SendMessage("file not found:" + this.Filename, 178);
+                }
             }
             catch (Exception e)
             {
                 Misc.SendMessage("ERROR:EnhancedScript:Load: " + e.Message, 178);
+                OnLoad?.Invoke(this, false);
                 return false;
             }
 
@@ -282,6 +299,7 @@ namespace RazorEnhanced
                 m_Text = content;
                 InitEngine();
             }
+            OnLoad?.Invoke(this,true);
             return true;
         }
 
@@ -362,7 +380,9 @@ namespace RazorEnhanced
 
                 //m_Run = true;
             }
-            catch { }
+            catch (Exception e){
+                OnError.Invoke(this, e.Message);
+            }
         }
 
         private void AsyncStart()
@@ -374,11 +394,17 @@ namespace RazorEnhanced
                 try
                 {
                     //EventManager.Instance.Unsubscribe(m_Thread);
+                    OnStart?.Invoke(this);
                     m_ScriptEngine.Run();
+                    OnStop?.Invoke(this);
                 }
-                catch (ThreadAbortException ex) { return; }
+                catch (ThreadAbortException ex) {
+                    OnStop?.Invoke(this);
+                    return; 
+                }
                 catch (Exception ex)
                 {
+                    OnError?.Invoke(this, ex.Message);
                     Misc.SendMessage($"EnhancedScript:AsyncStart:{ex.GetType()}:\n{ex.Message}", 138);
                 }
                 
@@ -789,14 +815,23 @@ namespace RazorEnhanced
                 {
                     pyEngine.Engine.SetTrace(pyTraceback);
                 }
-                if (m_StderrWriter != null)
-                {
-                    pyEngine.SetStderr(m_StderrWriter);
-                }
-                if (m_StdoutWriter != null)
-                {
-                    pyEngine.SetStdout(m_StdoutWriter);
-                }
+                
+                pyEngine.SetStderr(
+                    (string message) => {
+                        Misc.SendMessage(message,178);
+                        if (m_StderrWriter == null) return;
+                        m_StderrWriter.Invoke(message);
+                    }
+                );
+
+                pyEngine.SetStdout(
+                    (string message) => {
+                        Misc.SendMessage(message);
+                        if (m_StdoutWriter == null) return;
+                        m_StdoutWriter.Invoke(message);
+                    }
+                );
+
                 return pyEngine.Execute();
             } catch (Exception ex)
             {
