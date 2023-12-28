@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using System.Management.Instrumentation;
 using Microsoft.Scripting.Utils;
+using System.Diagnostics.Tracing;
 
 namespace RazorEnhanced
 {
@@ -160,8 +161,6 @@ namespace RazorEnhanced
         public event Action<EnhancedScript> OnStop;
         public event Action<EnhancedScript, string> OnError;
         public event Action<EnhancedScript, string> OnOutput;
-        
-        
 
         public static ScriptLanguage ExtToLanguage(string extenstion)
         {

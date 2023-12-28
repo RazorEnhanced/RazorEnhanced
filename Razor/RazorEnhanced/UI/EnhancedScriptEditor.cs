@@ -1102,12 +1102,6 @@ namespace RazorEnhanced.UI
             var editorContent = fastColoredTextBoxEditor.Text;
             if (editorContent != null && editorContent != "")
             {
-                string fileContent="";
-                //bool valid = false;
-                try {
-                    fileContent = File.ReadAllText(m_Script.Fullpath);
-                    //valid = true;
-                } catch { }
                 string fileContent = "";
                 if (m_Script.Exist) {
                     try { 
