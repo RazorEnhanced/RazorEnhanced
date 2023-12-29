@@ -20,7 +20,7 @@ namespace RazorEnhanced
 
         public Dictionary<string, object> Modules;
 
-        public static ScriptRuntime Runtime;
+        public ScriptRuntime Runtime;
         public ScriptEngine Engine { get;  }
         public ScriptScope Scope { get; set; }
         public String Text { get; set; }
@@ -32,9 +32,7 @@ namespace RazorEnhanced
         
 
         public PythonEngine() {
-            if (Runtime == null) {
-                Runtime = IronPython.Hosting.Python.CreateRuntime();
-            }
+            Runtime = IronPython.Hosting.Python.CreateRuntime();
             Engine = IronPython.Hosting.Python.GetEngine(Runtime);
             
             //Paths for IronPython 3.4
