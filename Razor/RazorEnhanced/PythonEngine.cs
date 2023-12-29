@@ -103,6 +103,11 @@ namespace RazorEnhanced
 
         }
 
+        public void SetTrace(TracebackDelegate tracebackDelegate)
+        {
+            Engine.SetTrace(tracebackDelegate);
+        }
+
         public void SetStdout(Action<string> stdoutWriter)
         {
             PythonWriter outputWriter = new PythonWriter(stdoutWriter);

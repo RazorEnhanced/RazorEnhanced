@@ -1,28 +1,25 @@
 ﻿using Assistant;
 using IronPython.Hosting;
-using IronPython.Runtime.Exceptions;
 using IronPython.Runtime;
-using Microsoft.Scripting.Hosting.Providers;
+using IronPython.Runtime.Exceptions;
+using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using Microsoft.Scripting.Hosting.Providers;
+using Microsoft.Scripting.Utils;
+using RazorEnhanced.UOScript;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
- 
-using Microsoft.Scripting;
+using System.Windows.Forms;
 using static RazorEnhanced.Scripts;
 using UOSScript = RazorEnhanced.UOScript.Script;
-using System.Text.RegularExpressions;
-using System.Collections.Concurrent;
-using System.Linq;
-using RazorEnhanced.UOScript;
-using System.Windows.Forms;
-using System.Threading.Tasks;
-using System.Management.Instrumentation;
-using Microsoft.Scripting.Utils;
-using System.Diagnostics.Tracing;
 
 namespace RazorEnhanced
 {
@@ -155,6 +152,8 @@ namespace RazorEnhanced
         public event Action<EnhancedScript> OnStop;
         public event Action<EnhancedScript, string> OnError;
         public event Action<EnhancedScript, string> OnOutput;
+        
+        
 
         public static ScriptLanguage ExtToLanguage(string extenstion)
         {
@@ -639,6 +638,22 @@ namespace RazorEnhanced
             }
         }
 
+        public bool Suspended
+        {
+            get { return ScriptEngine.Suspended; }
+            set { ScriptEngine.Suspended = value; }
+        }
+        public void Suspend()
+        {
+            ScriptEngine.Suspend();
+        }
+
+        public void Reseume()
+        {
+            ScriptEngine.Reseume();
+        }
+
+
     }
 
 // --------------------------------------------- ENHANCED SCRIPT ENGINE ----------------------------------------------------
@@ -655,16 +670,18 @@ namespace RazorEnhanced
         public Assembly csProgram;                                                    
         public UOSScript uosProgram;
 
-        public TracebackDelegate pyTraceback;
-        public Action<string> m_StdoutWriter;
-        public Action<string> m_StderrWriter;
+        private TracebackDelegate m_pyTraceback;
+        private Action<string> m_stdoutWriter;
+        private Action<string> m_stderrWriter;
 
-
+        private bool m_Suspended = false;
+        private ManualResetEvent m_SuspendedMutex;
         
-
 
         public EnhancedScriptEngine(EnhancedScript script, bool autoLoad = true)
         {
+            m_SuspendedMutex = new ManualResetEvent(!m_Suspended);
+
             m_Script = script;
             var lang = script.SetLanguage();
             if (autoLoad && lang != ScriptLanguage.UNKNOWN)
@@ -673,18 +690,49 @@ namespace RazorEnhanced
             }
         }
 
+        public bool Suspended
+        { 
+            get { return m_Suspended; }
+            set { 
+                if (value) { Suspend();} 
+                else { Reseume(); }
+            } 
+        }
+        public void Suspend()
+        {
+            if (m_Script.Language != ScriptLanguage.PYTHON) {
+                Misc.SendMessage("WARNING: Script Suspend is supported only by python scripts.");
+                return;
+            }
+            m_Suspended = true;
+            m_SuspendedMutex.Reset();
+        }
+
+        public void Reseume()
+        {
+            if (m_Script.Language != ScriptLanguage.PYTHON)
+            {
+                Misc.SendMessage("WARNING: Script Resume is supported only by python scripts.");
+                return;
+            }
+            m_Suspended = false;
+            m_SuspendedMutex.Set();
+        }
+
+        
+
         public void SetTracebackPython(TracebackDelegate traceFunc)
         {
-            pyTraceback = traceFunc;
+            m_pyTraceback = traceFunc;
         }
 
         public void SetStdout(Action<string> stdoutWriter)
         {
-            m_StdoutWriter = stdoutWriter;
+            m_stdoutWriter = stdoutWriter;
         }
         public void SetStderr(Action<string> stderrWriter)
         {
-            m_StderrWriter = stderrWriter;
+            m_stderrWriter = stderrWriter;
         }
 
 
@@ -692,17 +740,17 @@ namespace RazorEnhanced
         {
             //Misc.SendMessage(message);
             SendMessageScriptError(message);
-            if (m_StdoutWriter != null) {
-                m_StdoutWriter(message);
+            if (m_stdoutWriter != null) {
+                m_stdoutWriter(message);
             }
         }
         public void SendError(string message)
         {
             SendMessageScriptError(message, 138);
-            if (m_StderrWriter != null) {
-                m_StderrWriter(message);
-            } else if (m_StdoutWriter != null) {
-                m_StdoutWriter(message);
+            if (m_stderrWriter != null) {
+                m_stderrWriter(message);
+            } else if (m_stdoutWriter != null) {
+                m_stdoutWriter(message);
             }
         }
 
@@ -797,6 +845,20 @@ namespace RazorEnhanced
             return true;
         }
 
+        private TracebackDelegate TracebackPython(TraceBackFrame frame, string result, object payload) {
+            if (m_pyTraceback != null)
+            {
+                m_pyTraceback = m_pyTraceback.Invoke(frame, result, payload);
+            }
+
+            if (Suspended)
+            {
+                m_SuspendedMutex.WaitOne(); 
+            }
+            return TracebackPython;
+        }
+
+
 
 
         private bool RunPython()
@@ -811,24 +873,21 @@ namespace RazorEnhanced
                     m_Script.LastModified = lastModified;
                 }
 
-                if (pyTraceback != null)
-                {
-                    pyEngine.Engine.SetTrace(pyTraceback);
-                }
-                
+                pyEngine.SetTrace(TracebackPython);
+
                 pyEngine.SetStderr(
                     (string message) => {
                         Misc.SendMessage(message,178);
-                        if (m_StderrWriter == null) return;
-                        m_StderrWriter.Invoke(message);
+                        if (m_stderrWriter == null) return;
+                        m_stderrWriter.Invoke(message);
                     }
                 );
 
                 pyEngine.SetStdout(
                     (string message) => {
                         Misc.SendMessage(message);
-                        if (m_StdoutWriter == null) return;
-                        m_StdoutWriter.Invoke(message);
+                        if (m_stdoutWriter == null) return;
+                        m_stdoutWriter.Invoke(message);
                     }
                 );
 
