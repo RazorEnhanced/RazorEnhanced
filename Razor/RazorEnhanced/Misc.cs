@@ -1127,7 +1127,7 @@ namespace RazorEnhanced
             EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
             if (script != null)
             {
-                script.Reseume();
+                script.Resume();
             }
             else
             {
