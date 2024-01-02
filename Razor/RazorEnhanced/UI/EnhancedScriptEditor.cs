@@ -13,7 +13,7 @@ using FastColoredTextBoxNS;
 using System.Text.RegularExpressions;
 using Accord.Math;
 using Microsoft.Scripting.Utils;
-using RazorEnhanced.UOScript;
+using RazorEnhanced.UOS;
 using System.Threading.Tasks;
 using CUO_API;
 using IronPython.Runtime.Operations;
@@ -96,8 +96,8 @@ namespace RazorEnhanced.UI
 
         internal static void Init(string filename)
         {
-            string suffix = null;
-            if (filename == null)
+            string suffix = Path.GetExtension(filename); ;
+            if (suffix == null)
             {
                 ScriptListView scriptListView =  MainForm.GetCurrentAllScriptsTab();
                 if (scriptListView != null)
@@ -109,10 +109,6 @@ namespace RazorEnhanced.UI
                     if (scriptListView.Name == "csScriptListView")
                         suffix = ".cs";
                 }
-            }
-            else
-            {
-                suffix = Path.GetExtension(filename);
             }
 
             var editor = EnhancedScriptEditor.Search(filename);
@@ -252,7 +248,7 @@ namespace RazorEnhanced.UI
                 case ScriptLanguage.UOSTEAM:
                     fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Uos;
                     fastColoredTextBoxEditor.AutoIndentExistingLines = true;
-                    InitUOSSyntaxHighlight();
+                    UpdateSyntaxHighlight();
                     break;
             }
         }
@@ -276,10 +272,13 @@ namespace RazorEnhanced.UI
         }
 
 
-        public void InitUOSSyntaxHighlight()
+        public void UpdateSyntaxHighlight()
         {
             // keywords
-            List<String> keywords = UOSteamEngine.Instance.AllKeywords();
+            var uosEngine = m_Script.ScriptEngine.uosEngine;
+            if (uosEngine == null) return;
+
+            List<String> keywords = uosEngine.AllKeywords();
             string[] syntax =
             {
                 "and", "break", "continue", "elif", "else", "for", "if", "not", "or", "while", "true", "false",
@@ -290,7 +289,7 @@ namespace RazorEnhanced.UI
             this.fastColoredTextBoxEditor.SyntaxHighlighter.UosKeywordRegex = new Regex(pattern, RegexOptions.Compiled);
 
             // attributes
-            List<String> aliases = UOSteamEngine.Instance.AllAliases();
+            List<String> aliases = uosEngine.AllAliases();
             pattern = $@"\b({String.Join("|", aliases)})\b";
             this.fastColoredTextBoxEditor.SyntaxHighlighter.UosAttributeRegex = new Regex(pattern, RegexOptions.Compiled|RegexOptions.IgnoreCase);
 
@@ -310,7 +309,7 @@ namespace RazorEnhanced.UI
 
             //
             ToolTipDescriptions tooltip;
-            var methods = UOSteamEngine.Instance.AllKeywords().ToArray();
+            var methods = keywords.ToArray();
             var autodocMethods = new Dictionary<string, ToolTipDescriptions>();
             foreach (var method in keywords)
             {

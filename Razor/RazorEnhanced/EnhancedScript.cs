@@ -6,7 +6,7 @@ using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Hosting.Providers;
 using Microsoft.Scripting.Utils;
-using RazorEnhanced.UOScript;
+using RazorEnhanced.UOS;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -19,7 +19,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using static RazorEnhanced.Scripts;
-using UOSScript = RazorEnhanced.UOScript.Script;
 
 namespace RazorEnhanced
 {
@@ -668,9 +667,9 @@ namespace RazorEnhanced
         public UOSteamEngine uosEngine;
 
         public Assembly csProgram;                                                    
-        public UOSScript uosProgram;
 
         private TracebackDelegate m_pyTraceback;
+        private UOSTracebackDelegate m_uosTraceback;
         private Action<string> m_stdoutWriter;
         private Action<string> m_stderrWriter;
 
@@ -719,11 +718,16 @@ namespace RazorEnhanced
             m_SuspendedMutex.Set();
         }
 
-        
+
 
         public void SetTracebackPython(TracebackDelegate traceFunc)
         {
             m_pyTraceback = traceFunc;
+        }
+
+        public void SetTracebackUOS(UOSTracebackDelegate traceFunc)
+        {
+            m_uosTraceback = traceFunc;
         }
 
         public void SetStdout(Action<string> stdoutWriter)
@@ -790,8 +794,15 @@ namespace RazorEnhanced
         public bool Run()
         {
             if (!m_Loaded && !Load()) { return false; } // not loaded, and fail automatic loading.
-            bool result;
+            DateTime lastModified = File.GetLastWriteTime(m_Script.Fullpath);
+            if (m_Script.LastModified < lastModified)
+            {
+                Load();
+                // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
+                m_Script.LastModified = lastModified;
+            }
 
+            bool result;
             try {
                 switch (m_Script.Language) {
                     default:
@@ -845,34 +856,34 @@ namespace RazorEnhanced
             return true;
         }
 
-        private TracebackDelegate TracebackPython(TraceBackFrame frame, string result, object payload) {
+        private TracebackDelegate TracebackPython(TraceBackFrame frame, string result, object payload)
+        {
             if (m_pyTraceback != null)
             {
                 m_pyTraceback = m_pyTraceback.Invoke(frame, result, payload);
             }
 
-            if (Suspended)
-            {
-                m_SuspendedMutex.WaitOne(); 
-            }
+            SuspendCheck();
             return TracebackPython;
         }
 
-
-
-
+        private bool TracebackUOS(UOS.Script script, UOS.ASTNode node, UOS.Scope scope)
+        {
+            if (m_uosTraceback != null)
+            {
+                return m_uosTraceback.Invoke(script, node, scope);
+            }
+            SuspendCheck();
+            return true;
+        }
+        private void SuspendCheck() {
+            if (Suspended) m_SuspendedMutex.WaitOne();
+        }
+        
         private bool RunPython()
         {
             try
             {
-                DateTime lastModified = File.GetLastWriteTime(m_Script.Fullpath);
-                if (m_Script.LastModified < lastModified)
-                {
-                    LoadPython();
-                    // FileChangeDate update must be the last line of threads will messup (ex: mousewheel hotkeys)
-                    m_Script.LastModified = lastModified;
-                }
-
                 pyEngine.SetTrace(TracebackPython);
 
                 pyEngine.SetStderr(
@@ -950,10 +961,9 @@ namespace RazorEnhanced
 
         private bool LoadUOSteam()
         {
-            uosProgram = null;
             try
             {
-                uosEngine = UOSteamEngine.Instance;
+                uosEngine = new UOSteamEngine();
                 // Using // only will be deprecated instead of //UOS
                 var text = System.IO.File.ReadAllLines(m_Script.Fullpath);
                 if ((text[0].Substring(0, 2) == "//") && text[0].Length < 5)
@@ -962,21 +972,20 @@ namespace RazorEnhanced
                     SendOutput(message);
                 }
 
-                uosProgram = uosEngine.Load(m_Script.Fullpath);
+                return uosEngine.Load(m_Script.Fullpath);
             }
             catch (Exception ex)
             {
                 return HandleException(ex);
             }
-            return uosProgram != null;
-
         }
 
         private bool RunUOSteam()
         {
             try
             {
-                uosEngine.Execute(uosProgram);
+                uosEngine.OnTraceback(TracebackUOS);
+                uosEngine.Execute();
             }
             catch (Exception ex)
             {
