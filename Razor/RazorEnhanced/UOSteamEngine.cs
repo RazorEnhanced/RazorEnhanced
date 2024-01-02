@@ -32,7 +32,7 @@ namespace RazorEnhanced.UOS
         private Interpreter m_Interpreter;
         private Script m_Script;
 
-        public void OnTraceback(UOSTracebackDelegate traceDelegate) {
+        public void SetTrace(UOSTracebackDelegate traceDelegate) {
             m_Script.OnTraceback += traceDelegate;
         }
 
@@ -138,7 +138,7 @@ namespace RazorEnhanced.UOS
             UpdateNamespace();
         }
 
-
+                                          
         private void RegisterAlias()
         {
             m_Interpreter.RegisterAliasHandler("ground", AliasHandler);
@@ -5278,7 +5278,7 @@ namespace RazorEnhanced.UOS
                 
             var node = _statement.FirstChild();
 
-            if (OnTraceback!=null && OnTraceback.Invoke(this, node, _scope)){
+            if (OnTraceback!=null && !OnTraceback.Invoke(this, node, _scope)){
                 return false;
             }
 
