@@ -647,9 +647,9 @@ namespace RazorEnhanced
             ScriptEngine.Suspend();
         }
 
-        public void Reseume()
+        public void Resume()
         {
-            ScriptEngine.Reseume();
+            ScriptEngine.Resume();
         }
 
 
@@ -694,24 +694,24 @@ namespace RazorEnhanced
             get { return m_Suspended; }
             set { 
                 if (value) { Suspend();} 
-                else { Reseume(); }
+                else { Resume(); }
             } 
         }
         public void Suspend()
         {
-            if (m_Script.Language != ScriptLanguage.PYTHON) {
-                Misc.SendMessage("WARNING: Script Suspend is supported only by python scripts.");
+            if (m_Script.Language == ScriptLanguage.CSHARP) {
+                Misc.SendMessage("WARNING: Script Suspend is not supported by c# scripts.");
                 return;
             }
             m_Suspended = true;
             m_SuspendedMutex.Reset();
         }
 
-        public void Reseume()
+        public void Resume()
         {
-            if (m_Script.Language != ScriptLanguage.PYTHON)
+            if (m_Script.Language == ScriptLanguage.CSHARP)
             {
-                Misc.SendMessage("WARNING: Script Resume is supported only by python scripts.");
+                Misc.SendMessage("WARNING: Script Resume is not supported by c# scripts.");
                 return;
             }
             m_Suspended = false;
@@ -984,7 +984,7 @@ namespace RazorEnhanced
         {
             try
             {
-                uosEngine.OnTraceback(TracebackUOS);
+                uosEngine.SetTrace(TracebackUOS);
                 uosEngine.Execute();
             }
             catch (Exception ex)
