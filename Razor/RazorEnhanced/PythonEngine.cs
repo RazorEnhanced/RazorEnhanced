@@ -15,7 +15,11 @@ namespace RazorEnhanced
 {
     class PythonEngine
     {
+
+
         public Dictionary<string, object> Modules;
+
+        public ScriptRuntime Runtime;
         public ScriptEngine Engine { get;  }
         public ScriptScope Scope { get; set; }
         public String Text { get; set; }
@@ -24,55 +28,12 @@ namespace RazorEnhanced
         public CompiledCode Compiled { get; set; }
         public PythonCompilerOptions CompilerOptions { get; set; }
 
-        public class PythonWriter : MemoryStream
-        {
-            internal Action<string> m_action;
+        
 
-            public PythonWriter(Action<string> stdoutWriter)
-                : base()
-            {
-                m_action = stdoutWriter;
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                if (m_action != null)
-                    m_action(System.Text.Encoding.ASCII.GetString(buffer));
-                base.Write(buffer, offset, count);
-            }
-
-            public override Task WriteAsync(byte[] buffer, int offset, int count, System.Threading.CancellationToken cancellationToken)
-            {
-                if (m_action != null)
-                    m_action(System.Text.Encoding.ASCII.GetString(buffer));
-                return base.WriteAsync(buffer, offset, count, cancellationToken);
-            }
-
-            public override void WriteByte(byte value)
-            {
-                if (m_action != null)
-                    m_action(value.ToString());
-                base.WriteByte(value);
-            }
-
-            public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
-            {
-                return base.BeginWrite(buffer, offset, count, callback, state);
-            }
-        }
-
-        public PythonEngine(Action<string> stdoutWriter) {
-            var runtime = IronPython.Hosting.Python.CreateRuntime();
-            if (stdoutWriter != null)
-            {
-                PythonWriter outputWriter = new PythonWriter(stdoutWriter);
-                runtime.IO.SetErrorOutput(outputWriter, Encoding.ASCII);
-                runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
-            }
-            Engine = IronPython.Hosting.Python.GetEngine(runtime);
-
-
-
+        public PythonEngine() {
+            Runtime = IronPython.Hosting.Python.CreateRuntime();
+            Engine = IronPython.Hosting.Python.GetEngine(Runtime);
+            
             //Paths for IronPython 3.4
             var paths = new List<string>();
             var basepath = Assistant.Engine.RootPath;
@@ -129,17 +90,20 @@ namespace RazorEnhanced
 
             //Setup builtin modules and scope
             foreach (var module in Modules) {
-                Engine.Runtime.Globals.SetVariable(module.Key, module.Value);
+                Runtime.Globals.SetVariable(module.Key, module.Value);
                 Engine.GetBuiltinModule().SetVariable(module.Key, module.Value);
             }
-            Scope = Engine.CreateScope();
-
-            CompilerOptions = (PythonCompilerOptions)Engine.GetCompilerOptions(Scope);
-            CompilerOptions.ModuleName = "__main__";
-            CompilerOptions.Module |= ModuleOptions.Initialize;
+            
         }
 
-        public void Execute(String text, String path=null)
+        }
+
+        public void SetTrace(TracebackDelegate tracebackDelegate)
+        {
+            Engine.SetTrace(tracebackDelegate);
+        }
+
+        public void SetStdout(Action<string> stdoutWriter)
         {
             if (Engine == null) return;
 
@@ -154,7 +118,25 @@ namespace RazorEnhanced
 
             //COMPILE with OPTIONS
             //PythonCompilerOptions in order to initialize Python modules correctly, without it the Python env is half broken
+            Scope = Engine.CreateScope();
+
+            CompilerOptions = (PythonCompilerOptions)Engine.GetCompilerOptions(Scope);
+            CompilerOptions.ModuleName = "__main__";
+            CompilerOptions.Module |= ModuleOptions.Initialize;
+            CompilerOptions.Optimized = true;
+            
             Compiled = Source.Compile(CompilerOptions);
+            if (Compiled == null) { return false; }
+            
+            return true;
+        }
+        public bool Execute() {
+            //EXECUTE
+            if (Scope == null) { return false; }
+            else if (Compiled == null) { return false; }
+            else if (Source == null)   { return false; }
+            
+           
 
             //EXECUTE
             Journal journal = Modules["Journal"] as Journal;
