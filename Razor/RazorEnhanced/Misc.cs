@@ -1061,9 +1061,10 @@ namespace RazorEnhanced
             {
                 script.Run = true;
             }
-            else
+            else { 
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
-        }
+            }
+    }
 
         /// <summary>
         /// Stop a script by file name, Script must be present in script grid.
@@ -1084,15 +1085,70 @@ namespace RazorEnhanced
         /// Stop all script running.
         /// </summary>
         /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
-        public static void ScriptStopAll(bool skipCurrent=false)
+        public static void ScriptStopAll(bool skipCurrent = false)
         {
-            Scripts.EnhancedScript currentScript = Scripts.CurrentScript();
-            foreach (RazorEnhanced.Scripts.EnhancedScript script in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
+            EnhancedScript currentScript = EnhancedScript.Service.CurrentScript();
+            foreach (EnhancedScript script in EnhancedScript.Service.ScriptList())
             {
-                if ( skipCurrent && currentScript == script) { 
-                    continue; 
+                if (skipCurrent && currentScript == script)
+                {
+                    continue;
                 }
                 script.Run = false;
+            }
+        }
+
+        // Script function
+        /// <summary>
+        /// Suspend a script by file name, Script must be present in script grid.
+        /// </summary>
+        /// <param name="scriptfile">Name of the script.</param>
+        public static void ScriptSuspend(string scriptfile)
+        {
+            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
+            if (script != null)
+            {
+                script.Suspend();
+            }
+            else { 
+                Scripts.SendMessageScriptError("ScriptRun: Script not exist");
+            }
+        }
+
+        /// <summary>
+        /// Resume a script by file name, Script must be present in script grid.
+        /// </summary>
+        /// <param name="scriptfile">Name of the script.</param>
+        public static void ScriptResume(string scriptfile)
+        {
+            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
+            if (script != null)
+            {
+                script.Reseume();
+            }
+            else
+            {
+                Scripts.SendMessageScriptError("ScriptResume: Script not exist");
+            }
+        }
+
+
+        /// <summary>
+        /// Get status of script if is suspended or not, Script must be present in script grid.
+        /// </summary>
+        /// <param name="scriptfile"></param>
+        /// <returns>True: Script is suspended - False: otherwise.</returns>
+        public static bool ScriptIsSuspended(string scriptfile)
+        {
+            EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
+            if (script != null)
+            {
+                return script.Suspended;
+            }
+            else
+            {
+                Scripts.SendMessageScriptError("ScriptIsSuspended: Script not exist");
+                return false;
             }
         }
 

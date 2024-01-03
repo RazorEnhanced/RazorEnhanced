@@ -20,7 +20,9 @@ using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 using System.Reflection;
 using System.Threading.Tasks;
-using Assistant.UI;
+using CUO_API;
+using IronPython.Runtime.Operations;
+using System.Windows.Controls;
 
 namespace RazorEnhanced.UI
 {
@@ -135,11 +137,14 @@ namespace RazorEnhanced.UI
             m_popupMenu.AppearInterval = 100;
 
 
-            if (filetype == null)
-            {
-                filetype = ".py";
+            if (m_Script.GetLanguage() == ScriptLanguage.PYTHON) { 
+                m_Script.ScriptEngine.SetTracebackPython(null);
             }
-            m_Filetype = filetype;
+            m_Script.ScriptEngine.SetStdout(this.SetErrorBox);
+            // Always have to make these or Open() wont work from UOS to PY
+            // m_pe = new PythonEngine(this.SetErrorBox);
+            // m_pe.Engine.SetTrace(null);
+            UpdateTitle();
 
             if (m_Filetype == ".uos")
             {
@@ -547,6 +552,10 @@ namespace RazorEnhanced.UI
 
         private void Start(bool debug)
         {
+            if (autoclearToolStripMenuItem.Checked) { 
+                outputConsole.Clear();
+            }
+
             if (World.Player == null)
             {
                 SetErrorBox("Starting ERROR: Can't start script if not logged in game.");
@@ -850,15 +859,28 @@ namespace RazorEnhanced.UI
 
             try
             {
-                if (this.messagelistBox.InvokeRequired)
+                //if (this.messagelistBox.InvokeRequired)
+                if (this.outputConsole.InvokeRequired)
                 {
                     SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
                     this.Invoke(d, new object[] { text });
                 }
                 else
                 {
-                    this.messagelistBox.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] - " + text);
-                    this.messagelistBox.TopIndex = this.messagelistBox.Items.Count - 1;
+                    var lines_txt = text.Trim('\n');
+                    var multiline = lines_txt.IndexOf("\n") > 0;
+                    var multiline_txt = multiline ? "\n" : " ";
+                    var time_txt = "[" + DateTime.Now.ToString("HH:mm:ss") + "]";
+                    var showTimestamp = timeToolStripMenuItem.Checked; // logboxMenuStrip.
+                    var msg = showTimestamp ? time_txt + multiline_txt : "";
+                    msg += lines_txt+'\n';
+                    
+                    //this.messagelistBox.Items.Add(msg);
+                    //this.messagelistBox.TopIndex = this.messagelistBox.Items.Count - 1;
+
+                    outputConsole.AppendText(msg);
+                    outputConsole.SelectionStart = outputConsole.Text.Length-1;
+                    outputConsole.ScrollToCaret();
                 }
             }
             catch
@@ -1088,35 +1110,33 @@ namespace RazorEnhanced.UI
         {
             if (File.Exists(m_Filepath) && File.ReadAllText(m_Filepath) == fastColoredTextBoxEditor.Text)
             {
-                fastColoredTextBoxEditor.Text = String.Empty;
-                m_Filename = String.Empty;
-                m_Filepath = String.Empty;
-                this.Text = Title;
-                return true;
-            }
-
-            if (fastColoredTextBoxEditor.Text == String.Empty) // Not ask to save empty text
-                return true;
-
-            DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-            if (res == System.Windows.Forms.DialogResult.Yes)
-            {
-                if (m_Filename != null && m_Filename != String.Empty)
-                {
-                    SavaData();
-                    ReloadAfterSave();
+                string fileContent = "";
+                if (m_Script.Exist) {
+                    try { 
+                        fileContent = File.ReadAllText(m_Script.Fullpath);
+                    } catch { }
                 }
-                else
-                {
-                    SaveFileDialog save = new SaveFileDialog
-                    {
-                        Filter = "Script Files|*.py|Script Files|*.txt|C# Files|*.cs",
-                        FileName = m_Filename
-                    };
 
-                    if (save.ShowDialog() == DialogResult.OK)
+                if (fileContent != editorContent)
+                {
+                    DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                    if (res == DialogResult.Cancel) { 
+                        return false; 
+                    }
+                    if (res == DialogResult.No) {
+                        if (m_Script.Exist)
+                        {
+                            m_Script.Load(true);
+                        }
+                        else {
+                            UnloadScript();
+                        }
+                        return true; 
+                    }
+                    if (res == DialogResult.Yes)
                     {
-                        if (save.FileName != null && save.FileName != string.Empty && fastColoredTextBoxEditor.Text != null)
+
+                        if (m_Script.HasValidPath)
                         {
                             SavaData();
                             m_Filename = save.FileName;
@@ -1247,7 +1267,7 @@ namespace RazorEnhanced.UI
 
                 //Close File
                 case (Keys.Control | Keys.E):
-                    CloseAndSave();
+                    toolStripButtonClose.PerformClick();
                     return true;
 
                 //Inspect Entities
@@ -1369,26 +1389,30 @@ namespace RazorEnhanced.UI
 
         private void MessagelistBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if (messagelistBox.SelectedItems == null) // Nothing selected
-                return;
+            //if (messagelistBox.SelectedItems == null) return;
+            if (outputConsole.SelectedText == "") return;  // Nothing selected
 
             if (e.Control && e.KeyCode == Keys.C)
             {
-                Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
+                Utility.ClipBoardCopy(outputConsole.SelectedText);
+                //Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
             }
         }
 
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            messagelistBox.Items.Clear();
+            //messagelistBox.Items.Clear();
+            outputConsole.Text = "";
         }
 
         private void CopyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (messagelistBox.SelectedItems == null) // Nothing selected
-                return;
+            //if (messagelistBox.SelectedItems == null) return; 
+            
 
-            Utility.ClipBoardCopy(String.Join(Environment.NewLine, messagelistBox.SelectedItems.Cast<string>()));
+            if (outputConsole.SelectedText == "") return;  // Nothing selected
+            Utility.ClipBoardCopy(outputConsole.SelectedText);
+            
         }
 
         private void ToolStripInspectAlias_Click(object sender, EventArgs e)
@@ -1402,6 +1426,21 @@ namespace RazorEnhanced.UI
                 }
             }
             new EnhancedObjectInspector().Show();
+        }
+
+        private void EnhancedScriptEditor_Load(object sender, EventArgs e)
+        {
+            OnLoad();
+        }
+
+        private void timeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timeToolStripMenuItem.Checked = !timeToolStripMenuItem.Checked;
+        }
+
+        private void autoclearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            autoclearToolStripMenuItem.Checked = !autoclearToolStripMenuItem.Checked;
         }
     }
 

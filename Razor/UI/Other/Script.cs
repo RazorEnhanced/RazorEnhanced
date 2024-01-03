@@ -41,14 +41,11 @@ namespace Assistant
 
         internal static bool LoadItem(int index, Scripts.ScriptItem item, ScriptListView view)
         {
-            string filename = item.Filename;
-            bool wait = item.Wait;
-            bool loop = item.Loop;
-            string status = item.Status;
-            bool passkey = item.HotKeyPass;
-            Keys key = item.Hotkey;
-            bool autostart = item.AutoStart;
-            string fullPath = item.FullPath;
+            var selectedTab = Engine.MainWindow.AllScriptsTab.SelectedTab;
+            if (selectedTab.Controls.Count == 0) return null;
+
+            return (ScriptListView)selectedTab.Controls[0];
+        }
 
             bool run = false;
             if (status == "Running")
@@ -102,13 +99,13 @@ namespace Assistant
 
         internal static void LoadScriptList(System.Collections.Generic.List<Scripts.ScriptItem> scripts, ScriptListView scriptlistView)
         {
-            int index = 0;
             foreach (Scripts.ScriptItem item in scripts)
             {
-                bool success = LoadItem(index, item, scriptlistView);
-                if (success)
-                {
-                    index++;
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script != null) {
+                
+                    var listitem = ScriptToTableRow(script, item.Position);
+                    scriptlistView.Items.Add(listitem);
                 }
                 else
                 {
@@ -284,8 +281,10 @@ namespace Assistant
                 }
                 int location = index + 1;
 
-                if (location < 0 || location >= rowCount)
-                    return;
+            var item = list[index];
+            list.RemoveAt(index);
+            item.Position = location;
+            list.Insert(location, item);
 
                 var item = list[index];
                 list.RemoveAt(index);
@@ -323,9 +322,10 @@ namespace Assistant
                 if (location < 0 || location >= rowCount)
                     return;
 
-                var item = list[index];
-                list.RemoveAt(index);
-                list.Insert(location, item);
+            var item = list[index];
+            list.RemoveAt(index);
+            item.Position = location;
+            list.Insert(location, item);
 
                 ReloadScriptTable();
                 scriptListView.Items[location].Selected = true;
@@ -356,11 +356,11 @@ namespace Assistant
                 int rowCount = scriptListView.Items.Count;
                 int index = scriptListView.SelectedItems[0].Index;
 
-                if (index == 0) // include the header row
-                {
-                    return;
-                }
-                int location = index - 1;
+                
+            var item = list[index];
+            list.RemoveAt(index);
+            item.Position = location;
+            list.Insert(location, item);
 
                 if (location < 0 || location >= rowCount)
                     return;
@@ -691,7 +691,6 @@ namespace Assistant
         private void buttonScriptTo_Click(object sender, EventArgs e)
         {
             moveToToolStripMenuItem_Click(sender, e);
-            //ScriptGridMoveTo(0);
         }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {

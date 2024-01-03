@@ -37,6 +37,84 @@ namespace RazorEnhanced
             CsScripts = new List<ScriptItem>();
         }
 
+        public static void UpdateScriptItems() {
+            Scripts.PyScripts = EnhancedScript.Service.ScriptListTabPy().Apply(script => script.ToScriptItem()).ToList();
+            Scripts.CsScripts = EnhancedScript.Service.ScriptListTabCs().Apply(script => script.ToScriptItem()).ToList();
+            Scripts.UosScripts = EnhancedScript.Service.ScriptListTabUos().Apply(script => script.ToScriptItem()).ToList();
+        }
+
+        public static void LoadEnhancedScripts(List<RazorEnhanced.Scripts.ScriptItem> scriptItems) {
+            EnhancedScript.Service.ClearAll();
+            int prevPyIndex = 0;
+            int prevUosIndex = 0;
+            int prevCsIndex = 0;
+            foreach (var item in scriptItems)
+            {
+                // if no fullname then set it to local 
+                // if the file doesn't exist at its full path, is it local
+                string defaultPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
+                {
+                    item.FullPath = defaultPath;
+                }
+
+                // If no position use the previous index + 1
+                // In theory this should only happen first load after update
+                string suffix = Path.GetExtension(item.FullPath).ToLower();
+                switch (suffix)
+                {
+                    case ".py":
+                        if (item.Position == 0)
+                        {
+                            prevPyIndex++;
+                            item.Position = prevPyIndex;
+                        }
+                        else
+                        {
+                            prevPyIndex = item.Position;
+                        }
+                        Scripts.PyScripts.Add(item);
+                        break;
+                    case ".uos":
+                        if (item.Position == 0)
+                        {
+                            prevUosIndex++;
+                            item.Position = prevUosIndex;
+                        }
+                        else
+                        {
+                            prevUosIndex = item.Position;
+                        }
+                        Scripts.UosScripts.Add(item);
+                        break;
+                    case ".cs":
+                        if (item.Position == 0)
+                        {
+                            prevCsIndex++;
+                            item.Position = prevCsIndex;
+                        }
+                        else
+                        {
+                            prevCsIndex = item.Position;
+                        }
+                        Scripts.CsScripts.Add(item);
+                        break;
+                    default:
+                        // drop it
+                        break;
+                }
+
+                //Dalamar: find a nice way to instantiate EnhancedScripts
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null)
+                {
+                    Misc.SendMessage($"ERROR: File not found: {item.FullPath}", 138);
+                }
+            }
+            Scripts.UpdateScriptItems();
+        }
+
+
         internal static void ClearScriptKey(Keys key)
         {
             foreach (ScriptItem item in PyScripts)
@@ -251,6 +329,7 @@ namespace RazorEnhanced
             public bool HotKeyPass { get; set; }
             public bool AutoStart { get; set; }
             public string FullPath { get; set; }
+            public int Position { get; set; }
         }
 
 
@@ -636,6 +715,7 @@ namespace RazorEnhanced
         {
             private System.Threading.Timer m_Timer;
 
+
             private Thread m_AutoLootThread;
             private Thread m_ScavengerThread;
             private Thread m_BandageHealThread;
@@ -723,7 +803,19 @@ namespace RazorEnhanced
             static readonly object syncLock = new object();
             private void OnTick(object state)
             {
-                lock (syncLock)
+                var updateScripts = Task.Run(() => OnTickScripts(state));
+                var updateAgents = Task.Run(() => OnTickAgents(state));
+                while (!updateAgents.IsCompleted || !updateAgents.IsCompleted) {
+                    Misc.Pause(1);
+                }
+            }
+
+            
+            static readonly object syncLockScripts = new object();
+            private void OnTickScripts(object state)
+            {
+                
+                lock (syncLockScripts)
                 {
                     foreach (EnhancedScript script in EnhancedScripts.Values.ToList())
                     {
@@ -768,6 +860,9 @@ namespace RazorEnhanced
                                 script.Reset();
                         }
                     }
+                }
+            }
+            
 
                     if (World.Player != null && Client.Running) // Parte agent
                     {
