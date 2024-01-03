@@ -1087,7 +1087,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Stop all script running.
         /// </summary>
-        /// <param name="skipCurrent">True: All all scripts but the current one - False: stop all scripts. (Dafault: false)</param>
+        /// <param name="skipCurrent">True: Stop all scripts, but the current one - False: stop all scripts. (Dafault: false)</param>
         public static void ScriptStopAll(bool skipCurrent = false)
         {
             EnhancedScript currentScript = EnhancedScript.Service.CurrentScript();
@@ -1099,6 +1099,16 @@ namespace RazorEnhanced
                 }
                 script.Stop();
             }
+        }
+
+        /// <summary>
+        /// Returns the path of the current script.
+        /// </summary>
+        /// <param name="fullpath">True:Returns the full path. False: Returns the filename. (Dafault: true)</param>
+        public static string ScriptCurrent(bool fullpath=true)
+        {
+            EnhancedScript currentScript = EnhancedScript.Service.CurrentScript();
+            return fullpath ? currentScript.Fullpath : currentScript.Filename;
         }
 
         // Script function

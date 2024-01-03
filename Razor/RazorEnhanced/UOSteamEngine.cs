@@ -403,7 +403,6 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterCommandHandler("logoutbutton", LogoutButton);
             m_Interpreter.RegisterCommandHandler("virtue", Virtue);
             m_Interpreter.RegisterCommandHandler("msg", MsgCommand);
-            m_Interpreter.RegisterCommandHandler("playmacro", PlayMacro);
             m_Interpreter.RegisterCommandHandler("headmsg", HeadMsg);
             m_Interpreter.RegisterCommandHandler("partymsg", PartyMsg);
             m_Interpreter.RegisterCommandHandler("guildmsg", GuildMsg);
@@ -449,6 +448,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterCommandHandler("getenemy", GetEnemy); //TODO: add "transformations" list
             m_Interpreter.RegisterCommandHandler("getfriend", GetFriend); //TODO: add "transformations" list
             m_Interpreter.RegisterCommandHandler("namespace", ManageNamespaces); //TODO: add "transformations" list
+            m_Interpreter.RegisterCommandHandler("scripts", ManageScripts); //TODO: add "transformations" list
 
             // Expressions
             m_Interpreter.RegisterExpressionHandler("usetype", UseType);
@@ -4249,7 +4249,32 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-
+        /// script ('run'|'stop'|'suspend'|'resume'|'isrunning'|'issuspended') [script_name] [output_alias]
+        private bool ManageScripts(string command, Argument[] args, bool quiet, bool force)
+        {
+            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
+            var operation = args[0].AsString();
+            var script_name = args.Length >= 2 ? args[1].AsString(): Misc.ScriptCurrent(true);
+            var output_alias = args.Length == 3 ? args[2].AsString() : script_name + ( operation=="isrunning"? "_running" : "_suspended");
+            var cmd = $"{command} {operation}";
+            switch (operation) {
+                case "run": Misc.ScriptRun(script_name); break;
+                case "stop": Misc.ScriptStop(script_name); break;
+                case "suspend": Misc.ScriptSuspend(script_name); break;
+                case "resume": Misc.ScriptResume(script_name); break;
+                case "isrunning":
+                    var running = Misc.ScriptStatus(script_name);
+                    m_Interpreter.SetAlias(output_alias, (uint)(running ? 1 : 0));
+                    break;
+                case "issuspended":
+                    var suspended = Misc.ScriptIsSuspended(script_name);
+                    m_Interpreter.SetAlias(output_alias, (uint)(suspended ? 1 : 0));
+                    break;
+                default:
+                    throw new IllegalArgumentException(cmd + " not recognized.");
+            }
+            return true;
+        }
 
         /// <summary>
         /// namespace 'isolation' (true|false)
@@ -4262,6 +4287,7 @@ namespace RazorEnhanced.UOS
         private bool ManageNamespaces(string command, Argument[] args, bool quiet, bool force)
         {
             var cmd = command;
+            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
             var operation = args[0].AsString();
             cmd = $"{cmd}_{operation}";
             if (operation == "list")
