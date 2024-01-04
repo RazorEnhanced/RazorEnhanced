@@ -5331,7 +5331,7 @@ namespace Assistant
             this.friendLogBox.FormattingEnabled = true;
             this.friendLogBox.Location = new System.Drawing.Point(6, 19);
             this.friendLogBox.Name = "friendLogBox";
-            this.friendLogBox.Size = new System.Drawing.Size(259, 108);
+            this.friendLogBox.Size = new System.Drawing.Size(259, 82);
             this.friendLogBox.TabIndex = 0;
             // 
             // friendIncludePartyCheckBox
@@ -7496,7 +7496,7 @@ namespace Assistant
             this.targetlistBox.FormattingEnabled = true;
             this.targetlistBox.Location = new System.Drawing.Point(7, 72);
             this.targetlistBox.Name = "targetlistBox";
-            this.targetlistBox.Size = new System.Drawing.Size(113, 173);
+            this.targetlistBox.Size = new System.Drawing.Size(113, 134);
             this.targetlistBox.TabIndex = 0;
             this.targetlistBox.SelectedIndexChanged += new System.EventHandler(this.targetlistBox_SelectedIndexChanged);
             // 
