@@ -448,7 +448,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterCommandHandler("getenemy", GetEnemy); //TODO: add "transformations" list
             m_Interpreter.RegisterCommandHandler("getfriend", GetFriend); //TODO: add "transformations" list
             m_Interpreter.RegisterCommandHandler("namespace", ManageNamespaces); //TODO: add "transformations" list
-            m_Interpreter.RegisterCommandHandler("scripts", ManageScripts); //TODO: add "transformations" list
+            m_Interpreter.RegisterCommandHandler("script", ManageScripts); //TODO: add "transformations" list
 
             // Expressions
             m_Interpreter.RegisterExpressionHandler("usetype", UseType);
