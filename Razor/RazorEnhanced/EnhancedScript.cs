@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -36,7 +37,20 @@ namespace RazorEnhanced
 
         private  readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
 
-        internal List<EnhancedScript> ScriptList() { return m_ScriptList.Values.ToList().ToSortedList((s1, s2) => s1.Position - s2.Position).ToList(); }
+        internal List<EnhancedScript> ScriptList() 
+        {
+            var retList = new List<EnhancedScript>();
+            foreach (var script in m_ScriptList.Values)
+            {
+                retList.Add(script);
+            }
+            retList.Sort(delegate (EnhancedScript s1, EnhancedScript s2)
+            {
+                return s1.Position.CompareTo(s2.Position);
+            });
+            return retList;
+        }
+
         internal List<EnhancedScript> ScriptListEditor() { return ScriptList().Where(script => script.Editor).ToList(); }
         internal List<EnhancedScript> ScriptListTab() { return ScriptList().Where(script => script != null && !script.Editor && script.Exist).ToList(); }
         internal List<EnhancedScript> ScriptListTabPy() { return ScriptListTab().Where(script => script.Language == ScriptLanguage.PYTHON).ToList(); }
@@ -125,6 +139,7 @@ namespace RazorEnhanced
 
         private ScriptItem m_ScriptItem;
         private string m_Fullpath="";
+        private System.IO.FileSystemWatcher m_Watcher;
         private string m_Text = "";
         
         private bool m_Wait;
@@ -214,7 +229,6 @@ namespace RazorEnhanced
             if (script!=null){ return script; }
 
             script = new EnhancedScript(fullpath, "", wait, loop, hotkey, hotkeyPass, autostart, position, preload, editor);
-
             script.Load();
             return script;
         }
@@ -249,6 +263,12 @@ namespace RazorEnhanced
             StartMessage = true;
             StopMessage = false;
             LastModified = DateTime.MinValue;
+
+            m_Watcher = new FileSystemWatcher(Path.GetDirectoryName(fullpath));
+            m_Watcher.Filter = Path.GetFileName(fullpath);
+            m_Watcher.NotifyFilter = NotifyFilters.LastWrite;
+            m_Watcher.Changed += new FileSystemEventHandler(ScriptChanged);
+            m_Watcher.EnableRaisingEvents = true;
 
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
             Add();

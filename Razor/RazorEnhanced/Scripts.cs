@@ -592,38 +592,23 @@ namespace RazorEnhanced
             m_Timer.Start();
         }
 
-        static void ScriptChanged(object sender, FileSystemEventArgs e)
+        static internal void ScriptChanged(object sender, FileSystemEventArgs e)
         {
-            /*
-            var script = Scripts.Search(e.FullPath);
-            if (script != null) {
-                script.Load();
-            }
-            */
             foreach (var script in EnhancedScript.Service.ScriptList())
             {
-                // if (String.Compare(pair.Key.ToLower(), filename.ToLower()) == 0)
-                // script.LastModified = DateTime.MinValue;
-                script.Load();
+                if (script.Fullpath == e.FullPath)
+                {
+                    bool isRunning = script.IsRunning;
+
+                    if (isRunning)
+                        script.Stop();
+                    script.Load();
+                    script.LastModified = DateTime.MinValue;
+                    if (isRunning)
+                        script.Start();
+                }
             }
         }
-
-        static readonly System.IO.FileSystemWatcher Watcher = SetupFileWatcher();
-
-        static System.IO.FileSystemWatcher SetupFileWatcher()
-        {
-            System.IO.FileSystemWatcher watcher = new System.IO.FileSystemWatcher();
-
-            watcher.Path = Path.Combine(Assistant.Engine.RootPath, "Scripts");
-            watcher.Filter = "*.py";
-            watcher.NotifyFilter = NotifyFilters.LastWrite;
-            watcher.IncludeSubdirectories = true;
-            watcher.Changed += new FileSystemEventHandler(ScriptChanged);
-            watcher.EnableRaisingEvents = true;
-
-            return watcher;
-        }
-
 
         // Autostart
         internal static void AutoStart()
