@@ -300,7 +300,7 @@ namespace RazorEnhanced.UOS
         private void Execute()
         {
             m_journal = new Journal(100);
-                
+            
             m_Interpreter.StartScript();
             try
             {
@@ -6677,7 +6677,7 @@ namespace RazorEnhanced.UOS
 
             m_Script = m_Engine.Script;
             _executionState = ExecutionState.RUNNING;
-
+            m_Script.Init();
             ExecuteScript();
 
             return true;
