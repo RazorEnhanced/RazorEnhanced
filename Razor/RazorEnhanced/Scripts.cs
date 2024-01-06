@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
-using RazorEnhanced.UOScript;
+using RazorEnhanced.UOS;
 using Accord.Math;
 
 namespace RazorEnhanced
