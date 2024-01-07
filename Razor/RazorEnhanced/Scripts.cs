@@ -592,12 +592,71 @@ namespace RazorEnhanced
             m_Timer.Start();
         }
 
+        static List<System.IO.FileSystemWatcher> ExternalFileWatchers = new List<System.IO.FileSystemWatcher>();
+
+        static internal bool AttemptAddDirectoryWatcher(string fullpath)
+        {
+            bool watcherExists = false;
+            string path = Path.GetDirectoryName(fullpath);
+            string filter = "*" + Path.GetExtension(fullpath);
+
+            foreach (var watcher in ExternalFileWatchers)
+            {
+                if (watcher.Path == path && watcher.Filter == filter)
+                {
+                    watcherExists = true;
+                    break;
+                }
+            }
+
+            if (!watcherExists)
+            {
+                FileSystemWatcher watcher = new FileSystemWatcher(path);
+                watcher.Filter = filter;
+                watcher.NotifyFilter = NotifyFilters.LastWrite;
+                watcher.Changed += new FileSystemEventHandler(PerhapsExternalScriptChanged);
+                watcher.EnableRaisingEvents = true;
+                ExternalFileWatchers.Add(watcher);
+                return true;
+            }
+
+            return false;
+        }
+
+        static internal void PerhapsExternalScriptChanged(object sender, FileSystemEventArgs e)
+        {
+            // If the file changed is not in the script list, then invalidate all the scripts to force reload
+            // This is because we have no way of knowing who is importing this changed file
+            // Only reload the files of the same type though, so editing of .py will only reload .py scripts etc.
+            
+            var checkScript = EnhancedScriptService.Instance.Search(e.FullPath);
+            bool externalFile = (checkScript == null);
+
+            if (externalFile)
+            {
+                var changedFiletype = Path.GetExtension(e.FullPath);
+                foreach (var script in EnhancedScript.Service.ScriptList())
+                {
+                    if (Path.GetExtension(script.Fullpath) == changedFiletype)
+                    {
+                        bool isRunning = script.IsRunning;
+
+                        if (isRunning)
+                            script.Stop();
+                        script.Load();
+                        script.LastModified = DateTime.MinValue;
+                        if (isRunning)
+                            script.Start();
+                    }
+                }                
+            }
+        }
+
         static internal void ScriptChanged(object sender, FileSystemEventArgs e)
         {
-            foreach (var script in EnhancedScript.Service.ScriptList())
+            var script = EnhancedScriptService.Instance.Search(e.FullPath);
+            if (script != null) 
             {
-                if (script.Fullpath == e.FullPath)
-                {
                     bool isRunning = script.IsRunning;
 
                     if (isRunning)
@@ -606,7 +665,6 @@ namespace RazorEnhanced
                     script.LastModified = DateTime.MinValue;
                     if (isRunning)
                         script.Start();
-                }
             }
         }
 

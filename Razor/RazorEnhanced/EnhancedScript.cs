@@ -269,6 +269,8 @@ namespace RazorEnhanced
             m_Watcher.Changed += new FileSystemEventHandler(ScriptChanged);
             m_Watcher.EnableRaisingEvents = true;
 
+            AttemptAddDirectoryWatcher(fullpath);
+
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
             Add();
 
