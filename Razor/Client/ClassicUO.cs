@@ -12,6 +12,8 @@ using Assistant.UI;
 using System.Linq;
 using Newtonsoft.Json;
 using CUO_API;
+using Accord.Statistics.Running;
+using RazorEnhanced;
 
 
 namespace Assistant
@@ -59,15 +61,8 @@ namespace Assistant
             ClassicUOClient cuo = new ClassicUOClient();
             Client.Instance = cuo;
             cuo.InitPlugin(plugin);
-            cuo.Init(false);
+
             cuo.RunUI();
-
-            //if (!(Client.Instance as ClassicUOClient).Install(plugin, HostExecutionContext, character))
-            //{
-            //    Process.GetCurrentProcess().Kill();
-            //    return;
-            //}
-
         }
 
     }
@@ -114,6 +109,42 @@ namespace Assistant
             IPAddress address = Dns.GetHostAddresses(server)[0];
             m_LastConnection = address;
         }
+
+        internal override bool Init(RazorEnhanced.Shard selected)
+        {
+
+            base.Init(selected);
+
+            // Spin up CUO
+            Process cuo = new Process();
+            cuo.StartInfo.FileName = selected.CUOClient;
+            int osiEnc = 0;
+            if (selected.OSIEnc)
+            {
+                osiEnc = 5;
+            }
+            if (File.Exists(selected.ClientPath))
+            {
+                var clientVersion = FileVersionInfo.GetVersionInfo(selected.ClientPath);
+                string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", clientVersion.FileMajorPart, clientVersion.FileMinorPart, clientVersion.FileBuildPart, clientVersion.FilePrivatePart);
+                cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
+                                            selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
+                                            ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
+                                            verString);
+            }
+            else
+            {
+                cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\"",
+                                            selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
+                                            ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+                                            );
+            }
+            cuo.Start();
+            m_Running = false;
+            return false;
+
+        }
+
 
         public override void SetMapWndHandle(Form mapWnd)
         {
@@ -197,9 +228,12 @@ namespace Assistant
             header->OnFocusGained = Marshal.GetFunctionPointerForDelegate(_onFocusGained);
             header->OnFocusLost = Marshal.GetFunctionPointerForDelegate(_onFocusLost);
 
-            //CUOAssembly = AppDomain.CurrentDomain.GetAssemblies()
-            //    .FirstOrDefault(a => a.FullName.StartsWith("ClassicUO,"));
-
+            RazorEnhanced.Shard fake_shard =
+                new RazorEnhanced.Shard("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
+                                        ClassicUOClient.UOFilePath, "", "127.0.0.1", 1000, true, false, true);
+            base.Init(fake_shard);
+            RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
+            Start(fake_shard);
             m_Ready = true;
             return true;
         }
@@ -223,8 +257,11 @@ namespace Assistant
 
         private void OnPlayerPositionChanged(int x, int y, int z)
         {
-            World.Player.Position = new Point3D(x, y, z);
-            World.Player.WalkScriptRequest = 2;
+            if (World.Player != null)
+            {
+                World.Player.Position = new Point3D(x, y, z);
+                World.Player.WalkScriptRequest = 2;
+            }
         }
 
         internal static void RunTheUI()
@@ -245,12 +282,9 @@ namespace Assistant
             t.IsBackground = true;
             t.Start();
         }
-        internal override RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards)
+        internal override void SelectedShard(RazorEnhanced.Shard shard)
         {
-            RazorEnhanced.Shard cuo_shard =
-                new RazorEnhanced.Shard("Classic UO Default", Path.Combine(ClassicUOClient.UOFilePath, "client.exe"),
-                ClassicUOClient.UOFilePath, "", "127.0.0.1", 1000, true, false, true);
-            return cuo_shard;
+            return;
         }
 
         private unsafe bool OnRecv(ref byte[] data, ref int length)

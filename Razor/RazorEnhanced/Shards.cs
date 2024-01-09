@@ -56,7 +56,15 @@ namespace RazorEnhanced
         [JsonProperty("Selected")]
         internal bool Selected { get; set; }
 
-        public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected)
+        internal enum StartType
+        {
+            OSI,
+            CUO
+        }
+        [JsonProperty("StartClientType")]
+        internal StartType StartTypeSelected { get; set; }
+
+        public Shard(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected, StartType startType = StartType.OSI)
         {
             Description = description;
             ClientPath = clientpath;
@@ -67,6 +75,7 @@ namespace RazorEnhanced
             PatchEnc = patchenc;
             OSIEnc = osienc;
             Selected = selected;
+            StartTypeSelected = startType;
         }
         internal static void Load(bool tryBackup = true)
         {
@@ -140,7 +149,7 @@ namespace RazorEnhanced
             Save();
         }
 
-        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected)
+        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected, StartType startType=StartType.OSI)
         {
             if (Shards.allShards.m_Shards.ContainsKey(description))
             {
@@ -151,7 +160,7 @@ namespace RazorEnhanced
                         entry.Selected = false;
                     }
                 }
-                Shards.allShards.m_Shards[description] = new Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected);
+                Shards.allShards.m_Shards[description] = new Shard(description, clientpath, clientfolder, cuoClient, host, port, patchenc, osienc, selected, startType);
                 Save();
             }
         }
@@ -167,6 +176,7 @@ namespace RazorEnhanced
             }
             Save();
         }
+
 
         internal static void Delete(string shardname)
         {

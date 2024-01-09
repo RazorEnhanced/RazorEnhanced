@@ -12,7 +12,6 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
 using System.Linq;
-
 namespace Assistant
 {
 
@@ -143,6 +142,17 @@ namespace Assistant
 
         private static readonly System.Threading.Timer m_DwmTimer;
 
+        internal override bool Init(RazorEnhanced.Shard selected)
+        {
+            base.Init(selected);
+            RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
+            Instance.Start(selected);
+            return true;
+
+        }
+
+
+
         private static void OnTick(object state)
         {
             if (!m_Ready)
@@ -178,14 +188,12 @@ namespace Assistant
             //}
             Application.Run(Engine.MainWnd);
         }
-        internal override RazorEnhanced.Shard SelectShard(List<RazorEnhanced.Shard> shards)
+        internal override void SelectedShard(RazorEnhanced.Shard shard)
         {
-            RazorEnhanced.Shard shard = shards.FirstOrDefault(s => s.Selected);
             if (File.Exists(shard.ClientPath))
             {
                 m_Version = FileVersionInfo.GetVersionInfo(shard.ClientPath);
             }
-            return shard;
         }
 
 

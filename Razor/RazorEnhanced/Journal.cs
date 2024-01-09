@@ -33,7 +33,7 @@ namespace RazorEnhanced
     /// </summary>
     public class Journal
     {
-
+        private readonly object syncObj = new object();
         bool m_Active;
         internal bool Active { 
             get { return m_Active; } 
@@ -43,6 +43,8 @@ namespace RazorEnhanced
                 {
                     if (GlobalJournal != null)
                         m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>(GlobalJournal.m_journal); // clone global list at activate
+                    else
+                        m_journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>(); // initialize the global list
                 }
                 else
                 {
@@ -78,12 +80,14 @@ namespace RazorEnhanced
         internal static List<WeakReference<Journal>> allInstances = new List<WeakReference<Journal>>();
         internal static Journal GlobalJournal = new Journal(100);
 
-        public Journal(int size=100)
+        public Journal(int size = 100)
         {
-            m_MaxJournalEntries = size;
-            Active = true;
-            allInstances.Add(new WeakReference<Journal>(this));
-
+            lock (syncObj)
+            {
+                m_MaxJournalEntries = size;
+                Active = true;
+                allInstances.Add(new WeakReference<Journal>(this));
+            }
         }
 
         ~Journal()

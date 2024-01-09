@@ -13,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using AutoUpdaterDotNET;
 using RazorEnhanced;
+using Mono.Options;
+using System.Security.RightsManagement;
 
 namespace Assistant
 {
@@ -54,7 +56,7 @@ namespace Assistant
         public static bool IsOSI;
         
 
-        private static bool m_Running;
+        internal static bool m_Running;
         internal static bool Running { get { return m_Running; } }
 
         // Define GetShortPathName API function.
@@ -73,12 +75,112 @@ namespace Assistant
             return short_name.Substring(0, (int)length);
         }
 
-        public bool Init(bool isOSI)
-        // returns false on cancel
+        internal static RazorEnhanced.Shard SelectShard(string[] args)
+        {
+            if (args.Length > 0)
+            {
+                // these variables will be set when the command line is parsed
+                var shardName = "";
+                var uoPath = "";
+                var cuoPath = "";
+                var ip = "";
+                ushort port = 0;
+                bool patchEncryption = true;
+                bool osiEncryption = false;
+                bool cuoClientUsed = false;
+                bool showHelp = false;
+
+                
+                // these are the available options, note that they set the variables
+                var options = new OptionSet {
+                    { "d|description=", "the name of shard.", s => shardName = s },
+                    { "u|uoPath=", "the path only to UO client code.", u => uoPath = u },
+                    { "c|cuoPath=", "the path and .exe name for CUO.", c => cuoPath = c },
+                    { "i|ip=", "the ip or dns name for the server.", i => ip = i },
+                    { "p|port=", "the port number for the server. (often 2592)", p => port = Convert.ToUInt16(p) },
+                    { "e|encryptPatch", "patch encryption (usually true)", e => patchEncryption = e != null },
+                    { "o|osiEncryption", "use OSI encrytpion (usually only for paid UO server)", o => osiEncryption = o != null },
+                    { "s|startCuoClient", "use the cuopath to start CUO instead of OSI client", s => cuoClientUsed = s != null },
+                    { "h|help", "show help on console and exit", h => showHelp = h != null },
+                    };
+
+                List<string> extra;
+                try
+                {
+                    // parse the command line
+                    extra = options.Parse(args);
+                }
+                catch (OptionException e)
+                {
+                    // output some error message
+                    Console.Write("greet: ");
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine("Try `greet --help' for more information.");
+                    return null;
+                }
+                RazorEnhanced.Shard.StartType startType = Shard.StartType.OSI;
+                if (cuoClientUsed)
+                {
+                    startType = Shard.StartType.CUO;
+                }
+                RazorEnhanced.Shard argsShard =
+                    new RazorEnhanced.Shard("Wolfie", Path.Combine(uoPath, "client.exe"),
+                                uoPath, cuoPath, ip, port,
+                                patchEncryption, osiEncryption, true, startType);
+
+                return argsShard;
+            }
+
+
+            // Profile
+            RazorEnhanced.Profiles.Load();
+
+            // Shard Bookmarks
+            RazorEnhanced.Shard.Load();
+
+            RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
+
+            var shards = RazorEnhanced.Shard.Read();
+            m_Running = true;
+            RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
+
+            if ((RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
+            {
+                return selected;
+            }
+            else
+            {
+                RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
+                DialogResult laucherdialog = DialogResult.Retry;
+                while (laucherdialog == DialogResult.Retry)
+                {
+                    laucherdialog = launcher.ShowDialog();
+                }
+                if (laucherdialog == DialogResult.OK)                   // Avvia solo se premuto launch e non se exit
+                {
+                    shards = RazorEnhanced.Shard.Read();
+                    selected = shards.FirstOrDefault(s => s.Selected);
+                    if (selected == null)
+                    {
+                        MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    selected = null;
+                }
+            }
+            return selected;
+        }
+
+        internal virtual bool Init(RazorEnhanced.Shard selected)
         {
             //Dalamar
             //TODO: is this a good entry point for generating the docs ? 
             RazorEnhanced.AutoDocIO.UpdateDocs();
+
+
+
             RazorEnhanced.Config.LoadAll();
 
             RazorEnhanced.Journal.GlobalJournal.Clear(); // really just force it to be instantiated
@@ -102,85 +204,9 @@ namespace Assistant
 
             // Profile
             RazorEnhanced.Profiles.Load();
-
-            // Shard Bookmarks
-            RazorEnhanced.Shard.Load();
-
-            RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
-
-            var shards = RazorEnhanced.Shard.Read();
-
-            RazorEnhanced.Shard selected = Client.Instance.SelectShard(shards);
             m_Running = true;
 
-            if ((!isOSI) || (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
-            {                
-                Instance.Start(selected);
-            }
-            else
-            {
-                RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-                DialogResult laucherdialog = DialogResult.Retry;
-                while (laucherdialog == DialogResult.Retry)
-                {
-                    laucherdialog = launcher.ShowDialog();
-                }
-                if (laucherdialog == DialogResult.OK)                   // Avvia solo se premuto launch e non se exit
-                {
-                    if (selected == null)
-                    {
-                        MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        if (File.Exists(selected.ClientPath))
-                        {
-                            shards = RazorEnhanced.Shard.Read();
-                            selected = Instance.SelectShard(shards);                            
-                        }
-                        if (launcher.ActiveControl.Text == "Launch CUO")
-                        {
-                            // Spin up CUO
-                            Process cuo = new Process();
-                            cuo.StartInfo.FileName = selected.CUOClient;
-                            int osiEnc = 0;
-                            if (selected.OSIEnc)
-                            {
-                                osiEnc = 5;
-                            }
-                            if (File.Exists(selected.ClientPath))
-                            {
-                                var clientVersion = FileVersionInfo.GetVersionInfo(selected.ClientPath);
-                                string verString = String.Format("{0:00}.{1:0}.{2:0}.{3:D1}", clientVersion.FileMajorPart, clientVersion.FileMinorPart, clientVersion.FileBuildPart, clientVersion.FilePrivatePart);
-                                cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\" -clientversion \"{5}\"",
-                                                            selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
-                                                            ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location),
-                                                            verString);
-                            } else
-                            {
-                                cuo.StartInfo.Arguments = String.Format("-ip {0} -port {1} -uopath \"{2}\" -no_server_ping -encryption {3} -plugins \"{4}\"",
-                                                            selected.Host, selected.Port, ShortFileName(selected.ClientFolder), osiEnc,
-                                                            ShortFileName(System.Reflection.Assembly.GetExecutingAssembly().Location)
-                                                            );
-                            }
-                            cuo.Start();
-                            m_Running = false;
-                            return false;
-                        }
-                        else
-                        {
-                            Instance.Start(selected);
-                        }
-                    }
-                }
-                else
-                {
-                    m_Running = false;
-                    return false;
-                }
-            }
             return true;
-
         }
 
 
@@ -402,7 +428,7 @@ namespace Assistant
             m_Features = features;
         }
         public abstract void RunUI();
-        internal abstract RazorEnhanced.Shard SelectShard(System.Collections.Generic.List<RazorEnhanced.Shard> shards);
+        internal abstract void SelectedShard(RazorEnhanced.Shard shards);
 
         protected DateTime m_ConnectionStart;
         //public  DateTime ConnectionStart { get; }

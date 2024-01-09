@@ -197,12 +197,25 @@ namespace Assistant
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
             Thread.CurrentThread.Name = "Razor Main Thread";
-            Client.Instance = new OSIClient();
-            bool shardSelected = Client.Instance.Init(true);
-            if (shardSelected)
+            RazorEnhanced.Shard shardSelected = Client.SelectShard(Args);
+
+            if (shardSelected != null)
             {
-                Client.Instance.RunUI();
-                Client.Instance.Close();
+                if (shardSelected.StartTypeSelected == RazorEnhanced.Shard.StartType.CUO)
+                { 
+                    Client.Instance = new ClassicUOClient();
+                    Client.Instance.SelectedShard(shardSelected);
+                    Client.Instance.Init(shardSelected);
+                }
+                else 
+                { 
+                    Client.Instance = new OSIClient();
+                    Client.Instance.SelectedShard(shardSelected);
+                    Client.Instance.Init(shardSelected);
+                    Client.Instance.RunUI();
+                    Client.Instance.Close();
+                }
+
             }
         }
 

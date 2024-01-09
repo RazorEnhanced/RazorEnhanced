@@ -244,12 +244,20 @@ namespace RazorEnhanced.UI
             }
         }
 
-
-
         private void Okay_Click(object sender, EventArgs e)
         {
 
             UpdateGUI();
+            var shards = RazorEnhanced.Shard.Read();
+            Shard selected = shards.FirstOrDefault(s => s.Selected);
+            if (selected != null)
+            {
+                selected.StartTypeSelected = Shard.StartType.OSI;
+                Shard.Update(selected.Description, selected.ClientPath,
+                             selected.ClientFolder, selected.CUOClient,
+                             selected.Host, selected.Port, selected.PatchEnc,
+                             selected.OSIEnc, selected.Selected, selected.StartTypeSelected);
+            }
 
             // Genero Login.cfg
             StreamWriter login;
@@ -285,6 +293,16 @@ namespace RazorEnhanced.UI
         private void LaunchCUO_Click(object sender, EventArgs e)
         {
             UpdateGUI();
+            var shards = RazorEnhanced.Shard.Read();
+            Shard selected = shards.FirstOrDefault(s => s.Selected);
+            if (selected != null)
+            {
+                selected.StartTypeSelected = Shard.StartType.CUO;
+                Shard.Update(selected.Description, selected.ClientPath, 
+                             selected.ClientFolder, selected.CUOClient, 
+                             selected.Host, selected.Port, selected.PatchEnc, 
+                             selected.OSIEnc, selected.Selected, selected.StartTypeSelected);
+            }
 
             // Need to fix up settuings.json
             //StreamWriter login;
