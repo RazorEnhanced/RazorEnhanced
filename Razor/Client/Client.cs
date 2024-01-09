@@ -15,6 +15,7 @@ using AutoUpdaterDotNET;
 using RazorEnhanced;
 using Mono.Options;
 using System.Security.RightsManagement;
+using System.Security.Cryptography;
 
 namespace Assistant
 {
@@ -47,8 +48,9 @@ namespace Assistant
         public static readonly int SpellTargetShare = 24;
         public static readonly int HumanoidHealthChecks = 25;
         public static readonly int SpeechJournalChecks = 26;
+        public static readonly int PacketAgent = 27;
 
-        public static readonly int MaxBit = 26;
+        public static readonly int MaxBit = 27;
     }
     public abstract class Client
     {
@@ -88,7 +90,6 @@ namespace Assistant
                 bool patchEncryption = true;
                 bool osiEncryption = false;
                 bool cuoClientUsed = false;
-                bool showHelp = false;
 
                 
                 // these are the available options, note that they set the variables
@@ -101,10 +102,10 @@ namespace Assistant
                     { "e|encryptPatch", "patch encryption (usually true)", e => patchEncryption = e != null },
                     { "o|osiEncryption", "use OSI encrytpion (usually only for paid UO server)", o => osiEncryption = o != null },
                     { "s|startCuoClient", "use the cuopath to start CUO instead of OSI client", s => cuoClientUsed = s != null },
-                    { "h|help", "show help on console and exit", h => showHelp = h != null },
                     };
 
                 List<string> extra;
+                bool error = false;
                 try
                 {
                     // parse the command line
@@ -112,23 +113,23 @@ namespace Assistant
                 }
                 catch (OptionException e)
                 {
-                    // output some error message
-                    Console.Write("greet: ");
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine("Try `greet --help' for more information.");
-                    return null;
+                    MessageBox.Show("Error in Client.SelectShard. Looks like bad command line arguments");
+                    error = true;
                 }
-                RazorEnhanced.Shard.StartType startType = Shard.StartType.OSI;
-                if (cuoClientUsed)
+                if (!error)
                 {
-                    startType = Shard.StartType.CUO;
-                }
-                RazorEnhanced.Shard argsShard =
-                    new RazorEnhanced.Shard("Wolfie", Path.Combine(uoPath, "client.exe"),
-                                uoPath, cuoPath, ip, port,
-                                patchEncryption, osiEncryption, true, startType);
+                    RazorEnhanced.Shard.StartType startType = Shard.StartType.OSI;
+                    if (cuoClientUsed)
+                    {
+                        startType = Shard.StartType.CUO;
+                    }
+                    RazorEnhanced.Shard argsShard =
+                        new RazorEnhanced.Shard("Wolfie", Path.Combine(uoPath, "client.exe"),
+                                    uoPath, cuoPath, ip, port,
+                                    patchEncryption, osiEncryption, true, startType);
 
-                return argsShard;
+                    return argsShard;
+                }
             }
 
 
@@ -175,12 +176,6 @@ namespace Assistant
 
         internal virtual bool Init(RazorEnhanced.Shard selected)
         {
-            //Dalamar
-            //TODO: is this a good entry point for generating the docs ? 
-            RazorEnhanced.AutoDocIO.UpdateDocs();
-
-
-
             RazorEnhanced.Config.LoadAll();
 
             RazorEnhanced.Journal.GlobalJournal.Clear(); // really just force it to be instantiated

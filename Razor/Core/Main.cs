@@ -6,10 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
+using System.Web.Profile;
 using System.Windows.Forms;
 using CrashReporterDotNET;
+using IronPython.Runtime;
+using Mono.Options;
 
 namespace Assistant
 {
@@ -189,16 +193,56 @@ namespace Assistant
         private static string m_Version;
 
         [STAThread]
-        public static void Main(string[] Args)
+        public static void Main(string[] args)
         {
 
             Application.ThreadException += ApplicationThreadException;
-
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
-
             Thread.CurrentThread.Name = "Razor Main Thread";
-            RazorEnhanced.Shard shardSelected = Client.SelectShard(Args);
 
+            RazorEnhanced.AutoDocIO.UpdateDocs();
+            // these are the available options, note that they set the variables
+            bool autoDocsOnly = false;
+            bool showHelp = false;
+            var options = new OptionSet {
+                    { "a|autoDocsOnly", "Exit after generating autodocs", a => autoDocsOnly = a != null },
+                    { "h|help", "show help on console and exit", h => showHelp = h != null },
+                    // The following are parsed in Client.SelectShard but listed here for help 
+                    { "d|description=", "the name of shard.", (x) => { } },
+                    { "u|uoPath=", "the path only to UO client code.", (x) => { } },
+                    { "c|cuoPath=", "the path and .exe name for CUO.", (x) => { } },
+                    { "i|ip=", "the ip or dns name for the server.", (x) => { } },
+                    { "p|port=", "the port number for the server. (often 2592)", (x) => { } },
+                    { "e|encryptPatch", "patch encryption (usually true)", (x) => { } },
+                    { "o|osiEncryption", "use OSI encrytpion (usually only for paid UO server)", (x) => { } },
+                    { "s|startCuoClient", "use the cuopath to start CUO instead of OSI client", (x) => { } },
+                    };
+
+            List<string> extra;
+            try
+            {
+                // parse the command line
+                extra = options.Parse(args);
+            }
+            catch (OptionException e)
+            {
+                showHelp = true;
+            }
+            if (showHelp)
+            {
+                StringWriter writer = new StringWriter();
+                options.WriteOptionDescriptions(writer);
+                string descr = writer.ToString();
+                MessageBox.Show(descr);
+
+                return;
+            }
+            if (autoDocsOnly)
+            {
+                return;
+            }
+
+            RazorEnhanced.Shard shardSelected = Client.SelectShard(args);
             if (shardSelected != null)
             {
                 if (shardSelected.StartTypeSelected == RazorEnhanced.Shard.StartType.CUO)

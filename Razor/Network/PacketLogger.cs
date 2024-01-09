@@ -63,24 +63,26 @@ namespace Assistant
         
         public string StartRecording(bool appendLogs = false)
         {
-            if (m_Active) return m_OutputPath;
-            m_Active = true;
-            
-
-            Directory.CreateDirectory(BaseDir);
-            if (appendLogs == false)
+            if (Assistant.Client.Instance.AllowBit(FeatureBit.PacketAgent))
             {
-                File.Create(m_OutputPath).Dispose(); // create-truncate file
-            }
+                if (m_Active) return m_OutputPath;
+                m_Active = true;
 
-            using (StreamWriter sw = new StreamWriter(m_OutputPath, true))
-            {
-                sw.AutoFlush = true;
-                sw.WriteLine("\n\n");
-                sw.WriteLine(">>>>>>>>>> Logging START {0} >>>>>>>>>>", DateTime.Now);
-                sw.WriteLine("\n\n");
-            }
 
+                Directory.CreateDirectory(BaseDir);
+                if (appendLogs == false)
+                {
+                    File.Create(m_OutputPath).Dispose(); // create-truncate file
+                }
+
+                using (StreamWriter sw = new StreamWriter(m_OutputPath, true))
+                {
+                    sw.AutoFlush = true;
+                    sw.WriteLine("\n\n");
+                    sw.WriteLine(">>>>>>>>>> Logging START {0} >>>>>>>>>>", DateTime.Now);
+                    sw.WriteLine("\n\n");
+                }
+            }
             return m_OutputPath;
         }
 
