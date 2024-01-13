@@ -1,4 +1,5 @@
 using Accord.Math;
+using Assistant;
 using IronPython.Runtime;
 using Microsoft.Scripting.Utils;
 using System;
@@ -32,8 +33,21 @@ namespace RazorEnhanced.UOS
         private Interpreter m_Interpreter;
         private Script m_Script;
 
+        private Action<string> m_OutputWriter;
+        private Action<string> m_ErrorWriter;
+
         public void SetTrace(UOSTracebackDelegate traceDelegate) {
             m_Script.OnTraceback += traceDelegate;
+        }
+
+        public void SetStdout(Action<string> stdoutWriter)
+        {
+            m_OutputWriter = stdoutWriter;
+        }
+
+        public void SetStderr(Action<string> stderrWriter)
+        {
+            m_ErrorWriter = stderrWriter;
         }
 
         public Script Script { get { return m_Script; } }
@@ -95,7 +109,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    retlist.Add(methodSummary);
+                    retlist.AddRange(methodSummary.Split('\n').Where(line => line.Trim().Length > 0));
                 }
             }
 
@@ -116,7 +130,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    retlist.Add(methodSummary);
+                    retlist.AddRange(methodSummary.Split('\n').Where(line=>line.Trim().Length>0));
                 }
             }
             return retlist;
@@ -138,7 +152,19 @@ namespace RazorEnhanced.UOS
             UpdateNamespace();
         }
 
-                                          
+        public void SendOutput(string text)
+        {
+            if (m_OutputWriter != null) {
+                m_OutputWriter.Invoke(text);
+            }
+        }
+        public void SendError(string text)
+        {
+            if (m_ErrorWriter != null)
+            {
+                m_ErrorWriter.Invoke(text);
+            }
+        }
         private void RegisterAlias()
         {
             m_Interpreter.RegisterAliasHandler("ground", AliasHandler);
@@ -211,28 +237,29 @@ namespace RazorEnhanced.UOS
             try
             {
                 var root = m_Lexer.Lex(filename);
-                return Load(root, Misc.SendMessage, filename);
+                return Load(root, filename);
             }
             catch (Exception e){
-                Misc.SendMessage($"UOSEngine: fail to parse script:\n{e.Message}");
+                SendError($"UOSEngine: fail to parse script:\n{e.Message}");
             }
             return false;
         }
 
-        public bool Load(string[] textLines, Action<string> writer, string filename = "")
+        public bool Load(string content, string filename = "")
         {
             try
             {
-                var root = m_Lexer.Lex(textLines);
-                return Load(root, writer, filename);
+                var lines = content.Split('\n');
+                var root = m_Lexer.Lex(lines);
+                return Load(root, filename);
             }
             catch (Exception e){
-                Misc.SendMessage($"UOSEngine: fail to parse script:\n{e.Message}");
+                SendOutput($"UOSEngine: fail to parse script:\n{e.Message}");
             }
             return false;
         }
 
-        public bool Load(ASTNode root, Action<string> writer, string filename = "")
+        public bool Load(ASTNode root, string filename = "")
         {
             m_mutex.WaitOne();
 
@@ -242,7 +269,7 @@ namespace RazorEnhanced.UOS
             {
                 InitInterpreter(true);
 
-                m_Script = new Script(root, writer, this);
+                m_Script = new Script(root, this);
                 m_Script.Filename = filename;
 
 
@@ -250,7 +277,7 @@ namespace RazorEnhanced.UOS
                 m_Loaded = true;
             }
             catch (Exception e){
-                Misc.SendMessage($"UOSEngine: fail to load script:\n{e.Message}");
+                SendOutput($"UOSEngine: fail to load script:\n{e.Message}");
             }
 
             m_mutex.ReleaseMutex();
@@ -306,10 +333,11 @@ namespace RazorEnhanced.UOS
             {
                 while (m_Interpreter.ExecuteScript()) { };
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 m_Interpreter.StopScript();
-                throw;
+                SendError(e.Message);
+                //throw e;
             }
             finally
             {
@@ -644,7 +672,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useobject (serial)
         /// </summary>
-        private static IComparable UseObjExp(string expression, Argument[] args, bool quiet)
+        private IComparable UseObjExp(string expression, Argument[] args, bool quiet)
         {
             UseObject(expression, args, quiet, false);
             return true;
@@ -1974,11 +2002,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// setability ('primary'/'secondary'/'stun'/'disarm') ['on'/'off']
         /// </summary>
-        private static bool SetAbility(string command, Argument[] args, bool quiet, bool force)
+        private bool SetAbility(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
-                Misc.SendMessage("set ability not proper syntax");
+                SendError("set ability not proper syntax");
                 return true;
             }
             string ability = args[0].AsString().ToLower();
@@ -2076,11 +2104,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// pathfindto x y
         /// </summary>
-        private static bool PathFindTo(string command, Argument[] args, bool quiet, bool force)
+        private bool PathFindTo(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
             {
-                Misc.SendMessage("pathfindto requires an X and Y co-ordinates");
+                SendError("pathfindto requires an X and Y co-ordinates");
                 return false;
             }
 
@@ -2174,11 +2202,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// usetype (graphic) [color] [source] [range or search level]
         /// </summary>
-        private static IComparable UseType(string command, Argument[] args, bool quiet)
+        private IComparable UseType(string command, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
-                Misc.SendMessage("Insufficient parameters");
+                SendError("Insufficient parameters");
                 return false;
             }
             int itemID = args[0].AsInt();
@@ -2213,11 +2241,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useobject (serial)
         /// </summary>
-        private static bool UseObject(string command, Argument[] args, bool quiet, bool force)
+        private bool UseObject(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
             {
-                Misc.SendMessage("Insufficient parameters");
+                SendError("Insufficient parameters");
                 return true;
             }
             Assistant.Serial serial = (int)args[0].AsSerial();
@@ -2260,7 +2288,7 @@ namespace RazorEnhanced.UOS
             // Current logic for us, only searches 1 deep .. maybe thats enough for now
             if (args.Length == 0)
             {
-                Misc.SendMessage("Insufficient parameters");
+                SendError("Insufficient parameters");
                 return true;
             }
 
@@ -2303,11 +2331,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// (serial) (destination) [(x, y, z)] [amount]
         /// </summary>
-        private static bool MoveItem(string command, Argument[] args, bool quiet, bool force)
+        private bool MoveItem(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
-                Misc.SendMessage("Insufficient parameters");
+                SendError("Insufficient parameters");
                 return true;
             }
             int source = (int)args[0].AsSerial();
@@ -2336,7 +2364,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useskill ('skill name'/'last')
         /// </summary>
-        private static bool UseSkill(string command, Argument[] args, bool quiet, bool force)
+        private bool UseSkill(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2351,7 +2379,7 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                Misc.SendMessage("Incorrect number of parameters");
+                SendError("Incorrect number of parameters");
             }
             return true;
         }
@@ -2362,11 +2390,11 @@ namespace RazorEnhanced.UOS
         /// </summary>
         /// Feed doesn't support food groups etc unless someone adds it
         /// Config has the data now
-        private static bool Feed(string command, Argument[] args, bool quiet, bool force)
+        private bool Feed(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
-                Misc.SendMessage("Insufficient parameters");
+                SendError("Insufficient parameters");
                 return false;
             }
             int target = (int)args[0].AsSerial();
@@ -2396,11 +2424,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// rename (serial) ('name')
         /// </summary>
-        private static bool RenamePet(string command, Argument[] args, bool quiet, bool force)
+        private bool RenamePet(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
             {
-                Misc.SendMessage("Incorrect parameters");
+                SendError("Incorrect parameters");
                 return true;
             }
             int serial = (int)args[0].AsSerial();
@@ -2592,7 +2620,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 2)
             {
-                Misc.SendMessage("Usage: pushlist ('list name') ('element name') ('front'/'back']");
+                SendError("Usage: pushlist ('list name') ('element name') ('front'/'back']");
                 throw new RunTimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
                 // return true;
             }
@@ -2901,7 +2929,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// buy ('list name')
         /// </summary>
-        private static bool Buy(string command, Argument[] args, bool quiet, bool force)
+        private bool Buy(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2913,7 +2941,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    Misc.SendMessage(String.Format("Buy List {0} does not exist", buyListName), 55);
+                    SendError(String.Format("Buy List {0} does not exist", buyListName));
                 }
 
             }
@@ -2923,7 +2951,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// sell ('list name')
         /// </summary>
-        private static bool Sell(string command, Argument[] args, bool quiet, bool force)
+        private bool Sell(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2935,7 +2963,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    Misc.SendMessage(String.Format("Sell List {0} does not exist", sellListName), 55);
+                    SendError(String.Format("Sell List {0} does not exist", sellListName));
                 }
 
             }
@@ -3062,7 +3090,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// dress ['profile name']
         /// </summary>
-        private static bool Dress(string command, Argument[] args, bool quiet, bool force)
+        private bool Dress(string command, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 1)
@@ -3074,7 +3102,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    Misc.SendMessage(String.Format("Dress List {0} does not exist", dressListName), 55);
+                    SendError(String.Format("Dress List {0} does not exist", dressListName));
                 }
             }
             RazorEnhanced.Dress.DressFStart();
@@ -3084,7 +3112,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// undress ['profile name']
         /// </summary>
-        private static bool Undress(string command, Argument[] args, bool quiet, bool force)
+        private bool Undress(string command, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 1)
@@ -3096,7 +3124,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    Misc.SendMessage(String.Format("UnDress List {0} does not exist", unDressListName), 55);
+                    SendError(String.Format("UnDress List {0} does not exist", unDressListName));
                 }
             }
             RazorEnhanced.Dress.UnDressFStart();
@@ -3196,7 +3224,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// closegump 'container' 'serial'
         /// </summary>
-        private static bool CloseGump(string command, Argument[] args, bool quiet, bool force)
+        private bool CloseGump(string command, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 2)
@@ -3209,7 +3237,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    Misc.SendMessage(String.Format("Unable to closegumps on {0} type objects", container), 55);
+                    SendError(String.Format("Unable to closegumps on {0} type objects", container));
                 }
             }
             return true;
@@ -3399,11 +3427,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clickscreen (x) (y) ['single'/'double'] ['left'/'right']
         /// </summary>
-        private static bool ClickScreen(string command, Argument[] args, bool quiet, bool force)
+        private bool ClickScreen(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
-                Misc.SendMessage("Invalid parameters", 55);
+                SendError("Invalid parameters");
                 return true;
             }
             int x = args[0].AsInt();
@@ -3565,11 +3593,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// location (serial)
         /// </summary>
-        private static bool Location(string command, Argument[] args, bool quiet, bool force)
+        private bool Location(string command, Argument[] args, bool quiet, bool force)
         {
             uint serial = args[0].AsSerial();
             Mobile m = Mobiles.FindBySerial((int)serial);
-            Misc.SendMessage(String.Format("Position({0}, {1})", m.Position.X, m.Position.Y), 32, false);
+            SendOutput(String.Format("Position({0}, {1})", m.Position.X, m.Position.Y));
 
             return true;
         }
@@ -3577,7 +3605,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// sysmsg (text) [color]
         /// </summary>
-        private static bool SysMsg(string command, Argument[] args, bool quiet, bool force)
+        private bool SysMsg(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3743,11 +3771,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitforcontext (serial) (option) (timeout)
         /// </summary>
-        private static bool WaitForContext(string command, Argument[] args, bool quiet, bool force)
+        private bool WaitForContext(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
-                Misc.SendMessage("Usage is waitforcontents serial contextSelection timeout");
+                SendError("Usage is waitforcontents serial contextSelection timeout");
                 WrongParameterCount(command, 2, args.Length, "waitforcontents serial contextSelection timeout");
             }
             int timeout = 5000;
@@ -3850,11 +3878,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// autocolorpick (color) (dyesSerial) (dyeTubSerial)
         /// </summary>
-        private static bool AutoColorPick(string command, Argument[] args, bool quiet, bool force)
+        private bool AutoColorPick(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 3)
             {
-                Misc.SendMessage("Usage is: autocolorpick color dyesSerial dyeTubSerial");
+                SendError("Usage is: autocolorpick color dyesSerial dyeTubSerial");
                 WrongParameterCount(command, 3, args.Length, "Usage is: autocolorpick color dyesSerial dyeTubSerial");
 
             }
@@ -3863,8 +3891,8 @@ namespace RazorEnhanced.UOS
             uint dyeTubSerial = args[2].AsSerial();
             Item dyes = Items.FindBySerial((int)dyesSerial);
             Item dyeTub = Items.FindBySerial((int)dyeTubSerial);
-            if (dyes == null) { Misc.SendMessage("autocolorpick: error: can't find dyes with serial " + dyesSerial); }
-            if (dyeTub == null) { Misc.SendMessage("autocolorpick: error: can't find dye tub with serial " + dyeTubSerial); }
+            if (dyes == null) { SendError("autocolorpick: error: can't find dyes with serial " + dyesSerial); }
+            if (dyeTub == null) { SendError("autocolorpick: error: can't find dye tub with serial " + dyeTubSerial); }
             if (dyes != null && dyeTub != null)
             {
                 Items.ChangeDyeingTubColor(dyes, dyeTub, color);
@@ -3965,7 +3993,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// cast (spell id/'spell name'/'last') [serial]
         /// </summary>
-        private static bool Cast(string command, Argument[] args, bool quiet, bool force)
+        private bool Cast(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3980,7 +4008,7 @@ namespace RazorEnhanced.UOS
             }
             else 
             {
-                Misc.SendMessage("Incorrect number of parameters");
+                SendError("Incorrect number of parameters");
             }
 
 
@@ -4248,8 +4276,9 @@ namespace RazorEnhanced.UOS
             }
             return true;
         }
-
+        /// <summary>
         /// script ('run'|'stop'|'suspend'|'resume'|'isrunning'|'issuspended') [script_name] [output_alias]
+        /// </summary>
         private bool ManageScripts(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
@@ -4339,10 +4368,10 @@ namespace RazorEnhanced.UOS
             //}
             //else
             //{    }
-            Misc.SendMessage("Namespaces:");
+            SendOutput("Namespaces:");
             foreach (var name in Namespace.List())
             {
-                Misc.SendMessage(name);
+                SendOutput(name);
             }
             //
             return true;
@@ -4437,7 +4466,7 @@ namespace RazorEnhanced.UOS
             {
                 throw new IllegalArgumentException($"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
             }
-            Misc.SendMessage(content);
+            SendOutput(content);
             return true;
         }
         private bool ManageNamespaces_SetGet(string command, Argument[] args, bool quiet, bool force)
@@ -4490,7 +4519,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targettype (graphic) [color] [range]
         /// </summary>
-        private static bool TargetType(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetType(string command, Argument[] args, bool quiet, bool force)
         {
             // targettype (graphic) [color] [range]
             if (args.Length == 0) { WrongParameterCount(command, 1, 0);}
@@ -4524,7 +4553,7 @@ namespace RazorEnhanced.UOS
 
             if (itm == null)
             {
-                if (!quiet) { Misc.SendMessage("targettype: graphic "+ graphic.ToString() + " not found in range " + range.ToString() ); }
+                if (!quiet) { SendError("targettype: graphic "+ graphic.ToString() + " not found in range " + range.ToString() ); }
             }
             else {
                 RazorEnhanced.Target.TargetExecute(itm);
@@ -4536,7 +4565,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targetground (graphic) [color] [range]
         /// </summary>
-        private static bool TargetGround(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetGround(string command, Argument[] args, bool quiet, bool force)
         {
             // targettype (graphic) [color] [range]
             if (args.Length == 0) { WrongParameterCount(command, 1, 0); }
@@ -4564,7 +4593,7 @@ namespace RazorEnhanced.UOS
 
             if (itm == null)
             {
-                if (!quiet) { Misc.SendMessage("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString()); }
+                if (!quiet) { SendError("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString()); }
             }
             else
             {
@@ -4579,7 +4608,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  targettile ('last'/'current'/(x y z)) [graphic]
         /// </summary>
-        private static bool TargetTile(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetTile(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
             if (args.Length == 2 || args.Length == 4) // then graphic specified just use it
@@ -4601,7 +4630,7 @@ namespace RazorEnhanced.UOS
                 }
                 if (itm == null)
                 {
-                    if (!quiet) { Misc.SendMessage("targettile: graphic " + graphic.ToString() + " not found"); }
+                    if (!quiet) { SendError("targettile: graphic " + graphic.ToString() + " not found"); }
                 }
                 else
                 {
@@ -4648,7 +4677,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targettileoffset (x y z) [graphic]
         /// </summary>
-        private static bool TargetTileOffset(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetTileOffset(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 3) { WrongParameterCount(command, 3, args.Length); }
             if (args.Length == 4) // then graphic specified just use it
@@ -4668,7 +4697,7 @@ namespace RazorEnhanced.UOS
                 }
                 if (itm == null)
                 {
-                    if (!quiet) { Misc.SendMessage("targettile: graphic " + graphic.ToString() + " not found"); }
+                    if (!quiet) { SendError("targettile: graphic " + graphic.ToString() + " not found"); }
                 }
                 else
                 {
@@ -4702,7 +4731,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targettilerelative (serial) (range) [reverse = 'true' or 'false'] [graphic]
         /// </summary>
-        private static bool TargetTileRelative(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetTileRelative(string command, Argument[] args, bool quiet, bool force)
         {
             // targettilerelative   (serial) (range) [reverse = 'true' or 'false'] [graphic]
             if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
@@ -4745,7 +4774,7 @@ namespace RazorEnhanced.UOS
                 {
                     if (!quiet)
                     {
-                        Misc.SendMessage("targettilerelative: graphic " + graphic.ToString() + " not found in range " + range.ToString());
+                        SendError("targettilerelative: graphic " + graphic.ToString() + " not found in range " + range.ToString());
                     }
                 }
                 else
@@ -4856,10 +4885,10 @@ namespace RazorEnhanced.UOS
             string msg = string.Format("Error:\t{0}\n", error);
             if (node != null)
             {
-                msg += String.Format("Type:\t{0}\n", node.Type);
-                msg += String.Format("Word:\t{0}\n", node.Lexeme);
-                msg += String.Format("Line:\t{0}\n", node.LineNumber + 1);
-                msg += String.Format("Code:\t{0}\n", node.Lexer.GetLine(node.LineNumber));
+                msg += String.Format("Type:  {0}\n", node.Type);
+                msg += String.Format("Word:  {0}\n", node.Lexeme);
+                msg += String.Format("Line:  {0}\n", node.LineNumber + 1);
+                msg += String.Format("Code:  {0}\n", node.Lexer.GetLine(node.LineNumber));
             }
             return msg;
         }
@@ -5192,7 +5221,7 @@ namespace RazorEnhanced.UOS
         bool Debug { get; set; }
         public string Filename;
         public UOSteamEngine Engine;
-        Action<string> debugWriter;
+        Action<string> DebugWriter;
             
         public event UOSTracebackDelegate OnTraceback;
 
@@ -5277,9 +5306,8 @@ namespace RazorEnhanced.UOS
         // scripts to a bytecode. That would allow more errors
         // to be caught with better error messages, as well as
         // make the scripts execute more quickly.
-        public Script(ASTNode root, Action<string> writer, UOSteamEngine engine)
+        public Script(ASTNode root, UOSteamEngine engine)
         {
-            debugWriter = writer;
             // Set current to the first statement
             _root = root;
             Engine = engine;
@@ -5890,8 +5918,8 @@ namespace RazorEnhanced.UOS
             _statement = _statement.Next();
             if (Debug)
             {
-                if (_statement != null)
-                    debugWriter(String.Format("Line: {0}", _statement.LineNumber+1));
+                if (_statement != null && DebugWriter!=null)
+                    DebugWriter(String.Format("Line: {0}", _statement.LineNumber+1));
             }
         }
 
@@ -6377,7 +6405,7 @@ namespace RazorEnhanced.UOS
         internal ConcurrentDictionary<string, List<Argument>> _lists { get { return m_Engine.Namespace._lists; } }
         
         
-            // Lists
+        // Lists
         private UOSteamEngine m_Engine;
         private Script m_Script = null;
             
@@ -6677,6 +6705,7 @@ namespace RazorEnhanced.UOS
 
             m_Script = m_Engine.Script;
             _executionState = ExecutionState.RUNNING;
+            Suspended = false;
             m_Script.Init();
             ExecuteScript();
 
@@ -6686,6 +6715,7 @@ namespace RazorEnhanced.UOS
         public void StopScript()
         {
             m_Script = null;
+            Suspended = false;
             _executionState = ExecutionState.RUNNING;
         }
 
@@ -6887,10 +6917,11 @@ namespace RazorEnhanced.UOS
                 Lexeme = "";
             Parent = parent;
             LineNumber = lineNumber;
-            if (lexer == null) { 
-                this.Lexer = parent.Lexer;
+            if (lexer == null && parent != null && parent.Lexer != null)
+            {
+                lexer  = parent.Lexer;
             }
-
+            this.Lexer = lexer;
         }
 
         public ASTNode Push(ASTNodeType type, string lexeme, int lineNumber)
