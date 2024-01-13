@@ -860,7 +860,8 @@ namespace RazorEnhanced
                     content = File.ReadAllText(m_Script.Fullpath);
                 }
                 if (content == null || content == "") { 
-                    return false; } 
+                    return false; 
+                } 
 
                 if (!pyEngine.Load(content, m_Script.Fullpath)) {
                     return false;
@@ -987,14 +988,27 @@ namespace RazorEnhanced
             {
                 uosEngine = new UOSteamEngine();
                 // Using // only will be deprecated instead of //UOS
+
+                var content = m_Script.Text ?? "";
+                if (content == "" && File.Exists(m_Script.Fullpath))
+                {
+                    content = File.ReadAllText(m_Script.Fullpath);
+                }
+                if (content == null || content == "")
+                {
+                    return false;
+                }
+
+                /*
                 var text = System.IO.File.ReadAllLines(m_Script.Fullpath);
                 if ((text[0].Substring(0, 2) == "//") && text[0].Length < 5)
                 {
                     string message = "WARNING: // header for UOS scripts is going to be deprecated. Please use //UOS instead";
                     SendOutput(message);
                 }
+                */
 
-                return uosEngine.Load(m_Script.Fullpath);
+                return uosEngine.Load(content, m_Script.Fullpath);
             }
             catch (Exception ex)
             {
@@ -1007,6 +1021,23 @@ namespace RazorEnhanced
             try
             {
                 uosEngine.SetTrace(TracebackUOS);
+
+                uosEngine.SetStderr(
+                    (string message) => {
+                        Misc.SendMessage(message, 178);
+                        if (m_stderrWriter == null) return;
+                        m_stderrWriter.Invoke(message);
+                    }
+                );
+
+                uosEngine.SetStdout(
+                    (string message) => {
+                        Misc.SendMessage(message);
+                        if (m_stdoutWriter == null) return;
+                        m_stdoutWriter.Invoke(message);
+                    }
+                );
+
                 uosEngine.Execute();
             }
             catch (Exception ex)
