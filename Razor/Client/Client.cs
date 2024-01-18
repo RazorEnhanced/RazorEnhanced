@@ -174,16 +174,20 @@ namespace Assistant
             return selected;
         }
 
+        internal static void EnsureDirectoriesExist()
+        {
+            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
+            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
+            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
+        }
+
         internal virtual bool Init(RazorEnhanced.Shard selected)
         {
             RazorEnhanced.Config.LoadAll();
 
             RazorEnhanced.Journal.GlobalJournal.Clear(); // really just force it to be instantiated
 
-
-            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Profiles"));
-            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Backup"));
-            System.IO.Directory.CreateDirectory(Path.Combine(Assistant.Engine.RootPath, "Scripts"));
+            EnsureDirectoriesExist();
 
             List<string> locations = ValidFileLocations();
 

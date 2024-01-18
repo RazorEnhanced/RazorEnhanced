@@ -242,6 +242,7 @@ namespace Assistant
                 return;
             }
 
+            Client.EnsureDirectoriesExist();
             RazorEnhanced.Shard shardSelected = Client.SelectShard(args);
             if (shardSelected != null)
             {
