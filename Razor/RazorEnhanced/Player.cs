@@ -1207,26 +1207,6 @@ namespace RazorEnhanced
                 return null;
         }
 
-        internal static string GuessSkillName(string originalName)
-        {
-            int distance = 99;
-            string closest = "";
-
-            foreach (string skill in Enum.GetNames(typeof(SkillName)))
-            {
-                int computeDistance = UOAssist.LevenshteinDistance(skill, originalName);
-                if (computeDistance < distance)
-                {
-                    distance = computeDistance;
-                    closest = skill;
-                }
-            }
-
-            if (distance < 99)
-                return closest;
-            return originalName;
-
-        }
         internal static string GuessBuffName(string originalName)
         {
             int distance = 99;
@@ -1313,14 +1293,14 @@ namespace RazorEnhanced
         /// <returns>Value of the skill.</returns>
         public static double GetSkillValue(string skillname)
         {
-            string guessedSkillName = GuessSkillName(skillname);
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int guessedSkillId = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (guessedSkillId == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: GetSkillValue: " + skillname + " not valid");
                 return -1;
             }
 
-            return World.Player.Skills[(int)skill].Value;
+            return World.Player.Skills[guessedSkillId].Value;
         }
 
         /// <summary>
@@ -1388,14 +1368,14 @@ namespace RazorEnhanced
         /// <returns>Value of the skill.</returns>
         public static double GetRealSkillValue(string skillname)
         {
-            string guessedSkillName = GuessSkillName(skillname);
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int guessedSkillId = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (guessedSkillId == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: GetRealSkillValue: " + skillname + " not valid");
                 return -1;
             }
 
-            return World.Player.Skills[(int)skill].Base;
+            return World.Player.Skills[guessedSkillId].Base;
         }
 
         /// <summary>
@@ -1463,14 +1443,14 @@ namespace RazorEnhanced
         /// <returns>Value of the skill cap.</returns>
         public static double GetSkillCap(string skillname)
         {
-            string guessedSkillName = GuessSkillName(skillname);
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int guessedSkillId = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (guessedSkillId == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: GetSkillCap: " + skillname + " not valid");
                 return -1;
             }
 
-            return World.Player.Skills[(int)skill].Cap;
+            return World.Player.Skills[guessedSkillId].Cap;
         }
 
         /// <summary>
@@ -1544,14 +1524,14 @@ namespace RazorEnhanced
         /// </returns>
         public static int GetSkillStatus(string skillname)
         {
-            string guessedSkillName = GuessSkillName(skillname);
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int guessedSkillId = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (guessedSkillId == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: GetSkillStatus: " + skillname + " not valid");
                 return -1;
             }
 
-            return (int)World.Player.Skills[(int)skill].Lock;
+            return (int)World.Player.Skills[guessedSkillId].Lock;
         }
 
         /// <summary>
@@ -1624,14 +1604,13 @@ namespace RazorEnhanced
         /// </param>
         public static void SetSkillStatus(string skillname, int status)
         {
-            string guessedSkillName = GuessSkillName(skillname);
             if (status < 0 || status > 2)
             {
                 Scripts.SendMessageScriptError("Script Error: SetSkillStatus: status: " + status + " not valid");
                 return;
             }
-
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int guessedSkillId = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (guessedSkillId == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: SetSkillStatus: " + skillname + " not valid");
                 return;
@@ -1639,12 +1618,12 @@ namespace RazorEnhanced
 
             LockType t = (LockType)status;
 
-            Assistant.Client.Instance.SendToServer(new SetSkillLock(World.Player.Skills[(int)skill].Index, t));
+            Assistant.Client.Instance.SendToServer(new SetSkillLock(World.Player.Skills[guessedSkillId].Index, t));
 
-            World.Player.Skills[(int)skill].Lock = t;
-            Engine.MainWindow.SafeAction(s => s.UpdateSkill(World.Player.Skills[(int)skill]));
+            World.Player.Skills[guessedSkillId].Lock = t;
+            Engine.MainWindow.SafeAction(s => s.UpdateSkill(World.Player.Skills[guessedSkillId]));
 
-            Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[(int)skill]));
+            Assistant.Client.Instance.SendToClient(new SkillUpdate(World.Player.Skills[guessedSkillId]));
         }
 
         /// <summary> 
@@ -1780,8 +1759,8 @@ namespace RazorEnhanced
         /// <param name="wait">Optional: True: wait for confirmation from the server (default: False)</param>
         public static void UseSkill(string skillname, int target, bool wait = true)
         {
-            string guessedSkillName = GuessSkillName(skillname);
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int skill = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (skill == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
                 return;
@@ -1811,10 +1790,10 @@ namespace RazorEnhanced
             else
                 Assistant.Client.Instance.SendToServer(new UseTargetedSkill((ushort)skill, (uint)target));
 
-            if (skill == SkillName.Hiding)
+            if (skill == RazorEnhanced.Skills.GetSkillId("Hiding"))
                 StealthSteps.Hide();
 
-            else if (skill == SkillName.Stealth)
+            else if (skill == RazorEnhanced.Skills.GetSkillId("Stealth"))
             {
                 if (!World.Player.Visible) // Trigger stealth step counter
                     StealthSteps.Hide();
@@ -1847,8 +1826,8 @@ namespace RazorEnhanced
 
         public static void UseSkillOnly(string skillname, bool wait)
         {
-            string guessedSkillName = GuessSkillName(skillname);
-            if (!Enum.TryParse<SkillName>(guessedSkillName, out SkillName skill))
+            int skill = RazorEnhanced.Skills.GuessSkillId(skillname);
+            if (skill == -1)
             {
                 Scripts.SendMessageScriptError("Script Error: UseSkill: " + skillname + " not valid");
                 return;
@@ -1859,10 +1838,10 @@ namespace RazorEnhanced
             else
                 Assistant.Client.Instance.SendToServer(new UseSkill((int)skill));
 
-            if (skill == SkillName.Hiding)
+            if (skill == RazorEnhanced.Skills.GetSkillId("Hiding"))
                 StealthSteps.Hide();
 
-            else if (skill == SkillName.Stealth)
+            else if (skill == RazorEnhanced.Skills.GetSkillId("Stealth"))
             {
                 if (!World.Player.Visible) // Trigger stealth step counter
                     StealthSteps.Hide();

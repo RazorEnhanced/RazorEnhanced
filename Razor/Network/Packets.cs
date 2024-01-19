@@ -766,11 +766,6 @@ namespace Assistant
             Write((byte)0x24);
             WriteAsciiNull(cmd);
         }
-
-        internal UseSkill(SkillName sk)
-            : this((int)sk)
-        {
-        }
     }
 
     internal sealed class TrackingArrow : Packet

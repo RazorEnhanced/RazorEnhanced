@@ -281,7 +281,7 @@ namespace Assistant
             for (int i = 0; i < Skill.Count; i++)
             {
                 Skill sk = World.Player.Skills[i];
-                sb.AppendFormat("{0,-20} {1,-5:F1} {2,-5:F1} {3}{4,-5:F1} {5,-5:F1}\n", (SkillName)i, sk.Value, sk.Base, sk.Delta > 0 ? "+" : String.Empty, sk.Delta, sk.Cap);
+                sb.AppendFormat("{0,-20} {1,-5:F1} {2,-5:F1} {3}{4,-5:F1} {5,-5:F1}\n", RazorEnhanced.Skills.GetSkillName(i), sk.Value, sk.Base, sk.Delta > 0 ? "+" : String.Empty, sk.Delta, sk.Cap);
             }
 
             if (sb.Length > 0)

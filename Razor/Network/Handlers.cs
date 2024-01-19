@@ -365,7 +365,7 @@ namespace Assistant
                         if (World.Player != null)
                             World.Player.LastSkill = skillIndex;
 
-                        if ((skillIndex == (int)SkillName.Stealth && !World.Player.Visible) || skillIndex == (int)SkillName.Hiding)
+                        if ((skillIndex == RazorEnhanced.Skills.GetSkillId("Stealth") && !World.Player.Visible) || skillIndex == RazorEnhanced.Skills.GetSkillId("Hiding"))
                             StealthSteps.Hide();
                         break;
                     }
@@ -1088,7 +1088,7 @@ namespace Assistant
                             Engine.MainWindow.SafeAction(s => s.UpdateSkill(skill));
 
                             if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
+                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, RazorEnhanced.Skills.GetSkillName(i), skill.Delta > 0 ? " + " : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
                             Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
                         }
                         break;
@@ -1112,7 +1112,7 @@ namespace Assistant
                             skill.FixedCap = 100;
                             Engine.MainWindow.UpdateSkill(skill);
                             if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
+                                World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, RazorEnhanced.Skills.GetSkillName(i), skill.Delta > 0 ? " + " : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
                             Assistant.UOAssist.PostSkillUpdate(i, skill.FixedBase);
                         }
                         break;

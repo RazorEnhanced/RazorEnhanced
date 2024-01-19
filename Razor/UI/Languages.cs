@@ -634,18 +634,33 @@ namespace Assistant
             return String.Format(GetString(key), args);
         }
 
-        public static string Skill2Str(SkillName sk)
-        {
-            return Skill2Str((int) sk);
-        }
+        //public static string Skill2Str(SkillName sk)
+        //{
+        //    return Skill2Str((int) sk);
+        //}
 
         public static string Skill2Str(int skill)
         {
+
             string value = null;
             if (m_CliLoc != null)
+            {
                 value = m_CliLoc.GetString(1044060 + skill);
+                if (value != null && value == "")  // "" is same as null in that the skill doesnt exist
+                    value = null;
+            }
             if (value == null)
+            {
+                var ultimaSkill = Ultima.Skills.GetSkill(skill);
+                if (ultimaSkill != null)
+                {
+                    value = ultimaSkill.Name;
+                }
+            }
+            if (value == null)
+            {
                 value = String.Format("LanguageString \"{0}\" not found!", 1044060 + skill);
+            }
             return value;
         }
 

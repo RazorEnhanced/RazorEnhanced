@@ -1472,7 +1472,7 @@ namespace RazorEnhanced
                 if (World.Player.LastSkill != -1)
                 {
                     Assistant.Client.Instance.SendToServer(new UseSkill(World.Player.LastSkill));
-                    if ((World.Player.LastSkill == (int)SkillName.Stealth && !World.Player.Visible) || World.Player.LastSkill == (int)SkillName.Hiding) // Trigger stealth step counter
+                    if ((World.Player.LastSkill == RazorEnhanced.Skills.GetSkillId("Stealth") && !World.Player.Visible) || World.Player.LastSkill == RazorEnhanced.Skills.GetSkillId("Hiding")) // Trigger stealth step counter
                         StealthSteps.Hide();
                 }
             }

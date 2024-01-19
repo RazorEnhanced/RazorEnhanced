@@ -215,7 +215,7 @@ namespace Assistant
                                 {
                                     try
                                     {
-                                        return GlobalAddAtom(((SkillName)wParam).ToString());
+                                        return GlobalAddAtom(RazorEnhanced.Skills.GetSkillName(wParam));
                                     }
                                     catch
                                     {
@@ -394,7 +394,7 @@ namespace Assistant
         public static void PostSkillUpdate(int skill, int val)
         {
             PostToWndReg((uint)UOAMessage.SKILL_LEVEL, (IntPtr)skill, (IntPtr)val);
-            if (skill == (int)SkillName.Magery)
+            if (skill == RazorEnhanced.Skills.GetSkillId("Magery"))
                 PostToWndReg((uint)UOAMessage.MAGERY_LEVEL, (IntPtr)((int)(val / 10)), (IntPtr)(val % 10));
         }
 

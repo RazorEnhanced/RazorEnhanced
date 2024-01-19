@@ -385,6 +385,7 @@
     <Compile Include="RazorEnhanced\PathFinding.cs" />
     <Compile Include="RazorEnhanced\Multi.cs" />
     <Compile Include="RazorEnhanced\SeasonManager.cs" />
+    <Compile Include="RazorEnhanced\Skills.cs" />
     <Compile Include="RazorEnhanced\Sound.cs" />
     <Compile Include="RazorEnhanced\SpellGrid.cs">
       <SubType>Component</SubType>
