@@ -471,6 +471,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("inrange", InRange);
             m_Interpreter.RegisterExpressionHandler("buffexists", BuffExists);
             m_Interpreter.RegisterExpressionHandler("property", Property);
+            m_Interpreter.RegisterExpressionHandler("durability", Durability);
             m_Interpreter.RegisterExpressionHandler("findtype", FindType);
             m_Interpreter.RegisterExpressionHandler("findlayer", FindLayer);
             m_Interpreter.RegisterExpressionHandler("skillstate", SkillState);
@@ -1006,14 +1007,8 @@ namespace RazorEnhanced.UOS
                 Item item = Items.FindBySerial((int)serial);
                 if (item != null)
                 {
-                    List<String> props = Items.GetPropStringList((int)serial);
-                    foreach (String prop in props)
-                    {
-                        if (0 == String.Compare(findProp, prop, true))
-                        {
-                            return true;
-                        }
-                    }
+                    float value = Items.GetPropValue((int)serial, findProp);
+                    return value;                    
                 }
             }
 
@@ -1033,6 +1028,32 @@ namespace RazorEnhanced.UOS
             }
             return false;
         }
+
+        /// <summary>
+        /// durability ('name') (serial) [operator] [value]
+        /// </summary>
+        private static IComparable Durability(string expression, Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new RunTimeError(null, "durability requires 1 parameters");
+            }
+
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
+            if (thing.IsItem)
+            {
+                Item item = Items.FindBySerial((int)serial);
+                if (item != null)
+                {
+                    return item.Durability;
+                }
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// ingump (gump id/'any') ('text')
