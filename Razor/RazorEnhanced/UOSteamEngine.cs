@@ -2077,6 +2077,23 @@ namespace RazorEnhanced.UOS
 
             return true;
         }
+
+        static internal Dictionary<string, string> map = new Dictionary<string, string>()
+            {
+                {"north", "North" },
+                {"south", "South" },
+                {"east", "East" },
+                {"west", "West" },
+                {"southwest", "Left" },
+                {"left", "Left" },
+                {"northwest", "Up" },
+                {"up", "Up" },
+                {"southeast", "Down" },
+                {"down", "Down" },
+                {"northeast", "Right" },
+                {"right", "Right" },
+            };
+
         /// <summary>
         /// walk (direction)
         /// </summary>
@@ -2087,7 +2104,14 @@ namespace RazorEnhanced.UOS
 
             if (args.Length == 1)
             {
-                string direction = args[0].AsString();
+                string direction = args[0].AsString().ToLower();
+                if (!map.ContainsKey(direction))
+                {
+                    throw new IllegalArgumentException(args[0].AsString() + " not recognized.");
+                }
+                direction = map[direction];
+                if (Player.Direction != direction)
+                    Player.Walk(direction);
                 Player.Walk(direction);
             }
 
@@ -2123,7 +2147,14 @@ namespace RazorEnhanced.UOS
 
             if (args.Length == 1)
             {
-                string direction = args[0].AsString();
+                string direction = args[0].AsString().ToLower();
+                if (!map.ContainsKey(direction))
+                {
+                    throw new IllegalArgumentException(args[0].AsString() + " not recognized.");
+                }
+                direction = map[direction];
+                if (Player.Direction != direction)
+                    Player.Walk(direction);
                 Player.Run(direction);
             }
 
@@ -2137,7 +2168,12 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length == 1)
             {
-                string direction = args[0].AsString();
+                string direction = args[0].AsString().ToLower();
+                if (! map.ContainsKey(direction))
+                {
+                    throw new IllegalArgumentException(args[0].AsString() + " not recognized.");
+                }
+                direction = map[direction];
                 if (Player.Direction != direction)
                     Player.Walk(direction);
             }
