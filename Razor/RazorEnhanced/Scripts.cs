@@ -10,6 +10,19 @@ using System.Threading.Tasks;
 using RazorEnhanced.UOS;
 using Accord.Math;
 
+namespace Assistant
+{
+    public partial class MainForm : System.Windows.Forms.Form
+    {
+        private void autoScriptReload_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (autoScriptReload.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AutoScriptReload", autoScriptReload.Checked);
+        }
+    }
+}
+
+
 namespace RazorEnhanced
 {
     public class Scripts
@@ -628,7 +641,10 @@ namespace RazorEnhanced
             // If the file changed is not in the script list, then invalidate all the scripts to force reload
             // This is because we have no way of knowing who is importing this changed file
             // Only reload the files of the same type though, so editing of .py will only reload .py scripts etc.
-            
+            if (!RazorEnhanced.Settings.General.ReadBool("AutoScriptReload"))
+            {
+                return;
+            }
             var checkScript = EnhancedScriptService.Instance.Search(e.FullPath);
             bool externalFile = (checkScript == null);
 
@@ -654,6 +670,11 @@ namespace RazorEnhanced
 
         static internal void ScriptChanged(object sender, FileSystemEventArgs e)
         {
+            if (!RazorEnhanced.Settings.General.ReadBool("AutoScriptReload"))
+            {
+                return;
+            }
+
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
             if (script != null) 
             {

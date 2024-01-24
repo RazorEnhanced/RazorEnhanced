@@ -2526,6 +2526,7 @@ namespace RazorEnhanced
             general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
             general.Columns.Add("ScriptErrorLog", typeof(bool));
             general.Columns.Add("ScriptStartStopMessage", typeof(bool));
+            general.Columns.Add("AutoScriptReload", typeof(bool));
 
             // Parametri AgentAutostart
             general.Columns.Add("ScavengerAutostartCheckBox", typeof(bool));
@@ -2610,7 +2611,7 @@ namespace RazorEnhanced
                      Assistant.Engine.RootPath, 25, "Full Size", 1, 100, false, false, false,
 
                      // Parametri finestra script
-                     true, false, false,
+                     true, false, false, false,
 
                      // Parametri AgentAutostart
                      false, false, false,

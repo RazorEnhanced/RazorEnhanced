@@ -585,7 +585,9 @@
     <Compile Include="RazorEnhanced\ItemID.cs" />
     <Compile Include="Core\Buffs.cs" />
     <Compile Include="RazorEnhanced\Misc.cs" />
-    <Compile Include="RazorEnhanced\Scripts.cs" />
+    <Compile Include="RazorEnhanced\Scripts.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="RazorEnhanced\Settings.cs" />
     <Compile Include="RazorEnhanced\Spells.cs" />
     <Compile Include="RazorEnhanced\Player.cs" />
