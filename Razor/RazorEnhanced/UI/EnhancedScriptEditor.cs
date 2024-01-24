@@ -226,6 +226,7 @@ namespace RazorEnhanced.UI
                 m_Script.ScriptEngine.SetTracebackPython(null);
             }
             m_Script.ScriptEngine.SetStdout(this.SetErrorBox);
+            m_Script.ScriptEngine.SetStderr(this.SetErrorBox);
             // Always have to make these or Open() wont work from UOS to PY
             // m_pe = new PythonEngine(this.SetErrorBox);
             // m_pe.Engine.SetTrace(null);
@@ -536,9 +537,17 @@ namespace RazorEnhanced.UI
             m_popupMenu.Items.Width = m_popupMenu.Items.Width + 20;
 
         }
+        private void OnTraceback(string line, int line_num)
+        {
 
+        }
 
-        private TracebackDelegate OnTraceback(TraceBackFrame frame, string result, object payload)
+        private void OnTracebackUOS(TraceBackFrame frame, string result, object payload)
+        {
+            
+        }
+
+        private TracebackDelegate OnTracebackPy(TraceBackFrame frame, string result, object payload)
         {
             if (m_Debugger)
             {
@@ -586,7 +595,7 @@ namespace RazorEnhanced.UI
                     }
                 }
 
-                return OnTraceback;
+                return OnTracebackPy;
             }
             else
                 return null;
@@ -597,7 +606,7 @@ namespace RazorEnhanced.UI
             SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Call {0}", m_CurrentCode.co_name), Color.YellowGreen);
             SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightGreen);
             string locals = GetLocalsText(m_CurrentFrame);
-            SetTraceback(locals);
+            SetTracebackOutput(locals);
         }
 
         private void TracebackReturn()
@@ -605,7 +614,7 @@ namespace RazorEnhanced.UI
             SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Return {0}", m_CurrentCode.co_name), Color.YellowGreen);
             SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightBlue);
             string locals = GetLocalsText(m_CurrentFrame);
-            SetTraceback(locals);
+            SetTracebackOutput(locals);
         }
 
         private void TracebackLine()
@@ -613,14 +622,14 @@ namespace RazorEnhanced.UI
             SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Line {0}", (int)m_CurrentFrame.f_lineno), Color.YellowGreen);
             SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.Yellow);
             string locals = GetLocalsText(m_CurrentFrame);
-            SetTraceback(locals);
+            SetTracebackOutput(locals);
         }
 
         private void TracebackBreakpoint()
         {
             SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Breakpoint at line {0}", (int)m_CurrentFrame.f_lineno), Color.YellowGreen);
             string locals = GetLocalsText(m_CurrentFrame);
-            SetTraceback(locals);
+            SetTracebackOutput(locals);
         }
 
         private void EnqueueCommand(Command command)
@@ -677,7 +686,7 @@ namespace RazorEnhanced.UI
             {
                 default:
                 case ScriptLanguage.PYTHON:
-                    m_Script.ScriptEngine.SetTracebackPython(OnTraceback);
+                    m_Script.ScriptEngine.SetTracebackPython(OnTracebackPy);
                     break;
                 case ScriptLanguage.CSHARP:
                     if (m_Script.HasValidPath)
@@ -710,7 +719,7 @@ namespace RazorEnhanced.UI
             fastColoredTextBoxEditor.Invalidate();
 
             SetStatusLabel("IDLE", Color.DarkTurquoise);
-            SetTraceback(String.Empty);
+            SetTracebackOutput(String.Empty);
 
             m_Script.Stop();
             SetErrorBox("STOP: " + m_Script.Fullpath);
@@ -811,14 +820,14 @@ namespace RazorEnhanced.UI
             return result;
         }
 
-        private void SetTraceback(string text)
+        private void SetTracebackOutput(string text)
         {
             if (this.m_onclosing)
                 return;
 
             if (this.textBoxDebug.InvokeRequired)
             {
-                SetTracebackDelegate d = new SetTracebackDelegate(SetTraceback);
+                SetTracebackDelegate d = new SetTracebackDelegate(SetTracebackOutput);
                 this.Invoke(d, new object[] { text });
             }
             else
