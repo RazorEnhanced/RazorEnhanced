@@ -35,12 +35,12 @@ namespace RazorEnhanced
         {
             if (!Enum.TryParse(targetFlagsExists, out Assistant.Enums.TargetFlagsExists enumValue))
             {
-                enumValue = Assistant.Enums.TargetFlagsExists.Any;                
+                enumValue = Assistant.Enums.TargetFlagsExists.Any;
             }
 
             switch (enumValue)
             {
-                case Assistant.Enums.TargetFlagsExists.Any:                    
+                case Assistant.Enums.TargetFlagsExists.Any:
                     return Assistant.Targeting.HasTarget;
                 case Assistant.Enums.TargetFlagsExists.Beneficial:
                     return Assistant.Targeting.HasTarget &&
@@ -50,10 +50,10 @@ namespace RazorEnhanced
                            Assistant.Enums.TargetFlags.Harmful.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
                 case Assistant.Enums.TargetFlagsExists.Neutral:
                     return Assistant.Targeting.HasTarget &&
-                           Assistant.Enums.TargetFlags.None.GetHashCode().Equals(Assistant.Targeting.TargetFlags);                  
+                           Assistant.Enums.TargetFlags.None.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
                 default:
                     throw new ArgumentOutOfRangeException();
-            }            
+            }
         }
 
         /// <summary>
@@ -122,6 +122,9 @@ namespace RazorEnhanced
         }
 
 
+        static internal HashSet<int> CaveTiles = new HashSet<int>() { 0xae, 0x5, 0x3, 0xc1, 0xc2, 0xc3, 0xbd, 0x0016, 0x0017, 0x0018, 0x0019, 0x245, 0x246, 0x247, 0x248, 0x249, 0x22b, 0x22c, 0x22d, 0x22e, 0x22f };
+        static internal HashSet<int> SoilTiles = new HashSet<int>() {0x73, 0x74, 0x75, 0x76,  0x77, 0x78};
+
         /// <summary>
         /// Execute target on specific land point with offset distance from Mobile. Distance is calculated by target Mobile.Direction.
         /// </summary>
@@ -165,8 +168,20 @@ namespace RazorEnhanced
                     relpos.Y = mobile.Position.Y - offset;
                     break;
             }
-            Assistant.Point3D location = new Assistant.Point3D(relpos.X, relpos.Y, Statics.GetLandZ(relpos.X, relpos.Y, Player.Map));
-            Assistant.Targeting.Target(location, true);
+            var landId = Statics.GetLandID(relpos.X, relpos.Y, Player.Map);
+            var tileinfo = Statics.GetStaticsLandInfo(relpos.X, relpos.Y, Player.Map);
+            var tiles = Statics.GetStaticsTileInfo(relpos.X, relpos.Y, Player.Map);
+            if ( (CaveTiles.Contains(tileinfo.StaticID) || SoilTiles.Contains(tileinfo.StaticID)) && tiles.Count > 0)
+            {
+                Target.TargetExecute(relpos.X, relpos.Y, tiles[0].StaticZ, tiles[0].StaticID);
+            }
+            else
+            {
+                var staticZ = Statics.GetLandZ(relpos.X, relpos.Y, Player.Map);
+                Target.TargetExecute(relpos.X, relpos.Y, staticZ);
+                //Assistant.Point3D location = new Assistant.Point3D(relpos.X, relpos.Y, Statics.GetLandZ(relpos.X, relpos.Y, Player.Map));
+                //Assistant.Targeting.Target(location, true);
+            }
         }
         /// <param name="serial">Serial of the mobile</param>
         /// <param name="offset">+- distance to offset from the mobile identified with serial</param>
