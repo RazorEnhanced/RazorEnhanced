@@ -1,3 +1,4 @@
+using RazorEnhanced;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -32,6 +33,18 @@ namespace Assistant
             m_Items.TryGetValue(serial, out item);
             return item;
         }
+
+        internal static List<Item> FindItems(int x, int y, int z)
+        {
+            List<Item> items = new List<Item>();
+            foreach (var item in m_Items.Values)
+            {
+                if (item.Position.X == x && item.Position.Y == y)
+                    items.Add(item);
+            }
+            return items;
+        }
+
 
         internal static Mobile FindMobile(Serial serial)
         {
