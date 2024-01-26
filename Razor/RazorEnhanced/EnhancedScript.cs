@@ -33,7 +33,6 @@ namespace RazorEnhanced
     public class EnhancedScriptService { 
         public readonly static EnhancedScriptService Instance = new EnhancedScriptService();
 
-
         private  readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
 
         internal List<EnhancedScript> ScriptList() 
@@ -132,6 +131,7 @@ namespace RazorEnhanced
             }
         }
     }
+
     public class EnhancedScript
     {
         public readonly static EnhancedScriptService Service = EnhancedScriptService.Instance;
@@ -291,7 +291,6 @@ namespace RazorEnhanced
             return m_ScriptItem;
         }
 
-
         public bool Load(bool force = false)
         {
             string content = m_Text ?? "";
@@ -300,7 +299,10 @@ namespace RazorEnhanced
                 if (this.Exist)
                 {
                     LastModified = File.GetLastWriteTime(Fullpath);
-                    content = File.ReadAllText(Fullpath);
+                    lock (EnhancedScriptEngine.IoLock)
+                    {
+                        content = File.ReadAllText(Fullpath);
+                    }
                 }
                 else {
                     Misc.SendMessage("file not found:" + this.Filename, 178);
@@ -339,7 +341,10 @@ namespace RazorEnhanced
 
         public bool Save(){
             try {
-                File.WriteAllText(Fullpath, Text);
+                lock (EnhancedScriptEngine.IoLock)
+                {
+                    File.WriteAllText(Fullpath, Text);
+                }
                 LastModified = File.GetLastWriteTime(Fullpath);
                 Load(true);
             } catch (Exception e) {
@@ -683,7 +688,9 @@ namespace RazorEnhanced
     {
         private EnhancedScript m_Script;
         private bool m_Loaded = false;
-        
+
+        static internal Object IoLock = new Object();
+
         public PythonEngine pyEngine;
         public CSharpEngine csEngine;
         public UOSteamEngine uosEngine;
@@ -857,7 +864,10 @@ namespace RazorEnhanced
                 var content = m_Script.Text ?? "";
                 if (content == "" && File.Exists(m_Script.Fullpath))
                 {
-                    content = File.ReadAllText(m_Script.Fullpath);
+                    lock (IoLock)
+                    {
+                        content = File.ReadAllText(m_Script.Fullpath);
+                    }
                 }
                 if (content == null || content == "") { 
                     return false; 
@@ -992,7 +1002,10 @@ namespace RazorEnhanced
                 var content = m_Script.Text ?? "";
                 if (content == "" && File.Exists(m_Script.Fullpath))
                 {
-                    content = File.ReadAllText(m_Script.Fullpath);
+                    lock (IoLock)
+                    {
+                        content = File.ReadAllText(m_Script.Fullpath);
+                    }
                 }
                 if (content == null || content == "")
                 {
@@ -1109,7 +1122,10 @@ namespace RazorEnhanced
             // For prevent crash in case of file are busy or inaccessible
             try
             {
-                File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Script.Filename + ".ERROR", log.ToString());
+                lock (IoLock)
+                {
+                    File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Script.Filename + ".ERROR", log.ToString());
+                }
             }
             catch { }
             log.Clear();
