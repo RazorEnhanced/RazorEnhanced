@@ -389,24 +389,29 @@ namespace RazorEnhanced
             return m_Language;
         }
 
+        static private Object ScriptStateLock = new Object();
 
         internal void Start()
         {
             //if (IsRunning || !IsUnstarted)
             if (IsRunning) return;
 
-            try
+            lock (ScriptStateLock)
             {
-                //EventManager.Instance.Unsubscribe(m_Thread); 
-                if (m_Thread != null) { Stop(); }
-                m_Thread = new Thread(AsyncStart);
-                m_Thread.Start();
-                //while (!m_Thread.IsAlive){ Misc.Pause(1); }
+                try
+                {
+                    //EventManager.Instance.Unsubscribe(m_Thread); 
+                    if (m_Thread != null) { Stop(); }
+                    m_Thread = new Thread(AsyncStart);
+                    m_Thread.Start();
+                    //while (!m_Thread.IsAlive){ Misc.Pause(1); }
 
-                //m_Run = true;
-            }
-            catch (Exception e){
-                OnError.Invoke(this, e.Message);
+                    //m_Run = true;
+                }
+                catch (Exception e)
+                {
+                    OnError.Invoke(this, e.Message);
+                }
             }
         }
 
@@ -415,7 +420,7 @@ namespace RazorEnhanced
             do
             {
                 if (World.Player == null) return;
-
+              
                 try
                 {
                     //EventManager.Instance.Unsubscribe(m_Thread);
@@ -439,19 +444,22 @@ namespace RazorEnhanced
 
         internal void Stop()
         {
-            if (IsRunning) { 
-                try
+            if (IsRunning) {
+                lock (ScriptStateLock)
                 {
-                    if (m_Thread.ThreadState != ThreadState.AbortRequested)
+                    try
                     {
-                        //EventManager.Instance.Unsubscribe(m_Thread);
-                        //m_Thread.Interrupt();
-                        //m_Thread.Join();
-                        m_Thread.Abort();
-                        m_Thread = null;
+                        if (m_Thread.ThreadState != ThreadState.AbortRequested)
+                        {
+                            //EventManager.Instance.Unsubscribe(m_Thread);
+                            //m_Thread.Interrupt();                            
+                            m_Thread.Abort();
+                            m_Thread.Join();
+                            m_Thread = null;
+                        }
                     }
+                    catch { }
                 }
-                catch { }
             }
         }
 
