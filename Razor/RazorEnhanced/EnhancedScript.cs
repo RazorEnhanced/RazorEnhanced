@@ -1012,7 +1012,7 @@ namespace RazorEnhanced
                 {
                     lock (IoLock)
                     {
-                        content = File.ReadAllText(m_Script.Fullpath);
+                        content = ReadAllTextWithoutLocking(m_Script.Fullpath);
                     }
                 }
                 if (content == null || content == "")
