@@ -301,7 +301,7 @@ namespace RazorEnhanced
                     LastModified = File.GetLastWriteTime(Fullpath);
                     lock (EnhancedScriptEngine.IoLock)
                     {
-                        content = File.ReadAllText(Fullpath);
+                        content = ReadAllTextWithoutLocking(Fullpath);
                     }
                 }
                 else {
@@ -874,7 +874,7 @@ namespace RazorEnhanced
                 {
                     lock (IoLock)
                     {
-                        content = File.ReadAllText(m_Script.Fullpath);
+                        content = ReadAllTextWithoutLocking(m_Script.Fullpath);
                     }
                 }
                 if (content == null || content == "") { 
@@ -1012,7 +1012,7 @@ namespace RazorEnhanced
                 {
                     lock (IoLock)
                     {
-                        content = File.ReadAllText(m_Script.Fullpath);
+                        content = ReadAllTextWithoutLocking(m_Script.Fullpath);
                     }
                 }
                 if (content == null || content == "")
@@ -1137,13 +1137,6 @@ namespace RazorEnhanced
             }
             catch { }
             log.Clear();
-        }
-
-
-
-
-
+        }       
     }
-
-
 }
