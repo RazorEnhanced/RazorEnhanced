@@ -698,5 +698,14 @@ namespace RazorEnhanced
                     script.Start();
             }
         }
+
+        internal static string ReadAllTextWithoutLocking(string filePath)
+        {
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (StreamReader streamReader = new StreamReader(fileStream))
+            {
+                return streamReader.ReadToEnd();
+            }
+        }
     }
 }
