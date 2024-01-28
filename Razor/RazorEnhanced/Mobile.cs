@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Globalization;
-using RazorEnhanced.UOS;
-using Ultima;
 
 namespace RazorEnhanced
 {
