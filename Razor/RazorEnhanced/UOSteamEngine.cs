@@ -150,6 +150,7 @@ namespace RazorEnhanced.UOS
 
             string configFile = System.IO.Path.Combine(Assistant.Engine.RootPath, "Config", "UOS.config.json");
             UpdateNamespace();
+            InitInterpreter();
         }
 
         public void SendOutput(string text)

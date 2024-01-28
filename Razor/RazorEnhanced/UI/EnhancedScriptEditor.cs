@@ -276,7 +276,7 @@ namespace RazorEnhanced.UI
         public void UpdateSyntaxHighlight()
         {
             // keywords
-            var uosEngine = m_Script.ScriptEngine.uosEngine;
+            var uosEngine = new UOSteamEngine();
             if (uosEngine == null) return;
 
             List<String> keywords = uosEngine.AllKeywords();
