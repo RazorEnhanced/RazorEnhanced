@@ -194,7 +194,10 @@ namespace Assistant
             get { return m_ItemID; }
             set { m_ItemID = value; }
         }
-
+        /// <summary>
+        /// True when the container was opened
+        /// </summary>
+        internal bool ContainerOpened { get; set; }
         internal byte ArtID { get; set; }
 
         internal bool PropsUpdated

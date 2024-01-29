@@ -29,6 +29,11 @@ namespace RazorEnhanced
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
         /// </summary>
         public bool Updated { get { return m_AssistantItem.Updated; } }
+        
+        /// <summary>
+        /// True when the container was opened
+        /// </summary>
+        public bool ContainerOpened => m_AssistantItem.ContainerOpened;
 
         /// <summary>
         /// Represents the type of Item, usually unique for the Item image.  Sometime called ID or Graphics ID.

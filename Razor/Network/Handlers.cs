@@ -13,6 +13,11 @@ namespace Assistant
         internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static readonly List<Item> m_IgnoreGumps = new List<Item>();
+
+        /// <summary>
+        /// Last container displayed to the client
+        /// </summary>
+        private static Item m_LastContainerDisplay = null;
         internal static List<Item> IgnoreGumps { get { return m_IgnoreGumps; } }
 
         public static void Initialize()
@@ -87,6 +92,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x90, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
             PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
+            PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(Vendor.StoreSellList));
             PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
             PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
             PacketHandler.RegisterServerToClientViewer(0xA3, new PacketViewerCallback(StamUpdate));
@@ -744,6 +750,7 @@ namespace Assistant
             Item item = World.FindItem(ser);
             if (item != null)
             {
+                m_LastContainerDisplay = item;
                 // Simone:
                 // The following code is trying to fix missing properties of items inside a container that is never been opened.
                 // Note: This behaviour is only present with ClassicUO version >= 0.1.5.x due to an optimization(https://github.com/andreakarasho/ClassicUO/pull/1226)
@@ -910,7 +917,16 @@ namespace Assistant
             }
 
             foreach (Item container in updated)
+            {
                 container.Updated = true;
+            }
+
+            //This avoid issues with empty containers detection
+            if (m_LastContainerDisplay != null)
+            {
+                m_LastContainerDisplay.ContainerOpened = true;
+            }
+
 
             Item.UpdateContainers();
         }
