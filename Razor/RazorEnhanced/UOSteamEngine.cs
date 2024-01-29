@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace RazorEnhanced.UOS
 {
@@ -3819,7 +3820,8 @@ namespace RazorEnhanced.UOS
             {
                 uint serial = args[0].AsSerial();
                 string option = args[1].AsString();
-                Misc.ContextReply ((int)serial, option);
+
+                Misc.UseContextMenu((int)serial, option, 1000);
             }
 
             return true;
@@ -4571,8 +4573,6 @@ namespace RazorEnhanced.UOS
             return copy_ok;
         }
 
-
-
         /// <summary>
         /// targettype (graphic) [color] [range]
         /// </summary>
@@ -4600,7 +4600,6 @@ namespace RazorEnhanced.UOS
                 options.RangeMax = range;
                 options.OnGround = 1;
 
-
                 var item_list = Items.ApplyFilter(options);
                 if (item_list.Count > 0) {
                     item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1) );
@@ -4610,9 +4609,45 @@ namespace RazorEnhanced.UOS
 
             if (itm == null)
             {
-                if (!quiet) { SendError("targettype: graphic "+ graphic.ToString() + " not found in range " + range.ToString() ); }
+                Mobile mob = null;
+                // Container (Range: Container Serial)
+                var options = new Mobiles.Filter();
+
+                List<byte> notoriety = new List<byte>
+                    {
+                        (byte)1,
+                        (byte)2,
+                        (byte)3,
+                        (byte)4,
+                        (byte)5,
+                        (byte)6,
+                        (byte)7
+                    };
+
+                options.Bodies.Add(graphic);
+                if (color != -1)
+                    options.Hues.Add(color);
+                options.RangeMin = -1;
+                options.RangeMax = range;
+
+                var mob_list = Mobiles.ApplyFilter(options);
+                if (mob_list.Count > 0)
+                {
+                    mob_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
+                    mob = mob_list[0];
+                }
+
+                if (mob == null)
+                {
+                    if (!quiet) { SendError("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString()); }
+                }
+                else
+                {
+                    RazorEnhanced.Target.TargetExecute(mob);
+                }
             }
-            else {
+            else
+            {
                 RazorEnhanced.Target.TargetExecute(itm);
             }
 

@@ -881,6 +881,88 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Find the Mobile with a specific Graphic.
+        /// </summary>
+        /// <param name="graphic">Graphic of a Mobile.</param>
+        /// <param name="notoriety">Notorieties of a Mobile.</param>
+        /// <param name="rangemax">Max Range to scan for a mobile.</param>
+        /// <param name="highlight">highlight the mobile.</param>
+        /// <param name="selector">highlight the mobile.</param>
+        /// <returns>The mobile if in range. (empty: line not found)</returns>
+        public static Mobile FindMobile(int graphic, List<byte> notoriety, int rangemax, string selector, bool highlight)
+        {
+            Filter filter = new Filter();
+            filter.RangeMin = 0;
+            filter.RangeMax = rangemax;
+
+            if (graphic > 0)
+                filter.Bodies.Add(graphic);
+
+            if (notoriety.Count > 0)
+            {
+                foreach(byte i in notoriety)
+                {
+                    if (i >= 1 && i < 7)
+                        filter.Notorieties.Add(i);
+                }
+            }
+
+            var list = ApplyFilter(filter);
+            if (list.Count > 0)
+            {
+                Mobile anMobile = Select(list, selector);
+
+                if(highlight)
+                Target.SetLast(anMobile.Serial); //Attempt to highlight
+
+                return anMobile;
+            }
+            
+            return null;
+        }
+
+        /// <summary>
+        /// Find the Mobile with a specific Graphic.
+        /// </summary>
+        /// <param name="graphics">Graphics of a Mobile.</param>
+        /// <param name="notoriety">Notorieties of a Mobile.</param>
+        /// <param name="rangemax">Max Range to scan for a mobile.</param>
+        /// <param name="highlight">highlight the mobile.</param>
+        /// <param name="selector">highlight the mobile.</param>
+        /// <returns>The mobile if in range. (empty: line not found)</returns>
+        public static Mobile FindMobile(List<int> graphics, List<byte> notoriety, int rangemax, string selector, bool highlight)
+        {
+            Filter filter = new Filter();
+            filter.RangeMin = 0;
+            filter.RangeMax = rangemax;
+
+            if (graphics.Count > 0)
+                filter.Bodies = graphics;
+
+            if (notoriety.Count > 0)
+            {
+                foreach (byte i in notoriety)
+                {
+                    if (i >= 1 && i < 7)
+                        filter.Notorieties.Add(i);
+                }
+            }
+
+            var list = ApplyFilter(filter);
+            if (list.Count > 0)
+            {
+                Mobile anMobile = Select(list, selector);
+
+                if (highlight)
+                    Target.SetLast(anMobile.Serial); //Attempt to highlight
+
+                return anMobile;
+            }
+
+            return null;
+        }
+
 
         // USe
 
