@@ -121,6 +121,78 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// Targets the entity of a specific Graphic.
+        /// </summary>
+        /// <param name="graphic">Graphic of an Entity.</param>
+        /// <param name="color">Color of an Entity.</param>
+        /// <param name="range">Range to scan for an Entity.</param>
+        /// <param name="selector">Selector for sorting the Entity.</param>
+        /// <param name="notoriety">Notorieties of an Entity.</param>
+        /// <returns>if the attack was achieved. (empty: line not found)</returns>
+        public static bool TargetType(int graphic, int color, int range, string selector, List<byte> notoriety = null)
+        {
+            Item itm = null;
+
+            if (range > 18)
+            {
+                itm = Items.FindByID(graphic, color, -1, range);
+            }
+            else
+            {
+                var options = new Items.Filter();
+                options.Graphics.Add(graphic);
+                if (color != -1)
+                    options.Hues.Add(color);
+                options.RangeMin = -1;
+                options.RangeMax = range;
+                options.OnGround = 1;
+
+                var item_list = Items.ApplyFilter(options);
+
+                itm = Items.Select(item_list, selector);
+            }
+
+            if (itm == null)
+            {
+                Mobile mob = null;
+                // Container (Range: Container Serial)
+                var options = new Mobiles.Filter();
+
+                options.Bodies.Add(graphic);
+                if (color != -1)
+                    options.Hues.Add(color);
+
+                if (notoriety != null && notoriety.Count > 0)
+                {
+                    foreach (byte i in notoriety)
+                    {
+                        if (i >= 1 && i < 7)
+                            options.Notorieties.Add(i);
+                    }
+                }
+
+                options.RangeMin = -1;
+                options.RangeMax = range;
+
+                var mob_list = Mobiles.ApplyFilter(options);
+
+                mob = Mobiles.Select(mob_list, selector);
+
+                if (mob != null)
+                {
+                    TargetExecute(mob);
+                    return true;
+                }
+            }
+            else
+            {
+                TargetExecute(itm);
+                return true;
+            }
+
+            return false;
+        }
 
         static internal HashSet<int> CaveTiles = new HashSet<int>() { 0xae, 0x5, 0x3, 0xc1, 0xc2, 0xc3, 0xbd, 0x0016, 0x0017, 0x0018, 0x0019, 
             0x244, 0x245, 0x246, 0x247, 0x248, 0x249, 0x22b, 0x22c, 0x22d, 0x22e, 0x22f, 

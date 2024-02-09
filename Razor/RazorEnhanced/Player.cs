@@ -2105,20 +2105,34 @@ namespace RazorEnhanced
                 return;
 
             Target.AttackMessage(serial, true);
-            if (Targeting.LastAttack != serial)
+
+            Item it = Items.FindBySerial(serial);
+
+            if (it != null)
             {
-                Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
-                Targeting.LastAttack = (uint)serial;
+                if (!WarMode)
+                    SetWarMode(true);
+
+                Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+
+                Assistant.Client.Instance.SendToServerWait(new DoubleClick(it.Serial));
             }
-            Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
+            else
+            {
+                if (Targeting.LastAttack != serial)
+                {
+                    Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
+                    Targeting.LastAttack = (uint)serial;
+                }
+
+                Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
+            }
         }
 
         public static void Attack(Mobile mobile)
         {
             Attack(mobile.Serial);
         }
-
-
 
         /// <summary>
         /// Attack last target.
@@ -2135,6 +2149,166 @@ namespace RazorEnhanced
 
             Assistant.Client.Instance.SendToServerWait(new AttackReq(Targeting.LastAttack));
         }
+
+        /// <summary>
+        /// Attack the Entity with a specific Graphic.
+        /// </summary>
+        /// <param name="graphic">Graphic of an Entity.</param>
+        /// <param name="rangemax">Max Range to scan for an Entity.</param>
+        /// <param name="selector">Selector for sorting the Entity.</param>
+        /// <param name="color">Color of an Entity.</param>
+        /// <param name="notoriety">Notorieties of an Entity.</param>
+        /// <returns>if the attack was achieved. (empty: line not found)</returns>
+        public static bool AttackType(int graphic, int rangemax, string selector, List<int> color = null, List<byte> notoriety = null)
+        {
+            Mobiles.Filter filter = new Mobiles.Filter();
+            filter.RangeMin = 0;
+            filter.RangeMax = rangemax;
+
+            if (graphic > 0)
+                filter.Bodies.Add(graphic);
+
+            if (color != null && color.Count > 0)
+            {
+                foreach (int i in color)
+                {
+                    filter.Hues.Add(i);
+                }
+            }
+
+            if (notoriety != null && notoriety.Count > 0)
+            {
+                foreach (byte i in notoriety)
+                {
+                    if (i >= 1 && i < 7)
+                        filter.Notorieties.Add(i);
+                }
+            }
+            Mobile atMobile = null;
+            var list = Mobiles.ApplyFilter(filter);
+            if (list.Count > 0)
+                atMobile = Mobiles.Select(list, selector);
+
+            if(atMobile != null)
+            {
+                Target.SetLast(atMobile.Serial); //Attempt to highlight
+
+                Attack(atMobile.Serial);
+                return true;
+            }
+
+            Items.Filter itfilter = new Items.Filter();
+            itfilter.RangeMin = 0;
+            itfilter.RangeMax = rangemax;
+
+            if (graphic > 0)
+                itfilter.Graphics.Add(graphic);
+
+            if (color != null && color.Count > 0)
+            {
+                foreach (int i in color)
+                {
+                    itfilter.Hues.Add(i);
+                }
+            }
+
+            Item atItem = null;
+            var itlist = Items.ApplyFilter(itfilter);
+            if (itlist.Count > 0)
+                atItem = Items.Select(itlist, selector);
+
+            if (atItem != null)
+            {
+                Target.SetLast(atItem.Serial); //Attempt to highlight
+
+                Attack(atItem.Serial);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Attack the Mobile with a specific Graphic.
+        /// </summary>
+        /// <param name="graphics">Graphics of Entities.</param>
+        /// <param name="rangemax">Max Range to scan for an Entity.</param>
+        /// <param name="selector">Selector for sorting the Entity.</param>
+        /// <param name="color">Graphic of an Entity.</param>
+        /// <param name="notoriety">Notorieties of an Entity.</param>
+        /// <returns>if the attack was achieved. (empty: line not found)</returns>
+        public static bool AttackType(List<int> graphics, int rangemax, string selector, List<int> color = null, List<byte> notoriety = null)
+        {
+            Mobiles.Filter filter = new Mobiles.Filter();
+            filter.RangeMin = 0;
+            filter.RangeMax = rangemax;
+
+            if (graphics != null && graphics.Count > 0)
+                filter.Bodies = graphics;
+
+            if (color != null && color.Count > 0)
+            {
+                foreach (int i in color)
+                {
+                    filter.Hues.Add(i);
+                }
+            }
+
+            if (notoriety != null && notoriety.Count > 0)
+            {
+                foreach (byte i in notoriety)
+                {
+                    if (i >= 1 && i < 7)
+                        filter.Notorieties.Add(i);
+                }
+            }
+
+            Mobile atMobile = null;
+            var list = Mobiles.ApplyFilter(filter);
+            if (list.Count > 0)
+                atMobile = Mobiles.Select(list, selector);
+
+            if (atMobile != null)
+            {
+                Target.SetLast(atMobile.Serial); //Attempt to highlight
+
+                Attack(atMobile.Serial);
+                return true;
+            }
+
+            Items.Filter itfilter = new Items.Filter();
+            itfilter.RangeMin = 0;
+            itfilter.RangeMax = rangemax;
+
+            if (graphics != null && graphics.Count > 0)
+                itfilter.Graphics = graphics;
+
+            if (color != null && color.Count > 0)
+            {
+                foreach (int i in color)
+                {
+                    itfilter.Hues.Add(i);
+                }
+            }
+
+            Item atItem = null;
+            var itlist = Items.ApplyFilter(itfilter);
+
+            if (itlist.Count > 0)
+                atItem = Items.Select(itlist, selector);
+
+            if (atItem != null)
+            {
+                Target.SetLast(atItem.Serial); //Attempt to highlight
+
+                Attack(atItem.Serial);
+                return true;
+            }
+
+            return false;
+        }
+
+
 
         // Virtue
         /// <summary>
