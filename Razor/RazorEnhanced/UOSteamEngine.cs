@@ -605,10 +605,20 @@ namespace RazorEnhanced.UOS
                 Item container = Items.FindBySerial((int)serial);
                 if (container != null)
                 {
-                    if (!container.IsContainer)
-                        return 0;
-                    List<Item> list = container.Contains;
-                    return list.Count;
+                    Items.WaitForProps(container, 1000);
+
+                    string content = Items.GetPropValueString(container.Serial, "contents");
+                    if(string.IsNullOrEmpty(content))
+                    {
+                        if (!container.IsContainer)
+                            return 0;
+                        List<Item> list = container.Contains;
+                        return list.Count;
+                    }
+
+                    var contents = content.Split('/');
+
+                    return Utility.ToInt32(contents[0], 0);
                 }
                 return 0;
             }
