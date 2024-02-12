@@ -2101,30 +2101,30 @@ namespace RazorEnhanced
         public static void Attack(int serial)
         {
             // make sure its either an item or a mobile, else server will disconnect you
-            if ((World.FindMobile(serial) == null) && (World.FindItem(serial) == null))
+            var mobile = World.FindMobile(serial);
+            var item = World.FindItem(serial);
+            if ((mobile == null) && (item == null))
                 return;
 
             Target.AttackMessage(serial, true);
-
-            Item it = Items.FindBySerial(serial);
-
-            if (it != null)
+            if (Targeting.LastAttack != serial)
             {
-                if (!WarMode)
-                    SetWarMode(true);
+                Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
+                Targeting.LastAttack = (uint)serial;
+            }
 
-                Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
-
-                Assistant.Client.Instance.SendToServerWait(new DoubleClick(it.Serial));
+            if (item != null)
+            {
+                if (WarMode)
+                {
+                    Assistant.Client.Instance.SendToServerWait(new DoubleClick(item.Serial));
+                }
+                else {
+                    Misc.SendMessage("To attack an item you must be in war mode", 55);
+                }                
             }
             else
             {
-                if (Targeting.LastAttack != serial)
-                {
-                    Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(serial));
-                    Targeting.LastAttack = (uint)serial;
-                }
-
                 Assistant.Client.Instance.SendToServerWait(new AttackReq(serial));
             }
         }
