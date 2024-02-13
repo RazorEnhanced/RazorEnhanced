@@ -121,6 +121,7 @@ namespace RazorEnhanced
 
         internal static bool KeyDown(Keys k)
         {
+            EventManager.Instance.didRecieveHotkey(k);
             HotKeyEvent.AddEvent(k);
 
             Debug.WriteLine("KD Keys: 0x{0:X}", k);

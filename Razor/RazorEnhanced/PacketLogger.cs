@@ -2,7 +2,7 @@ using Accord;
 using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
-using IronPython.Runtime;
+using IronPython.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,6 +14,8 @@ using static IronPython.Modules.PythonIterTools;
 using static RazorEnhanced.PacketLogger;
 using static RazorEnhanced.PacketLogger.PacketTemplate;
 
+using IronPython.Runtime;
+
 namespace RazorEnhanced
 {
     /// <summary>
@@ -21,21 +23,7 @@ namespace RazorEnhanced
     /// </summary>
     public class PacketLogger
     {
-        public readonly static Dictionary<PacketPath, string> PathToString = new Dictionary<PacketPath, string> {
-            { PacketPath.ClientToServer, "ClientToServer" },
-            { PacketPath.ServerToClient, "ServerToClient" },
-            { PacketPath.RazorToServer, "RazorToServer" },
-            { PacketPath.RazorToClient,  "RazorToClient" },
-            { PacketPath.PacketVideo, "PacketVideo" },
-        };
-
-        public readonly static Dictionary<string, PacketPath> StringToPath = new Dictionary<string, PacketPath> {
-            { "ClientToServer", PacketPath.ClientToServer},
-            { "ServerToClient", PacketPath.ServerToClient},
-            { "RazorToServer", PacketPath.RazorToServer },
-            { "RazorToClient", PacketPath.RazorToClient },
-            { "PacketVideo", PacketPath.PacketVideo },
-        };
+        
 
 
 
@@ -94,7 +82,7 @@ namespace RazorEnhanced
 
         public static void SendToServer(PythonList packetData)
         {
-            SendToServer(packetData.Apply(data => (byte)((int)data + 0)));
+            SendToServer(packetData.Apply(_ObjectToBytes));
         }
 
         /// <summary>
@@ -111,9 +99,21 @@ namespace RazorEnhanced
         }
         public static void SendToClient(PythonList packetData)
         {
-            SendToClient(packetData.Apply(data => (byte)((int)data + 0)) );
+            SendToClient(packetData.Apply(_ObjectToBytes) );
         }
 
+        private static byte _ObjectToBytes(object data) {
+            var value = 0;
+            try
+            {
+                value = int.Parse(data.ToString());
+            }
+            catch (Exception e)
+            {
+                Misc.SendMessage($"PacketLogger: Warning: Failed to convert {data} into as byte:\n{e.Message}");
+            }
+            return (byte)value;
+        }
 
 
 
@@ -214,15 +214,15 @@ namespace RazorEnhanced
         public static string[] ListenPacketPath(string packetPath = "", bool active = true)
         {
             
-            var compareKeys = StringToPath.Keys.ToList();
-            var compareLower = StringToPath.Keys.Select(x => x.ToLower()).ToList();
+            var compareKeys = Packet.StringToPath.Keys.ToList();
+            var compareLower = Packet.StringToPath.Keys.Select(x => x.ToLower()).ToList();
             var matchPath = Regex.Replace(packetPath.ToLower(), "[^a-z]", "");
             var found = compareLower.IndexOf(matchPath);
 
             if (found != -1)
             {
                 var originalKey = compareKeys[found];
-                PacketPath path = StringToPath[originalKey];
+                PacketPath path = Packet.StringToPath[originalKey];
                 Assistant.PacketLogger.SharedInstance.ListenPacketPath(path, active);
             }
             else {
@@ -230,7 +230,7 @@ namespace RazorEnhanced
             }
 
             PacketPath[] activePaths = Assistant.PacketLogger.SharedInstance.ActivePacketPaths();
-            var activeKeys = StringToPath.Where(entry => activePaths.Contains(entry.Value)).Select(entry => entry.Key);
+            var activeKeys = Packet.StringToPath.Where(entry => activePaths.Contains(entry.Value)).Select(entry => entry.Key);
 
             return activeKeys.ToArray();
         }
