@@ -256,7 +256,7 @@ namespace RazorEnhanced.UOS
                 return Load(root, filename);
             }
             catch (Exception e){
-                SendOutput($"UOSEngine: fail to parse script:\n{e.Message}");
+                SendError($"UOSEngine: fail to parse script:\n{e.Message}");
             }
             return false;
         }
@@ -279,7 +279,7 @@ namespace RazorEnhanced.UOS
                 m_Loaded = true;
             }
             catch (Exception e){
-                SendOutput($"UOSEngine: fail to load script:\n{e.Message}");
+                SendError($"UOSEngine: fail to load script:\n{e.Message}");
             }
 
             m_mutex.ReleaseMutex();
@@ -6941,12 +6941,10 @@ namespace RazorEnhanced.UOS
             Error = error;
         }
 
-        public override string ToString()
-        {
-            return base.ToString() + $"line {LineNumber}: {Line} error near '{Node.Lexeme}': {Error}";
-        }
+        public override string Message { get { 
 
-        public override string Message { get { return base.Message + ToString(); } }
+            return $"line {LineNumber}: {Line}\nError near '{Node?.Lexeme??""}': {Error}";
+        } }
     }
 
     public enum ASTNodeType
@@ -7117,7 +7115,7 @@ namespace RazorEnhanced.UOS
         {
             _lines = lines;
             ASTNode node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0, this);
-
+            
             try
             {
                 for (_curLine = 0; _curLine < lines.Length; _curLine++)
@@ -7130,7 +7128,7 @@ namespace RazorEnhanced.UOS
             }
             catch (SyntaxError e)
             {
-                throw new SyntaxError(lines[_curLine], _curLine, e.Node, e.Message);
+                throw new SyntaxError(lines[_curLine], _curLine, e.Node, "Syntax error!");
             }
             catch (Exception e)
             {
@@ -7268,7 +7266,7 @@ namespace RazorEnhanced.UOS
                 case "if":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(node, "Script compilation error");
+                            throw new SyntaxError(statement, "Script compilation error");
 
                         var t = statement.Push(ASTNodeType.IF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -7277,7 +7275,7 @@ namespace RazorEnhanced.UOS
                 case "elseif":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(node, "Script compilation error");
+                            throw new SyntaxError(statement, "Script compilation error");
 
                         var t = statement.Push(ASTNodeType.ELSEIF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -7285,20 +7283,20 @@ namespace RazorEnhanced.UOS
                     }
                 case "else":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ELSE, null, _curLine);
                     break;
                 case "endif":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ENDIF, null, _curLine);
                     break;
                 case "while":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(node, "Script compilation error");
+                            throw new SyntaxError(statement, "Script compilation error");
 
                         var t = statement.Push(ASTNodeType.WHILE, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -7306,46 +7304,46 @@ namespace RazorEnhanced.UOS
                     }
                 case "endwhile":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ENDWHILE, null, _curLine);
                     break;
                 case "for":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(node, "Script compilation error");
+                            throw new SyntaxError(statement, "Script compilation error");
 
                         ParseForLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "endfor":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ENDFOR, null, _curLine);
                     break;
                 case "break":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.BREAK, null, _curLine);
                     break;
                 case "continue":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.CONTINUE, null, _curLine);
                     break;
                 case "stop":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.STOP, null, _curLine);
                     break;
                 case "replay":
                 case "loop":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(node, "Script compilation error");
+                        throw new SyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.REPLAY, null, _curLine);
                     break;
