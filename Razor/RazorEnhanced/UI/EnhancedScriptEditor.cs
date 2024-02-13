@@ -679,7 +679,7 @@ namespace RazorEnhanced.UI
             string text = GetFastTextBoxText();
             m_Script.Text = text;
             m_Script.LastModified = DateTime.Now;
-            m_Script.InitEngine();
+            if (!m_Script.InitEngine()) { return; }
             
             //Editor specific setup for each language Check 
             switch (m_Script.Language)

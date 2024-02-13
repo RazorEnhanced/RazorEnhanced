@@ -332,7 +332,7 @@ namespace RazorEnhanced
             }
             if (m_Preload)
             {
-                m_ScriptEngine.Load();
+                return m_ScriptEngine.Load();
             }
             return true;
         }
@@ -1029,19 +1029,7 @@ namespace RazorEnhanced
                 }
                 */
 
-                return uosEngine.Load(content, m_Script.Fullpath);
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
-        }
-
-        private bool RunUOSteam()
-        {
-            try
-            {
-                uosEngine.SetTrace(TracebackUOS);
+                
 
                 uosEngine.SetStderr(
                     (string message) => {
@@ -1058,6 +1046,21 @@ namespace RazorEnhanced
                         m_stdoutWriter.Invoke(message);
                     }
                 );
+
+
+                return uosEngine.Load(content, m_Script.Fullpath);
+            }
+            catch (Exception ex)
+            {
+                return HandleException(ex);
+            }
+        }
+
+        private bool RunUOSteam()
+        {
+            try
+            {
+                uosEngine.SetTrace(TracebackUOS);
 
                 uosEngine.Execute();
             }
