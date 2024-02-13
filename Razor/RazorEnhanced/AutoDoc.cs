@@ -878,9 +878,6 @@ namespace RazorEnhanced
                 typeof(PacketLogger.FieldType),
                 //typeof(PacketLogger.TemplateParser), // Probably is not needed 
 
-                typeof(Events),
-                
-
                 // API Agents
                 typeof(AutoLoot),
                 typeof(AutoLoot.AutoLootItem),

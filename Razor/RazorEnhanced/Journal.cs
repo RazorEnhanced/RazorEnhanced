@@ -55,8 +55,6 @@ namespace RazorEnhanced
 
         internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
         {
-            EventManager.Instance.didRecieveJournal(entry.Copy());
-
             bool needsCleanup = false;
             foreach (WeakReference<Journal> j in allInstances)
             {

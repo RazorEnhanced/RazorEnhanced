@@ -86,8 +86,7 @@ namespace RazorEnhanced
                 { "Timer", new RazorEnhanced.Timer() },
                 { "Trade", new RazorEnhanced.Trade() },
                 { "Vendor", new RazorEnhanced.Vendor() },
-                { "PacketLogger", new RazorEnhanced.PacketLogger() },
-                { "Events", new RazorEnhanced.Events() }
+                { "PacketLogger", new RazorEnhanced.PacketLogger() }
             };
 
             //Setup builtin modules and scope
@@ -175,13 +174,13 @@ namespace RazorEnhanced
             
             return true;
         }
-        
-        
         public bool Execute() {
             //EXECUTE
             if (Scope == null) { return false; }
             else if (Compiled == null) { return false; }
             else if (Source == null)   { return false; }
+            
+           
 
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;

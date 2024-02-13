@@ -1,6 +1,5 @@
 using RazorEnhanced;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -16,26 +15,8 @@ namespace Assistant
         PacketVideo,
     }
 
-
-
     public class Packet
     {
-        public readonly static Dictionary<PacketPath, string> PathToString = new Dictionary<PacketPath, string> {
-            { PacketPath.ClientToServer, "ClientToServer" },
-            { PacketPath.ServerToClient, "ServerToClient" },
-            { PacketPath.RazorToServer, "RazorToServer" },
-            { PacketPath.RazorToClient,  "RazorToClient" },
-            { PacketPath.PacketVideo, "PacketVideo" },
-        };
-
-        public readonly static Dictionary<string, PacketPath> StringToPath = new Dictionary<string, PacketPath> {
-            { "ClientToServer", PacketPath.ClientToServer},
-            { "ServerToClient", PacketPath.ServerToClient},
-            { "RazorToServer", PacketPath.RazorToServer },
-            { "RazorToClient", PacketPath.RazorToClient },
-            { "PacketVideo", PacketPath.PacketVideo },
-        };
-
         private static readonly byte[] m_Buffer = new byte[4]; // Internal format buffer.
         private MemoryStream m_Stream;
         private bool m_DynSize;

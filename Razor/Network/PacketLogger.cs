@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web.UI;
 using static RazorEnhanced.PacketLogger;
 
 namespace Assistant
@@ -201,11 +202,10 @@ namespace Assistant
             sw.WriteLine(jsonDump);
             return !template.showHexDump;
         }
-        
+
+
         public void LogPacketData(PacketPath path, byte[] packetData, bool blocked = false)
         {
-            EventManager.Instance.didRecievePacket(path, packetData);
-
             if (!m_Active) return;
             if (!m_PacketPaths.Contains(path)) { return; }
 
