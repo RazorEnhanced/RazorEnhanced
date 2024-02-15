@@ -12,7 +12,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace RazorEnhanced.UOS
 {
@@ -338,8 +340,7 @@ namespace RazorEnhanced.UOS
             catch (Exception e)
             {
                 m_Interpreter.StopScript();
-                SendError(e.Message);
-                //throw e;
+                throw e;
             }
             finally
             {
@@ -714,7 +715,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "X location requires a serial");
+                throw new UOSRuntimeError(null, "X location requires a serial");
                 // return 0;
             }
 
@@ -739,7 +740,7 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            throw new RunTimeError(null, "X location serial not found");
+            throw new UOSRuntimeError(null, "X location serial not found");
             // return 0;
         }
 
@@ -750,7 +751,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "Y location requires a serial");
+                throw new UOSRuntimeError(null, "Y location requires a serial");
                 // return 0;
             }
 
@@ -774,7 +775,7 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            throw new RunTimeError(null, "Y location serial not found");
+            throw new UOSRuntimeError(null, "Y location serial not found");
             // return 0;
         }
 
@@ -785,7 +786,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "Z location requires a serial");
+                throw new UOSRuntimeError(null, "Z location requires a serial");
                 // return 0;
             }
 
@@ -809,7 +810,7 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            throw new RunTimeError(null, "Z location serial not found");
+            throw new UOSRuntimeError(null, "Z location serial not found");
             // return 0;
         }
 
@@ -936,7 +937,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "FindType requires parameters");
+                throw new UOSRuntimeError(null, "FindType requires parameters");
                 // return false;
             }
 
@@ -1035,7 +1036,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 2)
             {
-                throw new RunTimeError(null, "Property requires 2 parameters");
+                throw new UOSRuntimeError(null, "Property requires 2 parameters");
                 // return false;
             }
 
@@ -1077,7 +1078,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "durability requires 1 parameters");
+                throw new UOSRuntimeError(null, "durability requires 1 parameters");
             }
 
             uint serial = args[0].AsSerial();
@@ -1382,7 +1383,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "enemy requires parameters");
+                throw new UOSRuntimeError(null, "enemy requires parameters");
                 // return false;
             }
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
@@ -1400,7 +1401,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "friend requires parameters");
+                throw new UOSRuntimeError(null, "friend requires parameters");
             }
 
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
@@ -1531,7 +1532,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "inregion requires parameters");
+                throw new UOSRuntimeError(null, "inregion requires parameters");
                 // return false;
             }
 
@@ -1591,7 +1592,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "Skill requires parameters");
+                throw new UOSRuntimeError(null, "Skill requires parameters");
                 // return false;
             }
 
@@ -1607,7 +1608,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "Find Object requires parameters");
+                throw new UOSRuntimeError(null, "Find Object requires parameters");
                 // return false;
             }
             m_Interpreter.UnSetAlias("found");
@@ -1682,7 +1683,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length > 1)
             {
-                throw new RunTimeError(null, "graphic Object requires 0 or 1 parameters");
+                throw new UOSRuntimeError(null, "graphic Object requires 0 or 1 parameters");
             }
 
             if (args.Length == 0)
@@ -1716,7 +1717,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "Distance Object requires parameters");
+                throw new UOSRuntimeError(null, "Distance Object requires parameters");
                 // return Int32.MaxValue;
             }
 
@@ -1755,7 +1756,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 2)
             {
-                throw new RunTimeError(null, "Find Object requires parameters");
+                throw new UOSRuntimeError(null, "Find Object requires parameters");
                 // return false;
             }
             uint serial = args[0].AsSerial();
@@ -1812,7 +1813,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 2)
             {
-                throw new RunTimeError(null, "Find Object requires parameters");
+                throw new UOSRuntimeError(null, "Find Object requires parameters");
                 // return false;
             }
             uint serial = args[0].AsSerial();
@@ -1837,7 +1838,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length < 1)
             {
-                throw new RunTimeError(null, "CountTypeGround requires parameters");
+                throw new UOSRuntimeError(null, "CountTypeGround requires parameters");
                 // return 0;
             }
 
@@ -2691,7 +2692,7 @@ namespace RazorEnhanced.UOS
             if (args.Length < 2)
             {
                 SendError("Usage: pushlist ('list name') ('element name') ('front'/'back']");
-                throw new RunTimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
+                throw new UOSRuntimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
                 // return true;
             }
 
@@ -3865,7 +3866,7 @@ namespace RazorEnhanced.UOS
                     Misc.ContextReply((int)serial, intOption);
                     return true;
                 }
-                catch (RazorEnhanced.UOS.RunTimeError)
+                catch (UOSRuntimeError)
                 {
                      // try string
                 }
@@ -4426,6 +4427,7 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
+
         private bool ManageNamespaces_List(string command, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 1) { WrongParameterCount(command, 2, args.Length); }
@@ -4849,7 +4851,7 @@ namespace RazorEnhanced.UOS
                 {
                     reverse = args[2].AsBool();
                 }
-                catch (RunTimeError)
+                catch (UOSRuntimeError)
                 {
                     // Maybe it was a graphic
                     graphic = args[2].AsInt();
@@ -4981,32 +4983,14 @@ namespace RazorEnhanced.UOS
 
     #region Parser/Interpreter
 
-    public class RunTimeError : Exception
-    {
-        public ASTNode Node;
 
-        public static String BuildErrorMessage(ASTNode node, string error) {
-            string msg = string.Format("Error:\t{0}\n", error);
-            if (node != null)
-            {
-                msg += String.Format("Type:  {0}\n", node.Type);
-                msg += String.Format("Word:  {0}\n", node.Lexeme);
-                msg += String.Format("Line:  {0}\n", node.LineNumber + 1);
-                msg += String.Format("Code:  {0}\n", node.Lexer.GetLine(node.LineNumber));
-            }
-            return msg;
-        }
-
-        public RunTimeError(ASTNode node, string error) : base(BuildErrorMessage(node, error))
-        {
-            Node = node;
-        }
-    }
+    
 
     internal static class TypeConverter
     {
-        public static int ToInt(string token)
+        public static int ToInt(ASTNode node)
         {
+            string token = node.Lexeme;
             int val;
 
             token = token.Replace("(", "").Replace(")", "");  // get rid of ( or ) if its there
@@ -5018,11 +5002,12 @@ namespace RazorEnhanced.UOS
             else if (int.TryParse(token, out val))
                 return val;
 
-            throw new RunTimeError(null, "Cannot convert argument to int");
+            throw new UOSRuntimeError(node, "Cannot convert argument to int");
         }
 
-        public static uint ToUInt(string token)
+        public static uint ToUInt(ASTNode node)
         {
+            string token = node.Lexeme;
             uint val;
 
             if (token.StartsWith("0x"))
@@ -5033,11 +5018,12 @@ namespace RazorEnhanced.UOS
             else if (uint.TryParse(token, out val))
                 return val;
 
-            throw new RunTimeError(null, "Cannot convert " + token + " argument to uint");
+            throw new UOSRuntimeError(node, "Cannot convert " + token + " argument to uint");
         }
 
-        public static ushort ToUShort(string token)
+        public static ushort ToUShort(ASTNode node)
         {
+            string token = node.Lexeme;
             ushort val;
 
             if (token.StartsWith("0x"))
@@ -5048,21 +5034,23 @@ namespace RazorEnhanced.UOS
             else if (ushort.TryParse(token, out val))
                 return val;
 
-            throw new RunTimeError(null, "Cannot convert argument to ushort");
+            throw new UOSRuntimeError(node, "Cannot convert argument to ushort");
         }
 
-        public static double ToDouble(string token)
+        public static double ToDouble(ASTNode node)
         {
+            string token = node.Lexeme;
             double val;
 
             if (double.TryParse(token, out val))
                 return val;
 
-            throw new RunTimeError(null, "Cannot convert argument to double");
+            throw new UOSRuntimeError(node, "Cannot convert argument to double");
         }
 
-        public static bool ToBool(string token)
+        public static bool ToBool(ASTNode node)
         {
+            string token = node.Lexeme;
             bool val;
             switch (token)
             {
@@ -5076,7 +5064,7 @@ namespace RazorEnhanced.UOS
             if (bool.TryParse(token, out val))
                 return val;
 
-            throw new RunTimeError(null, "Cannot convert argument to bool");
+            throw new UOSRuntimeError(node, "Cannot convert argument to bool");
         }
     }
 
@@ -5138,7 +5126,7 @@ namespace RazorEnhanced.UOS
         public int AsInt()
         {
             if (Node.Lexeme == null)
-                throw new RunTimeError(Node, $"Cannot convert argument to int: {Node.LineNumber}");
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to int: {Node.LineNumber}");
 
             // Try to resolve it as a scoped variable first
             var arg = _script.Lookup(Node.Lexeme);
@@ -5153,14 +5141,14 @@ namespace RazorEnhanced.UOS
             arg = CheckIsListElement(Node.Lexeme);
             if (arg != null)
                 return arg.AsInt();
-            return TypeConverter.ToInt(Node.Lexeme);
+            return TypeConverter.ToInt(Node);
         }
 
         // Treat the argument as an unsigned integer
         public uint AsUInt()
         {
             if (Node.Lexeme == null)
-                throw new RunTimeError(Node, $"Cannot convert argument to uint: {Node.LineNumber}");
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to uint: {Node.LineNumber}");
 
             // Try to resolve it as a scoped variable first
             var arg = _script.Lookup(Node.Lexeme);
@@ -5176,13 +5164,13 @@ namespace RazorEnhanced.UOS
             arg = CheckIsListElement(Node.Lexeme);
             if (arg != null)
                 return arg.AsUInt();
-            return TypeConverter.ToUInt(Node.Lexeme);
+            return TypeConverter.ToUInt(Node);
         }
 
         public ushort AsUShort()
         {
             if (Node.Lexeme == null)
-                throw new RunTimeError(Node, $"Cannot convert argument to ushort {Node.LineNumber}");
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to ushort {Node.LineNumber}");
 
             // Try to resolve it as a scoped variable first
             var arg = _script.Lookup(Node.Lexeme);
@@ -5193,7 +5181,7 @@ namespace RazorEnhanced.UOS
             if (arg != null)
                 return arg.AsUShort();
 
-            return TypeConverter.ToUShort(Node.Lexeme);
+            return TypeConverter.ToUShort(Node);
         }
 
         // Treat the argument as a serial or an alias. Aliases will
@@ -5201,7 +5189,7 @@ namespace RazorEnhanced.UOS
         public uint AsSerial()
         {
             if (Node.Lexeme == null)
-                throw new RunTimeError(Node, $"Cannot convert argument to serial {Node.LineNumber}");
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to serial {Node.LineNumber}");
 
             // Try to resolve it as a scoped variable first
             var arg = _script.Lookup(Node.Lexeme);
@@ -5222,7 +5210,7 @@ namespace RazorEnhanced.UOS
                     return arg.AsUInt();
                 return AsUInt();
             }
-            catch (RunTimeError)
+            catch (UOSRuntimeError)
             {
                 // invalid numeric
             }
@@ -5233,7 +5221,7 @@ namespace RazorEnhanced.UOS
                     return (uint)arg.AsInt();
                 return (uint)AsInt();
             }
-            catch (RunTimeError)
+            catch (UOSRuntimeError)
             {
                 // invalid numeric
             }
@@ -5245,7 +5233,7 @@ namespace RazorEnhanced.UOS
         public string AsString()
         {
             if (Node.Lexeme == null)
-                throw new RunTimeError(Node, $"Cannot convert argument to string {Node.LineNumber}");
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to string {Node.LineNumber}");
 
             // Try to resolve it as a scoped variable first
             var arg = _script.Lookup(Node.Lexeme);
@@ -5278,7 +5266,7 @@ namespace RazorEnhanced.UOS
         public bool AsBool()
         {
             if (Node.Lexeme == null)
-                throw new RunTimeError(Node, $"Cannot convert argument to bool {Node.LineNumber}");
+                throw new UOSRuntimeError(Node, $"Cannot convert argument to bool {Node.LineNumber}");
 
             // Try to resolve it as a scoped variable first
             var arg = _script.Lookup(Node.Lexeme);
@@ -5290,7 +5278,7 @@ namespace RazorEnhanced.UOS
                 return arg.AsBool();
 
 
-            return TypeConverter.ToBool(Node.Lexeme);
+            return TypeConverter.ToBool(Node);
         }
 
         public override bool Equals(object obj)
@@ -5432,7 +5420,7 @@ namespace RazorEnhanced.UOS
             if (_statement == null) { return false;}
 
             if (_statement.Type != ASTNodeType.STATEMENT)
-                throw new RunTimeError(_statement, "Invalid script");
+                throw new UOSRuntimeError(_statement, "Invalid script");
                 
             var node = _statement.FirstChild();
 
@@ -5441,7 +5429,7 @@ namespace RazorEnhanced.UOS
             }
 
             if (node == null)
-                throw new RunTimeError(_statement, "Invalid statement");
+                throw new UOSRuntimeError(_statement, "Invalid statement");
 
 
 
@@ -5511,7 +5499,7 @@ namespace RazorEnhanced.UOS
                         }
 
                         if (_statement == null)
-                            throw new RunTimeError(node, "If with no matching endif");
+                            throw new UOSRuntimeError(node, "If with no matching endif");
 
                         break;
                     }
@@ -5540,7 +5528,7 @@ namespace RazorEnhanced.UOS
                     }
 
                     if (_statement == null)
-                        throw new RunTimeError(node, "If with no matching endif");
+                        throw new UOSRuntimeError(node, "If with no matching endif");
 
                     break;
                 case ASTNodeType.ENDIF:
@@ -5572,7 +5560,7 @@ namespace RazorEnhanced.UOS
                     }
 
                     if (_statement == null)
-                        throw new RunTimeError(node, "If with no matching endif");
+                        throw new UOSRuntimeError(node, "If with no matching endif");
 
                     break;
                 case ASTNodeType.WHILE:
@@ -5662,7 +5650,7 @@ namespace RazorEnhanced.UOS
                     _scope.timer.Reset();
                     Debug = curDebug;
                     if (_statement == null)
-                        throw new RunTimeError(node, "Unexpected endwhile");
+                        throw new UOSRuntimeError(node, "Unexpected endwhile");
 
                     break;
                 case ASTNodeType.FOR:
@@ -5679,7 +5667,7 @@ namespace RazorEnhanced.UOS
                             var max = node.FirstChild();
 
                             if (max.Type != ASTNodeType.INTEGER)
-                                throw new RunTimeError(max, "Invalid for loop syntax");
+                                throw new UOSRuntimeError(max, "Invalid for loop syntax");
 
                             // Create a dummy argument that acts as our loop variable
                             var iter = new ASTNode(ASTNodeType.INTEGER, "0", node, 0);
@@ -5794,7 +5782,7 @@ namespace RazorEnhanced.UOS
                             int end = int.Parse(endParam.Lexeme) + 1; // +1 is important
                             if (end > listSize)
                             {
-                                throw new RunTimeError(node, "Invalid for loop: END parameter must be smaller then the list size (" + listSize + "), " + (end - 1) + " given ");
+                                throw new UOSRuntimeError(node, "Invalid for loop: END parameter must be smaller then the list size (" + listSize + "), " + (end - 1) + " given ");
                             }
                             num_iter = end - start;
                         }
@@ -5922,7 +5910,7 @@ namespace RazorEnhanced.UOS
                     Debug = curDebug;
 
                     if (_statement == null)
-                        throw new RunTimeError(node, "Unexpected endfor");
+                        throw new UOSRuntimeError(node, "Unexpected endfor");
                     break;
                 case ASTNodeType.BREAK:
                     // Walk until the end of the loop
@@ -5995,7 +5983,7 @@ namespace RazorEnhanced.UOS
                     }
                     Debug = curDebug;
                     if (_statement == null)
-                        throw new RunTimeError(node, "Unexpected continue");
+                        throw new UOSRuntimeError(node, "Unexpected continue");
                     break;
                 case ASTNodeType.STOP:
                     Engine.Interpreter.StopScript();
@@ -6076,12 +6064,12 @@ namespace RazorEnhanced.UOS
                 var handler = Engine.Interpreter.GetCommandHandler(node.Lexeme);
 
                 if (handler == null)
-                    throw new RunTimeError(node, "Unknown command");
+                    throw new UOSRuntimeError(node, "Unknown command");
 
                 cont = handler(node.Lexeme, ConstructArguments(ref node), quiet, force);
 
                 if (node != null)
-                    throw new RunTimeError(node, "Command did not consume all available arguments");
+                    throw new UOSRuntimeError(node, "Command did not consume all available arguments");
             }
             return cont;
         }
@@ -6089,12 +6077,12 @@ namespace RazorEnhanced.UOS
         private bool EvaluateExpression(ref ASTNode expr)
         {
             if (expr == null || (expr.Type != ASTNodeType.UNARY_EXPRESSION && expr.Type != ASTNodeType.BINARY_EXPRESSION && expr.Type != ASTNodeType.LOGICAL_EXPRESSION))
-                throw new RunTimeError(expr, "No expression following control statement");
+                throw new UOSRuntimeError(expr, "No expression following control statement");
 
             var node = expr.FirstChild();
 
             if (node == null)
-                throw new RunTimeError(expr, "Empty expression following control statement");
+                throw new UOSRuntimeError(expr, "Empty expression following control statement");
 
             switch (expr.Type)
             {
@@ -6116,7 +6104,7 @@ namespace RazorEnhanced.UOS
                 node = node.Next();
 
                 if (node == null)
-                    throw new RunTimeError(node, "Invalid logical expression");
+                    throw new UOSRuntimeError(node, "Invalid logical expression");
 
                 bool rhs;
                 var e = node.FirstChild();
@@ -6129,7 +6117,7 @@ namespace RazorEnhanced.UOS
                         rhs = EvaluateBinaryExpression(ref e);
                         break;
                     default:
-                        throw new RunTimeError(node, "Nested logical expressions are not possible");
+                        throw new UOSRuntimeError(node, "Nested logical expressions are not possible");
                 }
 
                 switch (op)
@@ -6141,7 +6129,7 @@ namespace RazorEnhanced.UOS
                         lhs = lhs || rhs;
                         break;
                     default:
-                        throw new RunTimeError(node, "Invalid logical operator");
+                        throw new UOSRuntimeError(node, "Invalid logical operator");
                 }
 
                 node = node.Next();
@@ -6195,10 +6183,10 @@ namespace RazorEnhanced.UOS
             }
             catch (ArgumentException e)
             {
-                throw new RunTimeError(null, e.Message);
+                throw new UOSRuntimeError(_statement, e.Message);
             }
 
-            throw new RunTimeError(null, "Unknown operator in expression");
+            throw new UOSRuntimeError(_statement, $"Unknown operator '{op}' in expression");
 
         }
 
@@ -6209,7 +6197,7 @@ namespace RazorEnhanced.UOS
             var handler = Engine.Interpreter.GetExpressionHandler(node.Lexeme);
 
             if (handler == null)
-                throw new RunTimeError(node, "Unknown expression");
+                throw new UOSRuntimeError(node, "Unknown expression");
 
             var result = handler(node.Lexeme, ConstructArguments(ref node), quiet);
 
@@ -6248,16 +6236,16 @@ namespace RazorEnhanced.UOS
             switch (node.Type)
             {
                 case ASTNodeType.INTEGER:
-                    val = TypeConverter.ToInt(node.Lexeme);
+                    val = TypeConverter.ToInt(node);
                     break;
                 case ASTNodeType.SERIAL:
-                    val = TypeConverter.ToUInt(node.Lexeme);
+                    val = TypeConverter.ToUInt(node);
                     break;
                 case ASTNodeType.STRING:
                     val = node.Lexeme;
                     break;
                 case ASTNodeType.DOUBLE:
-                    val = TypeConverter.ToDouble(node.Lexeme);
+                    val = TypeConverter.ToDouble(node);
                     break;
                 case ASTNodeType.OPERAND:
                     {
@@ -6273,7 +6261,7 @@ namespace RazorEnhanced.UOS
                         break;
                     }
                 default:
-                    throw new RunTimeError(node, "Invalid type found in expression");
+                    throw new UOSRuntimeError(node, "Invalid type found in expression");
             }
 
             return val;
@@ -6679,7 +6667,7 @@ namespace RazorEnhanced.UOS
         public bool ListContains(string name, Argument arg)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("ListContains {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("ListContains {0} does not exist", name));
 
             return _lists[name].Contains(arg);
         }
@@ -6687,7 +6675,7 @@ namespace RazorEnhanced.UOS
         public List<Argument> ListContents(string name)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("ListContents {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("ListContents {0} does not exist", name));
 
             return _lists[name];
         }
@@ -6696,7 +6684,7 @@ namespace RazorEnhanced.UOS
         public int ListLength(string name)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("ListLength {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("ListLength {0} does not exist", name));
 
             return _lists[name].Count;
         }
@@ -6704,7 +6692,7 @@ namespace RazorEnhanced.UOS
         public void PushList(string name, Argument arg, bool front, bool unique)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("PushList {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("PushList {0} does not exist", name));
 
             if (unique && _lists[name].Contains(arg))
                 return;
@@ -6718,7 +6706,7 @@ namespace RazorEnhanced.UOS
         public bool PopList(string name, Argument arg)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("PopList {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("PopList {0} does not exist", name));
 
             return _lists[name].Remove(arg);
         }
@@ -6726,7 +6714,7 @@ namespace RazorEnhanced.UOS
         public bool PopList(string name, bool front)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("PopList {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("PopList {0} does not exist", name));
 
             var idx = front ? 0 : _lists[name].Count - 1;
             _lists[name].RemoveAt(idx);
@@ -6737,7 +6725,7 @@ namespace RazorEnhanced.UOS
         public Argument GetListValue(string name, int idx)
         {
             if (!_lists.ContainsKey(name))
-                throw new RunTimeError(null, String.Format("GetListValue {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("GetListValue {0} does not exist", name));
 
             var list = _lists[name];
 
@@ -6755,7 +6743,7 @@ namespace RazorEnhanced.UOS
         public TimeSpan GetTimer(string name)
         {
             if (!_timers.TryGetValue(name, out DateTime timestamp))
-                throw new RunTimeError(null, String.Format("GetTimer {0} does not exist", name));
+                throw new UOSRuntimeError(null, String.Format("GetTimer {0} does not exist", name));
 
             TimeSpan elapsed = DateTime.UtcNow - timestamp;
 
@@ -6918,34 +6906,62 @@ namespace RazorEnhanced.UOS
         }
     }
 
-    public class SyntaxError : Exception
+    public class UOSScriptError : Exception
     {
         public ASTNode Node;
+        public string Type;
+        public string Lexeme;
         public string Line;
         public int LineNumber;
         public string Error;
 
-        public SyntaxError(ASTNode node, string error) : base(error)
+        public string ErrorName() { return this.GetType().Name; }
+
+        public UOSScriptError(ASTNode node, string error) : base(error)
         {
             Node = node;
-            Line = null;
-            LineNumber = 0;
+            Type = node?.Type.ToString()??"";
+            Lexeme = node?.Lexeme??"";
+            Line = node?.Lexer?.GetLine(node.LineNumber)??"";
+            LineNumber = node?.LineNumber??-1;
             Error = error;
         }
 
-        public SyntaxError(string line, int lineNumber, ASTNode node, string error) : base(error)
+        public UOSScriptError(string line, int lineNumber, ASTNode node, string error) : this(node, error)
         {
             Line = line;
             LineNumber = lineNumber;
-            Node = node;
-            Error = error;
         }
 
-        public override string Message { get { 
+        public string GetErrorMessage()
+        {
+            string msg = string.Format("{0}: {1}\n", ErrorName(), Error);
+            if (Node != null)
+            {
+                msg += String.Format("Type: {0}\n", Type);
+                msg += String.Format("Word: {0}\n", Lexeme);
+                msg += String.Format("Line: {0}\n", LineNumber + 1);
+                msg += String.Format("Code: {0}\n", Line);
+            }
+            return msg;
+        }
 
-            return $"line {LineNumber}: {Line}\nError near '{Node?.Lexeme??""}': {Error}";
-        } }
+        public override string Message { get { return GetErrorMessage(); } }
     }
+
+
+    public class UOSSyntaxError : UOSScriptError
+    {
+        public UOSSyntaxError(ASTNode node, string error) : base(node, error){}
+        public UOSSyntaxError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error){}
+    }
+
+    public class UOSRuntimeError : UOSScriptError
+    {
+        public UOSRuntimeError(ASTNode node, string error) : base(node, error){}
+        public UOSRuntimeError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error){}
+    }
+
 
     public enum ASTNodeType
     {
@@ -7126,13 +7142,13 @@ namespace RazorEnhanced.UOS
                     }
                 }
             }
-            catch (SyntaxError e)
+            catch (UOSSyntaxError e)
             {
-                throw new SyntaxError(lines[_curLine], _curLine, e.Node, "Syntax error!");
+                throw new UOSSyntaxError(lines[_curLine], _curLine, e.Node, "Syntax error!");
             }
             catch (Exception e)
             {
-                throw new SyntaxError(lines[_curLine], _curLine, null, e.Message);
+                throw new UOSSyntaxError(lines[_curLine], _curLine, null, e.Message);
             }
 
             return node;
@@ -7246,7 +7262,7 @@ namespace RazorEnhanced.UOS
                     node.Push(ASTNodeType.GREATER_THAN_OR_EQUAL, null, _curLine);
                     break;
                 default:
-                    throw new SyntaxError(node, "Invalid operator in binary expression");
+                    throw new UOSSyntaxError(node, "Invalid operator in binary expression");
             }
         }
 
@@ -7266,7 +7282,7 @@ namespace RazorEnhanced.UOS
                 case "if":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(statement, "Script compilation error");
 
                         var t = statement.Push(ASTNodeType.IF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -7275,7 +7291,7 @@ namespace RazorEnhanced.UOS
                 case "elseif":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(statement, "Script compilation error");
 
                         var t = statement.Push(ASTNodeType.ELSEIF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -7283,20 +7299,20 @@ namespace RazorEnhanced.UOS
                     }
                 case "else":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ELSE, null, _curLine);
                     break;
                 case "endif":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ENDIF, null, _curLine);
                     break;
                 case "while":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(statement, "Script compilation error");
 
                         var t = statement.Push(ASTNodeType.WHILE, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
@@ -7304,46 +7320,46 @@ namespace RazorEnhanced.UOS
                     }
                 case "endwhile":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ENDWHILE, null, _curLine);
                     break;
                 case "for":
                     {
                         if (lexemes.Length <= 1)
-                            throw new SyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(statement, "Script compilation error");
 
                         ParseForLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "endfor":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.ENDFOR, null, _curLine);
                     break;
                 case "break":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.BREAK, null, _curLine);
                     break;
                 case "continue":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.CONTINUE, null, _curLine);
                     break;
                 case "stop":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.STOP, null, _curLine);
                     break;
                 case "replay":
                 case "loop":
                     if (lexemes.Length > 1)
-                        throw new SyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(statement, "Script compilation error");
 
                     statement.Push(ASTNodeType.REPLAY, null, _curLine);
                     break;
@@ -7431,7 +7447,7 @@ namespace RazorEnhanced.UOS
                 unary = true;
 
             if (unary && binary)
-                throw new SyntaxError(node, String.Format("Invalid expression at line {0}", node.LineNumber));
+                throw new UOSSyntaxError(node, String.Format("Invalid expression at line {0}", node.LineNumber));
 
             if (unary)
                 ParseUnaryExpression(node, lexemes);
@@ -7522,12 +7538,12 @@ namespace RazorEnhanced.UOS
             //Common Syntax check
             if (!matchNumber.IsMatch(lexemes[0]))
             {
-                throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
+                throw new UOSSyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
             }
 
             if (lexemes.Length > 1 && lexemes[1] != "to" && lexemes[1] != "in" )
             {
-                throw new SyntaxError(statement, "Invalid for loop: missing 'to/in' keyword");
+                throw new UOSSyntaxError(statement, "Invalid for loop: missing 'to/in' keyword");
             }
 
 
@@ -7537,7 +7553,7 @@ namespace RazorEnhanced.UOS
             if (lexemes.Length == 1)
             {
                 if (!matchNumber.IsMatch(lexemes[0])) {
-                    throw new SyntaxError(statement, "Invalid for loop: expected number got "+ lexemes[0]);
+                    throw new UOSSyntaxError(statement, "Invalid for loop: expected number got "+ lexemes[0]);
                 }
                 var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
@@ -7547,15 +7563,15 @@ namespace RazorEnhanced.UOS
             {
                 if (!matchNumber.IsMatch(lexemes[2]))
                 {
-                    throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
+                    throw new UOSSyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
                 if ( lexemes[3] != "in" && lexemes[3] != "to" )
                 {
-                    throw new SyntaxError(statement, "Invalid for loop: missing 'in/to' keyword");
+                    throw new UOSSyntaxError(statement, "Invalid for loop: missing 'in/to' keyword");
                 }
                 if (!matchListName.IsMatch(lexemes[4]))
                 {
-                    throw new SyntaxError(statement, "Invalid for loop: list names must contain letters");
+                    throw new UOSSyntaxError(statement, "Invalid for loop: list names must contain letters");
                 }
 
                 var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
@@ -7575,7 +7591,7 @@ namespace RazorEnhanced.UOS
             {
                 if (!matchNumber.IsMatch(lexemes[2]))
                 {
-                    throw new SyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
+                    throw new UOSSyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
                 int from = Int32.Parse(lexemes[0]);
                 int to = Int32.Parse(lexemes[2]);
@@ -7583,7 +7599,7 @@ namespace RazorEnhanced.UOS
 
                 if (length < 0)
                 {
-                    throw new SyntaxError(statement, "Invalid for loop: loop count must be greater then 0, " + length.ToString() + " given ");
+                    throw new UOSSyntaxError(statement, "Invalid for loop: loop count must be greater then 0, " + length.ToString() + " given ");
                 }
 
                 var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
@@ -7592,7 +7608,7 @@ namespace RazorEnhanced.UOS
             //CASE: syntax error
             else
             {
-                throw new SyntaxError(statement, "Invalid for loop");
+                throw new UOSSyntaxError(statement, "Invalid for loop");
             }
         }
 
