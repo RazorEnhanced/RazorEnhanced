@@ -1,5 +1,6 @@
 using Accord.Math;
 using Assistant;
+using IronPython.Compiler.Ast;
 using IronPython.Runtime;
 using Microsoft.Scripting.Utils;
 using System;
@@ -19,6 +20,75 @@ using System.Windows.Forms;
 namespace RazorEnhanced.UOS
 {
     //
+
+
+    public class UOSScriptError : Exception
+    {
+        public ASTNode Node;
+        public string Type;
+        public string Lexeme;
+        public string Line;
+        public int LineNumber;
+        public string Error;
+
+        public string ErrorName() { return this.GetType().Name; }
+
+        public UOSScriptError(ASTNode node, string error) : base(error)
+        {
+            Node = node;
+            Type = node?.Type.ToString() ?? "";
+            Lexeme = node?.Lexeme ?? "";
+            Line = node?.Lexer?.GetLine(node.LineNumber) ?? "";
+            LineNumber = node?.LineNumber ?? -1;
+            Error = error;
+        }
+
+        public UOSScriptError(string line, int lineNumber, ASTNode node, string error) : this(node, error)
+        {
+            Line = line;
+            LineNumber = lineNumber;
+        }
+
+        public string GetErrorMessage()
+        {
+            string msg = string.Format("{0}: {1}\n", ErrorName(), Error);
+            if (Node != null)
+            {
+                msg += String.Format("Type: {0}\n", Type);
+                msg += String.Format("Word: {0}\n", Lexeme);
+                msg += String.Format("Line: {0}\n", LineNumber + 1);
+                msg += String.Format("Code: {0}\n", Line);
+            }
+            return msg;
+        }
+
+        public override string Message { get { return GetErrorMessage(); } }
+    }
+
+
+    public class UOSSyntaxError : UOSScriptError
+    {
+        public UOSSyntaxError(ASTNode node, string error) : base(node, error) { }
+        public UOSSyntaxError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error) { }
+    }
+
+    public class UOSRuntimeError : UOSScriptError
+    {
+        public UOSRuntimeError(ASTNode node, string error) : base(node, error) { }
+        public UOSRuntimeError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error) { }
+    }
+
+    public class UOSArgumentError : UOSRuntimeError
+    {
+        public UOSArgumentError(ASTNode node, string error) : base(node, error) { }
+        public UOSArgumentError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error) { }
+    }
+
+
+
+
+
+
     public class UOSteamEngine
     {
         static bool DEFAULT_ISOLATION = false;
@@ -348,15 +418,13 @@ namespace RazorEnhanced.UOS
             }
         }
 
-        public class IllegalArgumentException : Exception
-        {
-            public IllegalArgumentException(string msg) : base(msg) { }
-        }
+       
 
-        public static void WrongParameterCount(string commands, int expected, int given, string message = "")
+        public static void WrongParameterCount(ASTNode node, int expected, int given, string message = "")
         {
-            var msg = String.Format("{0} expect {1} parameters, {2} given. {3}", commands, expected, given, message);
-            throw new IllegalArgumentException(msg);
+            string command = node.Lexeme;
+            var msg = String.Format("{0} expect {1} parameters, {2} given. {3}", command, expected, given, message);
+            throw new UOSArgumentError(node, msg);
         }
         
         private void RegisterCommands()
@@ -524,27 +592,27 @@ namespace RazorEnhanced.UOS
 
 
             // Player Attributes
-            m_Interpreter.RegisterExpressionHandler("weight", (string expression, Argument[] args, bool quiet) => Player.Weight);
-            m_Interpreter.RegisterExpressionHandler("maxweight", (string expression, Argument[] args, bool quiet) => Player.MaxWeight);
-            m_Interpreter.RegisterExpressionHandler("diffweight", (string expression, Argument[] args, bool quiet) => Player.MaxWeight - Player.Weight);
-            m_Interpreter.RegisterExpressionHandler("mana", (string expression, Argument[] args, bool quiet) => Player.Mana);
-            m_Interpreter.RegisterExpressionHandler("maxmana", (string expression, Argument[] args, bool quiet) => Player.ManaMax);
-            m_Interpreter.RegisterExpressionHandler("stam", (string expression, Argument[] args, bool quiet) => Player.Stam);
-            m_Interpreter.RegisterExpressionHandler("maxstam", (string expression, Argument[] args, bool quiet) => Player.StamMax);
-            m_Interpreter.RegisterExpressionHandler("dex", (string expression, Argument[] args, bool quiet) => Player.Dex);
-            m_Interpreter.RegisterExpressionHandler("int", (string expression, Argument[] args, bool quiet) => Player.Int);
-            m_Interpreter.RegisterExpressionHandler("str", (string expression, Argument[] args, bool quiet) => Player.Str);
-            m_Interpreter.RegisterExpressionHandler("physical", (string expression, Argument[] args, bool quiet) => Player.AR);
-            m_Interpreter.RegisterExpressionHandler("fire", (string expression, Argument[] args, bool quiet) => Player.FireResistance);
-            m_Interpreter.RegisterExpressionHandler("cold", (string expression, Argument[] args, bool quiet) => Player.ColdResistance);
-            m_Interpreter.RegisterExpressionHandler("poison", (string expression, Argument[] args, bool quiet) => Player.PoisonResistance);
-            m_Interpreter.RegisterExpressionHandler("energy", (string expression, Argument[] args, bool quiet) => Player.EnergyResistance);
+            m_Interpreter.RegisterExpressionHandler("weight", (ASTNode node, Argument[] args, bool quiet) => Player.Weight);
+            m_Interpreter.RegisterExpressionHandler("maxweight", (ASTNode node, Argument[] args, bool quiet) => Player.MaxWeight);
+            m_Interpreter.RegisterExpressionHandler("diffweight", (ASTNode node, Argument[] args, bool quiet) => Player.MaxWeight - Player.Weight);
+            m_Interpreter.RegisterExpressionHandler("mana", (ASTNode node, Argument[] args, bool quiet) => Player.Mana);
+            m_Interpreter.RegisterExpressionHandler("maxmana", (ASTNode node, Argument[] args, bool quiet) => Player.ManaMax);
+            m_Interpreter.RegisterExpressionHandler("stam", (ASTNode node, Argument[] args, bool quiet) => Player.Stam);
+            m_Interpreter.RegisterExpressionHandler("maxstam", (ASTNode node, Argument[] args, bool quiet) => Player.StamMax);
+            m_Interpreter.RegisterExpressionHandler("dex", (ASTNode node, Argument[] args, bool quiet) => Player.Dex);
+            m_Interpreter.RegisterExpressionHandler("int", (ASTNode node, Argument[] args, bool quiet) => Player.Int);
+            m_Interpreter.RegisterExpressionHandler("str", (ASTNode node, Argument[] args, bool quiet) => Player.Str);
+            m_Interpreter.RegisterExpressionHandler("physical", (ASTNode node, Argument[] args, bool quiet) => Player.AR);
+            m_Interpreter.RegisterExpressionHandler("fire", (ASTNode node, Argument[] args, bool quiet) => Player.FireResistance);
+            m_Interpreter.RegisterExpressionHandler("cold", (ASTNode node, Argument[] args, bool quiet) => Player.ColdResistance);
+            m_Interpreter.RegisterExpressionHandler("poison", (ASTNode node, Argument[] args, bool quiet) => Player.PoisonResistance);
+            m_Interpreter.RegisterExpressionHandler("energy", (ASTNode node, Argument[] args, bool quiet) => Player.EnergyResistance);
 
-            m_Interpreter.RegisterExpressionHandler("followers", (string expression, Argument[] args, bool quiet) => Player.Followers);
-            m_Interpreter.RegisterExpressionHandler("maxfollowers", (string expression, Argument[] args, bool quiet) => Player.FollowersMax);
-            m_Interpreter.RegisterExpressionHandler("gold", (string expression, Argument[] args, bool quiet) => Player.Gold);
-            m_Interpreter.RegisterExpressionHandler("hidden", (string expression, Argument[] args, bool quiet) => !Player.Visible);
-            m_Interpreter.RegisterExpressionHandler("luck", (string expression, Argument[] args, bool quiet) => Player.Luck);
+            m_Interpreter.RegisterExpressionHandler("followers", (ASTNode node, Argument[] args, bool quiet) => Player.Followers);
+            m_Interpreter.RegisterExpressionHandler("maxfollowers", (ASTNode node, Argument[] args, bool quiet) => Player.FollowersMax);
+            m_Interpreter.RegisterExpressionHandler("gold", (ASTNode node, Argument[] args, bool quiet) => Player.Gold);
+            m_Interpreter.RegisterExpressionHandler("hidden", (ASTNode node, Argument[] args, bool quiet) => !Player.Visible);
+            m_Interpreter.RegisterExpressionHandler("luck", (ASTNode node, Argument[] args, bool quiet) => Player.Luck);
             m_Interpreter.RegisterExpressionHandler("waitingfortarget", WaitingForTarget); //TODO: loose approximation, see inside
 
             m_Interpreter.RegisterExpressionHandler("hits", Hits);
@@ -576,14 +644,16 @@ namespace RazorEnhanced.UOS
 
         #region Dummy and Placeholders
 
-        private static IComparable ExpressionNotImplemented(string expression, Argument[] args, bool _)
+        private static IComparable ExpressionNotImplemented(ASTNode node, Argument[] args, bool _)
         {
+            string expression = node.Lexeme;
             Console.WriteLine("Expression Not Implemented {0} {1}", expression, args);
             return 0;
         }
 
-        private static bool NotImplemented(string command, Argument[] args, bool quiet, bool force)
+        private static bool NotImplemented(ASTNode node, Argument[] args, bool quiet, bool force)
         {
+            string command = node.Lexeme;
             Console.WriteLine("UOS: NotImplemented {0} {1}", command, args);
             return true;
         }
@@ -597,7 +667,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// if contents (serial) ('operator') ('value')
         /// </summary>
-        private static IComparable CountContents(string expression, Argument[] args, bool quiet)
+        private static IComparable CountContents(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -631,7 +701,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// counttype (graphic) (color) (source) (operator) (value)
         /// </summary>
-        private static IComparable CountType(string expression, Argument[] args, bool quiet)
+        private static IComparable CountType(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 3)
@@ -649,7 +719,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// if injournal ('text') ['author'/'system']
         /// </summary>
-        private IComparable InJournal(string expression, Argument[] args, bool quiet)
+        private IComparable InJournal(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -672,7 +742,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// if listexists ('list name')
         /// </summary>
-        private IComparable ListExists(string expression, Argument[] args, bool quiet)
+        private IComparable ListExists(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -687,16 +757,16 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useobject (serial)
         /// </summary>
-        private IComparable UseObjExp(string expression, Argument[] args, bool quiet)
+        private IComparable UseObjExp(ASTNode node, Argument[] args, bool quiet)
         {
-            UseObject(expression, args, quiet, false);
+            UseObject(node, args, quiet, false);
             return true;
         }
 
         /// <summary>
         /// findalias ('alias name')
         /// </summary>
-        private IComparable FindAlias(string expression, Argument[] args, bool quiet)
+        private IComparable FindAlias(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -711,11 +781,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// x (serial)
         /// </summary>
-        private static IComparable LocationX(string expression, Argument[] args, bool quiet)
+        private static IComparable LocationX(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "X location requires a serial");
+                throw new UOSRuntimeError(node, "X location requires a serial");
                 // return 0;
             }
 
@@ -740,18 +810,18 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            throw new UOSRuntimeError(null, "X location serial not found");
+            throw new UOSRuntimeError(node, "X location serial not found");
             // return 0;
         }
 
         /// <summary>
         /// y (serial)
         /// </summary>
-        private static IComparable LocationY(string expression, Argument[] args, bool quiet)
+        private static IComparable LocationY(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "Y location requires a serial");
+                throw new UOSRuntimeError(node, "Y location requires a serial");
                 // return 0;
             }
 
@@ -775,18 +845,18 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            throw new UOSRuntimeError(null, "Y location serial not found");
+            throw new UOSRuntimeError(node, "Y location serial not found");
             // return 0;
         }
 
         /// <summary>
         /// z (serial)
         /// </summary>
-        private static IComparable LocationZ(string expression, Argument[] args, bool quiet)
+        private static IComparable LocationZ(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "Z location requires a serial");
+                throw new UOSRuntimeError(node, "Z location requires a serial");
                 // return 0;
             }
 
@@ -810,7 +880,7 @@ namespace RazorEnhanced.UOS
                 }
             }
 
-            throw new UOSRuntimeError(null, "Z location serial not found");
+            throw new UOSRuntimeError(node, "Z location serial not found");
             // return 0;
         }
 
@@ -818,7 +888,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// if not organizing
         /// </summary>
-        private static IComparable Organizing(string expression, Argument[] args, bool quiet)
+        private static IComparable Organizing(ASTNode node, Argument[] args, bool quiet)
         {
             return RazorEnhanced.Organizer.Status();
         }
@@ -826,7 +896,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// if not restock
         /// </summary>
-        private static IComparable Restocking(string expression, Argument[] args, bool quiet)
+        private static IComparable Restocking(ASTNode node, Argument[] args, bool quiet)
         {
             return RazorEnhanced.Restock.Status();
         }
@@ -933,11 +1003,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// findtype (graphic) [color] [source] [amount] [range or search level]
         /// </summary>
-        private IComparable FindType(string expression, Argument[] args, bool quiet)
+        private IComparable FindType(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "FindType requires parameters");
+                throw new UOSRuntimeError(node, "FindType requires parameters");
                 // return false;
             }
 
@@ -1032,11 +1102,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// property ('name') (serial) [operator] [value]
         /// </summary>
-        private static IComparable Property(string expression, Argument[] args, bool quiet)
+        private static IComparable Property(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 2)
             {
-                throw new UOSRuntimeError(null, "Property requires 2 parameters");
+                throw new UOSRuntimeError(node, "Property requires 2 parameters");
                 // return false;
             }
 
@@ -1074,11 +1144,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// durability ('name') (serial) [operator] [value]
         /// </summary>
-        private static IComparable Durability(string expression, Argument[] args, bool quiet)
+        private static IComparable Durability(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "durability requires 1 parameters");
+                throw new UOSRuntimeError(node, "durability requires 1 parameters");
             }
 
             uint serial = args[0].AsSerial();
@@ -1100,7 +1170,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// ingump (gump id/'any') ('text')
         /// </summary>
-        private static IComparable InGump(string expression, Argument[] args, bool quiet)
+        private static IComparable InGump(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 2)
             {
@@ -1122,7 +1192,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// war (serial)
         /// </summary>
-        private static IComparable InWarMode(string expression, Argument[] args, bool quiet)
+        private static IComparable InWarMode(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 1)
@@ -1140,7 +1210,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// poisoned [serial]
         /// </summary>
-        private static IComparable IsPoisoned(string expression, Argument[] args, bool quiet)
+        private static IComparable IsPoisoned(ASTNode node, Argument[] args, bool quiet)
         {
 
             if (args.Length == 0)
@@ -1163,7 +1233,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// name [serial]
         /// </summary>
-        private static IComparable Name(string expression, Argument[] args, bool quiet)
+        private static IComparable Name(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1185,7 +1255,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// dead [serial]
         /// </summary>
-        private static IComparable IsDead(string expression, Argument[] args, bool quiet)
+        private static IComparable IsDead(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1207,7 +1277,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// directionname [serial]
         /// </summary>
-        private static IComparable DirectionName(string expression, Argument[] args, bool quiet)
+        private static IComparable DirectionName(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1229,7 +1299,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// direction [serial]
         /// </summary>
-        private static IComparable Direction(string expression, Argument[] args, bool quiet)
+        private static IComparable Direction(ASTNode node, Argument[] args, bool quiet)
         {
             //UOS Direction -  Start in top-right-corner: 0 | North. Inclements: clockwise
             Dictionary<string, int> dir_num = new Dictionary<string, int>() {
@@ -1265,7 +1335,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// flying [serial]
         /// </summary>
-        private static IComparable IsFlying(string expression, Argument[] args, bool quiet)
+        private static IComparable IsFlying(ASTNode node, Argument[] args, bool quiet)
         {
             uint serial = (uint)Player.Serial;
             if (args.Length >= 1)
@@ -1283,7 +1353,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// paralyzed [serial]
         /// </summary>
-        private static IComparable IsParalyzed(string expression, Argument[] args, bool quiet)
+        private static IComparable IsParalyzed(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1300,7 +1370,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// mounted [serial]
         /// </summary>
-        private static IComparable IsMounted(string expression, Argument[] args, bool quiet)
+        private static IComparable IsMounted(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1317,7 +1387,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// yellowhits [serial]
         /// </summary>
-        private static IComparable YellowHits(string expression, Argument[] args, bool quiet)
+        private static IComparable YellowHits(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1345,7 +1415,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// criminal [serial]
         /// </summary>
-        private static IComparable IsCriminal(string expression, Argument[] args, bool quiet)
+        private static IComparable IsCriminal(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1362,7 +1432,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// murderer [serial]
         /// </summary>
-        private static IComparable IsMurderer(string expression, Argument[] args, bool quiet)
+        private static IComparable IsMurderer(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1379,11 +1449,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// enemy serial
         /// </summary>
-        private static IComparable IsEnemy(string expression, Argument[] args, bool quiet)
+        private static IComparable IsEnemy(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "enemy requires parameters");
+                throw new UOSRuntimeError(node, "enemy requires parameters");
                 // return false;
             }
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
@@ -1397,11 +1467,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// friend serial
         /// </summary>
-        private static IComparable IsFriend(string expression, Argument[] args, bool quiet)
+        private static IComparable IsFriend(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "friend requires parameters");
+                throw new UOSRuntimeError(node, "friend requires parameters");
             }
 
             Mobile theMobile = Mobiles.FindBySerial((int)args[0].AsSerial());
@@ -1415,7 +1485,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// gray serial
         /// </summary>
-        private static IComparable IsGray(string expression, Argument[] args, bool quiet)
+        private static IComparable IsGray(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1432,7 +1502,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// innocent serial
         /// </summary>
-        private static IComparable IsInnocent(string expression, Argument[] args, bool quiet)
+        private static IComparable IsInnocent(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1449,7 +1519,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// bandage
         /// </summary>
-        private static IComparable Bandage(string expression, Argument[] args, bool quiet)
+        private static IComparable Bandage(ASTNode node, Argument[] args, bool quiet)
         {
             int count = Items.ContainerCount((int)Player.Backpack.Serial, 0x0E21, -1, true);
             if (count > 0 && (Player.Hits < Player.HitsMax || Player.Poisoned))
@@ -1460,7 +1530,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// gumpexists (gump id/'any')
         /// </summary>
-        private static IComparable GumpExists(string expression, Argument[] args, bool quiet)
+        private static IComparable GumpExists(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1478,7 +1548,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// list ('list name') (operator) (value)
         /// </summary>
-        private IComparable ListCount(string expression, Argument[] args, bool quiet)
+        private IComparable ListCount(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 1)
             {
@@ -1486,14 +1556,14 @@ namespace RazorEnhanced.UOS
                 return m_Interpreter.ListLength(listName);
             }
 
-            WrongParameterCount("list", 1, args.Length, "list command requires 1 parameter, the list name");
+            WrongParameterCount(node, 1, args.Length, "list command requires 1 parameter, the list name");
             return 0;
         }
 
         /// <summary>
         /// inlist ('list name') ('element value')
         /// </summary>
-        private IComparable InList(string expression, Argument[] args, bool quiet)
+        private IComparable InList(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 1)
             {
@@ -1506,7 +1576,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// skillstate ('skill name') (operator) ('locked'/'up'/'down')
         /// </summary>
-        private static IComparable SkillState(string expression, Argument[] args, bool quiet)
+        private static IComparable SkillState(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 1)
             {
@@ -1528,11 +1598,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// inregion ('guards'/'town'/'dungeon'/'forest') [serial] [range]
         /// </summary>
-        private static IComparable InRegion(string expression, Argument[] args, bool quiet)
+        private static IComparable InRegion(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "inregion requires parameters");
+                throw new UOSRuntimeError(node, "inregion requires parameters");
                 // return false;
             }
 
@@ -1572,27 +1642,27 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// findwand NOT IMPLEMENTED
         /// </summary>
-        private static IComparable FindWand(string expression, Argument[] args, bool quiet)
+        private static IComparable FindWand(ASTNode node, Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return ExpressionNotImplemented(node, args, quiet);
         }
 
         /// <summary>
         /// inparty NOT IMPLEMENTED
         /// </summary>
-        private static IComparable InParty(string expression, Argument[] args, bool quiet)
+        private static IComparable InParty(ASTNode node, Argument[] args, bool quiet)
         {
-            return ExpressionNotImplemented(expression, args, quiet);
+            return ExpressionNotImplemented(node, args, quiet);
         }
 
         /// <summary>
         /// skill ('name') (operator) (value)
         /// </summary>
-        private static IComparable Skill(string expression, Argument[] args, bool quiet)
+        private static IComparable Skill(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "Skill requires parameters");
+                throw new UOSRuntimeError(node, "Skill requires parameters");
                 // return false;
             }
 
@@ -1604,11 +1674,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// findobject (serial) [color] [source] [amount] [range]
         /// </summary>
-        private IComparable FindObject(string expression, Argument[] args, bool quiet)
+        private IComparable FindObject(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "Find Object requires parameters");
+                throw new UOSRuntimeError(node, "Find Object requires parameters");
                 // return false;
             }
             m_Interpreter.UnSetAlias("found");
@@ -1679,11 +1749,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// graphic (serial) (operator) (value)
         /// </summary>
-        private static IComparable Graphic(string expression, Argument[] args, bool quiet)
+        private static IComparable Graphic(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length > 1)
             {
-                throw new UOSRuntimeError(null, "graphic Object requires 0 or 1 parameters");
+                throw new UOSRuntimeError(node, "graphic Object requires 0 or 1 parameters");
             }
 
             if (args.Length == 0)
@@ -1713,11 +1783,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// distance (serial) (operator) (value)
         /// </summary>
-        private static IComparable Distance(string expression, Argument[] args, bool quiet)
+        private static IComparable Distance(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "Distance Object requires parameters");
+                throw new UOSRuntimeError(node, "Distance Object requires parameters");
                 // return Int32.MaxValue;
             }
 
@@ -1752,11 +1822,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// inrange (serial) (range)
         /// </summary>
-        private static IComparable InRange(string expression, Argument[] args, bool quiet)
+        private static IComparable InRange(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 2)
             {
-                throw new UOSRuntimeError(null, "Find Object requires parameters");
+                throw new UOSRuntimeError(node, "Find Object requires parameters");
                 // return false;
             }
             uint serial = args[0].AsSerial();
@@ -1795,7 +1865,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// buffexists ('buff name')
         /// </summary>
-        private static IComparable BuffExists(string expression, Argument[] args, bool quiet)
+        private static IComparable BuffExists(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length >= 1)
             {
@@ -1809,11 +1879,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// findlayer (serial) (layer)
         /// </summary>
-        private IComparable FindLayer(string expression, Argument[] args, bool quiet)
+        private IComparable FindLayer(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 2)
             {
-                throw new UOSRuntimeError(null, "Find Object requires parameters");
+                throw new UOSRuntimeError(node, "Find Object requires parameters");
                 // return false;
             }
             uint serial = args[0].AsSerial();
@@ -1834,11 +1904,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// counttypeground (graphic) (color) (range) (operator) (value)
         /// </summary>
-        private static IComparable CountTypeGround(string expression, Argument[] args, bool quiet)
+        private static IComparable CountTypeGround(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length < 1)
             {
-                throw new UOSRuntimeError(null, "CountTypeGround requires parameters");
+                throw new UOSRuntimeError(node, "CountTypeGround requires parameters");
                 // return 0;
             }
 
@@ -1863,7 +1933,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// infriendlist (serial)
         /// </summary>
-        private static IComparable InFriendList(string expression, Argument[] args, bool quiet)
+        private static IComparable InFriendList(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length > 0)
             {
@@ -1882,9 +1952,9 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  timer ('timer name') (operator) (value)
         /// </summary>
-        private IComparable Timer(string expression, Argument[] args, bool quiet)
+        private IComparable Timer(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
+            if (args.Length < 1) { WrongParameterCount(node, 1, args.Length); }
 
             return m_Interpreter.GetTimer(args[0].AsString()).TotalMilliseconds;
 
@@ -1893,16 +1963,16 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  timerexists ('timer name')
         /// </summary>
-        private IComparable TimerExists(string expression, Argument[] args, bool quiet)
+        private IComparable TimerExists(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length < 1) { WrongParameterCount(expression, 1, args.Length); }
+            if (args.Length < 1) { WrongParameterCount(node, 1, args.Length); }
             return m_Interpreter.TimerExists(args[0].AsString());
         }
 
         /// <summary>
         ///  targetexists ('Any' | 'Harmful' | 'Neutral' | 'Beneficial')
         /// </summary>
-        private static IComparable TargetExists(string expression, Argument[] args, bool quiet)
+        private static IComparable TargetExists(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length >= 1)
             {
@@ -1917,7 +1987,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  waitingfortarget POORLY IMPLEMENTED
         /// </summary>
-        private static IComparable WaitingForTarget(string expression, Argument[] args, bool quiet)
+        private static IComparable WaitingForTarget(ASTNode node, Argument[] args, bool quiet)
         {
             //TODO: This is an very loose approximation. Waitingfortarget should know if there is any "pending target" coming from the server.
             //UOS Tester: Lermster#2355
@@ -1927,7 +1997,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// hits [serial]
         /// </summary>
-        private static IComparable Hits(string expression, Argument[] args, bool quiet)
+        private static IComparable Hits(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1951,7 +2021,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// diffhits [serial]
         /// </summary>
-        private static IComparable DiffHits(string expression, Argument[] args, bool quiet)
+        private static IComparable DiffHits(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -1973,7 +2043,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// maxhits [serial]
         /// </summary>
-        private static IComparable MaxHits(string expression, Argument[] args, bool quiet)
+        private static IComparable MaxHits(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -2004,7 +2074,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// land
         /// </summary>
-        private static bool LandCommand(string command, Argument[] args, bool quiet, bool force)
+        private static bool LandCommand(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Player.Fly(false);
             return true;
@@ -2014,20 +2084,20 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// fly
         /// </summary>
-        private static bool FlyCommand(string command, Argument[] args, bool quiet, bool force)
+        private static bool FlyCommand(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Player.Fly(true);
             return true;
         }
 
-        private static bool Pause(string command, Argument[] args, bool quiet, bool force)
+        private static bool Pause(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             int delay = args[0].AsInt();
             Misc.Pause(delay);
             return true;
         }
 
-        private static bool Info(string command, Argument[] args, bool quiet, bool force)
+        private static bool Info(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Misc.Inspect();
             return true;
@@ -2037,7 +2107,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// setability ('primary'/'secondary'/'stun'/'disarm') ['on'/'off']
         /// </summary>
-        private bool SetAbility(string command, Argument[] args, bool quiet, bool force)
+        private bool SetAbility(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
@@ -2103,7 +2173,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// attack (serial)
         /// </summary>
-        private static bool Attack(string command, Argument[] args, bool quiet, bool force)
+        private static bool Attack(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 1)
             {
@@ -2139,7 +2209,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// walk (direction)
         /// </summary>
-        private static bool Walk(string command, Argument[] args, bool quiet, bool force)
+        private static bool Walk(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
                 Player.Walk(Player.Direction);
@@ -2149,7 +2219,7 @@ namespace RazorEnhanced.UOS
                 string direction = args[0].AsString().ToLower();
                 if (!map.ContainsKey(direction))
                 {
-                    throw new IllegalArgumentException(args[0].AsString() + " not recognized.");
+                    throw new UOSArgumentError(node, args[0].AsString() + " not recognized.");
                 }
                 direction = map[direction];
                 if (Player.Direction != direction)
@@ -2163,7 +2233,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// pathfindto x y
         /// </summary>
-        private bool PathFindTo(string command, Argument[] args, bool quiet, bool force)
+        private bool PathFindTo(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
             {
@@ -2182,7 +2252,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// run (direction)
         /// </summary>
-        private static bool Run(string command, Argument[] args, bool quiet, bool force)
+        private static bool Run(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
                 Player.Run(Player.Direction);
@@ -2192,7 +2262,7 @@ namespace RazorEnhanced.UOS
                 string direction = args[0].AsString().ToLower();
                 if (!map.ContainsKey(direction))
                 {
-                    throw new IllegalArgumentException(args[0].AsString() + " not recognized.");
+                    throw new UOSArgumentError(node, args[0].AsString() + " not recognized.");
                 }
                 direction = map[direction];
                 if (Player.Direction != direction)
@@ -2206,14 +2276,14 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// turn (direction)
         /// </summary>
-        private static bool Turn(string command, Argument[] args, bool quiet, bool force)
+        private static bool Turn(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
                 string direction = args[0].AsString().ToLower();
                 if (! map.ContainsKey(direction))
                 {
-                    throw new IllegalArgumentException(args[0].AsString() + " not recognized.");
+                    throw new UOSArgumentError(node, args[0].AsString() + " not recognized.");
                 }
                 direction = map[direction];
                 if (Player.Direction != direction)
@@ -2227,7 +2297,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clearhands ('left'/'right'/'both')
         /// </summary>
-        private static bool ClearHands(string command, Argument[] args, bool quiet, bool force)
+        private static bool ClearHands(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0 || args[0].AsString().ToLower() == "both")
             {
@@ -2249,7 +2319,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clickobject (serial)
         /// </summary>
-        private static bool ClickObject(string command, Argument[] args, bool quiet, bool force)
+        private static bool ClickObject(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2263,7 +2333,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// bandageself
         /// </summary>
-        private static bool BandageSelf(string command, Argument[] args, bool quiet, bool force)
+        private static bool BandageSelf(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             BandageHeal.Heal(Assistant.World.Player, false);
             return true;
@@ -2273,7 +2343,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// usetype (graphic) [color] [source] [range or search level]
         /// </summary>
-        private IComparable UseType(string command, Argument[] args, bool quiet)
+        private IComparable UseType(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 0)
             {
@@ -2312,7 +2382,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useobject (serial)
         /// </summary>
-        private bool UseObject(string command, Argument[] args, bool quiet, bool force)
+        private bool UseObject(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 0)
             {
@@ -2352,7 +2422,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useonce (graphic) [color]
         /// </summary>
-        private bool UseOnce(string command, Argument[] args, bool quiet, bool force)
+        private bool UseOnce(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // This is a bit problematic
             // UOSteam highlights the selected item red in your backpack, and it searches recursively to find the item id
@@ -2392,7 +2462,7 @@ namespace RazorEnhanced.UOS
         /// clearusequeue resets the use once list
         /// </summary>
         /// 
-        private bool CleanUseQueue(string command, Argument[] args, bool quiet, bool force)
+        private bool CleanUseQueue(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             m_serialUseOnceIgnoreList.Clear();
             return true;
@@ -2402,7 +2472,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// (serial) (destination) [(x, y, z)] [amount]
         /// </summary>
-        private bool MoveItem(string command, Argument[] args, bool quiet, bool force)
+        private bool MoveItem(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
@@ -2435,7 +2505,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// useskill ('skill name'/'last')
         /// </summary>
-        private bool UseSkill(string command, Argument[] args, bool quiet, bool force)
+        private bool UseSkill(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2461,7 +2531,7 @@ namespace RazorEnhanced.UOS
         /// </summary>
         /// Feed doesn't support food groups etc unless someone adds it
         /// Config has the data now
-        private bool Feed(string command, Argument[] args, bool quiet, bool force)
+        private bool Feed(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
@@ -2495,7 +2565,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// rename (serial) ('name')
         /// </summary>
-        private bool RenamePet(string command, Argument[] args, bool quiet, bool force)
+        private bool RenamePet(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
             {
@@ -2512,7 +2582,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// togglehands ('left'/'right')
         /// </summary>
-        private  bool ToggleHands(string command, Argument[] args, bool quiet, bool force)
+        private  bool ToggleHands(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2556,7 +2626,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// unsetalias (alias name)
         /// </summary>
-        private bool UnSetAlias(string command, Argument[] args, bool quiet, bool force)
+        private bool UnSetAlias(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2570,11 +2640,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// setalias (alias name) [serial]
         /// </summary>
-        private bool SetAlias(string command, Argument[] args, bool quiet, bool force)
+        private bool SetAlias(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
-                return PromptAlias(command, args, quiet, force);
+                return PromptAlias(node, args, quiet, force);
             }
             if (args.Length == 2)
             {
@@ -2589,7 +2659,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// promptalias (alias name)
         /// </summary>
-        private bool PromptAlias(string command, Argument[] args, bool quiet, bool force)
+        private bool PromptAlias(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -2604,7 +2674,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// headmsg ('text') [color] [serial]
         /// </summary>
-        private static bool HeadMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool HeadMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             string msg = args[0].AsString();
             int color = 0;
@@ -2632,7 +2702,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// partymsg ('text') [color] [serial]
         /// </summary>
-        private static bool PartyMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool PartyMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 1)
@@ -2655,7 +2725,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// msg text [color]
         /// </summary>
-        private static bool MsgCommand(string command, Argument[] args, bool quiet, bool force)
+        private static bool MsgCommand(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             string msg = args[0].AsString();
             if (args.Length == 1)
@@ -2674,7 +2744,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// createlist (list name)
         /// </summary>
-        private bool CreateList(string command, Argument[] args, bool quiet, bool force)
+        private bool CreateList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length >= 1)
             {
@@ -2687,12 +2757,12 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// pushlist('list name') ('element value') ['front'/'back']
         /// </summary>
-        private bool PushList(string command, Argument[] args, bool quiet, bool force)
+        private bool PushList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
                 SendError("Usage: pushlist ('list name') ('element name') ('front'/'back']");
-                throw new UOSRuntimeError(null, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
+                throw new UOSRuntimeError(node, "Usage: pushlist ('list name') ('element name') ('front'/'back']");
                 // return true;
             }
 
@@ -2712,8 +2782,8 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                ASTNode node = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
-                Argument newArg = new Argument(insertItem._script, node);
+                ASTNode node_int = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
+                Argument newArg = new Argument(insertItem._script, node_int);
                 Console.WriteLine("Pushing {0} to list {1}", newArg.AsString(), listName);
                 m_Interpreter.PushList(listName, newArg, (frontBack == "front"), false);
             }
@@ -2724,7 +2794,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// moveitemoffset (serial) 'ground' [(x, y, z)] [amount] 
         /// </summary>
-        private static bool MoveItemOffset(string command, Argument[] args, bool quiet, bool force)
+        private static bool MoveItemOffset(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             uint serial = args[0].AsSerial();
             // string ground = args[1].AsString();
@@ -2752,7 +2822,7 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    WrongParameterCount(command, 5, args.Length, "Valid args num: 2,3,5,6");
+                    WrongParameterCount(node, 5, args.Length, "Valid args num: 2,3,5,6");
                 }
             }
 
@@ -2762,7 +2832,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// movetype (graphic) (source) (destination) [(x, y, z)] [color] [amount] [range or search level]
         /// </summary>
-        private static IComparable MoveType(string command, Argument[] args, bool quiet)
+        private static IComparable MoveType(ASTNode node, Argument[] args, bool quiet)
         {
             if (args.Length == 3)
             {
@@ -2857,7 +2927,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// movetypeoffset (graphic) (source) 'ground' [(x, y, z)] [color] [amount] [range or search level]
         /// </summary>
-        private static bool MoveTypeOffset(string command, Argument[] args, bool quiet, bool force)
+        private static bool MoveTypeOffset(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2 || args.Length == 3)
             {
@@ -2946,7 +3016,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// equipitem (serial) (layer)
         /// </summary>
-        private static bool EquipItem(string command, Argument[] args, bool quiet, bool force)
+        private static bool EquipItem(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
             {
@@ -2959,7 +3029,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// togglemounted
         /// </summary>
-        private bool ToggleMounted(string command, Argument[] args, bool quiet, bool force)
+        private bool ToggleMounted(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // uosteam has a crappy implementation
             // I am gonna change how it works a bit
@@ -2993,14 +3063,14 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// NOT IMPLEMENTED
         /// </summary>
-        private static bool EquipWand(string command, Argument[] args, bool quiet, bool force)
+        private static bool EquipWand(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
         /// <summary>
         /// buy ('list name')
         /// </summary>
-        private bool Buy(string command, Argument[] args, bool quiet, bool force)
+        private bool Buy(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3022,7 +3092,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// sell ('list name')
         /// </summary>
-        private bool Sell(string command, Argument[] args, bool quiet, bool force)
+        private bool Sell(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3044,7 +3114,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clearbuy
         /// </summary>
-        private static bool ClearBuy(string command, Argument[] args, bool quiet, bool force)
+        private static bool ClearBuy(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             BuyAgent.Disable();
             return true;
@@ -3053,7 +3123,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clearsell
         /// </summary>
-        private static bool ClearSell(string command, Argument[] args, bool quiet, bool force)
+        private static bool ClearSell(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             SellAgent.Disable();
             return true;
@@ -3062,7 +3132,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// restock ('profile name') [source] [destination] [dragDelay]
         /// </summary>
-        private static bool Restock(string command, Argument[] args, bool quiet, bool force)
+        private static bool Restock(ASTNode node, Argument[] args, bool quiet, bool force)
         {
 
             int src = -1;
@@ -3103,7 +3173,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// organizer ('profile name') [source] [destination] [dragDelay]
         /// </summary>
-        private static bool Organizer(string command, Argument[] args, bool quiet, bool force)
+        private static bool Organizer(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             int src = -1;
             int dst = -1;
@@ -3140,7 +3210,7 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-        private static bool AutoTargetObject(string command, Argument[] args, bool quiet, bool force)
+        private static bool AutoTargetObject(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3153,15 +3223,15 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// autoloot - NOT IMPLEMENTED
         /// </summary>
-        private static bool Autoloot(string command, Argument[] args, bool quiet, bool force)
+        private static bool Autoloot(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
         /// dress ['profile name']
         /// </summary>
-        private bool Dress(string command, Argument[] args, bool quiet, bool force)
+        private bool Dress(ASTNode node, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 1)
@@ -3183,7 +3253,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// undress ['profile name']
         /// </summary>
-        private bool Undress(string command, Argument[] args, bool quiet, bool force)
+        private bool Undress(ASTNode node, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 1)
@@ -3205,15 +3275,15 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// dressconfig What is this supposed to do ? NOT IMPLEMENTED
         /// </summary>
-        private static bool DressConfig(string command, Argument[] args, bool quiet, bool force)
+        private static bool DressConfig(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
         /// toggleautoloot
         /// </summary>
-        private static bool ToggleAutoloot(string command, Argument[] args, bool quiet, bool force)
+        private static bool ToggleAutoloot(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (RazorEnhanced.AutoLoot.Status())
             {
@@ -3229,7 +3299,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// togglescavenger
         /// </summary>
-        private static bool ToggleScavenger(string command, Argument[] args, bool quiet, bool force)
+        private static bool ToggleScavenger(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (RazorEnhanced.Scavenger.Status())
             {
@@ -3245,15 +3315,15 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// counter ('format') (operator) (value) NOT IMPLEMENTED
         /// </summary>
-        private static bool Counter(string command, Argument[] args, bool quiet, bool force)
+        private static bool Counter(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-                return NotImplemented(command, args, quiet, force);
+                return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
         /// waitforgump (gump id/'any') (timeout)
         /// </summary>
-        private static bool WaitForGump(string command, Argument[] args, bool quiet, bool force)
+        private static bool WaitForGump(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
             {
@@ -3267,7 +3337,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// replygump gump-id button [switch ...]
         /// </summary>
-        private static bool ReplyGump(string command, Argument[] args, bool quiet, bool force)
+        private static bool ReplyGump(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
             {
@@ -3295,7 +3365,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// closegump 'container' 'serial'
         /// </summary>
-        private bool CloseGump(string command, Argument[] args, bool quiet, bool force)
+        private bool CloseGump(ASTNode node, Argument[] args, bool quiet, bool force)
         {
 
             if (args.Length == 2)
@@ -3317,7 +3387,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clearjournal
         /// </summary>
-        private bool ClearJournal(string command, Argument[] args, bool quiet, bool force)
+        private bool ClearJournal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             m_journal.Clear();
             return true;
@@ -3326,7 +3396,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitforjournal ('text') (timeout) 
         /// </summary>
-        private bool WaitForJournal(string command, Argument[] args, bool quiet, bool force)
+        private bool WaitForJournal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
             {
@@ -3340,7 +3410,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// poplist ('list name') ('element value'/'front'/'back')
         /// </summary>
-        private bool PopList(string command, Argument[] args, bool quiet, bool force)
+        private bool PopList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             string frontBack = args[1].AsString().ToLower();
             m_Interpreter.PopList(args[0].AsString(), (frontBack == "front"));
@@ -3350,7 +3420,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// removelist ('list name')
         /// </summary>
-        private bool RemoveList(string command, Argument[] args, bool quiet, bool force)
+        private bool RemoveList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             m_Interpreter.DestroyList(args[0].AsString());
             return true;
@@ -3359,7 +3429,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clearlist ('list name')
         /// </summary>
-        private bool ClearList(string command, Argument[] args, bool quiet, bool force)
+        private bool ClearList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             m_Interpreter.ClearList(args[0].AsString());
             return true;
@@ -3368,7 +3438,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// ping
         /// </summary>
-        private static bool Ping(string command, Argument[] args, bool quiet, bool force)
+        private static bool Ping(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Assistant.Commands.Ping(null);
             return true;
@@ -3377,7 +3447,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// playmacro 'name'
         /// </summary>
-        private static bool PlayMacro(string command, Argument[] args, bool quiet, bool force)
+        private static bool PlayMacro(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length > 0)
             {
@@ -3395,7 +3465,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// playsound (sound id/'file name') 
         /// </summary>
-        private static bool PlaySound(string command, Argument[] args, bool quiet, bool force)
+        private static bool PlaySound(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3410,7 +3480,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// resync
         /// </summary>
-        private static bool Resync(string command, Argument[] args, bool quiet, bool force)
+        private static bool Resync(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Misc.Resync();
             return true;
@@ -3419,7 +3489,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// snapshot 
         /// </summary>
-        private static bool Snapshot(string command, Argument[] args, bool quiet, bool force)
+        private static bool Snapshot(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Assistant.ScreenCapManager.CaptureNow();
             return true;
@@ -3428,15 +3498,15 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// hotkeys
         /// </summary>
-        private static bool Hotkeys(string command, Argument[] args, bool quiet, bool force)
+        private static bool Hotkeys(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
         /// where
         /// </summary>
-        private static bool Where(string command, Argument[] args, bool quiet, bool force)
+        private static bool Where(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Assistant.Commands.Where(null);
             return true;
@@ -3445,7 +3515,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// messagebox ('title') ('body')
         /// </summary>
-        private static bool MessageBox(string command, Argument[] args, bool quiet, bool force)
+        private static bool MessageBox(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             string title = "not specified";
             string body = "empty";
@@ -3464,9 +3534,9 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// mapuo NOT IMPEMENTED
         /// </summary>
-        private static bool MapUO(string command, Argument[] args, bool quiet, bool force)
+        private static bool MapUO(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
 
@@ -3498,7 +3568,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clickscreen (x) (y) ['single'/'double'] ['left'/'right']
         /// </summary>
-        private bool ClickScreen(string command, Argument[] args, bool quiet, bool force)
+        private bool ClickScreen(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
@@ -3540,7 +3610,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// paperdoll
         /// </summary>
-        private static bool Paperdoll(string command, Argument[] args, bool quiet, bool force)
+        private static bool Paperdoll(ASTNode node, Argument[] args, bool quiet, bool force)
         {
 
             Misc.OpenPaperdoll();
@@ -3551,15 +3621,15 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// helpbutton  NOT IMPLEMENTED
         /// </summary>
-        private static bool HelpButton(string command, Argument[] args, bool quiet, bool force)
+        private static bool HelpButton(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
         /// guildbutton 
         /// </summary>
-        private static bool GuildButton(string command, Argument[] args, bool quiet, bool force)
+        private static bool GuildButton(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Player.GuildButton();
             return true;
@@ -3568,7 +3638,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// questsbutton 
         /// </summary>
-        private static bool QuestsButton(string command, Argument[] args, bool quiet, bool force)
+        private static bool QuestsButton(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Player.QuestButton();
             return true;
@@ -3577,7 +3647,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// logoutbutton 
         /// </summary>
-        private static bool LogoutButton(string command, Argument[] args, bool quiet, bool force)
+        private static bool LogoutButton(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Misc.Disconnect();
             return true;
@@ -3586,7 +3656,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// virtue('honor'/'sacrifice'/'valor') 
         /// </summary>
-        private static bool Virtue(string command, Argument[] args, bool quiet, bool force)
+        private static bool Virtue(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3600,7 +3670,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// guildmsg ('text')
         /// </summary>
-        private static bool GuildMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool GuildMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3613,7 +3683,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// allymsg ('text')
         /// </summary>
-        private static bool AllyMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool AllyMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3626,7 +3696,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// whispermsg ('text') [color]
         /// </summary>
-        private static bool WhisperMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool WhisperMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
             {
@@ -3645,7 +3715,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// yellmsg ('text') [color]
         /// </summary>
-        private static bool YellMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool YellMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
             {
@@ -3664,7 +3734,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// location (serial)
         /// </summary>
-        private bool Location(string command, Argument[] args, bool quiet, bool force)
+        private bool Location(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             uint serial = args[0].AsSerial();
             Mobile m = Mobiles.FindBySerial((int)serial);
@@ -3676,7 +3746,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// sysmsg (text) [color]
         /// </summary>
-        private bool SysMsg(string command, Argument[] args, bool quiet, bool force)
+        private bool SysMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3693,7 +3763,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// chatmsg (text) [color]
         /// </summary>
-        private static bool ChatMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool ChatMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
             {
@@ -3712,7 +3782,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// emotemsg (text) [color]
         /// </summary>
-        private static bool EmoteMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool EmoteMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1 || args.Length == 2)
             {
@@ -3731,7 +3801,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// promptmsg (text) [color]
         /// </summary>
-        private static bool PromptMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool PromptMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3744,7 +3814,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// timermsg (delay) (text) [color]
         /// </summary>
-        private static bool TimerMsg(string command, Argument[] args, bool quiet, bool force)
+        private static bool TimerMsg(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             //Verrify/Guessing parameter order.
             if (args.Length == 2)
@@ -3763,7 +3833,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitforprompt (timeout)
         /// </summary>
-        private static bool WaitForPrompt(string command, Argument[] args, bool quiet, bool force)
+        private static bool WaitForPrompt(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3776,7 +3846,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// cancelprompt 
         /// </summary>
-        private static bool CancelPrompt(string command, Argument[] args, bool quiet, bool force)
+        private static bool CancelPrompt(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Misc.CancelPrompt();
             return true;
@@ -3785,7 +3855,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// addfriend [serial]
         /// </summary>
-        private static bool AddFriend(string command, Argument[] args, bool quiet, bool force)
+        private static bool AddFriend(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // docs say something about options, guessing thats the selection ?
             // docs sucks and I stuggle to find examples on what params it takes
@@ -3817,16 +3887,16 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// removefriend NOT IMPLEMENTED
         /// </summary>
-        private static bool RemoveFriend(string command, Argument[] args, bool quiet, bool force)
+        private static bool RemoveFriend(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // the Razor API for removing a frend is not pretty ( agent code, midex up with form code a bit, NotImplemented for now )
-            return NotImplemented(command, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
         /// contextmenu (serial) (option)
         /// </summary>
-        private static bool ContextMenu(string command, Argument[] args, bool quiet, bool force)
+        private static bool ContextMenu(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // docs say something about options, guessing thats the selection ?
             if (args.Length == 2)
@@ -3843,12 +3913,12 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitforcontext (serial) (option) (timeout)
         /// </summary>
-        private bool WaitForContext(string command, Argument[] args, bool quiet, bool force)
+        private bool WaitForContext(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length < 2)
             {
                 SendError("Usage is waitforcontents serial contextSelection timeout");
-                WrongParameterCount(command, 2, args.Length, "waitforcontents serial contextSelection timeout");
+                WrongParameterCount(node, 2, args.Length, "waitforcontents serial contextSelection timeout");
             }
             int timeout = 5000;
             if (args.Length > 2)
@@ -3883,7 +3953,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// ignoreobject (serial)
         /// </summary>
-        private static bool IgnoreObject(string command, Argument[] args, bool quiet, bool force)
+        private static bool IgnoreObject(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3896,7 +3966,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// clearignorelist
         /// </summary>
-        private static bool ClearIgnoreList(string command, Argument[] args, bool quiet, bool force)
+        private static bool ClearIgnoreList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Misc.ClearIgnore();
             return true;
@@ -3905,7 +3975,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// setskill ('skill name') ('locked'/'up'/'down')
         /// </summary>
-        private static bool SetSkill(string command, Argument[] args, bool quiet, bool force)
+        private static bool SetSkill(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
             {
@@ -3932,7 +4002,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitforproperties (serial) (timeout)
         /// </summary>
-        private static bool WaitForProperties(string command, Argument[] args, bool quiet, bool force)
+        private static bool WaitForProperties(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
             {
@@ -3950,12 +4020,12 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// autocolorpick (color) (dyesSerial) (dyeTubSerial)
         /// </summary>
-        private bool AutoColorPick(string command, Argument[] args, bool quiet, bool force)
+        private bool AutoColorPick(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 3)
             {
                 SendError("Usage is: autocolorpick color dyesSerial dyeTubSerial");
-                WrongParameterCount(command, 3, args.Length, "Usage is: autocolorpick color dyesSerial dyeTubSerial");
+                WrongParameterCount(node, 3, args.Length, "Usage is: autocolorpick color dyesSerial dyeTubSerial");
 
             }
             int color = args[0].AsInt();
@@ -3975,7 +4045,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitforcontents (serial) (timeout)
         /// </summary>
-        private static bool WaitForContents(string command, Argument[] args, bool quiet, bool force)
+        private static bool WaitForContents(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 2)
             {
@@ -4011,7 +4081,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// miniheal [serial]
         /// </summary>
-        private static bool MiniHeal(string command, Argument[] args, bool quiet, bool force)
+        private static bool MiniHeal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (SelfCure()) { return true;  }
 
@@ -4038,7 +4108,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// bigheal [serial]
         /// </summary>
-        private static bool BigHeal(string command, Argument[] args, bool quiet, bool force)
+        private static bool BigHeal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (SelfCure()) { return true; }
 
@@ -4065,7 +4135,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// cast (spell id/'spell name'/'last') [serial]
         /// </summary>
-        private bool Cast(string command, Argument[] args, bool quiet, bool force)
+        private bool Cast(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -4091,7 +4161,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// chivalryheal [serial] 
         /// </summary>
-        private static bool ChivalryHeal(string command, Argument[] args, bool quiet, bool force)
+        private static bool ChivalryHeal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             RazorEnhanced.Target.Cancel();
             Spells.CastChivalry("Close Wounds");
@@ -4114,7 +4184,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// waitfortarget (timeout)
         /// </summary>
-        private static bool WaitForTarget(string command, Argument[] args, bool quiet, bool force)
+        private static bool WaitForTarget(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             int delay = 1000;
             bool show = false;
@@ -4134,7 +4204,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// cancelautotarget
         /// </summary>
-        private static bool CancelAutoTarget(string command, Argument[] args, bool quiet, bool force)
+        private static bool CancelAutoTarget(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             Assistant.Targeting.CancelAutoTarget();
             return true;
@@ -4143,7 +4213,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// canceltarget
         /// </summary>
-        private static bool CancelTarget(string command, Argument[] args, bool quiet, bool force)
+        private static bool CancelTarget(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             //https://discord.com/channels/292282788311203841/383331237269602325/839987031853105183
             //Target.Execute(0x0) is a better form of Target.Cancel
@@ -4155,12 +4225,12 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targetresource (serial) ('ore'/'sand'/'wood'/'graves'/'red mushrooms')
         /// </summary>
-        private static bool TargetResource(string command, Argument[] args, bool quiet, bool force)
+        private static bool TargetResource(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // targetresource serial (ore/sand/wood/graves/red mushrooms)
             if (args.Length != 2)
             {
-                WrongParameterCount(command, 2, args.Length);
+                WrongParameterCount(node, 2, args.Length);
             }
             uint tool = args[0].AsSerial();
             string resource = args[1].AsString();
@@ -4181,7 +4251,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// target (serial)
         /// </summary>
-        private static bool Target(string command, Argument[] args, bool quiet, bool force)
+        private static bool Target(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -4194,9 +4264,9 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// getenemy ('notoriety') ['filter']
         /// </summary>
-        private bool GetEnemy(string command, Argument[] args, bool quiet, bool force)
+        private bool GetEnemy(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
+            if (args.Length == 0) { WrongParameterCount(node, 1, args.Length); }
 
             RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
             bool nearest = false;
@@ -4273,9 +4343,9 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// getfriend ('notoriety') ['filter']
         /// </summary>
-        private bool GetFriend(string command, Argument[] args, bool quiet, bool force)
+        private bool GetFriend(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length == 0) { WrongParameterCount(command, 1, args.Length); }
+            if (args.Length == 0) { WrongParameterCount(node, 1, args.Length); }
 
             RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
             bool nearest = false;
@@ -4351,9 +4421,10 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// script ('run'|'stop'|'suspend'|'resume'|'isrunning'|'issuspended') [script_name] [output_alias]
         /// </summary>
-        private bool ManageScripts(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageScripts(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
+            var command = node.Lexeme;
+            if (args.Length < 1) { WrongParameterCount(node, 1, args.Length); }
             var operation = args[0].AsString();
             var script_name = args.Length >= 2 ? args[1].AsString(): Misc.ScriptCurrent(true);
             var output_alias = args.Length == 3 ? args[2].AsString() : script_name + ( operation=="isrunning"? "_running" : "_suspended");
@@ -4372,7 +4443,7 @@ namespace RazorEnhanced.UOS
                     m_Interpreter.SetAlias(output_alias, (uint)(suspended ? 1 : 0));
                     break;
                 default:
-                    throw new IllegalArgumentException(cmd + " not recognized.");
+                    throw new UOSArgumentError(node, cmd + " not recognized.");
             }
             return true;
         }
@@ -4385,52 +4456,53 @@ namespace RazorEnhanced.UOS
         /// namespace ('get'|'set'|'print') (namespace_name) ['all'|'alias'|'lists'|'timers'] [source_name] [destination_name]
         /// namespace 'print' [namespace_name] ['all'|'alias'|'lists'|'timers'] [name]
         /// </summary>
-        private bool ManageNamespaces(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces(ASTNode node, Argument[] args, bool quiet, bool force)
         {
+            string command = node.Lexeme;
             var cmd = command;
-            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
+            if (args.Length < 1) { WrongParameterCount(node, 1, args.Length); }
             var operation = args[0].AsString();
             cmd = $"{cmd}_{operation}";
             if (operation == "list")
             {
-                return ManageNamespaces_List(cmd, args, quiet, force);
+                return ManageNamespaces_List(node, cmd, args, quiet, force);
             }
             else if (operation == "isolation")
             {
-                return ManageNamespaces_Isolation(cmd, args, quiet, force);
+                return ManageNamespaces_Isolation(node, cmd, args, quiet, force);
             }
             else if (operation == "activate" || operation == "create")
             {
-                return ManageNamespaces_CreateActivate(cmd, args, quiet, force);
+                return ManageNamespaces_CreateActivate(node, cmd, args, quiet, force);
             }
             else if (operation == "delete")
             {
-                return ManageNamespaces_Delete(cmd, args, quiet, force);
+                return ManageNamespaces_Delete(node, cmd, args, quiet, force);
             }
             else if (operation == "move")
             {
-                return ManageNamespaces_Move(cmd, args, quiet, force);
+                return ManageNamespaces_Move(node, cmd, args, quiet, force);
             }
             else if (operation == "print")
             {
-                return ManageNamespaces_Print(cmd, args, quiet, force);
+                return ManageNamespaces_Print(node, cmd, args, quiet, force);
             }
             else if (operation == "get" || operation == "set")
             {
-                return ManageNamespaces_SetGet(cmd, args, quiet, force);
+                return ManageNamespaces_SetGet(node, cmd, args, quiet, force);
             }
             else
             {
-                throw new IllegalArgumentException(cmd + " not recognized.");
+                throw new UOSArgumentError(node, cmd + " not recognized.");
             }
 
             return true;
         }
 
 
-        private bool ManageNamespaces_List(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_List(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length < 1) { WrongParameterCount(command, 2, args.Length); }
+            if (args.Length < 1) { WrongParameterCount(node, 2, args.Length); }
             //var toListName = (args.Length == 2) ? args[1].ToString() : null;
             //if (toListName != null)
             //{
@@ -4450,23 +4522,23 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-        private bool ManageNamespaces_Isolation(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_Isolation(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            if (args.Length < 2) { WrongParameterCount(node, 2, args.Length); }
             this.UseIsolation = args[1].AsBool();
             return true;
         }
-        private bool ManageNamespaces_CreateActivate(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_CreateActivate(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
             var namespace_name = args.Length >= 2 ? args[1].AsString() : null;
             var operation = args[0].AsString();
-            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            if (args.Length < 2) { WrongParameterCount(node, 2, args.Length); }
             var ns = Namespace.Get(namespace_name);
             if (operation == "activate") { this.Namespace = ns; }
             return true;
 
         }
-        private bool ManageNamespaces_Delete(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_Delete(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
             var cur_namespace_name = Namespace.Name;
             var namespace_name = args.Length >= 2 ? args[1].AsString() : null;
@@ -4476,10 +4548,10 @@ namespace RazorEnhanced.UOS
             Namespace.Delete(namespace_name);
             return true;
         }
-        private bool ManageNamespaces_Move(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_Move(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
             
-            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            if (args.Length < 2) { WrongParameterCount(node, 2, args.Length); }
             var namespace_name = args[1].AsString();
 
             var old_name = Namespace.Name;
@@ -4499,12 +4571,12 @@ namespace RazorEnhanced.UOS
             var didMove = Namespace.Move(old_name, new_name, replace);
             if (!didMove)
             {
-                throw new IllegalArgumentException(cmd + $" failed, old name '{old_name}' not found.");
+                throw new UOSArgumentError(node,cmd + $" failed, old name '{old_name}' not found.");
             }
             return true;
         }
         /// namespace 'print' [namespace_name] ['all'|'alias'|'lists'|'timers'] [name]
-        private bool ManageNamespaces_Print(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_Print(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
             var operation = args[0].AsString();
             var namespace_name = args.Length >=2 ? args[1].AsString() : Namespace.Name;
@@ -4513,7 +4585,7 @@ namespace RazorEnhanced.UOS
 
             if (!Namespace.Has(namespace_name))
             {
-                throw new IllegalArgumentException($" {command} namespace '{namespace_name}' not found.");
+                throw new UOSArgumentError(node,$" {command} namespace '{namespace_name}' not found.");
             }
             
             var cmd = $"{command} '{namespace_name}' '{item_type}'";
@@ -4537,20 +4609,20 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                throw new IllegalArgumentException($"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
+                throw new UOSArgumentError(node,$"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
             }
             SendOutput(content);
             return true;
         }
-        private bool ManageNamespaces_SetGet(string command, Argument[] args, bool quiet, bool force)
+        private bool ManageNamespaces_SetGet(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            if (args.Length < 2) { WrongParameterCount(node, 2, args.Length); }
             var operation = args[0].AsString();
             var namespace_name = args[1].AsString();
 
             if (!Namespace.Has(namespace_name))
             {
-                throw new IllegalArgumentException($"{command} namespace '{namespace_name}' not found.");
+                throw new UOSArgumentError(node,$"{command} namespace '{namespace_name}' not found.");
             }
 
             var item_type = args.Length >= 3 ? args[2].AsString() : "all";
@@ -4582,7 +4654,7 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                throw new IllegalArgumentException($"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
+                throw new UOSArgumentError(node, $"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
             }
             return copy_ok;
         }
@@ -4590,10 +4662,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targettype (graphic) [color] [range]
         /// </summary>
-        private bool TargetType(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetType(ASTNode node, Argument[] args, bool quiet, bool force)
         {
+            string command = node.Lexeme;
             // targettype (graphic) [color] [range]
-            if (args.Length == 0) { WrongParameterCount(command, 1, 0);}
+            if (args.Length == 0) { WrongParameterCount(node, 1, 0);}
             var graphic = args[0].AsInt();
             var color = (args.Length >=2 ? args[1].AsInt() : -1);
             var range = (args.Length >=3 ? args[2].AsInt() : Player.Backpack.Serial);
@@ -4671,10 +4744,10 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targetground (graphic) [color] [range]
         /// </summary>
-        private bool TargetGround(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetGround(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // targettype (graphic) [color] [range]
-            if (args.Length == 0) { WrongParameterCount(command, 1, 0); }
+            if (args.Length == 0) { WrongParameterCount(node, 1, 0); }
             var graphic = args[0].AsInt();
             var color = (args.Length >= 2 ? args[1].AsInt() : -1);
             var range = (args.Length >= 3 ? args[2].AsInt() : -1);
@@ -4714,9 +4787,9 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  targettile ('last'/'current'/(x y z)) [graphic]
         /// </summary>
-        private bool TargetTile(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetTile(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length < 1) { WrongParameterCount(command, 1, args.Length); }
+            if (args.Length < 1) { WrongParameterCount(node, 1, args.Length); }
             if (args.Length == 2 || args.Length == 4) // then graphic specified just use it
             {
                 int graphic = 0;
@@ -4783,9 +4856,9 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targettileoffset (x y z) [graphic]
         /// </summary>
-        private bool TargetTileOffset(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetTileOffset(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length < 3) { WrongParameterCount(command, 3, args.Length); }
+            if (args.Length < 3) { WrongParameterCount(node, 3, args.Length); }
             if (args.Length == 4) // then graphic specified just use it
             {
                 int graphic = 0;
@@ -4837,10 +4910,10 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// targettilerelative (serial) (range) [reverse = 'true' or 'false'] [graphic]
         /// </summary>
-        private bool TargetTileRelative(string command, Argument[] args, bool quiet, bool force)
+        private bool TargetTileRelative(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // targettilerelative   (serial) (range) [reverse = 'true' or 'false'] [graphic]
-            if (args.Length < 2) { WrongParameterCount(command, 2, args.Length); }
+            if (args.Length < 2) { WrongParameterCount(node, 2, args.Length); }
             uint serial = args[0].AsSerial();
             int range = args[1].AsInt();
             bool reverse = false;
@@ -4900,12 +4973,12 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// war (on/off)
         /// </summary>
-        private static bool WarMode(string command, Argument[] args, bool quiet, bool force)
+        private static bool WarMode(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             // warmode on/off
             if (args.Length != 1)
             {
-                WrongParameterCount(command, 1, args.Length);
+                WrongParameterCount(node, 1, args.Length);
             }
             bool onOff = args[0].AsBool();
             Player.SetWarMode(onOff);
@@ -4916,7 +4989,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///cleartargetqueue
         /// </summary>
-        private static bool ClearTargetQueue(string command, Argument[] args, bool quiet, bool force)
+        private static bool ClearTargetQueue(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             RazorEnhanced.Target.ClearQueue();
             return true;
@@ -4925,11 +4998,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  settimer ('timer name') (milliseconds)
         /// </summary>
-        private bool SetTimer(string command, Argument[] args, bool quiet, bool force)
+        private bool SetTimer(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 2)
             {
-                WrongParameterCount(command, 2, args.Length);
+                WrongParameterCount(node, 2, args.Length);
             }
 
             m_Interpreter.SetTimer(args[0].AsString(), args[1].AsInt());
@@ -4939,11 +5012,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  removetimer ('timer name')
         /// </summary>
-        private bool RemoveTimer(string command, Argument[] args, bool quiet, bool force)
+        private bool RemoveTimer(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 1)
             {
-                WrongParameterCount(command, 1, args.Length);
+                WrongParameterCount(node, 1, args.Length);
             }
 
             m_Interpreter.RemoveTimer(args[0].AsString());
@@ -4953,11 +5026,11 @@ namespace RazorEnhanced.UOS
         /// <summary>
         ///  createtimer ('timer name')
         /// </summary>
-        private bool CreateTimer(string command, Argument[] args, bool quiet, bool force)
+        private bool CreateTimer(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length != 1)
             {
-                WrongParameterCount(command, 1, args.Length);
+                WrongParameterCount(node, 1, args.Length);
             }
 
             m_Interpreter.CreateTimer(args[0].AsString());
@@ -4968,9 +5041,10 @@ namespace RazorEnhanced.UOS
         /// shownames NOT IMPLEMENTED 
         /// </summary>
         /* shownames ['mobiles'/'corpses'] */
-        private static bool ShowNames(string command, Argument[] args, bool quiet, bool force)
+        private static bool ShowNames(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            return NotImplemented(command, args, quiet, force);
+
+            return NotImplemented(node, args, quiet, force);
         }
 
 
@@ -6066,7 +6140,7 @@ namespace RazorEnhanced.UOS
                 if (handler == null)
                     throw new UOSRuntimeError(node, "Unknown command");
 
-                cont = handler(node.Lexeme, ConstructArguments(ref node), quiet, force);
+                cont = handler(node, ConstructArguments(ref node), quiet, force);
 
                 if (node != null)
                     throw new UOSRuntimeError(node, "Command did not consume all available arguments");
@@ -6199,7 +6273,7 @@ namespace RazorEnhanced.UOS
             if (handler == null)
                 throw new UOSRuntimeError(node, "Unknown expression");
 
-            var result = handler(node.Lexeme, ConstructArguments(ref node), quiet);
+            var result = handler(node, ConstructArguments(ref node), quiet);
 
             if (ifnot)
                 return CompareOperands(ASTNodeType.EQUAL, result, false);
@@ -6252,7 +6326,7 @@ namespace RazorEnhanced.UOS
                         // This might be a registered keyword, so do a lookup
                         var handler = Engine.Interpreter.GetExpressionHandler(node.Lexeme);
                         if (handler != null)
-                            val = handler(node.Lexeme, ConstructArguments(ref node), quiet);
+                            val = handler(node, ConstructArguments(ref node), quiet);
                         else
                         {
                             Argument temp = new Argument(this, node);
@@ -6483,8 +6557,8 @@ namespace RazorEnhanced.UOS
 
         // Delegates
         //public delegate T ExpressionHandler<T>(string expression, Argument[] args, bool quiet) where T : IComparable;
-        public delegate IComparable ExpressionHandler(string expression, Argument[] args, bool quiet);
-        public delegate bool CommandHandler(string command, Argument[] args, bool quiet, bool force);
+        public delegate IComparable ExpressionHandler(ASTNode node, Argument[] args, bool quiet);
+        public delegate bool CommandHandler(ASTNode node, Argument[] args, bool quiet, bool force);
         public delegate uint AliasHandler(string alias);
 
         internal readonly ConcurrentDictionary<string, ExpressionHandler> _exprHandlers = new ConcurrentDictionary<string, ExpressionHandler>();
@@ -6536,15 +6610,16 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// An adapter that lets expressions be registered as commands
         /// </summary>
-        /// <param name="command">name of command</param>
+        /// <param name="node">name of command</param>
         /// <param name="args">arguments passed to command</param>
         /// <param name="quiet">ignored</param>
         /// <param name="force">ignored</param>
         /// <returns></returns>
-        private bool ExpressionCommand(string command, Argument[] args, bool quiet, bool force)
+        private bool ExpressionCommand(ASTNode node, Argument[] args, bool quiet, bool force)
         {
+            string command = node.Lexeme;
             var handler = GetExpressionHandler(command);
-            handler(command, args, false);
+            handler(node, args, false);
             return true;
         }
 
@@ -6906,61 +6981,6 @@ namespace RazorEnhanced.UOS
         }
     }
 
-    public class UOSScriptError : Exception
-    {
-        public ASTNode Node;
-        public string Type;
-        public string Lexeme;
-        public string Line;
-        public int LineNumber;
-        public string Error;
-
-        public string ErrorName() { return this.GetType().Name; }
-
-        public UOSScriptError(ASTNode node, string error) : base(error)
-        {
-            Node = node;
-            Type = node?.Type.ToString()??"";
-            Lexeme = node?.Lexeme??"";
-            Line = node?.Lexer?.GetLine(node.LineNumber)??"";
-            LineNumber = node?.LineNumber??-1;
-            Error = error;
-        }
-
-        public UOSScriptError(string line, int lineNumber, ASTNode node, string error) : this(node, error)
-        {
-            Line = line;
-            LineNumber = lineNumber;
-        }
-
-        public string GetErrorMessage()
-        {
-            string msg = string.Format("{0}: {1}\n", ErrorName(), Error);
-            if (Node != null)
-            {
-                msg += String.Format("Type: {0}\n", Type);
-                msg += String.Format("Word: {0}\n", Lexeme);
-                msg += String.Format("Line: {0}\n", LineNumber + 1);
-                msg += String.Format("Code: {0}\n", Line);
-            }
-            return msg;
-        }
-
-        public override string Message { get { return GetErrorMessage(); } }
-    }
-
-
-    public class UOSSyntaxError : UOSScriptError
-    {
-        public UOSSyntaxError(ASTNode node, string error) : base(node, error){}
-        public UOSSyntaxError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error){}
-    }
-
-    public class UOSRuntimeError : UOSScriptError
-    {
-        public UOSRuntimeError(ASTNode node, string error) : base(node, error){}
-        public UOSRuntimeError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error){}
-    }
 
 
     public enum ASTNodeType
@@ -7111,10 +7131,11 @@ namespace RazorEnhanced.UOS
     {
         private int _curLine = 0;
         private string[] _lines;
-
+        private ASTNode m_LastStatement;
 
         static Regex matchListName = new Regex("[a-zA-Z]+", RegexOptions.Compiled);
         static Regex matchNumber = new Regex("^[0-9]+$", RegexOptions.Compiled);
+
 
         //private static string _filename = ""; // can be empty
 
@@ -7130,28 +7151,29 @@ namespace RazorEnhanced.UOS
         public ASTNode Lex(string[] lines)
         {
             _lines = lines;
-            ASTNode node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0, this);
-            
+            ASTNode root_node = new ASTNode(ASTNodeType.SCRIPT, null, null, 0, this);
+            m_LastStatement = root_node;
             try
             {
                 for (_curLine = 0; _curLine < lines.Length; _curLine++)
                 {
                     foreach (var l in lines[_curLine].Split(';'))
                     {
-                        ParseLine(node, l);
+                        ParseLine(root_node, l);
                     }
                 }
             }
             catch (UOSSyntaxError e)
             {
-                throw new UOSSyntaxError(lines[_curLine], _curLine, e.Node, "Syntax error!");
+                throw new UOSSyntaxError(m_LastStatement, e.Message);
+                //throw new UOSSyntaxError(lines[_curLine], _curLine, e.Node, "Syntax error!");
             }
             catch (Exception e)
             {
-                throw new UOSSyntaxError(lines[_curLine], _curLine, null, e.Message);
+                throw new UOSSyntaxError(m_LastStatement, e.Message);
             }
 
-            return node;
+            return root_node;
         }
 
         public ASTNode Lex(string fname)
@@ -7268,7 +7290,7 @@ namespace RazorEnhanced.UOS
 
         private void ParseStatement(ASTNode node, string[] lexemes)
         {
-            var statement = node.Push(ASTNodeType.STATEMENT, null, _curLine);
+            m_LastStatement = node.Push(ASTNodeType.STATEMENT, null, _curLine);
 
             // Examine the first word on the line
             switch (lexemes[0])
@@ -7282,94 +7304,94 @@ namespace RazorEnhanced.UOS
                 case "if":
                     {
                         if (lexemes.Length <= 1)
-                            throw new UOSSyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                        var t = statement.Push(ASTNodeType.IF, null, _curLine);
+                        var t = m_LastStatement.Push(ASTNodeType.IF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "elseif":
                     {
                         if (lexemes.Length <= 1)
-                            throw new UOSSyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                        var t = statement.Push(ASTNodeType.ELSEIF, null, _curLine);
+                        var t = m_LastStatement.Push(ASTNodeType.ELSEIF, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "else":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.ELSE, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.ELSE, null, _curLine);
                     break;
                 case "endif":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.ENDIF, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.ENDIF, null, _curLine);
                     break;
                 case "while":
                     {
                         if (lexemes.Length <= 1)
-                            throw new UOSSyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                        var t = statement.Push(ASTNodeType.WHILE, null, _curLine);
+                        var t = m_LastStatement.Push(ASTNodeType.WHILE, null, _curLine);
                         ParseLogicalExpression(t, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "endwhile":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.ENDWHILE, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.ENDWHILE, null, _curLine);
                     break;
                 case "for":
                     {
                         if (lexemes.Length <= 1)
-                            throw new UOSSyntaxError(statement, "Script compilation error");
+                            throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                        ParseForLoop(statement, lexemes.Slice(1, lexemes.Length - 1));
+                        ParseForLoop(m_LastStatement, lexemes.Slice(1, lexemes.Length - 1));
                         break;
                     }
                 case "endfor":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.ENDFOR, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.ENDFOR, null, _curLine);
                     break;
                 case "break":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.BREAK, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.BREAK, null, _curLine);
                     break;
                 case "continue":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.CONTINUE, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.CONTINUE, null, _curLine);
                     break;
                 case "stop":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.STOP, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.STOP, null, _curLine);
                     break;
                 case "replay":
                 case "loop":
                     if (lexemes.Length > 1)
-                        throw new UOSSyntaxError(statement, "Script compilation error");
+                        throw new UOSSyntaxError(m_LastStatement, "Script compilation error");
 
-                    statement.Push(ASTNodeType.REPLAY, null, _curLine);
+                    m_LastStatement.Push(ASTNodeType.REPLAY, null, _curLine);
                     break;
                 default:
                     // It's a regular statement.
-                    ParseCommand(statement, lexemes[0]);
+                    ParseCommand(m_LastStatement, lexemes[0]);
 
                     foreach (var lexeme in lexemes.Slice(1, lexemes.Length - 1))
                     {
-                        ParseValue(statement, lexeme, ASTNodeType.STRING);
+                        ParseValue(m_LastStatement, lexeme, ASTNodeType.STRING);
                     }
                     break;
             }

@@ -1097,7 +1097,8 @@ namespace RazorEnhanced
             else if (
                 exceptionType == typeof(UOSScriptError) ||
                 exceptionType == typeof(UOSSyntaxError) ||
-                exceptionType == typeof(UOSRuntimeError) )
+                exceptionType == typeof(UOSRuntimeError) ||
+                exceptionType == typeof(UOSArgumentError))
             {
                 UOSScriptError uos_se = ex as UOSScriptError;
                 message += "\n"+uos_se.Message;
