@@ -148,6 +148,7 @@ namespace RazorEnhanced
         public static bool UpdateDocs(bool update = false)
         {
             //TODO: Remove manual override
+            XMLCommentReader.LoadXmlDocumentation(typeof(AutoDoc).Assembly);
             update = true;
 
             if (!JsonDocExists())
@@ -1298,7 +1299,7 @@ namespace RazorEnhanced
             }
         }
 
-        internal static void LoadXmlDocumentation(Assembly assembly)
+        public static void LoadXmlDocumentation(Assembly assembly)
         {
             if (loadedAssemblies.Contains(assembly))
             {
@@ -1306,6 +1307,7 @@ namespace RazorEnhanced
             }
             string directoryPath = GetPath(assembly);
             string xmlFilePath = Path.Combine(directoryPath, assembly.GetName().Name + ".xml");
+            
             if (File.Exists(xmlFilePath))
             {
                 LoadXmlDocumentation(File.ReadAllText(xmlFilePath));

@@ -908,7 +908,7 @@ namespace RazorEnhanced
             return TracebackPython;
         }
 
-        private bool TracebackUOS(UOS.Script script, UOS.ASTNode node, UOS.Scope scope)
+        private bool TracebackUOS(UOS.UOSCompiledScript script, UOS.ASTNode node, UOS.Scope scope)
         {
             if (m_uosTraceback != null)
             {
@@ -1079,7 +1079,10 @@ namespace RazorEnhanced
             
             // GRACEFUL/SILENT EXIT
             if (exceptionType == typeof(ThreadAbortException)) { return true; } // thread stopped: All good
-            if (exceptionType == typeof(SystemExitException)) { // sys.exit() or end of script
+            if (exceptionType == typeof(SystemExitException) ||
+                exceptionType == typeof(UOSStopError)   
+                ) { // sys.exit() or end of script
+                m_Script.Stop();
                 return true;
             }
 

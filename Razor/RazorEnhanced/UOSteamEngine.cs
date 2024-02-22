@@ -19,9 +19,6 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced.UOS
 {
-    //
-
-
     public class UOSScriptError : Exception
     {
         public ASTNode Node;
@@ -84,11 +81,21 @@ namespace RazorEnhanced.UOS
         public UOSArgumentError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error) { }
     }
 
+    public class UOSStopError : UOSScriptError
+    {
+        public UOSStopError(ASTNode node, string error) : base(node, error) { }
+        public UOSStopError(string line, int lineNumber, ASTNode node, string error) : base(line, lineNumber, node, error) { }
+    }
 
 
 
 
 
+
+    /// <summary>
+    /// This class contains all the methods available for the UOS scripts (.uos) 
+    /// The following classes and commands ARE NOT available in python.
+    /// </summary>
     public class UOSteamEngine
     {
         static bool DEFAULT_ISOLATION = false;
@@ -104,13 +111,13 @@ namespace RazorEnhanced.UOS
         private bool m_UseIsolation = DEFAULT_ISOLATION;
         private Namespace m_Namespace;
         private Interpreter m_Interpreter;
-        private Script m_Script;
+        private UOSCompiledScript m_Compiled;
 
         private Action<string> m_OutputWriter;
         private Action<string> m_ErrorWriter;
 
         public void SetTrace(UOSTracebackDelegate traceDelegate) {
-            m_Script.OnTraceback += traceDelegate;
+            m_Compiled.OnTraceback += traceDelegate;
         }
 
         public void SetStdout(Action<string> stdoutWriter)
@@ -123,7 +130,7 @@ namespace RazorEnhanced.UOS
             m_ErrorWriter = stderrWriter;
         }
 
-        public Script Script { get { return m_Script; } }
+        public UOSCompiledScript Compiled { get { return m_Compiled; } }
         public Interpreter Interpreter { get { return m_Interpreter; } }
         public Namespace Namespace { 
             get { return m_Namespace; } 
@@ -144,10 +151,7 @@ namespace RazorEnhanced.UOS
             }
         }
 
-        public class StopException : Exception
-        {
-            public StopException() : base("Stop encountered") { }
-        }
+        
 
         // useOnceIgnoreList
         private readonly List<int> m_serialUseOnceIgnoreList;
@@ -210,10 +214,11 @@ namespace RazorEnhanced.UOS
         }
 
         
+        
 
         public UOSteamEngine()
         {
-            m_mutex = new Mutex();
+            //m_mutex = new Mutex();
             m_serialUseOnceIgnoreList = new List<int>();
 
             m_Loaded = false;
@@ -335,16 +340,16 @@ namespace RazorEnhanced.UOS
 
         public bool Load(ASTNode root, string filename = "")
         {
-            m_mutex.WaitOne();
+            //m_mutex.WaitOne();
 
             m_Loaded = false;
-            m_Script = null;
+            m_Compiled = null;
             try
             {
                 InitInterpreter(true);
 
-                m_Script = new Script(root, this);
-                m_Script.Filename = filename;
+                m_Compiled = new UOSCompiledScript(root, this);
+                m_Compiled.Filename = filename;
 
 
                 UpdateNamespace();
@@ -354,36 +359,33 @@ namespace RazorEnhanced.UOS
                 SendError($"UOSEngine: fail to load script:\n{e.Message}");
             }
 
-            m_mutex.ReleaseMutex();
+            //m_mutex.ReleaseMutex();
             return m_Loaded;
         }
         
         public bool Execute(bool editorMode = false)
         {
             if (!m_Loaded) { return false; }
-
-            m_mutex.WaitOne();
+            Execute();
+            /*m_mutex.WaitOne();
             try
             {
                 Execute();
             }
-            catch (UOSteamEngine.StopException)
+            catch (UOSStopError e)
             {
-                if (!editorMode && m_Script.Filename != "") {
-                    Misc.ScriptStop(m_Script.Filename);
-                }
+                EnhancedScript.Service.CurrentScript().Stop();
             }
             catch (Exception e)
             {
-                if (!editorMode && m_Script.Filename != "") {
-                    Misc.ScriptStop(m_Script.Filename);
-                }
-                throw;
+                EnhancedScript.Service.CurrentScript().Stop();
+                throw e;
             }
             finally
             {
-                m_mutex.ReleaseMutex();
-            }
+                //m_mutex.ReleaseMutex();
+            }     
+                */
             return true;
         }
 
@@ -391,7 +393,7 @@ namespace RazorEnhanced.UOS
             var ns = Namespace.GlobalNamespace;
             if (m_UseIsolation && m_Namespace == Namespace.GlobalNamespace)
             {
-                 ns = Namespace.Get(Path.GetFileNameWithoutExtension(Script.Filename));
+                 ns = Namespace.Get(Path.GetFileNameWithoutExtension(Compiled.Filename));
             }
             if (ns != m_Namespace) {
                 m_Namespace = ns;
@@ -5185,12 +5187,12 @@ namespace RazorEnhanced.UOS
             get; set;
         }
         
-        internal Script _script
+        internal UOSCompiledScript _script
         {
             get; set;
         }
 
-        public Argument(Script script, ASTNode node)
+        public Argument(UOSCompiledScript script, ASTNode node)
         {
             Node = node;
             _script = script;
@@ -5381,8 +5383,8 @@ namespace RazorEnhanced.UOS
             return base.GetHashCode();
         }
     }
-    public delegate bool UOSTracebackDelegate(Script script, ASTNode node, Scope scope);
-    public class Script
+    public delegate bool UOSTracebackDelegate(UOSCompiledScript script, ASTNode node, Scope scope);
+    public class UOSCompiledScript
     {
         bool Debug { get; set; }
         public string Filename;
@@ -5396,7 +5398,7 @@ namespace RazorEnhanced.UOS
 
         private Scope _scope;
 
-        public Script()
+        public UOSCompiledScript()
         {
             Debug = false;
         }
@@ -5472,7 +5474,7 @@ namespace RazorEnhanced.UOS
         // scripts to a bytecode. That would allow more errors
         // to be caught with better error messages, as well as
         // make the scripts execute more quickly.
-        public Script(ASTNode root, UOSteamEngine engine)
+        public UOSCompiledScript(ASTNode root, UOSteamEngine engine)
         {
             // Set current to the first statement
             _root = root;
@@ -6062,7 +6064,7 @@ namespace RazorEnhanced.UOS
                 case ASTNodeType.STOP:
                     Engine.Interpreter.StopScript();
                     _statement = null;
-                    throw(new UOSteamEngine.StopException());
+                    throw new UOSStopError(node,"Found stop keyword.");
                     break;
                 case ASTNodeType.REPLAY:
                     _statement = _statement.Parent.FirstChild();
@@ -6573,7 +6575,7 @@ namespace RazorEnhanced.UOS
         
         // Lists
         private UOSteamEngine m_Engine;
-        private Script m_Script = null;
+        private UOSCompiledScript m_Script = null;
             
         private bool m_Suspended = false;
         private ManualResetEvent m_SuspendedMutex;
@@ -6870,7 +6872,7 @@ namespace RazorEnhanced.UOS
             if (m_Script != null)
                 return false;
 
-            m_Script = m_Engine.Script;
+            m_Script = m_Engine.Compiled;
             _executionState = ExecutionState.RUNNING;
             Suspended = false;
             m_Script.Init();
