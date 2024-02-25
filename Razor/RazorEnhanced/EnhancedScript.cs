@@ -908,7 +908,7 @@ namespace RazorEnhanced
             return TracebackPython;
         }
 
-        private bool TracebackUOS(UOS.Script script, UOS.ASTNode node, UOS.Scope scope)
+        private bool TracebackUOS(UOS.UOSCompiledScript script, UOS.ASTNode node, UOS.Scope scope)
         {
             if (m_uosTraceback != null)
             {
@@ -1079,7 +1079,10 @@ namespace RazorEnhanced
             
             // GRACEFUL/SILENT EXIT
             if (exceptionType == typeof(ThreadAbortException)) { return true; } // thread stopped: All good
-            if (exceptionType == typeof(SystemExitException)) { // sys.exit() or end of script
+            if (exceptionType == typeof(SystemExitException) ||
+                exceptionType == typeof(UOSStopError)   
+                ) { // sys.exit() or end of script
+                m_Script.Stop();
                 return true;
             }
 
@@ -1094,6 +1097,19 @@ namespace RazorEnhanced
                 message += "- SEVERITY: " + se.Severity + Environment.NewLine;
                 message += "- MESSAGE: " + se.Message + Environment.NewLine;
             }
+            else if (
+                exceptionType == typeof(UOSScriptError) ||
+                exceptionType == typeof(UOSSyntaxError) ||
+                exceptionType == typeof(UOSRuntimeError) ||
+                exceptionType == typeof(UOSArgumentError))
+            {
+                UOSScriptError uos_se = ex as UOSScriptError;
+                message += "\n"+uos_se.Message;
+                //message += "- LINE: " + uos_se.LineNumber + Environment.NewLine;
+                //message += "- CONTENT: " + uos_se.Line + Environment.NewLine;
+                //message += "- LEXEME: " + uos_se.Node?.Lexeme??"" + Environment.NewLine;
+                //message += "- MESSAGE: " + uos_se.Message + Environment.NewLine;
+            }
             else if (m_Script.Language == ScriptLanguage.PYTHON)
             {
                 message += "Python Error:";
@@ -1105,7 +1121,7 @@ namespace RazorEnhanced
                 message += Regex.Replace(ex.Message.Trim(), "\n\n", "\n");     //remove empty lines
             }
 
-            
+            m_Script.Stop();
             OutputException(message);
             return false;
         }

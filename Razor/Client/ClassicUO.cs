@@ -266,6 +266,7 @@ namespace Assistant
 
         internal static void RunTheUI()
         {
+            AutoDocIO.UpdateDocs();
             Engine.MainWnd = new MainForm();
             if (!IsOSI)
             {
