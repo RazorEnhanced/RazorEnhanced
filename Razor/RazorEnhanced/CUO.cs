@@ -953,6 +953,16 @@ namespace RazorEnhanced
             fiFollowingMode.SetValue(gameScene, false);
             fiFollowingTarget.SetValue(gameScene, 0);
         }
+
+        public static (bool, uint) Following()
+        {
+            var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
+
+            var followingMode = fiFollowingMode.GetValue(gameScene);
+            var followingTarget = fiFollowingTarget.GetValue(gameScene);
+
+            return (followingMode, followingTarget);
+        }
     }
 }
 
