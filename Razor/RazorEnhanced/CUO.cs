@@ -863,6 +863,96 @@ namespace RazorEnhanced
             return;
         }
 
+        private static (object, FieldInfo, FieldInfo) getFollowProps()
+        {
+            // FIXME this seems important but VisualStudio is throwing errors
+            // about not being able to use Client before it is defined-- not
+            // sure why it's working for other methods??
+            // if (Client.IsOSI)
+            // {
+            //     return (null, null, null);
+            // }
+
+            // We're looking to modify private props of a single instance of
+            // ClassicUO.Client/Game/Scenes/GameScene.cs. To do that, we have
+            // to get a reference to that object. Fortunately, the
+            // "ClassicUO.Client" class has a class/static property holding a
+            // reference to a "Game" object-- we can use that as an anchor, and
+            // walk down the full object tree: Client -> Game -> Scene
+
+            // Start with ClassicUO.Client, get Game
+            var Client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
+            PropertyInfo piGame = null;
+            foreach (var prop in Client.GetProperties())
+            {
+                if (prop.Name == "Game")
+                {
+                    piGame = prop;
+                    break;
+                }
+            }
+            if (piGame == null)
+            {
+                throw new Exception("Client object has no property 'Game'");
+            }
+            var game = piGame.GetValue(Client, null);
+            if (game == null)
+            {
+                throw new Exception("Game property of Client object is null");
+            }
+            
+            // From Game, get Scene
+            PropertyInfo piScene = null;
+            foreach (var prop in game.GetType().GetProperties())
+            {
+                if (prop.Name == "Scene")
+                {
+                    piScene = prop;
+                    break;
+                }
+            }
+            if (piScene == null)
+            {
+                throw new Exception("No such property 'Scenes' of Game object");
+            }
+            var scene = piScene.GetValue(game);
+            if (scene == null)
+            {
+                throw new Exception("Scenes property of Game object is null");
+            }
+
+            // Ok we have the object we want, now we just want to dig up 
+            // FieldInfos for the two fields we want to poke.
+            Type sceneType = scene.GetType();
+            FieldInfo fiFollowingMode = sceneType.GetField("_followingMode", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fiFollowingMode == null)
+            {
+                throw new Exception($"No such field '_followingMode' of {sceneType.ToString()} class");
+            }
+            FieldInfo fiFollowingTarget = sceneType.GetField("_followingTarget", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fiFollowingTarget == null)
+            {
+                throw new Exception($"No such property '_followingTarget' of {sceneType.ToString()} class");
+            }
+
+            return (scene, fiFollowingMode, fiFollowingTarget);
+        }
+
+        public static void FollowMobile(uint mobileserial)
+        {
+            var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
+
+            fiFollowingMode.SetValue(gameScene, true);
+            fiFollowingTarget.SetValue(gameScene, mobileserial);
+        }
+
+        public static void UnfollowMobile()
+        {
+            var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
+
+            fiFollowingMode.SetValue(gameScene, false);
+            fiFollowingTarget.SetValue(gameScene, 0);
+        }
     }
 }
 
