@@ -865,13 +865,10 @@ namespace RazorEnhanced
 
         private static (object, FieldInfo, FieldInfo) getFollowProps()
         {
-            // FIXME this seems important but VisualStudio is throwing errors
-            // about not being able to use Client before it is defined-- not
-            // sure why it's working for other methods??
-            // if (Client.IsOSI)
-            // {
-            //     return (null, null, null);
-            // }
+            if (Client.IsOSI)
+            {
+                return (null, null, null);
+            }
 
             // We're looking to modify private props of a single instance of
             // ClassicUO.Client/Game/Scenes/GameScene.cs. To do that, we have
@@ -881,9 +878,9 @@ namespace RazorEnhanced
             // walk down the full object tree: Client -> Game -> Scene
 
             // Start with ClassicUO.Client, get Game
-            var Client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
+            var client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
             PropertyInfo piGame = null;
-            foreach (var prop in Client.GetProperties())
+            foreach (var prop in client.GetProperties())
             {
                 if (prop.Name == "Game")
                 {
@@ -895,7 +892,7 @@ namespace RazorEnhanced
             {
                 throw new Exception("Client object has no property 'Game'");
             }
-            var game = piGame.GetValue(Client, null);
+            var game = piGame.GetValue(client, null);
             if (game == null)
             {
                 throw new Exception("Game property of Client object is null");
