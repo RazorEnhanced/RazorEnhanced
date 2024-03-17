@@ -938,6 +938,12 @@ namespace RazorEnhanced
             return (scene, fiFollowingMode, fiFollowingTarget);
         }
 
+        /// <summary>
+        /// Make the ClassicUO client follow the specific mobile.
+        ///
+        /// This is the same behavior as alt + left-clicking, which normally
+        /// shows the overhead message "Now following."
+        /// </summary>
         public static void FollowMobile(uint mobileserial)
         {
             var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
@@ -946,6 +952,10 @@ namespace RazorEnhanced
             fiFollowingTarget.SetValue(gameScene, mobileserial);
         }
 
+        /// <summary>
+        /// Stop the ClassicUO client from following, if it was following a
+        /// mobile.
+        /// </summary>
         public static void FollowOff()
         {
             var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
@@ -954,6 +964,11 @@ namespace RazorEnhanced
             fiFollowingTarget.SetValue(gameScene, 0);
         }
 
+        /// <summary>
+        /// Returns the status and target of the ClassicUO client's follow
+        /// behavior.
+        /// </summary>
+        /// <returns>bool followingMode, uint followingTarget</returns>
         public static (bool, uint) Following()
         {
             var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
