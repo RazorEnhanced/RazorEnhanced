@@ -958,7 +958,7 @@ namespace RazorEnhanced
             var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
 
             fiFollowingMode.SetValue(gameScene, false);
-            fiFollowingTarget.SetValue(gameScene, 0);
+            fiFollowingTarget.SetValue(gameScene, (uint)0);
         }
 
         /// <summary>
