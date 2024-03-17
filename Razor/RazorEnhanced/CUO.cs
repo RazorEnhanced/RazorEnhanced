@@ -946,7 +946,7 @@ namespace RazorEnhanced
             fiFollowingTarget.SetValue(gameScene, mobileserial);
         }
 
-        public static void UnfollowMobile()
+        public static void FollowOff()
         {
             var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
 
