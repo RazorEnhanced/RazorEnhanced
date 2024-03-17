@@ -973,8 +973,8 @@ namespace RazorEnhanced
         {
             var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
 
-            var followingMode = fiFollowingMode.GetValue(gameScene);
-            var followingTarget = fiFollowingTarget.GetValue(gameScene);
+            bool followingMode = (bool)fiFollowingMode.GetValue(gameScene);
+            uint followingTarget = (uint)fiFollowingTarget.GetValue(gameScene);
 
             return (followingMode, followingTarget);
         }
