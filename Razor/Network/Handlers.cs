@@ -2259,8 +2259,6 @@ namespace Assistant
                 }
             }
 
-            UpdateJournalList(text, type);
-
             // Filter based on api selected blocks
             foreach (string filter in Settings.JournalFilter.ReadAll())
             {
@@ -2398,41 +2396,6 @@ namespace Assistant
             retTable.Columns.Add(new System.Data.DataColumn("text", Type.GetType("System.String")));
 
             return retTable;
-        }
-
-        internal static void UpdateJournalList(string text, MessageType type)
-        {
-            string typeStr = type.ToString();
-            if (type == MessageType.Spell)
-            {
-                string trimmed_text = text.Trim();
-                Spell s = Spell.Get(trimmed_text);
-                if (s != null)
-                {
-                    string spell = Language.GetString(s.Name);
-                    text = text + " (" + spell + ")";
-                }
-            }
-            if (Engine.MainWindow.JournalTextSelection.CheckedItems.Contains(typeStr))
-            {
-                if (JIList.Rows.Count == 0 || JIList.Rows[0]["text"].ToString() != text)
-                {
-                    System.Data.DataRow newRow = JIList.NewRow();
-                    newRow["type"] = typeStr.ToLower();
-                    newRow["text"] = text.ToLower();
-                    //JIList.
-                    JIList.Rows.InsertAt(newRow, 0);
-                    if (JIList.Rows.Count > MaxJournalEntries)
-                    {
-                        System.Data.DataRow toBeRemoved = JIList.Rows[JIList.Rows.Count - 1];
-                        toBeRemoved.Delete();
-                    }
-                    JIList.AcceptChanges();
-                    // Check this credzba
-                    if (Engine.MainWindow.JournalList.RowCount > 0)
-                        Engine.MainWindow.SafeAction(s => { s.JournalList.FirstDisplayedScrollingRowIndex = 0; });
-                }
-            }
         }
 
         internal static void AsciiSpeech(Packet p, PacketHandlerEventArgs args)
