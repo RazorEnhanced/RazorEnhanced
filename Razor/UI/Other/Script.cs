@@ -602,13 +602,6 @@ namespace Assistant
                     if (script != null)
                     {
                         EnhancedScript.Service.RemoveScript(script);
-                        if (script.ScriptEngine.pyEngine != null)
-                        {
-                            (script.ScriptEngine.pyEngine.Modules["Journal"] as Journal).Active = false;
-                            script.ScriptEngine.pyEngine.Modules["Journal"] = null;
-                        }
-
-                        script = null;
                         Scripts.UpdateScriptItems();
                     }
                 }

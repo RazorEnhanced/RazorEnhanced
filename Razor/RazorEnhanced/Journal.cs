@@ -7,6 +7,24 @@ using System.Linq;
 using Assistant.UI;
 
 
+namespace Assistant
+{
+    public partial class MainForm : System.Windows.Forms.Form
+    {
+        private void journalfilterdatagrid_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            cell.Value = cell.Value.ToString().ToLower();
+            RazorEnhanced.Filters.CopyJournalFilterTable();
+        }
+
+        private void journalfilterdatagrid_DefaultValuesNeeded(object sender, System.Windows.Forms.DataGridViewRowEventArgs e)
+        {
+            e.Row.Cells[0].Value = "";
+        }
+    }
+}
+
 namespace RazorEnhanced
 {
 
@@ -30,12 +48,11 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    m_journal = null;
+                    Clear();
                 }
             } 
         }
 
-        private static readonly object listSyncObj = new object();
         internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
         {
             bool needsCleanup = false;
@@ -43,34 +60,18 @@ namespace RazorEnhanced
             {
                 if (j == null)
                     continue;
-                lock (listSyncObj)
+                Journal journal;
+                j.TryGetTarget(out journal);
+                if (journal != null)
                 {
-                    Journal journal;
-                    j.TryGetTarget(out journal);
-                    if (journal != null)
-                    {
-                        try
-                        {
-                            if (journal.Active)
-                                journal.enqueue(entry);
-                        }
-                        catch (Exception e)
-                        {
-                            // I just dont care if I loose a message.
-                            // I probably should, but noooo
-                        }
-                    }
-                    else
-                        needsCleanup = true;
+                    if (journal.Active)
+                        journal.enqueue(entry);
                 }
+                else
+                    needsCleanup = true;
             }
             if (needsCleanup)
-            {
-                lock (listSyncObj)
-                {
-                    allInstances.RemoveAll(wr => wr.TryGetTarget(out var el) && el == null);
-                }
-            }
+                allInstances.RemoveAll(wr => wr.TryGetTarget(out var el) && el == null);
         }
 
         internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> m_journal;

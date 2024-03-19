@@ -60,8 +60,6 @@ namespace RazorEnhanced
             }
 
             //RE Modules list
-            var journal = new RazorEnhanced.Journal();
-            journal.Active = false;
             Modules = new Dictionary<string, object>{
                 { "Misc", new RazorEnhanced.Misc() },
                 { "Items", new RazorEnhanced.Items() },
@@ -69,7 +67,7 @@ namespace RazorEnhanced
                 { "Player", new RazorEnhanced.Player() },
                 { "Spells", new RazorEnhanced.Spells() },
                 { "Gumps", new RazorEnhanced.Gumps() },
-                { "Journal", journal },
+                { "Journal", new RazorEnhanced.Journal() },
                 { "Target", new RazorEnhanced.Target() },
                 { "Statics", new RazorEnhanced.Statics() },
                 { "Sound", new RazorEnhanced.Sound() },
@@ -99,8 +97,7 @@ namespace RazorEnhanced
             
         }
         
-        ~PythonEngine()
-        {
+        ~PythonEngine() { 
 
         }
 
