@@ -936,6 +936,7 @@ namespace Assistant
             this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AllScripts = new System.Windows.Forms.TabPage();
             this.scriptControlBox = new System.Windows.Forms.GroupBox();
+            this.autoScriptReload = new System.Windows.Forms.CheckBox();
             this.scriptPacketLogCheckBox = new System.Windows.Forms.CheckBox();
             this.InspectGumpsButton = new System.Windows.Forms.Button();
             this.InspectContextButton = new System.Windows.Forms.Button();
@@ -1486,7 +1487,6 @@ namespace Assistant
             this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
             this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
             this.m_Tip = new System.Windows.Forms.ToolTip(this.components);
-            this.autoScriptReload = new System.Windows.Forms.CheckBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -3264,6 +3264,18 @@ namespace Assistant
             this.scriptControlBox.Size = new System.Drawing.Size(202, 647);
             this.scriptControlBox.TabIndex = 1;
             this.scriptControlBox.TabStop = false;
+            // 
+            // autoScriptReload
+            // 
+            this.autoScriptReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoScriptReload.Location = new System.Drawing.Point(11, 380);
+            this.autoScriptReload.Name = "autoScriptReload";
+            this.autoScriptReload.Size = new System.Drawing.Size(128, 17);
+            this.autoScriptReload.TabIndex = 80;
+            this.autoScriptReload.Text = "Auto Script Reload";
+            this.m_Tip.SetToolTip(this.autoScriptReload, "Used to automatically reload scripts modified by external editor");
+            this.autoScriptReload.UseVisualStyleBackColor = true;
+            this.autoScriptReload.CheckedChanged += new System.EventHandler(this.autoScriptReload_CheckedChanged);
             // 
             // scriptPacketLogCheckBox
             // 
@@ -9223,18 +9235,6 @@ namespace Assistant
             this.openmaplocation.Filter = "Executable Files|*.exe";
             this.openmaplocation.RestoreDirectory = true;
             this.openmaplocation.Title = "Select Enhanced Map";
-            // 
-            // autoScriptReload
-            // 
-            this.autoScriptReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.autoScriptReload.Location = new System.Drawing.Point(11, 380);
-            this.autoScriptReload.Name = "autoScriptReload";
-            this.autoScriptReload.Size = new System.Drawing.Size(128, 17);
-            this.autoScriptReload.TabIndex = 80;
-            this.autoScriptReload.Text = "Auto Script Reload";
-            this.m_Tip.SetToolTip(this.autoScriptReload, "Used to automatically reload scripts modified by external editor");
-            this.autoScriptReload.UseVisualStyleBackColor = true;
-            this.autoScriptReload.CheckedChanged += new System.EventHandler(this.autoScriptReload_CheckedChanged);
             // 
             // MainForm
             // 

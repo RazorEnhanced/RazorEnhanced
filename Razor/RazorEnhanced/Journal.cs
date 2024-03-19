@@ -53,6 +53,7 @@ namespace RazorEnhanced
             } 
         }
 
+        private static readonly object listSyncObj = new object();
         internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
         {
             bool needsCleanup = false;
@@ -64,14 +65,28 @@ namespace RazorEnhanced
                 j.TryGetTarget(out journal);
                 if (journal != null)
                 {
-                    if (journal.Active)
-                        journal.enqueue(entry);
+                    try
+                    {
+                        lock (listSyncObj)
+                        {
+                            if (journal.Active)
+                                journal.enqueue(entry);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // I just dont care if I loose a message.
+                        // I probably should, but noooo
+                    }
                 }
                 else
                     needsCleanup = true;
             }
             if (needsCleanup)
-                allInstances.RemoveAll(wr => wr.TryGetTarget(out var el) && el == null);
+                lock (listSyncObj)
+                {
+                    allInstances.RemoveAll(wr => wr.TryGetTarget(out var el) && el == null);
+                }
         }
 
         internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> m_journal;
