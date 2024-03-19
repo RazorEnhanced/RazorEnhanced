@@ -656,13 +656,6 @@ namespace Assistant
         private Label label80;
         private System.Windows.Forms.Button setSpellBarOrigin;
         private DataGridViewTextBoxColumn journalFilterText;
-        private TabPage journal;
-        private DataGridView journalList;
-        private CheckedListBox journalTextSelection;
-        private DataGridViewTextBoxColumn Type;
-        private DataGridViewTextBoxColumn journalEntries;
-        private Label viewFilter;
-        private System.Windows.Forms.TextBox journalFilterString;
         private CheckBox buyToCompleteAmount;
         private Button ChkForUpdate;
         private TabPage AllScripts;
@@ -1401,13 +1394,6 @@ namespace Assistant
             this.label39 = new System.Windows.Forms.Label();
             this.hotkeytextbox = new RazorEnhanced.UI.RazorHotKeyTextBox();
             this.hotkeytreeView = new System.Windows.Forms.TreeView();
-            this.journal = new System.Windows.Forms.TabPage();
-            this.viewFilter = new System.Windows.Forms.Label();
-            this.journalFilterString = new System.Windows.Forms.TextBox();
-            this.journalTextSelection = new System.Windows.Forms.CheckedListBox();
-            this.journalList = new System.Windows.Forms.DataGridView();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.journalEntries = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.screenshotTab = new System.Windows.Forms.TabPage();
             this.imgFmt = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -1592,8 +1578,6 @@ namespace Assistant
             this.groupBox8.SuspendLayout();
             this.groupBox28.SuspendLayout();
             this.groupBox27.SuspendLayout();
-            this.journal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.journalList)).BeginInit();
             this.screenshotTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
             this.videoTab.SuspendLayout();
@@ -1696,7 +1680,6 @@ namespace Assistant
             this.tabs.Controls.Add(this.emptyTab);
             this.tabs.Controls.Add(this.skillsTab);
             this.tabs.Controls.Add(this.enhancedHotKeytabPage);
-            this.tabs.Controls.Add(this.journal);
             this.tabs.Controls.Add(this.screenshotTab);
             this.tabs.Controls.Add(this.videoTab);
             this.tabs.Controls.Add(this.DPStabPage);
@@ -8323,106 +8306,6 @@ namespace Assistant
             this.hotkeytreeView.TabIndex = 0;
             this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
             // 
-            // journal
-            // 
-            this.journal.Controls.Add(this.viewFilter);
-            this.journal.Controls.Add(this.journalFilterString);
-            this.journal.Controls.Add(this.journalTextSelection);
-            this.journal.Controls.Add(this.journalList);
-            this.journal.Location = new System.Drawing.Point(4, 29);
-            this.journal.Name = "journal";
-            this.journal.Padding = new System.Windows.Forms.Padding(3);
-            this.journal.Size = new System.Drawing.Size(1104, 602);
-            this.journal.TabIndex = 18;
-            this.journal.Text = "Journal";
-            this.journal.UseVisualStyleBackColor = true;
-            // 
-            // viewFilter
-            // 
-            this.viewFilter.AutoSize = true;
-            this.viewFilter.Location = new System.Drawing.Point(71, 8);
-            this.viewFilter.Name = "viewFilter";
-            this.viewFilter.Size = new System.Drawing.Size(55, 13);
-            this.viewFilter.TabIndex = 5;
-            this.viewFilter.Text = "View Filter";
-            // 
-            // journalFilterString
-            // 
-            this.journalFilterString.AllowDrop = true;
-            this.journalFilterString.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.journalFilterString.Location = new System.Drawing.Point(126, 5);
-            this.journalFilterString.Name = "journalFilterString";
-            this.journalFilterString.Size = new System.Drawing.Size(976, 20);
-            this.journalFilterString.TabIndex = 4;
-            this.journalFilterString.Leave += new System.EventHandler(this.journalFilter_TextChanged);
-            // 
-            // journalTextSelection
-            // 
-            this.journalTextSelection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.journalTextSelection.CheckOnClick = true;
-            this.journalTextSelection.FormattingEnabled = true;
-            this.journalTextSelection.Items.AddRange(new object[] {
-            "Regular",
-            "System",
-            "Emote",
-            "Label",
-            "Focus",
-            "Whisper",
-            "Yell",
-            "Spell",
-            "Guild",
-            "Alliance",
-            "Encoded",
-            "Special"});
-            this.journalTextSelection.Location = new System.Drawing.Point(-2, 0);
-            this.journalTextSelection.Name = "journalTextSelection";
-            this.journalTextSelection.Size = new System.Drawing.Size(69, 439);
-            this.journalTextSelection.TabIndex = 3;
-            this.journalTextSelection.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnJournalFilterCheck);
-            // 
-            // journalList
-            // 
-            this.journalList.AllowUserToAddRows = false;
-            this.journalList.AllowUserToDeleteRows = false;
-            this.journalList.AllowUserToResizeColumns = false;
-            this.journalList.AllowUserToResizeRows = false;
-            this.journalList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.journalList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.journalList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Type,
-            this.journalEntries});
-            this.journalList.Location = new System.Drawing.Point(71, 27);
-            this.journalList.Name = "journalList";
-            this.journalList.RowHeadersVisible = false;
-            this.journalList.RowHeadersWidth = 62;
-            this.journalList.RowTemplate.Height = 28;
-            this.journalList.Size = new System.Drawing.Size(1027, 586);
-            this.journalList.TabIndex = 2;
-            // 
-            // Type
-            // 
-            this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Type.DataPropertyName = "type";
-            this.Type.HeaderText = "Type";
-            this.Type.MinimumWidth = 8;
-            this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
-            this.Type.Width = 56;
-            // 
-            // journalEntries
-            // 
-            this.journalEntries.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.journalEntries.DataPropertyName = "text";
-            this.journalEntries.HeaderText = "Journal Entries";
-            this.journalEntries.MinimumWidth = 8;
-            this.journalEntries.Name = "journalEntries";
-            this.journalEntries.ReadOnly = true;
-            this.journalEntries.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
             // screenshotTab
             // 
             this.screenshotTab.Controls.Add(this.imgFmt);
@@ -9398,9 +9281,6 @@ namespace Assistant
             this.groupBox28.PerformLayout();
             this.groupBox27.ResumeLayout(false);
             this.groupBox27.PerformLayout();
-            this.journal.ResumeLayout(false);
-            this.journal.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.journalList)).EndInit();
             this.screenshotTab.ResumeLayout(false);
             this.screenshotTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
@@ -9703,34 +9583,6 @@ namespace Assistant
             videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
             videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
             videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
-
-            // set up datasource for journal so I can use its filtering
-            //var source = new BindingSource();
-            //source.DataSource = Assistant.PacketHandlers.JIList;
-            System.Data.DataView dv = new System.Data.DataView(Assistant.PacketHandlers.JIList);
-            JournalList.DataSource = dv;
-            JournalList.Columns[0].DataPropertyName = "type";
-            JournalList.Columns[1].DataPropertyName = "text";
-
-            //Journal Filters
-            for (int index = 0; index < JournalTextSelection.Items.Count; index++)
-            {
-                var item = JournalTextSelection.Items[index];
-                string filter = (string)item;
-                //int index = this.journalTextSelection.FindStringExact(filter);
-                bool state = RazorEnhanced.Settings.General.ReadBool("Journal" + filter);
-                JournalTextSelection.SetItemCheckState(index, state ? CheckState.Checked : CheckState.Unchecked);
-            }
-            journalFilterString.Text = RazorEnhanced.Settings.General.ReadString("JournalFilterText");
-            journalFilter_TextChanged(null, null);
-            try
-            {
-                dv.RowFilter = JournalFilterString.Text; ;
-            }
-            catch (Exception)
-            {
-
-            }
         }
 
         public void SetBandSelfState()

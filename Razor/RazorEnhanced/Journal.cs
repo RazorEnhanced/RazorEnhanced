@@ -14,8 +14,14 @@ namespace Assistant
         private void journalfilterdatagrid_CellEndEdit(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
             System.Windows.Forms.DataGridViewCell cell = journalfilterdatagrid.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            cell.Value = cell.Value.ToString().ToLower();
-            RazorEnhanced.Filters.CopyJournalFilterTable();
+            if (cell != null)
+            {
+                if (cell.Value == null)
+                    cell.Value = "";
+                else
+                    cell.Value = cell.Value.ToString().ToLower();
+                RazorEnhanced.Filters.CopyJournalFilterTable();
+            }
         }
 
         private void journalfilterdatagrid_DefaultValuesNeeded(object sender, System.Windows.Forms.DataGridViewRowEventArgs e)
