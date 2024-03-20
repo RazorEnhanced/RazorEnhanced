@@ -59,46 +59,36 @@ namespace RazorEnhanced
             } 
         }
 
-        private static readonly object listSyncObj = new object();
+        internal static readonly object allInstancesSyncObj = new object();
+        internal static List<WeakReference<Journal>> allInstances = new List<WeakReference<Journal>>();
         internal static void Enqueue(RazorEnhanced.Journal.JournalEntry entry)
         {
             bool needsCleanup = false;
-            foreach (WeakReference<Journal> j in allInstances)
+            lock (allInstancesSyncObj)
             {
-                if (j == null)
-                    continue;
-                Journal journal;
-                j.TryGetTarget(out journal);
-                if (journal != null)
+                foreach (WeakReference<Journal> j in allInstances)
                 {
-                    try
+                    if (j == null)
+                        continue;
+                    Journal journal;
+                    j.TryGetTarget(out journal);
+                    if (journal != null)
                     {
-                        lock (listSyncObj)
-                        {
                             if (journal.Active)
                                 journal.enqueue(entry);
-                        }
                     }
-                    catch (Exception e)
-                    {
-                        // I just dont care if I loose a message.
-                        // I probably should, but noooo
-                    }
+                    else
+                        needsCleanup = true;
                 }
-                else
-                    needsCleanup = true;
-            }
-            if (needsCleanup)
-                lock (listSyncObj)
+                if (needsCleanup)
                 {
                     allInstances.RemoveAll(wr => wr.TryGetTarget(out var el) && el == null);
                 }
+            }
         }
 
         internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> m_journal;
         internal int m_MaxJournalEntries;
-
-        internal static List<WeakReference<Journal>> allInstances = new List<WeakReference<Journal>>();
         internal static Journal GlobalJournal = new Journal(100);
 
         public Journal(int size = 100)
@@ -107,7 +97,10 @@ namespace RazorEnhanced
             {
                 m_MaxJournalEntries = size;
                 Active = true;
-                allInstances.Add(new WeakReference<Journal>(this));
+                lock (allInstancesSyncObj)
+                {
+                    allInstances.Add(new WeakReference<Journal>(this));
+                }
             }
         }
 
