@@ -78,6 +78,30 @@ namespace RazorEnhanced
         }
 
         /// <summary>
+        /// Wait for the cursor to show the target, or the sound for fizzle (0x5c) or pause the script for a maximum amount of time. 
+        /// and an optional flag True or False. True Not show cursor, false show it
+        /// </summary>
+        /// <param name="delay">Maximum amount to wait, in milliseconds</param>
+        /// <param name="noshow">Prevent the cursor to display the target.</param>
+        /// <returns></returns>
+
+        public static bool WaitForTargetOrFizzle(int delay=5000, bool noshow = false)
+        {
+            ManualResetEvent waitOrFizzleEvent = new ManualResetEvent(false);
+            void watchForFizzle(PacketReader p, PacketHandlerEventArgs args)
+            {
+                waitOrFizzleEvent.Set();
+            }
+            PacketHandler.RegisterServerToClientViewer(0x54, watchForFizzle);
+            waitOrFizzleEvent.WaitOne(delay);
+            PacketHandler.RemoveServerToClientViewer(0x54, watchForFizzle);
+
+            return HasTarget();
+        }
+
+
+
+        /// <summary>
         /// Execute target on specific serial, item, mobile, X Y Z point.
         /// </summary>
         /// <param name="x">X coordinate.</param>

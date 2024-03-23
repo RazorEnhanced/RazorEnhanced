@@ -1534,12 +1534,14 @@ namespace RazorEnhanced
                     break;
 
                 case "Target Self Queued":
-                    Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"self\" queued."));
+                    World.Player.OverheadMessageFrom(993, World.Player.Name, "Target \"self\" queued.");
+                    //Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"self\" queued."));
                     Assistant.Targeting.TargetSelf(true);
                     break;
 
                 case "Target Last Queued":
-                    Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" queued."));
+                    World.Player.OverheadMessageFrom(993, World.Player.Name, "Target \"last\" queued.");
+                    //Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" queued."));
                     Assistant.Targeting.LastTarget(true);
                     break;
 
@@ -1549,17 +1551,20 @@ namespace RazorEnhanced
                     break;
 
                 case "Clear Target Queue":
-                    Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"queue\" cleared."));
+                    World.Player.OverheadMessageFrom(993, World.Player.Name, "Target \"queue\" cleared.");
+                    //Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"queue\" cleared."));
                     Assistant.Targeting.ClearQueue();
                     break;
 
                 case "Clear Last Target":
-                    Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" cleared."));
+                    World.Player.OverheadMessageFrom(993, World.Player.Name, "Target \"last\" cleared.");
+                    //Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" cleared."));
                     Assistant.Targeting.ClearLast();
                     break;
 
                 case "Clear Last and Queue":
-                    Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last and queue\" cleared."));
+                    World.Player.OverheadMessageFrom(993, World.Player.Name, "Target \"last and queue\" cleared.");
+                    //Assistant.Client.Instance.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last and queue\" cleared."));
                     Assistant.Targeting.ClearLast();
                     Assistant.Targeting.ClearQueue();
                     break;

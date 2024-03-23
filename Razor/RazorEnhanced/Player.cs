@@ -1873,6 +1873,16 @@ namespace RazorEnhanced
         /// <param name="msg">Message to send.</param>
         public static void ChatSay(int color, string msg)
         {
+            string trimmed_text = msg.Trim();
+            // Filter based on api selected blocks
+            foreach (string filter in RazorEnhanced.Settings.JournalFilter.ReadAll())
+            {
+                if (trimmed_text.ToLower().Contains(filter))
+                {
+                    return;
+                }
+            }
+
             List<ushort> kw = EncodedSpeech.GetKeywords(msg);
             if (kw.Count == 1 && kw[0] == 0)
             {

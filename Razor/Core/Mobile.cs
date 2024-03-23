@@ -430,6 +430,15 @@ namespace Assistant
 
         internal void OverheadMessageFrom(int hue, string from, string text)
         {
+            string trimmed_text = text.Trim();
+            // Filter based on api selected blocks
+            foreach (string filter in RazorEnhanced.Settings.JournalFilter.ReadAll())
+            {
+                if (trimmed_text.ToLower().Contains(filter))
+                {
+                    return;
+                }
+            }
             Assistant.Client.Instance.SendToClient(new UnicodeMessage(Serial, m_Body, MessageType.Regular, hue, 3, Language.CliLocName, from, text));
         }
 
