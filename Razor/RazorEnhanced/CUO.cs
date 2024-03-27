@@ -7,7 +7,6 @@ using System.Threading;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Drawing;
-using static RazorEnhanced.HotKey;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
@@ -17,6 +16,9 @@ using System.Globalization;
 using System.Web.UI.WebControls;
 using Accord.Collections;
 using Accord.Math;
+
+using static RazorEnhanced.HotKey;
+using static RazorEnhanced.Misc;
 
 namespace RazorEnhanced
 {
@@ -867,6 +869,7 @@ namespace RazorEnhanced
         {
             if (Client.IsOSI)
             {
+                SendMessage("CUO.* are not usable from the OSI client!", 33, false);
                 return (null, null, null);
             }
 
@@ -890,12 +893,14 @@ namespace RazorEnhanced
             }
             if (piGame == null)
             {
-                throw new Exception("Client object has no property 'Game'");
+                SendMessage("CUO.Follow* are currently broken and have no effect [0]", 33, false);
+                return (null, null, null);
             }
             var game = piGame.GetValue(client, null);
             if (game == null)
             {
-                throw new Exception("Game property of Client object is null");
+                SendMessage("CUO.Follow* are currently broken and have no effect [1]", 33, false);
+                return (null, null, null);
             }
             
             // From Game, get Scene
@@ -910,12 +915,14 @@ namespace RazorEnhanced
             }
             if (piScene == null)
             {
-                throw new Exception("No such property 'Scenes' of Game object");
+                SendMessage("CUO.Follow* are currently broken and have no effect [2]", 33, false);
+                return (null, null, null);
             }
             var scene = piScene.GetValue(game);
             if (scene == null)
             {
-                throw new Exception("Scenes property of Game object is null");
+               SendMessage("CUO.Follow* are currently broken and have no effect [3]", 33, false);
+                return (null, null, null);
             }
 
             // Ok we have the object we want, now we just want to dig up 
@@ -924,12 +931,14 @@ namespace RazorEnhanced
             FieldInfo fiFollowingMode = sceneType.GetField("_followingMode", BindingFlags.NonPublic | BindingFlags.Instance);
             if (fiFollowingMode == null)
             {
-                throw new Exception($"No such field '_followingMode' of {sceneType.ToString()} class");
+                SendMessage("CUO.Follow* are currently broken and have no effect [4]", 33, false);
+                return (null, null, null);
             }
             FieldInfo fiFollowingTarget = sceneType.GetField("_followingTarget", BindingFlags.NonPublic | BindingFlags.Instance);
             if (fiFollowingTarget == null)
             {
-                throw new Exception($"No such property '_followingTarget' of {sceneType.ToString()} class");
+                SendMessage("CUO.Follow* are currently broken and have no effect [5]", 33, false);
+                return (null, null, null);
             }
 
             return (scene, fiFollowingMode, fiFollowingTarget);
