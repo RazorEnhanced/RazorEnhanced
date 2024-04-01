@@ -2459,15 +2459,14 @@ namespace Assistant
             try
             {
                 string text = Language.ClilocFormat(num, ext_str);
-                if (num == 502642 && World.Player.LastSpell != 0)
-                {
-                    Spell s = Spell.Get(World.Player.LastSpell);
-                    Player.ChatSay(String.Format("You are already casting {0}", s.ToString()));
-
-                }
+                //if (num == 502642 && World.Player.LastSpell != 0)
+                //{
+                //    Spell s = Spell.Get(World.Player.LastSpell); // Needs to be the spell cast - 2
+                //    Player.ChatSay(String.Format("You are already casting {0}", s.ToString()));
+                //
+                //}
 
                 HandleSpeech(p, args, serial, body, type, hue, font, Language.CliLocName.ToUpper(), name, text);
-
             }
             catch { } // avoid possible error if ultima.dll fail to get cliloc entry.
         }
