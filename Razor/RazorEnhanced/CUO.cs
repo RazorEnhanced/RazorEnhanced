@@ -7,7 +7,6 @@ using System.Threading;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Drawing;
-using static RazorEnhanced.HotKey;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
@@ -17,6 +16,9 @@ using System.Globalization;
 using System.Web.UI.WebControls;
 using Accord.Collections;
 using Accord.Math;
+
+using static RazorEnhanced.HotKey;
+using static RazorEnhanced.Misc;
 
 namespace RazorEnhanced
 {
@@ -863,6 +865,125 @@ namespace RazorEnhanced
             return;
         }
 
+        private static (object, FieldInfo, FieldInfo) getFollowProps()
+        {
+            if (Client.IsOSI)
+            {
+                SendMessage("CUO.* are not usable from the OSI client!", 33, false);
+                return (null, null, null);
+            }
+
+            // We're looking to modify private props of a single instance of
+            // ClassicUO.Client/Game/Scenes/GameScene.cs. To do that, we have
+            // to get a reference to that object. Fortunately, the
+            // "ClassicUO.Client" class has a class/static property holding a
+            // reference to a "Game" object-- we can use that as an anchor, and
+            // walk down the full object tree: Client -> Game -> Scene
+
+            // Start with ClassicUO.Client, get Game
+            var client = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Client");
+            PropertyInfo piGame = null;
+            foreach (var prop in client.GetProperties())
+            {
+                if (prop.Name == "Game")
+                {
+                    piGame = prop;
+                    break;
+                }
+            }
+            if (piGame == null)
+            {
+                SendMessage("CUO.Follow* are currently broken and have no effect [0]", 33, false);
+                return (null, null, null);
+            }
+            var game = piGame.GetValue(client, null);
+            if (game == null)
+            {
+                SendMessage("CUO.Follow* are currently broken and have no effect [1]", 33, false);
+                return (null, null, null);
+            }
+            
+            // From Game, get Scene
+            PropertyInfo piScene = null;
+            foreach (var prop in game.GetType().GetProperties())
+            {
+                if (prop.Name == "Scene")
+                {
+                    piScene = prop;
+                    break;
+                }
+            }
+            if (piScene == null)
+            {
+                SendMessage("CUO.Follow* are currently broken and have no effect [2]", 33, false);
+                return (null, null, null);
+            }
+            var scene = piScene.GetValue(game);
+            if (scene == null)
+            {
+               SendMessage("CUO.Follow* are currently broken and have no effect [3]", 33, false);
+                return (null, null, null);
+            }
+
+            // Ok we have the object we want, now we just want to dig up 
+            // FieldInfos for the two fields we want to poke.
+            Type sceneType = scene.GetType();
+            FieldInfo fiFollowingMode = sceneType.GetField("_followingMode", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fiFollowingMode == null)
+            {
+                SendMessage("CUO.Follow* are currently broken and have no effect [4]", 33, false);
+                return (null, null, null);
+            }
+            FieldInfo fiFollowingTarget = sceneType.GetField("_followingTarget", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (fiFollowingTarget == null)
+            {
+                SendMessage("CUO.Follow* are currently broken and have no effect [5]", 33, false);
+                return (null, null, null);
+            }
+
+            return (scene, fiFollowingMode, fiFollowingTarget);
+        }
+
+        /// <summary>
+        /// Make the ClassicUO client follow the specific mobile.
+        ///
+        /// This is the same behavior as alt + left-clicking, which normally
+        /// shows the overhead message "Now following."
+        /// </summary>
+        public static void FollowMobile(uint mobileserial)
+        {
+            var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
+
+            fiFollowingMode.SetValue(gameScene, true);
+            fiFollowingTarget.SetValue(gameScene, mobileserial);
+        }
+
+        /// <summary>
+        /// Stop the ClassicUO client from following, if it was following a
+        /// mobile.
+        /// </summary>
+        public static void FollowOff()
+        {
+            var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
+
+            fiFollowingMode.SetValue(gameScene, false);
+            fiFollowingTarget.SetValue(gameScene, (uint)0);
+        }
+
+        /// <summary>
+        /// Returns the status and target of the ClassicUO client's follow
+        /// behavior.
+        /// </summary>
+        /// <returns>bool followingMode, uint followingTarget</returns>
+        public static (bool, uint) Following()
+        {
+            var (gameScene, fiFollowingMode, fiFollowingTarget) = getFollowProps();
+
+            bool followingMode = (bool)fiFollowingMode.GetValue(gameScene);
+            uint followingTarget = (uint)fiFollowingTarget.GetValue(gameScene);
+
+            return (followingMode, followingTarget);
+        }
     }
 }
 
