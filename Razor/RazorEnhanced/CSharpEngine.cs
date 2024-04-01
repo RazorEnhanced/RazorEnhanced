@@ -203,7 +203,7 @@ namespace RazorEnhanced
 
                 if (foundDirectives.Count <= 0)
                 {
-                    return;
+                    continue;
                 }
 
                 string basepath = Path.GetDirectoryName(filename); // BasePath of the imported file
