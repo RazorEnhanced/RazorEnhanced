@@ -451,11 +451,9 @@ namespace RazorEnhanced
                     if (!BandageFinish.IsSet) // the bandage should have reset the bandage otherwise it must have gotten "you must wait"
                         BandageFinish.Wait(10000); // wait a max of 10 seconds, but buf should finish sooner
                 }
-                else                // Se ho un delay custom
+                else //Wait configured delay
                 {
-                    BandageFinish.Reset(); // ensure its reset
-                    double delay = m_customdelay;
-                    BandageFinish.Wait((Int32)delay + 300);
+                    Thread.Sleep(m_customdelay + 300);
                 }
 
                 if (ShowCountdown)          // Se deve mostrare il cooldown
