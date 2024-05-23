@@ -26,7 +26,7 @@ namespace Assistant
             Command.Register("inspect", new CommandCallback(GetInfo));
             Command.Register("inspectgumps", new CommandCallback(InspectGumps));
             Command.Register("inspectalias", new CommandCallback(InspectAlias));
-            Command.Register("playscript", new CommandCallback(PlayScript));
+            Command.Register("playscript", new CommandCallback(PlayScriptIgnoreReturn));
             Command.Register("hideitem", new CommandCallback(HideItem));
             Command.Register("drop", new CommandCallback(DropItem));
         }
@@ -250,10 +250,14 @@ namespace Assistant
             }).Start();
         }
 
-        internal static void PlayScript(string[] param)
+        internal static void PlayScriptIgnoreReturn(string[] param)
+        {
+            PlayScript(param);
+        }
+        internal static bool PlayScript(string[] param)
         {
             if (param == null || param.Length == 0)
-                return;
+                return false;
             string scriptname = param[0];
 
             if (param.Length > 1)
@@ -271,9 +275,11 @@ namespace Assistant
                     script.Stop();
                 else
                     script.Start();
+                return true;
             }
-            else
-                RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist", 33, false);
+            
+            RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist", 33, false);
+            return false;
         }
     }
 

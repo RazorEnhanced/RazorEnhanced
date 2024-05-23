@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -2931,87 +2932,98 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static bool MoveTypeOffset(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (args.Length == 2 || args.Length == 3)
+            switch (args.Length)
             {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                Item item = Items.FindByID(id, -1, (int)src, true);
-                if (item != null)
-                {
-                    Items.DropItemGroundSelf(item.Serial);
-                }
+                case 2:
+                case 3:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        Item item = Items.FindByID(id, -1, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.DropItemGroundSelf(item.Serial);
+                        }
+                    }
+                    break;
+                case 4:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        //uint dest = args[2].AsSerial();
+                        int color = args[3].AsInt();
+                        Item item = Items.FindByID(id, color, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.MoveOnGround(item.Serial, 0, Player.Position.X, Player.Position.Y, Player.Position.Z);
+                        }
+                    }
+                    break;
+                case 5:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        // uint dest = args[2].AsSerial();
+                        int color = args[3].AsInt();
+                        int amount = args[4].AsInt();
+                        Item item = Items.FindByID(id, color, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
+                        }
+                    }
+                    break;
+                case 6:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        //uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        int z = args[5].AsInt();
+                        Item item = Items.FindByID(id, -1, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.MoveOnGround(item.Serial, 0, x, y, z);
+                        }
+                    }
+                    break;
+                case 7:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        //uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        int z = args[5].AsInt();
+                        int color = args[6].AsInt();
+                        Item item = Items.FindByID(id, color, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.MoveOnGround(item.Serial, 0, x, y, z);
+                        }
+                    }
+                    break;
+                case 8:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        //uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        int z = args[5].AsInt();
+                        int color = args[6].AsInt();
+                        int amount = args[7].AsInt();
+                        Item item = Items.FindByID(id, color, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.MoveOnGround(item.Serial, amount, x, y, z);
+                        }
+                    }
+                    break;
+                default:
+                    return false;
             }
-            if (args.Length == 4)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                //uint dest = args[2].AsSerial();
-                int color = args[3].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.MoveOnGround(item.Serial, 0, Player.Position.X, Player.Position.Y, Player.Position.Z);
-                }
-            }
-            if (args.Length == 5)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                // uint dest = args[2].AsSerial();
-                int color = args[3].AsInt();
-                int amount = args[4].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
-                }
-            }
-            if (args.Length == 6)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                //uint dest = args[2].AsSerial();
-                int x = args[3].AsInt();
-                int y = args[4].AsInt();
-                int z = args[5].AsInt();
-                Item item = Items.FindByID(id, -1, (int)src, true);
-                if (item != null)
-                {
-                    Items.MoveOnGround(item.Serial, 0, x, y, z);
-                }
-            }
-            if (args.Length == 7)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                //uint dest = args[2].AsSerial();
-                int x = args[3].AsInt();
-                int y = args[4].AsInt();
-                int z = args[5].AsInt();
-                int color = args[6].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.MoveOnGround(item.Serial, 0, x, y, z);
-                }
-            }
-            if (args.Length == 8)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                //uint dest = args[2].AsSerial();
-                int x = args[3].AsInt();
-                int y = args[4].AsInt();
-                int z = args[5].AsInt();
-                int color = args[6].AsInt();
-                int amount = args[7].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.MoveOnGround(item.Serial, amount, x, y, z);
-                }
-            }
-
             return true;
         }
 
@@ -3024,9 +3036,13 @@ namespace RazorEnhanced.UOS
             {
                 uint serial = args[0].AsSerial();
                 //int layer = args[1].AsInt();
-                Player.EquipItem((int)serial);
+                if (World.FindItem(serial) != null)
+                {
+                    Player.EquipItem((int)serial);
+                    return true;
+                }
             }
-            return true;
+            return false;
         }
         /// <summary>
         /// togglemounted
@@ -3081,6 +3097,7 @@ namespace RazorEnhanced.UOS
                 {
                     BuyAgent.ChangeList(buyListName);
                     BuyAgent.Enable();
+                    return true;
                 }
                 else
                 {
@@ -3088,7 +3105,7 @@ namespace RazorEnhanced.UOS
                 }
 
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3103,6 +3120,7 @@ namespace RazorEnhanced.UOS
                 {
                     SellAgent.ChangeList(sellListName);
                     SellAgent.Enable();
+                    return true;
                 }
                 else
                 {
@@ -3110,7 +3128,7 @@ namespace RazorEnhanced.UOS
                 }
 
             }
-            return true;
+            return false;
 
         }
         /// <summary>
@@ -3167,9 +3185,10 @@ namespace RazorEnhanced.UOS
                 {
                     System.Threading.Thread.Sleep(500);
                 }
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3207,9 +3226,10 @@ namespace RazorEnhanced.UOS
                 {
                     System.Threading.Thread.Sleep(500);
                 }
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         private static bool AutoTargetObject(ASTNode node, Argument[] args, bool quiet, bool force)
@@ -3218,8 +3238,10 @@ namespace RazorEnhanced.UOS
             {
                 uint serial = args[0].AsSerial();
                 Assistant.Targeting.SetAutoTarget(serial);
+
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3249,6 +3271,10 @@ namespace RazorEnhanced.UOS
                 }
             }
             RazorEnhanced.Dress.DressFStart();
+            while (RazorEnhanced.Dress.DressStatus())
+            {
+                Misc.Pause(100);
+            }
             return true;
         }
 
@@ -3271,6 +3297,10 @@ namespace RazorEnhanced.UOS
                 }
             }
             RazorEnhanced.Dress.UnDressFStart();
+            while (RazorEnhanced.Dress.UnDressStatus())
+            {
+                Misc.Pause(100);
+            }
             return true;
         }
 
@@ -3331,9 +3361,9 @@ namespace RazorEnhanced.UOS
             {
                 uint gumpid = args[0].AsUInt();
                 int delay = args[1].AsInt();
-                Gumps.WaitForGump(gumpid, delay);
+                return Gumps.WaitForGump(gumpid, delay);
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3346,6 +3376,7 @@ namespace RazorEnhanced.UOS
                 uint gumpid = args[0].AsUInt();
                 int buttonid = args[1].AsInt();
                 Gumps.SendAction(gumpid, buttonid);
+                return true;
             }
             if (args.Length > 2)
             {
@@ -3359,9 +3390,10 @@ namespace RazorEnhanced.UOS
                 }
                 
                 Gumps.SendAdvancedAction(gumpid, buttonid, switches);
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3377,13 +3409,14 @@ namespace RazorEnhanced.UOS
                 {
                     uint gumpid = args[1].AsSerial();
                     Gumps.CloseGump(gumpid);
+                    return true;
                 }
                 else
                 {
                     SendError(String.Format("Unable to closegumps on {0} type objects", container));
                 }
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3404,9 +3437,9 @@ namespace RazorEnhanced.UOS
             {
                 string text = args[0].AsString();
                 int delay = args[1].AsInt();
-                m_journal.WaitJournal(text, delay);
+                return m_journal.WaitJournal(text, delay);
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3415,8 +3448,7 @@ namespace RazorEnhanced.UOS
         private bool PopList(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             string frontBack = args[1].AsString().ToLower();
-            m_Interpreter.PopList(args[0].AsString(), (frontBack == "front"));
-            return true;
+            return m_Interpreter.PopList(args[0].AsString(), (frontBack == "front"));
         }
 
         /// <summary>
@@ -3458,10 +3490,10 @@ namespace RazorEnhanced.UOS
                 {
                     macroAndArgs.Add(arg.AsString());
                 }
-                Assistant.Commands.PlayScript( macroAndArgs.ToArray() );
+                return Assistant.Commands.PlayScript( macroAndArgs.ToArray() );
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3475,8 +3507,9 @@ namespace RazorEnhanced.UOS
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, filename);
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(fullpath);
                 player.Play();
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3529,8 +3562,11 @@ namespace RazorEnhanced.UOS
             {
                 title = args[1].AsString();
             }
-            System.Windows.Forms.MessageBox.Show(body, title);
-            return true;
+            var result = System.Windows.Forms.MessageBox.Show(body, title);
+
+            if (result == DialogResult.OK || result == DialogResult.Yes)
+                return true;
+            return false;
         }
 
         /// <summary>
@@ -3664,9 +3700,10 @@ namespace RazorEnhanced.UOS
             {
                 string virtue = args[0].AsString();
                 Player.InvokeVirtue(virtue);
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3678,8 +3715,9 @@ namespace RazorEnhanced.UOS
             {
                 string msg = args[0].AsString();
                 Player.ChatGuild(msg);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3691,8 +3729,9 @@ namespace RazorEnhanced.UOS
             {
                 string msg = args[0].AsString();
                 Player.ChatAlliance(msg);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3710,8 +3749,9 @@ namespace RazorEnhanced.UOS
 
                 string msg = args[0].AsString();
                 Player.ChatWhisper(color, msg);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3729,8 +3769,9 @@ namespace RazorEnhanced.UOS
 
                 string msg = args[0].AsString();
                 Player.ChatYell(color, msg);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3740,9 +3781,13 @@ namespace RazorEnhanced.UOS
         {
             uint serial = args[0].AsSerial();
             Mobile m = Mobiles.FindBySerial((int)serial);
-            SendOutput(String.Format("Position({0}, {1})", m.Position.X, m.Position.Y));
+            if (m != null)
+            {
+                SendOutput(String.Format("Position({0}, {1})", m.Position.X, m.Position.Y));
+                return true;
+            }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3754,11 +3799,14 @@ namespace RazorEnhanced.UOS
             {
                 Misc.SendMessage(args[0].AsString());
             }
-            if (args.Length == 2)
+            else if (args.Length == 2)
             {
                 Misc.SendMessage(args[0].AsString(), args[1].AsInt(), false);
             }
-
+            else 
+            { 
+                return false; 
+            }
             return true;
         }
 
@@ -3777,8 +3825,9 @@ namespace RazorEnhanced.UOS
 
                 string msg = args[0].AsString();
                 Player.ChatSay(color, msg);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3796,8 +3845,9 @@ namespace RazorEnhanced.UOS
 
                 string msg = args[0].AsString();
                 Player.ChatEmote(color, msg);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3809,8 +3859,10 @@ namespace RazorEnhanced.UOS
             {
                 var msg = args[0].AsString();
                 Misc.ResponsePrompt(msg);
+                return true;
+                
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3828,8 +3880,9 @@ namespace RazorEnhanced.UOS
                     color = args[2].AsInt();
                 }
                 Task.Delay(delay).ContinueWith( t => Misc.SendMessage(msg, color) );
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3840,9 +3893,9 @@ namespace RazorEnhanced.UOS
             if (args.Length == 1)
             {
                 var delay = args[0].AsInt();
-                Misc.WaitForPrompt(delay);
+                return Misc.WaitForPrompt(delay);
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3872,7 +3925,8 @@ namespace RazorEnhanced.UOS
             int serial = -1;
             if (args.Length == 0) {
                 serial = new Target().PromptTarget();
-            }else if (args.Length == 1)
+            } 
+            else if (args.Length == 1)
             {
                 serial = args[0].AsInt();
             }
@@ -3882,8 +3936,9 @@ namespace RazorEnhanced.UOS
                 var new_friend = Mobiles.FindBySerial(serial);
                 string name = new_friend.Name;
                 Friend.AddPlayer(list_name, name, serial);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3891,8 +3946,21 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static bool RemoveFriend(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            // the Razor API for removing a frend is not pretty ( agent code, midex up with form code a bit, NotImplemented for now )
-            return NotImplemented(node, args, quiet, force);
+            var list_name = DEFAULT_FRIEND_LIST;
+            if (RazorEnhanced.Settings.Friend.ListExists(list_name))
+            {
+                int serial = -1;
+                if (args.Length == 0)
+                {
+                    serial = new Target().PromptTarget();
+                }
+                else if (args.Length == 1)
+                {
+                    serial = args[0].AsInt();
+                }
+                return Friend.RemoveFriend(list_name, serial);
+             }
+            return false;
         }
 
         /// <summary>
@@ -3906,10 +3974,10 @@ namespace RazorEnhanced.UOS
                 uint serial = args[0].AsSerial();
                 string option = args[1].AsString();
 
-                Misc.UseContextMenu((int)serial, option, 1000);
+                return Misc.UseContextMenu((int)serial, option, 1000);
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3949,7 +4017,7 @@ namespace RazorEnhanced.UOS
                 return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3961,8 +4029,9 @@ namespace RazorEnhanced.UOS
             {
                 uint serial = args[0].AsSerial();
                 Misc.IgnoreObject((int)serial);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -3997,8 +4066,9 @@ namespace RazorEnhanced.UOS
                         break;
                 }
                 Player.SetSkillStatus(skill, setAs);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4015,8 +4085,9 @@ namespace RazorEnhanced.UOS
                 {
                     Items.WaitForProps(item, timeout);
                 }
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4040,8 +4111,9 @@ namespace RazorEnhanced.UOS
             if (dyes != null && dyeTub != null)
             {
                 Items.ChangeDyeingTubColor(dyes, dyeTub, color);
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4057,9 +4129,10 @@ namespace RazorEnhanced.UOS
                 if (item != null)
                 {
                     Items.WaitForContents(item, timeout);
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
 
@@ -4068,11 +4141,16 @@ namespace RazorEnhanced.UOS
         {
             if (Player.Poisoned) {
                 RazorEnhanced.Target.Cancel();
+
                 Spells.CastMagery("Cure");
                 RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
                 if (RazorEnhanced.Target.HasTarget())
                 {
                     RazorEnhanced.Target.Self();
+                }
+                else
+                {
+                    return false;
                 }
                 RazorEnhanced.Target.Cancel();
                 return true;
@@ -4085,7 +4163,7 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static bool MiniHeal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            if (SelfCure()) { return true;  }
+            if (SelfCure()) { return true; }
 
             RazorEnhanced.Target.Cancel();
             Spells.CastMagery("Heal");
@@ -4103,8 +4181,10 @@ namespace RazorEnhanced.UOS
                     RazorEnhanced.Target.TargetExecute(serial);
                 }
                 RazorEnhanced.Target.Cancel();
+                return true;
             }
-            return true;
+
+            return false;
         }
 
         /// <summary>
@@ -4130,8 +4210,9 @@ namespace RazorEnhanced.UOS
                     RazorEnhanced.Target.TargetExecute(serial);
                 }
                 RazorEnhanced.Target.Cancel();
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4153,9 +4234,8 @@ namespace RazorEnhanced.UOS
             else 
             {
                 SendError("Incorrect number of parameters");
+                return false;
             }
-
-
 
             return true;
         }
@@ -4179,8 +4259,9 @@ namespace RazorEnhanced.UOS
                     RazorEnhanced.Target.TargetExecute(serial);
                 }
                 RazorEnhanced.Target.Cancel();
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4199,8 +4280,7 @@ namespace RazorEnhanced.UOS
                 show = args[1].AsBool();
             }
 
-            RazorEnhanced.Target.WaitForTarget(delay, show);
-            return true;
+            return RazorEnhanced.Target.WaitForTarget(delay, show);
         }
 
         /// <summary>
@@ -4233,6 +4313,7 @@ namespace RazorEnhanced.UOS
             if (args.Length != 2)
             {
                 WrongParameterCount(node, 2, args.Length);
+                return false;
             }
             uint tool = args[0].AsSerial();
             string resource = args[1].AsString();
@@ -4259,8 +4340,10 @@ namespace RazorEnhanced.UOS
             {
                 uint serial = args[0].AsSerial();
                 RazorEnhanced.Target.TargetExecute((int)serial);
+
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4302,7 +4385,7 @@ namespace RazorEnhanced.UOS
                         filter.IsHuman = 1;
                         break;
                     case "transformation":
-                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc
+                    //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc
                     case "closest":
                     case "nearest":
                         nearest = true;
@@ -4321,7 +4404,8 @@ namespace RazorEnhanced.UOS
 
 
                 int color = 20;
-                switch (anEnemy.Notoriety){
+                switch (anEnemy.Notoriety)
+                {
                     case 1: color = 190; break; //Blue
                     case 2: color = 168; break; //Green
                     case 3:
@@ -4331,15 +4415,15 @@ namespace RazorEnhanced.UOS
                     case 7: color = 153; break; //Yellow
                 }
                 RazorEnhanced.Target.SetLast(anEnemy.Serial); //Attempt to highlight
-                if (! quiet)
+                if (!quiet)
                     Player.HeadMessage(color, "[Enemy] " + anEnemy.Name);
                 m_Interpreter.SetAlias("enemy", (uint)anEnemy.Serial);
+                return true;
             }
-            else
-            {
-                m_Interpreter.UnSetAlias("enemy");
-            }
-            return true;
+
+            // No enemies in list
+            m_Interpreter.UnSetAlias("enemy");
+            return false;
         }
 
         /// <summary>
@@ -4382,7 +4466,7 @@ namespace RazorEnhanced.UOS
                         filter.IsHuman = 1;
                         break;
                     case "transformation":
-                        //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc
+                    //TODO: add ids for transformations: ninja, necro, polymorpjh(?), etc
                     case "closest":
                     case "nearest":
                         nearest = true;
@@ -4413,12 +4497,11 @@ namespace RazorEnhanced.UOS
                 if (!quiet)
                     Player.HeadMessage(color, "[Friend] " + anEnemy.Name);
                 m_Interpreter.SetAlias("friend", (uint)anEnemy.Serial);
+                return true;
             }
-            else
-            {
-                m_Interpreter.UnSetAlias("friend");
-            }
-            return true;
+
+            m_Interpreter.UnSetAlias("friend");
+            return false;
         }
         /// <summary>
         /// script ('run'|'stop'|'suspend'|'resume'|'isrunning'|'issuspended') [script_name] [output_alias]
@@ -4498,7 +4581,7 @@ namespace RazorEnhanced.UOS
                 throw new UOSArgumentError(node, cmd + " not recognized.");
             }
 
-            return true;
+            return false;
         }
 
 
@@ -4733,14 +4816,16 @@ namespace RazorEnhanced.UOS
                 else
                 {
                     RazorEnhanced.Target.TargetExecute(mob);
+                    return true;
                 }
             }
             else
             {
                 RazorEnhanced.Target.TargetExecute(itm);
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -4774,13 +4859,14 @@ namespace RazorEnhanced.UOS
 
             if (itm == null)
             {
-                if (!quiet) { SendError("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString()); }
-            }
-            else
-            {
-                RazorEnhanced.Target.TargetExecute(itm);
+                if (!quiet)
+                {
+                    SendError("targettype: graphic " + graphic.ToString() + " not found in range " + range.ToString());
+                }
+                return false;
             }
 
+            RazorEnhanced.Target.TargetExecute(itm);
             return true;
         }
 
@@ -4811,21 +4897,23 @@ namespace RazorEnhanced.UOS
                 }
                 if (itm == null)
                 {
-                    if (!quiet) { SendError("targettile: graphic " + graphic.ToString() + " not found"); }
-                }
-                else
-                {
-                    LastTileTarget[0] = itm.Position.X;
-                    LastTileTarget[1] = itm.Position.Y;
-                    LastTileTarget[2] = itm.Position.Z;
-                    var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
-                    if (tiles2.Count > 0)
+                    if (!quiet)
                     {
-                        LastTileTarget[2] = tiles2[0].StaticZ;
-                        LastTileTarget[3] = tiles2[0].StaticID;
+                        SendError("targettile: graphic " + graphic.ToString() + " not found");
                     }
-                    RazorEnhanced.Target.TargetExecute(itm);
+                    return false;
                 }
+
+                LastTileTarget[0] = itm.Position.X;
+                LastTileTarget[1] = itm.Position.Y;
+                LastTileTarget[2] = itm.Position.Z;
+                var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+                if (tiles2.Count > 0)
+                {
+                    LastTileTarget[2] = tiles2[0].StaticZ;
+                    LastTileTarget[3] = tiles2[0].StaticID;
+                }
+                RazorEnhanced.Target.TargetExecute(itm);
                 return true;
             }
             // if we get here graphic wasnt specified
@@ -4879,20 +4967,20 @@ namespace RazorEnhanced.UOS
                 if (itm == null)
                 {
                     if (!quiet) { SendError("targettile: graphic " + graphic.ToString() + " not found"); }
+                    return false;
                 }
-                else
+
+                LastTileTarget[0] = itm.Position.X;
+                LastTileTarget[1] = itm.Position.Y;
+                LastTileTarget[2] = itm.Position.Z;
+                var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
+                if (tiles2.Count > 0)
                 {
-                    LastTileTarget[0] = itm.Position.X;
-                    LastTileTarget[1] = itm.Position.Y;
-                    LastTileTarget[2] = itm.Position.Z;
-                    var tiles2 = Statics.GetStaticsTileInfo(LastTileTarget[0], LastTileTarget[1], Player.Map);
-                    if (tiles2.Count > 0)
-                    {
-                        LastTileTarget[2] = tiles2[0].StaticZ;
-                        LastTileTarget[3] = tiles2[0].StaticID;
-                    }
-                    RazorEnhanced.Target.TargetExecute(itm);
+                    LastTileTarget[2] = tiles2[0].StaticZ;
+                    LastTileTarget[3] = tiles2[0].StaticID;
                 }
+                RazorEnhanced.Target.TargetExecute(itm);
+
                 return true;
             }
             // if we get here graphic wasnt specified
@@ -4909,6 +4997,7 @@ namespace RazorEnhanced.UOS
             RazorEnhanced.Target.TargetExecute(LastTileTarget[0], LastTileTarget[1], LastTileTarget[2], LastTileTarget[3]);
             return true;
         }
+
         /// <summary>
         /// targettilerelative (serial) (range) [reverse = 'true' or 'false'] [graphic]
         /// </summary>
@@ -4957,11 +5046,10 @@ namespace RazorEnhanced.UOS
                     {
                         SendError("targettilerelative: graphic " + graphic.ToString() + " not found in range " + range.ToString());
                     }
+                    return false;
                 }
-                else
-                {
-                    RazorEnhanced.Target.TargetExecute(itm);
-                }
+
+                RazorEnhanced.Target.TargetExecute(itm);
                 return true;
             }
 
