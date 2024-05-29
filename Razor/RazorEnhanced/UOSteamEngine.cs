@@ -1,9 +1,11 @@
 using Accord;
+using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
 using IronPython.Compiler.Ast;
 using IronPython.Runtime;
 using Microsoft.Scripting.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -1018,11 +1020,42 @@ namespace RazorEnhanced.UOS
             string listname = args[0].AsString();
             if (m_Interpreter.ListExists(listname))
             {
+                IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
                 foreach (Argument arg in m_Interpreter.ListContents(listname))
                 {
                     int type = arg.AsInt();
-                    if (FindByType(type, args))
-                        return true;
+                    itemids.append(type);
+                }
+
+                int color = -1;
+                if (args.Length >= 2)
+                {
+                    color = args[1].AsInt();
+                }
+
+                int container = -1;
+                if (args.Length >= 3)
+                {
+                    container = args[2].AsInt();
+                }
+                
+                int range = -1;
+                if (args.Length >= 4)
+                {
+                    range = args[3].AsInt();
+                }
+                var resultList = RazorEnhanced.Items.FindAllByID(itemids, color, container, range);
+                if (resultList.Count > 0)
+                {
+                    RazorEnhanced.Item item = (RazorEnhanced.Item)resultList.ElementAt(0);
+                    int serial = item.Serial;
+                    m_Interpreter.SetAlias("found", (uint)serial);
+                    return true;
+                }
+                else
+                {
+                    m_Interpreter.UnSetAlias("found");
+                    return false;
                 }
             }
             else
@@ -3184,7 +3217,7 @@ namespace RazorEnhanced.UOS
                 int max = 30 * 2; // max 30 seconds @ .5 seconds each loop
                 while (RazorEnhanced.Restock.Status() == true && (max-- > 0))
                 {
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(100);
                 }
                 return true;
             }
@@ -3225,7 +3258,7 @@ namespace RazorEnhanced.UOS
                 int max = 30 * 2; // max 30 seconds @ .5 seconds each loop
                 while (RazorEnhanced.Organizer.Status() == true && (max-- > 0))
                 {
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(100);
                 }
                 return true;
             }
@@ -5475,7 +5508,10 @@ namespace RazorEnhanced.UOS
     public delegate bool UOSTracebackDelegate(UOSCompiledScript script, ASTNode node, Scope scope);
     public class UOSCompiledScript
     {
+        const int MinLoopTime = 100;
         bool Debug { get; set; }
+        bool DebugTS { get; set; }
+
         public string Filename;
         public UOSteamEngine Engine;
         Action<string> DebugWriter;
@@ -5589,6 +5625,12 @@ namespace RazorEnhanced.UOS
                 if (_statement != null)
                 {
                     string msg = String.Format("{0}: {1}", _statement.LineNumber+1, _statement.Lexer.GetLine(_statement.LineNumber));
+                    if (DebugTS)
+                    {
+
+                        var ts = DateTime.Now.ToString("mmss:fff");
+                        msg = String.Format("{0} {1}: {2}", ts, _statement.LineNumber + 1, _statement.Lexer.GetLine(_statement.LineNumber));
+                    }
                     Engine.SendOutput(msg);
                 }
             }
@@ -5769,10 +5811,9 @@ namespace RazorEnhanced.UOS
                                 {
                                     if (depth == 0)
                                     {
-                                        int duration = (int)_scope.timer.ElapsedMilliseconds;
-                                        const int minimumLoopDelay = 500;
-                                        if (duration < minimumLoopDelay)
-                                            Misc.Pause(minimumLoopDelay - duration);
+                                        int duration = (int)_scope.timer.ElapsedMilliseconds;                                    
+                                        if (duration < MinLoopTime)
+                                            Misc.Pause(MinLoopTime - duration);
                                         _scope.timer.Reset();
                                         PopScope();
                                         // Go one past the endwhile so the loop doesn't repeat
@@ -5819,8 +5860,8 @@ namespace RazorEnhanced.UOS
                     }
 
                     var duration2 = _scope.timer.ElapsedMilliseconds;
-                    if (duration2 < 500)
-                        Misc.Pause((int)(500 - duration2));
+                    if (duration2 < MinLoopTime)
+                        Misc.Pause((int)(MinLoopTime - duration2));
                     _scope.timer.Reset();
                     Debug = curDebug;
                     if (_statement == null)
@@ -6222,10 +6263,19 @@ namespace RazorEnhanced.UOS
                 var args = ConstructArguments(ref node);
                 if (args.Length == 1)
                 {
-                    bool debugSetting = false;
-                    if (args[0].AsString().ToLower() == "on")
-                        debugSetting = true;
-                    Debug = debugSetting;
+                    string debugArgument = args[0].AsString().ToLower();
+                    if (debugArgument == "on"
+                        || debugArgument == "ts")
+                        Debug = true;
+                    else
+                    {
+                        Debug = false;
+                        DebugTS = false;
+                    }
+                    if (debugArgument == "ts")
+                        DebugTS = true;
+                    else
+                        DebugTS = false;
                 }
                 cont = true;
             }

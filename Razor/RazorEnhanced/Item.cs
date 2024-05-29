@@ -1654,7 +1654,7 @@ namespace RazorEnhanced
                 if (color != -1)
                     itemFilter.Hues.Add(color);
 
-                foreach (var item in RazorEnhanced.Items.ApplyFilter(itemFilter))
+                foreach (Item item in RazorEnhanced.Items.ApplyFilter(itemFilter))
                 {
                     returnList.Add(item);
                 }

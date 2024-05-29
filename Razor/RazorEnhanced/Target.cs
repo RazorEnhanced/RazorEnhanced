@@ -64,15 +64,17 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static bool WaitForTarget(int delay, bool noshow = false)
         {
-            int subdelay = delay;
             Assistant.Targeting.NoShowTarget = noshow;
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             while (Assistant.Targeting.HasTarget == false)
             {
                 Thread.Sleep(2);
-                subdelay -= 2;
-                if (subdelay <= 0)
+                if (watch.ElapsedMilliseconds >= delay)
                     break;
+                var elapsedMs2 = watch.ElapsedMilliseconds;
             }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
             Assistant.Targeting.NoShowTarget = false;
             return HasTarget();
         }
