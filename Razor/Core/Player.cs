@@ -179,6 +179,9 @@ namespace Assistant
         private readonly List<BuffIcon> m_Buffs = new List<BuffIcon>();
         internal List<BuffIcon> Buffs { get { return m_Buffs; } }
 
+        private readonly Dictionary<BuffIcon, DateTime> m_BuffTimes = new Dictionary<BuffIcon, DateTime>();
+        internal Dictionary<BuffIcon, DateTime> BuffTimes { get { return m_BuffTimes; } }
+
         private readonly List<SkillIcon> m_SkillEnabled = new List<SkillIcon>();
         internal List<SkillIcon> SkillEnabled { get { return m_SkillEnabled; } }
 
