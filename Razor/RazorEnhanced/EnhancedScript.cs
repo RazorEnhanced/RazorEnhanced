@@ -771,9 +771,18 @@ namespace RazorEnhanced
         {
             m_stdoutWriter = stdoutWriter;
         }
+        public Action<string> GetStdout()
+        {
+            return m_stdoutWriter;
+        }
+
         public void SetStderr(Action<string> stderrWriter)
         {
             m_stderrWriter = stderrWriter;
+        }
+        public Action<string> GetStderr()
+        {
+            return m_stderrWriter;
         }
 
 

@@ -182,13 +182,26 @@ namespace RazorEnhanced.UI
         public bool LoadFromFile(string filepath)
         {
             if (!File.Exists(filepath)) { return false; }
-            
+
             if (m_Script != null && m_Script.Editor)
             {
                 EnhancedScript.Service.RemoveScript(m_Script);
             }
 
+            Action<string> stdout = null;
+            Action<string> stderr = null;
+            if (m_Script != null)
+            {
+                stdout = m_Script.ScriptEngine.GetStdout();
+                stderr = m_Script.ScriptEngine.GetStderr();
+            }
             m_Script = EnhancedScript.FromFile(filepath, editor:true);
+            if (m_Script != null)
+            {
+                m_Script.ScriptEngine.SetStdout(stdout);
+                m_Script.ScriptEngine.SetStderr(stderr);
+            }
+
             var language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = m_Script.Text;
@@ -868,7 +881,11 @@ namespace RazorEnhanced.UI
                 }
             }
             catch
-            { }
+            {
+                // This is not right. UOS scripts
+                // executed without a editor still have the m_writer defined but 
+                //  There is no console so an exception is thrown
+            }
         }
 
         private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)

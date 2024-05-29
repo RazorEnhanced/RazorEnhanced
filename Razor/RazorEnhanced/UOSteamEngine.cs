@@ -1,3 +1,4 @@
+using Accord;
 using Accord.Math;
 using Assistant;
 using IronPython.Compiler.Ast;
@@ -5583,6 +5584,15 @@ namespace RazorEnhanced.UOS
             }
             if (_statement == null) { return false;}
 
+            if (Debug)
+            {
+                if (_statement != null)
+                {
+                    string msg = String.Format("{0}: {1}", _statement.LineNumber+1, _statement.Lexer.GetLine(_statement.LineNumber));
+                    Engine.SendOutput(msg);
+                }
+            }
+
             if (_statement.Type != ASTNodeType.STATEMENT)
                 throw new UOSRuntimeError(_statement, "Invalid script");
                 
@@ -6160,8 +6170,8 @@ namespace RazorEnhanced.UOS
                 case ASTNodeType.QUIET:
                 case ASTNodeType.FORCE:
                 case ASTNodeType.COMMAND:
-                    if (ExecuteCommand(node))
-                        Advance();
+                    ExecuteCommand(node);
+                    Advance();
 
                     break;
             }
@@ -6172,11 +6182,7 @@ namespace RazorEnhanced.UOS
         {
             Engine.Interpreter.ClearTimeout();
             _statement = _statement.Next();
-            if (Debug)
-            {
-                if (_statement != null && DebugWriter!=null)
-                    DebugWriter(String.Format("Line: {0}", _statement.LineNumber+1));
-            }
+
         }
 
         private ASTNode EvaluateModifiers(ASTNode node, out bool quiet, out bool force, out bool not)
@@ -6226,7 +6232,6 @@ namespace RazorEnhanced.UOS
             else
             {
                 var handler = Engine.Interpreter.GetCommandHandler(node.Lexeme);
-
                 if (handler == null)
                     throw new UOSRuntimeError(node, "Unknown command");
 
@@ -7235,6 +7240,8 @@ namespace RazorEnhanced.UOS
         public string GetLine(int lineNum=-1)
         {
             if (lineNum < 0) lineNum = _curLine;
+            if (lineNum >= _lines.Length)
+                return "line number exceeds all line numbers";
             return _lines[lineNum];
         }
 
