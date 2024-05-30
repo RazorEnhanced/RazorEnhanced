@@ -158,16 +158,15 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="directive">String containing the whole directive</param>
         /// <param name="basepath">Basepath for the relative path directives</param>
-        /// <param name="ignoreBasePath">Force to ignore the BasePath on the &lt; &gt; directive </param>
         /// <param name="filename">Extracted filename</param>
         /// <returns>Returns false if an error occurs</returns>
-        private bool ExtractFileNameFromDirective(string directive, string basepath, bool ignoreBasePath, out string filename)
+        private bool ExtractFileNameFromDirective(string directive, string basepath, out string filename)
         {
             if (directive.StartsWith("<") && directive.EndsWith(">"))
             {
                 // Relative path. Adding base folder
                 filename = directive.Substring(1, directive.Length - 2); // Removes < >
-                if (!ignoreBasePath) filename = Path.GetFullPath(Path.Combine(basepath, filename)); // Basepath is Scripts folder
+                filename = Path.GetFullPath(Path.Combine(basepath, filename)); // Basepath is the starting folder
             }
             else if (directive.StartsWith("\"") && directive.EndsWith("\""))
             {
@@ -179,7 +178,8 @@ namespace RazorEnhanced
                 filename = "";
                 return false; 
             }
-            return true;
+
+            return File.Exists(filename);
         }
 
         /// <summary>
@@ -206,11 +206,9 @@ namespace RazorEnhanced
                     continue;
                 }
 
-                string basepath = Path.GetDirectoryName(filename); // BasePath of the imported file
-
                 foreach (string line in foundDirectives)
                 {
-                    if (!ExtractFileNameFromDirective(line, basepath, true, out string assembly))
+                    if (!ExtractFileNameFromDirective(line, Assistant.Engine.RootPath, out string assembly))
                     {
                         errorwarnings.Add(string.Format("Error on RE Directive {0}", directive));
                         break;
@@ -249,7 +247,7 @@ namespace RazorEnhanced
 
             foreach (string line in imports)
             {
-                if (!ExtractFileNameFromDirective(line, basepath, false, out string file))
+                if (!ExtractFileNameFromDirective(line, basepath, out string file))
                 {
                     errorwarnings.Add(string.Format("Error on RE Directive {0}", directive));
                     break;
