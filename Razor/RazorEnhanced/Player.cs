@@ -991,16 +991,38 @@ namespace RazorEnhanced
             try
             {
                 buffname = buffname.ToLower();
-                if (World.Player == null || World.Player.BuffTimes == null) return 0;
-                KeyValuePair<BuffIcon, DateTime> keyValuePair = World.Player.BuffTimes.FirstOrDefault(bfd => GetBuffDescription(bfd.Key).ToLower().Equals(buffname));
-                BuffIcon buff = keyValuePair.Key;
-                DateTime expiredTime = keyValuePair.Value;
-                if (!BuffsExist(buffname) || expiredTime < DateTime.Now) return 0;
-                return (expiredTime - DateTime.Now).TotalMilliseconds;
+                
+                if (World.Player == null || World.Player.BuffTimes == null)
+                {
+                    return 0;
+                }
+                                
+                DateTime expiredTime = SearchBuffTime(World.Player.BuffTimes, buffname);
+                
+                if (!BuffsExist(buffname) || expiredTime < DateTime.Now)
+                {
+                    return 0;
+                }
+                
+                double timeRemaings = (expiredTime - DateTime.Now).TotalMilliseconds;
+                
+                return Math.Round(timeRemaings);
             } catch
             {
                 return 0;
             }            
+        }
+
+        internal static DateTime SearchBuffTime(Dictionary<BuffIcon, DateTime> buffTimes, String buffname)
+        {
+            foreach (var item in buffTimes)
+            {
+                if (GetBuffDescription(item.Key).ToLower().Equals(buffname))
+                {
+                    return item.Value;
+                }
+            }
+            return DateTime.Now;
         }
 
         // Special skill Icon
