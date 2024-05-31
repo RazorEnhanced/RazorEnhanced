@@ -1348,7 +1348,7 @@ namespace FastColoredTextBoxNS
                                            RegexCompiledOption);
             UosKeywordRegex =
                 new Regex(
-                    @"\b(and|break|continue|else|elseif|end|false|for|if|to|not|or|true|while)\b",
+                    @"\b(and|break|continue|else|elseif|endif|endfor|endwhile|false|for|if|to|not|or|true|while)\b",
                     RegexCompiledOption);
 
             UosFunctionsRegex =
