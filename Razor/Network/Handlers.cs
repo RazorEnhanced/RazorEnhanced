@@ -3499,12 +3499,16 @@ namespace Assistant
             if (Enum.IsDefined(typeof(BuffIcon), icon))
             {                
                 BuffIcon buff = (BuffIcon)icon;
+                
                 switch (action)
                 {
                     case 0x01: // show                        
                         if (World.Player != null && !World.Player.Buffs.Contains(buff))
                         {
                             World.Player.Buffs.Add(buff);
+                            p.Seek(12, SeekOrigin.Current);
+                            int duration = p.ReadInt16();
+                            World.Player.BuffTimes[buff] = DateTime.Now.AddSeconds(duration);                            
                         }
                         break;
 
@@ -3512,6 +3516,7 @@ namespace Assistant
                         if (World.Player != null && World.Player.Buffs.Contains(buff))
                         {
                             World.Player.Buffs.Remove(buff);
+                            World.Player.BuffTimes.Remove(buff);
                         }
                         break;
                 }

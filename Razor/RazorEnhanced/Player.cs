@@ -1,5 +1,6 @@
 using Assistant;
 using Assistant.UI;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -978,6 +979,50 @@ namespace RazorEnhanced
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Get durations from buff actived by buff name.
+        /// </summary>
+        /// <param name="buffname">
+        /// <returns>Duration</returns>
+        public static double BuffTime(string buffname)
+        {
+            try
+            {
+                buffname = buffname.ToLower();
+                
+                if (World.Player == null || World.Player.BuffTimes == null)
+                {
+                    return 0;
+                }
+                                
+                DateTime expiredTime = SearchBuffTime(World.Player.BuffTimes, buffname);
+                
+                if (!BuffsExist(buffname) || expiredTime < DateTime.Now)
+                {
+                    return 0;
+                }
+                
+                double timeRemaings = (expiredTime - DateTime.Now).TotalMilliseconds;
+                
+                return Math.Round(timeRemaings);
+            } catch
+            {
+                return 0;
+            }            
+        }
+
+        internal static DateTime SearchBuffTime(Dictionary<BuffIcon, DateTime> buffTimes, String buffname)
+        {
+            foreach (var item in buffTimes)
+            {
+                if (GetBuffDescription(item.Key).ToLower().Equals(buffname))
+                {
+                    return item.Value;
+                }
+            }
+            return DateTime.Now;
         }
 
         // Special skill Icon
