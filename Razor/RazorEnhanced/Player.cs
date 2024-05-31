@@ -986,7 +986,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="buffname">
         /// <returns>Duration</returns>
-        public static double BuffTime(string buffname)
+        public static int BuffTime(string buffname)
         {
             try
             {
@@ -1006,7 +1006,7 @@ namespace RazorEnhanced
                 
                 double timeRemaings = (expiredTime - DateTime.Now).TotalMilliseconds;
                 
-                return Math.Round(timeRemaings);
+                return (int)timeRemaings;
             } catch
             {
                 return 0;
