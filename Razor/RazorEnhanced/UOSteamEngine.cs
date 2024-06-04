@@ -564,7 +564,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("y", LocationY);
             m_Interpreter.RegisterExpressionHandler("z", LocationZ);
             m_Interpreter.RegisterExpressionHandler("organizing", Organizing);
-            m_Interpreter.RegisterExpressionHandler("restock", Restocking);
+            m_Interpreter.RegisterExpressionHandler("restocking", Restocking);
 
             m_Interpreter.RegisterExpressionHandler("contents", CountContents);
             m_Interpreter.RegisterExpressionHandler("inregion", InRegion);
@@ -4792,6 +4792,7 @@ namespace RazorEnhanced.UOS
 
             Item itm = null;
             // Container (Range: Container Serial)
+
             if (range > 18)
             {
                 itm = Items.FindByID(graphic, color, -1, range);
