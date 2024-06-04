@@ -1602,7 +1602,7 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private IComparable InList(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length == 1)
+            if (args.Length == 2)
             {
                 string listName = args[0].AsString();
                 return m_Interpreter.ListContains(listName, args[1]);  // This doesn't seem right
