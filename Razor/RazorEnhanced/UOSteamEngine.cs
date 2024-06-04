@@ -4436,12 +4436,11 @@ namespace RazorEnhanced.UOS
                     anEnemy = Mobiles.Select(list, "Nearest");
                 }
 
-
                 int color = 20;
                 switch (anEnemy.Notoriety)
                 {
-                    case 1: color = 190; break; //Blue
-                    case 2: color = 168; break; //Green
+                    case 1: color = 168; break; //Green
+                    case 2: color = 190; break; //Blue
                     case 3:
                     case 4: color = 1000; break; //Gray
                     case 5: color = 140; break; //Orange
@@ -4792,10 +4791,12 @@ namespace RazorEnhanced.UOS
 
             Item itm = null;
             // Container (Range: Container Serial)
+            itm = Items.FindByID(graphic, color, Player.Backpack.Serial, range);
 
-            if (range > 18)
+            if (itm != null)
             {
-                itm = Items.FindByID(graphic, color, -1, range);
+                RazorEnhanced.Target.TargetExecute(itm);
+                return true;
             }
             else
             {
