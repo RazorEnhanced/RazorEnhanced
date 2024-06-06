@@ -159,10 +159,13 @@ namespace RazorEnhanced
         public static bool TargetType(int graphic, int color, int range, string selector, List<byte> notoriety = null)
         {
             Item itm = null;
+            // Container (Range: Container Serial)
+            itm = Items.FindByID(graphic, color, Player.Backpack.Serial, range);
 
-            if (range > 18)
+            if (itm != null)
             {
-                itm = Items.FindByID(graphic, color, -1, range);
+                TargetExecute(itm);
+                return true;
             }
             else
             {

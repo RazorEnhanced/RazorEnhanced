@@ -564,7 +564,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("y", LocationY);
             m_Interpreter.RegisterExpressionHandler("z", LocationZ);
             m_Interpreter.RegisterExpressionHandler("organizing", Organizing);
-            m_Interpreter.RegisterExpressionHandler("restock", Restocking);
+            m_Interpreter.RegisterExpressionHandler("restocking", Restocking);
 
             m_Interpreter.RegisterExpressionHandler("contents", CountContents);
             m_Interpreter.RegisterExpressionHandler("inregion", InRegion);
@@ -1602,7 +1602,7 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private IComparable InList(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length == 1)
+            if (args.Length == 2)
             {
                 string listName = args[0].AsString();
                 return m_Interpreter.ListContains(listName, args[1]);  // This doesn't seem right
@@ -4436,12 +4436,11 @@ namespace RazorEnhanced.UOS
                     anEnemy = Mobiles.Select(list, "Nearest");
                 }
 
-
                 int color = 20;
                 switch (anEnemy.Notoriety)
                 {
-                    case 1: color = 190; break; //Blue
-                    case 2: color = 168; break; //Green
+                    case 1: color = 168; break; //Green
+                    case 2: color = 190; break; //Blue
                     case 3:
                     case 4: color = 1000; break; //Gray
                     case 5: color = 140; break; //Orange
@@ -4792,9 +4791,12 @@ namespace RazorEnhanced.UOS
 
             Item itm = null;
             // Container (Range: Container Serial)
-            if (range > 18)
+            itm = Items.FindByID(graphic, color, Player.Backpack.Serial, range);
+
+            if (itm != null)
             {
-                itm = Items.FindByID(graphic, color, -1, range);
+                RazorEnhanced.Target.TargetExecute(itm);
+                return true;
             }
             else
             {

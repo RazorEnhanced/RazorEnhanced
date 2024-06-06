@@ -690,10 +690,11 @@ namespace FastColoredTextBoxNS
                     KeywordStyle = BlueStyle;
                     break;
                 case Language.Uos:
-                    StringStyle = BrownStyle;
-                    CommentStyle = GreenStyle;
-                    NumberStyle = MagentaStyle;
+                    StringStyle = GreenStyle;
+                    CommentStyle = GrayStyle;
+                    NumberStyle = BlackStyle;
                     KeywordStyle = BlueStyle;
+                    FunctionsStyle = MaroonStyle;
                     break;
                 case Language.Lua:
                     StringStyle = BrownStyle;
@@ -1348,12 +1349,23 @@ namespace FastColoredTextBoxNS
                                            RegexCompiledOption);
             UosKeywordRegex =
                 new Regex(
-                    @"\b(and|break|continue|else|elseif|endif|endfor|endwhile|false|for|if|to|not|or|true|while)\b",
+                    @"\b(and|break|continue|else|elseif|endif|endfor|endwhile|false|for|if|to|not|or|true|while|replay|pause|stop|waitfortarget|walk|turn|run|waitforgump|waitforcontents|waitforjournal|waitforprompt|waitforcontext|waitforproperties)\b",
                     RegexCompiledOption);
 
             UosFunctionsRegex =
                 new Regex(
-                    @"\b(sysmsg)\b",
+                    @"\b(sysmsg|targettype|msg|fly|land|setability|attack|clearhands|clickobject|bandageself|useonce|clearusequeue|moveitem|target|
+moveitemoffset|movetypeoffset|pathfindto|useskill|feed|rename|shownames|togglehands|equipitem|togglemounted|equipwand|buy|sell|clearbuy|location|clearsell|
+organizer|restock|autoloot|autotargetobject|dress|undress|dressconfig|toggleautoloot|togglescavenger|counter|unsetalias|setalias|promptalias|replygump|
+closegump|clearjournal|poplist|pushlist|removelist|createlist|clearlist|info|ping|playmacro|playsound|resync|snapshot|hotkeys|where|messagebox|mapuo|clickscreen|
+paperdoll|helpbutton|guildbutton|questsbutton|logoutbutton|virtue|headmsg|partymsg|guildmsg|allymsg|whispermsg|yellmsg|chatmsg|emotemsg|promptmsg|timermsg|
+cancelprompt|addfriend|removefriend|contextmenu|ignoreobject|clearignorelist|setskill|autocolorpick|miniheal|bigheal|cast|chivalryheal|canceltarget|cancelautotarget|
+target|targetground|targettile|targettileoffset|targettilerelative|targetresource|cleartargetqueue|warmode|settimer|removetimer|createtimer|getenemy|
+getfriend|namespace|script|usetype|movetype|findalias|x|y|z|organizing|contents|inregion|skill|findobject|useobject|distance|graphic|inrange|buffexists|
+property|durability|findtype|findlayer|skillstate|counttype|counttypeground|findwand|inparty|infriendlist|ingump|gumpexists|injournal|listexists|list|
+inlist|timer|timerexists|targetexists|weight|maxweight|diffweight|mana|maxmana|stam|maxstam|dex|int|str|physical|fire|cold|poison|energy|followers|
+maxfollowers|gold|hidden|luck|waitingfortarget|hits|diffhits|maxhits|name|dead|direction|direction|directionname|flying|paralyzed|poisoned|mounted|
+yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking)\b",
                     RegexCompiledOption);
 
             UosAttributeRegex = new Regex(@"\b(lastobject|found|enemy|friend|ground|any|backpack|self|bank|lasttarget|last|mount|lefthand|righthand)\b",
@@ -1381,14 +1393,16 @@ namespace FastColoredTextBoxNS
                 InitUosRegex();
             //string highlighting
             range.SetStyle(StringStyle, UosStringRegex);
-            //comment highlighting
-            range.SetStyle(CommentStyle, UosCommentRegex);
             //number highlighting
             range.SetStyle(NumberStyle, UosNumberRegex);
             //attribute highlighting
             range.SetStyle(AttributeStyle, UosAttributeRegex);
+            //function highlighting
+            range.SetStyle(FunctionsStyle, UosFunctionsRegex);
             //keyword highlighting
             range.SetStyle(KeywordStyle, UosKeywordRegex);
+            //comment highlighting
+            range.SetStyle(CommentStyle, UosCommentRegex);
 
             //clear folding markers
             range.ClearFoldingMarkers();
