@@ -643,7 +643,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("murderer", IsMurderer);
 
             m_Interpreter.RegisterExpressionHandler("bandage", Bandage);
-
+            m_Interpreter.RegisterExpressionHandler("color", Color);
 
             // Object attributes
         }
@@ -1288,7 +1288,40 @@ namespace RazorEnhanced.UOS
 
             return false;
         }
-        
+
+        /// <summary>
+        /// color  (operator) (value)
+        /// </summary>
+        private static IComparable Color(ASTNode node, Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOSRuntimeError(node, "Color requires parameters");
+                // return false;
+            }
+
+            uint serial = args[0].AsSerial();
+            Assistant.Serial thing = new Assistant.Serial(serial);
+
+            if (thing.IsMobile)
+            {
+                Mobile mobile = Mobiles.FindBySerial((int)serial);
+                if (mobile != null)
+                {
+                    int color = mobile.Color;
+                    return color;
+                }
+                return false;
+            }
+
+            Item item = Items.FindBySerial((int)serial);
+            if (item == null)
+                return false;
+
+            int hue = item.Hue;
+            return hue;
+        }
+
         /// <summary>
         /// dead [serial]
         /// </summary>
@@ -1749,6 +1782,10 @@ namespace RazorEnhanced.UOS
                 Mobile mobile = Mobiles.FindBySerial((int)serial);
                 if (mobile != null)
                 {
+                    if (range != -1)
+                        if (Assistant.Utility.Distance(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > range)
+                            return false;
+
                     if (color == -1 || color == mobile.Hue)
                     {
                         m_Interpreter.SetAlias("found", (uint)mobile.Serial);
