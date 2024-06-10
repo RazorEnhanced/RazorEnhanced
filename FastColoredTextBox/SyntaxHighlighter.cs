@@ -1365,7 +1365,7 @@ getfriend|namespace|script|usetype|movetype|findalias|x|y|z|organizing|contents|
 property|durability|findtype|findlayer|skillstate|counttype|counttypeground|findwand|inparty|infriendlist|ingump|gumpexists|injournal|listexists|list|
 inlist|timer|timerexists|targetexists|weight|maxweight|diffweight|mana|maxmana|stam|maxstam|dex|int|str|physical|fire|cold|poison|energy|followers|
 maxfollowers|gold|hidden|luck|waitingfortarget|hits|diffhits|maxhits|name|dead|direction|direction|directionname|flying|paralyzed|poisoned|mounted|
-yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking)\b",
+yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking|color)\b",
                     RegexCompiledOption);
 
             UosAttributeRegex = new Regex(@"\b(lastobject|found|enemy|friend|ground|any|backpack|self|bank|lasttarget|last|mount|lefthand|righthand)\b",
