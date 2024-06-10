@@ -6372,8 +6372,10 @@ namespace RazorEnhanced.UOS
                 if (node == null)
                     throw new UOSRuntimeError(node, "Invalid logical expression");
 
-                // short circuit the if/and if lhs is already false
+                // short circuit the if/and if lhs is already false with and, already true with or 
                 if (op == ASTNodeType.AND && lhs == false)
+                    return lhs;
+                if (op == ASTNodeType.OR && lhs == true)
                     return lhs;
 
                 bool rhs;
