@@ -5696,7 +5696,15 @@ namespace RazorEnhanced.UOS
                         PushScope(node);
 
                         var expr = node.FirstChild();
-                        var result = EvaluateExpression(ref expr);
+                        bool result = false;
+                        try
+                        {
+                            result = EvaluateExpression(ref expr);
+                        }
+                        catch (RazorEnhanced.UOS.UOSRuntimeError e)
+                        {
+                            result = false;
+                        }
 
                         // Advance to next statement
                         Advance();
@@ -6363,6 +6371,10 @@ namespace RazorEnhanced.UOS
 
                 if (node == null)
                     throw new UOSRuntimeError(node, "Invalid logical expression");
+
+                // short circuit the if/and if lhs is already false
+                if (op == ASTNodeType.AND && lhs == false)
+                    return lhs;
 
                 bool rhs;
                 var e = node.FirstChild();
