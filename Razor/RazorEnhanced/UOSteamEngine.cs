@@ -5697,14 +5697,8 @@ namespace RazorEnhanced.UOS
 
                         var expr = node.FirstChild();
                         bool result = false;
-                        try
-                        {
-                            result = EvaluateExpression(ref expr);
-                        }
-                        catch (RazorEnhanced.UOS.UOSRuntimeError e)
-                        {
-                            result = false;
-                        }
+
+                        result = EvaluateExpression(ref expr);
 
                         // Advance to next statement
                         Advance();
