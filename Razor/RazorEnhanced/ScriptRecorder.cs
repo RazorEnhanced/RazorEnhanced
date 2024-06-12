@@ -393,7 +393,7 @@ namespace RazorEnhanced
 
         internal override void Record_RenameMobile(int serial, string name)
         {
-            AddLog("Misc.PerRename(0x" + serial.ToString("X8") + ", " + name + " )");
+            AddLog("Misc.PetRename(0x" + serial.ToString("X8") + ", " + name + " )");
         }
 
         internal override void Record_AsciiPromptResponse(uint type, string text)
@@ -432,8 +432,8 @@ namespace RazorEnhanced
 
         internal override void Record_GumpsResponse(uint id, int operation)
         {
-            AddLog("Gumps.WaitForGump(" + id + ", 10000)");
-            AddLog("Gumps.SendAction(" + id + ", " + operation + ")");
+            AddLog($"Gumps.WaitForGump(0x{id:x} 10000)");
+            AddLog($"Gumps.SendAction(0x{id:x} {operation}");
         }
 
         internal override void Record_SADisarm()
@@ -532,12 +532,12 @@ namespace RazorEnhanced
     {
         internal override void Record_AttackRequest(uint serial)
         {
-                AddLog("attack " + "0x" + serial.ToString("X8"));
+                AddLog($"attack 0x{serial:x8}");
         }
 
         internal override void Record_ClientDoubleClick(Assistant.Serial ser)
         {
-                AddLog("useobject 0x" + ser.Value.ToString("X8"));
+                AddLog($"useobject 0x{ser.Value:x8}");
         }
 
         internal override void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
@@ -724,14 +724,14 @@ namespace RazorEnhanced
         internal override void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
         {
             if (m == World.Player)
-                AddLog(string.Format("equipitem \"0x{0}\"", item.Serial.Value.ToString("X8")));
+                AddLog($"equipitem 0x{item.Serial:x8}");
             else
-                AddLog(string.Format("unequipitem \"{0}\"", l.ToString()));
+                AddLog($"unequipitem {l.ToString()}");
         }
 
         internal override void Record_RenameMobile(int serial, string name)
         {
-            AddLog(string.Format("rename 0x{0} \"{1}\"", serial.ToString("X8"), name));
+            AddLog($"rename 0x{serial:x8} {name}");
         }
 
         internal override void Record_AsciiPromptResponse(uint type, string text)
@@ -770,8 +770,8 @@ namespace RazorEnhanced
 
         internal override void Record_GumpsResponse(uint id, int operation)
         {
-            AddLog("waitforgump " + id + " 10000");
-            AddLog("replygump " + id + " " + operation);
+            AddLog($"waitforgump 0x{id:x} 15000");
+            AddLog($"replygump 0x{id:x} {operation}");
         }
 
         internal override void Record_SADisarm()
@@ -786,8 +786,8 @@ namespace RazorEnhanced
 
         internal override void Record_ContextMenuResponse(int serial, ushort idx)
         {
-            AddLog("waitforcontext 0x" + serial.ToString("X8") + " 10000");
-            AddLog("contextmenu 0x" + serial.ToString("X8") + " " + idx);
+            AddLog($"waitforcontext 0x{serial:x8} 10000");
+            AddLog($"contextmenu 0x{serial:x8} {idx}");
         }
 
         internal override void Record_ResponseStringQuery(byte yesno, string text)
