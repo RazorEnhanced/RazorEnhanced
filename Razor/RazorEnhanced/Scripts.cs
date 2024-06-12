@@ -504,7 +504,7 @@ namespace RazorEnhanced
                             }
                             catch { }
                         }
-
+                        var test = IsRunningThread(m_BandageHealThread);
                         if (BandageHeal.AutoMode && !IsRunningThread(m_BandageHealThread))
                         {
                             try
@@ -512,7 +512,7 @@ namespace RazorEnhanced
                                 m_BandageHealThread = new Thread(BandageHeal.AutoRun);
                                 m_BandageHealThread.Name = "Bandage Thread";
                                 m_BandageHealThread.Start();
-                                Thread.Sleep(1);
+                                Thread.Sleep(10);
                             }
                             catch { }
                         }

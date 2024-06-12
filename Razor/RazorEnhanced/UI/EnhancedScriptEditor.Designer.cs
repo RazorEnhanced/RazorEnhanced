@@ -73,6 +73,7 @@ namespace RazorEnhanced.UI
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.commentSelectLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unCommentLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.convertToByIdMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outputConsole = new System.Windows.Forms.RichTextBox();
             this.outputMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -500,7 +501,8 @@ namespace RazorEnhanced.UI
             this.cutToolStripMenuItem,
             this.toolStripMenuItem1,
             this.commentSelectLineToolStripMenuItem,
-            this.unCommentLineToolStripMenuItem});
+            this.unCommentLineToolStripMenuItem,
+            this.convertToByIdMenuItem});
             this.textareaMenuStrip.Name = "textareaMenuStrip";
             this.textareaMenuStrip.Size = new System.Drawing.Size(290, 170);
             // 
@@ -548,6 +550,15 @@ namespace RazorEnhanced.UI
             this.unCommentLineToolStripMenuItem.Size = new System.Drawing.Size(289, 32);
             this.unCommentLineToolStripMenuItem.Text = "UnComment Line";
             this.unCommentLineToolStripMenuItem.Click += new System.EventHandler(this.UnCommentLineToolStripMenuItem_Click);
+
+            //
+            this.convertToByIdMenuItem.Name = "convertToByIDToolStripMenuItem";
+            this.convertToByIdMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.convertToByIdMenuItem.Size = new System.Drawing.Size(289, 32);
+            this.convertToByIdMenuItem.Text = "Convert to by ID Line";
+            this.convertToByIdMenuItem.Click += new System.EventHandler(this.ConvertToByIdToolStripMenuItem_Click);
+
+
             // 
             // outputConsole
             // 
@@ -719,6 +730,7 @@ namespace RazorEnhanced.UI
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem commentSelectLineToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem unCommentLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem convertToByIdMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButton2;

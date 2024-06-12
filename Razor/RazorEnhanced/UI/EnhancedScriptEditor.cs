@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 using CUO_API;
 using IronPython.Runtime.Operations;
 using System.Windows.Controls;
+using Accord.Statistics.Filters;
+using static System.Net.Mime.MediaTypeNames;
+using System.Xml;
 
 namespace RazorEnhanced.UI
 {
@@ -1232,7 +1235,7 @@ namespace RazorEnhanced.UI
 
         internal static void InspectGumps()
         {
-            foreach (Form f in Application.OpenForms)
+            foreach (Form f in System.Windows.Forms.Application.OpenForms)
             {
                 if (f is EnhancedGumpInspector af)
                 {
@@ -1403,6 +1406,100 @@ namespace RazorEnhanced.UI
             }
         }
 
+        private IEnumerable<FastColoredTextBoxNS.Char> ConvertStringToCharEnumerable(string content)
+        {
+            // Convert each character in the string to a FastColoredTextBoxNS.Char
+            return content.Select(c => new FastColoredTextBoxNS.Char(c));
+        }
+
+        private void ConvertToByIdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var currentLine = fastColoredTextBoxEditor.Selection.FromLine;
+            var cursorLine = fastColoredTextBoxEditor.Selection.Start.iLine;
+            var lineToChange = fastColoredTextBoxEditor.Lines[currentLine];
+            var language = fastColoredTextBoxEditor.Language;
+            switch (language)
+            {
+                case FastColoredTextBoxNS.Language.Python:
+                    {
+                        string pattern = @"(.*Items\.)\s*(\w+)\(\s*(\w+)\s*\)(.*$)";
+                        Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                        Match m = r.Match(lineToChange);
+                        if (m.Success && m.Groups.Count == 5)
+                        {
+                            string frontPart = m.Groups[1].Value;
+                            string useItem = m.Groups[2].Value;
+
+                            string textSerial = m.Groups[3].Value;
+                            string lastPart = m.Groups[4].Value;
+                            if (useItem.lower() == "useitem")
+                            {
+                                Int32 serial = 0;
+                                if (textSerial.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    string hexString = textSerial.Substring(2);
+                                    serial = Convert.ToInt32(hexString, 16);
+                                }
+                                else
+                                {
+                                    serial = Convert.ToInt32(textSerial, 10);
+                                }
+                                Item item = Items.FindBySerial(serial);
+                                if (item != null)
+                                {
+                                    fastColoredTextBoxEditor.BeginUpdate();
+                                    string newLine = $"{frontPart}UseItemByID(0x{item.ItemID:x}, {item.Hue}){lastPart}";
+                                    fastColoredTextBoxEditor.TextSource[currentLine].Clear();
+                                    fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
+                                    fastColoredTextBoxEditor.EndUpdate();
+                                    fastColoredTextBoxEditor.Invalidate();
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
+                case FastColoredTextBoxNS.Language.Uos:
+                    {
+                        //useobject 0x40589c06
+                        string pattern = @"(.*)useobject\s+(\w+)(.*$)";
+                        Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+                        Match m = r.Match(lineToChange);
+                        if (m.Success && m.Groups.Count == 4)
+                        {
+                            string frontPart = m.Groups[1].Value;
+                            string textSerial = m.Groups[2].Value;
+                            string lastPart = m.Groups[3].Value;
+
+                            Int32 serial = 0;
+                            if (textSerial.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                            {
+                                string hexString = textSerial.Substring(2);
+                                serial = Convert.ToInt32(hexString, 16);
+                            }
+                            else
+                            {
+                                serial = Convert.ToInt32(textSerial, 10);
+                            }
+                            Item item = Items.FindBySerial(serial);
+                            if (item != null)
+                            {
+                                fastColoredTextBoxEditor.BeginUpdate();
+                                string newLine = $"{frontPart}usetype 0x{item.ItemID:x} {lastPart}";
+                                fastColoredTextBoxEditor.TextSource[currentLine].Clear();
+                                fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
+                                fastColoredTextBoxEditor.EndUpdate();
+                                fastColoredTextBoxEditor.Invalidate();
+                            }
+
+                        }
+                        break;
+                    }
+            }
+        }
+
+
         private void UnCommentLineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(fastColoredTextBoxEditor.SelectedText)) // No selection
@@ -1449,7 +1546,7 @@ namespace RazorEnhanced.UI
 
         private void ToolStripInspectAlias_Click(object sender, EventArgs e)
         {
-            foreach (Form f in Application.OpenForms)
+            foreach (Form f in System.Windows.Forms.Application.OpenForms)
             {
                 if (f is EnhancedObjectInspector af)
                 {
