@@ -432,8 +432,8 @@ namespace RazorEnhanced
 
         internal override void Record_GumpsResponse(uint id, int operation)
         {
-            AddLog($"Gumps.WaitForGump(0x{id:x} 10000)");
-            AddLog($"Gumps.SendAction(0x{id:x} {operation}");
+            AddLog($"Gumps.WaitForGump(0x{id:x}, 10000)");
+            AddLog($"Gumps.SendAction(0x{id:x}, {operation})");
         }
 
         internal override void Record_SADisarm()

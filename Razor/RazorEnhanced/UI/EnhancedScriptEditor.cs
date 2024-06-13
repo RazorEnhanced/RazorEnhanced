@@ -1486,7 +1486,7 @@ namespace RazorEnhanced.UI
                             if (item != null)
                             {
                                 fastColoredTextBoxEditor.BeginUpdate();
-                                string newLine = $"{frontPart}usetype 0x{item.ItemID:x} {lastPart}";
+                                string newLine = $"{frontPart}usetype 0x{item.ItemID:x} {item.Hue} {lastPart}";
                                 fastColoredTextBoxEditor.TextSource[currentLine].Clear();
                                 fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
                                 fastColoredTextBoxEditor.EndUpdate();
