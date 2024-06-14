@@ -260,12 +260,28 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterAliasHandler("mount", AliasHandler);
             m_Interpreter.RegisterAliasHandler("lefthand", AliasHandler);
             m_Interpreter.RegisterAliasHandler("righthand", AliasHandler);
-            //m_Interpreter.RegisterAliasHandler("lastobject", AliasHandler);  //TODO: how to you get the "last object" in razor ?
-            m_Interpreter.SetAlias("lastobject", 0); //TODO: not implemented
+            //m_Interpreter.RegisterAliasHandler("lastobject", AliasHandler);
+            //TODO: how to you get the "last object" in razor ?
+            uint lastobject = 0;
+            uint found = 0;
+            uint enemy = 0;
+            uint friend = 0;
+            if (m_Namespace == Namespace.GlobalNamespace)
+            {
+                if (Misc.CheckSharedValue("lastobject"))
+                    lastobject = (uint)Misc.ReadSharedValue("lastobject");
+                if (Misc.CheckSharedValue("found"))
+                    found = (uint)Misc.ReadSharedValue("found");
+                if (Misc.CheckSharedValue("enemy"))
+                    enemy = (uint)Misc.ReadSharedValue("enemy");
+                if (Misc.CheckSharedValue("friend"))
+                    friend = (uint)Misc.ReadSharedValue("friend");
+            }
+            m_Interpreter.SetAlias("lastobject", lastobject); //TODO: not implemented
 
-            m_Interpreter.SetAlias("found", 0);
-            m_Interpreter.SetAlias("enemy", 0);
-            m_Interpreter.SetAlias("friend", 0);
+            m_Interpreter.SetAlias("found", found);
+            m_Interpreter.SetAlias("enemy", enemy);
+            m_Interpreter.SetAlias("friend", friend);
 
 
         }
