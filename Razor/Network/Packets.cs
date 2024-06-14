@@ -1515,6 +1515,20 @@ namespace Assistant
         }
     }
 
+    internal sealed class PlaySound : Packet
+    {
+        public PlaySound(int soundID, int x, int y, int z)
+            : base(0x54, 12)
+        {
+            Write((byte)1); // flags
+            Write((short)soundID);
+            Write((short)0); // volume
+            Write((short)x);
+            Write((short)y);
+            Write((short)z);
+        }
+    }
+
     internal sealed class SupportedFeatures : Packet
     {
         //private static int m_Value = 0x801F;

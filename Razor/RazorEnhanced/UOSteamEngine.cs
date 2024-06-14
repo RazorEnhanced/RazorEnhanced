@@ -3575,6 +3575,15 @@ namespace RazorEnhanced.UOS
             if (args.Length == 1)
             {
                 string filename = args[0].AsString();
+
+                Int32.TryParse(filename, out int amount);
+
+                if(amount > 0)
+                {
+                    Misc.PlaySound(amount, World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z);
+                    return true;
+                }
+
                 string fullpath = Path.Combine(Assistant.Engine.RootPath, filename);
                 System.Media.SoundPlayer player = new System.Media.SoundPlayer(fullpath);
                 player.Play();
