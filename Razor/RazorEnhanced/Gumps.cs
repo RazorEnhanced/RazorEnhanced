@@ -796,23 +796,17 @@ namespace RazorEnhanced
         /// Adds a response to the gump
         /// </summary>
         /// WorldResponse
-        internal static void AddResponse(uint gumpid, int x, int y, string layout, string[] parsedStrings)
+        internal static void AddResponse(uint gumpid, int x, int y, string layout, List<string> parsedStrings)
         {
-            List<string> temp = new List<string>();
-            foreach (string s in parsedStrings)
-            {
-                temp.Add(s);
-            }
-
             if (m_gumpData.ContainsKey(gumpid))
             {
                 m_gumpData[gumpid].gumpRawData = layout;
-                m_gumpData[gumpid].gumpRawText = temp;
+                m_gumpData[gumpid].gumpRawText = parsedStrings;
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
                 m_incomingData[gumpid].gumpRawData = layout;
-                m_incomingData[gumpid].gumpRawText = temp;
+                m_incomingData[gumpid].gumpRawText = parsedStrings;
             }
         }
 

@@ -5,6 +5,7 @@ using System.IO;
 using Assistant.UI;
 using RazorEnhanced;
 using NLog;
+using System.Linq;
 
 namespace Assistant
 {
@@ -1903,7 +1904,7 @@ namespace Assistant
                 return;
             }
             Serial serial = p.ReadUInt32();
-            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
+            Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
 
             if (World.Player.Serial == serial)
             {
@@ -1954,6 +1955,7 @@ namespace Assistant
         private static void WorldItem(PacketReader p, PacketHandlerEventArgs args)
         {
             uint serial = p.ReadUInt32();
+            Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             if (!DragDropManager.EndHolding(serial))
                 return;
 
@@ -2084,7 +2086,7 @@ namespace Assistant
             byte _artDataID = p.ReadByte();
 
             uint serial = p.ReadUInt32();
-            //Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
 
             ushort itemID = p.ReadUInt16();
             Serial testSerial = serial;
@@ -2552,7 +2554,7 @@ namespace Assistant
             World.Player.CurrentGumpI = 0;
             World.Player.CurrentGumpStrings.Clear();
             World.Player.CurrentGumpTile.Clear();
-            RazorEnhanced.Gumps.RemoveGump(gumpID);
+            //RazorEnhanced.Gumps.RemoveGump(gumpID);
 
             int sc = p.ReadInt32();
             if (sc < 0 || sc > 2000)
@@ -3392,16 +3394,18 @@ namespace Assistant
                         stringlistparse[x1] = "";
                     }
                 }
-
+                var stringsInGump = new List<string>();
                 if (TryParseGump(layout, out string[] gumpPieces))
                 {
-                    ParseGumpString(gumpPieces, stringlistparse);
+                    stringsInGump = ParseGumpString(gumpPieces, stringlistparse);
+                    World.Player.CurrentGumpStrings.AddRange(stringsInGump);
+
                 }
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
                 World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
-                Gumps.AddResponse(currentgumpi, x, y, layout, stringlistparse);
+                Gumps.AddResponse(currentgumpi, x, y, layout, stringsInGump);
             }
 
             catch { }
@@ -3413,15 +3417,16 @@ namespace Assistant
 
         }
 
-        private static void ParseGumpString(string[] gumpPieces, string[] gumpLines)
+        private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
         {
+            List<string> lines = new List<string>();
             for (int i = 0; i < gumpPieces.Length; i++)
             {
                 string[] gumpParams = Regex.Split(gumpPieces[i], @"\s+");
                 switch (gumpParams[0].ToLower())
                 {
                     case "croppedtext":
-                        World.Player.CurrentGumpStrings.Add(gumpLines[int.Parse(gumpParams[6])]);
+                        lines.Add(gumpLines[int.Parse(gumpParams[6])]);
                         // CroppedText [x] [y] [width] [height] [color] [text-id]
                         // Adds a text field to the gump. gump is similar to the text command, but the text is cropped to the defined area.
                         //gump.AddControl(new CroppedText(gump, gumpParams, gumpLines), currentGUMPPage);
@@ -3429,7 +3434,7 @@ namespace Assistant
                         break;
 
                     case "htmlgump":
-                        World.Player.CurrentGumpStrings.Add(gumpLines[int.Parse(gumpParams[5])]);
+                        lines.Add(gumpLines[int.Parse(gumpParams[5])]);
                         // HtmlGump [x] [y] [width] [height] [text-id] [background] [scrollbar]
                         // Defines a text-area where Html-commands are allowed.
                         // [background] and [scrollbar] can be 0 or 1 and define whether the background is transparent and a scrollbar is displayed.
@@ -3437,7 +3442,7 @@ namespace Assistant
                         break;
 
                     case "text":
-                        World.Player.CurrentGumpStrings.Add(gumpLines[int.Parse(gumpParams[4])]);
+                        lines.Add(gumpLines[int.Parse(gumpParams[4])]);
                         // Text [x] [y] [color] [text-id]
                         // Defines the position and color of a text (data) entry.
                         //gump.AddControl(new TextLabel(gump, gumpParams, gumpLines), currentGUMPPage);
@@ -3445,10 +3450,11 @@ namespace Assistant
                     case "tilepic":
                         // TilePic [x] [y] [id]
                         // Adds a Tilepicture to the gump. [id] defines the tile graphic-id. For example use InsideUO to get them.
-                        World.Player.CurrentGumpTile.Add((int)float.Parse(gumpParams[3]));
+                        lines.Add(((int)float.Parse(gumpParams[3])).ToString());
                         break;
                 }
             }
+            return lines;
         }
 
         private static bool TryParseGump(string gumpData, out string[] pieces)
