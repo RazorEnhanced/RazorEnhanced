@@ -432,6 +432,20 @@ namespace RazorEnhanced
             SendMessage(msg, 945, wait);
         }
 
+        /// <summary>
+        /// Send a sound to the client.
+        /// </summary>
+        /// <param name="sound">The sound to play.</param>
+        /// <param name="x">The x point to send sound to.</param>
+        /// <param name="y">The y point to send sound to.</param>
+        /// <param name="z">The z point to send sound to.</param>
+        public static void PlaySound(int sound, int x, int y, int z) //Main function of playsound
+        {
+            if (sound > 0 && Assistant.World.Player != null)
+            {
+                Assistant.Client.Instance.SendToClient(new PlaySound(sound, x, y, z));
+            }
+        }
 
         /// <summary>
         /// Get the full path to the main Razor Enhanced folder.

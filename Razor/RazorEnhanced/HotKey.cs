@@ -556,7 +556,7 @@ namespace RazorEnhanced
                     Restock.FStop();
                     break;
 
-                case "Restock Set Soruce Bag":
+                case "Restock Set Source Bag":
                     Engine.MainWindow.RestockSetSource();
                     break;
 
@@ -640,7 +640,7 @@ namespace RazorEnhanced
                         SellAgent.Enable();
                     break;
 
-                case "Sell Set Soruce Bag":
+                case "Sell Set Source Bag":
                     Engine.MainWindow.SellAgentSetBag();
                     break;
 
@@ -709,7 +709,7 @@ namespace RazorEnhanced
                     Organizer.FStop();
                     break;
 
-                case "Organizer Set Soruce Bag":
+                case "Organizer Set Source Bag":
                     Engine.MainWindow.OrganizerSetSource();
                     break;
 
