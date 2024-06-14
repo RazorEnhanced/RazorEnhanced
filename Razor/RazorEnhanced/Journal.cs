@@ -309,7 +309,7 @@ namespace RazorEnhanced
 
 
         /// <summary>
-        /// Search in the Journal for the occurrence of text, for a given soruce. (case sensitive)
+        /// Search in the Journal for the occurrence of text, for a given source. (case sensitive)
         /// </summary>
         /// <param name="text">Text to search.</param>
         /// <param name="name">Name of the source.</param>
@@ -416,7 +416,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Returns all the lines present in the Journal for a given serial.
         /// </summary>
-        /// <param name="serial">Serial of the soruce.</param>
+        /// <param name="serial">Serial of the source.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextBySerial(int serial, bool addname = false)
@@ -445,7 +445,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Returns all the lines present in the Journal for a given color.
         /// </summary>
-        /// <param name="color">Color of the soruce.</param>
+        /// <param name="color">Color of the source.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextByColor(int color, bool addname = false)
@@ -474,7 +474,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Returns all the lines present in the Journal for a given source name. (case sensitive)
         /// </summary>
-        /// <param name="name">Name of the soruce.</param>
+        /// <param name="name">Name of the source.</param>
         /// <param name="addname">Prepend source name. (default: False)</param>
         /// <returns>A list of Journal as lines of text.</returns>
         public List<string> GetTextByName(string name, bool addname = false)
@@ -604,9 +604,9 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Pause script and wait for maximum amount of time, for a specific soruce to appear in Jorunal. (case sensitive)
+        /// Pause script and wait for maximum amount of time, for a specific source to appear in Jorunal. (case sensitive)
         /// </summary>
-        /// <param name="name">Name of the soruce.</param>
+        /// <param name="name">Name of the source.</param>
         /// <param name="delay">Maximum pause in milliseconds.</param>
         /// <returns></returns>
         public bool WaitByName(string name, int delay)

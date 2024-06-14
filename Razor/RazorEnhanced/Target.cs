@@ -375,9 +375,9 @@ namespace RazorEnhanced
         }
         
 
-        public static void TargetResource(Item item, int resoruce_number)
+        public static void TargetResource(Item item, int resource_number)
         {
-            TargetResource(item.Serial, resoruce_number);
+            TargetResource(item.Serial, resource_number);
         }
 
         /// <summary>

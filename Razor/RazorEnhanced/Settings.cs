@@ -938,7 +938,7 @@ namespace RazorEnhanced
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
-            hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Set Soruce Bag", Keys.None, true };
+            hotkeyrow.ItemArray = new object[] { "AgentOrganizer", "Organizer Set Source Bag", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
@@ -955,7 +955,7 @@ namespace RazorEnhanced
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
-            hotkeyrow.ItemArray = new object[] { "AgentSell", "Sell Set Soruce Bag", Keys.None, true };
+            hotkeyrow.ItemArray = new object[] { "AgentSell", "Sell Set Source Bag", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
 
             // Buy Agent
@@ -986,7 +986,7 @@ namespace RazorEnhanced
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
-            hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Set Soruce Bag", Keys.None, true };
+            hotkeyrow.ItemArray = new object[] { "AgentRestock", "Restock Set Source Bag", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
