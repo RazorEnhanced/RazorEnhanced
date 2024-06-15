@@ -3469,7 +3469,7 @@ namespace RazorEnhanced.UOS
             {
                 uint gumpid = args[0].AsUInt();
                 int buttonid = args[1].AsInt();
-                List<int> switches = new List<int>();
+                IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
                 for (int i= 2; i < args.Length; i++)
                 {
                     int switchid = args[i].AsInt();

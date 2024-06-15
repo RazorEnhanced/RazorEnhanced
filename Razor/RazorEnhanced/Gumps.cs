@@ -1,6 +1,7 @@
 using Assistant;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 
@@ -851,23 +852,59 @@ namespace RazorEnhanced
             World.Player.CurrentGumpI = 0;
         }
 
-        //AutoDoc concatenates description coming from Overloaded methods
-        /// <summary>
-        /// This method can also be used only Switches, without Text fileds.
-        /// </summary>
-        public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> switchs)
+        private static int[] ConvertToIntList(IronPython.Runtime.PythonList pythonList)
+        {
+            int[] retList = new int[pythonList.Count];
+            for (int i = 0; i < pythonList.Count; i++)
+            {
+                retList[i] = (int)pythonList.ElementAt(i);
+            }
+            return retList;
+        }
+
+        private static string[] ConvertToStringList(IronPython.Runtime.PythonList pythonList)
+        {
+            string[] retList = new string[pythonList.Count];
+            for (int i = 0; i < pythonList.Count; i++)
+            {
+                retList[i] = (string)pythonList.ElementAt(i);
+            }
+            return retList;
+        }
+
+        // Just a wrapper to accomodate existing code
+        // new way is WAY easier
+        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+            List<int> inSwitches)
+        {
+            IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
+
+            foreach (var item in inSwitches)
+            {
+                switches.Add(item);
+            }
+            SendAdvancedAction(gumpid, buttonid, switches);
+
+        }
+            
+            //AutoDoc concatenates description coming from Overloaded methods
+            /// <summary>
+            /// This method can also be used only Switches, without Text fileds.
+            /// </summary>
+            public static void SendAdvancedAction(uint gumpid, int buttonid,
+                IronPython.Runtime.PythonList switchs)
         {
             GumpTextEntry[] entries = new GumpTextEntry[0];
 
             if (gumpid == 0)
             {
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
-                Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, World.Player.CurrentGumpI, buttonid, switchs.ToArray(), entries));
+                Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, World.Player.CurrentGumpI, buttonid, ConvertToIntList(switchs), entries));
             }
             else
             {
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchs.ToArray(), entries);
+                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, ConvertToIntList(switchs), entries);
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
@@ -887,14 +924,61 @@ namespace RazorEnhanced
             World.Player.CurrentGumpTile.Clear();
         }
 
+        // Just a wrapper to accomodate existing code
+        // new way is WAY easier
+        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+            List<int> textlist_id, List<string> textlist_str)
+        {
+            IronPython.Runtime.PythonList textIDs = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList textStrings = new IronPython.Runtime.PythonList();
+
+            foreach (var item in textlist_id)
+            {
+                textIDs.Add(item);
+            }
+            foreach (var item in textlist_str)
+            {
+                textStrings.Add(item);
+            }
+            SendAdvancedAction(gumpid, buttonid, textIDs, textStrings);
+
+        }
+
         //AutoDoc concatenates description coming from Overloaded methods
         /// <summary>
         /// This method can also be used only Text fileds, without Switches.
         /// </summary>
-        public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> textlist_id, List<string> textlist_str)
+        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+            IronPython.Runtime.PythonList textlist_id, IronPython.Runtime.PythonList textlist_str)
         {
-            List<int> switchs = new List<int>();
+            IronPython.Runtime.PythonList switchs = new IronPython.Runtime.PythonList();
             SendAdvancedAction(gumpid, buttonid, switchs, textlist_id, textlist_str);
+        }
+
+        // Just a wrapper to accomodate existing code
+        // new way is WAY easier
+        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+            List<int> inSwitches, List<int> textlist_id, List<string> textlist_str)
+
+        {
+            IronPython.Runtime.PythonList textIDs = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList textStrings = new IronPython.Runtime.PythonList();
+            IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
+
+            foreach (var item in inSwitches)
+            {
+                switches.Add(item);
+            }
+            foreach (var item in textlist_id)
+            {
+                textIDs.Add(item);
+            }
+            foreach (var item in textlist_str)
+            {
+                textStrings.Add(item);
+            }
+            SendAdvancedAction(gumpid, buttonid, switches, textIDs, textStrings);
+
         }
 
         /// <summary>
@@ -906,19 +990,19 @@ namespace RazorEnhanced
         /// <param name="switchlist_id">List of ID of ON/Active switches. (empty: all Switches OFF)</param>
         /// <param name="textlist_id">List of ID of Text fileds. (empty: all text fileds empty )</param>
         /// <param name="textlist_str">List of the contents of the Text fields, provided in the same order as textlist_id.</param>
-        public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> switchlist_id, List<int> textlist_id, List<string> textlist_str)
+        public static void SendAdvancedAction(uint gumpid, int buttonid, IronPython.Runtime.PythonList switchlist_id, IronPython.Runtime.PythonList textlist_id, IronPython.Runtime.PythonList textlist_str)
         {
             if (textlist_id.Count == textlist_str.Count)
             {
                 int i = 0;
                 GumpTextEntry[] entries = new GumpTextEntry[textlist_id.Count];
-
+                var stringList = ConvertToStringList(textlist_str);
                 foreach (int entry in textlist_id)
                 {
                     GumpTextEntry entrie = new GumpTextEntry(0, string.Empty)
                     {
                         EntryID = (ushort)entry,
-                        Text = textlist_str[i]
+                        Text = stringList[i]
                     };
                     entries[i] = entrie;
                     i++;
@@ -927,12 +1011,14 @@ namespace RazorEnhanced
                 if (gumpid == 0)
                 {
                     Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
-                    Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, World.Player.CurrentGumpI, buttonid, switchlist_id.ToArray(), entries));
+                    Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, 
+                            World.Player.CurrentGumpI, buttonid, ConvertToIntList(switchlist_id), entries));
                 }
                 else
                 {
                     Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-                    GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, switchlist_id.ToArray(), entries);
+                    GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, 
+                        buttonid, ConvertToIntList(switchlist_id), entries);
                     if (m_gumpData.ContainsKey(gumpid))
                     {
                         PacketReader p = new PacketReader(gumpResp.ToArray(), false);
