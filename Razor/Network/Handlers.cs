@@ -2540,6 +2540,7 @@ namespace Assistant
             }
             else
             {
+                args.Block = false;
                 gd = new Gumps.GumpData();
             }
             gd.switches = new List<int>();
@@ -2601,7 +2602,6 @@ namespace Assistant
 
             if (gd != null)
             {
-                args.Block = true;
                 gd.hasResponse = true;
                 if (gd.action != null)
                 {
