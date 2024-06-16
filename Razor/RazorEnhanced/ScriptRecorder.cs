@@ -1,9 +1,13 @@
 using Assistant;
 using IronPython.Runtime.Exceptions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Scripting.Utils;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static IronPython.Modules._ast;
 
 namespace RazorEnhanced
 {
@@ -94,10 +98,10 @@ namespace RazorEnhanced
             if (!Active()) { return; }
             ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_UnicodeSpeech(type, text, hue); }).Start());
         }
-        internal void Record_GumpsResponse(uint id, int operation)
+        internal void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd)
         {
             if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_GumpsResponse(id, operation); }).Start());
+            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_GumpsResponse(id, operation, gd); }).Start());
         }
         internal void Record_SADisarm()
         {
@@ -178,7 +182,7 @@ namespace RazorEnhanced
         internal virtual void Record_RenameMobile(int serial, string name){ }
         internal virtual void Record_AsciiPromptResponse(uint type, string text){ }
         internal virtual void Record_UnicodeSpeech(MessageType type, string text, int hue){ }
-        internal virtual void Record_GumpsResponse(uint id, int operation){ }
+        internal virtual void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd){ }
         internal virtual void Record_SADisarm(){ }
         internal virtual void Record_SAStun(){ }
         internal virtual void Record_ContextMenuResponse(int serial, ushort idx){ }
@@ -430,10 +434,27 @@ namespace RazorEnhanced
             }
         }
 
-        internal override void Record_GumpsResponse(uint id, int operation)
+        internal override void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd)
         {
             AddLog($"Gumps.WaitForGump(0x{id:x}, 10000)");
-            AddLog($"Gumps.SendAction(0x{id:x}, {operation})");
+            if (gd == null || (gd.switches.Count == 0 && gd.textID.Count == 0))
+            {
+                AddLog($"Gumps.SendAction(0x{id:x}, {operation})");
+            }
+            else
+            {
+                string switchParam = String.Join(",", gd.switches);
+                string textIdParam = String.Join(",", gd.textID);
+                List<string> quotedStrings = new List<string>();
+                foreach (string str in gd.text)
+                {
+                    quotedStrings.Add($"\"{str}\"");
+                }
+                string textParam = String.Join(",", quotedStrings);
+                string parameters = $"[{switchParam}], [{textIdParam}], [{textParam}]";
+                AddLog($"Gumps.SendAdvancedAction(0x{id:x}, {operation}, {parameters})");
+
+            }
         }
 
         internal override void Record_SADisarm()
@@ -768,7 +789,7 @@ namespace RazorEnhanced
             }
         }
 
-        internal override void Record_GumpsResponse(uint id, int operation)
+        internal override void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd)
         {
             AddLog($"waitforgump 0x{id:x} 15000");
             AddLog($"replygump 0x{id:x} {operation}");
@@ -786,8 +807,7 @@ namespace RazorEnhanced
 
         internal override void Record_ContextMenuResponse(int serial, ushort idx)
         {
-            AddLog($"waitforcontext 0x{serial:x8} 10000");
-            AddLog($"contextmenu 0x{serial:x8} {idx}");
+            AddLog($"waitforcontext 0x{serial:x8} {idx} 10000");
         }
 
         internal override void Record_ResponseStringQuery(byte yesno, string text)

@@ -2537,10 +2537,14 @@ namespace Assistant
             {
                 args.Block = true;
                 gd = Gumps.m_gumpData[gumpID];
-                gd.switches = new List<int>();
-                gd.text = new List<string>();
-                gd.textID = new List<int>();
             }
+            else
+            {
+                gd = new Gumps.GumpData();
+            }
+            gd.switches = new List<int>();
+            gd.text = new List<string>();
+            gd.textID = new List<int>();
 
             int bid = p.ReadInt32();
             if (gd != null)
@@ -2593,7 +2597,7 @@ namespace Assistant
 
             RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
-            RazorEnhanced.ScriptRecorderService.Instance.Record_GumpsResponse(gumpID, bid);
+            RazorEnhanced.ScriptRecorderService.Instance.Record_GumpsResponse(gumpID, bid, gd );
 
             if (gd != null)
             {
