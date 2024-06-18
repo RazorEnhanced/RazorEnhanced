@@ -18,19 +18,19 @@ namespace RazorEnhanced
         private RazorEnhanced.Point3D m_pgtarget;
 
         /// <summary>
-        /// Get status if have in-game cursor has target shape.
+        /// Get the status of the in-game target cursor.
         /// </summary>
-        /// <returns>True: Cursor has target - False: otherwise</returns>
+        /// <returns>True if the client has a target cursor; otherwise, false.</returns>
         public static bool HasTarget()
         {
             return HasTarget("Any");
         }
 
         /// <summary>
-        /// Get status if have in-game cursor has target shape.
-        /// U can check if cursor is beneficial, harmful or neutral
+        /// Get the status of the in-game target cursor and check if the cursor is "Beneficial", "Harmful", or "Neutral".
         /// </summary>
-        /// <returns>True: Cursor has target - False: otherwise</returns>
+        /// <param name="targetFlagsExists">The target flag to check for can be "Any", "Beneficial", "Harmful", or "Neutral".</param>
+        /// <returns>True if the client has a target cursor and the flag matches; otherwise, false.</returns>
         public static bool HasTarget(string targetFlagsExists = "Any")
         {
             if (!Enum.TryParse(targetFlagsExists, out Assistant.Enums.TargetFlagsExists enumValue))
