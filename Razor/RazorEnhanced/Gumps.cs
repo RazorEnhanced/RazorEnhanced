@@ -916,18 +916,21 @@ namespace RazorEnhanced
             }
             else
             {
-                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, ConvertToIntList(switchs), entries);
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));                
                 if (m_gumpData.ContainsKey(gumpid))
                 {
+                    var gd = m_gumpData[gumpid];
+                    GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid, buttonid, ConvertToIntList(switchs), entries);
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
                     PacketHandlerEventArgs args = new PacketHandlerEventArgs();
                     p.ReadByte(); // through away the packet id
                     p.ReadInt16(); // throw away the packet length
                     Assistant.PacketHandlers.ClientGumpResponse(p, args);
                 }
-                else
+                if (m_incomingData.ContainsKey(gumpid))
                 {
+                    var gd = m_incomingData[gumpid];
+                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid, buttonid, ConvertToIntList(switchs), entries);
                     Assistant.Client.Instance.SendToServerWait(gumpResp);
                 }
             }
@@ -1030,18 +1033,22 @@ namespace RazorEnhanced
                 else
                 {
                     Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-                    GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, 
-                        buttonid, ConvertToIntList(switchlist_id), entries);
                     if (m_gumpData.ContainsKey(gumpid))
                     {
+                        var gd = m_gumpData[gumpid];
+                        GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid,
+                            buttonid, ConvertToIntList(switchlist_id), entries);
                         PacketReader p = new PacketReader(gumpResp.ToArray(), false);
                         PacketHandlerEventArgs args = new PacketHandlerEventArgs();
                         p.ReadByte(); // through away the packet id
                         p.ReadInt16(); // throw away the packet length
                         Assistant.PacketHandlers.ClientGumpResponse(p, args);
                     }
-                    else
+                    if (m_incomingData.ContainsKey(gumpid))
                     {
+                        var gd = m_incomingData[gumpid];
+                        GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid,
+                            buttonid, ConvertToIntList(switchlist_id), entries);
                         Assistant.Client.Instance.SendToServerWait(gumpResp);
                     }
                 }
