@@ -6,6 +6,7 @@ using Assistant.UI;
 using RazorEnhanced;
 using NLog;
 using System.Linq;
+using Ultima;
 
 namespace Assistant
 {
@@ -2522,7 +2523,7 @@ namespace Assistant
             World.Player.CurrentGumpI = p.ReadUInt32();
             World.Player.HasGump = true;
             RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
-            RazorEnhanced.Gumps.AddGump(World.Player.CurrentGumpI);
+            RazorEnhanced.Gumps.AddGump(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
         }
 
         internal static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
@@ -2532,16 +2533,16 @@ namespace Assistant
 
             Serial ser = p.ReadUInt32();
             uint gumpID = p.ReadUInt32();
-            Gumps.GumpData gd = null;
-            if (Gumps.m_gumpData.ContainsKey(gumpID))
+            RazorEnhanced.Gumps.GumpData gd = null;
+            if (RazorEnhanced.Gumps.m_gumpData.ContainsKey(gumpID))
             {
                 args.Block = true;
-                gd = Gumps.m_gumpData[gumpID];
+                gd = RazorEnhanced.Gumps.m_gumpData[gumpID];
             }
             else
             {
                 args.Block = false;
-                gd = new Gumps.GumpData();
+                gd = new RazorEnhanced.Gumps.GumpData();
             }
             gd.switches = new List<int>();
             gd.text = new List<string>();
@@ -2559,7 +2560,7 @@ namespace Assistant
             World.Player.CurrentGumpI = 0;
             World.Player.CurrentGumpStrings.Clear();
             World.Player.CurrentGumpTile.Clear();
-            //RazorEnhanced.Gumps.RemoveGump(gumpID);
+            RazorEnhanced.Gumps.RemoveGump(gumpID);
 
             int sc = p.ReadInt32();
             if (sc < 0 || sc > 2000)
@@ -2636,13 +2637,19 @@ namespace Assistant
                 case 0x04: // close gump
                     {
                         // int serial, int tid
+                        ushort serial = p.ReadUInt16();
+                        ushort gumpid = p.ReadUInt16();
                         if (World.Player != null)
                         {
                             World.Player.HasGump = false;
+                            if (World.Player.CurrentGumpI != 0)
+                                RazorEnhanced.Gumps.RemoveGump(World.Player.CurrentGumpI);
                             World.Player.CurrentGumpI = 0;
                             World.Player.CurrentGumpStrings.Clear();
                             World.Player.CurrentGumpTile.Clear();
                             RazorEnhanced.GumpInspector.GumpCloseAddLog(p, args);
+                            RazorEnhanced.Gumps.RemoveGump(gumpid);
+
                         }
                         break;
                     }
@@ -3342,7 +3349,7 @@ namespace Assistant
 
             uint currentgumps = p.ReadUInt32(); // Player Serial
             uint currentgumpi = p.ReadUInt32(); // Gump ID
-            RazorEnhanced.Gumps.AddGump(currentgumpi);
+            RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
             try
             {
                 int x = p.ReadInt32(), y = p.ReadInt32(); // Position
@@ -3409,7 +3416,7 @@ namespace Assistant
 
                 World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
-                Gumps.AddResponse(currentgumpi, x, y, layout, stringsInGump);
+                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, stringsInGump);
             }
 
             catch { }

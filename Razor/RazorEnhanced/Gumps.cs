@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Ultima;
 
 namespace RazorEnhanced
 {
@@ -19,12 +20,15 @@ namespace RazorEnhanced
     public class Gumps
     {
         internal static Mutex gumpIdMutex = new Mutex();
-        internal static void AddGump(uint gumpID)
+        internal static void AddGump(uint gumpSerial, uint gumpID)
         {
             gumpIdMutex.WaitOne(500);
             try
             {
-                m_incomingData[gumpID] = new IncomingGumpData();
+                var incomingGump = new IncomingGumpData();
+                incomingGump.gumpSerial = gumpSerial;
+                incomingGump.gumpId = gumpID;
+                m_incomingData[gumpID] = incomingGump;
             }
             finally
             {
@@ -91,6 +95,7 @@ namespace RazorEnhanced
 
         internal class IncomingGumpData
         {
+            public uint gumpSerial;
             public uint gumpId;
             public int x;
             public int y;
@@ -99,6 +104,7 @@ namespace RazorEnhanced
 
             public IncomingGumpData()
             {
+                gumpSerial = 0;
                 gumpId = 0;
                 x = 0;
                 y = 0;
@@ -704,6 +710,7 @@ namespace RazorEnhanced
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
             World.Player.CurrentGumpTile.Clear();
+            Gumps.RemoveGump(World.Player.CurrentGumpI);
             World.Player.CurrentGumpI = 0;
         }
 
@@ -789,6 +796,8 @@ namespace RazorEnhanced
                         }
                     }
                 }
+                Gumps.m_incomingData[gumpid].gumpId = World.Player.CurrentGumpI;
+                Gumps.m_incomingData[gumpid].gumpSerial = World.Player.CurrentGumpS;
             }
             return found;
         }
@@ -830,9 +839,10 @@ namespace RazorEnhanced
             else
             {
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
-                GumpResponse gumpResp = new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries);
                 if (m_gumpData.ContainsKey(gumpid))
                 {
+                    var gd = m_gumpData[gumpid];
+                    GumpResponse gumpResp = new GumpResponse(gd.serial, gd.gumpId, buttonid, nullswitch, nullentries);
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
 
                     PacketHandlerEventArgs args = new PacketHandlerEventArgs();
@@ -840,10 +850,13 @@ namespace RazorEnhanced
                     p.ReadInt16(); // throw away the packet length
                     Assistant.PacketHandlers.ClientGumpResponse(p, args);
                 }
-                else
+                if (m_incomingData.ContainsKey(gumpid))
                 {
+                    var gd = m_incomingData[gumpid];
+                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gd.gumpId, buttonid, nullswitch, nullentries);
                     Assistant.Client.Instance.SendToServerWait(gumpResp);
-                }
+                }   
+                Gumps.RemoveGump(gumpid);
             }
 
             World.Player.HasGump = false;
