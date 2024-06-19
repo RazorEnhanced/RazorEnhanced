@@ -3,6 +3,8 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Threading;
 
 
 namespace Assistant
@@ -488,6 +490,28 @@ namespace Assistant
                 Clipboard.SetText(txt);
             }
             catch { }
+        }
+
+
+        /// <summary>
+        /// Delays execution until the specified condition is met.
+        /// </summary>
+        /// <param name="condition">The lambda conditional that must be met to end the delay.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public static bool DelayUntil(Func<bool> condition, int delay)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            while (condition() == false)
+            {
+                Thread.Sleep(2);
+                if (watch.ElapsedMilliseconds >= delay)
+                    break;
+                var elapsedMs2 = watch.ElapsedMilliseconds;
+            }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            return condition();
         }
     }
 }

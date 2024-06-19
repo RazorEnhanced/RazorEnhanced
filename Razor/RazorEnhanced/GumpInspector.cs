@@ -78,7 +78,7 @@ namespace RazorEnhanced
             RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginUpdate();
             AddLog("----------- New Recevied START -----------");
 
-            AddLog("Gump Operation: " + GumpS.ToString());
+            AddLog("Gump Sequence: " + GumpS.ToString());
             AddLog("Gump ID: " + GumpI.ToString());
 
             foreach (string text in World.Player.CurrentGumpStrings)
