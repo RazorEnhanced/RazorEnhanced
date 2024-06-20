@@ -3470,13 +3470,42 @@ namespace RazorEnhanced.UOS
                 uint gumpid = args[0].AsUInt();
                 int buttonid = args[1].AsInt();
                 IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
-                for (int i= 2; i < args.Length; i++)
+                IronPython.Runtime.PythonList textIds = new IronPython.Runtime.PythonList();
+                IronPython.Runtime.PythonList textValues = new IronPython.Runtime.PythonList();
+
+                string sl = args[2].AsString().Trim().Replace("\"", "");
+                if (sl.Length > 0)
                 {
-                    int switchid = args[i].AsInt();
-                    switches.Add(switchid);
+                    List<int> switchList = sl.Split(',').Select(int.Parse).ToList();
+
+                    foreach (int sw in switchList)
+                    {
+                        switches.Add(sw);
+                    }
                 }
-                
-                Gumps.SendAdvancedAction(gumpid, buttonid, switches);
+                if (args.Length > 4)
+                {
+                    string til = args[3].AsString().Trim().Replace("\"", "");
+                    if (til.Length > 0)
+                    {
+                        List<int> textIdList = til.Split(',').Select(int.Parse).ToList();
+                        foreach (int textId in textIdList)
+                        {
+                            textIds.Add(textId);
+                        }
+                    }
+                    string tv = args[4].AsString().Trim().Replace("\"", "");
+                    if (tv.Length > 0)
+                    {
+                        List<string> textValueList = tv.Split(',').ToList();
+                        foreach (string textValue in textValueList)
+                        {
+                            textValues.Add(textValue);
+                        }
+                    }
+                }
+
+                Gumps.SendAdvancedAction(gumpid, buttonid, switches, textIds, textValues);
                 return true;
             }
 

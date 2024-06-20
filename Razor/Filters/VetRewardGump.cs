@@ -65,7 +65,7 @@ namespace Assistant.Filters
                         if (i == 1006046)
                         {
                             args.Block = true;
-                            RazorEnhanced.Gumps.RemoveGump(tid);
+                            RazorEnhanced.Gumps.CloseGump(tid);                            
                         }
                     }
                 }

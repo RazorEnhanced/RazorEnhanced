@@ -792,7 +792,19 @@ namespace RazorEnhanced
         internal override void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd)
         {
             AddLog($"waitforgump 0x{id:x} 15000");
-            AddLog($"replygump 0x{id:x} {operation}");
+            if (gd == null || (gd.switches.Count == 0 && gd.textID.Count == 0))
+            {
+                AddLog($"replygump 0x{id:x} {operation}");
+            }
+            else
+            {
+                string switchParam = String.Join(",", gd.switches);
+                string textIdParam = String.Join(",", gd.textID);
+                string textParam = String.Join(",",   gd.text);
+                string parameters = $"\"{switchParam}\" \"{textIdParam}\" \"{textParam}\"";
+                AddLog($"replygump 0x{id:x} {operation} {parameters}");
+
+            }
         }
 
         internal override void Record_SADisarm()

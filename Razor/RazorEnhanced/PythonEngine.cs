@@ -10,6 +10,7 @@ using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using IronPython.Compiler;
 using System.IO;
+using System.Diagnostics;
 
 namespace RazorEnhanced
 {
@@ -170,9 +171,18 @@ namespace RazorEnhanced
             CompilerOptions.ModuleName = "__main__";
             CompilerOptions.Module |= ModuleOptions.Initialize;
             CompilerOptions.Optimized = true;
-            
-            Compiled = Source.Compile(CompilerOptions);
-            if (Compiled == null) { return false; }
+            try
+            {
+                Compiled = Source.Compile(CompilerOptions);
+            }
+            catch (Microsoft.Scripting.SyntaxErrorException e)
+            {
+                Debug.WriteLine($"{e.Message} line: {e.Line} file: {FilePath}");
+            }
+            if (Compiled == null) 
+            {
+                return false; 
+            }
             
             return true;
         }
