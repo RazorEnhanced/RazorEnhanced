@@ -445,6 +445,23 @@ namespace RazorEnhanced
         }
         /////////////////////// END - AUTO REMOUNT /////////////////////
 
+        ///////////////////// START - Minimum Damage Displayed /////////////////////
+        private static int m_MinDmgDisplay;
+        internal static int MinDamageDisplayed
+        {
+            get { if (Engine.MainWindow.MinDmgDisplayCheckbox.Checked)
+                    return m_MinDmgDisplay;
+                else
+                    return 0;
+            }
+            set
+            {
+                m_MinDmgDisplay = value;
+                Engine.MainWindow.SafeAction(s => s.MinDamageShown.Text = value.ToString());
+            }
+        }
+        /////////////////////// END - Minimum Damage Displayed /////////////////////
+
 
         ///////////////////// START - FLAG COLOR ///////////////////////
         internal enum HighLightColor : ushort
@@ -694,6 +711,7 @@ namespace RazorEnhanced
             AutoRemountDelay = Settings.General.ReadInt("MountDelay");
             AutoRemountEDelay = Settings.General.ReadInt("EMountDelay");
             AutoRemountSerial = Settings.General.ReadInt("MountSerial");
+            MinDamageDisplayed = RazorEnhanced.Settings.General.ReadInt("LimitDamageDisplayValue");
 
             InitGraphGrid();
             InitJournalFilterGrid();

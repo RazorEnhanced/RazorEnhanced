@@ -30,6 +30,8 @@ namespace Assistant
         internal CheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
         internal CheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
         internal CheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
+        internal RazorAgentNumOnlyTextBox MinDamageShown { get { return minDmgShown; } }
+        
 
         private void autocarverrazorButton_Click(object sender, EventArgs e)
         {
@@ -273,6 +275,7 @@ namespace Assistant
             e.Row.Cells[3].Value = "No Change";
         }
 
+
         private void remountdelay_Leave(object sender, EventArgs e)
         {
             if (remountdelay.Text == String.Empty)
@@ -280,6 +283,15 @@ namespace Assistant
 
             RazorEnhanced.Filters.AutoRemountDelay = Convert.ToInt32(remountdelay.Text);
             Settings.General.WriteInt("MountDelay", RazorEnhanced.Filters.AutoRemountDelay);
+        }
+        
+        private void minDmgShown_Leave(object sender, EventArgs e)
+        {
+            if (minDmgShown.Text == String.Empty)
+                minDmgShown.Text = "1";
+
+            RazorEnhanced.Filters.MinDamageDisplayed = Convert.ToInt32(minDmgShown.Text);
+            Settings.General.WriteInt("LimitDamageDisplayValue", RazorEnhanced.Filters.MinDamageDisplayed);
         }
 
         private void remountedelay_Leave(object sender, EventArgs e)

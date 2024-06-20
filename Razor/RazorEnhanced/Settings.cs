@@ -12,6 +12,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Web.Security;
 using System.DirectoryServices;
+using static RazorEnhanced.Settings;
 
 
 namespace RazorEnhanced
@@ -2335,6 +2336,8 @@ namespace RazorEnhanced
             general.Columns.Add("ShowMessageFieldCheckBox", typeof(bool));
             general.Columns.Add("ShowAgentMessageCheckBox", typeof(bool));
             general.Columns.Add("ColorFlagsSelfHighlightCheckBox", typeof(bool));
+            general.Columns.Add("LimitDamageDisplayValue", typeof(int));
+            
 
             // Parametri Tab (Enhanced ToolBar)
             general.Columns.Add("LockToolBarCheckBox", typeof(bool));
@@ -2553,7 +2556,7 @@ namespace RazorEnhanced
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1, true, false, "[band", "[bandself", false, false,
 
                     // Parametri primo avvio per tab Enhanced Filters
-                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
+                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false, 1,
 
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true, false, 100,
@@ -5378,6 +5381,14 @@ namespace RazorEnhanced
                 General.WriteInt("SettingVersion", realVersion);
             }
 
+            if (realVersion == 17)
+            {
+                DataTable general = m_Dataset.Tables["GENERAL"];
+                general.Columns.Add("LimitDamageDisplayValue", typeof(int));
+                RazorEnhanced.Settings.General.WriteInt("LimitDamageDisplayValue", 1);
+                realVersion = 18;
+                General.WriteInt("SettingVersion", realVersion);
+            }
 
             {
                 // These always run and must be protected to ensure a patch is not applied twice

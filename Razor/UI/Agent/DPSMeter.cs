@@ -6,6 +6,8 @@ namespace Assistant
 {
     public partial class MainForm : System.Windows.Forms.Form
     {
+        internal CheckBox MinDmgDisplayCheckbox { get { return limitDamageDisplayEnable; } }
+
         internal Button DPSMeterStartB { get { return DPSMeterStartButton; } }
         internal Button DPSMeterPauseB { get { return DPSMeterPauseButton; } }
         internal Button DPSMeterStopB { get { return DPSMeterStopButton; } }

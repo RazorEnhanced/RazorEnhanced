@@ -728,6 +728,10 @@ namespace Assistant
         private CheckBox bandageHealIgnoreCount;
         private CheckBox scriptPacketLogCheckBox;
         private CheckBox autoScriptReload;
+        private GroupBox DmgDsplyGroup;
+        private CheckBox limitDamageDisplayEnable;
+        private RazorAgentNumOnlyTextBox minDmgShown;
+        private Label label81;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -876,6 +880,10 @@ namespace Assistant
             this.enhancedFilterTab = new System.Windows.Forms.TabPage();
             this.FilterPages = new System.Windows.Forms.TabControl();
             this.MiscFilterPage = new System.Windows.Forms.TabPage();
+            this.DmgDsplyGroup = new System.Windows.Forms.GroupBox();
+            this.minDmgShown = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+            this.label81 = new System.Windows.Forms.Label();
+            this.limitDamageDisplayEnable = new System.Windows.Forms.CheckBox();
             this.uomodgroupbox = new System.Windows.Forms.GroupBox();
             this.uomodpaperdollCheckBox = new System.Windows.Forms.CheckBox();
             this.uomodglobalsoundCheckBox = new System.Windows.Forms.CheckBox();
@@ -1483,6 +1491,7 @@ namespace Assistant
             this.enhancedFilterTab.SuspendLayout();
             this.FilterPages.SuspendLayout();
             this.MiscFilterPage.SuspendLayout();
+            this.DmgDsplyGroup.SuspendLayout();
             this.uomodgroupbox.SuspendLayout();
             this.groupBox32.SuspendLayout();
             this.groupBox24.SuspendLayout();
@@ -2649,6 +2658,7 @@ namespace Assistant
             // 
             // MiscFilterPage
             // 
+            this.MiscFilterPage.Controls.Add(this.DmgDsplyGroup);
             this.MiscFilterPage.Controls.Add(this.uomodgroupbox);
             this.MiscFilterPage.Controls.Add(this.groupBox32);
             this.MiscFilterPage.Controls.Add(this.groupBox24);
@@ -2662,6 +2672,49 @@ namespace Assistant
             this.MiscFilterPage.TabIndex = 0;
             this.MiscFilterPage.Text = "Misc";
             this.MiscFilterPage.UseVisualStyleBackColor = true;
+            // 
+            // DmgDsplyGroup
+            // 
+            this.DmgDsplyGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.DmgDsplyGroup.Controls.Add(this.minDmgShown);
+            this.DmgDsplyGroup.Controls.Add(this.label81);
+            this.DmgDsplyGroup.Controls.Add(this.limitDamageDisplayEnable);
+            this.DmgDsplyGroup.Location = new System.Drawing.Point(904, 297);
+            this.DmgDsplyGroup.Name = "DmgDsplyGroup";
+            this.DmgDsplyGroup.Size = new System.Drawing.Size(165, 91);
+            this.DmgDsplyGroup.TabIndex = 76;
+            this.DmgDsplyGroup.TabStop = false;
+            this.DmgDsplyGroup.Text = "Damage Display";
+            // 
+            // minDmgShown
+            // 
+            this.minDmgShown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.minDmgShown.Location = new System.Drawing.Point(93, 42);
+            this.minDmgShown.Name = "minDmgShown";
+            this.minDmgShown.Size = new System.Drawing.Size(58, 20);
+            this.minDmgShown.TabIndex = 2;
+            this.minDmgShown.Leave += new System.EventHandler(this.minDmgShown_Leave);
+            // 
+            // label81
+            // 
+            this.label81.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(9, 44);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(52, 13);
+            this.label81.TabIndex = 1;
+            this.label81.Text = "Min Dmg:";
+            // 
+            // limitDamageDisplayEnable
+            // 
+            this.limitDamageDisplayEnable.AutoSize = true;
+            this.limitDamageDisplayEnable.Location = new System.Drawing.Point(9, 20);
+            this.limitDamageDisplayEnable.Name = "limitDamageDisplayEnable";
+            this.limitDamageDisplayEnable.Size = new System.Drawing.Size(132, 17);
+            this.limitDamageDisplayEnable.TabIndex = 0;
+            this.limitDamageDisplayEnable.Text = "Suppress Dmg Display";
+            this.limitDamageDisplayEnable.UseVisualStyleBackColor = true;
+            this.limitDamageDisplayEnable.CheckedChanged += new System.EventHandler(this.DmgDisplayLimitCheckBox_CheckedChanged);
             // 
             // uomodgroupbox
             // 
@@ -9151,6 +9204,8 @@ namespace Assistant
             this.enhancedFilterTab.ResumeLayout(false);
             this.FilterPages.ResumeLayout(false);
             this.MiscFilterPage.ResumeLayout(false);
+            this.DmgDsplyGroup.ResumeLayout(false);
+            this.DmgDsplyGroup.PerformLayout();
             this.uomodgroupbox.ResumeLayout(false);
             this.groupBox32.ResumeLayout(false);
             this.groupBox32.PerformLayout();
@@ -9578,6 +9633,8 @@ namespace Assistant
                 uomodpaperdollCheckBox.Enabled = false;
                 uomodglobalsoundCheckBox.Enabled = false;
             }
+
+            limitDamageDisplayEnable.Checked = RazorEnhanced.Settings.General.ReadBool("LimitDamageDisplay");
 
             // Video Recorder
             videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
@@ -10058,6 +10115,23 @@ namespace Assistant
             }
         }
 
+        private void DmgDisplayLimitCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (limitDamageDisplayEnable.Focused)
+            {
+                if (limitDamageDisplayEnable.Checked)
+                {
+                    minDmgShown.Enabled = true;                    
+                }
+                else
+                {
+                    minDmgShown.Enabled = false;
+                }
+
+                RazorEnhanced.Settings.General.WriteBool("LimitDamageDisplay", limitDamageDisplayEnable.Checked);
+            }
+        }
+
         private void uomodpaperdollCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (uomodpaperdollCheckBox.Focused)
@@ -10186,7 +10260,6 @@ namespace Assistant
                 }
             }
         }
-
     }
 }
 
