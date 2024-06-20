@@ -905,7 +905,7 @@ namespace Assistant
                     {
                         // a corpse uses the hair to store the players serial in a weird algorithm
                         UInt32 owner = (0x7fffffff - ((UInt32)serial + 2) - 0x400) / 4;
-                        if (Player.Serial == owner)
+                        if (World.Player != null && World.Player.Serial == owner)
                         {
                             Player.Corpses.Add(container);
                         }
