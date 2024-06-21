@@ -538,7 +538,7 @@ namespace RazorEnhanced
                 Close();
             Gumps.GumpData gd = Gumps.CreateGump(false, true, true, false);
             gd.gumpId = m_spellGridGID;
-            gd.serial = (uint)Player.Serial;
+            gd.gumpSerial = (uint)Player.Serial;
 
             Gumps.AddPage(ref gd, 0);
 
@@ -595,7 +595,7 @@ namespace RazorEnhanced
             
             Gumps.GumpData spellBar = Gumps.CreateGump(false, false, false, false);
             spellBar.gumpId = (uint)999009999;
-            spellBar.serial = (uint)Player.Serial;
+            spellBar.gumpSerial = (uint)Player.Serial;
             Gumps.AddPage(ref spellBar, 0);
             //Gumps.AddAlphaRegion(ref spellBar, Engine.GridX, Engine.GridY, 300, 300);
             int y = 0;

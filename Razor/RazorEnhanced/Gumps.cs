@@ -20,28 +20,28 @@ namespace RazorEnhanced
     public class Gumps
     {
         internal static Mutex gumpIdMutex = new Mutex();
-        internal static void AddGump(uint gumpSerial, uint gumpID)
+        internal static void AddGump(uint gumpSerial, uint gumpId)
         {
             gumpIdMutex.WaitOne(500);
             try
             {
                 var incomingGump = new IncomingGumpData();
                 incomingGump.gumpSerial = gumpSerial;
-                incomingGump.gumpId = gumpID;
-                m_incomingData[gumpID] = incomingGump;
+                incomingGump.gumpId = gumpId;
+                m_incomingData[gumpId] = incomingGump;
             }
             finally
             {
                 gumpIdMutex.ReleaseMutex();
             }
         }
-        internal static void RemoveGump(uint gumpID)
+        internal static void RemoveGump(uint gumpId)
         {
             gumpIdMutex.WaitOne(500);
             try
             {
-                if (m_incomingData.ContainsKey(gumpID))
-                    m_incomingData.Remove(gumpID);                
+                if (m_incomingData.ContainsKey(gumpId))
+                    m_incomingData.Remove(gumpId);                
             }
             finally
             {
@@ -62,12 +62,12 @@ namespace RazorEnhanced
             return null;
         }
 
-        public static bool HasGump(uint gumpID)
+        public static bool HasGump(uint gumpId)
         {
             gumpIdMutex.WaitOne(500);
             try
             {
-                return m_incomingData.ContainsKey(gumpID);
+                return m_incomingData.ContainsKey(gumpId);
             }
             finally
             {
@@ -99,8 +99,8 @@ namespace RazorEnhanced
             public uint gumpId;
             public int x;
             public int y;
-            public string gumpRawData;
-            public List<string> gumpRawText;
+            public string gumpDefinition;
+            public List<string> gumpStrings;
 
             public IncomingGumpData()
             {
@@ -108,8 +108,8 @@ namespace RazorEnhanced
                 gumpId = 0;
                 x = 0;
                 y = 0;
-                gumpRawData = "";
-                gumpRawText = new List<string>();
+                gumpDefinition = "";
+                gumpStrings = new List<string>();
             }
         }
 
@@ -117,7 +117,7 @@ namespace RazorEnhanced
         {
             // vars used to build it
             public uint gumpId;
-            public uint serial;
+            public uint gumpSerial;
             public uint x;
             public uint y;
             public string gumpDefinition;
@@ -135,7 +135,7 @@ namespace RazorEnhanced
             public GumpData()
             {
                 gumpId = 0;
-                serial = 0;
+                gumpSerial = 0;
                 x = 0;
                 y = 0;
                 gumpDefinition = "";
@@ -213,10 +213,10 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="width"> width of the transparent backround</param>
         /// <param name="height"> height of the transparent backround</param>
-        /// <param name="gumpID"> The gumpID from gumps.mul that will be used for background</param>
-        public static void AddBackground(ref GumpData gd, int x, int y, int width, int height, int gumpID)
+        /// <param name="gumpId"> The gumpId from gumps.mul that will be used for background</param>
+        public static void AddBackground(ref GumpData gd, int x, int y, int width, int height, int gumpId)
         {
-            string textEntry = String.Format("{{ resizepic {0} {1} {2} {3} {4} }}", x, y, gumpID, width, height);
+            string textEntry = String.Format("{{ resizepic {0} {1} {2} {3} {4} }}", x, y, gumpId, width, height);
             gd.gumpDefinition += textEntry;
         }
         /// <summary>
@@ -366,10 +366,10 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpID"> id used to reference gumps.mul</param>
-        public static void AddImage(ref GumpData gd, int x, int y, int gumpID)
+        /// <param name="gumpId"> id used to reference gumps.mul</param>
+        public static void AddImage(ref GumpData gd, int x, int y, int gumpId)
         {            
-            string textEntry = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpID);
+            string textEntry = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpId);
             gd.gumpDefinition += textEntry;
         }
 
@@ -379,14 +379,14 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpID"> id used to reference gumps.mul</param>
+        /// <param name="gumpId"> id used to reference gumps.mul</param>
         /// <param name="width"> width of the html block</param>
         /// <param name="height"> height of the html block</param>
         /// <param name="sx"> maybe stretch X?</param>
         /// <param name="sy"> maybe stretch Y?</param>
-        public static void AddSpriteImage(ref GumpData gd, int x, int y, int gumpID, int width, int height, int sx, int sy)
+        public static void AddSpriteImage(ref GumpData gd, int x, int y, int gumpId, int width, int height, int sx, int sy)
         {
-            string textEntry = String.Format("{{ picinpic {0} {1} {2} {3} {4} {5} {6} }}", x, y, gumpID, width, height, sx, sy);
+            string textEntry = String.Format("{{ picinpic {0} {1} {2} {3} {4} {5} {6} }}", x, y, gumpId, width, height, sx, sy);
             gd.gumpDefinition += textEntry;
         }
 
@@ -396,11 +396,11 @@ namespace RazorEnhanced
         /// <param name="gd"> GumpData structure</param>
         /// <param name="x"> x co-ordinate of the origin</param>
         /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpID"> id used to reference gumps.mul</param>
+        /// <param name="gumpId"> id used to reference gumps.mul</param>
         /// <param name="hue"> to re-color the image</param>
-        public static void AddImage(ref GumpData gd, int x, int y, int gumpID, int hue)
+        public static void AddImage(ref GumpData gd, int x, int y, int gumpId, int hue)
         {
-            string textEntry = String.Format("{{ gumppic {0} {1} {2} hue={3} }}", x, y, gumpID, hue);
+            string textEntry = String.Format("{{ gumppic {0} {1} {2} hue={3} }}", x, y, gumpId, hue);
             gd.gumpDefinition += textEntry;
         }
 
@@ -412,10 +412,10 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="width"> width of the area</param>
         /// <param name="height"> height of the area</param>
-        /// <param name="gumpID">id of gump to be added</param>
-        public static void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpID)
+        /// <param name="gumpId">id of gump to be added</param>
+        public static void AddImageTiled(ref GumpData gd, int x, int y, int width, int height, int gumpId)
         {
-            string textEntry = String.Format("{{ gumppictiled {0} {1} {2} {3} {4} }}", x, y, width, height, gumpID);
+            string textEntry = String.Format("{{ gumppictiled {0} {1} {2} {3} {4} }}", x, y, width, height, gumpId);
             gd.gumpDefinition += textEntry;
         }
 
@@ -646,7 +646,7 @@ namespace RazorEnhanced
         public static void SendGump(GumpData gd, uint x, uint y)
         {
             m_gumpData[gd.gumpId] = gd;
-            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            GenericGump gg = new GenericGump(gd.gumpId, gd.gumpSerial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
 
@@ -660,7 +660,7 @@ namespace RazorEnhanced
             GumpData gd = new GumpData
             {
                 gumpId = gumpid,
-                serial = serial,
+                gumpSerial = serial,
                 x = x,
                 y = y,
                 hasResponse = false,
@@ -670,7 +670,7 @@ namespace RazorEnhanced
             gd.gumpStrings.AddRange(gumpStrings);
             //
             m_gumpData[gumpid] = gd;
-            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            GenericGump gg = new GenericGump(gd.gumpId, gd.gumpSerial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
         public static GumpData GetGumpData(uint gumpid)
@@ -816,8 +816,8 @@ namespace RazorEnhanced
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
-                m_incomingData[gumpid].gumpRawData = layout;
-                m_incomingData[gumpid].gumpRawText = parsedStrings;
+                m_incomingData[gumpid].gumpDefinition = layout;
+                m_incomingData[gumpid].gumpStrings = parsedStrings;
             }
         }
 
@@ -843,7 +843,7 @@ namespace RazorEnhanced
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.serial, gd.gumpId, buttonid, nullswitch, nullentries);
+                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gd.gumpId, buttonid, nullswitch, nullentries);
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
 
                     PacketHandlerEventArgs args = new PacketHandlerEventArgs();
@@ -921,7 +921,7 @@ namespace RazorEnhanced
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid, buttonid, ConvertToIntList(switchs), entries);
+                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid, buttonid, ConvertToIntList(switchs), entries);
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
                     PacketHandlerEventArgs args = new PacketHandlerEventArgs();
                     p.ReadByte(); // through away the packet id
@@ -1037,7 +1037,7 @@ namespace RazorEnhanced
                     if (m_gumpData.ContainsKey(gumpid))
                     {
                         var gd = m_gumpData[gumpid];
-                        GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid,
+                        GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid,
                             buttonid, ConvertToIntList(switchlist_id), entries);
                         PacketReader p = new PacketReader(gumpResp.ToArray(), false);
                         PacketHandlerEventArgs args = new PacketHandlerEventArgs();
@@ -1064,18 +1064,18 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Get a specific line from the most gumpID if it exists. Filter by line number.
+        /// Get a specific line from the most gumpId if it exists. Filter by line number.
         /// </summary>
-        /// <param name="gumpID">gump id to get data from</param>
+        /// <param name="gumpId">gump id to get data from</param>
         /// <param name="line_num">Number of the line.</param>
         /// <returns>Text content of the line. (empty: line not found)</returns>
-        public static string GetLine(uint gumpID, int line_num)
+        public static string GetLine(uint gumpId, int line_num)
         {
-            if (m_incomingData.ContainsKey(gumpID))
+            if (m_incomingData.ContainsKey(gumpId))
             {
-                if (line_num >= 0 && line_num < m_incomingData[gumpID].gumpRawText.Count)
+                if (line_num >= 0 && line_num < m_incomingData[gumpId].gumpStrings.Count)
                 {
-                    return m_incomingData[gumpID].gumpRawText[line_num];
+                    return m_incomingData[gumpId].gumpStrings[line_num];
                 }
             }
             return "";
@@ -1127,13 +1127,13 @@ namespace RazorEnhanced
         /// <summary>
         /// Get all text from the specified Gump if still open
         /// </summary>
-        /// <param name="gumpID">gump id to get data from</param>
+        /// <param name="gumpId">gump id to get data from</param>
         /// <returns>Text of the gump.</returns>
-        public static List<string> GetLineList(uint gumpID)
+        public static List<string> GetLineList(uint gumpId)
         {
-            if (m_incomingData.ContainsKey(gumpID))
+            if (m_incomingData.ContainsKey(gumpId))
             {
-                return m_incomingData[gumpID].gumpRawText;
+                return m_incomingData[gumpId].gumpStrings;
             }
             return new List<string>();
         }
@@ -1203,7 +1203,7 @@ namespace RazorEnhanced
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
-                return m_incomingData[gumpid].gumpRawData;
+                return m_incomingData[gumpid].gumpDefinition;
             }
             return string.Empty;
         }
@@ -1236,7 +1236,7 @@ namespace RazorEnhanced
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
-                return m_incomingData[gumpid].gumpRawText;
+                return m_incomingData[gumpid].gumpStrings;
             }
 
             return new List<string>();
