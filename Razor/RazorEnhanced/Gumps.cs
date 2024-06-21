@@ -780,8 +780,8 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                   Gumps.m_incomingData[gumpid] = new IncomingGumpData();
-                        
+                    Gumps.m_incomingData[gumpid] = new IncomingGumpData();
+
                     while (subdelay > 0)
                     {
                         if (World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid)
@@ -795,9 +795,10 @@ namespace RazorEnhanced
                             subdelay -= 2;
                         }
                     }
+                    Gumps.m_incomingData[gumpid].gumpId = World.Player.CurrentGumpI;
+                    Gumps.m_incomingData[gumpid].gumpSerial = World.Player.CurrentGumpS;
                 }
-                Gumps.m_incomingData[gumpid].gumpId = World.Player.CurrentGumpI;
-                Gumps.m_incomingData[gumpid].gumpSerial = World.Player.CurrentGumpS;
+
             }
             return found;
         }
