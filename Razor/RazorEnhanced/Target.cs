@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
+using Assistant.Enums;
 
 namespace RazorEnhanced
 {
@@ -37,13 +38,13 @@ namespace RazorEnhanced
                     return true;
 
                 case "neutral":
-                    return flag == 0;
+                    return flag == (byte)TargetFlags.Neutral;
 
                 case "harmful":
-                    return flag == 1;
+                    return flag == (byte)TargetFlags.Harmful;
 
                 case "beneficial":
-                    return flag == 2;
+                    return flag == (byte)TargetFlags.Beneficial;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.");
