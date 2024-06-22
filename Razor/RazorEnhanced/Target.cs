@@ -30,16 +30,25 @@ namespace RazorEnhanced
                 return false;
             }
 
-            byte flag = Assistant.Targeting.TargetFlags;
+            TargetFlags flag = (TargetFlags)Assistant.Targeting.TargetFlags;
 
-            return targetFlag.ToLower() switch
+            switch (targetFlag.ToLower())
             {
-                "any" => true,
-                "neutral" => flag == (byte)TargetFlags.Neutral,
-                "harmful" => flag == (byte)TargetFlags.Harmful,
-                "beneficial" => flag == (byte)TargetFlags.Beneficial,
-                _ => throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.")
-            };
+                case "any":
+                    return true;
+
+                case "neutral":
+                    return flag == TargetFlags.Neutral;
+
+                case "harmful":
+                    return flag == TargetFlags.Harmful;
+
+                case "beneficial":
+                    return flag == TargetFlags.Beneficial;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.");
+            }
         }
 
         /// <summary>
