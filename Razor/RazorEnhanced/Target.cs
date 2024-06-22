@@ -32,23 +32,14 @@ namespace RazorEnhanced
 
             byte flag = Assistant.Targeting.TargetFlags;
 
-            switch (targetFlag.ToLower())
+            return targetFlag.ToLower() switch
             {
-                case "any":
-                    return true;
-
-                case "neutral":
-                    return flag == (byte)TargetFlags.Neutral;
-
-                case "harmful":
-                    return flag == (byte)TargetFlags.Harmful;
-
-                case "beneficial":
-                    return flag == (byte)TargetFlags.Beneficial;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.");
-            }
+                "any" => true,
+                "neutral" => flag == (byte)TargetFlags.Neutral,
+                "harmful" => flag == (byte)TargetFlags.Harmful,
+                "beneficial" => flag == (byte)TargetFlags.Beneficial,
+                _ => throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.")
+            };
         }
 
         /// <summary>
