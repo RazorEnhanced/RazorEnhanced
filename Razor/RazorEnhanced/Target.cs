@@ -32,23 +32,14 @@ namespace RazorEnhanced
 
             TargetFlags flag = (TargetFlags)Assistant.Targeting.TargetFlags;
 
-            switch (targetFlag.ToLower())
+            return targetFlag.ToLower() switch
             {
-                case "any":
-                    return true;
-
-                case "neutral":
-                    return flag == TargetFlags.Neutral;
-
-                case "harmful":
-                    return flag == TargetFlags.Harmful;
-
-                case "beneficial":
-                    return flag == TargetFlags.Beneficial;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.");
-            }
+                "any" => true,
+                "neutral" => flag == TargetFlags.Neutral,
+                "harmful" => flag == TargetFlags.Harmful,
+                "beneficial" => flag == TargetFlags.Beneficial,
+                _ => throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.")
+            };
         }
 
         /// <summary>
