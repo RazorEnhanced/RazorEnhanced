@@ -322,7 +322,6 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Enums\TargetFlagsExists.cs" />
     <Compile Include="Enums\TargetFlags.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\PacketLogger.cs" />

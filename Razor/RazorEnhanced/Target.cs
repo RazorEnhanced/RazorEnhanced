@@ -1,16 +1,16 @@
 using Accord;
 using Assistant;
-using Assistant.Enums;
 using JsonData;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
+using Assistant.Enums;
 
 namespace RazorEnhanced
 {
     /// <summary>
-    /// The Target class provides various method for targeting Land, Items and Mobiles in game.
+    /// The Target class provides various methods for targeting Land, Items and Mobiles in game.
     /// </summary>
     public class Target
     {
@@ -18,41 +18,36 @@ namespace RazorEnhanced
         private RazorEnhanced.Point3D m_pgtarget;
 
         /// <summary>
-        /// Get status if have in-game cursor has target shape.
+        /// Get the status of the in-game target cursor
+        /// Optionally specify the target flag and check if the cursor is "Beneficial", "Harmful", or "Neutral".
         /// </summary>
-        /// <returns>True: Cursor has target - False: otherwise</returns>
-        public static bool HasTarget()
+        /// <param name="targetFlag">The target flag to check for can be "Any", "Beneficial", "Harmful", or "Neutral".</param>
+        /// <returns>True if the client has a target cursor and the optional flag matches; otherwise, false.</returns>
+        public static bool HasTarget(string targetFlag = "Any")
         {
-            return HasTarget("Any");
-        }
-
-        /// <summary>
-        /// Get status if have in-game cursor has target shape.
-        /// U can check if cursor is beneficial, harmful or neutral
-        /// </summary>
-        /// <returns>True: Cursor has target - False: otherwise</returns>
-        public static bool HasTarget(string targetFlagsExists = "Any")
-        {
-            if (!Enum.TryParse(targetFlagsExists, out Assistant.Enums.TargetFlagsExists enumValue))
+            if (!Assistant.Targeting.HasTarget)
             {
-                enumValue = Assistant.Enums.TargetFlagsExists.Any;
+                return false;
             }
 
-            switch (enumValue)
+            TargetFlags flag = (TargetFlags)Assistant.Targeting.TargetFlags;
+
+            switch (targetFlag.ToLower())
             {
-                case Assistant.Enums.TargetFlagsExists.Any:
-                    return Assistant.Targeting.HasTarget;
-                case Assistant.Enums.TargetFlagsExists.Beneficial:
-                    return Assistant.Targeting.HasTarget &&
-                           Assistant.Enums.TargetFlags.Beneficial.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
-                case Assistant.Enums.TargetFlagsExists.Harmful:
-                    return Assistant.Targeting.HasTarget &&
-                           Assistant.Enums.TargetFlags.Harmful.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
-                case Assistant.Enums.TargetFlagsExists.Neutral:
-                    return Assistant.Targeting.HasTarget &&
-                           Assistant.Enums.TargetFlags.None.GetHashCode().Equals(Assistant.Targeting.TargetFlags);
+                case "any":
+                    return true;
+
+                case "neutral":
+                    return flag == TargetFlags.Neutral;
+
+                case "harmful":
+                    return flag == TargetFlags.Harmful;
+
+                case "beneficial":
+                    return flag == TargetFlags.Beneficial;
+
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(targetFlag), targetFlag, "Invalid target flag specified.");
             }
         }
 
@@ -375,9 +370,9 @@ namespace RazorEnhanced
         }
         
 
-        public static void TargetResource(Item item, int resource_number)
+        public static void TargetResource(Item item, int resoruce_number)
         {
-            TargetResource(item.Serial, resource_number);
+            TargetResource(item.Serial, resoruce_number);
         }
 
         /// <summary>
