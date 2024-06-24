@@ -416,7 +416,7 @@ namespace Assistant
             {
                 Gumps.GumpData gd = Gumps.CreateGump(false, true, true, false);
                 gd.gumpId = 0x9994df;
-                gd.gumpSerial = (uint)Player.Serial;
+                gd.serial = (uint)Player.Serial;
 
                 int x = 100;
                 int y = 150;

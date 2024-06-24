@@ -112,12 +112,29 @@ namespace RazorEnhanced
                 gumpStrings = new List<string>();
             }
         }
-
+        /// <summary>
+        // vars defined
+        // gumpId
+        // serial
+        // x
+        // y
+        // gumpDefinition
+        // gumpStrings
+        // --  data returned --
+        // hasResponse
+        // buttonid
+        // switches
+        // text
+        // textID
+        // action
+        // gumpRawData
+        // gumpRawText
+        /// </summary>
             public class GumpData
         {
             // vars used to build it
             public uint gumpId;
-            public uint gumpSerial;
+            public uint serial;
             public uint x;
             public uint y;
             public string gumpDefinition;
@@ -135,7 +152,7 @@ namespace RazorEnhanced
             public GumpData()
             {
                 gumpId = 0;
-                gumpSerial = 0;
+                serial = 0;
                 x = 0;
                 y = 0;
                 gumpDefinition = "";
@@ -646,7 +663,7 @@ namespace RazorEnhanced
         public static void SendGump(GumpData gd, uint x, uint y)
         {
             m_gumpData[gd.gumpId] = gd;
-            GenericGump gg = new GenericGump(gd.gumpId, gd.gumpSerial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
 
@@ -660,7 +677,7 @@ namespace RazorEnhanced
             GumpData gd = new GumpData
             {
                 gumpId = gumpid,
-                gumpSerial = serial,
+                serial = serial,
                 x = x,
                 y = y,
                 hasResponse = false,
@@ -670,7 +687,7 @@ namespace RazorEnhanced
             gd.gumpStrings.AddRange(gumpStrings);
             //
             m_gumpData[gumpid] = gd;
-            GenericGump gg = new GenericGump(gd.gumpId, gd.gumpSerial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
+            GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
         public static GumpData GetGumpData(uint gumpid)
@@ -843,7 +860,7 @@ namespace RazorEnhanced
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gd.gumpId, buttonid, nullswitch, nullentries);
+                    GumpResponse gumpResp = new GumpResponse(gd.serial, gd.gumpId, buttonid, nullswitch, nullentries);
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
 
                     PacketHandlerEventArgs args = new PacketHandlerEventArgs();
@@ -921,7 +938,7 @@ namespace RazorEnhanced
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
-                    GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid, buttonid, ConvertToIntList(switchs), entries);
+                    GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid, buttonid, ConvertToIntList(switchs), entries);
                     PacketReader p = new PacketReader(gumpResp.ToArray(), false);
                     PacketHandlerEventArgs args = new PacketHandlerEventArgs();
                     p.ReadByte(); // through away the packet id
@@ -1037,7 +1054,7 @@ namespace RazorEnhanced
                     if (m_gumpData.ContainsKey(gumpid))
                     {
                         var gd = m_gumpData[gumpid];
-                        GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid,
+                        GumpResponse gumpResp = new GumpResponse(gd.serial, gumpid,
                             buttonid, ConvertToIntList(switchlist_id), entries);
                         PacketReader p = new PacketReader(gumpResp.ToArray(), false);
                         PacketHandlerEventArgs args = new PacketHandlerEventArgs();
