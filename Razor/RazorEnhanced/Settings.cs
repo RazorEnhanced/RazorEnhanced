@@ -5383,9 +5383,19 @@ namespace RazorEnhanced
 
             if (realVersion == 17)
             {
-                DataTable general = m_Dataset.Tables["GENERAL"];
-                general.Columns.Add("LimitDamageDisplayValue", typeof(int));
-                RazorEnhanced.Settings.General.WriteInt("LimitDamageDisplayValue", 1);
+                bool found = false;
+                DataTable buy_lists = m_Dataset.Tables["GENERAL"];
+                foreach (var column in buy_lists.Columns)
+                {
+                    if (column.ToString() == "LimitDamageDisplayValue")
+                        found = true;
+                }
+                if (!found)
+                {
+                    DataTable general = m_Dataset.Tables["GENERAL"];
+                    general.Columns.Add("LimitDamageDisplayValue", typeof(int));
+                    RazorEnhanced.Settings.General.WriteInt("LimitDamageDisplayValue", 1);
+                }
                 realVersion = 18;
                 General.WriteInt("SettingVersion", realVersion);
             }
