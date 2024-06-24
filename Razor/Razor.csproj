@@ -330,6 +330,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\CircularBuffer.cs" />
     <Compile Include="RazorEnhanced\Config.cs" />
     <Compile Include="Core\SkillIcon.cs" />
     <Compile Include="Core\DLLImport.cs" />

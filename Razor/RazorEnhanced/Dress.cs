@@ -458,7 +458,9 @@ namespace RazorEnhanced
                             {
                                 if (lefth == null || item.Serial != lefth.Serial)
                                 {
-                                    twoHandLeft = Assistant.World.FindItem(item.Serial).IsTwoHanded;
+                                    var i = Assistant.World.FindItem(item.Serial);
+                                    if (i == null) { continue; }
+                                    twoHandLeft = i.IsTwoHanded;
                                 }
                             }
 

@@ -47,24 +47,24 @@ namespace RazorEnhanced.UI
 
 
         private static List<EnhancedScriptEditor> m_EnhancedScriptEditors = new List<EnhancedScriptEditor>();
-        
+
 
         public static EnhancedScriptEditor Search(string fullpath)
         {
-            foreach (var editor in m_EnhancedScriptEditors){ 
-                if (editor.Script != null && editor.Script.Fullpath == fullpath){
+            foreach (var editor in m_EnhancedScriptEditors) {
+                if (editor.Script != null && editor.Script.Fullpath == fullpath) {
                     return editor;
                 }
             }
             return null;
         }
-        
+
         private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
         private static Command m_CurrentCommand = Command.None;
         private static readonly AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
-                                                        
-        
-        
+
+
+
 
         //private string m_Filename = String.Empty;
         //private string m_Filetype = String.Empty;
@@ -80,10 +80,10 @@ namespace RazorEnhanced.UI
         private object m_CurrentPayload;
 
 
-        
+
         //Dalamar:
         //TODO: replace current implementation with 
-        private EnhancedScript m_Script; 
+        private EnhancedScript m_Script;
         public EnhancedScript Script { get { return m_Script; } }
         private ScriptRecorder m_Recorder;
 
@@ -92,7 +92,7 @@ namespace RazorEnhanced.UI
         private volatile bool m_Debugger = false;
         private bool m_onclosing = false;
 
-        private bool m_ScriptWasRunning=false;
+        private bool m_ScriptWasRunning = false;
         private System.Threading.Timer m_Timer;
 
         private readonly FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
@@ -102,7 +102,7 @@ namespace RazorEnhanced.UI
             string suffix = Path.GetExtension(filename); ;
             if (suffix == null)
             {
-                ScriptListView scriptListView =  MainForm.GetCurrentAllScriptsTab();
+                ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
                 if (scriptListView != null)
                 {
                     if (scriptListView.Name == "pyScriptListView")
@@ -120,7 +120,7 @@ namespace RazorEnhanced.UI
                 editor.Show();
             }
             editor.BringToFront();
-            
+
         }
 
 
@@ -151,7 +151,7 @@ namespace RazorEnhanced.UI
                 SetStatusLabel("STOP", Color.DarkTurquoise);
             }
             else if (m_Script.IsRunning && !m_ScriptWasRunning)
-            { 
+            {
                 if (m_Debugger)
                 {
                     SetErrorBox("DEBUG: " + m_Script.Fullpath);
@@ -198,7 +198,7 @@ namespace RazorEnhanced.UI
                 stdout = m_Script.ScriptEngine.GetStdout();
                 stderr = m_Script.ScriptEngine.GetStderr();
             }
-            m_Script = EnhancedScript.FromFile(filepath, editor:true);
+            m_Script = EnhancedScript.FromFile(filepath, editor: true);
             if (m_Script != null)
             {
                 m_Script.ScriptEngine.SetStdout(stdout);
@@ -214,7 +214,7 @@ namespace RazorEnhanced.UI
 
         public void LoadNewFile(ScriptLanguage language)
         {
-            m_Script = EnhancedScript.FromText("",language);
+            m_Script = EnhancedScript.FromText("", language);
             language = m_Script.GetLanguage();
             LoadLanguage(language);
             fastColoredTextBoxEditor.Text = "";
@@ -238,7 +238,7 @@ namespace RazorEnhanced.UI
                 LoadNewFile(language);
             }
 
-            if (m_Script.GetLanguage() == ScriptLanguage.PYTHON) { 
+            if (m_Script.GetLanguage() == ScriptLanguage.PYTHON) {
                 m_Script.ScriptEngine.SetTracebackPython(null);
             }
             m_Script.ScriptEngine.SetStdout(this.SetErrorBox);
@@ -308,7 +308,7 @@ namespace RazorEnhanced.UI
             // attributes
             List<String> aliases = uosEngine.AllAliases();
             pattern = $@"\b({String.Join("|", aliases)})\b";
-            this.fastColoredTextBoxEditor.SyntaxHighlighter.UosAttributeRegex = new Regex(pattern, RegexOptions.Compiled|RegexOptions.IgnoreCase);
+            this.fastColoredTextBoxEditor.SyntaxHighlighter.UosAttributeRegex = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             // Fill in autocomplete
             List<AutocompleteItem> items = new List<AutocompleteItem>();
@@ -560,7 +560,7 @@ namespace RazorEnhanced.UI
 
         private void OnTracebackUOS(TraceBackFrame frame, string result, object payload)
         {
-            
+
         }
 
         private TracebackDelegate OnTracebackPy(TraceBackFrame frame, string result, object payload)
@@ -671,7 +671,7 @@ namespace RazorEnhanced.UI
 
         private void Start(bool debugger)
         {
-            if (autoclearToolStripMenuItem.Checked) { 
+            if (autoclearToolStripMenuItem.Checked) {
                 outputConsole.Clear();
             }
 
@@ -686,9 +686,9 @@ namespace RazorEnhanced.UI
                 SetErrorBox("ERROR: Can't start script if record mode is ON.");
                 return;
             }
-            
+
             m_Debugger = debugger;
-            
+
 
             m_Queue = new ConcurrentQueue<Command>();
 
@@ -696,7 +696,7 @@ namespace RazorEnhanced.UI
             m_Script.Text = text;
             m_Script.LastModified = DateTime.Now;
             if (!m_Script.InitEngine()) { return; }
-            
+
             //Editor specific setup for each language Check 
             switch (m_Script.Language)
             {
@@ -719,7 +719,7 @@ namespace RazorEnhanced.UI
             }
             m_Script.Start();
         }
-        
+
         private void Stop()
         {
             if (m_Recorder != null && m_Recorder.IsRecording()) return;
@@ -873,13 +873,13 @@ namespace RazorEnhanced.UI
                     var time_txt = "[" + DateTime.Now.ToString("HH:mm:ss") + "]";
                     var showTimestamp = timeToolStripMenuItem.Checked; // logboxMenuStrip.
                     var msg = showTimestamp ? time_txt + multiline_txt : "";
-                    msg += lines_txt+'\n';
-                    
+                    msg += lines_txt + '\n';
+
                     //this.messagelistBox.Items.Add(msg);
                     //this.messagelistBox.TopIndex = this.messagelistBox.Items.Count - 1;
 
                     outputConsole.AppendText(msg);
-                    outputConsole.SelectionStart = outputConsole.Text.Length-1;
+                    outputConsole.SelectionStart = outputConsole.Text.Length - 1;
                     outputConsole.ScrollToCaret();
                 }
             }
@@ -896,7 +896,7 @@ namespace RazorEnhanced.UI
             var shouldClose = OnUnload();
             e.Cancel = !shouldClose;
         }
-        
+
         private void ToolStripButtonPlay_Click(object sender, EventArgs e)
         {
             Start(false);
@@ -1000,7 +1000,7 @@ namespace RazorEnhanced.UI
         }
         private void Open()
         {
-            
+
 
             OpenFileDialog open = new OpenFileDialog
             {
@@ -1069,31 +1069,31 @@ namespace RazorEnhanced.UI
 
             var language = m_Script.GetLanguage();
             string filter;
-            switch (language){
+            switch (language) {
                 default:
-                case ScriptLanguage.PYTHON: 
+                case ScriptLanguage.PYTHON:
                     filter = "Python Files|*.py|Text Files|*.txt"; break;
-                case ScriptLanguage.CSHARP: 
+                case ScriptLanguage.CSHARP:
                     filter = "C# Files|*.cs|Text Files|*.txt"; break;
-                case ScriptLanguage.UOSTEAM: 
+                case ScriptLanguage.UOSTEAM:
                     filter = "UOS Files|*.uos|Text Files|*.txt"; break;
             }
-                
+
 
             SaveFileDialog save = new SaveFileDialog
             {
                 Filter = filter,
                 RestoreDirectory = true
-            };         
+            };
 
             if (m_Script.HasValidPath && !m_Script.Exist)
             {
                 save.InitialDirectory = Path.GetDirectoryName(m_Script.Fullpath);
                 save.FileName = m_Script.Filename;
-            } else { 
+            } else {
                 save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
             }
-        
+
             if (save.ShowDialog() == DialogResult.OK)
             {
                 var fullpath = save.FileName;
@@ -1105,17 +1105,17 @@ namespace RazorEnhanced.UI
 
                 if (File.Exists(fullpath))
                 {
-                    m_Script = EnhancedScript.FromFile(fullpath, editor:true);
+                    m_Script = EnhancedScript.FromFile(fullpath, editor: true);
                     m_Script.Text = fastColoredTextBoxEditor.Text;
                 }
-                else { 
+                else {
                     m_Script.Fullpath = fullpath;
                 }
 
 
                 m_Script.Save();
 
-                
+
                 UpdateTitle();
             }
         }
@@ -1125,14 +1125,14 @@ namespace RazorEnhanced.UI
             m_onclosing = true;
             Stop();
             if (m_Recorder != null) { m_Recorder.Stop(); }
-            
+
             // Not ask to save empty text
             var editorContent = fastColoredTextBoxEditor.Text;
             if (editorContent != null && editorContent != "")
             {
                 string fileContent = "";
                 if (m_Script.Exist) {
-                    try { 
+                    try {
                         fileContent = File.ReadAllText(m_Script.Fullpath);
                     } catch { }
                 }
@@ -1140,8 +1140,8 @@ namespace RazorEnhanced.UI
                 if (fileContent != editorContent)
                 {
                     DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                    if (res == DialogResult.Cancel) { 
-                        return false; 
+                    if (res == DialogResult.Cancel) {
+                        return false;
                     }
                     if (res == DialogResult.No) {
                         if (m_Script.Exist)
@@ -1151,7 +1151,7 @@ namespace RazorEnhanced.UI
                         else {
                             UnloadScript();
                         }
-                        return true; 
+                        return true;
                     }
                     if (res == DialogResult.Yes)
                     {
@@ -1395,13 +1395,13 @@ namespace RazorEnhanced.UI
             if (string.IsNullOrWhiteSpace(fastColoredTextBoxEditor.SelectedText)) // No selection
                 return;
 
-            string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None );
+            string[] lines = fastColoredTextBoxEditor.SelectedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
             fastColoredTextBoxEditor.SelectedText = "";
             for (int i = 0; i < lines.Count(); i++)
             {
                 fastColoredTextBoxEditor.SelectedText += "#" + lines[i];
-                if (i < lines.Count() -1)
+                if (i < lines.Count() - 1)
                     fastColoredTextBoxEditor.SelectedText += "\r\n";
             }
         }
@@ -1410,6 +1410,46 @@ namespace RazorEnhanced.UI
         {
             // Convert each character in the string to a FastColoredTextBoxNS.Char
             return content.Select(c => new FastColoredTextBoxNS.Char(c));
+        }
+
+        // Common code to get type infor for a serial
+        private ScriptRecorder.UsedObjectData? FindSerialTypeColor(string textSerial)
+        {
+            Int32 serial = 0;
+            if (textSerial.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+            {
+                string hexString = textSerial.Substring(2);
+                serial = Convert.ToInt32(hexString, 16);
+            }
+            else
+            {
+                serial = Convert.ToInt32(textSerial, 10);
+            }
+
+            // Try to find existing item
+            Item item = Items.FindBySerial(serial);
+            if (item != null)
+            {
+                int container = item.Container;
+                if (container == 0)
+                    container = -1;
+                return new ScriptRecorder.UsedObjectData((uint)serial, container, (ushort)item.ItemID, (ushort)item.Hue);
+            }
+
+            // Maybe its a Mobil
+            Mobile mobile = Mobiles.FindBySerial(serial);
+            if (mobile != null)
+                return new ScriptRecorder.UsedObjectData((uint)serial, -1, (ushort)mobile.Body, (ushort)mobile.Hue);
+
+            // Check for recently used (maybe and gone) items
+            foreach (var entry in ScriptRecorder.RecentSerialType)
+            {
+                if (entry.serial == serial)
+                    return entry;
+            }
+
+            // finally nothing found
+            return null;
         }
 
         private void ConvertToByIdToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1434,26 +1474,18 @@ namespace RazorEnhanced.UI
                             string lastPart = m.Groups[4].Value;
                             if (useItem.lower() == "useitem")
                             {
-                                Int32 serial = 0;
-                                if (textSerial.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                                var result = FindSerialTypeColor(textSerial);
+                                if (result.HasValue)
                                 {
-                                    string hexString = textSerial.Substring(2);
-                                    serial = Convert.ToInt32(hexString, 16);
-                                }
-                                else
-                                {
-                                    serial = Convert.ToInt32(textSerial, 10);
-                                }
-                                Item item = Items.FindBySerial(serial);
-                                if (item != null)
-                                {
+                                    var objectData = result.Value;
                                     fastColoredTextBoxEditor.BeginUpdate();
-                                    string newLine = $"{frontPart}UseItemByID(0x{item.ItemID:x}, {item.Hue}){lastPart}";
+                                    string newLine = $"{frontPart}UseItemByID(0x{objectData.itemId:x}, {objectData.hue} ){lastPart}";
                                     fastColoredTextBoxEditor.TextSource[currentLine].Clear();
                                     fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
                                     fastColoredTextBoxEditor.EndUpdate();
                                     fastColoredTextBoxEditor.Invalidate();
                                 }
+
                             }
                         }
 
@@ -1462,7 +1494,6 @@ namespace RazorEnhanced.UI
 
                 case FastColoredTextBoxNS.Language.Uos:
                     {
-                        //useobject 0x40589c06
                         string pattern = @"(.*)useobject\s+(\w+)(.*$)";
                         Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
                         Match m = r.Match(lineToChange);
@@ -1472,21 +1503,12 @@ namespace RazorEnhanced.UI
                             string textSerial = m.Groups[2].Value;
                             string lastPart = m.Groups[3].Value;
 
-                            Int32 serial = 0;
-                            if (textSerial.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                            var result = FindSerialTypeColor(textSerial);
+                            if (result.HasValue)
                             {
-                                string hexString = textSerial.Substring(2);
-                                serial = Convert.ToInt32(hexString, 16);
-                            }
-                            else
-                            {
-                                serial = Convert.ToInt32(textSerial, 10);
-                            }
-                            Item item = Items.FindBySerial(serial);
-                            if (item != null)
-                            {
+                                var objectData = result.Value;
                                 fastColoredTextBoxEditor.BeginUpdate();
-                                string newLine = $"{frontPart}usetype 0x{item.ItemID:x} {item.Hue} {lastPart}";
+                                string newLine = $"{frontPart}usetype 0x{objectData.itemId:x} {objectData.hue} {objectData.container}{lastPart}";
                                 fastColoredTextBoxEditor.TextSource[currentLine].Clear();
                                 fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
                                 fastColoredTextBoxEditor.EndUpdate();

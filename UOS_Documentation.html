@@ -2357,7 +2357,12 @@ function l111IlI1I1llll1lIIl1111l1()
 <P class="p79 ft12">Reply Gump</P>
 <P class="p13 ft23">Reply a server gump.</P>
 <P class="p22 ft13">Usage</P>
-<P class="p13 ft14">replygump (gump id/'any') (button) [option] [...]</P>
+<P class="p13 ft14"><strike>replygump (gump id/'any') (button) [option] [...]</strike></P>
+<P class="p13 ft14">replygump (gump id/'any') (button) (switches) (textids textvalues)<br />
+    Switches is a comma seperated list of integers as a string: e.g. "2,3,4"
+    textids is another list of integers represented as a string: e.g. "9,12"
+    textvalues is the values associated with data fields indicated by the textids: e.g. "some,value"
+    </P>
 <P class="p73 ft13">Sample</P>
 <P class="p234 ft14">useobject! 0x491093 waitforgump 0x1ec8c837 5000 replygump 0x1ec8c837 1</P>
 </DIV>

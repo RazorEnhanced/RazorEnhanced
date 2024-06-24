@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Scripting.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -146,6 +147,32 @@ namespace RazorEnhanced
     {
         public ScriptRecorderOutput Output;
 
+        internal struct UsedObjectData
+        {
+            internal uint serial;
+            internal int container;
+            internal ushort itemId;
+            internal ushort hue;
+
+            internal UsedObjectData(uint _serial, int _container, ushort _itemId, ushort _hue)
+            {
+                serial = _serial;
+                container = _container;
+                itemId = _itemId;
+                hue = _hue;
+            }
+        }
+
+        internal static CircularBuffer.CircularBuffer<UsedObjectData> RecentSerialType =
+            new CircularBuffer.CircularBuffer<UsedObjectData>(20);
+
+        internal static void enqueueUsedObject(uint _serial, int _container, ushort _itemId, ushort _hue)
+        {
+            UsedObjectData usedObject = new UsedObjectData(_serial, _container, _itemId, _hue);
+            if (!RecentSerialType.Contains(usedObject))
+                RecentSerialType.PushFront(usedObject);
+
+        }
         private bool m_Recording = false;
 
         public bool IsRecording()
@@ -175,7 +202,37 @@ namespace RazorEnhanced
 
 
         internal virtual void Record_AttackRequest(uint serial) { }
-        internal virtual void Record_ClientDoubleClick(Assistant.Serial ser){ }
+        internal virtual void Record_ClientDoubleClick(Assistant.Serial ser)
+        {
+            UsedObjectData newEntry;        
+            if (ser.IsItem)
+            {
+                Assistant.Item i = World.FindItem(ser);
+                if (i != null)
+                {
+                    int container = -1;
+                    if (i.IsInBackpack)
+                        container = Player.Backpack.Serial;
+                    else
+                    {
+                        if (i.Container is Item)
+                        {
+                            container = (i.Container as Item).Serial;
+                        }
+                    }
+                    if (container == 0)
+                        container = -1;
+                    enqueueUsedObject(i.Serial, container, i.ItemID, i.Hue);
+                }
+            } else if (ser.IsMobile)
+            {
+                Assistant.Mobile m = World.FindMobile(ser);
+                if (m != null)
+                {
+                    enqueueUsedObject(m.Serial, 0, m.Body, m.Hue);
+                }
+            }
+        }
         internal virtual void Record_DropRequest(Assistant.Item i, Assistant.Serial dest){ }
         internal virtual void Record_ClientTextCommand(int type, int id){ }
         internal virtual void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m){ }
@@ -201,10 +258,11 @@ namespace RazorEnhanced
 
         internal override void Record_ClientDoubleClick(Assistant.Serial ser)
         {
-                if (ser.IsItem)
-                    AddLog("Items.UseItem(0x" + ser.Value.ToString("X8") + ")");
-                else
-                    AddLog("Mobiles.UseMobile(0x" + ser.Value.ToString("X8") + ")");
+            base.Record_ClientDoubleClick(ser);
+            if (ser.IsItem)
+                AddLog("Items.UseItem(0x" + ser.Value.ToString("X8") + ")");
+            else
+                AddLog("Mobiles.UseMobile(0x" + ser.Value.ToString("X8") + ")");
         }
 
         internal override void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
@@ -558,7 +616,8 @@ namespace RazorEnhanced
 
         internal override void Record_ClientDoubleClick(Assistant.Serial ser)
         {
-                AddLog($"useobject 0x{ser.Value:x8}");
+            base.Record_ClientDoubleClick(ser);
+            AddLog($"useobject 0x{ser.Value:x8}");
         }
 
         internal override void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
