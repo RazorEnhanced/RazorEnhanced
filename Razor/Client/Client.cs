@@ -541,6 +541,8 @@ namespace Assistant
 
             ScriptRecorderService.Instance.RemoveAll();
             //RazorEnhanced.UI.EnhancedScriptEditor.End();
+
+            RazorEnhanced.CSharpEngine.Stop();
         }
 
 

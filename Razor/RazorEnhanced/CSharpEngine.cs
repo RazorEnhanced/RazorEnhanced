@@ -10,6 +10,9 @@ using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
+    /// <summary>
+    /// This class is used to compile and execute C# scripts.
+    /// </summary>
     public class CSharpEngine
     {
         private static CSharpEngine m_instance = null;
@@ -420,5 +423,54 @@ namespace RazorEnhanced
             run.Invoke(scriptInstance, null);
         }
 
+        /// <summary>
+        /// Kills the VBCSCompiler process if no other RazorEnhanced or ClassicUO process is running
+        /// </summary>
+        public static void Stop()
+        {
+            System.Diagnostics.Process[] pRazor = System.Diagnostics.Process.GetProcessesByName("RazorEnhanced");
+            System.Diagnostics.Process[] pCUO = System.Diagnostics.Process.GetProcessesByName("ClassicUO");
+
+            // Get application PID
+            int pid = System.Diagnostics.Process.GetCurrentProcess().Id;
+
+
+            bool bOtherRazorRunning = false;
+            bool bOtherCUORunning = false;
+
+            foreach (System.Diagnostics.Process process in pRazor)
+            {
+                if (process.Id != pid)
+                {
+                    bOtherRazorRunning = true;
+                    break;
+                }
+            }
+
+            foreach (System.Diagnostics.Process process in pCUO)
+            {
+                if (process.Id != pid)
+                {
+                    bOtherCUORunning = true;
+                    break;
+                }
+            }
+
+            // If one process is runnig, no need to kill VBCSCompiler
+            if (bOtherRazorRunning || bOtherCUORunning)
+            {
+                return;
+            }
+
+            // Kill all VBCSCompiler executable
+            if (System.Diagnostics.Process.GetProcessesByName("VBCSCompiler").Length != 0)
+            {
+                System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName("VBCSCompiler");
+                foreach (System.Diagnostics.Process process in processes)
+                {
+                    process.Kill();
+                }
+            }
+        }
     }
 }
