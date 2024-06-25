@@ -455,7 +455,7 @@ namespace RazorEnhanced
         /// <summary>
         /// Player is in praty.
         /// </summary>
-        public bool InParty { get { return Assistant.PacketHandlers.Party.Contains(World.Player.Serial); } }
+        public bool InParty { get { return Assistant.PacketHandlers.Party.Count > 0; } }
 
         // Position
         /// <summary>
