@@ -30,7 +30,9 @@ namespace RazorEnhanced
         public CompiledCode Compiled { get; set; }
         public PythonCompilerOptions CompilerOptions { get; set; }
 
-        
+        public Action<string> m_OutputWriter;
+        public Action<string> m_ErrorWriter;
+
 
         public PythonEngine() {
             Runtime = IronPython.Hosting.Python.CreateRuntime();
@@ -111,12 +113,14 @@ namespace RazorEnhanced
 
         public void SetStdout(Action<string> stdoutWriter)
         {
+            m_OutputWriter = stdoutWriter;
             PythonWriter outputWriter = new PythonWriter(stdoutWriter);
             Engine.Runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
         }
 
         public void SetStderr(Action<string> stderrWriter)
         {
+            m_ErrorWriter = stderrWriter;
             PythonWriter errorWriter = new PythonWriter(stderrWriter);
             Engine.Runtime.IO.SetErrorOutput(errorWriter, Encoding.ASCII);
         }
@@ -177,7 +181,9 @@ namespace RazorEnhanced
             }
             catch (Microsoft.Scripting.SyntaxErrorException e)
             {
-                Debug.WriteLine($"{e.Message} line: {e.Line} file: {FilePath}");
+                var message = $"{e.Message} line: {e.Line} file: {FilePath}";
+                if (m_ErrorWriter != null)
+                    m_ErrorWriter(message);
             }
             if (Compiled == null) 
             {

@@ -160,6 +160,7 @@ namespace RazorEnhanced
         internal DateTime LastModified;
 
         private readonly object m_Lock = new object();
+        internal static List<string> ExistingWatchers = new List<string>();
 
         public event Action<EnhancedScript, bool> OnLoad;
         public event Action<EnhancedScript> OnStart;
@@ -263,13 +264,15 @@ namespace RazorEnhanced
             StopMessage = false;
             LastModified = DateTime.MinValue;
 
-            m_Watcher = new FileSystemWatcher(Path.GetDirectoryName(fullpath));
-            m_Watcher.Filter = Path.GetFileName(fullpath);
-            m_Watcher.NotifyFilter = NotifyFilters.LastWrite;
-            m_Watcher.Changed += new FileSystemEventHandler(ScriptChanged);
-            m_Watcher.EnableRaisingEvents = true;
-
-            AttemptAddDirectoryWatcher(fullpath);
+            if (!ExistingWatchers.Contains(fullpath))
+            {
+                ExistingWatchers.Add(fullpath);
+                m_Watcher = new FileSystemWatcher(Path.GetDirectoryName(fullpath));
+                m_Watcher.Filter = Path.GetFileName(fullpath);
+                m_Watcher.NotifyFilter = NotifyFilters.LastWrite;
+                m_Watcher.Changed += new FileSystemEventHandler(ScriptChanged);
+                m_Watcher.EnableRaisingEvents = true;
+            }
 
             m_ScriptEngine = new EnhancedScriptEngine(this, m_Preload);
             Add();
@@ -871,6 +874,25 @@ namespace RazorEnhanced
             try
             {
                 pyEngine = new PythonEngine();
+                pyEngine.SetTrace(TracebackPython);
+
+                pyEngine.SetStderr(
+                    (string message) => {
+                        Misc.SendMessage(message, 178);
+                        if (m_stderrWriter == null) return;
+                        m_stderrWriter.Invoke(message);
+                    }
+                );
+
+                pyEngine.SetStdout(
+                    (string message) => {
+                        Misc.SendMessage(message);
+                        if (m_stdoutWriter == null) return;
+                        m_stdoutWriter.Invoke(message);
+                    }
+                );
+
+
 
                 //Clear path hooks (why?)
                 var pc = HostingHelpers.GetLanguageContext(pyEngine.Engine) as PythonContext;
@@ -934,24 +956,6 @@ namespace RazorEnhanced
         {
             try
             {
-                pyEngine.SetTrace(TracebackPython);
-
-                pyEngine.SetStderr(
-                    (string message) => {
-                        Misc.SendMessage(message,178);
-                        if (m_stderrWriter == null) return;
-                        m_stderrWriter.Invoke(message);
-                    }
-                );
-
-                pyEngine.SetStdout(
-                    (string message) => {
-                        Misc.SendMessage(message);
-                        if (m_stdoutWriter == null) return;
-                        m_stdoutWriter.Invoke(message);
-                    }
-                );
-
                 return pyEngine.Execute();
             } catch (Exception ex)
             {
