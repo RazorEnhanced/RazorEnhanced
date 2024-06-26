@@ -1113,7 +1113,7 @@ namespace RazorEnhanced.UOS
                 uint source = args[2].AsSerial();
                 int amount = -1;
                 if (args.Length >= 4)
-                    args[3].AsInt();
+                    amount = args[3].AsInt();
                 int range = -1;
                 if (args.Length == 5)
                     range = args[4].AsInt();
@@ -1127,16 +1127,21 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    Item item = Items.FindByID(type, color, (int)source, range);
-                    if (item != null)
+                    //Item item = Items.FindByID(type, color, (int)source, range);
+                    var listItems = Items.FindAllByID(type, color, (int)source, range);
+                    foreach (var _item in listItems)
                     {
-                        if (amount != -1 && item.Amount < amount)
-                        {
-                            item = null;
-                        }
+                        Item item = (Item)_item;
                         if (item != null)
                         {
-                            serial = item.Serial;
+                            if (amount != -1 && item.Amount < amount)
+                            {
+                                item = null;
+                            }
+                            if (item != null)
+                            {
+                                serial = item.Serial;
+                            }
                         }
                     }
                 }

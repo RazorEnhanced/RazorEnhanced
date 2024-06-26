@@ -3175,23 +3175,35 @@ namespace RazorEnhanced
             internal static List<RazorEnhanced.Organizer.OrganizerItem> ItemsRead(string list)
             {
                 List<RazorEnhanced.Organizer.OrganizerItem> items = new List<RazorEnhanced.Organizer.OrganizerItem>();
-
+                DataRowCollection rowData = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows;
                 if (ListExists(list))
                 {
-                    items.AddRange(from DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows where (string)row["List"] == list select (RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
+                    list = list.ToLower();
+                    foreach (DataRow row in rowData)
+                    {
+                        string rowListName = (string)row["List"];
+                        rowListName = rowListName.ToLower();
+                        if (rowListName == list)
+                        {
+                            items.Add((RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
+                        }
+                    }
                 }
 
                 return items;
             }
 
-            internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
+            internal static void ListDetailsRead(string _listname, out int bags, out int bagd, out int delay)
             {
                 bags = 0;
                 bagd = 0;
                 delay = 0;
+                var listname = _listname.ToLower(); 
                 foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
                 {
-                    if ((string)row["Description"] == listname)
+                    var rowName = (string)row["Description"];
+                    rowName = rowName.ToLower();
+                    if ( rowName == listname)
                     {
                         bags = Convert.ToInt32(row["Source"]);
                         bagd = Convert.ToInt32(row["Destination"]);

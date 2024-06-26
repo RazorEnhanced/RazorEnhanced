@@ -710,7 +710,10 @@ namespace RazorEnhanced
             if (gumpid == 0)
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
             else
+            {
+                Misc.Pause(500);
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
+            }
 
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
@@ -758,62 +761,31 @@ namespace RazorEnhanced
         /// <returns>True: wait found the gump - False: otherwise.</returns>
         public static bool WaitForGump(uint gumpid, int delay) // Delay in MS
         {
-            int subdelay = delay;
             bool found = false;
             if (gumpid == 0)
             {
-                while (subdelay > 0)
-                {
-                    if (World.Player.HasGump == true)
-                    {
-                        found = true;
-                        break;
-                    }
-                    else
-                    {
-                        Thread.Sleep(2);
-                        subdelay -= 2;
-                    }
-                }
+                found = Utility.DelayUntil(() => World.Player.HasGump == true, delay);
             }
             else
             {
                 if (Gumps.m_gumpData.ContainsKey(gumpid))
                 {
                     GumpData gd = Gumps.m_gumpData[gumpid];
-                    while (subdelay > 0)
-                    {
-                        if (gd.hasResponse == true)
-                        {
-                            found = true;
-                            break;
-                        }
-                        else
-                        {
-                            Thread.Sleep(2);
-                            subdelay -= 2;
-                        }
-                    }
+                    found = Utility.DelayUntil(() => gd.hasResponse == true, delay);
                 }
                 else
                 {
-                    Gumps.m_incomingData[gumpid] = new IncomingGumpData();
+                    // Check if gump is already up
+                    if (Gumps.m_incomingData.ContainsKey(gumpid))
+                            return true;
 
-                    while (subdelay > 0)
+                    Gumps.m_incomingData[gumpid] = new IncomingGumpData();
+                    found = Utility.DelayUntil(() => World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid, delay);
+                    if (found)
                     {
-                        if (World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid)
-                        {
-                            found = true;
-                            break;
-                        }
-                        else
-                        {
-                            Thread.Sleep(2);
-                            subdelay -= 2;
-                        }
+                        Gumps.m_incomingData[gumpid].gumpId = World.Player.CurrentGumpI;
+                        Gumps.m_incomingData[gumpid].gumpSerial = World.Player.CurrentGumpS;
                     }
-                    Gumps.m_incomingData[gumpid].gumpId = World.Player.CurrentGumpI;
-                    Gumps.m_incomingData[gumpid].gumpSerial = World.Player.CurrentGumpS;
                 }
 
             }
