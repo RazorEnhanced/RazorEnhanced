@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -128,8 +127,18 @@ namespace RazorEnhanced
         internal static void RefreshLists()
         {
             List<OrganizerList> lists = Settings.Organizer.ListsRead();
+            if (lists.Count == 0)
+                return;
 
-            OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
+            OrganizerList selectedList = lists[0];
+            foreach (var l in lists)
+            {
+                if (l.Selected)
+                {
+                    selectedList = l;
+                    break;
+                }
+            }
             if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
                 return;
 
