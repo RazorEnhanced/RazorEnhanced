@@ -1325,6 +1325,11 @@ namespace RazorEnhanced
             MoveOnGround(item.Serial, amounttodrop, Player.Position.X, Player.Position.Y, Player.Position.Z);
         }
 
+        /// <summary>
+        /// This function seldom works because the servers dont allow drop where your standing
+        /// </summary>
+        /// <param name="serialitem"></param>
+        /// <param name="amount"></param>
         public static void DropItemGroundSelf(int serialitem, int amount = 0)
         {
             Item i = FindBySerial(serialitem);
@@ -1576,7 +1581,8 @@ namespace RazorEnhanced
                 {
                     if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
                         continue;
-
+                    if (i.Amount == 0)
+                        continue;
                     if (itemids.Contains(i.ItemID)) // check item id
                     {
                         if (color != -1) // color -1 ALL

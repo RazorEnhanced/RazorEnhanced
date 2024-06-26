@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Web.ModelBinding;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static IronPython.Modules.PythonIterTools;
 
 namespace RazorEnhanced.UOS
 {
@@ -2929,93 +2930,124 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static IComparable MoveType(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length == 3)
+            switch (args.Length)
             {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                Item item = Items.FindByID(id, -1, (int)src, true);
-                if (item != null)
-                {
-                    Items.Move(item.Serial, (int)dest, item.Amount);
-                    return true;
-                }
+                case 3:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        uint dest = args[2].AsSerial();
+                        Item item = Items.FindByID(id, -1, (int)src, true);
+                        if (item != null)
+                        {
+                            Items.Move(item.Serial, (int)dest, item.Amount);
+                            return true;
+                        }
+                        break;
+                    }
+
+                case 4:
+                    {
+                        WrongParameterCount(node, 4, args.Length, "Co-ordinates requires x y and z");
+                        break;
+                    }
+
+                case 5:
+                case 6:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        // uint z = args[5].AsUInt(); unused
+
+                        Item item = Items.FindByID(id, -1, (int)src, true);
+                        if (item != null)
+                        {
+                            if (x == 0 && y == 0)
+                                Items.Move((int)src, (int)dest, item.Amount);
+                            else
+                                Items.Move((int)src, (int)dest, item.Amount, x, y);
+                            return true;
+                        }
+                        break;
+                    }
+
+                case 7:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        // uint z = args[5].AsUInt(); unused
+                        int color = args[6].AsInt();
+
+                        Item item = Items.FindByID(id, color, (int)src, true);
+                        if (item != null)
+                        {
+                            if (x == 0 && y == 0)
+                                Items.Move((int)src, (int)dest, item.Amount);
+                            else
+                                Items.Move((int)src, (int)dest, item.Amount, x, y);
+                            return true;
+                        }
+                        break;
+                    }
+
+                case 8:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        // uint z = args[5].AsUInt(); unused
+                        int color = args[6].AsInt();
+                        int amount = args[7].AsInt();
+
+                        Item item = Items.FindByID(id, color, (int)src, true);
+                        if (item != null)
+                        {
+                            if (x == 0 && y == 0)
+                                Items.Move((int)src, (int)dest, amount);
+                            else
+                                Items.Move((int)src, (int)dest, amount, x, y);
+                            return true;
+                        }
+                        break;
+                    }
+
+                case 9:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        uint dest = args[2].AsSerial();
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        // uint z = args[5].AsUInt(); unused
+                        int color = args[6].AsInt();
+                        int amount = args[7].AsInt();
+                        int range = args[8].AsInt();
+
+                        Item item = Items.FindByID(id, color, (int)src, range);
+                        if (item != null)
+                        {
+                            if (x == 0 && y == 0)
+                                Items.Move((int)item.Serial, (int)dest, amount);
+                            else
+                                Items.Move(item.Serial, (int)dest, amount, x, y);
+                            return true;
+                        }
+                        break;
+                    }
+
+                default:
+                    WrongParameterCount(node, 4, args.Length, "Invalid parameters specified");
+                    break;
             }
-            if (args.Length == 4)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                int color = args[3].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.Move(item.Serial, (int)dest, item.Amount);
-                    return true;
-                }
-            }
-            if (args.Length == 5)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                int color = args[3].AsInt();
-                int amount = args[4].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.Move(item.Serial, (int)dest, amount);
-                    return true;
-                }
-            }
-            if (args.Length == 6)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                int x = args[3].AsInt();
-                int y = args[4].AsInt();
-                //int z = args[5].AsInt();
-                Item item = Items.FindByID(id, -1, (int)src, true);
-                if (item != null)
-                {
-                    Items.Move(item.Serial, (int)dest, 0, x, y);
-                    return true;
-                }
-            }
-            if (args.Length == 7)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                int x = args[3].AsInt();
-                int y = args[4].AsInt();
-                //int z = args[5].AsInt();
-                int color = args[6].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.Move(item.Serial, (int)dest, -1, x, y);
-                    return true;
-                }
-            }
-            if (args.Length == 8)
-            {
-                int id = args[0].AsInt();
-                uint src = args[1].AsSerial();
-                uint dest = args[2].AsSerial();
-                int x = args[3].AsInt();
-                int y = args[4].AsInt();
-                //int z = args[5].AsInt();
-                int color = args[6].AsInt();
-                int amount = args[7].AsInt();
-                Item item = Items.FindByID(id, color, (int)src, true);
-                if (item != null)
-                {
-                    Items.Move(item.Serial, (int)dest, amount, x, y);
-                    return true;
-                }
-            }
+
 
             return false;
         }
@@ -3034,49 +3066,32 @@ namespace RazorEnhanced.UOS
                         Item item = Items.FindByID(id, -1, (int)src, true);
                         if (item != null)
                         {
-                            Items.DropItemGroundSelf(item.Serial);
+                            Items.DropItemGroundSelf(item.Serial); // this seldom works because of server limitations
                         }
+                        return true;
                     }
                     break;
                 case 4:
                     {
-                        int id = args[0].AsInt();
-                        uint src = args[1].AsSerial();
-                        //uint dest = args[2].AsSerial();
-                        int color = args[3].AsInt();
-                        Item item = Items.FindByID(id, color, (int)src, true);
-                        if (item != null)
-                        {
-                            Items.MoveOnGround(item.Serial, 0, Player.Position.X, Player.Position.Y, Player.Position.Z);
-                        }
+                        WrongParameterCount(node, 4, args.Length, "Co-ordinates requires x y and z");
+                        return false;
                     }
                     break;
                 case 5:
-                    {
-                        int id = args[0].AsInt();
-                        uint src = args[1].AsSerial();
-                        // uint dest = args[2].AsSerial();
-                        int color = args[3].AsInt();
-                        int amount = args[4].AsInt();
-                        Item item = Items.FindByID(id, color, (int)src, true);
-                        if (item != null)
-                        {
-                            Items.MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
-                        }
-                    }
-                    break;
                 case 6:
                     {
                         int id = args[0].AsInt();
                         uint src = args[1].AsSerial();
-                        //uint dest = args[2].AsSerial();
+                        //uint dest = args[2].AsSerial(); //ignored, in docs it says 'ground'
                         int x = args[3].AsInt();
                         int y = args[4].AsInt();
                         int z = args[5].AsInt();
+
                         Item item = Items.FindByID(id, -1, (int)src, true);
                         if (item != null)
                         {
-                            Items.MoveOnGround(item.Serial, 0, x, y, z);
+                            Items.MoveOnGround(item.Serial, -1, (int)Player.Position.X + x, (int)Player.Position.Y + y, (int)Player.Position.Z + z);
+                            return true;
                         }
                     }
                     break;
@@ -3084,15 +3099,17 @@ namespace RazorEnhanced.UOS
                     {
                         int id = args[0].AsInt();
                         uint src = args[1].AsSerial();
-                        //uint dest = args[2].AsSerial();
+                        //uint dest = args[2].AsSerial(); //ignored, in docs it says 'ground'
                         int x = args[3].AsInt();
                         int y = args[4].AsInt();
                         int z = args[5].AsInt();
                         int color = args[6].AsInt();
+
                         Item item = Items.FindByID(id, color, (int)src, true);
                         if (item != null)
                         {
-                            Items.MoveOnGround(item.Serial, 0, x, y, z);
+                            Items.MoveOnGround(item.Serial, -1, Player.Position.X + x, Player.Position.Y + y, Player.Position.Z + z);
+                            return true;
                         }
                     }
                     break;
@@ -3100,16 +3117,38 @@ namespace RazorEnhanced.UOS
                     {
                         int id = args[0].AsInt();
                         uint src = args[1].AsSerial();
-                        //uint dest = args[2].AsSerial();
+                        //uint dest = args[2].AsSerial(); //ignored, in docs it says 'ground'
                         int x = args[3].AsInt();
                         int y = args[4].AsInt();
                         int z = args[5].AsInt();
                         int color = args[6].AsInt();
                         int amount = args[7].AsInt();
+
                         Item item = Items.FindByID(id, color, (int)src, true);
                         if (item != null)
                         {
-                            Items.MoveOnGround(item.Serial, amount, x, y, z);
+                            Items.MoveOnGround(item.Serial, amount, Player.Position.X + x, Player.Position.Y + y, Player.Position.Z + z);
+                            return true;
+                        }
+                    }
+                    break;
+                case 9:
+                    {
+                        int id = args[0].AsInt();
+                        uint src = args[1].AsSerial();
+                        //uint dest = args[2].AsSerial(); //ignored, in docs it says 'ground'
+                        int x = args[3].AsInt();
+                        int y = args[4].AsInt();
+                        int z = args[5].AsInt();
+                        int color = args[6].AsInt();
+                        int amount = args[7].AsInt();
+                        int range = args[8].AsInt();
+
+                        Item item = Items.FindByID(id, color, (int)src, range, true);
+                        if (item != null)
+                        {
+                            Items.MoveOnGround(item.Serial, amount, Player.Position.X + x, Player.Position.Y + y, Player.Position.Z + z);
+                            return true;
                         }
                     }
                     break;
