@@ -609,6 +609,7 @@ namespace RazorEnhanced
 
         static internal void ScriptChanged(object sender, FileSystemEventArgs e)
         {
+            // This runs twice, comething to do with editor change, and only the SECOND change has the changes
             if (!RazorEnhanced.Settings.General.ReadBool("AutoScriptReload"))
             {
                 return;
@@ -617,9 +618,6 @@ namespace RazorEnhanced
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
             if (script != null) 
             {
-                if (script.LastModified == DateTime.MinValue)
-                    return;
-
                 bool isRunning = script.IsRunning;
 
                     if (isRunning)
