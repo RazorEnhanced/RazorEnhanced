@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using RazorEnhanced.UOS;
 using Accord.Math;
+using Newtonsoft.Json;
 
 namespace Assistant
 {
@@ -344,6 +345,7 @@ namespace RazorEnhanced
             public bool AutoStart { get; set; }
             public string FullPath { get; set; }
             public int Position { get; set; }
+            public bool Preload { get; set; }
         }
 
         internal class ScriptTimer

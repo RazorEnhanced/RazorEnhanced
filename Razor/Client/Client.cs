@@ -140,8 +140,6 @@ namespace Assistant
             // Shard Bookmarks
             RazorEnhanced.Shard.Load();
 
-            RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
-
             var shards = RazorEnhanced.Shard.Read();
             m_Running = true;
             RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);

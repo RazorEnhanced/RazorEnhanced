@@ -32,6 +32,7 @@ namespace Assistant
             var text_hotkey = script.HotKey.ToString();
             var text_hotkeypass = script.HotKeyPass ? "Yes" : "No";
             var text_index = Convert.ToString(index);
+            var text_preload = script.Preload ? "Yes" : "No";
 
             row.Add(text_status);
             row.Add(text_loop);
@@ -40,6 +41,7 @@ namespace Assistant
             row.Add(text_hotkey);
             row.Add(text_hotkeypass);
             row.Add(text_index);
+            row.Add(text_preload);
             
             return listitem;
         }
@@ -119,6 +121,7 @@ namespace Assistant
                     listitem.SubItems.Add(HotKey.KeyString(item.Hotkey));
                     listitem.SubItems.Add("No");
                     listitem.SubItems.Add("0");
+                    listitem.SubItems.Add("No");
                     scriptlistView.Items.Add(listitem);
                 }
                 
@@ -540,6 +543,7 @@ namespace Assistant
                     scriptItem.Loop = false;
                     scriptItem.Wait = false;
                     scriptItem.AutoStart = false;
+                    scriptItem.Preload = false;
                     scriptItem.HotKeyPass = false;
                     scriptItem.Hotkey = Keys.None;
                     scriptItem.FullPath = Path.Combine(scriptPath.ToLower(), filename);
@@ -812,6 +816,11 @@ namespace Assistant
                     scriptwaitmodecheckbox.Checked = true;
                 else
                     scriptwaitmodecheckbox.Checked = false;
+
+                if (scriptListView.SelectedItems[0].SubItems[8].Text == "Yes")
+                    scriptpreload.Checked = true;
+                else
+                    scriptpreload.Checked = false;
             }
         }
 
@@ -827,38 +836,38 @@ namespace Assistant
             if (stripmenu)
                 scriptautostartcheckbox.Checked = !scriptautostartcheckbox.Checked;
 
-            if (!scriptautostartcheckbox.Focused)
-                return;
+            if (scriptautostartcheckbox.Focused || stripmenu)
+            {
 
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
-            if (list == null)
-                return;
+                System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+                if (scriptListView.Name == "pyScriptListView")
+                    list = Scripts.PyScripts;
+                if (scriptListView.Name == "uosScriptListView")
+                    list = Scripts.UosScripts;
+                if (scriptListView.Name == "csScriptListView")
+                    list = Scripts.CsScripts;
+                if (list == null)
+                    return;
 
-            if (list == null || list.Count == 0) return;
+                if (list == null || list.Count == 0) return;
 
-            var selectedRow = scriptListView.SelectedItems[0];
-            Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
-            if (item == null) return;
+                var selectedRow = scriptListView.SelectedItems[0];
+                Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+                if (item == null) return;
 
-            var script = EnhancedScript.FromScriptItem(item);
-            if (script == null) return;
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null) return;
 
-            item.AutoStart = scriptautostartcheckbox.Checked;
-            script.AutoStart = scriptautostartcheckbox.Checked;
-            
-            if (scriptautostartcheckbox.Checked)
-                scriptListView.SelectedItems[0].SubItems[3].Text = "Yes";
-            else
-                scriptListView.SelectedItems[0].SubItems[3].Text = "No";
+                item.AutoStart = scriptautostartcheckbox.Checked;
+                script.AutoStart = scriptautostartcheckbox.Checked;
 
-            //ReloadScriptTable();
+                if (scriptautostartcheckbox.Checked)
+                    scriptListView.SelectedItems[0].SubItems[3].Text = "Yes";
+                else
+                    scriptListView.SelectedItems[0].SubItems[3].Text = "No";
+
+            }
         }
 
         private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
@@ -869,6 +878,56 @@ namespace Assistant
         private void autoStartAtLoginToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ScriptGridAutoStartAtLogin(true);
+        }
+
+        private void ScriptGridPreloadMode(bool stripmenu)
+        {
+            ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+            if (scriptListView == null)
+                return;
+
+            if (scriptListView.SelectedItems.Count != 1) // Selezione multipla o mancata
+                return;
+
+            if (stripmenu)
+                scriptpreload.Checked = !scriptpreload.Checked;
+
+            if (scriptpreload.Focused || stripmenu)
+            {
+                System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+                if (scriptListView.Name == "pyScriptListView")
+                    list = Scripts.PyScripts;
+                if (scriptListView.Name == "uosScriptListView")
+                    list = Scripts.UosScripts;
+                if (scriptListView.Name == "csScriptListView")
+                    list = Scripts.CsScripts;
+
+                if (list == null || list.Count == 0) return;
+
+                var selectedRow = scriptListView.SelectedItems[0];
+                Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+                if (item == null) return;
+
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null) return;
+
+                script.Preload = scriptpreload.Checked;
+                item.Preload = scriptpreload.Checked;
+
+                if (scriptpreload.Checked)
+                    scriptListView.SelectedItems[0].SubItems[8].Text = "Yes";
+                else
+                    scriptListView.SelectedItems[0].SubItems[8].Text = "No";
+            }
+        }
+        private void scriptpreloadcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            ScriptGridPreloadMode(false);
+        }
+
+        private void preloadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScriptGridPreloadMode(true);
         }
 
         private void ScriptGridLoopMode(bool stripmenu)
@@ -883,39 +942,36 @@ namespace Assistant
             if (stripmenu)
                 scriptloopmodecheckbox.Checked = !scriptloopmodecheckbox.Checked;
 
-            if (!scriptloopmodecheckbox.Focused)
-                return;
+            if (scriptloopmodecheckbox.Focused || stripmenu)
+            {
+                System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+                if (scriptListView.Name == "pyScriptListView")
+                    list = Scripts.PyScripts;
+                if (scriptListView.Name == "uosScriptListView")
+                    list = Scripts.UosScripts;
+                if (scriptListView.Name == "csScriptListView")
+                    list = Scripts.CsScripts;
+
+                if (list == null || list.Count == 0) return;
+
+                var selectedRow = scriptListView.SelectedItems[0];
+                Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+                if (item == null) return;
+
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null) return;
+
+                script.Loop = scriptloopmodecheckbox.Checked;
+                item.Loop = scriptloopmodecheckbox.Checked;
 
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
+                if (scriptloopmodecheckbox.Checked)
+                    scriptListView.SelectedItems[0].SubItems[2].Text = "Yes";
+                else
+                    scriptListView.SelectedItems[0].SubItems[2].Text = "No";
 
-            if (list == null || list.Count == 0 ) return;
-
-            var selectedRow = scriptListView.SelectedItems[0];
-            Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
-            if (item == null) return;
-
-            var script = EnhancedScript.FromScriptItem(item);
-            if (script == null) return;
-            
-            script.Loop = scriptloopmodecheckbox.Checked;
-            item.Loop = scriptloopmodecheckbox.Checked;
-            
-            
-            if (scriptloopmodecheckbox.Checked)
-                scriptListView.SelectedItems[0].SubItems[2].Text = "Yes";
-            else
-                scriptListView.SelectedItems[0].SubItems[2].Text = "No";
-            
-            //ReloadScriptTable();    
+            }  
         }
-
         private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)
         {
             ScriptGridLoopMode(false);
@@ -938,35 +994,35 @@ namespace Assistant
             if (stripmenu)
                 scriptwaitmodecheckbox.Checked = !scriptwaitmodecheckbox.Checked;
 
-            if (!scriptwaitmodecheckbox.Focused)
-                return;
+            if (scriptwaitmodecheckbox.Focused || stripmenu)
+            {
 
-            System.Collections.Generic.List<Scripts.ScriptItem> list = null;
-            if (scriptListView.Name == "pyScriptListView")
-                list = Scripts.PyScripts;
-            if (scriptListView.Name == "uosScriptListView")
-                list = Scripts.UosScripts;
-            if (scriptListView.Name == "csScriptListView")
-                list = Scripts.CsScripts;
+                System.Collections.Generic.List<Scripts.ScriptItem> list = null;
+                if (scriptListView.Name == "pyScriptListView")
+                    list = Scripts.PyScripts;
+                if (scriptListView.Name == "uosScriptListView")
+                    list = Scripts.UosScripts;
+                if (scriptListView.Name == "csScriptListView")
+                    list = Scripts.CsScripts;
 
-            if (list == null || list.Count == 0) return;
+                if (list == null || list.Count == 0) return;
 
-            var selectedRow = scriptListView.SelectedItems[0];
-            Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
-            if (item == null) return;
+                var selectedRow = scriptListView.SelectedItems[0];
+                Scripts.ScriptItem item = Scripts.FindScript(selectedRow.Text);
+                if (item == null) return;
 
-            var script = EnhancedScript.FromScriptItem(item);
-            if (script == null) return;
+                var script = EnhancedScript.FromScriptItem(item);
+                if (script == null) return;
 
-            script.Wait = scriptwaitmodecheckbox.Checked;
-            item.Wait = scriptwaitmodecheckbox.Checked;
+                script.Wait = scriptwaitmodecheckbox.Checked;
+                item.Wait = scriptwaitmodecheckbox.Checked;
 
-            if (scriptwaitmodecheckbox.Checked)
-                scriptListView.SelectedItems[0].SubItems[4].Text = "Yes";
-            else
-                scriptListView.SelectedItems[0].SubItems[4].Text = "No";
+                if (scriptwaitmodecheckbox.Checked)
+                    scriptListView.SelectedItems[0].SubItems[4].Text = "Yes";
+                else
+                    scriptListView.SelectedItems[0].SubItems[4].Text = "No";
 
-            //ReloadScriptTable();
+            }
         }
 
         private void scriptwaitmodecheckbox_CheckedChanged(object sender, EventArgs e)

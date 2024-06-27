@@ -212,16 +212,16 @@ namespace RazorEnhanced
         }
         public static EnhancedScript FromScriptItem(ScriptItem item)
         {
-            var preload = true;
+            var preload = item.Preload;
             var editor = false;
-            var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, item.Position, preload, editor);
+            var script = FromFile(item.FullPath, item.Wait, item.Loop, item.Hotkey, item.HotKeyPass, item.AutoStart, item.Position, item.Preload, editor);
             if (script == null) return null;
             script.ScriptItem = item;
             script.Position = item.Position;
             return script;
         }
 
-        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool autostart = false, int position = -1, bool preload = true, bool editor = true)
+        public static EnhancedScript FromFile(string fullpath, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool autostart = false, int position = -1, bool preload = false, bool editor = true)
         {
             if (!File.Exists(fullpath)) { return null; }
 

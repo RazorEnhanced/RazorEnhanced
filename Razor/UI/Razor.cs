@@ -466,6 +466,7 @@ namespace Assistant
         private ToolStripMenuItem moveToToolStripMenuItem;
         private ToolStripMenuItem flagsToolStripMenuItem;
         private ToolStripMenuItem loopModeToolStripMenuItem;
+        private ToolStripMenuItem preloadToolStripMenuItem;
         private ToolStripMenuItem waitBeforeInterruptToolStripMenuItem;
         private ToolStripMenuItem autoStartAtLoginToolStripMenuItem;
         private ToolStripMenuItem playToolStripMenuItem;
@@ -732,6 +733,10 @@ namespace Assistant
         private CheckBox limitDamageDisplayEnable;
         private RazorAgentNumOnlyTextBox minDmgShown;
         private Label label81;
+        private CheckBox scriptpreload;
+        private ColumnHeader preload;
+        private ColumnHeader columnHeader19;
+        private ColumnHeader columnHeader20;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -943,6 +948,7 @@ namespace Assistant
             this.InspectContextButton = new System.Windows.Forms.Button();
             this.scriptshowStartStopCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox30 = new System.Windows.Forms.GroupBox();
+            this.scriptpreload = new System.Windows.Forms.CheckBox();
             this.scriptautostartcheckbox = new System.Windows.Forms.CheckBox();
             this.scriptwaitmodecheckbox = new System.Windows.Forms.CheckBox();
             this.scriptloopmodecheckbox = new System.Windows.Forms.CheckBox();
@@ -974,6 +980,7 @@ namespace Assistant
             this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.preload = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.uosScriptingTab = new System.Windows.Forms.TabPage();
             this.uosScriptListView = new RazorEnhanced.UI.ScriptListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -985,6 +992,7 @@ namespace Assistant
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.csScriptingTab = new System.Windows.Forms.TabPage();
             this.csScriptListView = new RazorEnhanced.UI.ScriptListView();
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -996,6 +1004,7 @@ namespace Assistant
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.eautoloot = new System.Windows.Forms.TabPage();
@@ -1474,6 +1483,7 @@ namespace Assistant
             this.moveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loopModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.waitBeforeInterruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoStartAtLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -3304,7 +3314,7 @@ namespace Assistant
             // autoScriptReload
             // 
             this.autoScriptReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.autoScriptReload.Location = new System.Drawing.Point(11, 380);
+            this.autoScriptReload.Location = new System.Drawing.Point(11, 383);
             this.autoScriptReload.Name = "autoScriptReload";
             this.autoScriptReload.Size = new System.Drawing.Size(128, 17);
             this.autoScriptReload.TabIndex = 80;
@@ -3317,7 +3327,7 @@ namespace Assistant
             // 
             this.scriptPacketLogCheckBox.AccessibleDescription = "";
             this.scriptPacketLogCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.scriptPacketLogCheckBox.Location = new System.Drawing.Point(11, 360);
+            this.scriptPacketLogCheckBox.Location = new System.Drawing.Point(11, 363);
             this.scriptPacketLogCheckBox.Name = "scriptPacketLogCheckBox";
             this.scriptPacketLogCheckBox.Size = new System.Drawing.Size(160, 21);
             this.scriptPacketLogCheckBox.TabIndex = 79;
@@ -3329,7 +3339,7 @@ namespace Assistant
             this.InspectGumpsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectGumpsButton.Image = global::Assistant.Properties.Resources.gump;
             this.InspectGumpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.InspectGumpsButton.Location = new System.Drawing.Point(81, 12);
+            this.InspectGumpsButton.Location = new System.Drawing.Point(81, 6);
             this.InspectGumpsButton.Name = "InspectGumpsButton";
             this.InspectGumpsButton.Size = new System.Drawing.Size(99, 20);
             this.InspectGumpsButton.TabIndex = 78;
@@ -3343,7 +3353,7 @@ namespace Assistant
             this.InspectContextButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectContextButton.Image = global::Assistant.Properties.Resources.applications_utilities;
             this.InspectContextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.InspectContextButton.Location = new System.Drawing.Point(18, 10);
+            this.InspectContextButton.Location = new System.Drawing.Point(18, 4);
             this.InspectContextButton.Name = "InspectContextButton";
             this.InspectContextButton.Size = new System.Drawing.Size(53, 23);
             this.InspectContextButton.TabIndex = 77;
@@ -3355,7 +3365,7 @@ namespace Assistant
             // scriptshowStartStopCheckBox
             // 
             this.scriptshowStartStopCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.scriptshowStartStopCheckBox.Location = new System.Drawing.Point(11, 340);
+            this.scriptshowStartStopCheckBox.Location = new System.Drawing.Point(11, 343);
             this.scriptshowStartStopCheckBox.Name = "scriptshowStartStopCheckBox";
             this.scriptshowStartStopCheckBox.Size = new System.Drawing.Size(175, 22);
             this.scriptshowStartStopCheckBox.TabIndex = 76;
@@ -3365,15 +3375,25 @@ namespace Assistant
             // groupBox30
             // 
             this.groupBox30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox30.Controls.Add(this.scriptpreload);
             this.groupBox30.Controls.Add(this.scriptautostartcheckbox);
             this.groupBox30.Controls.Add(this.scriptwaitmodecheckbox);
             this.groupBox30.Controls.Add(this.scriptloopmodecheckbox);
-            this.groupBox30.Location = new System.Drawing.Point(11, 36);
+            this.groupBox30.Location = new System.Drawing.Point(11, 30);
             this.groupBox30.Name = "groupBox30";
-            this.groupBox30.Size = new System.Drawing.Size(175, 73);
+            this.groupBox30.Size = new System.Drawing.Size(175, 96);
             this.groupBox30.TabIndex = 49;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Script Info";
+            // 
+            // scriptpreload
+            // 
+            this.scriptpreload.Location = new System.Drawing.Point(6, 74);
+            this.scriptpreload.Name = "scriptpreload";
+            this.scriptpreload.Size = new System.Drawing.Size(62, 17);
+            this.scriptpreload.TabIndex = 52;
+            this.scriptpreload.Text = "Preload";
+            this.scriptpreload.CheckedChanged += new System.EventHandler(this.scriptpreloadcheckbox_CheckedChanged);
             // 
             // scriptautostartcheckbox
             // 
@@ -3406,7 +3426,7 @@ namespace Assistant
             // 
             this.groupBox42.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox42.Controls.Add(this.scriptSearchTextBox);
-            this.groupBox42.Location = new System.Drawing.Point(12, 257);
+            this.groupBox42.Location = new System.Drawing.Point(12, 260);
             this.groupBox42.Name = "groupBox42";
             this.groupBox42.Size = new System.Drawing.Size(175, 43);
             this.groupBox42.TabIndex = 75;
@@ -3424,7 +3444,7 @@ namespace Assistant
             // scripterrorlogCheckBox
             // 
             this.scripterrorlogCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.scripterrorlogCheckBox.Location = new System.Drawing.Point(11, 300);
+            this.scripterrorlogCheckBox.Location = new System.Drawing.Point(11, 303);
             this.scripterrorlogCheckBox.Name = "scripterrorlogCheckBox";
             this.scripterrorlogCheckBox.Size = new System.Drawing.Size(160, 23);
             this.scripterrorlogCheckBox.TabIndex = 74;
@@ -3445,7 +3465,7 @@ namespace Assistant
             this.groupBox31.Controls.Add(this.buttonScriptEditor);
             this.groupBox31.Controls.Add(this.buttonScriptStop);
             this.groupBox31.Controls.Add(this.buttonScriptPlay);
-            this.groupBox31.Location = new System.Drawing.Point(11, 120);
+            this.groupBox31.Location = new System.Drawing.Point(11, 125);
             this.groupBox31.Name = "groupBox31";
             this.groupBox31.Size = new System.Drawing.Size(175, 133);
             this.groupBox31.TabIndex = 50;
@@ -3454,7 +3474,7 @@ namespace Assistant
             // 
             // buttonScriptTo
             // 
-            this.buttonScriptTo.Location = new System.Drawing.Point(66, 45);
+            this.buttonScriptTo.Location = new System.Drawing.Point(66, 50);
             this.buttonScriptTo.Name = "buttonScriptTo";
             this.buttonScriptTo.Size = new System.Drawing.Size(47, 21);
             this.buttonScriptTo.TabIndex = 75;
@@ -3464,7 +3484,7 @@ namespace Assistant
             // 
             // buttonScriptEditorNew
             // 
-            this.buttonScriptEditorNew.Location = new System.Drawing.Point(7, 72);
+            this.buttonScriptEditorNew.Location = new System.Drawing.Point(7, 77);
             this.buttonScriptEditorNew.Name = "buttonScriptEditorNew";
             this.buttonScriptEditorNew.Size = new System.Drawing.Size(75, 21);
             this.buttonScriptEditorNew.TabIndex = 74;
@@ -3476,7 +3496,7 @@ namespace Assistant
             // 
             this.buttonScriptRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScriptRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptRefresh.Image")));
-            this.buttonScriptRefresh.Location = new System.Drawing.Point(66, 98);
+            this.buttonScriptRefresh.Location = new System.Drawing.Point(66, 103);
             this.buttonScriptRefresh.Name = "buttonScriptRefresh";
             this.buttonScriptRefresh.Size = new System.Drawing.Size(44, 27);
             this.buttonScriptRefresh.TabIndex = 73;
@@ -3486,7 +3506,7 @@ namespace Assistant
             // 
             // buttonAddScript
             // 
-            this.buttonAddScript.Location = new System.Drawing.Point(7, 19);
+            this.buttonAddScript.Location = new System.Drawing.Point(7, 24);
             this.buttonAddScript.Name = "buttonAddScript";
             this.buttonAddScript.Size = new System.Drawing.Size(75, 21);
             this.buttonAddScript.TabIndex = 14;
@@ -3495,7 +3515,7 @@ namespace Assistant
             // 
             // buttonRemoveScript
             // 
-            this.buttonRemoveScript.Location = new System.Drawing.Point(94, 19);
+            this.buttonRemoveScript.Location = new System.Drawing.Point(94, 24);
             this.buttonRemoveScript.Name = "buttonRemoveScript";
             this.buttonRemoveScript.Size = new System.Drawing.Size(75, 21);
             this.buttonRemoveScript.TabIndex = 15;
@@ -3504,7 +3524,7 @@ namespace Assistant
             // 
             // buttonScriptDown
             // 
-            this.buttonScriptDown.Location = new System.Drawing.Point(7, 45);
+            this.buttonScriptDown.Location = new System.Drawing.Point(7, 50);
             this.buttonScriptDown.Name = "buttonScriptDown";
             this.buttonScriptDown.Size = new System.Drawing.Size(47, 21);
             this.buttonScriptDown.TabIndex = 17;
@@ -3524,7 +3544,7 @@ namespace Assistant
             // 
             // buttonScriptUp
             // 
-            this.buttonScriptUp.Location = new System.Drawing.Point(122, 45);
+            this.buttonScriptUp.Location = new System.Drawing.Point(122, 50);
             this.buttonScriptUp.Name = "buttonScriptUp";
             this.buttonScriptUp.Size = new System.Drawing.Size(47, 21);
             this.buttonScriptUp.TabIndex = 18;
@@ -3534,7 +3554,7 @@ namespace Assistant
             // 
             // buttonScriptEditor
             // 
-            this.buttonScriptEditor.Location = new System.Drawing.Point(94, 71);
+            this.buttonScriptEditor.Location = new System.Drawing.Point(94, 76);
             this.buttonScriptEditor.Name = "buttonScriptEditor";
             this.buttonScriptEditor.Size = new System.Drawing.Size(75, 21);
             this.buttonScriptEditor.TabIndex = 20;
@@ -3546,7 +3566,7 @@ namespace Assistant
             // 
             this.buttonScriptStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScriptStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptStop.Image")));
-            this.buttonScriptStop.Location = new System.Drawing.Point(10, 98);
+            this.buttonScriptStop.Location = new System.Drawing.Point(10, 103);
             this.buttonScriptStop.Name = "buttonScriptStop";
             this.buttonScriptStop.Size = new System.Drawing.Size(44, 27);
             this.buttonScriptStop.TabIndex = 22;
@@ -3558,7 +3578,7 @@ namespace Assistant
             // 
             this.buttonScriptPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonScriptPlay.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptPlay.Image")));
-            this.buttonScriptPlay.Location = new System.Drawing.Point(122, 98);
+            this.buttonScriptPlay.Location = new System.Drawing.Point(122, 103);
             this.buttonScriptPlay.Name = "buttonScriptPlay";
             this.buttonScriptPlay.Size = new System.Drawing.Size(44, 27);
             this.buttonScriptPlay.TabIndex = 21;
@@ -3569,7 +3589,7 @@ namespace Assistant
             // showscriptmessageCheckBox
             // 
             this.showscriptmessageCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.showscriptmessageCheckBox.Location = new System.Drawing.Point(11, 320);
+            this.showscriptmessageCheckBox.Location = new System.Drawing.Point(11, 323);
             this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
             this.showscriptmessageCheckBox.Size = new System.Drawing.Size(175, 23);
             this.showscriptmessageCheckBox.TabIndex = 72;
@@ -3615,6 +3635,7 @@ namespace Assistant
             this.hotkey,
             this.heypass,
             this.index,
+            this.preload,
             this.fullFilePath});
             this.pyScriptListView.FullRowSelect = true;
             this.pyScriptListView.GridLines = true;
@@ -3636,12 +3657,14 @@ namespace Assistant
             // filename
             // 
             this.filename.DisplayIndex = 1;
+            this.filename.Tag = "filename";
             this.filename.Text = "Filename";
             this.filename.Width = 350;
             // 
             // status
             // 
             this.status.DisplayIndex = 2;
+            this.status.Tag = "status";
             this.status.Text = "Status";
             this.status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.status.Width = 80;
@@ -3649,30 +3672,36 @@ namespace Assistant
             // loop
             // 
             this.loop.DisplayIndex = 3;
+            this.loop.Tag = "loop";
             this.loop.Text = "Loop";
             this.loop.Width = 50;
             // 
             // autostart
             // 
-            this.autostart.DisplayIndex = 5;
+            this.autostart.DisplayIndex = 6;
+            this.autostart.Tag = "autostart";
             this.autostart.Text = "A.S.";
             this.autostart.Width = 55;
             // 
             // wait
             // 
+            this.wait.DisplayIndex = 5;
+            this.wait.Tag = "wait";
             this.wait.Text = "Wait";
             this.wait.Width = 40;
             // 
             // hotkey
             // 
-            this.hotkey.DisplayIndex = 6;
+            this.hotkey.DisplayIndex = 7;
+            this.hotkey.Tag = "hotkey";
             this.hotkey.Text = "HotKey";
             this.hotkey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.hotkey.Width = 80;
             // 
             // heypass
             // 
-            this.heypass.DisplayIndex = 7;
+            this.heypass.DisplayIndex = 8;
+            this.heypass.Tag = "keypass";
             this.heypass.Text = "KeyPass";
             this.heypass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.heypass.Width = 80;
@@ -3680,13 +3709,24 @@ namespace Assistant
             // index
             // 
             this.index.DisplayIndex = 0;
+            this.index.Tag = "index";
             this.index.Text = "#";
             this.index.Width = 40;
             // 
             // fullFilePath
             // 
+            this.fullFilePath.DisplayIndex = 9;
+            this.fullFilePath.Tag = "fullFilePath";
             this.fullFilePath.Text = "";
             this.fullFilePath.Width = 0;
+            // 
+            // preload
+            // 
+            this.preload.DisplayIndex = 4;
+            this.preload.Tag = "preload";
+            this.preload.Text = "Preload";
+            this.preload.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.preload.Width = 50;
             // 
             // uosScriptingTab
             // 
@@ -3712,6 +3752,7 @@ namespace Assistant
             this.columnHeader6,
             this.columnHeader7,
             this.columnHeader8,
+            this.columnHeader19,
             this.columnHeader9});
             this.uosScriptListView.FullRowSelect = true;
             this.uosScriptListView.GridLines = true;
@@ -3751,25 +3792,26 @@ namespace Assistant
             // 
             // columnHeader4
             // 
-            this.columnHeader4.DisplayIndex = 5;
+            this.columnHeader4.DisplayIndex = 6;
             this.columnHeader4.Text = "A.S.";
             this.columnHeader4.Width = 55;
             // 
             // columnHeader5
             // 
+            this.columnHeader5.DisplayIndex = 5;
             this.columnHeader5.Text = "Wait";
             this.columnHeader5.Width = 40;
             // 
             // columnHeader6
             // 
-            this.columnHeader6.DisplayIndex = 6;
+            this.columnHeader6.DisplayIndex = 7;
             this.columnHeader6.Text = "HotKey";
             this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader6.Width = 80;
             // 
             // columnHeader7
             // 
-            this.columnHeader7.DisplayIndex = 7;
+            this.columnHeader7.DisplayIndex = 8;
             this.columnHeader7.Text = "KeyPass";
             this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader7.Width = 80;
@@ -3782,8 +3824,16 @@ namespace Assistant
             // 
             // columnHeader9
             // 
+            this.columnHeader9.DisplayIndex = 9;
             this.columnHeader9.Text = "";
             this.columnHeader9.Width = 0;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.DisplayIndex = 4;
+            this.columnHeader19.Text = "Preload";
+            this.columnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader19.Width = 0;
             // 
             // csScriptingTab
             // 
@@ -3809,6 +3859,7 @@ namespace Assistant
             this.columnHeader15,
             this.columnHeader16,
             this.columnHeader17,
+            this.columnHeader20,
             this.columnHeader18});
             this.csScriptListView.FullRowSelect = true;
             this.csScriptListView.GridLines = true;
@@ -3829,44 +3880,39 @@ namespace Assistant
             // 
             // columnHeader10
             // 
-            this.columnHeader10.DisplayIndex = 1;
             this.columnHeader10.Text = "Filename";
             this.columnHeader10.Width = 350;
             // 
             // columnHeader11
             // 
-            this.columnHeader11.DisplayIndex = 2;
             this.columnHeader11.Text = "Status";
             this.columnHeader11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader11.Width = 80;
             // 
             // columnHeader12
             // 
-            this.columnHeader12.DisplayIndex = 3;
             this.columnHeader12.Text = "Loop";
             this.columnHeader12.Width = 50;
             // 
             // columnHeader13
             // 
-            this.columnHeader13.DisplayIndex = 5;
             this.columnHeader13.Text = "A.S.";
             this.columnHeader13.Width = 55;
             // 
             // columnHeader14
             // 
+            this.columnHeader14.DisplayIndex = 5;
             this.columnHeader14.Text = "Wait";
             this.columnHeader14.Width = 40;
             // 
             // columnHeader15
             // 
-            this.columnHeader15.DisplayIndex = 6;
             this.columnHeader15.Text = "HotKey";
             this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader15.Width = 80;
             // 
             // columnHeader16
             // 
-            this.columnHeader16.DisplayIndex = 7;
             this.columnHeader16.Text = "KeyPass";
             this.columnHeader16.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader16.Width = 80;
@@ -3881,6 +3927,13 @@ namespace Assistant
             // 
             this.columnHeader18.Text = "";
             this.columnHeader18.Width = 0;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.DisplayIndex = 4;
+            this.columnHeader20.Text = "Preload";
+            this.columnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader20.Width = 50;
             // 
             // EnhancedAgent
             // 
@@ -9117,6 +9170,7 @@ namespace Assistant
             // 
             this.flagsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loopModeToolStripMenuItem,
+            this.preloadToolStripMenuItem,
             this.waitBeforeInterruptToolStripMenuItem,
             this.autoStartAtLoginToolStripMenuItem});
             this.flagsToolStripMenuItem.Name = "flagsToolStripMenuItem";
@@ -9129,6 +9183,13 @@ namespace Assistant
             this.loopModeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.loopModeToolStripMenuItem.Text = "Loop Mode";
             this.loopModeToolStripMenuItem.Click += new System.EventHandler(this.loopModeToolStripMenuItem_Click);
+            // 
+            // preloadToolStripMenuItem
+            // 
+            this.preloadToolStripMenuItem.Name = "preloadToolStripMenuItem";
+            this.preloadToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.preloadToolStripMenuItem.Text = "Preload";
+            this.preloadToolStripMenuItem.Click += new System.EventHandler(this.preloadToolStripMenuItem_Click);
             // 
             // waitBeforeInterruptToolStripMenuItem
             // 
@@ -9649,7 +9710,7 @@ namespace Assistant
             BandageHealUseTarget.Enabled = !bandagehealusetext.Checked;
             bandageHealIgnoreCount.Enabled = bandagehealusetext.Checked;
         }
-        
+
         internal void DisableGameSize()
         {
             this.gameSize.Text = "Unavailable / CUO";
@@ -10121,7 +10182,7 @@ namespace Assistant
             {
                 if (limitDamageDisplayEnable.Checked)
                 {
-                    minDmgShown.Enabled = true;                    
+                    minDmgShown.Enabled = true;
                 }
                 else
                 {
@@ -10244,14 +10305,16 @@ namespace Assistant
         {
             if (scriptPacketLogCheckBox.Checked)
             {
-                var path = PacketLogger.SharedInstance.StartRecording(appendLogs:true);
-                if (this.scriptshowStartStopCheckBox.Checked ) { 
+                var path = PacketLogger.SharedInstance.StartRecording(appendLogs: true);
+                if (this.scriptshowStartStopCheckBox.Checked)
+                {
                     Misc.SendMessage($"Packet Logger: START", 178);
                     Misc.SendMessage(path, 178);
                 }
             }
-            else {
-                
+            else
+            {
+
                 var path = PacketLogger.SharedInstance.StopRecording();
                 if (this.scriptshowStartStopCheckBox.Checked)
                 {
