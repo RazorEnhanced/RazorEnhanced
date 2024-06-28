@@ -622,7 +622,7 @@ namespace RazorEnhanced
 
                     if (isRunning)
                         script.Stop();
-                    script.Load();
+                    script.Load(true);
                     script.LastModified = DateTime.MinValue;
                     if (isRunning)
                         script.Start();

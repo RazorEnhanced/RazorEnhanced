@@ -333,10 +333,7 @@ namespace RazorEnhanced
             if (m_Text.Trim() == "") {
                 return false;
             }
-            if (m_Preload)
-            {
-                return m_ScriptEngine.Load();
-            }
+            return m_ScriptEngine.Load();
             return true;
         }
 
