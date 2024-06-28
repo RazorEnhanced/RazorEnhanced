@@ -111,7 +111,7 @@ namespace RazorEnhanced.UI
                 // run update check .. removed AutoUpdater
                 AutoUpdater.Start("https://raw.githubusercontent.com/RazorEnhanced/razorenhanced.github.io/main/RazorEnhancedAutoUpdater.xml");
             }
-            RefreshGUI();
+            UpdateGUI();
         }
 
         private void RazorButton1_Click(object sender, EventArgs e)
