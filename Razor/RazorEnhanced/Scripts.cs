@@ -2,14 +2,11 @@ using Assistant;
 using System;
 using System.IO;
 using System.Linq;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
-using RazorEnhanced.UOS;
 using Accord.Math;
-using Newtonsoft.Json;
 
 namespace Assistant
 {
@@ -609,11 +606,8 @@ namespace RazorEnhanced
 
         static internal void ScriptChanged(object sender, FileSystemEventArgs e)
         {
-            // This runs twice, comething to do with editor change, and only the SECOND change has the changes
-            if (!RazorEnhanced.Settings.General.ReadBool("AutoScriptReload"))
-            {
-                return;
-            }
+            // This runs twice, only the SECOND change has the changes
+            // https://devblogs.microsoft.com/oldnewthing/20140507-00/?p=1053
 
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
             if (script != null) 

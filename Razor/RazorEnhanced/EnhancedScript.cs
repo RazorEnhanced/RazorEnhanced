@@ -5,7 +5,6 @@ using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Hosting.Providers;
-using Microsoft.Scripting.Utils;
 using RazorEnhanced.UOS;
 using System;
 using System.Collections.Concurrent;
@@ -13,8 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -318,11 +315,11 @@ namespace RazorEnhanced
                 return false;
             }
 
-
             if (force || content != m_Text)
             {
                 m_Text = content;
-                InitEngine();
+                if (Preload)
+                    InitEngine();
             }
             OnLoad?.Invoke(this,true);
             return true;
