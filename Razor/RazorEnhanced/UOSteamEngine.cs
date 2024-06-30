@@ -2940,7 +2940,7 @@ namespace RazorEnhanced.UOS
                         Item item = Items.FindByID(id, -1, (int)src, true);
                         if (item != null)
                         {
-                            Items.Move(item.Serial, (int)dest, item.Amount);
+                            Items.Move(item.Serial, (int)dest, -1);
                             return true;
                         }
                         break;
@@ -2966,9 +2966,9 @@ namespace RazorEnhanced.UOS
                         if (item != null)
                         {
                             if (x == 0 && y == 0)
-                                Items.Move((int)src, (int)dest, item.Amount);
+                                Items.Move(item.Serial, (int)dest, -1);
                             else
-                                Items.Move((int)src, (int)dest, item.Amount, x, y);
+                                Items.Move(item.Serial, (int)dest, -1, x, y);
                             return true;
                         }
                         break;
@@ -2988,9 +2988,9 @@ namespace RazorEnhanced.UOS
                         if (item != null)
                         {
                             if (x == 0 && y == 0)
-                                Items.Move((int)src, (int)dest, item.Amount);
+                                Items.Move(item.Serial, (int)dest, -1);
                             else
-                                Items.Move((int)src, (int)dest, item.Amount, x, y);
+                                Items.Move(item.Serial, (int)dest, -1, x, y);
                             return true;
                         }
                         break;
@@ -3011,9 +3011,9 @@ namespace RazorEnhanced.UOS
                         if (item != null)
                         {
                             if (x == 0 && y == 0)
-                                Items.Move((int)src, (int)dest, amount);
+                                Items.Move(item.Serial, (int)dest, amount);
                             else
-                                Items.Move((int)src, (int)dest, amount, x, y);
+                                Items.Move(item.Serial, (int)dest, amount, x, y);
                             return true;
                         }
                         break;

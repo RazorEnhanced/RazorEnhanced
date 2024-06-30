@@ -1143,7 +1143,9 @@ namespace RazorEnhanced
             // calcolo amount
             if (amount == 0)
             {
-                newamount = item.Amount;
+                if (item.Amount == 0)
+                    newamount = 1;
+                newamount = item.Amount;               
             }
             else
             {
@@ -1497,6 +1499,8 @@ namespace RazorEnhanced
                 foreach (Item i in cont.Contains)
                 {
                     if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
+                        continue;
+                    if (i.Amount == 0)
                         continue;
 
                     if (i.ItemID == itemid) // check item id
