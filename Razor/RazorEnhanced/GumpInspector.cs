@@ -2,6 +2,7 @@ using Assistant;
 using Assistant.UI;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace RazorEnhanced
 {
@@ -13,8 +14,8 @@ namespace RazorEnhanced
                 return;
 
             AddLog("----------- Response Recevied START -----------");
-            AddLog("Gump Operation: " + ser.ToString());
-            AddLog("Gump ID: " + tid.ToString());
+            AddLog($"Gump Sequence: 0x{ser:x}");
+            AddLog($"Gump ID: 0x{tid:x}");
             AddLog("Gump Button: " + bid.ToString());
         }
 
@@ -78,8 +79,8 @@ namespace RazorEnhanced
             RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.BeginUpdate();
             AddLog("----------- New Recevied START -----------");
 
-            AddLog("Gump Sequence: " + GumpS.ToString());
-            AddLog("Gump ID: " + GumpI.ToString());
+            AddLog($"Gump Sequence: 0x{GumpS:x}");
+            AddLog($"Gump ID: 0x{GumpI:x}");
 
             foreach (string text in World.Player.CurrentGumpStrings)
                 AddLog("Gump Text Data: " + text);
