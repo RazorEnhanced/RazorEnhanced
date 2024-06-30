@@ -22,7 +22,7 @@ namespace RazorEnhanced
         internal static Mutex gumpIdMutex = new Mutex();
         internal static void AddGump(uint gumpSerial, uint gumpId)
         {
-            gumpIdMutex.WaitOne(500);
+            gumpIdMutex.WaitOne(1500);
             try
             {
                 var incomingGump = new IncomingGumpData();
@@ -37,7 +37,7 @@ namespace RazorEnhanced
         }
         internal static void RemoveGump(uint gumpId)
         {
-            gumpIdMutex.WaitOne(500);
+            gumpIdMutex.WaitOne(1500);
             try
             {
                 if (m_incomingData.ContainsKey(gumpId))
@@ -775,11 +775,13 @@ namespace RazorEnhanced
                 }
                 else
                 {
+
                     // Check if gump is already up
                     if (Gumps.m_incomingData.ContainsKey(gumpid))
-                            return true;
+                        return true;
 
                     Gumps.m_incomingData[gumpid] = new IncomingGumpData();
+
                     found = Utility.DelayUntil(() => World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid, delay);
                     if (found)
                     {
@@ -923,6 +925,7 @@ namespace RazorEnhanced
                     GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gumpid, buttonid, ConvertToIntList(switchs), entries);
                     Assistant.Client.Instance.SendToServerWait(gumpResp);
                 }
+                Gumps.RemoveGump(gumpid);
             }
 
             World.Player.HasGump = false;
@@ -1041,6 +1044,7 @@ namespace RazorEnhanced
                             buttonid, ConvertToIntList(switchlist_id), entries);
                         Assistant.Client.Instance.SendToServerWait(gumpResp);
                     }
+                    Gumps.RemoveGump(gumpid);
                 }
 
                 World.Player.HasGump = false;
