@@ -391,19 +391,19 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// beats me, maybe a resizable image?
+        /// Add image from a sprite sheet
         /// </summary>
         /// <param name="gd"> GumpData structure</param>
-        /// <param name="x"> x co-ordinate of the origin</param>
-        /// <param name="y"> y co-ordinate of the origin</param>
-        /// <param name="gumpId"> id used to reference gumps.mul</param>
-        /// <param name="width"> width of the html block</param>
-        /// <param name="height"> height of the html block</param>
-        /// <param name="sx"> maybe stretch X?</param>
-        /// <param name="sy"> maybe stretch Y?</param>
-        public static void AddSpriteImage(ref GumpData gd, int x, int y, int gumpId, int width, int height, int sx, int sy)
+        /// <param name="x"> X co-ordinate of the origin</param>
+        /// <param name="y"> Y co-ordinate of the origin</param>
+        /// <param name="gumpId"> ID used to reference sprite sheet from gumps.mul</param>
+        /// <param name="spriteX"> X position on the sprite sheet where the sprite begins</param>
+        /// <param name="spriteY"> Y position on the sprite sheet where the sprite begins</param>
+        /// <param name="spriteW"> Width of the sprite</param>
+        /// <param name="spriteH"> Height of the sprite</param>
+        public static void AddSpriteImage(ref GumpData gd, int x, int y, int gumpId, int spriteX, int spriteY, int spriteW, int spriteH)
         {
-            string textEntry = String.Format("{{ picinpic {0} {1} {2} {3} {4} {5} {6} }}", x, y, gumpId, width, height, sx, sy);
+            string textEntry = String.Format("{{ picinpic {0} {1} {2} {3} {4} {5} {6} }}", x, y, gumpId, spriteX, spriteY, spriteW, spriteH);
             gd.gumpDefinition += textEntry;
         }
 
