@@ -711,7 +711,6 @@ namespace RazorEnhanced
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
             else
             {
-                Misc.Pause(500);
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
             }
 
