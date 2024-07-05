@@ -24,34 +24,28 @@ namespace Assistant
     {
         public static readonly int WeatherFilter = 0;
         public static readonly int LightFilter = 1;
-        public static readonly int SmartLT = 2;
+        public static readonly int PacketAgent = 2;
         public static readonly int RangeCheckLT = 3;
-        public static readonly int AutoOpenDoors = 4;
+        public static readonly int FPSOverride = 4;
         public static readonly int UnequipBeforeCast = 5;
         public static readonly int AutoPotionEquip = 6;
         public static readonly int BlockHealPoisoned = 7;
-        public static readonly int LoopingMacros = 8; // includes fors and macros running macros
-        public static readonly int UseOnceAgent = 9;
-        public static readonly int RestockAgent = 10;
-        public static readonly int SellAgent = 11;
-        public static readonly int BuyAgent = 12;
-        public static readonly int PotionHotkeys = 13;
-        public static readonly int RandomTargets = 14;
-        public static readonly int ClosestTargets = 15;
+        public static readonly int unused_2 = 8; 
+        public static readonly int unused_3 = 9;
+        public static readonly int unused_4 = 10;
+        public static readonly int unused_5 = 11;
+        public static readonly int unused_6 = 12;
+        public static readonly int unused_7 = 13;
+        public static readonly int unused_8 = 14;
+        public static readonly int unused_9 = 15;
         public static readonly int OverheadHealth = 16;
         public static readonly int AutolootAgent = 17;
         public static readonly int BoneCutterAgent = 18;
-        public static readonly int AdvancedMacros = 19;
+        public static readonly int unused_10 = 19;
         public static readonly int AutoRemount = 20;
         public static readonly int AutoBandage = 21;
-        public static readonly int EnemyTargetShare = 22;
-        public static readonly int FilterSeason = 23;
-        public static readonly int SpellTargetShare = 24;
-        public static readonly int HumanoidHealthChecks = 25;
-        public static readonly int SpeechJournalChecks = 26;
-        public static readonly int PacketAgent = 27;
 
-        public static readonly int MaxBit = 27;
+        public static readonly int MaxBit = 21;
     }
     public abstract class Client
     {
@@ -144,7 +138,7 @@ namespace Assistant
             m_Running = true;
             RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
 
-            if ((RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
+            if (((!Shards.ShowLauncher) && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null))
             {
                 return selected;
             }
@@ -189,7 +183,7 @@ namespace Assistant
             else
             {
                 MessageBox.Show("Unable to find the Data Folder " + selected.ClientFolder, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                Shards.ShowLauncher = true;
                 return false;
             }
 
@@ -235,11 +229,9 @@ namespace Assistant
             {
                 //SplashScreen.End();
                 MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                Shards.ShowLauncher = true;
                 return;
             }
-
-
 
             Language.LoadCliLoc();
 
@@ -259,8 +251,7 @@ namespace Assistant
                         MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     else
                         MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //SplashScreen.End();
-                    RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                    Shards.ShowLauncher = true;
                     return;
                 }
                 Assistant.MainForm.ForceSize();
@@ -272,8 +263,7 @@ namespace Assistant
             if (Engine.IP == IPAddress.None || port == 0)
             {
                 MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //SplashScreen.End();
-                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                Shards.ShowLauncher = true;
                 return;
             }
 

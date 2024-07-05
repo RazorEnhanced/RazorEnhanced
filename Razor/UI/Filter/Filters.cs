@@ -473,10 +473,12 @@ namespace Assistant
             }
         }
 
-        private void notshowlauncher_CheckedChanged(object sender, EventArgs e)
+        private void showlauncher_CheckedChanged(object sender, EventArgs e)
         {
-            if (notshowlauncher.Focused)
-                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", notshowlauncher.Checked);
+            if (showlauncher.Focused)
+            {
+                Shards.ShowLauncher = showlauncher.Checked;
+            }
         }
 
         private void forceSizeY_TextChanged(object sender, System.EventArgs e)

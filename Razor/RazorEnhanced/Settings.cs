@@ -2406,7 +2406,7 @@ namespace RazorEnhanced
             general.Columns.Add("Opacity", typeof(int));
             general.Columns.Add("WindowX", typeof(int));
             general.Columns.Add("WindowY", typeof(int));
-            general.Columns.Add("NotShowLauncher", typeof(bool));
+            general.Columns.Add("NotShowLauncher", typeof(bool)); // not used
 
             // Parametri Tab (Skill)
             general.Columns.Add("DisplaySkillChanges", typeof(bool));

@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.IO.Compression;
@@ -14,6 +15,10 @@ namespace RazorEnhanced
         internal static readonly string m_Save = "RazorEnhanced.shards";
         internal static AllShards allShards = new AllShards();
         public static bool AllowBeta { get { return allShards.AllowBeta; } }
+        public static bool ShowLauncher {
+            get { return allShards.ShowLauncher; }
+            set { allShards.ShowLauncher = value; Shard.Save();}
+            }
     }
 
     [Serializable]
@@ -21,6 +26,9 @@ namespace RazorEnhanced
     {
         [JsonProperty("AllowBeta")]
         internal bool AllowBeta = new bool();
+        [JsonProperty("ShowLauncher")]
+        [DefaultValue(true)]
+        internal bool ShowLauncher = new bool();
         [JsonProperty("Shards")]
         internal Dictionary<string, Shard> m_Shards = new Dictionary<string, Shard>();
     }
@@ -88,7 +96,11 @@ namespace RazorEnhanced
                 bool error = false;
                 try
                 {
-                    Shards.allShards = Newtonsoft.Json.JsonConvert.DeserializeObject<AllShards>(content);
+                    var settings = new JsonSerializerSettings
+                    {
+                        DefaultValueHandling = DefaultValueHandling.Populate
+                    };
+                    Shards.allShards = Newtonsoft.Json.JsonConvert.DeserializeObject<AllShards>(content, settings);
                 }
                 catch (Exception)
                 {
@@ -133,6 +145,7 @@ namespace RazorEnhanced
                 Insert("UO Eventine", String.Empty, String.Empty, String.Empty, "shard.uoeventine.com", 2593, true, false);
                 Insert("UO Forever", String.Empty, String.Empty, String.Empty, "play.uoforever.com", 2599, true, false);
                 Insert("UO Wolvesbane", String.Empty, String.Empty, String.Empty, "play.wolvesbaneuo.com", 2593, true, false);
+                Shards.ShowLauncher = true;
             }
         }
 

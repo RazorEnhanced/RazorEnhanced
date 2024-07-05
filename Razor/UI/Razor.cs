@@ -320,7 +320,7 @@ namespace Assistant
         private Label profilelinklabel;
 
         private bool m_CanClose = true;
-        private System.Windows.Forms.CheckBox notshowlauncher;
+        private System.Windows.Forms.CheckBox showlauncher;
         private GroupBox groupBox4;
         private Label label43;
         private ComboBox toolboxsizeComboBox;
@@ -796,7 +796,7 @@ namespace Assistant
             this.label79 = new System.Windows.Forms.Label();
             this.paypalButton = new System.Windows.Forms.Button();
             this.openchangelogButton = new System.Windows.Forms.Button();
-            this.notshowlauncher = new System.Windows.Forms.CheckBox();
+            this.showlauncher = new System.Windows.Forms.CheckBox();
             this.groupBox29 = new System.Windows.Forms.GroupBox();
             this.profilesCloneButton = new System.Windows.Forms.Button();
             this.profilesRenameButton = new System.Windows.Forms.Button();
@@ -979,8 +979,8 @@ namespace Assistant
             this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.index = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.preload = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.fullFilePath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.uosScriptingTab = new System.Windows.Forms.TabPage();
             this.uosScriptListView = new RazorEnhanced.UI.ScriptListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -991,8 +991,8 @@ namespace Assistant
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.csScriptingTab = new System.Windows.Forms.TabPage();
             this.csScriptListView = new RazorEnhanced.UI.ScriptListView();
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1003,8 +1003,8 @@ namespace Assistant
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.eautoloot = new System.Windows.Forms.TabPage();
@@ -1720,7 +1720,7 @@ namespace Assistant
             this.generalTab.Controls.Add(this.label79);
             this.generalTab.Controls.Add(this.paypalButton);
             this.generalTab.Controls.Add(this.openchangelogButton);
-            this.generalTab.Controls.Add(this.notshowlauncher);
+            this.generalTab.Controls.Add(this.showlauncher);
             this.generalTab.Controls.Add(this.groupBox29);
             this.generalTab.Controls.Add(this.forceSizeY);
             this.generalTab.Controls.Add(this.forceSizeX);
@@ -1775,14 +1775,14 @@ namespace Assistant
             this.openchangelogButton.UseVisualStyleBackColor = true;
             this.openchangelogButton.Click += new System.EventHandler(this.openchangelogButton_Click);
             // 
-            // notshowlauncher
+            // showlauncher
             // 
-            this.notshowlauncher.Location = new System.Drawing.Point(253, 124);
-            this.notshowlauncher.Name = "notshowlauncher";
-            this.notshowlauncher.Size = new System.Drawing.Size(241, 22);
-            this.notshowlauncher.TabIndex = 67;
-            this.notshowlauncher.Text = "Don\'t Show Launcher Window";
-            this.notshowlauncher.CheckedChanged += new System.EventHandler(this.notshowlauncher_CheckedChanged);
+            this.showlauncher.Location = new System.Drawing.Point(253, 124);
+            this.showlauncher.Name = "showlauncher";
+            this.showlauncher.Size = new System.Drawing.Size(148, 22);
+            this.showlauncher.TabIndex = 67;
+            this.showlauncher.Text = "Show Launcher Window";
+            this.showlauncher.CheckedChanged += new System.EventHandler(this.showlauncher_CheckedChanged);
             // 
             // groupBox29
             // 
@@ -3713,13 +3713,6 @@ namespace Assistant
             this.index.Text = "#";
             this.index.Width = 40;
             // 
-            // fullFilePath
-            // 
-            this.fullFilePath.DisplayIndex = 9;
-            this.fullFilePath.Tag = "fullFilePath";
-            this.fullFilePath.Text = "";
-            this.fullFilePath.Width = 0;
-            // 
             // preload
             // 
             this.preload.DisplayIndex = 4;
@@ -3727,6 +3720,12 @@ namespace Assistant
             this.preload.Text = "Preload";
             this.preload.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.preload.Width = 50;
+            // 
+            // fullFilePath
+            // 
+            this.fullFilePath.Tag = "fullFilePath";
+            this.fullFilePath.Text = "";
+            this.fullFilePath.Width = 0;
             // 
             // uosScriptingTab
             // 
@@ -3822,18 +3821,17 @@ namespace Assistant
             this.columnHeader8.Text = "#";
             this.columnHeader8.Width = 40;
             // 
-            // columnHeader9
-            // 
-            this.columnHeader9.DisplayIndex = 9;
-            this.columnHeader9.Text = "";
-            this.columnHeader9.Width = 0;
-            // 
             // columnHeader19
             // 
             this.columnHeader19.DisplayIndex = 4;
             this.columnHeader19.Text = "Preload";
             this.columnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader19.Width = 0;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "";
+            this.columnHeader9.Width = 0;
             // 
             // csScriptingTab
             // 
@@ -3901,7 +3899,6 @@ namespace Assistant
             // 
             // columnHeader14
             // 
-            this.columnHeader14.DisplayIndex = 5;
             this.columnHeader14.Text = "Wait";
             this.columnHeader14.Width = 40;
             // 
@@ -3919,21 +3916,19 @@ namespace Assistant
             // 
             // columnHeader17
             // 
-            this.columnHeader17.DisplayIndex = 0;
             this.columnHeader17.Text = "#";
             this.columnHeader17.Width = 40;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "Preload";
+            this.columnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader20.Width = 50;
             // 
             // columnHeader18
             // 
             this.columnHeader18.Text = "";
             this.columnHeader18.Width = 0;
-            // 
-            // columnHeader20
-            // 
-            this.columnHeader20.DisplayIndex = 4;
-            this.columnHeader20.Text = "Preload";
-            this.columnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader20.Width = 50;
             // 
             // EnhancedAgent
             // 
@@ -9588,7 +9583,7 @@ namespace Assistant
             {
                 DisableGameSize();
             }
-            notshowlauncher.Checked = RazorEnhanced.Settings.General.ReadBool("NotShowLauncher");
+            showlauncher.Checked = Shards.ShowLauncher;
             forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
             taskbar.Checked = !(systray.Checked = RazorEnhanced.Settings.General.ReadBool("Systray"));
             clientPrio.SelectedItem = RazorEnhanced.Settings.General.ReadString("ClientPrio");
@@ -10154,6 +10149,18 @@ namespace Assistant
                 if (!bandagehealenableCheckBox.Enabled)
                     bandagehealenableCheckBox.Enabled = true;
             }
+            if (!Assistant.Client.Instance.AllowBit(FeatureBit.FPSOverride))
+            {
+                UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_FPS);
+                uomodFPSCheckBox.Enabled = false;
+                uomodFPSCheckBox.Checked = false;
+            }
+            else
+            {
+                uomodFPSCheckBox.Enabled = true;
+                uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
+            }
+
 
         }
         // ----------------- FEATURE END -------------------

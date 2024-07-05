@@ -67,7 +67,7 @@ namespace RazorEnhanced.UI
             var ip = Assistant.Client.Resolve(hostLabel.Text);
             if (ip == null || ip == System.Net.IPAddress.None || Convert.ToInt32(portLabel.Text) == 0)
             {
-                RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
+                Shards.ShowLauncher = true;
                 launchCUO.Enabled = false;
                 launch.Enabled = false;
             }
