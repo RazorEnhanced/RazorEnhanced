@@ -9433,9 +9433,11 @@ namespace Assistant
 
         private void DisableCloseButton()
         {
+	    /* Linux hack
             IntPtr menu = DLLImport.Win.GetSystemMenu(this.Handle, false);
             DLLImport.Win.EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
             m_CanClose = false;
+	    */
         }
 
         private void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
