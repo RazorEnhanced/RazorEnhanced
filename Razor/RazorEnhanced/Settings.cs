@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Web.Security;
 using System.DirectoryServices;
 using static RazorEnhanced.Settings;
+using System.Net.NetworkInformation;
 
 
 namespace RazorEnhanced
@@ -396,40 +397,22 @@ namespace RazorEnhanced
             }
         }
 
-        public static string GetComputerSid()
+        public static string GetComputerUniqueId()
         {
-            if (IsLinux)
-            {
                 try
                 {
-                    using (Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64))
-                    {
-                        using (Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Microsoft\\Cryptography"))
-                        {
-                            {
-                                if (key != null)
-                                {
-                                    var o = key.GetValue("MachineGuid");
-                                    if (o != null)
-                                    {
-                                        return o.ToString();
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    String firstMacAddress = NetworkInterface
+                        .GetAllNetworkInterfaces()
+                        .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                        .Select(nic => nic.GetPhysicalAddress().ToString())
+                        .FirstOrDefault();
+                    return firstMacAddress;
                 }
                 catch (Exception)
                 { }
-            }
-            else
-            {
-                System.Security.Principal.SecurityIdentifier sid = new System.Security.Principal.SecurityIdentifier((byte[])new DirectoryEntry(string.Format("WinNT://{0},Computer", Environment.MachineName)).Children.Cast<DirectoryEntry>().First().InvokeGet("objectSID"), 0).AccountDomainSid;
-                return sid.ToString();
-            }
             return "Some crap I made up112.45678-234523";
         }
-        internal static string key = GetComputerSid();
+        internal static string key = GetComputerUniqueId();
         // Passwords
         public static string Protect(string text)
         {

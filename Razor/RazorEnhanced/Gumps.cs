@@ -663,6 +663,7 @@ namespace RazorEnhanced
         public static void SendGump(GumpData gd, uint x, uint y)
         {
             m_gumpData[gd.gumpId] = gd;
+            gd.hasResponse = false;
             GenericGump gg = new GenericGump(gd.gumpId, gd.serial, gd.x, gd.y, gd.gumpDefinition, gd.gumpStrings);
             Assistant.Client.Instance.SendToClientWait(gg);
         }
@@ -750,6 +751,21 @@ namespace RazorEnhanced
         public static bool HasGump()
         {
             return World.Player.HasGump;
+        }
+
+        public static bool WaitForGumpResponse(uint gumpid, int delay) // Delay in MS
+        {
+            bool found = false;
+            if (Gumps.m_gumpData.ContainsKey(gumpid))
+            {
+                GumpData gd = Gumps.m_gumpData[gumpid];
+                found = Utility.DelayUntil(() => gd.hasResponse == true, delay);
+            }
+            if (Gumps.m_incomingData.ContainsKey(gumpid))
+            {
+                found = Utility.DelayUntil(() => World.Player.HasGump == true, delay);
+            }
+            return found;
         }
 
         /// <summary>
