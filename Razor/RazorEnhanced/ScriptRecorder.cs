@@ -455,7 +455,7 @@ namespace RazorEnhanced
 
         internal override void Record_RenameMobile(int serial, string name)
         {
-            AddLog("Misc.PetRename(0x" + serial.ToString("X8") + ", " + name + " )");
+            AddLog("Misc.PetRename(0x" + serial.ToString("X8") + ", \"" + name + "\")");
         }
 
         internal override void Record_AsciiPromptResponse(uint type, string text)
@@ -622,10 +622,32 @@ namespace RazorEnhanced
 
         internal override void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
         {
-                if (dest != 0xFFFFFFFF)
-                    AddLog("moveitem 0x" + i.Serial.Value.ToString("X8") + " 0x" + dest.Value.ToString("X8") + " " + i.Amount);
+            if (dest == Player.Backpack.Serial)
+            {
+                if (World.Player.LastWeaponLeft == i.Serial)
+                {
+                    AddLog("clearhands left");
+                    AddLog("pause 600");
+                    return;
+                }
+                if (World.Player.LastWeaponRight == i.Serial)
+                {
+                    AddLog("clearhands right");
+                    AddLog("pause 600");
+                    return;
+                }
+            }
+            if (dest != 0xFFFFFFFF)
+            {
+                if (dest == Player.Backpack.Serial)
+                {
+                    AddLog($"moveitem {i.Serial:x} backpack {i.Position.X} {i.Position.Y} {i.Amount}");
+                }
                 else
-                    AddLog("moveitem 0x" + i.Serial.Value.ToString("X8") + " ground " + i.Amount);
+                    AddLog($"moveitem {i.Serial:x} 0x{dest:x} {i.Position.X} {i.Position.Y} {i.Amount}");             
+            }
+            else
+                AddLog($"moveitem {i.Serial:x} ground {i.Position.X} {i.Position.Y} {i.Position.Z} {i.Amount}");
         }
         /*internal static void Record_ClientSingleClick(Assistant.Serial ser)
         {
@@ -804,14 +826,17 @@ namespace RazorEnhanced
         internal override void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
         {
             if (m == World.Player)
-                AddLog($"equipitem 0x{item.Serial:x8}");
+            {
+                AddLog($"equipitem {item.Serial:x8} {(int)l}");
+                AddLog($"pause 600");
+            }
             else
                 AddLog($"unequipitem {l.ToString()}");
         }
 
         internal override void Record_RenameMobile(int serial, string name)
         {
-            AddLog($"rename 0x{serial:x8} {name}");
+            AddLog($"rename 0x{serial:x8} \"{name}\"");
         }
 
         internal override void Record_AsciiPromptResponse(uint type, string text)
