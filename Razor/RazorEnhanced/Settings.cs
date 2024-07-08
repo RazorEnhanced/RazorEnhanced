@@ -11,7 +11,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using System.Web.Security;
-using System.DirectoryServices;
+//using System.DirectoryServices;
 using static RazorEnhanced.Settings;
 using System.Net.NetworkInformation;
 
@@ -413,6 +413,7 @@ namespace RazorEnhanced
             return "Some crap I made up112.45678-234523";
         }
         internal static string key = GetComputerUniqueId();
+
         // Passwords
         public static string Protect(string text)
         {
