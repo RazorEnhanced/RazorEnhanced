@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Crypt.h"
 #include "uo_huffman.h"
 #include "PacketInfo.h"

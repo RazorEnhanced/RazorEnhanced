@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "MemFinder.h"
 
 DWORD MemFinder::Find(const void *data, int length, DWORD addressHint, DWORD addressMax)

@@ -33,12 +33,6 @@
     <ClCompile Include="PacketInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="twofish.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="uo_huffman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -46,6 +40,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TwoFish.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

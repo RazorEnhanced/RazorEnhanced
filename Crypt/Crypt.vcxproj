@@ -239,13 +239,8 @@
     <ClCompile Include="OldStatusBar.cpp" />
     <ClCompile Include="OSIEncryption.cpp" />
     <ClCompile Include="PacketInfo.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="twofish.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="TwoFish.c" />
     <ClCompile Include="uo_huffman.cpp" />
     <ClCompile Include="UOArt.cpp" />
   </ItemGroup>
