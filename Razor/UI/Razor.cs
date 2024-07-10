@@ -9431,13 +9431,16 @@ namespace Assistant
             base.WndProc(ref msg);
         }
 
-        private void DisableCloseButton()
+        protected override CreateParams CreateParams
         {
-	    /* Linux hack
-            IntPtr menu = DLLImport.Win.GetSystemMenu(this.Handle, false);
-            DLLImport.Win.EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
-            m_CanClose = false;
-	    */
+            get
+            {
+                const int CP_NOCLOSE_BUTTON = 0x200;
+                CreateParams myCp = base.CreateParams;
+                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
+                m_CanClose = false;
+                return myCp;
+            }
         }
 
         private void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
@@ -9484,8 +9487,6 @@ namespace Assistant
             this.BringToFront();
 
             Engine.ActiveWindow = this;
-
-            DisableCloseButton();
 
             tabs_IndexChanged(this, null); // load first tab
 
@@ -9848,14 +9849,12 @@ namespace Assistant
         {
             if (!m_CanClose && Assistant.Client.Instance.ClientRunning)
             {
-                DisableCloseButton();
                 e.Cancel = true;
             }
         }
 
         private void MainForm_Activated(object sender, System.EventArgs e)
         {
-            DisableCloseButton();
         }
 
         private void MainForm_Resize(object sender, System.EventArgs e)

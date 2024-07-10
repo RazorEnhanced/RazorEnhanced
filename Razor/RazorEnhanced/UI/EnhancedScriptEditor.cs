@@ -1096,6 +1096,7 @@ namespace RazorEnhanced.UI
 
             if (save.ShowDialog() == DialogResult.OK)
             {
+                m_Script.Stop();
                 var fullpath = save.FileName;
 
                 if (m_Script.Editor)

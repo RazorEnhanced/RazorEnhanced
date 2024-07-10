@@ -2398,6 +2398,7 @@ namespace RazorEnhanced.UOS
             if (args.Length == 0 || args[0].AsString().ToLower() == "both")
             {
                 Player.UnEquipItemByLayer("RightHand", false);
+                Misc.Pause(600);
                 Player.UnEquipItemByLayer("LeftHand", false);
             }
             if (args.Length == 1)
@@ -2579,6 +2580,7 @@ namespace RazorEnhanced.UOS
             int dest = (int)args[1].AsSerial();
             int x = -1;
             int y = -1;
+            int z = 0;
             int amount = -1;
 
             if (args.Length == 3)
@@ -2586,14 +2588,21 @@ namespace RazorEnhanced.UOS
                 amount = args[2].AsInt();
             }
 
-            if (args.Length > 5)
+            if (args.Length > 4)
             {
                 x = args[2].AsInt();
                 y = args[3].AsInt();
-                //int z = args[4].AsInt();
+                z = args[4].AsInt();
+            }
+            if (args.Length > 5)
+            {
                 amount = args[5].AsInt();
             }
-            Items.Move(source, dest, amount, x, y);
+            if (dest == -1)
+                Items.MoveOnGround(source, amount, x, y, z);
+            else
+                Items.Move(source, dest, amount, x, y);
+
 
             return true;
         }

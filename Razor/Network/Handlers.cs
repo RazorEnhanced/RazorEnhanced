@@ -7,6 +7,7 @@ using RazorEnhanced;
 using NLog;
 using System.Linq;
 using Ultima;
+using static IronPython.Modules._ast;
 
 namespace Assistant
 {
@@ -523,7 +524,14 @@ namespace Assistant
             ushort iid = 0;
 
             if (item != null)
+            {
+                Mobile mob = item.Container as Mobile;
+                if (mob != null)
+                {
+                    ScriptRecorder.enqueueUsedObject(serial, mob.Serial, item.ItemID, item.Hue);
+                }
                 iid = item.ItemID.Value;
+            }
 
             if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
             {
@@ -603,6 +611,7 @@ namespace Assistant
             {
                 i = Item.Factory(iser, 0);
                 i.Container = dest;
+                i.Position = newPos;
                 World.AddItem(i);
             }
             else
@@ -1608,12 +1617,18 @@ namespace Assistant
                 World.AddMobile(m = new Mobile(serial));
             }
 
-            m.Name = p.ReadString(30);
+            string newName = p.ReadString(30);
+            if (newName != m.Name)
+            {
+                RazorEnhanced.ScriptRecorderService.Instance.Record_RenameMobile((int)serial, newName);
+                m.Name = newName;
+            }
+ 
 
             m.Hits = p.ReadUInt16();
             m.HitsMax = p.ReadUInt16();
 
-            m.CanRename = p.ReadBoolean();//CanRename
+            m.CanRename = p.ReadBoolean(); //CanRename
 
             byte type = p.ReadByte();
 
