@@ -177,4 +177,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+    <Import Project="..\CustomIntermediateDirs.props" />
 </Project>

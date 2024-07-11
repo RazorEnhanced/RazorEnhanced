@@ -2,7 +2,7 @@
 
 #include "Crypt.h"
 #include "OSIEncryption.h"
-#include "TwoFish.h"
+#include "twofish.h"
 
 OSIEncryption::OSIEncryption()
 {

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Crypt.h"
-#include "Resource.h"
+#include "resource.h"
 #include <uxtheme.h>
 #include <vssym32.h>
 #include <dwmapi.h>
