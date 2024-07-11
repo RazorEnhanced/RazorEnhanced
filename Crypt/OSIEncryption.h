@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TwoFish.h"
+#include "twofish.h"
 
 class OSIEncryption
 {

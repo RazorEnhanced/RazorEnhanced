@@ -806,13 +806,11 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static IComparable LocationX(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length < 1)
+            uint serial = (uint)Player.Serial;
+            if (args.Length >= 1)
             {
-                throw new UOSRuntimeError(node, "X location requires a serial");
-                // return 0;
+                serial = args[0].AsSerial();
             }
-
-            uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
 
             if (thing.IsItem)
@@ -834,7 +832,6 @@ namespace RazorEnhanced.UOS
             }
 
             throw new UOSRuntimeError(node, "X location serial not found");
-            // return 0;
         }
 
         /// <summary>
@@ -842,14 +839,13 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static IComparable LocationY(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length < 1)
+            uint serial = (uint)Player.Serial;
+            if (args.Length >= 1)
             {
-                throw new UOSRuntimeError(node, "Y location requires a serial");
-                // return 0;
+                serial = args[0].AsSerial();
             }
-
-            uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
+
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -869,7 +865,7 @@ namespace RazorEnhanced.UOS
             }
 
             throw new UOSRuntimeError(node, "Y location serial not found");
-            // return 0;
+
         }
 
         /// <summary>
@@ -877,14 +873,13 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static IComparable LocationZ(ASTNode node, Argument[] args, bool quiet)
         {
-            if (args.Length < 1)
+            uint serial = (uint)Player.Serial;
+            if (args.Length >= 1)
             {
-                throw new UOSRuntimeError(node, "Z location requires a serial");
-                // return 0;
+                serial = args[0].AsSerial();
             }
-
-            uint serial = args[0].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
+
             if (thing.IsItem)
             {
                 Item item = Items.FindBySerial((int)serial);
@@ -1130,6 +1125,9 @@ namespace RazorEnhanced.UOS
                 {
                     //Item item = Items.FindByID(type, color, (int)source, range);
                     var listItems = Items.FindAllByID(type, color, (int)source, range);
+                    if (listItems == null)
+                        return false;
+
                     foreach (var _item in listItems)
                     {
                         Item item = (Item)_item;
