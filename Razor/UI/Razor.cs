@@ -6414,9 +6414,9 @@ namespace Assistant
             // bandagehealdexformulaCheckBox
             // 
             this.bandagehealdexformulaCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealdexformulaCheckBox.Location = new System.Drawing.Point(10, 102);
+            this.bandagehealdexformulaCheckBox.Location = new System.Drawing.Point(10, 96);
             this.bandagehealdexformulaCheckBox.Name = "bandagehealdexformulaCheckBox";
-            this.bandagehealdexformulaCheckBox.Size = new System.Drawing.Size(129, 22);
+            this.bandagehealdexformulaCheckBox.Size = new System.Drawing.Size(129, 31);
             this.bandagehealdexformulaCheckBox.TabIndex = 80;
             this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
             // 
