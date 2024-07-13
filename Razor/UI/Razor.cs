@@ -6186,6 +6186,7 @@ namespace Assistant
             this.bandagehealAutostartCheckBox.Size = new System.Drawing.Size(118, 22);
             this.bandagehealAutostartCheckBox.TabIndex = 78;
             this.bandagehealAutostartCheckBox.Text = "Autostart OnLogin";
+            this.bandagehealAutostartCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealAutostartCheckBox_CheckedChanged);
             // 
             // groupBox6
             // 
@@ -6237,6 +6238,7 @@ namespace Assistant
             this.bandageHealIgnoreCount.Text = "Ignore Count";
             this.bandageHealIgnoreCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.bandageHealIgnoreCount.UseVisualStyleBackColor = true;
+            this.bandageHealIgnoreCount.CheckedChanged += new System.EventHandler(this.bandagehealignorecount_CheckedChanged);
             // 
             // bandagehealTimeWithBufCheckBox
             // 
@@ -6247,6 +6249,7 @@ namespace Assistant
             this.bandagehealTimeWithBufCheckBox.TabIndex = 97;
             this.bandagehealTimeWithBufCheckBox.Text = "Time with Buff";
             this.bandagehealTimeWithBufCheckBox.UseVisualStyleBackColor = true;
+            this.bandagehealTimeWithBufCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealBufControlled_CheckedChanged);
             // 
             // label78
             // 
@@ -6274,6 +6277,7 @@ namespace Assistant
             this.bandagehealusetextContent.Size = new System.Drawing.Size(82, 20);
             this.bandagehealusetextContent.TabIndex = 94;
             this.bandagehealusetextContent.Text = "[band";
+            this.bandagehealusetextContent.Leave += new System.EventHandler(this.bandagehealusetext_Content_Leave);
             // 
             // bandagehealusetextSelfContent
             // 
@@ -6283,6 +6287,7 @@ namespace Assistant
             this.bandagehealusetextSelfContent.Size = new System.Drawing.Size(82, 20);
             this.bandagehealusetextSelfContent.TabIndex = 94;
             this.bandagehealusetextSelfContent.Text = "[bandself";
+            this.bandagehealusetextSelfContent.Leave += new System.EventHandler(this.bandagehealusetextSelf_Content_Leave);
             // 
             // bandagehealusetext
             // 
@@ -6293,6 +6298,7 @@ namespace Assistant
             this.bandagehealusetext.TabIndex = 93;
             this.bandagehealusetext.Text = "Send text for self heal";
             this.bandagehealusetext.UseVisualStyleBackColor = true;
+            this.bandagehealusetext.CheckedChanged += new System.EventHandler(this.bandagehealusetext_CheckedChanged);
             // 
             // bandagehealusetarget
             // 
@@ -6302,6 +6308,7 @@ namespace Assistant
             this.bandagehealusetarget.Size = new System.Drawing.Size(155, 22);
             this.bandagehealusetarget.TabIndex = 92;
             this.bandagehealusetarget.Text = "Use Normal Target";
+            this.bandagehealusetarget.CheckedChanged += new System.EventHandler(this.bandagehealusetarget_CheckedChanged);
             // 
             // bandagehealmaxrangeTextBox
             // 
@@ -6314,6 +6321,7 @@ namespace Assistant
             this.bandagehealmaxrangeTextBox.Name = "bandagehealmaxrangeTextBox";
             this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(29, 20);
             this.bandagehealmaxrangeTextBox.TabIndex = 91;
+            this.bandagehealmaxrangeTextBox.Leave += new System.EventHandler(this.bandagehealmaxrangeTextBox_Leave);
             // 
             // label46
             // 
@@ -6332,6 +6340,7 @@ namespace Assistant
             this.bandagehealcountdownCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealcountdownCheckBox.TabIndex = 89;
             this.bandagehealcountdownCheckBox.Text = "Show Heal Countdown";
+            this.bandagehealcountdownCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealcountdownCheckBox_CheckedChanged);
             // 
             // bandagehealhiddedCheckBox
             // 
@@ -6341,6 +6350,7 @@ namespace Assistant
             this.bandagehealhiddedCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealhiddedCheckBox.TabIndex = 88;
             this.bandagehealhiddedCheckBox.Text = "Block heal if Hidden";
+            this.bandagehealhiddedCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealhiddedCheckBox_CheckedChanged);
             // 
             // bandagehealmortalCheckBox
             // 
@@ -6350,6 +6360,7 @@ namespace Assistant
             this.bandagehealmortalCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealmortalCheckBox.TabIndex = 87;
             this.bandagehealmortalCheckBox.Text = "Block heal if Mortalled";
+            this.bandagehealmortalCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealmortalCheckBox_CheckedChanged);
             // 
             // bandagehealpoisonCheckBox
             // 
@@ -6359,6 +6370,7 @@ namespace Assistant
             this.bandagehealpoisonCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealpoisonCheckBox.TabIndex = 86;
             this.bandagehealpoisonCheckBox.Text = "Block heal if Poisoned";
+            this.bandagehealpoisonCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealpoisonCheckBox_CheckedChanged);
             // 
             // label33
             // 
@@ -6380,6 +6392,7 @@ namespace Assistant
             this.bandagehealhpTextBox.Name = "bandagehealhpTextBox";
             this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealhpTextBox.TabIndex = 84;
+            this.bandagehealhpTextBox.Leave += new System.EventHandler(this.bandagehealhpTextBox_Leave);
             // 
             // label32
             // 
@@ -6401,6 +6414,7 @@ namespace Assistant
             this.bandagehealdelayTextBox.Name = "bandagehealdelayTextBox";
             this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealdelayTextBox.TabIndex = 82;
+            this.bandagehealdelayTextBox.Leave += new System.EventHandler(this.bandagehealdelayTextBox_Leave);
             // 
             // label31
             // 
@@ -6419,6 +6433,7 @@ namespace Assistant
             this.bandagehealdexformulaCheckBox.Size = new System.Drawing.Size(129, 31);
             this.bandagehealdexformulaCheckBox.TabIndex = 80;
             this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
+            this.bandagehealdexformulaCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealdexformulaCheckBox_CheckedChanged);
             // 
             // bandagehealcustomcolorTextBox
             // 
@@ -6432,6 +6447,7 @@ namespace Assistant
             this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
             this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealcustomcolorTextBox.TabIndex = 79;
+            this.bandagehealcustomcolorTextBox.Leave += new System.EventHandler(this.bandagehealcustomcolorTextBox_Leave);
             // 
             // label30
             // 
@@ -6454,6 +6470,7 @@ namespace Assistant
             this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
             this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealcustomIDTextBox.TabIndex = 77;
+            this.bandagehealcustomIDTextBox.Leave += new System.EventHandler(this.bandagehealcustomIDTextBox_Leave);
             // 
             // label19
             // 
@@ -6472,6 +6489,7 @@ namespace Assistant
             this.bandagehealcustomCheckBox.Size = new System.Drawing.Size(137, 22);
             this.bandagehealcustomCheckBox.TabIndex = 75;
             this.bandagehealcustomCheckBox.Text = "Use Custom Bandage";
+            this.bandagehealcustomCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealcustomCheckBox_CheckedChanged);
             // 
             // bandagehealtargetLabel
             // 
@@ -6499,6 +6517,7 @@ namespace Assistant
             this.bandagehealsettargetButton.TabIndex = 2;
             this.bandagehealsettargetButton.Text = "Set Target";
             this.bandagehealsettargetButton.UseVisualStyleBackColor = true;
+            this.bandagehealsettargetButton.Click += new System.EventHandler(this.bandagehealsettargetButton_Click);
             // 
             // bandagehealtargetComboBox
             // 
@@ -6508,6 +6527,7 @@ namespace Assistant
             this.bandagehealtargetComboBox.Name = "bandagehealtargetComboBox";
             this.bandagehealtargetComboBox.Size = new System.Drawing.Size(121, 21);
             this.bandagehealtargetComboBox.TabIndex = 1;
+            this.bandagehealtargetComboBox.SelectedIndexChanged += new System.EventHandler(this.bandagehealtargetComboBox_SelectedIndexChanged);
             // 
             // label14
             // 
@@ -6526,6 +6546,7 @@ namespace Assistant
             this.bandagehealenableCheckBox.Size = new System.Drawing.Size(146, 22);
             this.bandagehealenableCheckBox.TabIndex = 76;
             this.bandagehealenableCheckBox.Text = "Enable Bandage Heal";
+            this.bandagehealenableCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealenableCheckBox_CheckedChanged);
             // 
             // groupBox5
             // 
