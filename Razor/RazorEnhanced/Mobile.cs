@@ -1040,63 +1040,51 @@ namespace RazorEnhanced
 
         // Props
 
-        public static void WaitForProps(Mobile m, int delay) // Delay in MS
+        public static bool WaitForProps(Mobile m, int delay) // Delay in MS
         {
-            WaitForProps(m.Serial, delay);
+            return WaitForProps(m.Serial, delay);
         }
 
-        public static void WaitForProps(int mobileserial, int delay) // Delay in MS
+        public static bool WaitForProps(int mobileserial, int delay) // Delay in MS
         {
             if (World.Player.Expansion <= 3) // Non esistono le props
-                return;
+                return false;
 
             Assistant.Mobile m = Assistant.World.FindMobile((Assistant.Serial)((uint)mobileserial));
 
             if (m == null)
-                return;
+                return false;
 
             if (m.PropsUpdated)
-                return;
+                return true;
 
             Assistant.Client.Instance.SendToServerWait(new QueryProperties(m.Serial));
             int subdelay = delay;
 
-            while (!m.PropsUpdated)
-            {
-                Thread.Sleep(2);
-                subdelay -= 2;
-                if (subdelay <= 0)
-                    break;
-            }
+            var found = Utility.DelayUntil(() => m.PropsUpdated == true, delay);
+            return found;
         }
 
         // wait for stats
-        public static void WaitForStats(Mobile m, int delay) // Delay in MS
+        public static bool WaitForStats(Mobile m, int delay) // Delay in MS
         {
-            WaitForStats(m.Serial, delay);
+            return WaitForStats(m.Serial, delay);
         }
 
-        public static void WaitForStats(int mobileserial, int delay) // Delay in MS
+        public static bool WaitForStats(int mobileserial, int delay) // Delay in MS
         {
             Assistant.Mobile m = World.FindMobile(mobileserial);
 
             if (m == null)
-                return;
+                return false;
 
             if (m.StatsUpdated)
-                return;
+                return true;
 
             Assistant.Client.Instance.SendToServerWait(new StatusQuery(m.Serial));
 
-            int subdelay = delay;
-
-            while (!m.StatsUpdated)
-            {
-                Thread.Sleep(2);
-                subdelay -= 2;
-                if (subdelay <= 0)
-                    break;
-            }
+            var found = Utility.DelayUntil(() => m.StatsUpdated == true, delay);
+            return found;
         }
 
         public static List<string> GetPropStringList(int serial)

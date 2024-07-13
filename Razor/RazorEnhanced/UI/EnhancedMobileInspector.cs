@@ -19,15 +19,18 @@ namespace RazorEnhanced.UI
             MaximizeBox = false;
         }
 
-        private void ProcessInfoThread()
+        private void ProcessInfoThread(Assistant.Mobile mobile)
         {
             UpdateStats();
-
-            foreach (string prop in m_props)
+            if (mobile == World.Player)
             {
-                float attrib = Player.SumAttribute(prop);
-                if (attrib > 0)
-                    AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": "+ attrib);
+                Dictionary<string, float> attributes = Player.SumAttributes(m_props);
+                foreach (string prop in m_props)
+                {
+                    float attrib = attributes[prop];
+                    if (attrib > 0)
+                        AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": " + attrib);
+                }
             }
         }
 
@@ -37,7 +40,7 @@ namespace RazorEnhanced.UI
             {
                 if (Client.Running)
                 {
-                    Mobiles.WaitForStats(m_mobile.Serial, 1000);
+                    Mobiles.WaitForStats(m_mobile.Serial, 5000);
 
                     // Details
                     lHits.Invoke(new Action(() => lHits.Text = m_mobile.Hits + " / " + m_mobile.HitsMax));
@@ -318,7 +321,7 @@ namespace RazorEnhanced.UI
 
                             if (World.Player.Expansion >= 3)
                             {
-                                m_ProcessInfo = new Thread(ProcessInfoThread);
+                                m_ProcessInfo = new Thread(() => ProcessInfoThread(m_mobile));
                                 m_ProcessInfo.Start();
                             }
                         }
@@ -327,7 +330,8 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                m_ProcessInfo = new Thread(ProcessInfoThread);
+                // Get attributes for m_mobile
+                m_ProcessInfo = new Thread(() => ProcessInfoThread(m_mobile));
                 m_ProcessInfo.Start();
             }
         }
