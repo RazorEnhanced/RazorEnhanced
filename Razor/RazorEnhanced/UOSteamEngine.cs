@@ -1167,7 +1167,7 @@ namespace RazorEnhanced.UOS
                 // return false;
             }
 
-            string findProp = args[0].AsString();
+            string findProp = args[0].AsString().ToLower();
             uint serial = args[1].AsSerial();
             Assistant.Serial thing = new Assistant.Serial(serial);
 
@@ -1176,8 +1176,14 @@ namespace RazorEnhanced.UOS
                 Item item = Items.FindBySerial((int)serial);
                 if (item != null)
                 {
-                    float value = Items.GetPropValue((int)serial, findProp);
-                    return value;                    
+                    Items.WaitForProps(thing, 1000);
+                    var allprops = Items.GetPropStringList(item);
+                    foreach (string prop in allprops)
+                    {
+                        var lowerProp = prop.ToLower();
+                        if (lowerProp.Contains(findProp))
+                            return true;
+                    }
                 }
             }
 
@@ -1186,12 +1192,12 @@ namespace RazorEnhanced.UOS
                 Mobile item = Mobiles.FindBySerial((int)serial);
                 if (item != null)
                 {
+                     Mobiles.WaitForProps(thing, 1000);
                     foreach (var prop in item.Properties)
                     {
-                        if (0 == String.Compare(findProp, prop.ToString(), true))
-                        {
+                        var lowerProp = prop.ToString().ToLower();
+                        if (lowerProp.Contains(findProp))
                             return true;
-                        }
                     }
                 }
             }

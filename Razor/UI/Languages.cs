@@ -564,7 +564,7 @@ namespace Assistant
         private static Ultima.StringList m_CliLoc = null;
         private static bool m_Loaded = false;
         private static string m_Current;
-        private static string m_CliLocName = "ENU";
+        private static string m_CliLocName = "enu";
 
         public static bool Loaded
         {
@@ -805,13 +805,13 @@ namespace Assistant
             if (m_CliLocName == null || m_CliLocName.Length <= 0)
                 m_CliLocName = "enu";
 
+            string fileName = "[CliLoc]";
             try
             {
                 m_CliLoc = new Ultima.StringList(m_CliLocName.ToLower());
             }
             catch (Exception e)
             {
-                string fileName = "[CliLoc]";
                 try
                 {
                     fileName = Ultima.Files.GetFilePath(String.Format("cliloc.{0}", m_CliLocName));
@@ -835,7 +835,7 @@ namespace Assistant
                 else
                 {
                     MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoCliLocMsg),
-                        Language.GetString(LocString.NoCliLoc), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Language.GetString(LocString.NoCliLoc)+" "+fileName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }

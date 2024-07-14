@@ -2713,6 +2713,40 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="attributename">Name of the property.</param>
         /// <returns>The total value as number.</returns>
+        internal static Dictionary<string, float> SumAttributes(List<string> attributenames)
+        {
+            Dictionary<string, float> result = new Dictionary<string, float>();
+            foreach(string attribname in attributenames)
+            {
+                result[attribname] = 0;
+            }
+            if (World.Player == null)
+                return result;
+
+            foreach (Layer l in m_layer_props)
+            {
+                Assistant.Item itemtocheck = World.Player.GetItemOnLayer(l);
+                if (itemtocheck == null) // Slot vuoto
+                    continue;
+
+                if (!itemtocheck.PropsUpdated)
+                    RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+
+                foreach (string attribname in attributenames)
+                {
+                    result[attribname] += RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attribname);
+                }
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// Scan all the equipped Item, returns the total value of a specific property. (ex: Lower Reagent Cost )
+        /// NOTE: This function is slow.
+        /// </summary>
+        /// <param name="attributename">Name of the property.</param>
+        /// <returns>The total value as number.</returns>
         public static float SumAttribute(string attributename)
         {
             if (World.Player == null)

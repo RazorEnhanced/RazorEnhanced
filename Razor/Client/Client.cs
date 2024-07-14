@@ -233,11 +233,16 @@ namespace Assistant
             string addr = selected.Host;
             uint port = selected.Port;
 
+            var lang = "enu";
+            string filename = Path.Combine(Assistant.Engine.RootPath,
+                "Language", String.Format("Razor_lang.{0}", lang));
+
             Ultima.Files.Directory = selected.ClientFolder;
-            if (!Language.Load("ENU"))
+            Console.WriteLine($"Ultima Directory - {selected.ClientFolder}");
+            if (!Language.Load("enu"))
             {
                 //SplashScreen.End();
-                MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Unable to load required file \n{filename}", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Shards.ShowLauncher = true;
                 return;
             }
