@@ -11,6 +11,8 @@ namespace Assistant
 {
     internal class Utility
     {
+        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private static readonly Random m_Random = new Random();
 
         internal static int Random(int min, int max)

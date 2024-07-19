@@ -21,6 +21,10 @@ using System.Windows.Controls;
 using Accord.Statistics.Filters;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using NLog;
+using Microsoft.Scripting.Ast;
 
 namespace RazorEnhanced.UI
 {
@@ -97,30 +101,73 @@ namespace RazorEnhanced.UI
 
         private readonly FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
 
-        internal static void Init(string filename)
+        internal static bool Init(string filePath)
         {
-            string suffix = Path.GetExtension(filename); ;
-            if (suffix == null)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
-                if (scriptListView != null)
+                string editor = Environment.GetEnvironmentVariable("EDITOR");
+
+                if (string.IsNullOrEmpty(editor))
                 {
-                    if (scriptListView.Name == "pyScriptListView")
-                        suffix = ".py";
-                    if (scriptListView.Name == "uosScriptListView")
-                        suffix = ".uos";
-                    if (scriptListView.Name == "csScriptListView")
-                        suffix = ".cs";
+                    Console.WriteLine("EDITOR environment variable is not set.");
+                    return false;
+                }
+
+                try
+                {
+                    if (filePath == null)
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = editor,
+                            UseShellExecute = false,
+                            CreateNoWindow = false
+                        });
+                    }
+                    else
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = editor,
+                            Arguments = filePath,
+                            UseShellExecute = false,
+                            CreateNoWindow = false
+                        });
+                    }
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error launching editor: {ex.Message}");
+                    return false;
                 }
             }
+            else
+            {
+                string suffix = Path.GetExtension(filePath); ;
+                if (suffix == null)
+                {
+                    ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
+                    if (scriptListView != null)
+                    {
+                        if (scriptListView.Name == "pyScriptListView")
+                            suffix = ".py";
+                        if (scriptListView.Name == "uosScriptListView")
+                            suffix = ".uos";
+                        if (scriptListView.Name == "csScriptListView")
+                            suffix = ".cs";
+                    }
+                }
 
-            var editor = EnhancedScriptEditor.Search(filename);
-            if (editor == null) {
-                editor = new EnhancedScriptEditor(filename, suffix);
-                editor.Show();
+                var editor = EnhancedScriptEditor.Search(filePath);
+                if (editor == null)
+                {
+                    editor = new EnhancedScriptEditor(filePath, suffix);
+                    editor.Show();
+                }
+                editor.BringToFront();
+                return true;
             }
-            editor.BringToFront();
-
         }
 
 

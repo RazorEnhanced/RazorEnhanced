@@ -1071,12 +1071,14 @@ namespace RazorEnhanced
         /// <param name="scriptfile">Name of the script.</param>
         public static void ScriptRun(string scriptfile)
         {
+            Utility.Logger.Debug("${System.Reflection.MethodBase.GetCurrentMethod().Name} called with {scriptfile}");
             EnhancedScript script = EnhancedScript.Service.Search(scriptfile);
             if (script != null)
             {
                 script.Start();
             }
-            else { 
+            else {
+                Utility.Logger.Debug("${System.Reflection.MethodBase.GetCurrentMethod().Name} {scriptfile} Doesnt exist");
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
             }
     }

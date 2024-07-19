@@ -715,7 +715,9 @@ namespace Assistant
                     fullPath = scriptItem.FullPath;
             }
             if (fullPath != null)
-                EnhancedScriptEditor.Init(fullPath);
+            {
+                    EnhancedScriptEditor.Init(fullPath);
+            }
         }
 
         private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)

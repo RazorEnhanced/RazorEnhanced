@@ -13,9 +13,6 @@ namespace RazorEnhanced
     /// </summary>
     public class Player
     {
-
-        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
         // Stats
         /// <summary>
         /// Current hit points.
@@ -2476,7 +2473,7 @@ namespace RazorEnhanced
             else
                 result = Client.Instance.RequestWalk(dir);
 
-            Logger.Debug("Move {0} Sent", direction);
+            Utility.Logger.Debug("Move {0} Sent", direction);
 
             return result;
         }

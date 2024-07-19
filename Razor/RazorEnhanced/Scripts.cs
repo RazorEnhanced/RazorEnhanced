@@ -609,6 +609,7 @@ namespace RazorEnhanced
             // This runs twice, only the SECOND change has the changes
             // https://devblogs.microsoft.com/oldnewthing/20140507-00/?p=1053
 
+            Utility.Logger.Debug($"File change processed {e.FullPath}");
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
             if (script != null) 
             {

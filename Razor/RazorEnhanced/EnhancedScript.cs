@@ -390,6 +390,8 @@ namespace RazorEnhanced
 
         internal void Start()
         {
+            Utility.Logger.Debug("${System.Reflection.MethodBase.GetCurrentMethod().Name} called for {m_Fullpath}");
+
             //if (IsRunning || !IsUnstarted)
             if (IsRunning) return;
 

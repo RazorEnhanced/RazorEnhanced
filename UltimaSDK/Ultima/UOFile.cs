@@ -42,7 +42,6 @@ namespace Ultima
     public unsafe class UOFile : DataReader
     {
         internal static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
-
         public UOFile(string filepath, bool loadFile = false)
         {
             FilePath = filepath;
