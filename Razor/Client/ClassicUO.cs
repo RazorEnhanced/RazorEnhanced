@@ -36,10 +36,27 @@ namespace Assistant
                 }
 
                 AssemblyName askedassembly = new AssemblyName(e.Name);
-                
-                bool isdll = File.Exists(Path.Combine(RootPath, askedassembly.Name + ".dll"));
 
-                return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
+                try
+                {
+                    string file = Utility.GetCaseInsensitiveFilePath(Path.Combine(RootPath, askedassembly.Name + ".dll"));
+                    return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + ".dll"));
+                }
+                catch(Exception ex)
+                {
+                    // try exe
+                }
+
+                try
+                {
+                    string file = Utility.GetCaseInsensitiveFilePath(Path.Combine(RootPath, askedassembly.Name + ".exe"));
+                    return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + ".exe"));
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return null;
             };
 
 
