@@ -128,7 +128,7 @@ namespace Assistant
                         startType = Shard.StartType.CUO;
                     }
                     RazorEnhanced.Shard argsShard =
-                        new RazorEnhanced.Shard("Unknown", Path.Combine(uoPath, "client.exe"),
+                        new RazorEnhanced.Shard("Wolfie", Path.Combine(uoPath, "client.exe"),
                                     uoPath, cuoPath, ip, port,
                                     patchEncryption, osiEncryption, true, startType);
 

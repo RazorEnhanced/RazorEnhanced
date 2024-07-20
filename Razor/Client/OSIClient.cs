@@ -228,26 +228,24 @@ namespace Assistant
 
         public override Loader_Error LaunchClient(string client)
         {
-            try
-            {
-                string dll = Utility.GetCaseInsensitiveFilePath(Path.Combine(Assistant.Engine.RootPath, "Crypt.dll"));
-                uint pid;
-                Loader_Error err = (Loader_Error)DLLImport.Razor.Load(client, dll, "OnAttach", null, 0, out pid);
+            string dll = Path.Combine(Assistant.Engine.RootPath, "Crypt.dll");
+            uint pid;
+            Loader_Error err = (Loader_Error)DLLImport.Razor.Load(client, dll, "OnAttach", null, 0, out pid);
 
-                if (err == Loader_Error.SUCCESS)
+            if (err == Loader_Error.SUCCESS)
+            {
+                try
                 {
                     ClientProc = Process.GetProcessById((int)pid);
                     if (ClientProc != null && !RazorEnhanced.Settings.General.ReadBool("SmartCPU"))
                         ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
                 }
-                return ClientProc == null ? Loader_Error.UNKNOWN_ERROR : err;
-
-            }
-            catch (Exception e)
-            {
+                catch
+                {
+                }
             }
 
-            return Loader_Error.UNKNOWN_ERROR;
+            return ClientProc == null ? Loader_Error.UNKNOWN_ERROR : err;
         }
 
         private static bool m_ClientEnc = false;
