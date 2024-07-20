@@ -185,6 +185,7 @@ namespace Assistant
         {
             //string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Definitions/spells.def");
             string filename = Path.Combine(Assistant.Engine.RootPath, "Definitions/spells.def");
+            filename = Utility.GetCaseInsensitiveFilePath(filename);
             m_SpellsByPower = new Dictionary<string, Spell>(64 + 10 + 16);
             m_SpellsByID = new Dictionary<int, Spell>(64 + 10 + 16);
 

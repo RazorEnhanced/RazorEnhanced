@@ -2,6 +2,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 namespace Ultima
 {
@@ -251,6 +252,33 @@ namespace Ultima
         {
             MulPath[key] = path;
         }
+        public static string GetCaseInsensitiveFilePath(string filePath)
+        {
+            string directry = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileName(filePath);
+
+            if (string.IsNullOrEmpty(directry) || string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("Invalid file path");
+            }
+
+            try
+            {
+                foreach (var f in System.IO.Directory.GetFiles(directry))
+                {
+                    if (string.Equals(Path.GetFileName(f), fileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return f;
+                    }
+                }
+
+                throw new FileNotFoundException($"File not found: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error accessing directory: {ex.Message}");
+            }
+        }
 
         /// <summary>
         /// Looks up a given <paramref name="file" /> in <see cref="Files.MulPath"/>
@@ -266,7 +294,11 @@ namespace Ultima
                 if (String.IsNullOrEmpty(path))
                     return null;
                 if (String.IsNullOrEmpty(Path.GetDirectoryName(path)))
+                {
                     path = Path.Combine(m_RootDir, path);
+                    path = GetCaseInsensitiveFilePath(path);
+                }
+
                 if (File.Exists(path))
                     return path;
             }

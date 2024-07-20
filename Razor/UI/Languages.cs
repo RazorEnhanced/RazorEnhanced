@@ -673,10 +673,17 @@ namespace Assistant
             m_CliLocName = "enu";
             string filename = Path.Combine(Assistant.Engine.RootPath,
                 "Language", String.Format("Razor_lang.{0}", lang));
-
-            if (!File.Exists(filename))
+            try
+            {
+                filename = Utility.GetCaseInsensitiveFilePath(filename);
+            }
+            catch (Exception e)
+            {
                 return false;
-            m_Current = lang;
+            }
+
+            m_Current = Path.GetExtension(filename).TrimStart('.');
+            m_CliLocName = m_Current;
             ArrayList errors = new ArrayList();
             Encoding encoding = Encoding.ASCII;
 
@@ -808,7 +815,7 @@ namespace Assistant
             string fileName = "[CliLoc]";
             try
             {
-                m_CliLoc = new Ultima.StringList(m_CliLocName.ToLower());
+                m_CliLoc = new Ultima.StringList(m_CliLocName);
             }
             catch (Exception e)
             {

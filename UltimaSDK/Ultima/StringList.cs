@@ -51,7 +51,7 @@ namespace Ultima
             m_StringTable = new Dictionary<int, string>();
             m_EntryTable = new Dictionary<int, StringEntry>();
 
-            using (BinaryReader bin = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            using (BinaryReader bin = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 m_Header1 = bin.ReadInt32();
                 m_Header2 = bin.ReadInt16();
