@@ -296,11 +296,16 @@ namespace Ultima
                 if (String.IsNullOrEmpty(Path.GetDirectoryName(path)))
                 {
                     path = Path.Combine(m_RootDir, path);
-                    path = GetCaseInsensitiveFilePath(path);
                 }
-
-                if (File.Exists(path))
+                try
+                {
+                    path = GetCaseInsensitiveFilePath(path);
                     return path;
+                }
+                catch(Exception e) 
+                {
+                    Console.WriteLine($"{path} not found in GetFilePath");
+                }
             }
 
             return null;

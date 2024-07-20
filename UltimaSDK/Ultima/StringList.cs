@@ -25,7 +25,9 @@ namespace Ultima
         public StringList(string language)
         {
             Language = language;
-            LoadEntry(Files.GetFilePath(String.Format("cliloc.{0}", language)));
+            string filePath = Files.GetFilePath(String.Format("cliloc.{0}", language));
+            Console.WriteLine($"StringList is using {filePath}");
+            LoadEntry(filePath);
         }
 
         /// <summary>

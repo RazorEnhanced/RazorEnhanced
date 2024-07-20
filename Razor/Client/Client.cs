@@ -236,9 +236,10 @@ namespace Assistant
             var lang = "enu";
             string filename = Path.Combine(Assistant.Engine.RootPath,
                 "Language", String.Format("Razor_lang.{0}", lang));
+            filename = Utility.GetCaseInsensitiveFilePath(filename);
 
             Ultima.Files.Directory = selected.ClientFolder;
-            Console.WriteLine($"Ultima Directory - {selected.ClientFolder}");
+            Utility.Logger.Debug($"Ultima Directory - {selected.ClientFolder}");
             if (!Language.Load("enu"))
             {
                 //SplashScreen.End();

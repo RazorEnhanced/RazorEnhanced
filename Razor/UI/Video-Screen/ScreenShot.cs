@@ -80,8 +80,13 @@ namespace Assistant
             if (screensList.SelectedIndex == -1)
                 return;
 
-            string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), screensList.SelectedItem.ToString());
-            if (!File.Exists(file))
+            string file = null;
+            try
+            {
+                file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), screensList.SelectedItem.ToString());
+                file = Utility.GetCaseInsensitiveFilePath(file);
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 screensList.Items.RemoveAt(screensList.SelectedIndex);
@@ -89,9 +94,11 @@ namespace Assistant
                 return;
             }
 
-            using (Stream reader = new FileStream(file, FileMode.Open, FileAccess.Read))
+            using (Stream reader = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                screenPrev.Image = Image.FromStream(reader);
+                {
+                    screenPrev.Image = Image.FromStream(reader);
+                }
             }
         }
 

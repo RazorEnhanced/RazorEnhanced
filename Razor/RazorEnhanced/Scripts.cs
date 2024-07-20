@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using Accord.Math;
+using System.Windows.Shapes;
 
 namespace Assistant
 {
@@ -55,7 +56,7 @@ namespace RazorEnhanced
             {
                 // if no fullname then set it to local 
                 // if the file doesn't exist at its full path, is it local
-                string defaultPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                string defaultPath = System.IO.Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
                 if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
                 {
                     item.FullPath = defaultPath;
@@ -63,7 +64,7 @@ namespace RazorEnhanced
 
                 // If no position use the previous index + 1
                 // In theory this should only happen first load after update
-                string suffix = Path.GetExtension(item.FullPath).ToLower();
+                string suffix = System.IO.Path.GetExtension(item.FullPath).ToLower();
                 switch (suffix)
                 {
                     case ".py":
@@ -274,7 +275,7 @@ namespace RazorEnhanced
                 {
                     if (item.FullPath == null)
                     {
-                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                        item.FullPath = System.IO.Path.Combine(Engine.RootPath, "Scripts", filename);
                     }
                     return item.FullPath;
                 }
@@ -285,7 +286,7 @@ namespace RazorEnhanced
                 {
                     if (item.FullPath == null)
                     {
-                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                        item.FullPath = System.IO.Path.Combine(Engine.RootPath, "Scripts", filename);
                     }
                     return item.FullPath;
                 }
@@ -296,7 +297,7 @@ namespace RazorEnhanced
                 {
                     if (item.FullPath == null)
                     {
-                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                        item.FullPath = System.IO.Path.Combine(Engine.RootPath, "Scripts", filename);
                     }
                     return item.FullPath;
                 }
@@ -634,8 +635,9 @@ namespace RazorEnhanced
             }
         }
 
-        internal static string ReadAllTextWithoutLocking(string filePath)
+        internal static string ReadAllTextWithoutLocking(string _filePath)
         {
+            string filePath = Utility.GetCaseInsensitiveFilePath(_filePath);
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader streamReader = new StreamReader(fileStream))
             {

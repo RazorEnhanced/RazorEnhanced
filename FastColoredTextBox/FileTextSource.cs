@@ -68,6 +68,33 @@ namespace FastColoredTextBoxNS
             Console.WriteLine("UnloadUnusedLines: " + count);
             #endif
         }
+        public static string GetCaseInsensitiveFilePath(string filePath)
+        {
+            string directory = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileName(filePath);
+
+            if (string.IsNullOrEmpty(directory) || string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("Invalid file path");
+            }
+
+            try
+            {
+                foreach (var f in Directory.GetFiles(directory))
+                {
+                    if (string.Equals(Path.GetFileName(f), fileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return f;
+                    }
+                }
+
+                throw new FileNotFoundException($"File not found: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error accessing directory: {ex.Message}");
+            }
+        }
 
         public void OpenFile(string fileName, Encoding enc)
         {
@@ -78,7 +105,7 @@ namespace FastColoredTextBoxNS
 
             SaveEOL = Environment.NewLine;
 
-            //read lines of file
+            //read lines of file            
             fs = new FileStream(fileName, FileMode.Open);
             var length = fs.Length;
             //read signature
@@ -89,32 +116,6 @@ namespace FastColoredTextBoxNS
             base.lines.Add(null);
             //other lines
             sourceFileLinePositions.Capacity = (int)(length/7 + 1000);
-
-            //int prev = 0;
-            //while(fs.Position < length)
-            //{
-            //    var b = fs.ReadByte();
-
-            //    if (b == 10)// \n
-            //    {
-            //        sourceFileLinePositions.Add((int)(fs.Position) + shift);
-            //        base.lines.Add(null);
-            //    }else
-            //    if (prev == 13)// \r (Mac format)
-            //    {
-            //        sourceFileLinePositions.Add((int)(fs.Position - 1) + shift);
-            //        base.lines.Add(null);
-            //        SaveEOL = "\r";
-            //    }
-
-            //    prev = b;
-            //}
-
-            //if (prev == 13)
-            //{
-            //    sourceFileLinePositions.Add((int)(fs.Position) + shift);
-            //    base.lines.Add(null);
-            //}
 
             int prev = 0;
             int prevPos = 0;

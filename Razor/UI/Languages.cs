@@ -815,13 +815,17 @@ namespace Assistant
             string fileName = "[CliLoc]";
             try
             {
+                Utility.Logger.Info($"Attempting to load cliloc from {m_CliLocName}");
                 m_CliLoc = new Ultima.StringList(m_CliLocName);
+                Utility.Logger.Info($"Success load cliloc with {m_CliLoc.Entries.Count} entries");
             }
             catch (Exception e)
             {
+                Utility.Logger.Debug($"load failed");
                 try
                 {
                     fileName = Ultima.Files.GetFilePath(String.Format("cliloc.{0}", m_CliLocName));
+                    Utility.Logger.Debug($"The cliloc could not be loaded from {fileName}");
                 }
                 catch
                 {
@@ -832,18 +836,8 @@ namespace Assistant
 
             if (m_CliLoc == null || m_CliLoc.Entries == null || m_CliLoc.Entries.Count < 10)
             {
-                m_CliLoc = null;
-                if (m_CliLocName != "enu")
-                {
-                    m_CliLocName = "enu";
-                    LoadCliLoc();
-                    return;
-                }
-                else
-                {
                     MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoCliLocMsg),
-                        Language.GetString(LocString.NoCliLoc)+" "+fileName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                        Language.GetString(LocString.NoCliLoc)+" "+fileName, MessageBoxButtons.OK, MessageBoxIcon.Warning);               
             }
         }
 
