@@ -1160,7 +1160,7 @@ namespace RazorEnhanced
             {
                 lock (IoLock)
                 {
-                    File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Script.Filename + ".ERROR", log.ToString());
+                    File.AppendAllText(Path.Combine(Assistant.Engine.RootPath, m_Script.Filename + ".ERROR"), log.ToString());
                 }
             }
             catch { }
