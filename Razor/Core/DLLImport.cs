@@ -209,18 +209,36 @@ namespace Assistant
             [DllImport("Crypt.dll")]
             internal static unsafe extern IntPtr GetUOVersion();
         }
-        internal class ZLib
+        internal class ZLib_linux
         {
-            [DllImport("zlib")]
+            private const string ZLibLibrary = "libz.so";
+
+            [DllImport(ZLibLibrary)]
             internal static extern string zlibVersion();
 
-            [DllImport("zlib")]
+            [DllImport(ZLibLibrary)]
             internal static extern ZLibError compress(byte[] dest, ref int destLength, byte[] source, int sourceLength);
 
-            [DllImport("zlib")]
+            [DllImport(ZLibLibrary)]
             internal static extern ZLibError compress2(byte[] dest, ref int destLength, byte[] source, int sourceLength, ZLibCompressionLevel level);
 
-            [DllImport("zlib")]
+            [DllImport(ZLibLibrary)]
+            internal static extern ZLibError uncompress(byte[] dest, ref int destLen, byte[] source, int sourceLen);
+        }
+        internal class ZLib_windows
+        {
+            private const string ZLibLibrary = "zlib";
+
+            [DllImport(ZLibLibrary)]
+            internal static extern string zlibVersion();
+
+            [DllImport(ZLibLibrary)]
+            internal static extern ZLibError compress(byte[] dest, ref int destLength, byte[] source, int sourceLength);
+
+            [DllImport(ZLibLibrary)]
+            internal static extern ZLibError compress2(byte[] dest, ref int destLength, byte[] source, int sourceLength, ZLibCompressionLevel level);
+
+            [DllImport(ZLibLibrary)]
             internal static extern ZLibError uncompress(byte[] dest, ref int destLen, byte[] source, int sourceLen);
         }
 

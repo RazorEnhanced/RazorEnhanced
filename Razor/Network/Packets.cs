@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
+using System.Runtime.InteropServices;
 
 namespace Assistant
 {
@@ -923,18 +922,6 @@ namespace Assistant
     // Doesn't seem to work right, puts up a fixed gump, ignores text 
     internal sealed class GenericGump : Packet
     {
-        static byte[] compress(byte[] input)
-        {
-            using (MemoryStream output = new MemoryStream())
-            {
-                using (System.IO.Compression.GZipStream gzip = new System.IO.Compression.GZipStream(output, CompressionLevel.Optimal))
-                {
-                    gzip.Write(input, 0, input.Length);
-                }
-                return output.ToArray();
-            }
-        }
-
         internal GenericGump(uint gumpid, uint serial, uint x, uint y,
             string gumpDefinition, List<string> gumpStrings)
             : base(0xDD)
@@ -957,9 +944,16 @@ namespace Assistant
             byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
             int destLen = dest.Length;
 
-            dest = compress(System.Text.Encoding.ASCII.GetBytes(gumpDefinition));
-            //bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+            bool worked = false;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                worked = (DLLImport.ZLib_linux.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
 
+            }
+            else
+            {
+                worked = (DLLImport.ZLib_windows.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+            }
 
             Write((uint)destLen + 4);
             Write((uint)gumpDefinition.Length);
@@ -983,7 +977,7 @@ namespace Assistant
                 byte[] textBuffer = ms.ToArray();
                 int compressedSize = textBuffer.Length + 10;
                 byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
-                ZLibError compResult2 = DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+                ZLibError compResult2 = DLLImport.ZLib_windows.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
                 bool worked2 = (compResult2 == ZLibError.Z_OK);
 
                 Write((uint)compressedSize + 4);
