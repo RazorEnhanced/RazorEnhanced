@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 
 namespace Assistant
@@ -922,6 +923,18 @@ namespace Assistant
     // Doesn't seem to work right, puts up a fixed gump, ignores text 
     internal sealed class GenericGump : Packet
     {
+        static byte[] compress(byte[] input)
+        {
+            using (MemoryStream output = new MemoryStream())
+            {
+                using (System.IO.Compression.GZipStream gzip = new System.IO.Compression.GZipStream(output, CompressionLevel.Optimal))
+                {
+                    gzip.Write(input, 0, input.Length);
+                }
+                return output.ToArray();
+            }
+        }
+
         internal GenericGump(uint gumpid, uint serial, uint x, uint y,
             string gumpDefinition, List<string> gumpStrings)
             : base(0xDD)
@@ -943,7 +956,11 @@ namespace Assistant
 
             byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
             int destLen = dest.Length;
-            bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+
+            dest = compress(System.Text.Encoding.ASCII.GetBytes(gumpDefinition));
+            //bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+
+
             Write((uint)destLen + 4);
             Write((uint)gumpDefinition.Length);
             Write((byte[])dest, 0, destLen);

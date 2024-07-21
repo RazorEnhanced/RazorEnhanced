@@ -716,13 +716,22 @@ namespace Assistant
             if (scriptTable.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
                 string scriptname = scriptListView.SelectedItems[0].Text;
-                Scripts.ScriptItem scriptItem = Scripts.FindScript(scriptname);
-                if (scriptItem != null) 
+                Utility.Logger.Debug($"Edit scriptName={scriptname}");
+                Scripts.ScriptItem scriptItem = Scripts.FindScript(scriptname.ToLower());
+                if (scriptItem != null)
+                {
                     fullPath = scriptItem.FullPath;
+                    Utility.Logger.Debug($"Edit fullPath={fullPath}");
+                }
+                else 
+                {
+                    Utility.Logger.Debug($"Edit lookup failed for scriptName={scriptname}");
+                }
             }
             if (fullPath != null)
             {
-                    EnhancedScriptEditor.Init(fullPath);
+                Utility.Logger.Debug($"Edit launching editor for fullPath={fullPath}");
+                EnhancedScriptEditor.Init(fullPath);
             }
         }
 

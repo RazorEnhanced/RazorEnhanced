@@ -112,7 +112,7 @@ namespace RazorEnhanced.UI
                     Console.WriteLine("EDITOR environment variable is not set.");
                     return false;
                 }
-
+                Utility.Logger.Debug($"EnhancedScriptEditor launchind editor for filePath={filePath}");
                 try
                 {
                     if (filePath == null)
@@ -129,7 +129,7 @@ namespace RazorEnhanced.UI
                         Process.Start(new ProcessStartInfo
                         {
                             FileName = editor,
-                            Arguments = filePath,
+                            Arguments = $"\"{filePath}\"",
                             UseShellExecute = false,
                             CreateNoWindow = false
                         });
