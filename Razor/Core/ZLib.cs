@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace Assistant
 {
@@ -107,7 +109,15 @@ namespace Assistant
             else
                 outLen = m_CompBuff.Length;
 
-            ZLibError error = DLLImport.ZLib_windows.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
+            ZLibError error = ZLibError.Z_ERRNO;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                error = DLLImport.ZLib_linux.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
+            }
+            else
+            {
+                error = DLLImport.ZLib_windows.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
+            }
             if (error != ZLibError.Z_OK)
                 throw new Exception("ZLib error during copression: " + error.ToString());
 
@@ -239,7 +249,15 @@ namespace Assistant
 
                     Raw.Read(m_ReadBuff, 0, block);
 
-                    ZLibError error = DLLImport.ZLib_windows.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+                    ZLibError error = ZLibError.Z_ERRNO;
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    {
+                        error = DLLImport.ZLib_linux.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);                        
+                    }
+                    else
+                    {
+                        error = DLLImport.ZLib_windows.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+                    }
                     if (error != ZLibError.Z_OK)
                         throw new Exception("ZLib error uncompressing: " + error.ToString());
 
@@ -287,7 +305,15 @@ namespace Assistant
 
                     Raw.Read(m_ReadBuff, 0, block);
 
-                    ZLibError error = DLLImport.ZLib_windows.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+                    ZLibError error = ZLibError.Z_ERRNO;
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    {
+                        error = DLLImport.ZLib_linux.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+                    }
+                    else
+                    {
+                        error = DLLImport.ZLib_windows.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+                    }
                     if (error != ZLibError.Z_OK)
                         throw new Exception("ZLib error uncompressing: " + error.ToString());
 

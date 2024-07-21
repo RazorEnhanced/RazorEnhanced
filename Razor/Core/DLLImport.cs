@@ -225,6 +225,7 @@ namespace Assistant
             [DllImport(ZLibLibrary)]
             internal static extern ZLibError uncompress(byte[] dest, ref int destLen, byte[] source, int sourceLen);
         }
+
         internal class ZLib_windows
         {
             private const string ZLibLibrary = "zlib";

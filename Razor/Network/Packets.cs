@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Windows.Documents;
 
 namespace Assistant
 {
@@ -979,7 +980,17 @@ namespace Assistant
                 byte[] textBuffer = ms.ToArray();
                 int compressedSize = textBuffer.Length + 10;
                 byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
-                ZLibError compResult2 = DLLImport.ZLib_windows.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+
+
+                ZLibError compResult2 = ZLibError.Z_ERRNO;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    compResult2 = DLLImport.ZLib_linux.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+                }
+                else
+                {
+                    compResult2 = DLLImport.ZLib_windows.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+                }
                 bool worked2 = (compResult2 == ZLibError.Z_OK);
 
                 Write((uint)compressedSize + 4);
