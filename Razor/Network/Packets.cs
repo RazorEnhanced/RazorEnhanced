@@ -947,11 +947,13 @@ namespace Assistant
             bool worked = false;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
+                Utility.Logger.Debug($"compressing gump information for linux");
                 worked = (DLLImport.ZLib_linux.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
 
             }
             else
             {
+                Utility.Logger.Debug($"compressing gump information for windows");
                 worked = (DLLImport.ZLib_windows.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
             }
 

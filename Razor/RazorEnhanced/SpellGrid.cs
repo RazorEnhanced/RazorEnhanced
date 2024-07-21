@@ -206,12 +206,14 @@ namespace RazorEnhanced
             if (Assistant.World.Player == null)
                 return;
 
+            /*
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 // Seems broken for now
                 Utility.Logger.Debug("{0} entered Broken on linux it seems", System.Reflection.MethodBase.GetCurrentMethod().Name);
                 return;
             }
+            */
 
             m_open = true;
             m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
