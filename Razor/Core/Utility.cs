@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Runtime.CompilerServices;
 //using System.Linq;
 
 
@@ -11,6 +12,11 @@ namespace Assistant
     internal class Utility
     {
         internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+        //internal static void DebugLog(string message, [CallerFilePath] string codePath, [CallerLineNumber], int lineNumber, [CallerMemberName] string memberName)
+        //{
+        //    Logger.Debug(member)
+        //}
 
         private static readonly Random m_Random = new Random();
 

@@ -1164,6 +1164,7 @@ namespace RazorEnhanced
                 }
             }
             catch { }
+
             log.Clear();
         }       
     }
