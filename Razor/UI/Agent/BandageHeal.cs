@@ -63,7 +63,7 @@ namespace Assistant
 
             if (bandagehealenableCheckBox.Checked)
             {
-                foreach (Control control in bandageSettingsBox.Controls)
+                foreach (Control control in groupBox31.Controls)
                 {
                     if (control.Name == "bandagehealAutostartCheckBox" || control.Name == "bandagehealenableCheckBox")
                         control.Enabled = true;
@@ -75,7 +75,7 @@ namespace Assistant
             }
             else
             {
-                foreach (Control control in bandageSettingsBox.Controls)
+                foreach (Control control in groupBox31.Controls)
                 {                    
                         control.Enabled = true;
                 }

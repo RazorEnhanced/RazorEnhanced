@@ -290,7 +290,6 @@ namespace Assistant
         private unsafe bool OnRecv(ref byte[] data, ref int length)
         {
             bool result = true;
-            Utility.Logger.Debug("{0} entered", System.Reflection.MethodBase.GetCurrentMethod().Name);
             try
             {
                 m_In += (uint)length;
