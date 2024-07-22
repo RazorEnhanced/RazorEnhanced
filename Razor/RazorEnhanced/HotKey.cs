@@ -102,7 +102,7 @@ namespace RazorEnhanced
 
         internal static bool OnKeyDown(int key, ModKeys mod)
         {
-            Debug.WriteLine("key: 0x{0:X} mod: 0x{0:X} ", key, mod);
+            Utility.Logger.Debug("key: 0x{0:X} mod: 0x{0:X} ", key, mod);
             Keys k = (Keys)key;
             if (mod.HasFlag(ModKeys.Control))
             {

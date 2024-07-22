@@ -274,8 +274,8 @@ namespace Ultima
             }
             string idx = Path.Combine(path, filename + ".idx");
             string mul = Path.Combine(path, filename + ".mul");
-            using (FileStream fsidx = new FileStream(idx, FileMode.Create, FileAccess.Write, FileShare.Write),
-                              fsmul = new FileStream(mul, FileMode.Create, FileAccess.Write, FileShare.Write))
+            using (FileStream fsidx = new FileStream(idx, FileMode.Create, FileAccess.Write, FileShare.ReadWrite),
+                              fsmul = new FileStream(mul, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
             {
                 using (BinaryWriter binidx = new BinaryWriter(fsidx),
                                     binmul = new BinaryWriter(fsmul))

@@ -11,6 +11,7 @@ using AutoUpdaterDotNET;
 using System.IO;
 using JsonData;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Assistant
 {
@@ -225,6 +226,28 @@ namespace Assistant
         private ComboBox restockListSelect;
         private Label label7;
         private TabPage bandageheal;
+        private GroupBox BandageHealSettingsBox;
+        private System.Windows.Forms.CheckBox bandagehealcountdownCheckBox;
+        private System.Windows.Forms.CheckBox bandagehealhiddedCheckBox;
+        private System.Windows.Forms.CheckBox bandagehealmortalCheckBox;
+        private System.Windows.Forms.CheckBox bandagehealpoisonCheckBox;
+        private Label label33;
+        private RazorAgentNumOnlyTextBox bandagehealhpTextBox;
+        private Label label32;
+        private System.Windows.Forms.CheckBox bandagehealdexformulaCheckBox;
+        private RazorAgentNumHexTextBox bandagehealcustomcolorTextBox;
+        private Label label30;
+        private RazorAgentNumHexTextBox bandagehealcustomIDTextBox;
+        private Label label19;
+        private System.Windows.Forms.CheckBox bandagehealcustomCheckBox;
+        private Label bandagehealtargetLabel;
+        private Label label15;
+        private System.Windows.Forms.Button bandagehealsettargetButton;
+        private ComboBox bandagehealtargetComboBox;
+        private Label label14;
+        private System.Windows.Forms.CheckBox bandagehealenableCheckBox;
+        private GroupBox groupBox5;
+        private ListBox bandagehealLogBox;
         private System.Windows.Forms.CheckBox rememberPwds;
         private System.Windows.Forms.CheckBox gameSize;
         private TextBox forceSizeX;
@@ -358,6 +381,10 @@ namespace Assistant
         private Label spellgrid_opacity_label;
         private TabControl toolbarstab;
         private Label labelHotride;
+        private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
+        private Label label46;
+        private RazorAgentNumOnlyTextBox bandagehealdelayTextBox;
+        private Label label31;
         private System.Windows.Forms.Button openchangelogButton;
         private System.Windows.Forms.Button discordrazorButton;
         private DataGridView vendorsellGridView;
@@ -528,7 +555,14 @@ namespace Assistant
         private Label label76;
         private System.Windows.Forms.Button targetChoseHue;
         private System.Windows.Forms.Button targetChoseBody;
+        private System.Windows.Forms.CheckBox bandagehealAutostartCheckBox;
+        private System.Windows.Forms.CheckBox bandagehealusetarget;
         private System.Windows.Forms.Button paypalButton;
+        private System.Windows.Forms.CheckBox bandagehealusetext;
+        private TextBox bandagehealusetextSelfContent;
+        private TextBox bandagehealusetextContent;
+        private Label label77;
+        private Label label78;
         private System.Windows.Forms.Button advertisementLink;
         private PictureBox advertisement;
         private System.Windows.Forms.CheckBox allowHiddenLooting;
@@ -569,6 +603,7 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private CheckBox bandagehealTimeWithBufCheckBox;
         private TabControl FilterPages;
         private TabPage MiscFilterPage;
         private GroupBox uomodgroupbox;
@@ -631,7 +666,7 @@ namespace Assistant
         private CheckBox scriptshowStartStopCheckBox;
         private GroupBox groupBox42;
         private TextBox scriptSearchTextBox;
-        private GroupBox groupBox31;
+        private GroupBox scriptOperationsBox;
         private Button buttonScriptTo;
         private Button buttonScriptEditorNew;
         private Button buttonScriptRefresh;
@@ -692,6 +727,7 @@ namespace Assistant
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
         private RazorAgentNumOnlyTextBox autoLootTextBoxDelay;
+        private CheckBox bandageHealIgnoreCount;
         private CheckBox scriptPacketLogCheckBox;
         private CheckBox autoScriptReload;
         private GroupBox DmgDsplyGroup;
@@ -702,41 +738,6 @@ namespace Assistant
         private ColumnHeader preload;
         private ColumnHeader columnHeader19;
         private ColumnHeader columnHeader20;
-        private SplitContainer splitContainer2;
-        private ListBox bandagehealLogBox;
-        private CheckBox bandagehealAutostartCheckBox;
-        private GroupBox groupBox6;
-        private CheckBox bandageHealIgnoreCount;
-        private CheckBox bandagehealTimeWithBufCheckBox;
-        private Label label78;
-        private Label label77;
-        private TextBox bandagehealusetextContent;
-        private TextBox bandagehealusetextSelfContent;
-        private CheckBox bandagehealusetext;
-        private CheckBox bandagehealusetarget;
-        private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
-        private Label label46;
-        private CheckBox bandagehealcountdownCheckBox;
-        private CheckBox bandagehealhiddedCheckBox;
-        private CheckBox bandagehealmortalCheckBox;
-        private CheckBox bandagehealpoisonCheckBox;
-        private Label label33;
-        private RazorAgentNumOnlyTextBox bandagehealhpTextBox;
-        private Label label32;
-        private RazorAgentNumOnlyTextBox bandagehealdelayTextBox;
-        private Label label31;
-        private CheckBox bandagehealdexformulaCheckBox;
-        private RazorAgentNumHexTextBox bandagehealcustomcolorTextBox;
-        private Label label30;
-        private RazorAgentNumHexTextBox bandagehealcustomIDTextBox;
-        private Label label19;
-        private CheckBox bandagehealcustomCheckBox;
-        private Label bandagehealtargetLabel;
-        private Label label15;
-        private Button bandagehealsettargetButton;
-        private ComboBox bandagehealtargetComboBox;
-        private Label label14;
-        private CheckBox bandagehealenableCheckBox;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -952,7 +953,7 @@ namespace Assistant
             this.groupBox42 = new System.Windows.Forms.GroupBox();
             this.scriptSearchTextBox = new System.Windows.Forms.TextBox();
             this.scripterrorlogCheckBox = new System.Windows.Forms.CheckBox();
-            this.groupBox31 = new System.Windows.Forms.GroupBox();
+            this.scriptOperationsBox = new System.Windows.Forms.GroupBox();
             this.buttonScriptTo = new System.Windows.Forms.Button();
             this.buttonScriptEditorNew = new System.Windows.Forms.Button();
             this.buttonScriptRefresh = new System.Windows.Forms.Button();
@@ -1159,13 +1160,12 @@ namespace Assistant
             this.restockAddListB = new System.Windows.Forms.Button();
             this.restockListSelect = new System.Windows.Forms.ComboBox();
             this.bandageheal = new System.Windows.Forms.TabPage();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.bandagehealLogBox = new System.Windows.Forms.ListBox();
+            this.BandageHealSettingsBox = new System.Windows.Forms.GroupBox();
             this.bandagehealAutostartCheckBox = new System.Windows.Forms.CheckBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.bandageHealIgnoreCount = new System.Windows.Forms.CheckBox();
             this.bandagehealTimeWithBufCheckBox = new System.Windows.Forms.CheckBox();
             this.label78 = new System.Windows.Forms.Label();
+            this.bandagehealenableCheckBox = new System.Windows.Forms.CheckBox();
             this.label77 = new System.Windows.Forms.Label();
             this.bandagehealusetextContent = new System.Windows.Forms.TextBox();
             this.bandagehealusetextSelfContent = new System.Windows.Forms.TextBox();
@@ -1188,7 +1188,8 @@ namespace Assistant
             this.bandagehealsettargetButton = new System.Windows.Forms.Button();
             this.bandagehealtargetComboBox = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.bandagehealenableCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.bandagehealLogBox = new System.Windows.Forms.ListBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.toolbarstab = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -1516,7 +1517,7 @@ namespace Assistant
             this.scriptControlBox.SuspendLayout();
             this.groupBox30.SuspendLayout();
             this.groupBox42.SuspendLayout();
-            this.groupBox31.SuspendLayout();
+            this.scriptOperationsBox.SuspendLayout();
             this.AllScriptsTab.SuspendLayout();
             this.pythonScriptingTab.SuspendLayout();
             this.uosScriptingTab.SuspendLayout();
@@ -1558,11 +1559,8 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.restockdataGridView)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.bandageheal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.BandageHealSettingsBox.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.toolbarTab.SuspendLayout();
             this.toolbarstab.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1633,7 +1631,7 @@ namespace Assistant
             this.friendlistView.MinimumSize = new System.Drawing.Size(10, 10);
             this.friendlistView.MultiSelect = false;
             this.friendlistView.Name = "friendlistView";
-            this.friendlistView.Size = new System.Drawing.Size(656, 245);
+            this.friendlistView.Size = new System.Drawing.Size(654, 245);
             this.friendlistView.TabIndex = 64;
             this.friendlistView.UseCompatibleStateImageBehavior = false;
             this.friendlistView.View = System.Windows.Forms.View.Details;
@@ -1672,7 +1670,7 @@ namespace Assistant
             this.friendguildListView.MinimumSize = new System.Drawing.Size(10, 10);
             this.friendguildListView.MultiSelect = false;
             this.friendguildListView.Name = "friendguildListView";
-            this.friendguildListView.Size = new System.Drawing.Size(656, 263);
+            this.friendguildListView.Size = new System.Drawing.Size(654, 263);
             this.friendguildListView.TabIndex = 77;
             this.friendguildListView.UseCompatibleStateImageBehavior = false;
             this.friendguildListView.View = System.Windows.Forms.View.Details;
@@ -1712,7 +1710,7 @@ namespace Assistant
             this.tabs.Name = "tabs";
             this.tabs.Padding = new System.Drawing.Point(9, 3);
             this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(1112, 635);
+            this.tabs.Size = new System.Drawing.Size(1097, 635);
             this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabs.TabIndex = 0;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_IndexChanged);
@@ -1741,7 +1739,7 @@ namespace Assistant
             this.generalTab.Controls.Add(this.label9);
             this.generalTab.Location = new System.Drawing.Point(4, 29);
             this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(1104, 602);
+            this.generalTab.Size = new System.Drawing.Size(1089, 602);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
             // 
@@ -2096,7 +2094,7 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
             this.moreOptTab.Location = new System.Drawing.Point(4, 29);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(1104, 602);
+            this.moreOptTab.Size = new System.Drawing.Size(1089, 602);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
@@ -2652,7 +2650,7 @@ namespace Assistant
             this.enhancedFilterTab.Controls.Add(this.FilterPages);
             this.enhancedFilterTab.Location = new System.Drawing.Point(4, 29);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
-            this.enhancedFilterTab.Size = new System.Drawing.Size(1104, 602);
+            this.enhancedFilterTab.Size = new System.Drawing.Size(1089, 602);
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Filters";
             // 
@@ -2666,7 +2664,7 @@ namespace Assistant
             this.FilterPages.Location = new System.Drawing.Point(-2, 2);
             this.FilterPages.Name = "FilterPages";
             this.FilterPages.SelectedIndex = 0;
-            this.FilterPages.Size = new System.Drawing.Size(1083, 608);
+            this.FilterPages.Size = new System.Drawing.Size(1068, 608);
             this.FilterPages.TabIndex = 0;
             // 
             // MiscFilterPage
@@ -2681,7 +2679,7 @@ namespace Assistant
             this.MiscFilterPage.Location = new System.Drawing.Point(4, 22);
             this.MiscFilterPage.Name = "MiscFilterPage";
             this.MiscFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.MiscFilterPage.Size = new System.Drawing.Size(1075, 582);
+            this.MiscFilterPage.Size = new System.Drawing.Size(1060, 582);
             this.MiscFilterPage.TabIndex = 0;
             this.MiscFilterPage.Text = "Misc";
             this.MiscFilterPage.UseVisualStyleBackColor = true;
@@ -2692,7 +2690,7 @@ namespace Assistant
             this.DmgDsplyGroup.Controls.Add(this.minDmgShown);
             this.DmgDsplyGroup.Controls.Add(this.label81);
             this.DmgDsplyGroup.Controls.Add(this.limitDamageDisplayEnable);
-            this.DmgDsplyGroup.Location = new System.Drawing.Point(904, 297);
+            this.DmgDsplyGroup.Location = new System.Drawing.Point(889, 297);
             this.DmgDsplyGroup.Name = "DmgDsplyGroup";
             this.DmgDsplyGroup.Size = new System.Drawing.Size(165, 91);
             this.DmgDsplyGroup.TabIndex = 76;
@@ -2771,7 +2769,7 @@ namespace Assistant
             this.groupBox32.Controls.Add(this.label47);
             this.groupBox32.Controls.Add(this.remountsetbutton);
             this.groupBox32.Controls.Add(this.remountcheckbox);
-            this.groupBox32.Location = new System.Drawing.Point(904, 172);
+            this.groupBox32.Location = new System.Drawing.Point(889, 172);
             this.groupBox32.Name = "groupBox32";
             this.groupBox32.Size = new System.Drawing.Size(165, 118);
             this.groupBox32.TabIndex = 74;
@@ -2991,7 +2989,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(194, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(694, 439);
+            this.groupBox23.Size = new System.Drawing.Size(679, 439);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -3014,7 +3012,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(682, 379);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(667, 379);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -3091,7 +3089,7 @@ namespace Assistant
             this.groupBox10.Controls.Add(this.label34);
             this.groupBox10.Controls.Add(this.autocarverrazorButton);
             this.groupBox10.Controls.Add(this.autocarverCheckBox);
-            this.groupBox10.Location = new System.Drawing.Point(903, 0);
+            this.groupBox10.Location = new System.Drawing.Point(888, 0);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(166, 80);
             this.groupBox10.TabIndex = 71;
@@ -3142,7 +3140,7 @@ namespace Assistant
             this.groupBox9.Controls.Add(this.label16);
             this.groupBox9.Controls.Add(this.boneCutterrazorButton);
             this.groupBox9.Controls.Add(this.bonecutterCheckBox);
-            this.groupBox9.Location = new System.Drawing.Point(903, 86);
+            this.groupBox9.Location = new System.Drawing.Point(888, 86);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(166, 80);
             this.groupBox9.TabIndex = 70;
@@ -3192,7 +3190,7 @@ namespace Assistant
             this.JournalFilterPage.Location = new System.Drawing.Point(4, 22);
             this.JournalFilterPage.Name = "JournalFilterPage";
             this.JournalFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.JournalFilterPage.Size = new System.Drawing.Size(1075, 582);
+            this.JournalFilterPage.Size = new System.Drawing.Size(1060, 582);
             this.JournalFilterPage.TabIndex = 1;
             this.JournalFilterPage.Text = "Journal";
             this.JournalFilterPage.UseVisualStyleBackColor = true;
@@ -3210,7 +3208,7 @@ namespace Assistant
             this.journalfilterdatagrid.RowHeadersVisible = false;
             this.journalfilterdatagrid.RowHeadersWidth = 62;
             this.journalfilterdatagrid.RowTemplate.Height = 28;
-            this.journalfilterdatagrid.Size = new System.Drawing.Size(1063, 554);
+            this.journalfilterdatagrid.Size = new System.Drawing.Size(1048, 554);
             this.journalfilterdatagrid.TabIndex = 0;
             this.journalfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.journalfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.journalfilterdatagrid_CellEndEdit);
@@ -3252,7 +3250,7 @@ namespace Assistant
             this.AllScripts.Controls.Add(this.AllScriptsTab);
             this.AllScripts.Location = new System.Drawing.Point(4, 29);
             this.AllScripts.Name = "AllScripts";
-            this.AllScripts.Size = new System.Drawing.Size(1104, 602);
+            this.AllScripts.Size = new System.Drawing.Size(1089, 602);
             this.AllScripts.TabIndex = 19;
             this.AllScripts.Text = "Scripting";
             this.AllScripts.UseVisualStyleBackColor = true;
@@ -3271,9 +3269,9 @@ namespace Assistant
             this.scriptControlBox.Controls.Add(this.groupBox30);
             this.scriptControlBox.Controls.Add(this.groupBox42);
             this.scriptControlBox.Controls.Add(this.scripterrorlogCheckBox);
-            this.scriptControlBox.Controls.Add(this.groupBox31);
+            this.scriptControlBox.Controls.Add(this.scriptOperationsBox);
             this.scriptControlBox.Controls.Add(this.showscriptmessageCheckBox);
-            this.scriptControlBox.Location = new System.Drawing.Point(904, 2);
+            this.scriptControlBox.Location = new System.Drawing.Point(889, 2);
             this.scriptControlBox.Name = "scriptControlBox";
             this.scriptControlBox.Size = new System.Drawing.Size(202, 647);
             this.scriptControlBox.TabIndex = 1;
@@ -3419,26 +3417,26 @@ namespace Assistant
             this.scripterrorlogCheckBox.Text = "Log Script Error";
             this.scripterrorlogCheckBox.CheckedChanged += new System.EventHandler(this.scripterrorlogCheckBox_CheckedChanged);
             // 
-            // groupBox31
+            // scriptOperationsBox
             // 
-            this.groupBox31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox31.Controls.Add(this.buttonScriptTo);
-            this.groupBox31.Controls.Add(this.buttonScriptEditorNew);
-            this.groupBox31.Controls.Add(this.buttonScriptRefresh);
-            this.groupBox31.Controls.Add(this.buttonAddScript);
-            this.groupBox31.Controls.Add(this.buttonRemoveScript);
-            this.groupBox31.Controls.Add(this.buttonScriptDown);
-            this.groupBox31.Controls.Add(this.textBoxDelay);
-            this.groupBox31.Controls.Add(this.buttonScriptUp);
-            this.groupBox31.Controls.Add(this.buttonScriptEditor);
-            this.groupBox31.Controls.Add(this.buttonScriptStop);
-            this.groupBox31.Controls.Add(this.buttonScriptPlay);
-            this.groupBox31.Location = new System.Drawing.Point(11, 125);
-            this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(175, 133);
-            this.groupBox31.TabIndex = 50;
-            this.groupBox31.TabStop = false;
-            this.groupBox31.Text = "Script Operation";
+            this.scriptOperationsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptTo);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptEditorNew);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptRefresh);
+            this.scriptOperationsBox.Controls.Add(this.buttonAddScript);
+            this.scriptOperationsBox.Controls.Add(this.buttonRemoveScript);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptDown);
+            this.scriptOperationsBox.Controls.Add(this.textBoxDelay);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptUp);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptEditor);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptStop);
+            this.scriptOperationsBox.Controls.Add(this.buttonScriptPlay);
+            this.scriptOperationsBox.Location = new System.Drawing.Point(11, 125);
+            this.scriptOperationsBox.Name = "scriptOperationsBox";
+            this.scriptOperationsBox.Size = new System.Drawing.Size(175, 133);
+            this.scriptOperationsBox.TabIndex = 50;
+            this.scriptOperationsBox.TabStop = false;
+            this.scriptOperationsBox.Text = "Script Operation";
             // 
             // buttonScriptTo
             // 
@@ -3575,7 +3573,7 @@ namespace Assistant
             this.AllScriptsTab.Location = new System.Drawing.Point(-2, 0);
             this.AllScriptsTab.Name = "AllScriptsTab";
             this.AllScriptsTab.SelectedIndex = 0;
-            this.AllScriptsTab.Size = new System.Drawing.Size(903, 602);
+            this.AllScriptsTab.Size = new System.Drawing.Size(888, 602);
             this.AllScriptsTab.TabIndex = 0;
             // 
             // pythonScriptingTab
@@ -3585,7 +3583,7 @@ namespace Assistant
             this.pythonScriptingTab.Location = new System.Drawing.Point(4, 22);
             this.pythonScriptingTab.Name = "pythonScriptingTab";
             this.pythonScriptingTab.Padding = new System.Windows.Forms.Padding(3);
-            this.pythonScriptingTab.Size = new System.Drawing.Size(895, 576);
+            this.pythonScriptingTab.Size = new System.Drawing.Size(880, 576);
             this.pythonScriptingTab.TabIndex = 13;
             this.pythonScriptingTab.Text = "Python";
             // 
@@ -3594,7 +3592,7 @@ namespace Assistant
             this.uosScriptingTab.Controls.Add(this.uosScriptListView);
             this.uosScriptingTab.Location = new System.Drawing.Point(4, 22);
             this.uosScriptingTab.Name = "uosScriptingTab";
-            this.uosScriptingTab.Size = new System.Drawing.Size(895, 576);
+            this.uosScriptingTab.Size = new System.Drawing.Size(880, 576);
             this.uosScriptingTab.TabIndex = 14;
             this.uosScriptingTab.Text = "UOS";
             this.uosScriptingTab.UseVisualStyleBackColor = true;
@@ -3604,7 +3602,7 @@ namespace Assistant
             this.csScriptingTab.Controls.Add(this.csScriptListView);
             this.csScriptingTab.Location = new System.Drawing.Point(4, 22);
             this.csScriptingTab.Name = "csScriptingTab";
-            this.csScriptingTab.Size = new System.Drawing.Size(895, 576);
+            this.csScriptingTab.Size = new System.Drawing.Size(880, 576);
             this.csScriptingTab.TabIndex = 15;
             this.csScriptingTab.Text = "C#";
             this.csScriptingTab.UseVisualStyleBackColor = true;
@@ -3615,7 +3613,7 @@ namespace Assistant
             this.EnhancedAgent.Location = new System.Drawing.Point(4, 29);
             this.EnhancedAgent.Name = "EnhancedAgent";
             this.EnhancedAgent.Padding = new System.Windows.Forms.Padding(3);
-            this.EnhancedAgent.Size = new System.Drawing.Size(1104, 602);
+            this.EnhancedAgent.Size = new System.Drawing.Size(1089, 602);
             this.EnhancedAgent.TabIndex = 14;
             this.EnhancedAgent.Text = "Agents";
             this.EnhancedAgent.UseVisualStyleBackColor = true;
@@ -3637,7 +3635,7 @@ namespace Assistant
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1098, 610);
+            this.tabControl1.Size = new System.Drawing.Size(1096, 610);
             this.tabControl1.TabIndex = 0;
             // 
             // eautoloot
@@ -3662,7 +3660,7 @@ namespace Assistant
             this.eautoloot.Location = new System.Drawing.Point(4, 22);
             this.eautoloot.Name = "eautoloot";
             this.eautoloot.Padding = new System.Windows.Forms.Padding(3);
-            this.eautoloot.Size = new System.Drawing.Size(1090, 584);
+            this.eautoloot.Size = new System.Drawing.Size(1088, 584);
             this.eautoloot.TabIndex = 0;
             this.eautoloot.Text = "Autoloot";
             this.eautoloot.UseVisualStyleBackColor = true;
@@ -3770,7 +3768,7 @@ namespace Assistant
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
             this.autolootdataGridView.RowHeadersWidth = 62;
-            this.autolootdataGridView.Size = new System.Drawing.Size(823, 468);
+            this.autolootdataGridView.Size = new System.Drawing.Size(821, 468);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
@@ -3904,7 +3902,7 @@ namespace Assistant
             this.groupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox13.Controls.Add(this.autolootLogBox);
-            this.groupBox13.Location = new System.Drawing.Point(838, 94);
+            this.groupBox13.Location = new System.Drawing.Point(836, 94);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(243, 469);
             this.groupBox13.TabIndex = 53;
@@ -3951,7 +3949,7 @@ namespace Assistant
             this.escavenger.Location = new System.Drawing.Point(4, 22);
             this.escavenger.Name = "escavenger";
             this.escavenger.Padding = new System.Windows.Forms.Padding(3);
-            this.escavenger.Size = new System.Drawing.Size(1090, 584);
+            this.escavenger.Size = new System.Drawing.Size(1088, 584);
             this.escavenger.TabIndex = 1;
             this.escavenger.Text = "Scavenger";
             this.escavenger.UseVisualStyleBackColor = true;
@@ -4040,7 +4038,7 @@ namespace Assistant
             this.scavengerdataGridView.Name = "scavengerdataGridView";
             this.scavengerdataGridView.RowHeadersVisible = false;
             this.scavengerdataGridView.RowHeadersWidth = 62;
-            this.scavengerdataGridView.Size = new System.Drawing.Size(787, 455);
+            this.scavengerdataGridView.Size = new System.Drawing.Size(785, 455);
             this.scavengerdataGridView.TabIndex = 72;
             this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.scavengerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellEndEdit);
@@ -4106,7 +4104,7 @@ namespace Assistant
             this.groupBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox12.Controls.Add(this.scavengerLogBox);
-            this.groupBox12.Location = new System.Drawing.Point(802, 94);
+            this.groupBox12.Location = new System.Drawing.Point(800, 94);
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(279, 456);
             this.groupBox12.TabIndex = 70;
@@ -4215,7 +4213,7 @@ namespace Assistant
             this.organizer.Location = new System.Drawing.Point(4, 22);
             this.organizer.Name = "organizer";
             this.organizer.Padding = new System.Windows.Forms.Padding(3);
-            this.organizer.Size = new System.Drawing.Size(1090, 584);
+            this.organizer.Size = new System.Drawing.Size(1088, 584);
             this.organizer.TabIndex = 2;
             this.organizer.Text = "Organizer";
             this.organizer.UseVisualStyleBackColor = true;
@@ -4339,7 +4337,7 @@ namespace Assistant
             this.organizerdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.organizerdataGridView.RowHeadersVisible = false;
             this.organizerdataGridView.RowHeadersWidth = 62;
-            this.organizerdataGridView.Size = new System.Drawing.Size(789, 437);
+            this.organizerdataGridView.Size = new System.Drawing.Size(787, 437);
             this.organizerdataGridView.TabIndex = 89;
             this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.organizerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellEndEdit);
@@ -4414,7 +4412,7 @@ namespace Assistant
             this.groupBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox16.Controls.Add(this.organizerLogBox);
-            this.groupBox16.Location = new System.Drawing.Point(804, 84);
+            this.groupBox16.Location = new System.Drawing.Point(802, 84);
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Size = new System.Drawing.Size(278, 468);
             this.groupBox16.TabIndex = 73;
@@ -4503,7 +4501,7 @@ namespace Assistant
             this.VendorBuy.Location = new System.Drawing.Point(4, 22);
             this.VendorBuy.Name = "VendorBuy";
             this.VendorBuy.Padding = new System.Windows.Forms.Padding(3);
-            this.VendorBuy.Size = new System.Drawing.Size(1090, 584);
+            this.VendorBuy.Size = new System.Drawing.Size(1088, 584);
             this.VendorBuy.TabIndex = 3;
             this.VendorBuy.Text = "Vendor Buy";
             this.VendorBuy.UseVisualStyleBackColor = true;
@@ -4512,7 +4510,7 @@ namespace Assistant
             // 
             this.buyToCompleteAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buyToCompleteAmount.AutoSize = true;
-            this.buyToCompleteAmount.Location = new System.Drawing.Point(803, 86);
+            this.buyToCompleteAmount.Location = new System.Drawing.Point(801, 86);
             this.buyToCompleteAmount.Name = "buyToCompleteAmount";
             this.buyToCompleteAmount.Size = new System.Drawing.Size(66, 17);
             this.buyToCompleteAmount.TabIndex = 91;
@@ -4526,7 +4524,7 @@ namespace Assistant
             this.buyLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buyLogBox.FormattingEnabled = true;
-            this.buyLogBox.Location = new System.Drawing.Point(812, 177);
+            this.buyLogBox.Location = new System.Drawing.Point(810, 177);
             this.buyLogBox.Name = "buyLogBox";
             this.buyLogBox.Size = new System.Drawing.Size(266, 264);
             this.buyLogBox.TabIndex = 0;
@@ -4535,7 +4533,7 @@ namespace Assistant
             // 
             this.buyCompareNameCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buyCompareNameCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buyCompareNameCheckBox.Location = new System.Drawing.Point(805, 65);
+            this.buyCompareNameCheckBox.Location = new System.Drawing.Point(803, 65);
             this.buyCompareNameCheckBox.Name = "buyCompareNameCheckBox";
             this.buyCompareNameCheckBox.Size = new System.Drawing.Size(135, 22);
             this.buyCompareNameCheckBox.TabIndex = 90;
@@ -4571,7 +4569,7 @@ namespace Assistant
             this.vendorbuydataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorbuydataGridView.RowHeadersVisible = false;
             this.vendorbuydataGridView.RowHeadersWidth = 62;
-            this.vendorbuydataGridView.Size = new System.Drawing.Size(788, 491);
+            this.vendorbuydataGridView.Size = new System.Drawing.Size(786, 491);
             this.vendorbuydataGridView.TabIndex = 88;
             this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.vendorbuydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellEndEdit);
@@ -4645,7 +4643,7 @@ namespace Assistant
             // 
             this.groupBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox18.Location = new System.Drawing.Point(804, 163);
+            this.groupBox18.Location = new System.Drawing.Point(802, 163);
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(278, 382);
             this.groupBox18.TabIndex = 73;
@@ -4664,7 +4662,7 @@ namespace Assistant
             // buyAddTargetB
             // 
             this.buyAddTargetB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buyAddTargetB.Location = new System.Drawing.Point(994, 39);
+            this.buyAddTargetB.Location = new System.Drawing.Point(992, 39);
             this.buyAddTargetB.Name = "buyAddTargetB";
             this.buyAddTargetB.Size = new System.Drawing.Size(90, 21);
             this.buyAddTargetB.TabIndex = 45;
@@ -4675,7 +4673,7 @@ namespace Assistant
             // 
             this.buyEnableCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buyEnableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buyEnableCheckBox.Location = new System.Drawing.Point(805, 44);
+            this.buyEnableCheckBox.Location = new System.Drawing.Point(803, 44);
             this.buyEnableCheckBox.Name = "buyEnableCheckBox";
             this.buyEnableCheckBox.Size = new System.Drawing.Size(135, 22);
             this.buyEnableCheckBox.TabIndex = 72;
@@ -4725,7 +4723,7 @@ namespace Assistant
             this.VendorSell.Location = new System.Drawing.Point(4, 22);
             this.VendorSell.Name = "VendorSell";
             this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
-            this.VendorSell.Size = new System.Drawing.Size(1090, 584);
+            this.VendorSell.Size = new System.Drawing.Size(1088, 584);
             this.VendorSell.TabIndex = 4;
             this.VendorSell.Text = "Vendor Sell";
             this.VendorSell.UseVisualStyleBackColor = true;
@@ -4797,7 +4795,7 @@ namespace Assistant
             this.vendorsellGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.vendorsellGridView.RowHeadersVisible = false;
             this.vendorsellGridView.RowHeadersWidth = 62;
-            this.vendorsellGridView.Size = new System.Drawing.Size(788, 455);
+            this.vendorsellGridView.Size = new System.Drawing.Size(786, 455);
             this.vendorsellGridView.TabIndex = 87;
             this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.vendorsellGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellEndEdit);
@@ -4872,7 +4870,7 @@ namespace Assistant
             this.groupBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox20.Controls.Add(this.sellLogBox);
-            this.groupBox20.Location = new System.Drawing.Point(804, 72);
+            this.groupBox20.Location = new System.Drawing.Point(802, 72);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(278, 473);
             this.groupBox20.TabIndex = 83;
@@ -4965,7 +4963,7 @@ namespace Assistant
             this.Dress.Location = new System.Drawing.Point(4, 22);
             this.Dress.Name = "Dress";
             this.Dress.Padding = new System.Windows.Forms.Padding(3);
-            this.Dress.Size = new System.Drawing.Size(1090, 584);
+            this.Dress.Size = new System.Drawing.Size(1088, 584);
             this.Dress.TabIndex = 5;
             this.Dress.Text = "Dress / Arm";
             this.Dress.UseVisualStyleBackColor = true;
@@ -4973,7 +4971,7 @@ namespace Assistant
             // useUo3D
             // 
             this.useUo3D.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.useUo3D.Location = new System.Drawing.Point(863, 84);
+            this.useUo3D.Location = new System.Drawing.Point(861, 84);
             this.useUo3D.Name = "useUo3D";
             this.useUo3D.Size = new System.Drawing.Size(185, 36);
             this.useUo3D.TabIndex = 92;
@@ -4983,7 +4981,7 @@ namespace Assistant
             // dressStopButton
             // 
             this.dressStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dressStopButton.Location = new System.Drawing.Point(852, 58);
+            this.dressStopButton.Location = new System.Drawing.Point(850, 58);
             this.dressStopButton.Name = "dressStopButton";
             this.dressStopButton.Size = new System.Drawing.Size(62, 20);
             this.dressStopButton.TabIndex = 91;
@@ -4994,7 +4992,7 @@ namespace Assistant
             // 
             this.dressConflictCheckB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dressConflictCheckB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.dressConflictCheckB.Location = new System.Drawing.Point(718, 84);
+            this.dressConflictCheckB.Location = new System.Drawing.Point(716, 84);
             this.dressConflictCheckB.Name = "dressConflictCheckB";
             this.dressConflictCheckB.Size = new System.Drawing.Size(128, 36);
             this.dressConflictCheckB.TabIndex = 90;
@@ -5004,7 +5002,7 @@ namespace Assistant
             // dressBagLabel
             // 
             this.dressBagLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dressBagLabel.Location = new System.Drawing.Point(991, 161);
+            this.dressBagLabel.Location = new System.Drawing.Point(989, 161);
             this.dressBagLabel.Name = "dressBagLabel";
             this.dressBagLabel.Size = new System.Drawing.Size(81, 19);
             this.dressBagLabel.TabIndex = 89;
@@ -5018,7 +5016,7 @@ namespace Assistant
             this.groupBox22.Controls.Add(this.dressRemoveB);
             this.groupBox22.Controls.Add(this.dressClearListB);
             this.groupBox22.Controls.Add(this.dressReadB);
-            this.groupBox22.Location = new System.Drawing.Point(973, 183);
+            this.groupBox22.Location = new System.Drawing.Point(971, 183);
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.Size = new System.Drawing.Size(100, 149);
             this.groupBox22.TabIndex = 85;
@@ -5074,7 +5072,7 @@ namespace Assistant
             // 
             this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(968, 61);
+            this.label29.Location = new System.Drawing.Point(966, 61);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(105, 13);
             this.label29.TabIndex = 76;
@@ -5085,7 +5083,7 @@ namespace Assistant
             this.groupBox21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox21.Controls.Add(this.dressLogBox);
-            this.groupBox21.Location = new System.Drawing.Point(719, 134);
+            this.groupBox21.Location = new System.Drawing.Point(717, 134);
             this.groupBox21.Name = "groupBox21";
             this.groupBox21.Size = new System.Drawing.Size(257, 414);
             this.groupBox21.TabIndex = 74;
@@ -5105,7 +5103,7 @@ namespace Assistant
             // dressSetBagB
             // 
             this.dressSetBagB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dressSetBagB.Location = new System.Drawing.Point(978, 134);
+            this.dressSetBagB.Location = new System.Drawing.Point(976, 134);
             this.dressSetBagB.Name = "dressSetBagB";
             this.dressSetBagB.Size = new System.Drawing.Size(88, 20);
             this.dressSetBagB.TabIndex = 88;
@@ -5115,7 +5113,7 @@ namespace Assistant
             // undressExecuteButton
             // 
             this.undressExecuteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.undressExecuteButton.Location = new System.Drawing.Point(786, 58);
+            this.undressExecuteButton.Location = new System.Drawing.Point(784, 58);
             this.undressExecuteButton.Name = "undressExecuteButton";
             this.undressExecuteButton.Size = new System.Drawing.Size(62, 20);
             this.undressExecuteButton.TabIndex = 87;
@@ -5125,7 +5123,7 @@ namespace Assistant
             // dressExecuteButton
             // 
             this.dressExecuteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dressExecuteButton.Location = new System.Drawing.Point(719, 58);
+            this.dressExecuteButton.Location = new System.Drawing.Point(717, 58);
             this.dressExecuteButton.Name = "dressExecuteButton";
             this.dressExecuteButton.Size = new System.Drawing.Size(62, 20);
             this.dressExecuteButton.TabIndex = 86;
@@ -5152,7 +5150,7 @@ namespace Assistant
             this.dressListView.Location = new System.Drawing.Point(6, 51);
             this.dressListView.MultiSelect = false;
             this.dressListView.Name = "dressListView";
-            this.dressListView.Size = new System.Drawing.Size(710, 503);
+            this.dressListView.Size = new System.Drawing.Size(708, 503);
             this.dressListView.TabIndex = 64;
             this.dressListView.UseCompatibleStateImageBehavior = false;
             this.dressListView.View = System.Windows.Forms.View.Details;
@@ -5232,7 +5230,7 @@ namespace Assistant
             this.friends.Location = new System.Drawing.Point(4, 22);
             this.friends.Name = "friends";
             this.friends.Padding = new System.Windows.Forms.Padding(3);
-            this.friends.Size = new System.Drawing.Size(1090, 584);
+            this.friends.Size = new System.Drawing.Size(1088, 584);
             this.friends.TabIndex = 6;
             this.friends.Text = "Friends";
             this.friends.UseVisualStyleBackColor = true;
@@ -5253,7 +5251,7 @@ namespace Assistant
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.friendguildListView);
-            this.splitContainer1.Size = new System.Drawing.Size(662, 522);
+            this.splitContainer1.Size = new System.Drawing.Size(660, 522);
             this.splitContainer1.SplitterDistance = 250;
             this.splitContainer1.TabIndex = 83;
             // 
@@ -5262,7 +5260,7 @@ namespace Assistant
             this.groupBox34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox34.Controls.Add(this.FriendGuildAddButton);
             this.groupBox34.Controls.Add(this.FriendGuildRemoveButton);
-            this.groupBox34.Location = new System.Drawing.Point(978, 230);
+            this.groupBox34.Location = new System.Drawing.Point(976, 230);
             this.groupBox34.Name = "groupBox34";
             this.groupBox34.Size = new System.Drawing.Size(106, 75);
             this.groupBox34.TabIndex = 82;
@@ -5294,7 +5292,7 @@ namespace Assistant
             this.groupBox33.Controls.Add(this.SLfriendCheckBox);
             this.groupBox33.Controls.Add(this.TBfriendCheckBox);
             this.groupBox33.Controls.Add(this.COMfriendCheckBox);
-            this.groupBox33.Location = new System.Drawing.Point(978, 147);
+            this.groupBox33.Location = new System.Drawing.Point(976, 147);
             this.groupBox33.Name = "groupBox33";
             this.groupBox33.Size = new System.Drawing.Size(106, 77);
             this.groupBox33.TabIndex = 78;
@@ -5343,7 +5341,7 @@ namespace Assistant
             this.friendGroupBox.Controls.Add(this.friendAddTargetButton);
             this.friendGroupBox.Controls.Add(this.friendRemoveButton);
             this.friendGroupBox.Controls.Add(this.friendAddButton);
-            this.friendGroupBox.Location = new System.Drawing.Point(978, 41);
+            this.friendGroupBox.Location = new System.Drawing.Point(976, 41);
             this.friendGroupBox.Name = "friendGroupBox";
             this.friendGroupBox.Size = new System.Drawing.Size(106, 100);
             this.friendGroupBox.TabIndex = 76;
@@ -5381,7 +5379,7 @@ namespace Assistant
             // 
             this.friendloggroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.friendloggroupBox.Controls.Add(this.friendLogBox);
-            this.friendloggroupBox.Location = new System.Drawing.Point(701, 131);
+            this.friendloggroupBox.Location = new System.Drawing.Point(699, 131);
             this.friendloggroupBox.Name = "friendloggroupBox";
             this.friendloggroupBox.Size = new System.Drawing.Size(271, 204);
             this.friendloggroupBox.TabIndex = 74;
@@ -5402,7 +5400,7 @@ namespace Assistant
             // friendIncludePartyCheckBox
             // 
             this.friendIncludePartyCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.friendIncludePartyCheckBox.Location = new System.Drawing.Point(701, 101);
+            this.friendIncludePartyCheckBox.Location = new System.Drawing.Point(699, 101);
             this.friendIncludePartyCheckBox.Name = "friendIncludePartyCheckBox";
             this.friendIncludePartyCheckBox.Size = new System.Drawing.Size(235, 22);
             this.friendIncludePartyCheckBox.TabIndex = 68;
@@ -5412,7 +5410,7 @@ namespace Assistant
             // friendAttackCheckBox
             // 
             this.friendAttackCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.friendAttackCheckBox.Location = new System.Drawing.Point(701, 76);
+            this.friendAttackCheckBox.Location = new System.Drawing.Point(699, 76);
             this.friendAttackCheckBox.Name = "friendAttackCheckBox";
             this.friendAttackCheckBox.Size = new System.Drawing.Size(241, 22);
             this.friendAttackCheckBox.TabIndex = 67;
@@ -5422,7 +5420,7 @@ namespace Assistant
             // friendPartyCheckBox
             // 
             this.friendPartyCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.friendPartyCheckBox.Location = new System.Drawing.Point(701, 51);
+            this.friendPartyCheckBox.Location = new System.Drawing.Point(699, 51);
             this.friendPartyCheckBox.Name = "friendPartyCheckBox";
             this.friendPartyCheckBox.Size = new System.Drawing.Size(241, 22);
             this.friendPartyCheckBox.TabIndex = 66;
@@ -5484,7 +5482,7 @@ namespace Assistant
             this.restock.Location = new System.Drawing.Point(4, 22);
             this.restock.Name = "restock";
             this.restock.Padding = new System.Windows.Forms.Padding(3);
-            this.restock.Size = new System.Drawing.Size(1090, 584);
+            this.restock.Size = new System.Drawing.Size(1088, 584);
             this.restock.TabIndex = 7;
             this.restock.Text = "Restock";
             this.restock.UseVisualStyleBackColor = true;
@@ -5609,7 +5607,7 @@ namespace Assistant
             this.restockdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.restockdataGridView.RowHeadersVisible = false;
             this.restockdataGridView.RowHeadersWidth = 62;
-            this.restockdataGridView.Size = new System.Drawing.Size(789, 437);
+            this.restockdataGridView.Size = new System.Drawing.Size(787, 437);
             this.restockdataGridView.TabIndex = 90;
             this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.restockdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellEndEdit);
@@ -5684,7 +5682,7 @@ namespace Assistant
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.restockLogBox);
-            this.groupBox2.Location = new System.Drawing.Point(804, 84);
+            this.groupBox2.Location = new System.Drawing.Point(802, 84);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(278, 468);
             this.groupBox2.TabIndex = 83;
@@ -5705,7 +5703,7 @@ namespace Assistant
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(851, 54);
+            this.label13.Location = new System.Drawing.Point(849, 54);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(105, 13);
             this.label13.TabIndex = 82;
@@ -5723,7 +5721,7 @@ namespace Assistant
             // restockAddTargetButton
             // 
             this.restockAddTargetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.restockAddTargetButton.Location = new System.Drawing.Point(994, 39);
+            this.restockAddTargetButton.Location = new System.Drawing.Point(992, 39);
             this.restockAddTargetButton.Name = "restockAddTargetButton";
             this.restockAddTargetButton.Size = new System.Drawing.Size(90, 21);
             this.restockAddTargetButton.TabIndex = 47;
@@ -5760,98 +5758,72 @@ namespace Assistant
             // 
             // bandageheal
             // 
-            this.bandageheal.Controls.Add(this.splitContainer2);
+            this.bandageheal.Controls.Add(this.BandageHealSettingsBox);
+            this.bandageheal.Controls.Add(this.groupBox5);
             this.bandageheal.Location = new System.Drawing.Point(4, 22);
             this.bandageheal.Name = "bandageheal";
             this.bandageheal.Padding = new System.Windows.Forms.Padding(3);
-            this.bandageheal.Size = new System.Drawing.Size(1090, 584);
+            this.bandageheal.Size = new System.Drawing.Size(1088, 584);
             this.bandageheal.TabIndex = 8;
             this.bandageheal.Text = "Bandage Heal";
             this.bandageheal.UseVisualStyleBackColor = true;
             // 
-            // splitContainer2
+            // BandageHealSettingsBox
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.bandagehealLogBox);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.bandagehealAutostartCheckBox);
-            this.splitContainer2.Panel2.Controls.Add(this.groupBox6);
-            this.splitContainer2.Panel2.Controls.Add(this.bandagehealenableCheckBox);
-            this.splitContainer2.Size = new System.Drawing.Size(1084, 578);
-            this.splitContainer2.SplitterDistance = 700;
-            this.splitContainer2.TabIndex = 77;
-            // 
-            // bandagehealLogBox
-            // 
-            this.bandagehealLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bandagehealLogBox.FormattingEnabled = true;
-            this.bandagehealLogBox.Location = new System.Drawing.Point(3, 3);
-            this.bandagehealLogBox.Name = "bandagehealLogBox";
-            this.bandagehealLogBox.Size = new System.Drawing.Size(694, 550);
-            this.bandagehealLogBox.TabIndex = 1;
+            this.BandageHealSettingsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealAutostartCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.bandageHealIgnoreCount);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealTimeWithBufCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label78);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealenableCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label77);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealusetextContent);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealusetextSelfContent);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealusetext);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealusetarget);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealmaxrangeTextBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label46);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealcountdownCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealhiddedCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealmortalCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealpoisonCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label33);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealhpTextBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label32);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealdelayTextBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label31);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealdexformulaCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealcustomcolorTextBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label30);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealcustomIDTextBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label19);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealcustomCheckBox);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealtargetLabel);
+            this.BandageHealSettingsBox.Controls.Add(this.label15);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealsettargetButton);
+            this.BandageHealSettingsBox.Controls.Add(this.bandagehealtargetComboBox);
+            this.BandageHealSettingsBox.Controls.Add(this.label14);
+            this.BandageHealSettingsBox.Location = new System.Drawing.Point(736, 24);
+            this.BandageHealSettingsBox.Name = "BandageHealSettingsBox";
+            this.BandageHealSettingsBox.Size = new System.Drawing.Size(346, 332);
+            this.BandageHealSettingsBox.TabIndex = 74;
+            this.BandageHealSettingsBox.TabStop = false;
+            this.BandageHealSettingsBox.Text = "Settings";
             // 
             // bandagehealAutostartCheckBox
             // 
-            this.bandagehealAutostartCheckBox.Location = new System.Drawing.Point(179, 15);
+            this.bandagehealAutostartCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealAutostartCheckBox.Location = new System.Drawing.Point(221, 19);
             this.bandagehealAutostartCheckBox.Name = "bandagehealAutostartCheckBox";
             this.bandagehealAutostartCheckBox.Size = new System.Drawing.Size(118, 22);
-            this.bandagehealAutostartCheckBox.TabIndex = 81;
+            this.bandagehealAutostartCheckBox.TabIndex = 75;
             this.bandagehealAutostartCheckBox.Text = "Autostart OnLogin";
             this.bandagehealAutostartCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealAutostartCheckBox_CheckedChanged);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.bandageHealIgnoreCount);
-            this.groupBox6.Controls.Add(this.bandagehealTimeWithBufCheckBox);
-            this.groupBox6.Controls.Add(this.label78);
-            this.groupBox6.Controls.Add(this.label77);
-            this.groupBox6.Controls.Add(this.bandagehealusetextContent);
-            this.groupBox6.Controls.Add(this.bandagehealusetextSelfContent);
-            this.groupBox6.Controls.Add(this.bandagehealusetext);
-            this.groupBox6.Controls.Add(this.bandagehealusetarget);
-            this.groupBox6.Controls.Add(this.bandagehealmaxrangeTextBox);
-            this.groupBox6.Controls.Add(this.label46);
-            this.groupBox6.Controls.Add(this.bandagehealcountdownCheckBox);
-            this.groupBox6.Controls.Add(this.bandagehealhiddedCheckBox);
-            this.groupBox6.Controls.Add(this.bandagehealmortalCheckBox);
-            this.groupBox6.Controls.Add(this.bandagehealpoisonCheckBox);
-            this.groupBox6.Controls.Add(this.label33);
-            this.groupBox6.Controls.Add(this.bandagehealhpTextBox);
-            this.groupBox6.Controls.Add(this.label32);
-            this.groupBox6.Controls.Add(this.bandagehealdelayTextBox);
-            this.groupBox6.Controls.Add(this.label31);
-            this.groupBox6.Controls.Add(this.bandagehealdexformulaCheckBox);
-            this.groupBox6.Controls.Add(this.bandagehealcustomcolorTextBox);
-            this.groupBox6.Controls.Add(this.label30);
-            this.groupBox6.Controls.Add(this.bandagehealcustomIDTextBox);
-            this.groupBox6.Controls.Add(this.label19);
-            this.groupBox6.Controls.Add(this.bandagehealcustomCheckBox);
-            this.groupBox6.Controls.Add(this.bandagehealtargetLabel);
-            this.groupBox6.Controls.Add(this.label15);
-            this.groupBox6.Controls.Add(this.bandagehealsettargetButton);
-            this.groupBox6.Controls.Add(this.bandagehealtargetComboBox);
-            this.groupBox6.Controls.Add(this.label14);
-            this.groupBox6.Location = new System.Drawing.Point(9, 43);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(361, 303);
-            this.groupBox6.TabIndex = 80;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Settings";
             // 
             // bandageHealIgnoreCount
             // 
             this.bandageHealIgnoreCount.AutoSize = true;
-            this.bandageHealIgnoreCount.Location = new System.Drawing.Point(210, 267);
+            this.bandageHealIgnoreCount.Location = new System.Drawing.Point(210, 304);
             this.bandageHealIgnoreCount.Name = "bandageHealIgnoreCount";
             this.bandageHealIgnoreCount.Size = new System.Drawing.Size(87, 17);
             this.bandageHealIgnoreCount.TabIndex = 98;
@@ -5863,7 +5835,7 @@ namespace Assistant
             // bandagehealTimeWithBufCheckBox
             // 
             this.bandagehealTimeWithBufCheckBox.AutoSize = true;
-            this.bandagehealTimeWithBufCheckBox.Location = new System.Drawing.Point(180, 105);
+            this.bandagehealTimeWithBufCheckBox.Location = new System.Drawing.Point(180, 142);
             this.bandagehealTimeWithBufCheckBox.Name = "bandagehealTimeWithBufCheckBox";
             this.bandagehealTimeWithBufCheckBox.Size = new System.Drawing.Size(93, 17);
             this.bandagehealTimeWithBufCheckBox.TabIndex = 97;
@@ -5874,16 +5846,27 @@ namespace Assistant
             // label78
             // 
             this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(207, 248);
+            this.label78.Location = new System.Drawing.Point(207, 285);
             this.label78.Name = "label78";
             this.label78.Size = new System.Drawing.Size(36, 13);
             this.label78.TabIndex = 96;
             this.label78.Text = "Other:";
             // 
+            // bandagehealenableCheckBox
+            // 
+            this.bandagehealenableCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealenableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealenableCheckBox.Location = new System.Drawing.Point(10, 19);
+            this.bandagehealenableCheckBox.Name = "bandagehealenableCheckBox";
+            this.bandagehealenableCheckBox.Size = new System.Drawing.Size(146, 22);
+            this.bandagehealenableCheckBox.TabIndex = 73;
+            this.bandagehealenableCheckBox.Text = "Enable Bandage Heal";
+            this.bandagehealenableCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealenableCheckBox_CheckedChanged);
+            // 
             // label77
             // 
             this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(207, 223);
+            this.label77.Location = new System.Drawing.Point(207, 260);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(28, 13);
             this.label77.TabIndex = 95;
@@ -5892,7 +5875,7 @@ namespace Assistant
             // bandagehealusetextContent
             // 
             this.bandagehealusetextContent.Enabled = false;
-            this.bandagehealusetextContent.Location = new System.Drawing.Point(254, 245);
+            this.bandagehealusetextContent.Location = new System.Drawing.Point(254, 282);
             this.bandagehealusetextContent.Name = "bandagehealusetextContent";
             this.bandagehealusetextContent.Size = new System.Drawing.Size(82, 20);
             this.bandagehealusetextContent.TabIndex = 94;
@@ -5902,7 +5885,7 @@ namespace Assistant
             // bandagehealusetextSelfContent
             // 
             this.bandagehealusetextSelfContent.Enabled = false;
-            this.bandagehealusetextSelfContent.Location = new System.Drawing.Point(254, 219);
+            this.bandagehealusetextSelfContent.Location = new System.Drawing.Point(254, 256);
             this.bandagehealusetextSelfContent.Name = "bandagehealusetextSelfContent";
             this.bandagehealusetextSelfContent.Size = new System.Drawing.Size(82, 20);
             this.bandagehealusetextSelfContent.TabIndex = 94;
@@ -5912,7 +5895,7 @@ namespace Assistant
             // bandagehealusetext
             // 
             this.bandagehealusetext.AutoSize = true;
-            this.bandagehealusetext.Location = new System.Drawing.Point(184, 193);
+            this.bandagehealusetext.Location = new System.Drawing.Point(184, 230);
             this.bandagehealusetext.Name = "bandagehealusetext";
             this.bandagehealusetext.Size = new System.Drawing.Size(128, 17);
             this.bandagehealusetext.TabIndex = 93;
@@ -5923,7 +5906,7 @@ namespace Assistant
             // bandagehealusetarget
             // 
             this.bandagehealusetarget.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealusetarget.Location = new System.Drawing.Point(184, 162);
+            this.bandagehealusetarget.Location = new System.Drawing.Point(184, 199);
             this.bandagehealusetarget.Name = "bandagehealusetarget";
             this.bandagehealusetarget.Size = new System.Drawing.Size(155, 22);
             this.bandagehealusetarget.TabIndex = 92;
@@ -5933,7 +5916,7 @@ namespace Assistant
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(7, 273);
+            this.label46.Location = new System.Drawing.Point(7, 310);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(65, 13);
             this.label46.TabIndex = 90;
@@ -5942,7 +5925,7 @@ namespace Assistant
             // bandagehealcountdownCheckBox
             // 
             this.bandagehealcountdownCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealcountdownCheckBox.Location = new System.Drawing.Point(10, 246);
+            this.bandagehealcountdownCheckBox.Location = new System.Drawing.Point(10, 283);
             this.bandagehealcountdownCheckBox.Name = "bandagehealcountdownCheckBox";
             this.bandagehealcountdownCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealcountdownCheckBox.TabIndex = 89;
@@ -5952,7 +5935,7 @@ namespace Assistant
             // bandagehealhiddedCheckBox
             // 
             this.bandagehealhiddedCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealhiddedCheckBox.Location = new System.Drawing.Point(10, 218);
+            this.bandagehealhiddedCheckBox.Location = new System.Drawing.Point(10, 255);
             this.bandagehealhiddedCheckBox.Name = "bandagehealhiddedCheckBox";
             this.bandagehealhiddedCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealhiddedCheckBox.TabIndex = 88;
@@ -5962,7 +5945,7 @@ namespace Assistant
             // bandagehealmortalCheckBox
             // 
             this.bandagehealmortalCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealmortalCheckBox.Location = new System.Drawing.Point(10, 190);
+            this.bandagehealmortalCheckBox.Location = new System.Drawing.Point(10, 227);
             this.bandagehealmortalCheckBox.Name = "bandagehealmortalCheckBox";
             this.bandagehealmortalCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealmortalCheckBox.TabIndex = 87;
@@ -5972,7 +5955,7 @@ namespace Assistant
             // bandagehealpoisonCheckBox
             // 
             this.bandagehealpoisonCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealpoisonCheckBox.Location = new System.Drawing.Point(10, 162);
+            this.bandagehealpoisonCheckBox.Location = new System.Drawing.Point(10, 199);
             this.bandagehealpoisonCheckBox.Name = "bandagehealpoisonCheckBox";
             this.bandagehealpoisonCheckBox.Size = new System.Drawing.Size(155, 22);
             this.bandagehealpoisonCheckBox.TabIndex = 86;
@@ -5982,7 +5965,7 @@ namespace Assistant
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(148, 139);
+            this.label33.Location = new System.Drawing.Point(135, 176);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(34, 13);
             this.label33.TabIndex = 85;
@@ -5991,7 +5974,7 @@ namespace Assistant
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(7, 138);
+            this.label32.Location = new System.Drawing.Point(7, 175);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(64, 13);
             this.label32.TabIndex = 83;
@@ -6000,7 +5983,7 @@ namespace Assistant
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(202, 137);
+            this.label31.Location = new System.Drawing.Point(202, 174);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(75, 13);
             this.label31.TabIndex = 81;
@@ -6009,9 +5992,9 @@ namespace Assistant
             // bandagehealdexformulaCheckBox
             // 
             this.bandagehealdexformulaCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealdexformulaCheckBox.Location = new System.Drawing.Point(10, 96);
+            this.bandagehealdexformulaCheckBox.Location = new System.Drawing.Point(10, 139);
             this.bandagehealdexformulaCheckBox.Name = "bandagehealdexformulaCheckBox";
-            this.bandagehealdexformulaCheckBox.Size = new System.Drawing.Size(129, 31);
+            this.bandagehealdexformulaCheckBox.Size = new System.Drawing.Size(129, 22);
             this.bandagehealdexformulaCheckBox.TabIndex = 80;
             this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
             this.bandagehealdexformulaCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealdexformulaCheckBox_CheckedChanged);
@@ -6019,7 +6002,7 @@ namespace Assistant
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(246, 79);
+            this.label30.Location = new System.Drawing.Point(246, 116);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(34, 13);
             this.label30.TabIndex = 78;
@@ -6028,7 +6011,7 @@ namespace Assistant
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(153, 78);
+            this.label19.Location = new System.Drawing.Point(153, 115);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(21, 13);
             this.label19.TabIndex = 76;
@@ -6037,7 +6020,7 @@ namespace Assistant
             // bandagehealcustomCheckBox
             // 
             this.bandagehealcustomCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealcustomCheckBox.Location = new System.Drawing.Point(10, 74);
+            this.bandagehealcustomCheckBox.Location = new System.Drawing.Point(10, 111);
             this.bandagehealcustomCheckBox.Name = "bandagehealcustomCheckBox";
             this.bandagehealcustomCheckBox.Size = new System.Drawing.Size(137, 22);
             this.bandagehealcustomCheckBox.TabIndex = 75;
@@ -6047,7 +6030,7 @@ namespace Assistant
             // bandagehealtargetLabel
             // 
             this.bandagehealtargetLabel.AutoSize = true;
-            this.bandagehealtargetLabel.Location = new System.Drawing.Point(73, 49);
+            this.bandagehealtargetLabel.Location = new System.Drawing.Point(73, 86);
             this.bandagehealtargetLabel.Name = "bandagehealtargetLabel";
             this.bandagehealtargetLabel.Size = new System.Drawing.Size(93, 13);
             this.bandagehealtargetLabel.TabIndex = 4;
@@ -6056,7 +6039,7 @@ namespace Assistant
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(7, 49);
+            this.label15.Location = new System.Drawing.Point(7, 86);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(41, 13);
             this.label15.TabIndex = 3;
@@ -6064,7 +6047,7 @@ namespace Assistant
             // 
             // bandagehealsettargetButton
             // 
-            this.bandagehealsettargetButton.Location = new System.Drawing.Point(213, 14);
+            this.bandagehealsettargetButton.Location = new System.Drawing.Point(213, 51);
             this.bandagehealsettargetButton.Name = "bandagehealsettargetButton";
             this.bandagehealsettargetButton.Size = new System.Drawing.Size(75, 23);
             this.bandagehealsettargetButton.TabIndex = 2;
@@ -6076,7 +6059,7 @@ namespace Assistant
             // 
             this.bandagehealtargetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.bandagehealtargetComboBox.FormattingEnabled = true;
-            this.bandagehealtargetComboBox.Location = new System.Drawing.Point(76, 15);
+            this.bandagehealtargetComboBox.Location = new System.Drawing.Point(76, 52);
             this.bandagehealtargetComboBox.Name = "bandagehealtargetComboBox";
             this.bandagehealtargetComboBox.Size = new System.Drawing.Size(121, 21);
             this.bandagehealtargetComboBox.TabIndex = 1;
@@ -6085,28 +6068,42 @@ namespace Assistant
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(7, 20);
+            this.label14.Location = new System.Drawing.Point(7, 57);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(66, 13);
             this.label14.TabIndex = 0;
             this.label14.Text = "Heal Target:";
             // 
-            // bandagehealenableCheckBox
+            // groupBox5
             // 
-            this.bandagehealenableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bandagehealenableCheckBox.Location = new System.Drawing.Point(10, 15);
-            this.bandagehealenableCheckBox.Name = "bandagehealenableCheckBox";
-            this.bandagehealenableCheckBox.Size = new System.Drawing.Size(146, 22);
-            this.bandagehealenableCheckBox.TabIndex = 79;
-            this.bandagehealenableCheckBox.Text = "Enable Bandage Heal";
-            this.bandagehealenableCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealenableCheckBox_CheckedChanged);
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.Controls.Add(this.bandagehealLogBox);
+            this.groupBox5.Location = new System.Drawing.Point(6, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(708, 550);
+            this.groupBox5.TabIndex = 54;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Bandage Heal Log";
+            // 
+            // bandagehealLogBox
+            // 
+            this.bandagehealLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealLogBox.FormattingEnabled = true;
+            this.bandagehealLogBox.Location = new System.Drawing.Point(7, 18);
+            this.bandagehealLogBox.Name = "bandagehealLogBox";
+            this.bandagehealLogBox.Size = new System.Drawing.Size(694, 524);
+            this.bandagehealLogBox.TabIndex = 0;
             // 
             // toolbarTab
             // 
             this.toolbarTab.Controls.Add(this.toolbarstab);
             this.toolbarTab.Location = new System.Drawing.Point(4, 29);
             this.toolbarTab.Name = "toolbarTab";
-            this.toolbarTab.Size = new System.Drawing.Size(1104, 602);
+            this.toolbarTab.Size = new System.Drawing.Size(1089, 602);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Toolbars";
             // 
@@ -6870,7 +6867,7 @@ namespace Assistant
             this.emptyTab.Controls.Add(this.groupBox43);
             this.emptyTab.Location = new System.Drawing.Point(4, 29);
             this.emptyTab.Name = "emptyTab";
-            this.emptyTab.Size = new System.Drawing.Size(1104, 602);
+            this.emptyTab.Size = new System.Drawing.Size(1089, 602);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Targetting";
             // 
@@ -7579,14 +7576,14 @@ namespace Assistant
             this.skillsTab.Controls.Add(this.skillList);
             this.skillsTab.Location = new System.Drawing.Point(4, 29);
             this.skillsTab.Name = "skillsTab";
-            this.skillsTab.Size = new System.Drawing.Size(1104, 602);
+            this.skillsTab.Size = new System.Drawing.Size(1089, 602);
             this.skillsTab.TabIndex = 2;
             this.skillsTab.Text = "Skills";
             // 
             // dispDelta
             // 
             this.dispDelta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dispDelta.Location = new System.Drawing.Point(956, 144);
+            this.dispDelta.Location = new System.Drawing.Point(941, 144);
             this.dispDelta.Name = "dispDelta";
             this.dispDelta.Size = new System.Drawing.Size(113, 22);
             this.dispDelta.TabIndex = 11;
@@ -7596,7 +7593,7 @@ namespace Assistant
             // skillCopyAll
             // 
             this.skillCopyAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.skillCopyAll.Location = new System.Drawing.Point(956, 109);
+            this.skillCopyAll.Location = new System.Drawing.Point(941, 109);
             this.skillCopyAll.Name = "skillCopyAll";
             this.skillCopyAll.Size = new System.Drawing.Size(132, 20);
             this.skillCopyAll.TabIndex = 9;
@@ -7606,7 +7603,7 @@ namespace Assistant
             // skillCopySel
             // 
             this.skillCopySel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.skillCopySel.Location = new System.Drawing.Point(956, 81);
+            this.skillCopySel.Location = new System.Drawing.Point(941, 81);
             this.skillCopySel.Name = "skillCopySel";
             this.skillCopySel.Size = new System.Drawing.Size(132, 21);
             this.skillCopySel.TabIndex = 8;
@@ -7616,7 +7613,7 @@ namespace Assistant
             // baseTotal
             // 
             this.baseTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.baseTotal.Location = new System.Drawing.Point(1026, 175);
+            this.baseTotal.Location = new System.Drawing.Point(1011, 175);
             this.baseTotal.Name = "baseTotal";
             this.baseTotal.ReadOnly = true;
             this.baseTotal.Size = new System.Drawing.Size(43, 20);
@@ -7625,7 +7622,7 @@ namespace Assistant
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(956, 179);
+            this.label1.Location = new System.Drawing.Point(941, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 15);
             this.label1.TabIndex = 6;
@@ -7640,7 +7637,7 @@ namespace Assistant
             "Up",
             "Down",
             "Locked"});
-            this.locks.Location = new System.Drawing.Point(1038, 45);
+            this.locks.Location = new System.Drawing.Point(1023, 45);
             this.locks.Name = "locks";
             this.locks.Size = new System.Drawing.Size(50, 23);
             this.locks.TabIndex = 5;
@@ -7648,7 +7645,7 @@ namespace Assistant
             // setlocks
             // 
             this.setlocks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.setlocks.Location = new System.Drawing.Point(956, 46);
+            this.setlocks.Location = new System.Drawing.Point(941, 46);
             this.setlocks.Name = "setlocks";
             this.setlocks.Size = new System.Drawing.Size(76, 20);
             this.setlocks.TabIndex = 4;
@@ -7658,7 +7655,7 @@ namespace Assistant
             // resetDelta
             // 
             this.resetDelta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetDelta.Location = new System.Drawing.Point(956, 13);
+            this.resetDelta.Location = new System.Drawing.Point(941, 13);
             this.resetDelta.Name = "resetDelta";
             this.resetDelta.Size = new System.Drawing.Size(132, 20);
             this.resetDelta.TabIndex = 3;
@@ -7682,7 +7679,7 @@ namespace Assistant
             this.skillList.HideSelection = false;
             this.skillList.Location = new System.Drawing.Point(7, 13);
             this.skillList.Name = "skillList";
-            this.skillList.Size = new System.Drawing.Size(931, 603);
+            this.skillList.Size = new System.Drawing.Size(916, 603);
             this.skillList.TabIndex = 1;
             this.skillList.UseCompatibleStateImageBehavior = false;
             this.skillList.View = System.Windows.Forms.View.Details;
@@ -7728,7 +7725,7 @@ namespace Assistant
             this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 29);
             this.enhancedHotKeytabPage.Name = "enhancedHotKeytabPage";
             this.enhancedHotKeytabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(1104, 602);
+            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(1089, 602);
             this.enhancedHotKeytabPage.TabIndex = 15;
             this.enhancedHotKeytabPage.Text = "HotKey";
             this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
@@ -7740,7 +7737,7 @@ namespace Assistant
             this.groupBox8.Controls.Add(this.hotkeyKeyMasterTextBox);
             this.groupBox8.Controls.Add(this.hotkeyMasterSetButton);
             this.groupBox8.Controls.Add(this.label42);
-            this.groupBox8.Location = new System.Drawing.Point(941, 105);
+            this.groupBox8.Location = new System.Drawing.Point(926, 105);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(157, 84);
             this.groupBox8.TabIndex = 4;
@@ -7783,7 +7780,7 @@ namespace Assistant
             this.groupBox28.Controls.Add(this.hotkeyMEnableButton);
             this.groupBox28.Controls.Add(this.hotkeyKeyMasterLabel);
             this.groupBox28.Controls.Add(this.hotkeyStatusLabel);
-            this.groupBox28.Location = new System.Drawing.Point(941, 7);
+            this.groupBox28.Location = new System.Drawing.Point(926, 7);
             this.groupBox28.Name = "groupBox28";
             this.groupBox28.Size = new System.Drawing.Size(157, 92);
             this.groupBox28.TabIndex = 3;
@@ -7836,7 +7833,7 @@ namespace Assistant
             this.groupBox27.Controls.Add(this.hotkeySetButton);
             this.groupBox27.Controls.Add(this.label39);
             this.groupBox27.Controls.Add(this.hotkeytextbox);
-            this.groupBox27.Location = new System.Drawing.Point(941, 195);
+            this.groupBox27.Location = new System.Drawing.Point(926, 195);
             this.groupBox27.Name = "groupBox27";
             this.groupBox27.Size = new System.Drawing.Size(157, 107);
             this.groupBox27.TabIndex = 2;
@@ -7888,7 +7885,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hotkeytreeView.Location = new System.Drawing.Point(10, 7);
             this.hotkeytreeView.Name = "hotkeytreeView";
-            this.hotkeytreeView.Size = new System.Drawing.Size(928, 595);
+            this.hotkeytreeView.Size = new System.Drawing.Size(913, 595);
             this.hotkeytreeView.TabIndex = 0;
             this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
             // 
@@ -7907,7 +7904,7 @@ namespace Assistant
             this.screenshotTab.Controls.Add(this.dispTime);
             this.screenshotTab.Location = new System.Drawing.Point(4, 29);
             this.screenshotTab.Name = "screenshotTab";
-            this.screenshotTab.Size = new System.Drawing.Size(1104, 602);
+            this.screenshotTab.Size = new System.Drawing.Size(1089, 602);
             this.screenshotTab.TabIndex = 8;
             this.screenshotTab.Text = "Screen Shots";
             // 
@@ -7941,7 +7938,7 @@ namespace Assistant
             // capNow
             // 
             this.capNow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.capNow.Location = new System.Drawing.Point(759, 11);
+            this.capNow.Location = new System.Drawing.Point(744, 11);
             this.capNow.Name = "capNow";
             this.capNow.Size = new System.Drawing.Size(285, 20);
             this.capNow.TabIndex = 8;
@@ -7957,7 +7954,7 @@ namespace Assistant
             this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.screenPath.Location = new System.Drawing.Point(7, 14);
             this.screenPath.Name = "screenPath";
-            this.screenPath.Size = new System.Drawing.Size(691, 20);
+            this.screenPath.Size = new System.Drawing.Size(676, 20);
             this.screenPath.TabIndex = 7;
             this.screenPath.TextChanged += new System.EventHandler(this.screenPath_TextChanged);
             // 
@@ -8041,7 +8038,7 @@ namespace Assistant
             this.videoTab.Location = new System.Drawing.Point(4, 29);
             this.videoTab.Name = "videoTab";
             this.videoTab.Padding = new System.Windows.Forms.Padding(3);
-            this.videoTab.Size = new System.Drawing.Size(1104, 602);
+            this.videoTab.Size = new System.Drawing.Size(1089, 602);
             this.videoTab.TabIndex = 16;
             this.videoTab.Text = "Video Recorder";
             // 
@@ -8235,7 +8232,7 @@ namespace Assistant
             this.DPStabPage.Location = new System.Drawing.Point(4, 29);
             this.DPStabPage.Name = "DPStabPage";
             this.DPStabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DPStabPage.Size = new System.Drawing.Size(1104, 602);
+            this.DPStabPage.Size = new System.Drawing.Size(1089, 602);
             this.DPStabPage.TabIndex = 17;
             this.DPStabPage.Text = "DPS Meter";
             this.DPStabPage.UseVisualStyleBackColor = true;
@@ -8253,7 +8250,7 @@ namespace Assistant
             this.filtergroup.Controls.Add(this.DPSmetermaxdamage);
             this.filtergroup.Controls.Add(this.label66);
             this.filtergroup.Controls.Add(this.DPSmetermindamage);
-            this.filtergroup.Location = new System.Drawing.Point(811, 53);
+            this.filtergroup.Location = new System.Drawing.Point(796, 53);
             this.filtergroup.Name = "filtergroup";
             this.filtergroup.Size = new System.Drawing.Size(287, 167);
             this.filtergroup.TabIndex = 66;
@@ -8337,7 +8334,7 @@ namespace Assistant
             this.DpsMeterGridView.Name = "DpsMeterGridView";
             this.DpsMeterGridView.RowHeadersVisible = false;
             this.DpsMeterGridView.RowHeadersWidth = 62;
-            this.DpsMeterGridView.Size = new System.Drawing.Size(796, 607);
+            this.DpsMeterGridView.Size = new System.Drawing.Size(781, 607);
             this.DpsMeterGridView.TabIndex = 65;
             // 
             // dataGridViewTextBoxColumn13
@@ -8378,7 +8375,7 @@ namespace Assistant
             this.DPSMeterStatusLabel.AutoSize = true;
             this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DPSMeterStatusLabel.ForeColor = System.Drawing.Color.Green;
-            this.DPSMeterStatusLabel.Location = new System.Drawing.Point(1068, 331);
+            this.DPSMeterStatusLabel.Location = new System.Drawing.Point(1053, 331);
             this.DPSMeterStatusLabel.Name = "DPSMeterStatusLabel";
             this.DPSMeterStatusLabel.Size = new System.Drawing.Size(28, 13);
             this.DPSMeterStatusLabel.TabIndex = 64;
@@ -8388,7 +8385,7 @@ namespace Assistant
             // 
             this.label67.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(1028, 331);
+            this.label67.Location = new System.Drawing.Point(1013, 331);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(40, 13);
             this.label67.TabIndex = 63;
@@ -8397,7 +8394,7 @@ namespace Assistant
             // DPSMeterPauseButton
             // 
             this.DPSMeterPauseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterPauseButton.Location = new System.Drawing.Point(954, 17);
+            this.DPSMeterPauseButton.Location = new System.Drawing.Point(939, 17);
             this.DPSMeterPauseButton.Name = "DPSMeterPauseButton";
             this.DPSMeterPauseButton.Size = new System.Drawing.Size(64, 21);
             this.DPSMeterPauseButton.TabIndex = 61;
@@ -8407,7 +8404,7 @@ namespace Assistant
             // DPSMeterStopButton
             // 
             this.DPSMeterStopButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterStopButton.Location = new System.Drawing.Point(886, 17);
+            this.DPSMeterStopButton.Location = new System.Drawing.Point(871, 17);
             this.DPSMeterStopButton.Name = "DPSMeterStopButton";
             this.DPSMeterStopButton.Size = new System.Drawing.Size(62, 21);
             this.DPSMeterStopButton.TabIndex = 60;
@@ -8417,7 +8414,7 @@ namespace Assistant
             // DPSMeterStartButton
             // 
             this.DPSMeterStartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterStartButton.Location = new System.Drawing.Point(816, 17);
+            this.DPSMeterStartButton.Location = new System.Drawing.Point(801, 17);
             this.DPSMeterStartButton.Name = "DPSMeterStartButton";
             this.DPSMeterStartButton.Size = new System.Drawing.Size(63, 21);
             this.DPSMeterStartButton.TabIndex = 59;
@@ -8427,7 +8424,7 @@ namespace Assistant
             // DPSMeterClearButton
             // 
             this.DPSMeterClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.DPSMeterClearButton.Location = new System.Drawing.Point(1023, 17);
+            this.DPSMeterClearButton.Location = new System.Drawing.Point(1008, 17);
             this.DPSMeterClearButton.Name = "DPSMeterClearButton";
             this.DPSMeterClearButton.Size = new System.Drawing.Size(63, 21);
             this.DPSMeterClearButton.TabIndex = 58;
@@ -8446,7 +8443,7 @@ namespace Assistant
             this.statusTab.Controls.Add(this.razorButtonWiki);
             this.statusTab.Location = new System.Drawing.Point(4, 29);
             this.statusTab.Name = "statusTab";
-            this.statusTab.Size = new System.Drawing.Size(1104, 602);
+            this.statusTab.Size = new System.Drawing.Size(1089, 602);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help / Status";
             // 
@@ -8482,7 +8479,7 @@ namespace Assistant
             this.advertisement.InitialImage = ((System.Drawing.Image)(resources.GetObject("advertisement.InitialImage")));
             this.advertisement.Location = new System.Drawing.Point(3, 3);
             this.advertisement.Name = "advertisement";
-            this.advertisement.Size = new System.Drawing.Size(913, 492);
+            this.advertisement.Size = new System.Drawing.Size(898, 492);
             this.advertisement.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.advertisement.TabIndex = 11;
             this.advertisement.TabStop = false;
@@ -8513,7 +8510,7 @@ namespace Assistant
             // 
             this.labelStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelStatus.Location = new System.Drawing.Point(922, 9);
+            this.labelStatus.Location = new System.Drawing.Point(907, 9);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(176, 268);
             this.labelStatus.TabIndex = 1;
@@ -8751,7 +8748,7 @@ namespace Assistant
             this.pyScriptListView.MultiSelect = false;
             this.pyScriptListView.Name = "pyScriptListView";
             this.pyScriptListView.ShowItemToolTips = true;
-            this.pyScriptListView.Size = new System.Drawing.Size(892, 575);
+            this.pyScriptListView.Size = new System.Drawing.Size(877, 575);
             this.pyScriptListView.TabIndex = 48;
             this.pyScriptListView.UseCompatibleStateImageBehavior = false;
             this.pyScriptListView.View = System.Windows.Forms.View.Details;
@@ -8857,7 +8854,7 @@ namespace Assistant
             this.uosScriptListView.MultiSelect = false;
             this.uosScriptListView.Name = "uosScriptListView";
             this.uosScriptListView.ShowItemToolTips = true;
-            this.uosScriptListView.Size = new System.Drawing.Size(889, 572);
+            this.uosScriptListView.Size = new System.Drawing.Size(874, 572);
             this.uosScriptListView.TabIndex = 49;
             this.uosScriptListView.UseCompatibleStateImageBehavior = false;
             this.uosScriptListView.View = System.Windows.Forms.View.Details;
@@ -8953,7 +8950,7 @@ namespace Assistant
             this.csScriptListView.MultiSelect = false;
             this.csScriptListView.Name = "csScriptListView";
             this.csScriptListView.ShowItemToolTips = true;
-            this.csScriptListView.Size = new System.Drawing.Size(889, 572);
+            this.csScriptListView.Size = new System.Drawing.Size(874, 572);
             this.csScriptListView.TabIndex = 49;
             this.csScriptListView.UseCompatibleStateImageBehavior = false;
             this.csScriptListView.View = System.Windows.Forms.View.Details;
@@ -9071,7 +9068,7 @@ namespace Assistant
             this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dressDragDelay.BackColor = System.Drawing.Color.White;
             this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.dressDragDelay.Location = new System.Drawing.Point(921, 58);
+            this.dressDragDelay.Location = new System.Drawing.Point(919, 58);
             this.dressDragDelay.Name = "dressDragDelay";
             this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
             this.dressDragDelay.TabIndex = 75;
@@ -9082,7 +9079,7 @@ namespace Assistant
             this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.restockDragDelay.BackColor = System.Drawing.Color.White;
             this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.restockDragDelay.Location = new System.Drawing.Point(804, 51);
+            this.restockDragDelay.Location = new System.Drawing.Point(802, 51);
             this.restockDragDelay.Name = "restockDragDelay";
             this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
             this.restockDragDelay.TabIndex = 81;
@@ -9095,9 +9092,9 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bandagehealmaxrangeTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealmaxrangeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealmaxrangeTextBox.Location = new System.Drawing.Point(77, 270);
+            this.bandagehealmaxrangeTextBox.Location = new System.Drawing.Point(77, 307);
             this.bandagehealmaxrangeTextBox.Name = "bandagehealmaxrangeTextBox";
-            this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(44, 20);
+            this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(29, 20);
             this.bandagehealmaxrangeTextBox.TabIndex = 91;
             this.bandagehealmaxrangeTextBox.Leave += new System.EventHandler(this.bandagehealmaxrangeTextBox_Leave);
             // 
@@ -9108,9 +9105,9 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealhpTextBox.Location = new System.Drawing.Point(76, 136);
+            this.bandagehealhpTextBox.Location = new System.Drawing.Point(76, 173);
             this.bandagehealhpTextBox.Name = "bandagehealhpTextBox";
-            this.bandagehealhpTextBox.Size = new System.Drawing.Size(68, 20);
+            this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealhpTextBox.TabIndex = 84;
             this.bandagehealhpTextBox.Leave += new System.EventHandler(this.bandagehealhpTextBox_Leave);
             // 
@@ -9121,9 +9118,9 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bandagehealdelayTextBox.Location = new System.Drawing.Point(283, 134);
+            this.bandagehealdelayTextBox.Location = new System.Drawing.Point(283, 171);
             this.bandagehealdelayTextBox.Name = "bandagehealdelayTextBox";
-            this.bandagehealdelayTextBox.Size = new System.Drawing.Size(68, 20);
+            this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealdelayTextBox.TabIndex = 82;
             this.bandagehealdelayTextBox.Leave += new System.EventHandler(this.bandagehealdelayTextBox_Leave);
             // 
@@ -9135,9 +9132,9 @@ namespace Assistant
             this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealcustomcolorTextBox.Enabled = false;
-            this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 76);
+            this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 113);
             this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
-            this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(68, 20);
+            this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealcustomcolorTextBox.TabIndex = 79;
             this.bandagehealcustomcolorTextBox.Leave += new System.EventHandler(this.bandagehealcustomcolorTextBox_Leave);
             // 
@@ -9149,9 +9146,9 @@ namespace Assistant
             this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
             this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bandagehealcustomIDTextBox.Enabled = false;
-            this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 75);
+            this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 112);
             this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
-            this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(68, 20);
+            this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
             this.bandagehealcustomIDTextBox.TabIndex = 77;
             this.bandagehealcustomIDTextBox.Leave += new System.EventHandler(this.bandagehealcustomIDTextBox_Leave);
             // 
@@ -9235,7 +9232,7 @@ namespace Assistant
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(1120, 643);
+            this.ClientSize = new System.Drawing.Size(1105, 643);
             this.Controls.Add(this.tabs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
@@ -9284,8 +9281,8 @@ namespace Assistant
             this.groupBox30.ResumeLayout(false);
             this.groupBox42.ResumeLayout(false);
             this.groupBox42.PerformLayout();
-            this.groupBox31.ResumeLayout(false);
-            this.groupBox31.PerformLayout();
+            this.scriptOperationsBox.ResumeLayout(false);
+            this.scriptOperationsBox.PerformLayout();
             this.AllScriptsTab.ResumeLayout(false);
             this.pythonScriptingTab.ResumeLayout(false);
             this.uosScriptingTab.ResumeLayout(false);
@@ -9340,12 +9337,9 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.restockdataGridView)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.bandageheal.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            this.BandageHealSettingsBox.ResumeLayout(false);
+            this.BandageHealSettingsBox.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
             this.toolbarTab.ResumeLayout(false);
             this.toolbarstab.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -10338,7 +10332,6 @@ namespace Assistant
                 }
             }
         }
-
     }
 }
 

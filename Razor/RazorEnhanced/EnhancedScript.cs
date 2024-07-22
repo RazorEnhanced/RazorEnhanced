@@ -390,6 +390,8 @@ namespace RazorEnhanced
 
         internal void Start()
         {
+            Utility.Logger.Debug("${System.Reflection.MethodBase.GetCurrentMethod().Name} called for {m_Fullpath}");
+
             //if (IsRunning || !IsUnstarted)
             if (IsRunning) return;
 
@@ -1158,10 +1160,11 @@ namespace RazorEnhanced
             {
                 lock (IoLock)
                 {
-                    File.AppendAllText(Assistant.Engine.RootPath + "\\" + m_Script.Filename + ".ERROR", log.ToString());
+                    File.AppendAllText(Path.Combine(Assistant.Engine.RootPath, m_Script.Filename + ".ERROR"), log.ToString());
                 }
             }
             catch { }
+
             log.Clear();
         }       
     }

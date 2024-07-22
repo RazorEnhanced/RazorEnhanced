@@ -13,8 +13,6 @@ namespace Assistant
 {
     public class PacketHandlers
     {
-        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
         private static readonly List<Item> m_IgnoreGumps = new List<Item>();
 
         /// <summary>
@@ -1749,7 +1747,7 @@ namespace Assistant
                 return;
 
             Serial serial = p.ReadUInt32();
-            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            Utility.Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             Mobile m = World.FindMobile(serial);
 
             if (m == null)
@@ -1932,7 +1930,7 @@ namespace Assistant
                 return;
             }
             Serial serial = p.ReadUInt32();
-            Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
+            Utility.Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
 
             if (World.Player.Serial == serial)
             {
@@ -1953,7 +1951,7 @@ namespace Assistant
                     // If corpse decayed, remove from list 
                     if (Player.Corpses.Contains(i))
                         Player.Corpses.Remove(i);
-                    Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
+                    Utility.Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
                     // Update weapon special ability icons on spellgrid when removing weapons
                     if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
                     { 
@@ -1983,7 +1981,7 @@ namespace Assistant
         private static void WorldItem(PacketReader p, PacketHandlerEventArgs args)
         {
             uint serial = p.ReadUInt32();
-            Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            Utility.Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             if (!DragDropManager.EndHolding(serial))
                 return;
 
@@ -2114,7 +2112,7 @@ namespace Assistant
             byte _artDataID = p.ReadByte();
 
             uint serial = p.ReadUInt32();
-            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            //Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
 
             ushort itemID = p.ReadUInt16();
             Serial testSerial = serial;
@@ -3180,11 +3178,11 @@ namespace Assistant
         private static void PinLocation(PacketReader p, PacketHandlerEventArgs args)
         {
             Serial serial = p.ReadUInt32();
-            Logger.Debug("{0} entered for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            Utility.Logger.Debug("{0} entered for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             Assistant.Item item = World.FindItem(serial);
             byte action = p.ReadByte();
 
-            Logger.Debug("{0} for {1:X} type {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, (int)action);
+            Utility.Logger.Debug("{0} for {1:X} type {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, (int)action);
             switch ((MapMessageType)action)
             {
                 case MapMessageType.Add:
@@ -3224,15 +3222,15 @@ namespace Assistant
             ushort width = p.ReadUInt16();
             ushort height = p.ReadUInt16();
             ushort facet = p.ReadUInt16();
-            Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+            Utility.Logger.Debug("{0} entered with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             MapItem mapItem = World.FindItem(serial) as MapItem;
             if (mapItem != null)
             {
-                Logger.Debug("{0} setting map origin with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+                Utility.Logger.Debug("{0} setting map origin with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
                 if (MapItem.Multiplier == 0)
                 {
                     MapItem.Multiplier = ((float)(x2 - x1)) / width;
-                    Logger.Debug("{0} set with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+                    Utility.Logger.Debug("{0} set with {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
                 }
 
                 mapItem.MapOrigin = new RazorEnhanced.Point2D(new Assistant.Point2D(x1, y1));
@@ -3241,7 +3239,7 @@ namespace Assistant
             }
             else 
             { 
-                Logger.Debug("{0} unable to find map for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
+                Utility.Logger.Debug("{0} unable to find map for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             }
 
 

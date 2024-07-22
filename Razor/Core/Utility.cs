@@ -1,16 +1,23 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Linq;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Runtime.CompilerServices;
+//using System.Linq;
 
 
 namespace Assistant
 {
     internal class Utility
     {
+        internal static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+        //internal static void DebugLog(string message, [CallerFilePath] string codePath, [CallerLineNumber], int lineNumber, [CallerMemberName] string memberName)
+        //{
+        //    Logger.Debug(member)
+        //}
+
         private static readonly Random m_Random = new Random();
 
         internal static int Random(int min, int max)
@@ -85,7 +92,8 @@ namespace Assistant
                     sb.Append(char.ToUpper(str[i]));
                 else
                     sb.Append(str[i]);
-                capitalizeNext = (" .,;!".Contains(str[i]));
+                //capitalizeNext = (" .,;!".Contains(str[i].ToString()));
+                capitalizeNext = " .,;!".IndexOf(str[i]) != -1;
             }
             return sb.ToString();
         }
@@ -512,6 +520,33 @@ namespace Assistant
             var elapsedMs = watch.ElapsedMilliseconds;
 
             return condition();
+        }
+
+        public static string GetCaseInsensitiveFilePath(string filePath)
+        {
+            string directory = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileName(filePath);
+
+            if (string.IsNullOrEmpty(directory) || string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("Invalid file path");
+            }
+
+            try
+            {
+                foreach (var f in Directory.GetFiles(directory))
+                {
+                    if (string.Equals(Path.GetFileName(f), fileName, StringComparison.OrdinalIgnoreCase)) {
+                        return f;
+                    }
+                }
+
+                throw new FileNotFoundException($"File not found: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error accessing directory: {ex.Message}");
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using RazorEnhanced.UI;
 using System;
 using System.Windows.Forms;
 using Assistant.UI;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace Assistant
@@ -61,9 +62,24 @@ namespace Assistant
             }
 
             if (bandagehealenableCheckBox.Checked)
-                groupBox6.Enabled = false;
+            {
+                foreach (Control control in BandageHealSettingsBox.Controls)
+                {
+                    if (control.Name == "bandagehealAutostartCheckBox" || control.Name == "bandagehealenableCheckBox")
+                        control.Enabled = true;
+                    else
+                    {
+                        control.Enabled = false;
+                    }
+                }
+            }
             else
-                groupBox6.Enabled = true;
+            {
+                foreach (Control control in BandageHealSettingsBox.Controls)
+                {                    
+                        control.Enabled = true;
+                }
+            }
         }
         private void bandagehealAutostartCheckBox_CheckedChanged(object sender, EventArgs e)
         {

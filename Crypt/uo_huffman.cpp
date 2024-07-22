@@ -13,7 +13,7 @@
 // (at your	option)	any	later version.
 //
 ////////////////////////////////////////////////////////////////////////////////
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "uo_huffman.h"
 
 

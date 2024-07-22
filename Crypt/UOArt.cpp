@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "UOArt.h"
 #include "Crypt.h"
 

@@ -18,6 +18,8 @@ namespace Ultima
 
         private static byte[] m_Buffer = new byte[1024];
 
+        internal static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Initialize <see cref="StringList"/> of Language
         /// </summary>
@@ -25,7 +27,9 @@ namespace Ultima
         public StringList(string language)
         {
             Language = language;
-            LoadEntry(Files.GetFilePath(String.Format("cliloc.{0}", language)));
+            string filePath = Files.GetFilePath(String.Format("cliloc.{0}", language));
+            logger.Debug($"StringList is using {filePath}");
+            LoadEntry(filePath);
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace Ultima
             m_StringTable = new Dictionary<int, string>();
             m_EntryTable = new Dictionary<int, StringEntry>();
 
-            using (BinaryReader bin = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
+            using (BinaryReader bin = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 m_Header1 = bin.ReadInt32();
                 m_Header2 = bin.ReadInt16();

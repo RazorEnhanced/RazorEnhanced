@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO.Compression;
+using System.Runtime.InteropServices;
+using System.Windows.Documents;
 
 namespace Assistant
 {
@@ -943,7 +944,20 @@ namespace Assistant
 
             byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
             int destLen = dest.Length;
-            bool worked = (DLLImport.ZLib.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+
+            bool worked = false;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                Utility.Logger.Debug($"compressing gump information for linux");
+                worked = (DLLImport.ZLib_linux.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+
+            }
+            else
+            {
+                Utility.Logger.Debug($"compressing gump information for windows");
+                worked = (DLLImport.ZLib_windows.compress(dest, ref destLen, System.Text.Encoding.ASCII.GetBytes(gumpDefinition), gumpDefinition.Length) == ZLibError.Z_OK);
+            }
+
             Write((uint)destLen + 4);
             Write((uint)gumpDefinition.Length);
             Write((byte[])dest, 0, destLen);
@@ -966,7 +980,17 @@ namespace Assistant
                 byte[] textBuffer = ms.ToArray();
                 int compressedSize = textBuffer.Length + 10;
                 byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
-                ZLibError compResult2 = DLLImport.ZLib.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+
+
+                ZLibError compResult2 = ZLibError.Z_ERRNO;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    compResult2 = DLLImport.ZLib_linux.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+                }
+                else
+                {
+                    compResult2 = DLLImport.ZLib_windows.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+                }
                 bool worked2 = (compResult2 == ZLibError.Z_OK);
 
                 Write((uint)compressedSize + 4);

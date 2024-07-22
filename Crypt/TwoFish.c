@@ -23,7 +23,7 @@
 #pragma pack(1)
 
 #include <memory.h>
-#include    "twofish.h"
+#include    "TwoFish.h"
 #include    "table.h"
 
 #pragma warning(disable: 4005)//ignore macro re-definitions

@@ -505,6 +505,7 @@ namespace Assistant
             ScriptListView scriptListView = MainForm.GetCurrentAllScriptsTab();
             if (scriptListView == null)
                 return;
+            Utility.Logger.Debug($"AddScript entered, scriptListView named {scriptListView.Name}");
 
             openFileDialogscript.Filter = "Script Files|";  // *.py; *.uos; *.txt; *.cs
 
@@ -532,13 +533,15 @@ namespace Assistant
             if (result == DialogResult.OK) // Test result.
             {
                 string filename = Path.GetFileName(openFileDialogscript.FileName);
-                string scriptPath = NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
+                string scriptPath = Path.GetDirectoryName(openFileDialogscript.FileName);
+                //NormalizePath(openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1));
 
-                Scripts.ScriptItem script = Scripts.FindScript(filename);
+                Utility.Logger.Debug($"AddScript dialog returned, filename={filename} scriptPath={scriptPath}");                
+                Scripts.ScriptItem script = Scripts.FindScript(filename.ToLower());
                 if (script == null)
                 {
                     var scriptItem = new Scripts.ScriptItem();
-                    scriptItem.Filename = filename;
+                    scriptItem.Filename = filename.ToLower();
                     scriptItem.Status = "Idle";
                     scriptItem.Loop = false;
                     scriptItem.Wait = false;
@@ -546,12 +549,15 @@ namespace Assistant
                     scriptItem.Preload = false;
                     scriptItem.HotKeyPass = false;
                     scriptItem.Hotkey = Keys.None;
-                    scriptItem.FullPath = Path.Combine(scriptPath.ToLower(), filename);
+                    scriptItem.FullPath = openFileDialogscript.FileName;
+                    Utility.Logger.Debug($"AddScript entry created, filename={filename} scriptPath={scriptPath}");
                     EnhancedScript.FromScriptItem(scriptItem);
                     Scripts.UpdateScriptItems();
                     ReloadScriptTable();
                 }
-             }
+
+                Utility.Logger.Debug($"AddScript script not null, filename={filename} scriptPath={scriptPath}");
+            }
         }
 
 
@@ -710,12 +716,23 @@ namespace Assistant
             if (scriptTable.Count > 0 && scriptListView.SelectedItems.Count == 1)
             {
                 string scriptname = scriptListView.SelectedItems[0].Text;
-                Scripts.ScriptItem scriptItem = Scripts.FindScript(scriptname);
-                if (scriptItem != null) 
+                Utility.Logger.Debug($"Edit scriptName={scriptname}");
+                Scripts.ScriptItem scriptItem = Scripts.FindScript(scriptname.ToLower());
+                if (scriptItem != null)
+                {
                     fullPath = scriptItem.FullPath;
+                    Utility.Logger.Debug($"Edit fullPath={fullPath}");
+                }
+                else 
+                {
+                    Utility.Logger.Debug($"Edit lookup failed for scriptName={scriptname}");
+                }
             }
             if (fullPath != null)
+            {
+                Utility.Logger.Debug($"Edit launching editor for fullPath={fullPath}");
                 EnhancedScriptEditor.Init(fullPath);
+            }
         }
 
         private void scriptSearchTextBox_TextChanged(object sender, EventArgs e)

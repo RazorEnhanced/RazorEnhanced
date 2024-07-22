@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using Assistant;
 using Assistant.UI;
 using System.Reflection;
+using NLog;
+using System.Runtime.InteropServices;
 
 namespace RazorEnhanced
 {
@@ -89,8 +91,6 @@ namespace RazorEnhanced
 
     internal class SpellGrid
     {
-        internal static NLog.Logger Log = NLog.LogManager.GetCurrentClassLogger();
-
         static bool m_open = false;
         static bool m_save_state;
         [Serializable]
@@ -205,6 +205,15 @@ namespace RazorEnhanced
         {
             if (Assistant.World.Player == null)
                 return;
+
+            /*
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                // Seems broken for now
+                Utility.Logger.Debug("{0} entered Broken on linux it seems", System.Reflection.MethodBase.GetCurrentMethod().Name);
+                return;
+            }
+            */
 
             m_open = true;
             m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
@@ -713,7 +722,7 @@ namespace RazorEnhanced
             }
             else
             {
-                Log.Warn("Invalid Index passed to SpellBarAction {0} valid range {1}-{2}", buttonID, 0, items.Count - 1);
+                Utility.Logger.Warn("Invalid Index passed to SpellBarAction {0} valid range {1}-{2}", buttonID, 0, items.Count - 1);
             }
         }
 

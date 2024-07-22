@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using CUO_API;
 using Accord.Statistics.Running;
 using RazorEnhanced;
+using NLog;
 
 
 namespace Assistant
@@ -68,8 +69,6 @@ namespace Assistant
     }
     public class ClassicUOClient : Client
     {
-
-
         public static string UOFilePath { get; set; }
         public override Process ClientProcess => m_ClientProcess;
         public override bool ClientRunning => m_ClientRunning;
@@ -290,34 +289,40 @@ namespace Assistant
 
         private unsafe bool OnRecv(ref byte[] data, ref int length)
         {
-            m_In += (uint)length;
-            fixed (byte* ptr = data)
+            bool result = true;
+            try
             {
-                bool result = true;
-                byte id = data[0];
-
-                PacketReader reader = null;
-                Packet packet = null;
-                bool isView = PacketHandler.HasServerViewer(id);
-                bool isFilter = PacketHandler.HasServerFilter(id);
-
-                                
-                if (isView)
+                m_In += (uint)length;
+                fixed (byte* ptr = data)
                 {
-                    
-                    reader = new PacketReader(ptr, length, PacketsTable.IsDynLength(id));
-                    result = !PacketHandler.OnServerPacket(id, reader, packet);
+                    byte id = data[0];
+
+                    PacketReader reader = null;
+                    Packet packet = null;
+                    bool isView = PacketHandler.HasServerViewer(id);
+                    bool isFilter = PacketHandler.HasServerFilter(id);
+
+
+                    if (isView)
+                    {
+
+                        reader = new PacketReader(ptr, length, PacketsTable.IsDynLength(id));
+                        result = !PacketHandler.OnServerPacket(id, reader, packet);
+                    }
+                    else if (isFilter)
+                    {
+                        packet = new Packet(data, length, PacketsTable.IsDynLength(id));
+                        result = !PacketHandler.OnServerPacket(id, reader, packet);
+                    }
+                    //TODO: check if this is done correctly
+                    PacketLogger.SharedInstance.LogPacketData(PacketPath.ServerToClient, data, result);
                 }
-                else if (isFilter)
-                {
-                    packet = new Packet(data, length, PacketsTable.IsDynLength(id));
-                    result = !PacketHandler.OnServerPacket(id, reader, packet);
-                }
-                //TODO: check if this is done correctly
-                PacketLogger.SharedInstance.LogPacketData(PacketPath.ServerToClient, data, result);
-                
-                return result;
             }
+            catch (Exception e)
+            {
+                Utility.Logger.Debug("{0} crash in onRecv {1}", System.Reflection.MethodBase.GetCurrentMethod().Name, e.ToString());
+            }
+            return result;
         }
 
         private unsafe bool OnSend(ref byte[] data, ref int length)

@@ -7,6 +7,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using Accord.Math;
+using System.Windows.Shapes;
+using static IronPython.Modules._ast;
 
 namespace Assistant
 {
@@ -55,7 +57,7 @@ namespace RazorEnhanced
             {
                 // if no fullname then set it to local 
                 // if the file doesn't exist at its full path, is it local
-                string defaultPath = Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
+                string defaultPath = System.IO.Path.Combine(Assistant.Engine.RootPath, "Scripts", item.Filename);
                 if (!File.Exists(item.FullPath) && File.Exists(defaultPath))
                 {
                     item.FullPath = defaultPath;
@@ -63,7 +65,7 @@ namespace RazorEnhanced
 
                 // If no position use the previous index + 1
                 // In theory this should only happen first load after update
-                string suffix = Path.GetExtension(item.FullPath).ToLower();
+                string suffix = System.IO.Path.GetExtension(item.FullPath).ToLower();
                 switch (suffix)
                 {
                     case ".py":
@@ -154,7 +156,7 @@ namespace RazorEnhanced
         {
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     item.Hotkey = key;
                     item.HotKeyPass = passkey;
@@ -163,7 +165,7 @@ namespace RazorEnhanced
             }
             foreach (Scripts.ScriptItem item in Scripts.UosScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     item.Hotkey = key;
                     item.HotKeyPass = passkey;
@@ -172,7 +174,7 @@ namespace RazorEnhanced
             }
             foreach (Scripts.ScriptItem item in Scripts.CsScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     item.Hotkey = key;
                     item.HotKeyPass = passkey;
@@ -249,17 +251,17 @@ namespace RazorEnhanced
         {
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return item;
             }
             foreach (Scripts.ScriptItem item in Scripts.UosScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return item;
             }
             foreach (Scripts.ScriptItem item in Scripts.CsScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return item;
             }
 
@@ -270,33 +272,33 @@ namespace RazorEnhanced
         {
             foreach (ScriptItem item in PyScripts)
             {
-                if (item.Filename == filename)
+                if (item.Filename.Equals(filename, StringComparison.OrdinalIgnoreCase))
                 {
                     if (item.FullPath == null)
                     {
-                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                        item.FullPath = System.IO.Path.Combine(Engine.RootPath, "Scripts", filename);
                     }
                     return item.FullPath;
                 }
             }
             foreach (ScriptItem item in UosScripts)
             {
-                if (item.Filename == filename)
+                if (item.Filename.Equals(filename, StringComparison.OrdinalIgnoreCase))
                 {
                     if (item.FullPath == null)
                     {
-                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                        item.FullPath = System.IO.Path.Combine(Engine.RootPath, "Scripts", filename);
                     }
                     return item.FullPath;
                 }
             }
             foreach (ScriptItem item in CsScripts)
             {
-                if (item.Filename == filename)
+                if (item.Filename.Equals(filename, StringComparison.OrdinalIgnoreCase))
                 {
                     if (item.FullPath == null)
                     {
-                        item.FullPath = Path.Combine(Engine.RootPath, "Scripts", filename);
+                        item.FullPath = System.IO.Path.Combine(Engine.RootPath, "Scripts", filename);
                     }
                     return item.FullPath;
                 }
@@ -609,6 +611,7 @@ namespace RazorEnhanced
             // This runs twice, only the SECOND change has the changes
             // https://devblogs.microsoft.com/oldnewthing/20140507-00/?p=1053
 
+            Utility.Logger.Debug($"File change processed {e.FullPath}");
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
             if (script != null) 
             {
@@ -633,8 +636,9 @@ namespace RazorEnhanced
             }
         }
 
-        internal static string ReadAllTextWithoutLocking(string filePath)
+        internal static string ReadAllTextWithoutLocking(string _filePath)
         {
+            string filePath = Utility.GetCaseInsensitiveFilePath(_filePath);
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (StreamReader streamReader = new StreamReader(fileStream))
             {

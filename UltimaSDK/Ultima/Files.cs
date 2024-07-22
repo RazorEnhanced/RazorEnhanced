@@ -1,7 +1,9 @@
 using Microsoft.Win32;
+using NLog.Fluent;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 namespace Ultima
 {
@@ -55,7 +57,7 @@ namespace Ultima
         /// Contains the rootDir (so relative values are possible for <see cref="MulPath"/>
         /// </summary>
         public static string RootDir { get { return m_RootDir; } set { m_RootDir = value; } }
-
+        internal static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static string[] m_Files = new string[]
         {
             "anim.idx",
@@ -203,10 +205,17 @@ namespace Ultima
             foreach (string file in m_Files)
             {
                 string filePath = Path.Combine(m_RootDir, file);
-                if (File.Exists(filePath))
-                    m_MulPath[file] = file;
-                else
+                try
+                {
+                    filePath = GetCaseInsensitiveFilePath(filePath);
+                    m_MulPath[file] = filePath;
+                }
+                catch (Exception ex)
+                {
                     m_MulPath[file] = "";
+                    logger.Debug($"file={file} not found in file system");
+                }
+
             }
         }
 
@@ -251,6 +260,33 @@ namespace Ultima
         {
             MulPath[key] = path;
         }
+        public static string GetCaseInsensitiveFilePath(string filePath)
+        {
+            string directry = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileName(filePath);
+
+            if (string.IsNullOrEmpty(directry) || string.IsNullOrEmpty(fileName))
+            {
+                throw new ArgumentException("Invalid file path");
+            }
+
+            try
+            {
+                foreach (var f in System.IO.Directory.GetFiles(directry))
+                {
+                    if (string.Equals(Path.GetFileName(f), fileName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return f;
+                    }
+                }
+
+                throw new FileNotFoundException($"File not found: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error accessing directory: {ex.Message}");
+            }
+        }
 
         /// <summary>
         /// Looks up a given <paramref name="file" /> in <see cref="Files.MulPath"/>
@@ -262,13 +298,24 @@ namespace Ultima
             {
                 string path = "";
                 if (MulPath.ContainsKey(file.ToLower()))
+                {
                     path = MulPath[file.ToLower()];
+                }
                 if (String.IsNullOrEmpty(path))
                     return null;
                 if (String.IsNullOrEmpty(Path.GetDirectoryName(path)))
+                {
                     path = Path.Combine(m_RootDir, path);
-                if (File.Exists(path))
+                }
+                try
+                {
+                    path = GetCaseInsensitiveFilePath(path);
                     return path;
+                }
+                catch(Exception e) 
+                {
+                    logger.Debug($"{path} not found in GetFilePath");
+                }
             }
 
             return null;
