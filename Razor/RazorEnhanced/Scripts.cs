@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using Accord.Math;
 using System.Windows.Shapes;
+using static IronPython.Modules._ast;
 
 namespace Assistant
 {
@@ -155,7 +156,7 @@ namespace RazorEnhanced
         {
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     item.Hotkey = key;
                     item.HotKeyPass = passkey;
@@ -164,7 +165,7 @@ namespace RazorEnhanced
             }
             foreach (Scripts.ScriptItem item in Scripts.UosScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     item.Hotkey = key;
                     item.HotKeyPass = passkey;
@@ -173,7 +174,7 @@ namespace RazorEnhanced
             }
             foreach (Scripts.ScriptItem item in Scripts.CsScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
                     item.Hotkey = key;
                     item.HotKeyPass = passkey;
@@ -250,17 +251,17 @@ namespace RazorEnhanced
         {
             foreach (Scripts.ScriptItem item in Scripts.PyScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return item;
             }
             foreach (Scripts.ScriptItem item in Scripts.UosScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return item;
             }
             foreach (Scripts.ScriptItem item in Scripts.CsScripts)
             {
-                if (item.Filename == name)
+                if (item.Filename.Equals(name, StringComparison.OrdinalIgnoreCase))
                     return item;
             }
 
@@ -271,7 +272,7 @@ namespace RazorEnhanced
         {
             foreach (ScriptItem item in PyScripts)
             {
-                if (item.Filename == filename)
+                if (item.Filename.Equals(filename, StringComparison.OrdinalIgnoreCase))
                 {
                     if (item.FullPath == null)
                     {
@@ -282,7 +283,7 @@ namespace RazorEnhanced
             }
             foreach (ScriptItem item in UosScripts)
             {
-                if (item.Filename == filename)
+                if (item.Filename.Equals(filename, StringComparison.OrdinalIgnoreCase))
                 {
                     if (item.FullPath == null)
                     {
@@ -293,7 +294,7 @@ namespace RazorEnhanced
             }
             foreach (ScriptItem item in CsScripts)
             {
-                if (item.Filename == filename)
+                if (item.Filename.Equals(filename, StringComparison.OrdinalIgnoreCase))
                 {
                     if (item.FullPath == null)
                     {
