@@ -236,12 +236,14 @@ namespace Assistant
             var lang = "enu";
             string filename = Path.Combine(Assistant.Engine.RootPath,
                 "Language", String.Format("Razor_lang.{0}", lang));
+            Utility.Logger.Debug($"initial filename={filename}");
             filename = Utility.GetCaseInsensitiveFilePath(filename);
-
+            Utility.Logger.Debug($"Case-fixed filename={filename}");
             Ultima.Files.Directory = selected.ClientFolder;
             Utility.Logger.Debug($"Ultima Directory - {selected.ClientFolder}");
             if (!Language.Load("enu"))
             {
+                Utility.Logger.Debug($"Language.Load failed to load");
                 //SplashScreen.End();
                 MessageBox.Show($"Unable to load required file \n{filename}", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Shards.ShowLauncher = true;

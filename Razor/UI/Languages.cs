@@ -666,19 +666,24 @@ namespace Assistant
 
         public static bool Load(string lang)
         {
-            lang = lang.ToUpper();
             if (m_Current != null && m_Current == lang)
+            {
+                Utility.Logger.Debug($"returning because m_Current={m_Current} lang={lang}");
                 return true;
+            }
 
             m_CliLocName = "enu";
             string filename = Path.Combine(Assistant.Engine.RootPath,
                 "Language", String.Format("Razor_lang.{0}", lang));
+            Utility.Logger.Debug($"initial filename={filename}");
             try
             {
                 filename = Utility.GetCaseInsensitiveFilePath(filename);
+                Utility.Logger.Debug($"Case-fixed filename={filename}");
             }
             catch (Exception e)
             {
+                Utility.Logger.Debug($"Exception - {e.ToString()}");
                 return false;
             }
 

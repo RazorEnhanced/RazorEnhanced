@@ -321,8 +321,10 @@ namespace Assistant
 
         internal Item GetItemOnLayer(Layer layer)
         {
+            if (m_Items == null)
+                return null;
             for (int i = 0; i < m_Items.Count; i++)
-            {
+            {                     
                 Item item = (Item)m_Items[i];
                 if (item.Layer == layer)
                     return item;
