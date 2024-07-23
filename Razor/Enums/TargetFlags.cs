@@ -1,4 +1,4 @@
-﻿namespace Assistant.Enums
+namespace Assistant.Enums
 {
     public enum TargetFlags : byte
     {

@@ -1,4 +1,4 @@
-﻿using Accord.Math.Distances;
+using Accord.Math.Distances;
 using Accord.Statistics.Moving;
 using RazorEnhanced;
 using System;
