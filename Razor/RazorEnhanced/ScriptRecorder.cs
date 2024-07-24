@@ -283,6 +283,7 @@ namespace RazorEnhanced
         */
         internal override void Record_ClientTextCommand(int type, int id)
         {
+            Utility.Logger.Debug($"Skill number used was: Type: {type} Id: {id}");
             if (type == 1) // Use Skill
             {
                 switch (id)

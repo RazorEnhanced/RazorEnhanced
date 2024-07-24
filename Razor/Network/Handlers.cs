@@ -1608,6 +1608,8 @@ namespace Assistant
 
         private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
         {
+            if (World.Player == null) return;
+
             Serial serial = p.ReadUInt32();
             Mobile m = World.FindMobile(serial);
             if (m == null)
@@ -1621,7 +1623,7 @@ namespace Assistant
                 RazorEnhanced.ScriptRecorderService.Instance.Record_RenameMobile((int)serial, newName);
                 m.Name = newName;
             }
- 
+
 
             m.Hits = p.ReadUInt16();
             m.HitsMax = p.ReadUInt16();
@@ -1662,74 +1664,69 @@ namespace Assistant
             player.AR = p.ReadUInt16(); // ar / physical resist
             player.Weight = p.ReadUInt16();
 
-            if (type >= 0x03)
+            if (type >= 0x03)  // Renaissance
             {
-                if (type > 0x04)
-                {
-                    player.MaxWeight = p.ReadUInt16();
-                    player.Race = p.ReadByte();
-                }
 
                 player.StatCap = p.ReadUInt16();
                 player.Followers = p.ReadByte();
                 player.FollowersMax = p.ReadByte();
-
-                if (type > 0x03)
-                {
-                    player.FireResistance = p.ReadInt16();
-                    player.ColdResistance = p.ReadInt16();
-                    player.PoisonResistance = p.ReadInt16();
-                    player.EnergyResistance = p.ReadInt16();
-
-                    player.Luck = p.ReadInt16();
-
-                    player.DamageMin = p.ReadUInt16();
-                    player.DamageMax = p.ReadUInt16();
-
-                    player.Tithe = p.ReadInt32();
-                }
-
-                if (type > 0x05)        // KR Data
-                {
-                    player.MaxPhysicResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.MaxFireResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.MaxColdResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.MaxPoisonResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.MaxEnergyResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.DefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.MaxDefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
-                    player.HitChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.SwingSpeedIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.DamageChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.LowerReagentCost = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.SpellDamageIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.FasterCastRecovery = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.FasterCasting = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.LowerManaCost = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    // OSI only send this much data in the packet .. all these others are bypassed because the packet is too short (121)
-                    player.HitPointsRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.StaminaRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.ManaRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.ReflectPhysicalDamage = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.EnhancePotions = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.StrengthIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.DexterityIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.IntelligenceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.HitPointsIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.StaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.ManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.MaximumHitPointsIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.MaximumStaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                    player.MaximumManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
-                }
             }
+            if (type >= 0x04) // AOS
+            {
+                player.FireResistance = p.ReadInt16();
+                player.ColdResistance = p.ReadInt16();
+                player.PoisonResistance = p.ReadInt16();
+                player.EnergyResistance = p.ReadInt16();
+
+                player.Luck = p.ReadInt16();
+
+                player.DamageMin = p.ReadUInt16();
+                player.DamageMax = p.ReadUInt16();
+
+                player.Tithe = p.ReadInt32();
+            }
+
+            if (type >= 0x06)        // KR Data
+            {
+                player.MaxPhysicResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.MaxFireResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.MaxColdResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.MaxPoisonResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.MaxEnergyResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.DefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.MaxDefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
+
+                player.HitChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.SwingSpeedIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.DamageChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.LowerReagentCost = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.SpellDamageIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.FasterCastRecovery = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.FasterCasting = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.LowerManaCost = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                // OSI only send this much data in the packet .. all these others are bypassed because the packet is too short (121)
+                player.HitPointsRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.StaminaRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.ManaRegeneration = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.ReflectPhysicalDamage = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.EnhancePotions = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.StrengthIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.DexterityIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.IntelligenceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.HitPointsIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.StaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.ManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.MaximumHitPointsIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.MaximumStaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+                player.MaximumManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
+            }
+        
 
             // Update All toolbar
             RazorEnhanced.ToolBar.UpdateAll();

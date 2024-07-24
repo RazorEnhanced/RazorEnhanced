@@ -25,6 +25,7 @@ namespace RazorEnhanced
         /// <summary>@nodoc</summary>
         static public Assistant.Mobile LastVendor { get; set; }
 
+        /// <summary>@nodoc</summary>
         static public void StoreSellList(PacketReader p, PacketHandlerEventArgs args)
         {
             Assistant.Serial serial = p.ReadUInt32();
@@ -53,6 +54,7 @@ namespace RazorEnhanced
                 newItem.Price = itPrice;
                 newItem.Name = itName;
 
+                Utility.Logger.Info($"Sell Item(Serial={itSerial:X}, ID={itId:X}, Hue={itHue}, Amount={itAmount}, Price={itPrice})");
                 sellItems.Add(new RazorEnhanced.Item(newItem));
             }
 
