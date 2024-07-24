@@ -123,6 +123,7 @@ namespace RazorEnhanced
         {
             HotKeyEvent.AddEvent(k);
 
+            Utility.Logger.Debug($"KeyDown {k:x}/{k}");
             Debug.WriteLine("KD Keys: 0x{0:X}", k);
             bool hotTextFocused = false;
             bool hotTextMasterFocused = false;
