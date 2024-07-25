@@ -7,8 +7,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using Accord.Math;
-using System.Windows.Shapes;
-using static IronPython.Modules._ast;
 
 namespace Assistant
 {

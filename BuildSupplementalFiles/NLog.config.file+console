@@ -12,6 +12,7 @@
   </targets>
 
   <rules>
-    <logger name="*" minlevel="Trace" writeTo="file,console" />
+    <logger name="*" minlevel="Debug" writeTo="file" />
+    <logger name="*" minlevel="Debug" writeTo="console" />
   </rules>
 </nlog>

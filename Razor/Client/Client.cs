@@ -184,9 +184,10 @@ namespace Assistant
         }
 
         internal virtual bool Init(RazorEnhanced.Shard selected)
-        {
+        {            
             if (selected.ClientFolder != null && Directory.Exists(selected.ClientFolder))
             {
+                Ultima.FilesDirectoryOverride.Directory = selected.ClientFolder;
                 Ultima.Files.SetMulPath(selected.ClientFolder);
             }
             else

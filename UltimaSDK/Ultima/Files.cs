@@ -7,6 +7,12 @@ using System.Net;
 
 namespace Ultima
 {
+    public sealed class FilesDirectoryOverride
+    {
+        public static string Directory { get; set; }
+
+    }
+
     public sealed class Files
     {
         public delegate void FileSaveHandler();
@@ -25,6 +31,7 @@ namespace Ultima
         private static string m_Directory;
         private static string m_RootDir;
 
+    
         /// <summary>
         /// Should loaded Data be cached
         /// </summary>
@@ -354,6 +361,10 @@ namespace Ultima
 
         private static string LoadDirectory()
         {
+            if (! string.IsNullOrEmpty(FilesDirectoryOverride.Directory))
+            {
+                return FilesDirectoryOverride.Directory;
+            }
             string dir = null;
             for (int i = knownRegkeys.Length - 1; i >= 0; i--)
             {

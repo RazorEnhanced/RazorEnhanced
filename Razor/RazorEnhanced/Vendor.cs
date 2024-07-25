@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Ultima;
 
 namespace RazorEnhanced
 {
@@ -54,7 +55,7 @@ namespace RazorEnhanced
                 newItem.Price = itPrice;
                 newItem.Name = itName;
 
-                Utility.Logger.Info($"Sell Item(Serial={itSerial:X}, ID={itId:X}, Hue={itHue}, Amount={itAmount}, Price={itPrice})");
+                //Utility.Logger.Info($"Sell Item(Serial={itSerial:X}, ID={itId:X}, Hue={itHue}, Amount={itAmount}, Price={itPrice})");
                 sellItems.Add(new RazorEnhanced.Item(newItem));
             }
 
@@ -432,7 +433,7 @@ namespace RazorEnhanced
 
         internal static void AddLog(string addlog)
         {
-            if (Client.Running)
+            if (Assistant.Client.Running)
             {
                 Engine.MainWindow.SafeAction(s => s.SellLogBox.Items.Add(addlog));
                 Engine.MainWindow.SafeAction(s => s.SellLogBox.SelectedIndex = s.SellLogBox.Items.Count - 1);
@@ -838,7 +839,7 @@ namespace RazorEnhanced
         }
         internal static void AddLog(string addlog)
         {
-            if (Client.Running)
+            if (Assistant.Client.Running)
             {
                 Engine.MainWindow.SafeAction(s => s.BuyLogBox.Items.Add(addlog));
                 Engine.MainWindow.SafeAction(s => s.BuyLogBox.SelectedIndex = s.BuyLogBox.Items.Count - 1);
@@ -1089,6 +1090,7 @@ namespace RazorEnhanced
 
                 foreach (BuyAgentItem buyItem in items) // Scanning of items present in the agent item list
                 {
+                    Utility.Logger.Info($"Buy Item(Name={buyItem.Name}, ID=0x{buyItem.Graphics:x}, Hue={buyItem.Color}, Amount={buyItem.Amount}, Cost={pack.Contains[i].Price})");
                     // int x = 0;
                     if (!buyItem.Selected)
                         continue;
