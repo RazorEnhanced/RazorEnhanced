@@ -831,12 +831,17 @@ namespace Assistant
                 {
                     fileName = Ultima.Files.GetFilePath(String.Format("cliloc.{0}", m_CliLocName));
                     Utility.Logger.Debug($"The cliloc could not be loaded from {fileName}");
+                    // Temp hack because OSI cliloc file format changed
+                    fileName = fileName + ".old";
+                    Ultima.Files.SetMulPath(fileName, ("cliloc." + m_CliLocName).ToLower());
+                    Utility.Logger.Info($"RE-Trying to load cliloc from {m_CliLocName} after setting filename to {fileName}");
+                    m_CliLoc = new Ultima.StringList(m_CliLocName);
+                    Utility.Logger.Info($"Success load cliloc with {m_CliLoc.Entries.Count} entries");
                 }
                 catch
                 {
-                }
-
-                MessageBox.Show("There was an exception while attempting to load \r\n" + fileName + "\r\n" + e, "Error loading CliLoc", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("There was an exception while attempting to load \r\n" + fileName + "\r\n" + e, "Error loading CliLoc", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }              
             }
 
             if (m_CliLoc == null || m_CliLoc.Entries == null || m_CliLoc.Entries.Count < 10)

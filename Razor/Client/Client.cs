@@ -14,9 +14,6 @@ using System.Reflection;
 using AutoUpdaterDotNET;
 using RazorEnhanced;
 using Mono.Options;
-using System.Security.RightsManagement;
-using System.Security.Cryptography;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace Assistant
 {
