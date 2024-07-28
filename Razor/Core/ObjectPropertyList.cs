@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Assistant
 {
@@ -103,7 +104,15 @@ namespace Assistant
                 short bytes = p.ReadInt16();
                 string args = string.Empty;
                 if (bytes > 0)
+                {
                     args = p.ReadUnicodeStringBE(bytes >> 1);
+                    // remove html tags if they exist
+                    if (args.Length > 0 && args[0] == '<')
+                    {
+                        var htmlRemover = new Regex("<[^>]+/?>"); 
+                        args = htmlRemover.Replace(args, "");
+                    }
+                }
 
                 if (property_list.Any(e => e.Number == num))
                     continue;
