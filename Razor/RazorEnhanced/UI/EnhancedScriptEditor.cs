@@ -103,7 +103,7 @@ namespace RazorEnhanced.UI
 
         internal static bool Init(string filePath)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (false) //(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 string editor = Environment.GetEnvironmentVariable("EDITOR");
 
