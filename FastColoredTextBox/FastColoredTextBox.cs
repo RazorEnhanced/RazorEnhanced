@@ -38,7 +38,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using Microsoft.Win32;
 using Timer = System.Windows.Forms.Timer;
-using Gtk;
 using System.Runtime.InteropServices.ComTypes;
 
 namespace FastColoredTextBoxNS
@@ -2490,29 +2489,26 @@ namespace FastColoredTextBoxNS
             data.SetData(DataFormats.Rtf, new ExportToRTF().GetRtf(Selection.Clone()));
         }
 
+        [DllImport("user32.dll")]
+        static extern IntPtr CloseClipboard();
+
         protected void SetClipboard(DataObject data)
         {
-            try
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Gtk.Clipboard clipboard = Gtk.Clipboard.Get(Gdk.Selection.Clipboard);
-                clipboard.Text = data.ToString();
-                clipboard.Store();
-            }
-            catch (System.DllNotFoundException ex)
-            {
-                MessageBox.Show("The GDK library appears missing, copy will not work", "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ExternalException)
-            {
-                //occurs if some other process holds open clipboard
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("GDK library exception - " + ex.Message, "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                try
+                {
+                    CloseClipboard();
+                    Clipboard.SetDataObject(data, true, 5, 100);
+                }
+                catch (ExternalException)
+                {
+                    //occurs if some other process holds open clipboard
+                }
             }
         }
 
-        public static MemoryStream PrepareHtmlForClipboard(string html)
+            public static MemoryStream PrepareHtmlForClipboard(string html)
         {
             Encoding enc = Encoding.UTF8;
 
@@ -2590,28 +2586,18 @@ namespace FastColoredTextBoxNS
         public virtual void Paste()
         {
             string text = null;
-            var thread = new Thread(() =>
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+
+                var thread = new Thread(() =>
                                         {
-                                            try
-                                            {
-                                                Gtk.Clipboard clipboard = Gtk.Clipboard.Get(Gdk.Selection.Clipboard);
-                                                if (clipboard.WaitForContents(Gdk.Selection.Clipboard) != null)
-                                                    text = clipboard.WaitForText();
-                                            }
-                                            catch (System.DllNotFoundException ex)
-                                            {
-                                                MessageBox.Show("The GDK library appears missing, paste will not work", "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                MessageBox.Show("GDK library exception - " + ex.ToString(), "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                            }
-
+                                            if (Clipboard.ContainsText())
+                                                text = Clipboard.GetText();
                                         });
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
-            thread.Join();
-
+                thread.SetApartmentState(ApartmentState.STA);
+                thread.Start();
+                thread.Join();
+            }
             if (Pasting != null)
             {
                 var args = new TextChangingEventArgs
