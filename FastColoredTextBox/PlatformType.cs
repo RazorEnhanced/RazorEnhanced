@@ -29,39 +29,32 @@ namespace FastColoredTextBoxNS
         };
 
         [DllImport("kernel32.dll")]
-        static extern void GetNativeSystemInfo(ref SYSTEM_INFO lpSystemInfo);
-
-        [DllImport("kernel32.dll")]
         static extern void GetSystemInfo(ref SYSTEM_INFO lpSystemInfo);
 
         public static Platform GetOperationSystemPlatform()
         {
-            var sysInfo = new SYSTEM_INFO();
 
-            // WinXP and older - use GetNativeSystemInfo
-            if (Environment.OSVersion.Version.Major > 5 ||
-                (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                GetNativeSystemInfo(ref sysInfo);
+                return Platform.X64;  // we'll only support 64 bit on linux
             }
-            // else use GetSystemInfo
-            else
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                var sysInfo = new SYSTEM_INFO();
                 GetSystemInfo(ref sysInfo);
+
+                switch (sysInfo.wProcessorArchitecture)
+                {
+                    case PROCESSOR_ARCHITECTURE_IA64:
+                    case PROCESSOR_ARCHITECTURE_AMD64:
+                        return Platform.X64;
+
+                    case PROCESSOR_ARCHITECTURE_INTEL:
+                        return Platform.X86;
+                }
             }
 
-            switch (sysInfo.wProcessorArchitecture)
-            {
-                case PROCESSOR_ARCHITECTURE_IA64:
-                case PROCESSOR_ARCHITECTURE_AMD64:
-                    return Platform.X64;
-
-                case PROCESSOR_ARCHITECTURE_INTEL:
-                    return Platform.X86;
-
-                default:
-                    return Platform.Unknown;
-            }
+            return Platform.Unknown;
         }
     }
 

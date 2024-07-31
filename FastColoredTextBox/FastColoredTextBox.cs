@@ -38,6 +38,8 @@ using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using Microsoft.Win32;
 using Timer = System.Windows.Forms.Timer;
+using Gtk;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace FastColoredTextBoxNS
 {
@@ -1914,14 +1916,14 @@ namespace FastColoredTextBoxNS
         /// <remarks>Set Handle to True for cancel key</remarks>
         [Browsable(true)]
         [Description("It occurs when visible char is enetering (alphabetic, digit, punctuation, DEL, BACKSPACE).")]
-        public event KeyPressEventHandler KeyPressing;
+        public event System.Windows.Forms.KeyPressEventHandler KeyPressing;
 
         /// <summary>
         /// It occurs when visible char is enetered (alphabetic, digit, punctuation, DEL, BACKSPACE)
         /// </summary>
         [Browsable(true)]
         [Description("It occurs when visible char is enetered (alphabetic, digit, punctuation, DEL, BACKSPACE).")]
-        public event KeyPressEventHandler KeyPressed;
+        public event System.Windows.Forms.KeyPressEventHandler KeyPressed;
 
         /// <summary>
         /// It occurs when calculates AutoIndent for new line
@@ -2488,26 +2490,26 @@ namespace FastColoredTextBoxNS
             data.SetData(DataFormats.Rtf, new ExportToRTF().GetRtf(Selection.Clone()));
         }
 
-        [DllImport("user32.dll")]
-        static extern IntPtr GetOpenClipboardWindow();
-
-        [DllImport("user32.dll")]
-        static extern IntPtr CloseClipboard();
-
         protected void SetClipboard(DataObject data)
         {
-                try
-                {
-                    /*
-                    while (GetOpenClipboardWindow() != IntPtr.Zero)
-                        Thread.Sleep(0);*/
-                    CloseClipboard();
-                    Clipboard.SetDataObject(data, true, 5, 100);
-                }
-                catch(ExternalException)
-                {
-                    //occurs if some other process holds open clipboard
-                }
+            try
+            {
+                Gtk.Clipboard clipboard = Gtk.Clipboard.Get(Gdk.Selection.Clipboard);
+                clipboard.Text = data.ToString();
+                clipboard.Store();
+            }
+            catch (System.DllNotFoundException ex)
+            {
+                MessageBox.Show("The GDK library appears missing, copy will not work", "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (ExternalException)
+            {
+                //occurs if some other process holds open clipboard
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("GDK library exception - " + ex.Message, "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public static MemoryStream PrepareHtmlForClipboard(string html)
@@ -2590,8 +2592,21 @@ namespace FastColoredTextBoxNS
             string text = null;
             var thread = new Thread(() =>
                                         {
-                                            if (Clipboard.ContainsText())
-                                                text = Clipboard.GetText();
+                                            try
+                                            {
+                                                Gtk.Clipboard clipboard = Gtk.Clipboard.Get(Gdk.Selection.Clipboard);
+                                                if (clipboard.WaitForContents(Gdk.Selection.Clipboard) != null)
+                                                    text = clipboard.WaitForText();
+                                            }
+                                            catch (System.DllNotFoundException ex)
+                                            {
+                                                MessageBox.Show("The GDK library appears missing, paste will not work", "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                MessageBox.Show("GDK library exception - " + ex.ToString(), "Error loading GDK", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            }
+
                                         });
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
@@ -2886,13 +2901,12 @@ namespace FastColoredTextBoxNS
 
         public static SizeF GetCharSize(Font font, char c)
         {
-            Size sz2 = TextRenderer.MeasureText("<" + c.ToString() + ">", font);
-            Size sz3 = TextRenderer.MeasureText("<>", font);
+            Size sz2 = System.Windows.Forms.TextRenderer.MeasureText("<" + c.ToString() + ">", font);
+            Size sz3 = System.Windows.Forms.TextRenderer.MeasureText("<>", font);
 
             return new SizeF(sz2.Width - sz3.Width + 1, /*sz2.Height*/font.Height);
         }
-
-        [DllImport("Imm32.dll")]
+         [DllImport("Imm32.dll")]
         public static extern IntPtr ImmGetContext(IntPtr hWnd);
 
         [DllImport("Imm32.dll")]
@@ -2900,20 +2914,23 @@ namespace FastColoredTextBoxNS
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == WM_HSCROLL || m.Msg == WM_VSCROLL)
-                if (m.WParam.ToInt32() != SB_ENDSCROLL)
-                    Invalidate();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                if (m.Msg == WM_HSCROLL || m.Msg == WM_VSCROLL)
+                    if (m.WParam.ToInt32() != SB_ENDSCROLL)
+                        Invalidate();
 
-            base.WndProc(ref m);
+                base.WndProc(ref m);
 
-            if (ImeAllowed)
-                if (m.Msg == WM_IME_SETCONTEXT && m.WParam.ToInt32() == 1)
-                {
-                    ImmAssociateContext(Handle, m_hImc);
-                }
+                if (ImeAllowed)
+                    if (m.Msg == WM_IME_SETCONTEXT && m.WParam.ToInt32() == 1)
+                    {
+                        ImmAssociateContext(Handle, m_hImc);
+                    }
+            }
         }
 
-        List<Control> tempHintsList = new List<Control>();
+        List < Control> tempHintsList = new List<Control>();
 
         void HideHints()
         {
@@ -2946,7 +2963,7 @@ namespace FastColoredTextBoxNS
             }
         }
 
-        public void OnScroll(ScrollEventArgs se, bool alignByLines)
+        public void OnScroll(System.Windows.Forms.ScrollEventArgs se, bool alignByLines)
         {
             HideHints();
 
@@ -2972,7 +2989,7 @@ namespace FastColoredTextBoxNS
             OnVisibleRangeChanged();
         }
 
-        protected override void OnScroll(ScrollEventArgs se)
+        protected override void OnScroll(System.Windows.Forms.ScrollEventArgs se)
         {
             OnScroll(se, true);
         }
@@ -4247,7 +4264,7 @@ namespace FastColoredTextBoxNS
                 InsertLinePrefix(commentPrefix);
         }
 
-        public void OnKeyPressing(KeyPressEventArgs args)
+        public void OnKeyPressing(System.Windows.Forms.KeyPressEventArgs args)
         {
             if (KeyPressing != null)
                 KeyPressing(this, args);
@@ -4261,14 +4278,14 @@ namespace FastColoredTextBoxNS
                 FindChar(c);
                 return true;
             }
-            var args = new KeyPressEventArgs(c);
+            var args = new System.Windows.Forms.KeyPressEventArgs(c);
             OnKeyPressing(args);
             return args.Handled;
         }
 
         public void OnKeyPressed(char c)
         {
-            var args = new KeyPressEventArgs(c);
+            var args = new System.Windows.Forms.KeyPressEventArgs(c);
             if (KeyPressed != null)
                 KeyPressed(this, args);
         }
@@ -4860,9 +4877,6 @@ namespace FastColoredTextBoxNS
         private static extern bool SetCaretPos(int x, int y);
 
         [DllImport("User32.dll")]
-        private static extern bool DestroyCaret();
-
-        [DllImport("User32.dll")]
         private static extern bool ShowCaret(IntPtr hWnd);
 
         [DllImport("User32.dll")]
@@ -5133,34 +5147,38 @@ namespace FastColoredTextBoxNS
             var caretHeight = CharHeight - lineInterval;
             car.Offset(0, lineInterval / 2);
 
-            if ((Focused || IsDragDrop || ShowCaretWhenInactive) && car.X >= LeftIndent && CaretVisible)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                int carWidth = (IsReplaceMode || WideCaret) ? CharWidth : 1;
-                if (WideCaret)
+
+                if ((Focused || IsDragDrop || ShowCaretWhenInactive) && car.X >= LeftIndent && CaretVisible)
                 {
-                    using (var brush = new SolidBrush(CaretColor))
-                        e.Graphics.FillRectangle(brush, car.X, car.Y, carWidth, caretHeight + 1);
+                    int carWidth = (IsReplaceMode || WideCaret) ? CharWidth : 1;
+                    if (WideCaret)
+                    {
+                        using (var brush = new SolidBrush(CaretColor))
+                            e.Graphics.FillRectangle(brush, car.X, car.Y, carWidth, caretHeight + 1);
+                    }
+                    else
+                        using (var pen = new Pen(CaretColor))
+                            e.Graphics.DrawLine(pen, car.X, car.Y, car.X, car.Y + caretHeight);
+
+                    var caretRect = new Rectangle(HorizontalScroll.Value + car.X, VerticalScroll.Value + car.Y, carWidth, caretHeight + 1);
+                    if (CaretBlinking)
+                        if (prevCaretRect != caretRect || !ShowScrollBars)
+                        {
+                            CreateCaret(Handle, 0, carWidth, caretHeight + 1);
+                            SetCaretPos(car.X, car.Y);
+                            ShowCaret(Handle);
+                        }
+
+                    prevCaretRect = caretRect;
+
                 }
                 else
-                    using (var pen = new Pen(CaretColor))
-                        e.Graphics.DrawLine(pen, car.X, car.Y, car.X, car.Y + caretHeight);
-
-                var caretRect = new Rectangle(HorizontalScroll.Value + car.X, VerticalScroll.Value + car.Y, carWidth, caretHeight + 1);
-
-                if (CaretBlinking)
-                if (prevCaretRect != caretRect || !ShowScrollBars)
                 {
-                    CreateCaret(Handle, 0, carWidth, caretHeight + 1);
-                    SetCaretPos(car.X, car.Y);
-                    ShowCaret(Handle);
+                    HideCaret(Handle);
+                    prevCaretRect = Rectangle.Empty;
                 }
-
-                prevCaretRect = caretRect;
-            }
-            else
-            {
-                HideCaret(Handle);
-                prevCaretRect = Rectangle.Empty;
             }
 
             //draw disabled mask
@@ -5604,7 +5622,7 @@ namespace FastColoredTextBoxNS
                 var newScrollPos = VerticalScroll.Value - Math.Sign(direction)*offset;
 
                 var ea =
-                    new ScrollEventArgs(direction > 0 ? ScrollEventType.SmallDecrement : ScrollEventType.SmallIncrement,
+                    new System.Windows.Forms.ScrollEventArgs(direction > 0 ? ScrollEventType.SmallDecrement : ScrollEventType.SmallIncrement,
                                         VerticalScroll.Value,
                                         newScrollPos,
                                         ScrollOrientation.VerticalScroll);
@@ -8002,8 +8020,11 @@ window.status = ""#print"";
                 Capture = true;
                 // Refresh the control
                 Refresh();
-                // Disable drawing
-                SendMessage(Handle, WM_SETREDRAW, 0, 0);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    // Disable drawing
+                    SendMessage(Handle, WM_SETREDRAW, 0, 0);
+                }
             }
         }
 
@@ -8018,8 +8039,11 @@ window.status = ""#print"";
                 middleClickScrollingTimer.Enabled = false;
                 Capture = false;
                 base.Cursor = defaultCursor;
-                // Enable drawing
-                SendMessage(Handle, WM_SETREDRAW, 1, 0);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    // Enable drawing
+                    SendMessage(Handle, WM_SETREDRAW, 1, 0);
+                }
                 Invalidate();
             }
         }
@@ -8029,13 +8053,13 @@ window.status = ""#print"";
         /// </summary>
         private void RestoreScrollsAfterMiddleClickScrollingMode()
         {
-            var xea = new ScrollEventArgs(ScrollEventType.ThumbPosition,
+            var xea = new System.Windows.Forms.ScrollEventArgs(ScrollEventType.ThumbPosition,
                 HorizontalScroll.Value,
                 middleClickScrollingOriginScroll.X,
                 ScrollOrientation.HorizontalScroll);
             OnScroll(xea);
 
-            var yea = new ScrollEventArgs(ScrollEventType.ThumbPosition,
+            var yea = new System.Windows.Forms.ScrollEventArgs(ScrollEventType.ThumbPosition,
                 VerticalScroll.Value,
                 middleClickScrollingOriginScroll.Y,
                 ScrollOrientation.VerticalScroll);
@@ -8110,12 +8134,12 @@ window.status = ""#print"";
             var xScrollOffset = (int)(-distanceX / 5.0);
             var yScrollOffset = (int)(-distanceY / 5.0);
 
-            var xea = new ScrollEventArgs(xScrollOffset < 0 ? ScrollEventType.SmallIncrement : ScrollEventType.SmallDecrement,
+            var xea = new System.Windows.Forms.ScrollEventArgs(xScrollOffset < 0 ? ScrollEventType.SmallIncrement : ScrollEventType.SmallDecrement,
                 HorizontalScroll.Value,
                 HorizontalScroll.Value + xScrollOffset,
                 ScrollOrientation.HorizontalScroll);
 
-            var yea = new ScrollEventArgs(yScrollOffset < 0 ? ScrollEventType.SmallDecrement : ScrollEventType.SmallIncrement,
+            var yea = new System.Windows.Forms.ScrollEventArgs(yScrollOffset < 0 ? ScrollEventType.SmallDecrement : ScrollEventType.SmallIncrement,
                 VerticalScroll.Value,
                 VerticalScroll.Value + yScrollOffset,
                 ScrollOrientation.VerticalScroll);
@@ -8127,12 +8151,18 @@ window.status = ""#print"";
             if ((middleClickScollDirection & (ScrollDirection.Right | ScrollDirection.Left)) > 0)
                 OnScroll(xea);
 
-            // Enable drawing
-            SendMessage(Handle, WM_SETREDRAW, 1, 0);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Enable drawing
+                SendMessage(Handle, WM_SETREDRAW, 1, 0);
+            }
             // Refresh the control
             Refresh();
-            // Disable drawing
-            SendMessage(Handle, WM_SETREDRAW, 0, 0);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                // Disable drawing
+                SendMessage(Handle, WM_SETREDRAW, 0, 0);
+            }
         }
 
         private void DrawMiddleClickScrolling(Graphics gr)
