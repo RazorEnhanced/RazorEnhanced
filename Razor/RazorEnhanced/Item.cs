@@ -1822,6 +1822,54 @@ namespace RazorEnhanced
         // Props
 
         /// <summary>
+        /// Request to get immediatly the Properties of an Item, and wait for a specified amount of time.
+        /// This only returns properties and does not attempt to update the object.
+        /// Used in this way, properties for object not yet seen can be retrieved
+        /// </summary>
+        /// <param name="itemserial">Serial or Item read.</param>
+        /// <param name="delay">Maximum waiting time, in milliseconds.</param>
+        public static List<Property> GetProperties(int itemserial, int delay) // Delay in MS
+        {
+            List<Property> properties = new List<Property>();
+
+            RazorEnhanced.Item i = FindBySerial(itemserial);
+            if (i != null)
+            {
+                WaitForProps(itemserial, delay);
+                return i.Properties;
+            }
+
+            // Item not found then just get properties
+            var fakeItem = Assistant.Item.Factory(itemserial, 1);
+            var callback = new PacketViewerCallback((PacketReader p, PacketHandlerEventArgs args) =>
+            {
+                ushort id = p.ReadUInt16();
+                if (id == 1)
+                {
+                    int s = p.ReadInt32();
+                    if ((int)s == itemserial)
+                    {
+                        fakeItem.ReadPropertyList(p);
+                    }
+                }
+            });
+            PacketHandler.RegisterServerToClientViewer(0xD6, callback);//0xD6 "encoded" packets
+            Assistant.Client.Instance.SendToServerWait(new QueryProperties(itemserial));
+            Utility.DelayUntil(() => { return fakeItem.PropsUpdated == true; }, delay);
+            PacketHandler.RemoveServerToClientViewer(0xD6, callback);
+
+            foreach (Assistant.ObjectPropertyList.OPLEntry entry in fakeItem.ObjPropList.Content)
+            {
+                Property property = new Property(entry);
+                properties.Add(property);
+            }
+            return properties;       
+        }
+
+
+
+
+        /// <summary>
         /// If not updated, request to the Properties of an Item, and wait for a maximum amount of time. 
         /// </summary>
         /// <param name="itemserial">Serial or Item read.</param>
@@ -1832,22 +1880,13 @@ namespace RazorEnhanced
                 return;
 
             Assistant.Item i = Assistant.World.FindItem(itemserial);
-
             if (i == null)
                 return;
 
-            if (i.PropsUpdated)
-                return;
-
-            Assistant.Client.Instance.SendToServerWait(new QueryProperties(i.Serial));
-            int subdelay = delay;
-
-            while (!i.PropsUpdated)
+            if (!i.PropsUpdated)
             {
-                Thread.Sleep(2);
-                subdelay -= 2;
-                if (subdelay <= 0)
-                    break;
+                Assistant.Client.Instance.SendToServerWait(new QueryProperties(i.Serial));
+                Utility.DelayUntil(() => { return i.PropsUpdated == true; }, delay);
             }
         }
 
