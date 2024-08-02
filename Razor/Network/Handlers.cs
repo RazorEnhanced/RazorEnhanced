@@ -1618,17 +1618,16 @@ namespace Assistant
             }
 
             string newName = p.ReadString(30);
-            if (newName != m.Name)
-            {
-                RazorEnhanced.ScriptRecorderService.Instance.Record_RenameMobile((int)serial, newName);
-                m.Name = newName;
-            }
-
 
             m.Hits = p.ReadUInt16();
             m.HitsMax = p.ReadUInt16();
 
             m.CanRename = p.ReadBoolean(); //CanRename
+            if (m.CanRename && newName != m.Name)
+            {
+                RazorEnhanced.ScriptRecorderService.Instance.Record_RenameMobile((int)serial, newName);
+            }
+            m.Name = newName;
 
             byte type = p.ReadByte();
 
