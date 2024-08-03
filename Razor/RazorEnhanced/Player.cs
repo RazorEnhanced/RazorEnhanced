@@ -1,10 +1,8 @@
 using Assistant;
 using Assistant.UI;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -164,6 +162,30 @@ namespace RazorEnhanced
         /// Get total Maximum Stamina Increase.
         /// </summary>
         public static int MaximumStaminaIncrease { get { return World.Player.MaximumStaminaIncrease; } }
+
+        /// <summary>
+        /// Finds all neutral pets in the area that can be renamed.
+        /// This isn't the server information on your pets, but its good enough for most cases
+        /// </summary>
+        public static List<Mobile> Pets
+        {
+            get
+            {
+
+                List<RazorEnhanced.Mobile> pets = new List<Mobile>();
+                foreach (var m in World.Mobiles)
+                {
+
+                    if (m.Value.CanRename == true)
+                    {
+                        pets.Add(new RazorEnhanced.Mobile(m.Value));
+                    }
+                }
+
+                return pets;
+            }
+        }
+
 
         /// <summary>
         /// Display a fake tracking arrow

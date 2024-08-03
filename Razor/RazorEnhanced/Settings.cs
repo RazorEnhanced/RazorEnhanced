@@ -1222,7 +1222,7 @@ namespace RazorEnhanced
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
-            hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Identidication", Keys.None, true };
+            hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Identification", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
@@ -1230,7 +1230,7 @@ namespace RazorEnhanced
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();
-            hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Feebleming", Keys.None, true };
+            hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Feeblemind", Keys.None, true };
             hotkey.Rows.Add(hotkeyrow);
 
             hotkeyrow = hotkey.NewRow();

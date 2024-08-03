@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Documents;
 
@@ -141,17 +142,10 @@ namespace Assistant
 
     internal sealed class SingleClick : Packet
     {
-        internal SingleClick(object clicked)
+        internal SingleClick(Serial serial)
             : base(0x09, 5)
         {
-            if (clicked is Mobile)
-                Write(((Mobile)clicked).Serial);
-            else if (clicked is Item)
-                Write(((Item)clicked).Serial);
-            else if (clicked is Serial)
-                Write(((Serial)clicked).Value);
-            else
-                Write((uint)0);
+            Write(serial);
         }
     }
 

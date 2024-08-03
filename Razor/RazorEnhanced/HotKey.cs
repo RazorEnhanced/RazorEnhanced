@@ -1,11 +1,11 @@
 using Assistant;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Assistant.UI;
 using System;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -354,7 +354,9 @@ namespace RazorEnhanced
                         break;
 
                     case "Equip Wands":
-                        ProcessEquipWands(RazorEnhanced.Settings.HotKey.FindString(k));
+                        string parameter = RazorEnhanced.Settings.HotKey.FindString(k);
+                        Thread thread = new Thread(() => ProcessEquipWands(parameter));
+                        thread.Start();                        
                         break;
 
                     case "Skills":
@@ -907,7 +909,7 @@ namespace RazorEnhanced
                     foreach (Assistant.Mobile m in World.MobilesInRange())
                     {
                         if (m != World.Player)
-                            Assistant.Client.Instance.SendToServer(new SingleClick(m));
+                            Assistant.Client.Instance.SendToServer(new SingleClick(m.Serial));
 
                         if (Assistant.Engine.MainWindow.LastTargTextFlags.Checked)
                             Targeting.CheckTextFlags(m);
@@ -915,7 +917,7 @@ namespace RazorEnhanced
                     foreach (Assistant.Item i in World.Items.Values)
                     {
                         if (i.IsCorpse)
-                            Assistant.Client.Instance.SendToServer(new SingleClick(i));
+                            Assistant.Client.Instance.SendToServer(new SingleClick(i.Serial));
                     }
                     break;
 
@@ -923,7 +925,7 @@ namespace RazorEnhanced
                     foreach (Assistant.Item i in World.Items.Values)
                     {
                         if (i.IsCorpse)
-                            Assistant.Client.Instance.SendToServer(new SingleClick(i));
+                            Assistant.Client.Instance.SendToServer(new SingleClick(i.Serial));
                     }
                     break;
 
@@ -931,7 +933,7 @@ namespace RazorEnhanced
                     foreach (Assistant.Mobile m in World.MobilesInRange())
                     {
                         if (m != World.Player)
-                            Assistant.Client.Instance.SendToServer(new SingleClick(m));
+                            Assistant.Client.Instance.SendToServer(new SingleClick(m.Serial));
 
                         if (Assistant.Engine.MainWindow.LastTargTextFlags.Checked)
                             Targeting.CheckTextFlags(m);
@@ -941,7 +943,7 @@ namespace RazorEnhanced
                 case "Items":
                     foreach (Assistant.Item i in World.Items.Values)
                     {
-                        Assistant.Client.Instance.SendToServer(new SingleClick(i));
+                        Assistant.Client.Instance.SendToServer(new SingleClick(i.Serial));
                     }
                     break;
 
@@ -1458,11 +1460,75 @@ namespace RazorEnhanced
 
         private static void ProcessEquipWands(string function)
         {
-            switch (function)
+            var WandIDs = new List<int>() {0x0DF2, 0x0DF3, 0x0DF4, 0x0DF5, };
+            var py_wands = Items.FindAllByID(WandIDs, 0, Player.Backpack.Serial, 3);
+            List<Item> possibleWands = new();
+            foreach (var w in py_wands)
             {
-                default:
-                    World.Player.SendMessage("Da implementare");
-                    break;
+                Item item = w as Item;
+                if (item != null)
+                {
+                    if (! item.PropsUpdated)
+                    {
+                        Items.WaitForProps(item.Serial, 4000);
+                    }
+                    possibleWands.Add(item);
+                }
+            }
+            uint clilocForWand = function.ToLower() switch
+            {
+                "wand magic arrow" => 1060492, // magic arrow
+                "wand night sight" => 1017324, // night sight  
+                "wand protection" => 1017325, // Protection
+                "wand clumsy" => 1017326, // clumsiness
+                "wand feeblemind" => 1017327, // feeblemind
+                "wand feebleming" => 1017327, // feeblemind
+                "wand identification" => 1017350, // identification
+                "wand identidication" => 1017350, // identification
+                "wand weakness" => 1017328, // weakness
+                "wand heal" => 1017329, // healing
+                "wand greater heal" => 1017330, // greater heal
+                "wand agility" => 1017331, // agility 
+                "wand cunning" => 1017332, // cunning
+                "wand strength" => 1017333, // strength
+                "wand harm" => 1017334, // harm
+                "wand curse" => 1017335, // curse
+                "wand bless" => 1017336, // bless
+                "wand cure" => 1017338, // cure
+                "wand mana drain" => 1017339, // mana drain
+                "wand paralyze" => 1017340, // paralyze
+                "wand invisibility" => 1017347, // invisibility
+                "wand reflection" => 1017371, // reflection	
+                "wand fireball" => 1060487,   // fireball
+                "wand lightning" => 1060491, // lightning
+                _ => 0
+            };
+            if (clilocForWand != 0)
+            {
+
+                foreach (var item in possibleWands)
+                {
+                    bool found = false;
+                    foreach (Property prop in item.Properties)
+                    {
+                        string entry = prop.ToString();
+                        if (entry.ToLower().Contains("charges"))
+                            found = true;
+                        bool hasCount = int.TryParse(prop.Args, out int uses);
+                        if (prop.Number == clilocForWand && hasCount && uses > 0)
+                        {
+                            if (Player.CheckLayer(item.Layer))
+                            {
+                                Player.UnEquipItemByLayer(item.Layer);
+                                Utility.DelayUntil(() => Player.CheckLayer(item.Layer) == false, 3000);
+                                Misc.Pause(1000);
+                            }
+                            Player.EquipItem(item);
+                            Utility.DelayUntil(() => {  return Player.CheckLayer(item.Layer) == true; }, 3000);
+                            return;
+                        }
+                    }
+                }
             }
         }
 

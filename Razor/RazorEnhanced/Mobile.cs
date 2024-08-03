@@ -993,18 +993,12 @@ namespace RazorEnhanced
         // Single Click
         public static void SingleClick(Mobile mobile)
         {
-            Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile.Serial));
         }
 
-        public static void SingleClick(int mobileserial)
+        public static void SingleClick(int serial)
         {
-            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
-            if (mobile == null)
-            {
-                Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
-                return;
-            }
-            Assistant.Client.Instance.SendToServerWait(new SingleClick(mobile));
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(serial));
         }
 
         // Message

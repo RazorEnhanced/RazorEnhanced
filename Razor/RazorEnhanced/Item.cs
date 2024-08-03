@@ -29,7 +29,7 @@ namespace RazorEnhanced
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
         /// </summary>
         public bool Updated { get { return m_AssistantItem.Updated; } }
-        
+
         /// <summary>
         /// True when the container was opened
         /// </summary>
@@ -48,7 +48,7 @@ namespace RazorEnhanced
                     return 0;
             }
         }
-
+        internal Assistant.Item AsAssistant {get {return m_AssistantItem;} }
         /// <summary>
         /// Read amount from item type object.
         /// </summary>
@@ -1805,7 +1805,7 @@ namespace RazorEnhanced
         /// <param name="item">Serial or Item to click</param>
         public static void SingleClick(Item item)
         {
-            Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(item.Serial));
         }
 
         public static void SingleClick(int itemserial)
@@ -1816,7 +1816,7 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
                 return;
             }
-            Assistant.Client.Instance.SendToServerWait(new SingleClick(item));
+            Assistant.Client.Instance.SendToServerWait(new SingleClick(itemserial));
         }
 
         // Props
@@ -1877,7 +1877,12 @@ namespace RazorEnhanced
         public static void WaitForProps(int itemserial, int delay) // Delay in MS
         {
             if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
+            {
+                Items.SingleClick(itemserial);
+                Item item = Items.FindBySerial(itemserial);
+                Utility.DelayUntil(() => item.PropsUpdated == true, delay);
                 return;
+            }
 
             Assistant.Item i = Assistant.World.FindItem(itemserial);
             if (i == null)
