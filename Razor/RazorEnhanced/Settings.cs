@@ -14,6 +14,8 @@ using System.Web.Security;
 //using System.DirectoryServices;
 using static RazorEnhanced.Settings;
 using System.Net.NetworkInformation;
+using static RazorEnhanced.AutoLoot.AutoLootItem;
+using System.Threading;
 
 
 namespace RazorEnhanced
@@ -2806,37 +2808,103 @@ namespace RazorEnhanced
                 Save();
             }
 
-            internal static Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> ItemsRead(string list)
+            private static readonly object _lock = new object();
+            internal static Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> ItemsRead(string list, List<string> includedLists = null, bool expand=true)
             {
-                Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
+                if (!Monitor.TryEnter(_lock))
+                    return null;
 
-                if (RazorEnhanced.AutoLoot.LockTable)
-                    return lootList;
-
-                if (ListExists(list))
+                try
                 {
-                    foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-                    {
-                        if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
-                        {
-                            RazorEnhanced.AutoLoot.AutoLootItem autoLootItem = ((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
-                            List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItems;
-                            if (lootList.TryGetValue(autoLootItem.Graphics, out autoLootItems))
-                            {
-                                autoLootItems.Add(autoLootItem);
-                                lootList[autoLootItem.Graphics] = autoLootItems;
 
-                            }
-                            else
+                        Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
+
+                    if (RazorEnhanced.AutoLoot.LockTable)
+                        return lootList;
+
+
+                    if (ListExists(list))
+                    {
+                        if (includedLists == null)
+                        {
+                            includedLists = new List<string>();
+                            includedLists.Add(list); // dont reinclude myself
+                        }
+                        foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+                        {
+                            if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
                             {
-                                autoLootItems = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
-                                autoLootItems.Add(autoLootItem);
-                                lootList.Add(autoLootItem.Graphics, autoLootItems);
+                                RazorEnhanced.AutoLoot.AutoLootItem autoLootItem = ((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
+                                if (autoLootItem.Selected && expand && autoLootItem.Name[0] == '+')
+                                {
+                                    // This block is to allow including other lists
+                                    string subList = autoLootItem.Name.Substring(1);
+                                    // if we have not already included this list
+                                    if (!includedLists.Contains(subList))
+                                    {
+                                        includedLists.Add(subList);
+                                        var subListItems = ItemsRead(subList, includedLists);
+                                        if (subListItems != null)
+                                        {
+                                            // for each graphic in returned dictionary combine with same graphic in lootList  
+                                            foreach (var subListItem in subListItems)
+                                            {
+                                                if (lootList.ContainsKey(subListItem.Key))
+                                                {
+                                                    // then combine the list from subitems with the lootList list
+                                                    foreach (RazorEnhanced.AutoLoot.AutoLootItem subItem in subListItem.Value)
+                                                    {
+                                                        // if item to combine is ItemID -1 always add it (probably some dups)
+                                                        if (subItem.Graphics == -1)
+                                                        {
+                                                            lootList[subListItem.Key].Add(subItem);
+                                                        }
+                                                        // if existing list doesn't have the item add it
+                                                        else if (lootList[subListItem.Key].Contains(subItem, new AutoLootItemComparer()))
+                                                        {
+                                                            // throw away the subitem because its a dup                                                    
+                                                        }
+                                                        else
+                                                        {
+                                                            lootList[subListItem.Key].Add(subItem);
+                                                        }
+                                                    }
+
+                                                }
+                                                // else just add the subItems key and value
+                                                else
+                                                {
+                                                    lootList[subListItem.Key] = subListItem.Value;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    continue;
+                                }
+                                List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItems;
+                                if (lootList.TryGetValue(autoLootItem.Graphics, out autoLootItems))
+                                {
+                                    autoLootItems.Add(autoLootItem);
+                                    lootList[autoLootItem.Graphics] = autoLootItems;
+
+                                }
+                                else
+                                {
+                                    autoLootItems = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
+                                    autoLootItems.Add(autoLootItem);
+                                    lootList.Add(autoLootItem.Graphics, autoLootItems);
+                                }
                             }
                         }
                     }
+                    return lootList;
                 }
-                return lootList;
+                finally
+                {
+                    Monitor.Exit(_lock);
+                }
+
+
             }
 
             internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse, out int range)

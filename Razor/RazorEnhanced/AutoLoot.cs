@@ -74,6 +74,26 @@ namespace RazorEnhanced
 
             private readonly List<Property> m_Properties;
             public List<Property> Properties { get { return m_Properties; } }
+            public class AutoLootItemComparer : IEqualityComparer<AutoLootItem>
+            {
+                public bool Equals(AutoLootItem x, AutoLootItem y)
+                {
+                    if (x == null || y == null)
+                        return false;
+
+                    return x.Graphics == y.Graphics;
+                }
+
+                public int GetHashCode(AutoLootItem obj)
+                {
+                    if (obj == null)
+                        return 0;
+
+                    int hashProperty1 = obj.Graphics.GetHashCode();
+
+                    return hashProperty1;
+                }
+            }
 
             public AutoLootItem(string name, int graphics, int color, bool selected, int lootBag, List<Property> properties)
             {
@@ -250,23 +270,25 @@ namespace RazorEnhanced
         internal static void InitGrid(string listName)
         {
             Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Clear();
-                    Dictionary<int, List<AutoLoot.AutoLootItem>> items = Settings.AutoLoot.ItemsRead(listName);
-                    foreach (KeyValuePair<int, List<AutoLoot.AutoLootItem>> entry in items)
-                    {
-                        foreach (AutoLootItem item in entry.Value)
-                        {
-                            string color = "All";
-                            if (item.Color != -1)
-                                color = "0x" + item.Color.ToString("X4");
+            Dictionary<int, List<AutoLoot.AutoLootItem>> items = Settings.AutoLoot.ItemsRead(listName, null, false);
+            if (items == null)
+                return;
+            foreach (KeyValuePair<int, List<AutoLoot.AutoLootItem>> entry in items)
+            {
+                foreach (AutoLootItem item in entry.Value)
+                {
+                    string color = "All";
+                    if (item.Color != -1)
+                        color = "0x" + item.Color.ToString("X4");
 
-                            string itemid = "All";
-                            if (item.Graphics != -1)
-                                itemid = "0x" + item.Graphics.ToString("X4");
-                            string lootBag = "0x" + item.LootBagOverride.ToString("X4");
+                    string itemid = "All";
+                    if (item.Graphics != -1)
+                        itemid = "0x" + item.Graphics.ToString("X4");
+                    string lootBag = "0x" + item.LootBagOverride.ToString("X4");
 
-                            Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, lootBag, item.Properties });
-                        }
-                    }
+                    Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, itemid, color, lootBag, item.Properties });
+                }
+            }
         }
 
         internal static void CopyTable()
@@ -405,6 +427,8 @@ namespace RazorEnhanced
 
         internal static void Engine(Dictionary<int, List<AutoLootItem>> autoLootList, int mseconds, Items.Filter filter)
         {
+            if (autoLootList == null)
+                return;
             //TODO: msecond it's unused
             List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
@@ -432,7 +456,7 @@ namespace RazorEnhanced
 
                 foreach (RazorEnhanced.Item item in corpse.Contains)
                 {
-                    // Blocco shared
+                    // shared block
                     if (item.ItemID == 0x0E75 && item.Properties.Count > 0) // Attende l'arrivo delle props
                     {
                         if (item.ItemID == 0x0E75 && item.Properties[0].ToString() == "Instanced loot container")  // Rilevato backpack possibile shared loot verifico props UODREAMS
@@ -441,7 +465,7 @@ namespace RazorEnhanced
                             break;
                         }
                     }
-                    if (item.IsCorpse)  // Rilevato contenitore OSI
+                    if (item.IsCorpse)  // OSI container detected - auto shares loot
                     {
                         m_OSIcont = item;
                         break;
@@ -549,6 +573,7 @@ namespace RazorEnhanced
         {            
         };
 
+        private static readonly object _lock = new object();
         internal static void AutoRun()
         {
             if (!Client.Running)
@@ -558,8 +583,25 @@ namespace RazorEnhanced
                 return;
             try
             {
-                m_corpsefilter.RangeMax = m_maxrange;
-                Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
+                if (Monitor.TryEnter(_lock))
+                {
+                    try
+                    {
+                        m_corpsefilter.RangeMax = m_maxrange;
+                        Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
+                    }
+                    finally
+                    {
+                        Monitor.Exit(_lock);
+                    }
+
+                }
+                else
+                {
+                    // Engine trying to loot faster than it completes 1 cycle
+                    System.Threading.Thread.Sleep(100);
+                }
+
             }
             catch (Exception)
             {
@@ -594,7 +636,7 @@ namespace RazorEnhanced
                 return;
             }
         Dictionary<int, List<AutoLootItem>> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
-        if (autoLootList.Count > 0)
+        if (autoLootList != null && autoLootList.Count > 0)
             {
                 Engine(autoLootList, millisec, filter);
                 uint lootbag = GetLootBag();
@@ -633,18 +675,22 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static List<AutoLootItem> GetList(string lootListName, bool wantMinusOnes=false)
         {
-            if (Settings.AutoLoot.ListExists(lootListName)) {
-                List<AutoLootItem> retList = new List<AutoLootItem>();
-                var lootDict = Settings.AutoLoot.ItemsRead(lootListName);
-                foreach (KeyValuePair<int, List<AutoLootItem>> entry in lootDict)
-                {
-                    foreach (AutoLootItem lootItem in entry.Value)
-                    {
-                        if (!wantMinusOnes && lootItem.Graphics == -1)
-                            continue;
-                        retList.Add(lootItem);
-                    }
+            List<AutoLootItem> retList = new List<AutoLootItem>();
 
+            if (Settings.AutoLoot.ListExists(lootListName)) {
+                var lootDict = Settings.AutoLoot.ItemsRead(lootListName);
+                if (lootDict != null)
+                {
+                    foreach (KeyValuePair<int, List<AutoLootItem>> entry in lootDict)
+                    {
+                        foreach (AutoLootItem lootItem in entry.Value)
+                        {
+                            if (!wantMinusOnes && lootItem.Graphics == -1)
+                                continue;
+                            retList.Add(lootItem);
+                        }
+
+                    }
                 }
                 return retList;
             }
