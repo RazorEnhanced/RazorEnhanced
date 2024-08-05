@@ -491,6 +491,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
     <Compile Include="RazorEnhanced\Trade.cs" />
+    <Compile Include="RazorEnhanced\UI\ClilocError.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\ClilocError.Designer.cs">
+      <DependentUpon>ClilocError.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -725,6 +731,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\ClilocError.resx">
+      <DependentUpon>ClilocError.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAgentAddList.resx">
       <DependentUpon>EnhancedAgentAddList.cs</DependentUpon>

@@ -846,8 +846,8 @@ namespace Assistant
 
             if (m_CliLoc == null || m_CliLoc.Entries == null || m_CliLoc.Entries.Count < 10)
             {
-                    MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoCliLocMsg),
-                        Language.GetString(LocString.NoCliLoc)+" "+fileName, MessageBoxButtons.OK, MessageBoxIcon.Warning);               
+                RazorEnhanced.UI.ClilocError.Show(Language.GetString(LocString.NoCliLocMsg),
+                    "https://discordapp.com/channels/292282788311203841/1269870329895977063");
             }
         }
 
