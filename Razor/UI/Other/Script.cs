@@ -556,6 +556,7 @@ namespace Assistant
                     ReloadScriptTable();
                 }
 
+                ReloadScriptTable();
                 Utility.Logger.Debug($"AddScript script not null, filename={filename} scriptPath={scriptPath}");
             }
         }
