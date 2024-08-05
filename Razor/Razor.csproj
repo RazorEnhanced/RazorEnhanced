@@ -582,6 +582,9 @@
     <Compile Include="RazorEnhanced\UI\RazorFastColoredTextBox.Designer.cs">
       <DependentUpon>RazorFastColoredTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\ScriptListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RazorEnhanced\UOSteamEngine.cs" />
     <Compile Include="RazorEnhanced\Vendor.cs" />
     <Compile Include="RazorEnhanced\Organizer.cs" />
@@ -598,9 +601,6 @@
     <Compile Include="RazorEnhanced\Settings.cs" />
     <Compile Include="RazorEnhanced\Spells.cs" />
     <Compile Include="RazorEnhanced\Player.cs" />
-    <Compile Include="RazorEnhanced\UI\Controls.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.cs">
       <SubType>Form</SubType>
     </Compile>
