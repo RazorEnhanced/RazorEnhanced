@@ -1041,7 +1041,7 @@ namespace RazorEnhanced
 
         public static bool WaitForProps(int mobileserial, int delay) // Delay in MS
         {
-            if (World.Player.Expansion <= 3) // Non esistono le props
+            if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
                 return false;
 
             Assistant.Mobile m = Assistant.World.FindMobile((Assistant.Serial)((uint)mobileserial));

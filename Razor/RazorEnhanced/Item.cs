@@ -1878,9 +1878,6 @@ namespace RazorEnhanced
         {
             if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
             {
-                Items.SingleClick(itemserial);
-                Item item = Items.FindBySerial(itemserial);
-                Utility.DelayUntil(() => item.PropsUpdated == true, delay);
                 return;
             }
 

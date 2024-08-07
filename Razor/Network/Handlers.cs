@@ -2715,48 +2715,7 @@ namespace Assistant
                                     {
                                         var name = Language.GetCliloc((int)attrib);
                                         ushort charge = p.ReadUInt16();
-
-                                        if (World.Player != null && World.Player.Expansion <= 3) // Fake Property for wands
-                                            if (item != null)
-                                            {
-                                                // This is a best guess, may need updates
-                                                uint newAttrib = attrib switch
-                                                {
-                                                    3002015 => 1060492, // magic arrow
-                                                    3002016 => 1017324, // night sight  
-                                                    3002025 => 1017325, // Protection
-                                                    3002011 => 1017326, // clumsiness
-                                                    3002013 => 1017327, // feeblemind
-                                                    3002018 => 1017328, // weakness
-                                                    3002014 => 1017329, // healing
-                                                    3002039 => 1017330, // greater heal
-                                                    3002019 => 1017331, // agility 
-                                                    3002020 => 1017332, // cunning
-                                                    3002026 => 1017333, // strength
-                                                    3002022 => 1017334, // harm
-                                                    3002037 => 1017335, // curse
-                                                    3002027 => 1017336, // bless
-                                                    3002021 => 1017338, // cure
-                                                    3002041 => 1017339, // mana drain
-                                                    3002048 => 1017340, // paralyze
-                                                    3002054 => 1017347, // invisibility
-                                                    3002046 => 1017371, // reflection
-                                                    1044063 => 1017350, // identification
-                                                    3002028 => 1060487, // fireball
-                                                    3002040 => 1060491, // lightning						
-                                                    _ => 0
-                                                };
-                                                var entry = new Assistant.ObjectPropertyList.OPLEntry((int)attrib, charge.ToString());
-                                                item.ObjPropList.AddOrReplace(entry);
-                                                if (newAttrib != 0)
-                                                {
-                                                    entry = new Assistant.ObjectPropertyList.OPLEntry((int)newAttrib, charge.ToString());
-                                                    item.ObjPropList.AddOrReplace(entry);
-                                                }
-                                                Assistant.Client.Instance.SendToClient(new ObjectProperties(serial, item.ObjPropList));
-                                                item.PropsUpdated = true;
-                                            }
-                                        
+                                      
                                         Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, item.Name, (int)serial));          // Journal buffer
 
                                         Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(name, "System", 1, item.Name, (int)serial));          // Journal buffer

@@ -136,29 +136,21 @@ namespace Assistant
 
         private void Cast()
         {
-            if (RazorEnhanced.Settings.General.ReadBool("SpellUnequip"))
+            if (RazorEnhanced.Settings.General.ReadBool("SpellUnequip") && Circle < 10)
             {
                 Item pack = World.Player.Backpack;
                 if (pack != null)
                 {
                     // dont worry about uneqipping RuneBooks or SpellBooks
                     Item item = World.Player.GetItemOnLayer(Layer.RightHand);
-#if DEBUG
                     if (item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA && !item.IsVirtueShield)
-#else
-                    if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
-#endif
                     {
                         DragDropManager.Drag(item, item.Amount);
                         DragDropManager.Drop(item, pack);
                     }
 
                     item = World.Player.GetItemOnLayer(Layer.LeftHand);
-#if DEBUG
                     if (item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA && !item.IsVirtueShield)
-#else
-                    if ( item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA )
-#endif
                     {
                         DragDropManager.Drag(item, item.Amount);
                         DragDropManager.Drop(item, pack);
