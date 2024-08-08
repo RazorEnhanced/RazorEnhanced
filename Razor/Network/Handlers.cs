@@ -1665,6 +1665,23 @@ namespace Assistant
             {
                 player.MaxWeight = p.ReadUInt16();
                 player.Race = p.ReadByte();
+                if (player.Race == 0)
+                {
+                    player.Race = 1;
+                }
+            }
+            else
+            {
+                if (Engine.ClientVersion.Major >= 5)
+                {
+                    player.MaxWeight = (ushort)(
+                        7 * (player.Str / 2) + 40
+                    );
+                }
+                else
+                {
+                    player.MaxWeight = (ushort)(player.Str * 4 + 25);
+                }
             }
 
             // UOR Extended Info (Renaissance)
