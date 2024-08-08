@@ -79,7 +79,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0x4F, new PacketViewerCallback(GlobalLight));
             PacketHandler.RegisterServerToClientViewer(0x56, new PacketViewerCallback(PinLocation));
             PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequestFromServer));
-            
+
 
             PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
             PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
@@ -428,7 +428,7 @@ namespace Assistant
                             RazorEnhanced.ScriptRecorderService.Instance.Record_ClientTextCommand(3, virtueid);
                         }
                         catch { }
-                        
+
                         break;
                     }
 
@@ -463,7 +463,7 @@ namespace Assistant
         private static void RenameMobile(PacketReader p, PacketHandlerEventArgs args)
         {
             if (RazorEnhanced.ScriptRecorderService.Instance.Active())
-            {                                  
+            {
                 Serial ser = p.ReadUInt32();
                 string name = p.ReadStringSafe(30);
                 RazorEnhanced.ScriptRecorderService.Instance.Record_RenameMobile((int)ser, name);
@@ -649,7 +649,7 @@ namespace Assistant
         {
             if (World.Player == null)
                 return;
-            
+
             if (World.Player.WalkSemaphore.Count < World.Player.WalkSemaphore.MaxCount)
                 World.Player.WalkSemaphore.Release();
 
@@ -1277,8 +1277,8 @@ namespace Assistant
             m.ProcessPacketFlags(p.ReadByte());
 
             // Apply color flag on mob if enabled
-            p = RazorEnhanced.Filters.MobileColorize(p, m); 
-            
+            p = RazorEnhanced.Filters.MobileColorize(p, m);
+
             m.Notoriety = p.ReadByte();
 
             if (m == World.Player)
@@ -1657,47 +1657,47 @@ namespace Assistant
             player.ManaMax = p.ReadUInt16();
 
             player.Gold = p.ReadUInt32();
-            player.AR = p.ReadUInt16(); // ar / physical resist
+            player.AR = p.ReadUInt16(); // AR is physical resist
             player.Weight = p.ReadUInt16();
 
-            if (type >= 0x03)  // Renaissance
+            // UOML Extended Info
+            if (type >= 0x05)
             {
+                player.MaxWeight = p.ReadUInt16();
+                player.Race = p.ReadByte();
+            }
 
+            // UOR Extended Info (Renaissance)
+            if (type >= 0x03)
+            {
                 player.StatCap = p.ReadUInt16();
                 player.Followers = p.ReadByte();
                 player.FollowersMax = p.ReadByte();
             }
-            if (type >= 0x04) // AOS
+
+            // AOS Extended Info
+            if (type >= 0x04)
             {
                 player.FireResistance = p.ReadInt16();
                 player.ColdResistance = p.ReadInt16();
                 player.PoisonResistance = p.ReadInt16();
                 player.EnergyResistance = p.ReadInt16();
-
                 player.Luck = p.ReadInt16();
-
                 player.DamageMin = p.ReadUInt16();
                 player.DamageMax = p.ReadUInt16();
-
                 player.Tithe = p.ReadInt32();
             }
 
-            if (type >= 0x06)        // KR Data
+            // UOKR Extended Info
+            if (type >= 0x06)
             {
                 player.MaxPhysicResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.MaxFireResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.MaxColdResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.MaxPoisonResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.MaxEnergyResistence = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.DefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.MaxDefenseChanceIncrease = p.Position + 2 > p.Length ? (short)0 : (short)p.ReadUInt16();
-
                 player.HitChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
                 player.SwingSpeedIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
                 player.DamageChanceIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
@@ -1722,7 +1722,6 @@ namespace Assistant
                 player.MaximumStaminaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
                 player.MaximumManaIncrease = p.Position + 2 > p.Length ? (short)0 : p.ReadInt16();
             }
-        
 
             // Update All toolbar
             RazorEnhanced.ToolBar.UpdateAll();
@@ -1941,13 +1940,13 @@ namespace Assistant
                 Item i = World.FindItem(serial);
                 if (i != null)
                 {
-                    // If corpse decayed, remove from list 
+                    // If corpse decayed, remove from list
                     if (Player.Corpses.Contains(i))
                         Player.Corpses.Remove(i);
                     Utility.Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
                     // Update weapon special ability icons on spellgrid when removing weapons
                     if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
-                    { 
+                    {
                         System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                         doAction.Start();
                     }
@@ -2110,7 +2109,7 @@ namespace Assistant
             ushort itemID = p.ReadUInt16();
             Serial testSerial = serial;
             itemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
-            
+
             if (testSerial.IsItem && Items.IgnoreIDs.Contains(itemID))
             {
                 args.Block = true;
@@ -2162,7 +2161,7 @@ namespace Assistant
                 {
                     // Somewhere here record player death
                     //Player.CorpseSerial == item.Serial;
-                    // 
+                    //
                     if (Engine.MainWindow.ShowCorpseNames.Checked)
                         Assistant.Client.Instance.SendToServer(new SingleClick(item.Serial));
 
@@ -2715,7 +2714,7 @@ namespace Assistant
                                     {
                                         var name = Language.GetCliloc((int)attrib);
                                         ushort charge = p.ReadUInt16();
-                                      
+
                                         Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, item.Name, (int)serial));          // Journal buffer
 
                                         Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(name, "System", 1, item.Name, (int)serial));          // Journal buffer
@@ -3059,7 +3058,7 @@ namespace Assistant
                             System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                             doAction.Start();
 
-                            //RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);      
+                            //RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);
                         }
                         else
                         {
@@ -3236,8 +3235,8 @@ namespace Assistant
                 mapItem.MapEnd = new RazorEnhanced.Point2D(new Assistant.Point2D(x2, y2));
                 mapItem.m_Facet = facet;
             }
-            else 
-            { 
+            else
+            {
                 Utility.Logger.Debug("{0} unable to find map for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
             }
 
@@ -3538,18 +3537,18 @@ namespace Assistant
             ushort action = p.ReadUInt16();
 
             if (Enum.IsDefined(typeof(BuffIcon), icon))
-            {                
+            {
                 BuffIcon buff = (BuffIcon)icon;
-                
+
                 switch (action)
                 {
-                    case 0x01: // show                        
+                    case 0x01: // show
                         if (World.Player != null && !World.Player.Buffs.Contains(buff))
                         {
                             World.Player.Buffs.Add(buff);
                             p.Seek(12, SeekOrigin.Current);
                             int duration = p.ReadInt16();
-                            World.Player.BuffTimes[buff] = DateTime.Now.AddSeconds(duration);                            
+                            World.Player.BuffTimes[buff] = DateTime.Now.AddSeconds(duration);
                         }
                         break;
 
@@ -3618,14 +3617,14 @@ namespace Assistant
         private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args, bool server)
         {
             if (World.Player == null) { return; }
-            
+
 
             var action = (TradeAction)p.ReadByte();
             int serial = (int)p.ReadUInt32();
 
             Trade.TradeData trade;
             switch (action)
-            {                                       
+            {
                 case TradeAction.Start:
                     trade = new Trade.TradeData();
                     trade.LastUpdate = TradeService.Timestamp();
