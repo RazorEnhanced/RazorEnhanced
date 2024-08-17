@@ -117,6 +117,7 @@ namespace Assistant
             // Spin up CUO
             Process cuo = new Process();
             cuo.StartInfo.FileName = selected.CUOClient;
+            cuo.StartInfo.WorkingDirectory = Path.GetDirectoryName(selected.CUOClient);
             int osiEnc = 0;
             if (selected.OSIEnc)
             {
