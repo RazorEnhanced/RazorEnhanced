@@ -746,6 +746,7 @@ namespace Assistant
             // Required for Windows Form Designer support
             //
             InitializeComponent();
+            this.AutoScaleMode = AutoScaleMode.Font;
 
             m_NotifyIcon.ContextMenu =
                 new ContextMenu(new MenuItem[]
