@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using RazorEnhanced;
 
 namespace Assistant
 {
@@ -156,22 +157,19 @@ namespace Assistant
                 itemID = DragDropManager.Holding.ItemID;
             }
             Item item;
-            switch (itemID)
+
+            if (ConfigFiles.Maps.Data.MapIDs.Contains(itemID))
             {
-                case 0x14EB:
-                case 0x14EC:
-                    item = new MapItem(serial);
-                    break;
-                case 0x2006:
-                    item = new CorpseItem(serial);
-                    break;
-                case 0:
-                    item = new Item(serial);
-                    break;
-                default:
-                    item = new Item(serial);
-                    break;
+                item = new MapItem(serial);
             }
+            else if (itemID == 0x2006)
+            {
+                item = new CorpseItem(serial);
+            }
+            else {
+                item = new Item(serial);
+            }
+        
             if (item != null)
             {
                 item.ItemID = (ushort)itemID;

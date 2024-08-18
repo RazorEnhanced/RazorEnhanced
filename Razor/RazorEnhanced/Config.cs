@@ -17,6 +17,7 @@ namespace RazorEnhanced
         public static readonly string CONFIG_FOODS = "foods.json";
         public static readonly string CONFIG_REGIONS = "regions.json";
         public static readonly string CONFIG_WANDS = "wands.json";
+        public static readonly string CONFIG_MAPS = "maps.json";
         public static readonly string CONFIG_SOUNDFILTERS = "soundfilters.json";
         public static readonly string CONFIG_PF_BYPASS = "pf_bypass.json";        
         #endregion
@@ -143,6 +144,8 @@ namespace RazorEnhanced
 
             ConfigFiles.Wands.Data = (ConfigFiles.Wands)Load(CONFIG_WANDS, typeof(ConfigFiles.Wands));
 
+            ConfigFiles.Maps.Data = (ConfigFiles.Maps)Load(CONFIG_MAPS, typeof(ConfigFiles.Maps));
+
             try
             {
                 string path = ConfigPath(CONFIG_SOUNDFILTERS);
@@ -219,6 +222,13 @@ namespace RazorEnhanced
         {
             new public static Wands Data = new Wands();
             public List<int> WandIDs;
+        }
+
+        //maps.json
+        public class Maps : ConfigData
+        {
+            new public static Maps Data = new Maps();
+            public List<uint> MapIDs;
         }
 
         //regions.json
