@@ -753,21 +753,6 @@ namespace RazorEnhanced
             return World.Player.HasGump;
         }
 
-        public static bool WaitForGumpResponse(uint gumpid, int delay) // Delay in MS
-        {
-            bool found = false;
-            if (Gumps.m_gumpData.ContainsKey(gumpid))
-            {
-                GumpData gd = Gumps.m_gumpData[gumpid];
-                found = Utility.DelayUntil(() => gd.hasResponse == true, delay);
-            }
-            if (Gumps.m_incomingData.ContainsKey(gumpid))
-            {
-                found = Utility.DelayUntil(() => World.Player.HasGump == true, delay);
-            }
-            return found;
-        }
-
         /// <summary>
         /// Waits for a specific Gump to appear, for a maximum amount of time. If gumpid is 0 it will match any Gump.
         /// </summary>
@@ -793,16 +778,9 @@ namespace RazorEnhanced
 
                     // Check if gump is already up
                     if (Gumps.m_incomingData.ContainsKey(gumpid))
-                        return true;
-
-                    Gumps.m_incomingData[gumpid] = new IncomingGumpData();
-
-                    found = Utility.DelayUntil(() => World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid, delay);
-                    if (found)
-                    {
-                        Gumps.m_incomingData[gumpid].gumpId = World.Player.CurrentGumpI;
-                        Gumps.m_incomingData[gumpid].gumpSerial = World.Player.CurrentGumpS;
-                    }
+                        found = true;                    
+                    else
+                        found = Utility.DelayUntil(() => World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid, delay);
                 }
 
             }

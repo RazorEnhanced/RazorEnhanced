@@ -1113,7 +1113,7 @@ namespace RazorEnhanced
                 exceptionType == typeof(UOSArgumentError))
             {
                 UOSScriptError uos_se = ex as UOSScriptError;
-                message += "\n"+uos_se.Message;
+                message += "\n" + uos_se.Message;
                 //message += "- LINE: " + uos_se.LineNumber + Environment.NewLine;
                 //message += "- CONTENT: " + uos_se.Line + Environment.NewLine;
                 //message += "- LEXEME: " + uos_se.Node?.Lexeme??"" + Environment.NewLine;
@@ -1121,13 +1121,18 @@ namespace RazorEnhanced
             }
             else if (m_Script.Language == ScriptLanguage.PYTHON)
             {
-                message += "Python Error:";
-                ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
-                string error = eo.FormatException(ex);
-                message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
-            } else {
-                message += "Generic Error:";
-                message += Regex.Replace(ex.Message.Trim(), "\n\n", "\n");     //remove empty lines
+                if (pyEngine != null)
+                {
+                    message += "Python Error:";
+                    ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
+                    string error = eo.FormatException(ex);
+                    message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
+                }
+                else
+                {
+                    message += "Generic Error:";
+                    message += Regex.Replace(ex.Message.Trim(), "\n\n", "\n");     //remove empty lines
+                }
             }
 
             m_Script.Stop();
