@@ -429,6 +429,9 @@ namespace Assistant
                     cur |= RazorEnhanced.ModKeys.Alt;
                 if (keymod.HasFlag(SDL_Keymod.KMOD_LSHIFT) || keymod.HasFlag(SDL_Keymod.KMOD_RSHIFT))
                     cur |= RazorEnhanced.ModKeys.Shift;
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    return RazorEnhanced.HotKey.OnKeyDown(LinuxPlatform.MapKey(key), cur);                
                 return RazorEnhanced.HotKey.OnKeyDown(Win32Platform.MapKey(key), cur);
             }
 
