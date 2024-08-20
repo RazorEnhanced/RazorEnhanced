@@ -272,14 +272,8 @@ namespace RazorEnhanced
 
         static Dictionary<string, string> FileContentHash = new();
 
-        static string HashJsonNoWhitespace(string filePath)
+        static string HashJsonNoWhitespace(string serializedJson)
         {
-            // Read and load the JSON file
-            string jsonData = File.ReadAllText(filePath);
-            var jsonObject = JsonConvert.DeserializeObject(jsonData);
-
-            // Serialize the JSON and remove all whitespace
-            string serializedJson = JsonConvert.SerializeObject(jsonObject, Formatting.None);
             string noWhitespaceJson = Regex.Replace(serializedJson, @"\s+", "");
 
             // Hash the resulting JSON string using SHA-256
