@@ -16,6 +16,10 @@ using static RazorEnhanced.Settings;
 using System.Net.NetworkInformation;
 using static RazorEnhanced.AutoLoot.AutoLootItem;
 using System.Threading;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Web.UI.WebControls;
 
 
 namespace RazorEnhanced
@@ -195,8 +199,11 @@ namespace RazorEnhanced
         }
         private static DataTable LoadScripting(string filename, string tableName)
         {
-            
-            var scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(File.ReadAllText(filename + "." + tableName));
+            string fileContent = File.ReadAllText(filename + "." + tableName);
+            string hash = HashJsonNoWhitespace(fileContent);
+            FileContentHash[tableName] = hash;
+
+            var scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(fileContent);
             Scripts.LoadEnhancedScripts(scriptItems);
             
             DataTable temp = initDict[tableName](tableName);
@@ -211,7 +218,11 @@ namespace RazorEnhanced
         }
         private static DataTable LoadItems<T>(string filename, string tableName) where T : ListAbleItem
         {
-            List<T> items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(File.ReadAllText(filename + "." + tableName));
+            string fileContent = File.ReadAllText(filename + "." + tableName);
+            string hash = HashJsonNoWhitespace(fileContent);
+            FileContentHash[tableName] = hash;
+
+            List<T> items = Newtonsoft.Json.JsonConvert.DeserializeObject<List<T>>(fileContent);
             DataTable temp = initDict[tableName](tableName);
             foreach (T item in items)
             {
@@ -252,7 +263,31 @@ namespace RazorEnhanced
             }
 
             string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
+            string hash = HashJsonNoWhitespace(xml);
+            if (FileContentHash.ContainsKey(tableName) && FileContentHash[tableName] == hash)
+                return;
+            FileContentHash[tableName] = hash;
             File.WriteAllText(filename + "." + tableName, xml);
+        }
+
+        static Dictionary<string, string> FileContentHash = new();
+
+        static string HashJsonNoWhitespace(string filePath)
+        {
+            // Read and load the JSON file
+            string jsonData = File.ReadAllText(filePath);
+            var jsonObject = JsonConvert.DeserializeObject(jsonData);
+
+            // Serialize the JSON and remove all whitespace
+            string serializedJson = JsonConvert.SerializeObject(jsonObject, Formatting.None);
+            string noWhitespaceJson = Regex.Replace(serializedJson, @"\s+", "");
+
+            // Hash the resulting JSON string using SHA-256
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(noWhitespaceJson));
+                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+            }
         }
 
         private static void SaveItems<T>(string filename, string tableName, DataTable targets) where T : ListAbleItem
@@ -273,9 +308,11 @@ namespace RazorEnhanced
             }
 
             string xml = Newtonsoft.Json.JsonConvert.SerializeObject(items, Newtonsoft.Json.Formatting.Indented);
-            //  File.WriteAllText(filename + '.' + table.TableName, Newtonsoft.Json.JsonConvert.SerializeObject(targets, Newtonsoft.Json.Formatting.Indented));
-            File.WriteAllText(filename + "." + tableName, xml);
-
+            string hash = HashJsonNoWhitespace(xml);
+            if (FileContentHash.ContainsKey(tableName) && FileContentHash[tableName] == hash)
+                return;
+            File.WriteAllText(filename + "." + tableName, xml); 
+            FileContentHash[tableName] = hash;
         }
         ///
 
