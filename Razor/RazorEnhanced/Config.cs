@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace RazorEnhanced
@@ -213,7 +214,8 @@ namespace RazorEnhanced
 
         //Serializable classes
         // common class/loader
-        public class ConfigData{
+        public class ConfigData
+        {
             public static ConfigData Data = new ConfigData();
         }
 
@@ -277,7 +279,7 @@ namespace RazorEnhanced
             public Facet TerMur; //Not implementeds
 
 
-            public class Facet{ public Dictionary<string, List<Rectangle>> Towns, Dungeons, Guarded, Forest; };
+            public class Facet { public Dictionary<string, List<Rectangle>> Towns, Dungeons, Guarded, Forest; };
             public class Rectangle { public int X, Y, Z, Width, Height; public bool Guarded = true; }
         }
 
@@ -305,6 +307,64 @@ namespace RazorEnhanced
         {
             new public static PF_Bypass Data = new PF_Bypass();
             public List<int> BypassIDs;
+
+        }
+
+        //Keyboard key mappers
+        internal class KeyMap : Config
+        {
+            private Dictionary<int, int> _keyMap = new Dictionary<int, int>();
+            private readonly string _filePath;
+            private readonly FileSystemWatcher _fileWatcher;
+            private readonly object _lock = new object();
+
+            internal Dictionary<int, int> Data
+            {
+                get
+                {
+                    lock (_lock)
+                    { return _keyMap; }
+                }
+            }
+
+            internal KeyMap()
+            {
+                string mapName = "WindowsKeyMap.json";
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    mapName = "LinuxKeyMap.json";
+                }
+                _filePath = ConfigPath(mapName);
+
+                LoadKeyMap();
+
+                _fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(_filePath), Path.GetFileName(_filePath))
+                {
+                    NotifyFilter = NotifyFilters.LastWrite,
+                    EnableRaisingEvents = true
+                };
+
+                _fileWatcher.Changed += OnFileChanged;
+
+            }
+            private void LoadKeyMap()
+            {
+                lock (_lock)
+                {
+                    _keyMap.Clear();
+
+                    if (File.Exists(_filePath))
+                    {
+                        string jsonData = File.ReadAllText(_filePath);
+                        _keyMap = JsonConvert.DeserializeObject<Dictionary<int, int>>(jsonData);
+                    }
+                }
+
+            }
+            private void OnFileChanged(object sender, FileSystemEventArgs e)
+            {
+                LoadKeyMap();
+            }
 
         }
     }
