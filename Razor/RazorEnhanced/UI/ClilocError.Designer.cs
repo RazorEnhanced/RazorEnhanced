@@ -51,6 +51,7 @@
             this.discordFAQLink.TabIndex = 1;
             this.discordFAQLink.TabStop = true;
             this.discordFAQLink.Text = "discord FAQ link";
+            this.discordFAQLink.Visible = false;
             // 
             // message
             // 
