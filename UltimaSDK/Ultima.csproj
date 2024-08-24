@@ -121,6 +121,7 @@
     <Compile Include="Ultima\Animdata.cs" />
     <Compile Include="Ultima\Art.cs" />
     <Compile Include="Ultima\ASCIIFont.cs" />
+    <Compile Include="Ultima\BwtDecompress.cs" />
     <Compile Include="Ultima\CalibrationInfo.cs" />
     <Compile Include="Ultima\Client.cs" />
     <Compile Include="Ultima\ClientHandles.cs" />
