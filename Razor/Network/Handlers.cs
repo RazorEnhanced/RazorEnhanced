@@ -3389,7 +3389,7 @@ namespace Assistant
 
             uint currentgumps = p.ReadUInt32(); // Player Serial
             uint currentgumpi = p.ReadUInt32(); // Gump ID
-            RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
+
             try
             {
                 int x = p.ReadInt32(), y = p.ReadInt32(); // Position
@@ -3405,6 +3405,7 @@ namespace Assistant
                 // Split on one or more non-digit characters.
                 World.Player.CurrentGumpStrings.Clear();
                 World.Player.CurrentGumpTile.Clear();
+                var stringsInGump = new List<string>();
 
                 // Parsing the uncompressed Gump Layout section
                 // It is looking for all numbers and if one is a valid index for the cliloc, will be converted into string
@@ -3416,7 +3417,11 @@ namespace Assistant
                         int i = int.Parse(value);
                         // If this is a valid id of a cliloc string
                         if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
+                        {
                             World.Player.CurrentGumpStrings.Add(Language.GetString(i));
+                            stringsInGump.Add(Language.GetString(i));
+                        }
+                            
                     }
                 }
 
@@ -3445,18 +3450,21 @@ namespace Assistant
                         stringlistparse[x1] = "";
                     }
                 }
-                var stringsInGump = new List<string>();
+
                 if (TryParseGump(layout, out string[] gumpPieces))
                 {
-                    stringsInGump = ParseGumpString(gumpPieces, stringlistparse);
-                    World.Player.CurrentGumpStrings.AddRange(stringsInGump);
+                    List<string> parsedStrings = ParseGumpString(gumpPieces, stringlistparse);
+                    stringsInGump.AddRange(parsedStrings);
+                    World.Player.CurrentGumpStrings.AddRange(parsedStrings);
 
                 }
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
+                RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
+                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, stringsInGump);
                 World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
-                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, stringsInGump);
+
             }
 
             catch { }
