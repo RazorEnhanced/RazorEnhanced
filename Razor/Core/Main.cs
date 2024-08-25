@@ -196,9 +196,16 @@ namespace Assistant
         public static void Main(string[] args)
         {
 
+
             Application.ThreadException += ApplicationThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
             Thread.CurrentThread.Name = "Razor Main Thread";
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Set default font
+            System.Drawing.Font defaultFont = new System.Drawing.Font("Arial", 8);
 
             RazorEnhanced.AutoDocIO.UpdateDocs();
             // these are the available options, note that they set the variables

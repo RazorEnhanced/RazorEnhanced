@@ -1769,7 +1769,7 @@ namespace Assistant
             // 
             // openchangelogButton
             // 
-            this.openchangelogButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openchangelogButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.openchangelogButton.Location = new System.Drawing.Point(542, 24);
             this.openchangelogButton.Name = "openchangelogButton";
             this.openchangelogButton.Size = new System.Drawing.Size(95, 23);
@@ -1806,7 +1806,7 @@ namespace Assistant
             // 
             // profilesCloneButton
             // 
-            this.profilesCloneButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesCloneButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesCloneButton.Location = new System.Drawing.Point(321, 44);
             this.profilesCloneButton.Name = "profilesCloneButton";
             this.profilesCloneButton.Size = new System.Drawing.Size(63, 21);
@@ -1816,7 +1816,7 @@ namespace Assistant
             // 
             // profilesRenameButton
             // 
-            this.profilesRenameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesRenameButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesRenameButton.Location = new System.Drawing.Point(252, 44);
             this.profilesRenameButton.Name = "profilesRenameButton";
             this.profilesRenameButton.Size = new System.Drawing.Size(63, 21);
@@ -1826,7 +1826,7 @@ namespace Assistant
             // 
             // profilesUnlinkButton
             // 
-            this.profilesUnlinkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesUnlinkButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesUnlinkButton.Location = new System.Drawing.Point(75, 70);
             this.profilesUnlinkButton.Name = "profilesUnlinkButton";
             this.profilesUnlinkButton.Size = new System.Drawing.Size(63, 21);
@@ -1836,7 +1836,7 @@ namespace Assistant
             // 
             // profilesLinkButton
             // 
-            this.profilesLinkButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesLinkButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesLinkButton.Location = new System.Drawing.Point(6, 70);
             this.profilesLinkButton.Name = "profilesLinkButton";
             this.profilesLinkButton.Size = new System.Drawing.Size(63, 21);
@@ -1855,7 +1855,7 @@ namespace Assistant
             // 
             // profilesDeleteButton
             // 
-            this.profilesDeleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesDeleteButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesDeleteButton.Location = new System.Drawing.Point(321, 18);
             this.profilesDeleteButton.Name = "profilesDeleteButton";
             this.profilesDeleteButton.Size = new System.Drawing.Size(63, 21);
@@ -1865,7 +1865,7 @@ namespace Assistant
             // 
             // profilesAddButton
             // 
-            this.profilesAddButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilesAddButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesAddButton.Location = new System.Drawing.Point(252, 18);
             this.profilesAddButton.Name = "profilesAddButton";
             this.profilesAddButton.Size = new System.Drawing.Size(63, 21);
@@ -1926,7 +1926,7 @@ namespace Assistant
             // clientPrio
             // 
             this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.clientPrio.Font = new System.Drawing.Font("Arial", 9F);
             this.clientPrio.Items.AddRange(new object[] {
             "Idle",
             "BelowNormal",
@@ -2412,7 +2412,7 @@ namespace Assistant
             // msglvl
             // 
             this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.msglvl.Font = new System.Drawing.Font("Arial", 9F);
             this.msglvl.Items.AddRange(new object[] {
             "Show All",
             "Warnings & Errors",
@@ -2822,7 +2822,7 @@ namespace Assistant
             // 
             // remountsetbutton
             // 
-            this.remountsetbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.remountsetbutton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.remountsetbutton.Location = new System.Drawing.Point(73, 19);
             this.remountsetbutton.Name = "remountsetbutton";
             this.remountsetbutton.Size = new System.Drawing.Size(75, 21);
@@ -3125,7 +3125,7 @@ namespace Assistant
             // 
             // autocarverrazorButton
             // 
-            this.autocarverrazorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.autocarverrazorButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.autocarverrazorButton.Location = new System.Drawing.Point(74, 18);
             this.autocarverrazorButton.Name = "autocarverrazorButton";
             this.autocarverrazorButton.Size = new System.Drawing.Size(75, 21);
@@ -3177,7 +3177,7 @@ namespace Assistant
             // 
             // boneCutterrazorButton
             // 
-            this.boneCutterrazorButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.boneCutterrazorButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 19);
             this.boneCutterrazorButton.Name = "boneCutterrazorButton";
             this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 21);
@@ -3313,7 +3313,7 @@ namespace Assistant
             // 
             // InspectGumpsButton
             // 
-            this.InspectGumpsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InspectGumpsButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectGumpsButton.Image = global::Assistant.Properties.Resources.gump;
             this.InspectGumpsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.InspectGumpsButton.Location = new System.Drawing.Point(81, 6);
@@ -3327,7 +3327,7 @@ namespace Assistant
             // 
             // InspectContextButton
             // 
-            this.InspectContextButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.InspectContextButton.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InspectContextButton.Image = global::Assistant.Properties.Resources.applications_utilities;
             this.InspectContextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.InspectContextButton.Location = new System.Drawing.Point(18, 4);
@@ -7643,7 +7643,7 @@ namespace Assistant
             // 
             this.locks.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.locks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.locks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.locks.Font = new System.Drawing.Font("Arial", 9F);
             this.locks.Items.AddRange(new object[] {
             "Up",
             "Down",
@@ -7922,7 +7922,7 @@ namespace Assistant
             // imgFmt
             // 
             this.imgFmt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.imgFmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.imgFmt.Font = new System.Drawing.Font("Arial", 9F);
             this.imgFmt.Items.AddRange(new object[] {
             "jpg",
             "png",
@@ -8384,7 +8384,7 @@ namespace Assistant
             // 
             this.DPSMeterStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.DPSMeterStatusLabel.AutoSize = true;
-            this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DPSMeterStatusLabel.ForeColor = System.Drawing.Color.Green;
             this.DPSMeterStatusLabel.Location = new System.Drawing.Point(642, 331);
             this.DPSMeterStatusLabel.Name = "DPSMeterStatusLabel";
@@ -8498,7 +8498,7 @@ namespace Assistant
             // label71
             // 
             this.label71.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label71.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label71.Location = new System.Drawing.Point(3, 345);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(650, 24);
@@ -8508,7 +8508,7 @@ namespace Assistant
             // labelHotride
             // 
             this.labelHotride.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHotride.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelHotride.Location = new System.Drawing.Point(3, 313);
             this.labelHotride.Name = "labelHotride";
             this.labelHotride.Size = new System.Drawing.Size(650, 45);
@@ -8703,7 +8703,7 @@ namespace Assistant
             // minDmgShown
             // 
             this.minDmgShown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.minDmgShown.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minDmgShown.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.minDmgShown.Location = new System.Drawing.Point(93, 42);
             this.minDmgShown.Name = "minDmgShown";
             this.minDmgShown.Size = new System.Drawing.Size(58, 20);

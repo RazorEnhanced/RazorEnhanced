@@ -565,7 +565,7 @@ namespace RazorEnhanced.UI
             this.outputConsole.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.outputConsole.ContextMenuStrip = this.outputMenuStrip;
             this.outputConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputConsole.Font = new System.Drawing.Font("Cascadia Mono", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.outputConsole.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.outputConsole.Location = new System.Drawing.Point(3, 3);
             this.outputConsole.Name = "outputConsole";
             this.outputConsole.ReadOnly = true;
