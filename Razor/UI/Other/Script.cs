@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using Assistant.UI;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using IronPython.Runtime.Operations;
 
 namespace Assistant
 {
@@ -600,7 +601,7 @@ namespace Assistant
                 for (int i=0; i< list.Count; i++)
                 {
                     Scripts.ScriptItem item = list[i];
-                    if (item.Filename == scriptListView.SelectedItems[0].Text)
+                    if (item.Filename.ToLower() == scriptListView.SelectedItems[0].Text.lower())
                     {
                         removeIndex = i;
                         break;
