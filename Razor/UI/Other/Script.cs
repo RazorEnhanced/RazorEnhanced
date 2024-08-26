@@ -600,7 +600,7 @@ namespace Assistant
                 for (int i=0; i< list.Count; i++)
                 {
                     Scripts.ScriptItem item = list[i];
-                    if (item.Filename.ToLower() == scriptListView.SelectedItems[0].Text.ToLower())
+                    if (item.Filename == scriptListView.SelectedItems[0].Text)
                     {
                         removeIndex = i;
                         break;
