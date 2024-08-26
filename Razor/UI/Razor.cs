@@ -10357,6 +10357,116 @@ namespace Assistant
                 }
             }
         }
+
+        private void minDmgShown_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void remountedelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void remountdelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scriptlistView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+
+        }
+
+        private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scriptlistView_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void autoLootTextBoxMaxRange_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void autoLootTextBoxDelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scavengerRange_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scavengerDragDelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void organizerDragDelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dressDragDelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void restockDragDelay_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bandagehealmaxrangeTextBox_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bandagehealhpTextBox_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bandagehealdelayTextBox_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bandagehealcustomcolorTextBox_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bandagehealcustomIDTextBox_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolboxcountWarningTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolboxcountGraphTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HotKey_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void HotKey_MouseRoll(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 }
 
