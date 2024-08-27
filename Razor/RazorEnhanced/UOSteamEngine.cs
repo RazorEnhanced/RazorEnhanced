@@ -1177,13 +1177,8 @@ namespace RazorEnhanced.UOS
                 if (item != null)
                 {
                     Items.WaitForProps(thing, 1000);
-                    var allprops = Items.GetPropStringList(item);
-                    foreach (string prop in allprops)
-                    {
-                        var lowerProp = prop.ToLower();
-                        if (lowerProp.Contains(findProp))
-                            return true;
-                    }
+                    float value = Items.GetPropValue(item, findProp);
+                    return value;
                 }
             }
 
