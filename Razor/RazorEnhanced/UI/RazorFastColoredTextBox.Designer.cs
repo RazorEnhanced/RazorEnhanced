@@ -28,7 +28,20 @@ namespace Assistant
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // RazorFastColoredTextBox
+            // 
+            this.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.CharHeight = 12;
+            this.CharWidth = 7;
+            this.Font = new System.Drawing.Font("Courier New", 8F);
+            this.Name = "RazorFastColoredTextBox";
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion

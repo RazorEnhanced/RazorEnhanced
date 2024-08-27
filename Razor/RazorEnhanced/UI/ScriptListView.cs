@@ -30,6 +30,17 @@ namespace RazorEnhanced.UI
             }
             base.WndProc(ref m);
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // ScriptListView
+            // 
+            this.Font = new System.Drawing.Font("Arial", 8F);
+            this.ResumeLayout(false);
+
+        }
     }
 
     public class RazorHotKeyTextBox : TextBox

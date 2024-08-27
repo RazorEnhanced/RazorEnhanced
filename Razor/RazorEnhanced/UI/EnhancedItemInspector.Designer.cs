@@ -80,15 +80,15 @@ namespace RazorEnhanced.UI
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.razorButton1 = new  System.Windows.Forms.Button ();
+            this.razorButton1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // bNameCopy
-            //
+            // 
             this.bNameCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bNameCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bNameCopy.FlatAppearance.BorderSize = 0;
@@ -99,9 +99,9 @@ namespace RazorEnhanced.UI
             this.bNameCopy.TabIndex = 0;
             this.bNameCopy.UseVisualStyleBackColor = true;
             this.bNameCopy.Click += new System.EventHandler(this.BNameCopy_Click);
-            //
+            // 
             // groupBox1
-            //
+            // 
             this.groupBox1.Controls.Add(this.imagepanel);
             this.groupBox1.Controls.Add(this.lName);
             this.groupBox1.Controls.Add(this.lSerial);
@@ -124,86 +124,86 @@ namespace RazorEnhanced.UI
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "General";
-            //
+            // 
             // imagepanel
-            //
+            // 
             this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.imagepanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.imagepanel.Location = new System.Drawing.Point(224, 44);
             this.imagepanel.Name = "imagepanel";
             this.imagepanel.Size = new System.Drawing.Size(132, 100);
             this.imagepanel.TabIndex = 18;
-            //
+            // 
             // lName
-            //
+            // 
             this.lName.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lName.Location = new System.Drawing.Point(97, 36);
             this.lName.Name = "lName";
             this.lName.ReadOnly = true;
-            this.lName.Size = new System.Drawing.Size(213, 19);
+            this.lName.Size = new System.Drawing.Size(213, 13);
             this.lName.TabIndex = 17;
             this.lName.Text = "null";
-            //
+            // 
             // lSerial
-            //
+            // 
             this.lSerial.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lSerial.Location = new System.Drawing.Point(97, 64);
             this.lSerial.Name = "lSerial";
             this.lSerial.ReadOnly = true;
-            this.lSerial.Size = new System.Drawing.Size(102, 19);
+            this.lSerial.Size = new System.Drawing.Size(102, 13);
             this.lSerial.TabIndex = 16;
             this.lSerial.Text = "0x00000000";
-            //
+            // 
             // lItemID
-            //
+            // 
             this.lItemID.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lItemID.Location = new System.Drawing.Point(97, 96);
             this.lItemID.Name = "lItemID";
             this.lItemID.ReadOnly = true;
-            this.lItemID.Size = new System.Drawing.Size(71, 19);
+            this.lItemID.Size = new System.Drawing.Size(71, 13);
             this.lItemID.TabIndex = 15;
             this.lItemID.Text = "0x0000";
-            //
+            // 
             // lColor
-            //
+            // 
             this.lColor.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lColor.Location = new System.Drawing.Point(97, 124);
             this.lColor.Name = "lColor";
             this.lColor.ReadOnly = true;
-            this.lColor.Size = new System.Drawing.Size(63, 19);
+            this.lColor.Size = new System.Drawing.Size(63, 13);
             this.lColor.TabIndex = 14;
             this.lColor.Text = "0x0000";
-            //
+            // 
             // lPosition
-            //
+            // 
             this.lPosition.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lPosition.Location = new System.Drawing.Point(114, 152);
             this.lPosition.Name = "lPosition";
             this.lPosition.ReadOnly = true;
-            this.lPosition.Size = new System.Drawing.Size(120, 19);
+            this.lPosition.Size = new System.Drawing.Size(120, 13);
             this.lPosition.TabIndex = 13;
             this.lPosition.Text = "0, 0, 0";
-            //
+            // 
             // label5
-            //
+            // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(39, 154);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 20);
+            this.label5.Size = new System.Drawing.Size(47, 14);
             this.label5.TabIndex = 8;
             this.label5.Text = "Position:";
-            //
+            // 
             // label4
-            //
+            // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(39, 124);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 20);
+            this.label4.Size = new System.Drawing.Size(35, 14);
             this.label4.TabIndex = 7;
             this.label4.Text = "Color:";
-            //
+            // 
             // bPositionCopy
-            //
+            // 
             this.bPositionCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bPositionCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bPositionCopy.FlatAppearance.BorderSize = 0;
@@ -214,9 +214,9 @@ namespace RazorEnhanced.UI
             this.bPositionCopy.TabIndex = 6;
             this.bPositionCopy.UseVisualStyleBackColor = true;
             this.bPositionCopy.Click += new System.EventHandler(this.BPositionCopy_Click);
-            //
+            // 
             // bColorCopy
-            //
+            // 
             this.bColorCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bColorCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bColorCopy.FlatAppearance.BorderSize = 0;
@@ -227,18 +227,18 @@ namespace RazorEnhanced.UI
             this.bColorCopy.TabIndex = 5;
             this.bColorCopy.UseVisualStyleBackColor = true;
             this.bColorCopy.Click += new System.EventHandler(this.BColorCopy_Click);
-            //
+            // 
             // label3
-            //
+            // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(39, 96);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 20);
+            this.label3.Size = new System.Drawing.Size(35, 14);
             this.label3.TabIndex = 3;
             this.label3.Text = "ItemID";
-            //
+            // 
             // bItemIdCopy
-            //
+            // 
             this.bItemIdCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bItemIdCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bItemIdCopy.FlatAppearance.BorderSize = 0;
@@ -249,18 +249,18 @@ namespace RazorEnhanced.UI
             this.bItemIdCopy.TabIndex = 4;
             this.bItemIdCopy.UseVisualStyleBackColor = true;
             this.bItemIdCopy.Click += new System.EventHandler(this.BItemIdCopy_Click);
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(39, 64);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 20);
+            this.label2.Size = new System.Drawing.Size(37, 14);
             this.label2.TabIndex = 1;
             this.label2.Text = "Serial:";
-            //
+            // 
             // bSerialCopy
-            //
+            // 
             this.bSerialCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bSerialCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bSerialCopy.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
@@ -272,18 +272,18 @@ namespace RazorEnhanced.UI
             this.bSerialCopy.TabIndex = 2;
             this.bSerialCopy.UseVisualStyleBackColor = true;
             this.bSerialCopy.Click += new System.EventHandler(this.BSerialCopy_Click);
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(39, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 20);
+            this.label1.Size = new System.Drawing.Size(37, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Name:";
-            //
+            // 
             // groupBox2
-            //
+            // 
             this.groupBox2.Controls.Add(this.lContainer);
             this.groupBox2.Controls.Add(this.lOwned);
             this.groupBox2.Controls.Add(this.lLayer);
@@ -305,77 +305,77 @@ namespace RazorEnhanced.UI
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Item Details";
-            //
+            // 
             // lContainer
-            //
+            // 
             this.lContainer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lContainer.Location = new System.Drawing.Point(166, 32);
             this.lContainer.Name = "lContainer";
             this.lContainer.ReadOnly = true;
-            this.lContainer.Size = new System.Drawing.Size(102, 19);
+            this.lContainer.Size = new System.Drawing.Size(102, 13);
             this.lContainer.TabIndex = 18;
             this.lContainer.Text = "0x00000000";
-            //
+            // 
             // lOwned
-            //
+            // 
             this.lOwned.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lOwned.Location = new System.Drawing.Point(166, 150);
             this.lOwned.Name = "lOwned";
             this.lOwned.ReadOnly = true;
-            this.lOwned.Size = new System.Drawing.Size(21, 19);
+            this.lOwned.Size = new System.Drawing.Size(21, 13);
             this.lOwned.TabIndex = 12;
             this.lOwned.Text = "No";
-            //
+            // 
             // lLayer
-            //
+            // 
             this.lLayer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lLayer.Location = new System.Drawing.Point(166, 122);
             this.lLayer.Name = "lLayer";
             this.lLayer.ReadOnly = true;
-            this.lLayer.Size = new System.Drawing.Size(79, 19);
+            this.lLayer.Size = new System.Drawing.Size(79, 13);
             this.lLayer.TabIndex = 11;
             this.lLayer.Text = "0";
-            //
+            // 
             // lAmount
-            //
+            // 
             this.lAmount.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lAmount.Location = new System.Drawing.Point(166, 89);
             this.lAmount.Name = "lAmount";
             this.lAmount.ReadOnly = true;
-            this.lAmount.Size = new System.Drawing.Size(129, 19);
+            this.lAmount.Size = new System.Drawing.Size(129, 13);
             this.lAmount.TabIndex = 10;
             this.lAmount.Text = "0";
-            //
+            // 
             // lRootContainer
-            //
+            // 
             this.lRootContainer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lRootContainer.Location = new System.Drawing.Point(166, 62);
             this.lRootContainer.Name = "lRootContainer";
             this.lRootContainer.ReadOnly = true;
-            this.lRootContainer.Size = new System.Drawing.Size(102, 19);
+            this.lRootContainer.Size = new System.Drawing.Size(102, 13);
             this.lRootContainer.TabIndex = 9;
             this.lRootContainer.Text = "0x00000000";
-            //
+            // 
             // label6
-            //
+            // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(39, 154);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 20);
+            this.label6.Size = new System.Drawing.Size(46, 14);
             this.label6.TabIndex = 8;
             this.label6.Text = "Owned:";
-            //
+            // 
             // label7
-            //
+            // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(39, 124);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 20);
+            this.label7.Size = new System.Drawing.Size(38, 14);
             this.label7.TabIndex = 7;
             this.label7.Text = "Layer:";
-            //
+            // 
             // bOwnedCopy
-            //
+            // 
             this.bOwnedCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bOwnedCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bOwnedCopy.FlatAppearance.BorderSize = 0;
@@ -386,9 +386,9 @@ namespace RazorEnhanced.UI
             this.bOwnedCopy.TabIndex = 6;
             this.bOwnedCopy.UseVisualStyleBackColor = true;
             this.bOwnedCopy.Click += new System.EventHandler(this.BOwnedCopy_Click);
-            //
+            // 
             // bLayerCopy
-            //
+            // 
             this.bLayerCopy.BackColor = System.Drawing.SystemColors.Control;
             this.bLayerCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bLayerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -400,18 +400,18 @@ namespace RazorEnhanced.UI
             this.bLayerCopy.TabIndex = 5;
             this.bLayerCopy.UseVisualStyleBackColor = false;
             this.bLayerCopy.Click += new System.EventHandler(this.BLayerCopy_Click);
-            //
+            // 
             // label8
-            //
+            // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(39, 94);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 20);
+            this.label8.Size = new System.Drawing.Size(47, 14);
             this.label8.TabIndex = 3;
             this.label8.Text = "Amount:";
-            //
+            // 
             // bAmountCopy
-            //
+            // 
             this.bAmountCopy.BackColor = System.Drawing.SystemColors.Control;
             this.bAmountCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bAmountCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -423,18 +423,18 @@ namespace RazorEnhanced.UI
             this.bAmountCopy.TabIndex = 4;
             this.bAmountCopy.UseVisualStyleBackColor = false;
             this.bAmountCopy.Click += new System.EventHandler(this.BAmountCopy_Click);
-            //
+            // 
             // label9
-            //
+            // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(39, 64);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(121, 20);
+            this.label9.Size = new System.Drawing.Size(81, 14);
             this.label9.TabIndex = 1;
             this.label9.Text = "Root Container:";
-            //
+            // 
             // bRContainerCopy
-            //
+            // 
             this.bRContainerCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bRContainerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bRContainerCopy.FlatAppearance.BorderSize = 0;
@@ -445,18 +445,18 @@ namespace RazorEnhanced.UI
             this.bRContainerCopy.TabIndex = 2;
             this.bRContainerCopy.UseVisualStyleBackColor = true;
             this.bRContainerCopy.Click += new System.EventHandler(this.BRContainerCopy_Click);
-            //
+            // 
             // label10
-            //
+            // 
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(39, 34);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(82, 20);
+            this.label10.Size = new System.Drawing.Size(56, 14);
             this.label10.TabIndex = 0;
             this.label10.Text = "Container:";
-            //
+            // 
             // bContainerCopy
-            //
+            // 
             this.bContainerCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
             this.bContainerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.bContainerCopy.FlatAppearance.BorderSize = 0;
@@ -467,9 +467,9 @@ namespace RazorEnhanced.UI
             this.bContainerCopy.TabIndex = 0;
             this.bContainerCopy.UseVisualStyleBackColor = true;
             this.bContainerCopy.Click += new System.EventHandler(this.BContainerCopy_Click);
-            //
+            // 
             // groupBox3
-            //
+            // 
             this.groupBox3.Controls.Add(this.listBoxAttributes);
             this.groupBox3.Location = new System.Drawing.Point(513, 12);
             this.groupBox3.Name = "groupBox3";
@@ -477,18 +477,18 @@ namespace RazorEnhanced.UI
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Attributes";
-            //
+            // 
             // listBoxAttributes
-            //
+            // 
             this.listBoxAttributes.FormattingEnabled = true;
-            this.listBoxAttributes.ItemHeight = 20;
+            this.listBoxAttributes.ItemHeight = 14;
             this.listBoxAttributes.Location = new System.Drawing.Point(12, 19);
             this.listBoxAttributes.Name = "listBoxAttributes";
-            this.listBoxAttributes.Size = new System.Drawing.Size(289, 324);
+            this.listBoxAttributes.Size = new System.Drawing.Size(289, 312);
             this.listBoxAttributes.TabIndex = 0;
-            //
+            // 
             // groupBox4
-            //
+            // 
             this.groupBox4.Controls.Add(this.visibleflaglabel);
             this.groupBox4.Controls.Add(this.groudflaglabel);
             this.groupBox4.Controls.Add(this.twohandflaglabel);
@@ -513,171 +513,171 @@ namespace RazorEnhanced.UI
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Flags";
-            //
+            // 
             // visibleflaglabel
-            //
+            // 
             this.visibleflaglabel.AutoSize = true;
             this.visibleflaglabel.Location = new System.Drawing.Point(87, 273);
             this.visibleflaglabel.Name = "visibleflaglabel";
-            this.visibleflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.visibleflaglabel.Size = new System.Drawing.Size(13, 14);
             this.visibleflaglabel.TabIndex = 36;
             this.visibleflaglabel.Text = "0";
-            //
+            // 
             // groudflaglabel
-            //
+            // 
             this.groudflaglabel.AutoSize = true;
             this.groudflaglabel.Location = new System.Drawing.Point(87, 243);
             this.groudflaglabel.Name = "groudflaglabel";
-            this.groudflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.groudflaglabel.Size = new System.Drawing.Size(13, 14);
             this.groudflaglabel.TabIndex = 35;
             this.groudflaglabel.Text = "0";
-            //
+            // 
             // twohandflaglabel
-            //
+            // 
             this.twohandflaglabel.AutoSize = true;
             this.twohandflaglabel.Location = new System.Drawing.Point(87, 213);
             this.twohandflaglabel.Name = "twohandflaglabel";
-            this.twohandflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.twohandflaglabel.Size = new System.Drawing.Size(13, 14);
             this.twohandflaglabel.TabIndex = 34;
             this.twohandflaglabel.Text = "0";
-            //
+            // 
             // containerflaglabel
-            //
+            // 
             this.containerflaglabel.AutoSize = true;
             this.containerflaglabel.Location = new System.Drawing.Point(87, 35);
             this.containerflaglabel.Name = "containerflaglabel";
-            this.containerflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.containerflaglabel.Size = new System.Drawing.Size(13, 14);
             this.containerflaglabel.TabIndex = 33;
             this.containerflaglabel.Text = "0";
-            //
+            // 
             // label19
-            //
+            // 
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(6, 273);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(59, 20);
+            this.label19.Size = new System.Drawing.Size(42, 14);
             this.label19.TabIndex = 32;
             this.label19.Text = "Visible:";
-            //
+            // 
             // label18
-            //
+            // 
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(6, 243);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(67, 20);
+            this.label18.Size = new System.Drawing.Size(46, 14);
             this.label18.TabIndex = 31;
             this.label18.Text = "Ground:";
-            //
+            // 
             // label15
-            //
+            // 
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(6, 213);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(85, 20);
+            this.label15.Size = new System.Drawing.Size(59, 14);
             this.label15.TabIndex = 30;
             this.label15.Text = "Two Hand:";
-            //
+            // 
             // movableflaglabel
-            //
+            // 
             this.movableflaglabel.AutoSize = true;
             this.movableflaglabel.Location = new System.Drawing.Point(87, 183);
             this.movableflaglabel.Name = "movableflaglabel";
-            this.movableflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.movableflaglabel.Size = new System.Drawing.Size(13, 14);
             this.movableflaglabel.TabIndex = 29;
             this.movableflaglabel.Text = "0";
-            //
+            // 
             // label17
-            //
+            // 
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(6, 183);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(72, 20);
+            this.label17.Size = new System.Drawing.Size(50, 14);
             this.label17.TabIndex = 28;
             this.label17.Text = "Movable:";
-            //
+            // 
             // potionflaglabel
-            //
+            // 
             this.potionflaglabel.AutoSize = true;
             this.potionflaglabel.Location = new System.Drawing.Point(87, 153);
             this.potionflaglabel.Name = "potionflaglabel";
-            this.potionflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.potionflaglabel.Size = new System.Drawing.Size(13, 14);
             this.potionflaglabel.TabIndex = 27;
             this.potionflaglabel.Text = "0";
-            //
+            // 
             // label16
-            //
+            // 
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(6, 153);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(58, 20);
+            this.label16.Size = new System.Drawing.Size(39, 14);
             this.label16.TabIndex = 26;
             this.label16.Text = "Potion:";
-            //
+            // 
             // multiflaglabel
-            //
+            // 
             this.multiflaglabel.AutoSize = true;
             this.multiflaglabel.Location = new System.Drawing.Point(87, 123);
             this.multiflaglabel.Name = "multiflaglabel";
-            this.multiflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.multiflaglabel.Size = new System.Drawing.Size(13, 14);
             this.multiflaglabel.TabIndex = 25;
             this.multiflaglabel.Text = "0";
-            //
+            // 
             // doorflaglabel
-            //
+            // 
             this.doorflaglabel.AutoSize = true;
             this.doorflaglabel.Location = new System.Drawing.Point(87, 93);
             this.doorflaglabel.Name = "doorflaglabel";
-            this.doorflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.doorflaglabel.Size = new System.Drawing.Size(13, 14);
             this.doorflaglabel.TabIndex = 24;
             this.doorflaglabel.Text = "0";
-            //
+            // 
             // corpseflaglabel
-            //
+            // 
             this.corpseflaglabel.AutoSize = true;
             this.corpseflaglabel.Location = new System.Drawing.Point(87, 63);
             this.corpseflaglabel.Name = "corpseflaglabel";
-            this.corpseflaglabel.Size = new System.Drawing.Size(18, 20);
+            this.corpseflaglabel.Size = new System.Drawing.Size(13, 14);
             this.corpseflaglabel.TabIndex = 23;
             this.corpseflaglabel.Text = "0";
-            //
+            // 
             // label14
-            //
+            // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(6, 123);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(46, 20);
+            this.label14.Size = new System.Drawing.Size(31, 14);
             this.label14.TabIndex = 21;
             this.label14.Text = "Multi:";
-            //
+            // 
             // label13
-            //
+            // 
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(6, 93);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(48, 20);
+            this.label13.Size = new System.Drawing.Size(33, 14);
             this.label13.TabIndex = 20;
             this.label13.Text = "Door:";
-            //
+            // 
             // label12
-            //
+            // 
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(6, 63);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(64, 20);
+            this.label12.Size = new System.Drawing.Size(45, 14);
             this.label12.TabIndex = 19;
             this.label12.Text = "Corpse:";
-            //
+            // 
             // label11
-            //
+            // 
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(6, 35);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(82, 20);
+            this.label11.Size = new System.Drawing.Size(56, 14);
             this.label11.TabIndex = 18;
             this.label11.Text = "Container:";
-            //
+            // 
             // razorButton1
-            //
+            // 
             this.razorButton1.Location = new System.Drawing.Point(390, 353);
             this.razorButton1.Name = "razorButton1";
             this.razorButton1.Size = new System.Drawing.Size(75, 32);
@@ -685,15 +685,16 @@ namespace RazorEnhanced.UI
             this.razorButton1.Text = "Close";
             this.razorButton1.UseVisualStyleBackColor = true;
             this.razorButton1.Click += new System.EventHandler(this.RazorButton1_Click);
-            //
+            // 
             // EnhancedItemInspector
-            //
+            // 
             this.ClientSize = new System.Drawing.Size(841, 451);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.razorButton1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Font = new System.Drawing.Font("Arial", 8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);

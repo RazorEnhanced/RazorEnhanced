@@ -790,6 +790,12 @@
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\RazorFastColoredTextBox.resx">
+      <DependentUpon>RazorFastColoredTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\ScriptListView.resx">
+      <DependentUpon>ScriptListView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\App.ico" />
     <EmbeddedResource Include="UI\HueEntry.resx">
       <DependentUpon>HueEntry.cs</DependentUpon>

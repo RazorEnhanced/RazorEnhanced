@@ -48,6 +48,9 @@ namespace RazorEnhanced.UI
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.scavengerpropGridView = new System.Windows.Forms.DataGridView();
+            this.ScavengerPropsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ScavengerMinPropsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ScavengerMaxPropValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.imagepanel = new System.Windows.Forms.Panel();
             this.lColor = new System.Windows.Forms.Label();
@@ -58,14 +61,11 @@ namespace RazorEnhanced.UI
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.bAddProp = new  System.Windows.Forms.Button ();
+            this.bAddProp = new System.Windows.Forms.Button();
             this.comboboxProp = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.razorButton1 = new  System.Windows.Forms.Button ();
-            this.ScavengerPropsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ScavengerMinPropsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ScavengerMaxPropValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.razorButton1 = new System.Windows.Forms.Button();
             ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -152,9 +152,9 @@ namespace RazorEnhanced.UI
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.scavengerpropGridView);
-            this.groupBox1.Location = new System.Drawing.Point(12, 123);
+            this.groupBox1.Location = new System.Drawing.Point(12, 132);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(608, 185);
+            this.groupBox1.Size = new System.Drawing.Size(608, 199);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Propreties List";
@@ -167,157 +167,15 @@ namespace RazorEnhanced.UI
             this.ScavengerPropsName,
             this.ScavengerMinPropsValue,
             this.ScavengerMaxPropValue});
-            this.scavengerpropGridView.Location = new System.Drawing.Point(9, 20);
+            this.scavengerpropGridView.Location = new System.Drawing.Point(9, 22);
             this.scavengerpropGridView.Name = "scavengerpropGridView";
             this.scavengerpropGridView.RowHeadersVisible = false;
-            this.scavengerpropGridView.Size = new System.Drawing.Size(588, 150);
+            this.scavengerpropGridView.Size = new System.Drawing.Size(588, 162);
             this.scavengerpropGridView.TabIndex = 0;
             this.scavengerpropGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerpropGridView_CellEndEdit);
             this.scavengerpropGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.scavengerpropGridView_CellMouseUp);
             this.scavengerpropGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.scavengerpropGridView_DataError);
             this.scavengerpropGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.scavengerpropGridView_DefaultValuesNeeded);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.imagepanel);
-            this.groupBox2.Controls.Add(this.lColor);
-            this.groupBox2.Controls.Add(this.lGraphics);
-            this.groupBox2.Controls.Add(this.lName);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(218, 105);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Item";
-            // 
-            // imagepanel
-            // 
-            this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.imagepanel.Location = new System.Drawing.Point(128, 50);
-            this.imagepanel.Name = "imagepanel";
-            this.imagepanel.Size = new System.Drawing.Size(60, 49);
-            this.imagepanel.TabIndex = 6;
-            // 
-            // lColor
-            // 
-            this.lColor.AutoSize = true;
-            this.lColor.Location = new System.Drawing.Point(63, 70);
-            this.lColor.Name = "lColor";
-            this.lColor.Size = new System.Drawing.Size(42, 13);
-            this.lColor.TabIndex = 5;
-            this.lColor.Text = "0x0000";
-            // 
-            // lGraphics
-            // 
-            this.lGraphics.AutoSize = true;
-            this.lGraphics.Location = new System.Drawing.Point(63, 50);
-            this.lGraphics.Name = "lGraphics";
-            this.lGraphics.Size = new System.Drawing.Size(42, 13);
-            this.lGraphics.TabIndex = 4;
-            this.lGraphics.Text = "0x0000";
-            // 
-            // lName
-            // 
-            this.lName.AutoSize = true;
-            this.lName.Location = new System.Drawing.Point(63, 30);
-            this.lName.Name = "lName";
-            this.lName.Size = new System.Drawing.Size(23, 13);
-            this.lName.TabIndex = 3;
-            this.lName.Text = "null";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 70);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Color:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Grapics:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Name:";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.bAddProp);
-            this.groupBox3.Controls.Add(this.comboboxProp);
-            this.groupBox3.Location = new System.Drawing.Point(236, 12);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(384, 105);
-            this.groupBox3.TabIndex = 4;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Props Editing";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 35);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Default Props:";
-            // 
-            // bAddProp
-            // 
-            this.bAddProp.Location = new System.Drawing.Point(298, 65);
-            this.bAddProp.Name = "bAddProp";
-            this.bAddProp.Size = new System.Drawing.Size(75, 23);
-            this.bAddProp.TabIndex = 6;
-            this.bAddProp.Text = "Add";
-            this.bAddProp.UseVisualStyleBackColor = true;
-            this.bAddProp.Click += new System.EventHandler(this.bAddProp_Click);
-            // 
-            // comboboxProp
-            // 
-            this.comboboxProp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboboxProp.FormattingEnabled = true;
-            this.comboboxProp.Location = new System.Drawing.Point(100, 30);
-            this.comboboxProp.Name = "comboboxProp";
-            this.comboboxProp.Size = new System.Drawing.Size(273, 24);
-            this.comboboxProp.TabIndex = 0;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteRowToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(134, 26);
-            // 
-            // deleteRowToolStripMenuItem
-            // 
-            this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
-            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.deleteRowToolStripMenuItem.Text = "Delete Row";
-            this.deleteRowToolStripMenuItem.Click += new System.EventHandler(this.deleteRowToolStripMenuItem_Click);
-            // 
-            // razorButton1
-            // 
-            this.razorButton1.Location = new System.Drawing.Point(275, 325);
-            this.razorButton1.Name = "razorButton1";
-            this.razorButton1.Size = new System.Drawing.Size(75, 23);
-            this.razorButton1.TabIndex = 5;
-            this.razorButton1.Text = "Close";
-            this.razorButton1.UseVisualStyleBackColor = true;
-            this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
             // 
             // ScavengerPropsName
             // 
@@ -339,15 +197,158 @@ namespace RazorEnhanced.UI
             this.ScavengerMaxPropValue.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ScavengerMaxPropValue.Width = 40;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.imagepanel);
+            this.groupBox2.Controls.Add(this.lColor);
+            this.groupBox2.Controls.Add(this.lGraphics);
+            this.groupBox2.Controls.Add(this.lName);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Location = new System.Drawing.Point(12, 13);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(218, 113);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Item";
+            // 
+            // imagepanel
+            // 
+            this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.imagepanel.Location = new System.Drawing.Point(128, 54);
+            this.imagepanel.Name = "imagepanel";
+            this.imagepanel.Size = new System.Drawing.Size(60, 53);
+            this.imagepanel.TabIndex = 6;
+            // 
+            // lColor
+            // 
+            this.lColor.AutoSize = true;
+            this.lColor.Location = new System.Drawing.Point(63, 75);
+            this.lColor.Name = "lColor";
+            this.lColor.Size = new System.Drawing.Size(43, 14);
+            this.lColor.TabIndex = 5;
+            this.lColor.Text = "0x0000";
+            // 
+            // lGraphics
+            // 
+            this.lGraphics.AutoSize = true;
+            this.lGraphics.Location = new System.Drawing.Point(63, 54);
+            this.lGraphics.Name = "lGraphics";
+            this.lGraphics.Size = new System.Drawing.Size(43, 14);
+            this.lGraphics.TabIndex = 4;
+            this.lGraphics.Text = "0x0000";
+            // 
+            // lName
+            // 
+            this.lName.AutoSize = true;
+            this.lName.Location = new System.Drawing.Point(63, 32);
+            this.lName.Name = "lName";
+            this.lName.Size = new System.Drawing.Size(23, 14);
+            this.lName.TabIndex = 3;
+            this.lName.Text = "null";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 75);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 14);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Color:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 14);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Grapics:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 14);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Name:";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.bAddProp);
+            this.groupBox3.Controls.Add(this.comboboxProp);
+            this.groupBox3.Location = new System.Drawing.Point(236, 13);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(384, 113);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Props Editing";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 38);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(75, 14);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Default Props:";
+            // 
+            // bAddProp
+            // 
+            this.bAddProp.Location = new System.Drawing.Point(298, 70);
+            this.bAddProp.Name = "bAddProp";
+            this.bAddProp.Size = new System.Drawing.Size(75, 25);
+            this.bAddProp.TabIndex = 6;
+            this.bAddProp.Text = "Add";
+            this.bAddProp.UseVisualStyleBackColor = true;
+            this.bAddProp.Click += new System.EventHandler(this.bAddProp_Click);
+            // 
+            // comboboxProp
+            // 
+            this.comboboxProp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboboxProp.FormattingEnabled = true;
+            this.comboboxProp.Location = new System.Drawing.Point(100, 32);
+            this.comboboxProp.Name = "comboboxProp";
+            this.comboboxProp.Size = new System.Drawing.Size(273, 22);
+            this.comboboxProp.TabIndex = 0;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteRowToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(134, 26);
+            // 
+            // deleteRowToolStripMenuItem
+            // 
+            this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.deleteRowToolStripMenuItem.Text = "Delete Row";
+            this.deleteRowToolStripMenuItem.Click += new System.EventHandler(this.deleteRowToolStripMenuItem_Click);
+            // 
+            // razorButton1
+            // 
+            this.razorButton1.Location = new System.Drawing.Point(275, 350);
+            this.razorButton1.Name = "razorButton1";
+            this.razorButton1.Size = new System.Drawing.Size(75, 25);
+            this.razorButton1.TabIndex = 5;
+            this.razorButton1.Text = "Close";
+            this.razorButton1.UseVisualStyleBackColor = true;
+            this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
+            // 
             // EnhancedScavengerEditItemProps
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 361);
+            this.ClientSize = new System.Drawing.Size(628, 389);
             this.Controls.Add(this.razorButton1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Font = new System.Drawing.Font("Arial", 8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EnhancedScavengerEditItemProps";

@@ -35,18 +35,18 @@ namespace RazorEnhanced.UI
             this.tSerial = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tName = new System.Windows.Forms.TextBox();
-            this.bAddPlayer = new  System.Windows.Forms.Button ();
-            this.bClose = new  System.Windows.Forms.Button ();
+            this.bAddPlayer = new System.Windows.Forms.Button();
+            this.bClose = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 25);
+            this.label1.Location = new System.Drawing.Point(4, 27);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(37, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Name:";
             // 
@@ -56,11 +56,11 @@ namespace RazorEnhanced.UI
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.tName);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(9, 10);
+            this.groupBox1.Location = new System.Drawing.Point(9, 11);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(221, 75);
+            this.groupBox1.Size = new System.Drawing.Size(221, 81);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Player";
@@ -72,7 +72,7 @@ namespace RazorEnhanced.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tSerial.BackColor = System.Drawing.Color.White;
             this.tSerial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tSerial.Location = new System.Drawing.Point(58, 46);
+            this.tSerial.Location = new System.Drawing.Point(58, 50);
             this.tSerial.Margin = new System.Windows.Forms.Padding(2);
             this.tSerial.Name = "tSerial";
             this.tSerial.Size = new System.Drawing.Size(104, 20);
@@ -81,10 +81,10 @@ namespace RazorEnhanced.UI
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 49);
+            this.label2.Location = new System.Drawing.Point(4, 53);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(36, 13);
+            this.label2.Size = new System.Drawing.Size(37, 14);
             this.label2.TabIndex = 2;
             this.label2.Text = "Serial:";
             // 
@@ -95,7 +95,7 @@ namespace RazorEnhanced.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tName.BackColor = System.Drawing.Color.White;
             this.tName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tName.Location = new System.Drawing.Point(58, 21);
+            this.tName.Location = new System.Drawing.Point(58, 23);
             this.tName.Margin = new System.Windows.Forms.Padding(2);
             this.tName.Name = "tName";
             this.tName.Size = new System.Drawing.Size(149, 20);
@@ -103,10 +103,10 @@ namespace RazorEnhanced.UI
             // 
             // bAddPlayer
             // 
-            this.bAddPlayer.Location = new System.Drawing.Point(241, 29);
+            this.bAddPlayer.Location = new System.Drawing.Point(241, 31);
             this.bAddPlayer.Margin = new System.Windows.Forms.Padding(2);
             this.bAddPlayer.Name = "bAddPlayer";
-            this.bAddPlayer.Size = new System.Drawing.Size(57, 19);
+            this.bAddPlayer.Size = new System.Drawing.Size(57, 20);
             this.bAddPlayer.TabIndex = 2;
             this.bAddPlayer.Text = "Add";
             this.bAddPlayer.UseVisualStyleBackColor = true;
@@ -114,10 +114,10 @@ namespace RazorEnhanced.UI
             // 
             // bClose
             // 
-            this.bClose.Location = new System.Drawing.Point(241, 54);
+            this.bClose.Location = new System.Drawing.Point(241, 58);
             this.bClose.Margin = new System.Windows.Forms.Padding(2);
             this.bClose.Name = "bClose";
-            this.bClose.Size = new System.Drawing.Size(57, 19);
+            this.bClose.Size = new System.Drawing.Size(57, 20);
             this.bClose.TabIndex = 3;
             this.bClose.Text = "Close";
             this.bClose.UseVisualStyleBackColor = true;
@@ -125,12 +125,13 @@ namespace RazorEnhanced.UI
             // 
             // EnhancedFriendAddPlayerManual
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 93);
+            this.ClientSize = new System.Drawing.Size(314, 100);
             this.Controls.Add(this.bClose);
             this.Controls.Add(this.bAddPlayer);
             this.Controls.Add(this.groupBox1);
+            this.Font = new System.Drawing.Font("Arial", 8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EnhancedFriendAddPlayerManual";

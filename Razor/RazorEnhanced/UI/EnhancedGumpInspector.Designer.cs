@@ -30,19 +30,19 @@ namespace RazorEnhanced.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedGumpInspector));
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.close = new  System.Windows.Forms.Button ();
-            this.clear = new  System.Windows.Forms.Button ();
+            this.close = new System.Windows.Forms.Button();
+            this.clear = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.razorButton1 = new  System.Windows.Forms.Button ();
+            this.razorButton1 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // close
             // 
-            this.close.Location = new System.Drawing.Point(533, 357);
+            this.close.Location = new System.Drawing.Point(533, 384);
             this.close.Name = "close";
-            this.close.Size = new System.Drawing.Size(75, 23);
+            this.close.Size = new System.Drawing.Size(75, 25);
             this.close.TabIndex = 2;
             this.close.Text = "Close";
             this.close.UseVisualStyleBackColor = true;
@@ -50,9 +50,9 @@ namespace RazorEnhanced.UI
             // 
             // clear
             // 
-            this.clear.Location = new System.Drawing.Point(19, 19);
+            this.clear.Location = new System.Drawing.Point(19, 20);
             this.clear.Name = "clear";
-            this.clear.Size = new System.Drawing.Size(75, 23);
+            this.clear.Size = new System.Drawing.Size(75, 25);
             this.clear.TabIndex = 4;
             this.clear.Text = "Clear";
             this.clear.UseVisualStyleBackColor = true;
@@ -60,9 +60,9 @@ namespace RazorEnhanced.UI
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(12, 13);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(496, 372);
+            this.groupBox1.Size = new System.Drawing.Size(496, 401);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Gump Log";
@@ -71,18 +71,18 @@ namespace RazorEnhanced.UI
             // 
             this.groupBox2.Controls.Add(this.razorButton1);
             this.groupBox2.Controls.Add(this.clear);
-            this.groupBox2.Location = new System.Drawing.Point(514, 12);
+            this.groupBox2.Location = new System.Drawing.Point(514, 13);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(108, 86);
+            this.groupBox2.Size = new System.Drawing.Size(108, 93);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Command";
             // 
             // razorButton1
             // 
-            this.razorButton1.Location = new System.Drawing.Point(19, 48);
+            this.razorButton1.Location = new System.Drawing.Point(19, 52);
             this.razorButton1.Name = "razorButton1";
-            this.razorButton1.Size = new System.Drawing.Size(75, 32);
+            this.razorButton1.Size = new System.Drawing.Size(75, 34);
             this.razorButton1.TabIndex = 5;
             this.razorButton1.Text = "Copy value to Clipboard";
             this.razorButton1.UseVisualStyleBackColor = true;
@@ -90,12 +90,13 @@ namespace RazorEnhanced.UI
             // 
             // EnhancedGumpInspector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(634, 392);
+            this.ClientSize = new System.Drawing.Size(634, 422);
             this.Controls.Add(this.close);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Font = new System.Drawing.Font("Arial", 8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EnhancedGumpInspector";
