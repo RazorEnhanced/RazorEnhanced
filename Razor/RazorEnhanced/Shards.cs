@@ -91,7 +91,7 @@ namespace RazorEnhanced
         {
             string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", Shards.m_Save);
             string backup = Path.Combine(Assistant.Engine.RootPath, "Backup", Shards.m_Save);
-
+            Shards.allShards = new();
             if (File.Exists(filename))
             {
                 var content = File.ReadAllText(filename);
@@ -106,42 +106,12 @@ namespace RazorEnhanced
                 }
                 catch (Exception)
                 {
-                    Dictionary<string, List<Shard>> tempShards = new();
-                    // try to load old format
-                    try
-                    {
-                        tempShards = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, List<Shard>>>(content);
-                        foreach (Shard entry in tempShards["SHARDS"])
-                        {
-                            Shards.allShards.m_Shards.Add(entry.Description, entry);
-                        }
-                        Save(); // force save of conversion
-                    }
-                    catch (Exception ex)
-                    {
-                        error = true;
-                    }
-                    if (error)
-                    {
-                        if (tryBackup)
-                        {
-                            var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Unable To Load Shards",
-                                    $"Shard file:\r\n{filename}\r\nTrying to restore from backup:\r\n{backup}",
-                                    ok: "Ok", no: null, cancel: null, backColor: null);
-                            File.Copy(backup, filename, true);
-                            Load(false);
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-
-                    File.Copy(filename, backup, true);
-                    return;
+                    RazorEnhanced.UI.RE_MessageBox.Show("Unable To Load Shards",
+                            $"Shard file:\r\n{filename} failed\r\nLoading default servers",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
                 }
             }
-            else
+            if (Shards.allShards.m_Shards == null || Shards.allShards.m_Shards.Count == 0)
             {
                 Shards.allShards = new AllShards();
                 Insert("OSI Ultima Online", String.Empty, String.Empty, String.Empty, "login.ultimaonline.com", 7776, true, true);
