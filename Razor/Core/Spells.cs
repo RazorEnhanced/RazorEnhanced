@@ -173,6 +173,55 @@ namespace Assistant
         private static readonly Dictionary<string, Spell> m_SpellsByPower;
         private static readonly Dictionary<int, Spell> m_SpellsByID;
 
+        static Spell()
+        {
+            //string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Definitions/spells.def");
+            string filename = Path.Combine(Assistant.Engine.RootPath, "Definitions/spells.def");
+            filename = Utility.GetCaseInsensitiveFilePath(filename);
+            m_SpellsByPower = new Dictionary<string, Spell>(64 + 10 + 16);
+            m_SpellsByID = new Dictionary<int, Spell>(64 + 10 + 16);
+
+            if (!File.Exists(filename))
+            {
+                //Engine.MainWindow.SafeAction({ MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoSpells), "Spells.def", MessageBoxButtons.OK, MessageBoxIcon.Warning); });
+                RazorEnhanced.UI.RE_MessageBox.Show("Spells.def",
+                        Language.GetString(LocString.NoSpells),
+                        ok: "Ok", no: null, cancel: null, backColor: null);
+                return;
+            }
+
+            using (StreamReader reader = new StreamReader(filename))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    line = line.Trim();
+                    if (line.Length <= 0 || line[0] == '#')
+                        continue;
+                    string[] split = line.Split('|');
+
+                    try
+                    {
+                        if (split.Length >= 5)
+                        {
+                            string[] reags = new string[split.Length - 5];
+                            for (int i = 5; i < split.Length; i++)
+                                reags[i - 5] = split[i].ToLower().Trim();
+                            Spell s = new Spell(split[0].Trim()[0], Convert.ToInt32(split[1].Trim()), Convert.ToInt32(split[2].Trim()), /*split[3].Trim(),*/ split[4].Trim(), reags);
+
+                            m_SpellsByID[s.GetID()] = s;
+
+                            if (s.WordsOfPower != null && s.WordsOfPower.Trim().Length > 0)
+                                m_SpellsByPower[s.WordsOfPower] = s;
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
+
 
         internal static void HealOrCureSelf()
         {
