@@ -106,14 +106,18 @@ namespace RazorEnhanced
                 {
                     if (try_backup)
                     {
-                        MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+                        var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Error Loading Profile",
+                                $"Error loading profile from:\r\n{filename}",
+                                ok: "Ok", no: null, cancel: null, backColor: null);
                         File.Copy(backup, filename, true);
                         Load(false);
                         return;
                     }
                     else
                     {
-                        MessageBox.Show("All failed!, recovering from Profile names, linked characters will be lost");
+                        var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("All Profile Load Failed",
+                                $"Profile load and backup failed\r\nrecovering from Profile names\r\nRelink profiles to character",
+                                ok: "Ok", no: null, cancel: null, backColor: null);
                     }
                 }
             }
@@ -474,7 +478,9 @@ namespace RazorEnhanced
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error writing " + m_Save + ": " + ex);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Unable To Save",
+                        $"Error writing to save file:\r\n{m_Save}\r\n{ex}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
             }
         }
     }

@@ -20,6 +20,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Web.UI.WebControls;
+using System.Web.Profile;
 
 
 namespace RazorEnhanced
@@ -167,7 +168,9 @@ namespace RazorEnhanced
             {
                 if (try_recover == true)
                 {
-                    MessageBox.Show("Error loading " + profileName + " {" + workingOnTableName + "}" + ", Trying to restore from backup");
+                    var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Error Loading Profile",
+                            $"Error loading file:\r\n{profileName}\r\ntable: {workingOnTableName}\r\n\r\nAttempting to restore from backup",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
                     Settings.RestoreBackup(profileName);
                     Load(profileName, false);
                 }
@@ -5238,7 +5241,9 @@ namespace RazorEnhanced
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error writing " + m_profileName + ": " + ex);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Error Saving Profile",
+                        $"Error writing file:\r\n{m_profileName}\r\nError: {ex}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
             }
         }
 
@@ -5543,9 +5548,11 @@ namespace RazorEnhanced
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("BackUp of: " + profileName + " Impossible to restore!");
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Restore Failed",
+                        $"Error restoring file:\r\n{profileName}\r\nError: {ex}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                 Environment.Exit(0);
             }
 
@@ -5557,7 +5564,9 @@ namespace RazorEnhanced
 
             if (!Directory.Exists(backupDir))
             {
-                MessageBox.Show("BackUp folder not exist! Can't restore: " + profileName);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("No Backup Available",
+                        $"BackUp folder not exist! Can't restore:\r\n{profileName}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                 Environment.Exit(0);
             }
 
@@ -5572,9 +5581,11 @@ namespace RazorEnhanced
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("BackUp of: " + profileName + " Impossible to restore!");
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("No Backup Available",
+                        $"BackUp of:\r\n{profileName}\r\nImpossible to restore\r\n{ex}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                 Environment.Exit(0);
             }
         }

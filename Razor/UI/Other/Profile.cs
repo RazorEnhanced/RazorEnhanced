@@ -23,16 +23,16 @@ namespace Assistant
         {
             string profiletodelete = profilesComboBox.Text;
 
-            DialogResult dialogResult = MessageBox.Show("Are you sure to delete this profile: " + profiletodelete, "Delete Profile?", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Profile?",
+                $"Are you sure to delete this profile:\r\n{profiletodelete}",
+                ok: "Yes", no: "No", cancel: null, backColor: null);
             if (dialogResult == DialogResult.Yes)
             {
                 if (profiletodelete == "default")
                 {
-                    MessageBox.Show("Can't delete default profile",
-                    "Can't delete default profile!",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation,
-                    MessageBoxDefaultButton.Button1);
+                    RazorEnhanced.UI.RE_MessageBox.Show("Can't delete default profile!",
+                        "Can't delete default profile",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                 }
                 else
                 {
@@ -92,11 +92,9 @@ namespace Assistant
         {
             if (World.Player == null)
             {
-                MessageBox.Show("You can't link a profile to player if not logged in game",
-                "Profiles",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                RazorEnhanced.UI.RE_MessageBox.Show("Must Be Logged In",
+                    "You can't link a profile to player if not logged in game",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 return;
             }
 
@@ -129,11 +127,9 @@ namespace Assistant
         {
             if (profilesComboBox.Text == "default")
             {
-                MessageBox.Show("Can't rename default profile",
-                "Can't rename default profile!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                RazorEnhanced.UI.RE_MessageBox.Show("Can't rename default profile!",
+                    "Can't rename default profile",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
             }
             else
             {

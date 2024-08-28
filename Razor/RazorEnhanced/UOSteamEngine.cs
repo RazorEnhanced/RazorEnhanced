@@ -3739,7 +3739,9 @@ namespace RazorEnhanced.UOS
             {
                 title = args[1].AsString();
             }
-            var result = System.Windows.Forms.MessageBox.Show(body, title);
+            var result = RazorEnhanced.UI.RE_MessageBox.Show(title,
+                body,
+                ok: "Yes", no: "No", cancel: null, backColor: null);
 
             if (result == DialogResult.OK || result == DialogResult.Yes)
                 return true;

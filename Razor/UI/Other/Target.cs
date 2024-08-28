@@ -346,11 +346,9 @@ namespace Assistant
 
             if (fail)
             {
-                MessageBox.Show("Invalid Target ID!",
-                "Invalid Target ID!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                RazorEnhanced.UI.RE_MessageBox.Show("Invalid Target ID",
+                    "Invalid Target ID",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 return;
             }
             Mobiles.Filter filtertoadd = new Mobiles.Filter

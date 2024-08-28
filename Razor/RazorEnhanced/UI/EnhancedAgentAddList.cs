@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -151,11 +152,9 @@ namespace RazorEnhanced.UI
 
             if (fail)
             {
-                MessageBox.Show("Invalid list name!",
-                "Invalid list name!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Invalid list name",
+                        $"List name {newList} is invalid\r\nUse a different name",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
             }
             else
             {

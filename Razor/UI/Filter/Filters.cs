@@ -318,7 +318,9 @@ namespace Assistant
 
             Assistant.Client.Instance.RequestStatbarPatch(preAOSstatbar.Checked);
             if (World.Player != null && !m_Initializing)
-                MessageBox.Show(this, "Close and re-open your status bar for the change to take effect.", "Status Window Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RazorEnhanced.UI.RE_MessageBox.Show("Status Window Note",
+                     "Close and re-open your status bar for the change to take effect.",
+                     ok: "Ok", no: null, cancel: null, backColor: null);
         }
 
         private void smartLT_CheckedChanged(object sender, System.EventArgs e)
@@ -399,7 +401,9 @@ namespace Assistant
                     if (x > 100 && x < 4000 && y > 100 && y < 4000)
                         Assistant.Client.Instance.SetGameSize(x, y);
                     else
-                        MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Bad Size",
+                            Language.GetString(LocString.ForceSizeBad),
+                            ok: "Ok", no: null, cancel: null, backColor: null);
                 }
                 else
                 {
@@ -444,7 +448,9 @@ namespace Assistant
                         int y = Utility.ToInt32(forceSizeY.Text, 600);
 
                         if (x < 100 || y < 100 || x > 4000 || y > 4000)
-                            MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                            RazorEnhanced.UI.RE_MessageBox.Show("Bad Size",
+                                Language.GetString(LocString.ForceSizeBad),
+                                ok: "Yes", no: null, cancel: null, backColor: null);
                         else
                             Assistant.Client.Instance.SetGameSize(x, y);
                     }
@@ -617,7 +623,9 @@ namespace Assistant
                     systray.Checked = false;
                     RazorEnhanced.Settings.General.WriteBool("Systray", false);
                     if (!this.ShowInTaskbar)
-                        MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Notice",
+                            Language.GetString(LocString.NextRestart),
+                            ok: "Yes", no: null, cancel: null, backColor: null);
                 }
             }
         }
@@ -631,7 +639,9 @@ namespace Assistant
                     taskbar.Checked = false;
                     RazorEnhanced.Settings.General.WriteBool("Systray", true);
                     if (this.ShowInTaskbar)
-                        MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Notice",
+                            Language.GetString(LocString.NextRestart),
+                            ok: "Yes", no: null, cancel: null, backColor: null);
                 }
             }
         }

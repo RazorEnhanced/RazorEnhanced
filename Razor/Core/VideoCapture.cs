@@ -109,7 +109,9 @@ namespace Assistant
             }
             catch
             {
-                MessageBox.Show("Video Codec not installed on your system.");
+                var result = RazorEnhanced.UI.RE_MessageBox.Show("No Video Codec Installed",
+                            "Video Codec not installed on your system",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
                 return false;
             }
         }

@@ -58,7 +58,9 @@ namespace Assistant
         {
             if (sellListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Sell list: " + sellListSelect.Text, "Delete Vendor Sell List?", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Vendor Sell List?",
+                    $"Are you sure to delete this Vendor Sell list:\r\n{sellListSelect.Text}",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");

@@ -61,7 +61,9 @@ namespace Assistant
         {
             if (restockListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Restock list: " + restockListSelect.Text, "Delete Restock List?", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Restock List?",
+                    $"Are you sure to delete this Restock list: \r\n{restockListSelect.Text}",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     Restock.AddLog("Restock list " + restockListSelect.Text + " removed!");

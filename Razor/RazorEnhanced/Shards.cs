@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Web.Profile;
 using System.Windows.Forms;
 
 namespace RazorEnhanced
@@ -115,7 +117,7 @@ namespace RazorEnhanced
                         }
                         Save(); // force save of conversion
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         error = true;
                     }
@@ -123,7 +125,9 @@ namespace RazorEnhanced
                     {
                         if (tryBackup)
                         {
-                            MessageBox.Show("Error loading " + Shards.m_Save + ", Try to restore from backup!");
+                            var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Unable To Load Shards",
+                                    $"Shard file:\r\n{filename}\r\nTrying to restore from backup:\r\n{backup}",
+                                    ok: "Ok", no: null, cancel: null, backColor: null);
                             File.Copy(backup, filename, true);
                             Load(false);
                         }
@@ -226,15 +230,17 @@ namespace RazorEnhanced
 
         internal static void Save()
         {
+            string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", Shards.m_Save);
             try
             {
-                string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", Shards.m_Save);
                 string serialized = Newtonsoft.Json.JsonConvert.SerializeObject(Shards.allShards, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(filename, serialized);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error writing " + Shards.m_Save + ": " + ex);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Unable To Save Shards",
+                    $"Shard file:\r\n{filename}\r\nFailed with error:\r\n{ex}",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
             }
         }
     }

@@ -1187,11 +1187,13 @@ namespace RazorEnhanced.UI
 
                 if (fileContent != editorContent)
                 {
-                    DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-                    if (res == DialogResult.Cancel) {
+                    var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Save current file?",
+                        $"Save file named:\r\n{m_Script.Fullpath}",
+                        ok: "Yes", no: "No", cancel: "Cancel", backColor: null);
+                    if (dialogResult == DialogResult.Cancel) {
                         return false;
                     }
-                    if (res == DialogResult.No) {
+                    if (dialogResult == DialogResult.No) {
                         if (m_Script.Exist)
                         {
                             m_Script.Load(true);
@@ -1201,7 +1203,7 @@ namespace RazorEnhanced.UI
                         }
                         return true;
                     }
-                    if (res == DialogResult.Yes)
+                    if (dialogResult == DialogResult.Yes)
                     {
 
                         if (m_Script.HasValidPath)

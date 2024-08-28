@@ -38,7 +38,9 @@ namespace Assistant
         {
             if (friendListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Friend list: " + friendListSelect.Text, "Delete Friend List?", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Friend List?",
+                    $"Are you sure to delete this Friend list: \r\n{friendListSelect.Text}",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Friend.AddLog("Friends list " + friendListSelect.Text + " removed!");

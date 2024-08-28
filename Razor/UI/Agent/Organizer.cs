@@ -48,7 +48,9 @@ namespace Assistant
         {
             if (organizerListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Organizer list: " + organizerListSelect.Text, "Delete Organizer List?", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Organizer List?",
+                   "Are you sure to delete this Organizer list: " + organizerListSelect.Text,
+                    ok: "Ok", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");

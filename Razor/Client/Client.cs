@@ -14,6 +14,7 @@ using System.Reflection;
 using AutoUpdaterDotNET;
 using RazorEnhanced;
 using Mono.Options;
+using Ultima;
 
 namespace Assistant
 {
@@ -114,7 +115,9 @@ namespace Assistant
                 }
                 catch (OptionException e)
                 {
-                    MessageBox.Show("Error in Client.SelectShard. Looks like bad command line arguments");
+                    RazorEnhanced.UI.RE_MessageBox.Show("Invalid Arguments passed", 
+                        "Error in Client.SelectShard.\r\nLooks like bad command line arguments",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                     error = true;
                 }
                 if (!error)
@@ -162,7 +165,9 @@ namespace Assistant
                     selected = shards.FirstOrDefault(s => s.Selected);
                     if (selected == null)
                     {
-                        MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Invalid shard",
+                        "You must select a valid shard",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                     }
                 }
                 else
@@ -189,7 +194,9 @@ namespace Assistant
             }
             else
             {
-                MessageBox.Show("Unable to find the Data Folder " + selected.ClientFolder, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RazorEnhanced.UI.RE_MessageBox.Show("Unable to find the Client Folder",
+                    $"Unable to find the Client Folder\r\n{selected.ClientFolder}",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 Shards.ShowLauncher = true;
                 return false;
             }
@@ -242,8 +249,9 @@ namespace Assistant
             if (!Language.Load("enu"))
             {
                 Utility.Logger.Debug($"Language.Load failed to load");
-                //SplashScreen.End();
-                MessageBox.Show($"Unable to load required file \n{filename}", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RazorEnhanced.UI.RE_MessageBox.Show("Unable to load required file",
+                    $"Unable to load the file:\r\n{filename}",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 Shards.ShowLauncher = true;
                 return;
             }
@@ -263,9 +271,13 @@ namespace Assistant
                 if (result != Assistant.Client.Loader_Error.SUCCESS)
                 {
                     if (clientPath == null || File.Exists(clientPath))
-                        MessageBox.Show("Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Unable to find the client",
+                            $"Unable to find the client:\r\n{clientPath}",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
                     else
-                        MessageBox.Show("Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Unable to launch the client",
+                                                    $"Unable to launch the client:\r\n{clientPath}",
+                                                    ok: "Ok", no: null, cancel: null, backColor: null);
                     Shards.ShowLauncher = true;
                     return;
                 }
@@ -277,7 +289,9 @@ namespace Assistant
             Engine.IP = Resolve(addr);
             if (Engine.IP == IPAddress.None || port == 0)
             {
-                MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RazorEnhanced.UI.RE_MessageBox.Show(Language.GetString(LocString.BadServerAddr),
+                    $"{Language.GetString(LocString.BadServerAddr)}.\r\nIP: {Engine.IP.ToString()} Port: {port.ToString()}",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 Shards.ShowLauncher = true;
                 return;
             }
@@ -738,15 +752,11 @@ namespace Assistant
                 {
                     DialogResult dialogResult;
 
-                    dialogResult =
-                        MessageBox.Show(
-                            $@"There is new version {args.CurrentVersion} available. You are using version {
-                                    args.InstalledVersion
-                                }. Do you want to update the application now?", @"Update Available",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Information);
+                    dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("New Version Available",
+                            $@"There is new version {args.CurrentVersion} available.\r\nYou are using version {args.InstalledVersion}.\r\nDo you want to update the application now?",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
 
-                    if (dialogResult.Equals(DialogResult.Yes))
+                    if (dialogResult.Equals(DialogResult.OK))
                     {
                         try
                         {
@@ -783,8 +793,9 @@ namespace Assistant
                         }
                         catch (Exception exception)
                         {
-                            MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                            RazorEnhanced.UI.RE_MessageBox.Show("Update Exception Occurred",
+                                    $@"{exception.Message}\r\nType: {exception.GetType().ToString()}",
+                                    ok: "Ok", no: null, cancel: null, backColor: null);
                         }
                     }
                     else 
@@ -798,9 +809,9 @@ namespace Assistant
             }
             else
             {
-                MessageBox.Show(
-                        @"There is a problem reaching update server please check your internet connection and try again later.",
-                        @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RazorEnhanced.UI.RE_MessageBox.Show("Update Server Unavailable",
+                                    @"There is a problem reaching update server please check your internet connection and try again later.",
+                                    ok: "Ok", no: null, cancel: null, backColor: null);
             }
 
         }

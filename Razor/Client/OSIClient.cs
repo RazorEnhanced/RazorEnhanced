@@ -398,12 +398,9 @@ namespace Assistant
 
         private static void FatalInit(InitError error)
         {
-            StringBuilder sb = new StringBuilder(Language.GetString(LocString.InitError));
-            sb.AppendFormat("{0}\n", error);
-            sb.Append(Language.GetString((int)(LocString.InitError + (int)error)));
-
-            //MessageBox.Show(Engine.ActiveWindow, sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            MessageBox.Show(sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            RazorEnhanced.UI.RE_MessageBox.Show(Language.GetString(LocString.InitError),
+                $"{Language.GetString(LocString.InitError)}\r\n{Language.GetString((int)LocString.InitError)} {(int)error}",
+                ok: "Ok", no: null, cancel: null, backColor: null);
         }
 
         internal void OnLogout()
@@ -509,14 +506,14 @@ namespace Assistant
                 case UONetMessage.Ready: //Patch status
                     if (lParam == (int)InitError.NO_MEMCOPY)
                     {
-                        if (MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoMemCpy), "No Client MemCopy", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-                        {
-                            m_Ready = false;
-                            ClientProc = null;
-                            Engine.MainWindow.CanClose = true;
-                            Engine.MainWindow.Close();
-                            break;
-                        }
+                        var result = RazorEnhanced.UI.RE_MessageBox.Show("No Client MemCopy",
+                            $"{Language.GetString(LocString.NoMemCpy)}",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
+                        m_Ready = false;
+                        ClientProc = null;
+                        Engine.MainWindow.CanClose = true;
+                        Engine.MainWindow.Close();
+                        break;
                     }
 
                     try
@@ -676,8 +673,9 @@ namespace Assistant
                                 error = "Unable to patch status bar.";
                                 break;
                         }
-
-                        MessageBox.Show(Engine.ActiveWindow, "An Error has occured : \n" + error, "Error Reported", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        var result = RazorEnhanced.UI.RE_MessageBox.Show("DLL Load Error",
+                            $"An Error has occured:\r\n{error}",
+                            ok: "Ok", no: null, cancel: null, backColor: null); ;
                         break;
                     }
 
@@ -687,7 +685,7 @@ namespace Assistant
 
                 // Unknown
                 default:
-                    //MessageBox.Show(Engine.ActiveWindow, "Unknown message from uo client\n" + ((int)wParam).ToString(), "Error?");
+                    Utility.Logger.Error($"Unknown message from uo client: {((int)wParam).ToString()}");
                     break;
             }
 

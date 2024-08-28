@@ -5,6 +5,7 @@ using AutoUpdaterDotNET;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -280,11 +281,10 @@ namespace RazorEnhanced.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error to access to login.cfg: " + ex,
-                "Launch Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Login Config Failure",
+                        $"Unable to read login file: {logincfgpath + "login.cfg"}\r\nError:\r\n{ex}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
+
                 this.Close();
             }
         }

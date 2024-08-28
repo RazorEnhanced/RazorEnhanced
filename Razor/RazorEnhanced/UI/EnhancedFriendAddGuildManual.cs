@@ -30,11 +30,9 @@ namespace RazorEnhanced.UI
         {
             if (tName.Text == null)
             {
-                MessageBox.Show("Guild name is not valid.",
-                "Guild name Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Invalid Guild Name",
+                        $"Empty guild name is invalid\r\nSpecify a name",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
             }
             else
             {

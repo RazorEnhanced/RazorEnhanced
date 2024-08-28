@@ -35,11 +35,9 @@ namespace RazorEnhanced.UI
 
             if (fail)
             {
-                MessageBox.Show("Invalid profile name!",
-                "Enhanced Profiles",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Invalid Profile Name",
+                    $"Invalid profile name",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
             }
             else
             {

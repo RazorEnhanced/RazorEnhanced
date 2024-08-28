@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace RazorEnhanced
 {
@@ -45,13 +46,15 @@ namespace RazorEnhanced
 
             // Load failed.
             var msg = String.Format("Coudn't load config file:\n{0}\n\n Please refer to Discord channel for assistance, more details:\n http://razorenhanced.net/", fullpath);
-            //MessageBox.Show(msg, "Fallback on default", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Assistant.Utility.Logger.Error(msg);
 
             fullpath = ConfigPath(configfile, readData: false);  // Fallback: load Config
             config = ConfigFiles.Load(fullpath, configModel);
             if (config == null)
             {
-                MessageBox.Show(msg, "Failed to load original Config file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var result = RazorEnhanced.UI.RE_MessageBox.Show("Config File Failure",
+                    "Failed to load original Config file",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 Application.Exit();
             }
 
@@ -147,14 +150,16 @@ namespace RazorEnhanced
 
             ConfigFiles.Maps.Data = (ConfigFiles.Maps)Load(CONFIG_MAPS, typeof(ConfigFiles.Maps));
 
+            string path = ConfigPath(CONFIG_SOUNDFILTERS);
             try
             {
-                string path = ConfigPath(CONFIG_SOUNDFILTERS);
                 ConfigFiles.FilterSounds = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, ushort[]>>(File.ReadAllText(path));
             }
             catch (Exception)
             {
-                MessageBox.Show("One of your Sound Filter Config Files is Corrupt");
+                var result = RazorEnhanced.UI.RE_MessageBox.Show("SoundFilter File Failure",
+                    "Failed to load Sound Filter file: {path}\r\nSounds may not behave as you expect",
+                    ok: "Ok", no: null, cancel: null, backColor: null);             
             }
         }
 

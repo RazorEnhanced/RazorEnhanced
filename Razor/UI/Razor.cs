@@ -748,6 +748,9 @@ namespace Assistant
             InitializeComponent();
             this.AutoScaleMode = AutoScaleMode.Font;
 
+            this.MaximizeBox = false;
+            this.MinimizeBox = true;
+
             m_NotifyIcon.ContextMenu =
                 new ContextMenu(new MenuItem[]
                 {
@@ -9804,15 +9807,6 @@ namespace Assistant
             {
                 if (!tabs.SelectedTab.Enabled)
                 {
-                    //DialogResult dialogResult = MessageBox.Show("Microsoft Visual C++ 2015 Redistributable is not installed, is necessary for prevent crash or missing function, Want open offical download site?", "Missing Dependency", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    //if (dialogResult == DialogResult.Yes)
-                    //{
-                    //  if (Environment.Is64BitOperatingSystem)
-                    //      System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe");
-                    //  else
-                    //      System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x86.exe");
-                    //}
-
                 }
                 else
                     ReloadVideoList();
@@ -10200,7 +10194,9 @@ namespace Assistant
                 if (uomodFPSCheckBox.Checked)
                 {
                     if (Engine.ClientBuild > 49)
-                        MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Warning",
+                            "Enabling this option can make client unstable",
+                            ok: "Accept", no: null, cancel: null, backColor: null);
                     UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_FPS);
                 }
                 else
@@ -10234,7 +10230,9 @@ namespace Assistant
                 if (uomodpaperdollCheckBox.Checked)
                 {
                     if (Engine.ClientBuild > 49)
-                        MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Warning",
+                            "Enabling this option can make client unstable",
+                            ok: "Accept", no: null, cancel: null, backColor: null);
                     UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_PAPERDOLL_SLOTS);
                 }
                 else
@@ -10251,7 +10249,9 @@ namespace Assistant
                 if (uomodglobalsoundCheckBox.Checked)
                 {
                     if (Engine.ClientBuild > 49)
-                        MessageBox.Show(this, "Enable this option can make client unstable!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        RazorEnhanced.UI.RE_MessageBox.Show("Warning",
+                            "Enabling this option can make client unstable",
+                            ok: "Accept", no: null, cancel: null, backColor: null);
                     UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_GLOBAL_SOUND);
                 }
                 else

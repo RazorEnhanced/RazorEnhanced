@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Assistant.UI;
 using System;
 using System.Threading;
+using static System.Windows.Forms.LinkLabel;
 
 namespace RazorEnhanced
 {
@@ -1971,7 +1972,10 @@ namespace RazorEnhanced
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Key: " + KeyString(m_key) + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                    $"Key: {KeyString(m_key)} already assigned!\r\nWant to replace?",
+                    ok: "Yes", no: "No", cancel: null,
+                    backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
@@ -1994,7 +1998,10 @@ namespace RazorEnhanced
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Key: " + KeyString(m_key) + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                    $"Key: {KeyString(m_key)} already assigned!\r\nWant to replace?",
+                    ok: "Yes", no: "No", cancel: null,
+                    backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
@@ -2017,7 +2024,9 @@ namespace RazorEnhanced
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Key: " + KeyString(m_key) + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                        $"Key: {KeyString(m_key)} already assigned!\r\nWant to replace?",
+                        ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
@@ -2040,7 +2049,9 @@ namespace RazorEnhanced
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Key: " + KeyString(m_key) + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                    $"Key: {KeyString(m_key)} already assigned!\r\nWant to replace?",
+                    ok: "Yes", no: "No", cancel: null, backColor: null );
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
@@ -2062,7 +2073,9 @@ namespace RazorEnhanced
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Key: " + KeyString(m_masterkey) + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
+                        $"Key: {KeyString(m_masterkey)} already assigned!\r\nWant to replace?",
+                        ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_masterkey);

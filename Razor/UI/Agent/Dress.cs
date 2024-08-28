@@ -51,7 +51,9 @@ namespace Assistant
         {
             if (dressListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Dress list: " + dressListSelect.Text, "Delete Dress List?", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Dress List?",
+                    $"Are you sure to delete this Dress list: \r\n{dressListSelect.Text}",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");

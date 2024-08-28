@@ -156,7 +156,9 @@ namespace Assistant
         {
             if (scavengerListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Scavenger list: " + scavengerListSelect.Text, "Delete Scavenger List?", MessageBoxButtons.YesNo);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Scavenger List?",
+                    $"Are you sure to delete this Scavenger list: \r\n{scavengerListSelect.Text}",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Scavenger.AddLog("Scavenger list " + scavengerListSelect.Text + " removed!");

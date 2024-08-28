@@ -36,11 +36,9 @@ namespace RazorEnhanced.UI
 
             if (fail)
             {
-                MessageBox.Show("Invalid profile name!",
-                "Enhanced Profiles",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Invalid Profile Name",
+                    $"Invalid profile name",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
             }
             else
             {
@@ -62,13 +60,11 @@ namespace RazorEnhanced.UI
                     RazorEnhanced.Profiles.Add(newprofileName);
                     RazorEnhanced.Profiles.Refresh();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Error during cloning profile!",
-                    "Enhanced Profiles",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation,
-                    MessageBoxDefaultButton.Button1);
+                    var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Error Cloning Profile",
+                            $"Error clonig profile error:\r\n{ex}",
+                            ok: "Ok", no: null, cancel: null, backColor: null);
                 }
 
                 this.Close();

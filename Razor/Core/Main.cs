@@ -225,7 +225,7 @@ namespace Assistant
                     { "s|startCuoClient", "use the cuopath to start CUO instead of OSI client", (x) => { } },
                     };
 
-            List<string> extra;
+            List<string> extra = new();
             try
             {
                 // parse the command line
@@ -235,13 +235,13 @@ namespace Assistant
             {
                 showHelp = true;
             }
-            if (showHelp)
+            if (extra.Count > 0 || showHelp)
             {
                 StringWriter writer = new StringWriter();
                 options.WriteOptionDescriptions(writer);
                 string descr = writer.ToString();
-                MessageBox.Show(descr);
-
+                RazorEnhanced.UI.RE_MessageBox.Show("Invalid Arguments", descr,
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 return;
             }
             if (autoDocsOnly)

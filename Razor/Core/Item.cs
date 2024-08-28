@@ -116,11 +116,11 @@ namespace Assistant
         internal static ConcurrentDictionary<int, Weapon> LoadWeapons()
         {
             ConcurrentDictionary<int, Weapon> retSet = new ConcurrentDictionary<int, Weapon>();
+            string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "weapons.json");
             try
             {
                 lock (LockingVar)
                 {
-                    string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "weapons.json");
                     if (File.Exists(pathName))
                     {
                         List<Weapon> weaponList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Weapon>>(File.ReadAllText(pathName));
@@ -142,7 +142,9 @@ namespace Assistant
             }
             catch (Exception)
             {
-                System.Windows.Forms.MessageBox.Show("Error loading Config/weapons.json");
+                var result = RazorEnhanced.UI.RE_MessageBox.Show("Error Loading File",
+                        $"File: {pathName}",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
             }
             return retSet;
         }

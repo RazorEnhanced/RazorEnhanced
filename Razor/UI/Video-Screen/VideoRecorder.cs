@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Accord.Video.DirectShow;
+using static IronPython.Modules._ast;
 
 namespace Assistant
 {
@@ -65,7 +66,9 @@ namespace Assistant
                 string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), videolistBox.SelectedItem.ToString());
                 if (!File.Exists(file))
                 {
-                    MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    RazorEnhanced.UI.RE_MessageBox.Show("File Not Found",
+                        Language.Format(LocString.FileNotFoundA1, file),
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                     videolistBox.Items.RemoveAt(videolistBox.SelectedIndex);
                     videolistBox.SelectedIndex = -1;
                     return;
@@ -95,7 +98,10 @@ namespace Assistant
                 return;
 
             string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), (string)videolistBox.SelectedItem);
-            if (MessageBox.Show(this, Language.Format(LocString.DelConf, file), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Confirmation",
+                Language.Format(LocString.DelConf, file),
+                ok: "Ok", no: "No", cancel: null, backColor: null);
+            if (dialogResult == DialogResult.No)
                 return;
 
             videolistBox.SelectedIndex = -1;
@@ -107,7 +113,9 @@ namespace Assistant
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Unable to Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                RazorEnhanced.UI.RE_MessageBox.Show("Unable to Delete",
+                    $"Unable to delete file:\r\n{file}\r\nError: {ex}",
+                    ok: "Ok", no: null, cancel: null, backColor: null);
                 return;
             }
             ReloadVideoList();
@@ -116,7 +124,10 @@ namespace Assistant
         private void ClearVideoDirectory(object sender, System.EventArgs e)
         {
             string dir = RazorEnhanced.Settings.General.ReadString("VideoPath");
-            if (MessageBox.Show(this, Language.Format(LocString.Confirm, dir), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete Confirmation",
+                Language.Format(LocString.Confirm, dir),
+                ok: "Ok", no: "No", cancel: null, backColor: null);
+            if (dialogResult == DialogResult.No)
                 return;
 
             string[] files = Directory.GetFiles(dir, "*.avi");
@@ -136,7 +147,9 @@ namespace Assistant
             }
 
             if (failed > 0)
-                MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                RazorEnhanced.UI.RE_MessageBox.Show("Warning",
+                    Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()),
+                    ok: "Ok", no: null, cancel: null, backColor: null);
             ReloadVideoList();
         }
 

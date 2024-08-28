@@ -33,11 +33,9 @@ namespace RazorEnhanced.UI
             int serial = 0;
             if (tName.Text == null)
             {
-                MessageBox.Show("Player name is not valid.",
-                "Player name Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Invalid Player Name",
+                        $"Empty player name is invalid\r\nSpecify a name",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
                 fail = true;
             }
 
@@ -47,11 +45,10 @@ namespace RazorEnhanced.UI
             }
             catch
             {
-                MessageBox.Show("Player Serial is not valid.",
-                "Player Serial Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Invalid Player Serial",
+                        $"Player serial: {tSerial.Text} is invalid",
+                        ok: "Ok", no: null, cancel: null, backColor: null);
+
                 fail = true;
             }
 

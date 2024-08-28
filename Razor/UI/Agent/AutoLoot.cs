@@ -231,7 +231,9 @@ namespace Assistant
         {
             if (autolootListSelect.Text != String.Empty)
             {
-                DialogResult dialogResult = MessageBox.Show("Are you sure to delete this AutoLoot list: " + autolootListSelect.Text, "Delete AutoLoot List?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Delete AutoLoot List?",
+                    $"Are you sure to delete this AutoLoot list: \r\n{autolootListSelect.Text}",
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.AutoLoot.AddLog("Autoloot list " + autolootListSelect.Text + " removed!");
