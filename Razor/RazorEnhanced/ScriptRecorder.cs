@@ -1,6 +1,5 @@
 using Assistant;
 using IronPython.Runtime.Exceptions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Scripting.Utils;
 using System;
 using System.Collections.Generic;

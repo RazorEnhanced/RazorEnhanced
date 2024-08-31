@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "RazorEnhanced";
+
+package remotecontrol;
+
+service RemoteControl {
+  rpc Record (RecordRequest) returns (stream RecordResponse);
+  rpc Play (PlayRequest) returns (stream PlayResponse);
+}
+
+message RecordRequest {
+  bool is_on = 1;
+  string format = 2;
+}
+
+message RecordResponse {
+  string data = 1;
+}
+
+message PlayRequest {
+  string format = 1;
+  repeated string commands = 2;
+}
+
+message PlayResponse {
+  string result = 1;
+  bool is_finished = 2;
+}

@@ -14,8 +14,7 @@ namespace SyncPrimitives
     /// that tries to Acquire() the semaphore
     /// with a zero count blocks until someone else
     /// calls Release() to increase the count.
-    /// <seealso cref="http://www.fawcette.com/javapro/
-    ///            2002_02/magazine/features/krangaraju/"/>
+    /// <seealso cref="http://www.fawcette.com/javapro/2002_02/magazine/features/krangaraju/"/>
     /// <seealso cref="http://www.mcs.drexel.edu/~shartley/
     ///         MCS361/Lectures/designingJavaSemaphore.html"/>
     /// </summary>

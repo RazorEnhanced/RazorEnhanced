@@ -437,12 +437,12 @@ namespace Assistant
 
             return true;
         }
-        private void OnDisconnected()
+        internal override void OnDisconnected()
         {
             base.OnDisconnected();
         }
 
-        private void OnConnected()
+        internal override void OnConnected()
         {
             base.OnConnected();
             bool ReWindowVisible = false;

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace RazorEnhanced
 {

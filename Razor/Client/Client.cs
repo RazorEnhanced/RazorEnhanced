@@ -224,6 +224,8 @@ namespace Assistant
             RazorEnhanced.Profiles.Load();
             m_Running = true;
 
+            RemoteControlService.StartServer("127.0.0.1", 5454);
+
             return true;
         }
 
@@ -394,11 +396,11 @@ namespace Assistant
 
         internal bool Connected { get; set; }
 
-        internal void OnDisconnected()
+        internal virtual void OnDisconnected()
         {
             Connected = false;
         }
-        internal void OnConnected()
+        internal virtual void OnConnected()
         {
             Connected = true;
         }
