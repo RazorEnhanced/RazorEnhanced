@@ -1,9 +1,8 @@
 using Assistant;
 using Assistant.UI;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using System;
 
 namespace RazorEnhanced
 {

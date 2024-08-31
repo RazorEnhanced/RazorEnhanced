@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Ultima;
 
 
@@ -139,11 +138,13 @@ namespace RazorEnhanced
         /// <returns>The name of the Land item.</returns>
         public static string GetTileName(int StaticID)
         {
-            try{
+            try
+            {
                 return GetItemData(StaticID).Name;
             }
-            catch (Exception){
-                Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID "+StaticID);
+            catch (Exception)
+            {
+                Scripts.SendMessageScriptError("Script Error: GetTileName invalid tileID " + StaticID);
                 return "";
             }
         }
@@ -163,28 +164,28 @@ namespace RazorEnhanced
             return TileData.ItemTable[StaticID];
         }
 
-            /// <summary>
-            /// Tile: Check Flag value of a given Tile item.
-            /// </summary>
-            /// <param name="StaticID">StaticID of a Tile item.</param>
-            /// <param name="flagname">
-            ///     None
-            ///     Translucent
-            ///     Wall
-            ///     Damaging
-            ///     Impassable
-            ///     Surface
-            ///     Bridge
-            ///     Window
-            ///     NoShoot
-            ///     Foliage
-            ///     HoverOver
-            ///     Roof
-            ///     Door
-            ///     Wet
-            /// </param>
-            /// <returns>True: if the Flag is active - False: otherwise</returns>
-            public static bool GetTileFlag(int StaticID, string flagname)
+        /// <summary>
+        /// Tile: Check Flag value of a given Tile item.
+        /// </summary>
+        /// <param name="StaticID">StaticID of a Tile item.</param>
+        /// <param name="flagname">
+        ///     None
+        ///     Translucent
+        ///     Wall
+        ///     Damaging
+        ///     Impassable
+        ///     Surface
+        ///     Bridge
+        ///     Window
+        ///     NoShoot
+        ///     Foliage
+        ///     HoverOver
+        ///     Roof
+        ///     Door
+        ///     Wet
+        /// </param>
+        /// <returns>True: if the Flag is active - False: otherwise</returns>
+        public static bool GetTileFlag(int StaticID, string flagname)
         {
             switch (flagname)
             {
@@ -410,9 +411,9 @@ namespace RazorEnhanced
             public int StaticZ { get { return m_StaticZ; } }
 
             // HuedTile interface 
-            public ushort ID { get { return (ushort)m_StaticID; }  }
+            public ushort ID { get { return (ushort)m_StaticID; } }
             public int Hue { get { return m_StaticHue; } }
-            public int Z { get { return m_StaticZ; }  }
+            public int Z { get { return m_StaticZ; } }
             public TileInfo(int id, int hue, int z)
             {
                 m_StaticID = id;

@@ -1,23 +1,10 @@
+using Accord.Math;
 using Assistant;
-using Assistant.UI;
 using System;
 using System.Collections.Generic;
-using System.Media;
-using System.Threading;
-using System.Collections.Concurrent;
 using System.Linq;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
 using System.Reflection;
-using Accord.Imaging.Filters;
-using IronPython.Runtime;
-using System.Globalization;
-using System.Web.UI.WebControls;
-using Accord.Collections;
-using Accord.Math;
-
-using static RazorEnhanced.HotKey;
+using System.Threading;
 using static RazorEnhanced.Misc;
 
 namespace RazorEnhanced
@@ -417,7 +404,7 @@ namespace RazorEnhanced
                                     if (GumpType != null)
                                     {
                                         int GumpTypeEnum = (int)GumpType.GetValue(gump);
-                                      
+
                                         if (GumpTypeEnum == 0)
                                         {
                                             var Gump = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
@@ -440,7 +427,7 @@ namespace RazorEnhanced
                                                             locprop.SetValue(gump, pos, null);
                                                         }
                                                     }
-                                                }  
+                                                }
                                             }
                                         }
                                     }
@@ -471,7 +458,7 @@ namespace RazorEnhanced
                         {
                             var gump = status.Invoke(assembly, new object[] { });
 
-                            if(gump!= null)
+                            if (gump != null)
                             {
                                 var Gumps = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.UI.Gumps.Gump");
                                 if (Gumps != null)
@@ -508,12 +495,12 @@ namespace RazorEnhanced
                         {
                             var parameters = new object[2] { x, y };
                             var gump = status.Invoke(assembly, parameters);
-                            
+
                             var uimanager = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Managers.UIManager");
                             if (uimanager != null)
                             {
                                 var add = uimanager?.GetMethod("Add", BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
-                                 if(add != null)
+                                if (add != null)
                                 {
                                     add.Invoke(assembly, new object[] { gump, true });
                                 }
@@ -675,11 +662,11 @@ namespace RazorEnhanced
                                                     }
 
                                                 }
-                                                
+
                                             }
                                         }
                                     }
-                                   
+
                                 }
                             }
                         }
@@ -756,7 +743,7 @@ namespace RazorEnhanced
             return "";
 
         }
-        
+
         /// <summary>
         /// Play a CUO macro by name
         /// Warning, limited testing !! 
@@ -814,7 +801,7 @@ namespace RazorEnhanced
                                         MethodInfo Update = null;
                                         foreach (var macroFn in macros.GetType().GetMethods())
                                         {
-                                            if (macroFn.Name == "FindMacro" && macroFn.GetParameters().Length == 1) 
+                                            if (macroFn.Name == "FindMacro" && macroFn.GetParameters().Length == 1)
                                             {
                                                 FindMacro = macroFn;
                                             }
@@ -831,7 +818,7 @@ namespace RazorEnhanced
                                                 Update = macroFn;
                                             }
                                         }
-                                        if (FindMacro != null && SetMacroToExecute != null 
+                                        if (FindMacro != null && SetMacroToExecute != null
                                             && WaitForTargetTimer != null && Update != null)
                                         {
                                             var theMacro = FindMacro.Invoke(macros, new object[] { macroName });
@@ -854,7 +841,7 @@ namespace RazorEnhanced
                         }
                     }
                 }
-                
+
                 var currentClient = ClassicUOClient.CUOAssembly?.GetType("ClassicUO.Game.Scenes.GameScene");
                 //{ ClassicUO.Game.Managers.MacroManager}
                 // int macroid = Client.Game.GetScene<GameScene>().Macros.GetAllMacros().IndexOf(_macro);
@@ -902,7 +889,7 @@ namespace RazorEnhanced
                 SendMessage("CUO.Follow* are currently broken and have no effect [1]", 33, false);
                 return (null, null, null);
             }
-            
+
             // From Game, get Scene
             PropertyInfo piScene = null;
             foreach (var prop in game.GetType().GetProperties())
@@ -921,7 +908,7 @@ namespace RazorEnhanced
             var scene = piScene.GetValue(game);
             if (scene == null)
             {
-               SendMessage("CUO.Follow* are currently broken and have no effect [3]", 33, false);
+                SendMessage("CUO.Follow* are currently broken and have no effect [3]", 33, false);
                 return (null, null, null);
             }
 

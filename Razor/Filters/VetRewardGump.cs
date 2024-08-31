@@ -1,6 +1,5 @@
 using System;
 using System.Text.RegularExpressions;
-using Assistant;
 
 namespace Assistant.Filters
 {
@@ -65,7 +64,7 @@ namespace Assistant.Filters
                         if (i == 1006046)
                         {
                             args.Block = true;
-                            RazorEnhanced.Gumps.CloseGump(tid);                            
+                            RazorEnhanced.Gumps.CloseGump(tid);
                         }
                     }
                 }

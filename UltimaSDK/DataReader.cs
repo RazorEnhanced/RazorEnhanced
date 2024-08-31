@@ -30,12 +30,10 @@
 
 #endregion
 
-using NLog.Fluent;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Ultima
 {

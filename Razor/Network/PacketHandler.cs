@@ -150,7 +150,7 @@ namespace Assistant
             if (pr != null)
             {
                 List<PacketViewerCallback> list;
-                m_ClientViewers .TryGetValue(id, out list);
+                m_ClientViewers.TryGetValue(id, out list);
                 if (list != null && list.Count > 0)
                     result = ProcessViewers(list, pr);
             }
@@ -218,7 +218,7 @@ namespace Assistant
                     }
                 }
             }
-            catch(System.InvalidOperationException e)
+            catch (System.InvalidOperationException e)
             {
                 // A viewer callback was added or removed will be okay next time
             }

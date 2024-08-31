@@ -1,4 +1,8 @@
+using Assistant.UI;
+using CUO_API;
+using RazorEnhanced;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -6,15 +10,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using Assistant;
-using Assistant.UI;
-using System.Linq;
-using Newtonsoft.Json;
-using CUO_API;
-using Accord.Statistics.Running;
-using RazorEnhanced;
-using NLog;
 
 
 namespace Assistant
@@ -36,7 +31,7 @@ namespace Assistant
                 }
 
                 AssemblyName askedassembly = new AssemblyName(e.Name);
-                
+
                 bool isdll = File.Exists(Path.Combine(RootPath, askedassembly.Name + ".dll"));
 
                 return Assembly.LoadFile(Path.Combine(RootPath, askedassembly.Name + (isdll ? ".dll" : ".exe")));
@@ -431,7 +426,7 @@ namespace Assistant
                     cur |= RazorEnhanced.ModKeys.Shift;
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                    return RazorEnhanced.HotKey.OnKeyDown(LinuxPlatform.MapKey(key), cur);                
+                    return RazorEnhanced.HotKey.OnKeyDown(LinuxPlatform.MapKey(key), cur);
                 return RazorEnhanced.HotKey.OnKeyDown(Win32Platform.MapKey(key), cur);
             }
 

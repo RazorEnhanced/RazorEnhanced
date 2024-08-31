@@ -110,7 +110,7 @@ namespace Assistant
         Dexterity = 1,
         Intelligence = 2,
     };
-    
+
 
     internal class PlayerData : Mobile
     {
@@ -162,7 +162,7 @@ namespace Assistant
         private byte m_ForcedSeason;
         private int[] m_MapPatches = new int[10];
 
-        
+
 
         private bool m_SkillsSent;
 
@@ -739,7 +739,7 @@ namespace Assistant
         {
             get
             {
-                    return base.Position;
+                return base.Position;
             }
             set
             {

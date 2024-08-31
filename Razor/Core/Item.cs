@@ -1,11 +1,10 @@
 using ConcurrentCollections;
+using Newtonsoft.Json;
+using RazorEnhanced;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Newtonsoft.Json;
-using RazorEnhanced;
 
 namespace Assistant
 {
@@ -168,10 +167,11 @@ namespace Assistant
             {
                 item = new CorpseItem(serial);
             }
-            else {
+            else
+            {
                 item = new Item(serial);
             }
-        
+
             if (item != null)
             {
                 item.ItemID = (ushort)itemID;
@@ -220,7 +220,7 @@ namespace Assistant
             {
                 // On OSI the amount value is used for other purposes if an item is declared not stackable in files.
                 try // avoid crash if some bad happen in Ultima.dll
-                {                    
+                {
                     if ((RazorEnhanced.Statics.GetItemData(ItemID).Flags & Ultima.TileFlag.Generic) != 0)
                         return m_Amount;
                     if (ItemID == 0x2006)
@@ -233,7 +233,7 @@ namespace Assistant
                             if (cont.Layer == Layer.ShopBuy ||
                                 cont.Layer == Layer.ShopResale ||
                                 cont.Layer == Layer.ShopSell)
-                                return m_Amount;                             
+                                return m_Amount;
                         }
                     }
                 }
@@ -278,7 +278,7 @@ namespace Assistant
                 {
                     return m_Name;
                 }
-                else if (ObjPropList.Content.Count > 0 )
+                else if (ObjPropList.Content.Count > 0)
                 {
                     return ObjPropList.Content[0].ToString();
                 }
@@ -825,8 +825,8 @@ namespace Assistant
             get { return m_ItemID.Value == 0x2006 || (m_ItemID.Value >= 0x0ECA && m_ItemID.Value <= 0x0ED2); }
         }
 
-        public int CorpseNumberItems { get; set; } = -1; 
-       
+        public int CorpseNumberItems { get; set; } = -1;
+
         internal static ConcurrentHashSet<uint> LoadDoorData()
         {
             ConcurrentHashSet<uint> ret = new ConcurrentHashSet<uint>();
@@ -1025,14 +1025,15 @@ namespace Assistant
         private RazorEnhanced.Point2D m_PinPosition;
         internal RazorEnhanced.Point2D PinPosition
         {
-            get {
+            get
+            {
                 if (MapItemHistory.ContainsKey(Serial))
                 {
                     Utility.Logger.Debug("{0} has entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                     return MapItemHistory[Serial].m_PinPosition;
                 }
                 Utility.Logger.Debug("{0} NO entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
-                return RazorEnhanced.Point2D.Zero; 
+                return RazorEnhanced.Point2D.Zero;
             }
             set
             {
@@ -1053,14 +1054,15 @@ namespace Assistant
         public RazorEnhanced.Point2D m_MapOrigin;
         internal RazorEnhanced.Point2D MapOrigin
         {
-            get {
+            get
+            {
                 if (MapItemHistory.ContainsKey(Serial))
                 {
                     Utility.Logger.Debug("{0} has entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
                     return MapItemHistory[Serial].m_MapOrigin;
                 }
                 Utility.Logger.Debug("{0} NO entry for {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial);
-                return RazorEnhanced.Point2D.Zero; 
+                return RazorEnhanced.Point2D.Zero;
             }
             set
             {
@@ -1080,14 +1082,16 @@ namespace Assistant
         public RazorEnhanced.Point2D m_MapEnd;
         internal RazorEnhanced.Point2D MapEnd
         {
-            get {
+            get
+            {
                 if (MapItemHistory.ContainsKey(Serial))
                 {
                     return MapItemHistory[Serial].m_MapEnd;
                 }
-                return RazorEnhanced.Point2D.Zero; 
+                return RazorEnhanced.Point2D.Zero;
             }
-            set {
+            set
+            {
                 Utility.Logger.Debug("{0} for {1:X} at x: {2} y: {3}", System.Reflection.MethodBase.GetCurrentMethod().Name, Serial, value.X, value.Y);
                 if (MapItemHistory.ContainsKey(Serial))
                 {

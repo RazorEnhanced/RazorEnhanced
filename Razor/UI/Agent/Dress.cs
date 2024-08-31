@@ -135,7 +135,8 @@ namespace Assistant
                 RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
             }
 
-            this.Invoke((MethodInvoker)delegate {
+            this.Invoke((MethodInvoker)delegate
+            {
                 RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, RazorEnhanced.Dress.DressUseUO3D, true);
                 RazorEnhanced.Dress.RefreshLists();
             });

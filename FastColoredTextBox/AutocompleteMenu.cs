@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Drawing;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace FastColoredTextBoxNS
 {
@@ -25,7 +25,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Minimum fragment length for popup
         /// </summary>
-        public int MinFragmentLength {get; set; }
+        public int MinFragmentLength { get; set; }
         /// <summary>
         /// User selects item
         /// </summary>
@@ -296,8 +296,8 @@ namespace FastColoredTextBoxNS
             tb.LostFocus += (o, e) =>
             {
                 if (Menu != null && !Menu.IsDisposed)
-                if (!Menu.Focused)
-                    SafetyClose();
+                    if (!Menu.Focused)
+                        SafetyClose();
             };
 
             tb.Scroll += delegate { SafetyClose(); };
@@ -378,7 +378,7 @@ namespace FastColoredTextBoxNS
 
         internal void DoAutocomplete(bool forced)
         {
-           if (!Menu.Enabled)
+            if (!Menu.Enabled)
             {
                 Menu.Close();
                 return;
@@ -408,7 +408,7 @@ namespace FastColoredTextBoxNS
                 {
                     item.Parent = Menu;
                     CompareResult res = item.Compare(text);
-                    if(res != CompareResult.Hidden)
+                    if (res != CompareResult.Hidden)
                         visibleItems.Add(item);
                     if (res == CompareResult.VisibleAndSelected && !foundSelected)
                     {
@@ -431,7 +431,7 @@ namespace FastColoredTextBoxNS
                 {
                     CancelEventArgs args = new CancelEventArgs();
                     Menu.OnOpening(args);
-                    if(!args.Cancel)
+                    if (!args.Cancel)
                         Menu.Show(tb, point);
                 }
 
@@ -459,17 +459,17 @@ namespace FastColoredTextBoxNS
                     needClose = true;
                 else
                     if (!Menu.Fragment.Contains(tb.Selection.Start))
+                {
+                    if (tb.Selection.Start.iLine == Menu.Fragment.End.iLine && tb.Selection.Start.iChar == Menu.Fragment.End.iChar + 1)
                     {
-                        if (tb.Selection.Start.iLine == Menu.Fragment.End.iLine && tb.Selection.Start.iChar == Menu.Fragment.End.iChar + 1)
-                        {
-                            //user press key at end of fragment
-                            char c = tb.Selection.CharBeforeStart;
-                            if (!Regex.IsMatch(c.ToString(), Menu.SearchPattern))//check char
-                                needClose = true;
-                        }
-                        else
+                        //user press key at end of fragment
+                        char c = tb.Selection.CharBeforeStart;
+                        if (!Regex.IsMatch(c.ToString(), Menu.SearchPattern))//check char
                             needClose = true;
                     }
+                    else
+                        needClose = true;
+                }
 
                 if (needClose)
                     Menu.Close();
@@ -530,24 +530,24 @@ namespace FastColoredTextBoxNS
 
                 var item = visibleItems[i];
 
-                if(item.BackColor != Color.Transparent)
-                using (var brush = new SolidBrush(item.BackColor))
-                    e.Graphics.FillRectangle(brush, 1, y, ClientSize.Width - 1 - 1, itemHeight - 1);
+                if (item.BackColor != Color.Transparent)
+                    using (var brush = new SolidBrush(item.BackColor))
+                        e.Graphics.FillRectangle(brush, 1, y, ClientSize.Width - 1 - 1, itemHeight - 1);
 
                 if (ImageList != null && visibleItems[i].ImageIndex >= 0)
                     e.Graphics.DrawImage(ImageList.Images[item.ImageIndex], 1, y);
 
                 if (i == FocussedItemIndex)
-                using (var selectedBrush = new LinearGradientBrush(new Point(0, y - 3), new Point(0, y + itemHeight), Color.Transparent, SelectedColor))
-                using (var pen = new Pen(SelectedColor))
-                {
-                    e.Graphics.FillRectangle(selectedBrush, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
-                    e.Graphics.DrawRectangle(pen, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
-                }
+                    using (var selectedBrush = new LinearGradientBrush(new Point(0, y - 3), new Point(0, y + itemHeight), Color.Transparent, SelectedColor))
+                    using (var pen = new Pen(SelectedColor))
+                    {
+                        e.Graphics.FillRectangle(selectedBrush, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
+                        e.Graphics.DrawRectangle(pen, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
+                    }
 
                 if (i == hoveredItemIndex)
-                using(var pen = new Pen(HoveredColor))
-                    e.Graphics.DrawRectangle(pen, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
+                    using (var pen = new Pen(HoveredColor))
+                        e.Graphics.DrawRectangle(pen, leftPadding, y, ClientSize.Width - 1 - leftPadding, itemHeight - 1);
 
                 using (var brush = new SolidBrush(item.ForeColor != Color.Transparent ? item.ForeColor : ForeColor))
                     e.Graphics.DrawString(item.ToString(), Font, brush, leftPadding, y);
@@ -679,32 +679,32 @@ namespace FastColoredTextBoxNS
         private bool ProcessKey(Keys keyData, Keys keyModifiers)
         {
             if (keyModifiers == Keys.None)
-            switch (keyData)
-            {
-                case Keys.Down:
-                    SelectNext(+1);
-                    return true;
-                case Keys.PageDown:
-                    SelectNext(+10);
-                    return true;
-                case Keys.Up:
-                    SelectNext(-1);
-                    return true;
-                case Keys.PageUp:
-                    SelectNext(-10);
-                    return true;
-                case Keys.Enter:
-                    OnSelecting();
-                    return true;
-                case Keys.Tab:
-                    if (!AllowTabKey)
-                        break;
-                    OnSelecting();
-                    return true;
-                case Keys.Escape:
-                    Menu.Close();
-                    return true;
-            }
+                switch (keyData)
+                {
+                    case Keys.Down:
+                        SelectNext(+1);
+                        return true;
+                    case Keys.PageDown:
+                        SelectNext(+10);
+                        return true;
+                    case Keys.Up:
+                        SelectNext(-1);
+                        return true;
+                    case Keys.PageUp:
+                        SelectNext(-10);
+                        return true;
+                    case Keys.Enter:
+                        OnSelecting();
+                        return true;
+                    case Keys.Tab:
+                        if (!AllowTabKey)
+                            break;
+                        OnSelecting();
+                        return true;
+                    case Keys.Escape:
+                        Menu.Close();
+                        return true;
+                }
 
             return false;
         }
@@ -789,8 +789,8 @@ namespace FastColoredTextBoxNS
     public class SelectingEventArgs : EventArgs
     {
         public AutocompleteItem Item { get; internal set; }
-        public bool Cancel {get;set;}
-        public int SelectedIndex{get;set;}
+        public bool Cancel { get; set; }
+        public int SelectedIndex { get; set; }
         public bool Handled { get; set; }
     }
 

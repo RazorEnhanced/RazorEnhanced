@@ -1,10 +1,9 @@
 using Assistant;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Globalization;
 
 namespace RazorEnhanced
 {
@@ -512,7 +511,7 @@ namespace RazorEnhanced
             ///     751, 970, 695
             /// </summary>
             public int IsHuman = -1;
-            
+
             /// <summary>
             /// Limit the search to Ghost only. (default: -1, any Mobile )
             /// Match any MobileID in the list:
@@ -724,7 +723,8 @@ namespace RazorEnhanced
                 case "Nearest":
                     Mobile closest = mobiles_reduced[0] as Mobile;
                     int closestDist = int.MaxValue;
-                    if (closest != null) {
+                    if (closest != null)
+                    {
                         foreach (Mobile m in mobiles_reduced)
                         {
                             int dist = Utility.Distance(m.Position.X, m.Position.Y, World.Player.Position.X, World.Player.Position.Y);
@@ -811,7 +811,7 @@ namespace RazorEnhanced
                     m_lastidx--;
                     // note since m_lastidx is global it could be larger than the current list
                     if ((m_lastidx > mobiles_reduced.Count() - 1) || (m_lastidx < 0))
-                        {
+                    {
                         m_lastidx = mobiles_reduced.Count() - 1;
                     }
                     result = mobiles_reduced[m_lastidx];
@@ -901,7 +901,7 @@ namespace RazorEnhanced
 
             if (notoriety.Count > 0)
             {
-                foreach(byte i in notoriety)
+                foreach (byte i in notoriety)
                 {
                     if (i >= 1 && i < 7)
                         filter.Notorieties.Add(i);
@@ -913,12 +913,12 @@ namespace RazorEnhanced
             {
                 Mobile anMobile = Select(list, selector);
 
-                if(highlight)
-                Target.SetLast(anMobile.Serial); //Attempt to highlight
+                if (highlight)
+                    Target.SetLast(anMobile.Serial); //Attempt to highlight
 
                 return anMobile;
             }
-            
+
             return null;
         }
 
@@ -1162,7 +1162,7 @@ namespace RazorEnhanced
             return ContextExist(mob.Serial, name, showContext);
         }
 
-        public static int ContextExist(int serial, string name, bool showContext= false)
+        public static int ContextExist(int serial, string name, bool showContext = false)
         {
             Assistant.Mobile mobile = World.FindMobile(serial);
             if (mobile == null) // Se item non valido
@@ -1184,7 +1184,7 @@ namespace RazorEnhanced
 
 
 
-        
+
 
         // Dalamar: the whole algorithm about line-of-sight could be move out of the Mobile class. has something to do with pathfinding after all.
         // for now have been wrapped in a region 

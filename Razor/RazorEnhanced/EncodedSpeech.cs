@@ -1,7 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
-using Assistant;
+using System.IO;
 using System.Linq;
 
 namespace RazorEnhanced
@@ -58,7 +57,7 @@ namespace RazorEnhanced
                     List<SpeechEntry> list = new List<SpeechEntry>();
                     FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     int num = 0;
-                    while ((num = fs.Read( buffer, 0, 4)) > 0)
+                    while ((num = fs.Read(buffer, 0, 4)) > 0)
                     {
                         int idKeyword = numRef[1] | (numRef[0] << 8);
                         int bytes = numRef[3] | (numRef[2] << 8);

@@ -1,7 +1,6 @@
 using Assistant;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace RazorEnhanced
@@ -52,8 +51,8 @@ namespace RazorEnhanced
         /// <param name="sounds"> The sounds to be filtered</param>
         public static void AddFilter(string name, List<Int32> sounds)
         {
-            ushort [] sounds2 = new ushort[sounds.Count];
-            for (int i=0; i<sounds.Count; i++)
+            ushort[] sounds2 = new ushort[sounds.Count];
+            for (int i = 0; i < sounds.Count; i++)
                 sounds2[i] = (ushort)sounds[i];
             var snd = new Assistant.Filters.SoundFilter(name, sounds2);
             Assistant.Filters.Filter.Register(snd);

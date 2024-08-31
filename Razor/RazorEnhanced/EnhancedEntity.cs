@@ -35,7 +35,7 @@ namespace RazorEnhanced
             get
             {
                 if (m_UOEntity == null)
-                    return new RazorEnhanced.Point3D(0,0,0);
+                    return new RazorEnhanced.Point3D(0, 0, 0);
                 else
                     return new RazorEnhanced.Point3D(m_UOEntity.Position);
 

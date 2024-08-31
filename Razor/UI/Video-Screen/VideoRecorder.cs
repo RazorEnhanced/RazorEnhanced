@@ -1,11 +1,10 @@
+using Accord.Video.DirectShow;
 using RazorEnhanced;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Accord.Video.DirectShow;
-using static IronPython.Modules._ast;
 
 namespace Assistant
 {

@@ -1,8 +1,8 @@
+using Microsoft.Win32.SafeHandles;
 using System;
-using System.Runtime.InteropServices;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.Win32.SafeHandles;
-using System.Linq;
 namespace Assistant
 {
 
@@ -954,7 +952,7 @@ namespace Assistant
 
                 }
 
-                
+
 
                 bool blocked = false;
                 switch (path)
@@ -991,7 +989,7 @@ namespace Assistant
                         //Debug.WriteLine("Packet id 0x{0:X}", data[0]);
                     }
 
-                    
+
                     fixed (byte* ptr = data)
                     {
                         //Packet.Log(path, ptr, data.Length, blocked);
@@ -1122,7 +1120,7 @@ namespace Assistant
 
         static byte Seq;
         internal bool RequestMove(Direction m_Dir, bool run)
-        { 
+        {
             Direction direction;
             int keyToPress = 0;
             string keyToSend = "";
@@ -1185,7 +1183,8 @@ namespace Assistant
             {
                 KeySend(keyToSend);  // this is only way I can send ctrl- and it forces focus to UO window
             }
-            else { 
+            else
+            {
                 KeyPress(keyToPress);  // if they are not running can post keystrokes
             }
 

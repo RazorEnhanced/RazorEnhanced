@@ -1,7 +1,5 @@
 using System;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace RazorEnhanced.UI
 {

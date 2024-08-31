@@ -1,11 +1,11 @@
+using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
+using Microsoft.Scripting;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using Microsoft.Scripting;
-using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
@@ -177,9 +177,10 @@ namespace RazorEnhanced
                 filename = directive.Substring(1, directive.Length - 2); // Removes " "
                 filename = Path.GetFullPath(filename); // This should resolve the relative ../ path
             }
-            else {
+            else
+            {
                 filename = "";
-                return false; 
+                return false;
             }
 
             return File.Exists(filename);
@@ -191,11 +192,11 @@ namespace RazorEnhanced
         /// <param name="filesList">Full path of all files where search for the directive</param>
         /// <param name="assemblies">List of all assemblies that must be inclide during the compile process</param>
         /// <param name="errorwarnings">List of error and warnings</param>
-        private void FindAllAssembliesIncludedInCSharpScripts(List<string> filesList, ref List<string> assemblies, ref List<string> errorwarnings) 
+        private void FindAllAssembliesIncludedInCSharpScripts(List<string> filesList, ref List<string> assemblies, ref List<string> errorwarnings)
         {
             const string directive = "//#assembly";
 
-            foreach (string filename in filesList) 
+            foreach (string filename in filesList)
             {
                 List<string> foundDirectives = new();
                 if (!FindDirectivesInFile(filename, directive, ref foundDirectives))
@@ -360,13 +361,13 @@ namespace RazorEnhanced
 
             CompilerOptions m_opt = new();
             CSharpCodeProvider m_provider = new(m_opt);
-            CompilerParameters m_compileParameters = CompilerSettings(true, assembliesList); 
+            CompilerParameters m_compileParameters = CompilerSettings(true, assembliesList);
 
             m_compileParameters.IncludeDebugInformation = debug;
             CompilerResults results = m_provider.CompileAssemblyFromFile(m_compileParameters, filesList.ToArray()); // Compiling
 
             DateTime stop = DateTime.Now;
-            
+
             if (debug)
             {
                 Misc.SendMessage("Script compiled in " + (stop - start).TotalMilliseconds.ToString("F0") + " ms");
@@ -394,7 +395,7 @@ namespace RazorEnhanced
                 if (mt != null)
                 {
                     MethodInfo method = mt.GetMethod("Run", bf);
-                    if (method != null) 
+                    if (method != null)
                     {
                         run = method;
                         runMethodsFound++;
@@ -414,7 +415,7 @@ namespace RazorEnhanced
             {
                 string error = "Required method 'public void Run()' missing from script.";
                 Misc.SendMessage(error);
-                throw new Microsoft.Scripting.SyntaxErrorException(error,null, new SourceSpan(), 0, Severity.FatalError);
+                throw new Microsoft.Scripting.SyntaxErrorException(error, null, new SourceSpan(), 0, Severity.FatalError);
             }
 
             // Creates an instance of the class runs the Run method

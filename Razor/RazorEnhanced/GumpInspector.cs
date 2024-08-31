@@ -1,8 +1,6 @@
 using Assistant;
-using Assistant.UI;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 
 namespace RazorEnhanced
 {

@@ -1,26 +1,18 @@
-using Accord;
-using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
-using IronPython.Compiler.Ast;
 using IronPython.Runtime;
 using Microsoft.Scripting.Utils;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.ModelBinding;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
-using static IronPython.Modules.PythonIterTools;
 
 namespace RazorEnhanced.UOS
 {
@@ -109,7 +101,7 @@ namespace RazorEnhanced.UOS
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
         private Journal m_journal;
-        private Mutex m_mutex;
+        //private Mutex m_mutex;
         private readonly Lexer m_Lexer = new Lexer();
 
         private bool m_Loaded = false;
@@ -121,7 +113,8 @@ namespace RazorEnhanced.UOS
         private Action<string> m_OutputWriter;
         private Action<string> m_ErrorWriter;
 
-        public void SetTrace(UOSTracebackDelegate traceDelegate) {
+        public void SetTrace(UOSTracebackDelegate traceDelegate)
+        {
             m_Compiled.OnTraceback += traceDelegate;
         }
 
@@ -137,26 +130,32 @@ namespace RazorEnhanced.UOS
 
         public UOSCompiledScript Compiled { get { return m_Compiled; } }
         public Interpreter Interpreter { get { return m_Interpreter; } }
-        public Namespace Namespace { 
-            get { return m_Namespace; } 
-            set {
-                if (value != m_Namespace){
+        public Namespace Namespace
+        {
+            get { return m_Namespace; }
+            set
+            {
+                if (value != m_Namespace)
+                {
                     m_Namespace = value;
                 }
-            } 
+            }
         }
 
-        public bool UseIsolation {
+        public bool UseIsolation
+        {
             get { return m_UseIsolation; }
-            set {
-                if (value != m_UseIsolation) {
+            set
+            {
+                if (value != m_UseIsolation)
+                {
                     m_UseIsolation = value;
                     UpdateNamespace();
                 }
             }
         }
 
-        
+
 
         // useOnceIgnoreList
         private readonly List<int> m_serialUseOnceIgnoreList;
@@ -167,7 +166,7 @@ namespace RazorEnhanced.UOS
         internal List<string> AllAliases()
         {
             var list = Interpreter._aliasHandlers.Keys.ToList();
-            list.AddRange(m_Interpreter. _alias.Keys.ToArray());
+            list.AddRange(m_Interpreter._alias.Keys.ToArray());
             return list;
         }
 
@@ -212,14 +211,14 @@ namespace RazorEnhanced.UOS
                 }
                 else
                 {
-                    retlist.AddRange(methodSummary.Split('\n').Where(line=>line.Trim().Length>0));
+                    retlist.AddRange(methodSummary.Split('\n').Where(line => line.Trim().Length > 0));
                 }
             }
             return retlist;
         }
 
-        
-        
+
+
 
         public UOSteamEngine()
         {
@@ -238,7 +237,8 @@ namespace RazorEnhanced.UOS
 
         public void SendOutput(string text)
         {
-            if (m_OutputWriter != null) {
+            if (m_OutputWriter != null)
+            {
                 m_OutputWriter.Invoke(text);
             }
         }
@@ -324,8 +324,10 @@ namespace RazorEnhanced.UOS
             return 0;
         }
 
-        public void InitInterpreter(bool force=false) {
-            if (force || m_Interpreter == null) { 
+        public void InitInterpreter(bool force = false)
+        {
+            if (force || m_Interpreter == null)
+            {
                 m_Interpreter = new(this);
                 RegisterCommands();
                 RegisterAlias();
@@ -339,7 +341,8 @@ namespace RazorEnhanced.UOS
                 var root = m_Lexer.Lex(filename);
                 return Load(root, filename);
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 SendError($"UOSEngine: fail to parse script:\n{e.Message}");
             }
             return false;
@@ -353,7 +356,8 @@ namespace RazorEnhanced.UOS
                 var root = m_Lexer.Lex(lines);
                 return Load(root, filename);
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 SendError($"UOSEngine: fail to parse script:\n{e.Message}");
             }
             return false;
@@ -376,14 +380,15 @@ namespace RazorEnhanced.UOS
                 UpdateNamespace();
                 m_Loaded = true;
             }
-            catch (Exception e){
+            catch (Exception e)
+            {
                 SendError($"UOSEngine: fail to load script:\n{e.Message}");
             }
 
             //m_mutex.ReleaseMutex();
             return m_Loaded;
         }
-        
+
         public bool Execute(bool editorMode = false)
         {
             if (!m_Loaded) { return false; }
@@ -410,21 +415,23 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-        private void UpdateNamespace(){
+        private void UpdateNamespace()
+        {
             var ns = Namespace.GlobalNamespace;
             if (m_UseIsolation && m_Namespace == Namespace.GlobalNamespace)
             {
-                 ns = Namespace.Get(Path.GetFileNameWithoutExtension(Compiled.Filename));
+                ns = Namespace.Get(Path.GetFileNameWithoutExtension(Compiled.Filename));
             }
-            if (ns != m_Namespace) {
+            if (ns != m_Namespace)
+            {
                 m_Namespace = ns;
             }
         }
-        
+
         private void Execute()
         {
             m_journal = new Journal(100);
-            
+
             m_Interpreter.StartScript();
             try
             {
@@ -441,7 +448,7 @@ namespace RazorEnhanced.UOS
             }
         }
 
-       
+
 
         public static void WrongParameterCount(ASTNode node, int expected, int given, string message = "")
         {
@@ -449,7 +456,7 @@ namespace RazorEnhanced.UOS
             var msg = String.Format("{0} expect {1} parameters, {2} given. {3}", command, expected, given, message);
             throw new UOSArgumentError(node, msg);
         }
-        
+
         private void RegisterCommands()
         {
             // Commands. From UOSteam Documentation
@@ -705,8 +712,8 @@ namespace RazorEnhanced.UOS
                     Items.WaitForProps(container, 1000);
 
                     string content = Items.GetPropValueString(container.Serial, "contents");
-                    if(string.IsNullOrEmpty(content))
-                    {                        
+                    if (string.IsNullOrEmpty(content))
+                    {
                         List<Item> list = container.Contains;
                         return list.Count;
                     }
@@ -1050,7 +1057,7 @@ namespace RazorEnhanced.UOS
                 {
                     container = args[2].AsInt();
                 }
-                
+
                 int range = -1;
                 if (args.Length >= 4)
                 {
@@ -1187,7 +1194,7 @@ namespace RazorEnhanced.UOS
                 Mobile item = Mobiles.FindBySerial((int)serial);
                 if (item != null)
                 {
-                     Mobiles.WaitForProps(thing, 1000);
+                    Mobiles.WaitForProps(thing, 1000);
                     foreach (var prop in item.Properties)
                     {
                         var lowerProp = prop.ToString().ToLower();
@@ -2324,7 +2331,7 @@ namespace RazorEnhanced.UOS
 
             return true;
         }
-        
+
         /// <summary>
         /// pathfindto x y
         /// </summary>
@@ -2376,7 +2383,7 @@ namespace RazorEnhanced.UOS
             if (args.Length == 1)
             {
                 string direction = args[0].AsString().ToLower();
-                if (! map.ContainsKey(direction))
+                if (!map.ContainsKey(direction))
                 {
                     throw new UOSArgumentError(node, args[0].AsString() + " not recognized.");
                 }
@@ -2686,7 +2693,7 @@ namespace RazorEnhanced.UOS
         /// <summary>
         /// togglehands ('left'/'right')
         /// </summary>
-        private  bool ToggleHands(ASTNode node, Argument[] args, bool quiet, bool force)
+        private bool ToggleHands(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             if (args.Length == 1)
             {
@@ -3488,7 +3495,7 @@ namespace RazorEnhanced.UOS
         /// </summary>
         private static bool Counter(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-                return NotImplemented(node, args, quiet, force);
+            return NotImplemented(node, args, quiet, force);
         }
 
         /// <summary>
@@ -3658,7 +3665,7 @@ namespace RazorEnhanced.UOS
                 {
                     macroAndArgs.Add(arg.AsString());
                 }
-                return Assistant.Commands.PlayScript( macroAndArgs.ToArray() );
+                return Assistant.Commands.PlayScript(macroAndArgs.ToArray());
             }
 
             return false;
@@ -3675,7 +3682,7 @@ namespace RazorEnhanced.UOS
 
                 Int32.TryParse(filename, out int amount);
 
-                if(amount > 0)
+                if (amount > 0)
                 {
                     Misc.PlaySound(amount, World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z);
                     return true;
@@ -3982,9 +3989,9 @@ namespace RazorEnhanced.UOS
             {
                 Misc.SendMessage(args[0].AsString(), args[1].AsInt(), false);
             }
-            else 
-            { 
-                return false; 
+            else
+            {
+                return false;
             }
             return true;
         }
@@ -4039,7 +4046,7 @@ namespace RazorEnhanced.UOS
                 var msg = args[0].AsString();
                 Misc.ResponsePrompt(msg);
                 return true;
-                
+
             }
             return false;
         }
@@ -4055,10 +4062,11 @@ namespace RazorEnhanced.UOS
                 var delay = args[0].AsInt();
                 var msg = args[1].AsString();
                 var color = 20;
-                if (args.Length == 3) {
+                if (args.Length == 3)
+                {
                     color = args[2].AsInt();
                 }
-                Task.Delay(delay).ContinueWith( t => Misc.SendMessage(msg, color) );
+                Task.Delay(delay).ContinueWith(t => Misc.SendMessage(msg, color));
                 return true;
             }
             return false;
@@ -4097,21 +4105,24 @@ namespace RazorEnhanced.UOS
             // TODO: Hypothetical implementation: 0 args -> prompt for serial, 1 arg = serial
             // once verified, remove NotImplemented below
             var list_name = DEFAULT_FRIEND_LIST;
-            if (!RazorEnhanced.Settings.Friend.ListExists(list_name)) {
+            if (!RazorEnhanced.Settings.Friend.ListExists(list_name))
+            {
                 RazorEnhanced.Settings.Friend.ListInsert(list_name, true, true, false, false, false, false, false);
             }
 
             int serial = -1;
-            if (args.Length == 0) {
+            if (args.Length == 0)
+            {
                 serial = new Target().PromptTarget();
-            } 
+            }
             else if (args.Length == 1)
             {
                 serial = args[0].AsInt();
             }
 
 
-            if (serial > 0 ) {
+            if (serial > 0)
+            {
                 var new_friend = Mobiles.FindBySerial(serial);
                 string name = new_friend.Name;
                 Friend.AddPlayer(list_name, name, serial);
@@ -4138,7 +4149,7 @@ namespace RazorEnhanced.UOS
                     serial = args[0].AsInt();
                 }
                 return Friend.RemoveFriend(list_name, serial);
-             }
+            }
             return false;
         }
 
@@ -4180,14 +4191,14 @@ namespace RazorEnhanced.UOS
 
                 try
                 {
-                    int intOption = args[1].AsInt();                    
+                    int intOption = args[1].AsInt();
                     Misc.WaitForContext((int)serial, timeout, false);
                     Misc.ContextReply((int)serial, intOption);
                     return true;
                 }
                 catch (UOSRuntimeError)
                 {
-                     // try string
+                    // try string
                 }
 
                 string option = args[1].AsString();
@@ -4318,7 +4329,8 @@ namespace RazorEnhanced.UOS
         //Not a UOS Function, utility method for autocure within big/small heal
         private static bool SelfCure()
         {
-            if (Player.Poisoned) {
+            if (Player.Poisoned)
+            {
                 RazorEnhanced.Target.Cancel();
 
                 Spells.CastMagery("Cure");
@@ -4410,7 +4422,7 @@ namespace RazorEnhanced.UOS
                 uint serial = args[1].AsSerial();
                 Spells.Cast(spell, serial);
             }
-            else 
+            else
             {
                 SendError("Incorrect number of parameters");
                 return false;
@@ -4428,12 +4440,14 @@ namespace RazorEnhanced.UOS
             Spells.CastChivalry("Close Wounds");
             RazorEnhanced.Target.WaitForTarget(2500); //TODO: find reasonable delay
 
-            if (RazorEnhanced.Target.HasTarget()) {
+            if (RazorEnhanced.Target.HasTarget())
+            {
                 if (args.Length == 0)
                 {
                     RazorEnhanced.Target.Self();
                 }
-                else {
+                else
+                {
                     var serial = args[0].AsInt();
                     RazorEnhanced.Target.TargetExecute(serial);
                 }
@@ -4689,10 +4703,11 @@ namespace RazorEnhanced.UOS
             var command = node.Lexeme;
             if (args.Length < 1) { WrongParameterCount(node, 1, args.Length); }
             var operation = args[0].AsString();
-            var script_name = args.Length >= 2 ? args[1].AsString(): Misc.ScriptCurrent(true);
-            var output_alias = args.Length == 3 ? args[2].AsString() : script_name + ( operation=="isrunning"? "_running" : "_suspended");
+            var script_name = args.Length >= 2 ? args[1].AsString() : Misc.ScriptCurrent(true);
+            var output_alias = args.Length == 3 ? args[2].AsString() : script_name + (operation == "isrunning" ? "_running" : "_suspended");
             var cmd = $"{command} {operation}";
-            switch (operation) {
+            switch (operation)
+            {
                 case "run": Misc.ScriptRun(script_name); break;
                 case "stop": Misc.ScriptStop(script_name); break;
                 case "suspend": Misc.ScriptSuspend(script_name); break;
@@ -4805,7 +4820,8 @@ namespace RazorEnhanced.UOS
         {
             var cur_namespace_name = Namespace.Name;
             var namespace_name = args.Length >= 2 ? args[1].AsString() : null;
-            if (cur_namespace_name == namespace_name){
+            if (cur_namespace_name == namespace_name)
+            {
                 this.Namespace = Namespace.Get();
             }
             Namespace.Delete(namespace_name);
@@ -4813,13 +4829,13 @@ namespace RazorEnhanced.UOS
         }
         private bool ManageNamespaces_Move(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
-            
+
             if (args.Length < 2) { WrongParameterCount(node, 2, args.Length); }
             var namespace_name = args[1].AsString();
 
             var old_name = Namespace.Name;
             var new_name = namespace_name;
-            
+
             if (args.Length >= 3)
             {
                 old_name = args[2].AsString();
@@ -4834,7 +4850,7 @@ namespace RazorEnhanced.UOS
             var didMove = Namespace.Move(old_name, new_name, replace);
             if (!didMove)
             {
-                throw new UOSArgumentError(node,cmd + $" failed, old name '{old_name}' not found.");
+                throw new UOSArgumentError(node, cmd + $" failed, old name '{old_name}' not found.");
             }
             return true;
         }
@@ -4842,15 +4858,15 @@ namespace RazorEnhanced.UOS
         private bool ManageNamespaces_Print(ASTNode node, string command, Argument[] args, bool quiet, bool force)
         {
             var operation = args[0].AsString();
-            var namespace_name = args.Length >=2 ? args[1].AsString() : Namespace.Name;
+            var namespace_name = args.Length >= 2 ? args[1].AsString() : Namespace.Name;
             var item_type = args.Length >= 3 ? args[2].AsString() : "all";
             var item_name = args.Length == 4 ? args[3].AsString() : null;
 
             if (!Namespace.Has(namespace_name))
             {
-                throw new UOSArgumentError(node,$" {command} namespace '{namespace_name}' not found.");
+                throw new UOSArgumentError(node, $" {command} namespace '{namespace_name}' not found.");
             }
-            
+
             var cmd = $"{command} '{namespace_name}' '{item_type}'";
             var ns = Namespace.Get(namespace_name);
             var content = "";
@@ -4872,7 +4888,7 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                throw new UOSArgumentError(node,$"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
+                throw new UOSArgumentError(node, $"{cmd} items kind must be either: 'all', 'alias', 'lists', 'timers'  ");
             }
             SendOutput(content);
             return true;
@@ -4885,7 +4901,7 @@ namespace RazorEnhanced.UOS
 
             if (!Namespace.Has(namespace_name))
             {
-                throw new UOSArgumentError(node,$"{command} namespace '{namespace_name}' not found.");
+                throw new UOSArgumentError(node, $"{command} namespace '{namespace_name}' not found.");
             }
 
             var item_type = args.Length >= 3 ? args[2].AsString() : "all";
@@ -4929,10 +4945,10 @@ namespace RazorEnhanced.UOS
         {
             string command = node.Lexeme;
             // targettype (graphic) [color] [range]
-            if (args.Length == 0) { WrongParameterCount(node, 1, 0);}
+            if (args.Length == 0) { WrongParameterCount(node, 1, 0); }
             var graphic = args[0].AsInt();
-            var color = (args.Length >=2 ? args[1].AsInt() : -1);
-            var range = (args.Length >=3 ? args[2].AsInt() : Player.Backpack.Serial);
+            var color = (args.Length >= 2 ? args[1].AsInt() : -1);
+            var range = (args.Length >= 3 ? args[2].AsInt() : Player.Backpack.Serial);
 
             Item itm = null;
             // Container (Range: Container Serial)
@@ -4946,16 +4962,17 @@ namespace RazorEnhanced.UOS
             else
             {
                 var options = new Items.Filter();
-                options.Graphics.Add( graphic );
+                options.Graphics.Add(graphic);
                 if (color != -1)
-                    options.Hues.Add( color );
+                    options.Hues.Add(color);
                 options.RangeMin = -1;
                 options.RangeMax = range;
                 options.OnGround = 1;
 
                 var item_list = Items.ApplyFilter(options);
-                if (item_list.Count > 0) {
-                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1) );
+                if (item_list.Count > 0)
+                {
+                    item_list.Sort((a, b) => (Player.DistanceTo(a) > Player.DistanceTo(b) ? 1 : -1));
                     itm = item_list[0];
                 }
             }
@@ -5051,7 +5068,7 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-        internal static int[] LastTileTarget = new int[4] {0, 0, 0, 0};
+        internal static int[] LastTileTarget = new int[4] { 0, 0, 0, 0 };
 
         /// <summary>
         ///  targettile ('last'/'current'/(x y z)) [graphic]
@@ -5204,8 +5221,8 @@ namespace RazorEnhanced.UOS
             }
             if (args.Length == 4)
             {
-                    reverse = args[2].AsBool();
-                    graphic = args[3].AsInt();
+                reverse = args[2].AsBool();
+                graphic = args[3].AsInt();
             }
 
             Item itm = null;
@@ -5329,7 +5346,7 @@ namespace RazorEnhanced.UOS
     #region Parser/Interpreter
 
 
-    
+
 
     internal static class TypeConverter
     {
@@ -5455,7 +5472,7 @@ namespace RazorEnhanced.UOS
         {
             get; set;
         }
-        
+
         internal UOSCompiledScript _script
         {
             get; set;
@@ -5466,7 +5483,7 @@ namespace RazorEnhanced.UOS
             Node = node;
             _script = script;
         }
-    
+
         // Treat the argument as an integer
         public int AsInt()
         {
@@ -5662,7 +5679,7 @@ namespace RazorEnhanced.UOS
         public string Filename;
         public UOSteamEngine Engine;
         Action<string> DebugWriter;
-            
+
         public event UOSTracebackDelegate OnTraceback;
 
         private ASTNode _root;
@@ -5731,7 +5748,7 @@ namespace RazorEnhanced.UOS
                 if (node.Lexeme == "//")
                     comment = true;
 
-                if (! comment)
+                if (!comment)
                     args.Add(new Argument(this, node));
 
                 node = node.Next();
@@ -5753,25 +5770,27 @@ namespace RazorEnhanced.UOS
             Engine = engine;
             Init();
         }
-            
-        public void Init(){
+
+        public void Init()
+        {
             _statement = _root.FirstChild();
             _scope = new Scope(null, _statement);
-                
+
         }
 
         public bool ExecuteNext()
         {
-            if (_statement == null) {
+            if (_statement == null)
+            {
                 Init();
             }
-            if (_statement == null) { return false;}
+            if (_statement == null) { return false; }
 
             if (Debug)
             {
                 if (_statement != null)
                 {
-                    string msg = String.Format("{0}: {1}", _statement.LineNumber+1, _statement.Lexer.GetLine(_statement.LineNumber));
+                    string msg = String.Format("{0}: {1}", _statement.LineNumber + 1, _statement.Lexer.GetLine(_statement.LineNumber));
                     if (DebugTS)
                     {
 
@@ -5784,10 +5803,11 @@ namespace RazorEnhanced.UOS
 
             if (_statement.Type != ASTNodeType.STATEMENT)
                 throw new UOSRuntimeError(_statement, "Invalid script");
-                
+
             var node = _statement.FirstChild();
 
-            if (OnTraceback!=null && !OnTraceback.Invoke(this, node, _scope)){
+            if (OnTraceback != null && !OnTraceback.Invoke(this, node, _scope))
+            {
                 return false;
             }
 
@@ -5960,7 +5980,7 @@ namespace RazorEnhanced.UOS
                                 {
                                     if (depth == 0)
                                     {
-                                        int duration = (int)_scope.timer.ElapsedMilliseconds;                                    
+                                        int duration = (int)_scope.timer.ElapsedMilliseconds;
                                         if (duration < MinLoopTime)
                                             Misc.Pause(MinLoopTime - duration);
                                         _scope.timer.Reset();
@@ -6122,7 +6142,8 @@ namespace RazorEnhanced.UOS
                         {
                             listParam = children[1];
                         }
-                        else {
+                        else
+                        {
                             endParam = children[1];
                             listParam = children[2];
                         }
@@ -6352,7 +6373,7 @@ namespace RazorEnhanced.UOS
                 case ASTNodeType.STOP:
                     Engine.Interpreter.StopScript();
                     _statement = null;
-                    throw new UOSStopError(node,"Found stop keyword.");
+                    throw new UOSStopError(node, "Found stop keyword.");
                     break;
                 case ASTNodeType.REPLAY:
                     _statement = _statement.Parent.FirstChild();
@@ -6642,7 +6663,8 @@ namespace RazorEnhanced.UOS
         }
     }
 
-    public class Namespace {
+    public class Namespace
+    {
         const string DEFAULT_NAMESPACE = "global";
 
         public static readonly ConcurrentDictionary<string, Namespace> _namespaces = new ConcurrentDictionary<string, Namespace>();
@@ -6653,20 +6675,23 @@ namespace RazorEnhanced.UOS
         public readonly ConcurrentDictionary<string, int> _alias = new ConcurrentDictionary<string, int>();
         public readonly ConcurrentDictionary<string, DateTime> _timers = new ConcurrentDictionary<string, DateTime>();
         public readonly ConcurrentDictionary<string, List<Argument>> _lists = new ConcurrentDictionary<string, List<Argument>>();
-            
-        public static Namespace Get(string name=null) {
+
+        public static Namespace Get(string name = null)
+        {
             if (name == null) { name = DEFAULT_NAMESPACE; }
             if (Has(name))
             {
                 return _namespaces[name];
             }
-            else { 
+            else
+            {
                 var ns = new Namespace(name);
                 return ns;
             }
         }
 
-        public static List<string> List() {
+        public static List<string> List()
+        {
             return _namespaces.Keys.ToList();
         }
 
@@ -6676,9 +6701,9 @@ namespace RazorEnhanced.UOS
             return _namespaces.ContainsKey(name);
         }
 
-        public static void Delete(string name=null)
+        public static void Delete(string name = null)
         {
-            if (name==null) { name = DEFAULT_NAMESPACE; }
+            if (name == null) { name = DEFAULT_NAMESPACE; }
 
             if (name == Namespace.GlobalNamespace.Name)
             {
@@ -6695,15 +6720,15 @@ namespace RazorEnhanced.UOS
 
         public static string PrintAll(string namespace_name = null, string item_name = null)
         {
-            var nss = namespace_name == null ? _namespaces.Keys.ToList():new List<string>{ namespace_name };
+            var nss = namespace_name == null ? _namespaces.Keys.ToList() : new List<string> { namespace_name };
 
             var content = "";
-            foreach(var ns in nss)
+            foreach (var ns in nss)
             {
                 var contentAlias = PrintAlias(namespace_name, item_name);
                 var contentLists = PrintLists(namespace_name, item_name);
                 var contentTimers = PrintTimers(namespace_name, item_name);
-                content += contentAlias + contentLists + contentTimers; 
+                content += contentAlias + contentLists + contentTimers;
             }
 
             return content;
@@ -6723,7 +6748,7 @@ namespace RazorEnhanced.UOS
             else
             {
                 var found = ns._alias.TryGetValue(item_name, out var value);
-                content += $"{namespace_name}:alias:{item_name}{(found?$" = {value}":" NOT found")}\n";
+                content += $"{namespace_name}:alias:{item_name}{(found ? $" = {value}" : " NOT found")}\n";
             }
 
             return content;
@@ -6738,7 +6763,7 @@ namespace RazorEnhanced.UOS
             {
                 var pairs = ns._lists.ToSortedList((a, b) => { return a.Key.CompareTo(b.Key); });
                 foreach (var pair in pairs)
-                { content += $"{namespace_name}:lists:{pair.Key} = {string.Join(", ",pair.Value.Apply((a)=>a.AsString()))}\n"; }
+                { content += $"{namespace_name}:lists:{pair.Key} = {string.Join(", ", pair.Value.Apply((a) => a.AsString()))}\n"; }
                 if (content == "") { content = $"{namespace_name}:lists: -EMPTY-\n"; }
             }
             else
@@ -6769,7 +6794,8 @@ namespace RazorEnhanced.UOS
             return content;
         }
 
-        public static bool CopyAll(string namespace_src, string namespace_dst, string name_src = null, string name_dst = null) {
+        public static bool CopyAll(string namespace_src, string namespace_dst, string name_src = null, string name_dst = null)
+        {
             var alias_ok = CopyAlias(namespace_src, namespace_dst, name_src, name_dst);
             var lists_ok = CopyLists(namespace_src, namespace_dst, name_src, name_dst);
             var timers_ok = CopyTimers(namespace_src, namespace_dst, name_src, name_dst);
@@ -6829,11 +6855,13 @@ namespace RazorEnhanced.UOS
             }
             return true;
         }
-            
-        public static bool Move(string oldname, string newname, bool replace=false) {               
+
+        public static bool Move(string oldname, string newname, bool replace = false)
+        {
             if (!Has(oldname)) { return false; }
 
-            if (replace){
+            if (replace)
+            {
                 Delete(newname);
                 var new_ns = Get(newname);
                 var old_ns = _namespaces[oldname];
@@ -6844,7 +6872,8 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-        private Namespace(string name) { 
+        private Namespace(string name)
+        {
             Name = name;
             _namespaces.TryAdd(name, this);
         }
@@ -6869,15 +6898,15 @@ namespace RazorEnhanced.UOS
         internal ConcurrentDictionary<string, int> _alias { get { return m_Engine.Namespace._alias; } }
         internal ConcurrentDictionary<string, DateTime> _timers { get { return m_Engine.Namespace._timers; } }
         internal ConcurrentDictionary<string, List<Argument>> _lists { get { return m_Engine.Namespace._lists; } }
-        
-        
+
+
         // Lists
         private UOSteamEngine m_Engine;
         private UOSCompiledScript m_Script = null;
-            
+
         private bool m_Suspended = false;
         private ManualResetEvent m_SuspendedMutex;
-            
+
 
         private enum ExecutionState
         {
@@ -6899,10 +6928,11 @@ namespace RazorEnhanced.UOS
         {
             Culture = new System.Globalization.CultureInfo(System.Globalization.CultureInfo.CurrentCulture.LCID, false);
             Culture.NumberFormat.NumberDecimalSeparator = ".";
-            Culture.NumberFormat.NumberGroupSeparator = ","; 
+            Culture.NumberFormat.NumberGroupSeparator = ",";
         }
 
-        public Interpreter(UOSteamEngine engine) {
+        public Interpreter(UOSteamEngine engine)
+        {
             m_Engine = engine;
             m_SuspendedMutex = new ManualResetEvent(!m_Suspended);
         }
@@ -6937,7 +6967,7 @@ namespace RazorEnhanced.UOS
         }
 
         public void RegisterCommandHandler(string keyword, CommandHandler handler, string docString = "default")
-        {                                                                                                                           
+        {
             _commandHandlers[keyword] = handler;
             DocItem di = new DocItem("", "UOSteamEngine", keyword, docString);
         }
@@ -6964,15 +6994,17 @@ namespace RazorEnhanced.UOS
             if (_aliasHandlers.TryGetValue(alias, out AliasHandler handler))
                 return handler(alias);
 
-            if (m_Engine.Namespace == Namespace.GlobalNamespace) { 
+            if (m_Engine.Namespace == Namespace.GlobalNamespace)
+            {
                 // uint value;
                 if (Misc.CheckSharedValue(alias))
                 {
                     return (uint)Misc.ReadSharedValue(alias);
                 }
             }
-            if (_alias.TryGetValue(alias, out int value)) { 
-                return (uint)value; 
+            if (_alias.TryGetValue(alias, out int value))
+            {
+                return (uint)value;
             }
 
             return uint.MaxValue;
@@ -6986,7 +7018,8 @@ namespace RazorEnhanced.UOS
             if (m_Engine.Namespace == Namespace.GlobalNamespace)
             {
                 return Misc.CheckSharedValue(alias);
-            }else
+            }
+            else
             {
                 return _alias.ContainsKey(alias);
             }
@@ -6994,15 +7027,16 @@ namespace RazorEnhanced.UOS
 
         public void UnSetAlias(string alias)
         {
-                
+
             if (m_Engine.Namespace == Namespace.GlobalNamespace)
             {
                 Misc.RemoveSharedValue(alias);
             }
-            if (_alias.ContainsKey(alias)) {
+            if (_alias.ContainsKey(alias))
+            {
                 _alias.TryRemove(alias, out var _);
             }
-                
+
         }
         public void SetAlias(string alias, uint serial)
         {
@@ -7134,7 +7168,7 @@ namespace RazorEnhanced.UOS
 
         public void RemoveTimer(string name)
         {
-            _timers.TryRemove(name,out var _);
+            _timers.TryRemove(name, out var _);
         }
 
         public bool TimerExists(string name)
@@ -7190,7 +7224,7 @@ namespace RazorEnhanced.UOS
         {
             if (m_Script == null)
                 return false;
-            
+
             if (_executionState == ExecutionState.PAUSED)
             {
                 if (_pauseTimeout < DateTime.UtcNow.Ticks)
@@ -7233,7 +7267,7 @@ namespace RazorEnhanced.UOS
             return true;
         }
 
-            
+
 
         // Pause execution for the given number of milliseconds
         public void Pause(long duration)
@@ -7344,9 +7378,9 @@ namespace RazorEnhanced.UOS
         public readonly Lexer Lexer;
 
         internal LinkedListNode<ASTNode> _node;
-        private LinkedList<ASTNode> _children; 
+        private LinkedList<ASTNode> _children;
 
-        public ASTNode(ASTNodeType type, string lexeme, ASTNode parent, int lineNumber, Lexer lexer=null)
+        public ASTNode(ASTNodeType type, string lexeme, ASTNode parent, int lineNumber, Lexer lexer = null)
         {
             Type = type;
             if (lexeme != null)
@@ -7357,7 +7391,7 @@ namespace RazorEnhanced.UOS
             LineNumber = lineNumber;
             if (lexer == null && parent != null && parent.Lexer != null)
             {
-                lexer  = parent.Lexer;
+                lexer = parent.Lexer;
             }
             this.Lexer = lexer;
         }
@@ -7409,7 +7443,8 @@ namespace RazorEnhanced.UOS
 
 
     //TODO: convert to "non static"  ( generic methos Slice gives issue, would need rewrite, but later down the roadmap )
-    public static class LexerExtension {
+    public static class LexerExtension
+    {
         public static T[] Slice<T>(this T[] src, int start, int end)
         {
             if (end < start)
@@ -7426,7 +7461,7 @@ namespace RazorEnhanced.UOS
             return slice;
         }
     }
-    
+
     public class Lexer
     {
         private int _curLine = 0;
@@ -7439,10 +7474,11 @@ namespace RazorEnhanced.UOS
 
         //private static string _filename = ""; // can be empty
 
-        public Lexer() { 
+        public Lexer()
+        {
         }
 
-        public string GetLine(int lineNum=-1)
+        public string GetLine(int lineNum = -1)
         {
             if (lineNum < 0) lineNum = _curLine;
             if (lineNum >= _lines.Length)
@@ -7758,7 +7794,7 @@ namespace RazorEnhanced.UOS
 
             foreach (var lexeme in lexemes)
             {
-                
+
                 if (IsOperator(lexeme))
                 {
                     // Operators mean it is a binary expression.
@@ -7865,7 +7901,7 @@ namespace RazorEnhanced.UOS
                 throw new UOSSyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
             }
 
-            if (lexemes.Length > 1 && lexemes[1] != "to" && lexemes[1] != "in" )
+            if (lexemes.Length > 1 && lexemes[1] != "to" && lexemes[1] != "in")
             {
                 throw new UOSSyntaxError(statement, "Invalid for loop: missing 'to/in' keyword");
             }
@@ -7876,8 +7912,9 @@ namespace RazorEnhanced.UOS
             //CASE: for (end)
             if (lexemes.Length == 1)
             {
-                if (!matchNumber.IsMatch(lexemes[0])) {
-                    throw new UOSSyntaxError(statement, "Invalid for loop: expected number got "+ lexemes[0]);
+                if (!matchNumber.IsMatch(lexemes[0]))
+                {
+                    throw new UOSSyntaxError(statement, "Invalid for loop: expected number got " + lexemes[0]);
                 }
                 var loop = statement.Push(ASTNodeType.FOR, null, _curLine);
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
@@ -7889,7 +7926,7 @@ namespace RazorEnhanced.UOS
                 {
                     throw new UOSSyntaxError(statement, "Invalid for loop: expected number got " + lexemes[2]);
                 }
-                if ( lexemes[3] != "in" && lexemes[3] != "to" )
+                if (lexemes[3] != "in" && lexemes[3] != "to")
                 {
                     throw new UOSSyntaxError(statement, "Invalid for loop: missing 'in/to' keyword");
                 }
@@ -7904,7 +7941,7 @@ namespace RazorEnhanced.UOS
                 ParseValue(loop, lexemes[4], ASTNodeType.LIST);
             }
             //CASE: for (start) to ('list name')
-            else if (lexemes.Length == 3 && matchListName.IsMatch(lexemes[2])  )
+            else if (lexemes.Length == 3 && matchListName.IsMatch(lexemes[2]))
             {
                 var loop = statement.Push(ASTNodeType.FOREACH, null, _curLine);
                 ParseValue(loop, lexemes[0], ASTNodeType.STRING);
@@ -7983,7 +8020,7 @@ namespace RazorEnhanced.UOS
                 var comment = _comments[i];
                 var char_left = _string.Length - _pos;
 
-                result = _string.Substring(_pos, Math.Min(char_left, comment.Length) ) == comment;
+                result = _string.Substring(_pos, Math.Min(char_left, comment.Length)) == comment;
 
                 /*
                 if (result && i + 1 < _comments.Length && _comments[i] == _comments[i + 1] && _pos + 1 < _eol)

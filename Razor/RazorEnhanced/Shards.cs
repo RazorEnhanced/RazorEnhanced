@@ -2,12 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.IO.Compression;
-using System.Web.Profile;
-using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -17,10 +12,11 @@ namespace RazorEnhanced
         internal static readonly string m_Save = "RazorEnhanced.shards";
         internal static AllShards allShards = new AllShards();
         public static bool AllowBeta { get { return allShards.AllowBeta; } }
-        public static bool ShowLauncher {
+        public static bool ShowLauncher
+        {
             get { return allShards.ShowLauncher; }
-            set { allShards.ShowLauncher = value; Shard.Save();}
-            }
+            set { allShards.ShowLauncher = value; Shard.Save(); }
+        }
     }
 
     [Serializable]
@@ -44,8 +40,8 @@ namespace RazorEnhanced
 
         [JsonProperty("ClientPath")]
         internal string ClientPath { get; set; }
-        
-        [JsonProperty("CUOClient")] 
+
+        [JsonProperty("CUOClient")]
         internal string CUOClient { get; set; }
 
         [JsonProperty("ClientFolder")]
@@ -53,15 +49,15 @@ namespace RazorEnhanced
 
         [JsonProperty("Host")]
         internal string Host { get; set; }
-        
-        [JsonProperty("Port")] 
+
+        [JsonProperty("Port")]
         internal uint Port { get; set; }
 
         [JsonProperty("PatchEnc")]
         internal bool PatchEnc { get; set; }
 
         [JsonProperty("OSIEnc")]
-        internal bool OSIEnc { get; set;}
+        internal bool OSIEnc { get; set; }
 
         [JsonProperty("Selected")]
         internal bool Selected { get; set; }
@@ -95,7 +91,6 @@ namespace RazorEnhanced
             if (File.Exists(filename))
             {
                 var content = File.ReadAllText(filename);
-                bool error = false;
                 try
                 {
                     var settings = new JsonSerializerSettings
@@ -141,7 +136,7 @@ namespace RazorEnhanced
             Save();
         }
 
-        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected, StartType startType=StartType.OSI)
+        internal static void Update(string description, string clientpath, string clientfolder, string cuoClient, string host, uint port, bool patchenc, bool osienc, bool selected, StartType startType = StartType.OSI)
         {
             if (Shards.allShards.m_Shards.ContainsKey(description))
             {
@@ -178,7 +173,7 @@ namespace RazorEnhanced
                 Shards.allShards.m_Shards.Remove(shardname);
                 if (row.Selected && Shards.allShards.m_Shards.Count > 0)
                 {
-                    foreach(var entry in Shards.allShards.m_Shards)
+                    foreach (var entry in Shards.allShards.m_Shards)
                     {
                         entry.Value.Selected = true;
                         break;
@@ -190,7 +185,7 @@ namespace RazorEnhanced
 
         internal static List<RazorEnhanced.Shard> Read()
         {
-            List < RazorEnhanced.Shard > returnList = new List<RazorEnhanced.Shard>();
+            List<RazorEnhanced.Shard> returnList = new List<RazorEnhanced.Shard>();
             foreach (var entry in Shards.allShards.m_Shards)
             {
                 returnList.Add(entry.Value);

@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using IronPython.Runtime;
+using IronPython.Compiler;
 using IronPython.Hosting;
+using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
-using IronPython.Compiler;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Diagnostics;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RazorEnhanced
 {
@@ -22,7 +19,7 @@ namespace RazorEnhanced
         public Dictionary<string, object> Modules;
 
         public ScriptRuntime Runtime;
-        public ScriptEngine Engine { get;  }
+        public ScriptEngine Engine { get; }
         public ScriptScope Scope { get; set; }
         public String Text { get; set; }
         public String FilePath { get; set; }
@@ -34,10 +31,11 @@ namespace RazorEnhanced
         public Action<string> m_ErrorWriter;
 
 
-        public PythonEngine() {
+        public PythonEngine()
+        {
             Runtime = IronPython.Hosting.Python.CreateRuntime();
             Engine = IronPython.Hosting.Python.GetEngine(Runtime);
-            
+
             //Paths for IronPython 3.4
             var paths = new List<string>();
             var basepath = Assistant.Engine.RootPath;
@@ -57,7 +55,7 @@ namespace RazorEnhanced
             if (System.IO.Directory.Exists(@"C:\Program Files\IronPython 3.4"))
             {
                 paths.Add(@"C:\Program Files\IronPython 3.4");
-                paths.Add(@"C:\Program Files\IronPython 3.4\Lib"); 
+                paths.Add(@"C:\Program Files\IronPython 3.4\Lib");
                 paths.Add(@"C:\Program Files\IronPython 3.4\DLLs");
                 paths.Add(@"C:\Program Files\IronPython 3.4\Scripts");
             }
@@ -95,14 +93,16 @@ namespace RazorEnhanced
             };
 
             //Setup builtin modules and scope
-            foreach (var module in Modules) {
+            foreach (var module in Modules)
+            {
                 Runtime.Globals.SetVariable(module.Key, module.Value);
                 Engine.GetBuiltinModule().SetVariable(module.Key, module.Value);
             }
-            
+
         }
-        
-        ~PythonEngine() { 
+
+        ~PythonEngine()
+        {
 
         }
 
@@ -125,10 +125,14 @@ namespace RazorEnhanced
             Engine.Runtime.IO.SetErrorOutput(errorWriter, Encoding.ASCII);
         }
 
-        public dynamic Call(PythonFunction function, params object[] args) {
-            try { 
+        public dynamic Call(PythonFunction function, params object[] args)
+        {
+            try
+            {
                 return Engine.Operations.Invoke(function, args);
-            } catch {
+            }
+            catch
+            {
                 return null;
             }
         }
@@ -185,20 +189,21 @@ namespace RazorEnhanced
                 if (m_ErrorWriter != null)
                     m_ErrorWriter(message);
             }
-            if (Compiled == null) 
+            if (Compiled == null)
             {
-                return false; 
+                return false;
             }
-            
+
             return true;
         }
-        public bool Execute() {
+        public bool Execute()
+        {
             //EXECUTE
             if (Scope == null) { return false; }
             else if (Compiled == null) { return false; }
-            else if (Source == null)   { return false; }
-            
-           
+            else if (Source == null) { return false; }
+
+
 
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;

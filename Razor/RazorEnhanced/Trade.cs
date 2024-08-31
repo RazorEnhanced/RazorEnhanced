@@ -2,18 +2,16 @@ using Assistant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using static RazorEnhanced.Player;
 using static RazorEnhanced.Trade;
 
 namespace RazorEnhanced
 {
-    public class TradeService {
+    public class TradeService
+    {
         public static readonly TradeService Instance = new TradeService();
 
-        public static TradeData Copy(TradeData trade) {
+        public static TradeData Copy(TradeData trade)
+        {
             var tradeInfo = new TradeData(); //export a copy of the original object.
             tradeInfo.TradeID = trade.TradeID;
             tradeInfo.LastUpdate = trade.LastUpdate;
@@ -33,7 +31,7 @@ namespace RazorEnhanced
         }
 
         public static float Timestamp() { return ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds() / 1000; }
-        
+
         private readonly Dictionary<int, TradeData> m_SecureTrades = new Dictionary<int, TradeData>();
 
         public Dictionary<int, TradeData> TradeData
@@ -43,7 +41,8 @@ namespace RazorEnhanced
 
         public List<TradeData> TradeList
         {
-            get {
+            get
+            {
                 return m_SecureTrades.Values.ToList().OrderBy(trade => trade.LastUpdate).ToList();
             }
         }
@@ -150,7 +149,7 @@ namespace RazorEnhanced
             if (!TradeService.Instance.TradeData.ContainsKey(TradeID)) { return false; }
             var packet = new TradeAccept((uint)TradeID, accept);
             Assistant.Client.Instance.SendToServer(packet);
-            
+
             return true;
         }
         public static bool Accept(bool accept = true)
@@ -197,7 +196,8 @@ namespace RazorEnhanced
 
             var packet = new TradeOffer((uint)TradeID, (uint)gold, (uint)platinum);
             Assistant.Client.Instance.SendToServer(packet); //DONT SEND TO CLIENT, EVER
-            if (!quiet) { 
+            if (!quiet)
+            {
                 Misc.SendMessage("WARNING: Trade.Offer() CANNOT update the offer Gold and Platinum on client, but works.", 148);
                 Misc.SendMessage($"CURRENTLY OFFERING: \nGold:     {gold} \nPlatinum: {platinum}", 148);
             }
@@ -207,10 +207,11 @@ namespace RazorEnhanced
             return true;
         }
 
-        public static bool Offer(int gold, int platinum, bool quiet = false) {
+        public static bool Offer(int gold, int platinum, bool quiet = false)
+        {
             if (TradeService.Instance.TradeData.Count == 0) { return false; }
             var trade = TradeService.Instance.TradeList.First();
-            return Offer(trade.TradeID, gold,platinum, quiet);
+            return Offer(trade.TradeID, gold, platinum, quiet);
         }
     }
 }

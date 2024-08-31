@@ -1,18 +1,12 @@
 using Accord;
-using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
 using IronPython.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using static IronPython.Modules.PythonIterTools;
-using static RazorEnhanced.PacketLogger;
-using static RazorEnhanced.PacketLogger.PacketTemplate;
 
 namespace RazorEnhanced
 {
@@ -76,7 +70,7 @@ namespace RazorEnhanced
         {
             return Assistant.PacketLogger.SharedInstance.StopRecording();
         }
-        
+
 
         /// <summary>
         /// Send a packet to the server.                                                                                     
@@ -111,7 +105,7 @@ namespace RazorEnhanced
         }
         public static void SendToClient(PythonList packetData)
         {
-            SendToClient(packetData.Apply(data => (byte)((int)data + 0)) );
+            SendToClient(packetData.Apply(data => (byte)((int)data + 0)));
         }
 
 
@@ -213,7 +207,7 @@ namespace RazorEnhanced
         /// <returns>List of strings of currently active packet paths.</returns>
         public static string[] ListenPacketPath(string packetPath = "", bool active = true)
         {
-            
+
             var compareKeys = StringToPath.Keys.ToList();
             var compareLower = StringToPath.Keys.Select(x => x.ToLower()).ToList();
             var matchPath = Regex.Replace(packetPath.ToLower(), "[^a-z]", "");
@@ -225,7 +219,8 @@ namespace RazorEnhanced
                 PacketPath path = StringToPath[originalKey];
                 Assistant.PacketLogger.SharedInstance.ListenPacketPath(path, active);
             }
-            else {
+            else
+            {
                 Misc.SendMessage($"PacketLogger:ListenPacketPath: packetPath not recognized '{packetPath}'");
             }
 
@@ -281,7 +276,7 @@ namespace RazorEnhanced
             public List<FieldTemplate> fields;
 
 
-            
+
         }
 
         /// <summary>
@@ -506,7 +501,7 @@ namespace RazorEnhanced
                 return VALID_TYPES.Contains(typename);
             }
         }
-    
+
         /// <summary>
         /// Given a PacketTemplate and some packet data[] it produces a structured object based on the template.
         /// </summary>

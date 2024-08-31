@@ -121,7 +121,7 @@ namespace Assistant
             {
                 Assistant.Item bag = Assistant.World.FindItem(SellAgent.SellBag);
 
-                if (bag != null && (! bag.IsLootableTarget))
+                if (bag != null && (!bag.IsLootableTarget))
                 {
                     SellAgent.AddLog("Invalid or not accessible Container!");
                     if (showagentmessageCheckBox.Checked)
@@ -194,7 +194,8 @@ namespace Assistant
                 SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
             }
 
-            this.Invoke((MethodInvoker)delegate {
+            this.Invoke((MethodInvoker)delegate
+            {
                 RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true, sellEnableCheckBox.Checked);
                 RazorEnhanced.SellAgent.RefreshLists();
             });

@@ -408,7 +408,7 @@ namespace Ultima
     }
 
     public sealed class MultiComponentList
-    {       
+    {
         private Point m_Min, m_Max, m_Center;
         private int m_Width, m_Height, m_maxHeight, m_Surface;
         private MTile[][][] m_Tiles;
@@ -1169,7 +1169,7 @@ namespace Ultima
                                 }
                                 //else if (i == 0)
                                 //{
-                                 //   MultiGraphic = block->ID;
+                                //   MultiGraphic = block->ID;
                                 //}
                             }
 
@@ -1345,7 +1345,7 @@ namespace Ultima
         private MultiComponentList()
         {
             m_Tiles = new MTile[0][][];
-            Count = 0;  
+            Count = 0;
         }
 
         public void ExportToTextFile(string FileName)

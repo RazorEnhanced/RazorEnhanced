@@ -1,9 +1,8 @@
+using Assistant.UI;
 using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
 using System.Windows.Forms;
-using Assistant.UI;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace Assistant
@@ -76,8 +75,8 @@ namespace Assistant
             else
             {
                 foreach (Control control in BandageHealSettingsBox.Controls)
-                {                    
-                        control.Enabled = true;
+                {
+                    control.Enabled = true;
                 }
             }
         }
@@ -280,7 +279,7 @@ namespace Assistant
             }
         }
 
-        
+
         private void bandagehealignorecount_CheckedChanged(object sender, EventArgs e)
         {
             if (bandageHealIgnoreCount.Focused)

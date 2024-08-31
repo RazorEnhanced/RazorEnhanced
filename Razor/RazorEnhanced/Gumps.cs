@@ -1,10 +1,8 @@
 using Assistant;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using Ultima;
 
 namespace RazorEnhanced
 {
@@ -16,7 +14,7 @@ namespace RazorEnhanced
     /// During development of scripts that involves interecting with Gumps, is often needed to know gumpids and buttonids.
     /// For this purpose, can be particularly usefull to use *Inspect Gumps* and *Record*, top right, in the internal RE script editor.
     /// </summary>
-    
+
     public class Gumps
     {
         internal static Mutex gumpIdMutex = new Mutex();
@@ -41,7 +39,7 @@ namespace RazorEnhanced
             try
             {
                 if (m_incomingData.ContainsKey(gumpId))
-                    m_incomingData.Remove(gumpId);                
+                    m_incomingData.Remove(gumpId);
             }
             finally
             {
@@ -52,7 +50,7 @@ namespace RazorEnhanced
         // easy access to get text by id
         public static string GetTextByID(GumpData gd, int id)
         {
-            for(int i=0; i< gd.textID.Count; i++)
+            for (int i = 0; i < gd.textID.Count; i++)
             {
                 if (gd.textID[i] == id)
                 {
@@ -130,7 +128,7 @@ namespace RazorEnhanced
         // gumpRawData
         // gumpRawText
         /// </summary>
-            public class GumpData
+        public class GumpData
         {
             // vars used to build it
             public uint gumpId;
@@ -184,7 +182,7 @@ namespace RazorEnhanced
         /// <param name="closable"> allow the gump to be right clicked to close</param>
         /// <param name="disposable"> allow the gump to be disposed (beats me what it does)</param>
         /// <param name="resizeable"> allow the gump to be resized</param>
-        public static GumpData CreateGump(bool movable=true, bool closable=true, bool disposable = true, bool resizeable=true) 
+        public static GumpData CreateGump(bool movable = true, bool closable = true, bool disposable = true, bool resizeable = true)
         {
             GumpData gd = new GumpData();
             if (!movable)
@@ -192,7 +190,7 @@ namespace RazorEnhanced
             if (!closable)
                 gd.gumpDefinition += "{ noclose}";
             if (!disposable)
-                gd.gumpDefinition += "{ nodispose}"; 
+                gd.gumpDefinition += "{ nodispose}";
             if (!resizeable)
                 gd.gumpDefinition += "{ noresize}";
             return gd;
@@ -354,7 +352,7 @@ namespace RazorEnhanced
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
         public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, bool background, bool scrollbar)
-        {            
+        {
             string textEntry = String.Format("{{ xmfhtmlgump {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, number, background ? 1 : 0, scrollbar ? 1 : 0);
             gd.gumpDefinition += textEntry;
         }
@@ -372,7 +370,7 @@ namespace RazorEnhanced
         /// No idea at all why this is different than the OTHER htmml, but SERVEUO had it
         /// </summary>
         public static void AddHtmlLocalized(ref GumpData gd, int x, int y, int width, int height, int number, string args, int color, bool background, bool scrollbar)
-        {            
+        {
             string textEntry = String.Format("{{ xmfhtmltok {0} {1} {2} {3} {4} {5} {6} {7} @{8}@ }}", x, y, width, height, background ? 1 : 0, scrollbar ? 1 : 0, color, number, args);
             gd.gumpDefinition += textEntry;
         }
@@ -385,7 +383,7 @@ namespace RazorEnhanced
         /// <param name="y"> y co-ordinate of the origin</param>
         /// <param name="gumpId"> id used to reference gumps.mul</param>
         public static void AddImage(ref GumpData gd, int x, int y, int gumpId)
-        {            
+        {
             string textEntry = String.Format("{{ gumppic {0} {1} {2} }}", x, y, gumpId);
             gd.gumpDefinition += textEntry;
         }
@@ -463,7 +461,7 @@ namespace RazorEnhanced
             int hue,
             int width,
             int height)
-        {            
+        {
             string textEntry = String.Format("{{ buttontileart {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} }}", x, y, normalID, pressedID, (int)type, param, buttonID, itemID, hue, width, height);
             gd.gumpDefinition += textEntry;
         }
@@ -626,7 +624,7 @@ namespace RazorEnhanced
         public static void AddTextEntry(ref GumpData gd, int x, int y, int width, int height, int hue, int entryID, string initialText)
         {
             gd.gumpStrings.Add(initialText);
-            string textEntry = String.Format("{{ textentry {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, hue, entryID,  gd.gumpStrings.Count-1 );
+            string textEntry = String.Format("{{ textentry {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, hue, entryID, gd.gumpStrings.Count - 1);
             gd.gumpDefinition += textEntry;
         }
 
@@ -642,7 +640,7 @@ namespace RazorEnhanced
         /// <param name="entryID"> id to be returned with text to identify the input field</param>
         /// <param name="initialTextID"> index into the list of strings passed to the gump</param>
         public static void AddTextEntry(ref GumpData gd, int x, int y, int width, int height, int hue, int entryID, int initialTextID)
-        {           
+        {
             string textEntry = String.Format("{{ textentry {0} {1} {2} {3} {4} {5} {6} }}", x, y, width, height, hue, entryID, initialTextID);
             if (gd.gumpStrings.Count > initialTextID)
                 gd.gumpDefinition += textEntry;
@@ -672,7 +670,7 @@ namespace RazorEnhanced
         /// Hack some gump test stuff
         /// </summary>
         ///
-        public static void SendGump(uint gumpid, uint serial, uint x, uint y, 
+        public static void SendGump(uint gumpid, uint serial, uint x, uint y,
             string gumpDefinition, List<string> gumpStrings)
         {
             GumpData gd = new GumpData
@@ -702,11 +700,11 @@ namespace RazorEnhanced
             return gd;
         }
 
-            /// <summary>
-            /// Close a specific Gump.
-            /// </summary>
-            /// <param name="gumpid">ID of the gump</param>
-            public static void CloseGump(uint gumpid)
+        /// <summary>
+        /// Close a specific Gump.
+        /// </summary>
+        /// <param name="gumpid">ID of the gump</param>
+        public static void CloseGump(uint gumpid)
         {
             if (gumpid == 0)
                 Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
@@ -778,7 +776,7 @@ namespace RazorEnhanced
 
                     // Check if gump is already up
                     if (Gumps.m_incomingData.ContainsKey(gumpid))
-                        found = true;                    
+                        found = true;
                     else
                         found = Utility.DelayUntil(() => World.Player.HasGump == true && World.Player.CurrentGumpI == gumpid, delay);
                 }
@@ -840,7 +838,7 @@ namespace RazorEnhanced
                     var gd = m_incomingData[gumpid];
                     GumpResponse gumpResp = new GumpResponse(gd.gumpSerial, gd.gumpId, buttonid, nullswitch, nullentries);
                     Assistant.Client.Instance.SendToServerWait(gumpResp);
-                }   
+                }
                 Gumps.RemoveGump(gumpid);
             }
 
@@ -872,7 +870,7 @@ namespace RazorEnhanced
 
         // Just a wrapper to accomodate existing code
         // new way is WAY easier
-        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+        public static void SendAdvancedAction(uint gumpid, int buttonid,
             List<int> inSwitches)
         {
             IronPython.Runtime.PythonList switches = new IronPython.Runtime.PythonList();
@@ -884,13 +882,13 @@ namespace RazorEnhanced
             SendAdvancedAction(gumpid, buttonid, switches);
 
         }
-            
-            //AutoDoc concatenates description coming from Overloaded methods
-            /// <summary>
-            /// This method can also be used only Switches, without Text fileds.
-            /// </summary>
-            public static void SendAdvancedAction(uint gumpid, int buttonid,
-                IronPython.Runtime.PythonList switchs)
+
+        //AutoDoc concatenates description coming from Overloaded methods
+        /// <summary>
+        /// This method can also be used only Switches, without Text fileds.
+        /// </summary>
+        public static void SendAdvancedAction(uint gumpid, int buttonid,
+            IronPython.Runtime.PythonList switchs)
         {
             GumpTextEntry[] entries = new GumpTextEntry[0];
 
@@ -901,7 +899,7 @@ namespace RazorEnhanced
             }
             else
             {
-                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));                
+                Assistant.Client.Instance.SendToClientWait(new CloseGump(gumpid));
                 if (m_gumpData.ContainsKey(gumpid))
                 {
                     var gd = m_gumpData[gumpid];
@@ -928,7 +926,7 @@ namespace RazorEnhanced
 
         // Just a wrapper to accomodate existing code
         // new way is WAY easier
-        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+        public static void SendAdvancedAction(uint gumpid, int buttonid,
             List<int> textlist_id, List<string> textlist_str)
         {
             IronPython.Runtime.PythonList textIDs = new IronPython.Runtime.PythonList();
@@ -950,7 +948,7 @@ namespace RazorEnhanced
         /// <summary>
         /// This method can also be used only Text fileds, without Switches.
         /// </summary>
-        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+        public static void SendAdvancedAction(uint gumpid, int buttonid,
             IronPython.Runtime.PythonList textlist_id, IronPython.Runtime.PythonList textlist_str)
         {
             IronPython.Runtime.PythonList switchs = new IronPython.Runtime.PythonList();
@@ -959,7 +957,7 @@ namespace RazorEnhanced
 
         // Just a wrapper to accomodate existing code
         // new way is WAY easier
-        public static void SendAdvancedAction(uint gumpid, int buttonid, 
+        public static void SendAdvancedAction(uint gumpid, int buttonid,
             List<int> inSwitches, List<int> textlist_id, List<string> textlist_str)
 
         {
@@ -1013,7 +1011,7 @@ namespace RazorEnhanced
                 if (gumpid == 0)
                 {
                     Assistant.Client.Instance.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
-                    Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, 
+                    Assistant.Client.Instance.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS,
                             World.Player.CurrentGumpI, buttonid, ConvertToIntList(switchlist_id), entries));
                 }
                 else
@@ -1193,7 +1191,7 @@ namespace RazorEnhanced
             }
             return string.Empty;
         }
-        
+
         /// <summary>
         /// Get the Raw Data of the most recent and still open Gump.
         /// </summary>

@@ -1,10 +1,10 @@
 using Assistant;
-using System;
-using System.Threading;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Linq;
 using Assistant.UI;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 
 namespace Assistant
@@ -41,9 +41,11 @@ namespace RazorEnhanced
     {
         private readonly object syncObj = new object();
         bool m_Active;
-        internal bool Active { 
-            get { return m_Active; } 
-            set {
+        internal bool Active
+        {
+            get { return m_Active; }
+            set
+            {
                 m_Active = value;
                 if (value)
                 {
@@ -56,7 +58,7 @@ namespace RazorEnhanced
                 {
                     Clear();
                 }
-            } 
+            }
         }
 
         internal static readonly object allInstancesSyncObj = new object();
@@ -74,8 +76,8 @@ namespace RazorEnhanced
                     j.TryGetTarget(out journal);
                     if (journal != null)
                     {
-                            if (journal.Active)
-                                journal.enqueue(entry);
+                        if (journal.Active)
+                            journal.enqueue(entry);
                     }
                     else
                         needsCleanup = true;
@@ -119,10 +121,10 @@ namespace RazorEnhanced
         }
 
 
-    /// <summary>
-    /// The JournalEntry class rapresents a line in the Journal.
-    /// </summary>
-    public class JournalEntry
+        /// <summary>
+        /// The JournalEntry class rapresents a line in the Journal.
+        /// </summary>
+        public class JournalEntry
         {
             private readonly string m_Text;
             /// <summary>
@@ -174,7 +176,8 @@ namespace RazorEnhanced
 
             private readonly static DateTime UnixTimeBegin = new DateTime(1970, 1, 1);
 
-            public JournalEntry Copy() {
+            public JournalEntry Copy()
+            {
                 return new JournalEntry(this);
             }
 
@@ -267,7 +270,7 @@ namespace RazorEnhanced
                 }
             }
             catch
-            {                
+            {
             }
             return false;
         }
@@ -278,7 +281,7 @@ namespace RazorEnhanced
         /// <param name="text">Text to block. case insensitive, and will match if the incoming message contains the text</param>
         /// <returns>void</returns>
         public void FilterText(string text)
-        {            
+        {
             Engine.MainWindow.SafeAction(s => { s.JournalFilterDataGrid.Rows.Add(new object[] { text.ToLower() }); });
             Filters.CopyJournalFilterTable();
         }
@@ -590,7 +593,7 @@ namespace RazorEnhanced
             int subdelay = delay;
             while (subdelay > 0)
             {
-                foreach(string s in msgs)
+                foreach (string s in msgs)
                 {
                     if (Search(s))
                         return s; // found one of msgs list

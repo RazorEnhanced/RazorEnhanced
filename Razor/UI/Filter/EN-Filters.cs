@@ -31,7 +31,7 @@ namespace Assistant
         internal CheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
         internal CheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
         internal RazorAgentNumOnlyTextBox MinDamageShown { get { return minDmgShown; } }
-        
+
 
         private void autocarverrazorButton_Click(object sender, EventArgs e)
         {
@@ -284,7 +284,7 @@ namespace Assistant
             RazorEnhanced.Filters.AutoRemountDelay = Convert.ToInt32(remountdelay.Text);
             Settings.General.WriteInt("MountDelay", RazorEnhanced.Filters.AutoRemountDelay);
         }
-        
+
         private void minDmgShown_Leave(object sender, EventArgs e)
         {
             if (minDmgShown.Text == String.Empty)

@@ -78,7 +78,7 @@ namespace Assistant
 
         }
 
-            internal void Read(PacketReader p)
+        internal void Read(PacketReader p)
         {
             var property_list = new List<OPLEntry>();
 
@@ -109,7 +109,7 @@ namespace Assistant
                     // remove html tags if they exist
                     if (args.Length > 0 && args[0] == '<')
                     {
-                        var htmlRemover = new Regex("<[^>]+/?>"); 
+                        var htmlRemover = new Regex("<[^>]+/?>");
                         args = htmlRemover.Replace(args, "");
                     }
                 }

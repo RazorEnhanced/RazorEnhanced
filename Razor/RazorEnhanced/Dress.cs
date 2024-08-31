@@ -1,8 +1,6 @@
 using Assistant;
 using Assistant.UI;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,19 +11,19 @@ namespace RazorEnhanced
     public class Dress
     {
 
-        internal class DressItemNew  : ListAbleItem
+        internal class DressItemNew : ListAbleItem
         {
             [JsonProperty("Layer")]
-            internal Layer Layer { get; set;}
+            internal Layer Layer { get; set; }
 
             [JsonProperty("Name")]
-            internal string Name { get; set;}
+            internal string Name { get; set; }
 
             [JsonProperty("Serial")]
             internal int Serial { get; set; }
 
             [JsonProperty("Selected")]
-            internal bool Selected { get; set;}
+            internal bool Selected { get; set; }
 
             public DressItemNew(string name, Layer layer, int serial, bool selected)
             {

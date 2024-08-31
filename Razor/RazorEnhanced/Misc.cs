@@ -1,17 +1,13 @@
 using Assistant;
 using Assistant.UI;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Media;
 using System.Threading;
-using System.Collections.Concurrent;
-using System.Linq;
-using System.Drawing;
-using static RazorEnhanced.HotKey;
-using System.Windows.Forms;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace RazorEnhanced
 {
@@ -104,7 +100,7 @@ namespace RazorEnhanced
                 if (isSubDirectoryOf(dirName, path))
                     return true;
             }
-            
+
             return false;
         }
         /// <summary>
@@ -266,7 +262,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="serial"> Serial number of object to test is Item</param>
         /// <returns>Return True - is an Item False - is not an item</returns>
-        public static bool IsItem(System.UInt32  serial)
+        public static bool IsItem(System.UInt32 serial)
         {
             Assistant.Serial anObject = new Assistant.Serial(serial);
             return anObject.IsItem;
@@ -324,7 +320,7 @@ namespace RazorEnhanced
             double deltaX = Math.Pow((point_a.X - point_b.X), 2);
             double deltaY = Math.Pow((point_a.Y - point_b.Y), 2);
 
-            double distance = Math.Sqrt( deltaX + deltaY );
+            double distance = Math.Sqrt(deltaX + deltaY);
             return distance;
         }
 
@@ -339,7 +335,7 @@ namespace RazorEnhanced
         {
             return Utility.Distance(X1, Y1, X2, Y2);
         }
-        
+
         /// <summary>
         /// Send to the client a list of keystrokes. Can contain control characters: 
         /// - Send Control+Key: ctrl+u: ^u
@@ -411,7 +407,7 @@ namespace RazorEnhanced
         {
             SendMessage(num.ToString(), color, true);
         }
-        
+
         public static void SendMessage(uint num, int color)
         {
             SendMessage(num.ToString(), color, true);
@@ -426,7 +422,7 @@ namespace RazorEnhanced
         {
             SendMessage(msg.ToString(), color, true);
         }
-        
+
         public static void SendMessage(string msg, bool wait = true)
         {
             SendMessage(msg, 945, wait);
@@ -473,7 +469,7 @@ namespace RazorEnhanced
         /// 
         public static string ScriptDirectory()
         {
-            return Path.Combine( RazorDirectory(), "Scripts");
+            return Path.Combine(RazorDirectory(), "Scripts");
         }
 
         /// <summary>
@@ -483,7 +479,7 @@ namespace RazorEnhanced
         /// 
         public static string ConfigDirectory()
         {
-            return Path.Combine( RazorDirectory(), "Config");
+            return Path.Combine(RazorDirectory(), "Config");
         }
 
         /// <summary>
@@ -493,9 +489,9 @@ namespace RazorEnhanced
         /// 
         public static string DataDirectory()
         {
-            return Path.Combine( RazorDirectory(), "Data");
+            return Path.Combine(RazorDirectory(), "Data");
         }
-        
+
 
 
         /// <summary>
@@ -518,7 +514,8 @@ namespace RazorEnhanced
             // Notify the server for disconnection, mimiking manual logout operations.
             // CUO doesn't support Logout via packet ( their method for handling the disconnect packet is empty )
             // So we handshake directly with the server
-            if (!Assistant.Client.IsOSI) { 
+            if (!Assistant.Client.IsOSI)
+            {
                 Assistant.Client.Instance.SendToServerWait(new LogoffNotification()); // Unnecessary, but mimic the normal packet flow of a client.
                 Assistant.Client.Instance.SendToServerWait(new ClosedStatusGump());
 
@@ -551,9 +548,10 @@ namespace RazorEnhanced
         public static bool UseContextMenu(int serial, string choice, int delay)
         {     // Delay in MS
             choice = choice.Trim().ToLower();
-            var menuList = WaitForContext(serial,delay,false);
+            var menuList = WaitForContext(serial, delay, false);
             var menuOption = menuList.Where(context => context.Entry.Trim().ToLower() == choice);
-            if (menuOption.Count() == 0) {
+            if (menuOption.Count() == 0)
+            {
                 return false;
             }
             ContextReply(serial, menuOption.First().Response);
@@ -569,7 +567,7 @@ namespace RazorEnhanced
         /// <param name="delay">Maximum wait.</param>
         /// <param name="showContext">Show context menu in-game. (default: True)</param>
         /// <returns>A List of Context objects.</returns>
-        public static List<Context> WaitForContext(int serial, int delay, bool showContext=false) // Delay in MS
+        public static List<Context> WaitForContext(int serial, int delay, bool showContext = false) // Delay in MS
         {
             if (!showContext)
             {
@@ -610,7 +608,7 @@ namespace RazorEnhanced
         /// <param name="mob">Entity as Item object.</param>
         /// <param name="delay">max time to wait for context</param>
         /// <param name="showContext"></param>
-        public static List<Context> WaitForContext(Mobile mob, int delay, bool showContext= false) // Delay in MS
+        public static List<Context> WaitForContext(Mobile mob, int delay, bool showContext = false) // Delay in MS
         {
             return WaitForContext(mob.Serial, delay, showContext);
         }
@@ -1077,11 +1075,12 @@ namespace RazorEnhanced
             {
                 script.Start();
             }
-            else {
+            else
+            {
                 Utility.Logger.Debug("${System.Reflection.MethodBase.GetCurrentMethod().Name} {scriptfile} Doesnt exist");
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
             }
-    }
+        }
 
         /// <summary>
         /// Stop a script by file name, Script must be present in script grid.
@@ -1121,7 +1120,7 @@ namespace RazorEnhanced
         /// Returns the path of the current script.
         /// </summary>
         /// <param name="fullpath">True:Returns the full path. False: Returns the filename. (Dafault: true)</param>
-        public static string ScriptCurrent(bool fullpath=true)
+        public static string ScriptCurrent(bool fullpath = true)
         {
             EnhancedScript currentScript = EnhancedScript.Service.CurrentScript();
             return fullpath ? currentScript.Fullpath : currentScript.Filename;
@@ -1139,7 +1138,8 @@ namespace RazorEnhanced
             {
                 script.Suspend();
             }
-            else { 
+            else
+            {
                 Scripts.SendMessageScriptError("ScriptRun: Script not exist");
             }
         }
@@ -1210,7 +1210,7 @@ namespace RazorEnhanced
             return ScreenCapManager.CaptureNowPath();
         }
 
- 
+
         /// <summary>
         /// The MapInfo class is used to store information about the Map location.
         /// </summary>
@@ -1245,7 +1245,8 @@ namespace RazorEnhanced
                 Facet = 0
             };
 
-            if (MapItem.MapItemHistory.ContainsKey(serial)) {
+            if (MapItem.MapItemHistory.ContainsKey(serial))
+            {
                 MapItem theItem = MapItem.MapItemHistory[serial];
                 mapInfo = new MapInfo
                 {
@@ -1347,7 +1348,7 @@ namespace RazorEnhanced
             return HotKeyEvent.LastEvent;
         }
 
-        
+
         /// <summary>
         /// Enable or disable the Seasons filter forcing a specific season
         /// Season filter state will be saved on logout but not the season flag that will be recovered.
@@ -1419,7 +1420,7 @@ namespace RazorEnhanced
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         internal static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
 
-        
+
         internal const int MOUSEEVENTF_ABSOLUTE = 0x8000;
         internal const int MOUSEEVENTF_LEFTDOWN = 0x0002;
         internal const int MOUSEEVENTF_LEFTUP = 0x0004;
@@ -1439,8 +1440,9 @@ namespace RazorEnhanced
             var window = Assistant.Client.Instance.GetWindowHandle();
             Point old_point = new Point();
             GetCursorPos(ref old_point);
-            
-            if (clientCoords) { 
+
+            if (clientCoords)
+            {
                 Point pnt = new Point { X = xpos, Y = ypos };
                 ClientToScreen(window, ref pnt);
                 xpos = pnt.X;
@@ -1472,7 +1474,7 @@ namespace RazorEnhanced
                 var window = Assistant.Client.Instance.GetWindowHandle();
                 ClientToScreen(window, ref pnt);
                 xpos = pnt.X;
-                ypos = pnt.Y;      
+                ypos = pnt.Y;
             }
             SetCursorPos(xpos, ypos);
             mouse_event(MOUSEEVENTF_RIGHTDOWN, xpos, ypos, 0, 0);
@@ -1485,7 +1487,8 @@ namespace RazorEnhanced
         /// See also: https://docs.microsoft.com/dotnet/api/system.drawing.rectangle
         /// </summary>
         /// <returns>Rectangle object. Properties: X, Y, Width, Height.</returns>
-        public static Rectangle GetWindowSize() {
+        public static Rectangle GetWindowSize()
+        {
             return Client.Instance.GetUoWindowPos();
         }
 
@@ -1495,4 +1498,4 @@ namespace RazorEnhanced
     }
 
 }
-                                                              
+

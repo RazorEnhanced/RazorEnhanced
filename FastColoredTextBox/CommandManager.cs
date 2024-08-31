@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS
 {
@@ -8,7 +8,7 @@ namespace FastColoredTextBoxNS
         readonly int maxHistoryLength = 200;
         LimitedStack<UndoableCommand> history;
         Stack<UndoableCommand> redoStack = new Stack<UndoableCommand>();
-        public TextSource TextSource{ get; private set; }
+        public TextSource TextSource { get; private set; }
         public bool UndoRedoStackIsEnabled { get; set; }
 
         public event EventHandler RedoCompleted = delegate { };
@@ -27,9 +27,9 @@ namespace FastColoredTextBoxNS
 
             //multirange ?
             if (cmd.ts.CurrentTB.Selection.ColumnSelectionMode)
-            if (cmd is UndoableCommand)
-                //make wrapper
-                cmd = new MultiRangeCommand((UndoableCommand)cmd);
+                if (cmd is UndoableCommand)
+                    //make wrapper
+                    cmd = new MultiRangeCommand((UndoableCommand)cmd);
 
 
             if (cmd is UndoableCommand)

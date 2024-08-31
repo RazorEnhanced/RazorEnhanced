@@ -1,9 +1,8 @@
 using RazorEnhanced;
-using RazorEnhanced.UI;
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -222,7 +221,7 @@ namespace Assistant
             {
                 setSpellBarOrigin.Visible = false;
             }
-            else 
+            else
             {
                 setSpellBarOrigin.Visible = true;
             }

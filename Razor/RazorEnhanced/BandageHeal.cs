@@ -1,11 +1,8 @@
 using Assistant;
 using Assistant.UI;
 using System;
-using System.Globalization;
-using System.Linq;
-using System.Threading;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -325,7 +322,7 @@ namespace RazorEnhanced
                 }
             }
         }
-        
+
         internal static bool CountActive = false;
         internal static void ShowCount(Assistant.Mobile target)
         {
@@ -334,7 +331,7 @@ namespace RazorEnhanced
             while (CountActive && maxCount > 0)
             {
                 Thread.Sleep(1000);
-                seconds++; 
+                seconds++;
                 maxCount--;
                 if (CountActive)
                     target.OverheadMessage(seconds.ToString());
@@ -391,7 +388,7 @@ namespace RazorEnhanced
                     }
                     AddLog("Using bandage (0x" + bandage.Serial.ToString("X8") + ") on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
                 }
-                else 
+                else
                 {
                     AddLog("Using bandage on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
                 }

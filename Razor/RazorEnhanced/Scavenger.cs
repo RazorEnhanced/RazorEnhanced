@@ -1,7 +1,6 @@
 using Assistant;
 using Assistant.UI;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace RazorEnhanced
         private static string m_scavengerlist;
         internal static volatile bool LockTable = false;
 
-        public class ScavengerItem   : ListAbleItem
+        public class ScavengerItem : ListAbleItem
         {
             public class Property
             {
@@ -105,7 +104,7 @@ namespace RazorEnhanced
 
         internal static string ScavengerListName
         {
-            get{ return m_scavengerlist; }
+            get { return m_scavengerlist; }
             set { m_scavengerlist = value; }
         }
 
@@ -286,7 +285,7 @@ namespace RazorEnhanced
 
         internal static void AddItemToList(string name, int graphics, int color)
         {
-            Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), new List<ScavengerItem.Property>()});
+            Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { "True", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), new List<ScavengerItem.Property>() });
             CopyTable();
         }
 
@@ -409,7 +408,7 @@ namespace RazorEnhanced
 
         // Funzioni da script
 
-       
+
 
 
 
@@ -473,7 +472,7 @@ namespace RazorEnhanced
             return bag.Serial.Value;
         }
 
-        
+
 
 
         /// <summary>
@@ -527,7 +526,7 @@ namespace RazorEnhanced
                 if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true) // Se è in esecuzione forza stop change list e restart
                 {
                     Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = false);
-                    Assistant.Engine.MainWindow.SafeAction(s => {s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName); InitGrid(listName); }) ;  // change list
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.ScavengerListSelect.SelectedIndex = s.ScavengerListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
                     Assistant.Engine.MainWindow.SafeAction(s => s.ScavengerCheckBox.Checked = true);
                 }
                 else

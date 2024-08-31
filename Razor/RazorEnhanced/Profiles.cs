@@ -1,14 +1,10 @@
 using Assistant;
 using Assistant.UI;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace RazorEnhanced
 {
@@ -44,7 +40,7 @@ namespace RazorEnhanced
             }
             public string Name { get; set; }
             public bool Last { get; set; }
-            public List<PlayerEntry> Players  { get; set; }
+            public List<PlayerEntry> Players { get; set; }
 
             public void Add(string playername, int serial)
             {
@@ -200,12 +196,13 @@ namespace RazorEnhanced
 
         internal static void SetLast(string name)
         {
-            for (int i=0; i < m_Dataset.Count; i++)
+            for (int i = 0; i < m_Dataset.Count; i++)
             {
                 if (m_Dataset[i].Name == name)
                 {
                     m_Dataset[i].Last = true;
-                } else
+                }
+                else
                 {
                     m_Dataset[i].Last = false;
                 }
@@ -246,7 +243,7 @@ namespace RazorEnhanced
                 if (profile.Contains(serial))
                     return profile.Name;
             }
-            return null;           
+            return null;
         }
 
         internal static string GetLinkName(string profilename)
@@ -293,7 +290,7 @@ namespace RazorEnhanced
         {
             foreach (var profile in m_Dataset)
             {
-                
+
                 if (profile.Name == profileName)
                 {
                     profile.Remove(serial);
@@ -388,7 +385,7 @@ namespace RazorEnhanced
             Assistant.MainForm.StopVideoRecorder();
 
             // Svuoto logbox e reset select index
-        //  Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
+            //  Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
             AutoLoot.AddLog("Profile Changed!");
 
             Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear();

@@ -1,4 +1,3 @@
-using RazorEnhanced;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -108,7 +107,7 @@ namespace Assistant
         }
 
         internal static void AddMulti(Item item)
-        {           
+        {
             Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
             if (multiinfo.Count == 0)
                 multiinfo = new Ultima.MultiComponentList(item.ItemID, item.Position.X, item.Position.Y);

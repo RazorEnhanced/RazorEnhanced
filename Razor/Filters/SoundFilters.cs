@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Assistant;
-
 namespace Assistant.Filters
 {
     public class SoundFilter : Filter

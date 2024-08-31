@@ -1,7 +1,7 @@
+using Assistant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assistant;
 using Ultima;
 
 namespace RazorEnhanced
@@ -130,7 +130,7 @@ namespace RazorEnhanced
 
     internal class SquareGrid
     {
-        public const int BigCost = int.MaxValue/2;
+        public const int BigCost = int.MaxValue / 2;
 
         private const int PersonHeight = 16;
         private const int StepHeight = 2;
@@ -174,7 +174,7 @@ namespace RazorEnhanced
             Assistant.Point2D point = new Assistant.Point2D(id.X, id.Y);
             bool result = TilesRect.Contains(point);
             //bool result2 = Tiles.Any(x => x.Equals(id));
-            return result; 
+            return result;
         }
 
 
@@ -187,7 +187,7 @@ namespace RazorEnhanced
         public int Cost(List<Assistant.Item> items, Point3D loc, Map map, Tile b, bool ignoremob, out int bZ)
         {
             int xForward = b.X, yForward = b.Y;
-            
+
             //var xRange = Enumerable.Range(xForward - 1, xForward + 1);
             //var yRange = Enumerable.Range(yForward - 1, yForward + 1);
             //var items = World.Items.Values.Where(item => item.OnGround && (xRange.Contains(item.Position.X) && yRange.Contains(item.Position.Y)));
@@ -225,7 +225,7 @@ namespace RazorEnhanced
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
                 }
             }
-            
+
             else if (b.X > loc.X && b.Y > loc.Y) //Down
             {
                 if (moveIsOk)
@@ -254,7 +254,7 @@ namespace RazorEnhanced
                 if (moveIsOk)
                     moveIsOk = Check(map, items.Where(x => x.Position.X == xForward + 1 && x.Position.Y == yForward), xForward + 1, yForward, startTop, startZ, ignoremob, out newZ);
             }
-            
+
             if (moveIsOk)
             {
                 // following the road didn't reduce time
@@ -467,7 +467,7 @@ namespace RazorEnhanced
 
             #endregion
 
-            if (!considerLand || landBlocks ) // Felix || stepTop < landZ)
+            if (!considerLand || landBlocks) // Felix || stepTop < landZ)
             {
                 return moveIsOk;
             }
@@ -789,7 +789,7 @@ namespace RazorEnhanced
                         int cost = graph.Cost(items, current, map, neighbor, ignoremob, out var neighborZ);
                         var newCost = CostSoFar[new Tile(current.X, current.Y).ToString()] + cost;
                         if (newCost < SquareGrid.BigCost)
-                        {                            
+                        {
                             if (!CostSoFar.ContainsKey(neigh) || newCost < CostSoFar[neigh])
                             {
                                 // If we're replacing the previous cost, remove it
@@ -932,8 +932,8 @@ namespace RazorEnhanced
         /// </summary>
         public static void PathFindTo(RazorEnhanced.Point3D destination)
         {
-            PathFindTo(destination.X, destination.Y, destination.Z);           
-        }        
+            PathFindTo(destination.X, destination.Y, destination.Z);
+        }
 
         /// <summary>
         /// Go to the given coordinates using Razor pathfinding.
@@ -941,11 +941,11 @@ namespace RazorEnhanced
         /// <param name="x">X map coordinates or Point3D</param>
         /// <param name="y">Y map coordinates</param>
         /// <param name="z">Z map coordinates</param>
-        public static void PathFindTo(int x, int y, int z=0)
+        public static void PathFindTo(int x, int y, int z = 0)
         {
             Route r = new Route();
-            r.X = x; 
-            r.Y = y; 
+            r.X = x;
+            r.Y = y;
             if (Assistant.Client.IsOSI)
                 r.Run = false; // because run on OSI screws with the window focus
             else
@@ -961,8 +961,9 @@ namespace RazorEnhanced
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
         /// <returns>Returns a Tile object</returns>
-        public static Tile Tile(int x, int y){
-            return new Tile(x,y);
+        public static Tile Tile(int x, int y)
+        {
+            return new Tile(x, y);
         }
 
         /// <summary>
@@ -1025,7 +1026,8 @@ namespace RazorEnhanced
         /// <param name="dst_y">Destination Y.</param>
         /// <param name="ignoremob">Ignores any mobiles with the path calculation.</param>
         /// <returns>List of Tile objects, each holds a .X and .Y coordinates.</returns>
-        public static List<Tile> GetPath(int dst_x, int dst_y, bool ignoremob) {
+        public static List<Tile> GetPath(int dst_x, int dst_y, bool ignoremob)
+        {
             return PathMove.GetPath(dst_x, dst_y, ignoremob);
         }
 
@@ -1072,7 +1074,7 @@ namespace RazorEnhanced
                 if (path[j].Conflict == false)
                     break;
             }
-            List<Tile> bypass = PathMove.GetPath(path[j+2].X, path[j+2].Y, false);
+            List<Tile> bypass = PathMove.GetPath(path[j + 2].X, path[j + 2].Y, false);
             return bypass;
         }
         internal static List<Tile> BypassHouse(List<Tile> path, int start)
@@ -1084,9 +1086,9 @@ namespace RazorEnhanced
                     break;
             }
             // +1 to get a little past the house
-            if (i < path.Count-1)
+            if (i < path.Count - 1)
                 return PathMove.GetPath(path[i + 1].X, path[i + 1].Y, false);
-            
+
             // effectively do nothing
             return PathMove.GetPath(path[start].X, path[start].Y, false);
         }
@@ -1127,7 +1129,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Point2D point = new Assistant.Point2D(tile.X, tile.Y);
                     if (area.Contains(point))
-                        {
+                    {
                         //if (tile.X == x && tile.Y == y)
                         tile.Conflict = true;
                     }
@@ -1141,7 +1143,7 @@ namespace RazorEnhanced
             try
             {
                 PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(this.PatchPath));
-                
+
                 if (m_Path == null) { return false; }
                 DateTime timeStart, timeEnd;
                 timeStart = DateTime.Now;
@@ -1204,10 +1206,10 @@ namespace RazorEnhanced
                                     for (; i < m_Path.Count; i++)
                                         if (!m_Path[i].Conflict)
                                             break;
-                                    m_Path.InsertRange(i-1, bypass);
+                                    m_Path.InsertRange(i - 1, bypass);
                                 }
-                                else 
-                                { 
+                                else
+                                {
                                 }
                                 // insert so the continue will start with the insert
                                 continue;
@@ -1284,7 +1286,7 @@ namespace RazorEnhanced
                     if (map != null)
                     {
                         var zTop = map.Tiles.GetLandTile(step.X, step.Y).Z;
-                        if ( Math.Abs(Player.Position.Z - zTop) > 2)
+                        if (Math.Abs(Player.Position.Z - zTop) > 2)
                             RazorEnhanced.Misc.Resync();
                     }
 

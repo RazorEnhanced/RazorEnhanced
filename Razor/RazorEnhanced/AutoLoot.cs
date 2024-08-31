@@ -1,7 +1,6 @@
 using Assistant;
 using Assistant.UI;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -494,10 +493,10 @@ namespace RazorEnhanced
                 {
                     matchAll = new List<AutoLootItem>();
                 }
-                
+
                 foreach (RazorEnhanced.Item item in ItemizeAllItems(m_cont.Contains))
                 {
-                    if (! item.IsLootable )
+                    if (!item.IsLootable)
                     {
                         continue;
                     }
@@ -570,7 +569,7 @@ namespace RazorEnhanced
         }
 
         private static readonly Items.AutoLootFilter m_corpsefilter = new Items.AutoLootFilter
-        {            
+        {
         };
 
         private static readonly object _lock = new object();
@@ -635,8 +634,8 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
                 return;
             }
-        Dictionary<int, List<AutoLootItem>> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
-        if (autoLootList != null && autoLootList.Count > 0)
+            Dictionary<int, List<AutoLootItem>> autoLootList = Settings.AutoLoot.ItemsRead(lootListName);
+            if (autoLootList != null && autoLootList.Count > 0)
             {
                 Engine(autoLootList, millisec, filter);
                 uint lootbag = GetLootBag();
@@ -645,12 +644,14 @@ namespace RazorEnhanced
                 {
                     DragDropManager.ProcessLootList(lootbag);
                 }
-            } else {
+            }
+            else
+            {
                 Scripts.SendMessageScriptError("Script Error: Autoloot.RunOnce: list specified is empty or doesn't exist");
             }
         }
 
-        
+
 
         /// <summary>
         /// Toggle "No Open Corpse" on/off. The change doesn't persist if you reopen razor.
@@ -673,11 +674,12 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="lootListName">Name of the AutoLoot list.</param>
         /// <returns></returns>
-        public static List<AutoLootItem> GetList(string lootListName, bool wantMinusOnes=false)
+        public static List<AutoLootItem> GetList(string lootListName, bool wantMinusOnes = false)
         {
             List<AutoLootItem> retList = new List<AutoLootItem>();
 
-            if (Settings.AutoLoot.ListExists(lootListName)) {
+            if (Settings.AutoLoot.ListExists(lootListName))
+            {
                 var lootDict = Settings.AutoLoot.ItemsRead(lootListName);
                 if (lootDict != null)
                 {
@@ -713,7 +715,7 @@ namespace RazorEnhanced
             Assistant.Item bag = Assistant.World.FindItem(AutoLoot.AutoLootBag);
             if (bag != null)
             {
-                if (! bag.IsLootableTarget)
+                if (!bag.IsLootableTarget)
                 {
                     if (!lootChangeMsgSent)
                     {

@@ -1,12 +1,11 @@
 using Assistant;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using System.Diagnostics;
 using Assistant.UI;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Threading;
-using static System.Windows.Forms.LinkLabel;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -31,8 +30,9 @@ namespace RazorEnhanced
         public double Timestamp;
 
         /// <summary>@nodoc</summary>
-        public static HotKeyEvent AddEvent(Keys k) {
-        LastEvent = new HotKeyEvent(k);
+        public static HotKeyEvent AddEvent(Keys k)
+        {
+            LastEvent = new HotKeyEvent(k);
             return LastEvent;
         }
 
@@ -47,7 +47,7 @@ namespace RazorEnhanced
 
     internal class HotKey
     {
-        
+
 
         public class HotKeyData
         {
@@ -64,8 +64,8 @@ namespace RazorEnhanced
             }
         }
 
-        
-        
+
+
 
         internal static Keys NormalKey { get { return m_key; } set { m_key = value; } }
         private static Keys m_key;
@@ -357,7 +357,7 @@ namespace RazorEnhanced
                     case "Equip Wands":
                         string parameter = RazorEnhanced.Settings.HotKey.FindString(k);
                         Thread thread = new Thread(() => ProcessEquipWands(parameter));
-                        thread.Start();                        
+                        thread.Start();
                         break;
 
                     case "Skills":
@@ -419,7 +419,7 @@ namespace RazorEnhanced
                     case "Script":
                         if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
                         {
-                            RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33, false);
+                            RazorEnhanced.Misc.SendMessage("Stopping all scripts...", 33, false);
                             EnhancedScript.Service.StopAll();
                         }
                         break;
@@ -429,7 +429,7 @@ namespace RazorEnhanced
                         if (item != null)
                         {
                             string filename = item.Filename;
-                            EnhancedScript script = EnhancedScript.Service.Search(filename,false);
+                            EnhancedScript script = EnhancedScript.Service.Search(filename, false);
                             if (script != null)
                             {
                                 if (script.IsRunning)
@@ -731,7 +731,7 @@ namespace RazorEnhanced
         }
 
         private static void ProcessGeneral(string function)
-            {
+        {
             switch (function)
             {
                 case "Resync":
@@ -1356,7 +1356,7 @@ namespace RazorEnhanced
                     {
                         if (!UseItemByIdHue(pack, 0x09B0, -1))
                         {
-                            if (!UseItemByIdHue(pack, 0x0E79, - 1))
+                            if (!UseItemByIdHue(pack, 0x0E79, -1))
                                 World.Player.SendMessage(MsgLevel.Warning, "No Pouch found");
                         }
                     }
@@ -1461,7 +1461,7 @@ namespace RazorEnhanced
 
         private static void ProcessEquipWands(string function)
         {
-            var WandIDs = new List<int>() {0x0DF2, 0x0DF3, 0x0DF4, 0x0DF5, };
+            var WandIDs = new List<int>() { 0x0DF2, 0x0DF3, 0x0DF4, 0x0DF5, };
             var py_wands = Items.FindAllByID(WandIDs, 0, Player.Backpack.Serial, 3);
             List<Item> possibleWands = new();
             foreach (var w in py_wands)
@@ -1469,7 +1469,7 @@ namespace RazorEnhanced
                 Item item = w as Item;
                 if (item != null)
                 {
-                    if (! item.PropsUpdated)
+                    if (!item.PropsUpdated)
                     {
                         Items.WaitForProps(item.Serial, 4000);
                     }
@@ -1509,12 +1509,10 @@ namespace RazorEnhanced
 
                 foreach (var item in possibleWands)
                 {
-                    bool found = false;
+                    
                     foreach (Property prop in item.Properties)
                     {
                         string entry = prop.ToString();
-                        if (entry.ToLower().Contains("charges"))
-                            found = true;
                         bool hasCount = int.TryParse(prop.Args, out int uses);
                         if (prop.Number == clilocForWand && hasCount && uses > 0)
                         {
@@ -1525,7 +1523,7 @@ namespace RazorEnhanced
                                 Misc.Pause(1000);
                             }
                             Player.EquipItem(item);
-                            Utility.DelayUntil(() => {  return Player.CheckLayer(item.Layer) == true; }, 3000);
+                            Utility.DelayUntil(() => { return Player.CheckLayer(item.Layer) == true; }, 3000);
                             return;
                         }
                     }
@@ -1546,7 +1544,7 @@ namespace RazorEnhanced
             }
             else
             {
-                RazorEnhanced.Player.UseSkillOnly(function,false);
+                RazorEnhanced.Player.UseSkillOnly(function, false);
             }
         }
 
@@ -1730,10 +1728,10 @@ namespace RazorEnhanced
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes.Add(GenerateNode(keydata));
 
             // Agents -> Dress List
-                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes.Add("DList", "List");
-                keylist = RazorEnhanced.Settings.HotKey.ReadDress();
-                foreach (HotKeyData keydata in keylist)
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes[3].Nodes.Add(GenerateNode(keydata));
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes.Add("DList", "List");
+            keylist = RazorEnhanced.Settings.HotKey.ReadDress();
+            foreach (HotKeyData keydata in keylist)
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[5].Nodes[3].Nodes.Add(GenerateNode(keydata));
 
             // Restock Agent
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("Restock");
@@ -2051,7 +2049,7 @@ namespace RazorEnhanced
             {
                 var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Replace Existing HotKey?",
                     $"Key: {KeyString(m_key)} already assigned!\r\nWant to replace?",
-                    ok: "Yes", no: "No", cancel: null, backColor: null );
+                    ok: "Yes", no: "No", cancel: null, backColor: null);
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);

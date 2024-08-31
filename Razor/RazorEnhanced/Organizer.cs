@@ -1,7 +1,6 @@
 using Assistant;
 using Assistant.UI;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -386,12 +385,12 @@ namespace RazorEnhanced
                 dragDelay = delay;
             }
 
-            List<RazorEnhanced.Organizer.OrganizerItem>  organizerList = Settings.Organizer.ItemsRead(organizerName);
+            List<RazorEnhanced.Organizer.OrganizerItem> organizerList = Settings.Organizer.ItemsRead(organizerName);
 
             int exit = Engine(organizerList, dragDelay, sourceBag, destBag);
         }
 
-            internal static void Engine()
+        internal static void Engine()
         {
             // Check Bag
             Assistant.Item sbag = Assistant.World.FindItem(m_sourcebag);
@@ -501,7 +500,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    Assistant.Engine.MainWindow.SafeAction(s => {s.OrganizerListSelect.SelectedIndex = s.OrganizerListSelect.Items.IndexOf(listName); Organizer.InitGrid(listName); });  // change list
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.OrganizerListSelect.SelectedIndex = s.OrganizerListSelect.Items.IndexOf(listName); Organizer.InitGrid(listName); });  // change list
                 }
             }
         }

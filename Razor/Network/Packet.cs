@@ -1,8 +1,6 @@
-using RazorEnhanced;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Assistant
@@ -781,7 +779,7 @@ namespace Assistant
 
                 if (fullLen > 4 && destLen > 0)
                 {
-                    ZLibError result = ZLibError.Z_ERRNO;                    
+                    ZLibError result = ZLibError.Z_ERRNO;
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
                         result = DLLImport.ZLib_linux.uncompress(buff, ref destLen, CopyBytes(this.Position, fullLen - 4), fullLen - 4);

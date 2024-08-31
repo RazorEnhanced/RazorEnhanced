@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
 {
@@ -139,7 +139,7 @@ namespace RazorEnhanced.UI
             if (m_proplist != null)
                 foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
                 {
-                    scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString()});
+                    scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString() });
                 }
 
             // Immagine
@@ -168,7 +168,7 @@ namespace RazorEnhanced.UI
                     Int32.TryParse(cell.Value.ToString(), out propvalue);
 
                 if (propvalue < 0 || propvalue > 999)
-                    propvalue =0;
+                    propvalue = 0;
 
                 cell.Value = propvalue.ToString();
             }
@@ -217,7 +217,7 @@ namespace RazorEnhanced.UI
                 if (row.Cells[0].Value != null)
                     propname = row.Cells[0].Value.ToString();
 
-                propslist.Add(new Scavenger.ScavengerItem.Property(propname, min ,max));
+                propslist.Add(new Scavenger.ScavengerItem.Property(propname, min, max));
             }
             m_row.Cells[4].Value = propslist;
             Scavenger.CopyTable();

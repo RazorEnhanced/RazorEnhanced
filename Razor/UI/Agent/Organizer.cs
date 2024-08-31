@@ -112,7 +112,8 @@ namespace Assistant
                 RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
             }
 
-            this.Invoke((MethodInvoker)delegate {
+            this.Invoke((MethodInvoker)delegate
+            {
                 RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, serial, RazorEnhanced.Organizer.OrganizerDestination, true);
                 RazorEnhanced.Organizer.RefreshLists();
             });
@@ -162,7 +163,8 @@ namespace Assistant
                 RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
             }
 
-            this.Invoke((MethodInvoker)delegate {
+            this.Invoke((MethodInvoker)delegate
+            {
                 RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, serial, true);
                 RazorEnhanced.Organizer.RefreshLists();
             });
@@ -241,14 +243,14 @@ namespace Assistant
                     newDest = Player.Bank.Serial;
             }
             else if (organizerDestination.Text.StartsWith("0x", StringComparison.CurrentCultureIgnoreCase))
-                {
+            {
                 if (!int.TryParse(organizerDestination.Text.Substring(2), System.Globalization.NumberStyles.HexNumber, null, out newDest))
                 {
                     RazorEnhanced.Organizer.AddLog("Invalid destination");
                     return;
                 }
             }
-            else 
+            else
             {
                 if (!int.TryParse(organizerDestination.Text.Substring(2), System.Globalization.NumberStyles.Number, null, out newDest))
                 {

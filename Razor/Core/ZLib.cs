@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 
 namespace Assistant
 {
@@ -252,7 +251,7 @@ namespace Assistant
                     ZLibError error = ZLibError.Z_ERRNO;
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        error = DLLImport.ZLib_linux.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);                        
+                        error = DLLImport.ZLib_linux.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
                     }
                     else
                     {

@@ -1,6 +1,6 @@
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Assistant
 {
@@ -11,7 +11,7 @@ namespace Assistant
             [return: MarshalAs(UnmanagedType.Bool)]
             [DllImport("user32.dll", SetLastError = true)]
             internal static extern bool PostMessage(IntPtr hWnd, int Msg, System.Windows.Forms.Keys wParam, uint lParam);
-            
+
             [DllImport("user32.dll")]
             internal static extern uint PostMessage(IntPtr hWnd, uint Msg, UIntPtr wParam, UIntPtr lParam);
 

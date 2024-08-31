@@ -1,19 +1,13 @@
+using CrashReporterDotNET;
+using Mono.Options;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
-using System.Web.Profile;
 using System.Windows.Forms;
-using CrashReporterDotNET;
-using IronPython.Runtime;
-using Mono.Options;
 
 namespace Assistant
 {
@@ -254,13 +248,13 @@ namespace Assistant
             if (shardSelected != null)
             {
                 if (shardSelected.StartTypeSelected == RazorEnhanced.Shard.StartType.CUO)
-                { 
+                {
                     Client.Instance = new ClassicUOClient();
                     Client.Instance.SelectedShard(shardSelected);
                     Client.Instance.Init(shardSelected);
                 }
-                else 
-                { 
+                else
+                {
                     Client.Instance = new OSIClient();
                     Client.Instance.SelectedShard(shardSelected);
                     Client.Instance.Init(shardSelected);

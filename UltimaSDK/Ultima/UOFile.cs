@@ -35,7 +35,6 @@
 using System;
 using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Runtime.CompilerServices;
 
 namespace Ultima
 {

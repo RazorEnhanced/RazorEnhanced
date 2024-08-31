@@ -1,14 +1,12 @@
+using Assistant;
+using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
-using Assistant;
-using Assistant.UI;
 using System.Reflection;
-using NLog;
-using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -139,7 +137,8 @@ namespace RazorEnhanced
         private static bool m_lock = false;
         internal static bool Lock
         {
-            get {return m_lock;} set {m_lock = value;}
+            get { return m_lock; }
+            set { m_lock = value; }
         }
 
         private static int m_vslot = 0;
@@ -157,7 +156,8 @@ namespace RazorEnhanced
         }
         internal static Form SpellGridForm
         {
-            get {return m_form;} set {m_form = value;}
+            get { return m_form; }
+            set { m_form = value; }
         }
 
         internal static void SpellGrid_close(object sender, EventArgs e)
@@ -193,7 +193,7 @@ namespace RazorEnhanced
                 m_form = null;
                 m_hslot = m_vslot = 0;
             }
-            else 
+            else
             {
                 uint gumpId = (uint)999009999;
                 Gumps.CloseGump(gumpId);
@@ -232,7 +232,7 @@ namespace RazorEnhanced
                 m_form.Opacity = ((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;
                 m_form.Refresh();
             }
-            else 
+            else
             {
                 GumpSpellGrid();
             }
@@ -319,7 +319,7 @@ namespace RazorEnhanced
                     }
                 }
             }
-            else 
+            else
             {
                 if (m_open)
                 {
@@ -537,7 +537,7 @@ namespace RazorEnhanced
         ////////////////////////////////////////////////////
 
         static internal uint m_spellGridGID = 9909999;
-        
+
         internal static void GetSpellGridOrigin()
         {
             if (World.Player == null)
@@ -601,7 +601,7 @@ namespace RazorEnhanced
             int ActiveColor = 32;
             int InactiveColor = 0;
             int offset = 3;
-            
+
             Gumps.GumpData spellBar = Gumps.CreateGump(false, false, false, false);
             spellBar.gumpId = (uint)999009999;
             spellBar.serial = (uint)Player.Serial;
@@ -658,7 +658,7 @@ namespace RazorEnhanced
                                         else
                                             Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, InactiveColor);
                                     }
-                                    else 
+                                    else
                                     {
                                         Gumps.AddImage(ref spellBar, Engine.GridX + (x * 50) + offset, Engine.GridY + (y * 50) + offset, (int)imageid, 0);
                                     }
@@ -826,7 +826,7 @@ namespace RazorEnhanced
 
             for (int x = 0; x < m_vslot * m_hslot; x++)
             {
-                if (x > (m_panellist.Count -1)|| x > (items.Count -1))
+                if (x > (m_panellist.Count - 1) || x > (items.Count - 1))
                     return;
 
                 int imageid = 0;
@@ -966,7 +966,7 @@ namespace RazorEnhanced
             foreach (SpellGridItem item in items)
             {
                 Engine.MainWindow.GridSlotComboBox.Items.Add("Slot " + i);
-                if (i == (m_hslot * m_vslot) -1 )
+                if (i == (m_hslot * m_vslot) - 1)
                     break;
                 i++;
                 if (i > 99)

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using AutoUpdaterDotNET;
+using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -18,7 +15,7 @@ namespace RazorEnhanced.UI
             InitializeComponent();
             MaximizeBox = false;
             this.Text = m_Title;
-            
+
         }
 
         private void RefreshGUI()
@@ -100,10 +97,10 @@ namespace RazorEnhanced.UI
             DateTime reminderDate = DateTime.MinValue;
             string reminderPath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced.reminder.json");
             if (File.Exists(reminderPath))
-            {                
+            {
                 reminderDate = Newtonsoft.Json.JsonConvert.DeserializeObject<DateTime>(File.ReadAllText(reminderPath));
             }
-            else 
+            else
             {
                 reminderDate = DateTime.MinValue;
             }
@@ -298,9 +295,9 @@ namespace RazorEnhanced.UI
             if (selected != null)
             {
                 selected.StartTypeSelected = Shard.StartType.CUO;
-                Shard.Update(selected.Description, selected.ClientPath, 
-                             selected.ClientFolder, selected.CUOClient, 
-                             selected.Host, selected.Port, selected.PatchEnc, 
+                Shard.Update(selected.Description, selected.ClientPath,
+                             selected.ClientFolder, selected.CUOClient,
+                             selected.Host, selected.Port, selected.PatchEnc,
                              selected.OSIEnc, selected.Selected, selected.StartTypeSelected);
             }
 

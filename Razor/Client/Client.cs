@@ -1,20 +1,17 @@
+using AutoUpdaterDotNET;
+using Mono.Options;
+using RazorEnhanced;
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using Microsoft.Win32.SafeHandles;
-using System.Linq;
-using System.Reflection;
-using AutoUpdaterDotNET;
-using RazorEnhanced;
-using Mono.Options;
-using Ultima;
 
 namespace Assistant
 {
@@ -58,7 +55,7 @@ namespace Assistant
     {
         public static Client Instance;
         public static bool IsOSI;
-        
+
 
         internal static bool m_Running;
         internal static bool Running { get { return m_Running; } }
@@ -93,7 +90,7 @@ namespace Assistant
                 bool osiEncryption = false;
                 bool cuoClientUsed = false;
 
-                
+
                 // these are the available options, note that they set the variables
                 var options = new OptionSet {
                     { "d|description=", "the name of shard.", s => shardName = s },
@@ -115,7 +112,7 @@ namespace Assistant
                 }
                 catch (OptionException e)
                 {
-                    RazorEnhanced.UI.RE_MessageBox.Show("Invalid Arguments passed", 
+                    RazorEnhanced.UI.RE_MessageBox.Show("Invalid Arguments passed",
                         "Error in Client.SelectShard.\r\nLooks like bad command line arguments",
                         ok: "Ok", no: null, cancel: null, backColor: null);
                     error = true;
@@ -186,7 +183,7 @@ namespace Assistant
         }
 
         internal virtual bool Init(RazorEnhanced.Shard selected)
-        {            
+        {
             if (selected.ClientFolder != null && Directory.Exists(selected.ClientFolder))
             {
                 Ultima.FilesDirectoryOverride.Directory = selected.ClientFolder;
@@ -299,8 +296,8 @@ namespace Assistant
                 return;
             }
 
-            Engine.ClientBuild = GetBuildPart();  
-            Engine.ClientMajor = GetMajorPart();  
+            Engine.ClientBuild = GetBuildPart();
+            Engine.ClientMajor = GetMajorPart();
 
             Assistant.Client.Instance.SetConnectionInfo(Engine.IP, (int)port);
 
@@ -470,7 +467,7 @@ namespace Assistant
                     string server = RazorEnhanced.CUO.GetSetting("IP");
                     IPAddress address = Dns.GetHostAddresses(server)[0];
                     return address;
-                }                   
+                }
 
                 return Engine.IP;
             }
@@ -743,7 +740,7 @@ namespace Assistant
         public abstract void BeginCalibratePosition();
         public abstract void SendToClientWait(Packet p);
         public abstract void SendToServerWait(Packet p);
-        
+
         public abstract List<string> ValidFileLocations();
 
         // Used for auto update  prompt
@@ -801,7 +798,7 @@ namespace Assistant
                                     ok: "Ok", no: null, cancel: null, backColor: null);
                         }
                     }
-                    else 
+                    else
                     {
                         string reminderPath = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced.reminder.json");
                         DateTime reminderDate = DateTime.Now.AddDays(7);

@@ -1,14 +1,10 @@
 ﻿using Assistant;
-using Google.Protobuf.Collections;
 using Grpc.Core;
 using IronPython.Runtime;
-using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting.Providers;
 using RazorEnhanced.UOS;
 using System;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
-using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -16,7 +12,7 @@ namespace RazorEnhanced
     {
         private bool _isRecording = false;
         private string _recordingFormat;
-        
+
         public static Server StartServer(string host, int port)
         {
             Server server = new Server
@@ -44,7 +40,7 @@ namespace RazorEnhanced
                     language = ScriptLanguage.CSHARP;
                     break;
                 default:
-                    language = ScriptLanguage.UNKNOWN; 
+                    language = ScriptLanguage.UNKNOWN;
                     break;
             }
             Utility.Logger.Debug($"Started recording in {request.Language} format");
@@ -84,7 +80,7 @@ namespace RazorEnhanced
         }
 
         public override async Task Play(PlayRequest request, IServerStreamWriter<PlayResponse> responseStream, ServerCallContext context)
-        {            
+        {
             switch (request.Language)
             {
                 case ProtoLanguage.Python:
@@ -98,7 +94,8 @@ namespace RazorEnhanced
                         );
                     */
                     pyEngine.SetStderr(
-                        (string message) => {
+                        (string message) =>
+                        {
                             Misc.SendMessage(message, 178);
                             responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
                         }
@@ -119,7 +116,7 @@ namespace RazorEnhanced
                     {
                         throw new OperationCanceledException();
                     }
-                    pyEngine.Execute(); 
+                    pyEngine.Execute();
                     break;
                 case ProtoLanguage.Uosteam:
                     UOSteamEngine uosEngine = new();

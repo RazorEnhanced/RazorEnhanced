@@ -2,12 +2,10 @@ using Assistant;
 using Assistant.UI;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -309,7 +307,7 @@ namespace RazorEnhanced
 
         internal static void AddList(string newList)
         {
-            RazorEnhanced.Settings.Friend.ListInsert(newList, false, false, false, false, false, false,false);
+            RazorEnhanced.Settings.Friend.ListInsert(newList, false, false, false, false, false, false, false);
 
             RazorEnhanced.Friend.RefreshLists();
             RazorEnhanced.Friend.RefreshPlayers();
@@ -380,7 +378,7 @@ namespace RazorEnhanced
 
         }
 
-            internal static void UpdateSelectedPlayer(int i)
+        internal static void UpdateSelectedPlayer(int i)
         {
             RazorEnhanced.Settings.Friend.PlayersRead(FriendListName, out List<FriendPlayer> players);
 

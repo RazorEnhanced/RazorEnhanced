@@ -149,7 +149,8 @@ namespace FastColoredTextBoxNS
             }
         }
 
-        public SyntaxHighlighter(FastColoredTextBox currentTb) {
+        public SyntaxHighlighter(FastColoredTextBox currentTb)
+        {
             this.currentTb = currentTb;
         }
 
@@ -1415,7 +1416,7 @@ yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking|c
             //end of block
             if (Regex.IsMatch(args.LineText, @"^\s*(endif|endwhile|endfor|until)\b", RegexOptions.IgnoreCase))
             {
-                
+
                 args.Shift = -args.TabLength;
                 args.ShiftNextLines = -args.TabLength;
                 //args.LineText = args.LineText.TrimStart();
@@ -1448,7 +1449,7 @@ yellowhits|war|criminal|enemy|friend|gray|innocent|murderer|bandage|restocking|c
 
             PythonNumberRegex = new Regex(@"\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b", RegexCompiledOption);
             PythonKeywordRegex = new Regex(@"\b(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|not|or|pass|print|raise|return|try|while|yield|None|True|False|as)\b", RegexCompiledOption);
-           
+
             RazorFunctionsKeywordRegex = new Regex("");
             RazorPropsKeywordRegex = new Regex("");
             RazorClassKeywordRegex = new Regex("");

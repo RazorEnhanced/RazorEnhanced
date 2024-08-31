@@ -1,4 +1,3 @@
-using RazorEnhanced.UI;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -11,10 +10,10 @@ namespace Assistant
     {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox hueNum;
-        private System.Windows.Forms.Button  inGame;
+        private System.Windows.Forms.Button inGame;
         private System.Windows.Forms.Label preview;
-        private System.Windows.Forms.Button  okay;
-        private System.Windows.Forms.Button  cancel;
+        private System.Windows.Forms.Button okay;
+        private System.Windows.Forms.Button cancel;
 
         /// <summary>
         /// Required designer variable.
@@ -72,10 +71,10 @@ namespace Assistant
         {
             this.label1 = new System.Windows.Forms.Label();
             this.hueNum = new TextBox();
-            this.inGame = new  System.Windows.Forms.Button ();
+            this.inGame = new System.Windows.Forms.Button();
             this.preview = new System.Windows.Forms.Label();
-            this.okay = new  System.Windows.Forms.Button ();
-            this.cancel = new  System.Windows.Forms.Button ();
+            this.okay = new System.Windows.Forms.Button();
+            this.cancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             //
             // label1

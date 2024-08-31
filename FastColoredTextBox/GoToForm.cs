@@ -48,6 +48,6 @@ namespace FastColoredTextBoxNS
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
-         }
+        }
     }
 }

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
@@ -29,7 +23,7 @@ namespace RazorEnhanced.UI
 
 
         internal RE_MessageBox(string title, string msg, string link = null,
-            string ok = "Ok", string no = "No", string cancel="Cancel",
+            string ok = "Ok", string no = "No", string cancel = "Cancel",
             Color? backColor = null)
         {
             InitializeComponent();
@@ -51,10 +45,11 @@ namespace RazorEnhanced.UI
             }
 
             if (cancel == null)
-            {  
+            {
                 this.cancelButton.Visible = false;
             }
-            else {
+            else
+            {
                 this.cancelButton.Visible = true;
                 this.cancelButton.Text = cancel;
                 cancelButton.Click += new EventHandler(CancelButton_Click);
@@ -99,12 +94,12 @@ namespace RazorEnhanced.UI
             }
         }
 
-        public static DialogResult Show(string title, string message, string link=null,
+        public static DialogResult Show(string title, string message, string link = null,
             string ok = "Ok", string no = "", string cancel = "Cancel",
             Color? backColor = null)
         {
             using (var form = new RE_MessageBox(title, message, link, ok, no, cancel, backColor))
-            {                
+            {
                 return form.ShowDialog();
             }
         }
@@ -123,7 +118,7 @@ namespace RazorEnhanced.UI
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-        
+
         private void NoButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.No;

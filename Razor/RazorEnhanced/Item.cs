@@ -1,11 +1,10 @@
 using Assistant;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Globalization;
 
 namespace RazorEnhanced
 {
@@ -48,7 +47,7 @@ namespace RazorEnhanced
                     return 0;
             }
         }
-        internal Assistant.Item AsAssistant {get {return m_AssistantItem;} }
+        internal Assistant.Item AsAssistant { get { return m_AssistantItem; } }
         /// <summary>
         /// Read amount from item type object.
         /// </summary>
@@ -106,7 +105,7 @@ namespace RazorEnhanced
         public int RootContainer
         {
             get
-            {                
+            {
                 if (m_AssistantItem.RootContainer is Assistant.Item)
                     return (m_AssistantItem.RootContainer as Assistant.Item).Serial;
                 else if (m_AssistantItem.RootContainer is Assistant.Mobile)
@@ -221,8 +220,11 @@ namespace RazorEnhanced
         /// <summary>
         /// -1 until corpse is checked, then # items in corpse. Used by looter to ignore empty corpses
         /// </summary>
-        public int CorpseNumberItems { get { return m_AssistantItem.CorpseNumberItems; } 
-            set { m_AssistantItem.CorpseNumberItems = value; } }
+        public int CorpseNumberItems
+        {
+            get { return m_AssistantItem.CorpseNumberItems; }
+            set { m_AssistantItem.CorpseNumberItems = value; }
+        }
 
         /// <summary>
         /// True: if the item is a door - False: otherwise.
@@ -457,7 +459,7 @@ namespace RazorEnhanced
         /// <param name="bag">Container as Item object.</param>
         /// <param name="x">x location to open at</param>
         /// <param name="y">y location to open at</param>
-        public static void OpenContainerAt(Item bag, int x, int y) 
+        public static void OpenContainerAt(Item bag, int x, int y)
         {
             if (bag == null || (!bag.IsCorpse && !bag.IsContainer))
                 return;
@@ -466,7 +468,7 @@ namespace RazorEnhanced
                 Misc.NextContPosition(x, y);
                 RazorEnhanced.Items.UseItem(bag);
             }
-            else 
+            else
             {
                 CUO.OpenContainerAt(bag, x, y);
             }
@@ -525,7 +527,7 @@ namespace RazorEnhanced
             if (bag != null)
                 return WaitForContents(bag, delay);
 
-            return false; 
+            return false;
         }
 
         private static readonly Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
@@ -576,10 +578,10 @@ namespace RazorEnhanced
             assistantItem.Hue = (ushort)color;
             if (i.Container == 0)
             {
-                if (Engine.UsePostSAChanges)                        
-                    Assistant.Client.Instance.SendToClient(new SAWorldItem(assistantItem));                
-                else                    
-                    Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));                
+                if (Engine.UsePostSAChanges)
+                    Assistant.Client.Instance.SendToClient(new SAWorldItem(assistantItem));
+                else
+                    Assistant.Client.Instance.SendToClient(new WorldItem(assistantItem));
             }
             else
                 Assistant.Client.Instance.SendToClient(new ContainerItem(assistantItem, true));
@@ -588,7 +590,8 @@ namespace RazorEnhanced
         /// <summary>
         /// @nodoc: Method ranamed to SetColor, to be removed.
         /// </summary>
-        public static void Color(int serial, int color = -1) {
+        public static void Color(int serial, int color = -1)
+        {
             SetColor(serial, color);
         }
 
@@ -619,9 +622,10 @@ namespace RazorEnhanced
                 // Eventually, the first time a player try to dye something, the callback finally fire and apply the last color tried.
                 // As the packet response usually arrives very fast, we will safely assume the following:
                 //    if after X seconds the original callback is still waiting for a packet, probably something went wrong and the callback gets removed ( probably the packet will never arrive )
-                var cleanup = new Thread( () => {
+                var cleanup = new Thread(() =>
+                {
                     Thread.Sleep(2000);
-                    if (HueEntry.Callback == cb) { HueEntry.Callback = null; } 
+                    if (HueEntry.Callback == cb) { HueEntry.Callback = null; }
                 });
                 cleanup.Start();
 
@@ -739,7 +743,7 @@ namespace RazorEnhanced
                 if (Graphics.Count > 0)
                 {
                     if (!Graphics.Contains(item.ItemID))
-                        return false;                
+                        return false;
                 }
 
                 if (Hues.Count > 0)
@@ -751,7 +755,7 @@ namespace RazorEnhanced
                 if (RangeMin != -1)
                 {
                     if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) < RangeMin)
-                        return false;               
+                        return false;
                 }
 
                 if (RangeMax != -1)
@@ -802,7 +806,7 @@ namespace RazorEnhanced
 
                 if (IsDoor != -1)
                 {
-                    if (! item.IsDoor == Convert.ToBoolean(IsDoor))
+                    if (!item.IsDoor == Convert.ToBoolean(IsDoor))
                         return false;
                 }
 
@@ -811,7 +815,7 @@ namespace RazorEnhanced
                     if (Misc.CheckIgnoreObject(item.Serial) == true)
                         return false;
                 }
-            
+
 
                 return true;
             }
@@ -890,14 +894,14 @@ namespace RazorEnhanced
                     Item nearest = items[0];
                     if (nearest != null)
                     {
-                        double minDist = Utility.Distance( Player.Position.X, Player.Position.Y, nearest.Position.X, nearest.Position.Y );
+                        double minDist = Utility.Distance(Player.Position.X, Player.Position.Y, nearest.Position.X, nearest.Position.Y);
 
                         foreach (Item t in items)
                         {
                             if (t == null)
                                 continue;
 
-                            double dist = Utility.Distance( Player.Position.X, Player.Position.Y, t.Position.X, t.Position.Y );
+                            double dist = Utility.Distance(Player.Position.X, Player.Position.Y, t.Position.X, t.Position.Y);
 
                             if (!(dist < minDist))
                                 continue;
@@ -913,14 +917,14 @@ namespace RazorEnhanced
                     Item farthest = items[0];
                     if (farthest != null)
                     {
-                        double maxDist = Utility.Distance( Player.Position.X, Player.Position.Y, farthest.Position.X, farthest.Position.Y );
-                        
+                        double maxDist = Utility.Distance(Player.Position.X, Player.Position.Y, farthest.Position.X, farthest.Position.Y);
+
                         foreach (Item t in items)
                         {
                             if (t == null)
                                 continue;
 
-                            double dist = Utility.Distance( Player.Position.X, Player.Position.Y, t.Position.X, t.Position.Y );
+                            double dist = Utility.Distance(Player.Position.X, Player.Position.Y, t.Position.X, t.Position.Y);
                             if (dist > maxDist)
                             {
                                 farthest = t;
@@ -1145,7 +1149,7 @@ namespace RazorEnhanced
             {
                 if (item.Amount == 0)
                     newamount = 1;
-                newamount = item.Amount;               
+                newamount = item.Amount;
             }
             else
             {
@@ -1712,9 +1716,9 @@ namespace RazorEnhanced
             return FindAllByID(itemids, color, container, range, considerIgnoreList);
         }
         // Find all items matching an C# list[ids]
-        public static IronPython.Runtime.PythonList FindAllByID( List<int>itemids, int color, int container, int range, bool considerIgnoreList = true)
+        public static IronPython.Runtime.PythonList FindAllByID(List<int> itemids, int color, int container, int range, bool considerIgnoreList = true)
         {
-            
+
             IronPython.Runtime.PythonList itemids_py = new IronPython.Runtime.PythonList();
             itemids_py.extend(itemids);
             return FindAllByID(itemids_py, color, container, range, considerIgnoreList);
@@ -1863,7 +1867,7 @@ namespace RazorEnhanced
                 Property property = new Property(entry);
                 properties.Add(property);
             }
-            return properties;       
+            return properties;
         }
 
 
@@ -2045,10 +2049,10 @@ namespace RazorEnhanced
                     if (content != null)
                     {
                         for (int i = 0; i < content.Count; i++)
-                        {                            
+                        {
                             if (!content[i].ToString().ToLower().StartsWith(name.ToLower())) // Props Name not match
                                 continue;
-                            
+
                             if (content[i].Args == null)  // Props exist but not have value
                                 return 1;
 
@@ -2252,7 +2256,8 @@ namespace RazorEnhanced
                 {
                     Assistant.Client.Instance.SendToClientWait(new CloseContainer(serial));
                 }
-            } else
+            }
+            else
             {
                 CUO.CloseGump((uint)serial);
             }

@@ -1,12 +1,12 @@
+using Accord.Math;
 using Assistant;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 using System.Threading;
-using System.Windows.Forms;
 using System.Threading.Tasks;
-using Accord.Math;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -40,13 +40,15 @@ namespace RazorEnhanced
             CsScripts = new List<ScriptItem>();
         }
 
-        public static void UpdateScriptItems() {
+        public static void UpdateScriptItems()
+        {
             Scripts.PyScripts = EnhancedScript.Service.ScriptListTabPy().Apply(script => script.ToScriptItem()).ToList();
             Scripts.CsScripts = EnhancedScript.Service.ScriptListTabCs().Apply(script => script.ToScriptItem()).ToList();
             Scripts.UosScripts = EnhancedScript.Service.ScriptListTabUos().Apply(script => script.ToScriptItem()).ToList();
         }
 
-        public static void LoadEnhancedScripts(List<RazorEnhanced.Scripts.ScriptItem> scriptItems) {
+        public static void LoadEnhancedScripts(List<RazorEnhanced.Scripts.ScriptItem> scriptItems)
+        {
             EnhancedScript.Service.ClearAll();
             int prevPyIndex = 0;
             int prevUosIndex = 0;
@@ -183,7 +185,7 @@ namespace RazorEnhanced
         }
 
         internal static void PatchUpHotkeys(string filename)
-        {         
+        {
             ScriptItem scriptItem = FindScript(filename);
             if (scriptItem == null)
                 return;
@@ -317,22 +319,27 @@ namespace RazorEnhanced
         {
             if (Assistant.World.Player == null) { return; }
 
-            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox")) {
+            if (RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+            {
                 string[] lines;
-                if (Client.IsOSI){
+                if (Client.IsOSI)
+                {
                     lines = msg.Split('\n');
-                } else {
-                    lines = new string[]{msg};
                 }
-                foreach(var line in lines){
+                else
+                {
+                    lines = new string[] { msg };
+                }
+                foreach (var line in lines)
+                {
                     Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", line.ToString()));
                 }
-                
+
             }
         }
         public class ScriptItem : ListAbleItem
         {
-            public string Filename { get; set;}
+            public string Filename { get; set; }
             //public string Flag { get; set; }  // appears unused
             public string Status { get; set; }
             public bool Loop { get; set; }
@@ -378,7 +385,7 @@ namespace RazorEnhanced
                 if (thread == null)
                     return false;
 
-                if (thread != null && ( (thread.ThreadState & ThreadState.Running) != 0 || (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (thread.ThreadState & ThreadState.AbortRequested) != 0 ))
+                if (thread != null && ((thread.ThreadState & ThreadState.Running) != 0 || (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (thread.ThreadState & ThreadState.AbortRequested) != 0))
                     return true;
                 else
                     return false;
@@ -428,21 +435,22 @@ namespace RazorEnhanced
                 { }
             }
 
-            
+
             private void OnTick(object state)
             {
                 var updateScripts = Task.Run(() => OnTickScripts(state));
                 var updateAgents = Task.Run(() => OnTickAgents(state));
-                while (!updateAgents.IsCompleted || !updateAgents.IsCompleted) {
+                while (!updateAgents.IsCompleted || !updateAgents.IsCompleted)
+                {
                     Misc.Pause(1);
                 }
             }
 
-            
+
             static readonly object syncLockScripts = new object();
             private void OnTickScripts(object state)
             {
-                
+
                 lock (syncLockScripts)
                 {
                     foreach (EnhancedScript script in EnhancedScript.Service.ScriptList())
@@ -469,7 +477,7 @@ namespace RazorEnhanced
                     }
                 }
             }
-            
+
 
 
             static readonly object syncLockAgents = new object();
@@ -477,7 +485,7 @@ namespace RazorEnhanced
             {
                 lock (syncLockAgents)
                 {
-                            if (World.Player != null && Client.Running) // Parte agent
+                    if (World.Player != null && Client.Running) // Parte agent
                     {
 
                         if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
@@ -611,16 +619,16 @@ namespace RazorEnhanced
 
             Utility.Logger.Debug($"File change processed {e.FullPath}");
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
-            if (script != null) 
+            if (script != null)
             {
                 bool isRunning = script.IsRunning;
 
-                    if (isRunning)
-                        script.Stop();
-                    script.Load(true);
-                    script.LastModified = DateTime.MinValue;
-                    if (isRunning)
-                        script.Start();
+                if (isRunning)
+                    script.Stop();
+                script.Load(true);
+                script.LastModified = DateTime.MinValue;
+                if (isRunning)
+                    script.Start();
             }
         }
 

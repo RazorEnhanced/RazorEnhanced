@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows.Documents;
 
 namespace Assistant
 {
@@ -1736,7 +1734,7 @@ namespace Assistant
                     WriteLittleUniFixed(i.Args, i.Args.Length);
                 }
             }
-           Write((uint)0);
+            Write((uint)0);
         }
 
     }
@@ -2066,12 +2064,12 @@ namespace Assistant
         internal TradeAccept(uint TradeID, bool accept) // TradePacket 0x6F: Trace Accept
             : base(0x6F, 17)
         {
-            Write((ushort) 17);
-            Write((byte) 2);
-            Write((uint) TradeID);
-            Write((uint) (accept ? 1 : 0));
-            Write((uint) 0);
-            Write((byte) 0);
+            Write((ushort)17);
+            Write((byte)2);
+            Write((uint)TradeID);
+            Write((uint)(accept ? 1 : 0));
+            Write((uint)0);
+            Write((byte)0);
         }
     }
 
@@ -2080,12 +2078,12 @@ namespace Assistant
         internal TradeCancel(uint TradeID) // TradePacket 0x6F   : Cancel trade
             : base(0x6F, 17)
         {
-            Write((ushort) 17);
-            Write((byte) 1);
-            Write((uint) TradeID);
-            Write((uint) 0);
-            Write((uint) 0);
-            Write((byte) 0);
+            Write((ushort)17);
+            Write((byte)1);
+            Write((uint)TradeID);
+            Write((uint)0);
+            Write((uint)0);
+            Write((byte)0);
         }
     }
 
@@ -2094,11 +2092,11 @@ namespace Assistant
         internal TradeOffer(uint TradeID, uint gold, uint paltinum) // TradePacket 0x6F: Offer gold/plat
             : base(0x6F, 17)
         {
-            Write((ushort) 17);
-            Write((byte) 3);
-            Write((uint) TradeID);
-            Write((uint) gold);
-            Write((uint) paltinum);
+            Write((ushort)17);
+            Write((byte)3);
+            Write((uint)TradeID);
+            Write((uint)gold);
+            Write((uint)paltinum);
             Write((byte)0);
         }
     }

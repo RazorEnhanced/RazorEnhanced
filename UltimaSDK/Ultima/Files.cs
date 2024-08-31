@@ -1,9 +1,7 @@
 using Microsoft.Win32;
-using NLog.Fluent;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 
 namespace Ultima
 {
@@ -31,7 +29,7 @@ namespace Ultima
         private static string m_Directory;
         private static string m_RootDir;
 
-    
+
         /// <summary>
         /// Should loaded Data be cached
         /// </summary>
@@ -319,7 +317,7 @@ namespace Ultima
                     path = GetCaseInsensitiveFilePath(path);
                     return path;
                 }
-                catch(Exception e) 
+                catch (Exception e)
                 {
                     logger.Debug($"{path} not found in GetFilePath");
                 }
@@ -361,7 +359,7 @@ namespace Ultima
 
         private static string LoadDirectory()
         {
-            if (! string.IsNullOrEmpty(FilesDirectoryOverride.Directory))
+            if (!string.IsNullOrEmpty(FilesDirectoryOverride.Directory))
             {
                 return FilesDirectoryOverride.Directory;
             }

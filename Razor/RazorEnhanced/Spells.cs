@@ -31,7 +31,7 @@ namespace RazorEnhanced
 
         }
 
-        
+
         internal static void CastOnly(string SpellName, bool wait)
         {
             //
@@ -44,7 +44,7 @@ namespace RazorEnhanced
             if (!success)
                 Scripts.SendMessageScriptError("Script Error: Cast: Invalid spell name: " + SpellName);
         }
-        
+
         internal static bool CastOnlyGeneric(Dictionary<string, int> conversion, string SpellName, bool wait)
         {
             if (World.Player == null)
@@ -117,7 +117,7 @@ namespace RazorEnhanced
             CastOnly(SpellName, true);
         }
 
-        
+
 
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace RazorEnhanced
         {
             CastOnlyMagery(SpellName, true);
         }
-        
+
 
         internal static void CastOnlyMagery(string SpellName, bool wait)
         {
@@ -311,7 +311,7 @@ namespace RazorEnhanced
         {
             CastOnlyChivalry(SpellName);
         }
-        
+
         internal static void CastOnlyChivalry(string SpellName, bool wait = true)
         {
             string guessedSpellName = GuessSpellName(SpellName);
@@ -485,7 +485,7 @@ namespace RazorEnhanced
         {
             CastOnlyMysticism(SpellName);
         }
-        
+
         internal static void CastOnlyMysticism(string SpellName, bool wait = true)
         {
             string guessedSpellName = GuessSpellName(SpellName);
@@ -566,7 +566,7 @@ namespace RazorEnhanced
         {
             CastOnlyMastery(SpellName);
         }
-        
+
         internal static void CastOnlyMastery(string SpellName, bool wait = true)
         {
             string guessedSpellName = GuessSpellName(SpellName);
@@ -769,7 +769,7 @@ namespace RazorEnhanced
             CastLastSpell((uint)m.Serial, wait);
         }
 
-        public static void CastLastSpell(bool wait=true)
+        public static void CastLastSpell(bool wait = true)
         {
             if (World.Player.LastSpell != 0)
             {
@@ -799,7 +799,7 @@ namespace RazorEnhanced
         }
 
 
-        
+
 
         internal static Assistant.Item FindUsedLayer()
         {

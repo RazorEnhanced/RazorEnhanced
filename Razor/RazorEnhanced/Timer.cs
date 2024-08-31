@@ -1,8 +1,6 @@
-using System.Collections.Concurrent;
-using System.Linq;
-using Ultima;
-using System.Timers;
 using System;
+using System.Collections.Concurrent;
+using System.Timers;
 
 namespace RazorEnhanced
 {
@@ -49,7 +47,7 @@ namespace RazorEnhanced
         public static ConcurrentDictionary<string, ScriptTimer> Timers { get => m_timers; set => m_timers = value; }
 
 
-        
+
         public static void Create(string name, int delay)
         {
             Create(name, delay, String.Empty);

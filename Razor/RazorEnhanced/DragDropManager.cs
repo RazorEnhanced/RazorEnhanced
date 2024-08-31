@@ -1,7 +1,7 @@
 using Assistant;
+using System;
 using System.Collections.Concurrent;
 using System.Threading;
-using System;
 
 namespace RazorEnhanced
 {
@@ -155,7 +155,7 @@ namespace RazorEnhanced
                 {
                     bool lootHidden = RazorEnhanced.Settings.General.ReadBool("AllowHiddenLooting");
 
-                    if ( (Player.Visible || lootHidden) && AutoLoot.SerialToGrabList.Count > 0)
+                    if ((Player.Visible || lootHidden) && AutoLoot.SerialToGrabList.Count > 0)
                     {
                         try
                         {

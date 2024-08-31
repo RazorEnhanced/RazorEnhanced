@@ -1,11 +1,8 @@
-using Accord.Math;
-using Accord;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.UI;
 using static RazorEnhanced.PacketLogger;
 
 namespace Assistant
@@ -37,15 +34,17 @@ namespace Assistant
         private string m_FileName;
         private string m_OutputPath;
 
-        
+
 
         public bool Active { get => m_Active; }
 
         public string BaseDir { get => m_BaseDir; }
         public string FileName { get => m_FileName; }
-        public string OutputPath {
+        public string OutputPath
+        {
             get => m_OutputPath;
-            set {
+            set
+            {
                 if (m_Active) { StopRecording(); }
                 m_OutputPath = value;
                 m_FileName = Path.GetFileName(m_OutputPath);
@@ -60,7 +59,7 @@ namespace Assistant
         {
             this.OutputPath = OutputPath;
         }
-        
+
         public string StartRecording(bool appendLogs = false)
         {
             if (Assistant.Client.Instance.AllowBit(FeatureBit.PacketAgent))
@@ -119,13 +118,13 @@ namespace Assistant
             }
         }
 
-        public void ListenPacketPath(PacketPath path, bool active=true)
+        public void ListenPacketPath(PacketPath path, bool active = true)
         {
             if (active && !m_PacketPaths.Contains(path))
             {
                 m_PacketPaths.Add(path);
             }
-            else if(!active && m_PacketPaths.Contains(path))
+            else if (!active && m_PacketPaths.Contains(path))
             {
                 m_PacketPaths.Remove(path);
             }
@@ -192,12 +191,13 @@ namespace Assistant
         protected bool DisplayTemplate(StreamWriter sw, byte[] packetData)
         {
             var packetID = packetData[0];
-            if (!m_PacketTemplates.Keys.Contains(packetID)){
+            if (!m_PacketTemplates.Keys.Contains(packetID))
+            {
                 return false;
             }
 
             PacketTemplate template = m_PacketTemplates[packetID];
-            var packet = RazorEnhanced.PacketLogger.TemplateParser.parse(template,packetData);
+            var packet = RazorEnhanced.PacketLogger.TemplateParser.parse(template, packetData);
             var jsonDump = JsonConvert.SerializeObject(packet, Formatting.Indented);
             sw.WriteLine(jsonDump);
             return !template.showHexDump;
@@ -228,9 +228,10 @@ namespace Assistant
 
                     sw.WriteLine("{0}: {1}{2}0x{3:X2} (Length: {4})", DateTime.Now.ToString("HH:mm:ss.ffff"), pathStr, blocked ? " [BLOCKED] " : " ", packetID, packetLen);
                     if (shouldDiscard) { return; }
-                    
+
                     var showHexDump = !DisplayTemplate(sw, packetData);
-                    if (showHexDump) { 
+                    if (showHexDump)
+                    {
                         Stream packetStream = new MemoryStream(packetData);
                         Utility.FormatBuffer(sw, packetStream, (int)packetStream.Length);
                     }

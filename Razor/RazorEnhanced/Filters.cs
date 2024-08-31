@@ -1,12 +1,11 @@
 using Assistant;
 using Assistant.UI;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 
 namespace RazorEnhanced
@@ -100,11 +99,11 @@ namespace RazorEnhanced
                     Mobiles.Message(m.Serial, 10, "[Mortalled]", false);
             }
 
-        /*  if (Engine.MainWindow.HighlightTargetCheckBox.Checked)
-            {
-                if (Targeting.IsLastTarget(m))
-                    Mobiles.Message(m.Serial, 10, "*[Target]*", false);
-            }*/
+            /*  if (Engine.MainWindow.HighlightTargetCheckBox.Checked)
+                {
+                    if (Targeting.IsLastTarget(m))
+                        Mobiles.Message(m.Serial, 10, "*[Target]*", false);
+                }*/
         }
         //////////////////// END - FLAG HIGHLIGHT //////////////////////
 
@@ -142,7 +141,7 @@ namespace RazorEnhanced
             foreach (DataGridViewRow gridRow in Assistant.Engine.MainWindow.JournalFilterDataGrid.Rows)
             {
                 if (gridRow.IsNewRow)
-                    continue;                
+                    continue;
                 Settings.JournalFilter.Insert(gridRow.Cells[0].Value.ToString());
             }
             Settings.Save();
@@ -209,8 +208,8 @@ namespace RazorEnhanced
             color = 0;
             foreach (GraphChangeData graphdata in m_graphfilterdata)
             {
-                if (! graphdata.Selected)
-                    continue; 
+                if (!graphdata.Selected)
+                    continue;
                 if (body != graphdata.GraphReal)
                     continue;
 
@@ -449,7 +448,9 @@ namespace RazorEnhanced
         private static int m_MinDmgDisplay;
         internal static int MinDamageDisplayed
         {
-            get { if (Engine.MainWindow.MinDmgDisplayCheckbox.Checked)
+            get
+            {
+                if (Engine.MainWindow.MinDmgDisplayCheckbox.Checked)
                     return m_MinDmgDisplay;
                 else
                     return 0;
@@ -527,7 +528,7 @@ namespace RazorEnhanced
                 color = (int)HighLightColor.Paralized;
             else if (m.Blessed) // Mortal
                 color = (int)HighLightColor.Mortal;
-            else if (m == World.Player && World.Player.Buffs.Contains(BuffIcon.BloodOathCurse))                
+            else if (m == World.Player && World.Player.Buffs.Contains(BuffIcon.BloodOathCurse))
                 color = (int)HighLightColor.BloodOath;
             else
             {

@@ -1,6 +1,6 @@
-using System.Text;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
 
 namespace FastColoredTextBoxNS
 {
@@ -152,19 +152,19 @@ namespace FastColoredTextBoxNS
             for (int i = 0; i < tb.Styles.Length; i++)
             {
                 if (tb.Styles[i] != null && ((int)styleIndex & mask) != 0)
-                if (tb.Styles[i].IsExportable)
-                {
-                    var style = tb.Styles[i];
-                    styles.Add(style);
+                    if (tb.Styles[i].IsExportable)
+                    {
+                        var style = tb.Styles[i];
+                        styles.Add(style);
 
-                    bool isTextStyle = style is TextStyle;
-                    if (isTextStyle)
-                        if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
-                        {
-                            hasTextStyle = true;
-                            textStyle = style as TextStyle;
-                        }
-                }
+                        bool isTextStyle = style is TextStyle;
+                        if (isTextStyle)
+                            if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
+                            {
+                                hasTextStyle = true;
+                                textStyle = style as TextStyle;
+                            }
+                    }
                 mask = mask << 1;
             }
             //add TextStyle css
@@ -180,17 +180,17 @@ namespace FastColoredTextBoxNS
                 result = textStyle.GetCSS();
             }
             //add no TextStyle css
-            foreach(var style in styles)
-//            if (style != textStyle)
-            if(!(style is TextStyle))
-                result += style.GetCSS();
+            foreach (var style in styles)
+                //            if (style != textStyle)
+                if (!(style is TextStyle))
+                    result += style.GetCSS();
 
             return result;
         }
 
         public static string GetColorAsString(Color color)
         {
-            if(color==Color.Transparent)
+            if (color == Color.Transparent)
                 return "";
             return string.Format("#{0:x2}{1:x2}{2:x2}", color.R, color.G, color.B);
         }
@@ -210,7 +210,7 @@ namespace FastColoredTextBoxNS
             else
             {
                 string css = GetCss(currentStyle);
-                if(css!="")
+                if (css != "")
                     sb.AppendFormat("<font style=\"{0}\">", css);
                 sb.Append(tempSB.ToString());
                 if (css != "")

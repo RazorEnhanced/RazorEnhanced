@@ -1,8 +1,8 @@
+using Assistant;
 using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
-using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -107,7 +107,7 @@ namespace RazorEnhanced.UI
             toolTip.SetToolTip(lItemID, m_itemTarg.ItemID.Value.ToString());
             lItemID.Text = "0x" + m_itemTarg.ItemID.Value.ToString("X4");
             toolTip.SetToolTip(lColor, m_itemTarg.Hue.ToString());
-            lColor.Text =  "0x" + m_itemTarg.Hue.ToString("x4");
+            lColor.Text = "0x" + m_itemTarg.Hue.ToString("x4");
             lPosition.Text = m_itemTarg.Position.ToString();
             // Details
             Assistant.PlayerData tempdata;

@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace RazorEnhanced
 {
@@ -21,7 +19,7 @@ namespace RazorEnhanced
         public static readonly string CONFIG_WANDS = "wands.json";
         public static readonly string CONFIG_MAPS = "maps.json";
         public static readonly string CONFIG_SOUNDFILTERS = "soundfilters.json";
-        public static readonly string CONFIG_PF_BYPASS = "pf_bypass.json";        
+        public static readonly string CONFIG_PF_BYPASS = "pf_bypass.json";
         #endregion
 
         //Dalamar: See if you like it (data/config loading)
@@ -123,7 +121,7 @@ namespace RazorEnhanced
         {
             // TODO: add more
             ConfigFiles.PF_Bypass.Data = (ConfigFiles.PF_Bypass)Load(CONFIG_PF_BYPASS, typeof(ConfigFiles.PF_Bypass));
-            ConfigFiles.Doors.Data = (ConfigFiles.Doors) Load(CONFIG_DOORS, typeof(ConfigFiles.Doors));
+            ConfigFiles.Doors.Data = (ConfigFiles.Doors)Load(CONFIG_DOORS, typeof(ConfigFiles.Doors));
             ConfigFiles.Foods.Data = (ConfigFiles.Foods)Load(CONFIG_FOODS, typeof(ConfigFiles.Foods));
             ConfigFiles.Regions.Data = (ConfigFiles.Regions)Load(CONFIG_REGIONS, typeof(ConfigFiles.Regions));
             //
@@ -159,7 +157,7 @@ namespace RazorEnhanced
             {
                 var result = RazorEnhanced.UI.RE_MessageBox.Show("SoundFilter File Failure",
                     "Failed to load Sound Filter file: {path}\r\nSounds may not behave as you expect",
-                    ok: "Ok", no: null, cancel: null, backColor: null);             
+                    ok: "Ok", no: null, cancel: null, backColor: null);
             }
         }
 
@@ -173,7 +171,8 @@ namespace RazorEnhanced
             public static bool IsFish(int ItemID)
             {
                 //Lazy caching
-                if (m_FishIDs == null) {
+                if (m_FishIDs == null)
+                {
                     var shared_foods = ConfigFiles.Foods.Data;
                     var fish_ids_txt = shared_foods.Fish.Values.ToList();
                     m_FishIDs = fish_ids_txt.Select(x => int.Parse(x)).ToList();

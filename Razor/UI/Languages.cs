@@ -1,11 +1,11 @@
 //#define LOG_CONTROL_TEXT
 
 using System;
-using System.Text;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using Ultima;
 
@@ -548,10 +548,10 @@ namespace Assistant
         AddAllMobilesTargetFilter,
         AddAllMobilesHumanoidTargetFilter,
         Season,
-        Circle_9_Spells=2100,
-        Druid_Spells=2120,
-        Cleric_Spells=2140,
-        Last_Cleric_Spell=2151,
+        Circle_9_Spells = 2100,
+        Druid_Spells = 2120,
+        Cleric_Spells = 2140,
+        Last_Cleric_Spell = 2151,
         __End
     }
 
@@ -600,7 +600,7 @@ namespace Assistant
         static Language()
         {
             m_Controls = new Hashtable(32, 1.0f, StringComparer.OrdinalIgnoreCase);
-            m_Strings = new Hashtable((int) (LocString.__End - LocString.__Start) + 1, 1.0f);
+            m_Strings = new Hashtable((int)(LocString.__End - LocString.__Start) + 1, 1.0f);
         }
 
         public static string GetString(LocString key)
@@ -615,8 +615,8 @@ namespace Assistant
         public static string GetString(int key)
         {
             string value = null;
-            if (key > (uint) LocString.__Start && key < (uint) LocString.__End)
-                value = m_Strings[(LocString) key] as string;
+            if (key > (uint)LocString.__Start && key < (uint)LocString.__End)
+                value = m_Strings[(LocString)key] as string;
             else if (m_CliLoc != null)
                 value = m_CliLoc.GetString(key);
 
@@ -786,7 +786,7 @@ namespace Assistant
                         if (controls)
                             m_Controls[key] = value;
                         else
-                            m_Strings[(LocString) Convert.ToInt32(key)] = value;
+                            m_Strings[(LocString)Convert.ToInt32(key)] = value;
                     }
                     catch
                     {
@@ -819,7 +819,6 @@ namespace Assistant
             if (m_CliLocName == null || m_CliLocName.Length <= 0)
                 m_CliLocName = "enu";
 
-            string fileName = "[CliLoc]";
             try
             {
                 Utility.Logger.Info($"Attempting to load cliloc from {m_CliLocName}");
@@ -844,7 +843,7 @@ namespace Assistant
                 {
                     string filePath = Ultima.Files.GetFilePath(String.Format("cliloc.{0}", m_CliLocName));
                     RazorEnhanced.UI.RE_MessageBox.Show("CLILOC Error",
-                        $"There was an exception while attempting to load:\r\n{filePath}", 
+                        $"There was an exception while attempting to load:\r\n{filePath}",
                         ok: "Ok", no: null, cancel: null, backColor: null);
 
                 }
@@ -916,7 +915,7 @@ namespace Assistant
 
                 if (controls[i] is ListView)
                 {
-                    foreach (ColumnHeader ch in ((ListView) controls[i]).Columns)
+                    foreach (ColumnHeader ch in ((ListView)controls[i]).Columns)
                     {
                         find = String.Format("{0}::{1}::{2}", name, controls[i].Name, ch.Index);
                         str = m_Controls[find] as string;
@@ -941,7 +940,7 @@ namespace Assistant
                 form.Text = text;
 
             if (form is MainForm)
-                ((MainForm) form).UpdateTitle();
+                ((MainForm)form).UpdateTitle();
         }
         internal static string ParsePropsCliloc(string instring)
         {

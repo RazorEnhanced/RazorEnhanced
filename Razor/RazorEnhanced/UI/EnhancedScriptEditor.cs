@@ -1,30 +1,22 @@
+using Accord.Math;
 using Assistant;
+using FastColoredTextBoxNS;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
+using IronPython.Runtime.Operations;
+using Microsoft.Scripting.Utils;
+using RazorEnhanced.UOS;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using FastColoredTextBoxNS;
-using System.Text.RegularExpressions;
-using Accord.Math;
-using Microsoft.Scripting.Utils;
-using RazorEnhanced.UOS;
-using System.Threading.Tasks;
-using CUO_API;
-using IronPython.Runtime.Operations;
-using System.Windows.Controls;
-using Accord.Statistics.Filters;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using NLog;
-using Microsoft.Scripting.Ast;
 
 namespace RazorEnhanced.UI
 {
@@ -55,8 +47,10 @@ namespace RazorEnhanced.UI
 
         public static EnhancedScriptEditor Search(string fullpath)
         {
-            foreach (var editor in m_EnhancedScriptEditors) {
-                if (editor.Script != null && editor.Script.Fullpath == fullpath) {
+            foreach (var editor in m_EnhancedScriptEditors)
+            {
+                if (editor.Script != null && editor.Script.Fullpath == fullpath)
+                {
                     return editor;
                 }
             }
@@ -280,12 +274,14 @@ namespace RazorEnhanced.UI
             m_popupMenu.ToolTipDuration = 5000;
             m_popupMenu.AppearInterval = 100;
 
-            if (!LoadFromFile(filename)) {
+            if (!LoadFromFile(filename))
+            {
                 var language = EnhancedScript.ExtToLanguage(filetype);
                 LoadNewFile(language);
             }
 
-            if (m_Script.GetLanguage() == ScriptLanguage.PYTHON) {
+            if (m_Script.GetLanguage() == ScriptLanguage.PYTHON)
+            {
                 m_Script.ScriptEngine.SetTracebackPython(null);
             }
             m_Script.ScriptEngine.SetStdout(this.SetErrorBox);
@@ -298,7 +294,8 @@ namespace RazorEnhanced.UI
             m_EnhancedScriptEditors.Add(this);
         }
 
-        public void LoadLanguage(ScriptLanguage language = ScriptLanguage.UNKNOWN) {
+        public void LoadLanguage(ScriptLanguage language = ScriptLanguage.UNKNOWN)
+        {
             switch (language)
             {
                 default:
@@ -395,7 +392,8 @@ namespace RazorEnhanced.UI
         }
 
 
-        public void InitPythonSyntaxHighlight() {
+        public void InitPythonSyntaxHighlight()
+        {
             //Dalamar: Trying to inject SyntaxHighlight (and Autocomplete) from AutoDoc
             //TODO: make it work
             // # Syntax Highlight
@@ -718,7 +716,8 @@ namespace RazorEnhanced.UI
 
         private void Start(bool debugger)
         {
-            if (autoclearToolStripMenuItem.Checked) {
+            if (autoclearToolStripMenuItem.Checked)
+            {
                 outputConsole.Clear();
             }
 
@@ -1116,7 +1115,8 @@ namespace RazorEnhanced.UI
 
             var language = m_Script.GetLanguage();
             string filter;
-            switch (language) {
+            switch (language)
+            {
                 default:
                 case ScriptLanguage.PYTHON:
                     filter = "Python Files|*.py|Text Files|*.txt"; break;
@@ -1137,7 +1137,9 @@ namespace RazorEnhanced.UI
             {
                 save.InitialDirectory = Path.GetDirectoryName(m_Script.Fullpath);
                 save.FileName = m_Script.Filename;
-            } else {
+            }
+            else
+            {
                 save.InitialDirectory = Path.Combine(Assistant.Engine.RootPath, "Scripts");
             }
 
@@ -1156,7 +1158,8 @@ namespace RazorEnhanced.UI
                     m_Script = EnhancedScript.FromFile(fullpath, editor: true);
                     m_Script.Text = fastColoredTextBoxEditor.Text;
                 }
-                else {
+                else
+                {
                     m_Script.Fullpath = fullpath;
                 }
 
@@ -1179,10 +1182,13 @@ namespace RazorEnhanced.UI
             if (editorContent != null && editorContent != "")
             {
                 string fileContent = "";
-                if (m_Script.Exist) {
-                    try {
+                if (m_Script.Exist)
+                {
+                    try
+                    {
                         fileContent = File.ReadAllText(m_Script.Fullpath);
-                    } catch { }
+                    }
+                    catch { }
                 }
 
                 if (fileContent != editorContent)
@@ -1190,15 +1196,18 @@ namespace RazorEnhanced.UI
                     var dialogResult = RazorEnhanced.UI.RE_MessageBox.Show("Save current file?",
                         $"Save file named:\r\n{m_Script.Fullpath}",
                         ok: "Yes", no: "No", cancel: "Cancel", backColor: null);
-                    if (dialogResult == DialogResult.Cancel) {
+                    if (dialogResult == DialogResult.Cancel)
+                    {
                         return false;
                     }
-                    if (dialogResult == DialogResult.No) {
+                    if (dialogResult == DialogResult.No)
+                    {
                         if (m_Script.Exist)
                         {
                             m_Script.Load(true);
                         }
-                        else {
+                        else
+                        {
                             UnloadScript();
                         }
                         return true;
@@ -1241,7 +1250,8 @@ namespace RazorEnhanced.UI
             return true;
         }
 
-        public void UnloadScript() {
+        public void UnloadScript()
+        {
             fastColoredTextBoxEditor.Text = String.Empty;
             if (m_Script.Editor)
             {
@@ -1303,9 +1313,11 @@ namespace RazorEnhanced.UI
         {
             if (!m_Script.IsRunning)
             {
-                if (m_Recorder == null) {
+                if (m_Recorder == null)
+                {
                     m_Recorder = ScriptRecorderService.RecorderForLanguage(m_Script.Language);
-                    m_Recorder.Output = (code) => {
+                    m_Recorder.Output = (code) =>
+                    {
                         fastColoredTextBoxEditor.Text += "\n" + code;
                     };
                 }
@@ -1609,11 +1621,11 @@ namespace RazorEnhanced.UI
         private void CopyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             //if (messagelistBox.SelectedItems == null) return; 
-            
+
 
             if (outputConsole.SelectedText == "") return;  // Nothing selected
             Utility.ClipBoardCopy(outputConsole.SelectedText);
-            
+
         }
 
         private void ToolStripInspectAlias_Click(object sender, EventArgs e)
@@ -1653,7 +1665,7 @@ namespace RazorEnhanced.UI
         public string Description;
         public string Notes;
 
-        public ToolTipDescriptions(string title, string[] parameter, string returns, string description, string notes="")
+        public ToolTipDescriptions(string title, string[] parameter, string returns, string description, string notes = "")
         {
             Title = title;
             Parameters = parameter;
@@ -1677,9 +1689,10 @@ namespace RazorEnhanced.UI
             complete_description += "\nParameters: ";
             if (Parameters.Length > 0)
             {
-                complete_description += "\n" + String.Join("\n", Parameters.Select(text=>"- "+text));
+                complete_description += "\n" + String.Join("\n", Parameters.Select(text => "- " + text));
             }
-            else {
+            else
+            {
                 complete_description += "None";
             }
             complete_description += "\n";
@@ -1688,7 +1701,8 @@ namespace RazorEnhanced.UI
             complete_description += $"\nReturns: {Returns}";
 
             //Notes
-            if (Notes.Length > 0){
+            if (Notes.Length > 0)
+            {
                 complete_description += "\n---\n" + Notes;
             }
             return complete_description;

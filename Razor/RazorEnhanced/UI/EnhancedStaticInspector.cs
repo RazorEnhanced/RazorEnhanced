@@ -1,9 +1,9 @@
+using Assistant;
 using System;
-using System.Windows.Forms;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Drawing;
-using Assistant;
+using System.Globalization;
+using System.Windows.Forms;
 using Ultima;
 
 namespace RazorEnhanced.UI

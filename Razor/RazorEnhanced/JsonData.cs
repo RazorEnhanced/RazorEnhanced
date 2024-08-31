@@ -1,13 +1,11 @@
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace JsonData
 {
 
-    public class TargetGUI  : RazorEnhanced.ListAbleItem
+    public class TargetGUI : RazorEnhanced.ListAbleItem
     {
         // Selector List
         internal static List<string> Selectors = new List<string>

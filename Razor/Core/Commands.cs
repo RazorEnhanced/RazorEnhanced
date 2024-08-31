@@ -1,12 +1,11 @@
+using Assistant.UI;
+using RazorEnhanced.UI;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
-using System.Threading;
 using System.Net.NetworkInformation;
-using RazorEnhanced.UI;
-using Assistant.UI;
-using Newtonsoft.Json;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -277,7 +276,7 @@ namespace Assistant
                     script.Start();
                 return true;
             }
-            
+
             RazorEnhanced.Misc.SendMessage("PlayScript: Script not exist", 33, false);
             return false;
         }
@@ -368,7 +367,7 @@ namespace Assistant
             }
 
             RazorEnhanced.ScriptRecorderService.Instance.Record_UnicodeSpeech(type, text, hue);
-            
+
 
             text = text.Trim();
 

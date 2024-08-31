@@ -27,12 +27,13 @@ namespace RazorEnhanced
         CSHARP,
         UOSTEAM,
     }
-    public class EnhancedScriptService { 
+    public class EnhancedScriptService
+    {
         public readonly static EnhancedScriptService Instance = new EnhancedScriptService();
 
-        private  readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
+        private readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
 
-        internal List<EnhancedScript> ScriptList() 
+        internal List<EnhancedScript> ScriptList()
         {
             var retList = new List<EnhancedScript>();
             foreach (var script in m_ScriptList.Values)
@@ -134,10 +135,10 @@ namespace RazorEnhanced
         public readonly static EnhancedScriptService Service = EnhancedScriptService.Instance;
 
         private ScriptItem m_ScriptItem;
-        private string m_Fullpath="";
+        private string m_Fullpath = "";
         private System.IO.FileSystemWatcher m_Watcher;
         private string m_Text = "";
-        
+
         private bool m_Wait;
         private bool m_Loop;
         private bool m_AutoStart;
@@ -164,8 +165,8 @@ namespace RazorEnhanced
         public event Action<EnhancedScript> OnStop;
         public event Action<EnhancedScript, string> OnError;
         public event Action<EnhancedScript, string> OnOutput;
-        
-        
+
+
 
         public static ScriptLanguage ExtToLanguage(string extenstion)
         {
@@ -223,14 +224,14 @@ namespace RazorEnhanced
             if (!File.Exists(fullpath)) { return null; }
 
             var script = Service.Search(fullpath);
-            if (script!=null){ return script; }
+            if (script != null) { return script; }
 
             script = new EnhancedScript(fullpath, "", wait, loop, hotkey, hotkeyPass, autostart, position, preload, editor);
             script.Load();
             return script;
         }
 
-        public static EnhancedScript FromText(string content, ScriptLanguage language=ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey=Keys.None, bool hotkeyPass=false, bool run = false, int position=-1, bool autostart = false, bool preload = true)
+        public static EnhancedScript FromText(string content, ScriptLanguage language = ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool run = false, int position = -1, bool autostart = false, bool preload = true)
         {
             var filename = EnhancedScript.TempFilename(language);
             EnhancedScript script = new EnhancedScript(filename, content, wait, loop, hotkey, hotkeyPass, autostart, position, preload, true);
@@ -244,18 +245,18 @@ namespace RazorEnhanced
         {
 
             m_Fullpath = fullpath;
-            
+
             m_Text = text;
             m_Wait = wait;
             m_Loop = loop;
             m_Hotkey = hotkey;
             m_HotKeyPass = hotkeyPass;
             m_AutoStart = autostart;
-            
+
 
             m_Preload = preload;
             m_Editor = editor;
-            
+
 
             StartMessage = true;
             StopMessage = false;
@@ -282,7 +283,8 @@ namespace RazorEnhanced
             return Service.AddScript(this);
         }
 
-        public bool Remove() { 
+        public bool Remove()
+        {
             return Service.RemoveScript(this);
         }
 
@@ -304,7 +306,8 @@ namespace RazorEnhanced
                         content = ReadAllTextWithoutLocking(Fullpath);
                     }
                 }
-                else {
+                else
+                {
                     Misc.SendMessage("file not found:" + this.Filename, 178);
                 }
             }
@@ -321,13 +324,14 @@ namespace RazorEnhanced
                 if (Preload)
                     InitEngine();
             }
-            OnLoad?.Invoke(this,true);
+            OnLoad?.Invoke(this, true);
             return true;
         }
 
         public bool InitEngine()
         {
-            if (m_Text.Trim() == "") {
+            if (m_Text.Trim() == "")
+            {
                 return false;
             }
             return m_ScriptEngine.Load();
@@ -336,15 +340,19 @@ namespace RazorEnhanced
 
 
 
-        public bool Save(){
-            try {
+        public bool Save()
+        {
+            try
+            {
                 lock (EnhancedScriptEngine.IoLock)
                 {
                     File.WriteAllText(Fullpath, Text);
                 }
                 LastModified = File.GetLastWriteTime(Fullpath);
                 Load(true);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Misc.SendMessage("ERROR:EnhancedScript:Save: " + e.Message, 178);
                 return false;
             }
@@ -356,14 +364,15 @@ namespace RazorEnhanced
 
 
         public ScriptLanguage SetLanguage(ScriptLanguage language = ScriptLanguage.UNKNOWN)
-        {    
-            m_Language = ( language != ScriptLanguage.UNKNOWN ) ? language : GuessLanguage(); 
+        {
+            m_Language = (language != ScriptLanguage.UNKNOWN) ? language : GuessLanguage();
             return m_Language;
         }
 
         public ScriptLanguage GetLanguage()
         {
-            if (m_Language == ScriptLanguage.UNKNOWN) {
+            if (m_Language == ScriptLanguage.UNKNOWN)
+            {
                 m_Language = GuessLanguage();
             }
             return m_Language;
@@ -371,7 +380,7 @@ namespace RazorEnhanced
 
         public ScriptLanguage GuessLanguage()
         {
-            
+
             if (m_Language == ScriptLanguage.UNKNOWN && HasValidPath)
             {
                 string ext = Path.GetExtension(Fullpath).ToLower();
@@ -419,7 +428,7 @@ namespace RazorEnhanced
             do
             {
                 if (World.Player == null) return;
-              
+
                 try
                 {
                     //EventManager.Instance.Unsubscribe(m_Thread);
@@ -427,23 +436,25 @@ namespace RazorEnhanced
                     m_ScriptEngine.Run();
                     OnStop?.Invoke(this);
                 }
-                catch (ThreadAbortException ex) {
+                catch (ThreadAbortException ex)
+                {
                     OnStop?.Invoke(this);
-                    return; 
+                    return;
                 }
                 catch (Exception ex)
                 {
                     OnError?.Invoke(this, ex.Message);
                     Misc.SendMessage($"EnhancedScript:AsyncStart:{ex.GetType()}:\n{ex.Message}", 138);
                 }
-                
+
                 Misc.Pause(1);
             } while (Loop);
         }
 
         internal void Stop()
         {
-            if (IsRunning) {
+            if (IsRunning)
+            {
                 lock (ScriptStateLock)
                 {
                     try
@@ -479,7 +490,7 @@ namespace RazorEnhanced
                 if (m_Thread == null) { return "Stopped"; }
                 switch (m_Thread.ThreadState)
                 {
-                    
+
                     case ThreadState.AbortRequested:
                         return "Stopping";
 
@@ -496,7 +507,7 @@ namespace RazorEnhanced
             }
         }
 
-        
+
         internal Thread Thread { get => m_Thread; }
 
         internal EnhancedScriptEngine ScriptEngine { get => m_ScriptEngine; }
@@ -514,9 +525,11 @@ namespace RazorEnhanced
         internal string Fullpath
         {
             get { lock (m_Lock) { return m_Fullpath; } }
-            set { 
+            set
+            {
                 lock (m_Lock) { m_Fullpath = value; }
-                if (m_ScriptItem != null){
+                if (m_ScriptItem != null)
+                {
                     m_ScriptItem.FullPath = m_Fullpath;
                     m_ScriptItem.Filename = Filename;
                 }
@@ -526,22 +539,29 @@ namespace RazorEnhanced
         internal ScriptItem ScriptItem
         {
             get { lock (m_Lock) { return ToScriptItem(); } }
-            set { lock (m_Lock) { 
+            set
+            {
+                lock (m_Lock)
+                {
                     m_ScriptItem = value;
                     m_Fullpath = value.FullPath;
-                } }
+                }
+            }
         }
 
         internal bool HasValidPath
         {
-            get { 
-                lock (m_Lock) {
+            get
+            {
+                lock (m_Lock)
+                {
                     if (m_Fullpath == null || m_Fullpath == "") { return false; }
                     if (Filename == null || Filename == "") { return false; }
                     var basedir = Path.GetDirectoryName(m_Fullpath);
                     if (!Directory.Exists(basedir)) { return false; }
                     return true;
-                } }
+                }
+            }
         }
 
         internal bool Exist
@@ -563,12 +583,14 @@ namespace RazorEnhanced
             get { lock (m_Lock) { return GetLanguage(); } }
             set { lock (m_Lock) { SetLanguage(value); } }
         }
-        
 
 
-        internal bool Wait{
-            get{lock (m_Lock){return m_Wait;}}
-            set {
+
+        internal bool Wait
+        {
+            get { lock (m_Lock) { return m_Wait; } }
+            set
+            {
                 lock (m_Lock) { m_Wait = value; }
                 if (m_ScriptItem != null)
                 {
@@ -577,10 +599,13 @@ namespace RazorEnhanced
             }
         }
 
-        
-        internal bool Loop{
-            get{lock (m_Lock){return m_Loop;}}
-            set{lock (m_Lock){m_Loop = value;}
+
+        internal bool Loop
+        {
+            get { lock (m_Lock) { return m_Loop; } }
+            set
+            {
+                lock (m_Lock) { m_Loop = value; }
                 if (m_ScriptItem != null)
                 {
                     m_ScriptItem.Loop = m_Loop;
@@ -588,10 +613,13 @@ namespace RazorEnhanced
             }
         }
 
-        
-        internal bool AutoStart{
-            get{lock (m_Lock){return m_AutoStart;}}
-            set{lock (m_Lock){m_AutoStart = value;}
+
+        internal bool AutoStart
+        {
+            get { lock (m_Lock) { return m_AutoStart; } }
+            set
+            {
+                lock (m_Lock) { m_AutoStart = value; }
                 if (m_ScriptItem != null)
                 {
                     m_ScriptItem.AutoStart = m_AutoStart;
@@ -613,7 +641,9 @@ namespace RazorEnhanced
         internal Keys HotKey
         {
             get { lock (m_Lock) { return m_Hotkey; } }
-            set { lock (m_Lock) { m_Hotkey = value; }
+            set
+            {
+                lock (m_Lock) { m_Hotkey = value; }
                 if (m_ScriptItem != null)
                 {
                     m_ScriptItem.Hotkey = m_Hotkey;
@@ -647,7 +677,7 @@ namespace RazorEnhanced
             }
         }
 
-        
+
 
 
         internal bool IsRunning
@@ -657,12 +687,12 @@ namespace RazorEnhanced
                 lock (m_Lock)
                 {
                     if (m_Thread == null) { return false; }
-                    if (  (m_Thread.ThreadState & 
-                          ( ThreadState.Unstarted | 
-                            ThreadState.Stopped | 
-                            ThreadState.Aborted | 
-                            ThreadState.StopRequested | 
-                            ThreadState.AbortRequested) ) == 0)
+                    if ((m_Thread.ThreadState &
+                          (ThreadState.Unstarted |
+                            ThreadState.Stopped |
+                            ThreadState.Aborted |
+                            ThreadState.StopRequested |
+                            ThreadState.AbortRequested)) == 0)
                         //if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
                         return true;
                     else
@@ -689,7 +719,7 @@ namespace RazorEnhanced
 
     }
 
-// --------------------------------------------- ENHANCED SCRIPT ENGINE ----------------------------------------------------
+    // --------------------------------------------- ENHANCED SCRIPT ENGINE ----------------------------------------------------
 
     public class EnhancedScriptEngine
     {
@@ -702,7 +732,7 @@ namespace RazorEnhanced
         public CSharpEngine csEngine;
         public UOSteamEngine uosEngine;
 
-        public Assembly csProgram;                                                    
+        public Assembly csProgram;
 
         private TracebackDelegate m_pyTraceback;
         private UOSTracebackDelegate m_uosTraceback;
@@ -711,7 +741,7 @@ namespace RazorEnhanced
 
         private bool m_Suspended = false;
         private ManualResetEvent m_SuspendedMutex;
-        
+
 
         public EnhancedScriptEngine(EnhancedScript script, bool autoLoad = true)
         {
@@ -726,16 +756,18 @@ namespace RazorEnhanced
         }
 
         public bool Suspended
-        { 
+        {
             get { return m_Suspended; }
-            set { 
-                if (value) { Suspend();} 
+            set
+            {
+                if (value) { Suspend(); }
                 else { Resume(); }
-            } 
+            }
         }
         public void Suspend()
         {
-            if (m_Script.Language == ScriptLanguage.CSHARP) {
+            if (m_Script.Language == ScriptLanguage.CSHARP)
+            {
                 Misc.SendMessage("WARNING: Script Suspend is not supported by c# scripts.");
                 return;
             }
@@ -789,16 +821,20 @@ namespace RazorEnhanced
         {
             //Misc.SendMessage(message);
             SendMessageScriptError(message);
-            if (m_stdoutWriter != null) {
+            if (m_stdoutWriter != null)
+            {
                 m_stdoutWriter(message);
             }
         }
         public void SendError(string message)
         {
             SendMessageScriptError(message, 138);
-            if (m_stderrWriter != null) {
+            if (m_stderrWriter != null)
+            {
                 m_stderrWriter(message);
-            } else if (m_stdoutWriter != null) {
+            }
+            else if (m_stdoutWriter != null)
+            {
                 m_stdoutWriter(message);
             }
         }
@@ -809,7 +845,8 @@ namespace RazorEnhanced
         /// </summary>
         public bool Load()
         {
-            if (m_Script.Text.Trim() == "") { 
+            if (m_Script.Text.Trim() == "")
+            {
                 //what if there are only comments but no actual code ? 
                 m_Loaded = false;
                 return false;
@@ -848,14 +885,18 @@ namespace RazorEnhanced
             }
 
             bool result;
-            try {
-                switch (m_Script.Language) {
+            try
+            {
+                switch (m_Script.Language)
+                {
                     default:
                     case ScriptLanguage.PYTHON: result = RunPython(); break;
                     case ScriptLanguage.CSHARP: result = RunCSharp(); break;
                     case ScriptLanguage.UOSTEAM: result = RunUOSteam(); break;
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 result = HandleException(ex);
             }
 
@@ -873,7 +914,8 @@ namespace RazorEnhanced
                 pyEngine.SetTrace(TracebackPython);
 
                 pyEngine.SetStderr(
-                    (string message) => {
+                    (string message) =>
+                    {
                         Misc.SendMessage(message, 178);
                         if (m_stderrWriter == null) return;
                         m_stderrWriter.Invoke(message);
@@ -881,7 +923,8 @@ namespace RazorEnhanced
                 );
 
                 pyEngine.SetStdout(
-                    (string message) => {
+                    (string message) =>
+                    {
                         Misc.SendMessage(message);
                         if (m_stdoutWriter == null) return;
                         m_stdoutWriter.Invoke(message);
@@ -904,11 +947,13 @@ namespace RazorEnhanced
                         content = ReadAllTextWithoutLocking(m_Script.Fullpath);
                     }
                 }
-                if (content == null || content == "") { 
-                    return false; 
-                } 
+                if (content == null || content == "")
+                {
+                    return false;
+                }
 
-                if (!pyEngine.Load(content, m_Script.Fullpath)) {
+                if (!pyEngine.Load(content, m_Script.Fullpath))
+                {
                     return false;
                 }
 
@@ -944,16 +989,18 @@ namespace RazorEnhanced
             SuspendCheck();
             return true;
         }
-        private void SuspendCheck() {
+        private void SuspendCheck()
+        {
             if (Suspended) m_SuspendedMutex.WaitOne();
         }
-        
+
         private bool RunPython()
         {
             try
             {
                 return pyEngine.Execute();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return HandleException(ex);
             }
@@ -1038,10 +1085,11 @@ namespace RazorEnhanced
                 }
                 */
 
-                
+
 
                 uosEngine.SetStderr(
-                    (string message) => {
+                    (string message) =>
+                    {
                         Misc.SendMessage(message, 178);
                         if (m_stderrWriter == null) return;
                         m_stderrWriter.Invoke(message);
@@ -1049,7 +1097,8 @@ namespace RazorEnhanced
                 );
 
                 uosEngine.SetStdout(
-                    (string message) => {
+                    (string message) =>
+                    {
                         Misc.SendMessage(message);
                         if (m_stdoutWriter == null) return;
                         m_stdoutWriter.Invoke(message);
@@ -1083,14 +1132,15 @@ namespace RazorEnhanced
         // ----------------------------------------- Exceptions & Log -----------------------------
         public bool HandleException(Exception ex)
         {
-            
+
             var exceptionType = ex.GetType();
-            
+
             // GRACEFUL/SILENT EXIT
             if (exceptionType == typeof(ThreadAbortException)) { return true; } // thread stopped: All good
             if (exceptionType == typeof(SystemExitException) ||
-                exceptionType == typeof(UOSStopError)   
-                ) { // sys.exit() or end of script
+                exceptionType == typeof(UOSStopError)
+                )
+            { // sys.exit() or end of script
                 m_Script.Stop();
                 return true;
             }
@@ -1143,7 +1193,8 @@ namespace RazorEnhanced
         private void OutputException(string message)
         {
             SendError("ERROR " + m_Script.Filename + ": " + message);
-            if (Scripts.ScriptErrorLog) {
+            if (Scripts.ScriptErrorLog)
+            {
                 LogException(message);
             }
         }
@@ -1171,6 +1222,6 @@ namespace RazorEnhanced
             catch { }
 
             log.Clear();
-        }       
+        }
     }
 }

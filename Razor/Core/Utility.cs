@@ -1,9 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using System.Threading;
-using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 //using System.Linq;
 
 
@@ -536,7 +535,8 @@ namespace Assistant
             {
                 foreach (var f in Directory.GetFiles(directory))
                 {
-                    if (string.Equals(Path.GetFileName(f), fileName, StringComparison.OrdinalIgnoreCase)) {
+                    if (string.Equals(Path.GetFileName(f), fileName, StringComparison.OrdinalIgnoreCase))
+                    {
                         return f;
                     }
                 }

@@ -1,10 +1,10 @@
+using Assistant.UI;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using Assistant.UI;
+using System.Windows.Forms;
 
 
 namespace Assistant
@@ -52,7 +52,8 @@ namespace Assistant
             return img;
         }
 
-        internal static void CaptureNow() {
+        internal static void CaptureNow()
+        {
             CaptureNowPath();
         }
         internal static string CaptureNowPath()

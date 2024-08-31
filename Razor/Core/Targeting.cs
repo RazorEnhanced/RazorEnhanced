@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Assistant
 {
@@ -39,7 +38,7 @@ namespace Assistant
         private static bool m_AllowGround;
         private static uint m_CurrentID;
         private static byte m_CurFlags;
-        
+
         private static uint m_PreviousID;
         private static bool m_PreviousGround;
         private static byte m_PrevFlags;
@@ -797,7 +796,7 @@ namespace Assistant
 
             m_ClientTarget = false;
 
-            
+
             RazorEnhanced.ScriptRecorderService.Instance.Record_Target(info);
 
             if (info.Serial != 0 && info.Serial.IsMobile)

@@ -1,26 +1,19 @@
 using Assistant;
 using JsonData;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
-using System.Web.Security;
 //using System.DirectoryServices;
-using static RazorEnhanced.Settings;
 using System.Net.NetworkInformation;
-using static RazorEnhanced.AutoLoot.AutoLootItem;
-using System.Threading;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.Web.UI.WebControls;
-using System.Web.Profile;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows.Forms;
+using static RazorEnhanced.AutoLoot.AutoLootItem;
 
 
 namespace RazorEnhanced
@@ -208,7 +201,7 @@ namespace RazorEnhanced
 
             var scriptItems = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RazorEnhanced.Scripts.ScriptItem>>(fileContent);
             Scripts.LoadEnhancedScripts(scriptItems);
-            
+
             DataTable temp = initDict[tableName](tableName);
             return temp;
         }
@@ -308,7 +301,7 @@ namespace RazorEnhanced
             string hash = HashJsonNoWhitespace(xml);
             if (FileContentHash.ContainsKey(tableName) && FileContentHash[tableName] == hash)
                 return;
-            File.WriteAllText(filename + "." + tableName, xml); 
+            File.WriteAllText(filename + "." + tableName, xml);
             FileContentHash[tableName] = hash;
         }
         ///
@@ -435,17 +428,17 @@ namespace RazorEnhanced
 
         public static string GetComputerUniqueId()
         {
-                try
-                {
-                    String firstMacAddress = NetworkInterface
-                        .GetAllNetworkInterfaces()
-                        .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                        .Select(nic => nic.GetPhysicalAddress().ToString())
-                        .FirstOrDefault();
-                    return firstMacAddress;
-                }
-                catch (Exception)
-                { }
+            try
+            {
+                String firstMacAddress = NetworkInterface
+                    .GetAllNetworkInterfaces()
+                    .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                    .Select(nic => nic.GetPhysicalAddress().ToString())
+                    .FirstOrDefault();
+                return firstMacAddress;
+            }
+            catch (Exception)
+            { }
             return "Some crap I made up112.45678-234523";
         }
         internal static string key = GetComputerUniqueId();
@@ -2357,7 +2350,7 @@ namespace RazorEnhanced
             general.Columns.Add("ShowAgentMessageCheckBox", typeof(bool));
             general.Columns.Add("ColorFlagsSelfHighlightCheckBox", typeof(bool));
             general.Columns.Add("LimitDamageDisplayValue", typeof(int));
-            
+
 
             // Parametri Tab (Enhanced ToolBar)
             general.Columns.Add("LockToolBarCheckBox", typeof(bool));
@@ -2465,7 +2458,7 @@ namespace RazorEnhanced
             general.Columns.Add("ForceSpellHue", typeof(bool));
             general.Columns.Add("SpellFormat", typeof(string));
             general.Columns.Add("MessageLevel", typeof(int));
-            general.Columns.Add("HiddedAutoOpenDoors", typeof(bool));            
+            general.Columns.Add("HiddedAutoOpenDoors", typeof(bool));
             general.Columns.Add("ChkNoRunStealth", typeof(bool));
             general.Columns.Add("FilterPoison", typeof(bool));
             general.Columns.Add("EnhancedMapPath", typeof(string));
@@ -2843,7 +2836,7 @@ namespace RazorEnhanced
             }
 
             private static readonly object _lock = new object();
-            internal static Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> ItemsRead(string list, List<string> includedLists = null, bool expand=true)
+            internal static Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> ItemsRead(string list, List<string> includedLists = null, bool expand = true)
             {
                 if (!Monitor.TryEnter(_lock))
                     return null;
@@ -2851,7 +2844,7 @@ namespace RazorEnhanced
                 try
                 {
 
-                        Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
+                    Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
 
                     if (RazorEnhanced.AutoLoot.LockTable)
                         return lootList;
@@ -3284,12 +3277,12 @@ namespace RazorEnhanced
                 bags = 0;
                 bagd = 0;
                 delay = 0;
-                var listname = _listname.ToLower(); 
+                var listname = _listname.ToLower();
                 foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
                 {
                     var rowName = (string)row["Description"];
                     rowName = rowName.ToLower();
-                    if ( rowName == listname)
+                    if (rowName == listname)
                     {
                         bags = Convert.ToInt32(row["Source"]);
                         bagd = Convert.ToInt32(row["Destination"]);
@@ -3725,7 +3718,7 @@ namespace RazorEnhanced
                     bool selected = (bool)row["Selected"];
                     bool useUo3D = (bool)row["UO3dEquipUnEquip"];
 
-                    RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, useUo3D, selected );
+                    RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, useUo3D, selected);
                     lists.Add(list);
                 }
 
@@ -4775,7 +4768,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadScript()
             {
-                List < RazorEnhanced.HotKey.HotKeyData > retList = new List<RazorEnhanced.HotKey.HotKeyData>();
+                List<RazorEnhanced.HotKey.HotKeyData> retList = new List<RazorEnhanced.HotKey.HotKeyData>();
 
                 foreach (Scripts.ScriptItem item in Scripts.PyScripts)
                 {
@@ -4795,8 +4788,8 @@ namespace RazorEnhanced
                     Keys key = item.Hotkey;
                     retList.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
                 }
-                
-                return retList; 
+
+                return retList;
             }
 
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadDress()
@@ -4907,7 +4900,7 @@ namespace RazorEnhanced
                 }
 
                 if (Scripts.UsingKey(key))
-                { 
+                {
                     return true;
                 }
                 if (m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => (Keys)Convert.ToInt32(row["HotKey"]) == key))

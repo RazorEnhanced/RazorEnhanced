@@ -13,7 +13,7 @@ namespace Assistant
             if (m_Screen != null)
                 return;
 
-            Thread t = new Thread(new ThreadStart(ThreadMain)) {Name = "Razor Splash Screen"};
+            Thread t = new Thread(new ThreadStart(ThreadMain)) { Name = "Razor Splash Screen" };
             t.Start();
             while (m_Screen == null)
                 Thread.Sleep(1);

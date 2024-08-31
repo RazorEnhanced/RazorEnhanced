@@ -2,12 +2,10 @@ using Assistant;
 using Assistant.UI;
 
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Ultima;
 
 namespace RazorEnhanced
 {
@@ -43,12 +41,12 @@ namespace RazorEnhanced
                 var itPrice = p.ReadUInt16();
                 var itNameLength = p.ReadUInt16();
                 string itName = null;
-                
+
                 if (itNameLength > 0)
                 {
                     itName = p.ReadString(itNameLength);
                 }
-                
+
                 var newItem = Assistant.Item.Factory(itSerial, itId);
                 newItem.Hue = itHue;
                 newItem.Amount = itAmount;
@@ -61,7 +59,7 @@ namespace RazorEnhanced
 
             Vendor.LastSellList = sellItems;
         }
-        
+
         /// <summary>@nodoc</summary>
         static public void StoreBuyList(PacketReader p, PacketHandlerEventArgs args)
         {
@@ -79,7 +77,7 @@ namespace RazorEnhanced
 
             if (container.Contains.Count == 0)
                 return;
-            else 
+            else
             {
                 // for debug
             }
@@ -203,7 +201,7 @@ namespace RazorEnhanced
                     return true;
                 }
             }
-            finally 
+            finally
             {
                 Assistant.PacketHandlers.HideContextUntil = DateTime.Now; // clear it at end
             }
@@ -220,7 +218,7 @@ namespace RazorEnhanced
         /// default value = -1 means don't check price</param>
         /// Returns True if a purchase is made, False otherwise
         /// </summary>
-        public static bool Buy(int vendorSerial, int itemID, int amount, int maxPrice=-1)
+        public static bool Buy(int vendorSerial, int itemID, int amount, int maxPrice = -1)
         {
             try
             {
@@ -310,7 +308,7 @@ namespace RazorEnhanced
                     }
                 }
             }
-            finally 
+            finally
             {
                 Assistant.PacketHandlers.HideContextUntil = DateTime.Now; // clear it at end
             }
@@ -335,7 +333,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="vendorSerial">Serial of the Vendor (default: -1 - most recent trade)</param>
         /// <returns>A list of BuyItem</returns>
-        public static List<BuyItem> BuyList(int vendorSerial=-1)
+        public static List<BuyItem> BuyList(int vendorSerial = -1)
         {
             List<BuyItem> buyList = new List<BuyItem>();
             if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
@@ -401,7 +399,7 @@ namespace RazorEnhanced
             internal int Bag { get { return m_Bag; } }
 
             [JsonProperty("Selected")]
-            internal bool Selected { get; set;}
+            internal bool Selected { get; set; }
             [JsonProperty("Enabled")]
 
             internal bool Enabled { get; set; }
@@ -774,7 +772,7 @@ namespace RazorEnhanced
         private static bool m_completeAmount;
         private static bool m_enabled;
         [Serializable]
-        public class BuyAgentItem  : ListAbleItem
+        public class BuyAgentItem : ListAbleItem
         {
             private readonly string m_Name;
             public string Name { get { return m_Name; } }
@@ -810,11 +808,11 @@ namespace RazorEnhanced
         internal static bool CompareName
         {
             get { return m_comparename; }
-            set 
-                { 
-                    m_comparename = value;
-                    Assistant.Engine.MainWindow.SafeAction(s => s.BuyCompareNameCheckBox.Checked = value);
-                }
+            set
+            {
+                m_comparename = value;
+                Assistant.Engine.MainWindow.SafeAction(s => s.BuyCompareNameCheckBox.Checked = value);
+            }
         }
 
         internal static bool Enabled
@@ -1003,7 +1001,7 @@ namespace RazorEnhanced
         }
 
         internal class ShopItem
-        { 
+        {
             internal string name;
             internal uint price;
         }
@@ -1060,7 +1058,7 @@ namespace RazorEnhanced
 
             Assistant.Serial serial = p.ReadUInt32();
             ushort gump = p.ReadUInt16();
-            
+
             Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
             if (vendor == null)
                 return;
@@ -1139,7 +1137,7 @@ namespace RazorEnhanced
                 }
             }
 
-            m_shoplist.Clear(); 
+            m_shoplist.Clear();
             if (buyList.Count <= 0)
                 return;
 
@@ -1218,7 +1216,7 @@ namespace RazorEnhanced
                 if (Engine.MainWindow.BuyCheckBox.Checked == true) // If it is running force stop change list and restart
                 {
                     Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = false);
-                    Assistant.Engine.MainWindow.SafeAction(s => {s.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
+                    Assistant.Engine.MainWindow.SafeAction(s => { s.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(listName); InitGrid(listName); });  // change list
                     Assistant.Engine.MainWindow.SafeAction(s => s.BuyCheckBox.Checked = true);
                 }
                 else
@@ -1254,7 +1252,7 @@ namespace RazorEnhanced
                 m_CompareName = comparename;
                 Selected = selected;
                 Enabled = enabled;
-                CompleteAmount = completeAmount;    
+                CompleteAmount = completeAmount;
             }
         }
     }

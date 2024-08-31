@@ -1,6 +1,4 @@
-using Assistant.Filters;
 using RazorEnhanced;
-using RazorEnhanced.UI;
 using System;
 using System.Drawing;
 using System.Reflection;
@@ -366,7 +364,7 @@ namespace Assistant
                             ProfileClass.SetValue(profile, autoOpenDoors.Checked, null);
                         }
                     }
-                }               
+                }
             }
 
             hiddedAutoOpenDoors.Enabled = autoOpenDoors.Checked;
@@ -614,7 +612,7 @@ namespace Assistant
             Assistant.Client.Instance.SmartCpuChecked = this.smartCPU.Checked;
         }
 
-    private void taskbar_CheckedChanged(object sender, System.EventArgs e)
+        private void taskbar_CheckedChanged(object sender, System.EventArgs e)
         {
             if (taskbar.Focused)
             {

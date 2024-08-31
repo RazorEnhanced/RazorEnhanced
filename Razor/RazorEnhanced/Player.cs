@@ -1010,26 +1010,27 @@ namespace RazorEnhanced
             try
             {
                 buffname = buffname.ToLower();
-                
+
                 if (World.Player == null || World.Player.BuffTimes == null)
                 {
                     return 0;
                 }
-                                
+
                 DateTime expiredTime = SearchBuffTime(World.Player.BuffTimes, buffname);
-                
+
                 if (!BuffsExist(buffname) || expiredTime < DateTime.Now)
                 {
                     return 0;
                 }
-                
+
                 double timeRemaings = (expiredTime - DateTime.Now).TotalMilliseconds;
-                
+
                 return (int)timeRemaings;
-            } catch
+            }
+            catch
             {
                 return 0;
-            }            
+            }
         }
 
         internal static DateTime SearchBuffTime(Dictionary<BuffIcon, DateTime> buffTimes, String buffname)
@@ -2193,9 +2194,10 @@ namespace RazorEnhanced
                 {
                     Assistant.Client.Instance.SendToServerWait(new DoubleClick(item.Serial));
                 }
-                else {
+                else
+                {
                     Misc.SendMessage("To attack an item you must be in war mode", 55);
-                }                
+                }
             }
             else
             {
@@ -2263,7 +2265,7 @@ namespace RazorEnhanced
             if (list.Count > 0)
                 atMobile = Mobiles.Select(list, selector);
 
-            if(atMobile != null)
+            if (atMobile != null)
             {
                 Target.SetLast(atMobile.Serial); //Attempt to highlight
 
@@ -2488,7 +2490,6 @@ namespace RazorEnhanced
             }
 
             World.Player.WalkScriptRequest = 1;
-            int timeout = 0;
             bool result = false;
             if (run)
                 result = Client.Instance.RequestRun(dir);
@@ -2735,7 +2736,7 @@ namespace RazorEnhanced
         internal static Dictionary<string, float> SumAttributes(List<string> attributenames)
         {
             Dictionary<string, float> result = new Dictionary<string, float>();
-            foreach(string attribname in attributenames)
+            foreach (string attribname in attributenames)
             {
                 result[attribname] = 0;
             }

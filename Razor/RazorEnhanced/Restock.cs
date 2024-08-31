@@ -1,7 +1,6 @@
 using Assistant;
 using Assistant.UI;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +35,7 @@ namespace RazorEnhanced
             public int AmountLimit { get { return m_amountlimit; } }
 
             [JsonProperty("Selected")]
-            internal bool Selected { get; set;}
+            internal bool Selected { get; set; }
 
             public RestockItem(string name, int graphics, int color, int amountlimit, bool selected)
             {
@@ -415,10 +414,10 @@ namespace RazorEnhanced
 
 
 
-        
 
 
-        
+
+
 
         /// <summary>
         /// Start the Restock Agent on the currently active list.
@@ -453,7 +452,7 @@ namespace RazorEnhanced
         /// <returns>True: if the Restock is running - False: otherwise</returns>
         public static bool Status()
         {
-            if (m_RestockThread != null && ((m_RestockThread.ThreadState & ThreadState.Running) != 0 || (m_RestockThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_RestockThread.ThreadState & ThreadState.AbortRequested) != 0) )
+            if (m_RestockThread != null && ((m_RestockThread.ThreadState & ThreadState.Running) != 0 || (m_RestockThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_RestockThread.ThreadState & ThreadState.AbortRequested) != 0))
                 return true;
             else
                 return false;

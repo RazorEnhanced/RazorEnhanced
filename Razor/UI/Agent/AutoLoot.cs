@@ -65,7 +65,8 @@ namespace Assistant
                 RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
                 AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
             }
-            BeginInvoke((MethodInvoker)delegate {
+            BeginInvoke((MethodInvoker)delegate
+            {
                 RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
                 RazorEnhanced.AutoLoot.RefreshLists();
             });

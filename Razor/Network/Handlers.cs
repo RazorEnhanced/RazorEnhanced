@@ -1,9 +1,9 @@
-using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.IO;
 using Assistant.UI;
 using RazorEnhanced;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 
 
 namespace Assistant
@@ -1599,7 +1599,7 @@ namespace Assistant
 
             if (RazorEnhanced.DPSMeter.Enabled)
                 RazorEnhanced.DPSMeter.AddDamage(serial, damage);
-            if (damage <  RazorEnhanced.Filters.MinDamageDisplayed)
+            if (damage < RazorEnhanced.Filters.MinDamageDisplayed)
                 args.Block = true;
         }
 
@@ -1939,7 +1939,7 @@ namespace Assistant
                 return;
             }
             Serial serial = p.ReadUInt32();
-            Utility.Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name,  serial);
+            Utility.Logger.Debug("{0} entered with serial {1:X}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial);
 
             if (World.Player.Serial == serial)
             {
@@ -1962,7 +1962,7 @@ namespace Assistant
                         Player.Corpses.Remove(i);
                     Utility.Logger.Debug("{0} removing item with {1:X} - {2}", System.Reflection.MethodBase.GetCurrentMethod().Name, serial, i.Name);
                     // Update weapon special ability icons on spellgrid when removing weapons
-                    if (World.Player != null && (i.Serial  == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
+                    if (World.Player != null && (i.Serial == World.Player.LastWeaponLeft || i.Serial == World.Player.LastWeaponRight))
                     {
                         System.Threading.Thread doAction = new System.Threading.Thread(() => RazorEnhanced.SpellGrid.UpdateSAHighLight(0));
                         doAction.Start();
@@ -2633,7 +2633,7 @@ namespace Assistant
 
             RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 
-            RazorEnhanced.ScriptRecorderService.Instance.Record_GumpsResponse(gumpID, bid, gd );
+            RazorEnhanced.ScriptRecorderService.Instance.Record_GumpsResponse(gumpID, bid, gd);
 
             if (gd != null)
             {
@@ -3421,7 +3421,7 @@ namespace Assistant
                             World.Player.CurrentGumpStrings.Add(Language.GetString(i));
                             stringsInGump.Add(Language.GetString(i));
                         }
-                            
+
                     }
                 }
 
@@ -3628,10 +3628,12 @@ namespace Assistant
             MoneyLimit = 4,
         };
 
-        private static void TradeRequestFromClient(PacketReader p, PacketHandlerEventArgs args) {
+        private static void TradeRequestFromClient(PacketReader p, PacketHandlerEventArgs args)
+        {
             TradeRequest(p, args, false);
         }
-        private static void TradeRequestFromServer(PacketReader p, PacketHandlerEventArgs args) {
+        private static void TradeRequestFromServer(PacketReader p, PacketHandlerEventArgs args)
+        {
             if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
             {
                 args.Block = true;
@@ -3693,11 +3695,13 @@ namespace Assistant
                     if (!TradeService.Instance.TradeData.ContainsKey(serial)) { return; }
                     trade = TradeService.Instance.TradeData[serial];
                     trade.LastUpdate = TradeService.Timestamp();
-                    if (server){
+                    if (server)
+                    {
                         trade.GoldTrader = (int)p.ReadUInt32();
                         trade.PlatinumTrader = (int)p.ReadUInt32();
                     }
-                    else {
+                    else
+                    {
                         trade.GoldMe = (int)p.ReadUInt32();
                         trade.PlatinumMe = (int)p.ReadUInt32();
                     }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Text;
 using System.Windows.Forms;
 
 namespace FastColoredTextBoxNS
@@ -98,8 +96,8 @@ namespace FastColoredTextBoxNS
                 var p2 = tb.PlaceToPoint(hint.Range.End);
                 var cx = (p1.X + p2.X) / 2;
                 var x = cx - hint.HostPanel.Width / 2;
-                hint.HostPanel.Left = Math.Max( tb.LeftIndent, x);
-                if(hint.HostPanel.Right > tb.ClientSize.Width)
+                hint.HostPanel.Left = Math.Max(tb.LeftIndent, x);
+                if (hint.HostPanel.Right > tb.ClientSize.Width)
                     hint.HostPanel.Left = Math.Max(tb.LeftIndent, x - (hint.HostPanel.Right - tb.ClientSize.Width));
             }
         }
@@ -282,7 +280,7 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Inlining. If True then hint will moves apart text.
         /// </summary>
-        public bool Inline{get; set;}
+        public bool Inline { get; set; }
 
         /// <summary>
         /// Scroll textbox to the hint

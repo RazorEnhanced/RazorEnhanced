@@ -1,8 +1,8 @@
+using Assistant;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using Assistant;
 
 namespace RazorEnhanced
 {
@@ -144,7 +144,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                        m_hitslabelSH.Text = hits.ToString() + " / " + maxhits.ToString();
+                    m_hitslabelSH.Text = hits.ToString() + " / " + maxhits.ToString();
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                        m_staminalabelSH.Text = stam.ToString() + " / " + maxstam.ToString();
+                    m_staminalabelSH.Text = stam.ToString() + " / " + maxstam.ToString();
                 }
             }
         }
@@ -198,7 +198,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                        m_manalabelSH.Text = mana.ToString() + " / " + maxmana.ToString();
+                    m_manalabelSH.Text = mana.ToString() + " / " + maxmana.ToString();
                 }
             }
         }
@@ -468,7 +468,7 @@ namespace RazorEnhanced
         //////////////// Load settings ////////////////
         internal static void LoadSettings()
         {
-        //  Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
+            //  Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
 
             Assistant.Engine.MainWindow.ToolBoxSizeComboBox.Items.Clear();
             Assistant.Engine.MainWindow.ToolBoxSizeComboBox.Items.Add("Big");
@@ -840,7 +840,7 @@ namespace RazorEnhanced
                     Location = new Point(0, 29),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
@@ -1083,7 +1083,7 @@ namespace RazorEnhanced
                     Location = new Point(0, 29),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
@@ -1108,7 +1108,7 @@ namespace RazorEnhanced
                     Location = new Point(0, 29),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Name = "panel" + i + "count",
                     Size = new Size(25, 13),
                     TabIndex = 1,
@@ -1345,7 +1345,7 @@ namespace RazorEnhanced
                     Location = new Point(0, 18),
                     Font =
                         new Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            GraphicsUnit.Point, ((byte) (0))),
+                            GraphicsUnit.Point, ((byte)(0))),
                     Name = "panel" + i + "count",
                     Size = new Size(10, 20),
                     TabIndex = 1,
@@ -1628,7 +1628,7 @@ namespace RazorEnhanced
                     Location = new Point(0, 18),
                     Font =
                         new System.Drawing.Font("Arial", 6.75F, System.Drawing.FontStyle.Regular,
-                            System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+                            System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                     Name = "panel" + i + "count",
                     Size = new Size(10, 20),
                     TabIndex = 1,
@@ -1670,12 +1670,12 @@ namespace RazorEnhanced
         internal static void EnhancedToolbar_Move(object sender, System.EventArgs e)
         {
             Point pt = m_form.Location;
-                if (m_form.WindowState != FormWindowState.Minimized)
-                {
-                    Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
-                    Assistant.Engine.ToolBarX = pt.X;
-                    Assistant.Engine.ToolBarY = pt.Y;
-                }
+            if (m_form.WindowState != FormWindowState.Minimized)
+            {
+                Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
+                Assistant.Engine.ToolBarX = pt.X;
+                Assistant.Engine.ToolBarY = pt.Y;
+            }
         }
 
         private static Bitmap BackGroundAddVerticale(Image firstImage, Image secondImage)
@@ -1747,9 +1747,9 @@ namespace RazorEnhanced
                         if (y < min.Y)
                         {
                             min.Y = y;
-                    }
+                        }
 
-                    if (x > max.X) max.X = x;
+                        if (x > max.X) max.X = x;
                         if (y > max.Y) max.Y = y;
                     }
                 }

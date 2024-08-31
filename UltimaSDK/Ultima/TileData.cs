@@ -284,8 +284,9 @@ namespace Ultima
         /// </summary>
         public TileFlag Flags
         {
-            get { 
-                return m_Flags; 
+            get
+            {
+                return m_Flags;
             }
             set { m_Flags = value; }
         }

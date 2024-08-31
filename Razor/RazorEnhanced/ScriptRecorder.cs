@@ -1,25 +1,20 @@
 using Assistant;
-using IronPython.Runtime.Exceptions;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Scripting.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using static IronPython.Modules._ast;
 
 namespace RazorEnhanced
 {
     public delegate void ScriptRecorderOutput(string code);
 
-    public class ScriptRecorderService{ 
+    public class ScriptRecorderService
+    {
         public readonly static ScriptRecorderService Instance = new ScriptRecorderService();
         private readonly List<ScriptRecorder> m_ScriptRecorderList = new List<ScriptRecorder>();
         public List<ScriptRecorder> ScriptRecorderList { get { return new List<ScriptRecorder>(m_ScriptRecorderList); } }
 
-        private int m_Count=0;
+        private int m_Count = 0;
 
         internal static ScriptRecorder RecorderForLanguage(ScriptLanguage language)
         {
@@ -32,7 +27,8 @@ namespace RazorEnhanced
             }
         }
 
-        public bool Active() { 
+        public bool Active()
+        {
             return m_Count > 0;
         }
 
@@ -61,7 +57,7 @@ namespace RazorEnhanced
         internal void Record_AttackRequest(uint serial)
         {
             if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_AttackRequest(serial); } ).Start());
+            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_AttackRequest(serial); }).Start());
         }
 
         internal void Record_ClientDoubleClick(Assistant.Serial ser)
@@ -72,7 +68,7 @@ namespace RazorEnhanced
         internal void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
         {
             if (!Active()) { return; }
-            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_DropRequest(i,dest); }).Start());
+            ScriptRecorderList.ForEach(recorder => new Task(() => { recorder.Record_DropRequest(i, dest); }).Start());
         }
         internal void Record_ClientTextCommand(int type, int id)
         {
@@ -190,13 +186,14 @@ namespace RazorEnhanced
             m_Recording = false;
         }
 
-        ~ScriptRecorder(){
+        ~ScriptRecorder()
+        {
             ScriptRecorderService.Instance.Remove(this);
         }
 
         internal void AddLog(string code)
         {
-            if (m_Recording &&  Output != null) { Output(code); }
+            if (m_Recording && Output != null) { Output(code); }
         }
 
 
@@ -204,7 +201,6 @@ namespace RazorEnhanced
         internal virtual void Record_AttackRequest(uint serial) { }
         internal virtual void Record_ClientDoubleClick(Assistant.Serial ser)
         {
-            UsedObjectData newEntry;        
             if (ser.IsItem)
             {
                 Assistant.Item i = World.FindItem(ser);
@@ -224,7 +220,8 @@ namespace RazorEnhanced
                         container = -1;
                     enqueueUsedObject(i.Serial, container, i.ItemID, i.Hue);
                 }
-            } else if (ser.IsMobile)
+            }
+            else if (ser.IsMobile)
             {
                 Assistant.Mobile m = World.FindMobile(ser);
                 if (m != null)
@@ -233,26 +230,26 @@ namespace RazorEnhanced
                 }
             }
         }
-        internal virtual void Record_DropRequest(Assistant.Item i, Assistant.Serial dest){ }
-        internal virtual void Record_ClientTextCommand(int type, int id){ }
-        internal virtual void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m){ }
-        internal virtual void Record_RenameMobile(int serial, string name){ }
-        internal virtual void Record_AsciiPromptResponse(uint type, string text){ }
-        internal virtual void Record_UnicodeSpeech(MessageType type, string text, int hue){ }
-        internal virtual void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd){ }
-        internal virtual void Record_SADisarm(){ }
-        internal virtual void Record_SAStun(){ }
-        internal virtual void Record_ContextMenuResponse(int serial, ushort idx){ }
-        internal virtual void Record_ResponseStringQuery(byte yesno, string text){ }
-        internal virtual void Record_MenuResponse(int index){ }
-        internal virtual void Record_Movement(Direction dir){ }
-        internal virtual void Record_Target(TargetInfo info){ }
+        internal virtual void Record_DropRequest(Assistant.Item i, Assistant.Serial dest) { }
+        internal virtual void Record_ClientTextCommand(int type, int id) { }
+        internal virtual void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m) { }
+        internal virtual void Record_RenameMobile(int serial, string name) { }
+        internal virtual void Record_AsciiPromptResponse(uint type, string text) { }
+        internal virtual void Record_UnicodeSpeech(MessageType type, string text, int hue) { }
+        internal virtual void Record_GumpsResponse(uint id, int operation, Gumps.GumpData gd) { }
+        internal virtual void Record_SADisarm() { }
+        internal virtual void Record_SAStun() { }
+        internal virtual void Record_ContextMenuResponse(int serial, ushort idx) { }
+        internal virtual void Record_ResponseStringQuery(byte yesno, string text) { }
+        internal virtual void Record_MenuResponse(int index) { }
+        internal virtual void Record_Movement(Direction dir) { }
+        internal virtual void Record_Target(TargetInfo info) { }
     }
     public class PyScriptRecorder : ScriptRecorder
     {
         internal override void Record_AttackRequest(uint serial)
         {
-                AddLog("Player.Attack(0x" + serial.ToString("X8") + ")");
+            AddLog("Player.Attack(0x" + serial.ToString("X8") + ")");
 
         }
 
@@ -267,10 +264,10 @@ namespace RazorEnhanced
 
         internal override void Record_DropRequest(Assistant.Item i, Assistant.Serial dest)
         {
-                if (dest != 0xFFFFFFFF)
-                    AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
-                else
-                    AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");
+            if (dest != 0xFFFFFFFF)
+                AddLog("Items.Move(0x" + i.Serial.Value.ToString("X8") + ", 0x" + dest.Value.ToString("X8") + ", " + i.Amount + ")");
+            else
+                AddLog("Items.DropItemGroundSelf(0x" + i.Serial.Value.ToString("X8") + ", " + i.Amount + ")");
         }
         /*internal static void Record_ClientSingleClick(Assistant.Serial ser)
         {
@@ -612,7 +609,7 @@ namespace RazorEnhanced
     {
         internal override void Record_AttackRequest(uint serial)
         {
-                AddLog($"attack 0x{serial:x8}");
+            AddLog($"attack 0x{serial:x8}");
         }
 
         internal override void Record_ClientDoubleClick(Assistant.Serial ser)
@@ -645,7 +642,7 @@ namespace RazorEnhanced
                     AddLog($"moveitem {i.Serial:x} backpack {i.Position.X} {i.Position.Y} {i.Amount}");
                 }
                 else
-                    AddLog($"moveitem {i.Serial:x} 0x{dest:x} {i.Position.X} {i.Position.Y} {i.Amount}");             
+                    AddLog($"moveitem {i.Serial:x} 0x{dest:x} {i.Position.X} {i.Position.Y} {i.Amount}");
             }
             else
                 AddLog($"moveitem {i.Serial:x} ground {i.Position.X} {i.Position.Y} {i.Position.Z} {i.Amount}");
@@ -794,28 +791,28 @@ namespace RazorEnhanced
                 switch (id)
                 {
                     case 1:
-                        virtue ="Honor";
+                        virtue = "Honor";
                         break;
                     case 2:
-                        virtue ="Sacrifice";
+                        virtue = "Sacrifice";
                         break;
                     case 3:
-                        virtue ="Valor";
+                        virtue = "Valor";
                         break;
                     case 4:
-                        virtue ="Compassion";
+                        virtue = "Compassion";
                         break;
                     case 5:
-                        virtue ="Honesty";
+                        virtue = "Honesty";
                         break;
                     case 6:
-                        virtue ="Humility";
+                        virtue = "Humility";
                         break;
                     case 7:
-                        virtue ="Justice";
+                        virtue = "Justice";
                         break;
                     case 8:
-                        virtue ="Spirituality";
+                        virtue = "Spirituality";
                         break;
                 }
                 if (virtue != string.Empty)
@@ -885,7 +882,7 @@ namespace RazorEnhanced
             {
                 string switchParam = String.Join(",", gd.switches);
                 string textIdParam = String.Join(",", gd.textID);
-                string textParam = String.Join(",",   gd.text);
+                string textParam = String.Join(",", gd.text);
                 string parameters = $"\"{switchParam}\" \"{textIdParam}\" \"{textParam}\"";
                 AddLog($"replygump 0x{id:x} {operation} {parameters}");
 
@@ -974,7 +971,7 @@ namespace RazorEnhanced
             if (info.Serial == 0)
             {
                 if (info.Gfx == 0)
-                    AddLog("targettile " + info.X + " " + info.Y + " " + info.Z );
+                    AddLog("targettile " + info.X + " " + info.Y + " " + info.Z);
                 else
                     AddLog("targettile " + info.X + " " + info.Y + " " + info.Z + " " + info.Gfx);
             }

@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RazorEnhanced
 {
@@ -37,7 +33,7 @@ namespace RazorEnhanced
         }
 
         public static void LoadSeasonFile()
-        {            
+        {
             _springLandTile = new ushort[Constants.MAX_LAND_DATA_INDEX_COUNT];
             _summerLandTile = new ushort[Constants.MAX_LAND_DATA_INDEX_COUNT];
             _fallLandTile = new ushort[Constants.MAX_LAND_DATA_INDEX_COUNT];
@@ -158,10 +154,10 @@ namespace RazorEnhanced
             ushort retGraphic = graphic;
             switch (season)
             {
-                case Season.Spring: 
+                case Season.Spring:
                     retGraphic = _springGraphic[graphic] == 0 ? graphic : _springGraphic[graphic];
                     break;
-                case Season.Summer: 
+                case Season.Summer:
                     retGraphic = _summerGraphic[graphic] == 0 ? graphic : _summerGraphic[graphic];
                     break;
                 case Season.Fall:

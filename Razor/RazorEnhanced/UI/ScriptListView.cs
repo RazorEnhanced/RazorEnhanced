@@ -1,6 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -103,14 +101,14 @@ namespace RazorEnhanced.UI
             switch (c)
             {
                 case "x":
-                        return;
+                    return;
                 case "X":
                     {
                         e.KeyChar = 'x';
                         return;
                     }
                 case "A":
-                        return;
+                    return;
                 case "a":
                     {
                         e.KeyChar = 'A';
@@ -152,7 +150,7 @@ namespace RazorEnhanced.UI
                         return;
                     }
             }
-        
+
             // copy/paste
             if ((((int)e.KeyChar == 22) || ((int)e.KeyChar == 3))
                 && ((ModifierKeys & Keys.Control) == Keys.Control))
