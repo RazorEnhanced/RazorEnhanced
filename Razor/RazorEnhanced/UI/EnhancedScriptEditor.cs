@@ -1462,7 +1462,7 @@ namespace RazorEnhanced.UI
             return content.Select(c => new FastColoredTextBoxNS.Char(c));
         }
 
-        // Common code to get type infor for a serial
+        // Common code to get type info for a serial
         private ScriptRecorder.UsedObjectData? FindSerialTypeColor(string textSerial)
         {
             Int32 serial = 0;

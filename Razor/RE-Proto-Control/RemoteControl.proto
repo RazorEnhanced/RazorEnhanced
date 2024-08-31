@@ -4,14 +4,20 @@ option csharp_namespace = "RazorEnhanced";
 
 package remotecontrol;
 
+enum ProtoLanguage {
+    UNKNOWN = 0;  // Default value
+    PYTHON = 1;
+    CSHARP = 2;
+    UOSTEAM = 3;
+}
+
 service RemoteControl {
   rpc Record (RecordRequest) returns (stream RecordResponse);
   rpc Play (PlayRequest) returns (stream PlayResponse);
 }
 
 message RecordRequest {
-  bool is_on = 1;
-  string format = 2;
+  ProtoLanguage language = 1;
 }
 
 message RecordResponse {
@@ -19,7 +25,7 @@ message RecordResponse {
 }
 
 message PlayRequest {
-  string format = 1;
+  ProtoLanguage language = 1;
   repeated string commands = 2;
 }
 
