@@ -3,6 +3,7 @@ using RazorEnhanced.UI;
 using System;
 using System.Windows.Forms;
 using Assistant.UI;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace Assistant

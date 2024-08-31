@@ -1,6 +1,6 @@
 import grpc
-import RemoteControl_pb2
-import RemoteControl_pb2_grpc
+import ProtoControl_pb2
+import ProtoControl_pb2_grpc
 import asyncio
 import time
 
@@ -18,7 +18,7 @@ async def read_stream_with_timeout(stream, timeout):
         return None
 
 async def run_record(stub):
-    record_request = RemoteControl_pb2.RecordRequest(language=RemoteControl_pb2.ProtoLanguage.UOSTEAM)
+    record_request = ProtoControl_pb2.RecordRequest(language=ProtoControl_pb2.ProtoLanguage.UOSTEAM)
     duration = 15  # Record test duration
     print(f"Testing Record API for {duration} seconds:")
     timeout = 1  # Timeout for each read attempt in seconds
@@ -48,8 +48,8 @@ async def run_record(stub):
 
 async def run_play(stub):
     print("\nTesting Play API:")
-    play_request = RemoteControl_pb2.PlayRequest(
-        language=RemoteControl_pb2.ProtoLanguage.PYTHON,
+    play_request = ProtoControl_pb2.PlayRequest(
+        language=ProtoControl_pb2.ProtoLanguage.PYTHON,
         commands=["print(\"Hello World\")", "Misc.Pause(5000)", "print(\"Bye!\")"]
     )
     try:
@@ -68,7 +68,7 @@ async def run():
     
     async with grpc.aio.insecure_channel(server_address) as channel:
         try:
-            stub = RemoteControl_pb2_grpc.RemoteControlStub(channel)
+            stub = ProtoControl_pb2_grpc.ProtoControlStub(channel)
             await run_record(stub)
             await run_play(stub)
         except grpc.RpcError as e:

@@ -224,7 +224,8 @@ namespace Assistant
             RazorEnhanced.Profiles.Load();
             m_Running = true;
 
-            RemoteControlService.StartServer("127.0.0.1", 5454);
+            // Start GRpc protobuf service
+            ProtoControlService.StartServer("127.0.0.1", 5454);
 
             return true;
         }
@@ -396,11 +397,11 @@ namespace Assistant
 
         internal bool Connected { get; set; }
 
-        internal virtual void OnDisconnected()
+        internal void OnDisconnected()
         {
             Connected = false;
         }
-        internal virtual void OnConnected()
+        internal void OnConnected()
         {
             Connected = true;
         }

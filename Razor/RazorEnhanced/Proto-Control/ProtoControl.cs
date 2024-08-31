@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
-    public class RemoteControlService : RemoteControl.RemoteControlBase
+    public class ProtoControlService : ProtoControl.ProtoControlBase
     {
         private bool _isRecording = false;
         private string _recordingFormat;
@@ -21,11 +21,11 @@ namespace RazorEnhanced
         {
             Server server = new Server
             {
-                Services = { RemoteControl.BindService(new RemoteControlService()) },
+                Services = { ProtoControl.BindService(new ProtoControlService()) },
                 Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
             };
             server.Start();
-            Utility.Logger.Info($"RemoteControl server listening on {host}:{port}");
+            Utility.Logger.Info($"ProtoControl server listening on {host}:{port}");
             return server;
         }
 

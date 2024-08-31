@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option csharp_namespace = "RazorEnhanced";
 
-package remotecontrol;
+package protocontrol;
 
 enum ProtoLanguage {
     UNKNOWN = 0;  // Default value
@@ -11,7 +11,7 @@ enum ProtoLanguage {
     UOSTEAM = 3;
 }
 
-service RemoteControl {
+service ProtoControl {
   rpc Record (RecordRequest) returns (stream RecordResponse);
   rpc Play (PlayRequest) returns (stream PlayResponse);
 }
@@ -33,3 +33,4 @@ message PlayResponse {
   string result = 1;
   bool is_finished = 2;
 }
+
