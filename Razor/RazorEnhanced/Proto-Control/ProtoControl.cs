@@ -5,6 +5,15 @@ using Microsoft.Scripting.Hosting.Providers;
 using RazorEnhanced.UOS;
 using System;
 using System.Threading.Tasks;
+using System.IO;
+using System.IO.MemoryMappedFiles;
+using Newtonsoft.Json;
+using static IronPython.Modules.PythonNT;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows.Navigation;
+using System.Net.Sockets;
+using System.Net;
 
 namespace RazorEnhanced
 {
@@ -13,8 +22,24 @@ namespace RazorEnhanced
         private bool _isRecording = false;
         private string _recordingFormat;
 
-        public static Server StartServer(string host, int port)
+        internal static int? AssignedPort { get; private set; }
+
+        public static Server StartServer(string host)
         {
+            int startingPort = 15454;  // Starting port
+            int numberOfPorts = 10;   // Number of ports to check
+
+            int port = FindAvailablePort(startingPort, numberOfPorts);
+
+            if (port < 1)
+            {
+                AssignedPort = null;
+                Utility.Logger.Error($"Unable to find a suitable port");
+                return null;
+            }
+
+            AssignedPort = port;
+
             Server server = new Server
             {
                 Services = { ProtoControl.BindService(new ProtoControlService()) },
@@ -147,6 +172,41 @@ namespace RazorEnhanced
             // Implement the logic to execute the command based on the format
             return $"Executed command '{command}' in {language} format";
         }
+
+        public static int FindAvailablePort(int startingPort, int range)
+        {
+            for (int port = startingPort; port < startingPort + range; port++)
+            {
+                if (IsPortAvailable(port))
+                {
+                    return port;
+                }
+            }
+            return -1;  // Return -1 if no port is available
+        }
+
+        private static bool IsPortAvailable(int port)
+        {
+            TcpListener listener = null;
+            try
+            {
+                // Create a TCP listener on the specified port
+                listener = new TcpListener(IPAddress.Loopback, port);
+                listener.Start();
+                return true;
+            }
+            catch (SocketException)
+            {
+                // If the port is in use, a SocketException will be thrown
+                return false;
+            }
+            finally
+            {
+                // Stop and dispose of the listener to release the port
+                listener?.Stop();
+            }
+        }
+
 
     }
 }

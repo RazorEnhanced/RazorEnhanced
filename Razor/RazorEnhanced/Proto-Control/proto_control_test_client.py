@@ -64,7 +64,7 @@ async def run_play(stub):
         print(f"Play API error: {e.code()}: {e.details()}")
 
 async def run():
-    server_address = '127.0.0.1:5454'
+    server_address = '127.0.0.1:15454'
     
     async with grpc.aio.insecure_channel(server_address) as channel:
         try:
