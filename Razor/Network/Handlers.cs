@@ -3405,7 +3405,7 @@ namespace Assistant
                 // Split on one or more non-digit characters.
                 World.Player.CurrentGumpStrings.Clear();
                 World.Player.CurrentGumpTile.Clear();
-                var stringsInGump = new List<string>();
+                var textsInGump = new List<string>();
 
                 // Parsing the uncompressed Gump Layout section
                 // It is looking for all numbers and if one is a valid index for the cliloc, will be converted into string
@@ -3419,7 +3419,7 @@ namespace Assistant
                         if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
                         {
                             World.Player.CurrentGumpStrings.Add(Language.GetString(i));
-                            stringsInGump.Add(Language.GetString(i));
+                            textsInGump.Add(Language.GetString(i));
                         }
 
                     }
@@ -3450,19 +3450,19 @@ namespace Assistant
                         stringlistparse[x1] = "";
                     }
                 }
-
+                var dataInGump = new List<string>();
                 if (TryParseGump(layout, out string[] gumpPieces))
                 {
                     List<string> parsedStrings = ParseGumpString(gumpPieces, stringlistparse);
-                    stringsInGump.AddRange(parsedStrings);
+                    dataInGump.AddRange(parsedStrings);
                     World.Player.CurrentGumpStrings.AddRange(parsedStrings);
 
                 }
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
                 RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
-                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, stringsInGump);
-                World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
+                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, textsInGump, dataInGump);
+                World.Player.CurrentGumpRawLayout = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
 
             }

@@ -932,7 +932,7 @@ namespace Assistant
         internal uint PromptType;
         internal List<int> CurrentGumpTile = new List<int>();
         internal List<string> CurrentGumpStrings = new List<string>();
-        internal string CurrentGumpRawData;
+        internal string CurrentGumpRawLayout;
         internal string[] CurrentGumpRawText;
         internal uint LastWeaponRight, LastWeaponLeft = 0;
 

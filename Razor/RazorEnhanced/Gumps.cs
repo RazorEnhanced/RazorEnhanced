@@ -95,10 +95,11 @@ namespace RazorEnhanced
         {
             public uint gumpSerial;
             public uint gumpId;
-            public int x;
-            public int y;
-            public string gumpDefinition;
-            public List<string> gumpStrings;
+            public uint x;
+            public uint y;
+            public string gumpLayout;
+            public List<string> gumpText;
+            public List<string> gumpData;
 
             public IncomingGumpData()
             {
@@ -106,8 +107,9 @@ namespace RazorEnhanced
                 gumpId = 0;
                 x = 0;
                 y = 0;
-                gumpDefinition = "";
-                gumpStrings = new List<string>();
+                gumpLayout = "";
+                gumpText = new List<string>();
+                gumpData = new List<string>();
             }
         }
         /// <summary>
@@ -144,8 +146,9 @@ namespace RazorEnhanced
             public List<string> text;
             public List<int> textID;
             internal Action<GumpData> action;
-            internal string gumpRawData;
-            internal List<string> gumpRawText;
+            internal string gumpLayout;
+            internal List<string> gumpText;
+            internal List<string> gumpData;
 
             public GumpData()
             {
@@ -161,8 +164,8 @@ namespace RazorEnhanced
                 text = new List<string>();
                 textID = new List<int>();
                 action = null;
-                gumpRawData = "";
-                gumpRawText = new List<string>();
+                gumpLayout = "";
+                gumpText = new List<string>();
             }
         }
 
@@ -697,6 +700,18 @@ namespace RazorEnhanced
                 gd = Gumps.m_gumpData[gumpid];
 
             }
+            if (Gumps.m_incomingData.ContainsKey(gumpid))
+            {
+                gd = new();
+                var tempGd = Gumps.m_incomingData[gumpid];
+                gd.gumpId = tempGd.gumpId;
+                gd.serial = tempGd.gumpSerial;
+                gd.x = tempGd.x;
+                gd.y = tempGd.y;
+                gd.gumpLayout = tempGd.gumpLayout;
+                gd.gumpText = tempGd.gumpText;
+                gd.gumpData = tempGd.gumpData;
+            }
             return gd;
         }
 
@@ -789,17 +804,19 @@ namespace RazorEnhanced
         /// Adds a response to the gump
         /// </summary>
         /// WorldResponse
-        internal static void AddResponse(uint gumpid, int x, int y, string layout, List<string> parsedStrings)
+        internal static void AddResponse(uint gumpid, int x, int y, string layout, List<string> parsedText, List<string> parsedData)
         {
             if (m_gumpData.ContainsKey(gumpid))
             {
-                m_gumpData[gumpid].gumpRawData = layout;
-                m_gumpData[gumpid].gumpRawText = parsedStrings;
+                m_gumpData[gumpid].gumpLayout = layout;
+                m_gumpData[gumpid].gumpText = parsedText;
+                m_gumpData[gumpid].gumpData = parsedData;
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
-                m_incomingData[gumpid].gumpDefinition = layout;
-                m_incomingData[gumpid].gumpStrings = parsedStrings;
+                m_incomingData[gumpid].gumpLayout = layout;
+                m_incomingData[gumpid].gumpText = parsedText;
+                m_incomingData[gumpid].gumpData = parsedData;
             }
         }
 
@@ -1048,7 +1065,8 @@ namespace RazorEnhanced
         }
 
         /// <summary>
-        /// Get a specific line from the most gumpId if it exists. Filter by line number.
+        /// Get a specific DATA line from the gumpId if it exists. Filter by line number.
+        /// The textual strings are not considered
         /// </summary>
         /// <param name="gumpId">gump id to get data from</param>
         /// <param name="line_num">Number of the line.</param>
@@ -1057,34 +1075,19 @@ namespace RazorEnhanced
         {
             if (m_incomingData.ContainsKey(gumpId))
             {
-                if (line_num >= 0 && line_num < m_incomingData[gumpId].gumpStrings.Count)
+                if (line_num >= 0 && line_num < m_incomingData[gumpId].gumpData.Count)
                 {
-                    return m_incomingData[gumpId].gumpStrings[line_num];
+                    return m_incomingData[gumpId].gumpData[line_num];
                 }
             }
             return "";
 
-            try
-            {
-                if (line_num > World.Player.CurrentGumpStrings.Count)
-                {
-                    Scripts.SendMessageScriptError("Script Error: LastGumpGetLine: Text line (" + line_num + ") not exist");
-                    return "";
-                }
-                else
-                {
-                    return World.Player.CurrentGumpStrings[line_num];
-                }
-            }
-            catch
-            {
-                return "";
-            }
         }
 
 
         /// <summary>
         /// Get a specific line from the most recent and still open Gump. Filter by line number.
+        /// The text constants on the gump ARE included in indexing
         /// </summary>
         /// <param name="line_num">Number of the line.</param>
         /// <returns>Text content of the line. (empty: line not found)</returns>
@@ -1113,11 +1116,29 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="gumpId">gump id to get data from</param>
         /// <returns>Text of the gump.</returns>
-        public static List<string> GetLineList(uint gumpId)
+        public static List<string> GetLineList(uint gumpId, bool dataOnly=false)
         {
+            if (m_gumpData.ContainsKey(gumpId))
+            {
+                if (dataOnly)
+                    return m_gumpData[gumpId].gumpData;
+
+                List<string> lines = new List<string>(m_gumpData[gumpId].gumpText);
+                lines.AddRange(m_gumpData[gumpId].gumpData);
+
+                return lines;
+
+            }
+
             if (m_incomingData.ContainsKey(gumpId))
             {
-                return m_incomingData[gumpId].gumpStrings;
+                if (dataOnly)
+                    return m_incomingData[gumpId].gumpData;
+
+                List<string> lines = new List<string>(m_incomingData[gumpId].gumpText);
+                lines.AddRange(m_incomingData[gumpId].gumpData);
+                
+                return lines;
             }
             return new List<string>();
         }
@@ -1176,69 +1197,35 @@ namespace RazorEnhanced
             }
         }
         /// <summary>
-        /// Get the Raw Data of a specific gumpid
+        /// Get the Raw layout (definition) of a specific gumpid
         /// </summary>
-        /// <returns>Raw Data of the gump.</returns>
-        public static string GetGumpRawData(uint gumpid)
+        /// <returns>layout (definition) of the gump.</returns>
+        public static string GetGumpRawLayout(uint gumpid)
         {
             if (m_gumpData.ContainsKey(gumpid))
             {
-                return m_gumpData[gumpid].gumpRawData;
+                return m_gumpData[gumpid].gumpLayout;
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
-                return m_incomingData[gumpid].gumpDefinition;
+                return m_incomingData[gumpid].gumpLayout;
             }
             return string.Empty;
         }
 
         /// <summary>
-        /// Get the Raw Data of the most recent and still open Gump.
+        /// Get the raw layout (definition) of the most recent and still open Gump.
         /// </summary>
-        /// <returns>Raw Data of the gump.</returns>
-        public static string LastGumpRawData()
+        /// <returns>layout (definition) of the gump.</returns>
+        public static string LastGumpRawLayout()
         {
             try
             {
-                return World.Player.CurrentGumpRawData;
+                return World.Player.CurrentGumpRawLayout;
             }
             catch
             {
                 return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Get the Raw Text of a specific Gump.
-        /// </summary>
-        /// <returns>List of Raw Text.</returns>
-        public static List<string> GetGumpRawText(uint gumpid)
-        {
-            if (m_gumpData.ContainsKey(gumpid))
-            {
-                return m_gumpData[gumpid].gumpRawText;
-            }
-            else if (m_incomingData.ContainsKey(gumpid))
-            {
-                return m_incomingData[gumpid].gumpStrings;
-            }
-
-            return new List<string>();
-        }
-
-        /// <summary>
-        /// Get the Raw Text of the most recent and still open Gump.
-        /// </summary>
-        /// <returns>List of Raw Text.</returns>
-        public static List<string> LastGumpRawText()
-        {
-            try
-            {
-                return new List<string>(World.Player.CurrentGumpRawText);
-            }
-            catch
-            {
-                return new List<string>();
             }
         }
 
