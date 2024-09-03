@@ -17,6 +17,15 @@ using System.Net;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using IronPython.Hosting;
+using IronPython.Runtime.Exceptions;
+using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.Scripting;
+using static Assistant.DLLImport;
+using static Microsoft.Scripting.Hosting.Shell.ConsoleHostOptions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using Microsoft.Scripting.Hosting;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -149,14 +158,17 @@ namespace RazorEnhanced
             {
                 case ProtoLanguage.Python:
                     PythonEngine pyEngine = new();
-                    /*pyEngine.Engine.SetTrace(
-                        (TraceBackFrame frame, string result, object payload) =>
-                        {
-                            //responseStream.WriteAsync(new PlayResponse { Result = frame, IsFinished = false });
-                            responseStream.WriteAsync(new PlayResponse { Result = "TRACEBACK HERE", IsFinished = true });
-                        }
-                        );
-                    */
+
+                    var tracingContext = new TracingContext(request.Commands, responseStream);
+
+                    // Store the context in AsyncLocal for thread-safety
+                    AsyncLocal<TracingContext> asyncLocalContext = new AsyncLocal<TracingContext>();
+                    asyncLocalContext.Value = tracingContext;
+
+                    // Set up the trace function
+                    // For now I think trace is too much, maybe add in later
+                    //pyEngine.Engine.SetTrace((frame, result, payload) => TraceFunction(asyncLocalContext, frame, result, payload));
+                    
                     pyEngine.SetStderr(
                         async (string message) =>
                         {
@@ -198,12 +210,35 @@ namespace RazorEnhanced
                     var hooks = pc.SystemState.Get__dict__()["path_hooks"] as PythonDictionary;
                     if (hooks != null) { hooks.Clear(); }
 
-                    string combinedString = string.Join("\r\n", request.Commands);
+                    string combinedString = string.Join("", request.Commands);
                     if (!pyEngine.Load(combinedString, null))
                     {
                         throw new OperationCanceledException();
                     }
-                    pyEngine.Execute();
+                    try
+                    {
+                        pyEngine.Execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        string message = "";
+                        message += "Python Error:";
+                        ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
+                        string error = eo.FormatException(ex);
+                        message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
+                        try
+                        {
+                            await _writeLock.WaitAsync();
+                            Misc.SendMessage(message);
+                            await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                        }
+                        finally
+                        {
+                            // Release the lock
+                            _writeLock.Release();
+                        }
+
+                    }
                     break;
                 case ProtoLanguage.Uosteam:
                     UOSteamEngine uosEngine = new();
@@ -268,7 +303,44 @@ namespace RazorEnhanced
                 listener?.Stop();
             }
         }
+        private TracebackDelegate TraceFunction(AsyncLocal<TracingContext> asyncLocalContext, TraceBackFrame frame, string result, object payload)
+        {
+            var context = asyncLocalContext.Value;
+            if (context != null && result == "line")
+            {
+                string fileName = frame.f_code.co_filename;
+                int lineNumber = (int)frame.f_lineno;
+                string lineContent = "Error outside range of source code";
+                if (lineNumber <= context.SourceCode.Count)
+                    lineContent = context.SourceCode[lineNumber-1];
 
+                var message = $"Executing: {fileName}:{lineNumber} - {lineContent}";
+                try
+                {
+                    // Wait for the lock before proceeding
+                    _writeLock.WaitAsync();
+                    Misc.SendMessage(message, 178);
+                    context.StreamWriter.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                }
+                finally
+                {
+                    // Release the lock
+                    _writeLock.Release();
+                }
+            }
+            return (f, r, p) => TraceFunction(asyncLocalContext, f, r, p);
+        }
 
+    }
+    internal class TracingContext
+    {
+        public IServerStreamWriter<PlayResponse> StreamWriter { get; }
+        public Google.Protobuf.Collections.RepeatedField<string> SourceCode { get; }
+
+        public TracingContext(Google.Protobuf.Collections.RepeatedField<string> _sourceCode,  IServerStreamWriter<PlayResponse> _streamWriter)
+        {
+            SourceCode = _sourceCode;
+            StreamWriter = _streamWriter;
+        }
     }
 }

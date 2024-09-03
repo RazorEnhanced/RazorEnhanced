@@ -1196,6 +1196,16 @@ namespace RazorEnhanced
                 return false;
             }
         }
+
+        /// <summary>@nodoc</summary>
+        /// kept only for backward compatibility 9/4/2024.
+        /// Should be removed in future
+        /// 
+        public static string GetGumpRawData(uint gumpid)
+        {
+            return GetGumpRawLayout(gumpid);
+        }
+
         /// <summary>
         /// Get the Raw layout (definition) of a specific gumpid
         /// </summary>
