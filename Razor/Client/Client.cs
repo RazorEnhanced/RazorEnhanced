@@ -221,7 +221,7 @@ namespace Assistant
             RazorEnhanced.Profiles.Load();
             m_Running = true;
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 // Start GRpc protobuf service only for linux until I resolve multipl client issue
                 ProtoControlService.StartServer("127.0.0.1");

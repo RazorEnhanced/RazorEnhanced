@@ -14,6 +14,9 @@ using System.Text;
 using System.Windows.Navigation;
 using System.Net.Sockets;
 using System.Net;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -40,18 +43,37 @@ namespace RazorEnhanced
 
             AssignedPort = port;
 
-            Server server = new Server
+            // Set the channel options including the write buffer size
+            var channelOptions = new List<ChannelOption>
+            {
+                new ChannelOption(ChannelOptions.MaxSendMessageLength, int.MaxValue),  // Set maximum send message length
+                new ChannelOption(ChannelOptions.MaxReceiveMessageLength, int.MaxValue),  // Set maximum receive message length
+                new ChannelOption("grpc.so_reuseport", 1), // Optionally enable port reuse                 
+            };
+            Server server = new Server(channelOptions)
             {
                 Services = { ProtoControl.BindService(new ProtoControlService()) },
                 Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
             };
-            server.Start();
-            Utility.Logger.Info($"ProtoControl server listening on {host}:{port}");
+            try
+            {
+                server.Start();
+                Utility.Logger.Info($"ProtoControl server listening on {host}:{port}");
+            }
+            catch (System.IO.IOException e)
+            {
+                Utility.Logger.Info($"ProtoControl server failed to load on {host}:{port}");
+                server = null;
+                AssignedPort = 0;
+            }
+            
             return server;
         }
 
         public override async Task Record(RecordRequest request, IServerStreamWriter<RecordResponse> responseStream, ServerCallContext context)
         {
+            if (World.Player == null)
+                return;
             ScriptLanguage language = ScriptLanguage.UNKNOWN;
             switch (request.Language)
             {
@@ -69,14 +91,28 @@ namespace RazorEnhanced
                     break;
             }
             Utility.Logger.Debug($"Started recording in {request.Language} format");
-            if (World.Player != null && (language == ScriptLanguage.PYTHON || language == ScriptLanguage.UOSTEAM))
+            if (language == ScriptLanguage.PYTHON || language == ScriptLanguage.UOSTEAM)
             {
                 var recorder = ScriptRecorderService.RecorderForLanguage(language);
+
                 try
                 {
+
                     recorder.Output = async (code) =>
                     {
-                        responseStream.WriteAsync(new RecordResponse { Data = code });
+                        code = code.TrimEnd(new char[] { '\r', '\n' });
+                        try
+                        {
+                            // Wait for the lock before proceeding
+                            await _writeLock.WaitAsync();
+                            await responseStream.WriteAsync(new RecordResponse { Data = code });
+                        }
+                        finally
+                        {
+                            // Release the lock
+                            _writeLock.Release();
+                        }
+
                     };
                     recorder.Start();
                     while (!context.CancellationToken.IsCancellationRequested)
@@ -104,8 +140,11 @@ namespace RazorEnhanced
             }
         }
 
+        private readonly SemaphoreSlim _writeLock = new SemaphoreSlim(1, 1);
         public override async Task Play(PlayRequest request, IServerStreamWriter<PlayResponse> responseStream, ServerCallContext context)
         {
+            if (World.Player == null)
+                return;
             switch (request.Language)
             {
                 case ProtoLanguage.Python:
@@ -119,17 +158,40 @@ namespace RazorEnhanced
                         );
                     */
                     pyEngine.SetStderr(
-                        (string message) =>
+                        async (string message) =>
                         {
-                            Misc.SendMessage(message, 178);
-                            responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                            message = message.TrimEnd(new char[] { '\r', '\n' });
+                            try
+                            {
+                                // Wait for the lock before proceeding
+                                await _writeLock.WaitAsync();
+                                Misc.SendMessage(message, 178);
+                                await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                            }
+                            finally 
+                            {
+                                // Release the lock
+                                _writeLock.Release();
+                            }
                         }
                         );
                     pyEngine.SetStdout(
-                    (string message) =>
+                    async (string message) =>
                     {
-                        Misc.SendMessage(message);
-                        responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                        message = message.TrimEnd(new char[] { '\r', '\n' });
+                        try
+                        {
+                            // Wait for the lock before proceeding
+                            await _writeLock.WaitAsync();
+
+                            Misc.SendMessage(message);
+                            await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                        }
+                        finally
+                        {
+                            // Release the lock
+                            _writeLock.Release();
+                        }
                     }
                     );
                     var pc = HostingHelpers.GetLanguageContext(pyEngine.Engine) as PythonContext;
