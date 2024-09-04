@@ -293,7 +293,6 @@ namespace RazorEnhanced
         internal static void CopyTable()
         {
             LockTable = true;
-
             Settings.AutoLoot.ClearList(Assistant.Engine.MainWindow.AutoLootListSelect.Text); // Rimuove vecchi dati dal save
 
             foreach (DataGridViewRow row in Assistant.Engine.MainWindow.AutoLootDataGridView.Rows)
@@ -302,30 +301,29 @@ namespace RazorEnhanced
                     continue;
 
                 int color;
-                if ((string)row.Cells[3].Value == "All")
+                if (row.Cells[3].Value != null && (string)row.Cells[3].Value == "All")
                     color = -1;
                 else
                     color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-                bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
+                bool check = false;
+                if (row.Cells[0].Value != null)
+                    bool.TryParse(row.Cells[0].Value.ToString(), out check);
 
                 int itemID;
-                if ((string)row.Cells[2].Value == "All")
+                if (row.Cells[2].Value != null && (string)row.Cells[2].Value == "All")
                     itemID = -1;
                 else
                     itemID = Convert.ToInt32((string)row.Cells[2].Value, 16);
                 int lootbagOverride = Convert.ToInt32((string)row.Cells[4].Value, 16);
-
 
                 if (row.Cells[5].Value != null)
                     Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, lootbagOverride, (List<AutoLootItem.Property>)row.Cells[5].Value));
                 else
                     Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, itemID, color, check, lootbagOverride, new List<AutoLootItem.Property>()));
             }
-
             Settings.Save(); // Salvo dati
             LockTable = false;
-
         }
 
         internal static void AddList(string newList)
