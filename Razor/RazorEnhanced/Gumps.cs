@@ -1197,7 +1197,38 @@ namespace RazorEnhanced
             }
         }
 
-        /// <summary>@nodoc</summary>
+
+        /// <summary>@nodoc @deprecate
+        /// In the future I'd like this to be the RAW version of the text,
+        /// meaning the cliloc number before translation. 
+        /// For language independent code, the numbers would be more useful than the text</summary>
+        /// <param name="gumpid"></param>
+        /// <returns>List<string></string></returns>
+        public static List<string> GetGumpRawText(uint gumpid)
+        {
+            return GetGumpText(gumpid);
+        }
+
+        /// <summary>
+        /// Get the Text of a specific Gump.
+        /// It is the cliloc translation of the #s in the gump
+        /// </summary>
+        /// <returns>List of Text in the gump</returns>
+        public static List<string> GetGumpText(uint gumpid)
+        {
+            if (m_gumpData.ContainsKey(gumpid))
+            {
+                return m_gumpData[gumpid].gumpText;
+            }
+            else if (m_incomingData.ContainsKey(gumpid))
+            {
+                return m_incomingData[gumpid].gumpText;
+            }
+
+            return new List<string>();
+        }
+
+        /// <summary>@nodoc @deprecate</summary>
         /// kept only for backward compatibility 9/4/2024.
         /// Should be removed in future
         /// 

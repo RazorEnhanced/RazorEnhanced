@@ -59,13 +59,14 @@ namespace RazorEnhanced
                 new ChannelOption(ChannelOptions.MaxReceiveMessageLength, int.MaxValue),  // Set maximum receive message length
                 new ChannelOption("grpc.so_reuseport", 1), // Optionally enable port reuse                 
             };
-            Server server = new Server(channelOptions)
-            {
-                Services = { ProtoControl.BindService(new ProtoControlService()) },
-                Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
-            };
+            Server server = null;
             try
             {
+                server = new Server(channelOptions)
+                {
+                    Services = { ProtoControl.BindService(new ProtoControlService()) },
+                    Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
+                };
                 server.Start();
                 Utility.Logger.Info($"ProtoControl server listening on {host}:{port}");
             }
