@@ -1,4 +1,5 @@
 using Microsoft.Win32.SafeHandles;
+using RazorEnhanced;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -142,6 +143,9 @@ namespace Assistant
 
         internal override bool Init(RazorEnhanced.Shard selected)
         {
+
+            // Start GRpc protobuf service
+            ProtoControlService.StartServer("127.0.0.1");
             base.Init(selected);
             RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
             Instance.Start(selected);

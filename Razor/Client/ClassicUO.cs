@@ -175,6 +175,12 @@ namespace Assistant
 
         public unsafe bool InitPlugin(PluginHeader* header)
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                // Start GRpc protobuf service only for linux until I resolve windows CUO wont use grpc 
+                ProtoControlService.StartServer("127.0.0.1");
+            }
+
             _sendToClient =
                 (OnPacketSendRecv)Marshal.GetDelegateForFunctionPointer(header->Recv, typeof(OnPacketSendRecv));
             _sendToServer =
