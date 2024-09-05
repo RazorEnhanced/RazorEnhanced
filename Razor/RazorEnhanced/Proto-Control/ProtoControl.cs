@@ -76,7 +76,7 @@ namespace RazorEnhanced
             }
             catch (Exception e)
             {
-                Utility.Logger.Info($"ProtoControl server failed to load on {host}:{port}");
+                Utility.Logger.Warn($"ProtoControl server failed to load on {host}:{port}");
                 server = null;
                 AssignedPort = 0;
             }
@@ -87,11 +87,12 @@ namespace RazorEnhanced
 
         public static async Task StopServer()
         {
-            AssignedPort = 0;
             if (server != null)
             {
                 await server.ShutdownAsync();
-                Console.WriteLine("Server shut down completed.");
+                Utility.Logger.Info("Server shut down completed.");
+                AssignedPort = 0;
+                server = null;
             }
         }
 
