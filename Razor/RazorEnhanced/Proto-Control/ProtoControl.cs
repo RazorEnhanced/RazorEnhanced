@@ -38,7 +38,7 @@ namespace RazorEnhanced
         private static Grpc.Core.Server server = null;
 
         private static readonly Stopwatch _stopwatch = new Stopwatch();
-        private static readonly long _timeGate = 50; // 50 milliseconds max output to remote
+        private static readonly long _timeGate = 100; // 100 milliseconds max output to remote. note tried 50 and it overflows
 
         internal static int? AssignedPort { get; private set; }
 
