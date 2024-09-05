@@ -733,6 +733,7 @@ namespace Assistant
         private ColumnHeader preload;
         private ColumnHeader columnHeader19;
         private ColumnHeader columnHeader20;
+        private CheckBox remoteControl;
         private CheckBox useUo3D;
 
         internal MainForm()
@@ -822,6 +823,7 @@ namespace Assistant
             this.opacityLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.moreOptTab = new System.Windows.Forms.TabPage();
+            this.remoteControl = new System.Windows.Forms.CheckBox();
             this.druidClericPackets = new System.Windows.Forms.CheckBox();
             this.allowHiddenLooting = new System.Windows.Forms.CheckBox();
             this.filterNPC = new System.Windows.Forms.CheckBox();
@@ -2041,6 +2043,7 @@ namespace Assistant
             // 
             // moreOptTab
             // 
+            this.moreOptTab.Controls.Add(this.remoteControl);
             this.moreOptTab.Controls.Add(this.druidClericPackets);
             this.moreOptTab.Controls.Add(this.allowHiddenLooting);
             this.moreOptTab.Controls.Add(this.filterNPC);
@@ -2103,6 +2106,17 @@ namespace Assistant
             this.moreOptTab.Size = new System.Drawing.Size(678, 365);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
+            // 
+            // remoteControl
+            // 
+            this.remoteControl.AutoSize = true;
+            this.remoteControl.Location = new System.Drawing.Point(436, 335);
+            this.remoteControl.Name = "remoteControl";
+            this.remoteControl.Size = new System.Drawing.Size(134, 18);
+            this.remoteControl.TabIndex = 84;
+            this.remoteControl.Text = "Enable Remote Control";
+            this.remoteControl.UseVisualStyleBackColor = true;
+            this.remoteControl.CheckedChanged += new System.EventHandler(this.remoteControl_CheckedChanged);
             // 
             // druidClericPackets
             // 
@@ -2740,7 +2754,7 @@ namespace Assistant
             this.uomodgroupbox.Controls.Add(this.uomodpaperdollCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
             this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-            this.uomodgroupbox.Location = new System.Drawing.Point(194, 208);
+            this.uomodgroupbox.Location = new System.Drawing.Point(194, 206);
             this.uomodgroupbox.Name = "uomodgroupbox";
             this.uomodgroupbox.Size = new System.Drawing.Size(234, 67);
             this.uomodgroupbox.TabIndex = 75;
@@ -3032,7 +3046,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
             this.groupBox23.Location = new System.Drawing.Point(194, 0);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(268, 201);
+            this.groupBox23.Size = new System.Drawing.Size(268, 199);
             this.groupBox23.TabIndex = 72;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -3055,7 +3069,7 @@ namespace Assistant
             this.graphfilterdatagrid.Name = "graphfilterdatagrid";
             this.graphfilterdatagrid.RowHeadersVisible = false;
             this.graphfilterdatagrid.RowHeadersWidth = 62;
-            this.graphfilterdatagrid.Size = new System.Drawing.Size(256, 141);
+            this.graphfilterdatagrid.Size = new System.Drawing.Size(256, 139);
             this.graphfilterdatagrid.TabIndex = 69;
             this.graphfilterdatagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.graphfilterdatagrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.graphfilterdatagrid_CellEndEdit);
@@ -3656,7 +3670,7 @@ namespace Assistant
             this.pyScriptListView.MultiSelect = false;
             this.pyScriptListView.Name = "pyScriptListView";
             this.pyScriptListView.ShowItemToolTips = true;
-            this.pyScriptListView.Size = new System.Drawing.Size(466, 337);
+            this.pyScriptListView.Size = new System.Drawing.Size(466, 335);
             this.pyScriptListView.TabIndex = 48;
             this.pyScriptListView.UseCompatibleStateImageBehavior = false;
             this.pyScriptListView.View = System.Windows.Forms.View.Details;
@@ -4112,7 +4126,7 @@ namespace Assistant
             this.autolootdataGridView.Name = "autolootdataGridView";
             this.autolootdataGridView.RowHeadersVisible = false;
             this.autolootdataGridView.RowHeadersWidth = 62;
-            this.autolootdataGridView.Size = new System.Drawing.Size(410, 230);
+            this.autolootdataGridView.Size = new System.Drawing.Size(410, 228);
             this.autolootdataGridView.TabIndex = 62;
             this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
             this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
@@ -4258,7 +4272,7 @@ namespace Assistant
             this.groupBox13.Controls.Add(this.autolootLogBox);
             this.groupBox13.Location = new System.Drawing.Point(425, 94);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(243, 231);
+            this.groupBox13.Size = new System.Drawing.Size(243, 229);
             this.groupBox13.TabIndex = 53;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "Autoloot Log";
@@ -4271,7 +4285,7 @@ namespace Assistant
             this.autolootLogBox.ItemHeight = 14;
             this.autolootLogBox.Location = new System.Drawing.Point(6, 19);
             this.autolootLogBox.Name = "autolootLogBox";
-            this.autolootLogBox.Size = new System.Drawing.Size(232, 32);
+            this.autolootLogBox.Size = new System.Drawing.Size(232, 4);
             this.autolootLogBox.TabIndex = 0;
             // 
             // autoLootCheckBox
@@ -9674,6 +9688,7 @@ namespace Assistant
             autosearchcontainers.Checked = RazorEnhanced.Settings.General.ReadBool("AutoSearch");
             nosearchpouches.Checked = RazorEnhanced.Settings.General.ReadBool("NoSearchPouches");
             druidClericPackets.Checked = RazorEnhanced.Settings.General.ReadBool("DruidClericPackets");
+            remoteControl.Checked = RazorEnhanced.Settings.General.ReadBool("RemoteControl");
             chknorunStealth.Checked = RazorEnhanced.Settings.General.ReadBool("ChkNoRunStealth");
             enhancedmappathTextBox.Text = Settings.General.ReadString("EnhancedMapPath");
             autoScriptReload.Checked = RazorEnhanced.Settings.General.ReadBool("AutoScriptReload");

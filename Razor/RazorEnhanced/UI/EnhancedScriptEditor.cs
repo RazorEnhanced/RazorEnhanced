@@ -98,7 +98,7 @@ namespace RazorEnhanced.UI
         internal static bool Init(string filePath)
         {
             string envEditorName = Environment.GetEnvironmentVariable("EDITOR");
-            if (string.IsNullOrEmpty(envEditorName) && RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && string.IsNullOrEmpty(envEditorName))
             {
                 Console.WriteLine("EDITOR environment variable is not set.");
                 return false;
@@ -106,7 +106,6 @@ namespace RazorEnhanced.UI
 
             if (!string.IsNullOrEmpty(envEditorName))
               {
-
                 Utility.Logger.Debug($"EnhancedScriptEditor launchind editor for filePath={filePath}");
                 try
                 {

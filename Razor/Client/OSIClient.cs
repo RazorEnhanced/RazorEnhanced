@@ -143,17 +143,11 @@ namespace Assistant
 
         internal override bool Init(RazorEnhanced.Shard selected)
         {
-
-            // Start GRpc protobuf service
-            ProtoControlService.StartServer("127.0.0.1");
             base.Init(selected);
             RazorEnhanced.Settings.Load(RazorEnhanced.Profiles.LastUsed());
             Instance.Start(selected);
             return true;
-
         }
-
-
 
         private static void OnTick(object state)
         {

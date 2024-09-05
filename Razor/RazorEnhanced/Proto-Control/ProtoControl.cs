@@ -26,6 +26,7 @@ using static Microsoft.Scripting.Hosting.Shell.ConsoleHostOptions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using Microsoft.Scripting.Hosting;
 using System.Text.RegularExpressions;
+using CUO_APINetPipes;
 
 namespace RazorEnhanced
 {
@@ -33,11 +34,14 @@ namespace RazorEnhanced
     {
         private bool _isRecording = false;
         private string _recordingFormat;
+        private static Grpc.Core.Server server = null;
 
         internal static int? AssignedPort { get; private set; }
 
-        public static Server StartServer(string host)
+        public static Grpc.Core.Server StartServer(string host)
         {
+            AssignedPort = 0;
+
             int startingPort = 15454;  // Starting port
             int numberOfPorts = 10;   // Number of ports to check
 
@@ -59,10 +63,10 @@ namespace RazorEnhanced
                 new ChannelOption(ChannelOptions.MaxReceiveMessageLength, int.MaxValue),  // Set maximum receive message length
                 new ChannelOption("grpc.so_reuseport", 1), // Optionally enable port reuse                 
             };
-            Server server = null;
+
             try
             {
-                server = new Server(channelOptions)
+                server = new Grpc.Core.Server(channelOptions)
                 {
                     Services = { ProtoControl.BindService(new ProtoControlService()) },
                     Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
@@ -70,14 +74,25 @@ namespace RazorEnhanced
                 server.Start();
                 Utility.Logger.Info($"ProtoControl server listening on {host}:{port}");
             }
-            catch (System.IO.IOException e)
+            catch (Exception e)
             {
                 Utility.Logger.Info($"ProtoControl server failed to load on {host}:{port}");
                 server = null;
                 AssignedPort = 0;
             }
-            
+
+
             return server;
+        }
+
+        public static async Task StopServer()
+        {
+            AssignedPort = 0;
+            if (server != null)
+            {
+                await server.ShutdownAsync();
+                Console.WriteLine("Server shut down completed.");
+            }
         }
 
         public override async Task Record(RecordRequest request, IServerStreamWriter<RecordResponse> responseStream, ServerCallContext context)

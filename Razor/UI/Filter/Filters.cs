@@ -233,7 +233,23 @@ namespace Assistant
             if (druidClericPackets.Focused)
                 RazorEnhanced.Settings.General.WriteBool("DruidClericPackets", druidClericPackets.Checked);
         }
+        private void remoteControl_CheckedChanged(object sender, System.EventArgs e)
+        {
+            RazorEnhanced.Settings.General.WriteBool("RemoteControl", remoteControl.Checked);
+            if (remoteControl.Checked)
+            {
+                // Start GRpc protobuf service 
+                var server = ProtoControlService.StartServer("127.0.0.1");
+                if (server == null)
+                    remoteControl.Checked = false;
+            }
+            else
+            {
+                // stop GRpc protobuf service 
+                ProtoControlService.StopServer();
 
+            }
+        }
 
         private void setpathmapbutton_Click(object sender, EventArgs e)
         {

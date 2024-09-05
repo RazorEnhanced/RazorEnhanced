@@ -21,7 +21,7 @@ namespace RazorEnhanced
     internal class Settings
     {
         // Versione progressiva della struttura dei salvataggi per successive modifiche
-        private static readonly int SettingVersion = 17;
+        private static readonly int SettingVersion = 19;
 
         private static string m_profileName = null;
 
@@ -2486,6 +2486,7 @@ namespace RazorEnhanced
             general.Columns.Add("AutoSearch", typeof(bool));
             general.Columns.Add("NoSearchPouches", typeof(bool));
             general.Columns.Add("DruidClericPackets", typeof(bool));
+            general.Columns.Add("RemoteControl", typeof(bool));
 
             // Parametri Mappa
             general.Columns.Add("MapX", typeof(int));
@@ -2606,7 +2607,7 @@ namespace RazorEnhanced
                     true, Keys.None,
 
                     // Parametri primo avvio interni
-                    "[{0}% / {1}%]", 0, String.Empty, false, false, true, false,
+                    "[{0}% / {1}%]", 0, String.Empty, false, false, true, false, false,
 
                      // Parametri primo avvio Mappa
                      200,200,200,200,
@@ -5492,7 +5493,14 @@ namespace RazorEnhanced
                 realVersion = 18;
                 General.WriteInt("SettingVersion", realVersion);
             }
-
+            if (realVersion == 18)
+            {
+                DataTable general = m_Dataset.Tables["General"];
+                general.Columns.Add("RemoteControl", typeof(bool));
+                RazorEnhanced.Settings.General.WriteBool("RemoteControl", false);
+                realVersion = 19;
+                General.WriteInt("SettingVersion", realVersion);
+            }
             {
                 // These always run and must be protected to ensure a patch is not applied twice
                 bool found = false;
