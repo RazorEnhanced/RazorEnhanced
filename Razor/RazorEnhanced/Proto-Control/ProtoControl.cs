@@ -27,6 +27,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using Microsoft.Scripting.Hosting;
 using System.Text.RegularExpressions;
 using CUO_APINetPipes;
+using System.Diagnostics;
 
 namespace RazorEnhanced
 {
@@ -35,6 +36,9 @@ namespace RazorEnhanced
         private bool _isRecording = false;
         private string _recordingFormat;
         private static Grpc.Core.Server server = null;
+
+        private static readonly Stopwatch _stopwatch = new Stopwatch();
+        private static readonly long _timeGate = 50; // 50 milliseconds max output to remote
 
         internal static int? AssignedPort { get; private set; }
 
@@ -72,6 +76,7 @@ namespace RazorEnhanced
                     Ports = { new ServerPort(host, port, ServerCredentials.Insecure) }
                 };
                 server.Start();
+                _stopwatch.Start();
                 Utility.Logger.Info($"ProtoControl server listening on {host}:{port}");
             }
             catch (Exception e)
@@ -90,6 +95,7 @@ namespace RazorEnhanced
             if (server != null)
             {
                 await server.ShutdownAsync();
+                _stopwatch.Stop();
                 Utility.Logger.Info("Server shut down completed.");
                 AssignedPort = 0;
                 server = null;
@@ -127,18 +133,7 @@ namespace RazorEnhanced
                     recorder.Output = async (code) =>
                     {
                         code = code.TrimEnd(new char[] { '\r', '\n' });
-                        try
-                        {
-                            // Wait for the lock before proceeding
-                            await _writeLock.WaitAsync();
-                            await responseStream.WriteAsync(new RecordResponse { Data = code });
-                        }
-                        finally
-                        {
-                            // Release the lock
-                            _writeLock.Release();
-                        }
-
+                        OutputRecordMessage(code, responseStream);
                     };
                     recorder.Start();
                     while (!context.CancellationToken.IsCancellationRequested)
@@ -166,7 +161,68 @@ namespace RazorEnhanced
             }
         }
 
+
         private readonly SemaphoreSlim _writeLock = new SemaphoreSlim(1, 1);
+
+        private async Task OutputPlayMessage(string message, IServerStreamWriter<PlayResponse> responseStream)
+        {
+            try
+            {
+                // Wait for the lock before proceeding
+                await _writeLock.WaitAsync();
+
+                // Calculate the time passed since the last execution
+                long elapsedTime = _stopwatch.ElapsedMilliseconds;
+                if (elapsedTime < _timeGate)
+                {
+                    // If time gate has not expired, calculate the remaining time and wait
+                    long remainingTime = _timeGate - elapsedTime;
+                    Thread.Sleep((int)remainingTime);
+                }
+
+                // Reset the stopwatch for the next gate
+                _stopwatch.Restart();
+
+
+                Misc.SendMessage(message, 178);
+                await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+            }
+            finally
+            {
+                // Release the lock
+                _writeLock.Release();
+            }
+
+        }
+        private async Task OutputRecordMessage(string message, IServerStreamWriter<RecordResponse> responseStream)
+        {
+            try
+            {
+                // Wait for the lock before proceeding
+                await _writeLock.WaitAsync();
+
+                // Calculate the time passed since the last execution
+                long elapsedTime = _stopwatch.ElapsedMilliseconds;
+                if (elapsedTime < _timeGate)
+                {
+                    // If time gate has not expired, calculate the remaining time and wait
+                    long remainingTime = _timeGate - elapsedTime;
+                    Thread.Sleep((int)remainingTime);
+                }
+
+                // Reset the stopwatch for the next gate
+                _stopwatch.Restart();
+
+                await responseStream.WriteAsync(new RecordResponse { Data = message });
+            }
+            finally
+            {
+                // Release the lock
+                _writeLock.Release();
+            }
+
+        }
+
         public override async Task Play(PlayRequest request, IServerStreamWriter<PlayResponse> responseStream, ServerCallContext context)
         {
             if (World.Player == null)
@@ -190,39 +246,16 @@ namespace RazorEnhanced
                         async (string message) =>
                         {
                             message = message.TrimEnd(new char[] { '\r', '\n' });
-                            try
-                            {
-                                // Wait for the lock before proceeding
-                                await _writeLock.WaitAsync();
-                                Misc.SendMessage(message, 178);
-                                await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
-                            }
-                            finally 
-                            {
-                                // Release the lock
-                                _writeLock.Release();
-                            }
+                            OutputPlayMessage(message, responseStream);
                         }
                         );
                     pyEngine.SetStdout(
-                    async (string message) =>
-                    {
-                        message = message.TrimEnd(new char[] { '\r', '\n' });
-                        try
+                        async (string message) =>
                         {
-                            // Wait for the lock before proceeding
-                            await _writeLock.WaitAsync();
-
-                            Misc.SendMessage(message);
-                            await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
+                            message = message.TrimEnd(new char[] { '\r', '\n' });
+                            OutputPlayMessage(message, responseStream);
                         }
-                        finally
-                        {
-                            // Release the lock
-                            _writeLock.Release();
-                        }
-                    }
-                    );
+                        );
                     var pc = HostingHelpers.GetLanguageContext(pyEngine.Engine) as PythonContext;
                     var hooks = pc.SystemState.Get__dict__()["path_hooks"] as PythonDictionary;
                     if (hooks != null) { hooks.Clear(); }
@@ -243,18 +276,7 @@ namespace RazorEnhanced
                         ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
                         string error = eo.FormatException(ex);
                         message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
-                        try
-                        {
-                            await _writeLock.WaitAsync();
-                            Misc.SendMessage(message);
-                            await responseStream.WriteAsync(new PlayResponse { Result = message, IsFinished = false });
-                        }
-                        finally
-                        {
-                            // Release the lock
-                            _writeLock.Release();
-                        }
-
+                        OutputPlayMessage(message, responseStream);
                     }
                     break;
                 case ProtoLanguage.Uosteam:
@@ -264,15 +286,6 @@ namespace RazorEnhanced
                     throw new OperationCanceledException();
                     break;
             }
-
-            /*foreach (var command in request.Commands)
-            {
-                string result = ExecuteCommand(command, request.Language);
-                await responseStream.WriteAsync(new PlayResponse { Result = result, IsFinished = false });
-            }
-
-            await responseStream.WriteAsync(new PlayResponse { Result = "Execution completed", IsFinished = true });
-            */
         }
 
         private string GenerateRecordingData(string format)

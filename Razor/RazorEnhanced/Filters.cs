@@ -283,6 +283,7 @@ namespace RazorEnhanced
         {
             RangeMax = 3,
             Movable = -1,
+            Multi = -1,
             IsCorpse = 1,
             IsDoor = -1,
             OnGround = 1,
@@ -348,6 +349,7 @@ namespace RazorEnhanced
             Graphics = new List<int> { 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD, 0x0ECE, 0x0ECF, 0x0ED0, 0x0ED1, 0x0ED2 },
             RangeMax = 1,
             Movable = -1,
+            Multi = -1,
             IsCorpse = -1,
             IsDoor = -1,
             OnGround = 1,

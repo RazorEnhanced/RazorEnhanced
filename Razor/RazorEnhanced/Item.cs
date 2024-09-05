@@ -667,17 +667,30 @@ namespace RazorEnhanced
             public List<int> Hues = new List<int>();
 
             /// <summary>
-            /// Limit the search by distance, to Items on the ground which are at least RangeMin tiles away from the Player. ( default: -1, any Item )
+            /// Limit the search by distance, to Items which are at least RangeMin tiles away from the Player. ( default: -1, any Item )
             /// </summary>
             public double RangeMin = -1;
             /// <summary>
-            /// Limit the search by distance, to Items on the ground which are at most RangeMax tiles away from the Player. ( default: -1, any Item )
+            /// Limit the search by distance, to Items which are at most RangeMax tiles away from the Player. ( default: -1, any Item )
             /// </summary>
             public double RangeMax = -1;
+            /// <summary>
+            /// Limit the search by height, to Items which are at least ZRangeMin coordinates away from the Player. ( default: -1, any Item )
+            /// </summary>
+            public double ZRangeMin = -1;
+            /// <summary>
+            /// Limit the search by height, to Items which are at most ZRangeMax coordinates away from the Player. ( default: -1, any Item )
+            /// </summary>
+            public double ZRangeMax = -1;
+
             /// <summary>
             /// Limit the search to only Movable Items. ( default: -1, any Item )
             /// </summary>
             public int Movable = -1;
+            /// <summary>
+            /// Limit the search to only Multi Items. ( default: -1, any Item )
+            /// </summary>
+            public int Multi = -1;
             /// <summary>
             /// Exclude from the search Items which are currently on the global Ignore List. ( default: False, any Item )
             /// </summary>
@@ -752,23 +765,42 @@ namespace RazorEnhanced
                         return false;
                 }
 
-                if (RangeMin != -1)
+                if (RangeMin > -1)
                 {
                     if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) < RangeMin)
                         return false;
                 }
 
-                if (RangeMax != -1)
+                if (RangeMax > -1)
                 {
                     if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > RangeMax)
                         return false;
                 }
+                if (ZRangeMin > -1)
+                {
+                    if ( Math.Abs(Math.Abs(item.Position.Z) - Math.Abs(World.Player.Position.Z)) < ZRangeMin)
+                        return false;
+                }
+
+                if (ZRangeMax > -1)
+                {
+                    if (Math.Abs(Math.Abs(item.Position.Z) - Math.Abs(World.Player.Position.Z)) > ZRangeMax)
+                        return false;
+                }
+
 
                 if (Movable >= 0)
                 {
                     if (!item.Movable == (Movable > 0))
                         return false;
                 }
+
+                if (Multi >= 0)
+                {
+                    if (!item.IsMulti == (Multi > 0))
+                        return false;
+                }
+
 
                 if (Layers.Count > 0)
                 {

@@ -381,6 +381,7 @@ namespace RazorEnhanced
         private static readonly Items.Filter m_itemfilter = new Items.Filter
         {
             Movable = -1,
+            Multi = -1,
             OnGround = 1,
             Enabled = true
         };
@@ -388,6 +389,7 @@ namespace RazorEnhanced
         private static readonly Items.Filter m_itemfilterOsi = new Items.Filter
         {
             Movable = -1,
+            Multi = -1,
             OnGround = 1,
             Enabled = true
         };
