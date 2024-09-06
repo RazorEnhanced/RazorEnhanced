@@ -1,78 +1,100 @@
-import grpc
-import ProtoControl_pb2
-import ProtoControl_pb2_grpc
 import asyncio
+import websockets
 import time
 
-async def read_stream_with_timeout(stream, timeout):
+from google.protobuf.message import DecodeError
+from ProtoControl_pb2 import PlayRequest, PlayResponse, StopPlayRequest, StopPlayResponse 
+from ProtoControl_pb2 import ProtoMessageType, ProtoLanguage
+from ProtoControl_pb2 import RecordRequest, RecordResponse, StopRecordRequest
+
+async def receive_message_with_timeout(websocket, timeout=5):
     try:
-        # Read from the stream with a timeout
-        response = await asyncio.wait_for(stream.read(), timeout)
+        data = await asyncio.wait_for(websocket.recv(), timeout=timeout)
+        response = RecordResponse()
+        response.ParseFromString(data)
         return response
     except asyncio.TimeoutError:
-        # If the timeout occurs, return None or handle the situation
-        #print("No data received within the timeout period.")
-        return None
-    except asyncio.CancelledError:
-        #print("No data received operation cancelled.")
-        return None
+        print("Timeout waiting for WebSocket message.")
+    except websockets.ConnectionClosedOK:
+        print("Connection closed.")
+    return None
 
-async def run_record(stub):
-    record_request = ProtoControl_pb2.RecordRequest(language=ProtoControl_pb2.ProtoLanguage.UOSTEAM)
-    duration = 15  # Record test duration
-    print(f"Testing Record API for {duration} seconds:")
-    timeout = 1  # Timeout for each read attempt in seconds
-    record_stream = stub.Record(record_request)
+
+
+async def websocket_client():
+    uri = "ws://localhost:15454/proto"
     
-    # Read from the stream for a specified duration
-    start_time = time.time()
-    
-    while True:
-        current_time = time.time()
-        if current_time - start_time > duration:
-            print("Desired duration reached")
-            break
+    async with websockets.connect(uri) as websocket:
+        # Create a PlayRequest message
+        request = PlayRequest(
+            type=ProtoMessageType.PlayRequestType,
+            language=ProtoLanguage.Python,
+            commands=["print('Hello from Python')", "print(Player.Name)", "print('Success')"]
+        )
 
-        remaining_time = duration - (current_time - start_time)
-        read_timeout = min(timeout, remaining_time)
-        read_timeout = remaining_time
+        # Serialize the message
+        request_data = request.SerializeToString()
+        await websocket.send(request_data)
+        print("PlayRequest sent to the server.")
 
+        # Receive and deserialize the PlayResponse message
         try:
-            response = await read_stream_with_timeout(record_stream, read_timeout)
-            if response is None:
-                continue
-        
-            print(f"Received: {response.data}")
-        except grpc.RpcError as e:
-            print(f"Record API error: {e.code()}: {e.details()}")
+            more = True
+            while True:
+                data = await websocket.recv()
+                response = PlayResponse()                
+                response.ParseFromString(data)
+                if not response.more:
+                    break;
+                print(f"PlayResponse: {response.result}")
 
-async def run_play(stub):
-    print("\nTesting Play API:")
-    play_request = ProtoControl_pb2.PlayRequest(
-        language=ProtoControl_pb2.ProtoLanguage.PYTHON,
-        commands=["print(\"Hello World\")", "Misc.Pause(5000)", "print(\"Bye!\")"]
-    )
-    try:
-        play_stream = stub.Play(play_request)
-        
-        async for response in play_stream:
-            print(f"Received: {response.result}")
-            if response.is_finished:
-                print("Play execution completed")
-                break
-    except grpc.RpcError as e:
-        print(f"Play API error: {e.code()}: {e.details()}")
+        except websockets.exceptions.ConnectionClosedOK:
+            print("Record stream ended")
+        except DecodeError as e:
+            print("Failed to parse response:", e)
 
-async def run():
-    server_address = '127.0.0.1:15454'
-    
-    async with grpc.aio.insecure_channel(server_address) as channel:
+        # Create a RecordRequest message
+        request = RecordRequest(
+            type=ProtoMessageType.RecordRequestType,
+            language=ProtoLanguage.Python
+        )
+
+        # Serialize the message
+        request_data = request.SerializeToString()
+        await websocket.send(request_data)
+        print("RecordRequest sent to the server.")
+
+        # Read from the stream for a specified duration
+        duration = 15  # Record test duration
+        start_time = time.time()
+        timeout = 1
         try:
-            stub = ProtoControl_pb2_grpc.ProtoControlStub(channel)
-            await run_record(stub)
-            await run_play(stub)
-        except grpc.RpcError as e:
-            print(f"Error connecting to server: {e.code()}: {e.details()}")
+            more = True
+            while more:
+                current_time = time.time()
+                if current_time - start_time > duration:
+                    print("Desired duration reached")
+                    stop = StopRecordRequest(
+                        type=ProtoMessageType.StopRecordRequestType
+                        )
+                    stop_data = request.SerializeToString()
+                    await websocket.send(stop_data)
+                    more = False
+              
+                remaining_time = duration - (current_time - start_time)
+                read_timeout = min(timeout, remaining_time)
+                read_timeout = remaining_time
+                response = await receive_message_with_timeout(websocket, read_timeout)
+                if response is None:
+                    continue  
 
-if __name__ == '__main__':
-    asyncio.run(run())
+                print(f"RecordResponse: {response.data}")
+
+        except websockets.exceptions.ConnectionClosedOK:
+            print("Record stream ended")
+        except DecodeError as e:
+            print("Failed to parse response:", e)
+
+
+
+asyncio.get_event_loop().run_until_complete(websocket_client())

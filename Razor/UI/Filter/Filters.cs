@@ -238,15 +238,16 @@ namespace Assistant
             RazorEnhanced.Settings.General.WriteBool("RemoteControl", remoteControl.Checked);
             if (remoteControl.Checked)
             {
-                // Start GRpc protobuf service 
-                var server = ProtoControlService.StartServer("127.0.0.1");
-                if (server == null)
-                    remoteControl.Checked = false;
+                // Start protobuf service
+                System.Net.IPAddress ip = System.Net.IPAddress.Parse("127.0.0.1");
+                ProtoControlServer.Instance.Start(ip);
+                //if (server == null)
+                //    remoteControl.Checked = false;
             }
             else
             {
                 // stop GRpc protobuf service 
-                ProtoControlService.StopServer();
+                ProtoControlServer.Instance.Stop();
 
             }
         }

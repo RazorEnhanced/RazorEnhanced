@@ -173,12 +173,6 @@
     <Reference Include="Google.Protobuf, Version=3.28.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.28.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
-    <Reference Include="Grpc.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
-      <HintPath>..\packages\Grpc.Core.2.31.0\lib\net45\Grpc.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Grpc.Core.Api, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
-      <HintPath>..\packages\Grpc.Core.Api.2.46.6\lib\net45\Grpc.Core.Api.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.61.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.61\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -266,9 +260,6 @@
     </Reference>
     <Reference Include="Mono.Options, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Options.6.12.0.148\lib\net40\Mono.Options.dll</HintPath>
-    </Reference>
-    <Reference Include="Net.Core.Grpc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASPNet.Core.Grpc.1.0.3.6\lib\netstandard2.0\Net.Core.Grpc.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -393,6 +384,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="websocket-sharp, Version=1.0.1.0, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharp-netstandard.1.0.1\lib\net45\websocket-sharp.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -461,7 +455,7 @@
     <Compile Include="RazorEnhanced\EnhancedScript.cs" />
     <Compile Include="RazorEnhanced\PacketLogger.cs" />
     <Compile Include="RazorEnhanced\Proto-Control\ProtoControl.cs" />
-    <Protobuf Include="RazorEnhanced\Proto-Control\ProtoControl.proto" GrpcServices="Server" />
+    <ProtoBuf Include="RazorEnhanced\Proto-Control\ProtoControl.proto" GrpcServices="None" />
     <Compile Include="RazorEnhanced\PythonEngine.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
@@ -1655,6 +1649,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
+    <ProtoBufNet_ProtoCompile>true</ProtoBufNet_ProtoCompile>
+  </PropertyGroup>
+  <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
     <PostBuildEvent>XCOPY  "$(SolutionDir)packages\IronPython.StdLib.3.4.1\content\Lib"  "$(TargetDir)Lib\"  /y /s
@@ -1672,7 +1669,6 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebView2.1.0.2592.51\build\Microsoft.Web.WebView2.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebView2.1.0.2592.51\build\Microsoft.Web.WebView2.targets'))" />
     <Error Condition="!Exists('..\packages\Grpc.Tools.2.66.0\build\Grpc.Tools.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Tools.2.66.0\build\Grpc.Tools.props'))" />
     <Error Condition="!Exists('..\packages\Grpc.Tools.2.66.0\build\Grpc.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Tools.2.66.0\build\Grpc.Tools.targets'))" />
-    <Error Condition="!Exists('..\packages\Grpc.Core.2.31.0\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.2.31.0\build\net45\Grpc.Core.targets'))" />
   </Target>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
@@ -1680,5 +1676,4 @@ XCOPY  "$(SolutionDir)BuildSupplementalFiles\"*  "$(TargetDir)"  /y /s</PostBuil
   <Import Project="..\CustomIntermediateDirs.props" />
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.2592.51\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.2592.51\build\Microsoft.Web.WebView2.targets')" />
   <Import Project="..\packages\Grpc.Tools.2.66.0\build\Grpc.Tools.targets" Condition="Exists('..\packages\Grpc.Tools.2.66.0\build\Grpc.Tools.targets')" />
-  <Import Project="..\packages\Grpc.Core.2.31.0\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.31.0\build\net45\Grpc.Core.targets')" />
 </Project>

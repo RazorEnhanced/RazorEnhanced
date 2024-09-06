@@ -9855,7 +9855,7 @@ namespace Assistant
                 World.Player != null && World.Player.Backpack != null ? (uint)World.Player.Backpack.Serial : 0,
                 World.Items.Count,
                 World.Mobiles.Count,
-                ProtoControlService.AssignedPort);
+                ProtoControlServer.Instance.AssignedPort);
 
             if (World.Player != null)
                 status += String.Format("\r\nCoordinates\r\nX: {0}\r\nY: {1}\r\nZ: {2}", World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z);

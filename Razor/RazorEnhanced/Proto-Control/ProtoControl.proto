@@ -5,32 +5,72 @@ option csharp_namespace = "RazorEnhanced";
 package protocontrol;
 
 enum ProtoLanguage {
-    UNKNOWN = 0;  // Default value
-    PYTHON = 1;
-    CSHARP = 2;
-    UOSTEAM = 3;
+    Unknown = 0;  // Default value
+    Python = 1;
+    Csharp = 2;
+    Uosteam = 3;
+}
+
+enum ProtoMessageType {
+    UndefinedType = 0;
+    PlayResponseType = 1;
+    PlayRequestType = 2;
+    StopPlayRequestType = 3;
+    StopPlayResponseType = 4;
+
+    RecordResponseType = 10;
+    RecordRequestType = 11;
+    StopRecordRequestType = 12;
+    StopRecordResponseType = 13;
 }
 
 service ProtoControl {
-  rpc Record (RecordRequest) returns (stream RecordResponse);
-  rpc Play (PlayRequest) returns (stream PlayResponse);
+    rpc Record (RecordRequest) returns (stream RecordResponse);
+    rpc StopRecord (StopRecordRequest) returns (StopRecordResponse);
+
+    rpc Play (PlayRequest) returns (stream PlayResponse);
+    rpc StopPlay (StopPlayRequest) returns (StopPlayResponse);
 }
 
+// Record Messages
 message RecordRequest {
-  ProtoLanguage language = 1;
+    ProtoMessageType type = 1; 
+    ProtoLanguage language = 2;
+}
+
+message StopRecordRequest {
+    ProtoMessageType type = 1;
 }
 
 message RecordResponse {
-  string data = 1;
+    ProtoMessageType type = 1;
+    bool more = 2;
+    string data = 3;
 }
 
+message StopRecordResponse {
+    ProtoMessageType type = 1;
+    bool success = 2;
+}
+
+// Play Messages
 message PlayRequest {
-  ProtoLanguage language = 1;
-  repeated string commands = 2;
+    ProtoMessageType type = 1;
+    ProtoLanguage language = 2;
+    repeated string commands = 3;
 }
 
 message PlayResponse {
-  string result = 1;
-  bool is_finished = 2;
+    ProtoMessageType type = 1;
+    bool more = 2;
+    string result = 3;
 }
 
+message StopPlayRequest {
+    ProtoMessageType type = 1;
+}
+
+message StopPlayResponse {
+    ProtoMessageType type = 1;
+    bool success = 2;
+}
