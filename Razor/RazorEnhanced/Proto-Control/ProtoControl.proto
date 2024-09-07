@@ -34,43 +34,52 @@ service ProtoControl {
 
 // Record Messages
 message RecordRequest {
-    ProtoMessageType type = 1; 
-    ProtoLanguage language = 2;
+    ProtoMessageType type = 1;
+    int32 sessionid = 2;
+    ProtoLanguage language = 3;
 }
 
 message StopRecordRequest {
     ProtoMessageType type = 1;
+    int32 sessionid = 2;
 }
 
 message RecordResponse {
     ProtoMessageType type = 1;
-    bool more = 2;
-    string data = 3;
+    int32 sessionid = 2;
+    bool more = 3;
+    string data = 4;
 }
 
 message StopRecordResponse {
     ProtoMessageType type = 1;
-    bool success = 2;
+    int32 sessionid = 2;
+    bool success = 3;
 }
 
 // Play Messages
 message PlayRequest {
     ProtoMessageType type = 1;
-    ProtoLanguage language = 2;
-    repeated string commands = 3;
+    int32 sessionid = 2;
+    ProtoLanguage language = 3;
+    repeated string commands = 4;
 }
 
 message PlayResponse {
     ProtoMessageType type = 1;
-    bool more = 2;
-    string result = 3;
+    int32 sessionid = 2;
+    bool more = 3;
+    string result = 4;
 }
 
 message StopPlayRequest {
     ProtoMessageType type = 1;
+    int32 sessionid = 2;
+
 }
 
 message StopPlayResponse {
     ProtoMessageType type = 1;
-    bool success = 2;
+    int32 sessionid = 2;
+    bool success = 3;
 }

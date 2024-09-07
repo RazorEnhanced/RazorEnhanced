@@ -1,7 +1,9 @@
+using Assistant;
 using IronPython.Compiler;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
+using Microsoft.Scripting.Debugging;
 using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
@@ -26,15 +28,24 @@ namespace RazorEnhanced
         public ScriptSource Source { get; set; }
         public CompiledCode Compiled { get; set; }
         public PythonCompilerOptions CompilerOptions { get; set; }
+        public TracebackDelegate Traceback { get; set; }
 
         public Action<string> m_OutputWriter;
         public Action<string> m_ErrorWriter;
+        static TracebackDelegate TraceCallback(TraceBackFrame frame, string result, object payload)
+        {
+            Console.WriteLine($"Tracing: {frame.f_code.co_name} at line {frame.f_lineno}");
+            return TraceCallback;
+        }
 
 
         public PythonEngine()
         {
-            Runtime = IronPython.Hosting.Python.CreateRuntime();
-            Engine = IronPython.Hosting.Python.GetEngine(Runtime);
+            var setup = Python.CreateRuntimeSetup(null);
+            setup.DebugMode = true;
+            Runtime = new ScriptRuntime(setup);
+            Engine = Python.GetEngine(Runtime);
+            Traceback = TraceCallback;
 
             //Paths for IronPython 3.4
             var paths = new List<string>();
@@ -108,6 +119,7 @@ namespace RazorEnhanced
 
         public void SetTrace(TracebackDelegate tracebackDelegate)
         {
+            Traceback = tracebackDelegate;
             Engine.SetTrace(tracebackDelegate);
         }
 
@@ -179,6 +191,8 @@ namespace RazorEnhanced
             CompilerOptions.ModuleName = "__main__";
             CompilerOptions.Module |= ModuleOptions.Initialize;
             CompilerOptions.Optimized = true;
+            Traceback = TraceCallback;
+            //Engine.SetTrace(TraceCallback);
             try
             {
                 Compiled = Source.Compile(CompilerOptions);
@@ -207,6 +221,7 @@ namespace RazorEnhanced
 
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;
+            Compiled.Engine.SetTrace(Traceback);
             Compiled.Execute(Scope);
             journal.Active = false;
 

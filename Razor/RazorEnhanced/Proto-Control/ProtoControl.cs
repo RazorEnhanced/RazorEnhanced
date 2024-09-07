@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Net;
-using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text;
 using Google.Protobuf;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using RazorEnhanced;
 using System.Diagnostics;
 using Assistant;
 using System.Net.Sockets;
@@ -16,30 +14,55 @@ using Microsoft.Scripting.Hosting.Providers;
 using Microsoft.Scripting.Hosting;
 using RazorEnhanced.UOS;
 using System.Text.RegularExpressions;
-using CrashReporterDotNET.com.drdump;
+using System.Collections.Concurrent;
+using IronPython.Runtime.Exceptions;
+using IronPython.Hosting;
 using System.Windows.Forms;
+using Consul;
 
 namespace RazorEnhanced
 {
     public class ProtoMessageParser : WebSocketBehavior
     {
+        internal class SessionData
+        {
+            internal int _sessionID;
+            internal ScriptRecorder _recorder;
+            internal Thread _playThread;
+            internal bool _shouldTerminate;
+
+            internal SessionData(int sessionID, ScriptRecorder scriptRecorder=null, Thread playThread=null)
+            {
+                _sessionID = sessionID;
+                _recorder = scriptRecorder;
+                _playThread = playThread;
+                _shouldTerminate = false;
+            }
+        }
+        internal ProtoMessageType _messageType = 0;
+        internal int _sessionID = 0;
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private readonly long _timeGate = 100; // 100 milliseconds max output to remote. note tried 50 and it overflows
 
         private readonly SemaphoreSlim _writeLock = new SemaphoreSlim(1, 1);
 
-        ScriptRecorder _recorder = null;
-
-        public ProtoMessageParser()
-        {
-        }
-
+        internal static ConcurrentDictionary<int, SessionData> _sessionTracker = new();
 
         protected override void OnMessage(MessageEventArgs e)
         {
+            // Convert the buffer to string
+            string receivedMessage = Encoding.UTF8.GetString(e.RawData);
+
             // Deserialize the received message            
-            ProtoMessageType messageType = GetMessageType(e.RawData);
-            switch (messageType)
+            var msgId = GetMessageTypeAndSessionID(e.RawData);
+            _messageType = msgId.type;
+            _sessionID = msgId.sessionId;
+            if (_messageType == 0 || _sessionID == 0)
+            {
+                Utility.Logger.Error($"Invalid messageType: {_messageType} and/or sessionID: {_sessionID}");
+                return;
+            }
+            switch (_messageType)
             {
                 case ProtoMessageType.PlayRequestType:
                     {
@@ -66,31 +89,44 @@ namespace RazorEnhanced
                     }
                     break;
                 default:
-                    Utility.Logger.Debug($"Unreasonable message received: {messageType}");
+                    Utility.Logger.Debug($"Unreasonable message received: {_messageType}");
                     return;
+            }            
+        }
+        private TracebackDelegate TraceCallback(TraceBackFrame frame, string result, object payload)
+        {
+            if (_sessionID == 0) 
+                return TraceCallback;
+
+            //bool shouldTerminate = false;
+            if (_sessionTracker.ContainsKey(_sessionID))
+            {
+                SessionData sessionData = _sessionTracker[_sessionID];
+                if (sessionData._shouldTerminate == true)
+                    throw new OperationCanceledException("Script execution aborted");
             }
-
-
-
-            
+            return TraceCallback;
         }
 
         public async Task Play(PlayRequest request)
         {
-            if (World.Player == null)
-                return;
+            if (World.Player == null) return;
+            if (request == null) return;
+
+            SessionData sessionData =
+                new SessionData(request.Sessionid, scriptRecorder:null, playThread: null );
+            _sessionTracker[request.Sessionid] = sessionData;
+
+
             switch (request.Language)
             {
                 case ProtoLanguage.Python:
                     PythonEngine pyEngine = new();
-
-                    //var tracingContext = new TracingContext(request.Commands, responseStream);
-                    // Store the context in AsyncLocal for thread-safety
-                    //AsyncLocal<TracingContext> asyncLocalContext = new AsyncLocal<TracingContext>();
-                    //asyncLocalContext.Value = tracingContext;
-                    // Set up the trace function
-                    // For now I think trace is too much, maybe add in later
-                    //pyEngine.Engine.SetTrace((frame, result, payload) => TraceFunction(asyncLocalContext, frame, result, payload));
+                    
+                    // Set up the trace function so we can force python to terminate
+                    sessionData._shouldTerminate = false;
+                    
+                    //Python.SetTrace(pyEngine.Engine, TraceCallback);
 
                     pyEngine.SetStderr(
                         async (string message) =>
@@ -117,18 +153,18 @@ namespace RazorEnhanced
                     }
                     try
                     {
-                        //Need to make a thread and wait on it so it can be killed
-                        pyEngine.Execute();
+                        //TracebackDelegate traceFn = TraceCallback;
+                        TracebackDelegate traceFn = (frame, result, _) => TraceCallback(frame, result, null);
+                        pyEngine.SetTrace(traceFn);
+                        sessionData._playThread = new Thread(() => RunPython(pyEngine));
+                        sessionData._playThread.Start();
+                        sessionData._playThread.Join();
+                        sessionData._playThread = null;
                         OutputPlayMessage("", false);
                     }
                     catch (Exception ex)
                     {
-                        string message = "";
-                        message += "Python Error:";
-                        ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
-                        string error = eo.FormatException(ex);
-                        message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
-                        OutputPlayMessage(message, false);
+                        Utility.Logger.Error($"Play Python failed {ex}");
                     }
                     break;
                 case ProtoLanguage.Uosteam:
@@ -139,6 +175,44 @@ namespace RazorEnhanced
                     break;
             }
 
+            if (_sessionTracker.ContainsKey(request.Sessionid)
+                && !_sessionTracker.TryRemove(request.Sessionid, out _))
+                Utility.Logger.Error($"Unable to remove Play session key from dictionary");
+        }
+        internal void RunPython(PythonEngine pyEngine)
+        {
+            string message = "";
+            try
+            {
+                pyEngine.Execute();
+            }
+            catch (OperationCanceledException stop)
+            {
+                message = stop.Message;
+            }
+            catch (Exception ex)
+            {
+                message += "Python Error:";
+                ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
+                string error = eo.FormatException(ex);
+                message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
+            }
+            
+            OutputPlayMessage(message, false);
+        }
+
+        public async Task StopPlay(StopPlayRequest request)
+        {
+            if (World.Player == null) return;
+            if (request == null) return;
+            if (_sessionTracker.ContainsKey(request.Sessionid))
+            {
+                SessionData sessionData = _sessionTracker[request.Sessionid];
+                sessionData._shouldTerminate = true;
+                Thread.Sleep(2000); // it should end itself
+                if (sessionData._playThread != null) // if not kill it
+                    sessionData._playThread.Abort();
+            }
         }
 
         private async Task OutputPlayMessage(string message, bool more)
@@ -180,8 +254,9 @@ namespace RazorEnhanced
 
             public async Task Record(RecordRequest request)
         {
-            if (World.Player == null)
-                return;
+            if (World.Player == null) return;
+            if (request == null) return;
+                
             ScriptLanguage language = ScriptLanguage.UNKNOWN;
             switch (request.Language)
             {
@@ -201,18 +276,20 @@ namespace RazorEnhanced
             Utility.Logger.Debug($"Started recording in {request.Language} format");
             if (language == ScriptLanguage.PYTHON || language == ScriptLanguage.UOSTEAM)
             {
-                _recorder = ScriptRecorderService.RecorderForLanguage(language);
+                SessionData sessionData =
+                    new SessionData(request.Sessionid, ScriptRecorderService.RecorderForLanguage(language));
+                _sessionTracker[request.Sessionid] = sessionData;
 
                 try
-                {
-                    _recorder.Output = async (code) =>
+                    {
+                    sessionData._recorder.Output = async (code) =>
                     {
                         // Create a response based on the request
                         code = code.TrimEnd(new char[] { '\r', '\n' });
-                        OutputRecordMessage(code);
+                        OutputRecordMessage(request.Sessionid, code);
                     };
-                    _recorder.Start();
-                    while (_recorder.IsRecording())
+                    sessionData._recorder.Start();
+                    while (sessionData._recorder != null && sessionData._recorder.IsRecording())
                     {
                         await Task.Delay(100); 
                     }
@@ -228,84 +305,117 @@ namespace RazorEnhanced
                 finally
                 {
                     Utility.Logger.Debug("Recording stopped");
-                    _recorder.Stop();
+                    if (sessionData._recorder != null)
+                        sessionData._recorder.Stop();
                 }
             }
             else
             {
                 throw new OperationCanceledException();
             }
-        }
 
-        private async Task OutputRecordMessage(string message)
-        {
-            try
+            var response = new RecordResponse
             {
-                // Wait for the lock before proceeding
-                await _writeLock.WaitAsync();
-
-                // Calculate the time passed since the last execution
-                long elapsedTime = _stopwatch.ElapsedMilliseconds;
-                if (elapsedTime < _timeGate)
-                {
-                    // If time gate has not expired, calculate the remaining time and wait
-                    long remainingTime = _timeGate - elapsedTime;
-                    Thread.Sleep((int)remainingTime);
-                }
-
-                // Reset the stopwatch for the next gate
-                _stopwatch.Restart();
-
-                var response = new RecordResponse { Type = ProtoMessageType.RecordResponseType, Data = message };
-                Send(response.ToByteArray());
-            }
-            finally
-            {
-                // Release the lock
-                _writeLock.Release();
-            }
-
-        }
-
-        public async Task StopPlay(StopPlayRequest request)
-        {
-            if (World.Player == null)
-                return;
-        }
-
-        public async Task StopRecorder(StopRecordRequest request)
-        {
-            if (World.Player == null)
-                return;
-
-            if (_recorder != null)
-            {
-                _recorder.Stop();
-                _recorder = null;
-            }
-            var response = new StopRecordResponse
-            {
-                Type = ProtoMessageType.StopRecordResponseType,                
-                Success = true
+                Type = ProtoMessageType.RecordResponseType,
+                Sessionid = request.Sessionid,
+                More = false,
+                Data = "Recording Stopped"
             };
             Send(response.ToByteArray());
+            if (_sessionTracker.ContainsKey(request.Sessionid)
+                && !_sessionTracker.TryRemove(request.Sessionid, out _))
+                    Utility.Logger.Error($"Unable to remove Record session key from dictionary");
+        }
+
+        private async Task OutputRecordMessage(int sessionID, string message)
+        {
+            if (_sessionTracker.ContainsKey(sessionID))
+            {
+                SessionData sessionData = _sessionTracker[sessionID];
+                try
+                {
+                    // Wait for the lock before proceeding
+                    await _writeLock.WaitAsync();
+
+                    // Calculate the time passed since the last execution
+                    long elapsedTime = _stopwatch.ElapsedMilliseconds;
+                    if (elapsedTime < _timeGate)
+                    {
+                        // If time gate has not expired, calculate the remaining time and wait
+                        long remainingTime = _timeGate - elapsedTime;
+                        Thread.Sleep((int)remainingTime);
+                    }
+
+                    // Reset the stopwatch for the next gate
+                    _stopwatch.Restart();
+
+                    bool more = false;
+                    if (sessionData._recorder != null)
+                        more = sessionData._recorder.IsRecording();
+                    var response = new RecordResponse
+                    {
+                        Type = ProtoMessageType.RecordResponseType,
+                        Sessionid = sessionID,
+                        More = more,
+                        Data = message
+                    };
+                    Send(response.ToByteArray());
+
+                }
+                finally
+                {
+                    // Release the lock
+                    _writeLock.Release();
+                }
+            }
+
+        }
+
+            public async Task StopRecorder(StopRecordRequest request)
+        {
+            if (World.Player == null) return;
+            if (request == null) return;
+
+            if (_sessionTracker.ContainsKey(request.Sessionid))
+            {
+                SessionData sessionData = _sessionTracker[request.Sessionid];
+
+                if (sessionData._recorder != null)
+                {
+                    sessionData._recorder.Stop();
+                }
+
+                var stopResponse = new StopRecordResponse
+                {
+                    Type = ProtoMessageType.StopRecordResponseType,
+                    Sessionid = request.Sessionid,
+                    Success = true
+                };
+                Send(stopResponse.ToByteArray());
+            }
         }
 
 
-        static ProtoMessageType GetMessageType(byte[] buffer)
+        (ProtoMessageType type, int sessionId) GetMessageTypeAndSessionID(byte[] buffer)
         {
             // The first field (tag 1) in the message is the MessageType enum
             // We only need to read the first few bytes to determine the message type
             using (var input = new CodedInputStream(buffer))
             {
+                ProtoMessageType messageType = 0;
+                int sessionID = 0;
                 uint tag = input.ReadTag();
                 if (tag>0 && WireFormat.GetTagFieldNumber(tag) == 1)
                 {
                     int enumValue = input.ReadEnum();
-                    return (ProtoMessageType)enumValue;
+                    messageType = (ProtoMessageType)enumValue;
                 }
+                tag = input.ReadTag();
+                if (tag>0 && WireFormat.GetTagFieldNumber(tag) == 2) {
+                    sessionID = input.ReadInt32();
+                }
+                return (messageType, sessionID);
             }
-            throw new InvalidOperationException("Unable to determine message type");
         }
 
 
@@ -364,12 +474,22 @@ namespace RazorEnhanced
             }
             AssignedPort = port;
 
-            string connection = $"ws://localhost:{AssignedPort}";
-            _server = new WebSocketServer(connection);
-            _server.AddWebSocketService<ProtoMessageParser>("/proto");
-            _server.Start();
-            Utility.Logger.Info($"WebSocket Server started at {connection}.");
-            return true;
+            try
+            {
+                string connection = $"ws://localhost:{AssignedPort}";
+                _server = new WebSocketServer(connection);
+                _server.ReuseAddress = true;
+                _server.AddWebSocketService<ProtoMessageParser>("/proto");
+                _server.Start();
+                Utility.Logger.Info($"WebSocket Server started at {connection}.");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AssignedPort = 0;
+                _server = null;
+            }
+            return false;
         }
 
         public void Stop()

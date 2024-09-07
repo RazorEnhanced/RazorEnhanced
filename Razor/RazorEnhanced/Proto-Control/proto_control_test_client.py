@@ -28,6 +28,7 @@ async def websocket_client():
         # Create a PlayRequest message
         request = PlayRequest(
             type=ProtoMessageType.PlayRequestType,
+            sessionid=1,
             language=ProtoLanguage.Python,
             commands=["print('Hello from Python')", "print(Player.Name)", "print('Success')"]
         )
@@ -46,7 +47,7 @@ async def websocket_client():
                 response.ParseFromString(data)
                 if not response.more:
                     break;
-                print(f"PlayResponse: {response.result}")
+                print(f"Play Session: {response.sessionid} Response: {response.result}")
 
         except websockets.exceptions.ConnectionClosedOK:
             print("Record stream ended")
@@ -56,6 +57,7 @@ async def websocket_client():
         # Create a RecordRequest message
         request = RecordRequest(
             type=ProtoMessageType.RecordRequestType,
+            sessionid=2,
             language=ProtoLanguage.Python
         )
 
@@ -88,7 +90,7 @@ async def websocket_client():
                 if response is None:
                     continue  
 
-                print(f"RecordResponse: {response.data}")
+                print(f"Record Session: {response.sessionid} Response: {response.data}")
 
         except websockets.exceptions.ConnectionClosedOK:
             print("Record stream ended")
