@@ -100,6 +100,8 @@ namespace RazorEnhanced
             public string gumpLayout;
             public List<string> gumpText;
             public List<string> gumpData;
+            internal List<string> layoutPieces;
+            internal List<string> stringList;
 
             public IncomingGumpData()
             {
@@ -146,9 +148,11 @@ namespace RazorEnhanced
             public List<string> text;
             public List<int> textID;
             internal Action<GumpData> action;
-            internal string gumpLayout;
-            internal List<string> gumpText;
-            internal List<string> gumpData;
+            public string gumpLayout;
+            public List<string> gumpText;
+            public List<string> gumpData;
+            public List<string> layoutPieces;
+            public List<string> stringList;
 
             public GumpData()
             {
@@ -711,6 +715,9 @@ namespace RazorEnhanced
                 gd.gumpLayout = tempGd.gumpLayout;
                 gd.gumpText = tempGd.gumpText;
                 gd.gumpData = tempGd.gumpData;
+                gd.layoutPieces = tempGd.layoutPieces;
+                gd.stringList = tempGd.stringList;
+
             }
             return gd;
         }
@@ -804,19 +811,27 @@ namespace RazorEnhanced
         /// Adds a response to the gump
         /// </summary>
         /// WorldResponse
-        internal static void AddResponse(uint gumpid, int x, int y, string layout, List<string> parsedText, List<string> parsedData)
+        internal static void AddResponse(uint gumpid, int x, int y, string layout, 
+            List<string> parsedText, List<string> parsedData,
+            string[] stringList, string[] layoutPieces
+            )
         {
+            // not ignore 3856070194
             if (m_gumpData.ContainsKey(gumpid))
             {
                 m_gumpData[gumpid].gumpLayout = layout;
                 m_gumpData[gumpid].gumpText = parsedText;
                 m_gumpData[gumpid].gumpData = parsedData;
+                m_gumpData[gumpid].layoutPieces = new List<string>(layoutPieces);
+                m_gumpData[gumpid].stringList = new List<string>(stringList);
             }
             else if (m_incomingData.ContainsKey(gumpid))
             {
                 m_incomingData[gumpid].gumpLayout = layout;
                 m_incomingData[gumpid].gumpText = parsedText;
                 m_incomingData[gumpid].gumpData = parsedData;
+                m_incomingData[gumpid].layoutPieces = new List<string>(layoutPieces);
+                m_incomingData[gumpid].stringList = new List<string>(stringList);
             }
         }
 
@@ -1062,6 +1077,83 @@ namespace RazorEnhanced
             {
                 Scripts.SendMessageScriptError("Script Error: SendAdvancedAction: entryID and entryS lenght not match");
             }
+        }
+
+        /// <summary>
+        /// @nodoc  
+        /// Testing, I'll remove nodoc after a while @todo Credzba
+        /// Text pieces and HTML pieces have a reference to a seperate 
+        /// string list (for performance? maybe) 
+        /// This matches up the entries, and return the pieces as they were in layout, 
+        /// but with the associated string appended.
+        /// e.g. piece Text 14 200 2  and stringlist (a, b, c, d)
+        /// the Resolved string ould be Text 14 200 2, c
+        /// I added the comma to make it easy to parse Text from data
+        /// </summary>
+        /// <param name="gumpId">gump id to get data from</param>
+        /// <returns>Text content of the line. (empty: line not found)</returns>
+        public static List<string> GetResolvedStringPieces(uint gumpid)
+        {
+            List<string> relsolvedPieces = new();
+            if (Gumps.m_gumpData.ContainsKey(gumpid))
+            {
+                foreach (var text in Gumps.m_gumpData[gumpid].layoutPieces)
+                {
+                    string resolvedText = text;
+                    try
+                    {
+                        var pieces = text.Split(' ');
+                        var id = pieces[0].ToLower();
+                        if (id == "text" || id == "html" || id == "croppedtext" || id == "htmlgump")
+                        {
+                            var splitText = text.Split(' ');
+                            int index = Int32.Parse(splitText[splitText.Length - 1]);
+                            resolvedText += "," + Gumps.m_incomingData[gumpid].stringList[index];
+                        }
+                        else continue;
+                    }
+                    catch (FormatException)
+                    {
+                        resolvedText += ",string not found";
+                    }
+                    catch (Exception e)
+                    {
+                        resolvedText += $",Error parsing {text} - report bug to discord channel";
+                    }
+                    relsolvedPieces.Add(resolvedText);
+                }
+            }
+
+            if (Gumps.m_incomingData.ContainsKey(gumpid))
+            {
+                foreach (var text in Gumps.m_incomingData[gumpid].layoutPieces)
+                {
+                    string resolvedText = text;
+                    try
+                    {
+                        var pieces = text.Split(' ');
+                        var id = pieces[0].ToLower();
+                        if (id == "text" || id == "html" || id == "croppedtext" || id == "htmlgump")
+                        {
+                            var splitText = text.Split(' ');
+                            int index = Int32.Parse(splitText[splitText.Length - 1]);
+                            resolvedText += "," + Gumps.m_incomingData[gumpid].stringList[index];
+                        }
+                        else continue;
+                    }
+                    catch (FormatException)
+                    {
+                        resolvedText += ",string not found";
+                    }
+                    catch (Exception e)
+                    {
+                        resolvedText += $",Error parsing {text} - report bug to discord channel";
+                    }
+                    relsolvedPieces.Add(resolvedText);
+                }
+            }
+            return relsolvedPieces;
+
         }
 
         /// <summary>

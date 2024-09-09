@@ -2,6 +2,7 @@ using AutoUpdaterDotNET;
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
@@ -13,6 +14,8 @@ namespace RazorEnhanced.UI
         public EnhancedLauncher()
         {
             InitializeComponent();
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                this.AutoScaleMode = AutoScaleMode.Font;
             MaximizeBox = false;
             this.Text = m_Title;
 

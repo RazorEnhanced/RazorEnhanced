@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -742,7 +743,8 @@ namespace Assistant
             // Required for Windows Form Designer support
             //
             InitializeComponent();
-            this.AutoScaleMode = AutoScaleMode.Font;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                this.AutoScaleMode = AutoScaleMode.Font;
 
             this.MaximizeBox = false;
             this.MinimizeBox = true;

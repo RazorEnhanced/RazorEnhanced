@@ -68,6 +68,7 @@ namespace RazorEnhanced
                     {
                         var request = PlayRequest.Parser.ParseFrom(e.RawData);
                         Play(request);
+                        OutputPlayMessage("finished", false);
                     }
                     break;
                 case ProtoMessageType.StopPlayRequestType:
@@ -146,7 +147,12 @@ namespace RazorEnhanced
                     var hooks = pc.SystemState.Get__dict__()["path_hooks"] as PythonDictionary;
                     if (hooks != null) { hooks.Clear(); }
 
-                    string combinedString = string.Join("\r", request.Commands);
+                    string combinedString = "";
+                    foreach (var statement in request.Commands)
+                    {
+                        combinedString += statement.TrimEnd(new char[] { '\r', '\n' }) + "\n";
+                    }
+                    
                     if (!pyEngine.Load(combinedString, null))
                     {
                         throw new OperationCanceledException();
@@ -198,7 +204,7 @@ namespace RazorEnhanced
                 message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
             }
             
-            OutputPlayMessage(message, false);
+            OutputPlayMessage(message, true);
         }
 
         public async Task StopPlay(StopPlayRequest request)

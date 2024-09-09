@@ -3461,7 +3461,7 @@ namespace Assistant
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(currentgumps, currentgumpi);
 
                 RazorEnhanced.Gumps.AddGump(currentgumps, currentgumpi);
-                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, textsInGump, dataInGump);
+                RazorEnhanced.Gumps.AddResponse(currentgumpi, x, y, layout, textsInGump, dataInGump, stringlistparse, gumpPieces);
                 World.Player.CurrentGumpRawLayout = layout; // Get raw data of current gump
                 World.Player.CurrentGumpRawText = stringlistparse; // Get raw text data of current gump
 
