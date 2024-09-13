@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 
@@ -387,6 +388,27 @@ namespace RazorEnhanced
             return false;
         }
 
+
+        static Tuple<string, int, string> ExtractNumberAndString(string input)
+        {
+            // Regular expression to match string before the '#', the number, and the text after the number
+            Regex regex = new Regex(@"^(.*)#(\d+)(.*)$");
+
+            // Match the input with the pattern
+            Match match = regex.Match(input);
+
+            if (match.Success)
+            {
+                // Extract the string before '#', the number, and the string after the number
+                string precedingString = match.Groups[1].Value;
+                int number = int.Parse(match.Groups[2].Value);
+                string followingString = match.Groups[3].Value;
+                return new Tuple<string, int, string>(precedingString, number, followingString);
+            }
+
+            return null; // No match found
+        }
+
         /// <summary>
         /// Search and return the most recent line Journal containing the given text. (case sensitive)
         /// </summary>
@@ -408,7 +430,16 @@ namespace RazorEnhanced
                             result = entrys.Text;
                     }
                 }
+
+                var answer = ExtractNumberAndString(result);
+                if (answer != null)
+                {
+                    int number = answer.Item2;
+                    var locString = Language.GetString(number);
+                    result = $"{answer.Item1}{locString}{answer.Item3}";
+                }
                 return result;
+
             }
             catch
             {
