@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Assistant;
+using System.Runtime.InteropServices;
 
 namespace RazorEnhanced
 {
@@ -306,18 +308,47 @@ namespace RazorEnhanced
             // Create a SyntaxTree from the source code
             var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
-            // Create a Compilation object
-            var compilation = CSharpCompilation.Create(
-                "CompiledAssembly",
-                new[] { syntaxTree },
-                new[]
-                {
+            // Prepare metadata references
+            var references = new List<MetadataReference>
+            {
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
                 MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location)
-                },
-                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            };
 
-            // Compile the code
+            List<string> assembliesList = new() { }; // List of assemblies.
+            CompilerParameters compileParameters = CompilerSettings(true, assembliesList);
+
+            // Add additional referenced assemblies from CompilerParameters
+            foreach (string referencedAssembly in compileParameters.ReferencedAssemblies)
+            {
+                try
+                {
+                    var assmbl = Assembly.Load("System.dll");
+                    var loc = assmbl?.Location;
+
+                    references.Add(MetadataReference.CreateFromFile(referencedAssembly));
+                }
+                catch (Exception ex)
+                {
+                    Utility.Logger.Error(ex.Message);
+                }
+            }
+
+            // Create the compilation options based on compile parameters
+            var compilationOptions = new CSharpCompilationOptions(
+                compileParameters.GenerateExecutable ? OutputKind.ConsoleApplication : OutputKind.DynamicallyLinkedLibrary,
+                optimizationLevel: compileParameters.IncludeDebugInformation ? OptimizationLevel.Debug : OptimizationLevel.Release
+            );
+
+            // Create the compilation object
+            var compilation = CSharpCompilation.Create(
+                compileParameters.OutputAssembly ?? "CompiledAssembly", // Name of the output assembly
+                new[] { syntaxTree },
+                references,
+                compilationOptions
+            );
+
+            // Emit to MemoryStream or to file based on CompilerParameters
             using (var stream = new MemoryStream())
             {
                 var result = compilation.Emit(stream);

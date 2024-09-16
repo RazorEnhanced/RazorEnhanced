@@ -250,7 +250,7 @@ namespace RazorEnhanced
                                 Assembly assembly;
                                 if (csEngine.CompileFromText(combinedString, out compileMessages, out assembly))
                                 {
-                                    sessionData._playThread = new Thread(() => RunCSharp(csEngine));
+                                    sessionData._playThread = new Thread(() => RunCSharp(csEngine, assembly));
                                     sessionData._playThread.Start();
                                     sessionData._playThread.Join();
                                     sessionData._playThread = null;
@@ -328,8 +328,21 @@ namespace RazorEnhanced
 
             OutputPlayMessage(message, true);
         }
-        internal void RunCSharp(CSharpEngine engine)
-        { }
+        internal void RunCSharp(CSharpEngine engine, Assembly program)
+        {
+            string message = "";
+            try
+            {
+                engine.Execute(program);
+            }
+            catch (Exception ex)
+            {
+                message += "C# Error:";;
+                string error = ex.ToString().Trim();
+                message += Regex.Replace(error, "\n\n", "\n");     //remove empty lines
+            }
+            OutputPlayMessage(message, true);
+        }
 
         public async Task StopPlay(StopPlayRequest request)
         {
