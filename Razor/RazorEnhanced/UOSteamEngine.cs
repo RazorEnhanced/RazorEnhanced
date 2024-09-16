@@ -348,7 +348,7 @@ namespace RazorEnhanced.UOS
             return false;
         }
 
-        public bool Load(string content, string filename = "")
+        public bool Load(string content, string filename)
         {
             try
             {
@@ -6453,7 +6453,7 @@ namespace RazorEnhanced.UOS
             {
                 var handler = Engine.Interpreter.GetCommandHandler(node.Lexeme);
                 if (handler == null)
-                    throw new UOSRuntimeError(node, "Unknown command");
+                    throw new UOSSyntaxError(node, "Unknown command");
 
                 cont = handler(node, ConstructArguments(ref node), quiet, force);
 

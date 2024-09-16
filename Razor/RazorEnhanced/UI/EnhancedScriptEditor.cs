@@ -95,6 +95,8 @@ namespace RazorEnhanced.UI
 
         private readonly FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
 
+
+
         internal static bool Init(string filePath)
         {
             string envEditorName = Environment.GetEnvironmentVariable("EDITOR");
@@ -105,7 +107,7 @@ namespace RazorEnhanced.UI
             }
 
             if (!string.IsNullOrEmpty(envEditorName))
-              {
+            {
                 Utility.Logger.Debug($"EnhancedScriptEditor launchind editor for filePath={filePath}");
                 try
                 {
@@ -114,8 +116,8 @@ namespace RazorEnhanced.UI
                         Process.Start(new ProcessStartInfo
                         {
                             FileName = envEditorName,
-                            UseShellExecute = false,
-                            CreateNoWindow = false
+                            UseShellExecute = true,
+                            CreateNoWindow = true
                         });
                     }
                     else
@@ -124,9 +126,10 @@ namespace RazorEnhanced.UI
                         {
                             FileName = envEditorName,
                             Arguments = $"\"{filePath}\"",
-                            UseShellExecute = false,
-                            CreateNoWindow = false
+                            UseShellExecute = true,
+                            CreateNoWindow = true
                         });
+                        
                     }
                     return true;
                 }
@@ -1708,6 +1711,8 @@ namespace RazorEnhanced.UI
             return complete_description;
         }
     }
+
+
 
     #region Custom Items per Autocomplete
 

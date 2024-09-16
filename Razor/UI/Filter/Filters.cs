@@ -1,6 +1,7 @@
 using RazorEnhanced;
 using System;
 using System.Drawing;
+using System.Net;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -239,8 +240,7 @@ namespace Assistant
             if (remoteControl.Checked)
             {
                 // Start protobuf service
-                System.Net.IPAddress ip = System.Net.IPAddress.Parse("127.0.0.1");
-                ProtoControlServer.Instance.Start(ip);
+                ProtoControlServer.Instance.Start(IPAddress.Loopback);
                 //if (server == null)
                 //    remoteControl.Checked = false;
             }

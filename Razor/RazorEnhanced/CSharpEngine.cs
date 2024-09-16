@@ -1,3 +1,5 @@
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using Microsoft.Scripting;
 using System;
@@ -295,43 +297,88 @@ namespace RazorEnhanced
         }
 
 
-        /*
         public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
         {
-            CompilerOptions opt = new();
-            CSharpCodeProvider provider = new(opt);
-
-
-            string myTempFile = Path.Combine(Path.GetTempPath(), "re_script.cs");
-
-            Misc.SendMessage("Compiling C# Script");
-            CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
-            CompilerResults results = provider.CompileAssemblyFromSource(compileParameters, source); // Compiling
-            Misc.SendMessage("Compile Done");
-
+            // Initialize out parameters
+            errorwarnings = new List<string>();
             assembly = null;
-            errorwarnings = new();
-            bool has_error = ManageCompileResult(results, ref errorwarnings);
-            if (has_error)
-            {
-                var error = results.Errors[0];
-                var a = new SourceLocation(0, error.Line, error.Column);
-                throw new SyntaxErrorException(error.ErrorText, results.PathToAssembly, error.ErrorNumber, "", new SourceSpan(a, a), 0, Severity.Error);
-            }
-            else
-            {
-                assembly = results.CompiledAssembly;
-            }
-            return has_error;
-        }
-        */
 
-        // https://medium.com/swlh/replace-codedom-with-roslyn-but-bin-roslyn-csc-exe-not-found-6a5dd9290bf2
-        // https://stackoverflow.com/questions/20018979/how-can-i-target-a-specific-language-version-using-codedom
-        // https://docs.microsoft.com/it-it/dotnet/api/microsoft.csharp.csharpcodeprovider.-ctor?view=net-5.0
-        // https://github.com/aspnet/RoslynCodeDomProvider/blob/main/src/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/Util/IProviderOptions.cs
-        // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
-        public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
+            // Create a SyntaxTree from the source code
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
+
+            // Create a Compilation object
+            var compilation = CSharpCompilation.Create(
+                "CompiledAssembly",
+                new[] { syntaxTree },
+                new[]
+                {
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location)
+                },
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+            // Compile the code
+            using (var stream = new MemoryStream())
+            {
+                var result = compilation.Emit(stream);
+
+                // Collect errors and warnings
+                errorwarnings.AddRange(result.Diagnostics
+                    .Where(d => d.Severity == DiagnosticSeverity.Error || d.Severity == DiagnosticSeverity.Warning)
+                    .Select(d => d.ToString()));
+
+                // If there are any errors, return false
+                if (result.Diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
+                {
+                    return false;
+                }
+
+                // Load the assembly from the memory stream
+                stream.Seek(0, SeekOrigin.Begin);
+                assembly = Assembly.Load(stream.ToArray());
+
+                return true;
+            }
+        }
+   
+
+    /*
+    public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
+    {
+        CompilerOptions opt = new();
+        CSharpCodeProvider provider = new(opt);
+
+
+        string myTempFile = Path.Combine(Path.GetTempPath(), "re_script.cs");
+
+        Misc.SendMessage("Compiling C# Script");
+        CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
+        CompilerResults results = provider.CompileAssemblyFromSource(compileParameters, source); // Compiling
+        Misc.SendMessage("Compile Done");
+
+        assembly = null;
+        errorwarnings = new();
+        bool has_error = ManageCompileResult(results, ref errorwarnings);
+        if (has_error)
+        {
+            var error = results.Errors[0];
+            var a = new SourceLocation(0, error.Line, error.Column);
+            throw new SyntaxErrorException(error.ErrorText, results.PathToAssembly, error.ErrorNumber, "", new SourceSpan(a, a), 0, Severity.Error);
+        }
+        else
+        {
+            assembly = results.CompiledAssembly;
+        }
+        return has_error;
+    }
+    */
+
+    // https://medium.com/swlh/replace-codedom-with-roslyn-but-bin-roslyn-csc-exe-not-found-6a5dd9290bf2
+    // https://stackoverflow.com/questions/20018979/how-can-i-target-a-specific-language-version-using-codedom
+    // https://docs.microsoft.com/it-it/dotnet/api/microsoft.csharp.csharpcodeprovider.-ctor?view=net-5.0
+    // https://github.com/aspnet/RoslynCodeDomProvider/blob/main/src/Microsoft.CodeDom.Providers.DotNetCompilerPlatform/Util/IProviderOptions.cs
+    // https://josephwoodward.co.uk/2016/12/in-memory-c-sharp-compilation-using-roslyn
+    public bool CompileFromFile(string path, bool debug, out List<string> errorwarnings, out Assembly assembly)
         {
             errorwarnings = new();
             assembly = null;

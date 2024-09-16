@@ -19,6 +19,9 @@ using IronPython.Runtime.Exceptions;
 using IronPython.Hosting;
 using System.Windows.Forms;
 using Consul;
+using System.Web.UI.WebControls;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace RazorEnhanced
 {
@@ -122,59 +125,152 @@ namespace RazorEnhanced
             switch (request.Language)
             {
                 case ProtoLanguage.Python:
-                    PythonEngine pyEngine = new();
-                    
-                    // Set up the trace function so we can force python to terminate
-                    sessionData._shouldTerminate = false;
-                    
-                    //Python.SetTrace(pyEngine.Engine, TraceCallback);
+                    {
+                        PythonEngine pyEngine = new();
 
-                    pyEngine.SetStderr(
-                        async (string message) =>
-                        {
-                            message = message.TrimEnd(new char[] { '\r', '\n' });
-                            OutputPlayMessage(message, true);
-                        }
-                        );
-                    pyEngine.SetStdout(
-                        async (string message) =>
-                        {
-                            message = message.TrimEnd(new char[] { '\r', '\n' });
-                            OutputPlayMessage(message, true);
-                        }
-                        );
-                    var pc = HostingHelpers.GetLanguageContext(pyEngine.Engine) as PythonContext;
-                    var hooks = pc.SystemState.Get__dict__()["path_hooks"] as PythonDictionary;
-                    if (hooks != null) { hooks.Clear(); }
+                        // Set up the trace function so we can force python to terminate
+                        sessionData._shouldTerminate = false;
 
-                    string combinedString = "";
-                    foreach (var statement in request.Commands)
-                    {
-                        combinedString += statement.TrimEnd(new char[] { '\r', '\n' }) + "\n";
-                    }
-                    
-                    if (!pyEngine.Load(combinedString, null))
-                    {
-                        throw new OperationCanceledException();
-                    }
-                    try
-                    {
-                        //TracebackDelegate traceFn = TraceCallback;
-                        TracebackDelegate traceFn = (frame, result, _) => TraceCallback(frame, result, null);
-                        pyEngine.SetTrace(traceFn);
-                        sessionData._playThread = new Thread(() => RunPython(pyEngine));
-                        sessionData._playThread.Start();
-                        sessionData._playThread.Join();
-                        sessionData._playThread = null;
-                        OutputPlayMessage("", false);
-                    }
-                    catch (Exception ex)
-                    {
-                        Utility.Logger.Error($"Play Python failed {ex}");
+                        //Python.SetTrace(pyEngine.Engine, TraceCallback);
+
+                        pyEngine.SetStderr(
+                            async (string message) =>
+                            {
+                                message = message.TrimEnd(new char[] { '\r', '\n' });
+                                OutputPlayMessage(message, true);
+                            }
+                            );
+                        pyEngine.SetStdout(
+                            async (string message) =>
+                            {
+                                message = message.TrimEnd(new char[] { '\r', '\n' });
+                                OutputPlayMessage(message, true);
+                            }
+                            );
+                        var pc = HostingHelpers.GetLanguageContext(pyEngine.Engine) as PythonContext;
+                        var hooks = pc.SystemState.Get__dict__()["path_hooks"] as PythonDictionary;
+                        if (hooks != null) { hooks.Clear(); }
+
+                        string combinedString = "";
+                        foreach (var statement in request.Commands)
+                        {
+                            combinedString += statement.TrimEnd(new char[] { '\r', '\n' }) + "\n";
+                        }
+
+                        if (!pyEngine.Load(combinedString, null))
+                        {
+                            throw new OperationCanceledException();
+                        }
+                        try
+                        {
+                            //TracebackDelegate traceFn = TraceCallback;
+                            TracebackDelegate traceFn = (frame, result, _) => TraceCallback(frame, result, null);
+                            pyEngine.SetTrace(traceFn);
+                            sessionData._playThread = new Thread(() => RunPython(pyEngine));
+                            sessionData._playThread.Start();
+                            sessionData._playThread.Join();
+                            sessionData._playThread = null;
+                            OutputPlayMessage("", false);
+                        }
+                        catch (Exception ex)
+                        {
+                            Utility.Logger.Error($"Play Python failed {ex}");
+                        }
                     }
                     break;
                 case ProtoLanguage.Uosteam:
-                    UOSteamEngine uosEngine = new();
+                    {
+                        UOSteamEngine uosEngine = new();
+                        if (uosEngine != null)
+                            try
+                            {
+                                uosEngine.SetStderr(
+                                    async (string message) =>
+                                    {
+                                        message = message.TrimEnd(new char[] { '\r', '\n' });
+                                        OutputPlayMessage(message, true);
+                                    }
+                                );
+                                uosEngine.SetStdout(
+                                    async (string message) =>
+                                    {
+                                        message = message.TrimEnd(new char[] { '\r', '\n' });
+                                        OutputPlayMessage(message, true);
+                                    }
+                                );
+                                string combinedString = "";
+                                foreach (var statement in request.Commands)
+                                {
+                                    combinedString += statement.TrimEnd(new char[] { '\r', '\n' }) + "\n";
+                                }
+
+                                uosEngine.Load(combinedString, "");                                
+                                sessionData._playThread = new Thread(() => RunUOS(uosEngine));
+                                sessionData._playThread.Start();
+                                sessionData._playThread.Join();
+                                sessionData._playThread = null;
+                                
+                            }
+                            catch (Exception ex)
+                            {
+                                Utility.Logger.Error($"Play UOS failed {ex}");
+                            }
+                        OutputPlayMessage("", false);
+                    }
+                    break;
+                case ProtoLanguage.Csharp:
+                    {
+                        CSharpEngine csEngine = CSharpEngine.Instance;
+                        if (csEngine != null)
+                            try
+                            {
+                                /*
+                                csEngine.SetStderr(
+                                    async (string message) =>
+                                    {
+                                        message = message.TrimEnd(new char[] { '\r', '\n' });
+                                        OutputPlayMessage(message, true);
+                                    }
+                                );
+                                csEngine.SetStdout(
+                                    async (string message) =>
+                                    {
+                                        message = message.TrimEnd(new char[] { '\r', '\n' });
+                                        OutputPlayMessage(message, true);
+                                    }
+                                );
+                                */
+                                string combinedString = "";
+                                foreach (var statement in request.Commands)
+                                {
+                                    combinedString += statement.TrimEnd(new char[] { '\r', '\n' }) + "\n";
+                                }
+
+                                List<string> compileMessages;
+                                Assembly assembly;
+                                if (csEngine.CompileFromText(combinedString, out compileMessages, out assembly))
+                                {
+                                    sessionData._playThread = new Thread(() => RunCSharp(csEngine));
+                                    sessionData._playThread.Start();
+                                    sessionData._playThread.Join();
+                                    sessionData._playThread = null;
+                                }
+                                else 
+                                {
+                                    foreach (var line in compileMessages)
+                                    {
+                                        OutputPlayMessage(line, true, false);
+                                    }
+                                }
+                                OutputPlayMessage("", false);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Utility.Logger.Error($"Play UOS failed {ex}");
+                            }
+                    }
+                    
                     break;
                 default:
                     throw new OperationCanceledException();
@@ -185,12 +281,14 @@ namespace RazorEnhanced
                 && !_sessionTracker.TryRemove(request.Sessionid, out _))
                 Utility.Logger.Error($"Unable to remove Play session key from dictionary");
         }
-        internal void RunPython(PythonEngine pyEngine)
+
+        // I think these run functions could be factored to all be the same
+        internal void RunPython(PythonEngine engine)
         {
             string message = "";
             try
             {
-                pyEngine.Execute();
+                engine.Execute();
             }
             catch (OperationCanceledException stop)
             {
@@ -199,13 +297,39 @@ namespace RazorEnhanced
             catch (Exception ex)
             {
                 message += "Python Error:";
-                ExceptionOperations eo = pyEngine.Engine.GetService<ExceptionOperations>();
+                ExceptionOperations eo = engine.Engine.GetService<ExceptionOperations>();
                 string error = eo.FormatException(ex);
                 message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
             }
             
             OutputPlayMessage(message, true);
         }
+        internal void RunUOS(UOSteamEngine engine)
+        {
+            string message = "";
+            try
+            {
+                engine.Execute();
+            }
+            catch (OperationCanceledException stop)
+            {
+                message = stop.Message;
+            }
+            catch (UOSSyntaxError ex)
+            {
+                message = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                message += "UOS Error:";
+                string error = ex.ToString();
+                message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
+            }
+
+            OutputPlayMessage(message, true);
+        }
+        internal void RunCSharp(CSharpEngine engine)
+        { }
 
         public async Task StopPlay(StopPlayRequest request)
         {
@@ -221,7 +345,7 @@ namespace RazorEnhanced
             }
         }
 
-        private async Task OutputPlayMessage(string message, bool more)
+        private async Task OutputPlayMessage(string message, bool more, bool sendInGame=true)
         {
             try
             {
@@ -240,8 +364,8 @@ namespace RazorEnhanced
                 // Reset the stopwatch for the next gate
                 _stopwatch.Restart();
 
-
-                Misc.SendMessage(message, 178);
+                if (sendInGame)
+                    Misc.SendMessage(message, 178);
                 var response = new PlayResponse
                 {
                     Type = ProtoMessageType.PlayResponseType,
@@ -471,7 +595,7 @@ namespace RazorEnhanced
             AssignedPort = 0;
             int startingPort = 15454;  // Starting port
             int numberOfPorts = 10;   // Number of ports to check
-            int port = FindAvailablePort(startingPort, numberOfPorts);
+            int port = FindAvailablePort(ip, startingPort, numberOfPorts);
             if (port < 1)
             {
                 AssignedPort = null;
@@ -482,7 +606,7 @@ namespace RazorEnhanced
 
             try
             {
-                string connection = $"ws://localhost:{AssignedPort}";
+                string connection = $"ws://{ip.ToString()}:{AssignedPort}";
                 _server = new WebSocketServer(connection);
                 _server.ReuseAddress = true;
                 _server.AddWebSocketService<ProtoMessageParser>("/proto");
@@ -504,11 +628,11 @@ namespace RazorEnhanced
             Console.WriteLine("WebSocket Server stopped.");
             _server = null;
         }
-        public static int FindAvailablePort(int startingPort, int range)
+        public static int FindAvailablePort(IPAddress ip, int startingPort, int range)
         {
             for (int port = startingPort; port < startingPort + range; port++)
             {
-                if (IsPortAvailable(port))
+                if (IsPortAvailable(ip, port))
                 {
                     return port;
                 }
@@ -516,13 +640,13 @@ namespace RazorEnhanced
             return -1;  // Return -1 if no port is available
         }
 
-        private static bool IsPortAvailable(int port)
+        private static bool IsPortAvailable(IPAddress ip, int port)
         {
             TcpListener listener = null;
             try
             {
                 // Create a TCP listener on the specified port
-                listener = new TcpListener(IPAddress.Loopback, port);
+                listener = new TcpListener(ip, port);
                 listener.Start();
                 return true;
             }
