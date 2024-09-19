@@ -319,6 +319,10 @@ namespace RazorEnhanced
             {
                 message = ex.Message;
             }
+            catch (UOSStopError ex)
+            {
+                message = $"stop keyword encountered at line {ex.LineNumber+1}";
+            }
             catch (Exception ex)
             {
                 message += "UOS Error:";
