@@ -32,12 +32,6 @@ namespace RazorEnhanced
 
         public Action<string> m_OutputWriter;
         public Action<string> m_ErrorWriter;
-        static TracebackDelegate TraceCallback(TraceBackFrame frame, string result, object payload)
-        {
-            Console.WriteLine($"Tracing: {frame.f_code.co_name} at line {frame.f_lineno}");
-            return TraceCallback;
-        }
-
 
         public PythonEngine()
         {
@@ -45,7 +39,7 @@ namespace RazorEnhanced
             setup.DebugMode = true;
             Runtime = new ScriptRuntime(setup);
             Engine = Python.GetEngine(Runtime);
-            Traceback = TraceCallback;
+            Traceback = null;
 
             //Paths for IronPython 3.4
             var paths = new List<string>();
@@ -191,7 +185,7 @@ namespace RazorEnhanced
             CompilerOptions.ModuleName = "__main__";
             CompilerOptions.Module |= ModuleOptions.Initialize;
             CompilerOptions.Optimized = true;
-            Traceback = TraceCallback;
+            Traceback = null;
             //Engine.SetTrace(TraceCallback);
             try
             {
@@ -221,7 +215,10 @@ namespace RazorEnhanced
 
             Journal journal = Modules["Journal"] as Journal;
             journal.Active = true;
-            Compiled.Engine.SetTrace(Traceback);
+            if (Traceback != null)
+            {
+                Compiled.Engine.SetTrace(Traceback);
+            }
             Compiled.Execute(Scope);
             journal.Active = false;
 

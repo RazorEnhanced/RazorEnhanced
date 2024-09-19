@@ -102,7 +102,7 @@ namespace RazorEnhanced.UI
             string envEditorName = Environment.GetEnvironmentVariable("EDITOR");
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && string.IsNullOrEmpty(envEditorName))
             {
-                Console.WriteLine("EDITOR environment variable is not set.");
+                Utility.Logger.Debug("EDITOR environment variable is not set.");
                 return false;
             }
 
@@ -135,7 +135,7 @@ namespace RazorEnhanced.UI
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error launching editor: {ex.Message}");
+                    Utility.Logger.Debug($"Error launching editor: {ex.Message}");
                     return false;
                 }
             }

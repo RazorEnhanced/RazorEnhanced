@@ -677,14 +677,14 @@ namespace RazorEnhanced.UOS
         private static IComparable ExpressionNotImplemented(ASTNode node, Argument[] args, bool _)
         {
             string expression = node.Lexeme;
-            Console.WriteLine("Expression Not Implemented {0} {1}", expression, args);
+            Utility.Logger.Info("Expression Not Implemented {0} {1}", expression, args);
             return 0;
         }
 
         private static bool NotImplemented(ASTNode node, Argument[] args, bool quiet, bool force)
         {
             string command = node.Lexeme;
-            Console.WriteLine("UOS: NotImplemented {0} {1}", command, args);
+            Utility.Logger.Info("UOS: NotImplemented {0} {1}", command, args);
             return true;
         }
 
@@ -2859,7 +2859,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length >= 1)
             {
-                Console.WriteLine("Creating list {0}", args[0].AsString());
+                Utility.Logger.Debug("Creating list {0}", args[0].AsString());
                 m_Interpreter.CreateList(args[0].AsString());
             }
             return true;
@@ -2888,14 +2888,14 @@ namespace RazorEnhanced.UOS
             Argument insertItem = args[1];
             if (resolvedAlias == uint.MaxValue)
             {
-                Console.WriteLine("Pushing {0} to list {1}", insertItem.AsString(), listName);
+                Utility.Logger.Debug("Pushing {0} to list {1}", insertItem.AsString(), listName);
                 m_Interpreter.PushList(listName, insertItem, (frontBack == "front"), false);
             }
             else
             {
                 ASTNode node_int = new ASTNode(ASTNodeType.INTEGER, resolvedAlias.ToString(), insertItem.Node, insertItem.Node.LineNumber);
                 Argument newArg = new Argument(insertItem._script, node_int);
-                Console.WriteLine("Pushing {0} to list {1}", newArg.AsString(), listName);
+                Utility.Logger.Debug("Pushing {0} to list {1}", newArg.AsString(), listName);
                 m_Interpreter.PushList(listName, newArg, (frontBack == "front"), false);
             }
             return true;

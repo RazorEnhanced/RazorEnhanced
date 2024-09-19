@@ -102,7 +102,7 @@ namespace Assistant
                 var szKey = new byte[32];
                 int res = XQueryKeymap(Display, szKey);
                 //foreach(var xx in szKey)
-                //Console.WriteLine(xx + "-");
+                //Utility.Logger.Debug(xx + "-");
                 int code = XKeysymToKeycode(Display, (int)key);
                 bool pressed = (szKey[code >> 3] & (1 << (code & 7))) == 0;
                 var r = szKey[code / 8];

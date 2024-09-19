@@ -575,7 +575,7 @@ namespace RazorEnhanced
         protected override void OnClose(CloseEventArgs e)
         {
             _stopwatch.Stop();
-            Console.WriteLine("WebSocket connection closed.");
+            Utility.Logger.Debug("WebSocket connection closed.");
         }
     }
 
@@ -642,7 +642,7 @@ namespace RazorEnhanced
         public void Stop()
         {
             _server.Stop();
-            Console.WriteLine("WebSocket Server stopped.");
+            Utility.Logger.Debug("WebSocket Server stopped.");
             _server = null;
         }
         public static int FindAvailablePort(IPAddress ip, int startingPort, int range)

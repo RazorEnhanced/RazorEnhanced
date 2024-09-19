@@ -636,7 +636,7 @@ namespace Assistant
             get { return walkScriptRequest; }
             set
             {
-                //Console.WriteLine("walkScriptRequest - {0}", value);
+                //Utility.Logger.Debug("walkScriptRequest - {0}", value);
                 //if ( (walkScriptRequest < 2) && (value >= 2))
                 //  System.Threading.Thread.Sleep(500);
                 walkScriptRequest = value;
