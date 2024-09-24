@@ -47,6 +47,8 @@ namespace RazorEnhanced
         /// Color of the mobile.
         /// </summary>
         public int Color { get { return m_AssistantMobile.Hue; } }
+        public ushort Hue { get { return base.Hue; } }
+
 
         /// <summary>
         /// True: Mobile.Propertires are updated - False: otherwise.

@@ -28,6 +28,7 @@ namespace RazorEnhanced
         }
 
         public int Serial { get { return (int)base.Serial.Value; } }
+        public ushort Hue { get { return base.Hue; } }
 
         /// <summary>
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
