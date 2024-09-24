@@ -1129,13 +1129,16 @@ namespace RazorEnhanced.UOS
                         var assistItem = (Assistant.Item)entity;
                         RazorEnhanced.Item item = new RazorEnhanced.Item(assistItem);
                         if (item != null)
-                        {                            
+                        {
                             // do they only want stuff on ground
                             if (groundCheck.ToLower() == "ground" && !item.OnGround)
                                 continue;
-                            Item container = Items.FindBySerial((int)source);
-                            if (container == null)
-                                break; // no use looking if container serial is bad
+                            else
+                            {
+                                Item container = Items.FindBySerial((int)source);
+                                if (container == null)
+                                    break; // no use looking if container serial is bad
+                            }
                             if (!item.IsChildOf(container, range+2))
                                 continue;
 
