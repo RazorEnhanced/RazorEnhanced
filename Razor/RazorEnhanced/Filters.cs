@@ -27,7 +27,7 @@ namespace RazorEnhanced
         }
         internal static bool MakeWallStatic(Assistant.Item wall)
         {
-            switch (wall.TypeID)
+            switch (wall.TypeID.Value)
             {
                 case 0x0080:
                 case 0x0082:

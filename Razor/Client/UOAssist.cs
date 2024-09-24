@@ -170,7 +170,7 @@ namespace Assistant
                         {
                             foreach (Item item in World.Items.Values)
                             {
-                                if (item.TypeID >= 0x4000)
+                                if (item.TypeID.Value >= 0x4000)
                                     PostMessage((IntPtr)wParam, (uint)UOAMessage.ADD_MULTI,
                                         (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))),
                                         (IntPtr)item.TypeID.Value);

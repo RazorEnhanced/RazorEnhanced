@@ -17,6 +17,14 @@ namespace Assistant
         {
             return a.m_ID;
         }
+        public static implicit operator int(TypeID a)
+        {
+            return a.m_ID;
+        }
+        public static implicit operator uint(TypeID a)
+        {
+            return a.m_ID;
+        }
 
         public static implicit operator TypeID(ushort a)
         {
@@ -61,6 +69,7 @@ namespace Assistant
 
             return ((TypeID)o).m_ID == m_ID;
         }
+
 
         public static bool operator ==(TypeID l, TypeID r)
         {

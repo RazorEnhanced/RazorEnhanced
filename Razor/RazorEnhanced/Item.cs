@@ -1626,7 +1626,7 @@ namespace RazorEnhanced
                         continue;
                     if (i.Amount == 0)
                         continue;
-                    if (itemids.Contains(i.TypeID)) // check item id
+                    if (itemids.Contains(i.TypeID.Value)) // check item id
                     {
                         if (color != -1) // color -1 ALL
                         {
@@ -1722,7 +1722,7 @@ namespace RazorEnhanced
                 if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
                     continue;
 
-                if (itemids.Contains(i.TypeID)) // check item id
+                if (itemids.Contains(i.TypeID.Value)) // check item id
                 {
                     if (color != -1) // color -1 ALL
                     {
