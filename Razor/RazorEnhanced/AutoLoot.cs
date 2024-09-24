@@ -725,7 +725,7 @@ namespace RazorEnhanced
                     {
                         return 0;
                     }
-                    return World.Player.Backpack.Serial.Value;
+                    return World.Player.Backpack.Serial;
                 }
             }
             else

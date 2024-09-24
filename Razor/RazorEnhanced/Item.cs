@@ -27,6 +27,8 @@ namespace RazorEnhanced
             m_AssistantItem = item;
         }
 
+        public int Serial { get { return (int)base.Serial.Value; } }
+
         /// <summary>
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
         /// </summary>

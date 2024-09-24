@@ -23,7 +23,7 @@ namespace Assistant
             m_Deleted = false;
         }
 
-        public Serial Serial { get { return m_Serial; } }
+        internal Serial Serial { get { return m_Serial.Value; } }
         internal Point3D entityPosition;
 
         public virtual Point3D Position

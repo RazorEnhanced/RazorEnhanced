@@ -386,7 +386,7 @@ namespace RazorEnhanced
                         Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
                         AddLog("Warning: Low bandage: " + bandageamount + " left");
                     }
-                    AddLog("Using bandage (0x" + bandage.Serial.Value.ToString("X8") + ") on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
+                    AddLog("Using bandage (0x" + bandage.Serial.ToString("X8") + ") on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
                 }
                 else
                 {

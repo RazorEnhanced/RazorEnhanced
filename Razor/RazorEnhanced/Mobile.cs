@@ -30,6 +30,9 @@ namespace RazorEnhanced
         /// </summary>
         public string Name { get { return m_AssistantMobile.Name; } }
 
+        public int Serial { get { return (int)base.Serial.Value; } }
+
+
         /// <summary>@nodoc @deprecate
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.MobileID )
         /// </summary>
