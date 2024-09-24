@@ -29,6 +29,24 @@ namespace RazorEnhanced
 
         public int Serial { get { return (int)base.Serial.Value; } }
         public ushort Hue { get { return base.Hue; } }
+        public ushort Color { get { return base.Hue; } }
+        public ushort Graphics { get { return base.TypeID.Value; } }
+        
+        /// <summary>
+        /// Represents the type of Item, usually unique for the Item image.  Sometime called ID or Graphics ID.
+        /// </summary>
+        public int ItemID { get { return (int)base.TypeID.Value; } }
+
+        //public int ItemID
+        //{
+        //    get
+        //    {
+        //        if (m_AssistantItem != null)
+        //            return m_AssistantItem.TypeID.Value;
+        //        else
+        //            return 0;
+        //    }
+        //}
 
         /// <summary>
         /// Check if the Item already have been updated with all the properties. (need better documentation) 
@@ -40,19 +58,7 @@ namespace RazorEnhanced
         /// </summary>
         public bool ContainerOpened => m_AssistantItem.ContainerOpened;
 
-        /// <summary>
-        /// Represents the type of Item, usually unique for the Item image.  Sometime called ID or Graphics ID.
-        /// </summary>
-        public int ItemID
-        {
-            get
-            {
-                if (m_AssistantItem != null)
-                    return m_AssistantItem.TypeID.Value;
-                else
-                    return 0;
-            }
-        }
+
         internal Assistant.Item AsAssistant { get { return m_AssistantItem; } }
         /// <summary>
         /// Read amount from item type object.

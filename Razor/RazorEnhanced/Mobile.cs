@@ -48,6 +48,8 @@ namespace RazorEnhanced
         /// </summary>
         public int Color { get { return m_AssistantMobile.Hue; } }
         public ushort Hue { get { return base.Hue; } }
+        public ushort Graphics { get { return base.TypeID.Value; } }
+        public int ItemID { get { return (int)base.TypeID.Value; } }
 
 
         /// <summary>
@@ -463,7 +465,7 @@ namespace RazorEnhanced
             /// Supports .Add() and .AddRange()
             /// </summary>
             public List<int> Bodies = new List<int>();
-
+            public List<int> Graphics { get { return Bodies; } set { Bodies = value; } }
             /// <summary>
             /// Limit the search by name of the Mobile.
             /// </summary>
