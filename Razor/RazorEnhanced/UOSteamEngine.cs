@@ -594,6 +594,8 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("contents", CountContents);
             m_Interpreter.RegisterExpressionHandler("inregion", InRegion);
             m_Interpreter.RegisterExpressionHandler("skill", Skill);
+            m_Interpreter.RegisterExpressionHandler("skillvalue", Skill);
+            m_Interpreter.RegisterExpressionHandler("skillbase", SkillBase);
             m_Interpreter.RegisterExpressionHandler("findobject", FindObject);
             m_Interpreter.RegisterExpressionHandler("useobject", UseObjExp);
             m_Interpreter.RegisterExpressionHandler("distance", Distance);
@@ -1782,6 +1784,23 @@ namespace RazorEnhanced.UOS
         }
 
         /// <summary>
+        /// skillbase ('name') (operator) (value)
+        /// </summary>
+        private static IComparable SkillBase(ASTNode node, Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOSRuntimeError(node, "Skill requires parameters");
+                // return false;
+            }
+
+            string skillname = args[0].AsString();
+            double skillvalue = Player.GetRealSkillValue(skillname);
+            return skillvalue;
+        }
+
+
+        /// <summary>
         /// skill ('name') (operator) (value)
         /// </summary>
         private static IComparable Skill(ASTNode node, Argument[] args, bool quiet)
@@ -1793,7 +1812,7 @@ namespace RazorEnhanced.UOS
             }
 
             string skillname = args[0].AsString();
-            double skillvalue = Player.GetRealSkillValue(skillname);
+            double skillvalue = Player.GetSkillValue(skillname);
             return skillvalue;
         }
 
@@ -2136,10 +2155,15 @@ namespace RazorEnhanced.UOS
             else if (args.Length >= 1)
             {
                 uint serial = args[0].AsSerial();
+                if (serial == Player.Serial)
+                {
+                    return Player.Hits;
+                }   
+
                 Mobile theMobile = Mobiles.FindBySerial((int)serial);
                 if (theMobile != null)
                 {
-                    return theMobile.Hits;
+                    return theMobile.Hits * 4; // convert to 100 base
                 }
             }
 
@@ -2155,7 +2179,7 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length == 0)
             {
-                return Player.HitsMax - Player.Hits;
+                return (Player.Hits / Player.HitsMax) * 100;
             }
             else if (args.Length >= 1)
             {
@@ -2163,7 +2187,7 @@ namespace RazorEnhanced.UOS
                 Mobile theMobile = Mobiles.FindBySerial((int)serial);
                 if (theMobile != null)
                 {
-                    return theMobile.HitsMax - theMobile.Hits;
+                    return (theMobile.Hits / theMobile.HitsMax) * 100;
                 }
             }
 
@@ -2182,10 +2206,15 @@ namespace RazorEnhanced.UOS
             else if (args.Length >= 1)
             {
                 uint serial = args[0].AsSerial();
+                if (serial == Player.Serial)
+                {
+                    return Player.HitsMax;
+                }
+
                 Mobile theMobile = Mobiles.FindBySerial((int)serial);
                 if (theMobile != null)
                 {
-                    return theMobile.HitsMax;
+                    return theMobile.HitsMax * 4;
                 }
             }
 
