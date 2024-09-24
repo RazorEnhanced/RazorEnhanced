@@ -1131,17 +1131,19 @@ namespace RazorEnhanced.UOS
                         if (item != null)
                         {
                             // do they only want stuff on ground
-                            if (groundCheck.ToLower() == "ground" && !item.OnGround)
-                                continue;
+                            if (groundCheck.ToLower() == "ground")
+                            {
+                                if (!item.OnGround)
+                                    continue;
+                            }
                             else
                             {
                                 Item container = Items.FindBySerial((int)source);
                                 if (container == null)
                                     break; // no use looking if container serial is bad
+                                if (!item.IsChildOf(container, range + 2))
+                                    continue;
                             }
-                            if (!item.IsChildOf(container, range+2))
-                                continue;
-
                             if (amount != -1 && item.Amount < amount)
                             {
                                 item = null;
