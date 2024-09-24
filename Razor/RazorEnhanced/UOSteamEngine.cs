@@ -2184,15 +2184,20 @@ namespace RazorEnhanced.UOS
         {
             if (args.Length == 0)
             {
-                return (Player.Hits / Player.HitsMax) * 100;
+                return (Player.HitsMax - Player.Hits);
             }
             else if (args.Length >= 1)
             {
                 uint serial = args[0].AsSerial();
+                if (serial == Player.Serial)
+                {
+                    return (Player.HitsMax - Player.Hits);
+                }
+
                 Mobile theMobile = Mobiles.FindBySerial((int)serial);
                 if (theMobile != null)
                 {
-                    return (theMobile.Hits / theMobile.HitsMax) * 100;
+                    return (theMobile.HitsMax - theMobile.Hits) * 4; // scale it to 100 
                 }
             }
 
