@@ -81,12 +81,6 @@ namespace Assistant
             }
         }
 
-        internal ushort Body
-        {
-            get { return m_Body; }
-            set { m_Body = value; }
-        }
-
         internal bool PropsUpdated
         {
             get { return m_PropsUpdated; }
@@ -127,7 +121,7 @@ namespace Assistant
         {
             get
             {
-                if (m_HumanBodies.Contains(this.Body))
+                if (m_HumanBodies.Contains(this.TypeID))
                     return true;
                 else
                     return false;
@@ -352,9 +346,9 @@ namespace Assistant
             }
         }
 
-        internal Item FindItemByID(ItemID id)
+        internal Item FindItemByID(TypeID id)
         {
-            return this.Contains.FirstOrDefault(item => item.ItemID == id);
+            return this.Contains.FirstOrDefault(item => item.TypeID == id);
         }
 
         internal int GetPacketFlags()

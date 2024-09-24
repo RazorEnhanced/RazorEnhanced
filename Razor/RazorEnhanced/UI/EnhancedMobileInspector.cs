@@ -213,8 +213,8 @@ namespace RazorEnhanced.UI
             lName.Text = m_mobile.Name.ToString();
             lSerial.Text = "0x" + m_mobile.Serial.Value.ToString("X8");
 
-            lMobileID.Text = "0x" + m_mobile.Body.ToString("X4");
-            toolTip.SetToolTip(lMobileID, m_mobile.Body.ToString());
+            lMobileID.Text = $"0x{m_mobile.TypeID.Value:X4}";
+            toolTip.SetToolTip(lMobileID, $"{m_mobile.TypeID.Value}");
 
             lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
             toolTip.SetToolTip(lColor, m_mobile.Hue.ToString());
@@ -262,7 +262,7 @@ namespace RazorEnhanced.UI
             try
             {
                 int m_hue = m_mobile.Hue;
-                Ultima.Frame[] m_animationframe = Ultima.Animations.GetAnimation(m_mobile.Body, 0, 1, ref m_hue, false, true);
+                Ultima.Frame[] m_animationframe = Ultima.Animations.GetAnimation(m_mobile.TypeID, 0, 1, ref m_hue, false, true);
                 imagepanel.BackgroundImage = m_animationframe[0].Bitmap;
             }
             catch

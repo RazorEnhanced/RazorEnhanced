@@ -396,7 +396,7 @@ namespace RazorEnhanced
 
             foreach (var item in items)
             {
-                itemData = TileData.ItemTable[item.ItemID & (TileData.ItemTable.Length - 1)];
+                itemData = TileData.ItemTable[item.TypeID & (TileData.ItemTable.Length - 1)];
                 flags = itemData.Flags;
 
                 if (item.Movable)
@@ -533,7 +533,7 @@ namespace RazorEnhanced
 
         private static bool IsOk(Assistant.Item item, int ourZ, int ourTop, bool ignoreDoors, bool ignoreSpellFields)
         {
-            var itemID = item.ItemID & (TileData.ItemTable.Length - 1);
+            var itemID = item.TypeID & (TileData.ItemTable.Length - 1);
             var itemData = TileData.ItemTable[itemID];
 
             if ((itemData.Flags & ImpassableSurface) == 0)
@@ -617,7 +617,7 @@ namespace RazorEnhanced
 
             foreach (var item in itemList)
             {
-                var itemData = TileData.ItemTable[item.ItemID & (TileData.ItemTable.Length - 1)];
+                var itemData = TileData.ItemTable[item.TypeID & (TileData.ItemTable.Length - 1)];
 
                 var calcTop = item.Position.Z + itemData.CalcHeight;
 
@@ -1110,7 +1110,7 @@ namespace RazorEnhanced
             Assistant.Item item = World.FindItem(serial & 0x7FFFFFFF);
             if (item != null && item.IsMulti)
             {
-                Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
+                Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.TypeID);
 
                 /*int xMin = 0;
                 int yMin = 0;

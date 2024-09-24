@@ -14,13 +14,16 @@ namespace RazorEnhanced
     /// Item can also be house foriture as well as decorative items on the ground, like lamp post and banches.
     /// However, for Item on the ground that cannot be picked up, they might be part of the world map, see Statics class.
     /// </summary>
-    public class Item : EnhancedEntity
+    public class Item : UOEntity
     {
         private readonly Assistant.Item m_AssistantItem;
 
         internal Item(Assistant.Item item)
-            : base(item)
+            : base(item.Serial)
         {
+            base.TypeID = item.TypeID;
+            base.Hue = item.Hue;
+            base.Position = item.Position;
             m_AssistantItem = item;
         }
 
@@ -42,7 +45,7 @@ namespace RazorEnhanced
             get
             {
                 if (m_AssistantItem != null)
-                    return m_AssistantItem.ItemID.Value;
+                    return m_AssistantItem.TypeID.Value;
                 else
                     return 0;
             }
@@ -125,15 +128,15 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="container">Item as container.</param>
         /// <returns>True: if is contained - False: otherwise.</returns>
-        public bool IsChildOf(Item container)
+        public bool IsChildOf(Item container, int maxDepth=100)
         {
-            return m_AssistantItem.IsChildOf(container);
+            return m_AssistantItem.IsChildOf(container.m_AssistantItem, maxDepth);
         }
 
         /// <param name="container">Mobile as container.</param>
-        public bool IsChildOf(Mobile container)
+        public bool IsChildOf(Mobile container, int maxDepth = 100)
         {
-            return m_AssistantItem.IsChildOf(container);
+            return m_AssistantItem.IsChildOf(container, maxDepth);
         }
 
         /// <summary>
@@ -442,7 +445,7 @@ namespace RazorEnhanced
         {
             get
             {
-                return Items.GetImage(m_AssistantItem.ItemID, m_AssistantItem.Hue);
+                return Items.GetImage(m_AssistantItem.TypeID, m_AssistantItem.Hue);
             }
         }
     }
@@ -755,7 +758,7 @@ namespace RazorEnhanced
 
                 if (Graphics.Count > 0)
                 {
-                    if (!Graphics.Contains(item.ItemID))
+                    if (!Graphics.Contains(item.TypeID))
                         return false;
                 }
 
@@ -1445,14 +1448,14 @@ namespace RazorEnhanced
                 UseItem(item.Serial);
         }
 
-        public static void UseItem(Item item, EnhancedEntity target)
+        public static void UseItem(Item item, UOEntity target)
         {
             if (item == null || target == null)
                 return;
 
             UseItem(item.Serial, target.Serial, true);
         }
-        public static void UseItem(int item, EnhancedEntity target)
+        public static void UseItem(int item, UOEntity target)
         {
             if (target == null)
                 return;
@@ -1539,7 +1542,7 @@ namespace RazorEnhanced
                     if (i.Amount == 0)
                         continue;
 
-                    if (i.ItemID == itemid) // check item id
+                    if (i.TypeID == itemid) // check item id
                     {
                         if (color != -1) // color -1 ALL
                         {
@@ -1623,7 +1626,7 @@ namespace RazorEnhanced
                         continue;
                     if (i.Amount == 0)
                         continue;
-                    if (itemids.Contains(i.ItemID)) // check item id
+                    if (itemids.Contains(i.TypeID)) // check item id
                     {
                         if (color != -1) // color -1 ALL
                         {
@@ -1719,7 +1722,7 @@ namespace RazorEnhanced
                 if (considerIgnoreList && Misc.CheckIgnoreObject(i.Serial))
                     continue;
 
-                if (itemids.Contains(i.ItemID)) // check item id
+                if (itemids.Contains(i.TypeID)) // check item id
                 {
                     if (color != -1) // color -1 ALL
                     {
@@ -2176,7 +2179,7 @@ namespace RazorEnhanced
             if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
                 return;
 
-            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.TypeID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
         }
 
         public static void Message(int serial, int hue, string message)
@@ -2190,7 +2193,7 @@ namespace RazorEnhanced
             if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
                 return;
 
-            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(item.Serial, item.TypeID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
         }
 
         // Count
@@ -2212,7 +2215,7 @@ namespace RazorEnhanced
                 {
                     if (color == -1)
                     {
-                        if (itemToCount.ItemID == itemid)
+                        if (itemToCount.TypeID == itemid)
                             count += itemToCount.Amount;
                         if (recursive && itemToCount.IsContainer)
                         {
@@ -2222,7 +2225,7 @@ namespace RazorEnhanced
                     }
                     else
                     {
-                        if (itemToCount.ItemID == itemid && itemToCount.Hue == color)
+                        if (itemToCount.TypeID == itemid && itemToCount.Hue == color)
                             count += itemToCount.Amount;
                         if (recursive && itemToCount.IsContainer)
                         {
@@ -2341,9 +2344,9 @@ namespace RazorEnhanced
         {
             List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
             if (color == -1)
-                items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid).ToList();
+                items = items.Where((i) => i.IsInBackpack && i.TypeID == itemid).ToList();
             else
-                items = items.Where((i) => i.IsInBackpack && i.ItemID == itemid && i.Hue == color).ToList();
+                items = items.Where((i) => i.IsInBackpack && i.TypeID == itemid && i.Hue == color).ToList();
 
             int amount = 0;
             foreach (Assistant.Item i in items)

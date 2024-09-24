@@ -141,14 +141,14 @@ namespace Assistant
                 {
                     // dont worry about uneqipping RuneBooks or SpellBooks
                     Item item = World.Player.GetItemOnLayer(Layer.RightHand);
-                    if (item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA && !item.IsVirtueShield)
+                    if (item != null && item.TypeID != 0x22C5 && item.TypeID != 0xE3B && item.TypeID != 0xEFA && !item.IsVirtueShield)
                     {
                         DragDropManager.Drag(item, item.Amount);
                         DragDropManager.Drop(item, pack);
                     }
 
                     item = World.Player.GetItemOnLayer(Layer.LeftHand);
-                    if (item != null && item.ItemID != 0x22C5 && item.ItemID != 0xE3B && item.ItemID != 0xEFA && !item.IsVirtueShield)
+                    if (item != null && item.TypeID != 0x22C5 && item.TypeID != 0xE3B && item.TypeID != 0xEFA && !item.IsVirtueShield)
                     {
                         DragDropManager.Drag(item, item.Amount);
                         DragDropManager.Drop(item, pack);

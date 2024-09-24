@@ -439,11 +439,11 @@ namespace RazorEnhanced
         /// <summary>
         /// Player Body or MobileID (see: Mobile.Body)
         /// </summary>
-        public static int Body { get { return World.Player.Body; } }
+        public static int Body { get { return World.Player.TypeID; } }
         /// <summary>
         /// Player MobileID or Body (see: Mobile.MobileID)
         /// </summary>
-        public static int MobileID { get { return World.Player.Body; } }
+        public static int MobileID { get { return World.Player.TypeID; } }
 
         /// <summary>
         /// Player unique Serial.
@@ -2555,7 +2555,7 @@ namespace RazorEnhanced
         /// <param name="msg">Text of the message.</param>
         public static void HeadMessage(int color, string msg)
         {
-            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, color, 3, Language.CliLocName, World.Player.Name, msg));
+            Assistant.Client.Instance.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.TypeID, MessageType.Regular, color, 3, Language.CliLocName, World.Player.Name, msg));
         }
 
         public static void HeadMessage(int color, int msg)

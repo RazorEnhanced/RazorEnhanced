@@ -52,7 +52,7 @@ namespace Assistant
 
     public class Item : UOEntity
     {
-        private ItemID m_ItemID;
+        private TypeID m_ItemID;
         private ushort m_Amount;
         private byte m_Direction;
         private byte m_Light;
@@ -155,7 +155,7 @@ namespace Assistant
             {
                 // Dropping this item, but already deleted so use ItemID from dead one
                 // Because the itemID of dragged items is not on a drop packet
-                itemID = DragDropManager.Holding.ItemID;
+                itemID = DragDropManager.Holding.TypeID;
             }
             Item item;
 
@@ -174,7 +174,7 @@ namespace Assistant
 
             if (item != null)
             {
-                item.ItemID = (ushort)itemID;
+                item.TypeID = (ushort)itemID;
             }
             return item;
         }
@@ -187,11 +187,6 @@ namespace Assistant
             m_Movable = true;
         }
 
-        internal ItemID ItemID
-        {
-            get { return m_ItemID; }
-            set { m_ItemID = value; }
-        }
         /// <summary>
         /// True when the container was opened
         /// </summary>
@@ -221,9 +216,9 @@ namespace Assistant
                 // On OSI the amount value is used for other purposes if an item is declared not stackable in files.
                 try // avoid crash if some bad happen in Ultima.dll
                 {
-                    if ((RazorEnhanced.Statics.GetItemData(ItemID).Flags & Ultima.TileFlag.Generic) != 0)
+                    if ((RazorEnhanced.Statics.GetItemData(TypeID).Flags & Ultima.TileFlag.Generic) != 0)
                         return m_Amount;
-                    if (ItemID == 0x2006)
+                    if (TypeID == 0x2006)
                         return m_Amount;
                     if (Container != null)
                     {
@@ -301,15 +296,15 @@ namespace Assistant
             get
             {
                 if ((m_Layer < Layer.FirstValid || m_Layer > Layer.LastValid) &&
-                    ((this.ItemID.ItemData.Flags & Ultima.TileFlag.Wearable) != 0 ||
-                    (this.ItemID.ItemData.Flags & Ultima.TileFlag.Armor) != 0 ||
-                    (this.ItemID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0
+                    ((this.TypeID.ItemData.Flags & Ultima.TileFlag.Wearable) != 0 ||
+                    (this.TypeID.ItemData.Flags & Ultima.TileFlag.Armor) != 0 ||
+                    (this.TypeID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0
                     ))
                 {
-                    m_Layer = (Layer)this.ItemID.ItemData.Quality;
+                    m_Layer = (Layer)this.TypeID.ItemData.Quality;
                 }
 
-                if ((this.ItemID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0)
+                if ((this.TypeID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0)
                 {
                     Weapon w;
                     bool found = Weapons.TryGetValue(this.m_ItemID, out w);
@@ -330,17 +325,17 @@ namespace Assistant
             }
         }
 
-        internal Item FindItemByID(ItemID id)
+        internal Item FindItemByID(TypeID id)
         {
             return FindItemByID(id, true);
         }
 
-        internal Item FindItemByID(ItemID id, bool recurse)
+        internal Item FindItemByID(TypeID id, bool recurse)
         {
             foreach (Item t in m_Items)
             {
                 Item item = t;
-                if (item.ItemID == id)
+                if (item.TypeID == id)
                 {
                     return item;
                 }
@@ -470,7 +465,7 @@ namespace Assistant
 
             foreach (Item check in World.Items.Values)
             {
-                if (check.Container == null && check.ItemID == ItemID && check.Hue == Hue && Utility.InRange(World.Player.Position, check.Position, 2))
+                if (check.Container == null && check.TypeID == TypeID && check.Hue == Hue && Utility.InRange(World.Player.Position, check.Position, 2))
                 {
                     DragDropManager.DragDrop(this, check);
                     m_AutoStackCache.Add(Serial);
@@ -515,7 +510,7 @@ namespace Assistant
             }
         }
 
-        internal bool IsChildOf(object parent)
+        internal bool IsChildOf(object parent, int maxDepth = 100)
         {
             Serial parentSerial = 0;
             if (parent is Mobile)
@@ -526,8 +521,8 @@ namespace Assistant
                 return false;
 
             object check = this;
-            int die = 100;
-            while (check != null && check is Item && die-- > 0)
+            
+            while (check != null && check is Item && maxDepth-- > 0)
             {
                 if (((Item)check).Serial == parentSerial)
                     return true;

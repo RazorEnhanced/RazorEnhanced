@@ -37,9 +37,9 @@ namespace RazorEnhanced.UI
             foreach (var o in Misc.SharedScriptData)
             {
                 if (o.Value is Item)
-                    sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Item)o.Value).Serial.ToString("X8") });
+                    sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Item)o.Value).Serial.Value.ToString("X8") });
                 if (o.Value is Mobile)
-                    sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Mobile)o.Value).Serial.ToString("X8") });
+                    sharedobjectGridView.Rows.Add(new object[] { o.Key, "0x " + ((Mobile)o.Value).Serial.Value.ToString("X8") });
                 else
                 {
                     if (int.TryParse(o.Value.ToString(), out int n))

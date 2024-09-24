@@ -240,7 +240,7 @@ namespace Assistant
                 Mobile m = World.FindMobile(s);
                 if (m != null)
                 {
-                    targ.Gfx = m.Body;
+                    targ.Gfx = m.TypeID;
                     if (wait)
                         Assistant.Client.Instance.SendToClientWait(new ChangeCombatant(m));
                     else
@@ -297,7 +297,7 @@ namespace Assistant
             {
                 TargetInfo targ = new TargetInfo();
                 targ.Serial = World.Player.Serial;
-                targ.Gfx = World.Player.Body;
+                targ.Gfx = World.Player.TypeID;
                 targ.Type = 0;
                 targ.X = World.Player.Position.X;
                 targ.Y = World.Player.Position.Y;
@@ -640,7 +640,7 @@ namespace Assistant
                     info.X = item.Position.X;
                     info.Y = item.Position.Y;
                     info.Z = item.Position.Z;
-                    info.Gfx = item.ItemID;
+                    info.Gfx = item.TypeID;
                 }
             }
             else if (s.IsMobile)
@@ -651,7 +651,7 @@ namespace Assistant
                     info.X = m.Position.X;
                     info.Y = m.Position.Y;
                     info.Z = m.Position.Z;
-                    info.Gfx = m.Body;
+                    info.Gfx = m.TypeID;
                 }
             }
             Target(info, wait);
@@ -670,7 +670,7 @@ namespace Assistant
                     X = item.Position.X,
                     Y = item.Position.Y,
                     Z = item.Position.Z,
-                    Gfx = item.ItemID
+                    Gfx = item.TypeID
                 };
                 Target(info, wait);
             }
@@ -685,7 +685,7 @@ namespace Assistant
                     X = m.Position.X,
                     Y = m.Position.Y,
                     Z = m.Position.Z,
-                    Gfx = m.Body
+                    Gfx = m.TypeID
                 };
                 Target(info, wait);
             }

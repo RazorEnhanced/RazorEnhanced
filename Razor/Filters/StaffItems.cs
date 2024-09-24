@@ -21,7 +21,7 @@ namespace Assistant.Filters
             get { return Language.GetString(LocString.StaffOnlyItems); }
         }
 
-        private static bool IsStaffItem(ItemID itemID)
+        private static bool IsStaffItem(TypeID itemID)
         {
             return (
                 itemID == 0x36FF || // LOS blocker
@@ -31,7 +31,7 @@ namespace Assistant.Filters
 
         private static bool IsStaffItem(Item i)
         {
-            return i.OnGround && (IsStaffItem(i.ItemID) || !i.Visible);
+            return i.OnGround && (IsStaffItem(i.TypeID) || !i.Visible);
         }
 
         public override void OnFilter(PacketReader p, PacketHandlerEventArgs args)

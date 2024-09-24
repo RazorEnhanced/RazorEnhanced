@@ -479,7 +479,7 @@
     <Compile Include="Core\Item.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\ItemID.cs">
+    <Compile Include="Core\TypeID.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Main.cs">
@@ -658,10 +658,8 @@
     <Compile Include="RazorEnhanced\Vendor.cs" />
     <Compile Include="RazorEnhanced\Organizer.cs" />
     <Compile Include="RazorEnhanced\Scavenger.cs" />
-    <Compile Include="RazorEnhanced\EnhancedEntity.cs" />
     <Compile Include="RazorEnhanced\Geometry.cs" />
     <Compile Include="RazorEnhanced\Item.cs" />
-    <Compile Include="RazorEnhanced\ItemID.cs" />
     <Compile Include="Core\Buffs.cs" />
     <Compile Include="RazorEnhanced\Misc.cs" />
     <Compile Include="RazorEnhanced\Scripts.cs">

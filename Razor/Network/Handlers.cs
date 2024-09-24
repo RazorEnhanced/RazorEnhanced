@@ -268,9 +268,9 @@ namespace Assistant
                 return;
 
             if (m != null && (
-                    (m.Body >= 0x0190 && m.Body <= 0x0193) ||   // Humans
-                    (m.Body >= 0x025D && m.Body <= 0x0260) ||   // Elves
-                    (m.Body >= 0x029A && m.Body <= 0x029B)) &&  // Gargoyles
+                    (m.TypeID >= 0x0190 && m.TypeID <= 0x0193) ||   // Humans
+                    (m.TypeID >= 0x025D && m.TypeID <= 0x0260) ||   // Elves
+                    (m.TypeID >= 0x029A && m.TypeID <= 0x029B)) &&  // Gargoyles
                     Utility.Distance(World.Player.Position, m.Position) <= 12)
             {
                 ScreenCapManager.DeathCapture(1.0);
@@ -523,9 +523,9 @@ namespace Assistant
                 Mobile mob = item.Container as Mobile;
                 if (mob != null)
                 {
-                    ScriptRecorder.enqueueUsedObject(serial, mob.Serial, item.ItemID, item.Hue);
+                    ScriptRecorder.enqueueUsedObject(serial, mob.Serial, item.TypeID, item.Hue);
                 }
-                iid = item.ItemID.Value;
+                iid = item.TypeID.Value;
             }
 
             if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
@@ -738,7 +738,7 @@ namespace Assistant
                     return;
             }
 
-            i.ItemID = itemid;
+            i.TypeID = itemid;
             i.Amount = amount;
             i.Position = pos;
             i.GridNum = gridPos;
@@ -809,7 +809,7 @@ namespace Assistant
             for (int i = 0; i < count; i++)
             {
                 Serial serial = p.ReadUInt32();
-                Assistant.ItemID itemID = p.ReadUInt16();
+                Assistant.TypeID itemID = p.ReadUInt16();
                 itemID = (ushort)(itemID + p.ReadSByte());// signed, itemID offset
                                                           // serial is purposely not checked to be valid, sometimes buy lists dont have "valid" item serials (and we are okay with that).
                 Item item = World.FindItem(serial);
@@ -827,7 +827,7 @@ namespace Assistant
                 //if ( !DragDropManager.EndHolding( serial ) )
                 //  continue;
 
-                item.ItemID = itemID;
+                item.TypeID = itemID;
                 item.Amount = p.ReadUInt16();
                 if (item.Amount == 0)
                     item.Amount = 1;
@@ -899,7 +899,7 @@ namespace Assistant
                 if (!DragDropManager.EndHolding(serial))
                     continue;
 
-                item.ItemID = itemID;
+                item.TypeID = itemID;
                 if (cont.IsItem)
                 {
                     Item container = World.FindItem(cont);
@@ -959,7 +959,7 @@ namespace Assistant
             if (!DragDropManager.EndHolding(serial))
                 return;
 
-            i.ItemID = iid;
+            i.TypeID = iid;
             i.Layer = (Layer)p.ReadByte();
 
             Serial ser = p.ReadUInt32();// cont must be set after hue (for counters)
@@ -1169,7 +1169,7 @@ namespace Assistant
             PlayerData.ExternalZ = false;
 
             p.ReadUInt32(); // always 0?
-            m.Body = p.ReadUInt16();
+            m.TypeID = p.ReadUInt16();
             m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadInt16());
             m.Direction = (Direction)p.ReadByte();
             m.Resync();
@@ -1240,14 +1240,14 @@ namespace Assistant
                     Assistant.Client.Instance.SendToServer(new StatusQuery(serial));
             }
 
-            m.Body = p.ReadUInt16();
+            m.TypeID = p.ReadUInt16();
 
             // Chiamata funzione cambio grafica mob.
             bool newcolor = false;
             int color = 0;
             if (Engine.MainWindow.MobFilterCheckBox.Checked)
             {
-                p = RazorEnhanced.Filters.GraphChangeBody(p, m.Body, out bool block, out newcolor, out color);
+                p = RazorEnhanced.Filters.GraphChangeBody(p, m.TypeID, out bool block, out newcolor, out color);
                 if (block)
                 {
                     args.Block = true;
@@ -1768,7 +1768,7 @@ namespace Assistant
 
             bool wasHidden = !m.Visible;
 
-            m.Body = (ushort)(p.ReadUInt16() + p.ReadSByte());
+            m.TypeID = (ushort)(p.ReadUInt16() + p.ReadSByte());
 
             m.Hue = p.ReadUInt16();
             m.ProcessPacketFlags(p.ReadByte());
@@ -1846,7 +1846,7 @@ namespace Assistant
             int ltHue = Engine.MainWindow.LTHilight;
 
 
-            m.Body = body;
+            m.TypeID = body;
 
             if (m != World.Player || World.Player.OutstandingMoveReqs == 0)
                 m.Position = position;
@@ -1901,11 +1901,11 @@ namespace Assistant
                     ushort num = p.ReadUInt16();
                     if (Engine.UseNewMobileIncoming)
                     {
-                        item.ItemID = num;
+                        item.TypeID = num;
                     }
                     else
                     {
-                        item.ItemID = (ushort)(num & 16383);
+                        item.TypeID = (ushort)(num & 16383);
                     }
                     item.Layer = (Layer)p.ReadByte();
                     if (Engine.UseNewMobileIncoming || (num & 32768) != 0)
@@ -2015,7 +2015,7 @@ namespace Assistant
                 item.Amount = 1;
 
             if ((itemID & 0x8000) != 0)
-                item.ItemID = (ushort)(item.ItemID + p.ReadSByte());
+                item.TypeID = (ushort)(item.TypeID + p.ReadSByte());
 
             ushort x = p.ReadUInt16();
             ushort y = p.ReadUInt16();
@@ -2042,7 +2042,7 @@ namespace Assistant
 
             if (isNew && World.Player != null)
             {
-                if (item.ItemID == 0x2006) // corpse itemid = 0x2006
+                if (item.TypeID == 0x2006) // corpse itemid = 0x2006
                 {
                     if (Engine.MainWindow.ShowCorpseNames.Checked)
                         Assistant.Client.Instance.SendToServer(new SingleClick(item.Serial));
@@ -2058,7 +2058,7 @@ namespace Assistant
                 else if (item.IsMulti)
                 {
                     World.AddMulti(item);
-                    Assistant.UOAssist.PostAddMulti(item.ItemID, item.Position);
+                    Assistant.UOAssist.PostAddMulti(item.TypeID, item.Position);
                 }
             }
             Item.UpdateContainers();
@@ -2146,7 +2146,7 @@ namespace Assistant
                 return;
 
             item.Container = null;
-            item.ItemID = itemID;
+            item.TypeID = itemID;
 
             item.Direction = p.ReadByte();
 
@@ -2174,7 +2174,7 @@ namespace Assistant
 
             if (isNew && World.Player != null)
             {
-                if (item.ItemID == 0x2006)// corpse itemid = 0x2006
+                if (item.TypeID == 0x2006)// corpse itemid = 0x2006
                 {
                     // Somewhere here record player death
                     //Player.CorpseSerial == item.Serial;
@@ -2193,7 +2193,7 @@ namespace Assistant
                 else if (item.IsMulti)
                 {
                     World.AddMulti(item);
-                    Assistant.UOAssist.PostAddMulti(item.ItemID, item.Position);
+                    Assistant.UOAssist.PostAddMulti(item.TypeID, item.Position);
                 }
             }
 
@@ -2407,7 +2407,7 @@ namespace Assistant
                 if (Engine.MainWindow.FilterNPC.Checked && ser.IsMobile)
                 {
                     Mobile m = World.FindMobile(ser);
-                    if (m != null && RazorEnhanced.Filters.IsOrcLizardRat(m.Body))
+                    if (m != null && RazorEnhanced.Filters.IsOrcLizardRat(m.TypeID))
                     {
                         args.Block = true;
                         return;

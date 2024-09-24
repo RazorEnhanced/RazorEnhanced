@@ -278,7 +278,7 @@ namespace RazorEnhanced
                 var i = World.FindItems(relpos.X, relpos.Y, tileinfo.StaticZ);
                 foreach (var item in i)
                 {
-                    if (CaveTiles.Contains(item.ItemID))
+                    if (CaveTiles.Contains(item.TypeID))
                     {
                         Target.TargetExecute(item.Serial);
                         return;
@@ -564,7 +564,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    m_pgtarget = target.Position;
+                    m_pgtarget = new RazorEnhanced.Point3D(target.Position);
                 }
             }
             else

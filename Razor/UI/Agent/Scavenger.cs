@@ -64,7 +64,7 @@ namespace Assistant
                 if (showagentmessageCheckBox.Checked)
                     Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
                 Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
-                this.Invoke((MethodInvoker)delegate { Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
+                this.Invoke((MethodInvoker)delegate { Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.TypeID, scavengerItem.Hue); });
             }
             else
             {

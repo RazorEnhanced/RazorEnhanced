@@ -96,7 +96,7 @@ namespace Assistant
                 if (showagentmessageCheckBox.Checked)
                     RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString(), false);
                 RazorEnhanced.AutoLoot.AddLog("Autoloot item added: " + autoLootItem.ToString());
-                this.Invoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
+                this.Invoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.TypeID, autoLootItem.Hue); });
             }
             else
             {

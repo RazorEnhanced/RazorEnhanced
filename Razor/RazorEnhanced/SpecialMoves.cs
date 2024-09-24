@@ -296,10 +296,10 @@ namespace Assistant
 
                 AOSAbility a = AOSAbility.Invalid;
                 if (right != null)
-                    a = GetAbility(right.ItemID.Value, m_Primary);
+                    a = GetAbility(right.TypeID.Value, m_Primary);
 
                 if (a == AOSAbility.Invalid && left != null)
-                    a = GetAbility(left.ItemID.Value, m_Primary);
+                    a = GetAbility(left.TypeID.Value, m_Primary);
 
                 if (a == AOSAbility.Invalid)
                     a = GetAbility(FistsID[0], m_Primary);
@@ -324,10 +324,10 @@ namespace Assistant
 
                 AOSAbility a = AOSAbility.Invalid;
                 if (right != null)
-                    a = GetAbility(right.ItemID.Value, m_Secondary);
+                    a = GetAbility(right.TypeID.Value, m_Secondary);
 
                 if (a == AOSAbility.Invalid && left != null)
-                    a = GetAbility(left.ItemID.Value, m_Secondary);
+                    a = GetAbility(left.TypeID.Value, m_Secondary);
 
                 if (a == AOSAbility.Invalid)
                     a = GetAbility(FistsID[0], m_Secondary);
@@ -394,10 +394,10 @@ namespace Assistant
 
             AOSAbility a = AOSAbility.Invalid;
             if (right != null)
-                a = GetAbility(right.ItemID.Value, m_Primary);
+                a = GetAbility(right.TypeID.Value, m_Primary);
 
             if (a == AOSAbility.Invalid && left != null)
-                a = GetAbility(left.ItemID.Value, m_Primary);
+                a = GetAbility(left.TypeID.Value, m_Primary);
 
             if (a == AOSAbility.Invalid)
                 a = GetAbility(FistsID[0], m_Primary);
@@ -443,10 +443,10 @@ namespace Assistant
 
             AOSAbility a = AOSAbility.Invalid;
             if (right != null)
-                a = GetAbility(right.ItemID.Value, m_Secondary);
+                a = GetAbility(right.TypeID.Value, m_Secondary);
 
             if (a == AOSAbility.Invalid && left != null)
-                a = GetAbility(left.ItemID.Value, m_Secondary);
+                a = GetAbility(left.TypeID.Value, m_Secondary);
 
             if (a == AOSAbility.Invalid)
                 a = GetAbility(FistsID[0], m_Secondary);
@@ -516,7 +516,7 @@ namespace Assistant
         internal static int GetPrimaryAbility(Assistant.Item wep)
         {
             if (wep != null)
-                return (int)GetAbility(wep.ItemID.Value, m_Primary);
+                return (int)GetAbility(wep.TypeID.Value, m_Primary);
             else
                 return 0;
         }
@@ -524,7 +524,7 @@ namespace Assistant
         internal static int GetSecondaryAbility(Assistant.Item wep)
         {
             if (wep != null)
-                return (int)GetAbility(wep.ItemID.Value, m_Secondary);
+                return (int)GetAbility(wep.TypeID.Value, m_Secondary);
             else
                 return 0;
         }

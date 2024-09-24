@@ -218,7 +218,7 @@ namespace RazorEnhanced
                     }
                     if (container == 0)
                         container = -1;
-                    enqueueUsedObject(i.Serial, container, i.ItemID, i.Hue);
+                    enqueueUsedObject(i.Serial, container, i.TypeID, i.Hue);
                 }
             }
             else if (ser.IsMobile)
@@ -226,7 +226,7 @@ namespace RazorEnhanced
                 Assistant.Mobile m = World.FindMobile(ser);
                 if (m != null)
                 {
-                    enqueueUsedObject(m.Serial, 0, m.Body, m.Hue);
+                    enqueueUsedObject(m.Serial, 0, m.TypeID, m.Hue);
                 }
             }
         }

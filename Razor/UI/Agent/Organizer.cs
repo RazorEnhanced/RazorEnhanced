@@ -79,7 +79,7 @@ namespace Assistant
         }
         private bool AcceptibleOrganizerTarget(Assistant.Item organizerBag)
         {
-            if (organizerBag.ItemID == 0x2259)
+            if (organizerBag.TypeID == 0x2259)
                 return true;
 
             return organizerBag.Serial.IsItem && organizerBag.IsContainer;
@@ -207,7 +207,7 @@ namespace Assistant
                 if (showagentmessageCheckBox.Checked)
                     RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString(), false);
                 RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
-                this.Invoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Hue); });
+                this.Invoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.TypeID, organizerItem.Hue); });
             }
             else
             {

@@ -93,7 +93,7 @@ namespace Assistant
                 if (showagentmessageCheckBox.Checked)
                     Misc.SendMessage("Buy Agent item added: " + buyItem.ToString(), false);
                 BuyAgent.AddLog("Buy Agent item added: " + buyItem.ToString());
-                this.Invoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
+                this.Invoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.TypeID, 999, buyItem.Hue); });
             }
             else
             {

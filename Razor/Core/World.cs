@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Ultima;
 
 namespace Assistant
 {
@@ -52,6 +53,26 @@ namespace Assistant
             return mobile;
         }
 
+        internal static List<UOEntity> FindAllEntityByID(ushort type, int color)
+        {
+            var typeId = new TypeID(type);
+            List<UOEntity> entities = new List<UOEntity>();
+            foreach (var item in World.Items.Values)
+            {
+                if (item.TypeID == typeId ) 
+                    if (color == -1 || item.Hue == (ushort)color)
+                        entities.Add(item);
+            }
+            foreach (var mobile in World.Mobiles.Values)
+            {
+                if (mobile.TypeID == typeId ) 
+                    if (color == -1 || mobile.Hue == (ushort)color)
+                        entities.Add(mobile);
+            }
+
+            return entities;
+        }
+
         internal static List<CorpseItem> CorpsesInRange(int range)
         {
             List<CorpseItem> list = new List<CorpseItem>();
@@ -61,7 +82,7 @@ namespace Assistant
 
             foreach (Item m in World.Items.Values)
             {
-                if (m.ItemID == 0x2006)
+                if (m.TypeID == 0x2006)
                 {
                     CorpseItem corpse = m as CorpseItem;
                     if (corpse != null)
@@ -108,9 +129,9 @@ namespace Assistant
 
         internal static void AddMulti(Item item)
         {
-            Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
+            Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.TypeID);
             if (multiinfo.Count == 0)
-                multiinfo = new Ultima.MultiComponentList(item.ItemID, item.Position.X, item.Position.Y);
+                multiinfo = new Ultima.MultiComponentList(item.TypeID, item.Position.X, item.Position.Y);
 
             int stairSpace = 1;
             m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X, item.Position.Y + multiinfo.Min.Y), new Point2D(item.Position.X + multiinfo.Max.X, item.Position.Y + multiinfo.Max.Y + stairSpace));

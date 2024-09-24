@@ -52,6 +52,10 @@ namespace RazorEnhanced
                     return m_UOEntity.Deleted;
             }
         }
+        /// <summary>
+        /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.MobileID )
+        /// </summary>
+        public int TypeID { get { return m_UOEntity.TypeID; } }
 
         public virtual int Hue
         {

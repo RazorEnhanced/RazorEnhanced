@@ -104,8 +104,8 @@ namespace RazorEnhanced.UI
             };
 
             lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
-            toolTip.SetToolTip(lItemID, m_itemTarg.ItemID.Value.ToString());
-            lItemID.Text = "0x" + m_itemTarg.ItemID.Value.ToString("X4");
+            lItemID.Text = $"0x{m_itemTarg.TypeID.Value:X4}";
+            toolTip.SetToolTip(lItemID, $"{m_itemTarg.TypeID.Value}");
             toolTip.SetToolTip(lColor, m_itemTarg.Hue.ToString());
             lColor.Text = "0x" + m_itemTarg.Hue.ToString("x4");
             lPosition.Text = m_itemTarg.Position.ToString();
@@ -182,7 +182,7 @@ namespace RazorEnhanced.UI
             visibleflaglabel.ForeColor = (m_itemTarg.Visible) ? Color.Green : Color.Red;
 
             // Immagine
-            Bitmap m_itemimage = Ultima.Art.GetStatic(m_itemTarg.ItemID);
+            Bitmap m_itemimage = Ultima.Art.GetStatic(m_itemTarg.TypeID);
             {
                 if (m_itemimage != null && m_itemTarg.Hue > 0)
                 {

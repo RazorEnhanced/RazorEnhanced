@@ -2114,12 +2114,12 @@ namespace RazorEnhanced
             {
                 Assistant.Item item = (Assistant.Item)t;
 
-                if (item.ItemID == find && item.Hue == hue)
+                if (item.TypeID == find && item.Hue == hue)
                 {
                     PlayerData.DoubleClick(item);
                     return true;
                 }
-                else if (item.ItemID == find && hue == -1) // All color
+                else if (item.TypeID == find && hue == -1) // All color
                 {
                     PlayerData.DoubleClick(item);
                     return true;

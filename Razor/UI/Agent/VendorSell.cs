@@ -85,7 +85,7 @@ namespace Assistant
                 if (showagentmessageCheckBox.Checked)
                     RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString(), false);
                 RazorEnhanced.SellAgent.AddLog("Sell Agent item added: " + sellItem.ToString());
-                this.Invoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
+                this.Invoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.TypeID, 999, sellItem.Hue); });
             }
             else
             {

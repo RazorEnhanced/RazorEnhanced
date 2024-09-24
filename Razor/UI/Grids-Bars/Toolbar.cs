@@ -149,7 +149,7 @@ namespace Assistant
                 if (item.Serial.IsItem)
                 {
                     toolboxcountNameTextBox.Text = item.Name;
-                    int itemgraph = item.ItemID;
+                    int itemgraph = item.TypeID;
                     toolboxcountGraphTextBox.Text = itemgraph.ToString("X4");
                     toolboxcountHueTextBox.Text = item.Hue.ToString("X4");
                     RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);

@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebSocketSharp;
 
 namespace RazorEnhanced.UOS
 {
@@ -618,6 +619,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("timer", Timer);
             m_Interpreter.RegisterExpressionHandler("timerexists", TimerExists);
             m_Interpreter.RegisterExpressionHandler("targetexists", TargetExists);
+            m_Interpreter.RegisterExpressionHandler("serial", SerialOf);
 
 
 
@@ -1079,67 +1081,62 @@ namespace RazorEnhanced.UOS
             }
             else
             {
-                int type = args[0].AsInt();
+                ushort type = args[0].AsUShort();
                 return FindByType(type, args);
             }
             return false;
         }
 
-        internal bool FindByType(int type, Argument[] args)
+        internal bool FindByType(ushort type, Argument[] args)
         {
             int serial = -1;
-            if (args.Length == 1 || args.Length == 2)
+            List<UOEntity> results = new();
+            m_Interpreter.UnSetAlias("found");
+            if (args.Length > 1 )
             {
                 int color = -1;
                 if (args.Length == 2)
                     color = args[1].AsInt();
-
-                List<int> results = FindByType_ground(type, color, -1, -1);
-                if (results.Count > 0)
-                {
-                    serial = results[0];
-                }
-                else
-                {
-                    Item item = Items.FindByID(type, color, -1, true);
-                    if (item != null)
-                    {
-                        serial = item.Serial;
-                    }
-                }
+                
+                results = World.FindAllEntityByID(type, color);
             }
+            if (results.Count == 0)
+                return false;
+
+            if (args.Length < 3)
+            {
+                serial = results[0].Serial; // any one will match
+            }
+
             if (args.Length >= 3)
             {
-                m_Interpreter.UnSetAlias("found");
                 int color = args[1].AsInt();
                 string groundCheck = args[2].AsString().ToLower();
                 uint source = args[2].AsSerial();
                 int amount = -1;
                 if (args.Length >= 4)
                     amount = args[3].AsInt();
-                int range = -1;
+                int range = 100;
                 if (args.Length == 5)
                     range = args[4].AsInt();
-                if (groundCheck == "ground")
-                {
-                    List<int> results = FindByType_ground(type, color, amount, range);
-                    if (results.Count > 0)
-                    {
-                        serial = results[0];
-                    }
-                }
-                else
-                {
-                    //Item item = Items.FindByID(type, color, (int)source, range);
-                    var listItems = Items.FindAllByID(type, color, (int)source, range);
-                    if (listItems == null)
-                        return false;
 
-                    foreach (var _item in listItems)
+                foreach (var entity in results)
+                {
+                    if (entity.Serial.IsItem)
                     {
-                        Item item = (Item)_item;
+                        var assistItem = (Assistant.Item)entity;
+                        RazorEnhanced.Item item = new RazorEnhanced.Item(assistItem);
                         if (item != null)
-                        {
+                        {                            
+                            // do they only want stuff on ground
+                            if (groundCheck.ToLower() == "ground" && !item.OnGround)
+                                continue;
+                            Item container = Items.FindBySerial((int)source);
+                            if (container == null)
+                                break; // no use looking if container serial is bad
+                            if (!item.IsChildOf(container, range+2))
+                                continue;
+
                             if (amount != -1 && item.Amount < amount)
                             {
                                 item = null;
@@ -1147,7 +1144,22 @@ namespace RazorEnhanced.UOS
                             if (item != null)
                             {
                                 serial = item.Serial;
+                                break; // first one found is fine
                             }
+                        }
+                    }
+                    if (entity.Serial.IsMobile)
+                    {
+                        Mobile mobile = new RazorEnhanced.Mobile((Assistant.Mobile)entity);
+                        if (mobile != null)
+                        {
+                            // I'm ignoring container and amount for mobiles
+                            if (range == -1 || Player.DistanceTo(mobile) <= range)
+                            {
+                                serial = mobile.Serial;
+                                break;
+                            }
+                                
                         }
                     }
                 }
@@ -1670,6 +1682,22 @@ namespace RazorEnhanced.UOS
             }
             return 0;
         }
+
+        /// <summary>
+        /// serial ('target')
+        /// returns the serial of the target be it mobile or item
+        /// </summary>
+        /// 
+        private static IComparable SerialOf(ASTNode node, Argument[] args, bool quiet)
+        {
+            if (args.Length == 1)
+            {
+                uint target = args[0].AsSerial();
+                return target;
+            }
+            return 0;
+        }
+
 
         /// <summary>
         /// skillstate ('skill name') (operator) ('locked'/'up'/'down')
@@ -4948,7 +4976,7 @@ namespace RazorEnhanced.UOS
             if (args.Length == 0) { WrongParameterCount(node, 1, 0); }
             var graphic = args[0].AsInt();
             var color = (args.Length >= 2 ? args[1].AsInt() : -1);
-            var range = (args.Length >= 3 ? args[2].AsInt() : Player.Backpack.Serial);
+            var range = (args.Length >= 3 ? args[2].AsInt() : (int)Player.Backpack.Serial);
 
             Item itm = null;
             // Container (Range: Container Serial)

@@ -12,13 +12,16 @@ namespace RazorEnhanced
     /// While the Mobile.Serial is unique for each Mobile, Mobile.MobileID is the unique for the Mobile apparence, or image. Sometimes is also called Body or Body ID.
     /// Mobiles which dies and leave a corpse behind, they stop existing as Mobiles and instead leave a corpse as a Item object appears.
     /// </summary>
-    public class Mobile : EnhancedEntity
+    public class Mobile : UOEntity
     {
         private readonly Assistant.Mobile m_AssistantMobile;
 
         internal Mobile(Assistant.Mobile mobile)
-            : base(mobile)
+            : base(mobile.Serial)
         {
+            base.TypeID = mobile.TypeID;
+            base.Hue = mobile.Hue;
+            base.Position = mobile.Position;
             m_AssistantMobile = mobile;
         }
 
@@ -27,15 +30,15 @@ namespace RazorEnhanced
         /// </summary>
         public string Name { get { return m_AssistantMobile.Name; } }
 
-        /// <summary>
+        /// <summary>@nodoc @deprecate
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.MobileID )
         /// </summary>
-        public int Body { get { return m_AssistantMobile.Body; } }
+        public int Body { get { return m_AssistantMobile.TypeID; } }
 
         /// <summary>
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.Body )
         /// </summary>
-        public int MobileID { get { return m_AssistantMobile.Body; } }
+        public int MobileID { get { return m_AssistantMobile.TypeID; } }
 
         /// <summary>
         /// Color of the mobile.
@@ -594,7 +597,7 @@ namespace RazorEnhanced
 
                     if (filter.Bodies.Count > 0)
                     {
-                        assistantMobiles = assistantMobiles.Where((m) => filter.Bodies.Contains(m.Body)).ToList();
+                        assistantMobiles = assistantMobiles.Where((m) => filter.Bodies.Contains(m.TypeID)).ToList();
                     }
 
                     if (filter.Hues.Count > 0)

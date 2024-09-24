@@ -100,7 +100,7 @@ namespace RazorEnhanced
             byte count = p.ReadByte();
             List<Item> orderedList = container.Contains;
             // This order logic is weird, but hard coded in official client
-            if (container.ItemID == 0x2af8)
+            if (container.TypeID == 0x2af8)
                 orderedList.Sort((i1, i2) => i1.Position.X - i2.Position.X);
             else
                 orderedList.Reverse();
@@ -264,7 +264,7 @@ namespace RazorEnhanced
                     int targetAmount = amount;
                     foreach (Item listItem in LastBuyList)
                     {
-                        if (listItem.ItemID == itemID)
+                        if (listItem.TypeID == itemID)
                         {
                             if (maxPrice >= 0 && listItem.Price > maxPrice)
                                 continue;
@@ -280,7 +280,7 @@ namespace RazorEnhanced
                     {
                         foreach (Item listItem in LastResellList)
                         {
-                            if (listItem.ItemID == itemID)
+                            if (listItem.TypeID == itemID)
                             {
                                 if (maxPrice >= 0 && listItem.Price > maxPrice)
                                     continue;
@@ -342,7 +342,7 @@ namespace RazorEnhanced
                     BuyItem item = new BuyItem();
                     item.Serial = listItem.Serial;
                     var test = Items.FindBySerial(item.Serial);
-                    item.ItemID = listItem.ItemID;
+                    item.ItemID = listItem.TypeID;
                     item.Amount = listItem.Amount;
                     item.Price = listItem.Price;
                     item.Name = listItem.Name;
@@ -1093,7 +1093,7 @@ namespace RazorEnhanced
                     if (!buyItem.Selected)
                         continue;
 
-                    if (buyItem.Graphics != pack.Contains[i].ItemID)
+                    if (buyItem.Graphics != pack.Contains[i].TypeID)
                         continue;
                     if (!RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, pack.Contains[i].Hue))
                         continue;

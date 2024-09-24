@@ -2,25 +2,25 @@ using System;
 
 namespace Assistant
 {
-    public struct ItemID
+    public struct TypeID
     {
         private readonly ushort m_ID;
 
-        internal ItemID(ushort id)
+        internal TypeID(ushort id)
         {
             m_ID = id;
         }
 
         internal ushort Value { get { return m_ID; } }
 
-        public static implicit operator ushort(ItemID a)
+        public static implicit operator ushort(TypeID a)
         {
             return a.m_ID;
         }
 
-        public static implicit operator ItemID(ushort a)
+        public static implicit operator TypeID(ushort a)
         {
-            return new ItemID(a);
+            return new TypeID(a);
         }
 
         public override string ToString()
@@ -57,37 +57,37 @@ namespace Assistant
 
         public override bool Equals(object o)
         {
-            if (o == null || !(o is ItemID)) return false;
+            if (o == null || !(o is TypeID)) return false;
 
-            return ((ItemID)o).m_ID == m_ID;
+            return ((TypeID)o).m_ID == m_ID;
         }
 
-        public static bool operator ==(ItemID l, ItemID r)
+        public static bool operator ==(TypeID l, TypeID r)
         {
             return l.m_ID == r.m_ID;
         }
 
-        public static bool operator !=(ItemID l, ItemID r)
+        public static bool operator !=(TypeID l, TypeID r)
         {
             return l.m_ID != r.m_ID;
         }
 
-        public static bool operator >(ItemID l, ItemID r)
+        public static bool operator >(TypeID l, TypeID r)
         {
             return l.m_ID > r.m_ID;
         }
 
-        public static bool operator >=(ItemID l, ItemID r)
+        public static bool operator >=(TypeID l, TypeID r)
         {
             return l.m_ID >= r.m_ID;
         }
 
-        public static bool operator <(ItemID l, ItemID r)
+        public static bool operator <(TypeID l, TypeID r)
         {
             return l.m_ID < r.m_ID;
         }
 
-        public static bool operator <=(ItemID l, ItemID r)
+        public static bool operator <=(TypeID l, TypeID r)
         {
             return l.m_ID <= r.m_ID;
         }

@@ -301,7 +301,7 @@ namespace Assistant
                 if (showagentmessageCheckBox.Checked)
                     RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString(), false);
                 RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
-                this.Invoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, restockItem.Hue); });
+                this.Invoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.TypeID, restockItem.Hue); });
             }
             else
             {

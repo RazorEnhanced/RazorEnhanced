@@ -170,10 +170,10 @@ namespace Assistant
                         {
                             foreach (Item item in World.Items.Values)
                             {
-                                if (item.ItemID >= 0x4000)
+                                if (item.TypeID >= 0x4000)
                                     PostMessage((IntPtr)wParam, (uint)UOAMessage.ADD_MULTI,
                                         (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))),
-                                        (IntPtr)item.ItemID.Value);
+                                        (IntPtr)item.TypeID.Value);
                             }
                         }
 
@@ -402,11 +402,11 @@ namespace Assistant
             {
                 WndRegEnt wnd = (WndRegEnt)m_WndReg[i];
                 if (wnd.Type == 1)
-                    PostMessage((IntPtr)wnd.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.ItemID.Value);
+                    PostMessage((IntPtr)wnd.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.TypeID.Value);
             }
         }
 
-        public static void PostAddMulti(ItemID iid, Point3D Position)
+        public static void PostAddMulti(TypeID iid, Point3D Position)
         {
             IntPtr pos = (IntPtr)((int)((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
 

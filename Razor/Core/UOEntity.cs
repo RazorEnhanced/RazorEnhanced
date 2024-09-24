@@ -6,6 +6,7 @@ namespace Assistant
     {
         private Serial m_Serial;
         //private Point3D m_Pos;
+        private ushort m_TypeID;
         private ushort m_Hue;
         private bool m_Deleted;
         private readonly Dictionary<ushort, int> m_ContextMenu = new Dictionary<ushort, int>();
@@ -60,6 +61,12 @@ namespace Assistant
         {
             get { return m_Hue; }
             set { m_Hue = value; }
+        }
+
+        internal virtual Assistant.TypeID TypeID
+        {
+            get { return m_TypeID; }
+            set { m_TypeID = value; }
         }
 
         internal virtual void Remove()

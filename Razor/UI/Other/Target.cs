@@ -405,7 +405,7 @@ namespace Assistant
         {
             Assistant.Mobile mob = Assistant.World.FindMobile(serial);
             if (mob != null)
-                targetbodydataGridView.Invoke((MethodInvoker)delegate { targetbodydataGridView.Rows.Add(new object[] { "0x" + mob.Body.ToString("X4") }); });
+                targetbodydataGridView.Invoke((MethodInvoker)delegate { targetbodydataGridView.Rows.Add(new object[] { "0x" + mob.TypeID.ToString() }); });
         }
 
         private void targetChoseHue_Click(object sender, EventArgs e)

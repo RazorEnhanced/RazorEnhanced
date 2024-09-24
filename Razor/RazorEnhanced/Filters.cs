@@ -27,49 +27,49 @@ namespace RazorEnhanced
         }
         internal static bool MakeWallStatic(Assistant.Item wall)
         {
-            switch (wall.ItemID)
+            switch (wall.TypeID)
             {
                 case 0x0080:
                 case 0x0082:
-                    wall.ItemID = WallStaticIDStone;
+                    wall.TypeID = WallStaticIDStone;
                     wall.Hue = (ushort)WallColor.Stone;
                     Assistant.Client.Instance.SendToClient(new WorldItem(wall));
                     if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Stone, 3,
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.TypeID, MessageType.Regular, (ushort)WallColor.Stone, 3,
                             Language.CliLocName, wall.Name, "[Wall Of Stone]"));
                     return true;
                 case 0x3996:
                 case 0x398C:
-                    wall.ItemID = WallStaticID;
+                    wall.TypeID = WallStaticID;
                     wall.Hue = (ushort)WallColor.Fire;
                     Assistant.Client.Instance.SendToClient(new WorldItem(wall));
                     if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Fire, 3, Language.CliLocName, wall.Name, "[Fire Field]"));
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.TypeID, MessageType.Regular, (ushort)WallColor.Fire, 3, Language.CliLocName, wall.Name, "[Fire Field]"));
                     return true;
                 case 0x3915:
                 case 0x3920:
                 case 0x3922:
-                    wall.ItemID = WallStaticID;
+                    wall.TypeID = WallStaticID;
                     wall.Hue = (ushort)WallColor.Poison;
                     Assistant.Client.Instance.SendToClient(new WorldItem(wall));
                     if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Poison, 3, Language.CliLocName, wall.Name, "[Poison Field]"));
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.TypeID, MessageType.Regular, (ushort)WallColor.Poison, 3, Language.CliLocName, wall.Name, "[Poison Field]"));
                     return true;
                 case 0x3967:
                 case 0x3979:
-                    wall.ItemID = WallStaticID;
+                    wall.TypeID = WallStaticID;
                     wall.Hue = (ushort)WallColor.Paralyze;
                     Assistant.Client.Instance.SendToClient(new WorldItem(wall));
                     if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Paralyze, 3, Language.CliLocName, wall.Name, "[Paralyze Field]"));
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.TypeID, MessageType.Regular, (ushort)WallColor.Paralyze, 3, Language.CliLocName, wall.Name, "[Paralyze Field]"));
                     return true;
                 case 0x3946:
                 case 0x3956:
-                    wall.ItemID = WallStaticID;
+                    wall.TypeID = WallStaticID;
                     wall.Hue = (ushort)WallColor.Energy;
                     Assistant.Client.Instance.SendToClient(new WorldItem(wall));
                     if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
-                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Energy, 3, Language.CliLocName, wall.Name, "[Energy Field]"));
+                        Assistant.Client.Instance.SendToClient(new UnicodeMessage(wall.Serial, wall.TypeID, MessageType.Regular, (ushort)WallColor.Energy, 3, Language.CliLocName, wall.Name, "[Energy Field]"));
                     return true;
                 default:
                     return false;
@@ -512,8 +512,8 @@ namespace RazorEnhanced
                 if (i == null)
                     continue;
 
-                if (i.ItemID == 0x204E && i.Hue == 0x08FD) // Death Shround
-                    i.ItemID = 0x1F03;
+                if (i.TypeID == 0x204E && i.Hue == 0x08FD) // Death Shround
+                    i.TypeID = 0x1F03;
 
                 Assistant.Client.Instance.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
             }

@@ -571,7 +571,7 @@ namespace Assistant
 
             if (Client.IsOSI)
             {
-                if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
+                if (TypeID != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
                 {
                     int x = Position.X, y = Position.Y;
                     Utility.Offset(e.Dir, ref x, ref y);
@@ -1019,7 +1019,7 @@ namespace Assistant
             if (s.IsItem && pack != null && RazorEnhanced.Settings.General.ReadBool("PotionEquip"))
             {
                 Item i = World.FindItem(s);
-                if (i != null && i.IsPotion && i.ItemID != 3853) // dont unequip for exploison potions
+                if (i != null && i.IsPotion && i.TypeID != 3853) // dont unequip for exploison potions
                 {
                     // dont worry about uneqipping RuneBooks or SpellBooks
                     Item left = World.Player.GetItemOnLayer(Layer.LeftHand);

@@ -82,7 +82,7 @@ namespace Assistant
             foreach (Item item in items)
             {
                 Write((uint)item.Serial);
-                Write((ushort)item.ItemID);
+                Write((ushort)item.TypeID);
                 Write((sbyte)0);
                 Write((ushort)item.Amount);
                 Write((ushort)item.Position.X);
@@ -115,7 +115,7 @@ namespace Assistant
 
             Write(item.Serial);
 
-            Write(item.ItemID);
+            Write(item.TypeID);
             Write((byte)0);
             Write(item.Amount);
             Write((ushort)item.Position.X);
@@ -208,7 +208,7 @@ namespace Assistant
             Write((ushort)m.Position.X);
             Write((ushort)m.Position.Y);
             Write((short)m.Position.Z);
-            Write((ushort)m.Body);
+            Write((ushort)m.TypeID);
         }
 
         internal TargetResponse(uint id, Item item)
@@ -221,7 +221,7 @@ namespace Assistant
             Write((ushort)item.Position.X);
             Write((ushort)item.Position.Y);
             Write((short)item.Position.Z);
-            Write((ushort)item.ItemID);
+            Write((ushort)item.TypeID);
         }
     }
 
@@ -1103,7 +1103,7 @@ namespace Assistant
 
             EnsureCapacity(3 + 4 + 2 + 2 + 2 + 1 + 1 + 2 + 1 + 1 + 4 + count * (4 + 2 + 1 + 2));
             Write((uint)m.Serial);
-            Write((ushort)m.Body);
+            Write((ushort)m.TypeID);
             Write((ushort)m.Position.X);
             Write((ushort)m.Position.Y);
             Write((sbyte)m.Position.Z);
@@ -1116,7 +1116,7 @@ namespace Assistant
             {
                 Item item = (Item)m.Contains[i];
                 Write((uint)item.Serial);
-                Write((ushort)item.ItemID);
+                Write((ushort)item.TypeID);
                 Write((byte)item.Layer);
                 if (ltHue != 0 && Targeting.IsLastTarget(m))
                     Write((ushort)ltHue);
@@ -1191,12 +1191,12 @@ namespace Assistant
         {
         }
 
-        internal HuePicker(ItemID itemid)
+        internal HuePicker(TypeID itemid)
             : this(Serial.MinusOne, itemid)
         {
         }
 
-        internal HuePicker(Serial target, ItemID itemid)
+        internal HuePicker(Serial target, TypeID itemid)
             : base(0x95, 9)
         {
             //BYTE[4] itemID of dye target
@@ -1207,7 +1207,7 @@ namespace Assistant
             Write((ushort)itemid);
         }
 
-        internal HuePicker(Serial target, ItemID model, ushort color)
+        internal HuePicker(Serial target, TypeID model, ushort color)
             : base(0x95, 9)
         {
             //BYTE[4] itemID of dye target
@@ -1297,7 +1297,7 @@ namespace Assistant
             // +1 - Flags
 
             uint serial = (uint)item.Serial;
-            ushort itemID = item.ItemID;
+            ushort itemID = item.TypeID;
             ushort amount = item.Amount;
             int x = item.Position.X;
             int y = item.Position.Y;
@@ -1368,7 +1368,7 @@ namespace Assistant
             */
 
             uint serial = (uint)item.Serial;
-            ushort itemID = item.ItemID;
+            ushort itemID = item.TypeID;
             ushort amount = item.Amount;
             int x = item.Position.X;
             int y = item.Position.Y;
@@ -1424,7 +1424,7 @@ namespace Assistant
             : base(0x2E, 15)
         {
             Write(item.Serial);
-            Write(item.ItemID);
+            Write(item.TypeID);
             Write((byte)0x00);
             Write((byte)item.Layer);
             Write(owner);
@@ -1464,7 +1464,7 @@ namespace Assistant
         {
             Write((int)m.Serial);
             Write((int)0);
-            Write((short)m.Body);
+            Write((ushort)m.TypeID);
             Write((short)m.Position.X);
             Write((short)m.Position.Y);
             Write((short)m.Position.Z);
@@ -1823,7 +1823,7 @@ namespace Assistant
         internal MobileUpdate(Mobile m) : base(0x20, 19)
         {
             Write((int)m.Serial);
-            Write((short)m.Body);
+            Write((ushort)m.TypeID);
             Write((byte)0);
             int ltHue = Engine.MainWindow.LTHilight;
             if (ltHue != 0 && Targeting.IsLastTarget(m))
