@@ -52,7 +52,7 @@ namespace Assistant
 
     public class Item : UOEntity
     {
-        private TypeID m_ItemID;
+        //private TypeID m_ItemID;
         private ushort m_Amount;
         private byte m_Direction;
         private byte m_Light;
@@ -279,7 +279,7 @@ namespace Assistant
                 }
                 else
                 {
-                    return m_ItemID.ToString();
+                    return TypeID.Value.ToString();
                 }
             }
             set
@@ -307,7 +307,7 @@ namespace Assistant
                 if ((this.TypeID.ItemData.Flags & Ultima.TileFlag.Weapon) != 0)
                 {
                     Weapon w;
-                    bool found = Weapons.TryGetValue(this.m_ItemID, out w);
+                    bool found = Weapons.TryGetValue(this.TypeID.Value, out w);
                     if (found)
                     {
                         if (w.Twohanded == true && IsTwoHanded == false)
@@ -649,7 +649,7 @@ namespace Assistant
             if (IsMulti && this.Position != Point3D.Zero && newPos != Point3D.Zero && this.Position != newPos)
             {
                 Assistant.UOAssist.PostRemoveMulti(this);
-                Assistant.UOAssist.PostAddMulti(m_ItemID, newPos);
+                Assistant.UOAssist.PostAddMulti(TypeID.Value, newPos);
             }
             base.OnPositionChanging(newPos);
         }
@@ -715,7 +715,7 @@ namespace Assistant
                 if (m_Items.Count > 0)
                     return true;
 
-                if (m_containerID.ContainsKey(m_ItemID.Value))
+                if (m_containerID.ContainsKey(TypeID.Value))
                     return true;
                 else
                     return false;
@@ -764,7 +764,7 @@ namespace Assistant
         {
             get
             {
-                return Hue >= 0x0400 && m_ItemID.Value == 0xE76;
+                return Hue >= 0x0400 && TypeID.Value == 0xE76;
             }
         }
 
@@ -795,7 +795,7 @@ namespace Assistant
 
         internal bool IsMulti
         {
-            get { return m_ItemID.Value >= 0x4000; }
+            get { return TypeID.Value >= 0x4000; }
         }
 
         internal bool IsSearchable
@@ -808,16 +808,16 @@ namespace Assistant
                 if (m_Items.Count > 0)
                     return true;
 
-                if (m_containerID.ContainsKey(m_ItemID.Value))
-                    return m_containerID[m_ItemID.Value].Searchable;
+                if (m_containerID.ContainsKey(TypeID.Value))
+                    return m_containerID[TypeID.Value].Searchable;
                 else
-                    return m_ItemID.Value == 0x0E79;
+                    return TypeID.Value == 0x0E79;
             }
         }
 
         internal bool IsCorpse
         {
-            get { return m_ItemID.Value == 0x2006 || (m_ItemID.Value >= 0x0ECA && m_ItemID.Value <= 0x0ED2); }
+            get { return TypeID.Value == 0x2006 || (TypeID.Value >= 0x0ECA && TypeID.Value <= 0x0ED2); }
         }
 
         public int CorpseNumberItems { get; set; } = -1;
@@ -855,7 +855,7 @@ namespace Assistant
         {
             get
             {
-                ushort iid = m_ItemID.Value;
+                ushort iid = TypeID.Value;
                 return DoorData.Contains(iid);
             }
         }
@@ -892,7 +892,7 @@ namespace Assistant
             // except beards and hair
             get
             {
-                ushort iid = m_ItemID.Value;
+                ushort iid = TypeID.Value;
                 return !NotLootable.Contains(iid);
             }
         }
@@ -901,7 +901,7 @@ namespace Assistant
         {
             get
             {
-                ushort iid = m_ItemID.Value;
+                ushort iid = TypeID.Value;
                 return (iid >= 0x19B7 && iid <= 0x19BA) || // ore
                     (iid >= 0x09CC && iid <= 0x09CF) || // fishes
                     (iid >= 0x1BDD && iid <= 0x1BE2) || // logs
@@ -915,8 +915,8 @@ namespace Assistant
         {
             get
             {
-                return (m_ItemID.Value >= 0x0F06 && m_ItemID.Value <= 0x0F0D) ||
-                    m_ItemID.Value == 0x2790 || m_ItemID.Value == 0x27DB; // Ninja belt (works like a potion)
+                return (TypeID.Value >= 0x0F06 && TypeID.Value <= 0x0F0D) ||
+                    TypeID.Value == 0x2790 || TypeID.Value == 0x27DB; // Ninja belt (works like a potion)
             }
         }
 
@@ -924,7 +924,7 @@ namespace Assistant
         {
             get
             {
-                ushort iid = m_ItemID.Value;
+                ushort iid = TypeID.Value;
                 return (iid >= 0x1bc3 && iid <= 0x1bc5); // virtue shields
             }
         }
@@ -933,7 +933,7 @@ namespace Assistant
         {
             get
             {
-                ushort iid = m_ItemID.Value;
+                ushort iid = TypeID.Value;
                 if (World.Player != null) // non loggato
                 {
                     if (m_PropsUpdated)
