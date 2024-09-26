@@ -665,24 +665,14 @@ namespace RazorEnhanced
                 Scripts.SendMessageScriptError("Script Error: ContextReply: Mobile or item not exit");
         }
 
-        public static void ContextReply(Mobile mob, int menu_num)
+        public static void ContextReply(UOEntity entity, int menu_num)
         {
-            ContextReply(mob.Serial, menu_num);
+            ContextReply(entity.Serial, menu_num);
         }
 
-        public static void ContextReply(Item itm, int menu_num)
+        public static void ContextReply(UOEntity entity, string menu_name)
         {
-            ContextReply(itm.Serial, menu_num);
-        }
-
-        public static void ContextReply(Mobile mob, string menu_name)
-        {
-            ContextReply(mob.Serial, menu_name);
-        }
-
-        public static void ContextReply(Item itm, string menu_name)
-        {
-            ContextReply(itm.Serial, menu_name);
+            ContextReply(entity.Serial, menu_name);
         }
 
         // Prompt Message Stuff
@@ -848,15 +838,10 @@ namespace RazorEnhanced
             m_serialignorelist.Add(serial);
         }
 
-        /// <param name="itm">Item to ignore</param>
-        public static void IgnoreObject(Item itm)
+        /// <param name="object">Item to ignore</param>
+        public static void IgnoreObject(UOEntity entity)
         {
-            IgnoreObject(itm.Serial);
-        }
-        /// <param name="mob">Mobile to ignore</param>
-        public static void IgnoreObject(Mobile mob)
-        {
-            IgnoreObject(mob.Serial);
+            IgnoreObject(entity.Serial);
         }
 
 
@@ -875,16 +860,10 @@ namespace RazorEnhanced
             return false;
         }
 
-        /// <param name="itm">Item to check</param>
-        public static bool CheckIgnoreObject(Item itm)
+        /// <param name="object">Item to check</param>
+        public static bool CheckIgnoreObject(UOEntity entity)
         {
-            return CheckIgnoreObject(itm.Serial);
-        }
-
-        /// <param name="mob">Mobile to check</param>
-        public static bool CheckIgnoreObject(Mobile mob)
-        {
-            return CheckIgnoreObject(mob.Serial);
+            return CheckIgnoreObject(entity.Serial);
         }
 
 
@@ -912,16 +891,10 @@ namespace RazorEnhanced
             }
         }
 
-        /// <param name="itm">Item to unignore.</param>
-        public static void UnIgnoreObject(Item itm)
+        /// <param name="entity">Item to unignore.</param>
+        public static void UnIgnoreObject(UOEntity entity)
         {
-            UnIgnoreObject(itm.Serial);
-        }
-
-        /// <param name="mob">Item to unignore</param>
-        public static void UnIgnoreObject(Mobile mob)
-        {
-            UnIgnoreObject(mob.Serial);
+            UnIgnoreObject(entity.Serial);
         }
 
         // Comandi Script per Menu Old

@@ -1211,56 +1211,6 @@ namespace RazorEnhanced
                 Assistant.DragDropManager.DragDrop(item, newamount, bag);
         }
 
-        /*public static void Move(int source, int destination, int amount, int x, int y)
-        {
-            Assistant.Item bag = Assistant.World.FindItem(destination);
-            Assistant.Item item = Assistant.World.FindItem(source);
-            int serialdestination = 0;
-
-            if (item == null)
-            {
-                Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-                return;
-            }
-
-            if (bag != null)
-            {
-                serialdestination = bag.Serial;
-            }
-            else
-            {
-                Assistant.Mobile mbag = Assistant.World.FindMobile(destination);
-                if (mbag != null)
-                {
-                    serialdestination = mbag.Serial;
-                }
-                else
-                {
-                    Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
-                    return;
-                }
-            }
-
-            Assistant.Point3D loc = Assistant.Point3D.MinusOne;
-            if (x != -1 && y != -1)
-                loc = new Assistant.Point3D(x, y, 0);
-
-            if (amount == 0)
-            {
-                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-                Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-            }
-            else
-            {
-                if (item.Amount < amount)
-                {
-                    amount = item.Amount;
-                }
-                Assistant.Client.Instance.SendToServerWait(new LiftRequest(item.Serial, amount));
-                Assistant.Client.Instance.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
-            }
-        }*/
-
         public static void Move(Item source, Mobile destination, int amount)
         {
             Move(source.Serial, destination.Serial, amount, -1, -1);

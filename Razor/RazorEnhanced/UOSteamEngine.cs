@@ -1124,6 +1124,9 @@ namespace RazorEnhanced.UOS
 
                 foreach (var entity in results)
                 {
+                    if (Player.DistanceTo(entity) > range)
+                        continue;
+
                     if (entity.Serial.IsItem)
                     {
                         var assistItem = (Assistant.Item)entity;

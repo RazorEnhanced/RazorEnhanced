@@ -526,12 +526,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="target">The other Mobile or Item</param>
         /// <returns>Distance in number of tiles.</returns>
-        public static int DistanceTo(Mobile target)
-        {
-            return Utility.Distance(Position.X, Position.Y, target.Position.X, target.Position.Y);
-        }
-
-        public static int DistanceTo(Item target)
+        public static int DistanceTo(UOEntity target)
         {
             return Utility.Distance(Position.X, Position.Y, target.Position.X, target.Position.Y);
         }
@@ -2601,23 +2596,56 @@ namespace RazorEnhanced
         {
             Assistant.Mobile mob = World.FindMobile(mobile);
             if (mob != null)
+                return InRange(mob, range);
+            else
             {
-                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mob.Position.X, mob.Position.Y) <= range)
-                    return true;
-                else
-                    return false;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Check if the mobile or item is within a certain range (&lt;=).
+        /// </summary>
+        /// <param name="">Item or Mobile object.</param>
+        /// <param name="range">Maximum distance in tiles.</param>
+        /// <returns>True: Item is in range - False: otherwise.</returns>
+        public static bool InRange(UOEntity entity, int range)
+        {
+            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, entity.Position.X, entity.Position.Y) <= range)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Check if the serial is within a certain range (&lt;=).
+        /// </summary>
+        /// <param name="">Item or Mobile serial.</param>
+        /// <param name="range">Maximum distance in tiles.</param>
+        /// <returns>True: serial is in range - False: otherwise.</returns>
+        public static bool InRange(int serial, int range)
+        {
+            Assistant.UOEntity entity = World.FindEntity(serial);
+            if (entity != null)
+            {
+                return InRange(entity, range);
             }
             else
                 return false;
         }
 
+
+        /// <summary>
+        /// Check if the mobile is within a certain range (&lt;=).
+        /// </summary>
+        /// <param name="">Serial or Mobile object.</param>
+        /// <param name="range">Maximum distance in tiles.</param>
+        /// <returns>True: Item is in range - False: otherwise.</returns>
         public static bool InRangeMobile(Mobile mobile, int range)
         {
-            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) <= range)
-                return true;
-            else
-                return false;
+            return InRange(mobile, range);
         }
+
 
         /// <summary>
         /// Check if the Item is within a certain range (&lt;=).
@@ -2630,10 +2658,7 @@ namespace RazorEnhanced
             Assistant.Item itm = World.FindItem(item);
             if (itm != null)
             {
-                if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, itm.Position.X, itm.Position.Y) <= range)
-                    return true;
-                else
-                    return false;
+                return InRange(itm, range);
             }
             else
                 return false;
@@ -2641,10 +2666,7 @@ namespace RazorEnhanced
 
         public static bool InRangeItem(Item item, int range)
         {
-            if (Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= range)
-                return true;
-            else
-                return false;
+            return InRange(item, range);
         }
 
 

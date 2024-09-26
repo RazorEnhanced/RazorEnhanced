@@ -52,6 +52,20 @@ namespace Assistant
             m_Mobiles.TryGetValue(serial, out mobile);
             return mobile;
         }
+        internal static UOEntity FindEntity(Serial serial)
+        {
+            Mobile mobile = null;
+            m_Mobiles.TryGetValue(serial, out mobile);
+            if (mobile != null)
+                return mobile;
+
+            Item item = null;
+            m_Items.TryGetValue(serial, out item);
+            if (item != null)
+                return item;    
+
+            return null;
+        }
 
         internal static List<UOEntity> FindAllEntityByID(ushort type, int color)
         {

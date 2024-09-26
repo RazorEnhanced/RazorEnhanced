@@ -27,6 +27,7 @@ namespace Assistant
             Command.Register("inspectalias", new CommandCallback(InspectAlias));
             Command.Register("playscript", new CommandCallback(PlayScriptIgnoreReturn));
             Command.Register("hideitem", new CommandCallback(HideItem));
+            Command.Register("hide", new CommandCallback(HideItem));
             Command.Register("drop", new CommandCallback(DropItem));
         }
 
