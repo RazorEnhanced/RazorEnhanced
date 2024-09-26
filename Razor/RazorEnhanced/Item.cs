@@ -767,7 +767,7 @@ namespace RazorEnhanced
 
                 if (Graphics.Count > 0)
                 {
-                    if (!Graphics.Contains(item.TypeID))
+                    if (!Graphics.Contains(item.TypeID.Value))
                         return false;
                 }
 
