@@ -1,4 +1,5 @@
 using Assistant.UI;
+using RazorEnhanced;
 using RazorEnhanced.UI;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Assistant
         {
             Command.Register("where", new CommandCallback(Where));
             Command.Register("ping", new CommandCallback(Ping));
+            Command.Register("sync", new CommandCallback(Sync));
             Command.Register("pping", new CommandCallback(Packet_Ping));
             Command.Register("reducecpu", new CommandCallback(ReNice));
             Command.Register("renice", new CommandCallback(ReNice));
@@ -202,6 +204,11 @@ namespace Assistant
                 }
             }
             Assistant.Ping.StartPing(num_packets);
+        }
+        
+        internal static void Sync(string[] param)
+        {
+            Misc.Resync();
         }
 
         internal static void Ping(string[] param)
