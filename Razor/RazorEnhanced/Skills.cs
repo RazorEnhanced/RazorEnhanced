@@ -101,8 +101,7 @@ namespace RazorEnhanced
             // add the ones from skills.mul data files (does nothing if already exists)
             foreach (var skill in Ultima.Skills.SkillEntries)
             {
-                if (!m_SkillNameById.ContainsKey(skill.Index))
-                    m_SkillNameById.Add(skill.Index, skill.Name);
+                m_SkillNameById[skill.Index] = skill.Name;
             }
 
             // Use the resulting dictionary to populate the inverse lookup
