@@ -531,6 +531,14 @@ namespace RazorEnhanced
             return Utility.Distance(Position.X, Position.Y, target.Position.X, target.Position.Y);
         }
 
+        public static int DistanceTo(int target)
+        {
+            UOEntity entity = World.FindEntity(target);
+            if (entity == null)
+                return -1;
+            return DistanceTo(entity);
+        }
+
         internal static Dictionary<BuffIcon, string> GetBuffsMapping()
         {
 

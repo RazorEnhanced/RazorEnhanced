@@ -3,6 +3,7 @@ using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -350,7 +351,7 @@ namespace RazorEnhanced
                 if (SelfHealUseText && SelfHealIgnoreCount)
                     checkForBandage = false;
 
-                Item bandage = null;
+                Assistant.Item bandage = null;
                 if (checkForBandage)
                 {
                     int bandageid = 0x0E21;
@@ -383,14 +384,14 @@ namespace RazorEnhanced
 
                     if (bandageamount < 11 && bandageamount > 1)    // don't warn on last bandaid to avoid constant message for everlasting bandage
                     {
-                        Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                        AddLog("Warning: Low bandage: " + bandageamount + " left");
+                        Player.HeadMessage(10, $"Warning: Low bandage: {bandageamount} left");
+                        AddLog($"Warning: Low bandage: {bandageamount} left");
                     }
-                    AddLog("Using bandage (0x" + bandage.Serial.ToString("X8") + ") on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
+                    AddLog($"Using bandage (0x{bandage.Serial:X}) on Target ({target.Name} - {target.Serial:X})");
                 }
                 else
                 {
-                    AddLog("Using bandage on Target (" + target.Name + " - " + target.Serial.ToString() + ")");
+                    AddLog($"Using bandage on Target ({target.Name} - {target.Serial:X})");
                 }
 
 
@@ -444,7 +445,7 @@ namespace RazorEnhanced
                 else if (RazorEnhanced.Settings.General.ReadBool("BandageHealTimeWithBuf"))
                 {
                     // This one doesn't reset because the heal should reset it
-                    Thread.Sleep(100);
+                    Thread.Sleep(500);
                     if (!BandageFinish.IsSet) // the bandage should have reset the bandage otherwise it must have gotten "you must wait"
                         BandageFinish.Wait(10000); // wait a max of 10 seconds, but buf should finish sooner
                 }
@@ -585,32 +586,37 @@ namespace RazorEnhanced
             return Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked;
         }
 
-        internal static Item SearchBandage(int itemid, int color)
+        // Changed to use the World Item type because the RE type gets messed up 
+        // with drag/drop
+        internal static Assistant.Item SearchBandage(int itemid, int color)
         {
-            // Genero filtro item
-            Items.Filter itemFilter = new Items.Filter
-            {
-                Enabled = true
-            };
-            itemFilter.Graphics.Add(itemid);
+            List<UOEntity> allBandaids = World.FindAllEntityByID((ushort)itemid, color);
 
-            if (color != -1)
-                itemFilter.Hues.Add(color);
-
-            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
             Assistant.Item belly = World.Player.GetItemOnLayer(Layer.Waist);
-
-            foreach (Item found in containeritem)
+            List<Assistant.Item> containeritem = new();
+            foreach (UOEntity entity in allBandaids)
             {
-                if (found.RootContainer == World.Player.Backpack.Serial)
+                if (entity is Assistant.Item)
                 {
-                    return found;
+                    Assistant.Item item = entity as Assistant.Item;
+                    if (item == null)
+                        continue;
+                    Assistant.Item rootContainer = item.RootContainer as Assistant.Item;
+                    if (rootContainer == null)
+                        continue;
+                    if (rootContainer.Serial == World.Player.Backpack.Serial 
+                        || rootContainer.Serial == World.Player.Serial)
+                    {
+                        containeritem.Add(item);
+                    }
+                    else if (belly != null && rootContainer.Serial == belly.Serial)
+                    {
+                        containeritem.Add(item);
+                    }
                 }
-                if (belly != null && found.RootContainer == belly.Serial)
-                {
-                    return found;
-                }
-
+            }
+            if (containeritem.Count > 0) {
+                return containeritem[0];
             }
             return null;
         }

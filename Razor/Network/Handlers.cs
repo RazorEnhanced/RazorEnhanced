@@ -608,6 +608,8 @@ namespace Assistant
                 i.Container = dest;
                 i.Position = newPos;
                 World.AddItem(i);
+                // This messes up the Enhanced Item as they point to the old Assistant.Item still
+                // but I couldnt think of a good way to fix it
             }
             else
             {

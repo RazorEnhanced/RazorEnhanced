@@ -1,3 +1,4 @@
+using Accord.Imaging.Filters;
 using Accord.Math;
 using Assistant;
 using IronPython.Runtime;
@@ -14,6 +15,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
+using static IronPython.Modules.PythonIterTools;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
 
 namespace RazorEnhanced.UOS
 {
@@ -1039,6 +1042,31 @@ namespace RazorEnhanced.UOS
                 throw new UOSRuntimeError(node, "FindType requires parameters");
                 // return false;
             }
+            m_Interpreter.UnSetAlias("found");
+            int serial = -1;
+
+            int color = -1;
+            if (args.Length > 1)
+                color = args[1].AsInt();
+
+            bool groundCheck = false;
+            int container = -1;
+            if (args.Length > 2)
+            {
+                groundCheck = (args[2].AsString().ToLower() == "ground");
+                container = args[2].AsInt();
+            }
+
+            // Intresting note from UOSteam, amount there cant exceed 15356
+            // also amount is a single entity with that amount, not a sum
+            int amount = -1;
+            if (args.Length > 3)
+                amount = args[3].AsInt();
+
+            int range = 100;
+            if (args.Length > 4)
+                range = args[4].AsInt();
+
 
             string listname = args[0].AsString();
             if (m_Interpreter.ListExists(listname))
@@ -1046,133 +1074,22 @@ namespace RazorEnhanced.UOS
                 IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
                 foreach (Argument arg in m_Interpreter.ListContents(listname))
                 {
-                    int type = arg.AsInt();
-                    itemids.append(type);
-                }
-
-                int color = -1;
-                if (args.Length >= 2)
-                {
-                    color = args[1].AsInt();
-                }
-
-                int container = -1;
-                if (args.Length >= 3)
-                {
-                    container = args[2].AsInt();
-                }
-
-                int range = -1;
-                if (args.Length >= 4)
-                {
-                    range = args[3].AsInt();
-                }
-                var resultList = RazorEnhanced.Items.FindAllByID(itemids, color, container, range);
-                if (resultList.Count > 0)
-                {
-                    RazorEnhanced.Item item = (RazorEnhanced.Item)resultList.ElementAt(0);
-                    int serial = item.Serial;
-                    m_Interpreter.SetAlias("found", (uint)serial);
-                    return true;
-                }
-                else
-                {
-                    m_Interpreter.UnSetAlias("found");
-                    return false;
+                    ushort type = arg.AsUShort();
+                    if (groundCheck)
+                        serial = FindByTypeOnGround(type, color, amount, range);
+                    else
+                        serial = FindByType(type, color, container, amount, range);
+                    if (serial != -1)
+                        break;
                 }
             }
             else
             {
                 ushort type = args[0].AsUShort();
-                return FindByType(type, args);
-            }
-            return false;
-        }
-
-        internal bool FindByType(ushort type, Argument[] args)
-        {
-            int serial = -1;
-            List<UOEntity> results = new();
-            m_Interpreter.UnSetAlias("found");
-            if (args.Length > 1 )
-            {
-                int color = -1;
-                if (args.Length == 2)
-                    color = args[1].AsInt();
-                
-                results = World.FindAllEntityByID(type, color);
-            }
-            if (results.Count == 0)
-                return false;
-
-            if (args.Length < 3)
-            {
-                serial = results[0].Serial; // any one will match
-            }
-
-            if (args.Length >= 3)
-            {
-                int color = args[1].AsInt();
-                string groundCheck = args[2].AsString().ToLower();
-                uint source = args[2].AsSerial();
-                int amount = -1;
-                if (args.Length >= 4)
-                    amount = args[3].AsInt();
-                int range = 100;
-                if (args.Length == 5)
-                    range = args[4].AsInt();
-
-                foreach (var entity in results)
-                {
-                    if (Player.DistanceTo(entity) > range)
-                        continue;
-
-                    if (entity.Serial.IsItem)
-                    {
-                        var assistItem = (Assistant.Item)entity;
-                        RazorEnhanced.Item item = new RazorEnhanced.Item(assistItem);
-                        if (item != null)
-                        {
-                            // do they only want stuff on ground
-                            if (groundCheck.ToLower() == "ground")
-                            {
-                                if (!item.OnGround)
-                                    continue;
-                            }
-                            else
-                            {
-                                Item container = Items.FindBySerial((int)source);
-                                if (container == null)
-                                    break; // no use looking if container serial is bad
-                                if (!item.IsChildOf(container, range + 2))
-                                    continue;
-                            }
-                            if (amount != -1 && item.Amount < amount)
-                            {
-                                item = null;
-                            }
-                            if (item != null)
-                            {
-                                serial = item.Serial;
-                                break; // first one found is fine
-                            }
-                        }
-                    }
-                    if (entity.Serial.IsMobile)
-                    {
-                        Mobile mobile = new RazorEnhanced.Mobile((Assistant.Mobile)entity);
-                        if (mobile != null)
-                        {
-                            // I'm ignoring container and amount for mobiles
-                            if (range == -1 || Player.DistanceTo(mobile) <= range)
-                            {
-                                serial = mobile.Serial;
-                                break;
-                            }
-                                
-                        }
-                    }
-                }
+                if (groundCheck)
+                    serial = FindByTypeOnGround(type, color, amount, range);
+                else
+                    serial = FindByType(type, color, container, amount, range);
             }
 
             if (serial != -1)
@@ -1182,8 +1099,56 @@ namespace RazorEnhanced.UOS
             }
 
             return false;
-
         }
+
+        internal int FindByType(ushort type, int color, int container, int amount, int depth)
+        {
+            var items = Items.FindAllByID(type, color, container, depth);
+            foreach (var pyThing in items)
+            {
+                RazorEnhanced.Item item = (RazorEnhanced.Item)pyThing;
+                if (amount == -1 || item.Amount >= amount)
+                {
+                    return item.Serial;
+                }
+            }
+            return -1; // none found
+        }
+
+        internal int FindByTypeOnGround(ushort type, int color, int amount, int range)
+        {
+            var results = World.FindAllEntityByID(type, color);
+            foreach (var entity in results)
+            {
+                if (Player.DistanceTo(entity) > range)
+                    continue;
+
+                if (entity.Serial.IsItem)
+                {
+                    var item = (Assistant.Item)entity;
+                    if (!item.OnGround)
+                        continue;
+
+                    if (amount == -1 || item.Amount >= amount)
+                    {
+                        return item.Serial;
+                    }
+                }
+
+                if (entity.Serial.IsMobile)
+                {
+                    Assistant.Mobile mobile = (Assistant.Mobile)entity;
+                    if (mobile != null)
+                    {
+                        // assume all mobiles are on ground
+                        // assume all mobiles are Amount 1 so ignore amount
+                        return mobile.Serial;
+                    }
+                }
+            }
+            return -1;
+        }
+
 
         /// <summary>
         /// property ('name') (serial) [operator] [value]

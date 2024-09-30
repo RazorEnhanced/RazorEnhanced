@@ -43,6 +43,17 @@ namespace RazorEnhanced
         /// </summary>
         public int MobileID { get { return m_AssistantMobile.TypeID; } }
 
+        public override Assistant.Point3D Position
+        {
+            get { return m_AssistantMobile.Position; }
+            set
+            {
+                m_AssistantMobile.Position = value;
+                base.Position = value;
+            }
+        }
+
+
         /// <summary>
         /// Color of the mobile.
         /// </summary>

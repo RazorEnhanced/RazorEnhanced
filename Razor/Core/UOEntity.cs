@@ -1,4 +1,9 @@
+using Google.Protobuf.WellKnownTypes;
+using IronPython.Runtime;
+using RazorEnhanced;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq.Expressions;
 
 namespace Assistant
 {
@@ -26,6 +31,7 @@ namespace Assistant
         internal Serial Serial { get { return m_Serial.Value; } }
         internal Point3D entityPosition;
 
+        //[PythonHidden]
         public virtual Point3D Position
         {
             get { return entityPosition; }
@@ -98,4 +104,48 @@ namespace Assistant
             m_ObjPropList.Read(p);
         }
     }
+
+    // All this weirdness is so that the Position gets refreshed every time its asked for
+    // Otherwise python caches the position, and the value returned is always the same
+    // Removed for now
+    /*
+    public class PlayerDynamicMetaObjectProvider : DynamicMetaObject
+    {
+        private UOEntity _entity;
+
+        public PlayerDynamicMetaObjectProvider(UOEntity entity)
+            : base(Expression.Constant(entity), BindingRestrictions.Empty, entity)
+        {
+            _entity = entity;
+        }
+
+        public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
+        {
+            if (binder.Name == "Position")
+            {
+                Expression getPositionExpression = Expression.Property(
+                    Expression.Constant(_entity),
+                    typeof(Player).GetProperty("Position"));
+
+                return new DynamicMetaObject(getPositionExpression, BindingRestrictions.GetTypeRestriction(Expression, LimitType));
+            }
+
+            return base.BindGetMember(binder);
+        }
+
+        public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+        {
+            if (binder.Name == "Position")
+            {
+                Expression setPositionExpression = Expression.Assign(
+                    Expression.Property(Expression.Constant(_entity), "Position"),
+                    Expression.Convert(value.Expression, typeof(Point3D)));
+
+                return new DynamicMetaObject(setPositionExpression, BindingRestrictions.GetTypeRestriction(Expression, LimitType));
+            }
+
+            return base.BindSetMember(binder, value);
+        }
+    }
+    */
 }

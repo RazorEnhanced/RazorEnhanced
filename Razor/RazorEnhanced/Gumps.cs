@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Ultima;
 
 namespace RazorEnhanced
 {
@@ -771,6 +772,47 @@ namespace RazorEnhanced
         public static bool HasGump()
         {
             return World.Player.HasGump;
+        }
+
+        /// <summary>@nodoc @experimental
+        /// wait for one of a list of gump ids
+        /// </summary>
+        /// <returns>True: one of the ids appeared - False: otherwise.</returns>
+        public static bool WaitForGump(IronPython.Runtime.PythonList gumpIDs, int delay)
+        {
+            bool found = false;
+            bool local = false;
+            List<uint> waitList = new List<uint>();
+            foreach (var gumpID in gumpIDs)
+            {
+                UInt32 gumpid = (uint)gumpID;
+                if (Gumps.m_incomingData.ContainsKey(gumpid))
+                    return true;
+                if (Gumps.m_gumpData.ContainsKey(gumpid))
+                {
+                    local = true;
+                }
+                waitList.Add(gumpid);
+            }
+
+            if (local)
+            {                
+                found = Utility.DelayUntil(() =>
+                {
+                    foreach (var gumpID in waitList)
+                    {
+                        if (Gumps.m_gumpData[gumpID].hasResponse == true)
+                            return true;
+                    }
+                    return false;
+                }, delay);
+            }
+            else
+            {
+                found = Utility.DelayUntil(() => World.Player.HasGump == true && waitList.Contains(World.Player.CurrentGumpI), delay);
+            }
+
+            return found;
         }
 
         /// <summary>
