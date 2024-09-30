@@ -1050,7 +1050,7 @@ namespace RazorEnhanced.UOS
                 color = args[1].AsInt();
 
             bool groundCheck = false;
-            int container = -1;
+            int container = Player.Backpack.Serial;  // default if not specified
             if (args.Length > 2)
             {
                 groundCheck = (args[2].AsString().ToLower() == "ground");
