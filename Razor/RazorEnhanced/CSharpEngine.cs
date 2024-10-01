@@ -298,111 +298,32 @@ namespace RazorEnhanced
             return false;
         }
 
-
+        // This function is used to compile a C# script from a string
+        // It would be way cooler if it used Roslyn and compiled in memory,
+        // but I was lazy and just used the old way
         public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
         {
-            // Initialize out parameters
-            errorwarnings = new List<string>();
-            assembly = null;
-
-            // Create a SyntaxTree from the source code
-            var syntaxTree = CSharpSyntaxTree.ParseText(source);
-
-            // Prepare metadata references
-            var references = new List<MetadataReference>
+            // Generate a unique file name with .cs suffix
+            string tempFileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".cs");
+            try
             {
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location)
-            };
+                // Write the source code to the file
+                File.WriteAllText(tempFileName, source);
 
-            List<string> assembliesList = new() { }; // List of assemblies.
-            CompilerParameters compileParameters = CompilerSettings(true, assembliesList);
-
-            // Add additional referenced assemblies from CompilerParameters
-            foreach (string referencedAssembly in compileParameters.ReferencedAssemblies)
+            // Call the CompileFromFile method
+            return CompileFromFile(tempFileName, true, out errorwarnings, out assembly);
+            }
+            finally
             {
-                try
+                // Ensure the temporary file is deleted
+                if (File.Exists(tempFileName))
                 {
-                    var assmbl = Assembly.Load("System.dll");
-                    var loc = assmbl?.Location;
-
-                    references.Add(MetadataReference.CreateFromFile(referencedAssembly));
-                }
-                catch (Exception ex)
-                {
-                    Utility.Logger.Error(ex.Message);
+                    File.Delete(tempFileName);
                 }
             }
 
-            // Create the compilation options based on compile parameters
-            var compilationOptions = new CSharpCompilationOptions(
-                compileParameters.GenerateExecutable ? OutputKind.ConsoleApplication : OutputKind.DynamicallyLinkedLibrary,
-                optimizationLevel: compileParameters.IncludeDebugInformation ? OptimizationLevel.Debug : OptimizationLevel.Release
-            );
-
-            // Create the compilation object
-            var compilation = CSharpCompilation.Create(
-                compileParameters.OutputAssembly ?? "CompiledAssembly", // Name of the output assembly
-                new[] { syntaxTree },
-                references,
-                compilationOptions
-            );
-
-            // Emit to MemoryStream or to file based on CompilerParameters
-            using (var stream = new MemoryStream())
-            {
-                var result = compilation.Emit(stream);
-
-                // Collect errors and warnings
-                errorwarnings.AddRange(result.Diagnostics
-                    .Where(d => d.Severity == DiagnosticSeverity.Error || d.Severity == DiagnosticSeverity.Warning)
-                    .Select(d => d.ToString()));
-
-                // If there are any errors, return false
-                if (result.Diagnostics.Any(d => d.Severity == DiagnosticSeverity.Error))
-                {
-                    return false;
-                }
-
-                // Load the assembly from the memory stream
-                stream.Seek(0, SeekOrigin.Begin);
-                assembly = Assembly.Load(stream.ToArray());
-
-                return true;
-            }
+            return false;
         }
-   
-
-    /*
-    public bool CompileFromText(string source, out List<string> errorwarnings, out Assembly assembly)
-    {
-        CompilerOptions opt = new();
-        CSharpCodeProvider provider = new(opt);
-
-
-        string myTempFile = Path.Combine(Path.GetTempPath(), "re_script.cs");
-
-        Misc.SendMessage("Compiling C# Script");
-        CompilerParameters compileParameters = CompilerSettings(true); // When compiler is invoked from the editor it's always in debug mode
-        CompilerResults results = provider.CompileAssemblyFromSource(compileParameters, source); // Compiling
-        Misc.SendMessage("Compile Done");
-
-        assembly = null;
-        errorwarnings = new();
-        bool has_error = ManageCompileResult(results, ref errorwarnings);
-        if (has_error)
-        {
-            var error = results.Errors[0];
-            var a = new SourceLocation(0, error.Line, error.Column);
-            throw new SyntaxErrorException(error.ErrorText, results.PathToAssembly, error.ErrorNumber, "", new SourceSpan(a, a), 0, Severity.Error);
-        }
-        else
-        {
-            assembly = results.CompiledAssembly;
-        }
-        return has_error;
-    }
-    */
 
     // https://medium.com/swlh/replace-codedom-with-roslyn-but-bin-roslyn-csc-exe-not-found-6a5dd9290bf2
     // https://stackoverflow.com/questions/20018979/how-can-i-target-a-specific-language-version-using-codedom

@@ -248,7 +248,7 @@ namespace RazorEnhanced
 
                                 List<string> compileMessages;
                                 Assembly assembly;
-                                if (csEngine.CompileFromText(combinedString, out compileMessages, out assembly))
+                                if (!csEngine.CompileFromText(combinedString, out compileMessages, out assembly))
                                 {
                                     sessionData._playThread = new Thread(() => RunCSharp(csEngine, assembly));
                                     sessionData._playThread.Start();
