@@ -728,6 +728,9 @@ namespace RazorEnhanced
 
         static internal Object IoLock = new Object();
 
+        // Without a global init, functions that take python types were failing
+        private static readonly PythonEngine forceInit = new();
+
         public PythonEngine pyEngine;
         public CSharpEngine csEngine;
         public UOSteamEngine uosEngine;
