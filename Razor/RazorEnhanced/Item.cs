@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization.Formatters;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -1649,6 +1650,39 @@ namespace RazorEnhanced
         public static IronPython.Runtime.PythonList FindAllByID(IronPython.Runtime.PythonList itemids, int color, int container, int range, bool considerIgnoreList = true)
         {
             var returnList = new IronPython.Runtime.PythonList();
+            var internalList = new List<int>();
+            foreach (var item in itemids)
+                internalList.Add((int)item);
+            var foundList = FindAllByID(internalList, color, container, range, considerIgnoreList);
+            if (foundList != null)
+            {
+                foreach (var item in foundList)
+                    returnList.Add(item);
+            }
+            return returnList;
+
+
+        }
+        // Find all items matching an id
+        public static IronPython.Runtime.PythonList FindAllByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            var returnList = new IronPython.Runtime.PythonList();
+            List<int> internalList = new();
+            internalList.Add(itemid);
+;
+            var foundList = FindAllByID(internalList, color, container, range, considerIgnoreList);
+            if (foundList != null)
+            {
+                foreach (var item in foundList)
+                    returnList.Add(item);
+            }
+            return returnList;
+        }
+
+        // Find all items matching an C# list[ids]
+        public static List<Item> FindAllByID(List<int> itemids, int color, int container, int range, bool considerIgnoreList = true)
+        {
+            var returnList = new List<Item>();
             if (container == -1)  // search everywhere
             {
                 Items.Filter itemFilter = new Items.Filter
@@ -1656,7 +1690,7 @@ namespace RazorEnhanced
                     Enabled = true
                 };
                 foreach (var itemID in itemids)
-                    itemFilter.Graphics.Add((int)itemID);
+                    itemFilter.Graphics.Add(itemID);
                 itemFilter.RangeMax = range;
                 itemFilter.CheckIgnoreObject = considerIgnoreList;
                 if (color != -1)
@@ -1697,26 +1731,12 @@ namespace RazorEnhanced
                 {
                     var recursItems = FindAllByID(itemids, color, i.Serial, range - 1, considerIgnoreList); // recall for sub container
                     if (recursItems != null)
-                        returnList += recursItems;
+                        returnList.AddRange(recursItems);
                 }
             }
             return returnList; // Return null if no item found
         }
-        // Find all items matching an id
-        public static IronPython.Runtime.PythonList FindAllByID(int itemid, int color, int container, int range, bool considerIgnoreList = true)
-        {
-            IronPython.Runtime.PythonList itemids = new IronPython.Runtime.PythonList();
-            itemids.append(itemid);
-            return FindAllByID(itemids, color, container, range, considerIgnoreList);
-        }
-        // Find all items matching an C# list[ids]
-        public static IronPython.Runtime.PythonList FindAllByID(List<int> itemids, int color, int container, int range, bool considerIgnoreList = true)
-        {
 
-            IronPython.Runtime.PythonList itemids_py = new IronPython.Runtime.PythonList();
-            itemids_py.extend(itemids);
-            return FindAllByID(itemids_py, color, container, range, considerIgnoreList);
-        }
 
 
         // Find item by Name
