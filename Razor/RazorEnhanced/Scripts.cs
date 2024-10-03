@@ -619,7 +619,7 @@ namespace RazorEnhanced
 
             Utility.Logger.Debug($"File change processed {e.FullPath}");
             var script = EnhancedScriptService.Instance.Search(e.FullPath);
-            if (script != null)
+            if (script != null && (RazorEnhanced.Settings.General.ReadBool("AutoScriptReload")))
             {
                 bool isRunning = script.IsRunning;
 
