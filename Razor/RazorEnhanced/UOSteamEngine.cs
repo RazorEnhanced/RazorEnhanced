@@ -1103,7 +1103,7 @@ namespace RazorEnhanced.UOS
 
         internal int FindByType(ushort type, int color, int container, int amount, int depth)
         {
-            var items = Items.FindAllByID(type, color, container, depth);
+            var items = Items.FindAllByID(type, color, container, depth, true);
             foreach (var pyThing in items)
             {
                 RazorEnhanced.Item item = (RazorEnhanced.Item)pyThing;
@@ -1120,6 +1120,9 @@ namespace RazorEnhanced.UOS
             var results = World.FindAllEntityByID(type, color);
             foreach (var entity in results)
             {
+                if (Misc.CheckIgnoreObject(entity.Serial))
+                    continue;
+
                 if (Player.DistanceTo(entity) > range)
                     continue;
 
