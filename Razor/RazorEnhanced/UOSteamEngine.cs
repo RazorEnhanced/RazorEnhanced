@@ -944,12 +944,13 @@ namespace RazorEnhanced.UOS
             // Search for items first
             Items.Filter itemFilter = new Items.Filter
             {
-                Enabled = true
+                Enabled = true,
+                CheckIgnoreObject = true
             };
             itemFilter.Graphics.Add(graphic);
             itemFilter.RangeMax = range;
             itemFilter.OnGround = 1;
-            itemFilter.CheckIgnoreObject = true;
+            
             if (color != -1)
                 itemFilter.Hues.Add(color);
             List<Item> items = RazorEnhanced.Items.ApplyFilter(itemFilter);
@@ -966,11 +967,11 @@ namespace RazorEnhanced.UOS
 
             Mobiles.Filter mobileFilter = new Mobiles.Filter
             {
-                Enabled = true
+                Enabled = true,
+                CheckIgnoreObject = true
             };
             mobileFilter.Bodies.Add(graphic);
             mobileFilter.RangeMax = range;
-            mobileFilter.CheckIgnoreObject = true;
             if (color != -1)
                 mobileFilter.Hues.Add(color);
             List<Mobile> mobiles = RazorEnhanced.Mobiles.ApplyFilter(mobileFilter);
@@ -994,7 +995,8 @@ namespace RazorEnhanced.UOS
             // Search for items first
             Items.Filter itemFilter = new Items.Filter
             {
-                Enabled = true
+                Enabled = true,
+                CheckIgnoreObject = true
             };
             itemFilter.Graphics.Add(graphic);
             itemFilter.RangeMax = range;
@@ -1013,6 +1015,7 @@ namespace RazorEnhanced.UOS
 
             Mobiles.Filter mobileFilter = new Mobiles.Filter
             {
+                CheckIgnoreObject = true,
                 Enabled = true
             };
             mobileFilter.Bodies.Add(graphic);
@@ -4585,6 +4588,8 @@ namespace RazorEnhanced.UOS
             if (args.Length == 0) { WrongParameterCount(node, 1, args.Length); }
 
             RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            filter.CheckIgnoreObject = true;
+
             bool nearest = false;
             foreach (var arg in args)
             {
@@ -4664,6 +4669,7 @@ namespace RazorEnhanced.UOS
             if (args.Length == 0) { WrongParameterCount(node, 1, args.Length); }
 
             RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
+            filter.CheckIgnoreObject = true;
             bool nearest = false;
             foreach (var arg in args)
             {
@@ -5000,6 +5006,7 @@ namespace RazorEnhanced.UOS
             else
             {
                 var options = new Items.Filter();
+                options.CheckIgnoreObject = true;
                 options.Graphics.Add(graphic);
                 if (color != -1)
                     options.Hues.Add(color);
@@ -5020,6 +5027,7 @@ namespace RazorEnhanced.UOS
                 Mobile mob = null;
                 // Container (Range: Container Serial)
                 var options = new Mobiles.Filter();
+                options.CheckIgnoreObject = true;
 
                 List<byte> notoriety = new List<byte>
                     {
@@ -5077,6 +5085,8 @@ namespace RazorEnhanced.UOS
 
             Item itm = null;
             var options = new Items.Filter();
+            options.CheckIgnoreObject = true;
+
             options.Graphics.Add(graphic);
             if (color != -1)
                 options.Hues.Add(color);
@@ -5122,6 +5132,7 @@ namespace RazorEnhanced.UOS
                 if (args.Length == 4)
                     graphic = args[3].AsInt();
                 var options = new Items.Filter();
+                options.CheckIgnoreObject = true;
                 options.Graphics.Add(graphic);
                 options.OnGround = 1;
                 var item_list = Items.ApplyFilter(options);
@@ -5191,6 +5202,7 @@ namespace RazorEnhanced.UOS
                 if (args.Length == 4)
                     graphic = args[3].AsInt();
                 var options = new Items.Filter();
+                options.CheckIgnoreObject = true;
                 options.Graphics.Add(graphic);
                 options.OnGround = 1;
                 var item_list = Items.ApplyFilter(options);
@@ -5267,6 +5279,7 @@ namespace RazorEnhanced.UOS
             if (graphic != -1)
             {
                 var options = new Items.Filter();
+                options.CheckIgnoreObject = true;
                 options.Graphics.Add(graphic);
                 options.RangeMax = range;
                 options.OnGround = 1;

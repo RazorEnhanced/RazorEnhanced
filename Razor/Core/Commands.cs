@@ -28,6 +28,8 @@ namespace Assistant
             Command.Register("inspectgumps", new CommandCallback(InspectGumps));
             Command.Register("inspectalias", new CommandCallback(InspectAlias));
             Command.Register("playscript", new CommandCallback(PlayScriptIgnoreReturn));
+            Command.Register("unsetalias", new CommandCallback(UnsetAlias));
+            Command.Register("setalias", new CommandCallback(SetAlias));
             Command.Register("hideitem", new CommandCallback(HideItem));
             Command.Register("hide", new CommandCallback(HideItem));
             Command.Register("drop", new CommandCallback(DropItem));
@@ -255,6 +257,53 @@ namespace Assistant
 
 
             }).Start();
+        }
+        internal static void UnsetAlias(string[] param)
+        {
+            if (param.Length > 0)
+            {
+                if (Misc.CheckSharedValue(param[0]))
+                    Misc.RemoveSharedValue(param[0]);
+                else
+                {
+                    RazorEnhanced.Misc.SendMessage("unsetalias: alias name not in use", 33, false);
+                }
+            }
+            else
+                RazorEnhanced.Misc.SendMessage("unsetalias: alias name not supplied", 33, false);
+
+        }
+
+        internal static bool TryConvertToInt(string input, out int result)
+        {
+            if (input.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+            {
+                // Convert from hexadecimal (base 16)
+                return int.TryParse(input.Substring(2), System.Globalization.NumberStyles.HexNumber, null, out result);
+            }
+            else
+            {
+                // Convert from decimal (base 10)
+                return int.TryParse(input, out result);
+            }
+        }
+
+        internal static void SetAlias(string[] param)
+        {
+            if (param.Length < 2)
+            {
+                RazorEnhanced.Misc.SendMessage("setalias: alias name and object id required", 33, false);
+                return;
+            }
+
+            if (TryConvertToInt(param[1], out int serial))
+            {
+                Misc.SetSharedValue(param[0], serial);
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("setalias: invalid object id", 33, false);
+            }
         }
 
         internal static void PlayScriptIgnoreReturn(string[] param)
