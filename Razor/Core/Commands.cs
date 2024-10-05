@@ -290,19 +290,27 @@ namespace Assistant
 
         internal static void SetAlias(string[] param)
         {
-            if (param.Length < 2)
+            if (param.Length == 1)
             {
-                RazorEnhanced.Misc.SendMessage("setalias: alias name and object id required", 33, false);
+                RazorEnhanced.Target target = new RazorEnhanced.Target();
+                int serial = target.PromptTarget("Select object to set alias");
+                if (serial == 0)
+                    RazorEnhanced.Misc.SendMessage("setalias: not set", 33, false);
+                else
+                    Misc.SetSharedValue(param[0], serial);
                 return;
             }
 
-            if (TryConvertToInt(param[1], out int serial))
+            if (param.Length == 2)
             {
-                Misc.SetSharedValue(param[0], serial);
-            }
-            else
-            {
-                RazorEnhanced.Misc.SendMessage("setalias: invalid object id", 33, false);
+                if (TryConvertToInt(param[1], out int serial))
+                {
+                    Misc.SetSharedValue(param[0], serial);
+                }
+                else
+                {
+                    RazorEnhanced.Misc.SendMessage("setalias: invalid object id", 33, false);
+                }
             }
         }
 

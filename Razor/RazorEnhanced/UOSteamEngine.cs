@@ -6,6 +6,8 @@ using Microsoft.Scripting.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -600,6 +602,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterExpressionHandler("skillvalue", Skill);
             m_Interpreter.RegisterExpressionHandler("skillbase", SkillBase);
             m_Interpreter.RegisterExpressionHandler("findobject", FindObject);
+            m_Interpreter.RegisterExpressionHandler("amount", Amount);
             m_Interpreter.RegisterExpressionHandler("useobject", UseObjExp);
             m_Interpreter.RegisterExpressionHandler("distance", Distance);
             m_Interpreter.RegisterExpressionHandler("graphic", Graphic);
@@ -1793,6 +1796,24 @@ namespace RazorEnhanced.UOS
             string skillname = args[0].AsString();
             double skillvalue = Player.GetSkillValue(skillname);
             return skillvalue;
+        }
+
+        /// <summary>
+        /// amount (serial)
+        /// </summary>
+        private IComparable Amount(ASTNode node, Argument[] args, bool quiet)
+        {
+            if (args.Length < 1)
+            {
+                throw new UOSRuntimeError(node, "Amount require a parameter");
+                // return false;
+            }
+            uint serial = args[0].AsSerial();
+            Item item = Items.FindBySerial((int)serial);
+            if (item == null)
+                return false;
+
+            return item.Amount;
         }
 
         /// <summary>
