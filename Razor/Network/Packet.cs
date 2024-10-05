@@ -894,7 +894,14 @@ namespace Assistant
 
         internal string ReadUnicodeStringLE()
         {
-            return ReadUnicodeString();
+            StringBuilder sb = new StringBuilder();
+
+            int c;
+
+            while ((c = ReadByte() | (ReadByte() << 8)) != 0)
+                sb.Append((char)c);
+
+            return sb.ToString();
         }
 
         internal string ReadUnicodeStringLESafe()
