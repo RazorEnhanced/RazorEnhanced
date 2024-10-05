@@ -3557,40 +3557,70 @@ namespace Assistant
             byte delay = p.ReadByte();
 
         }
+
         private static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
         {
             Serial ser = p.ReadUInt32();
             ushort icon = p.ReadUInt16();
-            ushort action = p.ReadUInt16();
+            ushort count = p.ReadUInt16();
 
             if (Enum.IsDefined(typeof(BuffIcon), icon))
             {
                 BuffIcon buff = (BuffIcon)icon;
-
-                switch (action)
+                if (World.Player != null)
                 {
-                    case 0x01: // show
-                        if (World.Player != null && !World.Player.Buffs.Contains(buff))
+                    lock (World.Player.Buffs)
+                    {
+                        if (count == 0)
                         {
-                            World.Player.Buffs.Add(buff);
-                            p.Seek(12, SeekOrigin.Current);
-                            int duration = p.ReadInt16();
-                            World.Player.BuffTimes[buff] = DateTime.Now.AddSeconds(duration);
+                            if (World.Player.Buffs.ContainsKey(buff))
+                            {
+                                World.Player.Buffs.TryRemove(buff, out _);
+                            }
                         }
-                        break;
+                        else
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                var sourceType = p.ReadUInt16(); //buff source?
+                                p.ReadUInt16(); //null data
+                                icon = p.ReadUInt16(); //icon
+                                var queueIndex = p.ReadUInt16(); //queue index 
 
-                    case 0x0: // remove
-                        if (World.Player != null && World.Player.Buffs.Contains(buff))
-                        {
-                            World.Player.Buffs.Remove(buff);
-                            World.Player.BuffTimes.Remove(buff);
+                                BuffInfo currentBuff = new BuffInfo();
+                                currentBuff.Icon = buff;
+                                currentBuff.StartTime = DateTime.Now;
+
+
+                                p.ReadUInt32(); //null data
+
+                                currentBuff.Duration = p.ReadUInt16();
+
+                                p.ReadUInt16(); //null data
+                                p.ReadByte(); //null data
+
+                                currentBuff.TitleCliloc = p.ReadUInt32();
+                                currentBuff.DescriptionCliloc = p.ReadUInt32();
+                                currentBuff.ExtraInfoCliloc = p.ReadUInt32();
+
+                                ushort argsCount = p.ReadUInt16();
+                                p.ReadUInt16(); //null
+                                currentBuff.TitleArgs = p.ReadUnicodeStringLE();
+
+                                argsCount = p.ReadUInt16();
+                                currentBuff.DescriptionArgs = p.ReadUnicodeStringLE();
+
+                                argsCount = p.ReadUInt16();
+                                currentBuff.ExtraInfoArgs = p.ReadUnicodeStringLE();
+                                World.Player.Buffs[buff] = currentBuff;
+                            }
                         }
-                        break;
+                    }
+
+                    // Highlight for bloodOath
+                    if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked && buff == BuffIcon.BloodOathCurse)
+                        RazorEnhanced.Filters.ApplyColor(World.Player);
                 }
-
-                // Highlight for bloodOath
-                if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked && buff == BuffIcon.BloodOathCurse)
-                    RazorEnhanced.Filters.ApplyColor(World.Player);
             }
         }
 

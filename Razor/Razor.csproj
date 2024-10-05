@@ -396,6 +396,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\BuffInfo.cs" />
     <Compile Include="Enums\TargetFlags.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Network\PacketLogger.cs" />
@@ -404,6 +405,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\BuffInfo.cs" />
     <Compile Include="RazorEnhanced\CircularBuffer.cs" />
     <Compile Include="RazorEnhanced\Config.cs" />
     <Compile Include="Core\SkillIcon.cs" />
