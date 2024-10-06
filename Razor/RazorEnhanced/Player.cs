@@ -528,15 +528,7 @@ namespace RazorEnhanced
         {
             get
             {
-                List<Assistant.BuffInfo> fastList;
-                
-                lock (World.Player.Buffs)
-                {
-                    //Limit the lock time inside locks, that's why don't create the instance inside
-                    fastList = World.Player.Buffs.Values.ToList();
-                }
-                
-                return fastList.Select(p => new RazorEnhanced.BuffInfo(p)).ToList();
+                return World.Player.Buffs.Values.Select(p => new RazorEnhanced.BuffInfo(p)).ToList();
             }
         }
 

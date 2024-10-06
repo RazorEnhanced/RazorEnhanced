@@ -3569,51 +3569,45 @@ namespace Assistant
                 BuffIcon buff = (BuffIcon)icon;
                 if (World.Player != null)
                 {
-                    lock (World.Player.Buffs)
+                    if (count == 0)
                     {
-                        if (count == 0)
+                        World.Player.Buffs.TryRemove(buff, out _);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < count; i++)
                         {
-                            if (World.Player.Buffs.ContainsKey(buff))
-                            {
-                                World.Player.Buffs.TryRemove(buff, out _);
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < count; i++)
-                            {
-                                var sourceType = p.ReadUInt16(); //buff source?
-                                p.ReadUInt16(); //null data
-                                icon = p.ReadUInt16(); //icon
-                                var queueIndex = p.ReadUInt16(); //queue index 
+                            var sourceType = p.ReadUInt16(); //buff source?
+                            p.ReadUInt16(); //null data
+                            icon = p.ReadUInt16(); //icon
+                            var queueIndex = p.ReadUInt16(); //queue index 
 
-                                BuffInfo currentBuff = new BuffInfo();
-                                currentBuff.Icon = buff;
-                                currentBuff.StartTime = DateTime.Now;
+                            BuffInfo currentBuff = new BuffInfo();
+                            currentBuff.Icon = buff;
+                            currentBuff.StartTime = DateTime.Now;
 
 
-                                p.ReadUInt32(); //null data
+                            p.ReadUInt32(); //null data
 
-                                currentBuff.Duration = p.ReadUInt16();
+                            currentBuff.Duration = p.ReadUInt16();
 
-                                p.ReadUInt16(); //null data
-                                p.ReadByte(); //null data
+                            p.ReadUInt16(); //null data
+                            p.ReadByte(); //null data
 
-                                currentBuff.TitleCliloc = p.ReadUInt32();
-                                currentBuff.DescriptionCliloc = p.ReadUInt32();
-                                currentBuff.ExtraInfoCliloc = p.ReadUInt32();
+                            currentBuff.TitleCliloc = p.ReadUInt32();
+                            currentBuff.DescriptionCliloc = p.ReadUInt32();
+                            currentBuff.ExtraInfoCliloc = p.ReadUInt32();
 
-                                ushort argsCount = p.ReadUInt16();
-                                p.ReadUInt16(); //null
-                                currentBuff.TitleArgs = p.ReadUnicodeStringLE();
+                            ushort argsCount = p.ReadUInt16();
+                            p.ReadUInt16(); //null
+                            currentBuff.TitleArgs = p.ReadUnicodeStringLE();
 
-                                argsCount = p.ReadUInt16();
-                                currentBuff.DescriptionArgs = p.ReadUnicodeStringLE();
+                            argsCount = p.ReadUInt16();
+                            currentBuff.DescriptionArgs = p.ReadUnicodeStringLE();
 
-                                argsCount = p.ReadUInt16();
-                                currentBuff.ExtraInfoArgs = p.ReadUnicodeStringLE();
-                                World.Player.Buffs[buff] = currentBuff;
-                            }
+                            argsCount = p.ReadUInt16();
+                            currentBuff.ExtraInfoArgs = p.ReadUnicodeStringLE();
+                            World.Player.Buffs[buff] = currentBuff;
                         }
                     }
 
