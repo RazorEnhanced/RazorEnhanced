@@ -292,16 +292,22 @@ namespace Assistant
         {
             if (param.Length == 1)
             {
-                RazorEnhanced.Target target = new RazorEnhanced.Target();
-                int serial = target.PromptTarget("Select object to set alias");
-                if (serial == 0)
-                    RazorEnhanced.Misc.SendMessage("setalias: not set", 33, false);
-                else
-                    Misc.SetSharedValue(param[0], serial);
-                return;
-            }
+                Thread thread = new Thread(() =>
+                {
+                    RazorEnhanced.Target target = new RazorEnhanced.Target();
+                    int serial = target.PromptTarget("Select object to set alias");
+                    if (serial == 0)
+                        RazorEnhanced.Misc.SendMessage("setalias: not set", 33, false);
+                    else
+                    {
+                        Misc.SetSharedValue(param[0], serial);
+                        return;
+                    }
+                });
 
-            if (param.Length == 2)
+                thread.Start();
+            }
+            else if (param.Length == 2)
             {
                 if (TryConvertToInt(param[1], out int serial))
                 {
@@ -311,6 +317,10 @@ namespace Assistant
                 {
                     RazorEnhanced.Misc.SendMessage("setalias: invalid object id", 33, false);
                 }
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("setalias: wrong number of parameters", 33, false);
             }
         }
 
