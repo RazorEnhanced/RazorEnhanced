@@ -527,6 +527,8 @@ namespace Assistant
 
             RazorEnhanced.Settings.General.SaveExitData();
 
+            ProtoControlServer.Instance.Stop();
+
             // Chiuto toolbar
             if (RazorEnhanced.ToolBar.ToolBarForm != null)
                 RazorEnhanced.ToolBar.ToolBarForm.Close();

@@ -574,6 +574,27 @@ namespace RazorEnhanced
 
         protected override void OnClose(CloseEventArgs e)
         {
+            // attempt to terminate all sessions
+            foreach (var session in _sessionTracker)
+            {
+                if (session.Value._recorder != null)
+                {
+                    var response = new RecordResponse
+                    {
+                        Type = ProtoMessageType.RecordResponseType,
+                        Sessionid = session.Value._sessionID,
+                        More = false,
+                        Data = "Recording Stopped"
+                    };
+                    Send(response.ToByteArray());
+                    session.Value._recorder.Stop();
+                }
+                if (session.Value._playThread != null)
+                {
+                    OutputPlayMessage("Process Ended", false, false);
+                    session.Value._playThread.Abort();
+                }
+            }   
             _stopwatch.Stop();
             Utility.Logger.Debug("WebSocket connection closed.");
         }
