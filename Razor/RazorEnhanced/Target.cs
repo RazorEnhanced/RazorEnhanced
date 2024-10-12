@@ -125,31 +125,26 @@ namespace RazorEnhanced
             }
         }
 
-        /// <param name="item">Item object to Target.</param>
-        public static void TargetExecute(RazorEnhanced.Item item)
+        /// <summary>
+        /// Targets the Mobil or Item specified
+        /// </summary>       
+        /// <param name="entity">object can be a Mobil or an Item.</param>
+        public static void TargetExecute(Assistant.UOEntity entity)
         {
-            Assistant.Targeting.Target(item.Serial, true);
+            Assistant.Targeting.Target(entity.Serial.Value, true);
         }
 
-        /// <param name="mobile">Mobile object to Target.</param>
-        public static void TargetExecute(RazorEnhanced.Mobile mobile)
-        {
-            if (!CheckHealPoisonTarg(mobile.Serial))
-            {
-                Assistant.Targeting.Target(mobile.Serial, true);
-            }
-        }
 
         /// <summary>
         /// Targets the entity of a specific Graphic.
         /// </summary>
         /// <param name="graphic">Graphic of an Entity.</param>
-        /// <param name="color">Color of an Entity.</param>
-        /// <param name="range">Range to scan for an Entity.</param>
-        /// <param name="selector">Selector for sorting the Entity.</param>
-        /// <param name="notoriety">Notorieties of an Entity.</param>
-        /// <returns>if the attack was achieved. (empty: line not found)</returns>
-        public static bool TargetType(int graphic, int color, int range, string selector, List<byte> notoriety = null)
+        /// <param name="color">Color of an Entity. (default: -1)</param>
+        /// <param name="range">Range to scan for an Entity. (default: 20)</param>
+        /// <param name="selector">Selector for sorting the Entity. (default: Nearest)</param>
+        /// <param name="notoriety">Notorieties of an Entity. (default: None -> all)</param>
+        /// <returns>if the attack was achieved. (true: target succeeded)</returns>
+        public static bool TargetType(int graphic, int color=-1, int range=20, string selector="Nearest", List<byte> notoriety = null)
         {
             Item itm = null;
             // Container (Range: Container Serial)

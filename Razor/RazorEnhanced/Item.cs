@@ -1575,6 +1575,7 @@ namespace RazorEnhanced
         /// <param name="itemid"> List of ItemID filter.</param>
         /// <param name="color">Color filter. (-1: any, 0: natural )</param>
         /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="range">In containers means the number of sub-containers to search. In World items means distance in squares (10: any Item)</param>
         /// <param name="recursive">
         /// Search subcontainers. 
         ///     True: all subcontainers
@@ -1583,7 +1584,7 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
         /// <returns>The Item matching the criteria.</returns>
-        public static Item FindByID(List<int> itemids, int color, int container, int range, bool considerIgnoreList = true)
+        public static Item FindByID(List<int> itemids, int color=-1, int container=-1, int range=10, bool considerIgnoreList = true)
         {
             if (container != -1)  // search in specific container
             {
