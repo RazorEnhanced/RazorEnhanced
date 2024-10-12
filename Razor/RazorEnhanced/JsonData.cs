@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace JsonData
@@ -135,7 +136,7 @@ namespace JsonData
 
         [JsonProperty("CheckIgnoreObject")] public bool CheckIgnoreObject { get; set; } = false;
 
-        [JsonProperty("IgnorePets")] private bool IgnoreObject { get; set; }        public bool IgnorePets { get; set; } = false;
+        [JsonProperty("IgnorePets")][DefaultValue(false)] public bool IgnorePets { get; set; } = false;
 
         [JsonProperty("Notorieties")] public List<byte> Notorieties { get; set; } = new List<byte>();
 
