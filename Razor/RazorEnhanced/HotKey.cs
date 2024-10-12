@@ -1036,6 +1036,7 @@ namespace RazorEnhanced
                     filter.Notorieties.Add(4);
                     filter.Notorieties.Add(3);
                     filter.CheckIgnoreObject = true;
+                    filter.IgnorePets = true;
                     filter.RangeMax = -1;
                     filter.CheckLineOfSight = true;
                     filter.Enabled = true;

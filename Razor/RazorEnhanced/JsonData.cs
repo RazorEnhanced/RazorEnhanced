@@ -91,107 +91,53 @@ namespace JsonData
             filter.Friend = mobileFilter.Friend;
             filter.Paralized = mobileFilter.Paralized;
             filter.CheckIgnoreObject = mobileFilter.CheckIgnoreObject;
+            filter.IgnorePets = mobileFilter.IgnorePets;
             filter.Notorieties = mobileFilter.Notorieties;
             return filter;
         }
 
-        private bool enabled = false;
+        [JsonProperty("Enabled")] public bool Enabled { get; set; } = true;
 
-        [JsonProperty("Enabled")]
-        public bool Enabled { get => enabled; set => enabled = value; }
+        [JsonProperty("Serials")] public List<int> Serials { get; set; } = new List<int>();
 
-        private List<int> serials = new List<int>();
+        [JsonProperty("Bodies")] public List<int> Bodies { get; set; } = new List<int>();
 
-        [JsonProperty("Serials")]
-        public List<int> Serials { get => serials; set => serials = value; }
+        [JsonProperty("Name")] public string Name { get; set; } = "";
 
-        private List<int> bodies = new List<int>();
+        [JsonProperty("Hues")] public List<int> Hues { get; set; } = new List<int>();
 
-        [JsonProperty("Bodies")]
-        public List<int> Bodies { get => bodies; set => bodies = value; }
+        [JsonProperty("RangeMin")] public double RangeMin { get; set; } = -1;
 
-        private string name = "";
+        [JsonProperty("RangeMax")] public double RangeMax { get; set; } = -1;
 
-        [JsonProperty("Name")]
-        public string Name { get => name; set => name = value; }
+        [JsonProperty("ZLevelMin")] public double ZLevelMin { get; set; } = -4096;
 
-        private List<int> hues = new List<int>();
-
-        [JsonProperty("Hues")]
-        public List<int> Hues { get => hues; set => hues = value; }
-
-        private double rangeMin = -1;
-
-        [JsonProperty("RangeMin")]
-        public double RangeMin { get => rangeMin; set => rangeMin = value; }
-
-        private double rangeMax = -1;
-
-        [JsonProperty("RangeMax")]
-        public double RangeMax { get => rangeMax; set => rangeMax = value; }
-
-        private double zlevelMin = -4096;
-
-        [JsonProperty("ZLevelMin")]
-        public double ZLevelMin { get => zlevelMin; set => zlevelMin = value; }
-
-        private double zlevelMax = 4096;
-
-        [JsonProperty("ZLevelMax")]
-        public double ZLevelMax { get => zlevelMax; set => zlevelMax = value; }
+        [JsonProperty("ZLevelMax")] public double ZLevelMax { get; set; } = 4096;
 
 
-        [JsonProperty("CheckLineOfSite")]
-        public bool CheckLineOfSite { get; set; }
+        [JsonProperty("CheckLineOfSite")] public bool CheckLineOfSite { get; set; } = false;
 
-        private int poisoned = 0;
+        [JsonProperty("Poisoned")] public int Poisoned { get; set; } = 0;
 
-        [JsonProperty("Poisoned")]
-        public int Poisoned { get => poisoned; set => poisoned = value; }
+        [JsonProperty("Blessed")] public int Blessed { get; set; } = 0;
 
-        private int blessed = 0;
+        [JsonProperty("IsHuman")] public int IsHuman { get; set; } = 0;
 
-        [JsonProperty("Blessed")]
-        public int Blessed { get => blessed; set => blessed = value; }
+        [JsonProperty("IsGhost")] public int IsGhost { get; set; } = 0;
 
-        private int isHuman = 0;
+        [JsonProperty("Female")] public int Female { get; set; } = 0;
 
-        [JsonProperty("IsHuman")]
-        public int IsHuman { get => isHuman; set => isHuman = value; }
+        [JsonProperty("Warmode")] public int Warmode { get; set; } = 0;
 
-        private int isGhost = 0;
+        [JsonProperty("Friend")] public int Friend { get; set; } = 0;
 
-        [JsonProperty("IsGhost")]
-        public int IsGhost { get => isGhost; set => isGhost = value; }
+        [JsonProperty("Paralized")] public int Paralized { get; set; } = 0;
 
-        private int female = 0;
+        [JsonProperty("CheckIgnoreObject")] public bool CheckIgnoreObject { get; set; } = false;
 
-        [JsonProperty("Female")]
-        public int Female { get => female; set => female = value; }
+        [JsonProperty("IgnorePets")] private bool IgnoreObject { get; set; }        public bool IgnorePets { get; set; } = false;
 
-        private int warmode = 0;
-
-        [JsonProperty("Warmode")]
-        public int Warmode { get => warmode; set => warmode = value; }
-
-        private int friend = 0;
-
-        [JsonProperty("Friend")]
-        public int Friend { get => friend; set => friend = value; }
-
-        private int paralized = 0;
-
-        [JsonProperty("Paralized")]
-        public int Paralized { get => paralized; set => paralized = value; }
-
-        private bool checkIgnoreObject = false;
-
-        [JsonProperty("CheckIgnoreObject")]
-        public bool CheckIgnoreObject { get => checkIgnoreObject; set => checkIgnoreObject = value; }
-
-        private List<byte> notorieties = new List<byte>();
-        [JsonProperty("Notorieties")]
-        public List<byte> Notorieties { get => notorieties; set => notorieties = value; }
+        [JsonProperty("Notorieties")] public List<byte> Notorieties { get; set; } = new List<byte>();
 
 
 
@@ -216,6 +162,7 @@ namespace JsonData
             filter.Friend = Friend;
             filter.Paralized = Paralized;
             filter.CheckIgnoreObject = CheckIgnoreObject;
+            filter.IgnorePets = IgnorePets;
             filter.Notorieties = Notorieties;
 
             return filter;

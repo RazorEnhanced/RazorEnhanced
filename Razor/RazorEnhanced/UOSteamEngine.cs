@@ -4610,6 +4610,7 @@ namespace RazorEnhanced.UOS
 
             RazorEnhanced.Mobiles.Filter filter = new RazorEnhanced.Mobiles.Filter();
             filter.CheckIgnoreObject = true;
+            filter.IgnorePets = true;
 
             bool nearest = false;
             foreach (var arg in args)

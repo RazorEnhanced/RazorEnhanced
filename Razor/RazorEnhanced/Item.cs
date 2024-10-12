@@ -503,6 +503,20 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// NOTE: This is from an internal razor table and can be changed based on your server!
+        /// 
+        /// Returns a pair of string values (Primary Ability, Secondary Ability) 
+        /// for the supplied item ID. 
+        /// "Invalid", "Invalid" for items not in the internal table
+        /// </summary>
+        public static (string, string) GetWeaponAbility(int itemId)
+        {
+            var primary = SpecialMoves.GetPrimaryAbility(itemId);
+            var secondary = SpecialMoves.GetSecondaryAbility(itemId);
+
+            return (primary.ToString(), secondary.ToString());
+        }
 
 
         /// <summary>

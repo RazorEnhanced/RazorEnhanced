@@ -2515,9 +2515,20 @@ namespace RazorEnhanced
             PathFindToPacket(x, y, z);
         }
 
+        /// <summary>
+        /// Go to the position supplied using Client-provided pathfinding.
+        /// </summary>
         public static void PathFindTo(RazorEnhanced.Point3D Location)
         {
             PathFindToPacket(Location.X, Location.Y, Location.Z);
+        }
+
+        /// <summary>
+        /// Go to the position supplied using Client-provided pathfinding.
+        /// </summary>
+        public static void PathFindTo(Assistant.Point3D Location)
+        {
+            PathFindToPacket(Location);
         }
 
         internal static void PathFindToPacket(Assistant.Point3D location)

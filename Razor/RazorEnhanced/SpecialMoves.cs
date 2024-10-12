@@ -29,7 +29,7 @@ namespace Assistant
         Feint,
         DualWield,
         DoubleShot,
-        ArmorPeirce,
+        ArmorPierce,
         Bladeweave,
         ForceArrow,
         LightningArrow,
@@ -233,7 +233,7 @@ namespace Assistant
         private static readonly AbilityInfo[] m_Primary = new AbilityInfo[]
         {
             new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID, SoulGlaiveID ),
-            new AbilityInfo( AOSAbility.ArmorPeirce, YumiID, WhipFencing ),
+            new AbilityInfo( AOSAbility.ArmorPierce, YumiID, WhipFencing ),
             new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID, WhipSword ),
             new AbilityInfo( AOSAbility.Block, NunchakuID ),
             new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID, WhipMace ),
@@ -260,7 +260,7 @@ namespace Assistant
         private static readonly AbilityInfo[] m_Secondary = new AbilityInfo[]
         {
 
-            new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
+            new AbilityInfo( AOSAbility.ArmorPierce, SaiID ),
             new AbilityInfo( AOSAbility.ArmorIgnore,  BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
             new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
             new AbilityInfo( AOSAbility.BleedAttack, LargeBattleAxeID, WarAxeID, ElvenSpellbladeID, BoomerangID ),
@@ -371,6 +371,15 @@ namespace Assistant
                 else
                     Assistant.Client.Instance.SendToServer(new DisarmRequest());
             }
+        }
+
+        internal static AOSAbility GetPrimaryAbility(int itemId)
+        {
+            return GetAbility(itemId, m_Primary);
+        }
+        internal static AOSAbility GetSecondaryAbility(int itemId)
+        {
+            return GetAbility(itemId, m_Secondary);
         }
 
         private static AOSAbility GetAbility(int item, AbilityInfo[] list)

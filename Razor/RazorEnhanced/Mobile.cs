@@ -272,6 +272,10 @@ namespace RazorEnhanced
                     result = Assistant.Layer.Ring;
                     break;
 
+                case "Talisman":
+                    result = Assistant.Layer.Talisman;
+                    break;
+
                 case "Neck":
                     result = Assistant.Layer.Neck;
                     break;
@@ -563,6 +567,10 @@ namespace RazorEnhanced
             /// </summary>
             public bool CheckIgnoreObject = false;
             /// <summary>
+            /// Include the Mobiles which are currently on the Pet List. ( default: True, include Pets )
+            /// </summary>
+            public bool IgnorePets = false;
+            /// <summary>
             /// Limit the search to the Mobile by notoriety.
             /// Supports .Add() and .AddRange()
             /// 
@@ -699,6 +707,11 @@ namespace RazorEnhanced
                     if (filter.CheckIgnoreObject)
                     {
                         assistantMobiles = assistantMobiles.Where((m) => Misc.CheckIgnoreObject(m.Serial) != true).ToList();
+                    }
+
+                    if (filter.IgnorePets)
+                    {
+                        assistantMobiles.RemoveAll(mobile => Player.Pets.Any(pet => pet.Serial == mobile.Serial));
                     }
 
                     // Esclude Self dalla ricerca
