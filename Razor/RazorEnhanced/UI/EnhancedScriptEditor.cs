@@ -1553,6 +1553,32 @@ namespace RazorEnhanced.UI
 
                             }
                         }
+                        pattern = @"(.*Target\.)\s*(\w+)\(\s*(\w+)\s*\)(.*$)";
+                        r = new Regex(pattern, RegexOptions.IgnoreCase);
+                        m = r.Match(lineToChange);
+                        if (m.Success && m.Groups.Count == 5)
+                        {
+                            string frontPart = m.Groups[1].Value;
+                            string targetExecute = m.Groups[2].Value;
+
+                            string textSerial = m.Groups[3].Value;
+                            string lastPart = m.Groups[4].Value;
+                            if (targetExecute.lower() == "targetexecute")
+                            {
+                                var result = FindSerialTypeColor(textSerial);
+                                if (result.HasValue)
+                                {
+                                    var objectData = result.Value;
+                                    fastColoredTextBoxEditor.BeginUpdate();
+                                    string newLine = $"{frontPart}TargetType(0x{objectData.itemId:x}, {objectData.hue} ){lastPart}";
+                                    fastColoredTextBoxEditor.TextSource[currentLine].Clear();
+                                    fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
+                                    fastColoredTextBoxEditor.EndUpdate();
+                                    fastColoredTextBoxEditor.Invalidate();
+                                }
+
+                            }
+                        }
 
                         break;
                     }
@@ -1581,6 +1607,29 @@ namespace RazorEnhanced.UI
                             }
 
                         }
+                        pattern = @"(.*)target\s+(\w+)(.*$)";
+                        r = new Regex(pattern, RegexOptions.IgnoreCase);
+                        m = r.Match(lineToChange);
+                        if (m.Success && m.Groups.Count == 4)
+                        {
+                            string frontPart = m.Groups[1].Value;
+                            string textSerial = m.Groups[2].Value;
+                            string lastPart = m.Groups[3].Value;
+
+                            var result = FindSerialTypeColor(textSerial);
+                            if (result.HasValue)
+                            {
+                                var objectData = result.Value;
+                                fastColoredTextBoxEditor.BeginUpdate();
+                                string newLine = $"{frontPart}targettype 0x{objectData.itemId:x} {objectData.hue} {objectData.container}{lastPart}";
+                                fastColoredTextBoxEditor.TextSource[currentLine].Clear();
+                                fastColoredTextBoxEditor.TextSource[currentLine].AddRange(ConvertStringToCharEnumerable(newLine));
+                                fastColoredTextBoxEditor.EndUpdate();
+                                fastColoredTextBoxEditor.Invalidate();
+                            }
+
+                        }
+
                         break;
                     }
             }
