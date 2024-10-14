@@ -53,6 +53,35 @@ namespace RazorEnhanced
         /// </summary>
         public static int StatCap { get { return World.Player.StatCap; } }
 
+        /// <summary>
+        /// Fame has to be reverse engineered from the title so it is just ranges:
+        /// 0: neutaral - 3 is highest fame
+        /// </summary>
+        public int Fame { get { return World.Player.Fame; } }
+
+        /// <summary>
+        /// Karma has to be reverse engineered from the title so it is just ranges:
+        /// -5: most evil, 0: neutaral, 5 most good
+        /// </summary>
+        public int Karma { get { return World.Player.Karma; } }
+
+        /// <summary>
+        /// This is the title string returned from the server
+        /// </summary>
+        public string KarmaTitle { get { return World.Player.KarmaTitle; } }
+
+        /// <summary>
+        /// Costly! 
+        /// Updates the Fame and Karma of the Mobile, but it can take as long as 1 second to complete.
+        /// </summary>
+        /// <returns>True if successful, False if not server packet received</returns>
+        public bool UpdateKarma()
+        {
+            World.Player.IgnoreProfile = true; // ignore next profile update
+            Assistant.Client.Instance.SendToServerWait(new RequestProfile(Serial));
+            return Utility.DelayUntil(() => World.Player.IgnoreProfile == false, 1000);
+        }
+
 
         //KR: Resistance and modifiers
         /// <summary>
