@@ -106,7 +106,8 @@ namespace RazorEnhanced.UOS
         private int m_lastMount;
         private int m_toggle_LeftSave;
         private int m_toggle_RightSave;
-        private Journal m_journal;
+        private static Journal g_journal;
+        private Journal m_journal = null;
         //private Mutex m_mutex;
         private readonly Lexer m_Lexer = new Lexer();
 
@@ -436,7 +437,10 @@ namespace RazorEnhanced.UOS
 
         private void Execute()
         {
-            m_journal = new Journal(100);
+            if (g_journal == null)
+                g_journal = new Journal(100);
+
+            m_journal = null;
 
             m_Interpreter.StartScript();
             try
@@ -450,7 +454,11 @@ namespace RazorEnhanced.UOS
             }
             finally
             {
-                m_journal.Active = false;
+                if (m_journal != null)
+                {
+                    m_journal.Active = false;
+                }
+                
             }
         }
 
@@ -512,6 +520,7 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterCommandHandler("waitforgump", WaitForGump);
             m_Interpreter.RegisterCommandHandler("replygump", ReplyGump);
             m_Interpreter.RegisterCommandHandler("closegump", CloseGump); // kind of done, RE can't do paperdolls ...
+            m_Interpreter.RegisterCommandHandler("uniquejournal", UniqueJournal);
             m_Interpreter.RegisterCommandHandler("clearjournal", ClearJournal);
             m_Interpreter.RegisterCommandHandler("waitforjournal", WaitForJournal);
             m_Interpreter.RegisterCommandHandler("poplist", PopList);
@@ -765,14 +774,18 @@ namespace RazorEnhanced.UOS
             if (args.Length == 1)
             {
                 string text = args[0].AsString();
-                return m_journal.Search(text);
+                if (m_journal != null)
+                    return m_journal.Search(text);
+                return g_journal.Search(text);
             }
             if (args.Length == 2)
             {
                 string text = args[0].AsString();
                 string texttype = args[1].AsString();
                 texttype = texttype.Substring(0, 1).ToUpper() + texttype.Substring(1).ToLower();  // syStEm -> System
-                return m_journal.SearchByType(text, texttype);
+                if (m_journal != null)
+                    return m_journal.SearchByType(text, texttype);
+                return g_journal.SearchByType(text, texttype);
             }
 
 
@@ -3657,11 +3670,23 @@ namespace RazorEnhanced.UOS
         }
 
         /// <summary>
+        /// uniquejournal causes the journal for this script to not be impacted by journal changes in other scripts
+        /// </summary>
+        private bool UniqueJournal(ASTNode node, Argument[] args, bool quiet, bool force)
+        {
+            m_journal = new Journal();
+            return true;
+        }
+
+
+        /// <summary>
         /// clearjournal
         /// </summary>
         private bool ClearJournal(ASTNode node, Argument[] args, bool quiet, bool force)
         {
-            m_journal.Clear();
+            if (m_journal != null)
+                m_journal.Clear();
+            g_journal.Clear();
             return true;
         }
 
@@ -3674,7 +3699,9 @@ namespace RazorEnhanced.UOS
             {
                 string text = args[0].AsString();
                 int delay = args[1].AsInt();
-                return m_journal.WaitJournal(text, delay);
+                if (m_journal != null)
+                    return m_journal.WaitJournal(text, delay);
+                return g_journal.WaitJournal(text, delay);
             }
             return false;
         }
