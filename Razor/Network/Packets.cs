@@ -1838,6 +1838,16 @@ namespace Assistant
             Write((sbyte)m.Position.Z);
         }
     }
+    internal sealed class RequestProfile : Packet
+    {
+        internal RequestProfile(int serial)
+            : base(0xB8)
+        {
+            EnsureCapacity(6);
+            Write((byte)0x00);
+            Write(serial);
+        }
+    }
 
     // Nuovi pacchetti Enhanced
 

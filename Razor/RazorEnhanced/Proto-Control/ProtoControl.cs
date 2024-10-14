@@ -662,8 +662,10 @@ namespace RazorEnhanced
 
         public void Stop()
         {
-            _server.Stop();
-            Utility.Logger.Debug("WebSocket Server stopped.");
+            if (_server != null) {
+                _server.Stop();
+                Utility.Logger.Debug("WebSocket Server stopped.");
+            }
             _server = null;
         }
         public static int FindAvailablePort(IPAddress ip, int startingPort, int range)

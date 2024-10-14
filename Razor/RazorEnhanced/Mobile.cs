@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Ultima;
 
 namespace RazorEnhanced
 {
@@ -32,6 +33,34 @@ namespace RazorEnhanced
 
         public int Serial { get { return (int)base.Serial.Value; } }
 
+        /// <summary>
+        /// Fame has to be reverse engineered from the title so it is just ranges:
+        /// 0: neutaral - 3 is highest fame
+        /// </summary>
+        public int Fame { get { return m_AssistantMobile.Fame; } }
+        
+        /// <summary>
+        /// Karma has to be reverse engineered from the title so it is just ranges:
+        /// -5: most evil, 0: neutaral, 5 most good
+        /// </summary>
+        public int Karma { get { return m_AssistantMobile.Karma; } }
+
+        /// <summary>
+        /// This is the title string returned from the server
+        /// </summary>
+        public string KarmaTitle { get { return m_AssistantMobile.KarmaTitle; } }
+
+        /// <summary>
+        /// Costly! 
+        /// Updates the Fame and Karma of the Mobile, but it can take as long as 1 second to complete.
+        /// </summary>
+        /// <returns>True if successful, False if not server packet received</returns>
+        public bool UpdateKarma()
+        {
+            m_AssistantMobile.IgnoreProfile = true; // ignore next profile update
+            Assistant.Client.Instance.SendToServerWait(new RequestProfile(Serial));
+            return Utility.DelayUntil(() => m_AssistantMobile.IgnoreProfile == false, 1000);
+        }
 
         /// <summary>@nodoc @deprecate
         /// Represents the type of Mobile, usually unique for the Mobile image. ( Alias: Mobile.MobileID )

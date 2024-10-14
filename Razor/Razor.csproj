@@ -1602,6 +1602,7 @@
     <None Include="RazorEnhanced\Resources\splashnew.jpg" />
     <Content Include="RazorEnhanced\Resources\search2.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
+    <None Include="Resources\github.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />
   </ItemGroup>

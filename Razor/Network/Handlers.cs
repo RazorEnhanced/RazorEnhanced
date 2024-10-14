@@ -1,9 +1,11 @@
 using Assistant.UI;
+using Google.Protobuf.WellKnownTypes;
 using RazorEnhanced;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Assistant
@@ -88,6 +90,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientFilter(0x77, new PacketFilterCallback(MobileMoving));
             PacketHandler.RegisterServerToClientFilter(0x78, new PacketFilterCallback(MobileIncoming));
             PacketHandler.RegisterServerToClientViewer(0x7C, new PacketViewerCallback(SendMenu));
+            PacketHandler.RegisterServerToClientViewer(0x88, new PacketViewerCallback(OpenPaperdoll));
             PacketHandler.RegisterServerToClientViewer(0x90, new PacketViewerCallback(MapDetails));
             PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
             PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
@@ -101,6 +104,7 @@ namespace Assistant
             PacketHandler.RegisterServerToClientViewer(0xAF, new PacketViewerCallback(DeathAnimation));
             PacketHandler.RegisterServerToClientFilter(0xAE, new PacketFilterCallback(UnicodeSpeech));
             PacketHandler.RegisterServerToClientViewer(0xB0, new PacketViewerCallback(SendGump));
+            PacketHandler.RegisterServerToClientViewer(0xB8, new PacketViewerCallback(Profile));
             PacketHandler.RegisterServerToClientViewer(0xB9, new PacketViewerCallback(Features));
             PacketHandler.RegisterServerToClientViewer(0xBA, new PacketViewerCallback(TrackingArrow));
             PacketHandler.RegisterServerToClientViewer(0xBC, new PacketViewerCallback(ChangeSeason));
@@ -1706,7 +1710,10 @@ namespace Assistant
                 player.DamageMax = p.ReadUInt16();
                 player.Tithe = p.ReadInt32();
             }
+            if (type == 0xdc)
+            {
 
+            }
             // UOKR Extended Info
             if (type >= 0x06)
             {
@@ -2431,8 +2438,8 @@ namespace Assistant
         internal static System.Data.DataTable InitJournalItems()
         {
             System.Data.DataTable retTable = new System.Data.DataTable("JournalItems");
-            retTable.Columns.Add(new System.Data.DataColumn("type", Type.GetType("System.String")));
-            retTable.Columns.Add(new System.Data.DataColumn("text", Type.GetType("System.String")));
+            retTable.Columns.Add(new System.Data.DataColumn("type", System.Type.GetType("System.String")));
+            retTable.Columns.Add(new System.Data.DataColumn("text", System.Type.GetType("System.String")));
 
             return retTable;
         }
@@ -2865,7 +2872,7 @@ namespace Assistant
                         ushort skillid = p.ReadUInt16();
                         byte action = p.ReadByte();
 
-                        if (Enum.IsDefined(typeof(SkillIcon), skillid))
+                        if (System.Enum.IsDefined(typeof(SkillIcon), skillid))
                         {
                             SkillIcon skill = (SkillIcon)skillid;
                             switch (action)
@@ -3227,6 +3234,32 @@ namespace Assistant
                     break;
             }
         }
+        private static void OpenPaperdoll(PacketReader p, PacketHandlerEventArgs args)
+        {
+            uint serial = p.ReadUInt32BE();
+            Mobile mobile = World.FindMobile(serial);
+
+            if (mobile == null)
+            {
+                return;
+            }
+
+            string text = p.ReadStringSafe(60);
+            byte flags = p.ReadByte();
+            
+            string pattern = @"The (\w+)";
+            Match match = Regex.Match(text, pattern);
+            if (match.Success)
+            {
+                string extracted = match.Groups[1].Value;
+                mobile.KarmaTitle = extracted;
+            }
+            else
+            {
+                mobile.KarmaTitle = "Unknown";
+            }
+
+        }
 
         private static void MapDetails(PacketReader p, PacketHandlerEventArgs args)
         {
@@ -3299,11 +3332,37 @@ namespace Assistant
             if (World.Player != null)
                 World.Player.Resync();
         }
-
         private static void Features(PacketReader p, PacketHandlerEventArgs args)
         {
             if (World.Player != null)
                 World.Player.Features = p.ReadUInt16();
+        }
+
+        private static void Profile(PacketReader p, PacketHandlerEventArgs args)
+        {
+            uint serial = p.ReadUInt32BE();
+            string characterName = p.ReadStringSafe();
+            string footer = p.ReadUnicodeStringSafe();
+            string body = p.ReadUnicodeStringSafe();
+
+            string pattern = @"The (\w+)";
+            Match match = Regex.Match(characterName, pattern);
+            Mobile mobile = World.FindMobile(serial);
+
+            if (mobile != null && match.Success)
+            {
+                string extracted = match.Groups[1].Value;
+                mobile.KarmaTitle = extracted;
+                if (mobile.IgnoreProfile)
+                {
+                    mobile.IgnoreProfile = false;
+                    args.Block = true;
+                }
+            }
+            else
+            {
+                mobile.KarmaTitle = "Unknown";
+            }
         }
 
 
@@ -3563,7 +3622,7 @@ namespace Assistant
             ushort icon = p.ReadUInt16();
             ushort action = p.ReadUInt16();
 
-            if (Enum.IsDefined(typeof(BuffIcon), icon))
+            if (System.Enum.IsDefined(typeof(BuffIcon), icon))
             {
                 BuffIcon buff = (BuffIcon)icon;
 

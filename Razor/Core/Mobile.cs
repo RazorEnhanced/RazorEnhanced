@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Assistant
 {
@@ -59,6 +60,85 @@ namespace Assistant
             m_Items = new List<Item>();
             m_Map = World.Player == null ? (byte)0 : World.Player.Map;
             m_Visible = true;
+        }
+
+        private Dictionary<string, int> karmNames = new()
+        {
+            {"", 0 },
+        };
+
+
+        internal static Dictionary<string, (int, int)> NameToFameKarma = new()
+        {
+        {"", (0, 0)},
+        {"Admirable", (2, 3)},
+        {"Dastardly", (1, -4)},
+        {"Dishonorable", (1, -2)},
+        {"Disreputable", (1, -1)},
+        {"Distinguished", (3, 1)},
+        {"Dread", (3, -5)},
+        {"Eminent", (3, 2)},
+        {"Evil", (3, -4)},
+        {"Fair", (0, 1)},
+        {"Famed", (2, 4)},
+        {"Glorious", (3, 5)},
+	    //{"Good", (0, 3)},  // Unfortunately they used these twice
+	    //{"Good", (1, 4)},
+	    {"Good", (0, 3)},
+        {"Great", (2, 5)},
+	    //{"Honest", (0, 4)},  // Unfortunately they used these twice
+	    //{"Honest", (1, 5)},
+	    {"Honest", (0, 4)},
+        {"Ignoble", (2, -2)},
+        {"Illustrious", (3, 4)},
+        {"Infamous", (3, -1)},
+	    //{"Kind", (0, 2)}, // Unfortunately they used these twice
+	    //{"Kind", (1, 3)},
+	    {"Kind", (0, 2)},
+        {"Malicious", (1, -3)},
+        {"Nefarious", (2, -5)},
+        {"Noble", (3, 3)},
+        {"Notable", (1, 0)},
+        {"Notorious", (2, -1)},
+        {"Prominent", (2, 0)},
+        {"Proper", (2, 2)},
+        {"Renowned", (3, 0)},
+        {"Reputable", (2, 1)},
+        {"Respectable", (1, 2)},
+        {"Sinister", (3, -2)},
+        {"Trustworthy", (0, 5)},
+        {"Upstanding", (1, 1)},
+        {"Vile", (2, -3)},
+        {"Villainous", (3, -3)},
+        {"Wicked", (2, -4)},
+        {"Wretched", (1, -5)},
+            {"Despicable", (0, -4)},
+            {"Outcast", (0, -5)},
+            {"Rude", (0, -1)},
+            {"Scoundrel", (0, -3)},
+            {"Unsavory", (0, -2)},
+        };
+
+        internal bool IgnoreProfile { get; set; } = false;
+
+        internal int Fame { get; set; } = -1;
+        internal int Karma { get; set; } = -1;
+
+        private string _karmaTitle = "Unknown";
+        internal string KarmaTitle
+        {
+            get { return _karmaTitle; }
+            set { 
+                Karma = -1;
+                Fame = -1;
+                _karmaTitle = value;
+
+                if (NameToFameKarma.ContainsKey(value))
+                {
+                    Fame = NameToFameKarma[value].Item1;
+                    Karma = NameToFameKarma[value].Item2;
+                }
+            }
         }
 
         internal string Name
