@@ -595,6 +595,9 @@ namespace RazorEnhanced.UOS
             m_Interpreter.RegisterCommandHandler("script", ManageScripts); //TODO: add "transformations" list
 
             // Expressions
+            m_Interpreter.RegisterExpressionHandler("true", (ASTNode node, Argument[] args, bool quiet) => true);
+            m_Interpreter.RegisterExpressionHandler("false", (ASTNode node, Argument[] args, bool quiet) => false);
+
             m_Interpreter.RegisterExpressionHandler("usetype", UseType);
             m_Interpreter.RegisterExpressionHandler("movetype", MoveType);
 
@@ -7056,24 +7059,24 @@ namespace RazorEnhanced.UOS
         public void RegisterExpressionHandler(string keyword, ExpressionHandler handler)
         {
             //_exprHandlers[keyword] = (expression, args, quiet) => handler(expression, args, quiet);
-            _exprHandlers[keyword] = handler;
+            _exprHandlers[keyword.ToLower()] = handler;
             RegisterCommandHandler(keyword, ExpressionCommand); // also register expressions as commands
         }
 
         public ExpressionHandler GetExpressionHandler(string keyword)
         {
-            _exprHandlers.TryGetValue(keyword, out ExpressionHandler expression);
+            _exprHandlers.TryGetValue(keyword.ToLower(), out ExpressionHandler expression);
             return expression;
         }
 
         public void RegisterCommandHandler(string keyword, CommandHandler handler, string docString = "default")
         {
-            _commandHandlers[keyword] = handler;
+            _commandHandlers[keyword.ToLower()] = handler;
             DocItem di = new DocItem("", "UOSteamEngine", keyword, docString);
         }
         public CommandHandler GetCommandHandler(string keyword)
         {
-            _commandHandlers.TryGetValue(keyword, out CommandHandler handler);
+            _commandHandlers.TryGetValue(keyword.ToLower(), out CommandHandler handler);
 
             return handler;
         }
