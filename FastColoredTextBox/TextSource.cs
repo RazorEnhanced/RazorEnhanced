@@ -13,7 +13,7 @@ namespace FastColoredTextBoxNS
     /// </summary>
     public class TextSource : IList<Line>, IDisposable
     {
-        readonly protected List<Line> lines = new List<Line>();
+        readonly protected List<Line> lines = new();
         protected LinesAccessor linesAccessor;
         int lastLineUniqueId;
         public CommandManager Manager { get; set; }
@@ -181,7 +181,7 @@ namespace FastColoredTextBoxNS
 
         public virtual void RemoveLine(int index, int count)
         {
-            List<int> removedLineIds = new List<int>();
+            List<int> removedLineIds = new();
             //
             if (count > 0)
                 if (IsNeedBuildRemovedLineIds)
@@ -330,13 +330,11 @@ namespace FastColoredTextBoxNS
 
         public virtual void SaveToFile(string fileName, Encoding enc)
         {
-            using (StreamWriter sw = new StreamWriter(fileName, false, enc))
-            {
-                for (int i = 0; i < Count - 1; i++)
-                    sw.WriteLine(lines[i].Text);
+            using StreamWriter sw = new(fileName, false, enc);
+            for (int i = 0; i < Count - 1; i++)
+                sw.WriteLine(lines[i].Text);
 
-                sw.Write(lines[Count - 1].Text);
-            }
+            sw.Write(lines[Count - 1].Text);
         }
     }
 }

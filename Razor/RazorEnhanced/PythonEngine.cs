@@ -1,9 +1,7 @@
-using Assistant;
 using IronPython.Compiler;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
-using Microsoft.Scripting.Debugging;
 using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
@@ -120,14 +118,14 @@ namespace RazorEnhanced
         public void SetStdout(Action<string> stdoutWriter)
         {
             m_OutputWriter = stdoutWriter;
-            PythonWriter outputWriter = new PythonWriter(stdoutWriter);
+            PythonWriter outputWriter = new(stdoutWriter);
             Engine.Runtime.IO.SetOutput(outputWriter, Encoding.ASCII);
         }
 
         public void SetStderr(Action<string> stderrWriter)
         {
             m_ErrorWriter = stderrWriter;
-            PythonWriter errorWriter = new PythonWriter(stderrWriter);
+            PythonWriter errorWriter = new(stderrWriter);
             Engine.Runtime.IO.SetErrorOutput(errorWriter, Encoding.ASCII);
         }
 

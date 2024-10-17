@@ -11,7 +11,7 @@ namespace Assistant
 {
     internal class ScreenCapManager
     {
-        private static readonly TimerCallback m_DoCaptureCall = new TimerCallback(CaptureNow);
+        private static readonly TimerCallback m_DoCaptureCall = new(CaptureNow);
 
         public static void Initialize()
         {
@@ -27,7 +27,7 @@ namespace Assistant
             // get te hDC of the target window
             IntPtr hdcSrc = User32.GetWindowDC(handle);
             // get the size
-            User32.RECT windowRect = new User32.RECT();
+            User32.RECT windowRect = new();
             User32.GetWindowRect(handle, ref windowRect);
             int width = windowRect.right - windowRect.left;
             int height = windowRect.bottom - windowRect.top;
@@ -132,7 +132,7 @@ namespace Assistant
         }
 
 
-        private static readonly Object m_lock = new Object();
+        private static readonly Object m_lock = new();
         internal static void DisplayTo(ListBox lb)
         {
             string path = RazorEnhanced.Settings.General.ReadString("CapPath");

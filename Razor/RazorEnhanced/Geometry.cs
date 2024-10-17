@@ -4,8 +4,8 @@ namespace RazorEnhanced
     {
         private Assistant.Point2D m_AssistantPoint2D;
 
-        internal static readonly Point2D Zero = new Point2D(new Assistant.Point2D(0, 0));
-        internal static readonly Point2D MinusOne = new Point2D(new Assistant.Point2D(-1, -1));
+        internal static readonly Point2D Zero = new(new Assistant.Point2D(0, 0));
+        internal static readonly Point2D MinusOne = new(new Assistant.Point2D(-1, -1));
 
         internal Point2D(Assistant.Point2D point2D)
         {
@@ -25,8 +25,8 @@ namespace RazorEnhanced
     {
         private Assistant.Point3D m_AssistantPoint3D;
 
-        internal static readonly Point3D Zero = new Point3D(new Assistant.Point3D(0, 0, 0));
-        internal static readonly Point3D MinusOne = new Point3D(new Assistant.Point3D(-1, -1, 0));
+        internal static readonly Point3D Zero = new(new Assistant.Point3D(0, 0, 0));
+        internal static readonly Point3D MinusOne = new(new Assistant.Point3D(-1, -1, 0));
 
         internal Point3D(Assistant.Point3D point3D)
         {

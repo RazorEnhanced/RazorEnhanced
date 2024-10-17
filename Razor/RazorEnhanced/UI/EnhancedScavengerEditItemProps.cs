@@ -7,7 +7,7 @@ namespace RazorEnhanced.UI
 {
     public partial class EnhancedScavengerEditItemProps : Form
     {
-        private readonly List<Scavenger.ScavengerItem.Property> m_proplist = new List<Scavenger.ScavengerItem.Property>();
+        private readonly List<Scavenger.ScavengerItem.Property> m_proplist = new();
         private readonly string m_name;
         private readonly string m_graphics;
         private readonly string m_color;
@@ -32,7 +32,7 @@ namespace RazorEnhanced.UI
             Close();
         }
 
-        internal static List<string> m_default_prop = new List<string>
+        internal static List<string> m_default_prop = new()
         {
             "Balanced",
             "Cold Resist",
@@ -206,7 +206,7 @@ namespace RazorEnhanced.UI
 
         private void SaveData()
         {
-            List<Scavenger.ScavengerItem.Property> propslist = new List<Scavenger.ScavengerItem.Property>();
+            List<Scavenger.ScavengerItem.Property> propslist = new();
             foreach (DataGridViewRow row in scavengerpropGridView.Rows)
             {
                 if (row.IsNewRow)

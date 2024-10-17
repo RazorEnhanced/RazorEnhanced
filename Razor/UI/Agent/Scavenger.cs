@@ -30,7 +30,7 @@ namespace Assistant
                     return;
 
                 DataGridViewRow row = scavengerdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
-                EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row)
+                EnhancedScavengerEditItemProps editProp = new(ref row)
                 {
                     TopMost = true
                 };

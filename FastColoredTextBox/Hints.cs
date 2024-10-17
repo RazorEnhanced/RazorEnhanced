@@ -12,7 +12,7 @@ namespace FastColoredTextBoxNS
     public class Hints : ICollection<Hint>, IDisposable
     {
         FastColoredTextBox tb;
-        List<Hint> items = new List<Hint>();
+        List<Hint> items = new();
 
         public Hints(FastColoredTextBox tb)
         {

@@ -50,7 +50,7 @@ namespace FastColoredTextBoxNS
         public string GetHtml(FastColoredTextBox tb)
         {
             this.tb = tb;
-            Range sel = new Range(tb);
+            Range sel = new(tb);
             sel.SelectAll();
             return GetHtml(sel);
         }
@@ -58,9 +58,9 @@ namespace FastColoredTextBoxNS
         public string GetHtml(Range r)
         {
             this.tb = r.tb;
-            Dictionary<StyleIndex, object> styles = new Dictionary<StyleIndex, object>();
-            StringBuilder sb = new StringBuilder();
-            StringBuilder tempSB = new StringBuilder();
+            Dictionary<StyleIndex, object> styles = new();
+            StringBuilder sb = new();
+            StringBuilder tempSB = new();
             StyleIndex currentStyleId = StyleIndex.None;
             r.Normalize();
             int currentLine = r.Start.iLine;
@@ -144,7 +144,7 @@ namespace FastColoredTextBoxNS
 
         private string GetCss(StyleIndex styleIndex)
         {
-            List<Style> styles = new List<Style>();
+            List<Style> styles = new();
             //find text renderer
             TextStyle textStyle = null;
             int mask = 1;

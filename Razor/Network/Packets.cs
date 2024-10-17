@@ -84,18 +84,18 @@ namespace Assistant
                 Write((uint)item.Serial);
                 Write((ushort)item.TypeID);
                 Write((sbyte)0);
-                Write((ushort)item.Amount);
+                Write(item.Amount);
                 Write((ushort)item.Position.X);
                 Write((ushort)item.Position.Y);
 
                 if (useKR)
-                    Write((byte)item.GridNum);
+                    Write(item.GridNum);
 
                 if (item.Container is Item)
                     Write((uint)((Item)item.Container).Serial);
                 else
                     Write((uint)0);
-                Write((ushort)item.Hue);
+                Write(item.Hue);
             }
         }
     }
@@ -152,7 +152,7 @@ namespace Assistant
         internal DoubleClick(Serial clicked)
             : base(0x06, 5)
         {
-            Write((uint)clicked.Value);
+            Write(clicked.Value);
         }
     }
 
@@ -188,21 +188,21 @@ namespace Assistant
         internal TargetResponse(TargetInfo info)
             : base(0x6C, 19)
         {
-            Write((byte)info.Type);
-            Write((uint)info.TargID);
-            Write((byte)info.Flags);
+            Write(info.Type);
+            Write(info.TargID);
+            Write(info.Flags);
             Write((uint)info.Serial);
             Write((ushort)info.X);
             Write((ushort)info.Y);
             Write((short)info.Z);
-            Write((ushort)info.Gfx);
+            Write(info.Gfx);
         }
 
         internal TargetResponse(uint id, Mobile m)
             : base(0x6C, 19)
         {
             Write((byte)0x00); // target object
-            Write((uint)id);
+            Write(id);
             Write((byte)0); // flags
             Write((uint)m.Serial);
             Write((ushort)m.Position.X);
@@ -215,7 +215,7 @@ namespace Assistant
             : base(0x6C, 19)
         {
             Write((byte)0x00); // target object
-            Write((uint)id);
+            Write(id);
             Write((byte)0); // flags
             Write((uint)item.Serial);
             Write((ushort)item.Position.X);
@@ -231,7 +231,7 @@ namespace Assistant
             : base(0x6C, 19)
         {
             Write((byte)0);
-            Write((uint)id);
+            Write(id);
             Write((byte)0);
             Write((uint)0);
             Write((ushort)0xFFFF);
@@ -256,7 +256,7 @@ namespace Assistant
             : base(0x6C, 19)
         {
             Write((byte)0);
-            Write((uint)id);
+            Write(id);
             Write((byte)3);
             Fill();
         }
@@ -267,7 +267,7 @@ namespace Assistant
         internal SkillsQuery(Mobile m)
             : base(0x34, 10)
         {
-            Write((uint)0xEDEDEDED); // que el fuck, osi
+            Write(0xEDEDEDED); // que el fuck, osi
             Write((byte)0x05);
             Write(m.Serial);
         }
@@ -278,7 +278,7 @@ namespace Assistant
         internal StatusQuery(Serial s)
             : base(0x34, 10)
         {
-            Write((uint)0xEDEDEDED);
+            Write(0xEDEDEDED);
             Write((byte)0x04);
             Write(s);
         }
@@ -336,10 +336,10 @@ namespace Assistant
             Write((byte)0xDF);
 
             Write((short)s.Index);
-            Write((ushort)s.FixedValue);
-            Write((ushort)s.FixedBase);
+            Write(s.FixedValue);
+            Write(s.FixedBase);
             Write((byte)s.Lock);
-            Write((ushort)s.FixedCap);
+            Write(s.FixedCap);
         }
     }
 
@@ -448,7 +448,7 @@ namespace Assistant
             WriteAsciiFixed(lang, 4);
             if (keys != null && keys.Count > 1)
             {
-                Write((ushort)keys[0]);
+                Write(keys[0]);
                 for (int i = 1; i < keys.Count; i++)
                     Write((byte)keys[i]);
                 WriteUTF8Null(text);
@@ -594,9 +594,9 @@ namespace Assistant
 
             for (int i = 0; i < list.Count; i++)
             {
-                SellListItem sli = (SellListItem)list[i];
+                SellListItem sli = list[i];
                 Write((uint)sli.Serial);
-                Write((ushort)sli.Amount);
+                Write(sli.Amount);
             }
         }
     }
@@ -637,8 +637,8 @@ namespace Assistant
             Write((short)m.AR);
             Write((short)m.Weight);
             Write((short)m.StatCap);
-            Write((byte)m.Followers);
-            Write((byte)m.FollowersMax);
+            Write(m.Followers);
+            Write(m.FollowersMax);
         }
     }
 
@@ -674,7 +674,7 @@ namespace Assistant
                 dir |= Direction.running;
             }
             Write((byte)dir);
-            Write((byte)seq);
+            Write(seq);
             //Write( (uint)Utility.Random( 0x7FFFFFFF ) ); // fastwalk key (unused)
             Write((uint)0);
             //if (PlayerData.FastWalkKey < 5)
@@ -690,7 +690,7 @@ namespace Assistant
         internal MoveReject(byte seq, Mobile m)
             : base(0x21, 8)
         {
-            Write((byte)seq);
+            Write(seq);
             Write((short)m.Position.X);
             Write((short)m.Position.Y);
             Write((byte)m.Direction);
@@ -703,8 +703,8 @@ namespace Assistant
         internal MoveAcknowledge(byte seq, byte noto)
             : base(0x22, 3)
         {
-            Write((byte)seq);
-            Write((byte)noto);
+            Write(seq);
+            Write(noto);
         }
     }
 
@@ -731,15 +731,15 @@ namespace Assistant
 
             EnsureCapacity(3 + 4 + 4 + 4 + 4 + switches.Length * 4 + 4 + entries.Length * 4 + txtlenght * 2);
 
-            Write((uint)serial);
-            Write((uint)tid);
-            Write((int)bid);
+            Write(serial);
+            Write(tid);
+            Write(bid);
 
-            Write((int)switches.Length);
+            Write(switches.Length);
             foreach (int t in switches)
-                Write((int)t);
+                Write(t);
 
-            Write((int)entries.Length);
+            Write(entries.Length);
             foreach (GumpTextEntry t in entries)
             {
                 Write((short)t.EntryID);
@@ -768,8 +768,8 @@ namespace Assistant
         {
             EnsureCapacity(12);
             Write(display ? (byte)1 : (byte)0);
-            Write((ushort)(mx));
-            Write((ushort)(my));
+            Write(mx);
+            Write(my);
             Write((uint)target);
         }
     }
@@ -821,7 +821,7 @@ namespace Assistant
             EnsureCapacity(1 + 2 + 2 + 4 + 4);
             Write((ushort)0x2C); // use targeted item
             Write(useItem); // use item
-            Write((uint)target); // on target
+            Write(target); // on target
         }
     }
 
@@ -833,7 +833,7 @@ namespace Assistant
             EnsureCapacity(1 + 2 + 2 + 2 + 4);
             Write((ushort)0x2D); // cast targeted spell
             Write(spell); // spell id
-            Write((uint)target);
+            Write(target);
         }
     }
 
@@ -845,7 +845,7 @@ namespace Assistant
             EnsureCapacity(1 + 2 + 2 + 2 + 4);
             Write((ushort)0x2E); // use skill
             Write(useSkill); // skill
-            Write((uint)target); // on target
+            Write(target); // on target
         }
     }
     internal sealed class TargeByResource : Packet
@@ -855,7 +855,7 @@ namespace Assistant
         {
             EnsureCapacity(11);
             Write((ushort)0x30); // command
-            Write((uint)Serial); // Tools
+            Write(Serial); // Tools
             Write((ushort)ResourceType); // Resource type
         }
     }
@@ -929,10 +929,10 @@ namespace Assistant
             //uint linesCount = 0;
             //uint uncompGumpStringsLength = 543;
             EnsureCapacity(4 + 4 + 4 + 4 + 4 + 4 + compGumpEntries.Length + 4 + 4 + 4 + 4 + compGumpStrings.Length);
-            Write((uint)gumpSerial);
-            Write((uint)gumpId);
-            Write((uint)gumpX);
-            Write((uint)gumpY);
+            Write(gumpSerial);
+            Write(gumpId);
+            Write(gumpX);
+            Write(gumpY);
 
             byte[] dest = new byte[gumpDefinition.Length]; // compressed SHOULD be smalled than uncompressed
             int destLen = dest.Length;
@@ -952,43 +952,41 @@ namespace Assistant
 
             Write((uint)destLen + 4);
             Write((uint)gumpDefinition.Length);
-            Write((byte[])dest, 0, destLen);
+            Write(dest, 0, destLen);
             Write((uint)gumpStrings.Count);
 
-            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+            using System.IO.MemoryStream ms = new();
+            foreach (string s in gumpStrings)
             {
-                foreach (string s in gumpStrings)
-                {
-                    short len = (short)s.Length;
-                    byte[] lenBytes = BitConverter.GetBytes(len);
-                    ms.WriteByte(lenBytes[1]);
-                    ms.WriteByte(lenBytes[0]);
-                    char[] charArray = new char[len];
-                    s.CopyTo(0, charArray, 0, len);
-                    byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(s);
-                    ms.Write(bytes, 0, bytes.Length);
-                }
-                //ms.Flush();
-                byte[] textBuffer = ms.ToArray();
-                int compressedSize = textBuffer.Length + 10;
-                byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
-
-
-                ZLibError compResult2 = ZLibError.Z_ERRNO;
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    compResult2 = DLLImport.ZLib_linux.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
-                }
-                else
-                {
-                    compResult2 = DLLImport.ZLib_windows.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
-                }
-                bool worked2 = (compResult2 == ZLibError.Z_OK);
-
-                Write((uint)compressedSize + 4);
-                Write((uint)textBuffer.Length);
-                Write((byte[])compressedData, 0, compressedSize);
+                short len = (short)s.Length;
+                byte[] lenBytes = BitConverter.GetBytes(len);
+                ms.WriteByte(lenBytes[1]);
+                ms.WriteByte(lenBytes[0]);
+                char[] charArray = new char[len];
+                s.CopyTo(0, charArray, 0, len);
+                byte[] bytes = System.Text.Encoding.BigEndianUnicode.GetBytes(s);
+                ms.Write(bytes, 0, bytes.Length);
             }
+            //ms.Flush();
+            byte[] textBuffer = ms.ToArray();
+            int compressedSize = textBuffer.Length + 10;
+            byte[] compressedData = new byte[compressedSize + 10]; // compressed SHOULD be smalled than uncompressed
+
+
+            ZLibError compResult2 = ZLibError.Z_ERRNO;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                compResult2 = DLLImport.ZLib_linux.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+            }
+            else
+            {
+                compResult2 = DLLImport.ZLib_windows.compress(compressedData, ref compressedSize, textBuffer, textBuffer.Length);
+            }
+            bool worked2 = (compResult2 == ZLibError.Z_OK);
+
+            Write((uint)compressedSize + 4);
+            Write((uint)textBuffer.Length);
+            Write(compressedData, 0, compressedSize);
         }
     }
 
@@ -1012,7 +1010,7 @@ namespace Assistant
 
             Write((short)0x04);
             Write((int)typeID);
-            Write((int)0);
+            Write(0);
         }
     }
 
@@ -1110,11 +1108,11 @@ namespace Assistant
             Write((byte)m.Direction);
             Write((ushort)hue);
             Write((byte)m.GetPacketFlags());
-            Write((byte)m.Notoriety);
+            Write(m.Notoriety);
 
             for (int i = 0; i < count; ++i)
             {
-                Item item = (Item)m.Contains[i];
+                Item item = m.Contains[i];
                 Write((uint)item.Serial);
                 Write((ushort)item.TypeID);
                 Write((byte)item.Layer);
@@ -1129,7 +1127,7 @@ namespace Assistant
                     else if (m.Paralized) // Caso Paral
                         hue = (int)RazorEnhanced.Filters.HighLightColor.Paralized;
                     else
-                        Write((ushort)item.Hue);
+                        Write(item.Hue);
                 }
             }
             Write((uint)0); // terminate
@@ -1176,7 +1174,7 @@ namespace Assistant
         internal MenuResponse(uint serial, ushort menuid, ushort index, ushort itemid, ushort hue)
             : base(0x7D, 13)
         {
-            Write((uint)serial);
+            Write(serial);
             Write(menuid);
             Write(index);
             Write(itemid);
@@ -1215,7 +1213,7 @@ namespace Assistant
             //BYTE[2] model on send, color on return from client (default on server send is 0x0FAB)
             Write((uint)target);
             Write((ushort)model);
-            Write((ushort)color);
+            Write(color);
         }
 
     }
@@ -1227,7 +1225,7 @@ namespace Assistant
         {
             Write((byte)dir);
             Write(seq);
-            Write((int)-1); // key
+            Write(-1); // key
         }
     }
 
@@ -1309,11 +1307,11 @@ namespace Assistant
                 serial |= 0x80000000;
             else
                 serial &= 0x7FFFFFFF;
-            Write((uint)serial);
+            Write(serial);
             ushort maskedItemID = (ushort)(itemID & 0x7FFF);
             Write(maskedItemID);
             if (amount != 0)
-                Write((ushort)amount);
+                Write(amount);
 
             x &= 0x7FFF;
             if (direction != 0)
@@ -1328,12 +1326,12 @@ namespace Assistant
 
             Write((ushort)y);
             if (direction != 0)
-                Write((byte)direction);
+                Write(direction);
             Write((sbyte)item.Position.Z);
             if (hue != 0)
-                Write((ushort)hue);
+                Write(hue);
             if (flags != 0)
-                Write((byte)flags);
+                Write(flags);
         }
     }
     internal sealed class SAWorldItem : Packet
@@ -1388,13 +1386,13 @@ namespace Assistant
             byte artDataId = item.ArtID;
             //if ((0x4000 & itemID) == 0x4000)
             //    artDataId = 2;
-            Write((byte)artDataId);
+            Write(artDataId);
 
-            Write((uint)serial);
+            Write(serial);
             Write((ushort)(itemID & 0x7FFF));
-            Write((byte)direction); // graph inc ?
+            Write(direction); // graph inc ?
 
-            Write((ushort)amount);
+            Write(amount);
             Write((ushort)0); // unknown
 
             x &= 0x7FFF;
@@ -1405,10 +1403,10 @@ namespace Assistant
 
             Write((sbyte)item.Position.Z);
 
-            Write((byte)light);
+            Write(light);
 
-            Write((ushort)hue);
-            Write((byte)flags);
+            Write(hue);
+            Write(flags);
             Write((ushort)0);
         }
     }
@@ -1463,14 +1461,14 @@ namespace Assistant
             : base(0x1B, 37)
         {
             Write((int)m.Serial);
-            Write((int)0);
+            Write(0);
             Write((ushort)m.TypeID);
             Write((short)m.Position.X);
             Write((short)m.Position.Y);
             Write((short)m.Position.Z);
             Write((byte)m.Direction);
             Write((byte)0);
-            Write((int)-1);
+            Write(-1);
 
             Write((short)0);
             Write((short)0);
@@ -1517,7 +1515,7 @@ namespace Assistant
             this.EnsureCapacity(6);
 
             Write((short)0x08);
-            Write((byte)map);
+            Write(map);
         }
     }
 
@@ -1527,7 +1525,7 @@ namespace Assistant
             : base(0xBC, 3)
         {
             Write((byte)season);
-            Write((bool)playSound);
+            Write(playSound);
         }
     }
 
@@ -1551,7 +1549,7 @@ namespace Assistant
         internal SupportedFeatures(ushort val)
             : base(0xB9, 3)
         {
-            Write((ushort)val); // 0x01 = T2A, 0x02 = LBR
+            Write(val); // 0x01 = T2A, 0x02 = LBR
         }
     }
 
@@ -1564,10 +1562,10 @@ namespace Assistant
 
             Write((short)0x0018);
 
-            Write((int)(patches.Length / 2));
+            Write(patches.Length / 2);
 
             foreach (int t in patches)
-                Write((int)t);
+                Write(t);
 
         }
     }
@@ -1632,7 +1630,7 @@ namespace Assistant
             : base(0x4E, 6)
         {
             Write((int)m.Serial);
-            Write((sbyte)m.LocalLightLevel);
+            Write(m.LocalLightLevel);
         }
     }
 
@@ -1723,10 +1721,10 @@ namespace Assistant
             Write((UInt16)1); // packet id
             Write((UInt32)serial); // serial
             Write((UInt16)0);
-            Write((Int32)0);
+            Write(0);
             foreach (var i in propertyList.Content)
             {
-                Write((Int32)i.Number); // cliloc
+                Write(i.Number); // cliloc
                 ushort len = (ushort)(i.Args.Length * 2);
                 Write(len);
                 if (i.Args.Length > 0)
@@ -1748,7 +1746,7 @@ namespace Assistant
 
             Write((ushort)0x15);
             Write((uint)entity);
-            Write((ushort)idx);
+            Write(idx);
         }
     }
 
@@ -1781,7 +1779,7 @@ namespace Assistant
 
             Write((ushort)0x1D);
             Write((uint)house.Serial);
-            Write((int)house.HouseRevision);
+            Write(house.HouseRevision);
         }
     }
 
@@ -1795,10 +1793,10 @@ namespace Assistant
 
             this.EnsureCapacity(1 + 2 + 4 + 1 + 1 + 1 + 2 + resp.Length + 1);
 
-            Write((int)serial);
-            Write((byte)type);
-            Write((byte)index);
-            Write((bool)ok);
+            Write(serial);
+            Write(type);
+            Write(index);
+            Write(ok);
             Write((short)(resp.Length + 1));
             WriteAsciiNull(resp);
         }
@@ -1836,6 +1834,16 @@ namespace Assistant
             Write((short)0);
             Write((byte)m.Direction);
             Write((sbyte)m.Position.Z);
+        }
+    }
+    internal sealed class RequestProfile : Packet
+    {
+        internal RequestProfile(int serial)
+            : base(0xB8)
+        {
+            EnsureCapacity(6);
+            Write((byte)0x00);
+            Write(serial);
         }
     }
 
@@ -1886,7 +1894,7 @@ namespace Assistant
             EnsureCapacity(1 + 2 + 2 + 2 + 2 + 1);
             Write((ushort)0x06);   // Command
             Write((byte)0x06);       // Party command
-            Write((byte)canloot);
+            Write(canloot);
         }
     }
 
@@ -1909,7 +1917,7 @@ namespace Assistant
             EnsureCapacity(2 + 2 + 2 + 4);
             Write((ushort)0x06);   // Command
             Write((byte)0x02);       // remove member
-            Write((uint)serial);
+            Write(serial);
         }
     }
 
@@ -1921,7 +1929,7 @@ namespace Assistant
             EnsureCapacity(2 + 2 + 2 + 4);
             Write((ushort)0x32);   // Command
             Write((ushort)0x01);
-            Write((int)0x00);
+            Write(0x00);
         }
     }
 
@@ -1931,7 +1939,7 @@ namespace Assistant
             : base(0xD7)
         {
             EnsureCapacity(2 + 4 + 2 + 2);
-            Write((uint)serial);
+            Write(serial);
             Write((ushort)0x32);
             Write((byte)0x0A);
         }
@@ -1943,7 +1951,7 @@ namespace Assistant
             : base(0xD7)
         {
             EnsureCapacity(2 + 4 + 2 + 2);
-            Write((uint)serial);
+            Write(serial);
             Write((ushort)0x28);
             Write((byte)0x0A);
         }
@@ -1992,9 +2000,9 @@ namespace Assistant
                 EnsureCapacity(18);
             }
 
-            Write((uint)serial);
-            Write((uint)promptid);
-            Write((uint)operation);
+            Write(serial);
+            Write(promptid);
+            Write(operation);
 
             if (string.IsNullOrEmpty(lang))
                 lang = "ENU";
@@ -2011,7 +2019,7 @@ namespace Assistant
         internal RenameRequest(uint serial, string name)
             : base(0x75, 65)
         {
-            Write((uint)serial);
+            Write(serial);
             WriteAsciiFixed(name, 30);
         }
     }
@@ -2025,7 +2033,7 @@ namespace Assistant
 
             Write((byte)serials.Count);
             foreach (uint serial in serials)
-                Write((uint)serial);
+                Write(serial);
         }
     }
 
@@ -2038,7 +2046,7 @@ namespace Assistant
 
             Write((byte)layers.Count);
             foreach (ushort layer in layers)
-                Write((ushort)layer);
+                Write(layer);
         }
     }
 
@@ -2066,7 +2074,7 @@ namespace Assistant
         {
             Write((ushort)17);
             Write((byte)2);
-            Write((uint)TradeID);
+            Write(TradeID);
             Write((uint)(accept ? 1 : 0));
             Write((uint)0);
             Write((byte)0);
@@ -2080,7 +2088,7 @@ namespace Assistant
         {
             Write((ushort)17);
             Write((byte)1);
-            Write((uint)TradeID);
+            Write(TradeID);
             Write((uint)0);
             Write((uint)0);
             Write((byte)0);
@@ -2094,9 +2102,9 @@ namespace Assistant
         {
             Write((ushort)17);
             Write((byte)3);
-            Write((uint)TradeID);
-            Write((uint)gold);
-            Write((uint)paltinum);
+            Write(TradeID);
+            Write(gold);
+            Write(paltinum);
             Write((byte)0);
         }
     }

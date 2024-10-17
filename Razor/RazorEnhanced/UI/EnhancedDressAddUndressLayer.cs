@@ -24,7 +24,7 @@ namespace RazorEnhanced.UI
         {
             if (layerlist.Text != String.Empty)
             {
-                Dress.DressItemNew toinsert = new RazorEnhanced.Dress.DressItemNew("UNDRESS", (Assistant.Layer)layerlist.SelectedItem, 0, true);
+                Dress.DressItemNew toinsert = new("UNDRESS", (Assistant.Layer)layerlist.SelectedItem, 0, true);
                 Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
                 Dress.InitGrid();
                 Close();

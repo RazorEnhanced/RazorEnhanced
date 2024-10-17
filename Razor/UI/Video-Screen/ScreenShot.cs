@@ -19,7 +19,7 @@ namespace Assistant
 
         private void setScnPath_Click(object sender, System.EventArgs e)
         {
-            FolderBrowserDialog folder = new FolderBrowserDialog
+            FolderBrowserDialog folder = new()
             {
                 Description = Language.GetString(LocString.SelSSFolder),
                 SelectedPath = RazorEnhanced.Settings.General.ReadString("CapPath"),
@@ -86,7 +86,7 @@ namespace Assistant
                 file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), screensList.SelectedItem.ToString());
                 file = Utility.GetCaseInsensitiveFilePath(file);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 RazorEnhanced.UI.RE_MessageBox.Show("File Not Found",
                     Language.Format(LocString.FileNotFoundA1, file),
@@ -96,11 +96,9 @@ namespace Assistant
                 return;
             }
 
-            using (Stream reader = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using Stream reader = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             {
-                {
-                    screenPrev.Image = Image.FromStream(reader);
-                }
+                screenPrev.Image = Image.FromStream(reader);
             }
         }
 
@@ -108,7 +106,7 @@ namespace Assistant
         {
             if (e.Button == MouseButtons.Right && e.Clicks == 1)
             {
-                ContextMenu menu = new ContextMenu();
+                ContextMenu menu = new();
                 menu.MenuItems.Add("Delete", new EventHandler(DeleteScreenCap));
                 if (screensList.SelectedIndex == -1)
                     menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
@@ -162,7 +160,7 @@ namespace Assistant
                 return;
 
             string[] files = Directory.GetFiles(dir, "*.jpg");
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             int failed = 0;
             for (int i = 0; i < files.Length; i++)
             {

@@ -909,7 +909,7 @@ namespace Ultima
 
                         bin.Write((int)m_LandData[i].Flags);
                         if (useNewTileDataFormat)
-                            bin.Write((int)m_LandData[i].Unk1);
+                            bin.Write(m_LandData[i].Unk1);
 
                         bin.Write(m_LandData[i].TextureID);
                         byte[] b = new byte[20];
@@ -930,7 +930,7 @@ namespace Ultima
 
                         bin.Write((int)m_ItemData[i].Flags);
                         if (useNewTileDataFormat)
-                            bin.Write((int)m_ItemData[i].Unk1);
+                            bin.Write(m_ItemData[i].Unk1);
 
                         bin.Write(m_ItemData[i].Weight);
                         bin.Write(m_ItemData[i].Quality);

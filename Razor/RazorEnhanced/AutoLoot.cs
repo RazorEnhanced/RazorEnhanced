@@ -28,7 +28,7 @@ namespace RazorEnhanced
         private static int m_autolootbag;
         private static bool m_noopencorpse;
         private static string m_autolootlist;
-        private static readonly Queue<int> m_IgnoreCorpseList = new Queue<int>();
+        private static readonly Queue<int> m_IgnoreCorpseList = new();
         internal static volatile bool LockTable = false;
 
         public class AutoLootItem : ListAbleItem
@@ -123,7 +123,7 @@ namespace RazorEnhanced
             }
         }
 
-        internal static ConcurrentQueue<SerialToGrab> SerialToGrabList = new ConcurrentQueue<SerialToGrab>();
+        internal static ConcurrentQueue<SerialToGrab> SerialToGrabList = new();
 
         internal class AutoLootList
         {
@@ -328,7 +328,7 @@ namespace RazorEnhanced
 
         internal static void AddList(string newList)
         {
-            RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
+            RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, 0, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
 
             RazorEnhanced.AutoLoot.RefreshLists();
             RazorEnhanced.AutoLoot.InitGrid();
@@ -399,7 +399,7 @@ namespace RazorEnhanced
 
         internal static List<Item> ItemizeAllItems(List<Item> container)
         {
-            List<Item> items = new List<Item>();
+            List<Item> items = new();
             if (container == null) // not valid serial or container not found
             {
                 return items;
@@ -538,7 +538,7 @@ namespace RazorEnhanced
             if (!grabItem.Movable || !grabItem.Visible)
                 return;
 
-            SerialToGrab data = new SerialToGrab(grabItem.Serial, corpseserial, autoLoootItem.LootBagOverride);
+            SerialToGrab data = new(grabItem.Serial, corpseserial, autoLoootItem.LootBagOverride);
 
             if (autoLoootItem.Properties.Count > 0) // Item con props
             {
@@ -566,11 +566,11 @@ namespace RazorEnhanced
                 SerialToGrabList.Enqueue(data);
         }
 
-        private static readonly Items.AutoLootFilter m_corpsefilter = new Items.AutoLootFilter
+        private static readonly Items.AutoLootFilter m_corpsefilter = new()
         {
         };
 
-        private static readonly object _lock = new object();
+        private static readonly object _lock = new();
         internal static void AutoRun()
         {
             if (!Client.Running)
@@ -674,7 +674,7 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static List<AutoLootItem> GetList(string lootListName, bool wantMinusOnes = false)
         {
-            List<AutoLootItem> retList = new List<AutoLootItem>();
+            List<AutoLootItem> retList = new();
 
             if (Settings.AutoLoot.ListExists(lootListName))
             {

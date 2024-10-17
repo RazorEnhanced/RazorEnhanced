@@ -65,7 +65,7 @@ namespace RazorEnhanced
             {
                 foreach (KeyValuePair<string, List<ConfigFiles.Regions.Rectangle>> pair in oldFacet.Towns)
                 {
-                    ConfigFiles.RegionByArea.Area area = new ConfigFiles.RegionByArea.Area(pair.Key);
+                    ConfigFiles.RegionByArea.Area area = new(pair.Key);
                     foreach (ConfigFiles.Regions.Rectangle aRect in pair.Value)
                     {
                         area.rect.Add(new System.Drawing.Rectangle(aRect.X, aRect.Y, aRect.Width, aRect.Height));
@@ -78,7 +78,7 @@ namespace RazorEnhanced
             {
                 foreach (KeyValuePair<string, List<ConfigFiles.Regions.Rectangle>> pair in oldFacet.Dungeons)
                 {
-                    ConfigFiles.RegionByArea.Area area = new ConfigFiles.RegionByArea.Area(pair.Key);
+                    ConfigFiles.RegionByArea.Area area = new(pair.Key);
                     foreach (ConfigFiles.Regions.Rectangle aRect in pair.Value)
                     {
                         area.rect.Add(new System.Drawing.Rectangle(aRect.X, aRect.Y, aRect.Width, aRect.Height));
@@ -91,7 +91,7 @@ namespace RazorEnhanced
             {
                 foreach (KeyValuePair<string, List<ConfigFiles.Regions.Rectangle>> pair in oldFacet.Guarded)
                 {
-                    ConfigFiles.RegionByArea.Area area = new ConfigFiles.RegionByArea.Area(pair.Key);
+                    ConfigFiles.RegionByArea.Area area = new(pair.Key);
                     foreach (ConfigFiles.Regions.Rectangle aRect in pair.Value)
                     {
                         area.rect.Add(new System.Drawing.Rectangle(aRect.X, aRect.Y, aRect.Width, aRect.Height));
@@ -104,7 +104,7 @@ namespace RazorEnhanced
             {
                 foreach (KeyValuePair<string, List<ConfigFiles.Regions.Rectangle>> pair in oldFacet.Forest)
                 {
-                    ConfigFiles.RegionByArea.Area area = new ConfigFiles.RegionByArea.Area(pair.Key);
+                    ConfigFiles.RegionByArea.Area area = new(pair.Key);
                     foreach (ConfigFiles.Regions.Rectangle aRect in pair.Value)
                     {
                         area.rect.Add(new System.Drawing.Rectangle(aRect.X, aRect.Y, aRect.Width, aRect.Height));
@@ -196,7 +196,7 @@ namespace RazorEnhanced
     //other possible names: Serializables, Models, ConfigFiles, DataStorage
     public class ConfigFiles
     {
-        public static Dictionary<string, ushort[]> FilterSounds = new Dictionary<string, ushort[]>();
+        public static Dictionary<string, ushort[]> FilterSounds = new();
 
         public static ConfigData Load(string fullpath, Type configModel)
         {
@@ -220,20 +220,20 @@ namespace RazorEnhanced
         // common class/loader
         public class ConfigData
         {
-            public static ConfigData Data = new ConfigData();
+            public static ConfigData Data = new();
         }
 
         //wands.json
         public class Wands : ConfigData
         {
-            new public static Wands Data = new Wands();
+            new public static Wands Data = new();
             public List<int> WandIDs;
         }
 
         //maps.json
         public class Maps : ConfigData
         {
-            new public static Maps Data = new Maps();
+            new public static Maps Data = new();
             public List<uint> MapIDs;
         }
 
@@ -268,12 +268,12 @@ namespace RazorEnhanced
 
             }
 
-            public static Dictionary<int, Facet> AllFacets = new Dictionary<int, Facet>();
+            public static Dictionary<int, Facet> AllFacets = new();
         }
 
         public class Regions : ConfigData
         {
-            new public static Regions Data = new Regions();
+            new public static Regions Data = new();
 
             public Facet Trammel;
             public Facet Felucca;
@@ -290,7 +290,7 @@ namespace RazorEnhanced
         //foods.json
         public class Foods : ConfigData
         {
-            new public static Foods Data = new Foods();
+            new public static Foods Data = new();
 
             public Dictionary<string, string> Fish;
             public Dictionary<string, string> FruitsAndVegetables;
@@ -300,7 +300,7 @@ namespace RazorEnhanced
         //doors.json
         public class Doors : ConfigData
         {
-            new public static Doors Data = new Doors();
+            new public static Doors Data = new();
             public Dictionary<string, List<DoorID>> DoorType;
             public class DoorID { public int Open, Close; }
 
@@ -309,7 +309,7 @@ namespace RazorEnhanced
         //pathfinding.json
         public class PF_Bypass : ConfigData
         {
-            new public static PF_Bypass Data = new PF_Bypass();
+            new public static PF_Bypass Data = new();
             public List<int> BypassIDs;
 
         }
@@ -317,10 +317,10 @@ namespace RazorEnhanced
         //Keyboard key mappers
         internal class KeyMap : Config
         {
-            private Dictionary<int, int> _keyMap = new Dictionary<int, int>();
+            private Dictionary<int, int> _keyMap = new();
             private readonly string _filePath;
             private readonly FileSystemWatcher _fileWatcher;
-            private readonly object _lock = new object();
+            private readonly object _lock = new();
 
             internal Dictionary<int, int> Data
             {

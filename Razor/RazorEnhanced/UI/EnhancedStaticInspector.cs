@@ -24,7 +24,7 @@ namespace RazorEnhanced.UI
             this.Close();
         }
 
-        private List<Statics.TileInfo> m_static = new List<Statics.TileInfo>();
+        private List<Statics.TileInfo> m_static = new();
         private void EnhancedStaticInspector_Load(object sender, EventArgs e)
         {
             // Land data

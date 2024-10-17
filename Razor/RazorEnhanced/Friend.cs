@@ -198,7 +198,7 @@ namespace RazorEnhanced
                     else
                         return Engine.MainWindow.FriendListSelect.Text;
                 }
-                catch (System.ComponentModel.InvalidAsynchronousStateException ex)
+                catch (System.ComponentModel.InvalidAsynchronousStateException)
                 {
                     return "";
                 }
@@ -266,7 +266,7 @@ namespace RazorEnhanced
 
                 foreach (FriendPlayer player in players)
                 {
-                    ListViewItem listitem = new ListViewItem
+                    ListViewItem listitem = new()
                     {
                         Checked = player.Selected
                     };
@@ -293,7 +293,7 @@ namespace RazorEnhanced
 
                 foreach (FriendGuild guild in guilds)
                 {
-                    ListViewItem listitem = new ListViewItem
+                    ListViewItem listitem = new()
                     {
                         Checked = guild.Selected
                     };
@@ -327,7 +327,7 @@ namespace RazorEnhanced
         internal static void AddPlayerToList(string name, int serial)
         {
             string selection = Engine.MainWindow.FriendListSelect.Text;
-            FriendPlayer player = new FriendPlayer(name, serial, true);
+            FriendPlayer player = new(name, serial, true);
 
             if (RazorEnhanced.Settings.Friend.ListExists(selection))
             {
@@ -351,7 +351,7 @@ namespace RazorEnhanced
         internal static void AddGuildToList(string name)
         {
             string selection = Engine.MainWindow.FriendListSelect.Text;
-            FriendGuild guild = new FriendGuild(name, true);
+            FriendGuild guild = new(name, true);
 
             if (RazorEnhanced.Settings.Friend.ListExists(selection))
             {
@@ -372,7 +372,7 @@ namespace RazorEnhanced
             FriendGuild old = guilds[i];
             if (lvi != null && old != null)
             {
-                FriendGuild guild = new Friend.FriendGuild(old.Name, lvi.Checked);
+                FriendGuild guild = new(old.Name, lvi.Checked);
                 RazorEnhanced.Settings.Friend.GuildReplace(RazorEnhanced.Friend.FriendListName, i, guild);
             }
 
@@ -392,7 +392,7 @@ namespace RazorEnhanced
 
             if (lvi != null && old != null)
             {
-                FriendPlayer player = new Friend.FriendPlayer(old.Name, old.Serial, lvi.Checked);
+                FriendPlayer player = new(old.Name, old.Serial, lvi.Checked);
                 RazorEnhanced.Settings.Friend.PlayerReplace(RazorEnhanced.Friend.FriendListName, i, player);
             }
         }
@@ -442,7 +442,7 @@ namespace RazorEnhanced
                     return true;
             }
 
-            List<Friend.FriendGuild> guilds = new List<FriendGuild>();
+            List<Friend.FriendGuild> guilds = new();
             RazorEnhanced.Settings.Friend.GuildRead(Friend.FriendListName, out guilds);
             foreach (FriendGuild guild in guilds)
             {
@@ -463,7 +463,7 @@ namespace RazorEnhanced
         /// <param name="serial">Serial of the Friend you want to add.</param>
         public static void AddPlayer(string friendlist, string name, int serial)
         {
-            FriendPlayer player = new FriendPlayer(name, serial, true);
+            FriendPlayer player = new(name, serial, true);
 
             if (RazorEnhanced.Settings.Friend.ListExists(friendlist))
             {
@@ -579,7 +579,7 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static List<int> GetList(string friendlist)
         {
-            List<int> friendserials = new List<int>();
+            List<int> friendserials = new();
             if (!Engine.MainWindow.FriendListSelect.Items.Contains(friendlist))
             {
                 Scripts.SendMessageScriptError("Script Error: Friend.GetList: Friend List: " + friendlist + " not exist");

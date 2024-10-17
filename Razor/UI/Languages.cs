@@ -600,7 +600,7 @@ namespace Assistant
         static Language()
         {
             m_Controls = new Hashtable(32, 1.0f, StringComparer.OrdinalIgnoreCase);
-            m_Strings = new Hashtable((int)(LocString.__End - LocString.__Start) + 1, 1.0f);
+            m_Strings = new Hashtable(LocString.__End - LocString.__Start + 1, 1.0f);
         }
 
         public static string GetString(LocString key)
@@ -690,10 +690,10 @@ namespace Assistant
 
             m_Current = Path.GetExtension(filename).TrimStart('.');
             m_CliLocName = m_Current;
-            ArrayList errors = new ArrayList();
+            ArrayList errors = new();
             Encoding encoding = Encoding.ASCII;
 
-            using (StreamReader reader = new StreamReader(filename))
+            using (StreamReader reader = new(filename))
             {
                 string line;
                 while ((line = reader.ReadLine()) != null)
@@ -733,7 +733,7 @@ namespace Assistant
                 }
             }
 
-            using (StreamReader reader = new StreamReader(filename, encoding))
+            using (StreamReader reader = new(filename, encoding))
             {
                 //m_Dict.Clear(); // just overwrite the old lang, rather than erasing it (this way if this lang is missing something, it'll appear in the old one
                 int lineNum = 0;
@@ -797,7 +797,7 @@ namespace Assistant
 
             if (errors.Count > 0)
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
 
                 sb.AppendFormat("Razor enountered errors on the following lines while loading the file '{0}'\r\n",
                     filename);
@@ -825,7 +825,7 @@ namespace Assistant
                 m_CliLoc = new Ultima.StringList(m_CliLocName);
                 Utility.Logger.Info($"Success load cliloc with {m_CliLoc.Entries.Count} entries");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Utility.Logger.Debug($"load failed");
                 try
@@ -948,9 +948,9 @@ namespace Assistant
             // for non-html I tested and it does nothing
             if (instring.Length == 0)
                 return "";
-            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            HtmlAgilityPack.HtmlDocument doc = new();
             doc.LoadHtml(instring);
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             foreach (HtmlAgilityPack.HtmlTextNode node in doc.DocumentNode.SelectNodes("//text()"))
             {
                 sb.Append(node.Text);

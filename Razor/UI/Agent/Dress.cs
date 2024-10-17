@@ -182,7 +182,7 @@ namespace Assistant
         {
             if (dressListView.FocusedItem != null)
             {
-                ListViewItem item = e.Item as ListViewItem;
+                ListViewItem item = e.Item;
                 RazorEnhanced.Dress.UpdateSelectedItems(item.Index);
             }
         }
@@ -212,7 +212,7 @@ namespace Assistant
         {
             if (dressListSelect.Text != String.Empty)
             {
-                EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer
+                EnhancedDressAddUndressLayer ManualAddLayer = new()
                 {
                     TopMost = true
                 };
@@ -264,7 +264,7 @@ namespace Assistant
                 dressStopButton.InvokeRequired ||
                 organizerDragDelay.InvokeRequired)
             {
-                UndressFinishWorkCallback d = new UndressFinishWorkCallback(UndressFinishWork);
+                UndressFinishWorkCallback d = new(UndressFinishWork);
                 this.Invoke(d, null);
             }
             else
@@ -293,7 +293,7 @@ namespace Assistant
                 dressStopButton.InvokeRequired ||
                 organizerDragDelay.InvokeRequired)
             {
-                UndressStartWorkCallback d = new UndressStartWorkCallback(UndressStartWork);
+                UndressStartWorkCallback d = new(UndressStartWork);
                 this.Invoke(d, null);
             }
             else

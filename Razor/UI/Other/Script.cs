@@ -16,7 +16,7 @@ namespace Assistant
         // ---------------------------------------------------------------------- UTILS ----------------------------------------------------------------------
         internal static ListViewItem ScriptToTableRow(EnhancedScript script, int index)
         {
-            ListViewItem listitem = new ListViewItem();
+            ListViewItem listitem = new();
             listitem.Text = script.Filename;
             listitem.ToolTipText = script.Fullpath;
             var row = listitem.SubItems;
@@ -109,7 +109,7 @@ namespace Assistant
                     // 17/08/2020 Removed loading not exist script file
                     // 2/15/2021 added back to avoid hotkey issue,
                     //    removed bad file entries at load in settings so should never happen
-                    ListViewItem listitem = new ListViewItem();
+                    ListViewItem listitem = new();
                     listitem.Text = "File Not Found";
                     listitem.SubItems.Add("Error");
                     listitem.SubItems.Add("No");
@@ -276,11 +276,11 @@ namespace Assistant
 
         public static DialogResult InputBox(string title, string promptText, ref string value)
         {
-            Form form = new Form();
-            Label label = new Label();
-            TextBox textBox = new TextBox();
-            Button buttonMove = new Button();
-            Button buttonCancel = new Button();
+            Form form = new();
+            Label label = new();
+            TextBox textBox = new();
+            Button buttonMove = new();
+            Button buttonCancel = new();
 
             form.Text = title;
             label.Text = promptText;

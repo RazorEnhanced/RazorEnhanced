@@ -38,7 +38,7 @@ namespace RazorEnhanced
     /// </summary>
     public class Timer
     {
-        private static ConcurrentDictionary<string, ScriptTimer> m_timers = new ConcurrentDictionary<string, ScriptTimer>();
+        private static ConcurrentDictionary<string, ScriptTimer> m_timers = new();
 
         /// <summary>
         /// @nodoc
@@ -70,7 +70,7 @@ namespace RazorEnhanced
                     m_timers.TryRemove(name, out ScriptTimer tt); // Remove timer
                 }
             }
-            ScriptTimer newtimer = new ScriptTimer();
+            ScriptTimer newtimer = new();
             newtimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             newtimer.Interval = delay;
             newtimer.Enabled = true;

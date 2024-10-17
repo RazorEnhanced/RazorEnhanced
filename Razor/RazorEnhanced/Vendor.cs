@@ -154,7 +154,7 @@ namespace RazorEnhanced
                 if (LastVendor.Serial != vendorSerial)
                     return false;
 
-                List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+                List<VendorBuyItem> buyList = new();
                 int targetAmount = amount;
                 foreach (Item listItem in LastBuyList)
                 {
@@ -163,7 +163,7 @@ namespace RazorEnhanced
                         if (maxPrice >= 0 && listItem.Price > maxPrice)
                             continue;
                         int buyAmount = Math.Min(targetAmount, listItem.Amount);
-                        VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                        VendorBuyItem item = new(listItem.Serial, buyAmount, listItem.Price);
                         buyList.Add(item);
                         targetAmount -= buyAmount;
                         if (targetAmount <= 0)
@@ -179,7 +179,7 @@ namespace RazorEnhanced
                             if (maxPrice >= 0 && listItem.Price > maxPrice)
                                 continue;
                             int buyAmount = Math.Min(targetAmount, listItem.Amount);
-                            VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                            VendorBuyItem item = new(listItem.Serial, buyAmount, listItem.Price);
                             buyList.Add(item);
                             targetAmount -= buyAmount;
                             if (targetAmount <= 0)
@@ -260,7 +260,7 @@ namespace RazorEnhanced
                     if (LastVendor.Serial != vendorSerial)
                         return false;
 
-                    List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+                    List<VendorBuyItem> buyList = new();
                     int targetAmount = amount;
                     foreach (Item listItem in LastBuyList)
                     {
@@ -269,7 +269,7 @@ namespace RazorEnhanced
                             if (maxPrice >= 0 && listItem.Price > maxPrice)
                                 continue;
                             int buyAmount = Math.Min(targetAmount, listItem.Amount);
-                            VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                            VendorBuyItem item = new(listItem.Serial, buyAmount, listItem.Price);
                             buyList.Add(item);
                             targetAmount -= buyAmount;
                             if (targetAmount <= 0)
@@ -285,7 +285,7 @@ namespace RazorEnhanced
                                 if (maxPrice >= 0 && listItem.Price > maxPrice)
                                     continue;
                                 int buyAmount = Math.Min(targetAmount, listItem.Amount);
-                                VendorBuyItem item = new VendorBuyItem(listItem.Serial, buyAmount, listItem.Price);
+                                VendorBuyItem item = new(listItem.Serial, buyAmount, listItem.Price);
                                 buyList.Add(item);
                                 targetAmount -= buyAmount;
                                 if (targetAmount <= 0)
@@ -335,11 +335,11 @@ namespace RazorEnhanced
         /// <returns>A list of BuyItem</returns>
         public static List<BuyItem> BuyList(int vendorSerial = -1)
         {
-            List<BuyItem> buyList = new List<BuyItem>();
+            List<BuyItem> buyList = new();
             if (vendorSerial == -1 || LastVendor.Serial == vendorSerial)
                 foreach (Item listItem in LastBuyList)
                 {
-                    BuyItem item = new BuyItem();
+                    BuyItem item = new();
                     item.Serial = listItem.Serial;
                     var test = Items.FindBySerial(item.Serial);
                     item.ItemID = listItem.TypeID;
@@ -604,8 +604,8 @@ namespace RazorEnhanced
 
             int sold = 0;
 
-            List<Assistant.SellListItem> list = new List<Assistant.SellListItem>(count); // Lista item checkati per vendita (non so dove sia dichiarata)
-            List<RazorEnhanced.SellAgent.SellAgentItem> templist = new List<RazorEnhanced.SellAgent.SellAgentItem>(); // Lista temporanea per controlli amount
+            List<Assistant.SellListItem> list = new(count); // Lista item checkati per vendita (non so dove sia dichiarata)
+            List<RazorEnhanced.SellAgent.SellAgentItem> templist = new(); // Lista temporanea per controlli amount
 
             AddLog("Container: 0x" + SellBag.ToString("X8"));
 
@@ -1005,7 +1005,7 @@ namespace RazorEnhanced
             internal string name;
             internal uint price;
         }
-        internal static List<ShopItem> m_shoplist = new List<ShopItem>();
+        internal static List<ShopItem> m_shoplist = new();
         private static void ShopList(PacketReader p, PacketHandlerEventArgs args)
         {
             Assistant.Serial serial = p.ReadUInt32();
@@ -1015,7 +1015,7 @@ namespace RazorEnhanced
                 return;
 
 
-            List<RazorEnhanced.Item> packList = new List<RazorEnhanced.Item>();
+            List<RazorEnhanced.Item> packList = new();
             RazorEnhanced.Item pack = Items.FindBySerial(serial);
             if (pack != null)
             {
@@ -1030,7 +1030,7 @@ namespace RazorEnhanced
                 uint price = p.ReadUInt32(); // Price
                 int textlenght = p.ReadByte(); // lenght name 
                 string itemname = p.ReadStringSafe(textlenght); // real item name show
-                ShopItem item = new ShopItem();
+                ShopItem item = new();
                 try
                 {
                     int nameId = Convert.ToInt32(itemname);
@@ -1070,7 +1070,7 @@ namespace RazorEnhanced
             int total = 0;
             int cost = 0;
             int amountScheduledToBePurchased = 0;
-            List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // List defined elsewhere (do not remove if cleaning around)
+            List<Assistant.VendorBuyItem> buyList = new(); // List defined elsewhere (do not remove if cleaning around)
             Vendor.LastVendor = vendor;
             //Vendor.LastBuyList = pack.Contains;
             for (int i = 0; i < pack.Contains.Count; i++)
@@ -1106,7 +1106,7 @@ namespace RazorEnhanced
                         int graphic = buyItem.Graphics;
                         int color = buyItem.Color;
                         int container = Player.Backpack.Serial;
-                        int count = Items.ContainerCount((int)container, graphic, color, true);
+                        int count = Items.ContainerCount(container, graphic, color, true);
                         count += amountScheduledToBePurchased;
                         if (count >= buyItem.Amount)
                             continue;

@@ -18,8 +18,8 @@ namespace Assistant
         internal int m_X;
         internal int m_Y;
 
-        internal static readonly Point2D Zero = new Point2D(0, 0);
-        internal static readonly Point2D MinusOne = new Point2D(-1, -1);
+        internal static readonly Point2D Zero = new(0, 0);
+        internal static readonly Point2D MinusOne = new(-1, -1);
 
         internal Point2D(int x, int y)
         {
@@ -162,8 +162,8 @@ namespace Assistant
         internal int m_Y;
         internal int m_Z;
 
-        internal static readonly Point3D Zero = new Point3D(0, 0, 0);
-        internal static readonly Point3D MinusOne = new Point3D(-1, -1, 0);
+        internal static readonly Point3D Zero = new(0, 0, 0);
+        internal static readonly Point3D MinusOne = new(-1, -1, 0);
 
         internal Point3D(int x, int y, int z)
         {
@@ -534,16 +534,16 @@ namespace Assistant
         // "test" must be smaller than this rectangle!
         internal bool Insersects(Rectangle2D test)
         {
-            Point2D e1 = new Point2D(test.Start.X + test.Width, test.Start.Y);
-            Point2D e2 = new Point2D(test.Start.X, test.Start.Y + test.Width);
+            Point2D e1 = new(test.Start.X + test.Width, test.Start.Y);
+            Point2D e2 = new(test.Start.X, test.Start.Y + test.Width);
 
             return Contains(test.Start) || Contains(test.End) || Contains(e1) || Contains(e2);
         }
 
         internal bool Contains(Rectangle2D test)
         {
-            Point2D e1 = new Point2D(test.Start.X + test.Width, test.Start.Y);
-            Point2D e2 = new Point2D(test.Start.X, test.Start.Y + test.Width);
+            Point2D e1 = new(test.Start.X + test.Width, test.Start.Y);
+            Point2D e2 = new(test.Start.X, test.Start.Y + test.Width);
 
             return Contains(test.Start) && Contains(test.End) && Contains(e1) && Contains(e2);
         }

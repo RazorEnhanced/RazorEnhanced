@@ -54,8 +54,8 @@ namespace RazorEnhanced
                 byte[] buffer = new byte[0x400];
                 fixed (byte* numRef = buffer)
                 {
-                    List<SpeechEntry> list = new List<SpeechEntry>();
-                    FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    List<SpeechEntry> list = new();
+                    FileStream fs = new(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     int num = 0;
                     while ((num = fs.Read(buffer, 0, 4)) > 0)
                     {
@@ -76,7 +76,7 @@ namespace RazorEnhanced
 
         internal static List<ushort> GetKeywords(string text)
         {
-            List<ushort> keynumber = new List<ushort>();
+            List<ushort> keynumber = new();
 
             if (m_Speech == null)
             {
@@ -85,7 +85,7 @@ namespace RazorEnhanced
 
             text = text.ToLower();
 
-            List<SpeechEntry> keywords = new List<SpeechEntry>();
+            List<SpeechEntry> keywords = new();
             List<SpeechEntry> speech = m_Speech.ToList();
             foreach (SpeechEntry entry in speech)
             {

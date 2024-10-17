@@ -12,7 +12,7 @@ namespace Assistant
 
         private void profilesAddButton_Click(object sender, EventArgs e)
         {
-            EnhancedProfileAdd addprofile = new EnhancedProfileAdd
+            EnhancedProfileAdd addprofile = new()
             {
                 TopMost = true
             };
@@ -133,7 +133,7 @@ namespace Assistant
             }
             else
             {
-                EnhancedProfileRename renameprofile = new EnhancedProfileRename
+                EnhancedProfileRename renameprofile = new()
                 {
                     TopMost = true
                 };
@@ -143,7 +143,7 @@ namespace Assistant
 
         private void profilesCloneButton_Click(object sender, EventArgs e)
         {
-            EnhancedProfileClone cloneprofile = new EnhancedProfileClone
+            EnhancedProfileClone cloneprofile = new()
             {
                 TopMost = true
             };

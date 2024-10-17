@@ -319,7 +319,7 @@ namespace CircularBuffer
         #region IEnumerable implementation
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return (IEnumerator)GetEnumerator();
+            return GetEnumerator();
         }
         #endregion
 

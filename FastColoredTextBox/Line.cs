@@ -69,7 +69,7 @@ namespace FastColoredTextBoxNS
         {
             get
             {
-                StringBuilder sb = new StringBuilder(Count);
+                StringBuilder sb = new(Count);
                 foreach (Char c in this)
                     sb.Append(c.c);
                 return sb.ToString();
@@ -174,7 +174,7 @@ namespace FastColoredTextBoxNS
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return chars.GetEnumerator() as System.Collections.IEnumerator;
+            return chars.GetEnumerator();
         }
 
         public virtual void RemoveRange(int index, int count)

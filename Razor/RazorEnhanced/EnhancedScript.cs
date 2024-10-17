@@ -29,9 +29,9 @@ namespace RazorEnhanced
     }
     public class EnhancedScriptService
     {
-        public readonly static EnhancedScriptService Instance = new EnhancedScriptService();
+        public readonly static EnhancedScriptService Instance = new();
 
-        private readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new ConcurrentDictionary<string, EnhancedScript>();
+        private readonly ConcurrentDictionary<string, EnhancedScript> m_ScriptList = new();
 
         internal List<EnhancedScript> ScriptList()
         {
@@ -157,8 +157,8 @@ namespace RazorEnhanced
         internal bool StopMessage;
         internal DateTime LastModified;
 
-        private readonly object m_Lock = new object();
-        internal static List<string> ExistingWatchers = new List<string>();
+        private readonly object m_Lock = new();
+        internal static List<string> ExistingWatchers = new();
 
         public event Action<EnhancedScript, bool> OnLoad;
         public event Action<EnhancedScript> OnStart;
@@ -234,7 +234,7 @@ namespace RazorEnhanced
         public static EnhancedScript FromText(string content, ScriptLanguage language = ScriptLanguage.UNKNOWN, bool wait = false, bool loop = false, Keys hotkey = Keys.None, bool hotkeyPass = false, bool run = false, int position = -1, bool autostart = false, bool preload = true)
         {
             var filename = EnhancedScript.TempFilename(language);
-            EnhancedScript script = new EnhancedScript(filename, content, wait, loop, hotkey, hotkeyPass, autostart, position, preload, true);
+            EnhancedScript script = new(filename, content, wait, loop, hotkey, hotkeyPass, autostart, position, preload, true);
             script.SetLanguage(language);
             return script;
         }
@@ -395,7 +395,7 @@ namespace RazorEnhanced
             return m_Language;
         }
 
-        static private Object ScriptStateLock = new Object();
+        static private Object ScriptStateLock = new();
 
         internal void Start()
         {
@@ -436,7 +436,7 @@ namespace RazorEnhanced
                     m_ScriptEngine.Run();
                     OnStop?.Invoke(this);
                 }
-                catch (ThreadAbortException ex)
+                catch (ThreadAbortException)
                 {
                     OnStop?.Invoke(this);
                     return;
@@ -726,7 +726,7 @@ namespace RazorEnhanced
         private EnhancedScript m_Script;
         private bool m_Loaded = false;
 
-        static internal Object IoLock = new Object();
+        static internal Object IoLock = new();
 
         // Without a global init, functions that take python types were failing
         private static readonly PythonEngine forceInit = new();
@@ -1203,7 +1203,7 @@ namespace RazorEnhanced
         }
         private void LogException(string message)
         {
-            StringBuilder log = new StringBuilder();
+            StringBuilder log = new();
             log.Append(Environment.NewLine);
             log.Append("============================ START REPORT ============================");
             log.Append(Environment.NewLine);

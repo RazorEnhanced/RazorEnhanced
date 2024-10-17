@@ -20,7 +20,7 @@ namespace FastColoredTextBoxNS
         public bool UseOriginalFont { get; set; }
 
         FastColoredTextBox tb;
-        Dictionary<Color, int> colorTable = new Dictionary<Color, int>();
+        Dictionary<Color, int> colorTable = new();
 
         public ExportToRTF()
         {
@@ -30,7 +30,7 @@ namespace FastColoredTextBoxNS
         public string GetRtf(FastColoredTextBox tb)
         {
             this.tb = tb;
-            Range sel = new Range(tb);
+            Range sel = new(tb);
             sel.SelectAll();
             return GetRtf(sel);
         }
@@ -125,7 +125,7 @@ namespace FastColoredTextBoxNS
 
         private RTFStyleDescriptor GetRtfDescriptor(StyleIndex styleIndex)
         {
-            List<Style> styles = new List<Style>();
+            List<Style> styles = new();
             //find text renderer
             TextStyle textStyle = null;
             int mask = 1;

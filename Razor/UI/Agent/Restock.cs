@@ -238,7 +238,7 @@ namespace Assistant
                 restockRemoveListB.InvokeRequired ||
                 restockDragDelay.InvokeRequired)
             {
-                RestockFinishWorkCallback d = new RestockFinishWorkCallback(RestockFinishWork);
+                RestockFinishWorkCallback d = new(RestockFinishWork);
                 this.Invoke(d, null);
             }
             else
@@ -263,7 +263,7 @@ namespace Assistant
                 restockRemoveListB.InvokeRequired ||
                 restockDragDelay.InvokeRequired)
             {
-                RestockStartWorkCallback d = new RestockStartWorkCallback(RestockStartWork);
+                RestockStartWorkCallback d = new(RestockStartWork);
                 this.Invoke(d, null);
             }
             else

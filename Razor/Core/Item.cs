@@ -79,7 +79,7 @@ namespace Assistant
 
         private bool m_Updated;
 
-        private static readonly object LockingVar = new object();
+        private static readonly object LockingVar = new();
         internal bool Updated
         {
             get { return m_Updated; }
@@ -114,7 +114,7 @@ namespace Assistant
 
         internal static ConcurrentDictionary<int, Weapon> LoadWeapons()
         {
-            ConcurrentDictionary<int, Weapon> retSet = new ConcurrentDictionary<int, Weapon>();
+            ConcurrentDictionary<int, Weapon> retSet = new();
             string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "weapons.json");
             try
             {
@@ -175,7 +175,8 @@ namespace Assistant
             if (item != null)
             {
                 item.TypeID = (ushort)itemID;
-            }
+           }
+
             return item;
         }
         protected Item(Serial serial)
@@ -423,7 +424,7 @@ namespace Assistant
 
                         for (int c = 0; c < Contains.Count; c++)
                         {
-                            Item icheck = (Item)Contains[c];
+                            Item icheck = Contains[c];
                             if (icheck.IsContainer)
                             {
                                 if (icheck.IsSearchable && RazorEnhanced.Settings.General.ReadBool("NoSearchPouches"))
@@ -442,7 +443,7 @@ namespace Assistant
             return true;
         }
 
-        private static readonly List<Item> m_NeedContUpdate = new List<Item>();
+        private static readonly List<Item> m_NeedContUpdate = new();
 
         internal static void UpdateContainers()
         {
@@ -456,7 +457,7 @@ namespace Assistant
             }
         }
 
-        private static readonly List<Serial> m_AutoStackCache = new List<Serial>();
+        private static readonly List<Serial> m_AutoStackCache = new();
 
         internal void AutoStackResource()
         {
@@ -521,7 +522,7 @@ namespace Assistant
                 return false;
 
             object check = this;
-            
+
             while (check != null && check is Item && maxDepth-- > 0)
             {
                 if (((Item)check).Serial == parentSerial)
@@ -629,7 +630,7 @@ namespace Assistant
             if (IsMulti)
                 Assistant.UOAssist.PostRemoveMulti(this);
 
-            List<Item> rem = new List<Item>(m_Items);
+            List<Item> rem = new(m_Items);
             m_Items.Clear();
 
             foreach (Item r in rem)
@@ -676,7 +677,7 @@ namespace Assistant
 
         internal static ConcurrentDictionary<int, ContainerData> LoadContainersData()
         {
-            ConcurrentDictionary<int, ContainerData> retContData = new ConcurrentDictionary<int, ContainerData>();
+            ConcurrentDictionary<int, ContainerData> retContData = new();
             lock (LockingVar)
             {
                 string pathName = Path.Combine(Assistant.Engine.RootPath, "Config", "ContainersData.json");
@@ -824,7 +825,7 @@ namespace Assistant
 
         internal static ConcurrentHashSet<uint> LoadDoorData()
         {
-            ConcurrentHashSet<uint> ret = new ConcurrentHashSet<uint>();
+            ConcurrentHashSet<uint> ret = new();
             lock (LockingVar)
             {
 

@@ -94,7 +94,7 @@ namespace Assistant
         {
             if (friendguildListView.FocusedItem != null)
             {
-                ListViewItem item = e.Item as ListViewItem;
+                ListViewItem item = e.Item;
                 RazorEnhanced.Friend.UpdateSelectedGuild(item.Index);
             }
         }
@@ -103,7 +103,7 @@ namespace Assistant
         {
             if (friendlistView.FocusedItem != null)
             {
-                ListViewItem item = e.Item as ListViewItem;
+                ListViewItem item = e.Item;
                 RazorEnhanced.Friend.UpdateSelectedPlayer(item.Index);
             }
         }
@@ -141,7 +141,7 @@ namespace Assistant
         {
             if (friendListSelect.Text != String.Empty)
             {
-                EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual
+                EnhancedFriendAddPlayerManual ManualAddPlayer = new()
                 {
                     TopMost = true
                 };
@@ -155,7 +155,7 @@ namespace Assistant
         {
             if (friendListSelect.Text != String.Empty)
             {
-                EnhancedFriendAddGuildManual ManualAddGuild = new EnhancedFriendAddGuildManual
+                EnhancedFriendAddGuildManual ManualAddGuild = new()
                 {
                     TopMost = true
                 };

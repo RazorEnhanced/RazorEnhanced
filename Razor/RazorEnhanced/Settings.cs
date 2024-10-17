@@ -37,7 +37,7 @@ namespace RazorEnhanced
         internal delegate void saveFN(string filename, string tableName, DataTable targets);
 
 
-        internal static Dictionary<string, initFN> initDict = new Dictionary<string, initFN>()
+        internal static Dictionary<string, initFN> initDict = new()
                 {
                     { "AUTOLOOT_ITEMS", InitItems<RazorEnhanced.AutoLoot.AutoLootItem>},
                     { "AUTOLOOT_LISTS", InitAutoLootLists},
@@ -66,7 +66,7 @@ namespace RazorEnhanced
                     { "TARGETS", InitItems<TargetGUI> },
                     { "TOOLBAR_ITEMS", InitToolbarItems }
                 };
-        internal static Dictionary<string, loadFN> loadDict = new Dictionary<string, loadFN>()
+        internal static Dictionary<string, loadFN> loadDict = new()
                 {
                     { "AUTOLOOT_ITEMS", LoadItems<RazorEnhanced.AutoLoot.AutoLootItem> },
                     { "BUY_ITEMS", LoadItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
@@ -81,7 +81,7 @@ namespace RazorEnhanced
                     { "SELL_ITEMS", LoadItems<RazorEnhanced.SellAgent.SellAgentItem> },
                     { "TARGETS", LoadItems<TargetGUI> },
         };
-        internal static Dictionary<string, saveFN> saveDict = new Dictionary<string, saveFN>()
+        internal static Dictionary<string, saveFN> saveDict = new()
                 {
                     { "AUTOLOOT_ITEMS", SaveItems<RazorEnhanced.AutoLoot.AutoLootItem> },
                     { "BUY_ITEMS", SaveItems<RazorEnhanced.BuyAgent.BuyAgentItem> },
@@ -207,7 +207,7 @@ namespace RazorEnhanced
         }
         internal static DataTable InitItems<T>(string tableName) where T : ListAbleItem
         {
-            DataTable items = new DataTable(tableName);
+            DataTable items = new(tableName);
             items.Columns.Add("List", typeof(string));
             items.Columns.Add("Item", typeof(T));
             return (items);
@@ -233,7 +233,7 @@ namespace RazorEnhanced
         //
         private static void SaveScripting(string filename, string tableName, DataTable targets)
         {
-            List<RazorEnhanced.Scripts.ScriptItem> items = new List<RazorEnhanced.Scripts.ScriptItem>();
+            List<RazorEnhanced.Scripts.ScriptItem> items = new();
             var scriptList = EnhancedScript.Service.ScriptListTab();
 
             int index = 1;
@@ -273,16 +273,14 @@ namespace RazorEnhanced
             string noWhitespaceJson = Regex.Replace(serializedJson, @"\s+", "");
 
             // Hash the resulting JSON string using SHA-256
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(noWhitespaceJson));
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            }
+            using SHA256 sha256 = SHA256.Create();
+            byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(noWhitespaceJson));
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
         }
 
         private static void SaveItems<T>(string filename, string tableName, DataTable targets) where T : ListAbleItem
         {
-            List<T> items = new List<T>();
+            List<T> items = new();
             foreach (DataRow row in targets.Rows)
             {
                 T item = (T)row["Item"];
@@ -322,34 +320,24 @@ namespace RazorEnhanced
                 var saltStringBytes = Generate256BitsOfRandomEntropy();
                 var ivStringBytes = Generate256BitsOfRandomEntropy();
                 var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-                using (var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
-                {
-                    var keyBytes = password.GetBytes(Keysize / 8);
-                    using (var symmetricKey = new System.Security.Cryptography.RijndaelManaged())
-                    {
-                        symmetricKey.BlockSize = 256;
-                        symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
-                        symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
-                        using (var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
-                        {
-                            using (var memoryStream = new MemoryStream())
-                            {
-                                using (var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, encryptor, System.Security.Cryptography.CryptoStreamMode.Write))
-                                {
-                                    cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
-                                    cryptoStream.FlushFinalBlock();
-                                    // Create the final bytes as a concatenation of the random salt bytes, the random iv bytes and the cipher bytes.
-                                    var cipherTextBytes = saltStringBytes;
-                                    cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
-                                    cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
-                                    memoryStream.Close();
-                                    cryptoStream.Close();
-                                    return Convert.ToBase64String(cipherTextBytes);
-                                }
-                            }
-                        }
-                    }
-                }
+                using var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations);
+                var keyBytes = password.GetBytes(Keysize / 8);
+                using var symmetricKey = new System.Security.Cryptography.RijndaelManaged();
+                symmetricKey.BlockSize = 256;
+                symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
+                symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+                using var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes);
+                using var memoryStream = new MemoryStream();
+                using var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, encryptor, System.Security.Cryptography.CryptoStreamMode.Write);
+                cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                cryptoStream.FlushFinalBlock();
+                // Create the final bytes as a concatenation of the random salt bytes, the random iv bytes and the cipher bytes.
+                var cipherTextBytes = saltStringBytes;
+                cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
+                cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
+                memoryStream.Close();
+                cryptoStream.Close();
+                return Convert.ToBase64String(cipherTextBytes);
             }
 
             public static string Decrypt(string cipherText, string passPhrase)
@@ -364,30 +352,20 @@ namespace RazorEnhanced
                 // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
                 var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
-                using (var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
-                {
-                    var keyBytes = password.GetBytes(Keysize / 8);
-                    using (var symmetricKey = new System.Security.Cryptography.RijndaelManaged())
-                    {
-                        symmetricKey.BlockSize = 256;
-                        symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
-                        symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
-                        using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
-                        {
-                            using (var memoryStream = new MemoryStream(cipherTextBytes))
-                            {
-                                using (var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, decryptor, System.Security.Cryptography.CryptoStreamMode.Read))
-                                {
-                                    var plainTextBytes = new byte[cipherTextBytes.Length];
-                                    var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
-                                    memoryStream.Close();
-                                    cryptoStream.Close();
-                                    return System.Text.Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
-                                }
-                            }
-                        }
-                    }
-                }
+                using var password = new System.Security.Cryptography.Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations);
+                var keyBytes = password.GetBytes(Keysize / 8);
+                using var symmetricKey = new System.Security.Cryptography.RijndaelManaged();
+                symmetricKey.BlockSize = 256;
+                symmetricKey.Mode = System.Security.Cryptography.CipherMode.CBC;
+                symmetricKey.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+                using var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes);
+                using var memoryStream = new MemoryStream(cipherTextBytes);
+                using var cryptoStream = new System.Security.Cryptography.CryptoStream(memoryStream, decryptor, System.Security.Cryptography.CryptoStreamMode.Read);
+                var plainTextBytes = new byte[cipherTextBytes.Length];
+                var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                memoryStream.Close();
+                cryptoStream.Close();
+                return System.Text.Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
             }
 
             private static byte[] Generate256BitsOfRandomEntropy()
@@ -408,15 +386,11 @@ namespace RazorEnhanced
             {
                 try
                 {
-                    using (Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64))
+                    using Microsoft.Win32.RegistryKey localKey = Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, Microsoft.Win32.RegistryView.Registry64);
+                    using Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Wine\\Drives");
+                    if (key != null)
                     {
-                        using (Microsoft.Win32.RegistryKey key = localKey.OpenSubKey("Software\\Wine\\Drives"))
-                        {
-                            if (key != null)
-                            {
-                                return true;
-                            }
-                        }
+                        return true;
                     }
                 }
                 catch (Exception)
@@ -473,7 +447,7 @@ namespace RazorEnhanced
         }
         internal static DataTable InitPasswords(string tableName)
         {
-            DataTable password = new DataTable(tableName);
+            DataTable password = new(tableName);
             password.Columns.Add("IP", typeof(string));
             password.Columns.Add("User", typeof(string));
             password.Columns.Add("Password", typeof(string));
@@ -537,10 +511,10 @@ namespace RazorEnhanced
             // ensure we save passwords to top level of profile
             string filename = Path.Combine(Assistant.Engine.RootPath, "Profiles", "RazorEnhanced");
 
-            List<PasswordStorage> items = new List<PasswordStorage>();
+            List<PasswordStorage> items = new();
             foreach (DataRow row in table.Rows)
             {
-                PasswordStorage item = new PasswordStorage();
+                PasswordStorage item = new();
                 item.IP = (string)row["IP"];
                 item.User = (string)row["User"];
                 item.Password = Protect((string)row["Password"]);
@@ -561,7 +535,7 @@ namespace RazorEnhanced
         internal static DataTable InitScripting(string tableName)
         {
             // Scripting
-            DataTable scripting = new DataTable(tableName);
+            DataTable scripting = new(tableName);
             scripting.Columns.Add("Filename", typeof(string));
             scripting.Columns.Add("Flag", typeof(Bitmap));    // note appears unused
             scripting.Columns.Add("Status", typeof(string));
@@ -578,7 +552,7 @@ namespace RazorEnhanced
         internal static DataTable InitAutoLootLists(string tableName)
         {
             // -------- AUTOLOOT ------------
-            DataTable autoloot_lists = new DataTable(tableName);
+            DataTable autoloot_lists = new(tableName);
             autoloot_lists.Columns.Add("Description", typeof(string));
             autoloot_lists.Columns.Add("Delay", typeof(int));
             autoloot_lists.Columns.Add("Range", typeof(int));
@@ -592,7 +566,7 @@ namespace RazorEnhanced
         internal static DataTable InitScavengerLists(string tableName)
         {
             // ----------- SCAVENGER ----------
-            DataTable scavenger_lists = new DataTable(tableName);
+            DataTable scavenger_lists = new(tableName);
             scavenger_lists.Columns.Add("Description", typeof(string));
             scavenger_lists.Columns.Add("Delay", typeof(int));
             scavenger_lists.Columns.Add("Range", typeof(int));
@@ -604,7 +578,7 @@ namespace RazorEnhanced
         internal static DataTable InitOrganizerLists(string tableName)
         {
             // ----------- ORGANIZER ----------
-            DataTable organizer_lists = new DataTable(tableName);
+            DataTable organizer_lists = new(tableName);
             organizer_lists.Columns.Add("Description", typeof(string));
             organizer_lists.Columns.Add("Delay", typeof(int));
             organizer_lists.Columns.Add("Source", typeof(int));
@@ -615,7 +589,7 @@ namespace RazorEnhanced
 
         internal static DataTable InitSellAgentLists(string tableName)
         {               // ----------- SELL AGENT ----------
-            DataTable sell_lists = new DataTable(tableName);
+            DataTable sell_lists = new(tableName);
             sell_lists.Columns.Add("Description", typeof(string));
             sell_lists.Columns.Add("Bag", typeof(int));
             sell_lists.Columns.Add("Selected", typeof(bool));
@@ -625,7 +599,7 @@ namespace RazorEnhanced
         }
         internal static DataTable InitBuyAgentLists(string tableName)
         {               // ----------- BUY AGENT ----------
-            DataTable buy_lists = new DataTable(tableName);
+            DataTable buy_lists = new(tableName);
             buy_lists.Columns.Add("Description", typeof(string));
             buy_lists.Columns.Add("CompareName", typeof(bool));
             buy_lists.Columns.Add("Selected", typeof(bool));
@@ -637,7 +611,7 @@ namespace RazorEnhanced
         internal static DataTable InitDressingAgentLists(string tableName)
         {
             // ----------- DRESS ----------
-            DataTable dress_lists = new DataTable(tableName);
+            DataTable dress_lists = new(tableName);
             dress_lists.Columns.Add("Description", typeof(string));
             dress_lists.Columns.Add("Bag", typeof(int));
             dress_lists.Columns.Add("Delay", typeof(int));
@@ -650,7 +624,7 @@ namespace RazorEnhanced
         }
         internal static DataTable InitDressingAgent(string tableName)
         {
-            DataTable dress_items = new DataTable(tableName);
+            DataTable dress_items = new(tableName);
             dress_items.Columns.Add("List", typeof(string));
             dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItemNew));
             return dress_items;
@@ -659,7 +633,7 @@ namespace RazorEnhanced
         internal static DataTable InitFriendsList(string tableName)
         {
             // ----------- FRIEND ----------
-            DataTable friend_lists = new DataTable(tableName);
+            DataTable friend_lists = new(tableName);
             friend_lists.Columns.Add("Description", typeof(string));
             friend_lists.Columns.Add("IncludeParty", typeof(bool));
             friend_lists.Columns.Add("PreventAttack", typeof(bool));
@@ -673,14 +647,14 @@ namespace RazorEnhanced
         }
         internal static DataTable InitPlayerFriends(string tableName)
         {
-            DataTable friend_player = new DataTable(tableName);
+            DataTable friend_player = new(tableName);
             friend_player.Columns.Add("List", typeof(string));
             friend_player.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendPlayer));
             return friend_player;
         }
         internal static DataTable InitGuildFriends(string tableName)
         {
-            DataTable friend_guild = new DataTable(tableName);
+            DataTable friend_guild = new(tableName);
             friend_guild.Columns.Add("List", typeof(string));
             friend_guild.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendGuild));
             return friend_guild;
@@ -689,7 +663,7 @@ namespace RazorEnhanced
         internal static DataTable InitRestockLists(string tableName)
         {
             // ----------- RESTOCK ----------
-            DataTable restock_lists = new DataTable(tableName);
+            DataTable restock_lists = new(tableName);
             restock_lists.Columns.Add("Description", typeof(string));
             restock_lists.Columns.Add("Delay", typeof(int));
             restock_lists.Columns.Add("Source", typeof(int));
@@ -699,7 +673,7 @@ namespace RazorEnhanced
         }
         internal static DataTable InitRestock(string tableName)
         {
-            DataTable restock_items = new DataTable(tableName);
+            DataTable restock_items = new(tableName);
             restock_items.Columns.Add("List", typeof(string));
             restock_items.Columns.Add("Item", typeof(RazorEnhanced.Restock.RestockItem));
             return restock_items;
@@ -708,7 +682,7 @@ namespace RazorEnhanced
         internal static DataTable InitGraphChanges(string tableName)
         {
             // ----------- FILTER GRAPH CHANGE ----------
-            DataTable filter_graph = new DataTable(tableName);
+            DataTable filter_graph = new(tableName);
             filter_graph.Columns.Add("Selected", typeof(bool));
             filter_graph.Columns.Add("GraphReal", typeof(int));
             filter_graph.Columns.Add("GraphNew", typeof(int));
@@ -720,7 +694,7 @@ namespace RazorEnhanced
         internal static DataTable InitJournalFilter(string tableName)
         {
             // ----------- FILTER GRAPH CHANGE ----------
-            DataTable filter_journal = new DataTable(tableName);
+            DataTable filter_journal = new(tableName);
             filter_journal.Columns.Add("FilterString", typeof(string));
             return filter_journal;
 
@@ -728,7 +702,7 @@ namespace RazorEnhanced
         internal static DataTable InitToolbarItems(string tableName)
         {
             // ----------- TOOLBAR ITEM ----------
-            DataTable toolbar_items = new DataTable(tableName);
+            DataTable toolbar_items = new(tableName);
             toolbar_items.Columns.Add("Name", typeof(string));
             toolbar_items.Columns.Add("Graphics", typeof(int));
             toolbar_items.Columns.Add("Color", typeof(int));
@@ -749,7 +723,7 @@ namespace RazorEnhanced
         internal static DataTable InitSpellGrid(string tableName)
         {
             // ----------- SPELLGRID ITEM ----------
-            DataTable spellgrid_items = new DataTable(tableName);
+            DataTable spellgrid_items = new(tableName);
             spellgrid_items.Columns.Add("Group", typeof(string));
             spellgrid_items.Columns.Add("Spell", typeof(string));
             spellgrid_items.Columns.Add("Color", typeof(string));
@@ -769,7 +743,7 @@ namespace RazorEnhanced
         internal static DataTable InitHotKeys(string tableName)
         {
             // ----------- HOTKEYS ----------
-            DataTable hotkey = new DataTable(tableName);
+            DataTable hotkey = new(tableName);
             hotkey.Columns.Add("Group", typeof(string));
             hotkey.Columns.Add("Name", typeof(string));
             hotkey.Columns.Add("Key", typeof(Keys));
@@ -2307,7 +2281,7 @@ namespace RazorEnhanced
         internal static DataTable InitGeneralSettings(string tableName)
         {
             // ----------- GENERAL SETTINGS ----------
-            DataTable general = new DataTable(tableName);
+            DataTable general = new(tableName);
 
             // Parametri Tab (Agent --> Heal)
             general.Columns.Add("BandageHealcountdownCheckBox", typeof(bool));
@@ -2601,7 +2575,7 @@ namespace RazorEnhanced
                     false, false, false, @"{power} [{spell}]", 0, false, false, false, string.Empty, false,
 
                     // Parametri primo avvio tab Options -> Hues
-                    (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
+                    0, 0x03B1, 0x0025, 0x0005, 0x03B1, 0x0480, 0x0025, 0x03B1,
 
                     // Parametri primo avvio tab HotKey
                     true, Keys.None,
@@ -2798,7 +2772,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.AutoLoot.AutoLootList> ListsRead()
             {
-                List<RazorEnhanced.AutoLoot.AutoLootList> lists = new List<RazorEnhanced.AutoLoot.AutoLootList>();
+                List<RazorEnhanced.AutoLoot.AutoLootList> lists = new();
 
                 foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
                 {
@@ -2809,7 +2783,7 @@ namespace RazorEnhanced
                     bool noopencorspe = (bool)row["NoOpenCorpse"];
                     int range = Convert.ToInt32(row["Range"]);
 
-                    RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe, range);
+                    RazorEnhanced.AutoLoot.AutoLootList list = new(description, delay, bag, selected, noopencorspe, range);
                     lists.Add(list);
                 }
 
@@ -2836,7 +2810,7 @@ namespace RazorEnhanced
                 Save();
             }
 
-            private static readonly object _lock = new object();
+            private static readonly object _lock = new();
             internal static Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> ItemsRead(string list, List<string> includedLists = null, bool expand = true)
             {
                 if (!Monitor.TryEnter(_lock))
@@ -2845,7 +2819,7 @@ namespace RazorEnhanced
                 try
                 {
 
-                    Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>>();
+                    Dictionary<int, List<RazorEnhanced.AutoLoot.AutoLootItem>> lootList = new();
 
                     if (RazorEnhanced.AutoLoot.LockTable)
                         return lootList;
@@ -3053,7 +3027,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Scavenger.ScavengerList> ListsRead()
             {
-                List<RazorEnhanced.Scavenger.ScavengerList> lists = new List<RazorEnhanced.Scavenger.ScavengerList>();
+                List<RazorEnhanced.Scavenger.ScavengerList> lists = new();
 
                 foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
                 {
@@ -3063,7 +3037,7 @@ namespace RazorEnhanced
                     bool selected = (bool)row["Selected"];
                     int range = Convert.ToInt32(row["Range"]);
 
-                    RazorEnhanced.Scavenger.ScavengerList list = new RazorEnhanced.Scavenger.ScavengerList(description, delay, bag, selected, range);
+                    RazorEnhanced.Scavenger.ScavengerList list = new(description, delay, bag, selected, range);
                     lists.Add(list);
                 }
 
@@ -3092,7 +3066,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Scavenger.ScavengerItem> ItemsRead(string list)
             {
-                List<RazorEnhanced.Scavenger.ScavengerItem> items = new List<RazorEnhanced.Scavenger.ScavengerItem>();
+                List<RazorEnhanced.Scavenger.ScavengerItem> items = new();
 
                 if (RazorEnhanced.Scavenger.LockTable)
                     return items;
@@ -3215,7 +3189,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Organizer.OrganizerList> ListsRead()
             {
-                List<RazorEnhanced.Organizer.OrganizerList> lists = new List<RazorEnhanced.Organizer.OrganizerList>();
+                List<RazorEnhanced.Organizer.OrganizerList> lists = new();
 
                 foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
                 {
@@ -3225,7 +3199,7 @@ namespace RazorEnhanced
                     int destination = Convert.ToInt32(row["Destination"]);
                     bool selected = (bool)row["Selected"];
 
-                    RazorEnhanced.Organizer.OrganizerList list = new RazorEnhanced.Organizer.OrganizerList(description, delay, source, destination, selected);
+                    RazorEnhanced.Organizer.OrganizerList list = new(description, delay, source, destination, selected);
                     lists.Add(list);
                 }
 
@@ -3254,7 +3228,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Organizer.OrganizerItem> ItemsRead(string list)
             {
-                List<RazorEnhanced.Organizer.OrganizerItem> items = new List<RazorEnhanced.Organizer.OrganizerItem>();
+                List<RazorEnhanced.Organizer.OrganizerItem> items = new();
                 DataRowCollection rowData = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows;
                 if (ListExists(list))
                 {
@@ -3371,7 +3345,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.SellAgent.SellAgentList> ListsRead()
             {
-                List<RazorEnhanced.SellAgent.SellAgentList> lists = new List<RazorEnhanced.SellAgent.SellAgentList>();
+                List<RazorEnhanced.SellAgent.SellAgentList> lists = new();
                 DataTable table = m_Dataset.Tables["SELL_LISTS"];
                 if (!table.Columns.Contains("Enabled"))
                 {
@@ -3389,7 +3363,7 @@ namespace RazorEnhanced
                     bool selected = (bool)row["Selected"];
                     bool enabled = (bool)row["Enabled"];
 
-                    RazorEnhanced.SellAgent.SellAgentList list = new RazorEnhanced.SellAgent.SellAgentList(description, bag, selected, enabled);
+                    RazorEnhanced.SellAgent.SellAgentList list = new(description, bag, selected, enabled);
                     lists.Add(list);
                 }
 
@@ -3433,7 +3407,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.SellAgent.SellAgentItem> ItemsRead(string list)
             {
-                List<RazorEnhanced.SellAgent.SellAgentItem> items = new List<RazorEnhanced.SellAgent.SellAgentItem>();
+                List<RazorEnhanced.SellAgent.SellAgentItem> items = new();
 
                 if (ListExists(list))
                 {
@@ -3549,7 +3523,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.BuyAgent.BuyAgentList> ListsRead()
             {
-                List<RazorEnhanced.BuyAgent.BuyAgentList> retList = new List<RazorEnhanced.BuyAgent.BuyAgentList>();
+                List<RazorEnhanced.BuyAgent.BuyAgentList> retList = new();
                 DataTable table = m_Dataset.Tables["BUY_LISTS"];
                 if (!table.Columns.Contains("Enabled"))
                 {
@@ -3603,7 +3577,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.BuyAgent.BuyAgentItem> ItemsRead(string list)
             {
-                List<RazorEnhanced.BuyAgent.BuyAgentItem> items = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
+                List<RazorEnhanced.BuyAgent.BuyAgentItem> items = new();
 
                 if (ListExists(list))
                 {
@@ -3708,7 +3682,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Dress.DressList> ListsRead()
             {
-                List<RazorEnhanced.Dress.DressList> lists = new List<RazorEnhanced.Dress.DressList>();
+                List<RazorEnhanced.Dress.DressList> lists = new();
 
                 foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
                 {
@@ -3719,7 +3693,7 @@ namespace RazorEnhanced
                     bool selected = (bool)row["Selected"];
                     bool useUo3D = (bool)row["UO3dEquipUnEquip"];
 
-                    RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, useUo3D, selected);
+                    RazorEnhanced.Dress.DressList list = new(description, delay, bag, conflict, useUo3D, selected);
                     lists.Add(list);
                 }
 
@@ -3728,7 +3702,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Dress.DressItemNew> ItemsRead(string list)
             {
-                List<RazorEnhanced.Dress.DressItemNew> items = new List<RazorEnhanced.Dress.DressItemNew>();
+                List<RazorEnhanced.Dress.DressItemNew> items = new();
 
                 if (ListExists(list))
                 {
@@ -3943,7 +3917,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Friend.FriendList> ListsRead()
             {
-                List<RazorEnhanced.Friend.FriendList> lists = new List<RazorEnhanced.Friend.FriendList>();
+                List<RazorEnhanced.Friend.FriendList> lists = new();
 
                 foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
                 {
@@ -3959,7 +3933,7 @@ namespace RazorEnhanced
 
                     bool selected = (bool)row["Selected"];
 
-                    RazorEnhanced.Friend.FriendList list = new RazorEnhanced.Friend.FriendList(description, autoacceptparty, preventattack, includeparty, slfriend, tbfriend, comfriend, minfriend, selected);
+                    RazorEnhanced.Friend.FriendList list = new(description, autoacceptparty, preventattack, includeparty, slfriend, tbfriend, comfriend, minfriend, selected);
                     lists.Add(list);
                 }
 
@@ -4281,7 +4255,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Restock.RestockList> ListsRead()
             {
-                List<RazorEnhanced.Restock.RestockList> lists = new List<RazorEnhanced.Restock.RestockList>();
+                List<RazorEnhanced.Restock.RestockList> lists = new();
 
                 foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
                 {
@@ -4318,7 +4292,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Restock.RestockItem> ItemsRead(string list)
             {
-                List<RazorEnhanced.Restock.RestockItem> items = new List<RazorEnhanced.Restock.RestockItem>();
+                List<RazorEnhanced.Restock.RestockItem> items = new();
 
                 if (ListExists(list))
                 {
@@ -4374,7 +4348,7 @@ namespace RazorEnhanced
 
             internal static List<string> ReadAll()
             {
-                List<string> retList = new List<string>();
+                List<string> retList = new();
 
                 foreach (DataRow row in m_Dataset.Tables["JOURNAL_FILTER"].Rows)
                 {
@@ -4399,10 +4373,10 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
             {
-                List<RazorEnhanced.Filters.GraphChangeData> retList = new List<RazorEnhanced.Filters.GraphChangeData>();
+                List<RazorEnhanced.Filters.GraphChangeData> retList = new();
                 foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
                 {
-                    RazorEnhanced.Filters.GraphChangeData graphdata = new RazorEnhanced.Filters.GraphChangeData(
+                    RazorEnhanced.Filters.GraphChangeData graphdata = new(
                         (bool)row["Selected"], Convert.ToInt32(row["GraphReal"]), Convert.ToInt32(row["GraphNew"]), Convert.ToInt32(row["ColorNew"]));
                     retList.Add(graphdata);
                 }
@@ -4412,7 +4386,7 @@ namespace RazorEnhanced
 
             internal static void Insert(bool enabled, int graphreal, int graphnew, int colornew)
             {
-                RazorEnhanced.Filters.GraphChangeData graphdata = new RazorEnhanced.Filters.GraphChangeData(enabled, graphreal, graphnew, colornew);
+                RazorEnhanced.Filters.GraphChangeData graphdata = new(enabled, graphreal, graphnew, colornew);
 
                 DataRow row = m_Dataset.Tables["FILTER_GRAPH"].NewRow();
                 //row["Graph"] = graphdata;
@@ -4434,7 +4408,7 @@ namespace RazorEnhanced
         {
             internal static List<string> ReadAllShortCut()
             {
-                List<string> all = new List<string>();
+                List<string> all = new();
                 foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
                 {
                     TargetGUI theTarget = (TargetGUI)row["Item"];
@@ -4533,7 +4507,7 @@ namespace RazorEnhanced
         {
             internal static List<RazorEnhanced.ToolBar.ToolBarItem> ReadItems()
             {
-                List<RazorEnhanced.ToolBar.ToolBarItem> retList = new List<RazorEnhanced.ToolBar.ToolBarItem>();
+                List<RazorEnhanced.ToolBar.ToolBarItem> retList = new();
                 foreach (DataRow row in m_Dataset.Tables["TOOLBAR_ITEMS"].Rows)  // .Count || index == -1) //out of range
                 {
                     string name = (string)row["Name"];
@@ -4556,7 +4530,7 @@ namespace RazorEnhanced
                 bool warn = Convert.ToBoolean(row["Warning"]);
                 int limit = Convert.ToInt32(row["WarningLimit"]);
 
-                RazorEnhanced.ToolBar.ToolBarItem item = new RazorEnhanced.ToolBar.ToolBarItem(name, graphic, color, warn, limit);
+                RazorEnhanced.ToolBar.ToolBarItem item = new(name, graphic, color, warn, limit);
                 return item;
             }
 
@@ -4616,7 +4590,7 @@ namespace RazorEnhanced
         {
             internal static List<RazorEnhanced.SpellGrid.SpellGridItem> ReadItems()
             {
-                List<RazorEnhanced.SpellGrid.SpellGridItem> griditem = new List<RazorEnhanced.SpellGrid.SpellGridItem>();
+                List<RazorEnhanced.SpellGrid.SpellGridItem> griditem = new();
 
                 for (int i = 0; i < m_Dataset.Tables["SPELLGRID_ITEMS"].Rows.Count; i++)
                 {
@@ -4628,7 +4602,7 @@ namespace RazorEnhanced
                         //string color = (string)row["Color"];
                         //Color c = Color.FromName((string)row["Color"]);
 
-                        RazorEnhanced.SpellGrid.SpellGridItem temp = new RazorEnhanced.SpellGrid.SpellGridItem((string)row["Group"], (string)row["Spell"], Color.FromName((string)row["Color"]), Color.FromName((string)row["Color"]));
+                        RazorEnhanced.SpellGrid.SpellGridItem temp = new((string)row["Group"], (string)row["Spell"], Color.FromName((string)row["Color"]), Color.FromName((string)row["Color"]));
                         griditem.Add(temp);
                     }
                 }
@@ -4639,7 +4613,7 @@ namespace RazorEnhanced
             internal static RazorEnhanced.SpellGrid.SpellGridItem ReadSelectedItem(int index)
             {
                 DataRow row = m_Dataset.Tables["SPELLGRID_ITEMS"].Rows[index];
-                RazorEnhanced.SpellGrid.SpellGridItem temp = new RazorEnhanced.SpellGrid.SpellGridItem((string)row["Group"], (string)row["Spell"], Color.FromName((string)row["Color"]), Color.FromName((string)row["Color"]));
+                RazorEnhanced.SpellGrid.SpellGridItem temp = new((string)row["Group"], (string)row["Spell"], Color.FromName((string)row["Color"]), Color.FromName((string)row["Color"]));
                 return temp;
                 //return (RazorEnhanced.SpellGrid.SpellGridItem)m_Dataset.Tables["SPELLGRID_ITEMS"].Rows[index];
             }
@@ -4715,7 +4689,7 @@ namespace RazorEnhanced
 
             internal static List<Assistant.PasswordMemory.PasswordData> RealAll()
             {
-                List<Assistant.PasswordMemory.PasswordData> dataOut = new List<Assistant.PasswordMemory.PasswordData>();
+                List<Assistant.PasswordMemory.PasswordData> dataOut = new();
 
                 foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)
                 {
@@ -4723,7 +4697,7 @@ namespace RazorEnhanced
                     string user = (string)row["User"];
                     string password = (string)row["Password"];
 
-                    Assistant.PasswordMemory.PasswordData data = new Assistant.PasswordMemory.PasswordData(ip, user, password);
+                    Assistant.PasswordMemory.PasswordData data = new(ip, user, password);
                     dataOut.Add(data);
                 }
                 return dataOut;
@@ -4737,7 +4711,7 @@ namespace RazorEnhanced
         {
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadGroup(string gname)
             {
-                List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
+                List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new();
 
                 foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
                 {
@@ -4753,13 +4727,13 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadTarget()
             {
-                List<RazorEnhanced.HotKey.HotKeyData> retList = new List<RazorEnhanced.HotKey.HotKeyData>();
+                List<RazorEnhanced.HotKey.HotKeyData> retList = new();
                 foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
                 {
                     TargetGUI theTarget = (TargetGUI)row["Item"];
                     string name = theTarget.Name;
                     Keys key = theTarget.HotKey;
-                    RazorEnhanced.HotKey.HotKeyData aKey = new RazorEnhanced.HotKey.HotKeyData(name, key);
+                    RazorEnhanced.HotKey.HotKeyData aKey = new(name, key);
                     retList.Add(aKey);
                 }
 
@@ -4769,7 +4743,7 @@ namespace RazorEnhanced
 
             internal static List<RazorEnhanced.HotKey.HotKeyData> ReadScript()
             {
-                List<RazorEnhanced.HotKey.HotKeyData> retList = new List<RazorEnhanced.HotKey.HotKeyData>();
+                List<RazorEnhanced.HotKey.HotKeyData> retList = new();
 
                 foreach (Scripts.ScriptItem item in Scripts.PyScripts)
                 {
@@ -5541,7 +5515,7 @@ namespace RazorEnhanced
 
             try
             {
-                DirectoryInfo d = new DirectoryInfo(src);
+                DirectoryInfo d = new(src);
                 FileInfo[] Files = d.GetFiles("*");
                 foreach (FileInfo file in Files)
                 {
@@ -5573,7 +5547,7 @@ namespace RazorEnhanced
 
             try
             {
-                DirectoryInfo d = new DirectoryInfo(backupDir);
+                DirectoryInfo d = new(backupDir);
                 FileInfo[] Files = d.GetFiles("RazorEnhanced.settings.*");
                 foreach (FileInfo file in Files)
                 {

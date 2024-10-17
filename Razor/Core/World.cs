@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Ultima;
 
 namespace Assistant
 {
@@ -36,7 +35,7 @@ namespace Assistant
 
         internal static List<Item> FindItems(int x, int y, int z)
         {
-            List<Item> items = new List<Item>();
+            List<Item> items = new();
             foreach (var item in m_Items.Values)
             {
                 if (item.Position.X == x && item.Position.Y == y)
@@ -62,7 +61,7 @@ namespace Assistant
             Item item = null;
             m_Items.TryGetValue(serial, out item);
             if (item != null)
-                return item;    
+                return item;
 
             return null;
         }
@@ -70,16 +69,16 @@ namespace Assistant
         internal static List<UOEntity> FindAllEntityByID(ushort type, int color)
         {
             var typeId = new TypeID(type);
-            List<UOEntity> entities = new List<UOEntity>();
+            List<UOEntity> entities = new();
             foreach (var item in World.Items.Values)
             {
-                if (item.TypeID == typeId ) 
+                if (item.TypeID == typeId)
                     if (color == -1 || item.Hue == (ushort)color)
                         entities.Add(item);
             }
             foreach (var mobile in World.Mobiles.Values)
             {
-                if (mobile.TypeID == typeId ) 
+                if (mobile.TypeID == typeId)
                     if (color == -1 || mobile.Hue == (ushort)color)
                         entities.Add(mobile);
             }
@@ -89,7 +88,7 @@ namespace Assistant
 
         internal static List<CorpseItem> CorpsesInRange(int range)
         {
-            List<CorpseItem> list = new List<CorpseItem>();
+            List<CorpseItem> list = new();
 
             if (World.Player == null)
                 return list;
@@ -114,7 +113,7 @@ namespace Assistant
 
         internal static List<Mobile> MobilesInRange(int range)
         {
-            List<Mobile> list = new List<Mobile>();
+            List<Mobile> list = new();
 
             if (World.Player == null)
                 return list;

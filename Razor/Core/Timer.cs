@@ -57,7 +57,7 @@ namespace Assistant
 
         internal IComparable Peek()
         {
-            return m_List[1] as IComparable;
+            return m_List[1];
         }
 
         internal IComparable Pop()
@@ -132,7 +132,7 @@ namespace Assistant
 
         internal List<IComparable> GetRawList()
         {
-            List<IComparable> copy = new List<IComparable>(m_Size);
+            List<IComparable> copy = new(m_Size);
             for (int i = 1; i <= m_Size; i++)
                 copy.Add(m_List[i]);
             return copy;
@@ -225,7 +225,7 @@ namespace Assistant
             set { m_Interval = value; }
         }
 
-        private static readonly MinHeap m_Heap = new MinHeap();
+        private static readonly MinHeap m_Heap = new();
         private static System.Timers.Timer m_SystemTimer;
 
         internal static System.Timers.Timer SystemTimer
@@ -276,7 +276,7 @@ namespace Assistant
         internal static void Slice()
         {
             int breakCount = 100;
-            List<IComparable> readd = new List<IComparable>();
+            List<IComparable> readd = new();
 
             while (!m_Heap.IsEmpty && ((Timer)m_Heap.Peek()).TimeUntilTick < TimeSpan.Zero)
             {

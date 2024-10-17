@@ -12,7 +12,7 @@ namespace FastColoredTextBoxNS
     /// </summary>
     public class MacrosManager
     {
-        private readonly List<object> macro = new List<object>();
+        private readonly List<object> macro = new();
 
         internal MacrosManager(FastColoredTextBox ctrl)
         {
@@ -122,7 +122,7 @@ namespace FastColoredTextBoxNS
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
                 var kc = new KeysConverter();
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 sb.AppendLine("<macros>");
                 foreach (var item in macro)
                 {

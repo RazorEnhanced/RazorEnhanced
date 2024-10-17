@@ -27,7 +27,7 @@ namespace RazorEnhanced
         }
 
         internal static bool Enabled = false;
-        private static readonly ConcurrentDictionary<uint, DamageData> m_damagedata = new ConcurrentDictionary<uint, DamageData>();
+        private static readonly ConcurrentDictionary<uint, DamageData> m_damagedata = new();
 
         internal static void AddDamage(uint serial, ushort damage)
         {
@@ -43,7 +43,7 @@ namespace RazorEnhanced
                 Assistant.Mobile mob = World.FindMobile(serial);
                 if (mob != null)
                 {
-                    DamageData data = new DamageData(World.FindMobile(serial).Name, damage);
+                    DamageData data = new(World.FindMobile(serial).Name, damage);
                     m_damagedata.TryAdd(serial, data);
                 }
             }

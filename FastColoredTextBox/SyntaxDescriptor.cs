@@ -11,9 +11,9 @@ namespace FastColoredTextBoxNS
         public char leftBracket2 = '{';
         public char rightBracket2 = '}';
         public BracketsHighlightStrategy bracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
-        public readonly List<Style> styles = new List<Style>();
-        public readonly List<RuleDesc> rules = new List<RuleDesc>();
-        public readonly List<FoldingDesc> foldings = new List<FoldingDesc>();
+        public readonly List<Style> styles = new();
+        public readonly List<RuleDesc> rules = new();
+        public readonly List<FoldingDesc> foldings = new();
 
         public void Dispose()
         {

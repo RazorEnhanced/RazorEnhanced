@@ -176,10 +176,11 @@ namespace Assistant
 
         internal static int FastWalkKey = 0;
         
-        private readonly ConcurrentDictionary<BuffIcon, BuffInfo> m_Buffs = new ConcurrentDictionary<BuffIcon, BuffInfo>();
+        private readonly ConcurrentDictionary<BuffIcon, BuffInfo> m_Buffs = new ();
         internal ConcurrentDictionary<BuffIcon, BuffInfo> Buffs { get { return m_Buffs; } }
         
-        private readonly List<SkillIcon> m_SkillEnabled = new List<SkillIcon>();
+        private readonly List<SkillIcon> m_SkillEnabled = new();
+        
         internal List<SkillIcon> SkillEnabled { get { return m_SkillEnabled; } }
 
 
@@ -552,7 +553,7 @@ namespace Assistant
             m_OutstandingMoves++;
             FastWalkKey++;
 
-            MoveEntry e = new MoveEntry();
+            MoveEntry e = new();
 
             if (!m_MoveInfo.ContainsKey(seq))
                 m_MoveInfo.TryAdd(seq, e);
@@ -625,7 +626,7 @@ namespace Assistant
             }
             Direction = dir;
         }
-        internal SyncPrimitives.Semaphore WalkSemaphore = new SyncPrimitives.Semaphore(5);
+        internal SyncPrimitives.Semaphore WalkSemaphore = new(5);
 
         private int walkScriptRequest = 0;
         internal int WalkScriptRequest
@@ -750,7 +751,7 @@ namespace Assistant
 
         internal override void OnPositionChanging(Point3D newPos)
         {
-            List<Mobile> mobiles = new List<Mobile>(World.Mobiles.Values);
+            List<Mobile> mobiles = new(World.Mobiles.Values);
 
             foreach (Mobile m in mobiles)
             {
@@ -763,7 +764,7 @@ namespace Assistant
                 }
             }
 
-            List<Item> items = new List<Item>(World.Items.Values);
+            List<Item> items = new(World.Items.Values);
             foreach (Item item in items)
             {
                 if (item.Deleted || item.Container != null)
@@ -779,14 +780,14 @@ namespace Assistant
 
         internal override void OnMapChange(byte old, byte cur)
         {
-            List<Mobile> list = new List<Mobile>(World.Mobiles.Values);
+            List<Mobile> list = new(World.Mobiles.Values);
             foreach (Mobile t in list)
             {
                 if (t != this && t.Map != cur)
                     t.Remove();
             }
 
-            List<Item> itemlist = new List<Item>(World.Items.Values);
+            List<Item> itemlist = new(World.Items.Values);
 
             foreach (Item i in itemlist)
             {
@@ -927,8 +928,8 @@ namespace Assistant
         internal uint PromptSenderSerial;
         internal uint PromptID;
         internal uint PromptType;
-        internal List<int> CurrentGumpTile = new List<int>();
-        internal List<string> CurrentGumpStrings = new List<string>();
+        internal List<int> CurrentGumpTile = new();
+        internal List<string> CurrentGumpStrings = new();
         internal string CurrentGumpRawLayout;
         internal string[] CurrentGumpRawText;
         internal uint LastWeaponRight, LastWeaponLeft = 0;
@@ -961,7 +962,7 @@ namespace Assistant
             }
         }
 
-        internal List<MenuItem> MenuEntry = new List<MenuItem>();
+        internal List<MenuItem> MenuEntry = new();
 
         // Query String
         internal bool HasQueryString;

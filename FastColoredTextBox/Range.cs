@@ -218,7 +218,7 @@ namespace FastColoredTextBoxNS
                 int toChar = ToX;
                 if (fromLine < 0) return null;
                 //
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 for (int y = fromLine; y <= toLine; y++)
                 {
                     int fromX = y == fromLine ? fromChar : 0;
@@ -285,7 +285,7 @@ namespace FastColoredTextBoxNS
             int fromChar = FromX;
             int toChar = ToX;
 
-            StringBuilder sb = new StringBuilder((toLine - fromLine) * 50);
+            StringBuilder sb = new((toLine - fromLine) * 50);
             charIndexToPlace = new List<Place>(sb.Capacity);
             if (fromLine >= 0)
             {
@@ -890,11 +890,11 @@ namespace FastColoredTextBoxNS
             List<Place> charIndexToPlace;
             GetText(out text, out charIndexToPlace);
             //create regex
-            Regex regex = new Regex(regexPattern, options);
+            Regex regex = new(regexPattern, options);
             //
             foreach (Match m in regex.Matches(text))
             {
-                Range r = new Range(this.tb);
+                Range r = new(this.tb);
                 //try get 'range' group, otherwise use group 0
                 Group group = m.Groups["range"];
                 if (!group.Success)
@@ -962,7 +962,7 @@ namespace FastColoredTextBoxNS
         {
             Normalize();
             //create regex
-            Regex regex = new Regex(regexPattern, options);
+            Regex regex = new(regexPattern, options);
             //
             var fts = tb.TextSource as FileTextSource; //<----!!!! ugly
 
@@ -1002,7 +1002,7 @@ namespace FastColoredTextBoxNS
             //
             foreach (Match m in regex.Matches(text))
             {
-                Range r = new Range(this.tb);
+                Range r = new(this.tb);
                 //try get 'range' group, otherwise use group 0
                 Group group = m.Groups["range"];
                 if (!group.Success)
@@ -1212,7 +1212,7 @@ namespace FastColoredTextBoxNS
         {
             var mask = tb.GetStyleIndexMask(new Style[] { style });
             //
-            Range r = new Range(tb);
+            Range r = new(tb);
             r.Start = Start;
             //go left, check style
             while (r.GoLeftThroughFolded())
@@ -1250,9 +1250,9 @@ namespace FastColoredTextBoxNS
         /// <returns>Range of found fragment</returns>
         public Range GetFragment(string allowedSymbolsPattern, RegexOptions options)
         {
-            Range r = new Range(tb);
+            Range r = new(tb);
             r.Start = Start;
-            Regex regex = new Regex(allowedSymbolsPattern, options);
+            Regex regex = new(allowedSymbolsPattern, options);
             //go left, check symbols
             while (r.GoLeftThroughFolded())
             {
@@ -1653,7 +1653,7 @@ namespace FastColoredTextBoxNS
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 var bounds = Bounds;
                 if (bounds.iStartLine < 0) return "";
                 //

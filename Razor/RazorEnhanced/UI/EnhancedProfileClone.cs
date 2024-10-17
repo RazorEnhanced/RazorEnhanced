@@ -51,7 +51,7 @@ namespace RazorEnhanced.UI
 
                 try
                 {
-                    DirectoryInfo d = new DirectoryInfo(src);
+                    DirectoryInfo d = new(src);
                     FileInfo[] Files = d.GetFiles("*");
                     foreach (FileInfo file in Files)
                     {

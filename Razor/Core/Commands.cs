@@ -70,7 +70,7 @@ namespace Assistant
             {
                 Engine.MainWindow.SafeAction(s =>
                 {
-                    RazorEnhanced.UI.EnhancedStaticInspector inspector = new RazorEnhanced.UI.EnhancedStaticInspector(pt);
+                    RazorEnhanced.UI.EnhancedStaticInspector inspector = new(pt);
                     inspector.TopMost = true;
                     inspector.Show();
                 });
@@ -82,7 +82,7 @@ namespace Assistant
                 {
                     Engine.MainWindow.SafeAction(s =>
                     {
-                        RazorEnhanced.UI.EnhancedItemInspector inspector = new RazorEnhanced.UI.EnhancedItemInspector(assistantItem);
+                        RazorEnhanced.UI.EnhancedItemInspector inspector = new(assistantItem);
                         inspector.TopMost = true;
                         inspector.Show();
                     });
@@ -94,7 +94,7 @@ namespace Assistant
                     {
                         Assistant.Engine.MainWindow.SafeAction(s =>
                         {
-                            RazorEnhanced.UI.EnhancedMobileInspector inspector = new RazorEnhanced.UI.EnhancedMobileInspector(assistantMobile);
+                            RazorEnhanced.UI.EnhancedMobileInspector inspector = new(assistantMobile);
                             inspector.TopMost = true;
                             inspector.Show();
                         });
@@ -122,7 +122,7 @@ namespace Assistant
 
         private static void Echo(string[] param)
         {
-            StringBuilder sb = new StringBuilder("Note To Self: ");
+            StringBuilder sb = new("Note To Self: ");
             foreach (string t in param)
                 sb.Append(t);
             Assistant.Client.Instance.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
@@ -207,7 +207,7 @@ namespace Assistant
             }
             Assistant.Ping.StartPing(num_packets);
         }
-        
+
         internal static void Sync(string[] param)
         {
             Misc.Resync();
@@ -222,8 +222,8 @@ namespace Assistant
                 int min = int.MaxValue;
                 int total = 0;
 
-                System.Net.NetworkInformation.Ping pingSender = new System.Net.NetworkInformation.Ping();
-                PingOptions options = new PingOptions();
+                System.Net.NetworkInformation.Ping pingSender = new();
+                PingOptions options = new();
                 options.DontFragment = true;
 
                 // Create a buffer of 32 bytes of data to be transmitted.
@@ -290,19 +290,37 @@ namespace Assistant
 
         internal static void SetAlias(string[] param)
         {
-            if (param.Length < 2)
+            if (param.Length == 1)
             {
-                RazorEnhanced.Misc.SendMessage("setalias: alias name and object id required", 33, false);
-                return;
-            }
+                Thread thread = new(() =>
+                {
+                    RazorEnhanced.Target target = new();
+                    int serial = target.PromptTarget("Select object to set alias");
+                    if (serial == 0)
+                        RazorEnhanced.Misc.SendMessage("setalias: not set", 33, false);
+                    else
+                    {
+                        Misc.SetSharedValue(param[0], serial);
+                        return;
+                    }
+                });
 
-            if (TryConvertToInt(param[1], out int serial))
+                thread.Start();
+            }
+            else if (param.Length == 2)
             {
-                Misc.SetSharedValue(param[0], serial);
+                if (TryConvertToInt(param[1], out int serial))
+                {
+                    Misc.SetSharedValue(param[0], serial);
+                }
+                else
+                {
+                    RazorEnhanced.Misc.SendMessage("setalias: invalid object id", 33, false);
+                }
             }
             else
             {
-                RazorEnhanced.Misc.SendMessage("setalias: invalid object id", 33, false);
+                RazorEnhanced.Misc.SendMessage("setalias: wrong number of parameters", 33, false);
             }
         }
 
@@ -398,7 +416,7 @@ namespace Assistant
             {
                 int value = pvSrc.ReadInt16();
                 int count = (value & 0xFFF0) >> 4;
-                List<ushort> keys = new List<ushort> { (ushort)value };
+                List<ushort> keys = new() { (ushort)value };
 
                 for (int i = 0; i < count; ++i)
                 {
@@ -458,7 +476,7 @@ namespace Assistant
             string[] split = text.Split(' ', '\t');
             if (m_List.ContainsKey(split[0]))
             {
-                CommandCallback call = (CommandCallback)m_List[split[0]];
+                CommandCallback call = m_List[split[0]];
                 if (call != null)
                 {
                     string[] param = new String[split.Length - 1];

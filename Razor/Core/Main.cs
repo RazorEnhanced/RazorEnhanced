@@ -33,14 +33,12 @@ namespace Assistant
 
             ReportCrash((Exception)exception);
 
-            using (StreamWriter txt = new StreamWriter("Crash.log", true))
-            {
-                txt.AutoFlush = true;
-                txt.WriteLine("Exception @ {0}", DateTime.Now.ToString("MM-dd-yy HH:mm:ss.ffff"));
-                txt.WriteLine(exception.ToString());
-                txt.WriteLine("");
-                txt.WriteLine("");
-            }
+            using StreamWriter txt = new("Crash.log", true);
+            txt.AutoFlush = true;
+            txt.WriteLine("Exception @ {0}", DateTime.Now.ToString("MM-dd-yy HH:mm:ss.ffff"));
+            txt.WriteLine(exception.ToString());
+            txt.WriteLine("");
+            txt.WriteLine("");
         }
 
         private static Version m_ClientVersion = null;
@@ -199,7 +197,7 @@ namespace Assistant
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Set default font
-            System.Drawing.Font defaultFont = new System.Drawing.Font("Arial", 8);
+            System.Drawing.Font defaultFont = new("Arial", 8);
 
             RazorEnhanced.AutoDocIO.UpdateDocs();
             // these are the available options, note that they set the variables
@@ -225,13 +223,13 @@ namespace Assistant
                 // parse the command line
                 extra = options.Parse(args);
             }
-            catch (OptionException e)
+            catch (OptionException)
             {
                 showHelp = true;
             }
             if (extra.Count > 0 || showHelp)
             {
-                StringWriter writer = new StringWriter();
+                StringWriter writer = new();
                 options.WriteOptionDescriptions(writer);
                 string descr = writer.ToString();
                 RazorEnhanced.UI.RE_MessageBox.Show("Invalid Arguments", descr,
@@ -318,7 +316,7 @@ namespace Assistant
 
         internal static void ReportCrash(Exception exception)
         {
-            ReportCrash reportCrash = new ReportCrash("razorenhanced@gmail.com");
+            ReportCrash reportCrash = new("razorenhanced@gmail.com");
             reportCrash.CaptureScreen = true;
             reportCrash.IncludeScreenshot = true;
             reportCrash.DoctorDumpSettings = new DoctorDumpSettings

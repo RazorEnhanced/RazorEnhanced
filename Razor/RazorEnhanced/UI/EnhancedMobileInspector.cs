@@ -44,14 +44,14 @@ namespace RazorEnhanced.UI
 
                     // Details
                     lHits.Invoke(new Action(() => lHits.Text = m_mobile.Hits + " / " + m_mobile.HitsMax));
-                    pHits.Invoke(new Action(() => pHits.Value = (int)(m_mobile.Hits * 100 / (m_mobile.HitsMax == 0 ? (ushort)1 : m_mobile.HitsMax))));
+                    pHits.Invoke(new Action(() => pHits.Value = m_mobile.Hits * 100 / (m_mobile.HitsMax == 0 ? (ushort)1 : m_mobile.HitsMax)));
 
                     lMana.Invoke(new Action(() => lMana.Text = m_mobile.Mana + " / " + m_mobile.ManaMax));
-                    pMana.Invoke(new Action(() => pMana.Value = (int)(m_mobile.Mana * 100 / (m_mobile.ManaMax == 0 ? (ushort)1 : m_mobile.ManaMax))));
+                    pMana.Invoke(new Action(() => pMana.Value = m_mobile.Mana * 100 / (m_mobile.ManaMax == 0 ? (ushort)1 : m_mobile.ManaMax)));
 
                     lStam.Invoke(new Action(() => lStam.Text = m_mobile.Stam + " / " + m_mobile.StamMax));
                     lStam.Text = m_mobile.Stam + " / " + m_mobile.StamMax;
-                    pStam.Invoke(new Action(() => pStam.Value = (int)(m_mobile.Stam * 100 / (m_mobile.StamMax == 0 ? (ushort)1 : m_mobile.StamMax))));
+                    pStam.Invoke(new Action(() => pStam.Value = m_mobile.Stam * 100 / (m_mobile.StamMax == 0 ? (ushort)1 : m_mobile.StamMax)));
                 }
             }
             catch { }
@@ -70,7 +70,7 @@ namespace RazorEnhanced.UI
         }
 
         // Props to show
-        private readonly List<string> m_props = new List<string>
+        private readonly List<string> m_props = new()
         {
             "Fire Resist",
             "Cold Resist",
@@ -200,7 +200,7 @@ namespace RazorEnhanced.UI
                 Close();
 
             // general
-            ToolTip toolTip = new ToolTip
+            ToolTip toolTip = new()
             {
                 // Set up the delays for the ToolTip.
                 AutoPopDelay = 10000,

@@ -1,27 +1,23 @@
-﻿using System;
+using Assistant;
+using Google.Protobuf;
+using IronPython.Runtime;
+using IronPython.Runtime.Exceptions;
+using Microsoft.Scripting.Hosting;
+using Microsoft.Scripting.Hosting.Providers;
+using RazorEnhanced.UOS;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
+using System.Net.Sockets;
+using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Text;
-using Google.Protobuf;
 using WebSocketSharp;
 using WebSocketSharp.Server;
-using System.Diagnostics;
-using Assistant;
-using System.Net.Sockets;
-using IronPython.Runtime;
-using Microsoft.Scripting.Hosting.Providers;
-using Microsoft.Scripting.Hosting;
-using RazorEnhanced.UOS;
-using System.Text.RegularExpressions;
-using System.Collections.Concurrent;
-using IronPython.Runtime.Exceptions;
-using IronPython.Hosting;
-using System.Windows.Forms;
-using Consul;
-using System.Web.UI.WebControls;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace RazorEnhanced
 {
@@ -34,7 +30,7 @@ namespace RazorEnhanced
             internal Thread _playThread;
             internal bool _shouldTerminate;
 
-            internal SessionData(int sessionID, ScriptRecorder scriptRecorder=null, Thread playThread=null)
+            internal SessionData(int sessionID, ScriptRecorder scriptRecorder = null, Thread playThread = null)
             {
                 _sessionID = sessionID;
                 _recorder = scriptRecorder;
@@ -44,10 +40,10 @@ namespace RazorEnhanced
         }
         internal ProtoMessageType _messageType = 0;
         internal int _sessionID = 0;
-        private readonly Stopwatch _stopwatch = new Stopwatch();
+        private readonly Stopwatch _stopwatch = new();
         private readonly long _timeGate = 100; // 100 milliseconds max output to remote. note tried 50 and it overflows
 
-        private readonly SemaphoreSlim _writeLock = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _writeLock = new(1, 1);
 
         internal static ConcurrentDictionary<int, SessionData> _sessionTracker = new();
 
@@ -95,11 +91,11 @@ namespace RazorEnhanced
                 default:
                     Utility.Logger.Debug($"Unreasonable message received: {_messageType}");
                     return;
-            }            
+            }
         }
         private TracebackDelegate TraceCallback(TraceBackFrame frame, string result, object payload)
         {
-            if (_sessionID == 0) 
+            if (_sessionID == 0)
                 return TraceCallback;
 
             //bool shouldTerminate = false;
@@ -118,7 +114,7 @@ namespace RazorEnhanced
             if (request == null) return;
 
             SessionData sessionData =
-                new SessionData(request.Sessionid, scriptRecorder:null, playThread: null );
+                new(request.Sessionid, scriptRecorder: null, playThread: null);
             _sessionTracker[request.Sessionid] = sessionData;
 
 
@@ -204,12 +200,12 @@ namespace RazorEnhanced
                                     combinedString += statement.TrimEnd(new char[] { '\r', '\n' }) + "\n";
                                 }
 
-                                uosEngine.Load(combinedString, "");                                
+                                uosEngine.Load(combinedString, "");
                                 sessionData._playThread = new Thread(() => RunUOS(uosEngine));
                                 sessionData._playThread.Start();
                                 sessionData._playThread.Join();
                                 sessionData._playThread = null;
-                                
+
                             }
                             catch (Exception ex)
                             {
@@ -255,7 +251,7 @@ namespace RazorEnhanced
                                     sessionData._playThread.Join();
                                     sessionData._playThread = null;
                                 }
-                                else 
+                                else
                                 {
                                     foreach (var line in compileMessages)
                                     {
@@ -270,7 +266,7 @@ namespace RazorEnhanced
                                 Utility.Logger.Error($"Play UOS failed {ex}");
                             }
                     }
-                    
+
                     break;
                 default:
                     throw new OperationCanceledException();
@@ -301,7 +297,7 @@ namespace RazorEnhanced
                 string error = eo.FormatException(ex);
                 message += Regex.Replace(error.Trim(), "\n\n", "\n");     //remove empty lines
             }
-            
+
             OutputPlayMessage(message, true);
         }
         internal void RunUOS(UOSteamEngine engine)
@@ -321,7 +317,7 @@ namespace RazorEnhanced
             }
             catch (UOSStopError ex)
             {
-                message = $"stop keyword encountered at line {ex.LineNumber+1}";
+                message = $"stop keyword encountered at line {ex.LineNumber + 1}";
             }
             catch (Exception ex)
             {
@@ -341,7 +337,7 @@ namespace RazorEnhanced
             }
             catch (Exception ex)
             {
-                message += "C# Error:";;
+                message += "C# Error:"; ;
                 string error = ex.ToString().Trim();
                 message += Regex.Replace(error, "\n\n", "\n");     //remove empty lines
             }
@@ -362,7 +358,7 @@ namespace RazorEnhanced
             }
         }
 
-        private async Task OutputPlayMessage(string message, bool more, bool sendInGame=true)
+        private async Task OutputPlayMessage(string message, bool more, bool sendInGame = true)
         {
             try
             {
@@ -399,11 +395,11 @@ namespace RazorEnhanced
         }
 
 
-            public async Task Record(RecordRequest request)
+        public async Task Record(RecordRequest request)
         {
             if (World.Player == null) return;
             if (request == null) return;
-                
+
             ScriptLanguage language = ScriptLanguage.UNKNOWN;
             switch (request.Language)
             {
@@ -424,11 +420,11 @@ namespace RazorEnhanced
             if (language == ScriptLanguage.PYTHON || language == ScriptLanguage.UOSTEAM)
             {
                 SessionData sessionData =
-                    new SessionData(request.Sessionid, ScriptRecorderService.RecorderForLanguage(language));
+                    new(request.Sessionid, ScriptRecorderService.RecorderForLanguage(language));
                 _sessionTracker[request.Sessionid] = sessionData;
 
                 try
-                    {
+                {
                     sessionData._recorder.Output = async (code) =>
                     {
                         // Create a response based on the request
@@ -438,7 +434,7 @@ namespace RazorEnhanced
                     sessionData._recorder.Start();
                     while (sessionData._recorder != null && sessionData._recorder.IsRecording())
                     {
-                        await Task.Delay(100); 
+                        await Task.Delay(100);
                     }
                 }
                 catch (OperationCanceledException)
@@ -471,7 +467,7 @@ namespace RazorEnhanced
             Send(response.ToByteArray());
             if (_sessionTracker.ContainsKey(request.Sessionid)
                 && !_sessionTracker.TryRemove(request.Sessionid, out _))
-                    Utility.Logger.Error($"Unable to remove Record session key from dictionary");
+                Utility.Logger.Error($"Unable to remove Record session key from dictionary");
         }
 
         private async Task OutputRecordMessage(int sessionID, string message)
@@ -518,7 +514,7 @@ namespace RazorEnhanced
 
         }
 
-            public async Task StopRecorder(StopRecordRequest request)
+        public async Task StopRecorder(StopRecordRequest request)
         {
             if (World.Player == null) return;
             if (request == null) return;
@@ -547,22 +543,21 @@ namespace RazorEnhanced
         {
             // The first field (tag 1) in the message is the MessageType enum
             // We only need to read the first few bytes to determine the message type
-            using (var input = new CodedInputStream(buffer))
+            using var input = new CodedInputStream(buffer);
+            ProtoMessageType messageType = 0;
+            int sessionID = 0;
+            uint tag = input.ReadTag();
+            if (tag > 0 && WireFormat.GetTagFieldNumber(tag) == 1)
             {
-                ProtoMessageType messageType = 0;
-                int sessionID = 0;
-                uint tag = input.ReadTag();
-                if (tag>0 && WireFormat.GetTagFieldNumber(tag) == 1)
-                {
-                    int enumValue = input.ReadEnum();
-                    messageType = (ProtoMessageType)enumValue;
-                }
-                tag = input.ReadTag();
-                if (tag>0 && WireFormat.GetTagFieldNumber(tag) == 2) {
-                    sessionID = input.ReadInt32();
-                }
-                return (messageType, sessionID);
+                int enumValue = input.ReadEnum();
+                messageType = (ProtoMessageType)enumValue;
             }
+            tag = input.ReadTag();
+            if (tag > 0 && WireFormat.GetTagFieldNumber(tag) == 2)
+            {
+                sessionID = input.ReadInt32();
+            }
+            return (messageType, sessionID);
         }
 
 
@@ -574,6 +569,27 @@ namespace RazorEnhanced
 
         protected override void OnClose(CloseEventArgs e)
         {
+            // attempt to terminate all sessions
+            foreach (var session in _sessionTracker)
+            {
+                if (session.Value._recorder != null)
+                {
+                    var response = new RecordResponse
+                    {
+                        Type = ProtoMessageType.RecordResponseType,
+                        Sessionid = session.Value._sessionID,
+                        More = false,
+                        Data = "Recording Stopped"
+                    };
+                    Send(response.ToByteArray());
+                    session.Value._recorder.Stop();
+                }
+                if (session.Value._playThread != null)
+                {
+                    OutputPlayMessage("Process Ended", false, false);
+                    session.Value._playThread.Abort();
+                }
+            }
             _stopwatch.Stop();
             Utility.Logger.Debug("WebSocket connection closed.");
         }
@@ -584,7 +600,7 @@ namespace RazorEnhanced
         internal int? AssignedPort { get; private set; }
 
         private static ProtoControlServer _instance = null;
-        private static readonly object _lock = new object();
+        private static readonly object _lock = new();
         private WebSocketServer _server;
 
         private ProtoControlServer()
@@ -631,7 +647,7 @@ namespace RazorEnhanced
                 Utility.Logger.Info($"WebSocket Server started at {connection}.");
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 AssignedPort = 0;
                 _server = null;
@@ -641,8 +657,11 @@ namespace RazorEnhanced
 
         public void Stop()
         {
-            _server.Stop();
-            Utility.Logger.Debug("WebSocket Server stopped.");
+            if (_server != null)
+            {
+                _server.Stop();
+                Utility.Logger.Debug("WebSocket Server stopped.");
+            }
             _server = null;
         }
         public static int FindAvailablePort(IPAddress ip, int startingPort, int range)
@@ -680,5 +699,5 @@ namespace RazorEnhanced
         }
 
     }
- 
+
 }

@@ -1,5 +1,4 @@
 using Microsoft.Win32.SafeHandles;
-using RazorEnhanced;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -83,7 +82,7 @@ namespace Assistant
         internal static string GetWindowsUserName()
         {
             int len = 1024;
-            StringBuilder sb = new StringBuilder(len);
+            StringBuilder sb = new(len);
             return DLLImport.Win.GetUserNameA(sb, &len) != 0 ? sb.ToString() : "";
         }
 
@@ -162,7 +161,7 @@ namespace Assistant
 
         public override void SetMapWndHandle(Form mapWnd)
         {
-            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.SetMapHWnd, (IntPtr)mapWnd.Handle);
+            DLLImport.Win.PostMessage(Assistant.Client.Instance.GetWindowHandle(), WM_UONETEVENT, (UIntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
         }
 
         public override void RequestStatbarPatch(bool preAOS)
@@ -323,7 +322,7 @@ namespace Assistant
             uint ip = (uint)ipBytes[3] << 24;
             ip += (uint)ipBytes[2] << 16;
             ip += (uint)ipBytes[1] << 8;
-            ip += (uint)ipBytes[0];
+            ip += ipBytes[0];
             m_ServerIP = ip;
 
             m_ServerPort = (ushort)port;
@@ -375,7 +374,7 @@ namespace Assistant
         }
 
         internal static Timer m_CalTimer = null;
-        private static readonly TimerCallback m_CalibrateNow = new TimerCallback(CalibrateNow);
+        private static readonly TimerCallback m_CalibrateNow = new(CalibrateNow);
         private static Point2D m_CalPos = Point2D.Zero;
 
         public override void BeginCalibratePosition()
@@ -490,7 +489,7 @@ namespace Assistant
                     {
                         if (Engine.MainWindow != null)
                         {
-                            StringBuilder sb = new StringBuilder(256);
+                            StringBuilder sb = new(256);
                             if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
                                 return false;
 
@@ -720,7 +719,7 @@ namespace Assistant
                     if (World.Player != null)
                     {
                         Position pos = (Position)Marshal.PtrToStructure(copydata.lpData, typeof(Position));
-                        Point3D pt = new Point3D();
+                        Point3D pt = new();
 
                         pt.X = pos.x;
                         pt.Y = pos.y;
@@ -1115,11 +1114,9 @@ namespace Assistant
         {
             return RequestMove(m_Dir, false);
         }
-
-        static byte Seq;
+        
         internal bool RequestMove(Direction m_Dir, bool run)
         {
-            Direction direction;
             int keyToPress = 0;
             string keyToSend = "";
             if (run)
@@ -1130,47 +1127,38 @@ namespace Assistant
             switch (m_Dir)
             {
                 case Direction.down:
-                    direction = Direction.down;
                     keyToPress = (int)KeyboardDir.Down;
                     keyToSend += "{DOWN}";
                     break;
                 case Direction.east:
-                    direction = Direction.east;
                     keyToPress = (int)KeyboardDir.East;
                     keyToSend += "{PGDN}";
                     break;
                 case Direction.left:
-                    direction = Direction.left;
                     keyToPress = (int)KeyboardDir.Left;
                     keyToSend += "{Left}";
                     break;
                 case Direction.north:
-                    direction = Direction.north;
                     keyToPress = (int)KeyboardDir.North;
                     keyToSend += "{PGUP}";
                     break;
                 case Direction.right:
-                    direction = Direction.right;
                     keyToPress = (int)KeyboardDir.Right;
                     keyToSend += "{RIGHT}";
                     break;
                 case Direction.south:
-                    direction = Direction.south;
                     keyToPress = (int)KeyboardDir.South;
                     keyToSend += "{END}";
                     break;
                 case Direction.up:
-                    direction = Direction.up;
                     keyToPress = (int)KeyboardDir.Up;
                     keyToSend += "{UP}";
                     break;
                 case Direction.west:
-                    direction = Direction.west;
                     keyToPress = (int)KeyboardDir.West;
                     keyToSend += "{HOME}";
                     break;
                 default:
-                    direction = Direction.up;
                     keyToPress = (int)KeyboardDir.Up;
                     keyToSend += "{UP}";
                     break;
@@ -1236,7 +1224,7 @@ namespace Assistant
 
         public override List<string> ValidFileLocations()
         {
-            List<string> validFileLocations = new List<string>();
+            List<string> validFileLocations = new();
             validFileLocations.Add(Assistant.Engine.RootPath);
 
             return validFileLocations;

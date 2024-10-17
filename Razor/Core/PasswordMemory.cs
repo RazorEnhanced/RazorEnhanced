@@ -5,7 +5,7 @@ namespace Assistant
 {
     internal class PasswordMemory
     {
-        private static List<PasswordData> list = new List<PasswordData>();
+        private static List<PasswordData> list = new();
 
         [Serializable]
         internal class PasswordData

@@ -17,12 +17,12 @@ namespace RazorEnhanced
     [Serializable]
     class DocContainer
     {
-        public DocSettings settings = new DocSettings();
+        public DocSettings settings = new();
 
-        public List<DocClass> classes = new List<DocClass>();
-        public List<DocMethod> constructors = new List<DocMethod>();
-        public List<DocProperty> properties = new List<DocProperty>();
-        public List<DocMethod> methods = new List<DocMethod>();
+        public List<DocClass> classes = new();
+        public List<DocMethod> constructors = new();
+        public List<DocProperty> properties = new();
+        public List<DocMethod> methods = new();
 
         public void AddRange(DocContainer otherContainer)
         {
@@ -232,7 +232,7 @@ namespace RazorEnhanced
 
         private static String IDT(int num) { return new String('\t', num); }
         private static readonly string Q3 = "\"\"\"";
-        private static readonly Regex NL = new Regex("\n[ \t]*", RegexOptions.Multiline | RegexOptions.Compiled);
+        private static readonly Regex NL = new("\n[ \t]*", RegexOptions.Multiline | RegexOptions.Compiled);
         private static string IndentText(string IDT, string text) { return NL.Replace(text, "\n" + IDT); }
 
         private static string ReplacePythonTypes(string typeName, bool addQuotes = false)
@@ -1296,20 +1296,18 @@ namespace RazorEnhanced
     /// </summary>
     class XMLCommentReader
     {
-        internal static HashSet<Assembly> loadedAssemblies = new HashSet<Assembly>();
-        internal static Dictionary<string, string> loadedXmlDocumentation = new Dictionary<string, string>();
+        internal static HashSet<Assembly> loadedAssemblies = new();
+        internal static Dictionary<string, string> loadedXmlDocumentation = new();
 
         public static void LoadXmlDocumentation(string xmlDocumentation)
         {
-            using (XmlReader xmlReader = XmlReader.Create(new StringReader(xmlDocumentation)))
+            using XmlReader xmlReader = XmlReader.Create(new StringReader(xmlDocumentation));
+            while (xmlReader.Read())
             {
-                while (xmlReader.Read())
+                if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "member")
                 {
-                    if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "member")
-                    {
-                        string raw_name = xmlReader["name"];
-                        loadedXmlDocumentation[raw_name] = xmlReader.ReadInnerXml();
-                    }
+                    string raw_name = xmlReader["name"];
+                    loadedXmlDocumentation[raw_name] = xmlReader.ReadInnerXml();
                 }
             }
         }
@@ -1333,7 +1331,7 @@ namespace RazorEnhanced
         public static string GetPath(Assembly assembly)
         {
             string codeBase = assembly.CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
+            UriBuilder uri = new(codeBase);
             string path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
@@ -1402,7 +1400,7 @@ namespace RazorEnhanced
             return "";
         }
 
-        private static readonly Regex baseIndent = new Regex(@"\A\n?(\s+)\S", RegexOptions.Compiled);
+        private static readonly Regex baseIndent = new(@"\A\n?(\s+)\S", RegexOptions.Compiled);
         public static String RemoveBaseIndentation(string text)
         {
             var match = baseIndent.Match(text);

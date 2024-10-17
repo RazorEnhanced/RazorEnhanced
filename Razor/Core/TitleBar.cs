@@ -10,7 +10,7 @@ namespace Assistant
     {
         private static string EncodeColorStat(int val, int max)
         {
-            double perc = ((double)val) / ((double)max);
+            double perc = val / ((double)max);
 
             if (perc <= 0.25)
                 return String.Format(" ~#FF0000{0}~#~", val);
@@ -20,7 +20,7 @@ namespace Assistant
                 return val.ToString();
         }
 
-        private static readonly StringBuilder m_TBBuilder = new StringBuilder();
+        private static readonly StringBuilder m_TBBuilder = new();
         internal static void UpdateTitleBar()
         {
             if (!Assistant.Client.Instance.Ready || !Assistant.Client.IsOSI || World.Player == null)
@@ -84,7 +84,7 @@ namespace Assistant
                 if (item.Graphics == 0)
                     continue;
 
-                StringBuilder sbitem = new StringBuilder();
+                StringBuilder sbitem = new();
                 sbitem.AppendFormat("~I{0:X4}", item.Graphics);
                 if (item.Color > 0 && item.Color < 0xFFFF)
                     sbitem.Append(item.Color.ToString("X4"));

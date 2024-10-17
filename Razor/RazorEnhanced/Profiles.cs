@@ -44,7 +44,7 @@ namespace RazorEnhanced
 
             public void Add(string playername, int serial)
             {
-                PlayerEntry playerEntry = new PlayerEntry(playername);
+                PlayerEntry playerEntry = new(playername);
                 playerEntry.PlayerSerial = serial;
                 Players.Add(playerEntry);
             }
@@ -117,15 +117,12 @@ namespace RazorEnhanced
                     }
                 }
             }
-
-
-            int countFoundProfiles = 0;
             string[] directorNames = Directory.GetDirectories(profileDir);
             m_Dataset = new List<Profile>();
 
             if (directorNames.Length == 0)
             {
-                Profile defaultProfile = new Profile("default");
+                Profile defaultProfile = new("default");
                 defaultProfile.Last = true;
                 m_Dataset.Add(defaultProfile);
             }
@@ -133,7 +130,7 @@ namespace RazorEnhanced
             {
                 foreach (string directorName in directorNames)
                 {
-                    Profile profile = new Profile(Path.GetFileName(directorName));
+                    Profile profile = new(Path.GetFileName(directorName));
                     m_Dataset.Add(profile);
                 }
                 SetLast(directorNames[0]); // default first one as last
@@ -171,7 +168,7 @@ namespace RazorEnhanced
         // Funzioni di accesso al salvataggio
         internal static List<string> ReadAll()
         {
-            List<string> profilelist = new List<string>();
+            List<string> profilelist = new();
 
             foreach (var profile in m_Dataset)
             {
@@ -213,7 +210,7 @@ namespace RazorEnhanced
 
         internal static void Add(string name)
         {
-            Profile newProfile = new Profile(name);
+            Profile newProfile = new(name);
             newProfile.Last = true;
             m_Dataset.Add(newProfile);
 

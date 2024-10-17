@@ -163,7 +163,7 @@ namespace RazorEnhanced
 
         internal static void AddList(string newList)
         {
-            RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, (int)0, false, false);
+            RazorEnhanced.Settings.Dress.ListInsert(newList, RazorEnhanced.Dress.DressDelay, 0, false, false);
             RazorEnhanced.Dress.RefreshLists();
             RazorEnhanced.Dress.InitGrid();
         }
@@ -193,7 +193,7 @@ namespace RazorEnhanced
 
             if (lvi != null && old != null)
             {
-                DressItemNew item = new Dress.DressItemNew(old.Name, old.Layer, old.Serial, lvi.Checked);
+                DressItemNew item = new(old.Name, old.Layer, old.Serial, lvi.Checked);
                 RazorEnhanced.Settings.Dress.ItemReplace(RazorEnhanced.Dress.DressListName, i, item);
             }
         }
@@ -218,7 +218,7 @@ namespace RazorEnhanced
 
             foreach (DressItemNew item in items)
             {
-                ListViewItem listitem = new ListViewItem
+                ListViewItem listitem = new()
                 {
                     Checked = item.Selected
                 };
@@ -255,7 +255,7 @@ namespace RazorEnhanced
                 if (layeritem == null) // slot vuoto
                     continue;
 
-                RazorEnhanced.Dress.DressItemNew itemtoinsert = new DressItemNew(layeritem.Name, l, layeritem.Serial, true);
+                RazorEnhanced.Dress.DressItemNew itemtoinsert = new(layeritem.Name, l, layeritem.Serial, true);
                 RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
             }
 
@@ -266,7 +266,7 @@ namespace RazorEnhanced
         {
             if (dressItem.Layer != Layer.Invalid)
             {
-                RazorEnhanced.Dress.DressItemNew toinsert = new RazorEnhanced.Dress.DressItemNew(dressItem.Name, dressItem.Layer, dressItem.Serial, true);
+                RazorEnhanced.Dress.DressItemNew toinsert = new(dressItem.Name, dressItem.Layer, dressItem.Serial, true);
                 RazorEnhanced.Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
                 RazorEnhanced.Dress.InitGrid();
             }
@@ -282,7 +282,7 @@ namespace RazorEnhanced
             {
                 if (Dress.DressUseUO3D)
                 {
-                    List<ushort> layertoundress = new List<ushort>();
+                    List<ushort> layertoundress = new();
                     foreach (Dress.DressItemNew item in items)
                     {
                         //Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(l);
@@ -319,7 +319,7 @@ namespace RazorEnhanced
         }
 
         // Layer List
-        internal static List<Layer> LayerList = new List<Layer>
+        internal static List<Layer> LayerList = new()
         {
             Layer.RightHand,
             Layer.LeftHand,
@@ -414,7 +414,7 @@ namespace RazorEnhanced
                     // but OSI does, so if delay is 0 let OSI swap fast otherwise handle udress for weapons
                     if (m_dressdelay == 0)
                     {
-                        List<uint> itemserial = new List<uint>();
+                        List<uint> itemserial = new();
                         Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
                         Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
@@ -437,7 +437,7 @@ namespace RazorEnhanced
                         // This logic is terrible .. The plan is
                         // If your swapping weapons, and new weapon 1hand/2hand not equal to new 1/hand/2hand
                         // then undress the existing weapons first
-                        List<uint> itemserial = new List<uint>();
+                        List<uint> itemserial = new();
                         Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
                         Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
@@ -472,7 +472,7 @@ namespace RazorEnhanced
                             }
                         }
 
-                        List<ushort> dropLayer = new List<ushort>();
+                        List<ushort> dropLayer = new();
                         if (dropWeaponL || twoHandLeft)
                         {
                             dropLayer.Add((ushort)Layer.LeftHand);

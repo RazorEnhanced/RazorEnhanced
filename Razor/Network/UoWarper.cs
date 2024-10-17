@@ -139,7 +139,7 @@ namespace RazorEnhanced
 
             internal List<object> _executeCommand(bool ReturnResults, string CommandName, object[] args)
             {
-                List<object> Results = new List<object>();
+                List<object> Results = new();
                 DLLImport.Uo.SetTop(_UOHandle, 0);
                 DLLImport.Uo.PushStrVal(_UOHandle, "Call");
                 DLLImport.Uo.PushStrVal(_UOHandle, CommandName);

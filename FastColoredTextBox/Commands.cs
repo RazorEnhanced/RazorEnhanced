@@ -275,7 +275,7 @@ namespace FastColoredTextBoxNS
     {
         string insertedText;
         List<Range> ranges;
-        List<string> prevText = new List<string>();
+        List<string> prevText = new();
 
         /// <summary>
         /// Constructor
@@ -473,7 +473,7 @@ namespace FastColoredTextBoxNS
     public class ReplaceMultipleTextCommand : UndoableCommand
     {
         List<ReplaceRange> ranges;
-        List<string> prevText = new List<string>();
+        List<string> prevText = new();
 
         public class ReplaceRange
         {
@@ -564,7 +564,7 @@ namespace FastColoredTextBoxNS
     public class RemoveLinesCommand : UndoableCommand
     {
         List<int> iLines;
-        List<string> prevText = new List<string>();
+        List<string> prevText = new();
 
         /// <summary>
         /// Constructor
@@ -659,7 +659,7 @@ namespace FastColoredTextBoxNS
     {
         private UndoableCommand cmd;
         private Range range;
-        private List<UndoableCommand> commandsByRanges = new List<UndoableCommand>();
+        private List<UndoableCommand> commandsByRanges = new();
 
         public MultiRangeCommand(UndoableCommand command) : base(command.ts)
         {

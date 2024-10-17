@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -32,11 +31,11 @@ namespace RazorEnhanced
         public ushort Hue { get { return base.Hue; } }
         public ushort Color { get { return base.Hue; } }
         public ushort Graphics { get { return base.TypeID.Value; } }
-        
+
         /// <summary>
         /// Represents the type of Item, usually unique for the Item image.  Sometime called ID or Graphics ID.
         /// </summary>
-        public int ItemID { get { return (int)base.TypeID.Value; } }
+        public int ItemID { get { return base.TypeID.Value; } }
 
         //public int ItemID
         //{
@@ -138,7 +137,7 @@ namespace RazorEnhanced
         /// </summary>
         /// <param name="container">Item as container.</param>
         /// <returns>True: if is contained - False: otherwise.</returns>
-        public bool IsChildOf(Item container, int maxDepth=100)
+        public bool IsChildOf(Item container, int maxDepth = 100)
         {
             return m_AssistantItem.IsChildOf(container.m_AssistantItem, maxDepth);
         }
@@ -171,10 +170,10 @@ namespace RazorEnhanced
         {
             get
             {
-                List<Item> items = new List<Item>();
+                List<Item> items = new();
                 for (int i = 0; i < m_AssistantItem.Contains.Count; i++)
                 {
-                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(m_AssistantItem.Contains[i]);
+                    RazorEnhanced.Item enhancedItem = new(m_AssistantItem.Contains[i]);
                     items.Add(enhancedItem);
                 }
                 return items;
@@ -292,7 +291,7 @@ namespace RazorEnhanced
         public Point3D GetWorldPosition()
         {
             Assistant.Point3D assistantPoint = m_AssistantItem.GetWorldPosition();
-            RazorEnhanced.Point3D enhancedPoint = new RazorEnhanced.Point3D(assistantPoint);
+            RazorEnhanced.Point3D enhancedPoint = new(assistantPoint);
             return enhancedPoint;
         }
 
@@ -305,10 +304,10 @@ namespace RazorEnhanced
         {
             get
             {
-                List<Property> properties = new List<Property>();
+                List<Property> properties = new();
                 foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantItem.ObjPropList.Content)
                 {
-                    Property property = new Property(entry);
+                    Property property = new(entry);
                     properties.Add(property);
                 }
                 return properties;
@@ -488,7 +487,7 @@ namespace RazorEnhanced
         }
 
 
-        internal static HashSet<ushort> IgnoreIDs = new HashSet<ushort>();
+        internal static HashSet<ushort> IgnoreIDs = new();
         /// <summary>
         /// Used to ignore specific types. Be careful as you wont see things you ignore, 
         /// and could result in a mobile being able to kill you without you seeing it
@@ -503,6 +502,20 @@ namespace RazorEnhanced
             }
         }
 
+        /// <summary>
+        /// NOTE: This is from an internal razor table and can be changed based on your server!
+        /// 
+        /// Returns a pair of string values (Primary Ability, Secondary Ability) 
+        /// for the supplied item ID. 
+        /// "Invalid", "Invalid" for items not in the internal table
+        /// </summary>
+        public static (string, string) GetWeaponAbility(int itemId)
+        {
+            var primary = SpecialMoves.GetPrimaryAbility(itemId);
+            var secondary = SpecialMoves.GetSecondaryAbility(itemId);
+
+            return (primary.ToString(), secondary.ToString());
+        }
 
 
         /// <summary>
@@ -543,7 +556,7 @@ namespace RazorEnhanced
             return false;
         }
 
-        private static readonly Dictionary<uint, int> m_HuedItems = new Dictionary<uint, int>();
+        private static readonly Dictionary<uint, int> m_HuedItems = new();
 
         internal static int Hued(uint serial)
         {
@@ -660,13 +673,13 @@ namespace RazorEnhanced
             /// Limit the search to a list of Serials of Item to find. (ex: 0x0406EFCA )
             /// Supports .Add() and .AddRange()
             /// </summary>
-            public List<int> Serials = new List<int>();
+            public List<int> Serials = new();
 
             /// <summary>
             /// Limit the search to a list of Grapichs ID (see: Item.ItemID ) 
             /// Supports .Add() and .AddRange()
             /// </summary>
-            public List<int> Graphics = new List<int>();
+            public List<int> Graphics = new();
 
             /// <summary>
             /// Limit the search by name of the Item.
@@ -677,7 +690,7 @@ namespace RazorEnhanced
             /// Limit the search to a list of Colors.
             /// Supports .Add() and .AddRange()
             /// </summary>
-            public List<int> Hues = new List<int>();
+            public List<int> Hues = new();
 
             /// <summary>
             /// Limit the search by distance, to Items which are at least RangeMin tiles away from the Player. ( default: -1, any Item )
@@ -734,7 +747,7 @@ namespace RazorEnhanced
             ///     InnerLegs
             ///     Talisman
             /// </summary>
-            public List<string> Layers = new List<string>();
+            public List<string> Layers = new();
             /// <summary>
             /// Limit the search to the Items on the ground. (default: -1, any Item)
             /// </summary>
@@ -760,7 +773,7 @@ namespace RazorEnhanced
             {
                 if (Name != String.Empty)
                 {
-                    Regex rgx = new Regex(Name, RegexOptions.IgnoreCase);
+                    Regex rgx = new(Name, RegexOptions.IgnoreCase);
                     // should probably use prop[0]
                     if (!rgx.IsMatch(item.Name))
                         return false;
@@ -791,7 +804,7 @@ namespace RazorEnhanced
                 }
                 if (ZRangeMin > -1)
                 {
-                    if ( Math.Abs(Math.Abs(item.Position.Z) - Math.Abs(World.Player.Position.Z)) < ZRangeMin)
+                    if (Math.Abs(Math.Abs(item.Position.Z) - Math.Abs(World.Player.Position.Z)) < ZRangeMin)
                         return false;
                 }
 
@@ -817,7 +830,7 @@ namespace RazorEnhanced
 
                 if (Layers.Count > 0)
                 {
-                    List<Assistant.Layer> list = new List<Assistant.Layer>();
+                    List<Assistant.Layer> list = new();
 
                     foreach (string text in Layers)
                     {
@@ -894,7 +907,7 @@ namespace RazorEnhanced
         public static List<Item> ApplyFilter(Filter filter)
         {
 
-            List<RazorEnhanced.Item> result = new List<RazorEnhanced.Item>();
+            List<RazorEnhanced.Item> result = new();
             try
             {
                 foreach (var entry in World.Items)
@@ -1082,7 +1095,7 @@ namespace RazorEnhanced
                 return null;
             else
             {
-                RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                RazorEnhanced.Item enhancedItem = new(assistantItem);
                 return enhancedItem;
             }
         }
@@ -1288,7 +1301,7 @@ namespace RazorEnhanced
                 return;
             }
 
-            Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
+            Assistant.Point3D loc = new(x, y, z);
 
             int amounttodrop = amount;
             if ((item.Amount < amount) || (amount == 0))
@@ -1445,7 +1458,7 @@ namespace RazorEnhanced
         public static bool UseItemByID(int itemid, int color = -1)
         {
             // Genero filtro item
-            Items.Filter itemFilter = new Items.Filter
+            Items.Filter itemFilter = new()
             {
                 Enabled = true
             };
@@ -1525,7 +1538,7 @@ namespace RazorEnhanced
             }
             else  // Search in world
             {
-                Items.Filter itemFilter = new Items.Filter
+                Items.Filter itemFilter = new()
                 {
                     Enabled = true
                 };
@@ -1561,6 +1574,7 @@ namespace RazorEnhanced
         /// <param name="itemid"> List of ItemID filter.</param>
         /// <param name="color">Color filter. (-1: any, 0: natural )</param>
         /// <param name="container">Serial of the container to search. (-1: any Item)</param>
+        /// <param name="range">In containers means the number of sub-containers to search. In World items means distance in squares (10: any Item)</param>
         /// <param name="recursive">
         /// Search subcontainers. 
         ///     True: all subcontainers
@@ -1569,7 +1583,7 @@ namespace RazorEnhanced
         /// </param>
         /// <param name="considerIgnoreList">True: Ignore Items are excluded - False: any Item.</param>
         /// <returns>The Item matching the criteria.</returns>
-        public static Item FindByID(List<int> itemids, int color, int container, int range, bool considerIgnoreList = true)
+        public static Item FindByID(List<int> itemids, int color = -1, int container = -1, int range = 10, bool considerIgnoreList = true)
         {
             if (container != -1)  // search in specific container
             {
@@ -1609,7 +1623,7 @@ namespace RazorEnhanced
             }
             else  // Search in world
             {
-                Items.Filter itemFilter = new Items.Filter
+                Items.Filter itemFilter = new()
                 {
                     Enabled = true
                 };
@@ -1669,7 +1683,7 @@ namespace RazorEnhanced
             var returnList = new IronPython.Runtime.PythonList();
             List<int> internalList = new();
             internalList.Add(itemid);
-;
+            ;
             var foundList = FindAllByID(internalList, color, container, range, considerIgnoreList);
             if (foundList != null)
             {
@@ -1685,7 +1699,7 @@ namespace RazorEnhanced
             var returnList = new List<Item>();
             if (container == -1)  // search everywhere
             {
-                Items.Filter itemFilter = new Items.Filter
+                Items.Filter itemFilter = new()
                 {
                     Enabled = true
                 };
@@ -1794,7 +1808,7 @@ namespace RazorEnhanced
             }
             else  // Search in world
             {
-                Items.Filter itemFilter = new Items.Filter
+                Items.Filter itemFilter = new()
                 {
                     Enabled = true
                 };
@@ -1848,7 +1862,7 @@ namespace RazorEnhanced
         /// <param name="delay">Maximum waiting time, in milliseconds.</param>
         public static List<Property> GetProperties(int itemserial, int delay) // Delay in MS
         {
-            List<Property> properties = new List<Property>();
+            List<Property> properties = new();
 
             RazorEnhanced.Item i = FindBySerial(itemserial);
             if (i != null)
@@ -1865,7 +1879,7 @@ namespace RazorEnhanced
                 if (id == 1)
                 {
                     int s = p.ReadInt32();
-                    if ((int)s == itemserial)
+                    if (s == itemserial)
                     {
                         fakeItem.ReadPropertyList(p);
                     }
@@ -1878,7 +1892,7 @@ namespace RazorEnhanced
 
             foreach (Assistant.ObjectPropertyList.OPLEntry entry in fakeItem.ObjPropList.Content)
             {
-                Property property = new Property(entry);
+                Property property = new(entry);
                 properties.Add(property);
             }
             return properties;
@@ -1924,7 +1938,7 @@ namespace RazorEnhanced
         /// <returns>List of strings.</returns>
         public static List<string> GetPropStringList(int serial)
         {
-            List<string> propstringlist = new List<string>();
+            List<string> propstringlist = new();
             Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
             if (assistantItem == null)
@@ -1993,7 +2007,7 @@ namespace RazorEnhanced
                                 //print(p)
                                 propString = content[i].ToString();
                                 string pattern = @"\s*(\b[^:]*)(:)?\s*([^\s].*)?";
-                                Regex rx = new Regex(pattern,
+                                Regex rx = new(pattern,
                                     RegexOptions.Compiled | RegexOptions.IgnoreCase);
                                 Match m = rx.Match(propString);
                                 if (m.Groups.Count > 3)
@@ -2321,7 +2335,7 @@ namespace RazorEnhanced
         /// <returns></returns>
         public static int BackpackCount(int itemid, int color = -1)
         {
-            List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
+            List<Assistant.Item> items = new(World.Items.Values.ToList());
             if (color == -1)
                 items = items.Where((i) => i.IsInBackpack && i.TypeID == itemid).ToList();
             else
@@ -2391,7 +2405,7 @@ namespace RazorEnhanced
                         if (hue > 0)
                         {
                             // Create clone to preserve original cached bitmap!
-                            System.Drawing.Bitmap bitmapDeepCopy = new System.Drawing.Bitmap(bitmapOriginal);
+                            System.Drawing.Bitmap bitmapDeepCopy = new(bitmapOriginal);
 
                             bool onlyHueGrayPixels = (hue & 0x8000) != 0;
                             hue = (hue & 0x3FFF) - 1;

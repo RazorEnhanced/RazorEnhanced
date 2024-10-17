@@ -71,7 +71,7 @@ namespace RazorEnhanced.UI
             }
 
             // copy/paste
-            if ((((int)e.KeyChar == 22) || ((int)e.KeyChar == 3))
+            if (((e.KeyChar == 22) || (e.KeyChar == 3))
                 && ((ModifierKeys & Keys.Control) == Keys.Control))
                 return;
 
@@ -152,7 +152,7 @@ namespace RazorEnhanced.UI
             }
 
             // copy/paste
-            if ((((int)e.KeyChar == 22) || ((int)e.KeyChar == 3))
+            if (((e.KeyChar == 22) || (e.KeyChar == 3))
                 && ((ModifierKeys & Keys.Control) == Keys.Control))
                 return;
 

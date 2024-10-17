@@ -13,7 +13,7 @@ namespace Assistant
             if (m_Screen != null)
                 return;
 
-            Thread t = new Thread(new ThreadStart(ThreadMain)) { Name = "Razor Splash Screen" };
+            Thread t = new(new ThreadStart(ThreadMain)) { Name = "Razor Splash Screen" };
             t.Start();
             while (m_Screen == null)
                 Thread.Sleep(1);
@@ -87,7 +87,7 @@ namespace Assistant
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
+            System.ComponentModel.ComponentResourceManager resources = new(typeof(SplashScreen));
             this.SuspendLayout();
             //
             // SplashScreen

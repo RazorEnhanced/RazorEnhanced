@@ -10,8 +10,8 @@ namespace RazorEnhanced
 
     public class ScriptRecorderService
     {
-        public readonly static ScriptRecorderService Instance = new ScriptRecorderService();
-        private readonly List<ScriptRecorder> m_ScriptRecorderList = new List<ScriptRecorder>();
+        public readonly static ScriptRecorderService Instance = new();
+        private readonly List<ScriptRecorder> m_ScriptRecorderList = new();
         public List<ScriptRecorder> ScriptRecorderList { get { return new List<ScriptRecorder>(m_ScriptRecorderList); } }
 
         private int m_Count = 0;
@@ -160,11 +160,11 @@ namespace RazorEnhanced
         }
 
         internal static CircularBuffer.CircularBuffer<UsedObjectData> RecentSerialType =
-            new CircularBuffer.CircularBuffer<UsedObjectData>(20);
+            new(20);
 
         internal static void enqueueUsedObject(uint _serial, int _container, ushort _itemId, ushort _hue)
         {
-            UsedObjectData usedObject = new UsedObjectData(_serial, _container, _itemId, _hue);
+            UsedObjectData usedObject = new(_serial, _container, _itemId, _hue);
             if (!RecentSerialType.Contains(usedObject))
                 RecentSerialType.PushFront(usedObject);
 
@@ -501,7 +501,7 @@ namespace RazorEnhanced
             {
                 string switchParam = String.Join(",", gd.switches);
                 string textIdParam = String.Join(",", gd.textID);
-                List<string> quotedStrings = new List<string>();
+                List<string> quotedStrings = new();
                 foreach (string str in gd.text)
                 {
                     quotedStrings.Add($"\"{str}\"");

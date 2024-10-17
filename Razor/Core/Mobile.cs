@@ -26,9 +26,8 @@ namespace Assistant
 
     public class Mobile : UOEntity
     {
-        private static readonly List<ushort> m_HumanBodies = new List<ushort>() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695 };
+        private static readonly List<ushort> m_HumanBodies = new() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751, 970, 695 };
 
-        private ushort m_Body;
         private Direction m_Direction;
         private string m_Name;
 
@@ -59,6 +58,86 @@ namespace Assistant
             m_Items = new List<Item>();
             m_Map = World.Player == null ? (byte)0 : World.Player.Map;
             m_Visible = true;
+        }
+
+        private Dictionary<string, int> karmNames = new()
+        {
+            {"", 0 },
+        };
+
+
+        internal static Dictionary<string, (int, int)> NameToFameKarma = new()
+        {
+        {"", (0, 0)},
+        {"Admirable", (2, 3)},
+        {"Dastardly", (1, -4)},
+        {"Dishonorable", (1, -2)},
+        {"Disreputable", (1, -1)},
+        {"Distinguished", (3, 1)},
+        {"Dread", (3, -5)},
+        {"Eminent", (3, 2)},
+        {"Evil", (3, -4)},
+        {"Fair", (0, 1)},
+        {"Famed", (2, 4)},
+        {"Glorious", (3, 5)},
+	    //{"Good", (0, 3)},  // Unfortunately they used these twice
+	    //{"Good", (1, 4)},
+	    {"Good", (0, 3)},
+        {"Great", (2, 5)},
+	    //{"Honest", (0, 4)},  // Unfortunately they used these twice
+	    //{"Honest", (1, 5)},
+	    {"Honest", (0, 4)},
+        {"Ignoble", (2, -2)},
+        {"Illustrious", (3, 4)},
+        {"Infamous", (3, -1)},
+	    //{"Kind", (0, 2)}, // Unfortunately they used these twice
+	    //{"Kind", (1, 3)},
+	    {"Kind", (0, 2)},
+        {"Malicious", (1, -3)},
+        {"Nefarious", (2, -5)},
+        {"Noble", (3, 3)},
+        {"Notable", (1, 0)},
+        {"Notorious", (2, -1)},
+        {"Prominent", (2, 0)},
+        {"Proper", (2, 2)},
+        {"Renowned", (3, 0)},
+        {"Reputable", (2, 1)},
+        {"Respectable", (1, 2)},
+        {"Sinister", (3, -2)},
+        {"Trustworthy", (0, 5)},
+        {"Upstanding", (1, 1)},
+        {"Vile", (2, -3)},
+        {"Villainous", (3, -3)},
+        {"Wicked", (2, -4)},
+        {"Wretched", (1, -5)},
+            {"Despicable", (0, -4)},
+            {"Outcast", (0, -5)},
+            {"Rude", (0, -1)},
+            {"Scoundrel", (0, -3)},
+            {"Unsavory", (0, -2)},
+        };
+
+        internal bool IgnoreProfile { get; set; } = false;
+
+        internal int Fame { get; set; } = -1;
+        internal int Karma { get; set; } = -1;
+
+        private string _karmaTitle = "Unknown";
+        internal string KarmaTitle
+        {
+            get { return _karmaTitle; }
+            set
+            {
+                Karma = -1;
+                Fame = -1;
+                _karmaTitle = value;
+
+                if (NameToFameKarma.ContainsKey(value))
+                {
+                    Fame = NameToFameKarma[value].Item1;
+                    Karma = NameToFameKarma[value].Item2;
+                }
+            }
         }
 
         internal string Name
@@ -135,13 +214,13 @@ namespace Assistant
                 if (StatsUpdated && m_Hits == 0)
                     return true;
 
-                return m_Body == 402
-                    || m_Body == 403
-                    || m_Body == 607
-                    || m_Body == 608
-                    || m_Body == 694
-                    || m_Body == 695
-                    || m_Body == 970;
+                return Body == 402
+                    || Body == 403
+                    || Body == 607
+                    || Body == 608
+                    || Body == 694
+                    || Body == 695
+                    || Body == 970;
             }
         }
 
@@ -287,7 +366,7 @@ namespace Assistant
 
         internal override void Remove()
         {
-            List<Item> rem = new List<Item>(m_Items);
+            List<Item> rem = new(m_Items);
             m_Items.Clear();
 
             foreach (Item r in rem)
@@ -318,7 +397,7 @@ namespace Assistant
                 return null;
             for (int i = 0; i < m_Items.Count; i++)
             {
-                Item item = (Item)m_Items[i];
+                Item item = m_Items[i];
                 if (item.Layer == layer)
                     return item;
             }
@@ -434,7 +513,7 @@ namespace Assistant
                     return;
                 }
             }
-            Assistant.Client.Instance.SendToClient(new UnicodeMessage(Serial, m_Body, MessageType.Regular, hue, 3, Language.CliLocName, from, text));
+            Assistant.Client.Instance.SendToClient(new UnicodeMessage(Serial, Body, MessageType.Regular, hue, 3, Language.CliLocName, from, text));
         }
 
         internal void OverheadMessage(string text)

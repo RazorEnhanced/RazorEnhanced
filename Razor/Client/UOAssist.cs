@@ -98,7 +98,7 @@ namespace Assistant
 
             private void MyCallback(string[] args)
             {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 for (int i = 0; i < args.Length; i++)
                 {
                     if (i != 0)
@@ -172,7 +172,7 @@ namespace Assistant
                             {
                                 if (item.TypeID.Value >= 0x4000)
                                     PostMessage((IntPtr)wParam, (uint)UOAMessage.ADD_MULTI,
-                                        (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))),
+                                        (IntPtr)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16)),
                                         (IntPtr)item.TypeID.Value);
                             }
                         }
@@ -267,7 +267,7 @@ namespace Assistant
                             return 0;
 
                         int hue = wParam & 0xFFFF;
-                        StringBuilder sb = new StringBuilder(256);
+                        StringBuilder sb = new(256);
                         if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
                             return 0;
 
@@ -287,7 +287,7 @@ namespace Assistant
 
                 case UOAMessage.ADD_CMD:
                     {
-                        StringBuilder sb = new StringBuilder(256);
+                        StringBuilder sb = new(256);
                         if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
                             return 0;
 
@@ -385,7 +385,7 @@ namespace Assistant
         {
             PostToWndReg((uint)UOAMessage.SKILL_LEVEL, (IntPtr)skill, (IntPtr)val);
             if (skill == RazorEnhanced.Skills.GetSkillId("Magery"))
-                PostToWndReg((uint)UOAMessage.MAGERY_LEVEL, (IntPtr)((int)(val / 10)), (IntPtr)(val % 10));
+                PostToWndReg((uint)UOAMessage.MAGERY_LEVEL, (IntPtr)(val / 10), (IntPtr)(val % 10));
         }
 
         public static void PostRemoveMulti(Item item)
@@ -393,7 +393,7 @@ namespace Assistant
             if (item == null)
                 return;
 
-            IntPtr pos = (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16)));
+            IntPtr pos = (IntPtr)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16));
 
             if (pos == IntPtr.Zero)
                 return;
@@ -408,7 +408,7 @@ namespace Assistant
 
         public static void PostAddMulti(TypeID iid, Point3D Position)
         {
-            IntPtr pos = (IntPtr)((int)((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
+            IntPtr pos = (IntPtr)((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16));
 
             if (pos == IntPtr.Zero)
                 return;

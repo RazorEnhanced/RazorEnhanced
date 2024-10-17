@@ -3,7 +3,6 @@ using Assistant.UI;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -276,7 +275,7 @@ namespace RazorEnhanced
 
         internal static void EngineRun(Assistant.Mobile target)
         {
-            if (target.Poisoned || (int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit)       // Check HP se bendare o meno.
+            if (target.Poisoned || target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax) < m_hplimit)       // Check HP se bendare o meno.
             {
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
                 {
@@ -301,7 +300,7 @@ namespace RazorEnhanced
         }
 
 
-        internal static ManualResetEventSlim BandageFinish = new ManualResetEventSlim(true);
+        internal static ManualResetEventSlim BandageFinish = new(true);
 
         internal static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
         {
@@ -339,7 +338,7 @@ namespace RazorEnhanced
             }
         }
 
-        static internal Mutex HealMutex = new Mutex();
+        static internal Mutex HealMutex = new();
         static internal int NoBandageMsgCount = 0;
         internal static void Heal(Assistant.Mobile target, bool wait)
         {
@@ -491,7 +490,7 @@ namespace RazorEnhanced
                     break;
                 case "Friend":
                     {
-                        RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
+                        RazorEnhanced.Mobiles.Filter targfilter = new()
                         {
                             Enabled = true,
                             Friend = 1,
@@ -504,7 +503,7 @@ namespace RazorEnhanced
                     break;
                 case "Friend Or Self":
                     {
-                        RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
+                        RazorEnhanced.Mobiles.Filter targfilter = new()
                         {
                             Enabled = true,
                             Friend = 1,
@@ -604,7 +603,7 @@ namespace RazorEnhanced
                     Assistant.Item rootContainer = item.RootContainer as Assistant.Item;
                     if (rootContainer == null)
                         continue;
-                    if (rootContainer.Serial == World.Player.Backpack.Serial 
+                    if (rootContainer.Serial == World.Player.Backpack.Serial
                         || rootContainer.Serial == World.Player.Serial)
                     {
                         containeritem.Add(item);
@@ -615,7 +614,8 @@ namespace RazorEnhanced
                     }
                 }
             }
-            if (containeritem.Count > 0) {
+            if (containeritem.Count > 0)
+            {
                 return containeritem[0];
             }
             return null;

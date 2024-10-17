@@ -1,9 +1,4 @@
-using Google.Protobuf.WellKnownTypes;
-using IronPython.Runtime;
-using RazorEnhanced;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq.Expressions;
 
 namespace Assistant
 {
@@ -14,7 +9,7 @@ namespace Assistant
         private ushort m_TypeID;
         private ushort m_Hue;
         private bool m_Deleted;
-        private readonly Dictionary<ushort, int> m_ContextMenu = new Dictionary<ushort, int>();
+        private readonly Dictionary<ushort, int> m_ContextMenu = new();
         protected ObjectPropertyList m_ObjPropList = null;
 
         internal ObjectPropertyList ObjPropList { get { return m_ObjPropList; } }
@@ -67,6 +62,11 @@ namespace Assistant
         {
             get { return m_Hue; }
             set { m_Hue = value; }
+        }
+
+        internal ushort Body
+        {
+            get { return TypeID; }
         }
 
         internal virtual Assistant.TypeID TypeID
