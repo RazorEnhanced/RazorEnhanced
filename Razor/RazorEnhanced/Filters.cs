@@ -530,7 +530,7 @@ namespace RazorEnhanced
                 color = (int)HighLightColor.Paralized;
             else if (m.Blessed) // Mortal
                 color = (int)HighLightColor.Mortal;
-            else if (m == World.Player && World.Player.Buffs.Contains(BuffIcon.BloodOathCurse))
+            else if (m == World.Player && World.Player.Buffs.ContainsKey(BuffIcon.BloodOathCurse))
                 color = (int)HighLightColor.BloodOath;
             else
             {
@@ -647,7 +647,7 @@ namespace RazorEnhanced
                         else if (m.Blessed) // Mortal
                             p = RewriteColor(p, (ushort)HighLightColor.Mortal);
 
-                        else if (m == World.Player && World.Player.Buffs.Contains(BuffIcon.BloodOathCurse))
+                        else if (m == World.Player && World.Player.Buffs.ContainsKey(BuffIcon.BloodOathCurse))
                             p = RewriteColor(p, (ushort)HighLightColor.BloodOath);
                     }
                 }

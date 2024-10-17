@@ -291,7 +291,7 @@ namespace RazorEnhanced
 
                 if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
                 {
-                    if (World.Player.Buffs.Contains(BuffIcon.MortalStrike) && (target.Serial == Player.Serial))
+                    if (World.Player.Buffs.ContainsKey(BuffIcon.MortalStrike) && (target.Serial == Player.Serial))
                         return;
                 }
 
